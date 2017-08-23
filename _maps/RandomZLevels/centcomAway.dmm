@@ -83,19 +83,19 @@
 /area/awaymission/centcomAway/cafe)
 "ar" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/kitchen/rollingpin,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/green{
 	dir = 1
 	},
 /area/awaymission/centcomAway/cafe)
 "as" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/food/condiment/enzyme,
 /turf/open/floor/plasteel/green{
 	dir = 1
 	},
@@ -109,7 +109,7 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/cafe)
 "av" = (
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/cafe)
 "aw" = (
@@ -122,7 +122,7 @@
 /area/awaymission/centcomAway/cafe)
 "ay" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/knife/butcher,
+/obj/item/kitchen/knife/butcher,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/centcomAway/cafe)
 "az" = (
@@ -182,7 +182,7 @@
 /area/awaymission/centcomAway/cafe)
 "aL" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/centcomAway/cafe)
 "aM" = (
@@ -211,7 +211,7 @@
 /area/awaymission/centcomAway/maint)
 "aQ" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/cafe)
 "aR" = (
@@ -297,8 +297,8 @@
 /area/awaymission/centcomAway/cafe)
 "bg" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/food/condiment/peppermill,
+/obj/item/reagent_containers/food/condiment/saltshaker,
 /turf/open/floor/plasteel/green{
 	dir = 1
 	},
@@ -413,7 +413,7 @@
 /area/awaymission/centcomAway/cafe)
 "bA" = (
 /obj/structure/rack,
-/obj/item/weapon/extinguisher/mini,
+/obj/item/extinguisher/mini,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/gloves/color/black,
 /turf/open/floor/plating,
@@ -529,17 +529,17 @@
 /area/awaymission/centcomAway/hangar)
 "bW" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/storage/firstaid/toxin,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "bX" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/fire{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -547,10 +547,10 @@
 /area/awaymission/centcomAway/hangar)
 "bY" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2
 	},
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -572,12 +572,12 @@
 	},
 /area/awaymission/centcomAway/hangar)
 "cb" = (
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /obj/structure/table,
 /turf/open/floor/plasteel/redyellow,
 /area/awaymission/centcomAway/cafe)
 "cc" = (
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/structure/table,
 /turf/open/floor/plasteel/redyellow,
 /area/awaymission/centcomAway/cafe)
@@ -603,7 +603,7 @@
 /area/awaymission/centcomAway/cafe)
 "ch" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/spray/plantbgone{
+/obj/item/reagent_containers/spray/plantbgone{
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/hydrofloor,
@@ -630,7 +630,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "co" = (
-/obj/item/weapon/pen,
+/obj/item/pen,
 /obj/structure/table,
 /turf/open/floor/plasteel/redyellow,
 /area/awaymission/centcomAway/cafe)
@@ -733,17 +733,17 @@
 /area/awaymission/centcomAway/hangar)
 "cJ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/centcomAway/hangar)
 "cK" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/centcomAway/hangar)
 "cL" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/centcomAway/hangar)
 "cM" = (
@@ -810,8 +810,8 @@
 /area/awaymission/centcomAway/hangar)
 "cX" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/stamp,
+/obj/item/clipboard,
+/obj/item/stamp,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/centcomAway/hangar)
 "cY" = (
@@ -875,7 +875,7 @@
 /area/awaymission/centcomAway/cafe)
 "dl" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/handcuffs,
+/obj/item/storage/box/handcuffs,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/centcomAway/hangar)
 "dm" = (
@@ -977,7 +977,7 @@
 /area/awaymission/centcomAway/hangar)
 "dC" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/redyellow,
 /area/awaymission/centcomAway/cafe)
 "dD" = (
@@ -1105,12 +1105,12 @@
 /area/awaymission/centcomAway/hangar)
 "ea" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "eb" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "ec" = (
@@ -1185,17 +1185,17 @@
 /area/awaymission/centcomAway/cafe)
 "eo" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/kitchen/rollingpin,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/red,
 /area/awaymission/centcomAway/cafe)
 "ep" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/food/condiment/enzyme,
 /turf/open/floor/plasteel/red,
 /area/awaymission/centcomAway/cafe)
 "eq" = (
@@ -1301,7 +1301,7 @@
 /area/awaymission/centcomAway/general)
 "eK" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/tank/internals/anesthetic,
+/obj/item/tank/internals/anesthetic,
 /obj/item/clothing/mask/breath/medical,
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
@@ -1311,7 +1311,7 @@
 /area/awaymission/centcomAway/general)
 "eM" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/extinguisher/mini,
+/obj/item/extinguisher/mini,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
@@ -1381,7 +1381,7 @@
 /area/awaymission/centcomAway/courtroom)
 "eZ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/lockbox,
+/obj/item/storage/lockbox,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "fa" = (
@@ -1394,13 +1394,13 @@
 /area/awaymission/centcomAway/hangar)
 "fc" = (
 /obj/structure/table,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/pen,
+/obj/item/clipboard,
+/obj/item/pen,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "fd" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "fe" = (
@@ -1432,12 +1432,12 @@
 /area/awaymission/centcomAway/general)
 "fj" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/courtroom)
 "fk" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/prisoner,
+/obj/item/storage/box/prisoner,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/courtroom)
 "fl" = (
@@ -1504,7 +1504,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/weapon/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -1522,7 +1522,7 @@
 /area/awaymission/centcomAway/general)
 "fC" = (
 /obj/machinery/computer/scan_consolenew,
-/obj/item/weapon/dnainjector/telemut/darkbundle,
+/obj/item/dnainjector/telemut/darkbundle,
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
 "fD" = (
@@ -1763,7 +1763,7 @@
 /area/awaymission/centcomAway/general)
 "gt" = (
 /obj/machinery/photocopier,
-/obj/item/weapon/paper/fluff/awaymissions/centcom/gateway_memo,
+/obj/item/paper/fluff/awaymissions/centcom/gateway_memo,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -1779,7 +1779,7 @@
 /area/awaymission/centcomAway/general)
 "gv" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/hand_labeler_refill,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
@@ -1787,7 +1787,7 @@
 /area/awaymission/centcomAway/general)
 "gw" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -1917,7 +1917,7 @@
 /area/awaymission/centcomAway/hangar)
 "gU" = (
 /obj/structure/table,
-/obj/item/weapon/paper/fluff/awaymissions/centcom/gateway_memo,
+/obj/item/paper/fluff/awaymissions/centcom/gateway_memo,
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "gV" = (
@@ -1990,14 +1990,14 @@
 /area/awaymission/centcomAway/general)
 "hj" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/PDAs,
+/obj/item/storage/box/PDAs,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
 /area/awaymission/centcomAway/general)
 "hk" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/red,
+/obj/item/folder/red,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -2022,7 +2022,7 @@
 /area/awaymission/centcomAway/general)
 "ho" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/blue,
+/obj/item/folder/blue,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -2073,7 +2073,7 @@
 "hx" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/weapon/storage/toolbox/electrical{
+/obj/item/storage/toolbox/electrical{
 	pixel_y = 5
 	},
 /turf/open/floor/plating,
@@ -2123,12 +2123,12 @@
 /area/awaymission/centcomAway/courtroom)
 "hG" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "hH" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/bodybags,
+/obj/item/storage/box/bodybags,
 /turf/open/floor/engine,
 /area/awaymission/centcomAway/general)
 "hI" = (
@@ -2199,7 +2199,7 @@
 /area/awaymission/centcomAway/courtroom)
 "hS" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/wood,
 /area/awaymission/centcomAway/courtroom)
 "hT" = (
@@ -2215,7 +2215,7 @@
 /turf/open/floor/engine,
 /area/awaymission/centcomAway/general)
 "hW" = (
-/obj/item/weapon/twohanded/required/kirbyplants,
+/obj/item/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -2315,8 +2315,8 @@
 /area/awaymission/centcomAway/general)
 "ir" = (
 /obj/structure/closet/crate/trashcart,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/general)
 "is" = (
@@ -2481,31 +2481,31 @@
 	dir = 9
 	},
 /obj/item/clothing/mask/cigarette/cigar/havana,
-/obj/item/weapon/reagent_containers/food/drinks/sillycup,
+/obj/item/reagent_containers/food/drinks/sillycup,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/general)
 "iU" = (
 /obj/structure/table/wood{
 	dir = 5
 	},
-/obj/item/weapon/lighter,
+/obj/item/lighter,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/general)
 "iV" = (
 /obj/structure/table/wood{
 	dir = 5
 	},
-/obj/item/weapon/storage/backpack/satchel,
+/obj/item/storage/backpack/satchel,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/general)
 "iW" = (
 /obj/machinery/computer/card/centcom,
-/obj/item/weapon/card/id/centcom,
+/obj/item/card/id/centcom,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/general)
 "iX" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/red,
+/obj/item/folder/red,
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/general)
 "iY" = (
@@ -2560,7 +2560,7 @@
 /area/awaymission/centcomAway/general)
 "jg" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/general)
 "jh" = (
@@ -2599,7 +2599,7 @@
 /area/awaymission/centcomAway/general)
 "jn" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/general)
 "jo" = (
@@ -2611,7 +2611,7 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/general)
 "jq" = (
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 4
@@ -2619,7 +2619,7 @@
 /area/awaymission/centcomAway/general)
 "jr" = (
 /obj/structure/table,
-/obj/item/weapon/firstaid_arm_assembly,
+/obj/item/firstaid_arm_assembly,
 /turf/open/floor/plasteel/vault,
 /area/awaymission/centcomAway/hangar)
 "js" = (
@@ -2645,7 +2645,7 @@
 /area/awaymission/centcomAway/hangar)
 "jv" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/vault,
 /area/awaymission/centcomAway/hangar)
 "jw" = (
@@ -2783,7 +2783,7 @@
 /area/awaymission/centcomAway/general)
 "jQ" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -2940,7 +2940,7 @@
 /area/awaymission/centcomAway/hangar)
 "kq" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/paper/pamphlet/centcom/visitor_info,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -2966,7 +2966,7 @@
 	},
 /area/awaymission/centcomAway/general)
 "ku" = (
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
@@ -3018,10 +3018,10 @@
 	},
 /area/awaymission/centcomAway/general)
 "kC" = (
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/structure/table,
 /obj/item/device/taperecorder,
-/obj/item/weapon/stamp,
+/obj/item/stamp,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -3065,8 +3065,8 @@
 /area/awaymission/centcomAway/general)
 "kJ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/handcuffs,
-/obj/item/weapon/stamp,
+/obj/item/storage/box/handcuffs,
+/obj/item/stamp,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -3098,7 +3098,7 @@
 /area/awaymission/centcomAway/general)
 "kP" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup,
+/obj/item/reagent_containers/food/drinks/trophy/gold_cup,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/general)
 "kQ" = (
@@ -3242,7 +3242,7 @@
 /area/awaymission/centcomAway/thunderdome)
 "lp" = (
 /obj/structure/table,
-/obj/item/weapon/lipstick,
+/obj/item/lipstick,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -3282,8 +3282,8 @@
 /area/awaymission/centcomAway/thunderdome)
 "lv" = (
 /obj/structure/rack,
-/obj/item/weapon/restraints/legcuffs/beartrap,
-/obj/item/weapon/twohanded/fireaxe,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/twohanded/fireaxe,
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/thunderdome)
 "lw" = (
@@ -3312,7 +3312,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lB" = (
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/reagent_containers/glass/rag,
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/general)
 "lC" = (
@@ -3344,8 +3344,8 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/red,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/weapon/hatchet,
-/obj/item/weapon/shield/riot,
+/obj/item/hatchet,
+/obj/item/shield/riot,
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/thunderdome)
 "lH" = (
@@ -3377,8 +3377,8 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/tdome/green,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/weapon/hatchet,
-/obj/item/weapon/shield/riot,
+/obj/item/hatchet,
+/obj/item/shield/riot,
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/thunderdome)
 "lM" = (
@@ -3451,7 +3451,7 @@
 /area/awaymission/centcomAway/thunderdome)
 "lX" = (
 /obj/machinery/chem_dispenser,
-/obj/item/weapon/storage/box/beakers,
+/obj/item/storage/box/beakers,
 /turf/open/floor/plasteel/green{
 	dir = 1
 	},
@@ -3482,12 +3482,12 @@
 /turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mc" = (
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/soap/nanotrasen,
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/thunderdome)
 "md" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser/retro,
+/obj/item/gun/energy/laser/retro,
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/thunderdome)
 "me" = (
@@ -3511,7 +3511,7 @@
 /area/awaymission/centcomAway/thunderdome)
 "mh" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/popcorn,
+/obj/item/reagent_containers/food/snacks/popcorn,
 /turf/open/floor/plasteel/redyellow{
 	dir = 5
 	},
@@ -3530,7 +3530,7 @@
 /area/awaymission/centcomAway/cafe)
 "mk" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/popcorn,
+/obj/item/reagent_containers/food/snacks/popcorn,
 /turf/open/floor/plasteel/barber{
 	dir = 8;
 	heat_capacity = 1
@@ -3574,21 +3574,21 @@
 /area/awaymission/centcomAway/thunderdome)
 "mq" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/handcuffs,
+/obj/item/storage/box/handcuffs,
 /turf/open/floor/plasteel/redyellow{
 	dir = 5
 	},
 /area/awaymission/centcomAway/thunderdome)
 "mr" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plasteel/redyellow{
 	dir = 5
 	},
 /area/awaymission/centcomAway/thunderdome)
 "ms" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/redyellow{
 	dir = 5
 	},
@@ -3657,7 +3657,7 @@
 /area/awaymission/centcomAway/cafe)
 "mB" = (
 /obj/machinery/chem_dispenser,
-/obj/item/weapon/storage/box/beakers,
+/obj/item/storage/box/beakers,
 /turf/open/floor/plasteel/red,
 /area/awaymission/centcomAway/cafe)
 "mC" = (
@@ -3717,8 +3717,8 @@
 /area/awaymission/centcomAway/cafe)
 "mL" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/food/condiment/peppermill,
+/obj/item/reagent_containers/food/condiment/saltshaker,
 /turf/open/floor/plasteel/red,
 /area/awaymission/centcomAway/cafe)
 "mM" = (
@@ -3751,7 +3751,7 @@
 /obj/structure/safe/floor,
 /obj/item/clothing/under/rank/centcom_officer,
 /obj/item/clothing/suit/det_suit,
-/obj/item/weapon/gun/ballistic/revolver/mateba,
+/obj/item/gun/ballistic/revolver/mateba,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/general)
 "mR" = (
@@ -3772,8 +3772,8 @@
 /area/awaymission/centcomAway/hangar)
 "mU" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/secure/briefcase,
-/obj/item/weapon/storage/belt/utility/full,
+/obj/item/storage/secure/briefcase,
+/obj/item/storage/belt/utility/full,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/general)
 "mV" = (
@@ -3941,9 +3941,9 @@
 /area/awaymission/centcomAway/thunderdome)
 "nz" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/sugar,
-/obj/item/weapon/reagent_containers/food/condiment/milk,
-/obj/item/weapon/reagent_containers/food/drinks/ice,
+/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/drinks/ice,
 /turf/open/floor/plasteel/barber{
 	dir = 8;
 	heat_capacity = 1

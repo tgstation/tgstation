@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		"Sort Junction" = new /datum/pipe_info/disposal(DISP_SORTJUNCTION,	PIPE_TRINARY),
 	)
 ))
-/obj/item/weapon/pipe_dispenser
+/obj/item/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/tools.dmi'
@@ -153,33 +153,33 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	var/paint_color="grey"
 	var/screen = CATEGORY_ATMOS //Starts on the atmos tab.
 
-/obj/item/weapon/pipe_dispenser/New()
+/obj/item/pipe_dispenser/New()
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-/obj/item/weapon/pipe_dispenser/Destroy()
+/obj/item/pipe_dispenser/Destroy()
 	qdel(spark_system)
 	spark_system = null
 	return ..()
 
-/obj/item/weapon/pipe_dispenser/attack_self(mob/user)
+/obj/item/pipe_dispenser/attack_self(mob/user)
 	show_menu(user)
 
-/obj/item/weapon/pipe_dispenser/suicide_act(mob/user)
+/obj/item/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
 
-/obj/item/weapon/pipe_dispenser/proc/render_dir_img(_dir,pic,title,flipped=0)
+/obj/item/pipe_dispenser/proc/render_dir_img(_dir,pic,title,flipped=0)
 	var/selected=" class=\"imglink\""
 	if(_dir == p_dir)
 		selected=" class=\"imglink selected\""
 	return "<a href=\"?src=\ref[src];setdir=[_dir];flipped=[flipped]\" title=\"[title]\"[selected]\"><img src=\"[pic]\" /></a>"
 
-/obj/item/weapon/pipe_dispenser/proc/show_menu(mob/user)
+/obj/item/pipe_dispenser/proc/show_menu(mob/user)
 	if(!user || !src)
 		return 0
 	var/dat = {"<h2>Type</h2>
@@ -453,7 +453,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	popup.open()
 	return
 
-/obj/item/weapon/pipe_dispenser/Topic(href, href_list)
+/obj/item/pipe_dispenser/Topic(href, href_list)
 	if(!usr.canUseTopic(src))
 		usr << browse(null, "window=pipedispenser")
 		return
@@ -517,7 +517,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		show_menu(usr)
 
 
-/obj/item/weapon/pipe_dispenser/pre_attackby(atom/A, mob/user)
+/obj/item/pipe_dispenser/pre_attackby(atom/A, mob/user)
 	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
 		return ..()
 
@@ -593,7 +593,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			return ..()
 
 
-/obj/item/weapon/pipe_dispenser/proc/activate()
+/obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 
 #undef PIPE_BINARY

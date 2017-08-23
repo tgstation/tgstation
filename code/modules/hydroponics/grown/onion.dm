@@ -4,7 +4,7 @@
 	icon_state = "seed-onion"
 	species = "onion"
 	plantname = "Onion Sprouts"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/onion
+	product = /obj/item/reagent_containers/food/snacks/grown/onion
 	lifespan = 20
 	maturation = 3
 	production = 4
@@ -16,7 +16,7 @@
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 	mutatelist = list(/obj/item/seeds/onion/red)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/onion
+/obj/item/reagent_containers/food/snacks/grown/onion
 	seed = /obj/item/seeds/onion
 	name = "onion"
 	desc = "Nothing to cry over."
@@ -24,7 +24,7 @@
 	filling_color = "#C0C9A0"
 	bitesize_mod = 2
 	tastes = list("onions" = 1)
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/onion_slice
+	slice_path = /obj/item/reagent_containers/food/snacks/onion_slice
 	slices_num = 2
 
 /obj/item/seeds/onion/red
@@ -34,18 +34,18 @@
 	species = "onion_red"
 	plantname = "Red Onion Sprouts"
 	weed_chance = 1
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/onion/red
+	product = /obj/item/reagent_containers/food/snacks/grown/onion/red
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "tearjuice" = 0.05)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/onion/red
+/obj/item/reagent_containers/food/snacks/grown/onion/red
 	seed = /obj/item/seeds/onion/red
 	name = "red onion"
 	desc = "Purple despite the name."
 	icon_state = "onion_red"
 	filling_color = "#C29ACF"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/onion_slice/red
+	slice_path = /obj/item/reagent_containers/food/snacks/onion_slice/red
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/onion/slice(accuracy, obj/item/weapon/W, mob/user)
+/obj/item/reagent_containers/food/snacks/grown/onion/slice(accuracy, obj/item/W, mob/user)
 	var/datum/effect_system/smoke_spread/chem/S = new	//Since the onion is destroyed when it's sliced,
 	var/splat_location = get_turf(src)	//we need to set up the smoke beforehand
 	S.attach(splat_location)
@@ -55,16 +55,16 @@
 		return TRUE
 	qdel(S)
 
-/obj/item/weapon/reagent_containers/food/snacks/onion_slice
+/obj/item/reagent_containers/food/snacks/onion_slice
 	name = "onion slices"
 	desc = "Rings, not for wearing."
 	icon_state = "onionslice"
 	list_reagents = list("nutriment" = 5, "vitamin" = 2)
 	filling_color = "#C0C9A0"
 	gender = PLURAL
-	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/onionrings
+	cooked_type = /obj/item/reagent_containers/food/snacks/onionrings
 
-/obj/item/weapon/reagent_containers/food/snacks/onion_slice/red
+/obj/item/reagent_containers/food/snacks/onion_slice/red
 	name = "red onion slices"
 	desc = "They shine like exceptionally low quality amethyst."
 	icon_state = "onionslice_red"

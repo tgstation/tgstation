@@ -53,9 +53,9 @@
 		continue
 	return TRUE
 
-/obj/item/weapon/football
+/obj/item/football
 	name = "football"
-	icon = 'hippiestation/icons/obj/weapons.dmi'
+	icon = 'hippiestation/icons/obj/items_and_weapons.dmi'
 	icon_state = "football"
 	resistance_flags = FIRE_PROOF
 	desc = "It should more accurately be called a \"hand-egg.\""
@@ -65,7 +65,7 @@
 	throw_speed = 1
 	var/stage = 0
 
-/obj/item/weapon/football/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = TRUE, datum/callback/callback)
+/obj/item/football/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = TRUE, datum/callback/callback)
 	throw_speed = 1
 	icon_state = "football_air"
 	if(istype(thrower, /mob/living/carbon/human))
@@ -85,14 +85,14 @@
 				return FALSE
 	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
 
-/obj/item/weapon/football/process()
+/obj/item/football/process()
 	if(stage == 2)
 		icon_state = "football_hot"
 		visible_message("<span class='danger'>[src] bursts into flames!</span>")
 		do_sparks(10, FALSE, src)
 	stage++
 
-/obj/item/weapon/football/throw_impact(atom/hit_atom)
+/obj/item/football/throw_impact(atom/hit_atom)
 	if(stage)
 		STOP_PROCESSING(SSobj, src)
 		throwforce = (stage * 7)
@@ -114,10 +114,10 @@
 		unlimitedthrow = FALSE
 	icon_state = "football"
 
-/obj/item/weapon/football/is_hot()
+/obj/item/football/is_hot()
 	return stage * 900
-	
-/obj/item/weapon/football/ex_act()
+
+/obj/item/football/ex_act()
 	return
 
 #undef FOOTBALL_TACKLE_COOLDOWN

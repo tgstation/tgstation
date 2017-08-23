@@ -223,7 +223,7 @@
 							return
 						to_chat(user, "<span class='notice'>The nanobots composing the mindshield implant have been rendered inert. Now to continue.</span>")
 						user.visible_message("<span class='warning'>[user] relaxes again.</span>")
-						for(var/obj/item/weapon/implant/mindshield/L in target)
+						for(var/obj/item/implant/mindshield/L in target)
 							if(L)
 								qdel(L)
 						to_chat(target, "<span class='boldannounce'>Your mental protection unexpectedly falters, dims, dies.</span>")
@@ -386,7 +386,7 @@
 		return
 	user.visible_message("<span class='warning'>[user] bends over and coughs out a cloud of black smoke!</span>")
 	to_chat(user, "<span class='shadowling'>You regurgitate a vast cloud of blinding smoke.</span>")
-	var/obj/item/weapon/reagent_containers/glass/beaker/large/B = new /obj/item/weapon/reagent_containers/glass/beaker/large(user.loc) //hacky
+	var/obj/item/reagent_containers/glass/beaker/large/B = new /obj/item/reagent_containers/glass/beaker/large(user.loc) //hacky
 	B.reagents.clear_reagents() //Just in case!
 	B.invisibility = INFINITY //This ought to do the trick
 	B.reagents.add_reagent("blindness_smoke", 10)
@@ -716,7 +716,7 @@
 			revert_cast()
 			return
 
-		if (!boom.is_holding(/obj/item/weapon/storage/backpack/holding)) //so people actually have a chance to kill ascended slings without being insta-sploded
+		if (!boom.is_holding(/obj/item/storage/backpack/holding)) //so people actually have a chance to kill ascended slings without being insta-sploded
 			user.visible_message("<span class='warning'>[user]'s markings flare as they gesture at [boom]!</span>", \
 								"<span class='shadowling'>You direct a lance of telekinetic energy into [boom].</span>")
 			if(iscarbon(boom))

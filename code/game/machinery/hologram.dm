@@ -51,7 +51,7 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/holopad(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/holopad(null)
 	B.apply_default_parts(src)
 	holopads += src
 
@@ -83,7 +83,7 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/RefreshParts()
 	var/holograph_range = 4
-	for(var/obj/item/weapon/stock_parts/capacitor/B in component_parts)
+	for(var/obj/item/stock_parts/capacitor/B in component_parts)
 		holograph_range += 1 * B.rating
 	holo_range = holograph_range
 
@@ -384,11 +384,11 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		return Impersonation.examine(user)
 	return ..()
 
-/obj/item/weapon/circuitboard/machine/holopad
+/obj/item/circuitboard/machine/holopad
 	name = "AI Holopad (Machine Board)"
 	build_path = /obj/machinery/holopad
 	origin_tech = "programming=1"
-	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
+	req_components = list(/obj/item/stock_parts/capacitor = 1)
 
 #undef HOLOPAD_PASSIVE_POWER_USAGE
 #undef HOLOGRAM_POWER_USAGE

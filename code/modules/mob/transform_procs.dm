@@ -9,7 +9,7 @@
 
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/X in implants)
-			var/obj/item/weapon/implant/IMP = X
+			var/obj/item/implant/IMP = X
 			stored_implants += IMP
 			IMP.removed(src, 1, 1)
 
@@ -83,7 +83,7 @@
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in implants)
-			var/obj/item/weapon/implant/IMP = Y
+			var/obj/item/implant/IMP = Y
 			IMP.implant(O, null, 1)
 
 	//re-add organs to new mob. this order prevents moving the mind to a brain at any point
@@ -155,7 +155,7 @@
 
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/X in implants)
-			var/obj/item/weapon/implant/IMP = X
+			var/obj/item/implant/IMP = X
 			stored_implants += IMP
 			IMP.removed(src, 1, 1)
 
@@ -238,7 +238,7 @@
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in implants)
-			var/obj/item/weapon/implant/IMP = Y
+			var/obj/item/implant/IMP = Y
 			IMP.implant(O, null, 1)
 
 	if(tr_flags & TR_KEEPORGANS)

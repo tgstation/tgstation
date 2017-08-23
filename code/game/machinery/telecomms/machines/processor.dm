@@ -37,20 +37,20 @@
 
 /obj/machinery/telecomms/processor/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/processor(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/telecomms/processor(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/telecomms/processor
+/obj/item/circuitboard/machine/telecomms/processor
 	name = "Processor Unit (Machine Board)"
 	build_path = /obj/machinery/telecomms/processor
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 3,
-							/obj/item/weapon/stock_parts/subspace/filter = 1,
-							/obj/item/weapon/stock_parts/subspace/treatment = 2,
-							/obj/item/weapon/stock_parts/subspace/analyzer = 1,
+							/obj/item/stock_parts/manipulator = 3,
+							/obj/item/stock_parts/subspace/filter = 1,
+							/obj/item/stock_parts/subspace/treatment = 2,
+							/obj/item/stock_parts/subspace/analyzer = 1,
 							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/subspace/amplifier = 1)
+							/obj/item/stock_parts/subspace/amplifier = 1)
 
 
 //Preset Processors

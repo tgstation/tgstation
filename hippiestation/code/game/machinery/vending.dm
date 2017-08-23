@@ -53,18 +53,18 @@
 	var/shut_up = 0				//Stop spouting those godawful pitches!
 	var/extended_inventory = 0	//can we access the hidden inventory?
 	var/scan_id = 1
-	var/obj/item/weapon/coin/coin
+	var/obj/item/coin/coin
 	var/width = 350
 	var/height = 475
 	var/product_ads
 
-	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
+	var/obj/item/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 /obj/machinery/vending/Initialize()
 	. = ..()
 	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
-		var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/vendor(null)
+		var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/vendor(null)
 		B.apply_default_parts(src)
 	else
 		build_inventory(products)
@@ -78,12 +78,12 @@
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
 
-/obj/item/weapon/circuitboard/machine/vendor
+/obj/item/circuitboard/machine/vendor
 	name = "Booze-O-Mat Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/boozeomat
 	origin_tech = "programming=1"
 	req_components = list(
-							/obj/item/weapon/vending_refill/boozeomat = 3)
+							/obj/item/vending_refill/boozeomat = 3)
 
 	var/list/names_paths = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
 							/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
@@ -95,8 +95,8 @@
 							/obj/machinery/vending/medical = "NanoMed Plus",
 							/obj/machinery/vending/wallmed = "NanoMed")
 
-/obj/item/weapon/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+/obj/item/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/screwdriver))
 		var/position = names_paths.Find(build_path)
 		position = (position == names_paths.len) ? 1 : (position + 1)
 		var/typepath = names_paths[position]
@@ -106,12 +106,12 @@
 	else
 		return ..()
 
-/obj/item/weapon/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
+/obj/item/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
 	build_path = typepath
 	name = "[names_paths[build_path]] Vendor (Machine Board)"
 	req_components = list(initial(typepath.refill_canister) = initial(typepath.refill_count))
 
-/obj/item/weapon/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
+/obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
 	for(var/typepath in names_paths)
 		if(istype(M, typepath))
 			set_type(typepath)
@@ -134,7 +134,7 @@
 		build_inventory(products, start_empty = 1)
 		build_inventory(contraband, 1, start_empty = 1)
 		build_inventory(premium, 0, 1, start_empty = 1)
-		for(var/obj/item/weapon/vending_refill/VR in component_parts)
+		for(var/obj/item/vending_refill/VR in component_parts)
 			refill_inventory(VR, product_records, STANDARD_CHARGE)
 			refill_inventory(VR, coin_records, COIN_CHARGE)
 			refill_inventory(VR, hidden_records, CONTRABAND_CHARGE)
@@ -168,7 +168,7 @@
 		stat |= BROKEN
 		icon_state = "[initial(icon_state)]-broken"
 
-/obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine, var/charge_type = STANDARD_CHARGE)
+/obj/machinery/vending/proc/refill_inventory(obj/item/vending_refill/refill, datum/data/vending_product/machine, var/charge_type = STANDARD_CHARGE)
 	var/total = 0
 	var/to_restock = 0
 
@@ -202,7 +202,7 @@
 		for(var/datum/data/vending_product/machine_content in product_list[i])
 			while(machine_content.amount !=0)
 				var/safety = 0 //to avoid infinite loop
-				for(var/obj/item/weapon/vending_refill/VR in component_parts)
+				for(var/obj/item/vending_refill/VR in component_parts)
 					safety++
 					if(VR.charges[i] < VR.init_charges[i])
 						VR.charges[i]++
@@ -236,7 +236,7 @@
 			return
 	..()
 
-/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/vending/attackby(obj/item/W, mob/user, params)
 	if(panel_open)
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
@@ -245,7 +245,7 @@
 		if(default_deconstruction_crowbar(W))
 			return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(anchored)
 			panel_open = !panel_open
 			user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
@@ -257,11 +257,11 @@
 		else
 			user << "<span class='warning'>You must first secure [src].</span>"
 		return
-	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/wirecutters))
 		if(panel_open)
 			attack_hand(user)
 		return
-	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
+	else if(istype(W, /obj/item/coin) && premium.len > 0)
 		if(!user.drop_item())
 			return
 		if(coin)
@@ -277,7 +277,7 @@
 			user << "<span class='notice'>It does nothing.</span>"
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
-			var/obj/item/weapon/vending_refill/canister = W
+			var/obj/item/vending_refill/canister = W
 			if(canister.charges[STANDARD_CHARGE] == 0)
 				user << "<span class='notice'>This [canister.name] is empty!</span>"
 			else
@@ -360,7 +360,7 @@
 	if(issilicon(usr))
 		if(iscyborg(usr))
 			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
+			if(!(R.module && istype(R.module,/obj/item/robot_module/butler) ))
 				usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 				return
 		else

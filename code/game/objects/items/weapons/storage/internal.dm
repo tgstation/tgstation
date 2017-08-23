@@ -1,27 +1,27 @@
-/obj/item/weapon/storage/internal
+/obj/item/storage/internal
 	storage_slots = 2
 	max_w_class = WEIGHT_CLASS_SMALL
 	max_combined_w_class = 50 // Limited by slots, not combined weight class
 	w_class = WEIGHT_CLASS_BULKY
 	rustle_jimmies = FALSE
 
-/obj/item/weapon/storage/internal/Adjacent(A)
+/obj/item/storage/internal/Adjacent(A)
 	if(loc)
 		return loc.Adjacent(A)
 
-/obj/item/weapon/storage/internal/pocket
+/obj/item/storage/internal/pocket
 	var/priority = TRUE
 	// TRUE if opens when clicked, like a backpack.
 	// FALSE if opens only when dragged on mob's icon (hidden pocket)
 	var/quickdraw = FALSE
 	// TRUE if you can quickdraw items from it with alt-click.
 
-/obj/item/weapon/storage/internal/pocket/New()
+/obj/item/storage/internal/pocket/New()
 	..()
 	if(loc)
 		name = loc.name
 
-/obj/item/weapon/storage/internal/pocket/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
+/obj/item/storage/internal/pocket/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	. = ..()
 	if(. && silent && !prevent_warning)
 		if(quickdraw)
@@ -29,24 +29,24 @@
 		else
 			to_chat(user, "<span class='notice'>You discreetly slip [W] into [src].")
 
-/obj/item/weapon/storage/internal/pocket/big
+/obj/item/storage/internal/pocket/big
 	max_w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/weapon/storage/internal/pocket/small
+/obj/item/storage/internal/pocket/small
 	storage_slots = 1
 	priority = FALSE
 
-/obj/item/weapon/storage/internal/pocket/tiny
+/obj/item/storage/internal/pocket/tiny
 	storage_slots = 1
 	max_w_class = WEIGHT_CLASS_TINY
 	priority = FALSE
 
-/obj/item/weapon/storage/internal/pocket/shoes
+/obj/item/storage/internal/pocket/shoes
 	can_hold = list(
-		/obj/item/weapon/kitchen/knife, /obj/item/weapon/switchblade, /obj/item/weapon/pen,
-		/obj/item/weapon/scalpel, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/dnainjector,
-		/obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/weapon/reagent_containers/dropper,
-		/obj/item/weapon/implanter, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool/mini,
+		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
+		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
+		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
+		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
 		/obj/item/device/firing_pin
 		)
 	//can hold both regular pens and energy daggers. made for your every-day tactical curators/murderers.
@@ -55,35 +55,35 @@
 	silent = TRUE
 
 
-/obj/item/weapon/storage/internal/pocket/shoes/clown
+/obj/item/storage/internal/pocket/shoes/clown
 	can_hold = list(
-		/obj/item/weapon/kitchen/knife, /obj/item/weapon/switchblade, /obj/item/weapon/pen,
-		/obj/item/weapon/scalpel, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/dnainjector,
-		/obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/weapon/reagent_containers/dropper,
-		/obj/item/weapon/implanter, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool/mini,
-		/obj/item/device/firing_pin, /obj/item/weapon/bikehorn)
+		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
+		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
+		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
+		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
+		/obj/item/device/firing_pin, /obj/item/bikehorn)
 
-/obj/item/weapon/storage/internal/pocket/small/detective
+/obj/item/storage/internal/pocket/small/detective
 	priority = TRUE // so the detectives would discover pockets in their hats
 
-/obj/item/weapon/storage/internal/pocket/small/detective/PopulateContents()
-	new /obj/item/weapon/reagent_containers/food/drinks/flask/det(src)
+/obj/item/storage/internal/pocket/small/detective/PopulateContents()
+	new /obj/item/reagent_containers/food/drinks/flask/det(src)
 
-/obj/item/weapon/storage/internal/pocket/pocketprotector
+/obj/item/storage/internal/pocket/pocketprotector
 	storage_slots = 3
 	max_w_class = WEIGHT_CLASS_TINY
 	can_hold = list( //Same items as a PDA
-		/obj/item/weapon/pen,
+		/obj/item/pen,
 		/obj/item/toy/crayon,
-		/obj/item/weapon/lipstick,
+		/obj/item/lipstick,
 		/obj/item/device/flashlight/pen,
 		/obj/item/clothing/mask/cigarette)
 
-/obj/item/weapon/storage/internal/pocket/pocketprotector/cosmetology/PopulateContents()
+/obj/item/storage/internal/pocket/pocketprotector/cosmetology/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/lipstick/random(src)
+		new /obj/item/lipstick/random(src)
 
-/obj/item/weapon/storage/internal/pocket/pocketprotector/full/PopulateContents()
-	new /obj/item/weapon/pen/red(src)
-	new /obj/item/weapon/pen(src)
-	new /obj/item/weapon/pen/blue(src)
+/obj/item/storage/internal/pocket/pocketprotector/full/PopulateContents()
+	new /obj/item/pen/red(src)
+	new /obj/item/pen(src)
+	new /obj/item/pen/blue(src)

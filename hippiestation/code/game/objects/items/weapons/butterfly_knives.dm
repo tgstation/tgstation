@@ -1,11 +1,11 @@
 
-/obj/item/weapon/melee/transforming/butterfly
+/obj/item/melee/transforming/butterfly
 	name = "butterfly knife"
 	desc = "A stealthy knife famously used by spy organisations. Capable of piercing armour and causing massive backstab damage when used with harm intent."
 	flags = CONDUCT
 	force = 0
 	force_on = 10
-	icon = 'hippiestation/icons/obj/weapons.dmi'
+	icon = 'hippiestation/icons/obj/items_and_weapons.dmi'
 	icon_state = "butterflyknife0"
 	icon_state_on = "butterflyknife1"
 	hitsound_on = 'hippiestation/sound/weapons/knife.ogg'
@@ -26,7 +26,7 @@
 	var/onsound
 	var/offsound
 
-/obj/item/weapon/melee/transforming/butterfly/transform_weapon(mob/living/user, supress_message_text)
+/obj/item/melee/transforming/butterfly/transform_weapon(mob/living/user, supress_message_text)
 	..()
 	if(active)
 		item_state = item_state_on
@@ -36,7 +36,7 @@
 		sharpness = initial(sharpness)
 
 
-/obj/item/weapon/melee/transforming/butterfly/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/melee/transforming/butterfly/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(check_target_facings(user, M) == FACING_SAME_DIR && active && user.a_intent != INTENT_HELP && ishuman(M))
 		var/mob/living/carbon/human/U = M
 		return backstab(U,user,backstabforce)
@@ -48,13 +48,13 @@
 	else
 		return ..()
 
-/obj/item/weapon/melee/transforming/butterfly/transform_messages(mob/living/user, supress_message_text)//no fucking esword on sound
+/obj/item/melee/transforming/butterfly/transform_messages(mob/living/user, supress_message_text)//no fucking esword on sound
 	playsound(user, active ? onsound  : offsound , 50, 1)
 	if(!supress_message_text)
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
 
-/obj/item/weapon/melee/transforming/butterfly/proc/backstab(mob/living/carbon/human/U, mob/living/carbon/user, damage)
+/obj/item/melee/transforming/butterfly/proc/backstab(mob/living/carbon/human/U, mob/living/carbon/user, damage)
 	var/obj/item/bodypart/affecting = U.get_bodypart("chest")
 
 	if(!affecting || U == user || U.stat == DEAD) //no chest???!!!!
@@ -71,7 +71,7 @@
 
 	add_logs(user, U, "backstabbed", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
-/obj/item/weapon/melee/transforming/butterfly/energy
+/obj/item/melee/transforming/butterfly/energy
 	name = "energy balisong"
 	origin_tech = "combat=4;syndicate=3"
 	desc = "A vicious carbon fibre blade and plasma tip allow for unparelled precision strikes against fat Nanotrasen backsides"

@@ -22,8 +22,8 @@
 	var/factions = null
 	var/contains_sample = 0
 
-/obj/item/seeds/replicapod/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
+/obj/item/seeds/replicapod/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/reagent_containers/syringe))
 		if(!contains_sample)
 			for(var/datum/reagent/blood/bloodSample in W.reagents.reagent_list)
 				if(bloodSample.data["mind"] && bloodSample.data["cloneable"] == 1)

@@ -1,4 +1,4 @@
-/obj/item/weapon/grenade/spawnergrenade
+/obj/item/grenade/spawnergrenade
 	desc = "It will unleash an unspecified anomaly into the vicinity."
 	name = "delivery grenade"
 	icon = 'icons/obj/grenade.dmi'
@@ -8,7 +8,7 @@
 	var/spawner_type = null // must be an object path
 	var/deliveryamt = 1 // amount of type to deliver
 
-/obj/item/weapon/grenade/spawnergrenade/prime()			// Prime now just handles the two loops that query for people in lockers and people who can see it.
+/obj/item/grenade/spawnergrenade/prime()			// Prime now just handles the two loops that query for people in lockers and people who can see it.
 	update_mob()
 	if(spawner_type && deliveryamt)
 		// Make a quick flash
@@ -22,18 +22,18 @@
 
 	qdel(src)
 
-/obj/item/weapon/grenade/spawnergrenade/manhacks
+/obj/item/grenade/spawnergrenade/manhacks
 	name = "viscerator delivery grenade"
 	spawner_type = /mob/living/simple_animal/hostile/viscerator
 	deliveryamt = 10
 	origin_tech = "materials=3;magnets=4;syndicate=3"
 
-/obj/item/weapon/grenade/spawnergrenade/spesscarp
+/obj/item/grenade/spawnergrenade/spesscarp
 	name = "carp delivery grenade"
 	spawner_type = /mob/living/simple_animal/hostile/carp
 	deliveryamt = 5
 	origin_tech = "materials=3;magnets=4;syndicate=3"
 
-/obj/item/weapon/grenade/spawnergrenade/syndiesoap
+/obj/item/grenade/spawnergrenade/syndiesoap
 	name = "Mister Scrubby"
-	spawner_type = /obj/item/weapon/soap/syndie
+	spawner_type = /obj/item/soap/syndie

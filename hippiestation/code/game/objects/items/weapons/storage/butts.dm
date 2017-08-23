@@ -1,9 +1,9 @@
 /mob/living/DirectAccess(atom/target)
-	if(..() || istype(target.loc, /obj/item/weapon/storage/internal/pocket/butt))
+	if(..() || istype(target.loc, /obj/item/storage/internal/pocket/butt))
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/storage/internal/pocket/butt/handle_item_insertion(obj/item/W, prevent_warning = 1, mob/user)
+/obj/item/storage/internal/pocket/butt/handle_item_insertion(obj/item/W, prevent_warning = 1, mob/user)
 	if(istype(loc, /obj/item/organ/butt))
 		var/obj/item/organ/butt/B = loc
 		if(B.owner && ishuman(B.owner))
@@ -13,7 +13,7 @@
 				return
 	. = ..()
 
-/obj/item/weapon/storage/internal/pocket/butt/Adjacent(A)
+/obj/item/storage/internal/pocket/butt/Adjacent(A)
 	if(istype(loc, /obj/item/organ/butt))
 		var/obj/item/organ/butt/B = loc
 		if(B.owner)
@@ -59,7 +59,7 @@
 				return FALSE
 			var/obj/item/organ/butt/B = buttowner.getorgan(/obj/item/organ/butt)
 			if(B)
-				var/obj/item/weapon/storage/internal/pocket/butt/pocket = B.inv
+				var/obj/item/storage/internal/pocket/butt/pocket = B.inv
 				if(!pocket)
 					return FALSE
 				user.visible_message("<span class='warning'>[user] starts hiding [I] inside [src == user ? "his own" : "[user]'s"] butt.</span>", "<span class='warning'>You start hiding [I] inside [user == src ? "your" : "[user]'s"] butt.</span>")

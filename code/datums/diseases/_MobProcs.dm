@@ -92,7 +92,7 @@
 
 		switch(target_zone)
 			if(1)
-				if(isobj(H.head) && !istype(H.head, /obj/item/weapon/paper))
+				if(isobj(H.head) && !istype(H.head, /obj/item/paper))
 					Cl = H.head
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(H.wear_mask))

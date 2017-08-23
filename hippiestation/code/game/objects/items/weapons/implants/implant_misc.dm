@@ -1,11 +1,11 @@
-/obj/item/weapon/implant/comstimms
+/obj/item/implant/comstimms
 	name = "Combat Stimulant Implant"
 	desc = "A cocktail of potent drugs will heal damage allowing you to fight for longer"
 	icon_state = "adrenal"
 	origin_tech = "materials=2;biotech=4;combat=3;syndicate=4"
 	uses = 3
 
-/obj/item/weapon/implant/comstimms/get_data()
+/obj/item/implant/comstimms/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Cybersun Industries Combat Implant<BR>
 				<b>Life:</b> Five days.<BR>
@@ -16,7 +16,7 @@
 				<b>Integrity:</b> Implant can only be used three times before reserves are depleted."}
 	return dat
 
-/obj/item/weapon/implant/comstimms/activate()
+/obj/item/implant/comstimms/activate()
 	uses--
 	to_chat(imp_in, "<span class='notice'>You feel the pain fade, and your wounds close!</span>")
 	imp_in.adjustToxLoss(-30, 0) //The idea being to take a nearly dead man and make them combat ready

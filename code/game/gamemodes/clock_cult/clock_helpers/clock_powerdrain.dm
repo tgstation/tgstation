@@ -1,14 +1,14 @@
 //horrifying power drain proc made for clockcult's power drain in lieu of six istypes or six for(x in view) loops
 /atom/movable/proc/power_drain(clockcult_user)
-	var/obj/item/weapon/stock_parts/cell/cell = get_cell()
+	var/obj/item/stock_parts/cell/cell = get_cell()
 	if(cell)
 		return cell.power_drain(clockcult_user)
 	return 0
 
-/obj/item/weapon/melee/baton/power_drain(clockcult_user)	//balance memes
+/obj/item/melee/baton/power_drain(clockcult_user)	//balance memes
 	return 0
 
-/obj/item/weapon/gun/power_drain(clockcult_user)	//balance memes
+/obj/item/gun/power_drain(clockcult_user)	//balance memes
 	return 0
 
 /obj/machinery/power/apc/power_drain(clockcult_user)
@@ -34,7 +34,7 @@
 			visible_message("<span class='warning'>[src]'s panel flies open with a flurry of sparks!</span>")
 		update_icon()
 
-/obj/item/weapon/stock_parts/cell/power_drain(clockcult_user)
+/obj/item/stock_parts/cell/power_drain(clockcult_user)
 	if(charge)
 		. = min(charge, MIN_CLOCKCULT_POWER*3)
 		charge = use(.)

@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather, 
 			mob.dna.remove_mutation(CLOWNMUT)
 
 	var/obj/item/device/gangtool/gangtool = new(mob)
-	var/obj/item/weapon/pen/gang/T = new(mob)
+	var/obj/item/pen/gang/T = new(mob)
 	var/obj/item/toy/crayon/spraycan/gang/SC = new(mob,gang)
 	var/obj/item/clothing/glasses/hud/security/chameleon/C = new(mob,gang)
 

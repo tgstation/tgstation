@@ -1,6 +1,6 @@
-/obj/item/weapon/banner
+/obj/item/banner
 	name = "banner"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "banner"
 	item_state = "banner"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
@@ -9,7 +9,7 @@
 	var/moralecooldown = 0
 	var/moralewait = 600
 
-/obj/item/weapon/banner/attack_self(mob/living/carbon/human/user)
+/obj/item/banner/attack_self(mob/living/carbon/human/user)
 	if(moralecooldown + moralewait > world.time)
 		return
 	to_chat(user, "<span class='notice'>You increase the morale of your fellows!</span>")
@@ -23,30 +23,30 @@
 		H.AdjustKnockdown(-40)
 		H.AdjustUnconscious(-40)
 
-/obj/item/weapon/banner/red
+/obj/item/banner/red
 	name = "red banner"
 	icon_state = "banner-red"
 	item_state = "banner-red"
 	desc = "A banner with the logo of the red deity."
 
-/obj/item/weapon/banner/blue
+/obj/item/banner/blue
 	name = "blue banner"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
 	desc = "A banner with the logo of the blue deity"
 
-/obj/item/weapon/storage/backpack/bannerpack
+/obj/item/storage/backpack/bannerpack
 	name = "nanotrasen banner backpack"
 	desc = "It's a backpack with lots of extra room.  A banner with Nanotrasen's logo is attached, that can't be removed."
 	max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 	icon_state = "bannerpack"
 
-/obj/item/weapon/storage/backpack/bannerpack/red
+/obj/item/storage/backpack/bannerpack/red
 	name = "red banner backpack"
 	desc = "It's a backpack with lots of extra room.  A red banner is attached, that can't be removed."
 	icon_state = "bannerpack-red"
 
-/obj/item/weapon/storage/backpack/bannerpack/blue
+/obj/item/storage/backpack/bannerpack/blue
 	name = "blue banner backpack"
 	desc = "It's a backpack with lots of extra room.  A blue banner is attached, that can't be removed."
 	icon_state = "bannerpack-blue"
@@ -98,7 +98,7 @@
 	icon_state = "prophet-blue"
 
 //Structure conversion staff
-/obj/item/weapon/godstaff
+/obj/item/godstaff
 	name = "godstaff"
 	desc = "It's a stick..?"
 	icon_state = "godstaff-red"
@@ -109,7 +109,7 @@
 	var/staffwait = 30
 
 
-/obj/item/weapon/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(staffcooldown + staffwait > world.time)
 		return
 	user.visible_message("[user] chants deeply and waves their staff!")
@@ -117,11 +117,11 @@
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
 
-/obj/item/weapon/godstaff/red
+/obj/item/godstaff/red
 	icon_state = "godstaff-red"
 	conversion_color = "#ff0000"
 
-/obj/item/weapon/godstaff/blue
+/obj/item/godstaff/blue
 	icon_state = "godstaff-blue"
 	conversion_color = "#0000ff"
 
@@ -161,12 +161,12 @@
 	icon_state = "crusader-blue"
 
 
-/obj/item/weapon/storage/box/itemset/crusader
+/obj/item/storage/box/itemset/crusader
 	name = "Crusader's Armour Set" //i can't into ck2 references
 	desc = "This armour is said to be based on the armor of kings on another world thousands of years ago, who tended to assassinate, conspire, and plot against everyone who tried to do the same to them.  Some things never change."
 
 
-/obj/item/weapon/storage/box/itemset/crusader/blue/New()
+/obj/item/storage/box/itemset/crusader/blue/New()
 	..()
 	contents = list()
 	sleep(1)
@@ -176,7 +176,7 @@
 	new /obj/item/clothing/shoes/plate/blue(src)
 
 
-/obj/item/weapon/storage/box/itemset/crusader/red/New()
+/obj/item/storage/box/itemset/crusader/red/New()
 	..()
 	contents = list()
 	sleep(1)
@@ -186,7 +186,7 @@
 	new /obj/item/clothing/shoes/plate/red(src)
 
 
-/obj/item/weapon/claymore/weak
+/obj/item/claymore/weak
 	desc = "This one is rusted."
 	force = 30
 	armour_penetration = 15

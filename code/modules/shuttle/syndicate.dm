@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/shuttle/syndicate
 	name = "syndicate shuttle terminal"
-	circuit = /obj/item/weapon/circuitboard/computer/syndicate_shuttle
+	circuit = /obj/item/circuitboard/computer/syndicate_shuttle
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	light_color = LIGHT_COLOR_RED
@@ -18,24 +18,24 @@
 
 /obj/machinery/computer/shuttle/syndicate/Topic(href, href_list)
 	if(href_list["move"])
-		var/obj/item/weapon/circuitboard/computer/syndicate_shuttle/board = circuit
+		var/obj/item/circuitboard/computer/syndicate_shuttle/board = circuit
 		if(board.challenge && world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(usr, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least [round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] more minutes to allow them to prepare.</span>")
 			return 0
 		board.moved = TRUE
 	..()
 
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle
+/obj/item/circuitboard/computer/syndicate_shuttle
 	name = "Syndicate Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/syndicate
 	var/challenge = FALSE
 	var/moved = FALSE
 
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle/Initialize()
+/obj/item/circuitboard/computer/syndicate_shuttle/Initialize()
 	. = ..()
 	GLOB.syndicate_shuttle_boards += src
 
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle/Destroy()
+/obj/item/circuitboard/computer/syndicate_shuttle/Destroy()
 	GLOB.syndicate_shuttle_boards -= src
 	return ..()
 

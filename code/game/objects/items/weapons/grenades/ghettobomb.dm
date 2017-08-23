@@ -1,6 +1,6 @@
 //improvised explosives//
 
-/obj/item/weapon/grenade/iedcasing
+/obj/item/grenade/iedcasing
 	name = "improvised firebomb"
 	desc = "A weak, improvised incendiary device."
 	w_class = WEIGHT_CLASS_SMALL
@@ -19,7 +19,7 @@
 	var/range = 3
 	var/list/times
 
-/obj/item/weapon/grenade/iedcasing/Initialize()
+/obj/item/grenade/iedcasing/Initialize()
 	. = ..()
 	add_overlay("improvised_grenade_filled")
 	add_overlay("improvised_grenade_wired")
@@ -31,9 +31,9 @@
 	else
 		range = pick(2,2,2,3,3,3,4)
 
-/obj/item/weapon/grenade/iedcasing/CheckParts(list/parts_list)
+/obj/item/grenade/iedcasing/CheckParts(list/parts_list)
 	..()
-	var/obj/item/weapon/reagent_containers/food/drinks/soda_cans/can = locate() in contents
+	var/obj/item/reagent_containers/food/drinks/soda_cans/can = locate() in contents
 	if(can)
 		can.pixel_x = 0 //Reset the sprite's position to make it consistent with the rest of the IED
 		can.pixel_y = 0
@@ -43,7 +43,7 @@
 		underlays += can_underlay
 
 
-/obj/item/weapon/grenade/iedcasing/attack_self(mob/user) //
+/obj/item/grenade/iedcasing/attack_self(mob/user) //
 	if(!active)
 		if(clown_check(user))
 			to_chat(user, "<span class='warning'>You light the [name]!</span>")
@@ -61,11 +61,11 @@
 				C.throw_mode_on()
 			addtimer(CALLBACK(src, .proc/prime), det_time)
 
-/obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
+/obj/item/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()
 	explosion(src.loc,-1,-1,2, flame_range = 4)	// small explosion, plus a very large fireball.
 	qdel(src)
 
-/obj/item/weapon/grenade/iedcasing/examine(mob/user)
+/obj/item/grenade/iedcasing/examine(mob/user)
 	..()
 	to_chat(user, "You can't tell when it will explode!")

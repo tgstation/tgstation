@@ -7,29 +7,29 @@
 /area/ruin/powered/golem_ship)
 "c" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/storage/bag/ore,
-/obj/item/weapon/storage/bag/ore,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
 /obj/item/device/mining_scanner,
 /obj/item/device/flashlight/lantern,
-/obj/item/weapon/card/id/mining,
+/obj/item/card/id/mining,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "d" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/storage/bag/ore,
-/obj/item/weapon/storage/bag/ore,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
 /obj/item/device/mining_scanner,
 /obj/item/device/flashlight/lantern,
-/obj/item/weapon/card/id/mining,
+/obj/item/card/id/mining,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "e" = (
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "f" = (
@@ -78,7 +78,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "o" = (
-/obj/item/weapon/resonator,
+/obj/item/resonator,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "p" = (
@@ -112,12 +112,12 @@
 /area/ruin/powered/golem_ship)
 "u" = (
 /obj/structure/table/wood,
-/obj/item/weapon/bedsheet/rd/royal_cape{
+/obj/item/bedsheet/rd/royal_cape{
 	layer = 3;
 	pixel_x = 5;
 	pixel_y = 9
 	},
-/obj/item/weapon/book/manual/research_and_development{
+/obj/item/book/manual/research_and_development{
 	name = "Sacred Text of the Liberator";
 	pixel_x = -4;
 	pixel_y = 3
@@ -129,7 +129,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "v" = (
-/obj/item/weapon/resonator/upgraded,
+/obj/item/resonator/upgraded,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "w" = (
@@ -153,24 +153,24 @@
 /area/ruin/powered/golem_ship)
 "A" = (
 /obj/structure/table/wood,
-/obj/item/weapon/surgical_drapes{
+/obj/item/surgical_drapes{
 	pixel_x = 15
 	},
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "B" = (
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /obj/structure/table/wood,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "C" = (
-/obj/item/weapon/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
 /obj/structure/table/wood,
-/obj/item/weapon/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
 /obj/item/areaeditor/blueprints{
 	desc = "Use to build new structures in the wastes.";
 	name = "land claim"
@@ -178,10 +178,10 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "D" = (
-/obj/item/weapon/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
 /obj/structure/table/wood,
-/obj/item/weapon/storage/firstaid/brute,
-/obj/item/weapon/disk/design_disk/golem_shell,
+/obj/item/storage/firstaid/brute,
+/obj/item/disk/design_disk/golem_shell,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "E" = (

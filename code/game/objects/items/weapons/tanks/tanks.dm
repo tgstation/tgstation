@@ -1,4 +1,4 @@
-/obj/item/weapon/tank
+/obj/item/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
@@ -18,10 +18,10 @@
 	var/integrity = 3
 	var/volume = 70
 
-/obj/item/weapon/tank/ui_action_click(mob/user)
+/obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
 
-/obj/item/weapon/tank/proc/toggle_internals(mob/user)
+/obj/item/tank/proc/toggle_internals(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(!istype(H))
 		return
@@ -50,7 +50,7 @@
 	H.update_action_buttons_icon()
 
 
-/obj/item/weapon/tank/New()
+/obj/item/tank/New()
 	..()
 
 	air_contents = new(volume) //liters
@@ -58,14 +58,14 @@
 
 	START_PROCESSING(SSobj, src)
 
-/obj/item/weapon/tank/Destroy()
+/obj/item/tank/Destroy()
 	if(air_contents)
 		qdel(air_contents)
 
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/weapon/tank/examine(mob/user)
+/obj/item/tank/examine(mob/user)
 	var/obj/icon = src
 	..()
 	if (istype(src.loc, /obj/item/assembly))
@@ -94,7 +94,7 @@
 
 	to_chat(user, "<span class='notice'>It feels [descriptive].</span>")
 
-/obj/item/weapon/tank/blob_act(obj/structure/blob/B)
+/obj/item/tank/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		var/turf/location = get_turf(src)
 		if(!location)
@@ -105,7 +105,7 @@
 
 		qdel(src)
 
-/obj/item/weapon/tank/deconstruct(disassembled = TRUE)
+/obj/item/tank/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		var/turf/T = get_turf(src)
 		if(T)
@@ -114,7 +114,7 @@
 		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	qdel(src)
 
-/obj/item/weapon/tank/suicide_act(mob/user)
+/obj/item/tank/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	user.visible_message("<span class='suicide'>[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
@@ -134,7 +134,7 @@
 
 	return (BRUTELOSS)
 
-/obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
@@ -144,14 +144,14 @@
 	else
 		. = ..()
 
-/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+/obj/item/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "tanks", name, 420, 200, master_ui, state)
 		ui.open()
 
-/obj/item/weapon/tank/ui_data(mob/user)
+/obj/item/tank/ui_data(mob/user)
 	var/list/data = list()
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
@@ -170,7 +170,7 @@
 
 	return data
 
-/obj/item/weapon/tank/ui_act(action, params)
+/obj/item/tank/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
@@ -195,19 +195,19 @@
 			if(.)
 				distribute_pressure = Clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 
-/obj/item/weapon/tank/remove_air(amount)
+/obj/item/tank/remove_air(amount)
 	return air_contents.remove(amount)
 
-/obj/item/weapon/tank/return_air()
+/obj/item/tank/return_air()
 	return air_contents
 
-/obj/item/weapon/tank/assume_air(datum/gas_mixture/giver)
+/obj/item/tank/assume_air(datum/gas_mixture/giver)
 	air_contents.merge(giver)
 
 	check_status()
 	return 1
 
-/obj/item/weapon/tank/proc/remove_air_volume(volume_to_return)
+/obj/item/tank/proc/remove_air_volume(volume_to_return)
 	if(!air_contents)
 		return null
 
@@ -219,13 +219,13 @@
 
 	return remove_air(moles_needed)
 
-/obj/item/weapon/tank/process()
+/obj/item/tank/process()
 	//Allow for reactions
 	air_contents.react()
 	check_status()
 
 
-/obj/item/weapon/tank/proc/check_status()
+/obj/item/tank/proc/check_status()
 	//Handle exploding, leaking, and rupturing of the tank
 
 	if(!air_contents)

@@ -16,14 +16,14 @@
 
 	for(var/obj/item/I in loc)
 		if(notices > 4) break
-		if(istype(I, /obj/item/weapon/paper))
+		if(istype(I, /obj/item/paper))
 			I.loc = src
 			notices++
 	icon_state = "nboard0[notices]"
 
 //attaching papers!!
-/obj/structure/noticeboard/attackby(obj/item/weapon/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo))
+/obj/structure/noticeboard/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/paper) || istype(O, /obj/item/photo))
 		if(!allowed(user))
 			to_chat(user, "<span class='info'>You are not authorized to add notices</span>")
 			return
@@ -42,7 +42,7 @@
 	var/auth = allowed(user)
 	var/dat = "<B>[name]</B><BR>"
 	for(var/obj/item/P in src)
-		if(istype(P, /obj/item/weapon/paper))
+		if(istype(P, /obj/item/paper))
 			dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> [auth ? "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A>" : ""]<BR>"
 		else
 			dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> [auth ? "<A href='?src=\ref[src];remove=\ref[P]'>Remove</A>" : ""]<BR>"
@@ -67,7 +67,7 @@
 			return
 		var/obj/item/P = locate(href_list["write"]) in contents
 		if(istype(P) && P.loc == src)
-			var/obj/item/I = usr.is_holding_item_of_type(/obj/item/weapon/pen)
+			var/obj/item/I = usr.is_holding_item_of_type(/obj/item/pen)
 			if(I)
 				add_fingerprint(usr)
 				P.attackby(I, usr)

@@ -66,7 +66,7 @@
 			SpeakPeace(list("Congratulations.", "By my very loose calculations you've now wasted a decent chunk of the round doing this.", "But you've seen this meme to its conclusion, and that's a experience in itself, right?"))
 		if(251)
 			SpeakPeace(list("Anyway, here.", "I can't give you anything that would impact the progression of the round.","But you've earned this at least."))
-			var/obj/item/weapon/reagent_containers/food/drinks/trophy/silver_cup/the_ride = new(get_turf(user))
+			var/obj/item/reagent_containers/food/drinks/trophy/silver_cup/the_ride = new(get_turf(user))
 			the_ride.name = "Overextending The Joke: Second Place"
 			the_ride.desc = "There's a point where this needed to stop, and we've clearly passed it."
 		if(252)
@@ -76,7 +76,7 @@
 		if(1000)
 			SpeakPeace(list("The ends exists somewhere beyond meaningful milestones.", "There will be no more messages until then.", "You disgust me."))
 		if(5643)
-			var/obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup/never_ends = new(get_turf(user))
+			var/obj/item/reagent_containers/food/drinks/trophy/gold_cup/never_ends = new(get_turf(user))
 			never_ends.name = "Overextending The Joke: First Place"
 			never_ends.desc = "And so we are left alone with our regrets."
 		else

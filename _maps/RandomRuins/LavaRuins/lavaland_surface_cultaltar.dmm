@@ -58,7 +58,7 @@
 /area/ruin/unpowered)
 "k" = (
 /obj/effect/decal/remains/human,
-/obj/item/weapon/melee/cultblade,
+/obj/item/melee/cultblade,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -100,7 +100,7 @@
 	},
 /obj/item/device/cult_shift,
 /obj/effect/decal/remains/human,
-/obj/item/weapon/melee/cultblade/dagger,
+/obj/item/melee/cultblade/dagger,
 /obj/effect/step_trigger/sound_effect{
 	happens_once = 1;
 	name = "a grave mistake";

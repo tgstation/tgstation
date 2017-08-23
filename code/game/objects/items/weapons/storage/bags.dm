@@ -16,7 +16,7 @@
  */
 
 //  Generic non-item
-/obj/item/weapon/storage/bag
+/obj/item/storage/bag
 	allow_quick_gather = 1
 	allow_quick_empty = 1
 	display_contents_with_number = 1 // should work fine now
@@ -26,7 +26,7 @@
 // -----------------------------
 //          Trash bag
 // -----------------------------
-/obj/item/weapon/storage/bag/trash
+/obj/item/storage/bag/trash
 	name = "trash bag"
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
 	icon = 'icons/obj/janitor.dmi'
@@ -40,14 +40,14 @@
 	max_combined_w_class = 30
 	storage_slots = 30
 	can_hold = list() // any
-	cant_hold = list(/obj/item/weapon/disk/nuclear)
+	cant_hold = list(/obj/item/disk/nuclear)
 
-/obj/item/weapon/storage/bag/trash/suicide_act(mob/user)
+/obj/item/storage/bag/trash/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!</span>")
 	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
 	return (TOXLOSS)
 
-/obj/item/weapon/storage/bag/trash/update_icon()
+/obj/item/storage/bag/trash/update_icon()
 	if(contents.len == 0)
 		icon_state = "[initial(icon_state)]"
 	else if(contents.len < 12)
@@ -56,17 +56,17 @@
 		icon_state = "[initial(icon_state)]2"
 	else icon_state = "[initial(icon_state)]3"
 
-/obj/item/weapon/storage/bag/trash/cyborg
+/obj/item/storage/bag/trash/cyborg
 
-/obj/item/weapon/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+/obj/item/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	J.put_in_cart(src, user)
 	J.mybag=src
 	J.update_icon()
 
-/obj/item/weapon/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+/obj/item/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return
 
-/obj/item/weapon/storage/bag/trash/bluespace
+/obj/item/storage/bag/trash/bluespace
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
@@ -78,7 +78,7 @@
 //        Mining Satchel
 // -----------------------------
 
-/obj/item/weapon/storage/bag/ore
+/obj/item/storage/bag/ore
 	name = "mining satchel"
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
@@ -89,13 +89,13 @@
 	storage_slots = 50
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
 	max_w_class = WEIGHT_CLASS_NORMAL
-	can_hold = list(/obj/item/weapon/ore)
+	can_hold = list(/obj/item/ore)
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 
-/obj/item/weapon/storage/bag/ore/cyborg
+/obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
 
-/obj/item/weapon/storage/bag/ore/holding //miners, your messiah has arrived
+/obj/item/storage/bag/ore/holding //miners, your messiah has arrived
 	name = "mining satchel of holding"
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	storage_slots = INFINITY
@@ -107,7 +107,7 @@
 //          Plant bag
 // -----------------------------
 
-/obj/item/weapon/storage/bag/plants
+/obj/item/storage/bag/plants
 	name = "plant bag"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
@@ -115,18 +115,18 @@
 	max_combined_w_class = 100 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
 	max_w_class = WEIGHT_CLASS_NORMAL
 	w_class = WEIGHT_CLASS_TINY
-	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/weapon/grown, /obj/item/weapon/reagent_containers/honeycomb)
+	can_hold = list(/obj/item/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/grown, /obj/item/reagent_containers/honeycomb)
 	resistance_flags = FLAMMABLE
 
 ////////
 
-/obj/item/weapon/storage/bag/plants/portaseeder
+/obj/item/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
 	origin_tech = "biotech=3;engineering=2"
 
-/obj/item/weapon/storage/bag/plants/portaseeder/verb/dissolve_contents()
+/obj/item/storage/bag/plants/portaseeder/verb/dissolve_contents()
 	set name = "Activate Seed Extraction"
 	set category = "Object"
 	set desc = "Activate to convert your plants into plantable seeds."
@@ -143,7 +143,7 @@
 // Because it stacks stacks, this doesn't operate normally.
 // However, making it a storage/bag allows us to reuse existing code in some places. -Sayu
 
-/obj/item/weapon/storage/bag/sheetsnatcher
+/obj/item/storage/bag/sheetsnatcher
 	name = "sheet snatcher"
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 	icon = 'icons/obj/mining.dmi'
@@ -154,7 +154,7 @@
 
 	allow_quick_empty = 1 // this function is superceded
 
-/obj/item/weapon/storage/bag/sheetsnatcher/can_be_inserted(obj/item/W, stop_messages = 0)
+/obj/item/storage/bag/sheetsnatcher/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(!istype(W, /obj/item/stack/sheet) || istype(W, /obj/item/stack/sheet/mineral/sandstone) || istype(W, /obj/item/stack/sheet/mineral/wood))
 		if(!stop_messages)
 			to_chat(usr, "The snatcher does not accept [W].")
@@ -170,7 +170,7 @@
 
 
 // Modified handle_item_insertion.  Would prefer not to, but...
-/obj/item/weapon/storage/bag/sheetsnatcher/handle_item_insertion(obj/item/W, prevent_warning = 0)
+/obj/item/storage/bag/sheetsnatcher/handle_item_insertion(obj/item/W, prevent_warning = 0)
 	var/obj/item/stack/sheet/S = W
 	if(!istype(S)) return 0
 
@@ -212,7 +212,7 @@
 
 // Sets up numbered display to show the stack size of each stored mineral
 // NOTE: numbered display is turned off currently because it's broken
-/obj/item/weapon/storage/bag/sheetsnatcher/orient2hud(mob/user)
+/obj/item/storage/bag/sheetsnatcher/orient2hud(mob/user)
 	var/adjusted_contents = contents.len
 
 	//Numbered contents display
@@ -235,7 +235,7 @@
 
 
 // Modified quick_empty verb drops appropriate sized stacks
-/obj/item/weapon/storage/bag/sheetsnatcher/quick_empty()
+/obj/item/storage/bag/sheetsnatcher/quick_empty()
 	var/location = get_turf(src)
 	for(var/obj/item/stack/sheet/S in contents)
 		while(S.amount)
@@ -251,7 +251,7 @@
 	update_icon()
 
 // Instead of removing
-/obj/item/weapon/storage/bag/sheetsnatcher/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/storage/bag/sheetsnatcher/remove_from_storage(obj/item/W, atom/new_location)
 	var/obj/item/stack/sheet/S = W
 	if(!istype(S)) return 0
 
@@ -271,7 +271,7 @@
 //    Sheet Snatcher (Cyborg)
 // -----------------------------
 
-/obj/item/weapon/storage/bag/sheetsnatcher/borg
+/obj/item/storage/bag/sheetsnatcher/borg
 	name = "sheet snatcher 9000"
 	desc = ""
 	capacity = 500//Borgs get more because >specialization
@@ -281,7 +281,7 @@
 //           Book bag
 // -----------------------------
 
-/obj/item/weapon/storage/bag/books
+/obj/item/storage/bag/books
 	name = "book bag"
 	desc = "A bag for books."
 	icon = 'icons/obj/library.dmi'
@@ -291,13 +291,13 @@
 	max_combined_w_class = 21
 	max_w_class = WEIGHT_CLASS_NORMAL
 	w_class = WEIGHT_CLASS_BULKY //Bigger than a book because physics
-	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/book, /obj/item/weapon/spellbook)
+	can_hold = list(/obj/item/book, /obj/item/storage/book, /obj/item/spellbook)
 	resistance_flags = FLAMMABLE
 
 /*
  * Trays - Agouri
  */
-/obj/item/weapon/storage/bag/tray
+/obj/item/storage/bag/tray
 	name = "tray"
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "tray"
@@ -311,7 +311,7 @@
 	materials = list(MAT_METAL=3000)
 	preposition = "on"
 
-/obj/item/weapon/storage/bag/tray/attack(mob/living/M, mob/living/user)
+/obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	..()
 	// Drop all the things. All of them.
 	var/list/obj/item/oldContents = contents.Copy()
@@ -334,16 +334,16 @@
 		if(prob(10))
 			M.Knockdown(40)
 
-/obj/item/weapon/storage/bag/tray/proc/rebuild_overlays()
+/obj/item/storage/bag/tray/proc/rebuild_overlays()
 	cut_overlays()
 	for(var/obj/item/I in contents)
 		add_overlay(mutable_appearance(I.icon, I.icon_state))
 
-/obj/item/weapon/storage/bag/tray/remove_from_storage(obj/item/W as obj, atom/new_location)
+/obj/item/storage/bag/tray/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
 	rebuild_overlays()
 
-/obj/item/weapon/storage/bag/tray/handle_item_insertion(obj/item/I, prevent_warning = 0)
+/obj/item/storage/bag/tray/handle_item_insertion(obj/item/I, prevent_warning = 0)
 	add_overlay(mutable_appearance(I.icon, I.icon_state))
 	. = ..()
 
@@ -352,7 +352,7 @@
  *	Chemistry bag
  */
 
-/obj/item/weapon/storage/bag/chemistry
+/obj/item/storage/bag/chemistry
 	name = "chemistry bag"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bag"
@@ -361,14 +361,14 @@
 	max_combined_w_class = 200
 	w_class = WEIGHT_CLASS_TINY
 	preposition = "in"
-	can_hold = list(/obj/item/weapon/reagent_containers/pill, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
+	can_hold = list(/obj/item/reagent_containers/pill, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle)
 	resistance_flags = FLAMMABLE
 
 /*
  *  Biowaste bag (mostly for xenobiologists)
  */
 
-/obj/item/weapon/storage/bag/bio
+/obj/item/storage/bag/bio
 	name = "bio bag"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "biobag"
@@ -377,5 +377,5 @@
 	max_combined_w_class = 200
 	w_class = WEIGHT_CLASS_TINY
 	preposition = "in"
-	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/weapon/reagent_containers/food/snacks/deadmouse, /obj/item/weapon/reagent_containers/food/snacks/monkeycube)
+	can_hold = list(/obj/item/slime_extract, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/blood, /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/food/snacks/deadmouse, /obj/item/reagent_containers/food/snacks/monkeycube)
 	resistance_flags = FLAMMABLE

@@ -1,5 +1,5 @@
 /*
- *	Absorbs /obj/item/weapon/secstorage.
+ *	Absorbs /obj/item/secstorage.
  *	Reimplements it only slightly to use existing storage functionality.
  *
  *	Contains:
@@ -10,7 +10,7 @@
 // -----------------------------
 //         Generic Item
 // -----------------------------
-/obj/item/weapon/storage/secure
+/obj/item/storage/secure
 	name = "secstorage"
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
@@ -26,13 +26,13 @@
 	max_w_class = WEIGHT_CLASS_SMALL
 	max_combined_w_class = 14
 
-/obj/item/weapon/storage/secure/examine(mob/user)
+/obj/item/storage/secure/examine(mob/user)
 	..()
 	to_chat(user, text("The service panel is [src.open ? "open" : "closed"]."))
 
-/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
 	if(locked)
-		if (istype(W, /obj/item/weapon/screwdriver))
+		if (istype(W, /obj/item/screwdriver))
 			if (do_after(user, 20*W.toolspeed, target = src))
 				src.open =! src.open
 				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
@@ -61,14 +61,14 @@
 	// -> storage/attackby() what with handle insertion, etc
 	return ..()
 
-/obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
+/obj/item/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
 		src.add_fingerprint(usr)
 		to_chat(usr, "<span class='warning'>It's locked!</span>")
 		return 0
 	..()
 
-/obj/item/weapon/storage/secure/attack_self(mob/user)
+/obj/item/storage/secure/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (src.locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
@@ -82,7 +82,7 @@
 	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
 	user << browse(dat, "window=caselock;size=300x280")
 
-/obj/item/weapon/storage/secure/Topic(href, href_list)
+/obj/item/storage/secure/Topic(href, href_list)
 	..()
 	if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
 		return
@@ -115,13 +115,13 @@
 			return
 	return
 
-/obj/item/weapon/storage/secure/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/obj/item/storage/secure/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(locked)
 		to_chat(user, "<span class='warning'>It's locked!</span>")
 		return 0
 	return ..()
 
-/obj/item/weapon/storage/secure/can_be_inserted(obj/item/W, stop_messages = 0)
+/obj/item/storage/secure/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(locked)
 		return 0
 	return ..()
@@ -130,7 +130,7 @@
 // -----------------------------
 //        Secure Briefcase
 // -----------------------------
-/obj/item/weapon/storage/secure/briefcase
+/obj/item/storage/secure/briefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "secure"
@@ -147,11 +147,11 @@
 	max_combined_w_class = 21
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
-/obj/item/weapon/storage/secure/briefcase/PopulateContents()
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/pen(src)
+/obj/item/storage/secure/briefcase/PopulateContents()
+	new /obj/item/paper(src)
+	new /obj/item/pen(src)
 
-/obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
+/obj/item/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
 		to_chat(usr, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 		add_fingerprint(user)
@@ -159,10 +159,10 @@
 		..()
 
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
-/obj/item/weapon/storage/secure/briefcase/syndie
+/obj/item/storage/secure/briefcase/syndie
 	force = 15
 
-/obj/item/weapon/storage/secure/briefcase/syndie/PopulateContents()
+/obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
 	for(var/i = 0, i < storage_slots - 2, i++)
 		new /obj/item/stack/spacecash/c1000(src)
@@ -172,7 +172,7 @@
 //        Secure Safe
 // -----------------------------
 
-/obj/item/weapon/storage/secure/safe
+/obj/item/storage/secure/safe
 	name = "secure safe"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
@@ -184,14 +184,14 @@
 	max_w_class = 8
 	anchored = TRUE
 	density = FALSE
-	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
+	cant_hold = list(/obj/item/storage/secure/briefcase)
 
-/obj/item/weapon/storage/secure/safe/PopulateContents()
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/pen(src)
+/obj/item/storage/secure/safe/PopulateContents()
+	new /obj/item/paper(src)
+	new /obj/item/pen(src)
 
-/obj/item/weapon/storage/secure/safe/attack_hand(mob/user)
+/obj/item/storage/secure/safe/attack_hand(mob/user)
 	return attack_self(user)
 
-/obj/item/weapon/storage/secure/safe/HoS
+/obj/item/storage/secure/safe/HoS
 	name = "head of security's safe"

@@ -38,10 +38,10 @@
 	return - 1
 
 
-/obj/structure/reflector/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/reflector/attackby(obj/item/W, mob/user, params)
 	if(admin)
 		return
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		if(anchored)
 			to_chat(user, "Unweld the [src] first!")
 		if(do_after(user, 80*W.toolspeed, target = src))
@@ -50,8 +50,8 @@
 			new framebuildstacktype(loc, framebuildstackamount)
 			new buildstacktype(loc, buildstackamount)
 			qdel(src)
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		switch(anchored)
 			if(0)
 				if (WT.remove_fuel(0,user))

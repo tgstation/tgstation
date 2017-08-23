@@ -26,21 +26,21 @@
 
 /obj/machinery/mech_bay_recharge_port/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mech_recharger(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/mech_recharger(null)
 	B.apply_default_parts(src)
 	recharging_turf = get_step(loc, dir)
 
-/obj/item/weapon/circuitboard/machine/mech_recharger
+/obj/item/circuitboard/machine/mech_recharger
 	name = "Mechbay Recharger (Machine Board)"
 	build_path = /obj/machinery/mech_bay_recharge_port
 	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
 							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/capacitor = 5)
+							/obj/item/stock_parts/capacitor = 5)
 
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
 	var/MC
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		MC += C.rating
 	max_charge = MC * 25
 
@@ -83,7 +83,7 @@
 	desc = "Used to control mechbay power ports."
 	icon_screen = "recharge_comp"
 	icon_keyboard = "rd_key"
-	circuit = /obj/item/weapon/circuitboard/computer/mech_bay_power_console
+	circuit = /obj/item/circuitboard/computer/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 	light_color = LIGHT_COLOR_PINK
 

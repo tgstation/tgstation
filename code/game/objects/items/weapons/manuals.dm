@@ -1,12 +1,12 @@
 /*********************MANUALS (BOOKS)***********************/
 
 //Oh god what the fuck I am not good at computer
-/obj/item/weapon/book/manual
+/obj/item/book/manual
 	icon = 'icons/obj/library.dmi'
 	due_date = 0 // Game time in 1/10th seconds
 	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 
-/obj/item/weapon/book/manual/engineering_particle_accelerator
+/obj/item/book/manual/engineering_particle_accelerator
 	name = "Particle Accelerator User's Guide"
 	icon_state ="bookParticleAccelerator"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -47,7 +47,7 @@
 				</html>"}
 
 
-/obj/item/weapon/book/manual/engineering_singularity_safety
+/obj/item/book/manual/engineering_singularity_safety
 	name = "Singularity Safety in Special Circumstances"
 	icon_state ="bookEngineeringSingularitySafety"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -95,7 +95,7 @@
 				</html>
 				"}
 
-/obj/item/weapon/book/manual/hydroponics_pod_people
+/obj/item/book/manual/hydroponics_pod_people
 	name = "The Human Harvest - From seed to market"
 	icon_state ="bookHydroponicsPodPeople"
 	author = "Farmer John"
@@ -130,7 +130,7 @@
 				</html>
 				"}
 
-/obj/item/weapon/book/manual/medical_cloning
+/obj/item/book/manual/medical_cloning
 	name = "Cloning techniques of the 26th century"
 	icon_state ="bookCloning"
 	author = "Medical Journal, volume 3"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -208,7 +208,7 @@
 				"}
 
 
-/obj/item/weapon/book/manual/ripley_build_and_repair
+/obj/item/book/manual/ripley_build_and_repair
 	name = "APLU \"Ripley\" Construction and Operation Manual"
 	icon_state ="book"
 	author = "Weyland-Yutani Corp"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -283,7 +283,7 @@
 				Coming soon...
 			"}
 
-/obj/item/weapon/book/manual/experimentor
+/obj/item/book/manual/experimentor
 	name = "Mentoring your Experiments"
 	icon_state = "rdbook"
 	author = "Dr. H.P. Kritz"
@@ -415,7 +415,7 @@
 	</html>
 	"}
 
-/obj/item/weapon/book/manual/research_and_development
+/obj/item/book/manual/research_and_development
 	name = "Research and Development 101"
 	icon_state = "rdbook"
 	author = "Dr. L. Ight"
@@ -465,7 +465,7 @@
 			"}
 
 
-/obj/item/weapon/book/manual/robotics_cyborgs
+/obj/item/book/manual/robotics_cyborgs
 	name = "Cyborgs for Dummies"
 	icon_state = "borgbook"
 	author = "XISC"
@@ -658,7 +658,7 @@
 
 
 
-/obj/item/weapon/book/manual/chef_recipes
+/obj/item/book/manual/chef_recipes
 	name = "Chef Recipes"
 	icon_state = "cooked_book"
 	author = "Lord Frenrir Cageth"
@@ -740,7 +740,7 @@
 			"}
 
 
-/obj/item/weapon/book/manual/barman_recipes
+/obj/item/book/manual/barman_recipes
 	name = "Barman Recipes"
 	icon_state = "barbook"
 	author = "Sir John Rose"
@@ -793,7 +793,7 @@
 			"}
 
 
-/obj/item/weapon/book/manual/detective
+/obj/item/book/manual/detective
 	name = "The Film Noir: Proper Procedures for Investigations"
 	icon_state ="bookDetective"
 	author = "Nanotrasen"
@@ -834,7 +834,7 @@
 			</body>
 			</html>"}
 
-/obj/item/weapon/book/manual/nuclear
+/obj/item/book/manual/nuclear
 	name = "Fission Mailed: Nuclear Sabotage 101"
 	icon_state ="bookNuclear"
 	author = "Syndicate"
@@ -872,16 +872,16 @@
 // Wiki books that are linked to the configured wiki link.
 
 // A book that links to the wiki
-/obj/item/weapon/book/manual/wiki
+/obj/item/book/manual/wiki
 	var/page_link = ""
 	window_size = "970x710"
 
-/obj/item/weapon/book/manual/wiki/attack_self()
+/obj/item/book/manual/wiki/attack_self()
 	if(!dat)
 		initialize_wikibook()
 	..()
 
-/obj/item/weapon/book/manual/wiki/proc/initialize_wikibook()
+/obj/item/book/manual/wiki/proc/initialize_wikibook()
 	if(config.wikiurl)
 		dat = {"
 
@@ -907,28 +907,28 @@
 
 			"}
 
-/obj/item/weapon/book/manual/wiki/chemistry
+/obj/item/book/manual/wiki/chemistry
 	name = "Chemistry Textbook"
 	icon_state ="chemistrybook"
 	author = "Nanotrasen"
 	title = "Chemistry Textbook"
 	page_link = "Guide_to_chemistry"
 
-/obj/item/weapon/book/manual/wiki/engineering_construction
+/obj/item/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"
 	icon_state ="bookEngineering"
 	author = "Engineering Encyclopedia"
 	title = "Station Repairs and Construction"
 	page_link = "Guide_to_construction"
 
-/obj/item/weapon/book/manual/wiki/engineering_guide
+/obj/item/book/manual/wiki/engineering_guide
 	name = "Engineering Textbook"
 	icon_state ="bookEngineering2"
 	author = "Engineering Encyclopedia"
 	title = "Engineering Textbook"
 	page_link = "Guide_to_engineering"
 
-/obj/item/weapon/book/manual/wiki/security_space_law
+/obj/item/book/manual/wiki/security_space_law
 	name = "Space Law"
 	desc = "A set of Nanotrasen guidelines for keeping law and order on their space stations."
 	icon_state = "bookSpaceLaw"
@@ -936,21 +936,21 @@
 	title = "Space Law"
 	page_link = "Space_Law"
 
-/obj/item/weapon/book/manual/wiki/infections
+/obj/item/book/manual/wiki/infections
 	name = "Infections - Making your own pandemic!"
 	icon_state = "bookInfections"
 	author = "Infections Encyclopedia"
 	title = "Infections - Making your own pandemic!"
 	page_link = "Infections"
 
-/obj/item/weapon/book/manual/wiki/telescience
+/obj/item/book/manual/wiki/telescience
 	name = "Teleportation Science - Bluespace for dummies!"
 	icon_state = "book7"
 	author = "University of Bluespace"
 	title = "Teleportation Science - Bluespace for dummies!"
 	page_link = "Guide_to_telescience"
 
-/obj/item/weapon/book/manual/wiki/engineering_hacking
+/obj/item/book/manual/wiki/engineering_hacking
 	name = "Hacking"
 	icon_state ="bookHacking"
 	author = "Engineering Encyclopedia"

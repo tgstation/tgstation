@@ -12,7 +12,7 @@
 	var/cut = FALSE
 	var/log_amount = 10
 
-/obj/structure/flora/tree/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
 	if(!cut && log_amount && (!(NODECONSTRUCT in flags)))
 		if(W.sharpness && W.force > 0)
 			if(W.hitsound)
@@ -30,7 +30,7 @@
 				name += " stump"
 				cut = TRUE
 				for(var/i=1 to log_amount)
-					new /obj/item/weapon/grown/log/tree(get_turf(src))
+					new /obj/item/grown/log/tree(get_turf(src))
 
 	else
 		return ..()
@@ -252,7 +252,7 @@
 	icon_state = "fullgrass_[rand(1, 3)]"
 	. = ..()
 
-/obj/item/weapon/twohanded/required/kirbyplants
+/obj/item/twohanded/required/kirbyplants
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
@@ -263,26 +263,26 @@
 	throw_speed = 2
 	throw_range = 4
 
-/obj/item/weapon/twohanded/required/kirbyplants/equipped(mob/living/user)
+/obj/item/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.override = 1
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
 	..()
 
-/obj/item/weapon/twohanded/required/kirbyplants/dropped(mob/living/user)
+/obj/item/twohanded/required/kirbyplants/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("sneaking_mission")
 
-/obj/item/weapon/twohanded/required/kirbyplants/random
+/obj/item/twohanded/required/kirbyplants/random
 	var/list/static/states
 
-/obj/item/weapon/twohanded/required/kirbyplants/random/Initialize()
+/obj/item/twohanded/required/kirbyplants/random/Initialize()
 	. = ..()
 	if(!states)
 		generate_states()
 	icon_state = pick(states)
 
-/obj/item/weapon/twohanded/required/kirbyplants/random/proc/generate_states()
+/obj/item/twohanded/required/kirbyplants/random/proc/generate_states()
 	states = list()
 	for(var/i in 1 to 25)
 		var/number
@@ -294,7 +294,7 @@
 	states += "applebush"
 
 
-/obj/item/weapon/twohanded/required/kirbyplants/dead
+/obj/item/twohanded/required/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"

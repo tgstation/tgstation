@@ -5,16 +5,16 @@
 
 /**********************Mineral ores**************************/
 
-/obj/item/weapon/ore
+/obj/item/ore
 	name = "rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 
-/obj/item/weapon/ore/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = I
+/obj/item/ore/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/W = I
 		if(W.remove_fuel(15) && refined_type)
 			new refined_type(get_turf(src.loc))
 			qdel(src)
@@ -22,22 +22,22 @@
 			to_chat(user, "<span class='info'>Not enough fuel to smelt [src].</span>")
 	..()
 
-/obj/item/weapon/ore/Crossed(atom/movable/AM)
+/obj/item/ore/Crossed(atom/movable/AM)
 	set waitfor = FALSE
 	var/show_message = TRUE
-	for(var/obj/item/weapon/ore/O in loc)
+	for(var/obj/item/ore/O in loc)
 		if(O != src)
 			show_message = FALSE
 			break
-	var/obj/item/weapon/storage/bag/ore/OB
+	var/obj/item/storage/bag/ore/OB
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		OB = locate(/obj/item/weapon/storage/bag/ore) in H.get_storage_slots()
+		OB = locate(/obj/item/storage/bag/ore) in H.get_storage_slots()
 		if(!OB)
-			OB = locate(/obj/item/weapon/storage/bag/ore) in H.held_items
+			OB = locate(/obj/item/storage/bag/ore) in H.held_items
 	else if(iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM
-		OB = locate(/obj/item/weapon/storage/bag/ore) in R.held_items
+		OB = locate(/obj/item/storage/bag/ore) in R.held_items
 	if(OB)
 		var/obj/structure/ore_box/box
 		if(!OB.can_be_inserted(src, TRUE, AM))
@@ -53,7 +53,7 @@
 		var/mob/living/L = AM
 		if(istype(L.pulling, /obj/structure/ore_box))
 			box = L.pulling
-			for(var/obj/item/weapon/ore/O in OB)
+			for(var/obj/item/ore/O in OB)
 				OB.remove_from_storage(src, box)
 		if(show_message)
 			playsound(L, "rustle", 50, TRUE)
@@ -65,7 +65,7 @@
 				"<span class='notice'>You scoop up the ores beneath you with your [OB.name].</span>")
 	return ..()
 
-/obj/item/weapon/ore/uranium
+/obj/item/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
@@ -73,7 +73,7 @@
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
-/obj/item/weapon/ore/iron
+/obj/item/ore/iron
 	name = "iron ore"
 	icon_state = "Iron ore"
 	origin_tech = "materials=1"
@@ -81,7 +81,7 @@
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
-/obj/item/weapon/ore/glass
+/obj/item/ore/glass
 	name = "sand pile"
 	icon_state = "Glass ore"
 	origin_tech = "materials=1"
@@ -90,10 +90,10 @@
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/weapon/ore/glass/attack_self(mob/living/user)
+/obj/item/ore/glass/attack_self(mob/living/user)
 	to_chat(user, "<span class='notice'>You use the sand to make sandstone.</span>")
 	var/sandAmt = 1
-	for(var/obj/item/weapon/ore/glass/G in user.loc) // The sand on the floor
+	for(var/obj/item/ore/glass/G in user.loc) // The sand on the floor
 		sandAmt += 1
 		qdel(G)
 	while(sandAmt > 0)
@@ -109,7 +109,7 @@
 	qdel(src)
 	return
 
-/obj/item/weapon/ore/glass/throw_impact(atom/hit_atom)
+/obj/item/ore/glass/throw_impact(atom/hit_atom)
 	if(..() || !ishuman(hit_atom))
 		return
 	var/mob/living/carbon/human/C = hit_atom
@@ -128,11 +128,11 @@
 	to_chat(C, "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>")
 	qdel(src)
 
-/obj/item/weapon/ore/glass/basalt
+/obj/item/ore/glass/basalt
 	name = "volcanic ash"
 	icon_state = "volcanic_sand"
 
-/obj/item/weapon/ore/plasma
+/obj/item/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
 	origin_tech = "plasmatech=2;materials=2"
@@ -140,16 +140,16 @@
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
-/obj/item/weapon/ore/plasma/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = I
+/obj/item/ore/plasma/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/W = I
 		if(W.welding)
 			to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
 	else
 		..()
 
 
-/obj/item/weapon/ore/silver
+/obj/item/ore/silver
 	name = "silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
@@ -157,7 +157,7 @@
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
-/obj/item/weapon/ore/gold
+/obj/item/ore/gold
 	name = "gold ore"
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
@@ -165,7 +165,7 @@
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
-/obj/item/weapon/ore/diamond
+/obj/item/ore/diamond
 	name = "diamond ore"
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
@@ -173,7 +173,7 @@
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
-/obj/item/weapon/ore/bananium
+/obj/item/ore/bananium
 	name = "bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
@@ -181,7 +181,7 @@
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
-/obj/item/weapon/ore/titanium
+/obj/item/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"
 	origin_tech = "materials=4"
@@ -189,12 +189,12 @@
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 
-/obj/item/weapon/ore/slag
+/obj/item/ore/slag
 	name = "slag"
 	desc = "Completely useless"
 	icon_state = "slag"
 
-/obj/item/weapon/twohanded/required/gibtonite
+/obj/item/twohanded/required/gibtonite
 	name = "gibtonite ore"
 	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
 	icon = 'icons/obj/mining.dmi'
@@ -208,12 +208,12 @@
 	var/attacher = "UNKNOWN"
 	var/det_timer
 
-/obj/item/weapon/twohanded/required/gibtonite/Destroy()
+/obj/item/twohanded/required/gibtonite/Destroy()
 	qdel(wires)
 	wires = null
 	return ..()
 
-/obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
+/obj/item/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/device/assembly/igniter))
 		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
 		wires = new /datum/wires/explosive/gibtonite(src)
@@ -227,7 +227,7 @@
 			wires.interact(user)
 			return
 
-	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator) || I.force >= 10)
+	if(istype(I, /obj/item/pickaxe) || istype(I, /obj/item/resonator) || I.force >= 10)
 		GibtoniteReaction(user)
 		return
 	if(primed)
@@ -241,22 +241,22 @@
 			return
 	..()
 
-/obj/item/weapon/twohanded/required/gibtonite/attack_self(user)
+/obj/item/twohanded/required/gibtonite/attack_self(user)
 	if(wires)
 		wires.interact(user)
 	else
 		..()
 
-/obj/item/weapon/twohanded/required/gibtonite/bullet_act(obj/item/projectile/P)
+/obj/item/twohanded/required/gibtonite/bullet_act(obj/item/projectile/P)
 	GibtoniteReaction(P.firer)
 	..()
 
-/obj/item/weapon/twohanded/required/gibtonite/ex_act()
+/obj/item/twohanded/required/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
 
 
 
-/obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
+/obj/item/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
 		primed = TRUE
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
@@ -283,7 +283,7 @@
 			log_game("[key_name(user)] has primed a [name] for detonation at [A][COORD(bombturf)]")
 		det_timer = addtimer(CALLBACK(src, .proc/detonate, notify_admins), det_time, TIMER_STOPPABLE)
 
-/obj/item/weapon/twohanded/required/gibtonite/proc/detonate(notify_admins)
+/obj/item/twohanded/required/gibtonite/proc/detonate(notify_admins)
 	if(primed)
 		switch(quality)
 			if(GIBTONITE_QUALITY_HIGH)
@@ -294,12 +294,12 @@
 				explosion(src,0,1,3,adminlog = notify_admins)
 		qdel(src)
 
-/obj/item/weapon/ore/Initialize()
+/obj/item/ore/Initialize()
 	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
-/obj/item/weapon/ore/ex_act()
+/obj/item/ore/ex_act()
 	return
 
 /*****************************Coin********************************/
@@ -307,7 +307,7 @@
 // The coin's value is a value of it's materials.
 // Yes, the gold standard makes a come-back!
 // This is the only way to make coins that are possible to produce on station actually worth anything.
-/obj/item/weapon/coin
+/obj/item/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
 	icon_state = "coin__heads"
@@ -321,78 +321,78 @@
 	var/cooldown = 0
 	var/value = 1
 
-/obj/item/weapon/coin/Initialize()
+/obj/item/coin/Initialize()
 	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
-/obj/item/weapon/coin/examine(mob/user)
+/obj/item/coin/examine(mob/user)
 	..()
 	if(value)
 		to_chat(user, "<span class='info'>It's worth [value] credit\s.</span>")
 
-/obj/item/weapon/coin/gold
+/obj/item/coin/gold
 	name = "gold coin"
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
 	value = 50
 	materials = list(MAT_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/weapon/coin/silver
+/obj/item/coin/silver
 	name = "silver coin"
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
 	value = 20
 	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/weapon/coin/diamond
+/obj/item/coin/diamond
 	name = "diamond coin"
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
 	value = 500
 	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/weapon/coin/iron
+/obj/item/coin/iron
 	name = "iron coin"
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	value = 1
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/weapon/coin/plasma
+/obj/item/coin/plasma
 	name = "plasma coin"
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
 	value = 100
 	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/weapon/coin/uranium
+/obj/item/coin/uranium
 	name = "uranium coin"
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
 	value = 80
 	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/weapon/coin/clown
+/obj/item/coin/clown
 	name = "bananium coin"
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
 	value = 1000 //makes the clown cry
 	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/weapon/coin/adamantine
+/obj/item/coin/adamantine
 	name = "adamantine coin"
 	cmineral = "adamantine"
 	icon_state = "coin_adamantine_heads"
 	value = 1500
 
-/obj/item/weapon/coin/mythril
+/obj/item/coin/mythril
 	name = "mythril coin"
 	cmineral = "mythril"
 	icon_state = "coin_mythril_heads"
 	value = 3000
 
-/obj/item/weapon/coin/twoheaded
+/obj/item/coin/twoheaded
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	desc = "Hey, this coin's the same on both sides!"
@@ -400,7 +400,7 @@
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
 	value = 1
 
-/obj/item/weapon/coin/antagtoken
+/obj/item/coin/antagtoken
 	name = "antag token"
 	icon_state = "coin_valid_valid"
 	cmineral = "valid"
@@ -408,7 +408,7 @@
 	sideslist = list("valid", "salad")
 	value = 0
 
-/obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
@@ -423,7 +423,7 @@
 			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
 			return
 
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/wirecutters))
 		if(!string_attached)
 			..()
 			return
@@ -436,7 +436,7 @@
 		to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
 	else ..()
 
-/obj/item/weapon/coin/attack_self(mob/user)
+/obj/item/coin/attack_self(mob/user)
 	if(cooldown < world.time)
 		if(string_attached) //does the coin have a wire attached
 			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
