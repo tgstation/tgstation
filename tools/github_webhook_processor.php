@@ -460,7 +460,7 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 	);
 
 	$filename = '/html/changelogs/AutoChangeLog-pr-'.$payload['pull_request']['number'].'.yml';
-	echo apisend($payload['pull_request']['base']['repo']['url'].'/contents'.$filename, 'PUT', $context);
+	echo apisend($payload['pull_request']['base']['repo']['url'].'/contents'.$filename, 'PUT', $content);
 }
 
 function sendtoallservers($str, $payload = null) {
