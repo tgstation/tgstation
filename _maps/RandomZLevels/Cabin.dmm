@@ -12,7 +12,7 @@
 /turf/closed/wall/mineral/wood,
 /area/awaymission/snowforest/lumbermill)
 "ae" = (
-/obj/item/weapon/grown/log/tree,
+/obj/item/grown/log/tree,
 /turf/open/floor/plating/asteroid/snow/temperatre,
 /area/awaymission/snowforest)
 "af" = (
@@ -40,7 +40,7 @@
 /turf/open/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "aj" = (
-/obj/item/weapon/grown/log/tree,
+/obj/item/grown/log/tree,
 /turf/open/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "ak" = (
@@ -49,12 +49,12 @@
 /area/awaymission/snowforest/lumbermill)
 "al" = (
 /obj/structure/table/wood,
-/obj/item/weapon/grown/log/tree,
+/obj/item/grown/log/tree,
 /turf/open/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "am" = (
 /obj/structure/table/wood,
-/obj/item/weapon/twohanded/required/chainsaw,
+/obj/item/twohanded/required/chainsaw,
 /turf/open/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "an" = (
@@ -147,7 +147,7 @@
 /area/awaymission/cabin)
 "aA" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/brown,
+/obj/item/bedsheet/brown,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "aB" = (
@@ -193,7 +193,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aG" = (
-/obj/item/weapon/reagent_containers/pill/patch/styptic,
+/obj/item/reagent_containers/pill/patch/styptic,
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "aH" = (
@@ -298,12 +298,12 @@
 /area/awaymission/cabin)
 "aY" = (
 /obj/structure/table/wood,
-/obj/item/weapon/phone,
+/obj/item/phone,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "aZ" = (
 /obj/structure/guncase/shotgun,
-/obj/item/weapon/gun/ballistic/shotgun/riot,
+/obj/item/gun/ballistic/shotgun/riot,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "ba" = (
@@ -318,7 +318,7 @@
 /area/awaymission/cabin)
 "bc" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/britcup,
+/obj/item/reagent_containers/food/drinks/britcup,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bd" = (
@@ -493,12 +493,12 @@
 /area/awaymission/cabin)
 "bK" = (
 /obj/effect/decal/cleanable/blood,
-/obj/item/weapon/reagent_containers/pill/patch/styptic,
+/obj/item/reagent_containers/pill/patch/styptic,
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "bL" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/patriot,
+/obj/item/bedsheet/patriot,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bM" = (
@@ -543,12 +543,12 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bV" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/knife/butcher,
+/obj/item/kitchen/knife/butcher,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "bW" = (
@@ -575,12 +575,12 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/weapon/surgicaldrill,
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/cautery,
-/obj/item/weapon/surgical_drapes,
-/obj/item/weapon/scalpel,
-/obj/item/weapon/hemostat,
+/obj/item/surgicaldrill,
+/obj/item/circular_saw,
+/obj/item/cautery,
+/obj/item/surgical_drapes,
+/obj/item/scalpel,
+/obj/item/hemostat,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "ca" = (
@@ -654,7 +654,7 @@
 /area/awaymission/cabin)
 "cn" = (
 /obj/structure/bed/roller,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "co" = (
@@ -681,7 +681,7 @@
 /area/awaymission/snowforest)
 "cs" = (
 /obj/structure/table/wood,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ct" = (
@@ -699,9 +699,9 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/brute,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "cw" = (
@@ -914,7 +914,7 @@
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dl" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dm" = (
@@ -937,7 +937,7 @@
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dq" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
@@ -961,7 +961,7 @@
 "du" = (
 /obj/structure/closet/toolcloset,
 /obj/item/device/lightreplacer,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "dv" = (

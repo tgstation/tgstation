@@ -210,7 +210,7 @@
 	icon_state = "pipe-c";
 	invisibility = 101
 	},
-/obj/item/weapon/bikehorn,
+/obj/item/bikehorn,
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
 	wet = 5
@@ -254,7 +254,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "aO" = (
-/obj/item/weapon/bikehorn,
+/obj/item/bikehorn,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
@@ -306,7 +306,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "aW" = (
-/obj/item/weapon/bikehorn,
+/obj/item/bikehorn,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
@@ -326,7 +326,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "aY" = (
-/obj/item/weapon/bikehorn,
+/obj/item/bikehorn,
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
@@ -378,10 +378,10 @@
 	invisibility = 101
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/crumpled/bloody{
+/obj/item/paper/crumpled/bloody{
 	info = "If you dare not continue down this path of madness, escape can be found through the chute in this room. "
 	},
-/obj/item/weapon/pen/fourcolor,
+/obj/item/pen/fourcolor,
 /turf/open/indestructible{
 	icon_state = "white"
 	},
@@ -414,7 +414,7 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/indestructible{
 	icon_state = "white"
 	},
@@ -489,7 +489,7 @@
 /turf/closed/mineral/clown,
 /area/ruin/powered/clownplanet)
 "bq" = (
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/indestructible{
 	icon_state = "white"
 	},
@@ -518,7 +518,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "bu" = (
-/obj/item/weapon/bikehorn,
+/obj/item/bikehorn,
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c";
@@ -645,7 +645,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "bL" = (
-/obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup,
+/obj/item/reagent_containers/food/drinks/trophy/gold_cup,
 /obj/structure/table/glass,
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
@@ -674,7 +674,7 @@
 /area/ruin/powered/clownplanet)
 "bQ" = (
 /obj/structure/table/glass,
-/obj/item/weapon/grown/bananapeel/bluespace,
+/obj/item/grown/bananapeel/bluespace,
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bR" = (
@@ -683,10 +683,10 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bS" = (
-/obj/item/weapon/coin/clown,
-/obj/item/weapon/coin/clown,
-/obj/item/weapon/coin/clown,
-/obj/item/weapon/coin/clown,
+/obj/item/coin/clown,
+/obj/item/coin/clown,
+/obj/item/coin/clown,
+/obj/item/coin/clown,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -698,16 +698,16 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bU" = (
-/obj/item/weapon/bikehorn/airhorn,
+/obj/item/bikehorn/airhorn,
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bV" = (
 /obj/structure/table/glass,
-/obj/item/weapon/gun/magic/staff/honk,
+/obj/item/gun/magic/staff/honk,
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bW" = (
-/obj/item/weapon/bikehorn,
+/obj/item/bikehorn,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
 	name = "bananium floor";
@@ -735,7 +735,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "ca" = (
-/obj/item/weapon/bikehorn,
+/obj/item/bikehorn,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
@@ -864,10 +864,10 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "dL" = (
-/obj/item/weapon/coin/clown,
-/obj/item/weapon/coin/clown,
-/obj/item/weapon/coin/clown,
-/obj/item/weapon/coin/clown,
+/obj/item/coin/clown,
+/obj/item/coin/clown,
+/obj/item/coin/clown,
+/obj/item/coin/clown,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -925,7 +925,7 @@
 /turf/open/lava/smooth,
 /area/ruin/powered/clownplanet)
 "CB" = (
-/obj/item/weapon/paper/crumpled/bloody{
+/obj/item/paper/crumpled/bloody{
 	info = "Abandon hope, all ye who enter here."
 	},
 /obj/effect/decal/cleanable/blood/old,
@@ -934,7 +934,7 @@
 	},
 /area/lavaland/surface/outdoors/explored)
 "KX" = (
-/obj/item/weapon/grown/bananapeel{
+/obj/item/grown/bananapeel{
 	color = "#2F3000";
 	name = "stealth banana peel"
 	},

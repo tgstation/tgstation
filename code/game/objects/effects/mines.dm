@@ -3,7 +3,7 @@
 	desc = "Better stay away from that thing."
 	density = FALSE
 	anchored = TRUE
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "uglymine"
 	var/triggered = 0
 
@@ -129,8 +129,8 @@
 	spawn(0)
 		new /datum/hallucination/delusion(victim, TRUE, "demon",duration,0)
 
-	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
-	chainsaw.flags |= NODROP
+	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
+	chainsaw.flags_1 |= NODROP_1
 	victim.drop_all_held_items()
 	victim.put_in_hands(chainsaw)
 	chainsaw.attack_self(victim)

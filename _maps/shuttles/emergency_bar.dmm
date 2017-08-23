@@ -35,8 +35,8 @@
 /area/shuttle/escape)
 "ai" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/cigarettes/cigars/havana,
-/obj/item/weapon/lighter{
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/lighter{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -107,8 +107,8 @@
 	pixel_y = -24
 	},
 /obj/structure/table/wood/poker,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey,
 /obj/machinery/light,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
@@ -167,7 +167,7 @@
 	pixel_x = 6;
 	pixel_y = 24
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
@@ -274,8 +274,8 @@
 	pixel_x = 27
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/bottle/lizardwine,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aT" = (
@@ -329,7 +329,7 @@
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bc" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
@@ -372,8 +372,8 @@
 /area/shuttle/escape)
 "bj" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/toxin{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -445,7 +445,7 @@
 /area/shuttle/escape)
 "bw" = (
 /obj/structure/table/optable,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
@@ -470,10 +470,10 @@
 /area/shuttle/escape)
 "bz" = (
 /obj/structure/table,
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/hemostat,
-/obj/item/weapon/retractor,
-/obj/item/weapon/scalpel,
+/obj/item/circular_saw,
+/obj/item/hemostat,
+/obj/item/retractor,
+/obj/item/scalpel,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bA" = (
@@ -508,7 +508,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bG" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
@@ -526,7 +526,7 @@
 /area/shuttle/escape)
 "bJ" = (
 /obj/structure/table/wood/bar,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "bK" = (
@@ -547,14 +547,14 @@
 /area/shuttle/escape)
 "bN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
-/obj/item/weapon/storage/fancy/cigarettes/cigars/havana,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bO" = (
 /obj/structure/table/wood/bar,
-/obj/item/weapon/folder/red,
+/obj/item/folder/red,
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "bP" = (
@@ -579,23 +579,23 @@
 /area/shuttle/escape)
 "bS" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/toxin{
 	pixel_x = 4;
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bT" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bU" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/brute{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/brute{
 	pixel_x = 4;
 	pixel_y = 4
 	},

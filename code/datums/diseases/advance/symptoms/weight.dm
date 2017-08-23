@@ -18,6 +18,7 @@ Bonus
 /datum/symptom/weight_gain
 
 	name = "Weight Gain"
+	desc = "The virus mutates the host's metabolism, making it gain weight much faster than normal."
 	stealth = -3
 	resistance = -3
 	stage_speed = -2
@@ -27,6 +28,7 @@ Bonus
 	base_message_chance = 100
 	symptom_delay_min = 15
 	symptom_delay_max = 45
+	threshold_desc = "<b>Stealth 4:</b> The symptom is less noticeable."
 
 /datum/symptom/weight_gain/Start(datum/disease/advance/A)
 	..()
@@ -66,6 +68,7 @@ Bonus
 /datum/symptom/weight_loss
 
 	name = "Weight Loss"
+	desc = "The virus mutates the host's metabolism, making it almost unable to gain nutrition from food."
 	stealth = -3
 	resistance = -2
 	stage_speed = -2
@@ -75,6 +78,7 @@ Bonus
 	base_message_chance = 100
 	symptom_delay_min = 15
 	symptom_delay_max = 45
+	threshold_desc = "<b>Stealth 4:</b> The symptom is less noticeable."
 
 /datum/symptom/weight_loss/Start(datum/disease/advance/A)
 	..()
@@ -116,6 +120,7 @@ Bonus
 /datum/symptom/weight_even
 
 	name = "Weight Even"
+	desc = "The virus alters the host's metabolism, making it far more efficient then normal, and synthesizing nutrients from normally unedible sources."
 	stealth = -3
 	resistance = -2
 	stage_speed = -2
