@@ -31,6 +31,10 @@
 	else
 		add_ranged_ability(user, null, TRUE)
 
+	if(action)
+		action.UpdateButtonIcon()
+
+
 /obj/effect/proc_holder/spell/targeted/sling/InterceptClickOn(mob/living/caller, params, atom/t)
 	if(!ishuman(t))
 		to_chat(caller, "<span class='warning'>You can't use this ability on that!</span>")
@@ -49,6 +53,11 @@
 /obj/effect/proc_holder/spell/targeted/sling/revert_cast()
 	. = ..()
 	remove_ranged_ability()
+
+/obj/effect/proc_holder/spell/targeted/sling/start_recharge()
+	. = ..()
+	if(action)
+		action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/targeted/sling/glare //Stuns and mutes a human target for 10 seconds
 	name = "Glare"
