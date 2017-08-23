@@ -102,11 +102,11 @@
 /obj/structure/destructible/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		var/obj/item/weapon/storage/book/bible/B = L.bible_check()
+		var/obj/item/storage/book/bible/B = L.bible_check()
 		if(B)
 			if(!(B.resistance_flags & ON_FIRE))
 				to_chat(L, "<span class='warning'>Your [B.name] bursts into flames!</span>")
-			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
+			for(var/obj/item/storage/book/bible/BI in L.GetAllContents())
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
 			continue

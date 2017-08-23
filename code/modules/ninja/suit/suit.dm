@@ -16,7 +16,7 @@ Contents:
 	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
-	allowed = list(/obj/item/weapon/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals, /obj/item/weapon/stock_parts/cell)
+	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
 	slowdown = 0
 	resistance_flags = LAVA_PROOF | ACID_PROOF
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
@@ -26,12 +26,12 @@ Contents:
 
 		//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell
 	var/datum/effect_system/spark_spread/spark_system
 	var/list/reagent_list = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
 	var/list/stored_research = list()//For stealing station research.
-	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
-	var/obj/item/weapon/dash/energy_katana/energyKatana //For teleporting the katana back to the ninja (It's an ability)
+	var/obj/item/disk/tech_disk/t_disk//To copy design onto disk.
+	var/obj/item/dash/energy_katana/energyKatana //For teleporting the katana back to the ninja (It's an ability)
 
 		//Other articles of ninja gear worn together, used to easily reference them after initializing.
 	var/obj/item/clothing/head/helmet/space/space_ninja/n_hood
@@ -83,7 +83,7 @@ Contents:
 		reagent_id == "radium" ? reagents.add_reagent(reagent_id, r_maxamount+(a_boost*a_transfer)) : reagents.add_reagent(reagent_id, r_maxamount)//It will take into account radium used for adrenaline boosting.
 
 	//Cell Init
-	cell = new/obj/item/weapon/stock_parts/cell/high
+	cell = new/obj/item/stock_parts/cell/high
 	cell.charge = 9000
 	cell.name = "black power cell"
 	cell.icon_state = "bscell"

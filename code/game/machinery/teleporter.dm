@@ -3,7 +3,7 @@
 	desc = "Used to control a linked teleportation Hub and Station."
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
-	circuit = /obj/item/weapon/circuitboard/computer/teleporter
+	circuit = /obj/item/circuitboard/computer/teleporter
 	var/obj/item/device/gps/locked = null
 	var/regime_set = "Teleporter"
 	var/id = null
@@ -173,7 +173,7 @@
 				continue
 			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 
-		for(var/obj/item/weapon/implant/tracking/I in GLOB.tracked_implants)
+		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
 			if(!I.imp_in || !ismob(I.loc))
 				continue
 			else
@@ -235,17 +235,17 @@
 
 /obj/machinery/teleport/hub/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/teleporter_hub(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/teleporter_hub
+/obj/item/circuitboard/machine/teleporter_hub
 	name = "Teleporter Hub (Machine Board)"
 	build_path = /obj/machinery/teleport/hub
 	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 3,
-							/obj/item/weapon/stock_parts/matter_bin = 1)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
+							/obj/item/ore/bluespace_crystal = 3,
+							/obj/item/stock_parts/matter_bin = 1)
+	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
 
 /obj/machinery/teleport/hub/Initialize()
 	..()
@@ -259,7 +259,7 @@
 
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		A += M.rating
 	accurate = A
 
@@ -329,7 +329,7 @@
 
 /obj/machinery/teleport/hub/syndicate/New()
 	..()
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/super(null)
 	RefreshParts()
 
 
@@ -348,18 +348,18 @@
 
 /obj/machinery/teleport/station/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/teleporter_station(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/teleporter_station
+/obj/item/circuitboard/machine/teleporter_station
 	name = "Teleporter Station (Machine Board)"
 	build_path = /obj/machinery/teleport/station
 	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
 	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 2,
-							/obj/item/weapon/stock_parts/capacitor = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
+							/obj/item/ore/bluespace_crystal = 2,
+							/obj/item/stock_parts/capacitor = 2,
+							/obj/item/stock_parts/console_screen = 1)
+	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
 
 /obj/machinery/teleport/station/Initialize()
 	..()
@@ -367,7 +367,7 @@
 
 /obj/machinery/teleport/station/RefreshParts()
 	var/E
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		E += C.rating
 	efficiency = E - 1
 
@@ -395,7 +395,7 @@
 		teleporter_console = null
 	return ..()
 
-/obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(panel_open)
@@ -420,7 +420,7 @@
 	else if(default_deconstruction_crowbar(W))
 		return
 
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/wirecutters))
 		if(panel_open)
 			link_console_and_hub()
 			to_chat(user, "<span class='caution'>You reconnect the station to nearby machinery.</span>")

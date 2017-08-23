@@ -1,4 +1,4 @@
-/obj/item/weapon/inducer
+/obj/item/inducer
 	name = "inducer"
 	desc = "A tool for inductively charging internal power cells."
 	icon = 'icons/obj/tools.dmi'
@@ -10,31 +10,31 @@
 	force = 7
 	var/powertransfer = 1000
 	var/opened = FALSE
-	var/cell_type = /obj/item/weapon/stock_parts/cell/high
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/cell_type = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/cell/cell
 	var/recharging = FALSE
 
-/obj/item/weapon/inducer/Initialize()
+/obj/item/inducer/Initialize()
 	. = ..()
 	if(!cell && cell_type)
 		cell = new cell_type
 
-/obj/item/weapon/inducer/proc/induce(obj/item/weapon/stock_parts/cell/target, coefficient)
+/obj/item/inducer/proc/induce(obj/item/stock_parts/cell/target, coefficient)
 	var/totransfer = min(cell.charge,(powertransfer * coefficient))
 	var/transferred = target.give(totransfer)
 	cell.use(transferred)
 	cell.update_icon()
 	target.update_icon()
 
-/obj/item/weapon/inducer/get_cell()
+/obj/item/inducer/get_cell()
 	return cell
 
-/obj/item/weapon/inducer/emp_act(severity)
+/obj/item/inducer/emp_act(severity)
 	..()
 	if(cell)
 		cell.emp_act(severity)
 
-/obj/item/weapon/inducer/attack_obj(obj/O, mob/living/carbon/user)
+/obj/item/inducer/attack_obj(obj/O, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 
@@ -46,7 +46,7 @@
 
 	return ..()
 
-/obj/item/weapon/inducer/proc/cantbeused(mob/user)
+/obj/item/inducer/proc/cantbeused(mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to use \the [src]!</span>")
 		return TRUE
@@ -61,8 +61,8 @@
 	return FALSE
 
 
-/obj/item/weapon/inducer/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/item/inducer/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/screwdriver))
 		playsound(src, W.usesound, 50, 1)
 		if(!opened)
 			to_chat(user, "<span class='notice'>You unscrew the battery compartment.</span>")
@@ -74,7 +74,7 @@
 			opened = FALSE
 			update_icon()
 			return
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
+	if(istype(W, /obj/item/stock_parts/cell))
 		if(opened)
 			if(!cell)
 				if(!user.transferItemToLoc(W, src))
@@ -95,16 +95,16 @@
 
 	return ..()
 
-/obj/item/weapon/inducer/proc/recharge(atom/movable/A, mob/user)
+/obj/item/inducer/proc/recharge(atom/movable/A, mob/user)
 	if(recharging)
 		return TRUE
 	else
 		recharging = TRUE
-	var/obj/item/weapon/stock_parts/cell/C = A.get_cell()
-	var/obj/item/weapon/gun/energy/E
+	var/obj/item/stock_parts/cell/C = A.get_cell()
+	var/obj/item/gun/energy/E
 	var/obj/O
 	var/coefficient = 1
-	if(istype(A, /obj/item/weapon/gun/energy))
+	if(istype(A, /obj/item/gun/energy))
 		coefficient = 0.075 // 14 loops to recharge an egun from 0-1000
 		E = A
 	if(istype(A, /obj))
@@ -133,7 +133,7 @@
 	recharging = FALSE
 
 
-/obj/item/weapon/inducer/attack(mob/M, mob/user)
+/obj/item/inducer/attack(mob/M, mob/user)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 
@@ -145,7 +145,7 @@
 	return ..()
 
 
-/obj/item/weapon/inducer/attack_self(mob/user)
+/obj/item/inducer/attack_self(mob/user)
 	if(opened && cell)
 		user.visible_message("[user] removes \the [cell] from \the [src]!","<span class='notice'>You remove \the [cell].</span>")
 		cell.update_icon()
@@ -154,7 +154,7 @@
 		update_icon()
 
 
-/obj/item/weapon/inducer/examine(mob/living/M)
+/obj/item/inducer/examine(mob/living/M)
 	..()
 	if(cell)
 		to_chat(M, "<span class='notice'>It's display shows: [cell.charge]W</span>")
@@ -163,7 +163,7 @@
 	if(opened)
 		to_chat(M,"<span class='notice'>It's battery compartment is open.</span>")
 
-/obj/item/weapon/inducer/update_icon()
+/obj/item/inducer/update_icon()
 	cut_overlays()
 	if(opened)
 		if(!cell)
@@ -171,7 +171,7 @@
 		else
 			add_overlay("inducer-bat")
 
-/obj/item/weapon/inducer/sci
+/obj/item/inducer/sci
 	icon_state = "inducer-sci"
 	item_state = "inducer-sci"
 	desc = "A tool for inductively charging internal power cells. This one has a science color scheme, and is less potent than it's engineering counterpart."
@@ -179,7 +179,7 @@
 	powertransfer = 500
 	opened = TRUE
 
-/obj/item/weapon/inducer/sci/Initialize()
+/obj/item/inducer/sci/Initialize()
 	. = ..()
 	update_icon()
 

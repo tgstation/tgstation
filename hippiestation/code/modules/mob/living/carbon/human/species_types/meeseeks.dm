@@ -17,7 +17,7 @@
 	heatmod = 0
 	species_traits = list(RESISTHOT,RESISTCOLD,RESISTPRESSURE,RADIMMUNE,NOBREATH,NOBLOOD,NOFIRE,VIRUSIMMUNE,PIERCEIMMUNE,NOTRANSSTING,NOHUNGER,NOCRITDAMAGE,NOZOMBIE,NO_UNDERWEAR,EASYDISMEMBER)
 	teeth_type = /obj/item/stack/teeth/meeseeks
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/meeseeks
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/meeseeks
 	damage_overlay_type = ""
 	var/mob/living/carbon/master
 	var/datum/objective/objective

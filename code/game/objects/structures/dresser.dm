@@ -7,7 +7,7 @@
 	anchored = TRUE
 
 /obj/structure/dresser/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/weapon/wrench))
+	if(istype(P, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		playsound(src, P.usesound, 50, 1)
 		if(do_after(user, 20, target = src))

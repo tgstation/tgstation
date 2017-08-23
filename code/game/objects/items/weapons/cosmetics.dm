@@ -1,39 +1,39 @@
-/obj/item/weapon/lipstick
+/obj/item/lipstick
 	gender = PLURAL
 	name = "red lipstick"
 	desc = "A generic brand of lipstick."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
 	var/colour = "red"
 	var/open = FALSE
 
 
-/obj/item/weapon/lipstick/purple
+/obj/item/lipstick/purple
 	name = "purple lipstick"
 	colour = "purple"
 
-/obj/item/weapon/lipstick/jade
+/obj/item/lipstick/jade
 	//It's still called Jade, but theres no HTML color for jade, so we use lime.
 	name = "jade lipstick"
 	colour = "lime"
 
-/obj/item/weapon/lipstick/black
+/obj/item/lipstick/black
 	name = "black lipstick"
 	colour = "black"
 
 
-/obj/item/weapon/lipstick/random
+/obj/item/lipstick/random
 	name = "lipstick"
 
-/obj/item/weapon/lipstick/random/New()
+/obj/item/lipstick/random/New()
 	..()
 	colour = pick("red","purple","lime","black","green","blue","white")
 	name = "[colour] lipstick"
 
 
 
-/obj/item/weapon/lipstick/attack_self(mob/user)
+/obj/item/lipstick/attack_self(mob/user)
 	cut_overlays()
 	to_chat(user, "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>")
 	open = !open
@@ -45,7 +45,7 @@
 	else
 		icon_state = "lipstick"
 
-/obj/item/weapon/lipstick/attack(mob/M, mob/user)
+/obj/item/lipstick/attack(mob/M, mob/user)
 	if(!open)
 		return
 
@@ -79,7 +79,7 @@
 		to_chat(user, "<span class='warning'>Where are the lips on that?</span>")
 
 //you can wipe off lipstick with paper!
-/obj/item/weapon/paper/attack(mob/M, mob/user)
+/obj/item/paper/attack(mob/M, mob/user)
 	if(user.zone_selected == "mouth")
 		if(!ismob(M))
 			return
@@ -102,16 +102,16 @@
 		..()
 
 
-/obj/item/weapon/razor
+/obj/item/razor
 	name = "electric razor"
 	desc = "The latest and greatest power razor born from the science of shaving."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "razor"
 	flags = CONDUCT
 	w_class = WEIGHT_CLASS_TINY
 
 
-/obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = "mouth")
+/obj/item/razor/proc/shave(mob/living/carbon/human/H, location = "mouth")
 	if(location == "mouth")
 		H.facial_hair_style = "Shaved"
 	else
@@ -121,7 +121,7 @@
 	playsound(loc, 'sound/items/welder2.ogg', 20, 1)
 
 
-/obj/item/weapon/razor/attack(mob/M, mob/user)
+/obj/item/razor/attack(mob/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/location = user.zone_selected

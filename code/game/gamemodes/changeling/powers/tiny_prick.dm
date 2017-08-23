@@ -109,11 +109,11 @@
 	chemical_cost = 20
 	dna_cost = 1
 
-/obj/item/weapon/melee/arm_blade/false
+/obj/item/melee/arm_blade/false
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
 	force = 5 //Basically as strong as a punch
 
-/obj/item/weapon/melee/arm_blade/false/afterattack(atom/target, mob/user, proximity)
+/obj/item/melee/arm_blade/false/afterattack(atom/target, mob/user, proximity)
 	return
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
@@ -134,7 +134,7 @@
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
 
-	var/obj/item/weapon/melee/arm_blade/false/blade = new(target,1)
+	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
@@ -142,7 +142,7 @@
 	addtimer(CALLBACK(src, .proc/remove_fake, target, blade), 600)
 	return TRUE
 
-/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/false/blade)
+/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
 	[target] reforms their [blade.name] into an arm!</span>",

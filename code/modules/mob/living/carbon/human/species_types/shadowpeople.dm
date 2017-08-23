@@ -5,7 +5,7 @@
 	sexes = 0
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	species_traits = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision

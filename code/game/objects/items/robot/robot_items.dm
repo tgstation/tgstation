@@ -154,7 +154,7 @@
 	flags = NOBLUDGEON
 	var/mode = "draw"
 	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
-	var/static/list/charge_items = typecacheof(list(/obj/item/weapon/stock_parts/cell, /obj/item/weapon/gun/energy))
+	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))
 
 /obj/item/borg/charger/Initialize()
 	. = ..()
@@ -197,15 +197,15 @@
 			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
 
 		else if(is_type_in_list(target, charge_items))
-			var/obj/item/weapon/stock_parts/cell/cell = target
+			var/obj/item/stock_parts/cell/cell = target
 			if(!istype(cell))
-				cell = locate(/obj/item/weapon/stock_parts/cell) in target
+				cell = locate(/obj/item/stock_parts/cell) in target
 			if(!cell)
 				to_chat(user, "<span class='warning'>[target] has no power cell!</span>")
 				return
 
-			if(istype(target, /obj/item/weapon/gun/energy))
-				var/obj/item/weapon/gun/energy/E = target
+			if(istype(target, /obj/item/gun/energy))
+				var/obj/item/gun/energy/E = target
 				if(!E.can_charge)
 					to_chat(user, "<span class='warning'>[target] has no power port!</span>")
 					return
@@ -236,15 +236,15 @@
 			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
 
 	else if(is_type_in_list(target, charge_items))
-		var/obj/item/weapon/stock_parts/cell/cell = target
+		var/obj/item/stock_parts/cell/cell = target
 		if(!istype(cell))
-			cell = locate(/obj/item/weapon/stock_parts/cell) in target
+			cell = locate(/obj/item/stock_parts/cell) in target
 		if(!cell)
 			to_chat(user, "<span class='warning'>[target] has no power cell!</span>")
 			return
 
-		if(istype(target, /obj/item/weapon/gun/energy))
-			var/obj/item/weapon/gun/energy/E = target
+		if(istype(target, /obj/item/gun/energy))
+			var/obj/item/gun/energy/E = target
 			if(!E.can_charge)
 				to_chat(user, "<span class='warning'>[target] has no power port!</span>")
 				return
@@ -380,7 +380,7 @@
 		var/obj/O = A
 		if(O.density)
 			return FALSE
-	new /obj/item/weapon/reagent_containers/food/snacks/lollipop(T)
+	new /obj/item/reagent_containers/food/snacks/lollipop(T)
 	candy--
 	check_amount()
 	to_chat(user, "<span class='notice'>Dispensing lollipop...</span>")
@@ -462,13 +462,13 @@
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg
+	ammo_type = /obj/item/reagent_containers/food/snacks/gumball/cyborg
 	nodamage = TRUE
 
 /obj/item/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/weapon/reagent_containers/food/snacks/gumball/S = new ammo_type(T)
+		var/obj/item/reagent_containers/food/snacks/gumball/S = new ammo_type(T)
 		S.color = color
 		dropped = TRUE
 
@@ -482,12 +482,12 @@
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
-	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg
+	ammo_type = /obj/item/reagent_containers/food/snacks/lollipop/cyborg
 	var/color2 = rgb(0, 0, 0)
 	nodamage = TRUE
 
 /obj/item/projectile/bullet/reusable/lollipop/New()
-	var/obj/item/weapon/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)
+	var/obj/item/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
 	var/mutable_appearance/head = mutable_appearance('icons/obj/projectiles.dmi', "lollipop_2")
 	head.color = color2
@@ -496,7 +496,7 @@
 /obj/item/projectile/bullet/reusable/lollipop/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/weapon/reagent_containers/food/snacks/lollipop/S = new ammo_type(T)
+		var/obj/item/reagent_containers/food/snacks/lollipop/S = new ammo_type(T)
 		S.change_head_color(color2)
 		dropped = TRUE
 

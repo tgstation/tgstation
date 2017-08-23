@@ -181,13 +181,13 @@
 
 	to_chat(usr, "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>")
 
-/obj/item/weapon/cqc_manual
+/obj/item/cqc_manual
 	name = "old manual"
 	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
 	icon = 'icons/obj/library.dmi'
 	icon_state ="cqcmanual"
 
-/obj/item/weapon/cqc_manual/attack_self(mob/living/carbon/human/user)
+/obj/item/cqc_manual/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
 	to_chat(user, "<span class='boldannounce'>You remember the basics of CQC.</span>")

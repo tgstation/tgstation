@@ -26,7 +26,7 @@
 		icon_state = "staples"
 		name = "staples"
 
-/obj/item/weapon/staplegun
+/obj/item/staplegun
 	name = "Staple gun"
 	desc = "Insert paper you want to staple and then use the gun on a wall/floor. CAUTION: Don't use on people."
 	icon = 'hippiestation/icons/obj/staples.dmi'
@@ -39,14 +39,14 @@
 	attack_verb = list("stapled")
 	var/ammo = 5
 	var/max_ammo = 10
-	var/obj/item/weapon/paper/P = null //TODO: Make papers attachable to people
+	var/obj/item/paper/P = null //TODO: Make papers attachable to people
 	var/obj/item/organ/butt/B = null
 
-/obj/item/weapon/staplegun/Initialize()
+/obj/item/staplegun/Initialize()
 	..()
 	update_icon()
 
-/obj/item/weapon/staplegun/examine(mob/user)
+/obj/item/staplegun/examine(mob/user)
 	..()
 	user << "It contains [ammo]/[max_ammo] staples."
 	if(istype(P))
@@ -54,12 +54,12 @@
 	if(istype(B))
 		user << "There's a butt loaded in it... What?"
 
-/obj/item/weapon/staplegun/update_icon()
+/obj/item/staplegun/update_icon()
 	var/amt = max(0, min(round(ammo/1.5), 6))
 	overlays.Cut()
 	overlays += icon(icon, "[icon_state][amt]")
 
-/obj/item/weapon/staplegun/attack(mob/living/target, mob/living/user)
+/obj/item/staplegun/attack(mob/living/target, mob/living/user)
 	if(ammo <= 0)
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return
@@ -101,7 +101,7 @@
 	ammo--
 	update_icon()
 
-/obj/item/weapon/staplegun/afterattack(atom/target, mob/user, proximity)
+/obj/item/staplegun/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
 
@@ -120,7 +120,7 @@
 			ammo -= 1
 			update_icon()
 
-/obj/item/weapon/staplegun/attack_self(mob/user)
+/obj/item/staplegun/attack_self(mob/user)
 	if(istype(P))
 		user << "<span class='notice'>You take out \the [P] out of \the [src]."
 		P.loc = user.loc
@@ -134,7 +134,7 @@
 		new /obj/item/stack/staples(user.loc, ammo)
 		ammo = 0
 
-/obj/item/weapon/staplegun/attackby(obj/item/I, mob/user)
+/obj/item/staplegun/attackby(obj/item/I, mob/user)
 	..()
 	if(istype(I, /obj/item/stack/staples))
 		if(ammo < max_ammo)
@@ -152,7 +152,7 @@
 		else
 			user << "<span class='notice'>\The [src] is already full!</span>"
 
-	if(istype(I, /obj/item/weapon/paper))
+	if(istype(I, /obj/item/paper))
 		if(!istype(P))
 			user.drop_item()
 			I.loc = src
@@ -197,15 +197,15 @@
 		else
 			overlays += "[icon_state]_open"
 
-/obj/structure/closet/coffin/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/closet/coffin/attackby(obj/item/W, mob/user, params)
 	if(user in src)
 		return
 	if(opened)
 		if(user.drop_item())
 			W.forceMove(loc)
 			return 1
-	else if(istype(W, /obj/item/weapon/staplegun) && !welded)
-		var/obj/item/weapon/staplegun/WS = W
+	else if(istype(W, /obj/item/staplegun) && !welded)
+		var/obj/item/staplegun/WS = W
 		if(WS.ammo >= 10)
 			user << "<span class='notice'>You begin stapling \the [src]...</span>"
 			playsound(loc, 'hippiestation/sound/weapons/staplegun.ogg', 50, 1)
@@ -219,7 +219,7 @@
 				user.visible_message("[user.name] has stapled [src] shut with \the [WS].", "<span class='warning'>You staple [src] shut.</span>")
 				WS.ammo = WS.ammo-10
 			return
-	else if(istype(W, /obj/item/weapon/crowbar) && welded)
+	else if(istype(W, /obj/item/crowbar) && welded)
 		user << "<span class='notice'>You begin prying out staples from \the [src]...</span>"
 		playsound(loc, 'sound/items/crowbar.ogg', 50, 1)
 		if(do_after(user,80,5,1, target = src))
@@ -234,7 +234,7 @@
 				new/obj/item/stack/staples(src.loc)
 			return
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		if(isinspace() && !anchored)
 			return
 		anchored = !anchored

@@ -45,7 +45,7 @@
 
 /obj/machinery/power/smes/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smes(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/smes(null)
 	B.apply_default_parts(src)
 
 	spawn(5)
@@ -64,25 +64,25 @@
 		update_icon()
 	return
 
-/obj/item/weapon/circuitboard/machine/smes
+/obj/item/circuitboard/machine/smes
 	name = "SMES (Machine Board)"
 	build_path = /obj/machinery/power/smes
 	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
-							/obj/item/weapon/stock_parts/cell = 5,
-							/obj/item/weapon/stock_parts/capacitor = 1)
-	def_components = list(/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high/empty)
+							/obj/item/stock_parts/cell = 5,
+							/obj/item/stock_parts/capacitor = 1)
+	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high/empty)
 
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0
 	var/MC = 0
 	var/C
-	for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
+	for(var/obj/item/stock_parts/capacitor/CP in component_parts)
 		IO += CP.rating
 	input_level_max = initial(input_level_max) * IO
 	output_level_max = initial(output_level_max) * IO
-	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
+	for(var/obj/item/stock_parts/cell/PC in component_parts)
 		MC += PC.maxcharge
 		C += PC.charge
 	capacity = MC / (15000) * 1e6
@@ -163,7 +163,7 @@
 		return
 
 	//disassembling the terminal
-	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
+	if(istype(I, /obj/item/wirecutters) && terminal && panel_open)
 		terminal.dismantle(user, I)
 		return
 
@@ -174,12 +174,12 @@
 		log_game("[src] has been deconstructed by [key_name(user)]")
 		investigate_log("SMES deconstructed by [key_name(user)]", INVESTIGATE_SINGULO)
 		return
-	else if(panel_open && istype(I, /obj/item/weapon/crowbar))
+	else if(panel_open && istype(I, /obj/item/crowbar))
 		return
 
 	return ..()
 
-/obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/weapon/crowbar/C)
+/obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/crowbar/C)
 	if(istype(C) && terminal)
 		to_chat(usr, "<span class='warning'>You must first remove the power terminal!</span>")
 		return FALSE
@@ -187,7 +187,7 @@
 	return ..()
 
 /obj/machinery/power/smes/on_deconstruction()
-	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
+	for(var/obj/item/stock_parts/cell/cell in component_parts)
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()

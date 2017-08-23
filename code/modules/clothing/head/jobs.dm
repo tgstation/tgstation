@@ -79,7 +79,7 @@
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
 	icon_state = "detective"
 	var/candy_cooldown = 0
-	pockets = /obj/item/weapon/storage/internal/pocket/small/detective
+	pockets = /obj/item/storage/internal/pocket/small/detective
 	dog_fashion = /datum/dog_fashion/head/detective
 
 /obj/item/clothing/head/fedora/det_hat/AltClick()
@@ -87,7 +87,7 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		if(candy_cooldown < world.time)
-			var/obj/item/weapon/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(src)
+			var/obj/item/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/reagent_containers/food/snacks/candy_corn(src)
 			M.put_in_hands(CC)
 			to_chat(M, "You slip a candy corn from your hat.")
 			candy_cooldown = world.time+1200

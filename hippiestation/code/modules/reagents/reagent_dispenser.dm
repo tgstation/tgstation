@@ -36,12 +36,12 @@
 	reagent_icon = new
 	update_icon()
 
-/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
 	..()
 	update_icon()
 
-/obj/structure/reagent_dispensers/chemical/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/structure/reagent_dispensers/chemical/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		if(container_type & DRAWABLE)
 			container_type |= OPENCONTAINER
 			container_type &= ~DRAWABLE

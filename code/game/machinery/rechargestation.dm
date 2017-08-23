@@ -14,29 +14,29 @@
 
 /obj/machinery/recharge_station/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cyborgrecharger(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/cyborgrecharger(null)
 	B.apply_default_parts(src)
 	update_icon()
 
-/obj/item/weapon/circuitboard/machine/cyborgrecharger
+/obj/item/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger (Machine Board)"
 	build_path = /obj/machinery/recharge_station
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
-							/obj/item/weapon/stock_parts/capacitor = 2,
-							/obj/item/weapon/stock_parts/cell = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
+							/obj/item/stock_parts/capacitor = 2,
+							/obj/item/stock_parts/cell = 1,
+							/obj/item/stock_parts/manipulator = 1)
 	def_components = list(
-		/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high)
+		/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
 	repairs = 0
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_speed += C.rating * 100
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		repairs += M.rating - 1
-	for(var/obj/item/weapon/stock_parts/cell/C in component_parts)
+	for(var/obj/item/stock_parts/cell/C in component_parts)
 		recharge_speed *= C.maxcharge / 10000
 
 /obj/machinery/recharge_station/process()

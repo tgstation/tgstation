@@ -1,4 +1,4 @@
-/obj/item/weapon/grenade/smokebomb
+/obj/item/grenade/smokebomb
 	name = "smoke grenade"
 	desc = "The word 'Dank' is scribbled on it in crayon."
 	icon = 'icons/obj/grenade.dmi'
@@ -8,16 +8,16 @@
 	slot_flags = SLOT_BELT
 	var/datum/effect_system/smoke_spread/bad/smoke
 
-/obj/item/weapon/grenade/smokebomb/New()
+/obj/item/grenade/smokebomb/New()
 	..()
 	src.smoke = new /datum/effect_system/smoke_spread/bad
 	src.smoke.attach(src)
 
-/obj/item/weapon/grenade/smokebomb/Destroy()
+/obj/item/grenade/smokebomb/Destroy()
 	qdel(smoke)
 	return ..()
 
-/obj/item/weapon/grenade/smokebomb/prime()
+/obj/item/grenade/smokebomb/prime()
 	update_mob()
 	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 	smoke.set_up(4, src)

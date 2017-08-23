@@ -92,7 +92,7 @@
 	icon_state = "chairold";
 	dir = 1
 	},
-/obj/item/weapon/crowbar/large{
+/obj/item/crowbar/large{
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy..";
 	force = 20;
 	name = "heavy crowbar"

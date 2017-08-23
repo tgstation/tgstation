@@ -47,17 +47,17 @@
 
 /obj/machinery/telecomms/relay/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/relay(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/telecomms/relay(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/telecomms/relay
+/obj/item/circuitboard/machine/telecomms/relay
 	name = "Relay Mainframe (Machine Board)"
 	build_path = /obj/machinery/telecomms/relay
 	origin_tech = "programming=2;engineering=2;bluespace=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/subspace/filter = 2)
+							/obj/item/stock_parts/subspace/filter = 2)
 
 
 

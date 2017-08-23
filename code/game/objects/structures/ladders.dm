@@ -88,7 +88,7 @@
 /obj/structure/ladder/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/ladder/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/ladder/attackby(obj/item/W, mob/user, params)
 	return attack_hand(user)
 
 /obj/structure/ladder/attack_ghost(mob/dead/observer/user)

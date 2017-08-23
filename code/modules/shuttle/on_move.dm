@@ -297,7 +297,7 @@ All ShuttleMove procs go here
 
 /************************************Item move procs************************************/
 
-/obj/item/weapon/storage/pod/onShuttleMove()
+/obj/item/storage/pod/onShuttleMove()
 	unlocked = TRUE
 	// If the pod was launched, the storage will always open.
 	return ..()

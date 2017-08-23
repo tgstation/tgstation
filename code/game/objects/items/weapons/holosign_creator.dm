@@ -1,4 +1,4 @@
-/obj/item/weapon/holosign_creator
+/obj/item/holosign_creator
 	name = "holographic sign projector"
 	desc = "A handy-dandy holographic projector that displays a janitorial sign."
 	icon = 'icons/obj/device.dmi'
@@ -19,7 +19,7 @@
 	var/holosign_type = /obj/structure/holosign/wetsign
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
-/obj/item/weapon/holosign_creator/afterattack(atom/target, mob/user, flag)
+/obj/item/holosign_creator/afterattack(atom/target, mob/user, flag)
 	if(flag)
 		if(!check_allowed_items(target, 1))
 			return
@@ -50,17 +50,17 @@
 				else
 					to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
 
-/obj/item/weapon/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/weapon/holosign_creator/attack_self(mob/user)
+/obj/item/holosign_creator/attack_self(mob/user)
 	if(signs.len)
 		for(var/H in signs)
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
 
 
-/obj/item/weapon/holosign_creator/security
+/obj/item/holosign_creator/security
 	name = "security holobarrier projector"
 	desc = "A holographic projector that creates holographic security barriers."
 	icon_state = "signmaker_sec"
@@ -68,7 +68,7 @@
 	creation_time = 30
 	max_signs = 6
 
-/obj/item/weapon/holosign_creator/engineering
+/obj/item/holosign_creator/engineering
 	name = "engineering holobarrier projector"
 	desc = "A holographic projector that creates holographic engineering barriers."
 	icon_state = "signmaker_engi"
@@ -76,7 +76,7 @@
 	creation_time = 30
 	max_signs = 6
 
-/obj/item/weapon/holosign_creator/atmos
+/obj/item/holosign_creator/atmos
 	name = "ATMOS holofan projector"
 	desc = "A holographic projector that creates holographic barriers that prevent changes in atmosphere conditions."
 	icon_state = "signmaker_engi"
@@ -84,7 +84,7 @@
 	creation_time = 0
 	max_signs = 3
 
-/obj/item/weapon/holosign_creator/cyborg
+/obj/item/holosign_creator/cyborg
 	name = "Energy Barrier Projector"
 	desc = "A holographic projector that creates fragile energy fields"
 	creation_time = 15
@@ -92,7 +92,7 @@
 	holosign_type = /obj/structure/holosign/barrier/cyborg
 	var/shock = 0
 
-/obj/item/weapon/holosign_creator/cyborg/attack_self(mob/user)
+/obj/item/holosign_creator/cyborg/attack_self(mob/user)
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 

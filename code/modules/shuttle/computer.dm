@@ -4,13 +4,13 @@
 	icon_keyboard = "tech_key"
 	light_color = LIGHT_COLOR_CYAN
 	req_access = list( )
-	circuit = /obj/item/weapon/circuitboard/computer/shuttle
+	circuit = /obj/item/circuitboard/computer/shuttle
 	var/shuttleId
 	var/possible_destinations = ""
 	var/admin_controlled
 	var/no_destination_swap = 0
 
-/obj/machinery/computer/shuttle/Initialize(mapload, obj/item/weapon/circuitboard/computer/shuttle/C)
+/obj/machinery/computer/shuttle/Initialize(mapload, obj/item/circuitboard/computer/shuttle/C)
 	. = ..()
 	if(istype(C))
 		possible_destinations = C.possible_destinations

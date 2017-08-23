@@ -1,14 +1,14 @@
 #define MAKESHIFT_BATON_CD 1.5
 
-/obj/item/weapon/melee/baton
+/obj/item/melee/baton
 	var/stamforce = 80
 
-/obj/item/weapon/melee/baton/cattleprod/hippie_cattleprod
+/obj/item/melee/baton/cattleprod/hippie_cattleprod
 	w_class = WEIGHT_CLASS_NORMAL
 	stunforce = 0
 
 
-/obj/item/weapon/melee/baton/proc/baton_stun_hippie_makeshift(mob/living/L, mob/user)
+/obj/item/melee/baton/proc/baton_stun_hippie_makeshift(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that

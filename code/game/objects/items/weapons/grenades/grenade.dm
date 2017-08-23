@@ -1,4 +1,4 @@
-/obj/item/weapon/grenade
+/obj/item/grenade
 	name = "grenade"
 	desc = "It has an adjustable timer."
 	w_class = WEIGHT_CLASS_SMALL
@@ -17,13 +17,13 @@
 	var/det_time = 50
 	var/display_timer = 1
 
-/obj/item/weapon/grenade/deconstruct(disassembled = TRUE)
+/obj/item/grenade/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		prime()
 	if(!QDELETED(src))
 		qdel(src)
 
-/obj/item/weapon/grenade/proc/clown_check(mob/living/carbon/human/user)
+/obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 		active = 1
@@ -37,7 +37,7 @@
 	return 1
 
 
-/obj/item/weapon/grenade/examine(mob/user)
+/obj/item/grenade/examine(mob/user)
 	..()
 	if(display_timer)
 		if(det_time > 1)
@@ -46,7 +46,7 @@
 			to_chat(user, "\The [src] is set for instant detonation.")
 
 
-/obj/item/weapon/grenade/attack_self(mob/user)
+/obj/item/grenade/attack_self(mob/user)
 	if(!active)
 		if(clown_check(user))
 			preprime(user)
@@ -54,7 +54,7 @@
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
 
-/obj/item/weapon/grenade/proc/preprime(mob/user)
+/obj/item/grenade/proc/preprime(mob/user)
 	if(user)
 		to_chat(user, "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>")
 	playsound(loc, 'sound/weapons/armbomb.ogg', 60, 1)
@@ -71,16 +71,16 @@
 
 	addtimer(CALLBACK(src, .proc/prime), det_time)
 
-/obj/item/weapon/grenade/proc/prime()
+/obj/item/grenade/proc/prime()
 
-/obj/item/weapon/grenade/proc/update_mob()
+/obj/item/grenade/proc/update_mob()
 	if(ismob(loc))
 		var/mob/M = loc
 		M.dropItemToGround(src)
 
 
-/obj/item/weapon/grenade/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/item/grenade/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		switch(det_time)
 			if ("1")
 				det_time = 10
@@ -98,14 +98,14 @@
 	else
 		return ..()
 
-/obj/item/weapon/grenade/attack_hand()
+/obj/item/grenade/attack_hand()
 	walk(src, null, null)
 	..()
 
-/obj/item/weapon/grenade/attack_paw(mob/user)
+/obj/item/grenade/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/weapon/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/obj/item/projectile/P = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")

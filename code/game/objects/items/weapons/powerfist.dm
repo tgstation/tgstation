@@ -1,4 +1,4 @@
-/obj/item/weapon/melee/powerfist
+/obj/item/melee/powerfist
 	name = "power-fist"
 	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
 	icon_state = "powerfist"
@@ -17,10 +17,10 @@
 	var/click_delay = 1.5
 	var/fisto_setting = 1
 	var/gasperfist = 3
-	var/obj/item/weapon/tank/internals/tank = null //Tank used for the gauntlet's piston-ram.
+	var/obj/item/tank/internals/tank = null //Tank used for the gauntlet's piston-ram.
 
 
-/obj/item/weapon/melee/powerfist/examine(mob/user)
+/obj/item/melee/powerfist/examine(mob/user)
 	..()
 	if(!in_range(user, src))
 		to_chat(user, "<span class='notice'>You'll need to get closer to see any more.</span>")
@@ -29,15 +29,15 @@
 		to_chat(user, "<span class='notice'>[bicon(tank)] It has \the [tank] mounted onto it.</span>")
 
 
-/obj/item/weapon/melee/powerfist/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/tank/internals))
+/obj/item/melee/powerfist/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/tank/internals))
 		if(!tank)
-			var/obj/item/weapon/tank/internals/IT = W
+			var/obj/item/tank/internals/IT = W
 			if(IT.volume <= 3)
 				to_chat(user, "<span class='warning'>\The [IT] is too small for \the [src].</span>")
 				return
 			updateTank(W, 0, user)
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		switch(fisto_setting)
 			if(1)
 				fisto_setting = 2
@@ -47,12 +47,12 @@
 				fisto_setting = 1
 		playsound(loc, W.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/screwdriver))
 		if(tank)
 			updateTank(tank, 1, user)
 
 
-/obj/item/weapon/melee/powerfist/proc/updateTank(obj/item/weapon/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
+/obj/item/melee/powerfist/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)
 		if(!tank)
 			to_chat(user, "<span class='notice'>\The [src] currently has no tank attached to it.</span>")
@@ -71,7 +71,7 @@
 		tank = thetank
 
 
-/obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user)
+/obj/item/melee/powerfist/attack(mob/living/target, mob/living/user)
 	if(!tank)
 		to_chat(user, "<span class='warning'>\The [src] can't operate without a source of gas!</span>")
 		return

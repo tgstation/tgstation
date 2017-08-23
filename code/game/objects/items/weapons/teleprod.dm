@@ -1,4 +1,4 @@
-/obj/item/weapon/melee/baton/cattleprod/teleprod
+/obj/item/melee/baton/cattleprod/teleprod
 	name = "teleprod"
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
 	w_class = WEIGHT_CLASS_NORMAL
@@ -7,7 +7,7 @@
 	origin_tech = "combat=2;bluespace=4;materials=3"
 	slot_flags = null
 
-/obj/item/weapon/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
+/obj/item/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()
 	if(status && user.disabilities & CLUMSY && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
@@ -26,10 +26,10 @@
 			else
 				do_teleport(M, get_turf(M), 15)
 
-/obj/item/weapon/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
-	if(istype(I, /obj/item/weapon/ore/bluespace_crystal))
+/obj/item/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
+	if(istype(I, /obj/item/ore/bluespace_crystal))
 		if(!cell)
-			var/obj/item/weapon/melee/baton/cattleprod/teleprod/S = new /obj/item/weapon/melee/baton/cattleprod/teleprod
+			var/obj/item/melee/baton/cattleprod/teleprod/S = new /obj/item/melee/baton/cattleprod/teleprod
 			remove_item_from_storage(user)
 			qdel(src)
 			qdel(I)

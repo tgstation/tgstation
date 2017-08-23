@@ -5,7 +5,7 @@
 	return 0
 
 /mob/living/carbon/isloyal()
-	for(var/obj/item/weapon/implant/mindshield/L in implants)
+	for(var/obj/item/implant/mindshield/L in implants)
 		return 1
 
 

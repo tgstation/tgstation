@@ -140,7 +140,7 @@
 	..()
 
 
-/turf/closed/wall/attackby(obj/item/weapon/W, mob/user, params)
+/turf/closed/wall/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -165,7 +165,7 @@
 		return
 
 
-/turf/closed/wall/proc/try_wallmount(obj/item/weapon/W, mob/user, turf/T)
+/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user, turf/T)
 	//check for wall mounted frames
 	if(istype(W, /obj/item/wallframe))
 		var/obj/item/wallframe/F = W
@@ -173,16 +173,16 @@
 			F.attach(src, user)
 		return 1
 	//Poster stuff
-	else if(istype(W, /obj/item/weapon/poster))
+	else if(istype(W, /obj/item/poster))
 		place_poster(W,user)
 		return 1
 
 	return 0
 
 
-/turf/closed/wall/proc/try_decon(obj/item/weapon/W, mob/user, turf/T)
-	if( istype(W, /obj/item/weapon/weldingtool) )
-		var/obj/item/weapon/weldingtool/WT = W
+/turf/closed/wall/proc/try_decon(obj/item/W, mob/user, turf/T)
+	if( istype(W, /obj/item/weldingtool) )
+		var/obj/item/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
 			to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
 			playsound(src, W.usesound, 100, 1)
@@ -193,7 +193,7 @@
 					to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 					dismantle_wall()
 					return 1
-	else if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
+	else if( istype(W, /obj/item/gun/energy/plasmacutter) )
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
 		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		if(do_after(user, slicing_duration*W.toolspeed, target = src))
@@ -207,9 +207,9 @@
 	return 0
 
 
-/turf/closed/wall/proc/try_destroy(obj/item/weapon/W, mob/user, turf/T)
-	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
-		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
+/turf/closed/wall/proc/try_destroy(obj/item/W, mob/user, turf/T)
+	if(istype(W, /obj/item/pickaxe/drill/jackhammer))
+		var/obj/item/pickaxe/drill/jackhammer/D = W
 		if(!iswallturf(src) || !user || !W || !T)
 			return 1
 		if( user.loc == T && user.get_active_held_item() == W )
@@ -263,7 +263,7 @@
 	if(.)
 		ChangeTurf(/turf/closed/wall/clockwork)
 
-/turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/turf/closed/wall/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	return 0
 
 /turf/closed/wall/acid_act(acidpwr, acid_volume)
@@ -274,13 +274,13 @@
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)
 
-/turf/closed/wall/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+/turf/closed/wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 26)
 	return FALSE
 
-/turf/closed/wall/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+/turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the wall.</span>")

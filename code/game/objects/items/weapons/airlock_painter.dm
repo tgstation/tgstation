@@ -1,4 +1,4 @@
-/obj/item/weapon/airlock_painter
+/obj/item/airlock_painter
 	name = "airlock painter"
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks. Use it on an airlock during or after construction to change the paintjob."
 	icon = 'icons/obj/objects.dmi'
@@ -15,13 +15,13 @@
 
 	var/obj/item/device/toner/ink = null
 
-/obj/item/weapon/airlock_painter/New()
+/obj/item/airlock_painter/New()
 	..()
 	ink = new /obj/item/device/toner(src)
 
 //This proc doesn't just check if the painter can be used, but also uses it.
 //Only call this if you are certain that the painter will be used right after this check!
-/obj/item/weapon/airlock_painter/proc/use(mob/user)
+/obj/item/airlock_painter/proc/use(mob/user)
 	if(can_use(user))
 		ink.charges--
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
@@ -32,7 +32,7 @@
 //This proc only checks if the painter can be used.
 //Call this if you don't want the painter to be used right after this check, for example
 //because you're expecting user input.
-/obj/item/weapon/airlock_painter/proc/can_use(mob/user)
+/obj/item/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
 		to_chat(user, "<span class='notice'>There is no toner cartridge installed in [src]!</span>")
 		return 0
@@ -42,7 +42,7 @@
 	else
 		return 1
 
-/obj/item/weapon/airlock_painter/suicide_act(mob/user)
+/obj/item/airlock_painter/suicide_act(mob/user)
 	var/obj/item/organ/lungs/L = user.getorganslot("lungs")
 
 	if(can_use(user) && L)
@@ -89,7 +89,7 @@
 		return SHAME
 
 
-/obj/item/weapon/airlock_painter/examine(mob/user)
+/obj/item/airlock_painter/examine(mob/user)
 	..()
 	if(!ink)
 		to_chat(user, "<span class='notice'>It doesn't have a toner cartridge installed.</span>")
@@ -104,7 +104,7 @@
 	to_chat(user, "<span class='notice'>Its ink levels look [ink_level].</span>")
 
 
-/obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/airlock_painter/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/toner))
 		if(ink)
 			to_chat(user, "<span class='notice'>[src] already contains \a [ink].</span>")
@@ -117,7 +117,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/airlock_painter/attack_self(mob/user)
+/obj/item/airlock_painter/attack_self(mob/user)
 	if(ink)
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		ink.loc = user.loc

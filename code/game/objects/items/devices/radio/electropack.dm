@@ -35,7 +35,7 @@
 			return
 	..()
 
-/obj/item/device/electropack/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
