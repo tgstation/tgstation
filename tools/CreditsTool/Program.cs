@@ -105,21 +105,21 @@ namespace CreditsTool
 			return result;
 		}
 
-		static IList<IDictionary<string, object>> LoadPages(WebResponse firstResponse, string repoOwner, string repoName, string authToken)
+		static IEnumerable<IDictionary<string, object>> LoadPages(WebResponse firstResponse, string repoOwner, string repoName, string authToken)
 		{
 			int numPages = GetNumPagesOfContributors(firstResponse);
 			Console.WriteLine(String.Format("Downloading {0} pages of contributor info...", numPages));
 			//load and combine json for all pages
 			var jss = new JavaScriptSerializer();
-			List<IDictionary<string, object>> json;
 			using (var sr = new StreamReader(firstResponse.GetResponseStream()))
-				json = jss.Deserialize<List<IDictionary<string, object>>>(sr.ReadToEnd());
+				foreach (var J in jss.Deserialize<IEnumerable<IDictionary<string, object>>>(sr.ReadToEnd()))
+					yield return J;
 
 			//skip the first
 			for (var I = 2; I <= numPages; ++I)
 				using (var sr = new StreamReader(GetPageResponse(repoOwner, repoName, authToken, I).GetResponseStream()))
-					json.AddRange(jss.Deserialize<List<IDictionary<string, object>>>(sr.ReadToEnd()));
-			return json;
+					foreach (var J in jss.Deserialize<IEnumerable<IDictionary<string, object>>>(sr.ReadToEnd()))
+						yield return J;
 		}
 
 		static int GetNumPagesOfContributors(WebResponse response)
