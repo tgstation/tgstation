@@ -10,6 +10,11 @@
 								  //if TESTING is enabled, qdel will call this object's find_references() verb.
 //defines for the gc_destroyed var
 
+#define GC_QUEUE_PREQUEUE 1
+#define GC_QUEUE_CHECK 2
+#define GC_QUEUE_ENDODONTICS 3
+#define GC_QUEUE_HARDDELETE 4
+
 #define GC_QUEUED_FOR_QUEUING -1
 #define GC_QUEUED_FOR_HARD_DEL -2
 #define GC_CURRENTLY_BEING_QDELETED -3
