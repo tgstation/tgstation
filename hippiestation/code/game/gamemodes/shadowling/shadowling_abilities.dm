@@ -11,9 +11,48 @@
 
 
 
-/obj/effect/proc_holder/spell/targeted/glare //Stuns and mutes a human target for 10 seconds
+
+/obj/effect/proc_holder/spell/targeted/sling //Stuns and mutes a human target for 10 seconds
+	ranged_mousepointer = 'icons/effects/cult_target.dmi'
+	var/mob/living/user
+	var/mob/living/target
+
+/obj/effect/proc_holder/spell/targeted/sling/Click()
+	var/mob/living/user = usr
+	if(!istype(user))
+		return
+	var/msg
+	if(!can_cast(user))
+		msg = "<span class='warning'>You can no longer cast [name]!</span>"
+		remove_ranged_ability(msg)
+		return
+	if(active)
+		remove_ranged_ability()
+	else
+		add_ranged_ability(user, null, TRUE)
+
+/obj/effect/proc_holder/spell/targeted/sling/InterceptClickOn(mob/living/caller, params, atom/t)
+	if(!ishuman(t))
+		to_chat(caller, "<span class='warning'>You can't use this ability on that!</span>")
+		revert_cast()
+		return
+	if(!ishuman(t))
+		to_chat(caller, "<span class='warning'>You may only use this ability on humans!</span>")
+		revert_cast()
+		return
+	user = caller
+	target = t
+	if(!shadowling_check(user))
+		revert_cast()
+		return
+
+/obj/effect/proc_holder/spell/targeted/sling/revert_cast()
+	. = ..()
+	remove_ranged_ability()
+
+/obj/effect/proc_holder/spell/targeted/sling/glare //Stuns and mutes a human target for 10 seconds
 	name = "Glare"
-	desc = "Stuns and mutes a target for a decent duration."
+	desc = "Causes damage to the target's motor and speech abilities."
 	panel = "Shadowling Abilities"
 	charge_max = 300
 	human_req = 1
@@ -21,37 +60,34 @@
 	action_icon_state = "glare"
 	action_icon = 'hippiestation/icons/mob/actions.dmi'
 
-/obj/effect/proc_holder/spell/targeted/glare/cast(list/targets,mob/user = usr)
-	for(var/mob/living/target in targets)
-		if(!ishuman(target))
-			to_chat(user, "<span class='warning'>You may only glare at humans!</span>")
-			revert_cast()
-			return
-		if(!shadowling_check(user))
-			revert_cast()
-			return
-		if(target.stat)
-			to_chat(user, "<span class='warning'>[target] must be conscious!</span>")
-			revert_cast()
-			return
-		if(is_shadow_or_thrall(target))
-			to_chat(user, "<span class='warning'>You cannot glare at allies!</span>")
-			revert_cast()
-			return
-		var/mob/living/L = user
-		if(L.incorporeal_move) //Other abilities can still be used, but glare needed balancing
-			to_chat(user, "<span class='warning'>You cannot glare while shadow walking!</span>")
-			revert_cast()
-			return
-		var/mob/living/carbon/human/M = target
-		user.visible_message("<span class='warning'><b>[user]'s eyes flash a blinding red!</b></span>")
-		target.visible_message("<span class='danger'>[target] freezes in place, their eyes glazing over...</span>")
-		if(in_range(target, user))
-			to_chat(target, "<span class='userdanger'>Your gaze is forcibly drawn into [user]'s eyes, and you are mesmerized by the heavenly lights...</span>")
-		else //Only alludes to the shadowling if the target is close by
-			to_chat(target, "<span class='userdanger'>Red lights suddenly dance in your vision, and you are mesmerized by their heavenly beauty...</span>")
+
+/obj/effect/proc_holder/spell/targeted/sling/glare/InterceptClickOn(mob/living/caller, params, atom/t)
+	. = ..()
+	if(target.stat)
+		to_chat(user, "<span class='warning'>[target] must be conscious!</span>")
+		revert_cast()
+		return
+	if(is_shadow_or_thrall(target))
+		to_chat(user, "<span class='warning'>You cannot glare at allies!</span>")
+		revert_cast()
+		return
+	var/mob/living/carbon/human/M = target
+	user.visible_message("<span class='warning'><b>[user]'s eyes flash a purpleish-red!</b></span>")
+	var/distance = get_dist(target, user)
+	if (distance <= 1) //Melee
+		target.visible_message("<span class='danger'>[target] suddendly collapses...</span>")
+		to_chat(target, "<span class='userdanger'>A purple light flashes across your vision, and you lose control of your movements!</span>")
 		target.Stun(100)
 		M.silent += 10
+	else //Distant glare
+		var/loss = 100 - ((distance - 1) * 15)
+		target.adjustStaminaLoss(loss)
+		target.stuttering = loss
+		to_chat(target, "<span class='userdanger'>A purple light flashes across your vision, and exhaustion floods your body...</span>")
+		target.visible_message("<span class='danger'>[target] looks very tired...</span>")
+	charge_counter = 0
+	start_recharge()
+	remove_ranged_ability()
 
 
 /obj/effect/proc_holder/spell/aoe_turf/veil //Puts out most nearby lights except for flares and yellow slime cores
@@ -244,6 +280,10 @@
 		target.setOxyLoss(0) //In case the shadowling was choking them out
 		target.mind.special_role = "thrall"
 		SSticker.mode.add_thrall(target.mind)
+		if(target.reagents.has_reagent("frostoil")) //Stabilize body temp incase the sling froze them earlier
+			target.reagents.remove_reagent("frostoil", 100)
+			to_chat(target, "<span class='notice'>You feel warmer... it feels good.</span>")
+			target.bodytemperature = 310
 
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind //Lets a shadowling talk to its allies
@@ -291,12 +331,8 @@
 	user.visible_message("<span class='warning'>[user]'s skin suddenly bubbles and shifts around their body!</span>", \
 						 "<span class='shadowling'>You regenerate your protective armor and cleanse your form of defects.</span>")
 	user.adjustCloneLoss(user.getCloneLoss())
-	user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(user), slot_w_uniform)
-	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(user), slot_shoes)
 	user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(user), slot_wear_suit)
 	user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(user), slot_head)
-	user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(user), slot_gloves)
-	user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(user), slot_wear_mask)
 	user.set_species(/datum/species/shadow/ling)
 
 
@@ -506,7 +542,7 @@
 				thrallToRevive.set_species(/datum/species/shadow/ling/lesser)
 				thrallToRevive.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/lesser_glare)
 				thrallToRevive.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/lesser_shadow_walk)
-				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))
+				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/sling/glare(null))
 			if("Revive")
 				if(!is_thrall(thrallToRevive))
 					to_chat(user, "<span class='warning'>[thrallToRevive] is not a thrall.</span>")
@@ -694,7 +730,7 @@
 // YES THEY'RE OP, BUT THEY'VE WON AT THE POINT WHERE THEY HAVE THIS, SO WHATEVER. //
 
 
-/obj/effect/proc_holder/spell/targeted/annihilate //Gibs someone instantly.
+/obj/effect/proc_holder/spell/targeted/sling/annihilate //Gibs someone instantly.
 	name = "Annihilate"
 	desc = "Gibs someone instantly."
 	panel = "Ascendant"
@@ -705,30 +741,34 @@
 	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/magic/Staff_Chaos.ogg'
 
-/obj/effect/proc_holder/spell/targeted/annihilate/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
+/obj/effect/proc_holder/spell/targeted/sling/annihilate/InterceptClickOn(mob/living/caller, params, atom/t)
+	. = ..()
+	var/mob/living/boom = target
 	if(user.incorporeal_move)
 		to_chat(user, "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>")
 		revert_cast()
 		return
-	for(var/mob/living/boom in targets)
-		if(is_shadow(boom)) //Used to not work on thralls. Now it does so you can PUNISH THEM LIKE THE WRATHFUL GOD YOU ARE.
-			to_chat(user, "<span class='warning'>Making an ally explode seems unwise.<span>")
-			revert_cast()
-			return
+	if(is_shadow(boom)) //Used to not work on thralls. Now it does so you can PUNISH THEM LIKE THE WRATHFUL GOD YOU ARE.
+		to_chat(user, "<span class='warning'>Making an ally explode seems unwise.<span>")
+		revert_cast()
+		return
+	if(istype(boom, /mob/living/simple_animal/pet/dog/corgi))
+		to_chat(user, "<span class='warning'>Not even we are that bad of monsters..<span>")
+		revert_cast()
+		return
+	if (!boom.is_holding(/obj/item/weapon/storage/backpack/holding)) //so people actually have a chance to kill ascended slings without being insta-sploded
+		user.visible_message("<span class='warning'>[user]'s markings flare as they gesture at [boom]!</span>", \
+							"<span class='shadowling'>You direct a lance of telekinetic energy into [boom].</span>")
+		if(iscarbon(boom))
+			playsound(boom, 'sound/magic/Disintegrate.ogg', 100, 1)
+		boom.visible_message("<span class='userdanger'>[boom] explodes!</span>")
+		boom.gib()
+	else
+		to_chat(user, "<span class='warning'>The telekinetic energy is absorbed by the bluespace portal in [boom]'s hand!<span>")
+		to_chat(boom, "<span class='userdanger'>You feel a slight recoil from the bag of holding!<span>")
 
-		if (!boom.is_holding(/obj/item/weapon/storage/backpack/holding)) //so people actually have a chance to kill ascended slings without being insta-sploded
-			user.visible_message("<span class='warning'>[user]'s markings flare as they gesture at [boom]!</span>", \
-								"<span class='shadowling'>You direct a lance of telekinetic energy into [boom].</span>")
-			if(iscarbon(boom))
-				playsound(boom, 'sound/magic/Disintegrate.ogg', 100, 1)
-			boom.visible_message("<span class='userdanger'>[boom] explodes!</span>")
-			boom.gib()
-		else
-			to_chat(user, "<span class='warning'>The telekinetic energy is absorbed by the bluespace portal in [boom]'s hand!<span>")
-			to_chat(boom, "<span class='userdanger'>You feel a slight recoil from the bag of holding!<span>")
 
-
-/obj/effect/proc_holder/spell/targeted/hypnosis //Enthralls someone instantly. Nonlethal alternative to Annihilate
+/obj/effect/proc_holder/spell/targeted/sling/hypnosis //Enthralls someone instantly. Nonlethal alternative to Annihilate
 	name = "Hypnosis"
 	desc = "Instantly enthralls a human."
 	panel = "Ascendant"
@@ -738,34 +778,32 @@
 	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	action_icon_state = "enthrall"
 
-/obj/effect/proc_holder/spell/targeted/hypnosis/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
+/obj/effect/proc_holder/spell/targeted/sling/hypnosis/InterceptClickOn(mob/living/caller, params, atom/t)
 	if(user.incorporeal_move)
 		revert_cast()
 		to_chat(user, "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>")
 		return
 
-	for(var/mob/living/carbon/human/target in targets)
-		if(is_shadow_or_thrall(target))
-			to_chat(user, "<span class='warning'>You cannot enthrall an ally.<span>")
-			revert_cast()
-			return
-		if(!target.ckey || !target.mind)
-			to_chat(user, "<span class='warning'>The target has no mind.</span>")
-			revert_cast()
-			return
-		if(target.stat)
-			to_chat(user, "<span class='warning'>The target must be conscious.</span>")
-			revert_cast()
-			return
-		if(!ishuman(target))
-			to_chat(user, "<span class='warning'>You can only enthrall humans.</span>")
-			revert_cast()
-			return
-
-		to_chat(user, "<span class='shadowling'>You instantly rearrange <b>[target]</b>'s memories, hyptonitizing them into a thrall.</span>")
-		to_chat(target, "<span class='userdanger'><font size=3>An agonizing spike of pain drives into your mind, and--</font></span>")
-		target.mind.special_role = "thrall"
-		SSticker.mode.add_thrall(target.mind)
+	if(is_shadow_or_thrall(target))
+		to_chat(user, "<span class='warning'>You cannot enthrall an ally.<span>")
+		revert_cast()
+		return
+	if(!target.ckey || !target.mind)
+		to_chat(user, "<span class='warning'>The target has no mind.</span>")
+		revert_cast()
+		return
+	if(target.stat)
+		to_chat(user, "<span class='warning'>The target must be conscious.</span>")
+		revert_cast()
+		return
+	if(!ishuman(target))
+		to_chat(user, "<span class='warning'>You can only enthrall humans.</span>")
+		revert_cast()
+		return
+	to_chat(user, "<span class='shadowling'>You instantly rearrange <b>[target]</b>'s memories, hyptonitizing them into a thrall.</span>")
+	to_chat(target, "<span class='userdanger'><font size=3>An agonizing spike of pain drives into your mind, and--</font></span>")
+	target.mind.special_role = "thrall"
+	SSticker.mode.add_thrall(target.mind)
 
 
 /obj/effect/proc_holder/spell/self/shadowling_phase_shift //Permanent version of shadow walk with no drawback. Toggleable.
