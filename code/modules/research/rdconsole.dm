@@ -109,7 +109,6 @@ doesn't have toxins access.
 	selected_design = null
 	return ..()
 
-<<<<<<< HEAD
 /obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
 	//Loading a disk into it.
 	if(istype(D, /obj/item/disk))
@@ -129,19 +128,6 @@ doesn't have toxins access.
 			if(!user.drop_item())
 				to_chat(user, "<span class='danger'>[D] is stuck to your hand!</span>")
 				return
-=======
-/obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
-
-	//Loading a disk into it.
-	if(istype(D, /obj/item/disk))
-		if(t_disk || d_disk)
-			to_chat(user, "A disk is already loaded into the machine.")
-			return
-
-		if(istype(D, /obj/item/disk/tech_disk))
-			t_disk = D
-		else if (istype(D, /obj/item/disk/design_disk))
->>>>>>> tgstation/master
 			d_disk = D
 		else
 			to_chat(user, "<span class='danger'>Machine cannot accept disks in that format.</span>")
