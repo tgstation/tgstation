@@ -2,15 +2,15 @@ SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
 	init_order = INIT_ORDER_PERSISTENCE
 	flags = SS_NO_FIRE
-	var/savefile/secret_satchels
+	var/secret_satchels
 	var/list/satchel_blacklist 		= list() //this is a typecache
 	var/list/new_secret_satchels 	= list() //these are objects
-	var/old_secret_satchels 		= ""
+	var/list/old_secret_satchels 		= ""
 
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 
-	var/savefile/trophy_sav
+	var/trophy_sav
 	var/list/saved_trophies = list()
 
 /datum/controller/subsystem/persistence/Initialize()
@@ -21,52 +21,36 @@ SUBSYSTEM_DEF(persistence)
 	..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
-	secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
+	secret_satchels = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
+	if(!fexists(secret_satchels))
+		return
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))
-	secret_satchels[SSmapping.config.map_name] >> old_secret_satchels
-
-	var/list/expanded_old_satchels = list()
-	var/placed_satchels = 0
-
-	if(!isnull(old_secret_satchels))
-		expanded_old_satchels = splittext(old_secret_satchels,"#")
-		if(PlaceSecretSatchel(expanded_old_satchels))
-			placed_satchels++
-	else
-		expanded_old_satchels.len = 0
+	var/list/json = list()
+	json = json_decode(file2text(secret_satchels))
+	old_secret_satchels = json["data"]
+	var/placed_satchel = 0
+	if(old_secret_satchels.len)
+		if(old_secret_satchels.len >= 20) //guards against low drop pools assuring that one player cannot reliably find his own gear.
+			var/pos = rand(1, old_secret_satchels.len)
+			old_secret_satchels.Cut(pos, pos+1)
+			var/obj/item/storage/backpack/satchel/flat/F = new()
+			F.x = old_secret_satchels[pos]["x"]
+			F.y = old_secret_satchels[pos]["y"]
+			F.z = ZLEVEL_STATION
+			var/path = text2path(old_secret_satchels[pos]["saved_obj"])
+			if(!ispath(path))
+				return
+			if(isfloorturf(F.loc) && !istype(F.loc, /turf/open/floor/plating/))
+				F.hide(1)
+			new path(F)
+			placed_satchel++
 
 	var/list/free_satchels = list()
 	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION)))) //Nontrivially expensive but it's roundstart only
 		if(isfloorturf(T) && !istype(T, /turf/open/floor/plating/))
 			free_satchels += new /obj/item/storage/backpack/satchel/flat/secret(T)
-			if(!isemptylist(free_satchels) && ((free_satchels.len + placed_satchels) >= (50 - expanded_old_satchels.len) * 0.1)) //up to six tiles, more than enough to kill anything that moves
+			if(!isemptylist(free_satchels) && ((free_satchels.len + placed_satchel) >= (50 - old_secret_satchels.len) * 0.1)) //up to six tiles, more than enough to kill anything that moves
 				break
-
-/datum/controller/subsystem/persistence/proc/PlaceSecretSatchel(list/expanded_old_satchels)
-	var/satchel_string
-
-	if(expanded_old_satchels.len >= 20) //guards against low drop pools assuring that one player cannot reliably find his own gear.
-		satchel_string = pick_n_take(expanded_old_satchels)
-
-	old_secret_satchels = jointext(expanded_old_satchels,"#")
-	WRITE_FILE(secret_satchels[SSmapping.config.map_name], old_secret_satchels)
-
-	var/list/chosen_satchel = splittext(satchel_string,"|")
-	if(!chosen_satchel || isemptylist(chosen_satchel) || chosen_satchel.len != 3) //Malformed
-		return 0
-
-	var/path = text2path(chosen_satchel[3]) //If the item no longer exist, this returns null
-	if(!path)
-		return 0
-
-	var/obj/item/storage/backpack/satchel/flat/F = new()
-	F.x = text2num(chosen_satchel[1])
-	F.y = text2num(chosen_satchel[2])
-	F.z = ZLEVEL_STATION
-	if(isfloorturf(F.loc) && !istype(F.loc, /turf/open/floor/plating/))
-		F.hide(1)
-	new path(F)
-	return 1
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
 	for(var/mob/living/simple_animal/parrot/Poly/P in GLOB.living_mob_list)
@@ -74,14 +58,16 @@ SUBSYSTEM_DEF(persistence)
 		break //Who's been duping the bird?!
 
 /datum/controller/subsystem/persistence/proc/LoadChiselMessages()
-	var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
-	var/saved_json
-	chisel_messages_sav[SSmapping.config.map_name] >> saved_json
+	var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
+	if(!fexists(json_file))
+		return
+	var/list/json
+	json = json_decode(file2text(json_file))
 
-	if(!saved_json)
+	if(!json)
 		return
 
-	var/list/saved_messages = json_decode(saved_json)
+	var/list/saved_messages = json["data"]
 
 	for(var/item in saved_messages)
 		if(!islist(item))
@@ -109,19 +95,16 @@ SUBSYSTEM_DEF(persistence)
 	log_world("Loaded [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
-	trophy_sav = new /savefile("data/npc_saves/TrophyItems.sav")
-	var/saved_json
-	trophy_sav >> saved_json
+	trophy_sav = file("data/npc_saves/TrophyItems.json")
+	if(!fexists(trophy_sav))
+		return
+	var/list/json = list()
+	json = json_decode(file2text(trophy_sav))
 
-	if(!saved_json)
+	if(!json)
 		return
 
-	var/decoded_json = json_decode(saved_json)
-
-	if(!islist(decoded_json))
-		return
-
-	saved_trophies = decoded_json
+	saved_trophies = json["data"]
 
 	SetUpTrophies(saved_trophies.Copy())
 
@@ -156,6 +139,7 @@ SUBSYSTEM_DEF(persistence)
 	CollectTrophies()
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
+	var/list/satchels = list()
 	for(var/A in new_secret_satchels)
 		var/obj/item/storage/backpack/satchel/flat/F = A
 		if(QDELETED(F) || F.z != ZLEVEL_STATION || F.invisibility != INVISIBILITY_MAXIMUM)
@@ -170,25 +154,37 @@ SUBSYSTEM_DEF(persistence)
 				savable_obj += O.type
 		if(isemptylist(savable_obj))
 			continue
-		old_secret_satchels += "[F.x]|[F.y]|[pick(savable_obj)]#"
-	WRITE_FILE(secret_satchels[SSmapping.config.map_name], old_secret_satchels)
+		var/list/data = list()
+		data["x"] = F.x
+		data["y"] = F.y
+		data["saved_obj"] = pick(savable_obj)
+		satchels += list(data)
+	var/list/file_data = list()
+	file_data["data"] = satchels
+	fdel(secret_satchels)
+	WRITE_FILE(secret_satchels, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/CollectChiselMessages()
-	var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
+	var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
 
 	for(var/obj/structure/chisel_message/M in chisel_messages)
 		saved_messages += list(M.pack())
 
 	log_world("Saved [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
-
-	WRITE_FILE(chisel_messages_sav[SSmapping.config.map_name], json_encode(saved_messages))
+	var/list/file_data = list()
+	file_data["data"] = saved_messages
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/SaveChiselMessage(obj/structure/chisel_message/M)
 	saved_messages += list(M.pack()) // dm eats one list
 
 
 /datum/controller/subsystem/persistence/proc/CollectTrophies()
-	WRITE_FILE(trophy_sav, json_encode(saved_trophies))
+	var/list/file_data = list()
+	file_data["data"] = saved_trophies
+	fdel(trophy_sav)
+	WRITE_FILE(trophy_sav, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/SaveTrophy(obj/structure/displaycase/trophy/T)
 	if(!T.added_roundstart && T.showpiece)

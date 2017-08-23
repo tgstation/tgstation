@@ -112,14 +112,17 @@
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-	S["family"] 			>> family
-
+	var/json_file = file("data/npc_saves/Runtime.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = list()
+	json = json_decode(file2text(json_file))
+	family = json["family"]
 	if(isnull(family))
 		family = list()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
-	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+	var/json_file = file("data/npc_saves/Runtime.json")
 	family = list()
 	if(!dead)
 		for(var/mob/living/simple_animal/pet/cat/kitten/C in children)
@@ -129,7 +132,8 @@
 				family[C.type] += 1
 			else
 				family[C.type] = 1
-	WRITE_FILE(S["family"], family)
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(family))
 	memory_saved = 1
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
