@@ -12,9 +12,11 @@ It is possible to destroy the net by the occupant or someone else.
 	density = TRUE//Can't pass through.
 	opacity = 0//Can see through.
 	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
-	anchored = TRUE//Can't drag/grab the trapped mob.
+	anchored = TRUE//Can't drag/grab the net.
 	layer = ABOVE_ALL_MOB_LAYER
 	max_integrity = 25 //How much health it has.
+	can_buckle = 1
+	buckle_prevents_pull = TRUE
 	var/mob/living/carbon/affecting = null//Who it is currently affecting, if anyone.
 	var/mob/living/carbon/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
@@ -31,8 +33,9 @@ It is possible to destroy the net by the occupant or someone else.
 	if(!affecting)
 		return
 	var/check = 30//30 seconds before teleportation. Could be extended I guess.
-
-	affecting.anchored = TRUE //No moving for you!
+	if(affecting.buckled)
+		affecting.buckled.unbuckle_mob(affecting,TRUE)
+	buckle_mob(affecting, TRUE) //No moving for you!
 	//The person can still try and attack the net when inside.
 
 	while(check>0)//While 30 seconds have not passed.
@@ -40,7 +43,6 @@ It is possible to destroy the net by the occupant or someone else.
 		sleep(10)
 		if(isnull(src)||isnull(affecting)||affecting.loc!=loc)
 			if(affecting)
-				affecting.anchored = FALSE
 				for(var/mob/O in viewers(3, affecting))
 					O.show_message("[affecting.name] was recovered from the energy net!", 1, "<span class='italics'>You hear a grunt.</span>", 2)
 			if(master)//As long as they still exist.
@@ -73,9 +75,12 @@ It is possible to destroy the net by the occupant or someone else.
 	playsound(affecting.loc, 'sound/effects/phasein.ogg', 25, 1)
 	playsound(affecting.loc, 'sound/effects/sparks2.ogg', 50, 1)
 	new /obj/effect/temp_visual/dir_setting/ninja/phase(get_turf(affecting), affecting.dir)
-	affecting.anchored = FALSE
 
 /obj/structure/energy_net/attack_paw(mob/user)
 	return attack_hand()
 
+/obj/structure/energy_net/user_buckle_mob(mob/living/M, mob/living/user)
+	return//We only want our target to be buckled
 
+/obj/structure/energy_net/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
+	return//The net must be destroyed to free the target

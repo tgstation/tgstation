@@ -945,7 +945,6 @@
 /mob/living/proc/update_canmove()
 	var/ko = IsKnockdown() || IsUnconscious() || stat || (status_flags & FAKEDEATH)
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
-	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
 	var/ignore_legs = get_leg_ignore()
@@ -957,8 +956,8 @@
 	else if(has_legs || ignore_legs)
 		lying = 0
 
-	if(buckled)
-		lying = 90*buckle_lying
+	if(buckled && buckled.buckle_lying != -1)
+		lying = 90*buckled.buckle_lying
 	else if(!lying)
 		if(resting)
 			fall()
