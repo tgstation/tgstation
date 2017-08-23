@@ -17,8 +17,7 @@
 	var/hidden_crystals	//these crystals are hidden from telecrystals until the uplink is next locked
 	var/datum/uplink_purchase_log/log
 
-/datum/component/uplink/New(datum/p, _owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20)
-	..()
+/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20)
 	if(_owner)
 		log = new(_owner, src)
 	enabled = _enabled
