@@ -115,7 +115,7 @@
 //Tries to dump content
 /obj/item/storage/proc/dump_content_at(atom/dest_object, mob/living/user)
 	var/atom/dump_destination = dest_object.get_dumping_location()
-	. = Adjacent(user) && dump_destination && user.Adjacent(dump_destination) && dump_destination.storage_contents_dump_act(src, user))
+	. = Adjacent(user) && dump_destination && user.Adjacent(dump_destination) && dump_destination.storage_contents_dump_act(src, user)
 	if(.)
 		playsound(src, "rustle", 50, 1, -5)
 
