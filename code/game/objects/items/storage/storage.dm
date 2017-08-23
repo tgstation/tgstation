@@ -33,14 +33,10 @@
 	cant_hold = typecacheof(cant_hold)
 
 	if(allow_quick_empty)
-		verbs += /obj/item/storage/verb/quick_empty
-	else
-		verbs -= /obj/item/storage/verb/quick_empty
+		verbs += /obj/item/storage/proc/quick_empty
 
 	if(allow_quick_gather)
-		verbs += /obj/item/storage/verb/toggle_gathering_mode
-	else
-		verbs -= /obj/item/storage/verb/toggle_gathering_mode
+		verbs += /obj/item/storage/proc/toggle_gathering_mode
 
 	boxes = new
 	boxes.name = "storage"
@@ -473,7 +469,7 @@
 /obj/item/storage/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/storage/verb/toggle_gathering_mode()
+/obj/item/storage/proc/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
 	set category = "Object"
 
@@ -492,7 +488,7 @@
 			to_chat(usr, "[src] now picks up one item at a time.")
 
 // Empty all the contents onto the current turf
-/obj/item/storage/verb/quick_empty()
+/obj/item/storage/proc/quick_empty()
 	set name = "Empty Contents"
 	set category = "Object"
 
