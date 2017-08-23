@@ -212,7 +212,7 @@
 				return
 			if(!user.transferItemToLoc(A, src))
 				return
-			to_chat(user, "<span class='notice'>You insert [A], disabling the [src]'s safeties.</span>")
+			to_chat(user, "<span class='notice'>You insert [A], disabling [src]'s safeties.</span>")
 			dispensable_reagents |= emagged_reagents //add the emagged reagents to the dispensable ones
 			emagged = TRUE
 			return
