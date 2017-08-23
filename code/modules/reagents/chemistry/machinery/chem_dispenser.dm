@@ -53,7 +53,7 @@
 		"mine_salve",
 		"toxin"
 	)
-	var/list/addin_reagents = list(
+	var/static/list/addin_reagents = list(
 		"oil",
 		"ash",
 		"acetone",
@@ -208,24 +208,22 @@
 		var/obj/item/device/chem_dispenser_auth_board/A = I
 		if (A.isAuthorized())
 			if(emagged)
-				to_chat(user, "<span class='warning'>\The machine has no functional safeties to disable.</span>")
+				to_chat(user, "<span class='warning'>[src] has no functional safeties to disable.</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(A, src))
 				return
-			A.loc = src
-			to_chat(user, "<span class='notice'>You insert the dangerous reagents authorization board, disabling the [src]'s safeties.</span>")
+			to_chat(user, "<span class='notice'>You insert [A], disabling the [src]'s safeties.</span>")
 			dispensable_reagents |= emagged_reagents //add the emagged reagents to the dispensable ones
 			emagged = TRUE
 			return
 		else
-			to_chat(user, "<span class='warning'>\The board has to be authorized for use by the Head of Security.</span>")
+			to_chat(user, "<span class='warning'>[A] has to be authorized for use by the Head of Security or the Captain.</span>")
 			return ..()
 	else if (istype(I, /obj/item/device/chem_dispenser_addin_board))
 		if (!upgraded)
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
-			I.loc = src
-			to_chat(user, "<span class='notice'>You insert the supplementary recipes add-in board to the [src].</span>")
+			to_chat(user, "<span class='notice'>You insert [I] to [src].</span>")
 			dispensable_reagents |= addin_reagents
 			upgraded = TRUE
 			return
