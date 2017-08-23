@@ -6,15 +6,15 @@
 	icon_screen = "invaders"
 	clockwork = TRUE //it'd look weird
 	var/list/prizes = list(
-		/obj/item/weapon/storage/box/snappops					= 2,
+		/obj/item/storage/box/snappops					= 2,
 		/obj/item/toy/talking/AI								= 2,
 		/obj/item/toy/talking/codex_gigas						= 2,
 		/obj/item/clothing/under/syndicate/tacticool			= 2,
 		/obj/item/toy/sword										= 2,
 		/obj/item/toy/gun										= 2,
-		/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow	= 2,
-		/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
-		/obj/item/weapon/storage/crayons						= 2,
+		/obj/item/gun/ballistic/shotgun/toy/crossbow	= 2,
+		/obj/item/storage/box/fakesyndiesuit				= 2,
+		/obj/item/storage/crayons						= 2,
 		/obj/item/toy/spinningtoy								= 2,
 		/obj/item/toy/prize/ripley								= 1,
 		/obj/item/toy/prize/fireripley							= 1,
@@ -34,15 +34,15 @@
 		/obj/item/toy/redbutton									= 2,
 		/obj/item/toy/talking/owl								= 2,
 		/obj/item/toy/talking/griffin							= 2,
-		/obj/item/weapon/coin/antagtoken						= 2,
+		/obj/item/coin/antagtoken						= 2,
 		/obj/item/stack/tile/fakespace/loaded					= 2,
 		/obj/item/stack/tile/fakepit/loaded						= 2,
 		/obj/item/toy/toy_xeno									= 2,
-		/obj/item/weapon/storage/box/actionfigure				= 1,
-		/obj/item/weapon/restraints/handcuffs/fake              = 2,
-		/obj/item/weapon/grenade/chem_grenade/glitter/pink		= 1,
-		/obj/item/weapon/grenade/chem_grenade/glitter/blue		= 1,
-		/obj/item/weapon/grenade/chem_grenade/glitter/white		= 1,
+		/obj/item/storage/box/actionfigure				= 1,
+		/obj/item/restraints/handcuffs/fake              = 2,
+		/obj/item/grenade/chem_grenade/glitter/pink		= 1,
+		/obj/item/grenade/chem_grenade/glitter/blue		= 1,
+		/obj/item/grenade/chem_grenade/glitter/white		= 1,
 		/obj/item/toy/eightball									= 2,
 		/obj/item/toy/windupToolbox								= 2)
 
@@ -56,8 +56,8 @@
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-		var/choice = pick(subtypesof(/obj/item/weapon/circuitboard/computer/arcade))
-		var/obj/item/weapon/circuitboard/CB = new choice()
+		var/choice = pick(subtypesof(/obj/item/circuitboard/computer/arcade))
+		var/obj/item/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
 		return INITIALIZE_HINT_QDEL
 	Reset()
@@ -66,7 +66,7 @@
 
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(prob(0.0001)) //1 in a million
-		new /obj/item/weapon/gun/energy/pulse/prize(src)
+		new /obj/item/gun/energy/pulse/prize(src)
 		UnlockMedal(PULSE_MEDAL,usr.client)
 
 	if(!contents.len)
@@ -105,7 +105,7 @@
 	name = "arcade machine"
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/computer/arcade/battle
+	circuit = /obj/item/circuitboard/computer/arcade/battle
 	var/enemy_name = "Space Villian"
 	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
@@ -335,7 +335,7 @@
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/computer/arcade/orion_trail
+	circuit = /obj/item/circuitboard/computer/arcade/orion_trail
 	var/busy = FALSE //prevent clickspam that allowed people to ~speedrun~ the game.
 	var/engine = 0
 	var/hull = 0
@@ -1025,7 +1025,7 @@
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(emagged)
-		new /obj/item/weapon/orion_ship(loc)
+		new /obj/item/orion_ship(loc)
 		message_admins("[key_name_admin(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 	else
@@ -1050,7 +1050,7 @@
 	loot = list()
 	del_on_death = TRUE
 
-/obj/item/weapon/orion_ship
+/obj/item/orion_ship
 	name = "model settler ship"
 	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion! It even has a miniature FX-293 reactor, which was renowned for its instability and tendency to explode..."
 	icon = 'icons/obj/toy.dmi'
@@ -1058,7 +1058,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/active = 0 //if the ship is on
 
-/obj/item/weapon/orion_ship/examine(mob/user)
+/obj/item/orion_ship/examine(mob/user)
 	..()
 	if(!(in_range(user, src)))
 		return
@@ -1067,7 +1067,7 @@
 	else
 		to_chat(user, "<span class='notice'>There's a little switch on the bottom. It's flipped up.</span>")
 
-/obj/item/weapon/orion_ship/attack_self(mob/user) //Minibomb-level explosion. Should probably be more because of how hard it is to survive the machine! Also, just over a 5-second fuse
+/obj/item/orion_ship/attack_self(mob/user) //Minibomb-level explosion. Should probably be more because of how hard it is to survive the machine! Also, just over a 5-second fuse
 	if(active)
 		return
 

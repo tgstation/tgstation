@@ -6,12 +6,12 @@
 	icon_state = "telecrystal"
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 50
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	origin_tech = "materials=6;syndicate=1"
 
 /obj/item/stack/telecrystal/attack(mob/target, mob/user)
 	if(target == user)
-		var/obj/item/weapon/implant/uplink/I = locate() in target
+		var/obj/item/implant/uplink/I = locate() in target
 		if(I)
 			GET_COMPONENT_FROM(uplink, /datum/component/uplink, I)
 			if(uplink && uplink.enabled) //You can't go around smacking people with crystals to find out if they have an uplink or not.
@@ -23,8 +23,8 @@
 /obj/item/stack/telecrystal/afterattack(obj/item/I, mob/user, proximity)
 	if(!proximity)
 		return
-	if(istype(I, /obj/item/weapon/cartridge/virus/frame))
-		var/obj/item/weapon/cartridge/virus/frame/cart = I
+	if(istype(I, /obj/item/cartridge/virus/frame))
+		var/obj/item/cartridge/virus/frame/cart = I
 		if(!cart.charges)
 			to_chat(user, "<span class='notice'>[cart] is out of charges, it's refusing to accept [src]</span>")
 			return

@@ -15,7 +15,7 @@
 	. = ..()
 	AddComponent(/datum/component/uplink, owner_key, FALSE, TRUE)
 
-/obj/item/weapon/pen/uplink/Initialize(mapload, owner_key)
+/obj/item/pen/uplink/Initialize(mapload, owner_key)
 	. = ..()
 	AddComponent(/datum/component/uplink, owner_key)
 	traitor_unlock_degrees = 360

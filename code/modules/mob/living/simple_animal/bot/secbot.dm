@@ -15,7 +15,7 @@
 	bot_type = SEC_BOT
 	model = "Securitron"
 	bot_core_type = /obj/machinery/bot_core/secbot
-	var/baton_type = /obj/item/weapon/melee/baton
+	var/baton_type = /obj/item/melee/baton
 	window_id = "autosec"
 	window_name = "Automatic Security Unit v1.6"
 	allow_pai = 0
@@ -51,8 +51,8 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/turf/Tsec = get_turf(src)
-	new /obj/item/weapon/stock_parts/cell/potato(Tsec)
-	var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
+	new /obj/item/stock_parts/cell/potato(Tsec)
+	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
 	S.reagents.add_reagent("whiskey", 15)
 	S.on_reagent_change()
 	..()
@@ -173,11 +173,11 @@ Auto Patrol: []"},
 
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/attackby(obj/item/weapon/W, mob/user, params)
+/mob/living/simple_animal/bot/secbot/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
+	if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
 		return
-	if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+	if(!istype(W, /obj/item/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		retaliate(user)
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
@@ -229,7 +229,7 @@ Auto Patrol: []"},
 		if( !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 			return
 		if(!C.handcuffed)
-			C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
+			C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
 			C.update_handcuffed()
 			playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 			back_to_idle()
@@ -401,7 +401,7 @@ Auto Patrol: []"},
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
-	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
+	var/obj/item/secbot_assembly/Sa = new /obj/item/secbot_assembly(Tsec)
 	Sa.build_step = 1
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name

@@ -35,7 +35,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
+	butcher_results = list(/obj/item/ectoplasm = 1)
 	AIStatus = AI_OFF
 	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
@@ -455,7 +455,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 ////////Creation
 
-/obj/item/weapon/guardiancreator
+/obj/item/guardiancreator
 	name = "deck of tarot cards"
 	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power. "
 	icon = 'icons/obj/toy.dmi'
@@ -473,7 +473,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/allowling = TRUE
 	var/allowguardian = FALSE
 
-/obj/item/weapon/guardiancreator/attack_self(mob/living/user)
+/obj/item/guardiancreator/attack_self(mob/living/user)
 	if(isguardian(user) && !allowguardian)
 		to_chat(user, "<span class='holoparasite'>[mob_name] chains are not allowed.</span>")
 		return
@@ -500,7 +500,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		used = FALSE
 
 
-/obj/item/weapon/guardiancreator/proc/spawn_guardian(var/mob/living/user, var/key)
+/obj/item/guardiancreator/proc/spawn_guardian(var/mob/living/user, var/key)
 	var/guardiantype = "Standard"
 	if(random)
 		guardiantype = pick(possible_guardians)
@@ -567,17 +567,17 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
 
-/obj/item/weapon/guardiancreator/choose
+/obj/item/guardiancreator/choose
 	random = FALSE
 
-/obj/item/weapon/guardiancreator/choose/dextrous
+/obj/item/guardiancreator/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/guardiancreator/choose/wizard
+/obj/item/guardiancreator/choose/wizard
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard")
 	allowmultiple = TRUE
 
-/obj/item/weapon/guardiancreator/tech
+/obj/item/guardiancreator/tech
 	name = "holoparasite injector"
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
 	icon = 'icons/obj/syringe.dmi'
@@ -589,16 +589,16 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	failure_message = "<span class='holoparasitebold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
-/obj/item/weapon/guardiancreator/tech/choose/traitor
+/obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/guardiancreator/tech/choose
+/obj/item/guardiancreator/tech/choose
 	random = FALSE
 
-/obj/item/weapon/guardiancreator/tech/choose/dextrous
+/obj/item/guardiancreator/tech/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/paper/guides/antag/guardian
+/obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
 	icon_state = "paper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>
@@ -622,10 +622,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <br>
 "}
 
-/obj/item/weapon/paper/guides/antag/guardian/update_icon()
+/obj/item/paper/guides/antag/guardian/update_icon()
 	return
 
-/obj/item/weapon/paper/guides/antag/guardian/wizard
+/obj/item/paper/guides/antag/guardian/wizard
 	name = "Guardian Guide"
 	info = {"<b>A list of Guardian Types</b><br>
 
@@ -651,16 +651,16 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 "}
 
 
-/obj/item/weapon/storage/box/syndie_kit/guardian
+/obj/item/storage/box/syndie_kit/guardian
 	name = "holoparasite injector kit"
 
-/obj/item/weapon/storage/box/syndie_kit/guardian/Initialize()
+/obj/item/storage/box/syndie_kit/guardian/Initialize()
 	..()
-	new /obj/item/weapon/guardiancreator/tech/choose/traitor(src)
-	new /obj/item/weapon/paper/guides/antag/guardian(src)
+	new /obj/item/guardiancreator/tech/choose/traitor(src)
+	new /obj/item/paper/guides/antag/guardian(src)
 	return
 
-/obj/item/weapon/guardiancreator/carp
+/obj/item/guardiancreator/carp
 	name = "holocarp fishsticks"
 	desc = "Using the power of Carp'sie, you can catch a carp from byond the veil of Carpthulu, and bind it to your fleshy flesh form."
 	icon = 'icons/obj/food/food.dmi'
@@ -675,5 +675,5 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	allowling = TRUE
 	random = TRUE
 
-/obj/item/weapon/guardiancreator/carp/choose
+/obj/item/guardiancreator/carp/choose
 	random = FALSE

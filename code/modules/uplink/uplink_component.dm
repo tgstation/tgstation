@@ -97,7 +97,7 @@
 	var/datum/uplink_purchase_log/_log = log
 	if(_log)
 		if(owner && !item.purchase_log_vis)
-			var/obj/item/weapon/storage/B = A
+			var/obj/item/storage/B = A
 			is_item = istype(B)
 			if(is_item)
 				for(var/obj/item/I in B)

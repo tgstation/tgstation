@@ -547,21 +547,21 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	if(!clone)
 		return
 
-	var/static/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item/ammo_box/a357,\
-	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/transforming/energy/sword/saber,\
-	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
-	/obj/item/weapon/cartridge/virus/syndicate, /obj/item/clothing/under/chameleon,\
-	/obj/item/clothing/shoes/chameleon, /obj/item/weapon/card/id/syndicate,\
+	var/static/list/non_fakeattack_weapons = list(/obj/item/gun/ballistic, /obj/item/ammo_box/a357,\
+	/obj/item/gun/energy/kinetic_accelerator/crossbow, /obj/item/melee/transforming/energy/sword/saber,\
+	/obj/item/storage/box/syndicate, /obj/item/storage/box/emps,\
+	/obj/item/cartridge/virus/syndicate, /obj/item/clothing/under/chameleon,\
+	/obj/item/clothing/shoes/chameleon, /obj/item/card/id/syndicate,\
 	/obj/item/clothing/mask/chameleon, /obj/item/clothing/glasses/thermal,\
-	/obj/item/device/chameleon, /obj/item/weapon/card/emag,	/obj/item/weapon/grenade/plastic/x4,\
-	/obj/item/weapon/storage/toolbox/syndicate, /obj/item/weapon/aiModule,\
-	/obj/item/device/radio/headset/syndicate,	/obj/item/weapon/grenade/plastic/c4,\
-	/obj/item/device/powersink, /obj/item/weapon/storage/box/syndie_kit,\
-	/obj/item/toy/syndicateballoon, /obj/item/weapon/gun/energy/laser/captain,\
-	/obj/item/weapon/hand_tele, /obj/item/weapon/construction/rcd, /obj/item/weapon/tank/jetpack,\
+	/obj/item/device/chameleon, /obj/item/card/emag,	/obj/item/grenade/plastic/x4,\
+	/obj/item/storage/toolbox/syndicate, /obj/item/aiModule,\
+	/obj/item/device/radio/headset/syndicate,	/obj/item/grenade/plastic/c4,\
+	/obj/item/device/powersink, /obj/item/storage/box/syndie_kit,\
+	/obj/item/toy/syndicateballoon, /obj/item/gun/energy/laser/captain,\
+	/obj/item/hand_tele, /obj/item/construction/rcd, /obj/item/tank/jetpack,\
 	/obj/item/clothing/under/rank/captain, /obj/item/device/aicard,\
-	/obj/item/clothing/shoes/magboots, /obj/item/areaeditor/blueprints, /obj/item/weapon/disk/nuclear,\
-	/obj/item/clothing/suit/space/nasavoid, /obj/item/weapon/tank)
+	/obj/item/clothing/shoes/magboots, /obj/item/areaeditor/blueprints, /obj/item/disk/nuclear,\
+	/obj/item/clothing/suit/space/nasavoid, /obj/item/tank)
 
 	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(get_turf(target),target)
 
@@ -606,7 +606,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 
 	max_integrity = 100
 
-/obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/living/user, params)
+/obj/effect/fake_attacker/attackby(obj/item/P, mob/living/user, params)
 	step_away(src,my_target,2)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
@@ -983,11 +983,11 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 					if(prob(25))
 						target.halitem.icon_state = "plasticx40"
 				if(3) //sword
-					target.halitem.icon = 'icons/obj/weapons.dmi'
+					target.halitem.icon = 'icons/obj/items_and_weapons.dmi'
 					target.halitem.icon_state = "sword0"
 					target.halitem.name = "Energy Sword"
 				if(4) //stun baton
-					target.halitem.icon = 'icons/obj/weapons.dmi'
+					target.halitem.icon = 'icons/obj/items_and_weapons.dmi'
 					target.halitem.icon_state = "stunbaton"
 					target.halitem.name = "Stun Baton"
 				if(5) //emag

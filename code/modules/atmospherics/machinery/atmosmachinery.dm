@@ -129,8 +129,8 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/update_icon()
 	return
 
-/obj/machinery/atmospherics/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+/obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wrench))
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
 			if (level==1 && isturf(T) && T.intact)
@@ -186,7 +186,7 @@ Pipelines + Other Objects -> Pipe network
 	user.throw_at(target, range, speed)
 
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(can_unwrench)
 			var/obj/item/pipe/stored = new(loc, make_from=src)
 			if(!disassembled)

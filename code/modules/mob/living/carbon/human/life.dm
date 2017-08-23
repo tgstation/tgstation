@@ -50,7 +50,7 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
+	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
 		return ONE_ATMOSPHERE
 	else
 		return pressure
@@ -280,13 +280,13 @@
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
+		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			. = 1
 	if(glasses)
-		if(glasses.flags & BLOCK_GAS_SMOKE_EFFECT)
+		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			. = 1
 	if(head)
-		if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
+		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			. = 1
 	if(NOBREATH in dna.species.species_traits)
 		. = 1

@@ -93,7 +93,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = loc
 		stored.forceMove(T)
 	qdel(src)
@@ -119,7 +119,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/turf/T = get_turf(src)
 	if(T.intact)
 		return
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(istype(W, /obj/item/wirecutters))
 		if (shock(user, 50))
 			return
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
@@ -135,8 +135,8 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 		coil.cable_join(src, user)
 
-	else if(istype(W, /obj/item/weapon/twohanded/rcl))
-		var/obj/item/weapon/twohanded/rcl/R = W
+	else if(istype(W, /obj/item/twohanded/rcl))
+		var/obj/item/twohanded/rcl/R = W
 		if(R.loaded)
 			R.loaded.cable_join(src, user)
 			R.is_empty(user)
@@ -460,7 +460,7 @@ By design, d1 is the smallest direction and d2 is the highest
 // Definitions
 ////////////////////////////////
 
-GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restraints", /obj/item/weapon/restraints/handcuffs/cable, 15)))
+GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15)))
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -480,7 +480,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=10, MAT_GLASS=5)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"

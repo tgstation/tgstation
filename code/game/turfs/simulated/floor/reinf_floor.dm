@@ -20,10 +20,10 @@
 		..()
 	return //unplateable
 
-/turf/open/floor/engine/attackby(obj/item/weapon/C, mob/user, params)
+/turf/open/floor/engine/attackby(obj/item/C, mob/user, params)
 	if(!C || !user)
 		return
-	if(istype(C, /obj/item/weapon/wrench))
+	if(istype(C, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin removing rods...</span>")
 		playsound(src, C.usesound, 80, 1)
 		if(do_after(user, 30*C.toolspeed, target = src))
