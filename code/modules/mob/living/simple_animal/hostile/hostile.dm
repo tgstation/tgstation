@@ -158,7 +158,7 @@
 				Targets -= A
 	if(!Targets.len)//We didnt find nothin!
 		return
-	var/chosen_target = pick(Targets)//Pick the remaining targets (if any) at random
+	var/chosen_target = SSrng.pick_from_list(Targets)//Pick the remaining targets (if any) at random
 	return chosen_target
 
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
@@ -275,7 +275,7 @@
 		if(AIStatus == AI_IDLE)
 			AIStatus = AI_ON
 			FindTarget()
-		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
+		else if(target != null && SSrng.probability(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
 
 
@@ -284,8 +284,8 @@
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
-	if(target && emote_taunt.len && prob(taunt_chance))
-		emote("me", 1, "[pick(emote_taunt)] at [target].")
+	if(target && emote_taunt.len && SSrng.probability(taunt_chance))
+		emote("me", 1, "[SSrng.pick_from_list(emote_taunt)] at [target].")
 		taunt_chance = max(taunt_chance-7,2)
 
 

@@ -126,7 +126,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 					continue
 				destination_list += T
 			if(destination_list.len)
-				destination = pick(destination_list)
+				destination = SSrng.pick_from_list(destination_list)
 			else
 				return
 
@@ -200,13 +200,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 		else
 			switch(role)
 				if("clown")
-					newname = pick(GLOB.clown_names)
+					newname = SSrng.pick_from_list(GLOB.clown_names)
 				if("mime")
-					newname = pick(GLOB.mime_names)
+					newname = SSrng.pick_from_list(GLOB.mime_names)
 				if("ai")
-					newname = pick(GLOB.ai_names)
+					newname = SSrng.pick_from_list(GLOB.ai_names)
 				if("deity")
-					newname = pick(GLOB.clown_names|GLOB.ai_names|GLOB.mime_names) //pick any old name
+					newname = SSrng.pick_from_list(GLOB.clown_names|GLOB.ai_names|GLOB.mime_names) //pick any old name
 				else
 					return
 
@@ -226,7 +226,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
 /proc/ionnum()
-	return "[pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
+	return "[SSrng.pick_from_list("!","@","#","$","%","^","&")][SSrng.pick_from_list("!","@","#","$","%","^","&","*")][SSrng.pick_from_list("!","@","#","$","%","^","&","*")][SSrng.pick_from_list("!","@","#","$","%","^","&","*")]"
 
 //Returns a list of unslaved cyborgs
 /proc/active_free_borgs()
@@ -270,7 +270,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if(user)
 			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in borgs
 		else
-			. = pick(borgs)
+			. = SSrng.pick_from_list(borgs)
 	return .
 
 /proc/select_active_ai(mob/user)
@@ -279,7 +279,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if(user)
 			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in ais
 		else
-			. = pick(ais)
+			. = SSrng.pick_from_list(ais)
 	return .
 
 //Returns a list of all items of interest with their name
@@ -676,11 +676,11 @@ Turf and target are separate in case you want to teleport some distance from a t
 /proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
 	var/dy = abs(B.y - A.y)
-	return get_dir(A, B) & (rand() * (dx+dy) < dy ? 3 : 12)
+	return get_dir(A, B) & (SSrng.random() * (dx+dy) < dy ? 3 : 12)
 
-//chances are 1:value. anyprob(1) will always return true
+//chances are 1:value. anyprob() will always return true
 /proc/anyprob(value)
-	return (rand(1,value)==value)
+	return (SSrng.random(1,value)==value)
 
 /proc/view_or_range(distance = world.view , center = usr , type)
 	switch(type)
@@ -894,8 +894,8 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /proc/random_step(atom/movable/AM, steps, chance)
 	var/initial_chance = chance
 	while(steps > 0)
-		if(prob(chance))
-			step(AM, pick(GLOB.alldirs))
+		if(SSrng.probability(chance))
+			step(AM, SSrng.pick_from_list(GLOB.alldirs))
 		chance = max(chance - (initial_chance / steps), 0)
 		steps--
 
@@ -909,10 +909,10 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /proc/randomColor(mode = 0)	//if 1 it doesn't pick white, black or gray
 	switch(mode)
 		if(0)
-			return pick("white","black","gray","red","green","blue","brown","yellow","orange","darkred",
+			return SSrng.pick_from_list("white","black","gray","red","green","blue","brown","yellow","orange","darkred",
 						"crimson","lime","darkgreen","cyan","navy","teal","purple","indigo")
 		if(1)
-			return pick("red","green","blue","brown","yellow","orange","darkred","crimson",
+			return SSrng.pick_from_list("red","green","blue","brown","yellow","orange","darkred","crimson",
 						"lime","darkgreen","cyan","navy","teal","purple","indigo")
 		else
 			return "white"
@@ -1263,7 +1263,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	C.color = flash_color
 	animate(C, color = initial(C.color), time = flash_time)
 
-#define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
+#define RANDOM_COLOUR (rgb(SSrng.random(0,255),SSrng.random(0,255),SSrng.random(0,255)))
 
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
 #define QDEL_NULL(item) qdel(item); item = null
@@ -1278,7 +1278,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 
 /proc/random_nukecode()
-	var/val = rand(0, 99999)
+	var/val = SSrng.random(0, 99999)
 	var/str = "[val]"
 	while(length(str) < 5)
 		str = "0" + str
@@ -1287,8 +1287,8 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 /atom/proc/Shake(pixelshiftx = 15, pixelshifty = 15, duration = 250)
 	var/initialpixelx = pixel_x
 	var/initialpixely = pixel_y
-	var/shiftx = rand(-pixelshiftx,pixelshiftx)
-	var/shifty = rand(-pixelshifty,pixelshifty)
+	var/shiftx = SSrng.random(-pixelshiftx,pixelshiftx)
+	var/shifty = SSrng.random(-pixelshifty,pixelshifty)
 	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely

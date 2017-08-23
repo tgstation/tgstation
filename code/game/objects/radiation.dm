@@ -15,7 +15,7 @@
 		if(distance < heavy_range)
 			T.rad_act(severity)
 		else if(distance == heavy_range)
-			if(prob(50))
+			if(SSrng.probability(50))
 				T.rad_act(severity)
 			else
 				T.rad_act(light_severity)

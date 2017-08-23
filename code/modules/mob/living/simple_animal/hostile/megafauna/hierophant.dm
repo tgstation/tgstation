@@ -122,7 +122,7 @@ Difficulty: Hard
 	for(var/obj/item/W in L)
 		if(!L.dropItemToGround(W))
 			qdel(W)
-	visible_message("<span class='hierophant_warning'>\"[pick(kill_phrases)]\"</span>")
+	visible_message("<span class='hierophant_warning'>\"[SSrng.pick_from_list(kill_phrases)]\"</span>")
 	visible_message("<span class='hierophant_warning'>[src] annihilates [L]!</span>","<span class='userdanger'>You annihilate [L], restoring your health!</span>")
 	adjustHealth(-L.maxHealth*0.5)
 	L.dust()
@@ -136,7 +136,7 @@ Difficulty: Hard
 	var/targets_the_same = (new_target == target)
 	. = ..()
 	if(. && target && !targets_the_same)
-		visible_message("<span class='hierophant_warning'>\"[pick(target_phrases)]\"</span>")
+		visible_message("<span class='hierophant_warning'>\"[SSrng.pick_from_list(target_phrases)]\"</span>")
 		if(spawned_beacon && loc == spawned_beacon.loc && did_reset)
 			arena_trap(src)
 
@@ -209,7 +209,7 @@ Difficulty: Hard
 	arena_trap(target)
 	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier * 0.75) //scale cooldown lower with high anger.
 
-	if(prob(anger_modifier * 0.75)) //major ranged attack
+	if(SSrng.probability(anger_modifier * 0.75)) //major ranged attack
 		var/list/possibilities = list()
 		var/cross_counter = 1 + round(anger_modifier * 0.12)
 		if(cross_counter > 1)
@@ -217,14 +217,14 @@ Difficulty: Hard
 		if(get_dist(src, target) > 2)
 			possibilities += "blink_spam"
 		if(chaser_cooldown < world.time)
-			if(prob(anger_modifier * 2))
+			if(SSrng.probability(anger_modifier * 2))
 				possibilities = list("chaser_swarm")
 			else
 				possibilities += "chaser_swarm"
 		if(possibilities.len)
 			ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier * 0.75) //we didn't cancel out of an attack, use the higher cooldown
 			var/blink_counter = 1 + round(anger_modifier * 0.08)
-			switch(pick(possibilities))
+			switch(SSrng.pick_from_list(possibilities))
 				if("blink_spam") //blink either once or multiple times.
 					if(health < maxHealth * 0.5 && blink_counter > 1)
 						visible_message("<span class='hierophant'>\"Mx ampp rsx iwgeti.\"</span>")
@@ -253,7 +253,7 @@ Difficulty: Hard
 					sleep(6)
 					while(health && !QDELETED(target) && cross_counter)
 						cross_counter--
-						if(prob(60))
+						if(SSrng.probability(60))
 							INVOKE_ASYNC(src, .proc/cardinal_blasts, target)
 						else
 							INVOKE_ASYNC(src, .proc/diagonal_blasts, target)
@@ -271,7 +271,7 @@ Difficulty: Hard
 					var/list/targets = ListTargets()
 					var/list/cardinal_copy = GLOB.cardinals.Copy()
 					while(health && targets.len && cardinal_copy.len)
-						var/mob/living/pickedtarget = pick(targets)
+						var/mob/living/pickedtarget = SSrng.pick_from_list(targets)
 						if(targets.len >= cardinal_copy.len)
 							pickedtarget = pick_n_take(targets)
 						if(!istype(pickedtarget) || pickedtarget.stat == DEAD)
@@ -292,18 +292,18 @@ Difficulty: Hard
 	if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
 		var/obj/effect/temp_visual/hierophant/chaser/C = new /obj/effect/temp_visual/hierophant/chaser(loc, src, target, chaser_speed, FALSE)
 		chaser_cooldown = world.time + initial(chaser_cooldown)
-		if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
+		if((SSrng.probability(anger_modifier) || target.Adjacent(src)) && target != src)
 			var/obj/effect/temp_visual/hierophant/chaser/OC = new(loc, src, target, chaser_speed * 1.5, FALSE)
 			OC.moving = 4
-			OC.moving_dir = pick(GLOB.cardinals - C.moving_dir)
+			OC.moving_dir = SSrng.pick_from_list(GLOB.cardinals - C.moving_dir)
 
-	else if(prob(10 + (anger_modifier * 0.5)) && get_dist(src, target) > 2)
+	else if(SSrng.probability(10 + (anger_modifier * 0.5)) && get_dist(src, target) > 2)
 		blink(target)
 
-	else if(prob(70 - anger_modifier)) //a cross blast of some type
-		if(prob(anger_modifier * (2 / target_slowness)) && health < maxHealth * 0.5) //we're super angry do it at all dirs
+	else if(SSrng.probability(70 - anger_modifier)) //a cross blast of some type
+		if(SSrng.probability(anger_modifier * (2 / target_slowness)) && health < maxHealth * 0.5) //we're super angry do it at all dirs
 			INVOKE_ASYNC(src, .proc/alldir_blasts, target)
-		else if(prob(60))
+		else if(SSrng.probability(60))
 			INVOKE_ASYNC(src, .proc/cardinal_blasts, target)
 		else
 			INVOKE_ASYNC(src, .proc/diagonal_blasts, target)
@@ -523,7 +523,7 @@ Difficulty: Hard
 	if((. != previous_moving_dir && . == more_previouser_moving_dir) || . == 0) //we're alternating, recalculate
 		var/list/cardinal_copy = GLOB.cardinals.Copy()
 		cardinal_copy -= more_previouser_moving_dir
-		. = pick(cardinal_copy)
+		. = SSrng.pick_from_list(cardinal_copy)
 
 /obj/effect/temp_visual/hierophant/chaser/proc/seek_target()
 	if(!currently_seeking)
@@ -628,7 +628,7 @@ Difficulty: Hard
 			flash_color(L.client, "#660099", 1)
 		playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
 		to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
-		var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
+		var/limb_to_hit = L.get_bodypart(SSrng.pick_from_list("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
 		L.apply_damage(damage, BURN, limb_to_hit, armor)
 		if(ishostile(L))

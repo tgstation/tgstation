@@ -226,7 +226,7 @@
 		return 0
 
 	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
-	var/obj/effect/landmark/spawn_here = GLOB.xeno_spawn.len ? pick(GLOB.xeno_spawn) : null
+	var/obj/effect/landmark/spawn_here = GLOB.xeno_spawn.len ? SSrng.pick_from_list(GLOB.xeno_spawn) : null
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
 		if("Queen")
@@ -284,7 +284,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(alert("This character appears to have been an alien. Would you like to respawn them as such?",,"Yes","No")=="Yes")
 				var/turf/T
 				if(GLOB.xeno_spawn.len)
-					T = pick(GLOB.xeno_spawn)
+					T = SSrng.pick_from_list(GLOB.xeno_spawn)
 
 				var/mob/living/carbon/alien/new_xeno
 				switch(G_found.mind.special_role)//If they have a mind, we can determine which caste they were.
@@ -381,7 +381,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	switch(new_character.mind.special_role)
 		if("Wizard")
-			new_character.loc = pick(GLOB.wizardstart)
+			new_character.loc = SSrng.pick_from_list(GLOB.wizardstart)
 			//SSticker.mode.learn_basic_spells(new_character)
 			SSticker.mode.equip_wizard(new_character)
 		if("Syndicate")
@@ -397,7 +397,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(ANTAG_DATUM_NINJA)
 			ninjadatum.equip_space_ninja()
 			if(ninja_spawn.len)
-				var/obj/effect/landmark/ninja_spawn_here = pick(ninja_spawn)
+				var/obj/effect/landmark/ninja_spawn_here = SSrng.pick_from_list(ninja_spawn)
 				new_character.loc = ninja_spawn_here.loc
 
 		else//They may also be a cyborg or AI.
@@ -1182,7 +1182,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	switch(punishment)
 		if(ADMIN_PUNISHMENT_LIGHTNING)
 			var/turf/T = get_step(get_step(target, NORTH), NORTH)
-			T.Beam(target, icon_state="lightning[rand(1,12)]", time = 5)
+			T.Beam(target, icon_state="lightning[SSrng.random(1,12)]", time = 5)
 			target.adjustFireLoss(75)
 			target.electrocution_animation(40)
 			to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>")
@@ -1202,7 +1202,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /client/proc/trigger_centcom_recall()
 	if(!holder)
 		return
-	var/message = pick(GLOB.admiral_messages)
+	var/message = SSrng.pick_from_list(GLOB.admiral_messages)
 	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as text|null
 
 	if(!message)

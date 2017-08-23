@@ -25,7 +25,7 @@
 			barsigns += signinfo
 
 //randomly assigning a sign
-	set_sign(pick(barsigns))
+	set_sign(SSrng.pick_from_list(barsigns))
 
 /obj/structure/sign/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
@@ -82,7 +82,7 @@
 		else
 			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
 			if(!broken && !emagged)
-				set_sign(pick(barsigns))
+				set_sign(SSrng.pick_from_list(barsigns))
 			else if(emagged)
 				set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 			else

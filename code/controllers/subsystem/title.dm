@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(title)
 
 	var/list/provisional_title_screens = flist("config/title_screens/images/")
 	var/list/title_screens = list()
-	var/use_rare_screens = prob(1)
+	var/use_rare_screens = SSrng.probability(1)
 
 	for(var/S in provisional_title_screens)
 		var/list/L = splittext(S,"+")
@@ -35,8 +35,8 @@ SUBSYSTEM_DEF(title)
 				title_screens -= S
 				break
 
-		file_path = "config/title_screens/images/[pick(title_screens)]"
-		
+		file_path = "config/title_screens/images/[SSrng.pick_from_list(title_screens)]"
+
 		icon = new(fcopy_rsc(file_path))
 
 		if(splash_turf)

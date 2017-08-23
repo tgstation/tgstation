@@ -65,8 +65,8 @@
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 
 /obj/item/target/bullet_act(obj/item/projectile/P)
-	var/p_x = P.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset P.p_x!"
-	var/p_y = P.p_y + pick(0,0,0,0,0,-1,1)
+	var/p_x = P.p_x + SSrng.pick_from_list(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset P.p_x!"
+	var/p_y = P.p_y + SSrng.pick_from_list(0,0,0,0,0,-1,1)
 	var/decaltype = DECALTYPE_SCORCH
 	if(istype(/obj/item/projectile/bullet, P))
 		decaltype = DECALTYPE_BULLET
@@ -80,9 +80,9 @@
 		bullet_hole.pixel_x = p_x - 1 //offset correction
 		bullet_hole.pixel_y = p_y - 1
 		if(decaltype == DECALTYPE_SCORCH)
-			bullet_hole.setDir(pick(NORTH,SOUTH,EAST,WEST))// random scorch design
+			bullet_hole.setDir(SSrng.pick_from_list(NORTH,SOUTH,EAST,WEST))// random scorch design
 			if(P.damage >= 20 || istype(P, /obj/item/projectile/beam/practice))
-				bullet_hole.setDir(pick(NORTH,SOUTH,EAST,WEST))
+				bullet_hole.setDir(SSrng.pick_from_list(NORTH,SOUTH,EAST,WEST))
 			else
 				bullet_hole.icon_state = "light_scorch"
 		else

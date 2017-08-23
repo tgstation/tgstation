@@ -45,7 +45,7 @@
 		forkload = null
 
 	else if(user.zone_selected == "eyes")
-		if(user.disabilities & CLUMSY && prob(50))
+		if(user.disabilities & CLUMSY && SSrng.probability(50))
 			M = user
 		return eyestab(M,user)
 	else
@@ -71,14 +71,14 @@
 
 /obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == "eyes")
-		if(user.disabilities & CLUMSY && prob(50))
+		if(user.disabilities & CLUMSY && SSrng.probability(50))
 			M = user
 		return eyestab(M,user)
 	else
 		return ..()
 
 /obj/item/kitchen/knife/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
+	user.visible_message(SSrng.pick_from_list("<span class='suicide'>[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting [user.p_their()] throat with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting [user.p_their()] stomach open with the [src.name]! It looks like [user.p_theyre()] trying to commit seppuku.</span>"))
 	return (BRUTELOSS)

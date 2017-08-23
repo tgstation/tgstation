@@ -95,7 +95,7 @@
 		var/obj/docking_port/stationary/SM = S
 		if(SM.id == "emergency_home")
 			var/new_dir = turn(SM.dir, 180)
-			SM.loc = get_ranged_target_turf(SM, new_dir, rand(3,15))
+			SM.loc = get_ranged_target_turf(SM, new_dir, SSrng.random(3,15))
 			break
 	qdel(src)
 
@@ -135,7 +135,7 @@
 	if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
 		to_chat(L, "Your offering is accepted. You may pass.")
 		qdel(L.pulling)
-		var/turf/LA = pick(warp_points)
+		var/turf/LA = SSrng.pick_from_list(warp_points)
 		L.forceMove(LA)
 		L.hallucination = 0
 		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>")
@@ -165,7 +165,7 @@
 		for(var/obj/effect/landmark/shuttle_arena_entrance/S in GLOB.landmarks_list)
 			warp_points |= S
 
-	var/obj/effect/landmark/LA = pick(warp_points)
+	var/obj/effect/landmark/LA = SSrng.pick_from_list(warp_points)
 	var/mob/living/M = AM
 	M.forceMove(get_turf(LA))
 	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>")

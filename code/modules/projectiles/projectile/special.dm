@@ -177,7 +177,7 @@
 
 /obj/item/projectile/beam/wormhole/on_hit(atom/target)
 	if(ismob(target))
-		var/turf/portal_destination = pick(orange(6, src))
+		var/turf/portal_destination = SSrng.pick_from_list(orange(6, src))
 		do_teleport(target, portal_destination)
 		return ..()
 	if(!gun)
@@ -328,7 +328,7 @@
 	for(var/atom/movable/A in range(T, power))
 		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
-		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinals)), power+1, 1)
+		A.throw_at(get_edge_target_turf(A, SSrng.pick_from_list(GLOB.cardinals)), power+1, 1)
 		thrown_items[A] = A
 	for(var/turf/Z in range(T,power))
 		new /obj/effect/temp_visual/gravpush(Z)
@@ -353,7 +353,7 @@
 
 /obj/item/projectile/curse_hand/Initialize(mapload)
 	. = ..()
-	handedness = prob(50)
+	handedness = SSrng.probability(50)
 	update_icon()
 
 /obj/item/projectile/curse_hand/update_icon()
@@ -457,9 +457,9 @@
 
 	var/splatter_icon_state
 	if(set_dir in GLOB.diagonals)
-		splatter_icon_state = "splatter[pick(1, 2, 6)]"
+		splatter_icon_state = "splatter[SSrng.pick_from_list(1, 2, 6)]"
 	else
-		splatter_icon_state = "splatter[pick(3, 4, 5)]"
+		splatter_icon_state = "splatter[SSrng.pick_from_list(3, 4, 5)]"
 
 	var/image/blood = image('icons/effects/blood.dmi', M, splatter_icon_state, ABOVE_MOB_LAYER)
 	var/target_pixel_x = 0
@@ -500,8 +500,8 @@
 		return
 
 	var/image/hit_effect = image('icons/effects/blood.dmi', A, is_wall ? hal_impact_effect_wall : hal_impact_effect, ABOVE_MOB_LAYER)
-	hit_effect.pixel_x = A.pixel_x + rand(-4,4)
-	hit_effect.pixel_y = A.pixel_y + rand(-4,4)
+	hit_effect.pixel_x = A.pixel_x + SSrng.random(-4,4)
+	hit_effect.pixel_y = A.pixel_y + SSrng.random(-4,4)
 	hal_target.client.images += hit_effect
 	sleep(is_wall ? hit_duration_wall : hit_duration)
 	hal_target.client.images -= hit_effect
@@ -557,7 +557,7 @@
 	hal_target.Knockdown(100)
 	hal_target.stuttering += 20
 	if(hal_target.dna && hal_target.dna.check_mutation(HULK))
-		hal_target.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		hal_target.say(SSrng.pick_from_list(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 	else if(hal_target.status_flags & CANKNOCKDOWN)
 		addtimer(CALLBACK(hal_target, /mob/living/carbon.proc/do_jitter_animation, 20), 5)
 

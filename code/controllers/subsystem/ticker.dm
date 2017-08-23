@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
-	login_music = pick(music)
+	login_music = SSrng.pick_from_list(music)
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
@@ -614,10 +614,10 @@ SUBSYSTEM_DEF(ticker)
 	else
 		var/list/randomtips = world.file2list("strings/tips.txt")
 		var/list/memetips = world.file2list("strings/sillytips.txt")
-		if(randomtips.len && prob(95))
-			m = pick(randomtips)
+		if(randomtips.len && SSrng.probability(95))
+			m = SSrng.pick_from_list(randomtips)
 		else if(memetips.len)
-			m = pick(memetips)
+			m = SSrng.pick_from_list(memetips)
 
 	if(m)
 		to_chat(world, "<font color='purple'><b>Tip of the round: </b>[html_encode(m)]</font>")
@@ -655,7 +655,7 @@ SUBSYSTEM_DEF(ticker)
 	maprotatechecked = 1
 
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
-	if (!prob((world.time/600)*config.maprotatechancedelta))
+	if (!SSrng.probability((world.time/600)*config.maprotatechancedelta))
 		return
 	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 
@@ -837,7 +837,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Shutdown()
 	if(!round_end_sound)
-		round_end_sound = pick(\
+		round_end_sound = SSrng.pick_from_list(\
 		'sound/roundend/newroundsexy.ogg',
 		'sound/roundend/apcdestroyed.ogg',
 		'sound/roundend/bangindonk.ogg',

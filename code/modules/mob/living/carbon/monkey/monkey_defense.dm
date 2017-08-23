@@ -7,14 +7,14 @@
 
 /mob/living/carbon/monkey/attack_paw(mob/living/M)
 	if(..()) //successful monkey bite.
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/dam_zone = SSrng.pick_from_list("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart("chest")
 		if(M.limb_destroyer)
 			dismembering_strike(M, affecting.body_zone)
 		if(stat != DEAD)
-			var/dmg = rand(1, 5)
+			var/dmg = SSrng.random(1, 5)
 			apply_damage(dmg, BRUTE, affecting)
 			damage_clothes(dmg, BRUTE, "melee", affecting.body_zone)
 
@@ -22,7 +22,7 @@
 
 /mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
 	if(..()) //successful larva bite.
-		var/damage = rand(1, 3)
+		var/damage = SSrng.random(1, 3)
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
@@ -42,16 +42,16 @@
 			grabbedby(M)
 		if("harm")
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			if (prob(75))
+			if (SSrng.probability(75))
 				visible_message("<span class='danger'>[M] has punched [name]!</span>", \
 						"<span class='userdanger'>[M] has punched [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 				playsound(loc, "punch", 25, 1, -1)
-				var/damage = rand(5, 10)
-				if(prob(40))
-					damage = rand(10, 15)
+				var/damage = SSrng.random(5, 10)
+				if(SSrng.probability(40))
+					damage = SSrng.random(10, 15)
 					if(AmountUnconscious() < 100 && health > 0)
-						Unconscious(rand(200, 300))
+						Unconscious(SSrng.random(200, 300))
 						visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
 									"<span class='userdanger'>[M] has knocked out [name]!</span>", null, 5)
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
@@ -68,7 +68,7 @@
 		if("disarm")
 			if(!IsUnconscious())
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-				if (prob(25))
+				if (SSrng.probability(25))
 					Knockdown(40)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					add_logs(M, src, "pushed")
@@ -83,13 +83,13 @@
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
 		if (M.a_intent == INTENT_HARM)
-			if ((prob(95) && health > 0))
+			if ((SSrng.probability(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-				var/damage = rand(15, 30)
+				var/damage = SSrng.random(15, 30)
 				if (damage >= 25)
-					damage = rand(20, 40)
+					damage = SSrng.random(20, 40)
 					if(AmountUnconscious() < 300)
-						Unconscious(rand(200, 300))
+						Unconscious(SSrng.random(200, 300))
 					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
 							"<span class='userdanger'>[M] has wounded [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				else
@@ -113,7 +113,7 @@
 		if (M.a_intent == INTENT_DISARM)
 			var/obj/item/I = null
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			if(prob(95))
+			if(SSrng.probability(95))
 				Knockdown(20)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
 						"<span class='userdanger'>[M] has tackled down [name]!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -132,8 +132,8 @@
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
+		var/damage = SSrng.random(M.melee_damage_lower, M.melee_damage_upper)
+		var/dam_zone = dismembering_strike(M, SSrng.pick_from_list("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
 			return TRUE
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
@@ -146,10 +146,10 @@
 
 /mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
-		var/damage = rand(5, 35)
+		var/damage = SSrng.random(5, 35)
 		if(M.is_adult)
-			damage = rand(20, 40)
-		var/dam_zone = dismembering_strike(M, pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
+			damage = SSrng.random(20, 40)
+		var/dam_zone = dismembering_strike(M, SSrng.pick_from_list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
 			return 1
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
@@ -191,14 +191,14 @@
 			take_overall_damage(60, 60)
 			damage_clothes(200, BRUTE, "bomb")
 			adjustEarDamage(30, 120)
-			if(prob(70))
+			if(SSrng.probability(70))
 				Unconscious(200)
 
 		if(3)
 			take_overall_damage(30, 0)
 			damage_clothes(50, BRUTE, "bomb")
 			adjustEarDamage(15,60)
-			if (prob(50))
+			if (SSrng.probability(50))
 				Unconscious(160)
 
 
@@ -207,7 +207,7 @@
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
-			if(prob(50/severity) && BP.body_zone != "chest")
+			if(SSrng.probability(50/severity) && BP.body_zone != "chest")
 				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--

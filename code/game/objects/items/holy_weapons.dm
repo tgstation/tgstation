@@ -141,7 +141,7 @@
 	slot_flags = SLOT_BELT
 
 /obj/item/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
-	force = rand(1, 30)
+	force = SSrng.random(1, 30)
 	..()
 
 /obj/item/nullrod/claymore/saber
@@ -234,7 +234,7 @@
 	var/mob/dead/observer/theghost = null
 
 	if(LAZYLEN(candidates))
-		theghost = pick(candidates)
+		theghost = SSrng.pick_from_list(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
 		S.name = name
@@ -388,7 +388,7 @@
 	. = ..()
 
 /obj/item/nullrod/tribal_knife/process()
-	slowdown = rand(-2, 2)
+	slowdown = SSrng.random(-2, 2)
 
 
 /obj/item/nullrod/pitchfork

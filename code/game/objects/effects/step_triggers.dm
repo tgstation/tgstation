@@ -125,9 +125,9 @@
 	if(teleport_x && teleport_y && teleport_z)
 		if(teleport_x_offset && teleport_y_offset && teleport_z_offset)
 
-			A.x = rand(teleport_x, teleport_x_offset)
-			A.y = rand(teleport_y, teleport_y_offset)
-			A.z = rand(teleport_z, teleport_z_offset)
+			A.x = SSrng.random(teleport_x, teleport_x_offset)
+			A.y = SSrng.random(teleport_y, teleport_y_offset)
+			A.z = SSrng.random(teleport_z, teleport_z_offset)
 
 /* Fancy teleporter, creates sparks and smokes when used */
 

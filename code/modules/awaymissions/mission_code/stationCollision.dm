@@ -51,7 +51,7 @@
 /obj/item/gun/ballistic/automatic/c20r/sc_c20r/Initialize()
 	. = ..()
 	for(var/ammo in magazine.stored_ammo)
-		if(prob(95)) //95% chance
+		if(SSrng.probability(95)) //95% chance
 			magazine.stored_ammo -= ammo
 
 //Barman's shotgun
@@ -60,7 +60,7 @@
 /obj/item/gun/ballistic/shotgun/sc_pump/Initialize()
 	. = ..()
 	for(var/ammo in magazine.stored_ammo)
-		if(prob(95)) //95% chance
+		if(SSrng.probability(95)) //95% chance
 			magazine.stored_ammo -= ammo
 
 //Lasers
@@ -74,11 +74,11 @@
  */
 
 //These vars hold the code itself, they'll be generated at round-start
-GLOBAL_VAR_INIT(sc_safecode1, "[rand(0,9)]")
-GLOBAL_VAR_INIT(sc_safecode2, "[rand(0,9)]")
-GLOBAL_VAR_INIT(sc_safecode3, "[rand(0,9)]")
-GLOBAL_VAR_INIT(sc_safecode4, "[rand(0,9)]")
-GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
+GLOBAL_VAR_INIT(sc_safecode1, "[SSrng.random(0,9)]")
+GLOBAL_VAR_INIT(sc_safecode2, "[SSrng.random(0,9)]")
+GLOBAL_VAR_INIT(sc_safecode3, "[SSrng.random(0,9)]")
+GLOBAL_VAR_INIT(sc_safecode4, "[SSrng.random(0,9)]")
+GLOBAL_VAR_INIT(sc_safecode5, "[SSrng.random(0,9)]")
 
 //Pieces of paper actually containing the hints
 /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_prison
@@ -147,7 +147,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 
 /obj/singularity/narsie/sc_Narsie/process()
 	eat()
-	if(prob(25))
+	if(SSrng.probability(25))
 		mezzer()
 
 /obj/singularity/narsie/sc_Narsie/consume(atom/A)

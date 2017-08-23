@@ -121,7 +121,7 @@
 	apply_damage(I.force * weakness, I.damtype, def_zone)
 	var/message_verb = ""
 	if(I.attack_verb && I.attack_verb.len)
-		message_verb = "[pick(I.attack_verb)]"
+		message_verb = "[SSrng.pick_from_list(I.attack_verb)]"
 	else if(I.force)
 		message_verb = "attacked"
 
@@ -167,7 +167,7 @@
 	if(..())
 		switch(M.a_intent)
 			if ("harm")
-				var/damage = rand(1, 5)
+				var/damage = SSrng.random(1, 5)
 				playsound(loc, "punch", 25, 1, -1)
 				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 						"<span class='userdanger'>[M] has punched [src]!</span>")
@@ -176,14 +176,14 @@
 				updatehealth()
 			if ("disarm")
 				if (!lying && !ascended) //No stealing the arch devil's pitchfork.
-					if (prob(5))
+					if (SSrng.probability(5))
 						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						add_logs(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else
-						if (prob(25))
+						if (SSrng.probability(25))
 							drop_item()
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \

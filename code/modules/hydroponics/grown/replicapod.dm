@@ -89,7 +89,7 @@
 		if(realName)
 			podman.real_name = realName
 		else
-			podman.real_name = "Pod Person [rand(0,999)]"
+			podman.real_name = "Pod Person [SSrng.random(0,999)]"
 		mind.transfer_to(podman)
 		if(ckey)
 			podman.ckey = ckey
@@ -104,7 +104,7 @@
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1
-		if(prob(getYield() * 20))
+		if(SSrng.probability(getYield() * 20))
 			seed_count++
 		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 		for(var/i=0,i<seed_count,i++)

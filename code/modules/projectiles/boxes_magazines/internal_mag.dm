@@ -39,7 +39,7 @@
 	stored_ammo.Insert(0, b)
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/spin()
-	for(var/i in 1 to rand(0, max_ammo*2))
+	for(var/i in 1 to SSrng.random(0, max_ammo*2))
 		rotate()
 
 

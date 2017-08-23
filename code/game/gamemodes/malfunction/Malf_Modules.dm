@@ -247,7 +247,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(!owner || QDELETED(owner))
 		return
 	to_chat(owner, "<span class='small boldannounce'>Running executable 'selfdestruct'...</span>")
-	sleep(rand(10, 30))
+	sleep(SSrng.random(10, 30))
 	if(!owner || QDELETED(owner))
 		return
 	owner.playsound_local(owner, 'sound/misc/bloblarm.ogg', 50, 0)
@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		sleep(20)
 		if(!owner || QDELETED(owner))
 			return
-		to_chat(owner, "<span class='boldannounce'>Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%</span>")
+		to_chat(owner, "<span class='boldannounce'>Sending security report to Central Command.....[SSrng.random(0, 9) + (SSrng.random(20, 30) * i)]%</span>")
 	sleep(3)
 	if(!owner || QDELETED(owner))
 		return
@@ -286,7 +286,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(!owner || QDELETED(owner))
 		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
-	sleep(rand(15, 25))
+	sleep(SSrng.random(15, 25))
 	if(!owner || QDELETED(owner))
 		return
 	to_chat(owner, "<span class='boldnotice'>Please repeat password to confirm.</span>")
@@ -727,7 +727,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/blackout/Activate()
 	for(var/obj/machinery/power/apc/apc in GLOB.apcs_list)
-		if(prob(30 * apc.overload))
+		if(SSrng.probability(30 * apc.overload))
 			apc.overload_lighting()
 		else
 			apc.overload++

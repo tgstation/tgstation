@@ -444,8 +444,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!(L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
 		return //General ambience check is below the ship ambience so one can play without the other
 
-	if(prob(35))
-		var/sound = pick(ambientsounds)
+	if(SSrng.probability(35))
+		var/sound = SSrng.pick_from_list(ambientsounds)
 
 		if(!L.client.played)
 			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))

@@ -7,7 +7,7 @@
 
 /obj/item/cartridge/virus/message_header()
 	return "<b>[charges] viral files left.</b><HR>"
-	
+
 /obj/item/cartridge/virus/message_special(obj/item/device/pda/target)
 	if (!istype(loc, /obj/item/device/pda))
 		return ""  //Sanity check, this shouldn't be possible.
@@ -30,7 +30,7 @@
 	if(!isnull(target) && !target.toff)
 		charges--
 		to_chat(U, "<span class='notice'>Virus Sent!</span>")
-		target.honkamt = (rand(15,20))
+		target.honkamt = (SSrng.random(15,20))
 	else
 		to_chat(U, "PDA not found.")
 
@@ -67,11 +67,11 @@
 		var/difficulty = 0
 		if(target.cartridge)
 			difficulty += BitCount(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
-		if(target.cartridge.access & CART_MANIFEST) 
+		if(target.cartridge.access & CART_MANIFEST)
 			difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
 		else
 			difficulty += 2
-		if(!target.detonatable || prob(difficulty * 15) || (target.hidden_uplink))
+		if(!target.detonatable || SSrng.probability(difficulty * 15) || (target.hidden_uplink))
 			U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
 		else
 			U.show_message("<span class='notice'>Success!</span>", 1)
@@ -90,7 +90,7 @@
 		return
 	if(!isnull(target) && !target.toff)
 		charges--
-		var/lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
+		var/lock_code = "[SSrng.random(100,999)] [SSrng.pick_from_list("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
 		to_chat(U, "<span class='notice'>Virus Sent!  The unlock code to the target is: [lock_code]</span>")
 		if(!target.hidden_uplink)
 			var/obj/item/device/uplink/uplink = new(target)

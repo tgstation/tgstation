@@ -14,8 +14,8 @@
 			for(var/i = 1, i <= temp_message.len, i++) //Create a second list for excluding words down the line
 				pick_list += i
 			for(var/i=1, ((i <= D.stage) && (i <= temp_message.len)), i++) //Loop for each stage of the disease or until we run out of words
-				if(prob(3 * D.stage)) //Stage 1: 3% Stage 2: 6% Stage 3: 9% Stage 4: 12%
-					var/H = pick(pick_list)
+				if(SSrng.probability(3 * D.stage)) //Stage 1: 3% Stage 2: 6% Stage 3: 9% Stage 4: 12%
+					var/H = SSrng.pick_from_list(pick_list)
 					if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
 					temp_message[H] = "HONK"
 					pick_list -= H //Make sure that you dont HONK the same word twice
@@ -125,7 +125,7 @@
 				var/trimmed = trim_left(temp)
 				if(length(trimmed))
 					if(append)
-						temp += pick(append)
+						temp += SSrng.pick_from_list(append)
 
 					say(temp)
 				winset(client, "input", "text=[null]")

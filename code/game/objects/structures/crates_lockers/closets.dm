@@ -428,15 +428,15 @@
 	for(var/obj/O in src)
 		O.emp_act(severity)
 	if(secure && !broken)
-		if(prob(50 / severity))
+		if(SSrng.probability(50 / severity))
 			locked = !locked
 			update_icon()
-		if(prob(20 / severity) && !opened)
+		if(SSrng.probability(20 / severity) && !opened)
 			if(!locked)
 				open()
 			else
 				req_access = list()
-				req_access += pick(get_all_accesses())
+				req_access += SSrng.pick_from_list(get_all_accesses())
 	..()
 
 

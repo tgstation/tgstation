@@ -46,7 +46,7 @@
 		var/obj/item/projectile/proj = mover
 		if(proj.firer && Adjacent(proj.firer))
 			return 1
-		if(prob(proj_pass_rate))
+		if(SSrng.probability(proj_pass_rate))
 			return 1
 		return 0
 	else

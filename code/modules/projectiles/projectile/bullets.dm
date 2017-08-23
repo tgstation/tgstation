@@ -45,7 +45,7 @@
 	damage = 6
 
 /obj/item/projectile/bullet/pellet/weak/New()
-	range = rand(1, 8)
+	range = SSrng.random(1, 8)
 	..()
 
 /obj/item/projectile/bullet/pellet/weak/on_range()
@@ -56,7 +56,7 @@
 	damage = 3
 
 /obj/item/projectile/bullet/pellet/overload/New()
-	range = rand(1, 10)
+	range = SSrng.random(1, 10)
 	..()
 
 /obj/item/projectile/bullet/pellet/overload/on_hit(atom/target, blocked = FALSE)
@@ -273,7 +273,7 @@
 
 /obj/item/projectile/bullet/sniper/on_hit(atom/target, blocked = FALSE)
 	if((blocked != 100) && (!ismob(target) && breakthings))
-		target.ex_act(rand(1,2))
+		target.ex_act(SSrng.random(1,2))
 	return ..()
 
 /obj/item/projectile/bullet/sniper/gang

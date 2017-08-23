@@ -15,7 +15,7 @@
 	glass_desc = "Vitamins! Yay!"
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/M)
-	if(M.getOxyLoss() && prob(30))
+	if(M.getOxyLoss() && SSrng.probability(30))
 		M.adjustOxyLoss(-1, 0)
 		. = 1
 	..()
@@ -31,7 +31,7 @@
 	glass_desc = "Are you sure this is tomato juice?"
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/M)
-	if(M.getFireLoss() && prob(20))
+	if(M.getFireLoss() && SSrng.probability(20))
 		M.heal_bodypart_damage(0,1, 0)
 		. = 1
 	..()
@@ -47,7 +47,7 @@
 	glass_desc = "A glass of sweet-sour lime juice."
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/M)
-	if(M.getToxLoss() && prob(20))
+	if(M.getToxLoss() && SSrng.probability(20))
 		M.adjustToxLoss(-1*REM, 0)
 		. = 1
 	..()
@@ -69,7 +69,7 @@
 		if(1 to 20)
 			//nothing
 		if(21 to INFINITY)
-			if(prob(current_cycle-10))
+			if(SSrng.probability(current_cycle-10))
 				M.cure_nearsighted()
 	..()
 	return
@@ -171,7 +171,7 @@
 		return
 	if(!M.silent)//cant laugh if you're mute
 		M.emote("laugh")
-		var/laughnum = rand(1,2)
+		var/laughnum = SSrng.random(1,2)
 		if(M.gender == MALE)
 			if(laughnum == 1)
 				playsound(get_turf(M), 'sound/voice/human/manlaugh1.ogg', 50, 1)
@@ -212,7 +212,7 @@
 	glass_desc = "White and nutritious goodness!"
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/M)
-	if(M.getBruteLoss() && prob(20))
+	if(M.getBruteLoss() && SSrng.probability(20))
 		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	if(holder.has_reagent("capsaicin"))
@@ -234,7 +234,7 @@
 	glass_desc = "White and nutritious soy goodness!"
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/M)
-	if(M.getBruteLoss() && prob(20))
+	if(M.getBruteLoss() && SSrng.probability(20))
 		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
@@ -250,7 +250,7 @@
 	glass_desc = "Ewwww..."
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/M)
-	if(M.getBruteLoss() && prob(20))
+	if(M.getBruteLoss() && SSrng.probability(20))
 		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
@@ -298,7 +298,7 @@
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.jitteriness = max(0,M.jitteriness-3)
 	M.AdjustSleeping(-20, FALSE)
-	if(M.getToxLoss() && prob(20))
+	if(M.getToxLoss() && SSrng.probability(20))
 		M.adjustToxLoss(-1, 0)
 	if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -317,8 +317,8 @@
 	glass_desc = "You feel like taking a few golf swings after a few swigs of this."
 
 /datum/reagent/consumable/tea/arnold_palmer/on_mob_life(mob/living/M)
-	if(prob(5))
-		to_chat(M, "<span class = 'notice'>[pick("You remember to square your shoulders.","You remember to keep your head down.","You can't decide between squaring your shoulders and keeping your head down.","You remember to relax.","You think about how someday you'll get two strokes off your golf game.")]</span>")
+	if(SSrng.probability(5))
+		to_chat(M, "<span class = 'notice'>[SSrng.pick_from_list("You remember to square your shoulders.","You remember to keep your head down.","You can't decide between squaring your shoulders and keeping your head down.","You remember to relax.","You think about how someday you'll get two strokes off your golf game.")]</span>")
 	..()
 	. = 1
 
@@ -358,7 +358,7 @@
 	M.dizziness = max(0,M.dizziness-2)
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.AdjustSleeping(-40, FALSE)
-	if(M.getToxLoss() && prob(20))
+	if(M.getToxLoss() && SSrng.probability(20))
 		M.adjustToxLoss(-1, 0)
 	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -567,7 +567,7 @@
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
-	if(M.getBruteLoss() && prob(20))
+	if(M.getBruteLoss() && SSrng.probability(20))
 		M.heal_bodypart_damage(1,0, 0)
 	..()
 	. = 1
@@ -589,7 +589,7 @@
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
-	if(M.getBruteLoss() && prob(20))
+	if(M.getBruteLoss() && SSrng.probability(20))
 		M.heal_bodypart_damage(1,0, 0)
 	..()
 	. = 1

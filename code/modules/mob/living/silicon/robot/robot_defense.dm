@@ -37,15 +37,15 @@
 	if(..()) //successful slime shock
 		flash_act()
 		var/stunprob = M.powerlevel * 7 + 10
-		if(prob(stunprob) && M.powerlevel >= 8)
-			adjustBruteLoss(M.powerlevel * rand(6,10))
+		if(SSrng.probability(stunprob) && M.powerlevel >= 8)
+			adjustBruteLoss(M.powerlevel * SSrng.random(6,10))
 
-	var/damage = rand(1, 3)
+	var/damage = SSrng.random(1, 3)
 
 	if(M.is_adult)
-		damage = rand(20, 40)
+		damage = SSrng.random(20, 40)
 	else
-		damage = rand(5, 35)
+		damage = SSrng.random(5, 35)
 	damage = round(damage / 2) // borgs recieve half damage
 	adjustBruteLoss(damage)
 	updatehealth()
@@ -185,6 +185,6 @@
 /mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
 	..(Proj)
 	updatehealth()
-	if(prob(75) && Proj.damage > 0)
+	if(SSrng.probability(75) && Proj.damage > 0)
 		spark_system.start()
 	return 2

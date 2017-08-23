@@ -165,7 +165,7 @@
 			update_icon()
 			user.regenerate_icons()
 			if(boxes.len >= 5)
-				if(prob(10 * boxes.len))
+				if(SSrng.probability(10 * boxes.len))
 					to_chat(user, "<span class='danger'>You can't keep holding the stack!</span>")
 					disperse_pizzas()
 				else
@@ -229,23 +229,23 @@
 
 /obj/item/pizzabox/attack(mob/living/target, mob/living/user, def_zone)
 	. = ..()
-	if(boxes.len >= 3 && prob(25 * boxes.len))
+	if(boxes.len >= 3 && SSrng.probability(25 * boxes.len))
 		disperse_pizzas()
 
 /obj/item/pizzabox/throw_impact(atom/movable/AM)
-	if(boxes.len >= 2 && prob(20 * boxes.len))
+	if(boxes.len >= 2 && SSrng.probability(20 * boxes.len))
 		disperse_pizzas()
 
 /obj/item/pizzabox/proc/disperse_pizzas()
 	visible_message("<span class='warning'>The pizzas fall everywhere!</span>")
 	for(var/V in boxes)
 		var/obj/item/pizzabox/P = V
-		var/fall_dir = pick(GLOB.alldirs)
+		var/fall_dir = SSrng.pick_from_list(GLOB.alldirs)
 		step(P, fall_dir)
-		if(P.pizza && prob(50)) //rip pizza
+		if(P.pizza && SSrng.probability(50)) //rip pizza
 			P.open = TRUE
 			P.pizza.forceMove(get_turf(P))
-			fall_dir = pick(GLOB.alldirs)
+			fall_dir = SSrng.pick_from_list(GLOB.alldirs)
 			step(P.pizza, fall_dir)
 			P.pizza = null
 			P.update_icon()
@@ -262,7 +262,7 @@
 	update_icon()
 
 /obj/item/pizzabox/bomb/New()
-	var/randompizza = pick(subtypesof(/obj/item/reagent_containers/food/snacks/pizza))
+	var/randompizza = SSrng.pick_from_list(subtypesof(/obj/item/reagent_containers/food/snacks/pizza))
 	pizza = new randompizza(src)
 	bomb = new(src)
 	wires = new /datum/wires/explosive/pizza(src)

@@ -78,7 +78,7 @@
 		release_items()
 	..()
 	for(var/obj/item/I in stored_items)
-		A = pick(oview(range))
+		A = SSrng.pick_from_list(oview(range))
 		I.throw_at(A, range, 2)
 		to_chat(owner, "<span class='warning'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))] spasms and throws the [I.name]!</span>")
 	stored_items = list()
@@ -136,7 +136,7 @@
 	origin_tech = "materials=2;biotech=3"
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
-	if(prob(60/severity))
+	if(SSrng.probability(60/severity))
 		to_chat(owner, "<span class='warning'>Your breathing tube suddenly closes!</span>")
 		owner.losebreath += 2
 
@@ -158,5 +158,5 @@
 /obj/item/storage/box/cyber_implants/PopulateContents()
 	var/implant
 	while(contents.len <= amount)
-		implant = pick(boxed)
+		implant = SSrng.pick_from_list(boxed)
 		new implant(src)

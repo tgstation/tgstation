@@ -266,7 +266,7 @@
 	update_icons()
 
 /mob/living/simple_animal/hostile/jungle/leaper/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(prob(33) && !ckey)
+	if(SSrng.probability(33) && !ckey)
 		ranged_cooldown = 0 //Keeps em on their toes instead of a constant rotation
 	..()
 
@@ -293,7 +293,7 @@
 	density = FALSE
 	pass_flags |= PASSMOB
 	notransform = TRUE
-	var/turf/new_turf = locate((target.x + rand(-3,3)),(target.y + rand(-3,3)),target.z)
+	var/turf/new_turf = locate((target.x + SSrng.random(-3,3)),(target.y + SSrng.random(-3,3)),target.z)
 	if(player_hop)
 		new_turf = get_turf(target)
 		hop_cooldown = world.time + PLAYER_HOP_DELAY
@@ -333,7 +333,7 @@
 		if(!QDELETED(L)) // Some mobs are deleted on death
 			var/throw_dir = get_dir(src, L)
 			if(L.loc == loc)
-				throw_dir = pick(GLOB.alldirs)
+				throw_dir = SSrng.pick_from_list(GLOB.alldirs)
 			var/throwtarget = get_edge_target_turf(src, throw_dir)
 			L.throw_at(throwtarget, 3, 1)
 			visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
@@ -430,10 +430,10 @@
 		attack_state = MOOK_ATTACK_WARMUP
 		walk(src,0)
 		update_icons()
-		if(prob(50) && get_dist(src,target) <= 3 || forced_slash_combo)
+		if(SSrng.probability(50) && get_dist(src,target) <= 3 || forced_slash_combo)
 			addtimer(CALLBACK(src, .proc/SlashCombo), ATTACK_INTERMISSION_TIME)
 			return
-		addtimer(CALLBACK(src, .proc/LeapAttack), ATTACK_INTERMISSION_TIME + rand(0,3))
+		addtimer(CALLBACK(src, .proc/LeapAttack), ATTACK_INTERMISSION_TIME + SSrng.random(0,3))
 		return
 	attack_state = MOOK_ATTACK_RECOVERY
 	ResetNeutral()
@@ -486,7 +486,7 @@
 		if(!struck_target_leap)
 			update_icons()
 		struck_target_leap = FALSE
-		if(prob(40))
+		if(SSrng.probability(40))
 			attack_state = MOOK_ATTACK_NEUTRAL
 			if(target)
 				if(isliving(target))
@@ -535,7 +535,7 @@
 				var/mob/living/simple_animal/hostile/jungle/mook/M = ML
 				if(!M.stat)
 					mook_under_us = TRUE
-					var/anydir = pick(GLOB.cardinals)
+					var/anydir = SSrng.pick_from_list(GLOB.cardinals)
 					Move(get_step(src, anydir), anydir)
 					continue
 
@@ -717,7 +717,7 @@
 			if(target_dist > 7)//Offscreen check
 				SolarBeamStartup(target)
 				return
-			if(get_dist(src,target) >= 4 && prob(40))
+			if(get_dist(src,target) >= 4 && SSrng.probability(40))
 				SolarBeamStartup(target)
 				return
 		addtimer(CALLBACK(src, .proc/Volley), 5)
@@ -775,8 +775,8 @@
 		readied_shot.starting = our_turf
 		readied_shot.firer = src
 		readied_shot.original = target
-		readied_shot.yo = target.y - our_turf.y + rand(-1,1)
-		readied_shot.xo = target.x - our_turf.x + rand(-1,1)
+		readied_shot.yo = target.y - our_turf.y + SSrng.random(-1,1)
+		readied_shot.xo = target.x - our_turf.x + SSrng.random(-1,1)
 		readied_shot.fire()
 		playsound(src, projectilesound, 100, 1)
 

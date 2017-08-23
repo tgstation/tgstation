@@ -27,7 +27,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/frog/Initialize()
 	. = ..()
-	if(prob(1))
+	if(SSrng.probability(1))
 		name = "rare frog"
 		desc = "It seems a little smug."
 		icon_state = "rare_frog"

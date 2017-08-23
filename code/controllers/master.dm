@@ -53,7 +53,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/static/restart_clear = 0
 	var/static/restart_timeout = 0
 	var/static/restart_count = 0
-	
+
 	//current tick limit, assigned before running a subsystem.
 	//used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
@@ -240,7 +240,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		SS.state = SS_IDLE
 		if (SS.flags & SS_TICKER)
 			tickersubsystems += SS
-			timer += world.tick_lag * rand(1, 5)
+			timer += world.tick_lag * SSrng.random(1, 5)
 			SS.next_fire = timer
 			continue
 
@@ -311,7 +311,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				for(var/I in current_runlevel_subsystems)
 					var/datum/controller/subsystem/SS = I
 					if(SS.next_fire <= world.time)
-						stagger += world.tick_lag * rand(1, 5)
+						stagger += world.tick_lag * SSrng.random(1, 5)
 						SS.next_fire = stagger
 
 			subsystems_to_check = current_runlevel_subsystems

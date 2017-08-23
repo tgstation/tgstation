@@ -219,7 +219,7 @@
 	illustration = "flashbang"
 
 /obj/item/storage/box/wall_flash/PopulateContents()
-	var/id = rand(1000, 9999)
+	var/id = SSrng.random(1000, 9999)
 	// FIXME what if this conflicts with an existing one?
 
 	new /obj/item/wallframe/button(src)
@@ -381,7 +381,7 @@
 	new /obj/item/device/pda(src)
 	new /obj/item/cartridge/head(src)
 
-	var/newcart = pick(	/obj/item/cartridge/engineering,
+	var/newcart = SSrng.pick_from_list(	/obj/item/cartridge/engineering,
 						/obj/item/cartridge/security,
 						/obj/item/cartridge/medical,
 						/obj/item/cartridge/signal/toxins,
@@ -656,7 +656,7 @@
 
 /obj/item/storage/box/actionfigure/PopulateContents()
 	for(var/i in 1 to 4)
-		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
+		var/randomFigure = SSrng.pick_from_list(subtypesof(/obj/item/toy/figure))
 		new randomFigure(src)
 
 #define NODESIGN "None"
@@ -746,7 +746,7 @@
 
 /obj/item/storage/box/ingredients/wildcard/PopulateContents()
 	for(var/i in 1 to 7)
-		var/randomFood = pick(/obj/item/reagent_containers/food/snacks/grown/chili,
+		var/randomFood = SSrng.pick_from_list(/obj/item/reagent_containers/food/snacks/grown/chili,
 							  /obj/item/reagent_containers/food/snacks/grown/tomato,
 							  /obj/item/reagent_containers/food/snacks/grown/carrot,
 							  /obj/item/reagent_containers/food/snacks/grown/potato,

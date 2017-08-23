@@ -195,7 +195,7 @@
 		to_chat(user, "[src] is in pristine condition.")
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(amount>0 && prob(10))
+	if(amount>0 && SSrng.probability(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	. = ..()
 
@@ -292,7 +292,7 @@
 
 /mob/living/simple_animal/bot/bullet_act(obj/item/projectile/Proj)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		if(prob(75) && Proj.damage > 0)
+		if(SSrng.probability(75) && Proj.damage > 0)
 			do_sparks(5, TRUE, src)
 	return ..()
 

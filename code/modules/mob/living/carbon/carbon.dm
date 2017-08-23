@@ -17,14 +17,14 @@
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
-		if(prob(40))
-			if(prob(25))
+		if(SSrng.probability(40))
+			if(SSrng.probability(25))
 				audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
 							 "<span class='warning'>You hear something rumbling.</span>", 4,\
 							  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
 			var/obj/item/I = user.get_active_held_item()
 			if(I && I.force)
-				var/d = rand(round(I.force / 4), I.force)
+				var/d = SSrng.random(round(I.force / 4), I.force)
 				var/obj/item/bodypart/BP = get_bodypart("chest")
 				if(BP.receive_damage(d, 0))
 					update_damage_overlays()
@@ -32,7 +32,7 @@
 									"<span class='userdanger'>[user] attacks your stomach wall with the [I.name]!</span>")
 				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
 
-				if(prob(src.getBruteLoss() - 50))
+				if(SSrng.probability(src.getBruteLoss() - 50))
 					for(var/atom/movable/A in stomach_contents)
 						A.loc = loc
 						stomach_contents.Remove(A)
@@ -397,14 +397,14 @@
 	if(disabilities & CLUMSY)
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
-	switch(rand(1,100)+modifier) //91-100=Nothing special happens
+	switch(SSrng.random(1,100)+modifier) //91-100=Nothing special happens
 		if(-INFINITY to 0) //attack yourself
 			I.attack(src,src)
 		if(1 to 30) //throw it at yourself
 			I.throw_impact(src)
 		if(31 to 60) //Throw object in facing direction
 			var/turf/target = get_turf(loc)
-			var/range = rand(2,I.throw_range)
+			var/range = SSrng.random(2,I.throw_range)
 			for(var/i = 1; i < range; i++)
 				var/turf/new_turf = get_step(target, dir)
 				target = new_turf
@@ -494,7 +494,7 @@
 /mob/living/carbon/proc/spew_organ(power = 5)
 	if(!internal_organs.len)
 		return //Guess we're out of organs
-	var/obj/item/organ/guts = pick(internal_organs)
+	var/obj/item/organ/guts = SSrng.pick_from_list(internal_organs)
 	var/turf/T = get_turf(src)
 	guts.Remove(src)
 	guts.forceMove(T)
@@ -747,7 +747,7 @@
 	var/organs_amt = 0
 	for(var/X in internal_organs)
 		var/obj/item/organ/O = X
-		if(prob(50))
+		if(SSrng.probability(50))
 			organs_amt++
 			O.Remove(src)
 			O.loc = get_turf(src)

@@ -182,14 +182,14 @@ mob
 
 		Add_Overlay()
 			set name = "4. Add Overlay"
-			add_overlay(image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
+			add_overlay(image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = SSrng.random(-64,32), pixel_y = SSrng.random(-64,32))
 
 		Stress_Test()
 			set name = "5. Stress Test"
 			for(var/i = 0 to 1000)
 				// The third parameter forces it to generate a new one, even if it's already cached
 				getFlatIcon(src,0,2)
-				if(prob(5))
+				if(SSrng.probability(5))
 					Add_Overlay()
 			Browse_Icon()
 
@@ -884,7 +884,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 				GLOB.friendly_animal_types += SA
 
 
-	var/mob/living/simple_animal/SA = pick(GLOB.friendly_animal_types)
+	var/mob/living/simple_animal/SA = SSrng.pick_from_list(GLOB.friendly_animal_types)
 
 	var/icon = initial(SA.icon)
 	var/icon_state = initial(SA.icon_state)
@@ -892,7 +892,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	var/image/final_image = image(icon, icon_state=icon_state, loc = A)
 
 	if(ispath(SA, /mob/living/simple_animal/butterfly))
-		final_image.color = rgb(rand(0,255), rand(0,255), rand(0,255))
+		final_image.color = rgb(SSrng.random(0,255), SSrng.random(0,255), SSrng.random(0,255))
 
 	// For debugging
 	final_image.text = initial(SA.name)

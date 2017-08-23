@@ -80,7 +80,7 @@
 			/obj/item/reagent_containers/food/snacks/burger/fivealarm)
 
 /obj/effect/spawner/lootdrop/three_course_meal/Initialize(mapload)
-	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)
+	loot = list(SSrng.pick_from_list(soups) = 1,SSrng.pick_from_list(salads) = 1,SSrng.pick_from_list(mains) = 1)
 	. = ..()
 
 /obj/effect/spawner/lootdrop/maintenance

@@ -127,7 +127,7 @@
 
 /mob/living/carbon/human/interactive/proc/random()
 	//this is here because this has no client/prefs/brain whatever.
-	age = rand(AGE_MIN,AGE_MAX)
+	age = SSrng.random(AGE_MIN,AGE_MAX)
 	//job handling
 	myjob = new/datum/job/assistant()
 	job = myjob.title
@@ -178,7 +178,7 @@
 		var/choice = input("Customization Choices") as null|anything in list("Service NPC","Security NPC","Random","Custom")
 		if(choice)
 			if(choice == "Service NPC" || choice == "Security NPC")
-				var/job = choice == "Service NPC" ? pick("Bartender","Cook","Botanist","Janitor") : pick("Warden","Detective","Security Officer")
+				var/job = choice == "Service NPC" ? SSrng.pick_from_list("Bartender","Cook","Botanist","Janitor") : SSrng.pick_from_list("Warden","Detective","Security Officer")
 				for(var/j in SSjob.occupations)
 					var/datum/job/J = j
 					if(J.title == job)
@@ -190,26 +190,26 @@
 						T.doSetup()
 						break
 			if(choice == "Random")
-				T.myjob = pick(SSjob.occupations)
+				T.myjob = SSrng.pick_from_list(SSjob.occupations)
 				T.job = T.myjob.title
 				for(var/obj/item/W in T)
 					qdel(W)
 				T.myjob.equip(T)
 				T.doSetup()
-				if(prob(25))
+				if(SSrng.probability(25))
 					var/list/validchoices = list()
 					for(var/mob/living/carbon/human/M in GLOB.mob_list)
 						validchoices += M
-					var/mob/living/carbon/human/chosen = pick(validchoices)
+					var/mob/living/carbon/human/chosen = SSrng.pick_from_list(validchoices)
 					var/datum/dna/toDoppel = chosen.dna
 					T.real_name = toDoppel.real_name
 					toDoppel.transfer_identity(T, transfer_SE=1)
 					T.updateappearance(mutcolor_update=1)
 					T.domutcheck()
-				if(prob(25))
-					var/cType = pick(list(SNPC_BRUTE,SNPC_STEALTH,SNPC_MARTYR,SNPC_PSYCHO))
+				if(SSrng.probability(25))
+					var/cType = SSrng.pick_from_list(list(SNPC_BRUTE,SNPC_STEALTH,SNPC_MARTYR,SNPC_PSYCHO))
 					T.makeTraitor(cType)
-				T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
+				T.loc = SSrng.pick_from_list(get_area_turfs(T.job2area(T.myjob)))
 			if(choice == "Custom")
 				var/cjob = input("Choose Job") as null|anything in SSjob.occupations
 				if(cjob)
@@ -246,7 +246,7 @@
 				var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
 				if(doTele)
 					if(doTele == "Yes")
-						T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
+						T.loc = SSrng.pick_from_list(get_area_turfs(T.job2area(T.myjob)))
 
 /mob/living/carbon/human/interactive/proc/doSetup()
 	Path_ID = new /obj/item/card/id(src)
@@ -276,7 +276,7 @@
 	//arms
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
+		if(SSrng.probability((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
 			BP.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE)
 	update_icons()
 	update_damage_overlays()
@@ -343,18 +343,18 @@
 
 /mob/living/carbon/human/interactive/proc/makeTraitor(var/inPers)
 	isTraitor = 1
-	traitorScale = (slyness + smartness) + rand(-10,10)
+	traitorScale = (slyness + smartness) + SSrng.random(-10,10)
 	traitorType = inPers
 
 	switch(traitorType)
 		if(SNPC_BRUTE) // SMASH KILL RAAARGH
-			traitorTarget = pick(GLOB.mob_list)
+			traitorTarget = SSrng.pick_from_list(GLOB.mob_list)
 		if(SNPC_STEALTH) // Shhh we is sneekies
-			var/A = pick(typesof(/datum/objective_item/steal) - /datum/objective_item/steal)
+			var/A = SSrng.pick_from_list(typesof(/datum/objective_item/steal) - /datum/objective_item/steal)
 			var/datum/objective_item/steal/S = new A
 			traitorTarget = locate(S.targetitem) in world
 		if(SNPC_MARTYR) // MY LIFE FOR SPESZUL
-			var/targetType = pick(/obj/machinery/gravity_generator/main/station, /obj/machinery/power/smes/engineering, /obj/machinery/telecomms/hub)
+			var/targetType = SSrng.pick_from_list(/obj/machinery/gravity_generator/main/station, /obj/machinery/power/smes/engineering, /obj/machinery/telecomms/hub)
 			traitorTarget = locate(targetType) in GLOB.machines
 		if(SNPC_PSYCHO) // YOU'RE LIKE A FLESH BICYLE AND I WANT TO DISMANTLE YOU
 			traitorTarget = null
@@ -377,10 +377,10 @@
 	loadVoice()
 
 	// a little bit of variation to make individuals more unique
-	robustness += rand(-10,10)
-	smartness += rand(-10,10)
-	attitude += rand(-10,10)
-	slyness += rand(-10,10)
+	robustness += SSrng.random(-10,10)
+	smartness += SSrng.random(-10,10)
+	attitude += SSrng.random(-10,10)
+	slyness += SSrng.random(-10,10)
 
 /mob/living/carbon/human/interactive/Destroy()
 	SSnpcpool.stop_processing(src)
@@ -504,7 +504,7 @@
 
 /mob/living/carbon/human/interactive/proc/insert_into_backpack()
 	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_hands,"right hand" = slot_hands)
-	var/obj/item/I = get_item_by_slot(pick(slots))
+	var/obj/item/I = get_item_by_slot(SSrng.pick_from_list(slots))
 	var/obj/item/storage/BP = get_item_by_slot(slot_back)
 	if(back && BP && I)
 		if(BP.can_be_inserted(I,0))
@@ -635,7 +635,7 @@
 			if(isitem(TARGET))
 				if(istype(TARGET, /obj/item))
 					var/obj/item/W = TARGET
-					if(W.force >= best_force || prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
+					if(W.force >= best_force || SSrng.probability((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 						if(!get_item_for_held_index(1) || !get_item_for_held_index(2))
 							put_in_hands(W)
 						else
@@ -691,7 +691,7 @@
 	if(!doing && !IsDeadOrIncap() && !TARGET)
 		doing |= TRAVEL
 		if(!isTraitor || !traitorTarget)
-			var/choice = rand(1,50)
+			var/choice = SSrng.random(1,50)
 			switch(choice)
 				if(1 to 30)
 					//chance to chase an item
@@ -699,9 +699,9 @@
 				if(31 to 40)
 					TARGET = safepick(get_area_turfs(job2area(myjob)))
 				if(41 to 45)
-					TARGET = pick(target_filter(favouredObjIn(urange(MAX_RANGE_FIND,src,1))))
+					TARGET = SSrng.pick_from_list(target_filter(favouredObjIn(urange(MAX_RANGE_FIND,src,1))))
 				if(46 to 50)
-					TARGET = pick(target_filter(oview(MIN_RANGE_FIND,src)))
+					TARGET = SSrng.pick_from_list(target_filter(oview(MIN_RANGE_FIND,src)))
 		else if(isTraitor && traitorTarget)
 			TARGET = traitorTarget
 		tryWalk(TARGET)
@@ -815,7 +815,7 @@
 	if(T.title == "Botanist")
 		return /area/hydroponics
 	else
-		return pick(/area/hallway, /area/crew_quarters/locker)
+		return SSrng.pick_from_list(/area/hallway, /area/crew_quarters/locker)
 
 /mob/living/carbon/human/interactive/proc/target_filter(target)
 	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/light, /obj/structure/cable, /obj/machinery/atmospherics)
@@ -848,28 +848,28 @@
 
 	var/chatmsg = ""
 
-	if(prob(10)) // 10% chance to broadcast it over the radio
+	if(SSrng.probability(10)) // 10% chance to broadcast it over the radio
 		chatmsg = ";"
 
-	if(prob(chattyness) || knownStrings.len < 10) // say a generic phrase, otherwise draw from our strings.
+	if(SSrng.probability(chattyness) || knownStrings.len < 10) // say a generic phrase, otherwise draw from our strings.
 		if(doing & INTERACTING)
-			if(prob(chattyness))
-				chatmsg += pick("This [nouns_objects] is a little [adjective_objects].",
+			if(SSrng.probability(chattyness))
+				chatmsg += SSrng.pick_from_list("This [nouns_objects] is a little [adjective_objects].",
 				"Well [verbs_use] my [nouns_body], this [nouns_insult] is pretty [adjective_insult].",
 				"[capitalize(curse_words)], what am I meant to do with this [adjective_insult] [nouns_objects].")
 		else if(doing & TRAVEL)
-			if(prob(chattyness))
-				chatmsg += pick("Oh [curse_words], [verbs_move]!",
+			if(SSrng.probability(chattyness))
+				chatmsg += SSrng.pick_from_list("Oh [curse_words], [verbs_move]!",
 				"Time to get my [adjective_generic] [adjective_insult] [nouns_body] elsewhere.",
 				"I wonder if there is anything to [verbs_use] and [verbs_touch] somewhere else..")
 		else if(doing & FIGHTING)
-			if(prob(chattyness))
-				chatmsg += pick("I'm going to [verbs_use] you, you [adjective_insult] [nouns_insult]!",
+			if(SSrng.probability(chattyness))
+				chatmsg += SSrng.pick_from_list("I'm going to [verbs_use] you, you [adjective_insult] [nouns_insult]!",
 				"Rend and [verbs_touch], rend and [verbs_use]!",
 				"You [nouns_insult], I'm going to [verbs_use] you right in the [nouns_body]. JUST YOU WAIT!")
-		if(prob(chattyness/2))
+		if(SSrng.probability(chattyness/2))
 			chatmsg = ";"
-			var/what = pick(1,2,3,4,5)
+			var/what = SSrng.pick_from_list(1,2,3,4,5)
 			switch(what)
 				if(1)
 					chatmsg += "Well [curse_words], this is a [adjective_generic] situation."
@@ -878,17 +878,17 @@
 				if(3)
 					chatmsg += "I want to [verbs_use] that [nouns_insult] when I find them."
 				if(4)
-					chatmsg += "[pick("Innocent","Guilty","Traitorous","Honk")] until proven [adjective_generic]!"
+					chatmsg += "[SSrng.pick_from_list("Innocent","Guilty","Traitorous","Honk")] until proven [adjective_generic]!"
 				if(5)
 					var/toSay = ""
 					for(var/i = 0; i < 5; i++)
 						curse_words = pick_list(NPC_SPEAK_FILE,"curse_words")
 						toSay += "[curse_words] "
 					chatmsg += "Hey [nouns_generic], why dont you go [toSay], you [nouns_insult]!"
-	else if(prob(chattyness))
-		chatmsg += pick(knownStrings)
-		if(prob(25)) // cut out some phrases now and then to make sure we're fresh and new
-			knownStrings -= pick(chatmsg)
+	else if(SSrng.probability(chattyness))
+		chatmsg += SSrng.pick_from_list(knownStrings)
+		if(SSrng.probability(25)) // cut out some phrases now and then to make sure we're fresh and new
+			knownStrings -= SSrng.pick_from_list(chatmsg)
 
 	if(chatmsg != ";" && chatmsg != "")
 		src.say(chatmsg)
@@ -914,7 +914,7 @@
 				return 1
 
 	if(!(get_turf(src) in validHome))
-		tryWalk(pick(get_area_turfs(job2area(myjob))))
+		tryWalk(SSrng.pick_from_list(get_area_turfs(job2area(myjob))))
 		return 1
 	return 0
 
@@ -928,9 +928,9 @@
 /mob/living/carbon/human/interactive/proc/traitor(obj)
 
 	if(traitorType == SNPC_PSYCHO)
-		traitorTarget = pick(nearby)
+		traitorTarget = SSrng.pick_from_list(nearby)
 
-	if(prob(traitorScale))
+	if(SSrng.probability(traitorScale))
 		if(!Adjacent(traitorTarget) && !(traitorType == SNPC_PSYCHO))
 			tryWalk(get_turf(traitorTarget))
 		else
@@ -960,7 +960,7 @@
 							inactivity_period = 0
 							customEmote("[src]'s chest closes, hiding their insides.")
 				if(SNPC_PSYCHO)
-					var/choice = pick(typesof(/obj/item/grenade/chem_grenade) - /obj/item/grenade/chem_grenade)
+					var/choice = SSrng.pick_from_list(typesof(/obj/item/grenade/chem_grenade) - /obj/item/grenade/chem_grenade)
 
 					new choice(src)
 
@@ -1022,9 +1022,9 @@
 				if(HP.harvest || HP.dead)
 					HP.attack_hand(src)
 				else if(!HP.myseed)
-					var/seedType = pick(typesof(/obj/item/seeds) - /obj/item/seeds)
+					var/seedType = SSrng.pick_from_list(typesof(/obj/item/seeds) - /obj/item/seeds)
 					var/obj/item/seeds/SEED = new seedType(src)
-					customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")] towards [TARGET], producing a [SEED]!")
+					customEmote("[src] [SSrng.pick_from_list("gibbers","drools","slobbers","claps wildly","spits")] towards [TARGET], producing a [SEED]!")
 					HP.attackby(SEED,src)
 				else
 					var/change = 0
@@ -1061,7 +1061,7 @@
 			if(!Adjacent(SF))
 				tryWalk(get_turf(SF), 1)
 			else
-				customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], upending the [internalBag]'s contents all over the [SF]!")
+				customEmote("[src] [SSrng.pick_from_list("gibbers","drools","slobbers","claps wildly","spits")], upending the [internalBag]'s contents all over the [SF]!")
 				//smartfridges call updateUsrDialog when you call attackby, so we're going to have to cheese-magic-space this
 				for(var/obj/toLoad in internalBag.contents)
 					if(contents.len >= SF.max_n_of_items)
@@ -1095,12 +1095,12 @@
 		if(!Adjacent(RT))
 			tryWalk(get_turf(RT))
 		else
-			var/drinkChoice = pick(typesof(/obj/item/reagent_containers/food/drinks) - /obj/item/reagent_containers/food/drinks)
+			var/drinkChoice = SSrng.pick_from_list(typesof(/obj/item/reagent_containers/food/drinks) - /obj/item/reagent_containers/food/drinks)
 			if(drinkChoice)
 				var/obj/item/reagent_containers/food/drinks/D = new drinkChoice(get_turf(src))
 				RT.attackby(D,src)
-				src.say("[pick("Something to wet your whistle!","Down the hatch, a tasty beverage!","One drink, coming right up!","Tasty liquid for your oral intake!","Enjoy!")]")
-				customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], serving up a [D]!")
+				src.say("[SSrng.pick_from_list("Something to wet your whistle!","Down the hatch, a tasty beverage!","One drink, coming right up!","Tasty liquid for your oral intake!","Enjoy!")]")
+				customEmote("[src] [SSrng.pick_from_list("gibbers","drools","slobbers","claps wildly","spits")], serving up a [D]!")
 
 /mob/living/carbon/human/interactive/proc/shitcurity(obj)
 	var/list/allContents = getAllContents()
@@ -1158,7 +1158,7 @@
 		else
 			var/hasPranked = 0
 			for(var/A in allContents)
-				if(prob(smartness/2) && !hasPranked)
+				if(SSrng.probability(smartness/2) && !hasPranked)
 					if(istype(A, /obj/item/soap))
 						npcDrop(A)
 						hasPranked = 1
@@ -1171,7 +1171,7 @@
 			if(!hasPranked)
 				if(S.reagents.total_volume <= 5)
 					S.reagents.add_reagent("water", 25)
-				S.afterattack(get_turf(pick(orange(1,clownTarget))),src)
+				S.afterattack(get_turf(SSrng.pick_from_list(orange(1,clownTarget))),src)
 
 
 /mob/living/carbon/human/interactive/proc/healpeople(obj)
@@ -1248,7 +1248,7 @@
 // START COOKING MODULE
 /mob/living/carbon/human/interactive/proc/cookingwithmagic(var/obj/item/reagent_containers/food/snacks/target)
 	if(Adjacent(target))
-		customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")] towards [target], and with a bang, it's instantly cooked!")
+		customEmote("[src] [SSrng.pick_from_list("gibbers","drools","slobbers","claps wildly","spits")] towards [target], and with a bang, it's instantly cooked!")
 		var/obj/item/reagent_containers/food/snacks/S = new target.cooked_type (get_turf(src))
 		target.initialize_cooked_food(S, 100)
 		if(target) // cleaning up old food seems inconsistent, so this will clean up stragglers
@@ -1286,8 +1286,8 @@
 		var/foundCustom
 
 		for(var/obj/item/reagent_containers/food/snacks/donkpocket/DP in rangeCheck) // donkpockets are hitler to chef SNPCs
-			if(prob(50))
-				customEmote("[src] points at the [DP], emitting a loud [pick("bellow","screech","yell","scream")], and it bursts into flame.")
+			if(SSrng.probability(50))
+				customEmote("[src] points at the [DP], emitting a loud [SSrng.pick_from_list("bellow","screech","yell","scream")], and it bursts into flame.")
 				qdel(DP)
 
 		for(var/customType in customableTypes)
@@ -1302,16 +1302,16 @@
 				if(!Adjacent(SF))
 					tryWalk(get_turf(SF),1)
 				else
-					customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], grabbing various foodstuffs from [SF] and sticking them in it's mouth!")
+					customEmote("[src] [SSrng.pick_from_list("gibbers","drools","slobbers","claps wildly","spits")], grabbing various foodstuffs from [SF] and sticking them in it's mouth!")
 					for(var/obj/item/A in SF.contents)
-						if(prob(smartness/2))
+						if(SSrng.probability(smartness/2))
 							A.loc = src
 
 
 		if(foundCustom)
 			var/obj/item/reagent_containers/food/snacks/FC = foundCustom
 			for(var/obj/item/reagent_containers/food/snacks/toMake in allContents)
-				if(prob(smartness))
+				if(SSrng.probability(smartness))
 					if(FC.reagents)
 						FC.attackby(toMake,src)
 					else
@@ -1326,7 +1326,7 @@
 
 		if(D)
 			TARGET = D
-			var/choice = pick(1,2)
+			var/choice = SSrng.pick_from_list(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
 				inactivity_period = get_dist(src,D)
@@ -1336,7 +1336,7 @@
 			foundCookable = 1
 		else if(FD)
 			TARGET = FD
-			var/choice = pick(1,2)
+			var/choice = SSrng.pick_from_list(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
 				inactivity_period = get_dist(src,D)
@@ -1346,7 +1346,7 @@
 			foundCookable = 1
 		else if(CB)
 			TARGET = CB
-			var/choice = pick(1,2)
+			var/choice = SSrng.pick_from_list(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
 				inactivity_period = get_dist(src,D)
@@ -1356,7 +1356,7 @@
 			foundCookable = 1
 		else if(PD)
 			TARGET = PD
-			var/choice = pick(1,2)
+			var/choice = SSrng.pick_from_list(1,2)
 			if(choice == 1)
 				tryWalk(get_turf(D))
 				inactivity_period = get_dist(src,D)
@@ -1417,13 +1417,13 @@
 				if(initial(O.cooked_type))
 					allTypes += A
 
-			var/chosenType = pick(allTypes)
+			var/chosenType = SSrng.pick_from_list(allTypes)
 
 			var/obj/item/reagent_containers/food/snacks/newSnack = new chosenType(get_turf(src))
 			TARGET = newSnack
 			newSnack.reagents.remove_any((newSnack.reagents.total_volume/2)-1)
 			newSnack.name = "Synthetic [newSnack.name]"
-			customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")] as they vomit [newSnack] from their mouth!")
+			customEmote("[src] [SSrng.pick_from_list("gibbers","drools","slobbers","claps wildly","spits")] as they vomit [newSnack] from their mouth!")
 // END COOKING MODULE
 
 /mob/living/carbon/human/interactive/proc/compareFaction(var/list/targetFactions)
@@ -1441,7 +1441,7 @@
 		if((graytide || (TRAITS & TRAIT_MEAN)) || retal)
 			interest += targetInterestShift
 			a_intent = INTENT_HARM
-			zone_selected = pick("chest","r_leg","l_leg","r_arm","l_arm","head")
+			zone_selected = SSrng.pick_from_list("chest","r_leg","l_leg","r_arm","l_arm","head")
 			doing |= FIGHTING
 			if(retal)
 				TARGET = retal_target
@@ -1497,7 +1497,7 @@
 				for(var/A in allContents)
 					if(istype(A, /obj/item/gun))	// guns are for shooting, not throwing.
 						continue
-					if(prob(robustness))
+					if(SSrng.probability(robustness))
 						if(istype(A, /obj/item))
 							var/obj/item/W = A
 							if(W.throwforce > 19) // Only throw worthwile stuff, no more lobbing wrenches at wenches
@@ -1506,7 +1506,7 @@
 						if(istype(A, /obj/item/grenade)) // Allahu ackbar! ALLAHU ACKBARR!!
 							var/obj/item/grenade/G = A
 							G.attack_self(src)
-							if(prob(smartness))
+							if(SSrng.probability(smartness))
 								npcDrop(G,1)
 								inactivity_period = 15
 								sleep(15)
@@ -1561,7 +1561,7 @@
 						tryWalk(TARGET)
 					else
 						if(Adjacent(TARGET))
-							a_intent = pick(INTENT_DISARM, INTENT_HARM)
+							a_intent = SSrng.pick_from_list(INTENT_DISARM, INTENT_HARM)
 							M.attack_hand(src)
 			timeout++
 		else if(timeout >= 10 || !(targetRange(M) > 14))

@@ -264,7 +264,7 @@
 		eject_range = 10
 
 	else if(floorturf)
-		target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
+		target = get_offset_target_turf(T, SSrng.random(5)-SSrng.random(5), SSrng.random(5)-SSrng.random(5))
 
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 	for(var/atom/movable/AM in H)
@@ -408,7 +408,7 @@
 		else
 			setbit = WEST
 
-		if(prob(50))	// 50% chance to choose the found bit or the other one
+		if(SSrng.probability(50))	// 50% chance to choose the found bit or the other one
 			return setbit
 		else
 			return mask & (~setbit)

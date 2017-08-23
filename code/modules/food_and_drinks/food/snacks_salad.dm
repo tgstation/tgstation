@@ -11,7 +11,7 @@
 
 /obj/item/reagent_containers/food/snacks/salad/New()
 	..()
-	eatverb = pick("crunch","devour","nibble","gnaw","gobble","chomp")
+	eatverb = SSrng.pick_from_list("crunch","devour","nibble","gnaw","gobble","chomp")
 
 /obj/item/reagent_containers/food/snacks/salad/aesirsalad
 	name = "\improper Aesir salad"

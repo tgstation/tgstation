@@ -170,7 +170,7 @@ SUBSYSTEM_DEF(persistence)
 				savable_obj += O.type
 		if(isemptylist(savable_obj))
 			continue
-		old_secret_satchels += "[F.x]|[F.y]|[pick(savable_obj)]#"
+		old_secret_satchels += "[F.x]|[F.y]|[SSrng.pick_from_list(savable_obj)]#"
 	WRITE_FILE(secret_satchels[SSmapping.config.map_name], old_secret_satchels)
 
 /datum/controller/subsystem/persistence/proc/CollectChiselMessages()

@@ -43,11 +43,11 @@
 	give_hair()
 	set_light(1, 2) // same glowing as visible player ghosts
 	if(random)
-		switch(rand(0,1))
+		switch(SSrng.random(0,1))
 			if(0)
-				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+				name = "ghost of [SSrng.pick_from_list(GLOB.first_names_male)] [SSrng.pick_from_list(GLOB.last_names)]"
 			if(1)
-				name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
+				name = "ghost of [SSrng.pick_from_list(GLOB.first_names_female)] [SSrng.pick_from_list(GLOB.last_names)]"
 
 
 /mob/living/simple_animal/hostile/retaliate/ghost/proc/give_hair()

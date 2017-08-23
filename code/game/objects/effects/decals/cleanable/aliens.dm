@@ -30,8 +30,8 @@
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions)
 	set waitfor = 0
-	var/direction = pick(directions)
-	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
+	var/direction = SSrng.pick_from_list(directions)
+	for(var/i = 0, i < text2num(pickweight(list("1" = 4, "2" = 3, "3" = 1))), i++)
 		sleep(2)
 		if(i > 0)
 			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)

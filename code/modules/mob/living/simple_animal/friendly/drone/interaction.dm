@@ -67,7 +67,7 @@
 									  "can't tell if their ethernet detour is moving or not", "won't be able to reseed enough"+\
 									  " kernels to function properly","can't start their neurotube console")
 
-		to_chat(user, "<span class='warning'>You can't seem to find the [pick(faux_gadgets)]! Without it, [src] [pick(faux_problems)].</span>")
+		to_chat(user, "<span class='warning'>You can't seem to find the [SSrng.pick_from_list(faux_gadgets)]! Without it, [src] [SSrng.pick_from_list(faux_problems)].</span>")
 		return
 	user.visible_message("<span class='notice'>[user] begins to reactivate [src].</span>", "<span class='notice'>You begin to reactivate [src]...</span>")
 	if(do_after(user, 30, 1, target = src))

@@ -26,5 +26,5 @@
 
 /mob/living/simple_animal/butterfly/Initialize()
 	. = ..()
-	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	var/newcolor = rgb(SSrng.random(0, 255), SSrng.random(0, 255), SSrng.random(0, 255))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)

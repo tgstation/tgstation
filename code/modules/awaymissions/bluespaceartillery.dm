@@ -52,6 +52,6 @@
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
 			L+=T
-		var/loc = pick(L)
+		var/loc = SSrng.pick_from_list(L)
 		explosion(loc,explosiondev,explosionmed,explosionlight)
 		reload = 0

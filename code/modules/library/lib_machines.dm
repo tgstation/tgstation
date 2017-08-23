@@ -319,7 +319,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	return null
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_forbidden_lore(mob/user)
-	var/spook = pick("blood", "brass")
+	var/spook = SSrng.pick_from_list("blood", "brass")
 	var/turf/T = get_turf(src)
 	if(spook == "blood")
 		new /obj/item/tome(T)
@@ -468,7 +468,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 				B.title = title
 				B.author = author
 				B.dat = content
-				B.icon_state = "book[rand(1,8)]"
+				B.icon_state = "book[SSrng.random(1,8)]"
 				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
 	if(href_list["printbible"])
@@ -578,15 +578,15 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 	audible_message("[src] begins to hum as it warms up its printing drums.")
 	busy = TRUE
-	sleep(rand(200,400))
+	sleep(SSrng.random(200,400))
 	busy = FALSE
 	if(P)
 		if(!stat)
 			visible_message("[src] whirs as it prints and binds a new book.")
 			var/obj/item/book/B = new(src.loc)
 			B.dat = P.info
-			B.name = "Print Job #" + "[rand(100, 999)]"
-			B.icon_state = "book[rand(1,7)]"
+			B.name = "Print Job #" + "[SSrng.random(100, 999)]"
+			B.icon_state = "book[SSrng.random(1,7)]"
 			qdel(P)
 		else
 			P.loc = loc

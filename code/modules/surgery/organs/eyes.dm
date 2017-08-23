@@ -81,7 +81,7 @@
 	if(!owner)
 		return
 	if(severity > 1)
-		if(prob(10 * severity))
+		if(SSrng.probability(10 * severity))
 			return
 	to_chat(owner, "<span class='warning'>Static obfuscates your vision!</span>")
 	owner.flash_act(visual = 1)

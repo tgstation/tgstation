@@ -18,8 +18,8 @@
 			var/obj/item/ore/slag/wrath = new /obj/item/ore/slag
 			qdel(src)
 			user.put_in_active_hand(wrath)
-	if(is_servant_of_ratvar(user) && prob(20))
-		var/pickedmessage = pick(servant_of_ratvar_messages)
+	if(is_servant_of_ratvar(user) && SSrng.probability(20))
+		var/pickedmessage = SSrng.pick_from_list(servant_of_ratvar_messages)
 		to_chat(user, "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>")
 
 /obj/item/clockwork/component/examine(mob/user)
@@ -168,9 +168,9 @@
 	. = ..()
 	if(randomsinglesprite)
 		replace_name_desc()
-		icon_state = "[icon_state][rand(1, randomspritemax)]"
-		pixel_x = rand(-sprite_shift, sprite_shift)
-		pixel_y = rand(-sprite_shift, sprite_shift)
+		icon_state = "[icon_state][SSrng.random(1, randomspritemax)]"
+		pixel_x = SSrng.random(-sprite_shift, sprite_shift)
+		pixel_y = SSrng.random(-sprite_shift, sprite_shift)
 
 /obj/item/clockwork/alloy_shards/examine(mob/user)
 	..()

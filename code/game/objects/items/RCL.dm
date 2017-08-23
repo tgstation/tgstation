@@ -46,7 +46,7 @@
 	else if(istype(W, /obj/item/screwdriver))
 		if(!loaded)
 			return
-		if(ghetto && prob(10)) //Is it a ghetto RCL? If so, give it a 10% chance to fall apart
+		if(ghetto && SSrng.probability(10)) //Is it a ghetto RCL? If so, give it a 10% chance to fall apart
 			to_chat(user, "<span class='warning'>You attempt to loosen the securing screws on the side, but it falls apart!</span>")
 			while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
 				var/diff = loaded.amount % 30
@@ -147,7 +147,7 @@
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		return
 
-	if(prob(2) && ghetto) //Give ghetto RCLs a 2% chance to jam, requiring it to be reactviated manually.
+	if(SSrng.probability(2) && ghetto) //Give ghetto RCLs a 2% chance to jam, requiring it to be reactviated manually.
 		to_chat(user, "<span class='warning'>[src]'s wires jam!</span>")
 		active = FALSE
 		return

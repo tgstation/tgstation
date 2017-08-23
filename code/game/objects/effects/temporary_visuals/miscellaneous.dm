@@ -8,9 +8,9 @@
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
 	if(set_dir in GLOB.diagonals)
-		icon_state = "[splatter_type][pick(1, 2, 6)]"
+		icon_state = "[splatter_type][SSrng.pick_from_list(1, 2, 6)]"
 	else
-		icon_state = "[splatter_type][pick(3, 4, 5)]"
+		icon_state = "[splatter_type][SSrng.pick_from_list(3, 4, 5)]"
 	. = ..()
 	var/target_pixel_x = 0
 	var/target_pixel_y = 0
@@ -59,14 +59,14 @@
 	switch(newdir)
 		if(NORTH)
 			layer = BELOW_MOB_LAYER
-			pixel_x = rand(-3,3)
-			pixel_y = rand(4,6)
+			pixel_x = SSrng.random(-3,3)
+			pixel_y = SSrng.random(4,6)
 		if(SOUTH)
-			pixel_x = rand(-3,3)
-			pixel_y = rand(-1,1)
+			pixel_x = SSrng.random(-3,3)
+			pixel_y = SSrng.random(-1,1)
 		else
-			pixel_x = rand(-1,1)
-			pixel_y = rand(-1,1)
+			pixel_x = SSrng.random(-1,1)
+			pixel_y = SSrng.random(-1,1)
 	..()
 
 /obj/effect/temp_visual/dir_setting/firing_effect/energy
@@ -279,8 +279,8 @@
 	if(set_color)
 		add_atom_colour(set_color, FIXED_COLOUR_PRIORITY)
 	. = ..()
-	pixel_x = rand(-12, 12)
-	pixel_y = rand(-9, 0)
+	pixel_x = SSrng.random(-12, 12)
+	pixel_y = SSrng.random(-9, 0)
 
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
@@ -314,11 +314,11 @@
 
 /obj/effect/temp_visual/impact_effect/Initialize(mapload, atom/target, obj/item/projectile/P)
 	if(target == P.original) //the projectile hit the target originally clicked
-		pixel_x = P.p_x + target.pixel_x - 16 + rand(-4,4)
-		pixel_y = P.p_y + target.pixel_y - 16 + rand(-4,4)
+		pixel_x = P.p_x + target.pixel_x - 16 + SSrng.random(-4,4)
+		pixel_y = P.p_y + target.pixel_y - 16 + SSrng.random(-4,4)
 	else
-		pixel_x = target.pixel_x + rand(-4,4)
-		pixel_y = target.pixel_y + rand(-4,4)
+		pixel_x = target.pixel_x + SSrng.random(-4,4)
+		pixel_y = target.pixel_y + SSrng.random(-4,4)
 	. = ..()
 
 /obj/effect/temp_visual/impact_effect/red_laser
@@ -353,8 +353,8 @@
 
 /obj/effect/temp_visual/heart/Initialize(mapload)
 	. = ..()
-	pixel_x = rand(-4,4)
-	pixel_y = rand(-4,4)
+	pixel_x = SSrng.random(-4,4)
+	pixel_y = SSrng.random(-4,4)
 	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
 
 /obj/effect/temp_visual/bleed

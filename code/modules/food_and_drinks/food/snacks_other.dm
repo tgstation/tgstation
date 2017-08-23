@@ -68,7 +68,7 @@
 
 /obj/item/reagent_containers/food/snacks/popcorn/New()
 	..()
-	eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
+	eatverb = SSrng.pick_from_list("bite","crunch","nibble","gnaw","gobble","chomp")
 
 /obj/item/reagent_containers/food/snacks/loadedbakedpotato
 	name = "loaded baked potato"
@@ -432,7 +432,7 @@
 /obj/item/reagent_containers/food/snacks/lollipop/New()
 	..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
-	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+	change_head_color(rgb(SSrng.random(0, 255), SSrng.random(0, 255), SSrng.random(0, 255)))
 
 /obj/item/reagent_containers/food/snacks/lollipop/proc/change_head_color(C)
 	headcolor = C
@@ -471,7 +471,7 @@
 
 /obj/item/reagent_containers/food/snacks/gumball/New()
 	..()
-	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	color = rgb(SSrng.random(0, 255), SSrng.random(0, 255), SSrng.random(0, 255))
 
 /obj/item/reagent_containers/food/snacks/gumball/cyborg
 	var/spamchecking = TRUE

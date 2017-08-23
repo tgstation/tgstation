@@ -14,6 +14,6 @@
 	icon_state = "eal"
 
 /datum/language/machine/get_random_name()
-	if(prob(70))
-		return "[pick(GLOB.posibrain_names)]-[rand(100, 999)]"
-	return pick(GLOB.ai_names)
+	if(SSrng.probability(70))
+		return "[SSrng.pick_from_list(GLOB.posibrain_names)]-[SSrng.random(100, 999)]"
+	return SSrng.pick_from_list(GLOB.ai_names)

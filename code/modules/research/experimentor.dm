@@ -63,7 +63,7 @@
 		if(istype(I, /obj/item/relic))
 			item_reactions["[I]"] = SCANTYPE_DISCOVER
 		else
-			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+			item_reactions["[I]"] = SSrng.pick_from_list(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 		if(ispath(I, /obj/item/stock_parts) || ispath(I, /obj/item/grenade/chem_grenade) || ispath(I, /obj/item/kitchen))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
@@ -74,7 +74,7 @@
 		if(ispath(I, /obj/item/reagent_containers/food))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				valid_items += rand(1,max(2,35-probWeight))
+				valid_items += SSrng.random(1,max(2,35-probWeight))
 				valid_items += I
 
 		if(ispath(I, /obj/item/construction/rcd) || ispath(I, /obj/item/grenade) || ispath(I, /obj/item/device/aicard) || ispath(I, /obj/item/storage/backpack/holding) || ispath(I, /obj/item/slime_extract) || ispath(I, /obj/item/device/onetankbomb) || ispath(I, /obj/item/device/transfer_valve))
@@ -185,12 +185,12 @@
 		if(cloneMode && cloneCount > 0)
 			visible_message("<span class='notice'>A duplicate [loaded_item] pops out!</span>")
 			var/type_to_make = loaded_item.type
-			new type_to_make(get_turf(pick(oview(1,src))))
+			new type_to_make(get_turf(SSrng.pick_from_list(oview(1,src))))
 			--cloneCount
 			if(cloneCount == 0)
 				cloneMode = FALSE
 			return
-		var/turf/dropturf = get_turf(pick(view(1,src)))
+		var/turf/dropturf = get_turf(SSrng.pick_from_list(view(1,src)))
 		if(!dropturf) //Failsafe to prevent the object being lost in the void forever.
 			dropturf = get_turf(src)
 		loaded_item.loc = dropturf
@@ -208,7 +208,7 @@
 	var/counter = 1
 	while(!result)
 		var/probtocheck = from[counter]
-		if(prob(probtocheck))
+		if(SSrng.probability(probtocheck))
 			result = TRUE
 			return from[counter+1]
 		if(counter + 2 < from.len)
@@ -224,19 +224,19 @@
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_POKE)
 		visible_message("[src] prods at [exp_on] with mechanical arms.")
-		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+		if(SSrng.probability(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("[exp_on] is gripped in just the right way, enhancing its focus.")
 			badThingCoeff++
-		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions and destroys [exp_on], lashing its arms out at nearby people!</span>")
 			for(var/mob/living/m in oview(1, src))
-				m.apply_damage(15, BRUTE, pick("head","chest","groin"))
+				m.apply_damage(15, BRUTE, SSrng.pick_from_list("head","chest","groin"))
 				investigate_log("Experimentor dealt minor brute to [m].", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions!</span>")
 			exp = SCANTYPE_OBLITERATE
-		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, throwing the [exp_on]!</span>")
 			var/mob/living/target = locate(/mob/living) in oview(7,src)
 			if(target)
@@ -248,24 +248,24 @@
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_IRRADIATE)
 		visible_message("<span class='danger'>[src] reflects radioactive rays at [exp_on]!</span>")
-		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+		if(SSrng.probability(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("[exp_on] has activated an unknown subroutine!")
 			cloneMode = TRUE
 			cloneCount = badThingCoeff
 			investigate_log("Experimentor has made a clone of [exp_on]", INVESTIGATE_EXPERIMENTOR)
 			ejectItem()
-		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and leaking radiation!</span>")
 			radiation_pulse(get_turf(src), 1, 1, 25, 1)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, spewing toxic waste!</span>")
 			for(var/turf/T in oview(1, src))
 				if(!T.density)
-					if(prob(EFFECT_PROB_VERYHIGH))
+					if(SSrng.probability(EFFECT_PROB_VERYHIGH))
 						var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
 						reagentdecal.reagents.add_reagent("radium", 7)
-		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_MEDIUM-badThingCoeff))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
 			var/newPath = pickWeighted(valid_items)
@@ -279,12 +279,12 @@
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_GAS)
 		visible_message("<span class='warning'>[src] fills its chamber with gas, [exp_on] included.</span>")
-		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+		if(SSrng.probability(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("[exp_on] achieves the perfect mix!")
-			new /obj/item/stack/sheet/mineral/plasma(get_turf(pick(oview(1,src))))
-		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
+			new /obj/item/stack/sheet/mineral/plasma(get_turf(SSrng.pick_from_list(oview(1,src))))
+		else if(SSrng.probability(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] destroys [exp_on], leaking dangerous gas!</span>")
-			chosenchem = pick("carbon","radium","toxin","condensedcapsaicin","mushroomhallucinogen","space_drugs","ethanol","beepskysmash")
+			chosenchem = SSrng.pick_from_list("carbon","radium","toxin","condensedcapsaicin","mushroomhallucinogen","space_drugs","ethanol","beepskysmash")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
@@ -295,9 +295,9 @@
 			smoke.start()
 			qdel(R)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s chemical chamber has sprung a leak!</span>")
-			chosenchem = pick("mutationtoxin","nanomachines","sacid")
+			chosenchem = SSrng.pick_from_list("mutationtoxin","nanomachines","sacid")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
@@ -309,10 +309,10 @@
 			ejectItem(TRUE)
 			warn_admins(usr, "[chosenchem] smoke")
 			investigate_log("Experimentor has released <font color='red'>[chosenchem]</font> smoke!", INVESTIGATE_EXPERIMENTOR)
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("[src] malfunctions, spewing harmless gas.")
 			throwSmoke(loc)
-		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] melts [exp_on], ionizing the air around it!</span>")
 			empulse(loc, 4, 6)
 			investigate_log("Experimentor has generated an Electromagnetic Pulse.", INVESTIGATE_EXPERIMENTOR)
@@ -320,17 +320,17 @@
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_HEAT)
 		visible_message("[src] raises [exp_on]'s temperature.")
-		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+		if(SSrng.probability(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='warning'>[src]'s emergency coolant system gives off a small ding!</span>")
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
-			var/obj/item/reagent_containers/food/drinks/coffee/C = new /obj/item/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
-			chosenchem = pick("plasma","capsaicin","ethanol")
+			var/obj/item/reagent_containers/food/drinks/coffee/C = new /obj/item/reagent_containers/food/drinks/coffee(get_turf(SSrng.pick_from_list(oview(1,src))))
+			chosenchem = SSrng.pick_from_list("plasma","capsaicin","ethanol")
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(chosenchem , 50)
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
-		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_VERYLOW-badThingCoeff))
 			var/turf/start = get_turf(src)
 			var/mob/M = locate(/mob/living) in view(src, 3)
 			var/turf/MT = get_turf(M)
@@ -343,12 +343,12 @@
 				FB.yo = MT.y - start.y
 				FB.xo = MT.x - start.x
 				FB.fire()
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and releasing a burst of flame!</span>")
 			explosion(loc, -1, 0, 0, 0, 0, flame_range = 2)
 			investigate_log("Experimentor started a fire.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, melting [exp_on] and leaking hot air!</span>")
 			var/datum/gas_mixture/env = loc.return_air()
 			var/transfer_moles = 0.25 * env.total_moles()
@@ -362,27 +362,27 @@
 			air_update_turf()
 			investigate_log("Experimentor has released hot air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, activating its emergency coolant systems!</span>")
 			throwSmoke(loc)
 			for(var/mob/living/m in oview(1, src))
-				m.apply_damage(5, BURN, pick("head","chest","groin"))
+				m.apply_damage(5, BURN, SSrng.pick_from_list("head","chest","groin"))
 				investigate_log("Experimentor has dealt minor burn damage to [m]", INVESTIGATE_EXPERIMENTOR)
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_COLD)
 		visible_message("[src] lowers [exp_on]'s temperature.")
-		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+		if(SSrng.probability(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='warning'>[src]'s emergency coolant system gives off a small ding!</span>")
-			var/obj/item/reagent_containers/food/drinks/coffee/C = new /obj/item/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
+			var/obj/item/reagent_containers/food/drinks/coffee/C = new /obj/item/reagent_containers/food/drinks/coffee(get_turf(SSrng.pick_from_list(oview(1,src))))
 			playsound(src, 'sound/machines/ding.ogg', 50, 1) //Ding! Your death coffee is ready!
-			chosenchem = pick("uranium","frostoil","ephedrine")
+			chosenchem = SSrng.pick_from_list("uranium","frostoil","ephedrine")
 			C.reagents.remove_any(25)
 			C.reagents.add_reagent(chosenchem , 50)
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
-		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!</span>")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
@@ -394,7 +394,7 @@
 			smoke.start()
 			qdel(R)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, shattering [exp_on] and leaking cold air!</span>")
 			var/datum/gas_mixture/env = loc.return_air()
 			var/transfer_moles = 0.25 * env.total_moles()
@@ -408,7 +408,7 @@
 			air_update_turf()
 			investigate_log("Experimentor has released cold air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!</span>")
 			var/datum/effect_system/smoke_spread/smoke = new
 			smoke.set_up(0, loc)
@@ -420,17 +420,17 @@
 		if(linked_console.linked_lathe)
 			for(var/material in exp_on.materials)
 				linked_console.linked_lathe.materials.insert_amount( min((linked_console.linked_lathe.materials.max_amount - linked_console.linked_lathe.materials.total_amount), (exp_on.materials[material])), material)
-		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+		if(SSrng.probability(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='warning'>[src]'s crushing mechanism slowly and smoothly descends, flattening the [exp_on]!</span>")
-			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
-		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
+			new /obj/item/stack/sheet/plasteel(get_turf(SSrng.pick_from_list(oview(1,src))))
+		else if(SSrng.probability(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes way too many levels too high, crushing right through space-time!</span>")
 			playsound(src, 'sound/effects/supermatter.ogg', 50, 1, -3)
 			investigate_log("Experimentor has triggered the 'throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			for(var/atom/movable/AM in oview(7,src))
 				if(!AM.anchored)
 					AM.throw_at(src,10,1)
-		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
+		else if(SSrng.probability(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes one level too high, crushing right into space-time!</span>")
 			playsound(src, 'sound/effects/supermatter.ogg', 50, 1, -3)
 			investigate_log("Experimentor has triggered the 'minor throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
@@ -440,12 +440,12 @@
 					throwAt.Add(AM)
 			for(var/counter = 1, counter < throwAt.len, ++counter)
 				var/atom/movable/cast = throwAt[counter]
-				cast.throw_at(pick(throwAt),10,1)
+				cast.throw_at(SSrng.pick_from_list(throwAt),10,1)
 		ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == FAIL)
-		var/a = pick("rumbles","shakes","vibrates","shudders")
-		var/b = pick("crushes","spins","viscerates","smashes","insults")
+		var/a = SSrng.pick_from_list("rumbles","shakes","vibrates","shudders")
+		var/b = SSrng.pick_from_list("crushes","spins","viscerates","smashes","insults")
 		visible_message("<span class='warning'>[exp_on] [a], and [b], the experiment was a failure.</span>")
 
 	if(exp == SCANTYPE_DISCOVER)
@@ -457,11 +457,11 @@
 		ejectItem()
 
 	//Global reactions
-	if(prob(EFFECT_PROB_VERYLOW-badThingCoeff) && loaded_item)
-		var/globalMalf = rand(1,100)
+	if(SSrng.probability(EFFECT_PROB_VERYLOW-badThingCoeff) && loaded_item)
+		var/globalMalf = SSrng.random(1,100)
 		if(globalMalf < 15)
 			visible_message("<span class='warning'>[src]'s onboard detection system has malfunctioned!</span>")
-			item_reactions["[exp_on.type]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+			item_reactions["[exp_on.type]"] = SSrng.pick_from_list(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 			ejectItem()
 		if(globalMalf > 16 && globalMalf < 35)
 			visible_message("<span class='warning'>[src] melts [exp_on], ian-izing the air around it!</span>")
@@ -589,8 +589,8 @@
 
 /obj/item/relic/Initialize()
 	. = ..()
-	icon_state = pick("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
-	realName = "[pick("broken","twisted","spun","improved","silly","regular","badly made")] [pick("device","object","toy","illegal tech","weapon")]"
+	icon_state = SSrng.pick_from_list("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
+	realName = "[SSrng.pick_from_list("broken","twisted","spun","improved","silly","regular","badly made")] [SSrng.pick_from_list("device","object","toy","illegal tech","weapon")]"
 
 
 /obj/item/relic/proc/reveal()
@@ -598,9 +598,9 @@
 		return
 	revealed = TRUE
 	name = realName
-	cooldownMax = rand(60,300)
-	realProc = pick("teleport","explode","rapidDupe","petSpray","flash","clean","corgicannon")
-	origin_tech = pick("engineering=[rand(2,5)]","magnets=[rand(2,5)]","plasmatech=[rand(2,5)]","programming=[rand(2,5)]","powerstorage=[rand(2,5)]")
+	cooldownMax = SSrng.random(60,300)
+	realProc = SSrng.pick_from_list("teleport","explode","rapidDupe","petSpray","flash","clean","corgicannon")
+	origin_tech = SSrng.pick_from_list("engineering=[SSrng.random(2,5)]","magnets=[SSrng.random(2,5)]","plasmatech=[SSrng.random(2,5)]","programming=[SSrng.random(2,5)]","powerstorage=[SSrng.random(2,5)]")
 
 /obj/item/relic/attack_self(mob/user)
 	if(revealed)
@@ -625,19 +625,19 @@
 	smoke.start()
 
 /obj/item/relic/proc/corgicannon(mob/user)
-	playsound(src, "sparks", rand(25,50), 1)
+	playsound(src, "sparks", SSrng.random(25,50), 1)
 	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
-	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, .throwSmoke, C))
+	C.throw_at(SSrng.pick_from_list(oview(10,user)), 10, SSrng.random(3,8), callback = CALLBACK(src, .throwSmoke, C))
 	warn_admins(user, "Corgi Cannon", 0)
 
 /obj/item/relic/proc/clean(mob/user)
-	playsound(src, "sparks", rand(25,50), 1)
+	playsound(src, "sparks", SSrng.random(25,50), 1)
 	var/obj/item/grenade/chem_grenade/cleaner/CL = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
 	CL.prime()
 	warn_admins(user, "Smoke", 0)
 
 /obj/item/relic/proc/flash(mob/user)
-	playsound(src, "sparks", rand(25,50), 1)
+	playsound(src, "sparks", SSrng.random(25,50), 1)
 	var/obj/item/grenade/flashbang/CB = new/obj/item/grenade/flashbang(user.loc)
 	CB.prime()
 	warn_admins(user, "Flash")
@@ -646,14 +646,14 @@
 	var/message = "<span class='danger'>[src] begins to shake, and in the distance the sound of rampaging animals arises!</span>"
 	visible_message(message)
 	to_chat(user, message)
-	var/animals = rand(1,25)
+	var/animals = SSrng.random(1,25)
 	var/counter
 	var/list/valid_animals = list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/butterfly, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/crab, /mob/living/simple_animal/pet/fox, /mob/living/simple_animal/hostile/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/dog/pug, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/poison/bees, /mob/living/simple_animal/hostile/carp)
 	for(counter = 1; counter < animals; counter++)
-		var/mobType = pick(valid_animals)
+		var/mobType = SSrng.pick_from_list(valid_animals)
 		new mobType(get_turf(src))
 	warn_admins(user, "Mass Mob Spawn")
-	if(prob(60))
+	if(SSrng.probability(60))
 		to_chat(user, "<span class='warning'>[src] falls apart!</span>")
 		qdel(src)
 
@@ -661,7 +661,7 @@
 	audible_message("[src] emits a loud pop!")
 	var/list/dupes = list()
 	var/counter
-	var/max = rand(5,10)
+	var/max = SSrng.random(5,10)
 	for(counter = 1; counter < max; counter++)
 		var/obj/item/relic/R = new type(get_turf(src))
 		R.name = name
@@ -670,25 +670,25 @@
 		R.realProc = realProc
 		R.revealed = TRUE
 		dupes |= R
-		R.throw_at(pick(oview(7,get_turf(src))),10,1)
+		R.throw_at(SSrng.pick_from_list(oview(7,get_turf(src))),10,1)
 	counter = 0
-	QDEL_LIST_IN(dupes, rand(10, 100))
+	QDEL_LIST_IN(dupes, SSrng.random(10, 100))
 	warn_admins(user, "Rapid duplicator", 0)
 
 /obj/item/relic/proc/explode(mob/user)
 	to_chat(user, "<span class='danger'>[src] begins to heat up!</span>")
-	addtimer(CALLBACK(src, .proc/do_explode, user), rand(35, 100))
+	addtimer(CALLBACK(src, .proc/do_explode, user), SSrng.random(35, 100))
 
 /obj/item/relic/proc/do_explode(mob/user)
 	if(loc == user)
 		visible_message("<span class='notice'>\The [src]'s top opens, releasing a powerful blast!</span>")
-		explosion(user.loc, 0, rand(1,5), rand(1,5), rand(1,5), rand(1,5), flame_range = 2)
+		explosion(user.loc, 0, SSrng.random(1,5), SSrng.random(1,5), SSrng.random(1,5), SSrng.random(1,5), flame_range = 2)
 		warn_admins(user, "Explosion")
 		qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 
 /obj/item/relic/proc/teleport(mob/user)
 	to_chat(user, "<span class='notice'>The [src] begins to vibrate!</span>")
-	addtimer(CALLBACK(src, .proc/do_teleport, user), rand(10, 30))
+	addtimer(CALLBACK(src, .proc/do_teleport, user), SSrng.random(10, 30))
 
 /obj/item/relic/proc/do_teleport(mob/user)
 	var/turf/userturf = get_turf(user)

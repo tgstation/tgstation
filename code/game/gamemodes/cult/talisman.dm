@@ -31,7 +31,7 @@
 			user.whisper(invocation, language = /datum/language/common)
 		if(health_cost && iscarbon(user))
 			var/mob/living/carbon/C = user
-			C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm"))
+			C.apply_damage(health_cost, BRUTE, SSrng.pick_from_list("l_arm", "r_arm"))
 
 //Malformed Talisman: If something goes wrong.
 /obj/item/paper/talisman/malformed

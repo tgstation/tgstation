@@ -103,7 +103,7 @@
 	. = ..()
 	if(.)
 		if(obj_integrity/max_integrity > 0.66)
-			if(prob(damage_amount*2))
+			if(SSrng.probability(damage_amount*2))
 				spark_system.start()
 		else if(!(stat & BROKEN))
 			spark_system.start()

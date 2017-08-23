@@ -50,20 +50,20 @@
 		adjustBruteLoss(-2)
 
 /mob/living/simple_animal/hostile/mushroom/Initialize()//Makes every shroom a little unique
-	melee_damage_lower += rand(3, 5)
-	melee_damage_upper += rand(10,20)
-	maxHealth += rand(40,60)
-	move_to_delay = rand(3,11)
+	melee_damage_lower += SSrng.random(3, 5)
+	melee_damage_upper += SSrng.random(10,20)
+	maxHealth += SSrng.random(40,60)
+	move_to_delay = SSrng.random(3,11)
 	cap_living = cap_living || mutable_appearance(icon, "mushroom_cap")
 	cap_dead = cap_dead || mutable_appearance(icon, "mushroom_cap_dead")
 
-	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	cap_color = rgb(SSrng.random(0, 255), SSrng.random(0, 255), SSrng.random(0, 255))
 	UpdateMushroomCap()
 	health = maxHealth
 	..()
 
 /mob/living/simple_animal/hostile/mushroom/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Possibility to flee from a fight just to make it more visually interesting
-	if(!retreat_distance && prob(33))
+	if(!retreat_distance && SSrng.probability(33))
 		retreat_distance = 5
 		addtimer(CALLBACK(src, .proc/stop_retreat), 30)
 	. = ..()
@@ -122,11 +122,11 @@
 /mob/living/simple_animal/hostile/mushroom/proc/LevelUp(level_gain)
 	if(powerlevel <= 9)
 		powerlevel += level_gain
-		if(prob(25))
-			melee_damage_lower += (level_gain * rand(1,5))
+		if(SSrng.probability(25))
+			melee_damage_lower += (level_gain * SSrng.random(1,5))
 		else
-			melee_damage_upper += (level_gain * rand(1,5))
-		maxHealth += (level_gain * rand(1,5))
+			melee_damage_upper += (level_gain * SSrng.random(1,5))
+		maxHealth += (level_gain * SSrng.random(1,5))
 	adjustBruteLoss(-maxHealth) //They'll always heal, even if they don't gain a level, in case you want to keep this shroom around instead of harvesting it
 
 /mob/living/simple_animal/hostile/mushroom/proc/Bruise()

@@ -33,7 +33,7 @@
 				home = console.pad
 
 		if(!home)
-			console = get_team_console(pick(1, 2, 3, 4))
+			console = get_team_console(SSrng.pick_from_list(1, 2, 3, 4))
 			home = console.pad
 		return 1
 

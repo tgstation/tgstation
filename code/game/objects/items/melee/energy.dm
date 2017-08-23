@@ -17,7 +17,7 @@
 	return ..()
 
 /obj/item/melee/transforming/energy/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
+	user.visible_message("<span class='suicide'>[user] is [SSrng.pick_from_list("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/melee/transforming/energy/add_blood(list/blood_dna)
@@ -150,14 +150,14 @@
 /obj/item/melee/transforming/energy/sword/saber/Initialize(mapload)
 	. = ..()
 	if(LAZYLEN(possible_colors))
-		var/set_color = pick(possible_colors)
+		var/set_color = SSrng.pick_from_list(possible_colors)
 		item_color = set_color
 		light_color = possible_colors[set_color]
 
 /obj/item/melee/transforming/energy/sword/saber/process()
 	. = ..()
 	if(hacked)
-		var/set_color = pick(possible_colors)
+		var/set_color = SSrng.pick_from_list(possible_colors)
 		light_color = possible_colors[set_color]
 		update_light()
 

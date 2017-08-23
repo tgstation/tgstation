@@ -17,7 +17,7 @@
 
 /datum/antagonist/ninja/randomAllegiance/New(datum/mind/new_owner)
 	..(new_owner)
-	helping_station = rand(0,1)
+	helping_station = SSrng.random(0,1)
 
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current, safety=0)//Safety in case you need to unequip stuff for existing characters.
 	if(safety)
@@ -82,7 +82,7 @@
 
 			if(3)	//protect/kill
 				if(!possible_targets.len)	continue
-				var/index = rand(1,possible_targets.len)
+				var/index = SSrng.random(1,possible_targets.len)
 				var/datum/mind/M = possible_targets[index]
 				var/is_bad_guy = possible_targets[M]
 				possible_targets.Cut(index,index+1)
@@ -101,7 +101,7 @@
 					owner.objectives += O
 			if(4)	//debrain/capture
 				if(!possible_targets.len)	continue
-				var/selected = rand(1,possible_targets.len)
+				var/selected = SSrng.random(1,possible_targets.len)
 				var/datum/mind/M = possible_targets[selected]
 				var/is_bad_guy = possible_targets[M]
 				possible_targets.Cut(selected,selected+1)

@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather, 
 
 	//Spawn more bosses depending on server population
 	var/gangs_to_create = 2
-	if(prob(num_players() * 2))
+	if(SSrng.probability(num_players() * 2))
 		gangs_to_create ++
 
 	for(var/i=1 to gangs_to_create)
@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather, 
 
 		//Now assign a boss for the gang
 		for(var/n in 1 to 3)
-			var/datum/mind/boss = pick(antag_candidates)
+			var/datum/mind/boss = SSrng.pick_from_list(antag_candidates)
 			antag_candidates -= boss
 			G.bosses[boss] = GANGSTER_BOSS_STARTING_INFLUENCE
 			boss.gang_datum = G
@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather, 
 /datum/game_mode/gang/post_setup()
 	set waitfor = FALSE
 	..()
-	sleep(rand(10,100))
+	sleep(SSrng.random(10,100))
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)
 			G.bosses[boss_mind] = GANGSTER_BOSS_STARTING_INFLUENCE			//Force influence to be put on it.

@@ -47,5 +47,5 @@ BONUS
 			else
 				to_chat(H, "<span class='warning'>You feel manly!</span>")
 				if(!(H.facial_hair_style == "Dwarf Beard") && !(H.facial_hair_style == "Very Long Beard"))
-					H.facial_hair_style = pick("Dwarf Beard", "Very Long Beard")
+					H.facial_hair_style = SSrng.pick_from_list("Dwarf Beard", "Very Long Beard")
 					H.update_hair()

@@ -224,9 +224,9 @@
 					randlaws += lpath
 			var/datum/ai_laws/lawtype
 			if(randlaws.len)
-				lawtype = pick(randlaws)
+				lawtype = SSrng.pick_from_list(randlaws)
 			else
-				lawtype = pick(subtypesof(/datum/ai_laws/default))
+				lawtype = SSrng.pick_from_list(subtypesof(/datum/ai_laws/default))
 
 			var/datum/ai_laws/templaws = new lawtype()
 			inherent = templaws.inherent
@@ -316,15 +316,15 @@
 			. = zeroth
 			set_zeroth_law(law)
 		if(LAW_ION)
-			var/i = rand(1, ion.len)
+			var/i = SSrng.random(1, ion.len)
 			. = ion[i]
 			ion[i] = law
 		if(LAW_INHERENT)
-			var/i = rand(1, inherent.len)
+			var/i = SSrng.random(1, inherent.len)
 			. = inherent[i]
 			inherent[i] = law
 		if(LAW_SUPPLIED)
-			var/i = rand(1, supplied.len)
+			var/i = SSrng.random(1, supplied.len)
 			. = supplied[i]
 			supplied[i] = law
 

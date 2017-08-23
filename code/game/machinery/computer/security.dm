@@ -515,7 +515,7 @@ What a mess.*/
 				//General Record
 				var/datum/data/record/G = new /datum/data/record()
 				G.fields["name"] = "New Record"
-				G.fields["id"] = "[num2hex(rand(1, 1.6777215E7), 6)]"
+				G.fields["id"] = "[num2hex(SSrng.random(1, 1.6777215E7), 6)]"
 				G.fields["rank"] = "Unassigned"
 				G.fields["sex"] = "Male"
 				G.fields["age"] = "Unknown"
@@ -754,32 +754,32 @@ What a mess.*/
 		return
 
 	for(var/datum/data/record/R in GLOB.data_core.security)
-		if(prob(10/severity))
-			switch(rand(1,8))
+		if(SSrng.probability(10/severity))
+			switch(SSrng.random(1,8))
 				if(1)
-					if(prob(10))
-						R.fields["name"] = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
+					if(SSrng.probability(10))
+						R.fields["name"] = "[SSrng.pick_from_list(lizard_name(MALE),lizard_name(FEMALE))]"
 					else
-						R.fields["name"] = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
+						R.fields["name"] = "[SSrng.pick_from_list(SSrng.pick_from_list(GLOB.first_names_male), SSrng.pick_from_list(GLOB.first_names_female))] [SSrng.pick_from_list(GLOB.last_names)]"
 				if(2)
-					R.fields["sex"] = pick("Male", "Female")
+					R.fields["sex"] = SSrng.pick_from_list("Male", "Female")
 				if(3)
-					R.fields["age"] = rand(5, 85)
+					R.fields["age"] = SSrng.random(5, 85)
 				if(4)
-					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged")
+					R.fields["criminal"] = SSrng.pick_from_list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged")
 				if(5)
-					R.fields["p_stat"] = pick("*Unconscious*", "Active", "Physically Unfit")
+					R.fields["p_stat"] = SSrng.pick_from_list("*Unconscious*", "Active", "Physically Unfit")
 				if(6)
-					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
+					R.fields["m_stat"] = SSrng.pick_from_list("*Insane*", "*Unstable*", "*Watch*", "Stable")
 				if(7)
-					R.fields["species"] = pick(GLOB.roundstart_species)
+					R.fields["species"] = SSrng.pick_from_list(GLOB.roundstart_species)
 				if(8)
-					var/datum/data/record/G = pick(GLOB.data_core.general)
+					var/datum/data/record/G = SSrng.pick_from_list(GLOB.data_core.general)
 					R.fields["photo_front"] = G.fields["photo_front"]
 					R.fields["photo_side"] = G.fields["photo_side"]
 			continue
 
-		else if(prob(1))
+		else if(SSrng.probability(1))
 			qdel(R)
 			continue
 

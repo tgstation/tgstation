@@ -267,10 +267,10 @@
 
 /obj/structure/girder/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
-		return prob(girderpasschance)
+		return SSrng.probability(girderpasschance)
 	else
 		if(istype(mover, /obj/item/projectile))
-			return prob(girderpasschance)
+			return SSrng.probability(girderpasschance)
 		else
 			return 0
 
@@ -282,7 +282,7 @@
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/metal)
+		var/remains = SSrng.pick_from_list(/obj/item/stack/rods, /obj/item/stack/sheet/metal)
 		new remains(loc)
 	qdel(src)
 

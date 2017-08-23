@@ -155,11 +155,11 @@
 	else
 		switch(severity)
 			if(1)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(20,30), 30)
+				brainmob.emp_damage = min(brainmob.emp_damage + SSrng.random(20,30), 30)
 			if(2)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(10,20), 30)
+				brainmob.emp_damage = min(brainmob.emp_damage + SSrng.random(10,20), 30)
 			if(3)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
+				brainmob.emp_damage = min(brainmob.emp_damage + SSrng.random(0,10), 30)
 		brainmob.emote("alarm")
 	..()
 

@@ -16,4 +16,4 @@
 	for(var/P in GLOB.apcs_list)
 		var/obj/machinery/power/apc/C = P
 		if(C.cell && C.z == ZLEVEL_STATION)
-			C.energy_fail(rand(30,120))
+			C.energy_fail(SSrng.random(30,120))

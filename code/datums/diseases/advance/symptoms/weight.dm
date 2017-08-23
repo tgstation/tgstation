@@ -41,8 +41,8 @@ Bonus
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(1, 2, 3, 4)
-			if(prob(base_message_chance))
-				to_chat(M, "<span class='warning'>[pick("You feel blubbery.", "Your stomach hurts.")]</span>")
+			if(SSrng.probability(base_message_chance))
+				to_chat(M, "<span class='warning'>[SSrng.pick_from_list("You feel blubbery.", "Your stomach hurts.")]</span>")
 		else
 			M.overeatduration = min(M.overeatduration + 100, 600)
 			M.nutrition = min(M.nutrition + 100, NUTRITION_LEVEL_FULL)
@@ -91,10 +91,10 @@ Bonus
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(1, 2, 3, 4)
-			if(prob(base_message_chance))
-				to_chat(M, "<span class='warning'>[pick("You feel hungry.", "You crave for food.")]</span>")
+			if(SSrng.probability(base_message_chance))
+				to_chat(M, "<span class='warning'>[SSrng.pick_from_list("You feel hungry.", "You crave for food.")]</span>")
 		else
-			to_chat(M, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
+			to_chat(M, "<span class='warning'><i>[SSrng.pick_from_list("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
 			M.overeatduration = max(M.overeatduration - 100, 0)
 			M.nutrition = max(M.nutrition - 100, 0)
 

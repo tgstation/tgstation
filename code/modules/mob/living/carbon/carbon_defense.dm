@@ -80,7 +80,7 @@
 		apply_damage(I.force, I.damtype, affecting)
 		damage_clothes(I.force, I.damtype, "melee", affecting.body_zone)
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
-			if(prob(33))
+			if(SSrng.probability(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
 				add_splatter_floor(location)
@@ -100,7 +100,7 @@
 
 		//dismemberment
 		var/probability = I.get_dismemberment_chance(affecting)
-		if(prob(probability))
+		if(SSrng.probability(probability))
 			if(affecting.dismember(I.damtype))
 				I.add_mob_blood(src)
 				playsound(get_turf(src), I.get_dismember_sound(), 80, 1)
@@ -155,7 +155,7 @@
 	if(..()) //successful slime attack
 		if(M.powerlevel > 0)
 			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
-			if(prob(stunprob))
+			if(SSrng.probability(stunprob))
 				M.powerlevel -= 3
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
@@ -164,12 +164,12 @@
 				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
 
 				do_sparks(5, TRUE, src)
-				var/power = M.powerlevel + rand(0,3)
+				var/power = M.powerlevel + SSrng.random(0,3)
 				Knockdown(power*20)
 				if(stuttering < power)
 					stuttering = power
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustFireLoss(M.powerlevel * rand(6,10))
+				if (SSrng.probability(stunprob) && M.powerlevel >= 8)
+					adjustFireLoss(M.powerlevel * SSrng.random(6,10))
 					updatehealth()
 		return 1
 
@@ -279,26 +279,26 @@
 
 		if (damage == 1)
 			to_chat(src, "<span class='warning'>Your eyes sting a little.</span>")
-			if(prob(40))
+			if(SSrng.probability(40))
 				adjust_eye_damage(1)
 
 		else if (damage == 2)
 			to_chat(src, "<span class='warning'>Your eyes burn.</span>")
-			adjust_eye_damage(rand(2, 4))
+			adjust_eye_damage(SSrng.random(2, 4))
 
 		else if( damage > 3)
 			to_chat(src, "<span class='warning'>Your eyes itch and burn severely!</span>")
-			adjust_eye_damage(rand(12, 16))
+			adjust_eye_damage(SSrng.random(12, 16))
 
 		if(eyes.eye_damage > 10)
 			blind_eyes(damage)
-			blur_eyes(damage * rand(3, 6))
+			blur_eyes(damage * SSrng.random(3, 6))
 
 			if(eyes.eye_damage > 20)
-				if(prob(eyes.eye_damage - 20))
+				if(SSrng.probability(eyes.eye_damage - 20))
 					if(become_nearsighted())
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
-				else if(prob(eyes.eye_damage - 25))
+				else if(SSrng.probability(eyes.eye_damage - 25))
 					if(become_blind())
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 			else
@@ -307,7 +307,7 @@
 			mind.disrupt_spells(-500)
 		return 1
 	else if(damage == 0) // just enough protection
-		if(prob(20))
+		if(SSrng.probability(20))
 			to_chat(src, "<span class='notice'>Something bright flashes in the corner of your vision!</span>")
 		if(has_bane(BANE_LIGHT))
 			mind.disrupt_spells(0)
@@ -328,7 +328,7 @@
 
 			if(ears.ear_damage >= 15)
 				to_chat(src, "<span class='warning'>Your ears start to ring badly!</span>")
-				if(prob(ears.ear_damage - 5))
+				if(SSrng.probability(ears.ear_damage - 5))
 					to_chat(src, "<span class='userdanger'>You can't hear anything!</span>")
 					ears.ear_damage = min(ears.ear_damage, UNHEALING_EAR_DAMAGE)
 					// you need earmuffs, inacusiate, or replacement

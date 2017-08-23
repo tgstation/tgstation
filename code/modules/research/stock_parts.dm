@@ -58,7 +58,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
-	if(alt_sound && prob(1))
+	if(alt_sound && SSrng.probability(1))
 		playsound(src, alt_sound, 40, 1)
 	else
 		playsound(src, pshoom_or_beepboopblorpzingshadashwoosh, 40, 1)
@@ -77,8 +77,8 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 
 /obj/item/stock_parts/Initialize()
 	. = ..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = SSrng.random(-5, 5)
+	pixel_y = SSrng.random(-5, 5)
 
 //Rating 1
 

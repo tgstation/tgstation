@@ -72,7 +72,7 @@
 /obj/item/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
 	if(!proximity) return
 	if(force > 0)
-		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
+		force -= SSrng.random(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else
 		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
 		qdel(src)
@@ -99,7 +99,7 @@
 
 /obj/item/grown/nettle/death/pickup(mob/living/carbon/user)
 	if(..())
-		if(prob(50))
+		if(SSrng.probability(50))
 			user.Knockdown(100)
 			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle as you try picking it up!</span>")
 
@@ -111,7 +111,7 @@
 		add_logs(user, M, "attacked", src)
 
 		M.adjust_blurriness(force/7)
-		if(prob(20))
+		if(SSrng.probability(20))
 			M.Unconscious(force / 0.3)
 			M.Knockdown(force / 0.75)
 		M.drop_item()

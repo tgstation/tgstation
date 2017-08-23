@@ -26,7 +26,7 @@
 			var/obj/item/bodypart/BP = C.get_bodypart("head")
 			if(BP)
 				BP.drop_limb()
-				playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+				playsound(loc,SSrng.pick_from_list('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 		return (BRUTELOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -114,8 +114,8 @@
 
 /obj/item/paperslip/New()
 	..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = SSrng.random(-5, 5)
+	pixel_y = SSrng.random(-5, 5)
 
 
 /obj/item/hatchet/cutterblade

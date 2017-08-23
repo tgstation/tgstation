@@ -3,7 +3,7 @@
 
 /obj/item/clothing/under/color/random/New()
 	..()
-	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
+	var/obj/item/clothing/under/color/C = SSrng.pick_from_list(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
 	name = initial(C.name)
 	icon_state = initial(C.icon_state)
 	item_state = initial(C.item_state)

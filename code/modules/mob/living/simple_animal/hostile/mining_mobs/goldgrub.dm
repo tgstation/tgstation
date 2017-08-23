@@ -34,9 +34,9 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize()
 	..()
-	var/i = rand(1,3)
+	var/i = SSrng.random(1,3)
 	while(i)
-		loot += pick(/obj/item/ore/silver, /obj/item/ore/gold, /obj/item/ore/uranium, /obj/item/ore/diamond)
+		loot += SSrng.pick_from_list(/obj/item/ore/silver, /obj/item/ore/gold, /obj/item/ore/uranium, /obj/item/ore/diamond)
 		i--
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)

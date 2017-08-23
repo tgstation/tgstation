@@ -104,19 +104,19 @@
 /obj/item/reagent_containers/food/snacks/customizable/update_overlays(obj/item/reagent_containers/food/snacks/S)
 	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
-		filling.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
+		filling.color = SSrng.pick_from_list("#FF0000","#0000FF","#008000","#FFFF00")
 	else
 		filling.color = S.filling_color
 
 	switch(ingredients_placement)
 		if(INGREDIENTS_SCATTER)
-			filling.pixel_x = rand(-1,1)
-			filling.pixel_y = rand(-1,1)
+			filling.pixel_x = SSrng.random(-1,1)
+			filling.pixel_y = SSrng.random(-1,1)
 		if(INGREDIENTS_STACK)
-			filling.pixel_x = rand(-1,1)
+			filling.pixel_x = SSrng.random(-1,1)
 			filling.pixel_y = 2 * ingredients.len - 1
 		if(INGREDIENTS_STACKPLUSTOP)
-			filling.pixel_x = rand(-1,1)
+			filling.pixel_x = SSrng.random(-1,1)
 			filling.pixel_y = 2 * ingredients.len - 1
 			if(our_overlays)
 				our_overlays.Cut(ingredients.len)	//???, add overlay calls later in this proc will queue the compile if necessary
@@ -129,7 +129,7 @@
 			cut_overlays()
 			filling.color = filling_color
 		if(INGREDIENTS_LINE)
-			filling.pixel_x = filling.pixel_y = rand(-8,3)
+			filling.pixel_x = filling.pixel_y = SSrng.random(-8,3)
 
 	add_overlay(filling)
 
@@ -277,7 +277,7 @@
 
 /obj/item/reagent_containers/food/snacks/customizable/soup/New()
 	..()
-	eatverb = pick("slurp","sip","suck","inhale","drink")
+	eatverb = SSrng.pick_from_list("slurp","sip","suck","inhale","drink")
 
 
 

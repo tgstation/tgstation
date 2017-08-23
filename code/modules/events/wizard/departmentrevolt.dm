@@ -12,28 +12,28 @@
 	var/nation
 	var/list/citizens	=		list()
 
-	tidecolor = pick("grey", "white", "yellow", "purple", "brown", "whatevercolorrepresentstheservicepeople")
+	tidecolor = SSrng.pick_from_list("grey", "white", "yellow", "purple", "brown", "whatevercolorrepresentstheservicepeople")
 	switch(tidecolor)
 		if("grey") //God help you
 			jobs_to_revolt = list("Assistant")
-			nation = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
+			nation = SSrng.pick_from_list("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 		if("white")
 			jobs_to_revolt = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist")
-			nation = pick("Mede", "Healtha", "Recova", "Chemi", "Geneti", "Viro", "Psych")
+			nation = SSrng.pick_from_list("Mede", "Healtha", "Recova", "Chemi", "Geneti", "Viro", "Psych")
 		if("yellow")
 			jobs_to_revolt = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
-			nation = pick("Atomo", "Engino", "Power", "Teleco")
+			nation = SSrng.pick_from_list("Atomo", "Engino", "Power", "Teleco")
 		if("purple")
 			jobs_to_revolt = list("Research Director","Scientist", "Roboticist")
-			nation = pick("Sci", "Griffa", "Explosi", "Mecha", "Xeno")
+			nation = SSrng.pick_from_list("Sci", "Griffa", "Explosi", "Mecha", "Xeno")
 		if("brown")
 			jobs_to_revolt = list("Quartermaster", "Cargo Technician", "Shaft Miner")
-			nation = pick("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
+			nation = SSrng.pick_from_list("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 		if("whatevercolorrepresentstheservicepeople") //the few, the proud, the technically aligned
 			jobs_to_revolt = list("Bartender", "Cook", "Botanist", "Clown", "Mime", "Janitor", "Chaplain")
-			nation = pick("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
+			nation = SSrng.pick_from_list("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 
-	nation += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
+	nation += SSrng.pick_from_list("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
 
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.mind)

@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Initialize()
 	. = ..()
-	true_name = pick(possible_true_names)
+	true_name = SSrng.pick_from_list(possible_true_names)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
@@ -265,7 +265,7 @@
 	if(GLOB.ratvar_awakens) //if ratvar has woken, we block nearly everything at a very high chance
 		blockchance = 90
 		counterchance = 90
-	if(prob(blockchance))
+	if(SSrng.probability(blockchance))
 		. = TRUE
 		if(target)
 			target.do_attack_animation(src)
@@ -275,7 +275,7 @@
 		visible_message("<span class='boldannounce'>[src] blocks [target && isitem(textobject) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
 		"<span class='userdanger'>You block [target && isitem(textobject) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>")
 		if(target && Adjacent(target))
-			if(prob(counterchance))
+			if(SSrng.probability(counterchance))
 				counterchance = initial(counterchance)
 				var/previousattacktext = attacktext
 				attacktext = "counters"
@@ -389,10 +389,10 @@
 
 /datum/action/innate/summon_marauder/Activate()
 	if(linked_marauder.is_in_host())
-		clockwork_say(owner, text2ratvar("[pick(defend_phrases)], [linked_marauder.true_name]!"))
+		clockwork_say(owner, text2ratvar("[SSrng.pick_from_list(defend_phrases)], [linked_marauder.true_name]!"))
 		linked_marauder.emerge_from_host(TRUE)
 	else
-		clockwork_say(owner, text2ratvar("[pick(return_phrases)], [linked_marauder.true_name]!"))
+		clockwork_say(owner, text2ratvar("[SSrng.pick_from_list(return_phrases)], [linked_marauder.true_name]!"))
 		linked_marauder.return_to_host()
 	return TRUE
 

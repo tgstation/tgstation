@@ -205,8 +205,8 @@ GLOBAL_PROTECT(Banlist)
 	var/last
 
 	for(i=0, i<1001, i++)
-		var/a = pick(1,0)
-		var/b = pick(1,0)
+		var/a = SSrng.pick_from_list(1,0)
+		var/b = SSrng.pick_from_list(1,0)
 		if(b)
 			GLOB.Banlist.cd = "/base"
 			GLOB.Banlist.dir.Add("trash[i]trashid[i]")
@@ -220,7 +220,7 @@ GLOBAL_PROTECT(Banlist)
 		WRITE_FILE(GLOB.Banlist["id"], "trashid[i]")
 		WRITE_FILE(GLOB.Banlist["reason"], "Trashban[i].")
 		WRITE_FILE(GLOB.Banlist["temp"], a)
-		WRITE_FILE(GLOB.Banlist["minutes"], GLOB.CMinutes + rand(1,2000))
+		WRITE_FILE(GLOB.Banlist["minutes"], GLOB.CMinutes + SSrng.random(1,2000))
 		WRITE_FILE(GLOB.Banlist["bannedby"], "trashmin")
 		last = "trash[i]"
 

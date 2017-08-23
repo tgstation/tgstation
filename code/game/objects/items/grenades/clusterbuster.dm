@@ -10,11 +10,11 @@
 
 /obj/item/grenade/clusterbuster/prime()
 	update_mob()
-	var/numspawned = rand(4,8)
+	var/numspawned = SSrng.random(4,8)
 	var/again = 0
 
 	for(var/more = numspawned,more > 0,more--)
-		if(prob(35))
+		if(SSrng.probability(35))
 			again++
 			numspawned--
 
@@ -42,12 +42,12 @@
 	icon_state = "clusterbang_segment_active"
 	payload = payload_type
 	active = 1
-	walk_away(src,loc,rand(1,4))
-	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
+	walk_away(src,loc,SSrng.random(1,4))
+	addtimer(CALLBACK(src, .proc/prime), SSrng.random(15,60))
 
 /obj/item/grenade/clusterbuster/segment/prime()
 
-	new /obj/effect/payload_spawner(loc, payload, rand(4,8))
+	new /obj/effect/payload_spawner(loc, payload, SSrng.random(4,8))
 
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 
@@ -61,9 +61,9 @@
 	for(var/loop = numspawned ,loop > 0, loop--)
 		var/obj/item/grenade/P = new type(loc)
 		P.active = 1
-		walk_away(P,loc,rand(1,4))
+		walk_away(P,loc,SSrng.random(1,4))
 
-		spawn(rand(15,60))
+		spawn(SSrng.random(15,60))
 			if(P && !QDELETED(P))
 				P.prime()
 			qdel(src)
@@ -130,6 +130,6 @@
 
 //random clusterbuster spawner
 /obj/item/grenade/clusterbuster/random/New()
-	var/real_type = pick(subtypesof(/obj/item/grenade/clusterbuster))
+	var/real_type = SSrng.pick_from_list(subtypesof(/obj/item/grenade/clusterbuster))
 	new real_type(loc)
 	qdel(src)

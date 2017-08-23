@@ -330,7 +330,7 @@
 
 /obj/item/conveyor_switch_construct/Initialize()
 	. = ..()
-	id = rand() //this couldn't possibly go wrong
+	id = SSrng.random() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
 	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))

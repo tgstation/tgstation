@@ -27,17 +27,17 @@
 	var/list/company = list("Investments", "Securities", "Corporation", "Bank", "Brokerage", "& Co.", "Brothers", "& Sons", "Investement Firm", "Union", "Partners", "Capital", "Trade", "Holdings")
 	for(var/i in 1 to 5)
 		var/pname = ""
-		switch (rand(1,5))
+		switch (SSrng.random(1,5))
 			if (1)
-				pname = "[prob(10) ? pick(first) + " " : null][pick(names)] [pick(company)]"
+				pname = "[SSrng.probability(10) ? SSrng.pick_from_list(first) + " " : null][SSrng.pick_from_list(names)] [SSrng.pick_from_list(company)]"
 			if (2)
-				pname = "[pick(names)] & [pick(names)][prob(25) ? " " + pick(company) : null]"
+				pname = "[SSrng.pick_from_list(names)] & [SSrng.pick_from_list(names)][SSrng.probability(25) ? " " + SSrng.pick_from_list(company) : null]"
 			if (3)
-				pname = "[prob(45) ? pick(first) + " " : null][pick(locations)] [pick(company)]"
+				pname = "[SSrng.probability(45) ? SSrng.pick_from_list(first) + " " : null][SSrng.pick_from_list(locations)] [SSrng.pick_from_list(company)]"
 			if (4)
-				pname = "[prob(10) ? "The " : null][pick(names)] [pick(locations)] [pick(company)]"
+				pname = "[SSrng.probability(10) ? "The " : null][SSrng.pick_from_list(names)] [SSrng.pick_from_list(locations)] [SSrng.pick_from_list(company)]"
 			if (5)
-				pname = "[prob(10) ? "The " : null][pick(fnames)] [pick(names)][prob(10) ? " " + pick(company) : null]"
+				pname = "[SSrng.probability(10) ? "The " : null][SSrng.pick_from_list(fnames)] [SSrng.pick_from_list(names)][SSrng.probability(10) ? " " + SSrng.pick_from_list(company) : null]"
 		if (pname in stockBrokers)
 			i--
 			continue
@@ -55,7 +55,7 @@
 	else
 		var/d = uppertext(ascii2text(text2ascii(name, 1)))
 		for(var/i in 2 to length(name))
-			if (prob(100 / i))
+			if (SSrng.probability(100 / i))
 				d += uppertext(ascii2text(text2ascii(name, i)))
 		return d
 
@@ -68,41 +68,41 @@
 	for (var/i = 1, i <= amt, i++)
 		var/datum/stock/S = new
 		var/sname = ""
-		switch (rand(1,6))
+		switch (SSrng.random(1,6))
 			if(1)
 				while (sname == "" || sname == "FAG") // honestly it's a 0.6% chance per round this happens - or once in 166 rounds - so i'm accounting for it before someone yells at me
 					sname = "[consonant()][vowel()][consonant()]"
 			if (2)
-				sname = "[pick(tech_prefix)][pick(tech_short)][prob(20) ? " " + pick(company) : null]"
+				sname = "[SSrng.pick_from_list(tech_prefix)][SSrng.pick_from_list(tech_short)][SSrng.probability(20) ? " " + SSrng.pick_from_list(company) : null]"
 			if (3 to 4)
-				var/fruit = pick(fruits)
+				var/fruit = SSrng.pick_from_list(fruits)
 				fruits -= fruit
-				sname = "[prob(10) ? "The " : null][fruit][prob(40) ? " " + pick(company): null]"
+				sname = "[SSrng.probability(10) ? "The " : null][fruit][SSrng.probability(40) ? " " + SSrng.pick_from_list(company): null]"
 			if (5 to 6)
-				var/pname = pick(random_nouns)
+				var/pname = SSrng.pick_from_list(random_nouns)
 				random_nouns -= pname
-				switch (rand(1,3))
+				switch (SSrng.random(1,3))
 					if (1)
 						sname = "[pname] & [pname]"
 					if (2)
-						sname = "[pname] [pick(company)]"
+						sname = "[pname] [SSrng.pick_from_list(company)]"
 					if (3)
 						sname = "[pname]"
 		S.name = sname
 		S.short_name = generateDesignation(S.name)
-		S.current_value = rand(10, 125)
-		var/dv = rand(10, 40) / 10
-		S.fluctuational_coefficient = prob(50) ? (1 / dv) : dv
-		S.average_optimism = rand(-10, 10) / 100
-		S.optimism = S.average_optimism + (rand(-40, 40) / 100)
-		S.current_trend = rand(-200, 200) / 10
+		S.current_value = SSrng.random(10, 125)
+		var/dv = SSrng.random(10, 40) / 10
+		S.fluctuational_coefficient = SSrng.probability(50) ? (1 / dv) : dv
+		S.average_optimism = SSrng.random(-10, 10) / 100
+		S.optimism = S.average_optimism + (SSrng.random(-40, 40) / 100)
+		S.current_trend = SSrng.random(-200, 200) / 10
 		S.last_trend = S.current_trend
-		S.disp_value_change = rand(-1, 1)
-		S.speculation = rand(-20, 20)
-		S.average_shares = round(rand(500, 10000) / 10)
-		S.outside_shareholders = rand(1000, 30000)
-		S.available_shares = rand(200000, 800000)
-		S.fluctuation_rate = rand(6, 20)
+		S.disp_value_change = SSrng.random(-1, 1)
+		S.speculation = SSrng.random(-20, 20)
+		S.average_shares = round(SSrng.random(500, 10000) / 10)
+		S.outside_shareholders = SSrng.random(1000, 30000)
+		S.available_shares = SSrng.random(200000, 800000)
+		S.fluctuation_rate = SSrng.random(6, 20)
 		S.generateIndustry()
 		S.generateEvents()
 		stocks += S

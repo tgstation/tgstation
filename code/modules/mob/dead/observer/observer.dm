@@ -101,7 +101,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(!T)
 		var/list/turfs = get_area_turfs(/area/shuttle/arrival)
 		if(turfs.len)
-			T = pick(turfs)
+			T = SSrng.pick_from_list(turfs)
 		else
 			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION)	//middle of the station
 
@@ -377,7 +377,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!L || !L.len)
 		to_chat(usr, "No area available.")
 
-	usr.loc = pick(L)
+	usr.loc = SSrng.pick_from_list(L)
 	update_parallax_contents()
 
 /mob/dead/observer/verb/follow()

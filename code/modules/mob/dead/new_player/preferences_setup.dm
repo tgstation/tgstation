@@ -4,7 +4,7 @@
 	if(gender_override)
 		gender = gender_override
 	else
-		gender = pick(MALE,FEMALE)
+		gender = SSrng.pick_from_list(MALE,FEMALE)
 	underwear = random_underwear(gender)
 	undershirt = random_undershirt(gender)
 	socks = random_socks()
@@ -15,10 +15,10 @@
 	facial_hair_color = hair_color
 	eye_color = random_eye_color()
 	if(!pref_species)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = SSrng.pick_from_list(config.roundstart_races)
 		pref_species = new rando_race()
 	features = random_features()
-	age = rand(AGE_MIN,AGE_MAX)
+	age = SSrng.random(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon()
 	// Silicons only need a very basic preview since there is no customization for them.

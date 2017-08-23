@@ -71,20 +71,20 @@ Difficulty: Very Hard
 	else
 		move_to_delay = initial(move_to_delay)
 
-	if(prob(20+anger_modifier)) //Major attack
+	if(SSrng.probability(20+anger_modifier)) //Major attack
 		telegraph()
 
 		if(health < maxHealth/3)
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			INVOKE_ASYNC(src, .proc/spiral_shoot, pick(TRUE, FALSE))
+			INVOKE_ASYNC(src, .proc/spiral_shoot, SSrng.pick_from_list(TRUE, FALSE))
 
-	else if(prob(20))
+	else if(SSrng.probability(20))
 		ranged_cooldown = world.time + 30
 		random_shots()
 	else
-		if(prob(70))
+		if(SSrng.probability(70))
 			ranged_cooldown = world.time + 20
 			blast()
 		else
@@ -114,10 +114,10 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
 		var/obj/effect/temp_visual/at_shield/AT = new /obj/effect/temp_visual/at_shield(src.loc, src)
-		var/random_x = rand(-32, 32)
+		var/random_x = SSrng.random(-32, 32)
 		AT.pixel_x += random_x
 
-		var/random_y = rand(0, 72)
+		var/random_y = SSrng.random(0, 72)
 		AT.pixel_y += random_y
 	..()
 
@@ -125,7 +125,7 @@ Difficulty: Very Hard
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.mind)
-			if(H.mind.martial_art && prob(H.mind.martial_art.deflection_chance))
+			if(H.mind.martial_art && SSrng.probability(H.mind.martial_art.deflection_chance))
 				. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
@@ -179,7 +179,7 @@ Difficulty: Very Hard
 	var/turf/U = get_turf(src)
 	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 	for(var/T in RANGE_TURFS(12, U) - U)
-		if(prob(5))
+		if(SSrng.probability(5))
 			shoot_projectile(T)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
@@ -364,7 +364,7 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/Initialize(mapload)
 	. = ..()
 	if(!activation_method)
-		activation_method = pick(possible_methods)
+		activation_method = SSrng.pick_from_list(possible_methods)
 
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()
@@ -443,7 +443,7 @@ Difficulty: Very Hard
 
 /obj/machinery/anomalous_crystal/theme_warp/Initialize()
 	. = ..()
-	terrain_theme = pick("lavaland","winter","jungle","ayy lmao")
+	terrain_theme = SSrng.pick_from_list("lavaland","winter","jungle","ayy lmao")
 	observer_desc = "This crystal changes the area around it to match the theme of \"[terrain_theme]\"."
 
 	switch(terrain_theme)
@@ -484,8 +484,8 @@ Difficulty: Very Hard
 						if(O.air)
 							var/datum/gas_mixture/G = O.air
 							G.copy_from_turf(O)
-						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
-							var/atom/Picked = pick(NewFlora)
+						if(SSrng.probability(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
+							var/atom/Picked = SSrng.pick_from_list(NewFlora)
 							new Picked(O)
 						continue
 					if(iswallturf(T) && NewTerrainWalls)
@@ -510,7 +510,7 @@ Difficulty: Very Hard
 
 /obj/machinery/anomalous_crystal/emitter/Initialize()
 	. = ..()
-	generated_projectile = pick(/obj/item/projectile/colossus)
+	generated_projectile = SSrng.pick_from_list(/obj/item/projectile/colossus)
 
 	var/proj_name = initial(generated_projectile.name)
 	observer_desc = "This crystal generates \a [proj_name] when activated."
@@ -670,7 +670,7 @@ Difficulty: Very Hard
 				if(!W.admin_spawned && !(W.flags_2 & HOLOGRAM_2) && !(W.flags_1 & ABSTRACT_1))
 					L += W
 		if(L.len)
-			var/obj/item/CHOSEN = pick(L)
+			var/obj/item/CHOSEN = SSrng.pick_from_list(L)
 			new CHOSEN.type(T)
 			qdel(CHOSEN)
 

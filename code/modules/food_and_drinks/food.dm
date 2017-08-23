@@ -12,8 +12,8 @@
 /obj/item/reagent_containers/food/Initialize(mapload)
 	. = ..()
 	if(!mapload)
-		pixel_x = rand(-5, 5)
-		pixel_y = rand(-5, 5)
+		pixel_x = SSrng.random(-5, 5)
+		pixel_y = SSrng.random(-5, 5)
 
 /obj/item/reagent_containers/food/proc/checkLiked(var/fraction, mob/M)
 	if(last_check_time + 50 < world.time)

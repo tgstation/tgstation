@@ -90,7 +90,7 @@
 //Disk stuff.
 /obj/item/disk/data/New()
 	..()
-	icon_state = "datadisk[rand(0,6)]"
+	icon_state = "datadisk[SSrng.random(0,6)]"
 	add_overlay("datadisk_gene")
 
 /obj/item/disk/data/attack_self(mob/user)
@@ -172,9 +172,9 @@
 	if(efficiency > 2)
 		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
 		H.dna.remove_mutation_group(unclean_mutations)
-	if(efficiency > 5 && prob(20))
+	if(efficiency > 5 && SSrng.probability(20))
 		H.randmutvg()
-	if(efficiency < 3 && prob(50))
+	if(efficiency < 3 && SSrng.probability(50))
 		var/mob/M = H.randmutb()
 		if(ismob(M))
 			H = M
@@ -183,7 +183,7 @@
 	occupant = H
 
 	if(!clonename)	//to prevent null names
-		clonename = "clone ([rand(0,999)])"
+		clonename = "clone ([SSrng.random(0,999)])"
 	H.real_name = clonename
 
 	icon_state = "pod_1"
@@ -397,7 +397,7 @@
 
 /obj/machinery/clonepod/emp_act(severity)
 	var/mob/living/mob_occupant = occupant
-	if(mob_occupant && prob(100/(severity*efficiency)))
+	if(mob_occupant && SSrng.probability(100/(severity*efficiency)))
 		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
 		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
 		go_out()
@@ -415,7 +415,7 @@
 
 /obj/machinery/clonepod/proc/horrifyingsound()
 	for(var/i in 1 to 5)
-		playsound(loc,pick('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg'), 100, rand(0.95,1.05))
+		playsound(loc,SSrng.pick_from_list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg'), 100, SSrng.random(0.95,1.05))
 		sleep(1)
 	sleep(10)
 	playsound(loc,'sound/hallucinations/wail.ogg',100,1)

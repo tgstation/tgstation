@@ -111,10 +111,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/New(client/C)
 	parent = C
-	custom_names["ai"] = pick(GLOB.ai_names)
-	custom_names["cyborg"] = pick(GLOB.ai_names)
-	custom_names["clown"] = pick(GLOB.clown_names)
-	custom_names["mime"] = pick(GLOB.mime_names)
+	custom_names["ai"] = SSrng.pick_from_list(GLOB.ai_names)
+	custom_names["cyborg"] = SSrng.pick_from_list(GLOB.ai_names)
+	custom_names["clown"] = SSrng.pick_from_list(GLOB.clown_names)
+	custom_names["mime"] = SSrng.pick_from_list(GLOB.mime_names)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -807,7 +807,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("name")
 					real_name = pref_species.random_name(gender,1)
 				if("age")
-					age = rand(AGE_MIN, AGE_MAX)
+					age = SSrng.random(AGE_MIN, AGE_MAX)
 				if("hair")
 					hair_color = random_short_color()
 				if("hair_style")
@@ -827,7 +827,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("s_tone")
 					skin_tone = random_skin_tone()
 				if("bag")
-					backbag = pick(GLOB.backbaglist)
+					backbag = SSrng.pick_from_list(GLOB.backbaglist)
 				if("all")
 					random_character()
 
@@ -1262,9 +1262,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/firstspace = findtext(real_name, " ")
 		var/name_length = length(real_name)
 		if(!firstspace)	//we need a surname
-			real_name += " [pick(GLOB.last_names)]"
+			real_name += " [SSrng.pick_from_list(GLOB.last_names)]"
 		else if(firstspace == name_length)
-			real_name += "[pick(GLOB.last_names)]"
+			real_name += "[SSrng.pick_from_list(GLOB.last_names)]"
 
 	character.real_name = real_name
 	character.name = character.real_name

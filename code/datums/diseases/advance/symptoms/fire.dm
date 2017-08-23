@@ -51,8 +51,8 @@ Bonus
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(3)
-			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]</span>")
+			if(SSrng.probability(base_message_chance) && !suppress_warning)
+				to_chat(M, "<span class='warning'>[SSrng.pick_from_list("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]</span>")
 		if(4)
 			Firestacks_stage_4(M, A)
 			M.IgniteMob()
@@ -132,8 +132,8 @@ Bonus
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(3)
-			if(prob(base_message_chance))
-				to_chat(M, "<span class='warning'>[pick("Your veins boil.", "You feel hot.", "You smell meat cooking.")]</span>")
+			if(SSrng.probability(base_message_chance))
+				to_chat(M, "<span class='warning'>[SSrng.pick_from_list("Your veins boil.", "You feel hot.", "You smell meat cooking.")]</span>")
 		if(4)
 			Alkali_fire_stage_4(M, A)
 			M.IgniteMob()

@@ -62,7 +62,7 @@
 					to_chat(H, "You already used this contract!")
 					return
 				used = 1
-				var/mob/dead/observer/theghost = pick(candidates)
+				var/mob/dead/observer/theghost = SSrng.pick_from_list(candidates)
 				spawn_antag(theghost.client, get_turf(src), href_list["school"])
 				if(H && H.mind)
 					SSticker.mode.update_wiz_icons_added(H.mind)
@@ -98,8 +98,8 @@
 			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
 
 	equip_antag(M)
-	var/wizard_name_first = pick(GLOB.wizard_first)
-	var/wizard_name_second = pick(GLOB.wizard_second)
+	var/wizard_name_first = SSrng.pick_from_list(GLOB.wizard_first)
+	var/wizard_name_second = SSrng.pick_from_list(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	if(usr)
 		var/datum/objective/protect/new_objective = new /datum/objective/protect
@@ -118,7 +118,7 @@
 	M.mind.name = newname
 	M.real_name = newname
 	M.name = newname
-	M.age = rand(AGE_MIN, WIZARD_AGE_MIN - 1)
+	M.age = SSrng.random(AGE_MIN, WIZARD_AGE_MIN - 1)
 	M.dna.update_dna_identity()
 
 /obj/item/antag_spawner/contract/equip_antag(mob/target)
@@ -163,7 +163,7 @@
 		if(!(check_usability(user)))
 			return
 		used = TRUE
-		var/mob/dead/observer/theghost = pick(nuke_candidates)
+		var/mob/dead/observer/theghost = SSrng.pick_from_list(nuke_candidates)
 		spawn_antag(theghost.client, get_turf(src), "syndieborg")
 		do_sparks(4, TRUE, src)
 		qdel(src)
@@ -207,10 +207,10 @@
 		else
 			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
 
-	var/brainfirstname = pick(GLOB.first_names_male)
-	if(prob(50))
-		brainfirstname = pick(GLOB.first_names_female)
-	var/brainopslastname = pick(GLOB.last_names)
+	var/brainfirstname = SSrng.pick_from_list(GLOB.first_names_male)
+	if(SSrng.probability(50))
+		brainfirstname = SSrng.pick_from_list(GLOB.first_names_female)
+	var/brainopslastname = SSrng.pick_from_list(GLOB.last_names)
 	if(SSticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
 		brainopslastname = SSticker.mode.nukeops_lastname
 	var/brainopsname = "[brainfirstname] [brainopslastname]"
@@ -248,7 +248,7 @@
 		if(used)
 			return
 		used = 1
-		var/mob/dead/observer/theghost = pick(demon_candidates)
+		var/mob/dead/observer/theghost = SSrng.pick_from_list(demon_candidates)
 		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name))
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)

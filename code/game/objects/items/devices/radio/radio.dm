@@ -357,7 +357,7 @@
 			// so that they can be logged even AFTER the mob is deleted or something
 
 			// Other tags:
-			"compression" = rand(35,65), // compressed radio signal
+			"compression" = SSrng.random(35,65), // compressed radio signal
 			"message" = message, // the actual sent message
 			"radio" = src, // stores the radio used for transmission
 			"slow" = 0, // how much to sleep() before broadcasting - simulates net lag

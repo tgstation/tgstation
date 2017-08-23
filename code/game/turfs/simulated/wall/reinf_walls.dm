@@ -248,7 +248,7 @@
 
 /turf/closed/wall/r_wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		if(prob(30))
+		if(SSrng.probability(30))
 			dismantle_wall()
 
 /turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

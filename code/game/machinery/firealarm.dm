@@ -73,7 +73,7 @@
 			add_overlay("overlay_fire")
 
 /obj/machinery/firealarm/emp_act(severity)
-	if(prob(50 / severity))
+	if(SSrng.probability(50 / severity))
 		alarm()
 	..()
 
@@ -235,7 +235,7 @@
 	. = ..()
 	if(.) //damage received
 		if(obj_integrity > 0 && !(stat & BROKEN) && buildstage != 0)
-			if(prob(33))
+			if(SSrng.probability(33))
 				alarm()
 
 /obj/machinery/firealarm/obj_break(damage_flag)

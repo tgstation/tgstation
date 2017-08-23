@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/proc/setthemename(pickedtheme) //set the guardian's theme to something cool!
 	if(!pickedtheme)
-		pickedtheme = pick("magic", "tech", "carp")
+		pickedtheme = SSrng.pick_from_list("magic", "tech", "carp")
 	var/list/possible_names = list()
 	switch(pickedtheme)
 		if("magic")
@@ -89,7 +89,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if("carp")
 			for(var/type in (subtypesof(/datum/guardianname/carp) - namedatum.type))
 				possible_names += new type
-	namedatum = pick(possible_names)
+	namedatum = SSrng.pick_from_list(possible_names)
 	updatetheme(pickedtheme)
 
 /mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme to whatever its datum is; proc for adminfuckery
@@ -417,7 +417,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
 			var/mob/dead/observer/new_stand = null
 			if(candidates.len)
-				new_stand = pick(candidates)
+				new_stand = SSrng.pick_from_list(candidates)
 				to_chat(G, "<span class='holoparasite'>Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance.</span>")
 				to_chat(src, "<span class='holoparasitebold'>Your <font color=\"[G.namedatum.colour]\">[G.real_name]</font> has been successfully reset.</span>")
 				message_admins("[key_name_admin(new_stand)] has taken control of ([key_name_admin(G)])")
@@ -493,7 +493,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/mob/dead/observer/theghost = null
 
 	if(candidates.len)
-		theghost = pick(candidates)
+		theghost = SSrng.pick_from_list(candidates)
 		spawn_guardian(user, theghost.key)
 	else
 		to_chat(user, "[failure_message]")
@@ -503,7 +503,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/proc/spawn_guardian(var/mob/living/user, var/key)
 	var/guardiantype = "Standard"
 	if(random)
-		guardiantype = pick(possible_guardians)
+		guardiantype = SSrng.pick_from_list(possible_guardians)
 	else
 		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in possible_guardians
 		if(!guardiantype)

@@ -12,7 +12,7 @@
 
 /obj/structure/emergency_shield/Initialize()
 	. = ..()
-	setDir(pick(GLOB.cardinals))
+	setDir(SSrng.pick_from_list(GLOB.cardinals))
 	air_update_turf(1)
 
 /obj/structure/emergency_shield/Destroy()
@@ -96,7 +96,7 @@
 
 	for(var/turf/target_tile in range(shield_range, src))
 		if(isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield) in target_tile))
-			if(!(stat & BROKEN) || prob(33))
+			if(!(stat & BROKEN) || SSrng.probability(33))
 				deployed_shields += new /obj/structure/emergency_shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
@@ -106,15 +106,15 @@
 
 /obj/machinery/shieldgen/process()
 	if((stat & BROKEN) && active)
-		if(deployed_shields.len && prob(5))
-			qdel(pick(deployed_shields))
+		if(deployed_shields.len && SSrng.probability(5))
+			qdel(SSrng.pick_from_list(deployed_shields))
 
 
 /obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat && BROKEN))
 			stat |= BROKEN
-			locked = pick(0,1)
+			locked = SSrng.pick_from_list(0,1)
 			update_icon()
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
@@ -252,7 +252,7 @@
 		return
 
 	var/surplus = max(PN.avail - PN.load, 0)
-	var/avail_power = min(rand(50,200), surplus)
+	var/avail_power = min(SSrng.random(50,200), surplus)
 	if(avail_power)
 		power += avail_power
 		PN.load += avail_power //uses powernet power.
@@ -451,9 +451,9 @@
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return prob(20)
+		return SSrng.probability(20)
 	else
 		if(istype(mover, /obj/item/projectile))
-			return prob(10)
+			return SSrng.probability(10)
 		else
 			return !density

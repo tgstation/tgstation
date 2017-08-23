@@ -47,7 +47,7 @@ Bonus
 	if(istype(eyes))
 		switch(A.stage)
 			if(1, 2)
-				if(prob(base_message_chance) && !suppress_warning)
+				if(SSrng.probability(base_message_chance) && !suppress_warning)
 					to_chat(M, "<span class='warning'>Your eyes itch.</span>")
 			if(3, 4)
 				to_chat(M, "<span class='warning'><b>Your eyes burn!</b></span>")
@@ -58,7 +58,7 @@ Bonus
 				M.adjust_eye_damage(5)
 				if(eyes.eye_damage >= 10)
 					M.become_nearsighted()
-				if(prob(eyes.eye_damage - 10 + 1))
+				if(SSrng.probability(eyes.eye_damage - 10 + 1))
 					if(!remove_eyes)
 						if(M.become_blind())
 							to_chat(M, "<span class='userdanger'>You go blind!</span>")
@@ -111,7 +111,7 @@ Bonus
 	switch(A.stage)
 		if(4, 5) //basically oculine
 			if(M.disabilities & BLIND)
-				if(prob(20))
+				if(SSrng.probability(20))
 					to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
 					M.cure_blind()
 					M.cure_nearsighted()
@@ -128,6 +128,6 @@ Bonus
 				else if(eyes.eye_damage > 0)
 					M.adjust_eye_damage(-1)
 		else
-			if(prob(base_message_chance))
-				to_chat(M, "<span class='notice'>[pick("Your eyes feel great.", "You are now blinking manually.", "You don't feel the need to blink.")]</span>")
+			if(SSrng.probability(base_message_chance))
+				to_chat(M, "<span class='notice'>[SSrng.pick_from_list("Your eyes feel great.", "You are now blinking manually.", "You don't feel the need to blink.")]</span>")
 	return

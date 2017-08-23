@@ -57,7 +57,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget()
 	. = ..()
-	if(. && prob(12))
+	if(. && SSrng.probability(12))
 		INVOKE_ASYNC(src, .proc/dash)
 
 /obj/item/melee/transforming/cleaving_saw/miner //nerfed saw because it is very murdery
@@ -206,7 +206,7 @@ Difficulty: Medium
 	if(!LAZYLEN(accessable_turfs))
 		return
 	dash_cooldown = world.time + initial(dash_cooldown)
-	target_turf = pick(accessable_turfs)
+	target_turf = SSrng.pick_from_list(accessable_turfs)
 	var/turf/step_back_turf = get_step(target_turf, get_cardinal_dir(target_turf, own_turf))
 	var/turf/step_forward_turf = get_step(own_turf, get_cardinal_dir(own_turf, target_turf))
 	new /obj/effect/temp_visual/small_smoke/halfsecond(step_back_turf)
@@ -232,7 +232,7 @@ Difficulty: Medium
 		miner_saw.transform_weapon(src, TRUE)
 		icon_state = "miner[miner_saw.active ? "_transformed":""]"
 		icon_living = "miner[miner_saw.active ? "_transformed":""]"
-		time_until_next_transform = world.time + rand(50, 100)
+		time_until_next_transform = world.time + SSrng.random(50, 100)
 
 /obj/effect/temp_visual/dir_setting/miner_death
 	icon_state = "miner_death"
@@ -244,10 +244,10 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/dir_setting/miner_death/proc/fade_out()
 	var/matrix/M = new
-	M.Turn(pick(90, 270))
+	M.Turn(SSrng.pick_from_list(90, 270))
 	var/final_dir = dir
 	if(dir & (EAST|WEST)) //Facing east or west
-		final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
+		final_dir = SSrng.pick_from_list(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
 	animate(src, transform = M, pixel_y = -6, dir = final_dir, time = 2, easing = EASE_IN|EASE_OUT)
 	sleep(5)

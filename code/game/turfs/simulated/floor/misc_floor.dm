@@ -184,8 +184,8 @@
 		var/image/I = new('icons/effects/effects.dmi', src, "heal", ABOVE_MOB_LAYER) //fake a healing glow for servants
 		I.appearance_flags = RESET_COLOR
 		I.color = "#5A6068"
-		I.pixel_x = rand(-12, 12)
-		I.pixel_y = rand(-9, 0)
+		I.pixel_x = SSrng.random(-12, 12)
+		I.pixel_y = SSrng.random(-9, 0)
 		var/list/viewing = list()
 		for(var/mob/M in viewers(src))
 			if(M.client && (is_servant_of_ratvar(M) || isobserver(M) || M.stat == DEAD))
@@ -264,13 +264,13 @@
 		ChangeTurf(src.baseturf)
 
 /turf/open/floor/vines/narsie_act(force, ignore_mobs, probability = 20)
-	if(prob(probability) || force)
+	if(SSrng.probability(probability) || force)
 		ChangeTurf(baseturf) //nar sie eats this shit
 		narsie_act(force, ignore_mobs, probability)
 
 /turf/open/floor/vines/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		if(prob(50))
+		if(SSrng.probability(50))
 			ChangeTurf(src.baseturf)
 
 /turf/open/floor/vines/ChangeTurf(turf/open/floor/T)

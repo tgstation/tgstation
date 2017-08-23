@@ -161,7 +161,7 @@
 		mecha_face_target(A)
 		var/list/possible_weapons = get_mecha_equip_by_flag(RANGED)
 		if(possible_weapons.len)
-			var/obj/item/mecha_parts/mecha_equipment/ME = pick(possible_weapons) //so we don't favor mecha.equipment[1] forever
+			var/obj/item/mecha_parts/mecha_equipment/ME = SSrng.pick_from_list(possible_weapons) //so we don't favor mecha.equipment[1] forever
 			if(ME.action(A))
 				ME.start_cooldown()
 				return
@@ -174,7 +174,7 @@
 	if(mecha)
 		var/list/possible_weapons = get_mecha_equip_by_flag(MELEE)
 		if(possible_weapons.len)
-			var/obj/item/mecha_parts/mecha_equipment/ME = pick(possible_weapons)
+			var/obj/item/mecha_parts/mecha_equipment/ME = SSrng.pick_from_list(possible_weapons)
 			mecha_face_target(target)
 			if(ME.action(target))
 				ME.start_cooldown()
@@ -221,19 +221,19 @@
 				return
 
 			//Smoke if there's too many targets	- Smoke Power
-			if(threat_count >= threat_use_mecha_smoke && prob(smoke_chance))
+			if(threat_count >= threat_use_mecha_smoke && SSrng.probability(smoke_chance))
 				if(mecha.smoke_action && mecha.smoke_action.owner && mecha.smoke)
 					mecha.smoke_action.Activate()
 
 			//Heavy damage - Defence Power or Retreat
 			if(mecha.obj_integrity < mecha.max_integrity*0.25)
-				if(prob(defence_mode_chance))
+				if(SSrng.probability(defence_mode_chance))
 					if(mecha.defense_action && mecha.defense_action.owner && !mecha.defence_mode)
 						mecha.leg_overload_mode = 0
 						mecha.defense_action.Activate(TRUE)
 						addtimer(CALLBACK(mecha.defense_action, /datum/action/innate/mecha/mech_defence_mode.proc/Activate, FALSE), 100) //10 seconds of defence, then toggle off
 
-				else if(prob(retreat_chance))
+				else if(SSrng.probability(retreat_chance))
 					//Speed boost if possible
 					if(mecha.overload_action && mecha.overload_action.owner && !mecha.leg_overload_mode)
 						mecha.overload_action.Activate(TRUE)

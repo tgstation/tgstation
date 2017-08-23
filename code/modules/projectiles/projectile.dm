@@ -101,7 +101,7 @@
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
 			else
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
-			if(prob(33))
+			if(SSrng.probability(33))
 				L.add_splatter_floor(target_loca)
 		else if(impact_effect_type)
 			new impact_effect_type(target_loca, target, src)
@@ -175,7 +175,7 @@
 			for(var/mob/living/L in target_turf)
 				mobs_list += L
 			if(mobs_list.len)
-				var/mob/living/picked_mob = pick(mobs_list)
+				var/mob/living/picked_mob = SSrng.pick_from_list(mobs_list)
 				if(!prehit(picked_mob))
 					return FALSE
 				picked_mob.bullet_act(src, def_zone)
@@ -183,7 +183,7 @@
 	return TRUE
 
 /obj/item/projectile/proc/check_ricochet()
-	if(prob(ricochet_chance))
+	if(SSrng.probability(ricochet_chance))
 		return TRUE
 	return FALSE
 
@@ -222,7 +222,7 @@
 			if(!Angle)
 				Angle=round(Get_Angle(src,current))
 			if(spread)
-				Angle += (rand() - 0.5) * spread
+				Angle += (SSrng.random() - 0.5) * spread
 			if(!nondirectional_sprite)
 				var/matrix/M = new
 				M.Turn(Angle)

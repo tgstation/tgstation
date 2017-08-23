@@ -41,7 +41,7 @@
 			icon_state = "full"
 
 /obj/item/reagent_containers/blood/random/Initialize()
-	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
+	blood_type = SSrng.pick_from_list("A+", "A-", "B+", "B-", "O+", "O-", "L")
 	. = ..()
 
 /obj/item/reagent_containers/blood/APlus

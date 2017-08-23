@@ -71,7 +71,7 @@
 	var/datum/playingcard/card
 
 	while (cards.len)
-		card                    = pick(cards)
+		card                    = SSrng.pick_from_list(cards)
 		newcards.Add(card)
 		src.cards.Remove(card)
 
@@ -236,8 +236,8 @@
 			var/datum/playingcard/P = cards[1]
 			var/mutable_appearance/card_overlay = mutable_appearance(icon, (concealed ? "card_back" : "[P.card_icon]") )
 
-			card_overlay.pixel_x = card_overlay.pixel_x + (-5 + rand(10))
-			card_overlay.pixel_y = card_overlay.pixel_y + (-5 + rand(10))
+			card_overlay.pixel_x = card_overlay.pixel_x + (-5 + SSrng.random(10))
+			card_overlay.pixel_y = card_overlay.pixel_y + (-5 + SSrng.random(10))
 
 			add_overlay(card_overlay)
 		else

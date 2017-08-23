@@ -214,7 +214,7 @@
 		return
 	start()
 
-	if (prob(max(5/efficiency-5,dirty*5))) //a clean unupgraded microwave has no risk of failure
+	if (SSrng.probability(max(5/efficiency-5,dirty*5))) //a clean unupgraded microwave has no risk of failure
 		muck_start()
 		if (!microwaving(4))
 			muck_finish()
@@ -223,7 +223,7 @@
 		return
 
 	else
-		if(has_extra_item() && prob(min(dirty*5,100)) && !microwaving(4))
+		if(has_extra_item() && SSrng.probability(min(dirty*5,100)) && !microwaving(4))
 			broke()
 			return
 
@@ -240,7 +240,7 @@
 
 		if(metal)
 			visible_message("<span class='warning'>Sparks fly around [src]!")
-			if(prob(max(metal/2, 33)))
+			if(SSrng.probability(max(metal/2, 33)))
 				explosion(loc,0,1,2)
 			broke()
 			return
@@ -298,7 +298,7 @@
 	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
 	for(var/obj/item/reagent_containers/food/snacks/S in src)
-		if(prob(50))
+		if(SSrng.probability(50))
 			new /obj/item/reagent_containers/food/snacks/badrecipe(src)
 			qdel(S)
 

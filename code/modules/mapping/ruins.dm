@@ -22,13 +22,13 @@
 		if(ruins && ruins.len)
 			last_checked_ruin_index++ //ruins with no cost come first in the ruin list, so they'll get picked really often
 			if(is_picking)
-				ruin = ruins[pick(ruins)]
+				ruin = ruins[SSrng.pick_from_list(ruins)]
 			else
 				var/ruin_key = ruins[last_checked_ruin_index] //get the ruin's key via index
 				ruin = ruins[ruin_key] //use that key to get the ruin datum itself
 				if(ruin.cost >= 0) //if it has a non-negative cost, cancel out and pick another, to ensure true randomness
 					is_picking = TRUE
-					ruin = ruins[pick(ruins)]
+					ruin = ruins[SSrng.pick_from_list(ruins)]
 		else
 			log_world("Ruin loader had no ruins to pick from with [budget] left to spend.")
 			break
@@ -44,8 +44,8 @@
 			sanity--
 			var/width_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(ruin.width / 2)
 			var/height_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(ruin.height / 2)
-			var/z_level = pick(z_levels)
-			var/turf/T = locate(rand(width_border, world.maxx - width_border), rand(height_border, world.maxy - height_border), z_level)
+			var/z_level = SSrng.pick_from_list(z_levels)
+			var/turf/T = locate(SSrng.random(width_border, world.maxx - width_border), SSrng.random(height_border, world.maxy - height_border), z_level)
 			var/valid = TRUE
 
 			for(var/turf/check in ruin.get_affected_turfs(T,1))

@@ -55,15 +55,15 @@ Bonus
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
 		if(1, 2, 3, 4)
-			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("Your throat hurts.", "You clear your throat.")]</span>")
+			if(SSrng.probability(base_message_chance) && !suppress_warning)
+				to_chat(M, "<span class='warning'>[SSrng.pick_from_list("Your throat hurts.", "You clear your throat.")]</span>")
 		else
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.SetSpecialVoice(H.dna.species.random_name(H.gender))
 				if(scramble_language)
 					H.remove_language(current_language)
-					current_language = pick(subtypesof(/datum/language) - /datum/language/common)
+					current_language = SSrng.pick_from_list(subtypesof(/datum/language) - /datum/language/common)
 					H.grant_language(current_language)
 					var/datum/language_holder/mob_language = H.get_language_holder()
 					mob_language.only_speaks_language = current_language

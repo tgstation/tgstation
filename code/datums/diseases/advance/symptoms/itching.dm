@@ -45,6 +45,6 @@ BONUS
 		return
 	var/mob/living/M = A.affected_mob
 	var/can_scratch = scratch && !M.incapacitated()
-	to_chat(M, "<span class='warning'>Your [pick("back", "arm", "leg", "elbow", "head")] itches. [can_scratch ? " You scratch it." : ""]</span>")
+	to_chat(M, "<span class='warning'>Your [SSrng.pick_from_list("back", "arm", "leg", "elbow", "head")] itches. [can_scratch ? " You scratch it." : ""]</span>")
 	if(can_scratch)
 		M.adjustBruteLoss(0.5)

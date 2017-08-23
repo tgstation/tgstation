@@ -63,7 +63,7 @@
 
 /mob/living/carbon/monkey/proc/battle_screech()
 	if(next_battle_screech < world.time)
-		emote(pick("roar","screech"))
+		emote(SSrng.pick_from_list("roar","screech"))
 		for(var/mob/living/carbon/monkey/M in view(7,src))
 			M.next_battle_screech = world.time + battle_screech_cooldown
 
@@ -126,7 +126,7 @@
 		return 1
 
 	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
-	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
+	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || SSrng.probability(MONKEY_AGGRESSIVE_MVM_PROB)))
 		return 1
 
 	return 0
@@ -138,7 +138,7 @@
 		return TRUE
 
 	if(on_fire || buckled || restrained())
-		if(!resisting && prob(MONKEY_RESIST_PROB))
+		if(!resisting && SSrng.probability(MONKEY_RESIST_PROB))
 			resisting = TRUE
 			walk_to(src,0)
 			resist()
@@ -191,7 +191,7 @@
 		return TRUE
 
 	// nuh uh you don't pull me!
-	if(pulledby && (mode != MONKEY_IDLE || prob(MONKEY_PULL_AGGRO_PROB)))
+	if(pulledby && (mode != MONKEY_IDLE || SSrng.probability(MONKEY_PULL_AGGRO_PROB)))
 		if(Adjacent(pulledby))
 			a_intent = INTENT_DISARM
 			monkey_attack(pulledby)
@@ -218,16 +218,16 @@
 						return TRUE
 
 			// pickup any nearby objects
-			if(!pickupTarget && prob(MONKEY_PICKUP_PROB))
+			if(!pickupTarget && SSrng.probability(MONKEY_PICKUP_PROB))
 				var/obj/item/I = locate(/obj/item/) in oview(5,src)
 				if(I && !blacklistItems[I])
 					pickupTarget = I
 
 			// I WANNA STEAL
-			if(!pickupTarget && prob(MONKEY_STEAL_PROB))
+			if(!pickupTarget && SSrng.probability(MONKEY_STEAL_PROB))
 				var/mob/living/carbon/human/H = locate(/mob/living/carbon/human/) in oview(5,src)
 				if(H)
-					pickupTarget = pick(H.held_items)
+					pickupTarget = SSrng.pick_from_list(H.held_items)
 
 			// clear any combat walking
 			if(!resisting)
@@ -244,7 +244,7 @@
 				INVOKE_ASYNC(src, .proc/walk2derpless, target)
 
 			// pickup any nearby weapon
-			if(!pickupTarget && prob(MONKEY_WEAPON_PROB))
+			if(!pickupTarget && SSrng.probability(MONKEY_WEAPON_PROB))
 				var/obj/item/W = locate(/obj/item/) in oview(2,src)
 				if(W && !blacklistItems[W] && W.force > best_force)
 					pickupTarget = W
@@ -252,14 +252,14 @@
 			// recruit other monkies
 			var/list/around = view(src, MONKEY_ENEMY_VISION)
 			for(var/mob/living/carbon/monkey/M in around)
-				if(M.mode == MONKEY_IDLE && prob(MONKEY_RECRUIT_PROB))
+				if(M.mode == MONKEY_IDLE && SSrng.probability(MONKEY_RECRUIT_PROB))
 					M.battle_screech()
 					M.target = target
 					M.mode = MONKEY_HUNT
 
 			// switch targets
 			for(var/mob/living/L in around)
-				if(L != target && should_target(L) && L.stat == CONSCIOUS && prob(MONKEY_SWITCH_TARGET_PROB))
+				if(L != target && should_target(L) && L.stat == CONSCIOUS && SSrng.probability(MONKEY_SWITCH_TARGET_PROB))
 					target = L
 					return TRUE
 
@@ -279,7 +279,7 @@
 							break
 
 					// if the target has a weapon, chance to disarm them
-					if(W && prob(MONKEY_ATTACK_DISARM_PROB))
+					if(W && SSrng.probability(MONKEY_ATTACK_DISARM_PROB))
 						pickupTarget = W
 						a_intent = INTENT_DISARM
 						monkey_attack(target)
@@ -402,11 +402,11 @@
 
 	// if we arn't enemies, we were likely recruited to attack this target, jobs done if we calm down so go back to idle
 	if(!enemies[L])
-		if( target == L && prob(MONKEY_HATRED_REDUCTION_PROB) )
+		if( target == L && SSrng.probability(MONKEY_HATRED_REDUCTION_PROB) )
 			back_to_idle()
 		return // already de-aggroed
 
-	if(prob(MONKEY_HATRED_REDUCTION_PROB))
+	if(SSrng.probability(MONKEY_HATRED_REDUCTION_PROB))
 		enemies[L] --
 
 	// if we are not angry at our target, go back to idle
@@ -426,16 +426,16 @@
 		a_intent = INTENT_HARM
 
 /mob/living/carbon/monkey/attack_hand(mob/living/L)
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+	if(L.a_intent == INTENT_HARM && SSrng.probability(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
-	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+	else if(L.a_intent == INTENT_DISARM && SSrng.probability(MONKEY_RETALIATE_DISARM_PROB))
 		retaliate(L)
 	return ..()
 
 /mob/living/carbon/monkey/attack_paw(mob/living/L)
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+	if(L.a_intent == INTENT_HARM && SSrng.probability(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
-	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+	else if(L.a_intent == INTENT_DISARM && SSrng.probability(MONKEY_RETALIATE_DISARM_PROB))
 		retaliate(L)
 	return ..()
 

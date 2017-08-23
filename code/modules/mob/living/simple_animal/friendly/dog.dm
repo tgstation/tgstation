@@ -189,7 +189,7 @@
 					if(!allowed)
 						to_chat(usr, "<span class='warning'>You set [item_to_add] on [src]'s back, but it falls off!</span>")
 						item_to_add.loc = loc
-						if(prob(25))
+						if(SSrng.probability(25))
 							step_rand(item_to_add)
 						for(var/i in list(1,2,4,8,4,8,4,dir))
 							setDir(i)
@@ -249,7 +249,7 @@
 	else
 		to_chat(user, "<span class='warning'>You set [item_to_add] on [src]'s head, but it falls off!</span>")
 		item_to_add.loc = loc
-		if(prob(25))
+		if(SSrng.probability(25))
 			step_rand(item_to_add)
 		for(var/i in list(1,2,4,8,4,8,4,dir))
 			setDir(i)
@@ -398,11 +398,11 @@
 					if(isturf(movement_target.loc) )
 						movement_target.attack_animal(src)
 					else if(ishuman(movement_target.loc) )
-						if(prob(20))
+						if(SSrng.probability(20))
 							emote("me", 1, "stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
 
-		if(prob(1))
-			emote("me", 1, pick("dances around.","chases its tail!"))
+		if(SSrng.probability(1))
+			emote("me", 1, SSrng.pick_from_list("dances around.","chases its tail!"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					setDir(i)
@@ -530,8 +530,8 @@
 	make_babies()
 
 	if(!stat && !resting && !buckled)
-		if(prob(1))
-			emote("me", 1, pick("dances around.","chases her tail."))
+		if(SSrng.probability(1))
+			emote("me", 1, SSrng.pick_from_list("dances around.","chases her tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					setDir(i)
@@ -541,8 +541,8 @@
 	..()
 
 	if(!stat && !resting && !buckled)
-		if(prob(1))
-			emote("me", 1, pick("chases its tail."))
+		if(SSrng.probability(1))
+			emote("me", 1, SSrng.pick_from_list("chases its tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					setDir(i)

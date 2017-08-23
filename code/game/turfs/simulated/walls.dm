@@ -78,19 +78,19 @@
 			NT.contents_explosion(severity, target)
 			return
 		if(2)
-			if (prob(50))
+			if (SSrng.probability(50))
 				dismantle_wall(0,1)
 			else
 				dismantle_wall(1,1)
 		if(3)
-			if (prob(hardness))
+			if (SSrng.probability(hardness))
 				dismantle_wall(0,1)
 	if(!density)
 		..()
 
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
-	if(prob(50))
+	if(SSrng.probability(50))
 		dismantle_wall()
 
 /turf/closed/wall/mech_melee_attack(obj/mecha/M)
@@ -99,7 +99,7 @@
 		if(BRUTE)
 			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			visible_message("<span class='danger'>[M.name] has hit [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
-			if(prob(hardness + M.force) && M.force > 20)
+			if(SSrng.probability(hardness + M.force) && M.force > 20)
 				dismantle_wall(1)
 				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		if(BURN)
@@ -123,9 +123,9 @@
 
 /turf/closed/wall/attack_hulk(mob/user, does_attack_animation = 0)
 	..(user, 1)
-	if(prob(hardness))
+	if(SSrng.probability(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		user.say(SSrng.pick_from_list(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		dismantle_wall(1)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
@@ -246,11 +246,11 @@
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		if(prob(50))
+		if(SSrng.probability(50))
 			dismantle_wall()
 		return
 	if(current_size == STAGE_FOUR)
-		if(prob(30))
+		if(SSrng.probability(30))
 			dismantle_wall()
 
 /turf/closed/wall/narsie_act(force, ignore_mobs, probability = 20)

@@ -374,7 +374,7 @@
 /obj/machinery/airalarm/proc/shock(mob/user, prb)
 	if((stat & (NOPOWER)))		// unpowered, no shock
 		return 0
-	if(!prob(prb))
+	if(!SSrng.probability(prb))
 		return 0 //you lucked out, no shock for you
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)

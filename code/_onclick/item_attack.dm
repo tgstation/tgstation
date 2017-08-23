@@ -74,7 +74,7 @@
 	if(I.force)
 		apply_damage(I.force, I.damtype)
 		if(I.damtype == BRUTE)
-			if(prob(33))
+			if(SSrng.probability(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
 				add_splatter_floor(location)
@@ -104,7 +104,7 @@
 /mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
 	var/message_verb = "attacked"
 	if(I.attack_verb && I.attack_verb.len)
-		message_verb = "[pick(I.attack_verb)]"
+		message_verb = "[SSrng.pick_from_list(I.attack_verb)]"
 	else if(!I.force)
 		return
 	var/message_hit_area = ""

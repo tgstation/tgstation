@@ -131,7 +131,7 @@
 
 /obj/structure/reagent_dispensers/peppertank/Initialize()
 	. = ..()
-	if(prob(1))
+	if(SSrng.probability(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
 
 

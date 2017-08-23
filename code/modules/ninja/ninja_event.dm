@@ -26,7 +26,7 @@ Contents:
 	var/give_objectives = TRUE
 
 /datum/round_event/ghost_role/ninja/setup()
-	helping_station = rand(0,1)
+	helping_station = SSrng.random(0,1)
 
 
 /datum/round_event/ghost_role/ninja/kill()
@@ -46,7 +46,7 @@ Contents:
 						spawn_locs += L.loc
 		if(!spawn_locs.len)
 			return kill()
-		spawn_loc = pick(spawn_locs)
+		spawn_loc = SSrng.pick_from_list(spawn_locs)
 	if(!spawn_loc)
 		return MAP_ERROR
 
@@ -91,7 +91,7 @@ Contents:
 /proc/create_space_ninja(spawn_loc)
 	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
-	A.real_name = "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
+	A.real_name = "[SSrng.pick_from_list(GLOB.ninja_titles)] [SSrng.pick_from_list(GLOB.ninja_names)]"
 	A.copy_to(new_ninja)
 	new_ninja.dna.update_dna_identity()
 	return new_ninja

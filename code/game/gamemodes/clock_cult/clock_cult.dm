@@ -119,7 +119,7 @@ Credit where due:
 		number_players -= 30
 		starter_servants += round(number_players/15)
 	while(starter_servants)
-		var/datum/mind/servant = pick(antag_candidates)
+		var/datum/mind/servant = SSrng.pick_from_list(antag_candidates)
 		servants_to_serve += servant
 		antag_candidates -= servant
 		modePlayer += servant

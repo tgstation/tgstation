@@ -97,7 +97,7 @@
 
 				C.network = tempnetwork
 				var/area/A = get_area(src)
-				C.c_tag = "[A.name] ([rand(1, 999)])"
+				C.c_tag = "[A.name] ([SSrng.random(1, 999)])"
 
 
 			else if(istype(W, /obj/item/wirecutters))

@@ -63,7 +63,7 @@
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BRUTE)
 		damage = damage * 2
-	else if(damage_type == BURN && damage > 0 && B.obj_integrity - damage > 0 && prob(60))
+	else if(damage_type == BURN && damage > 0 && B.obj_integrity - damage > 0 && SSrng.probability(60))
 		var/obj/structure/blob/newB = B.expand(null, null, 0)
 		if(newB)
 			newB.obj_integrity = B.obj_integrity - damage
@@ -71,7 +71,7 @@
 	return ..()
 
 /datum/reagent/blob/replicating_foam/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
-	if(prob(30))
+	if(SSrng.probability(30))
 		newB.expand(null, null, 0) //do it again!
 
 //does massive brute and burn damage, but can only expand manually
@@ -123,18 +123,18 @@
 	M.apply_damage(0.7*reac_volume, BRUTE)
 
 /datum/reagent/blob/shifting_fragments/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
-	if(istype(B, /obj/structure/blob/normal) || (istype(B, /obj/structure/blob/shield) && prob(25)))
+	if(istype(B, /obj/structure/blob/normal) || (istype(B, /obj/structure/blob/shield) && SSrng.probability(25)))
 		newB.forceMove(get_turf(B))
 		B.forceMove(T)
 
 /datum/reagent/blob/shifting_fragments/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage > 0 && B.obj_integrity - damage > 0 && prob(60-damage))
+	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage > 0 && B.obj_integrity - damage > 0 && SSrng.probability(60-damage))
 		var/list/blobstopick = list()
 		for(var/obj/structure/blob/OB in orange(1, B))
-			if((istype(OB, /obj/structure/blob/normal) || (istype(OB, /obj/structure/blob/shield) && prob(25))) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
+			if((istype(OB, /obj/structure/blob/normal) || (istype(OB, /obj/structure/blob/shield) && SSrng.probability(25))) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
 				blobstopick += OB //as long as the blob picked is valid; ie, a normal or shield blob that has the same chemical as we do, we can swap with it
 		if(blobstopick.len)
-			var/obj/structure/blob/targeted = pick(blobstopick) //randomize the blob chosen, because otherwise it'd tend to the lower left
+			var/obj/structure/blob/targeted = SSrng.pick_from_list(blobstopick) //randomize the blob chosen, because otherwise it'd tend to the lower left
 			var/turf/T = get_turf(targeted)
 			targeted.forceMove(get_turf(B))
 			B.forceMove(T) //swap the blobs
@@ -170,7 +170,7 @@
 	if(damage_type == BURN && damage_flag != "energy")
 		for(var/turf/open/T in range(1, B))
 			var/obj/structure/blob/C = locate() in T
-			if(!(C && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) && prob(80))
+			if(!(C && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) && SSrng.probability(80))
 				new /obj/effect/hotspot(T)
 	if(damage_flag == "fire")
 		return 0
@@ -225,7 +225,7 @@
 	M.apply_damage(0.6*reac_volume, TOX)
 	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
 		M.death() //sleeping in a fight? bad plan.
-		var/points = rand(5, 10)
+		var/points = SSrng.random(5, 10)
 		var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(get_turf(M))
 		BS.overmind = O
 		BS.update_icons()
@@ -235,7 +235,7 @@
 		to_chat(O, "<span class='notice'>Gained [points] resources from the zombification of [M].</span>")
 
 /datum/reagent/blob/zombifying_pods/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage <= 20 && B.obj_integrity - damage <= 0 && prob(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
+	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage <= 20 && B.obj_integrity - damage <= 0 && SSrng.probability(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
 		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
 		BS.overmind = B.overmind
@@ -244,7 +244,7 @@
 	return ..()
 
 /datum/reagent/blob/zombifying_pods/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
-	if(prob(10))
+	if(SSrng.probability(10))
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(T)
 		BS.overmind = B.overmind
 		BS.update_icons()
@@ -270,15 +270,15 @@
 		M.apply_damage(0.6*reac_volume, OXY)
 
 /datum/reagent/blob/energized_jelly/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && B.obj_integrity - damage <= 0 && prob(10))
-		do_sparks(rand(2, 4), FALSE, B)
+	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && B.obj_integrity - damage <= 0 && SSrng.probability(10))
+		do_sparks(SSrng.random(2, 4), FALSE, B)
 	return ..()
 
 /datum/reagent/blob/energized_jelly/tesla_reaction(obj/structure/blob/B, power)
 	return 0
 
 /datum/reagent/blob/energized_jelly/emp_reaction(obj/structure/blob/B, severity)
-	var/damage = rand(30, 50) - severity * rand(10, 15)
+	var/damage = SSrng.random(30, 50) - severity * SSrng.random(10, 15)
 	B.take_damage(damage, BURN, "energy")
 
 //does aoe brute damage when hitting targets, is immune to explosions
@@ -360,7 +360,7 @@
 
 /datum/reagent/blob/electromagnetic_web/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	if(prob(reac_volume*2))
+	if(SSrng.probability(reac_volume*2))
 		M.emp_act(EMP_LIGHT)
 	if(M)
 		M.apply_damage(reac_volume, BURN)
@@ -458,7 +458,7 @@
 /datum/reagent/blob/pressurized_slime/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	var/turf/open/T = get_turf(M)
-	if(istype(T) && prob(reac_volume))
+	if(istype(T) && SSrng.probability(reac_volume))
 		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
@@ -480,7 +480,7 @@
 
 /datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/structure/blob/B, probchance)
 	for(var/turf/open/T in range(1, B))
-		if(prob(probchance))
+		if(SSrng.probability(probchance))
 			T.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 			for(var/obj/O in T)
 				O.extinguish()

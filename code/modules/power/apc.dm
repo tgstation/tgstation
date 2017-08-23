@@ -502,7 +502,7 @@
 			if (C.get_amount() >= 10 && !terminal && opened && has_electronics > 0)
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/N = T.get_cable_node()
-				if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
+				if (SSrng.probability(50) && electrocute_mob(usr, N, N, 1, TRUE))
 					do_sparks(5, TRUE, src)
 					return
 				C.use(10)
@@ -1180,7 +1180,7 @@
 			stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
-	if(!prob(prb))
+	if(!SSrng.probability(prb))
 		return 0
 	do_sparks(5, TRUE, src)
 	if(isalien(user))

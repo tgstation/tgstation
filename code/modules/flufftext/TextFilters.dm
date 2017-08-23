@@ -7,13 +7,13 @@
 	var/list/split_phrase = splittext(phrase," ") //Split it up into words.
 
 	var/list/unstuttered_words = split_phrase.Copy()
-	var/i = rand(1,3)
+	var/i = SSrng.random(1,3)
 	if(stun) i = split_phrase.len
 	for(,i > 0,i--) //Pick a few words to stutter on.
 
 		if (!unstuttered_words.len)
 			break
-		var/word = pick(unstuttered_words)
+		var/word = SSrng.pick_from_list(unstuttered_words)
 		unstuttered_words -= word //Remove from unstuttered words so we don't stutter it again.
 		var/index = split_phrase.Find(word) //Find the word in the split phrase so we can replace it.
 
@@ -24,7 +24,7 @@
 			first_letter = first_sound
 
 		//Repeat the first letter to create a stutter.
-		var/rnum = rand(1,3)
+		var/rnum = SSrng.random(1,3)
 		switch(rnum)
 			if(1)
 				word = "[first_letter]-[word]"
@@ -38,7 +38,7 @@
 	return sanitize(jointext(split_phrase," "))
 
 /proc/Stagger(mob/M,d) //Technically not a filter, but it relates to drunkenness.
-	step(M, pick(d,turn(d,90),turn(d,-90)))
+	step(M, SSrng.pick_from_list(d,turn(d,90),turn(d,-90)))
 
 /proc/Ellipsis(original_msg, chance = 50, keep_words)
 	if(chance <= 0) return "..."
@@ -51,7 +51,7 @@
 	var/new_msg = ""
 
 	for(var/w in words)
-		if(prob(chance))
+		if(SSrng.probability(chance))
 			new_words += "..."
 			if(!keep_words)
 				continue

@@ -46,7 +46,7 @@
 			new /obj/item/stack/spacecash/c200(get_turf(src)) // will autostack
 			playsound(src.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 			SSshuttle.points -= 200
-			if(next_warning < world.time && prob(15))
+			if(next_warning < world.time && SSrng.probability(15))
 				var/area/A = get_area(loc)
 				var/message = "Unauthorized credit withdrawal underway in [A.map_name]!!"
 				radio.talk_into(src, message, radio_channel, get_spans())

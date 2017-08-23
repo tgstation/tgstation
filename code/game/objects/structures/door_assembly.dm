@@ -699,7 +699,7 @@
 		var/turf/T = get_turf(src)
 		var/metal_amt = 4
 		if(!disassembled)
-			metal_amt = rand(2,4)
+			metal_amt = SSrng.random(2,4)
 		new /obj/item/stack/sheet/metal(T, metal_amt)
 		if(mineral)
 			if (mineral == "glass")

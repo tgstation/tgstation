@@ -64,7 +64,7 @@ Bonus
 
 /datum/symptom/heal/toxin/Heal(mob/living/M, datum/disease/advance/A)
 	var/heal_amt = 1 * power
-	if(M.toxloss > 0 && prob(base_message_chance) && !hide_healing)
+	if(M.toxloss > 0 && SSrng.probability(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#66FF99")
 	M.adjustToxLoss(-heal_amt)
 	return 1
@@ -96,7 +96,7 @@ Bonus
 
 /datum/symptom/heal/toxin/plus/Heal(mob/living/M, datum/disease/advance/A)
 	var/heal_amt = 2 * power
-	if(M.toxloss > 0 && prob(base_message_chance) && !hide_healing)
+	if(M.toxloss > 0 && SSrng.probability(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#00FF00")
 	M.adjustToxLoss(-heal_amt)
 	return 1
@@ -140,7 +140,7 @@ Bonus
 		if(L.heal_damage(heal_amt/parts.len, 0))
 			M.update_damage_overlays()
 
-	if(prob(base_message_chance) && !hide_healing)
+	if(SSrng.probability(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#FF3333")
 
 	return 1
@@ -190,7 +190,7 @@ Bonus
 		if(L.heal_damage(heal_amt/parts.len, 0))
 			M.update_damage_overlays()
 
-	if(prob(base_message_chance) && !hide_healing)
+	if(SSrng.probability(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#CC1100")
 
 	return 1
@@ -234,7 +234,7 @@ Bonus
 		if(L.heal_damage(0, heal_amt/parts.len))
 			M.update_damage_overlays()
 
-	if(prob(base_message_chance) && !hide_healing)
+	if(SSrng.probability(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#FF9933")
 	return 1
 
@@ -282,7 +282,7 @@ Bonus
 		if(L.heal_damage(0, heal_amt/parts.len))
 			M.update_damage_overlays()
 
-	if(prob(base_message_chance) && !hide_healing)
+	if(SSrng.probability(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#CC6600")
 	return 1
 

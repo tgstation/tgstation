@@ -8,7 +8,7 @@
 	var/list/river_nodes = list()
 	var/num_spawned = 0
 	while(num_spawned < nodes)
-		var/turf/F = locate(rand(min_x, max_x), rand(min_y, max_y), target_z)
+		var/turf/F = locate(SSrng.random(min_x, max_x), SSrng.random(min_y, max_y), target_z)
 
 		river_nodes += new /obj/effect/landmark/river_waypoint(F)
 		num_spawned++
@@ -21,7 +21,7 @@
 		W.connected = 1
 		var/turf/cur_turf = get_turf(W)
 		cur_turf.ChangeTurf(turf_type,FALSE,FALSE,TRUE)
-		var/turf/target_turf = get_turf(pick(river_nodes - W))
+		var/turf/target_turf = get_turf(SSrng.pick_from_list(river_nodes - W))
 		if(!target_turf)
 			break
 		var/detouring = 0
@@ -29,12 +29,12 @@
 		while(cur_turf != target_turf)
 
 			if(detouring) //randomly snake around a bit
-				if(prob(20))
+				if(SSrng.probability(20))
 					detouring = 0
 					cur_dir = get_dir(cur_turf, target_turf)
-			else if(prob(20))
+			else if(SSrng.probability(20))
 				detouring = 1
-				if(prob(50))
+				if(SSrng.probability(50))
 					cur_dir = turn(cur_dir, 45)
 				else
 					cur_dir = turn(cur_dir, -45)
@@ -85,12 +85,12 @@
 
 	for(var/F in cardinal_turfs) //cardinal turfs are always changed but don't always spread
 		var/turf/T = F
-		if(!istype(T, logged_turf_type) && T.ChangeTurf(type,FALSE,FALSE,TRUE) && prob(probability))
+		if(!istype(T, logged_turf_type) && T.ChangeTurf(type,FALSE,FALSE,TRUE) && SSrng.probability(probability))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 
 	for(var/F in diagonal_turfs) //diagonal turfs only sometimes change, but will always spread if changed
 		var/turf/T = F
-		if(!istype(T, logged_turf_type) && prob(probability) && T.ChangeTurf(type,FALSE,FALSE,TRUE))
+		if(!istype(T, logged_turf_type) && SSrng.probability(probability) && T.ChangeTurf(type,FALSE,FALSE,TRUE))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 		else if(ismineralturf(T))
 			var/turf/closed/mineral/M = T

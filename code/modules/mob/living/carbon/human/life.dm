@@ -66,8 +66,8 @@
 		adjust_blurriness(-1)
 
 	if (getBrainLoss() >= 60 && stat == CONSCIOUS)
-		if(prob(3))
-			if(prob(25))
+		if(SSrng.probability(3))
+			if(SSrng.probability(25))
 				emote("drool")
 			else
 				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
@@ -272,7 +272,7 @@
 	//Puke if toxloss is too high
 	if(!stat)
 		if(getToxLoss() >= 45 && nutrition > 20)
-			lastpuke += prob(50)
+			lastpuke += SSrng.probability(50)
 			if(lastpuke >= 50) // about 25 second delay I guess
 				vomit(20, toxic = TRUE)
 				lastpuke = 0
@@ -297,11 +297,11 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		for(var/obj/item/I in BP.embedded_objects)
-			if(prob(I.embedded_pain_chance))
+			if(SSrng.probability(I.embedded_pain_chance))
 				BP.receive_damage(I.w_class*I.embedded_pain_multiplier)
 				to_chat(src, "<span class='userdanger'>[I] embedded in your [BP.name] hurts!</span>")
 
-			if(prob(I.embedded_fall_chance))
+			if(SSrng.probability(I.embedded_fall_chance))
 				BP.receive_damage(I.w_class*I.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
 				I.loc = get_turf(src)
@@ -382,7 +382,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
 
 		if(drunkenness >= 6)
-			if(prob(25))
+			if(SSrng.probability(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
 
@@ -390,18 +390,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			slurring += 1.2
 
 		if(drunkenness >= 41)
-			if(prob(25))
+			if(SSrng.probability(25))
 				confused += 2
 			Dizzy(10)
 
 		if(drunkenness >= 51)
-			if(prob(5))
+			if(SSrng.probability(5))
 				confused += 10
 				vomit()
 			Dizzy(25)
 
 		if(drunkenness >= 61)
-			if(prob(50))
+			if(SSrng.probability(50))
 				blur_eyes(5)
 
 		if(drunkenness >= 71)
@@ -409,12 +409,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 		if(drunkenness >= 81)
 			adjustToxLoss(0.2)
-			if(prob(5) && !stat)
+			if(SSrng.probability(5) && !stat)
 				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 
 		if(drunkenness >= 91)
 			adjustBrainLoss(0.4)
-			if(prob(20) && !stat)
+			if(SSrng.probability(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
 					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
 				else

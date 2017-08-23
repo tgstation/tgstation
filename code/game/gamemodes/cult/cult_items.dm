@@ -22,9 +22,9 @@
 							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(rand(force/2, force), BRUTE, pick("l_arm", "r_arm"))
+			H.apply_damage(SSrng.random(force/2, force), BRUTE, SSrng.pick_from_list("l_arm", "r_arm"))
 		else
-			user.adjustBruteLoss(rand(force/2,force))
+			user.adjustBruteLoss(SSrng.random(force/2,force))
 		return
 	..()
 
@@ -44,7 +44,7 @@
 			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
 			user.emote("scream")
-			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
+			user.apply_damage(30, BRUTE, SSrng.pick_from_list("l_arm", "r_arm"))
 			user.dropItemToGround(src)
 
 /obj/item/melee/cultblade/dagger
@@ -352,7 +352,7 @@
 		return
 	if(!iscultist(user))
 		user.dropItemToGround(src, TRUE)
-		step(src, pick(GLOB.alldirs))
+		step(src, SSrng.pick_from_list(GLOB.alldirs))
 		to_chat(user, "<span class='warning'>\The [src] flickers out of your hands, your connection to this dimension is too strong!</span>")
 		return
 

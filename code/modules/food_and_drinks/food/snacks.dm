@@ -53,7 +53,7 @@
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(!eatverb)
-		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
+		eatverb = SSrng.pick_from_list("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='notice'>None of [src] left, oh no!</span>")
 		qdel(src)
@@ -104,7 +104,7 @@
 		if(reagents)								//Handle ingestion of the reagent.
 			if(M.satiety > -200)
 				M.satiety -= junkiness
-			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/eatfood.ogg', SSrng.random(10,50), 1)
 			if(reagents.total_volume)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
@@ -206,7 +206,7 @@
 			"[user] inaccurately slices [src] with [W]!", \
 			"<span class='notice'>You inaccurately slice [src] with your [W]!</span>" \
 		)
-		slices_lost = rand(1,min(1,round(slices_num/2)))
+		slices_lost = SSrng.random(1,min(1,round(slices_num/2)))
 
 	var/reagents_per_slice = reagents.total_volume/slices_num
 	for(var/i=1 to (slices_num-slices_lost))
@@ -240,7 +240,7 @@
 	cut_overlays()
 	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
-		filling.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
+		filling.color = SSrng.pick_from_list("#FF0000","#0000FF","#008000","#FFFF00")
 	else
 		filling.color = S.filling_color
 
@@ -283,12 +283,12 @@
 	if(isanimal(M))
 		if(iscorgi(M))
 			var/mob/living/L = M
-			if(bitecount == 0 || prob(50))
+			if(bitecount == 0 || SSrng.probability(50))
 				M.emote("me", 1, "nibbles away at \the [src]")
 			bitecount++
 			L.taste(reagents) // why should carbons get all the fun?
 			if(bitecount >= 5)
-				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
+				var/sattisfaction_text = SSrng.pick_from_list("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
 				if(sattisfaction_text)
 					M.emote("me", 1, "[sattisfaction_text]")
 				qdel(src)

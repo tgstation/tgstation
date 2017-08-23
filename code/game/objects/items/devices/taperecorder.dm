@@ -290,5 +290,5 @@
 
 //Random colour tapes
 /obj/item/device/tape/random/New()
-	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
+	icon_state = "tape_[SSrng.pick_from_list("white", "blue", "red", "yellow", "purple")]"
 	..()

@@ -248,9 +248,9 @@
 	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/head/soft/black(src)
-	if(prob(40))
+	if(SSrng.probability(40))
 		new /obj/item/clothing/mask/bandana/skull(src)
-	if(prob(40))
+	if(SSrng.probability(40))
 		new /obj/item/clothing/mask/bandana/skull(src)
 	return
 

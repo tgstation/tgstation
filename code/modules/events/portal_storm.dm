@@ -54,14 +54,14 @@
 	while(number_of_bosses > boss_spawn.len)
 		var/turf/F = get_turf(pick_n_take(b_spawns))
 		if(!F)
-			F = safepick(get_area_turfs(pick(station_areas)))
+			F = safepick(get_area_turfs(SSrng.pick_from_list(station_areas)))
 		boss_spawn += F
 
 	var/list/h_spawns = GLOB.generic_event_spawns.Copy()
 	while(number_of_hostiles > hostiles_spawn.len)
 		var/turf/T = get_turf(pick_n_take(h_spawns))
 		if(!T)
-			T = safepick(get_area_turfs(pick(station_areas)))
+			T = safepick(get_area_turfs(SSrng.pick_from_list(station_areas)))
 		hostiles_spawn += T
 
 	next_boss_spawn = startWhen + Ceiling(2 * number_of_hostiles / number_of_bosses)
@@ -110,7 +110,7 @@
 	else
 		for(var/V in station_areas)
 			var/area/A = V
-			var/turf/F = get_turf(pick(A.contents))
+			var/turf/F = get_turf(SSrng.pick_from_list(A.contents))
 			flick_overlay_static(storm, F, 15)
 			playsound(F, 'sound/magic/lightningbolt.ogg', 80, 1)
 

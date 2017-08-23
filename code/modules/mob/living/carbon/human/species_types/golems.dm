@@ -29,13 +29,13 @@
 	var/special_name_chance = 5
 
 /datum/species/golem/random_name(gender,unique,lastname)
-	var/golem_surname = pick(GLOB.golem_names)
+	var/golem_surname = SSrng.pick_from_list(GLOB.golem_names)
 	// 3% chance that our golem has a human surname, because
 	// cultural contamination
-	if(prob(human_surname_chance))
-		golem_surname = pick(GLOB.last_names)
-	else if(special_names && special_names.len && prob(special_name_chance))
-		golem_surname = pick(special_names)
+	if(SSrng.probability(human_surname_chance))
+		golem_surname = SSrng.pick_from_list(GLOB.last_names)
+	else if(special_names && special_names.len && SSrng.probability(special_name_chance))
+		golem_surname = SSrng.pick_from_list(special_names)
 
 	var/golem_name = "[prefix] [golem_surname]"
 	return golem_name
@@ -48,7 +48,7 @@
 /datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	var/list/golem_types = typesof(/datum/species/golem) - src.type
-	var/datum/species/golem/golem_type = pick(golem_types)
+	var/datum/species/golem/golem_type = SSrng.pick_from_list(golem_types)
 	var/mob/living/carbon/human/H = C
 	H.set_species(golem_type)
 	to_chat(H, "[initial(golem_type.info_text)]")
@@ -87,7 +87,7 @@
 			to_chat(H, "<span class='notice'>You feel more stable.<span>")
 			boom_warning = FALSE
 
-	if(H.bodytemperature > 850 && H.on_fire && prob(25))
+	if(H.bodytemperature > 850 && H.on_fire && SSrng.probability(25))
 		explosion(get_turf(H),1,2,4,flame_range = 5)
 		if(H)
 			H.gib()
@@ -317,7 +317,7 @@
 	H.visible_message("<span class='danger'>[H] turns into a pile of sand!</span>")
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
-	for(var/i=1, i <= rand(3,5), i++)
+	for(var/i=1, i <= SSrng.random(3,5), i++)
 		new /obj/item/ore/glass(get_turf(H))
 	qdel(H)
 
@@ -348,7 +348,7 @@
 	H.visible_message("<span class='danger'>[H] shatters!</span>")
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
-	for(var/i=1, i <= rand(3,5), i++)
+	for(var/i=1, i <= SSrng.random(3,5), i++)
 		new /obj/item/shard(get_turf(H))
 	qdel(H)
 
@@ -358,8 +358,8 @@
 			H.visible_message("<span class='danger'>The [P.name] gets reflected by [H]'s glass skin!</span>", \
 			"<span class='userdanger'>The [P.name] gets reflected by [H]'s glass skin!</span>")
 			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/new_x = P.starting.x + SSrng.pick_from_list(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/new_y = P.starting.y + SSrng.pick_from_list(0, 0, 0, 0, 0, -1, 1, -2, 2)
 				var/turf/curloc = get_turf(H)
 
 				// redirect the projectile
@@ -486,7 +486,7 @@
 	var/active = null
 
 /datum/species/golem/bananium/random_name(gender,unique,lastname)
-	var/clown_name = pick(GLOB.clown_names)
+	var/clown_name = SSrng.pick_from_list(GLOB.clown_names)
 	var/golem_name = "[uppertext(clown_name)]"
 	return golem_name
 
@@ -525,7 +525,7 @@
 			active = 1
 			playsound(get_turf(H), 'sound/items/bikehorn.ogg', 50, 1)
 			last_honk = world.time
-			honkooldown = rand(20, 80)
+			honkooldown = SSrng.random(20, 80)
 			active = null
 	..()
 
@@ -550,8 +550,8 @@
 	var/obj/effect/proc_holder/spell/targeted/dominate/dominate
 
 /datum/species/golem/runic/random_name(gender,unique,lastname)
-	var/edgy_first_name = pick("Razor","Blood","Dark","Evil","Cold","Pale","Black","Silent","Chaos","Deadly")
-	var/edgy_last_name = pick("Edge","Night","Death","Razor","Blade","Steel","Calamity","Twilight","Shadow","Nightmare") //dammit Razor Razor
+	var/edgy_first_name = SSrng.pick_from_list("Razor","Blood","Dark","Evil","Cold","Pale","Black","Silent","Chaos","Deadly")
+	var/edgy_last_name = SSrng.pick_from_list("Edge","Night","Death","Razor","Blade","Steel","Calamity","Twilight","Shadow","Nightmare") //dammit Razor Razor
 	var/golem_name = "[edgy_first_name] [edgy_last_name]"
 	return golem_name
 
@@ -601,9 +601,9 @@
 	prefix = "Cloth"
 
 /datum/species/golem/cloth/random_name(gender,unique,lastname)
-	var/pharaoh_name = pick("Neferkare", "Hudjefa", "Khufu", "Mentuhotep", "Ahmose", "Amenhotep", "Thutmose", "Hatshepsut", "Tutankhamun", "Ramses", "Seti", \
+	var/pharaoh_name = SSrng.pick_from_list("Neferkare", "Hudjefa", "Khufu", "Mentuhotep", "Ahmose", "Amenhotep", "Thutmose", "Hatshepsut", "Tutankhamun", "Ramses", "Seti", \
 	"Merenptah", "Djer", "Semerkhet", "Nynetjer", "Khafre", "Pepi", "Intef", "Ay") //yes, Ay was an actual pharaoh
-	var/golem_name = "[pharaoh_name] \Roman[rand(1,99)]"
+	var/golem_name = "[pharaoh_name] \Roman[SSrng.random(1,99)]"
 	return golem_name
 
 /datum/species/golem/cloth/spec_life(mob/living/carbon/human/H)

@@ -71,7 +71,7 @@
 		overmind.update_health_hud()
 	Pulse_Area(overmind, 12, 4, 3)
 	for(var/obj/structure/blob/normal/B in range(1, src))
-		if(prob(5))
+		if(SSrng.probability(5))
 			B.change_to(/obj/structure/blob/shield/core, overmind)
 	..()
 
@@ -91,7 +91,7 @@
 	if(!new_overmind)
 		candidates = pollCandidatesForMob("Do you want to play as a blob overmind?", ROLE_BLOB, null, ROLE_BLOB, 50, src) //we're technically not a mob but behave similarly
 		if(candidates.len)
-			C = pick(candidates)
+			C = SSrng.pick_from_list(candidates)
 	else
 		C = new_overmind
 

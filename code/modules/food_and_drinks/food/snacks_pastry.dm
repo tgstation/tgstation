@@ -16,7 +16,7 @@
 
 /obj/item/reagent_containers/food/snacks/donut/Initialize()
 	. = ..()
-	if(prob(30))
+	if(SSrng.probability(30))
 		icon_state = "donut2"
 		name = "frosted donut"
 		reagents.add_reagent("sprinkles", 2)
@@ -31,10 +31,10 @@
 
 /obj/item/reagent_containers/food/snacks/donut/chaos/Initialize()
 	. = ..()
-	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", "slimejelly", "banana", "berryjuice", "omnizine")
+	extra_reagent = SSrng.pick_from_list("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", "slimejelly", "banana", "berryjuice", "omnizine")
 	reagents.add_reagent("[extra_reagent]", 3)
 	bonus_reagents = list("[extra_reagent]" = 3, "sugar" = 1)
-	if(prob(30))
+	if(SSrng.probability(30))
 		icon_state = "donut2"
 		name = "frosted chaos donut"
 		reagents.add_reagent("sprinkles", 2)
@@ -54,7 +54,7 @@
 	. = ..()
 	if(extra_reagent)
 		reagents.add_reagent("[extra_reagent]", 3)
-	if(prob(30))
+	if(SSrng.probability(30))
 		icon_state = "jdonut2"
 		name = "frosted jelly Donut"
 		reagents.add_reagent("sprinkles", 2)
@@ -230,7 +230,7 @@
 	foodtype = GRAIN | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/plumphelmetbiscuit/Initialize()
-	var/fey = prob(10)
+	var/fey = SSrng.probability(10)
 	if(fey)
 		name = "exceptional plump helmet biscuit"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"

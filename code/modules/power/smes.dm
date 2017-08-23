@@ -134,7 +134,7 @@
 			if(C.get_amount() < 10 || !C)
 				return
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
-			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE)) //animate the electrocution if uncautious and unlucky
+			if (SSrng.probability(50) && electrocute_mob(usr, N, N, 1, TRUE)) //animate the electrocution if uncautious and unlucky
 				do_sparks(5, TRUE, src)
 				return
 
@@ -410,12 +410,12 @@
 
 
 /obj/machinery/power/smes/emp_act(severity)
-	input_attempt = rand(0,1)
+	input_attempt = SSrng.random(0,1)
 	inputting = input_attempt
-	output_attempt = rand(0,1)
+	output_attempt = SSrng.random(0,1)
 	outputting = output_attempt
-	output_level = rand(0, output_level_max)
-	input_level = rand(0, input_level_max)
+	output_level = SSrng.random(0, output_level_max)
+	input_level = SSrng.random(0, input_level_max)
 	charge -= 1e6/severity
 	if (charge < 0)
 		charge = 0

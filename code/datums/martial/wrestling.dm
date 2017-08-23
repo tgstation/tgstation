@@ -277,7 +277,7 @@
 		D.forceMove(A.loc)
 
 		var/fluff = "body-slam"
-		switch(pick(2,3))
+		switch(SSrng.pick_from_list(2,3))
 			if (2)
 				fluff = "turbo [fluff]"
 			if (3)
@@ -289,13 +289,13 @@
 			D.emote("scream")
 			D.Knockdown(40)
 
-			switch(rand(1,3))
+			switch(SSrng.random(1,3))
 				if (2)
-					D.adjustBruteLoss(rand(20,30))
+					D.adjustBruteLoss(SSrng.random(20,30))
 				if (3)
 					D.ex_act(EXPLODE_LIGHT)
 				else
-					D.adjustBruteLoss(rand(10,20))
+					D.adjustBruteLoss(SSrng.random(10,20))
 		else
 			D.ex_act(EXPLODE_LIGHT)
 
@@ -327,7 +327,7 @@
 		addtimer(CALLBACK(src, .proc/CheckStrikeTurf, A, T), 4)
 
 		A.visible_message("<span class = 'danger'><b>[A] headbutts [D]!</b></span>")
-		D.adjustBruteLoss(rand(10,20))
+		D.adjustBruteLoss(SSrng.random(10,20))
 		playsound(A.loc, "swing_hit", 50, 1)
 		D.Unconscious(20)
 	add_logs(A, D, "headbutted")
@@ -341,7 +341,7 @@
 
 	A.visible_message("<span class = 'danger'><B>[A] roundhouse-kicks [D]!</B></span>")
 	playsound(A.loc, "swing_hit", 50, 1)
-	D.adjustBruteLoss(rand(10,20))
+	D.adjustBruteLoss(SSrng.random(10,20))
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	if (T && isturf(T))
@@ -380,7 +380,7 @@
 			A.pixel_y = 0
 			if (falling == 1)
 				A.visible_message("<span class = 'danger'><B>...and dives head-first into the ground, ouch!</b></span>")
-				A.adjustBruteLoss(rand(10,20))
+				A.adjustBruteLoss(SSrng.random(10,20))
 				A.Knockdown(60)
 			to_chat(A, "[D] is too far away!")
 			return 0
@@ -403,12 +403,12 @@
 		A.emote("scream")
 
 		if (falling == 1)
-			if (prob(33) || D.stat)
+			if (SSrng.probability(33) || D.stat)
 				D.ex_act(EXPLODE_LIGHT)
 			else
-				D.adjustBruteLoss(rand(20,30))
+				D.adjustBruteLoss(SSrng.random(20,30))
 		else
-			D.adjustBruteLoss(rand(20,30))
+			D.adjustBruteLoss(SSrng.random(20,30))
 
 		D.Knockdown(40)
 
@@ -434,7 +434,7 @@
 	A.start_pulling(D)
 	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
 								"<span class='userdanger'>[A] gets [D] in a cinch!</span>")
-	D.Stun(rand(60,100))
+	D.Stun(SSrng.random(60,100))
 	add_logs(A, D, "cinched")
 	return 1
 

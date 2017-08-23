@@ -281,7 +281,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 		//capping damage
 		damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
-		if(damage > damage_archived && prob(10))
+		if(damage > damage_archived && SSrng.probability(10))
 			playsound(get_turf(src), 'sound/effects/empulse.ogg', 50, 1)
 
 	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
@@ -379,18 +379,18 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 				supermatter_zap(src, 5, min(power*2, 20000))
 				if(power > CRITICAL_POWER_PENALTY_THRESHOLD)
 					supermatter_zap(src, 5, min(power*2, 20000))
-		else if (damage > damage_penalty_point && prob(20))
+		else if (damage > damage_penalty_point && SSrng.probability(20))
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, 1, extrarange = 10)
 			supermatter_zap(src, 5, Clamp(power*2, 4000, 20000))
 
-		if(prob(15) && power > POWER_PENALTY_THRESHOLD)
+		if(SSrng.probability(15) && power > POWER_PENALTY_THRESHOLD)
 			supermatter_pull(src, power/750)
-		if(prob(5))
-			supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
-		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
-			supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, rand(5, 10))
-		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2) || prob(0.3) && power > POWER_PENALTY_THRESHOLD)
-			supermatter_anomaly_gen(src, PYRO_ANOMALY, rand(5, 10))
+		if(SSrng.probability(5))
+			supermatter_anomaly_gen(src, FLUX_ANOMALY, SSrng.random(5, 10))
+		if(power > SEVERE_POWER_PENALTY_THRESHOLD && SSrng.probability(5) || SSrng.probability(1))
+			supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, SSrng.random(5, 10))
+		if(power > SEVERE_POWER_PENALTY_THRESHOLD && SSrng.probability(2) || SSrng.probability(0.3) && power > POWER_PENALTY_THRESHOLD)
+			supermatter_anomaly_gen(src, PYRO_ANOMALY, SSrng.random(5, 10))
 
 
 
@@ -626,7 +626,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 				step_towards(pulled_object,center)
 
 /obj/machinery/power/supermatter_shard/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5)
-	var/turf/L = pick(orange(anomalyrange, anomalycenter))
+	var/turf/L = SSrng.pick_from_list(orange(anomalyrange, anomalycenter))
 	if(L)
 		switch(type)
 			if(FLUX_ANOMALY)
@@ -650,11 +650,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	var/list/arctargetsmachine = list()
 	var/list/arctargetsstructure = list()
 
-	if(prob(20)) //let's not hit all the engineers with every beam and/or segment of the arc
+	if(SSrng.probability(20)) //let's not hit all the engineers with every beam and/or segment of the arc
 		for(var/mob/living/Z in oview(zapstart, range+2))
 			arctargetsmob += Z
 	if(arctargetsmob.len)
-		var/mob/living/H = pick(arctargetsmob)
+		var/mob/living/H = SSrng.pick_from_list(arctargetsmob)
 		var/atom/A = H
 		target_mob = H
 		target_atom = A
@@ -663,7 +663,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		for(var/obj/machinery/X in oview(zapstart, range+2))
 			arctargetsmachine += X
 		if(arctargetsmachine.len)
-			var/obj/machinery/M = pick(arctargetsmachine)
+			var/obj/machinery/M = SSrng.pick_from_list(arctargetsmachine)
 			var/atom/A = M
 			target_machine = M
 			target_atom = A
@@ -672,7 +672,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			for(var/obj/structure/Y in oview(zapstart, range+2))
 				arctargetsstructure += Y
 			if(arctargetsstructure.len)
-				var/obj/structure/O = pick(arctargetsstructure)
+				var/obj/structure/O = SSrng.pick_from_list(arctargetsstructure)
 				var/atom/A = O
 				target_structure = O
 				target_atom = A
@@ -684,22 +684,22 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			. = zapdir
 
 	if(target_mob)
-		target_mob.electrocute_act(rand(5,10), "Supermatter Discharge Bolt", 1, stun = 0)
-		if(prob(15))
+		target_mob.electrocute_act(SSrng.random(5,10), "Supermatter Discharge Bolt", 1, stun = 0)
+		if(SSrng.probability(15))
 			supermatter_zap(target_mob, 5, power / 2)
 			supermatter_zap(target_mob, 5, power / 2)
 		else
 			supermatter_zap(target_mob, 5, power / 1.5)
 
 	else if(target_machine)
-		if(prob(15))
+		if(SSrng.probability(15))
 			supermatter_zap(target_machine, 5, power / 2)
 			supermatter_zap(target_machine, 5, power / 2)
 		else
 			supermatter_zap(target_machine, 5, power / 1.5)
 
 	else if(target_structure)
-		if(prob(15))
+		if(SSrng.probability(15))
 			supermatter_zap(target_structure, 5, power / 2)
 			supermatter_zap(target_structure, 5, power / 2)
 		else

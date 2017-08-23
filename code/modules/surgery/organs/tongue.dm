@@ -107,15 +107,15 @@
 	var/list/message_list = splittext(message, " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len - 1)
+	for(var/i = SSrng.random(maxchanges / 2, maxchanges), i > 0, i--)
+		var/insertpos = SSrng.random(1, message_list.len - 1)
 		var/inserttext = message_list[insertpos]
 
 		if(!(copytext(inserttext, length(inserttext) - 2) == "..."))
 			message_list[insertpos] = inserttext + "..."
 
-		if(prob(20) && message_list.len > 3)
-			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
+		if(SSrng.probability(20) && message_list.len > 3)
+			message_list.Insert(insertpos, "[SSrng.pick_from_list("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
 
 	return jointext(message_list, " ")
 
@@ -153,7 +153,7 @@
 
 /obj/item/organ/tongue/bone/Initialize()
 	. = ..()
-	phomeme_type = pick(phomeme_types)
+	phomeme_type = SSrng.pick_from_list(phomeme_types)
 
 /obj/item/organ/tongue/bone/TongueSpeech(var/message)
 	. = message

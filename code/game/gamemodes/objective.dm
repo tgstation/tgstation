@@ -37,7 +37,7 @@
 		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
 			possible_targets += possible_target
 	if(possible_targets.len > 0)
-		target = pick(possible_targets)
+		target = SSrng.pick_from_list(possible_targets)
 	update_explanation_text()
 	return target
 
@@ -512,7 +512,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			new I
 
 /datum/objective/steal/special/find_target()
-	return set_target(pick(GLOB.possible_items_special))
+	return set_target(SSrng.pick_from_list(GLOB.possible_items_special))
 
 /datum/objective/steal/exchange
 	martyr_compatible = 0
@@ -549,7 +549,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/download
 
 /datum/objective/download/proc/gen_amount_goal()
-	target_amount = rand(10,20)
+	target_amount = SSrng.random(10,20)
 	explanation_text = "Download [target_amount] research level\s."
 	return target_amount
 
@@ -584,7 +584,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/capture
 
 /datum/objective/capture/proc/gen_amount_goal()
-		target_amount = rand(5,10)
+		target_amount = SSrng.random(5,10)
 		explanation_text = "Capture [target_amount] lifeform\s with an energy net. Live, rare specimens are worth more."
 		return target_amount
 
@@ -651,7 +651,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/destroy/find_target()
 	var/list/possible_targets = active_ais(1)
-	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
+	var/mob/living/silicon/ai/target_ai = SSrng.pick_from_list(possible_targets)
 	target = target_ai.mind
 	update_explanation_text()
 	return target
@@ -731,7 +731,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	department_real_names = list()
 
 	var/list/departments = list("Head of Security","Research Director","Chief Engineer","Chief Medical Officer")
-	var/department_head = pick(departments)
+	var/department_head = SSrng.pick_from_list(departments)
 	switch(department_head)
 		if("Head of Security")
 			department_string = "security"
@@ -767,10 +767,10 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	department_real_names = list()
 
 	//Needed heads is between min_lings and the maximum possible amount of command roles
-	//So at the time of writing, rand(3,6), it's also capped by the amount of lings there are
+	//So at the time of writing, SSrng.random(3,6), it's also capped by the amount of lings there are
 	//Because you can't fill 6 head roles with 3 lings
 
-	var/needed_heads = rand(min_lings,GLOB.command_positions.len)
+	var/needed_heads = SSrng.random(min_lings,GLOB.command_positions.len)
 	needed_heads = min(SSticker.mode.changelings.len,needed_heads)
 
 	var/list/heads = SSticker.mode.get_living_heads()

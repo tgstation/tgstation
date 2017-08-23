@@ -89,7 +89,7 @@
 		for(var/j, j<10, j++)
 			var/string = ""
 			for(var/i, i<20, i++)
-				string = "[string][prob(percentage)]"
+				string = "[string][SSrng.probability(percentage)]"
 			data["dos_strings"] += list(list("nums" = string))
 	else
 		data["relays"] = list()

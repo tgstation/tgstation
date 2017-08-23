@@ -27,13 +27,13 @@
 /obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
 	if(!istype(C))
 		return
-	if(user.disabilities & CLUMSY && prob(50))
+	if(user.disabilities & CLUMSY && SSrng.probability(50))
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
 		return
 
 	// chance of monkey retaliation
-	if(ismonkey(C) && prob(MONKEY_CUFF_RETALIATION_PROB))
+	if(ismonkey(C) && SSrng.probability(MONKEY_CUFF_RETALIATION_PROB))
 		var/mob/living/carbon/monkey/M
 		M = C
 		M.retaliate(user)
@@ -278,7 +278,7 @@
 				var/mob/living/carbon/C = L
 				snap = 1
 				if(!C.lying)
-					def_zone = pick("l_leg", "r_leg")
+					def_zone = SSrng.pick_from_list("l_leg", "r_leg")
 					if(!C.legcuffed && C.get_num_legs() >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
 						src.loc = C

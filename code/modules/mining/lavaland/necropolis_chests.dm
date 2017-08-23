@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,28)
+	var/loot = SSrng.random(1,28)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -624,7 +624,7 @@
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
-	if(user.disabilities & CLUMSY && prob(50))
+	if(user.disabilities & CLUMSY && SSrng.probability(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 
@@ -666,7 +666,7 @@
 	name = "dragon chest"
 
 /obj/structure/closet/crate/necropolis/dragon/PopulateContents()
-	var/loot = rand(1,4)
+	var/loot = SSrng.random(1,4)
 	switch(loot)
 		if(1)
 			new /obj/item/melee/ghost_sword(src)
@@ -790,7 +790,7 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random = rand(1,4)
+	var/random = SSrng.random(1,4)
 
 	switch(random)
 		if(1)
@@ -810,7 +810,7 @@
 			to_chat(user, "<span class='danger'>You feel like you could walk straight through lava now.</span>")
 			H.weather_immunities |= "lava"
 
-	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
+	playsound(user.loc,'sound/items/drink.ogg', SSrng.random(10,50), 1)
 	qdel(src)
 
 /datum/disease/transformation/dragon
@@ -906,7 +906,7 @@
 	name = "bubblegum chest"
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
-	var/loot = rand(1,3)
+	var/loot = SSrng.random(1,3)
 	switch(loot)
 		if(1)
 			new /obj/item/mayhem(src)
@@ -987,7 +987,7 @@
 
 /obj/structure/closet/crate/necropolis/colossus/PopulateContents()
 	var/list/choices = subtypesof(/obj/machinery/anomalous_crystal)
-	var/random_crystal = pick(choices)
+	var/random_crystal = SSrng.pick_from_list(choices)
 	new random_crystal(src)
 	new /obj/item/organ/vocal_cords/colossus(src)
 

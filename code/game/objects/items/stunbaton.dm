@@ -33,7 +33,7 @@
 /obj/item/melee/baton/throw_impact(atom/hit_atom)
 	..()
 	//Only mob/living types have stun handling
-	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
+	if(status && SSrng.probability(throw_hit_chance) && iscarbon(hit_atom))
 		baton_stun(hit_atom)
 
 /obj/item/melee/baton/loaded/Initialize() //this one starts with a cell pre-installed.
@@ -109,7 +109,7 @@
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && user.disabilities & CLUMSY && prob(50))
+	if(status && user.disabilities & CLUMSY && SSrng.probability(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		user.Knockdown(stunforce*3)

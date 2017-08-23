@@ -160,17 +160,17 @@
 	)
 
 /obj/item/screwdriver/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [SSrng.pick_from_list("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
 /obj/item/screwdriver/Initialize()
 	. = ..()
 	if(random_color) //random colors!
-		var/our_color = pick(screwdriver_colors)
+		var/our_color = SSrng.pick_from_list(screwdriver_colors)
 		add_atom_colour(screwdriver_colors[our_color], FIXED_COLOUR_PRIORITY)
 		update_icon()
-	if(prob(75))
-		pixel_y = rand(0, 16)
+	if(SSrng.probability(75))
+		pixel_y = SSrng.random(0, 16)
 
 /obj/item/screwdriver/update_icon()
 	if(!random_color) //icon override
@@ -202,7 +202,7 @@
 		return ..()
 	if(user.zone_selected != "eyes" && user.zone_selected != "head")
 		return ..()
-	if(user.disabilities & CLUMSY && prob(50))
+	if(user.disabilities & CLUMSY && SSrng.probability(50))
 		M = user
 	return eyestab(M,user)
 
@@ -291,7 +291,7 @@
 	..()
 	if(!icon_state)
 		if(!param_color)
-			param_color = pick("yellow","red")
+			param_color = SSrng.pick_from_list("yellow","red")
 		icon_state = "cutters_[param_color]"
 
 /obj/item/wirecutters/attack(mob/living/carbon/C, mob/user)
@@ -349,7 +349,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart("head")
 		if(BP)
 			BP.drop_limb()
-			playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+			playsound(loc,SSrng.pick_from_list('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 	return (BRUTELOSS)
 
 /obj/item/wirecutters/power/attack_self(mob/user)

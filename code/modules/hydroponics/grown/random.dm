@@ -15,9 +15,9 @@
 /obj/item/seeds/random/New()
 	randomize_stats()
 	..()
-	if(prob(60))
+	if(SSrng.probability(60))
 		add_random_reagents()
-	if(prob(50))
+	if(SSrng.probability(50))
 		add_random_traits()
 	add_random_plant_type(35)
 

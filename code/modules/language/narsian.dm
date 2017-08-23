@@ -34,9 +34,9 @@
 			if(syllable != target_syllable) //don't combine with yourself
 				if(length(syllable) + length(target_syllable) > 8) //if the resulting syllable would be very long, don't put anything between it
 					syllables += "[syllable][target_syllable]"
-				else if(prob(80)) //we'll be minutely different each round.
+				else if(SSrng.probability(80)) //we'll be minutely different each round.
 					syllables += "[syllable]'[target_syllable]"
-				else if(prob(25)) //5% chance of - instead of '
+				else if(SSrng.probability(25)) //5% chance of - instead of '
 					syllables += "[syllable]-[target_syllable]"
 				else //15% chance of no ' or - at all
 					syllables += "[syllable][target_syllable]"

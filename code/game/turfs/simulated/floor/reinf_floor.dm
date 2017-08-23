@@ -47,23 +47,23 @@
 		return
 	switch(severity)
 		if(1)
-			if(prob(80))
+			if(SSrng.probability(80))
 				ReplaceWithLattice()
-			else if(prob(50))
+			else if(SSrng.probability(50))
 				ChangeTurf(src.baseturf)
 			else
 				make_plating(1)
 		if(2)
-			if(prob(50))
+			if(SSrng.probability(50))
 				make_plating(1)
 
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		if(floor_tile)
-			if(prob(30))
+			if(SSrng.probability(30))
 				new floor_tile(src)
 				make_plating()
-		else if(prob(30))
+		else if(SSrng.probability(30))
 			ReplaceWithLattice()
 
 /turf/open/floor/engine/attack_paw(mob/user)

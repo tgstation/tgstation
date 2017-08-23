@@ -34,7 +34,7 @@
 	for(var/j = 0, j < num_devils, j++)
 		if (!antag_candidates.len)
 			break
-		var/datum/mind/devil = pick(antag_candidates)
+		var/datum/mind/devil = SSrng.pick_from_list(antag_candidates)
 		devils += devil
 		devil.special_role = traitor_name
 		devil.restricted_roles = restricted_jobs

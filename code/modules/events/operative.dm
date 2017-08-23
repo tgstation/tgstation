@@ -22,7 +22,7 @@
 	if(!spawn_locs.len)
 		return MAP_ERROR
 
-	var/mob/living/carbon/human/operative = new(pick(spawn_locs))
+	var/mob/living/carbon/human/operative = new(SSrng.pick_from_list(spawn_locs))
 	var/datum/preferences/A = new
 	A.copy_to(operative)
 	operative.dna.update_dna_identity()

@@ -61,12 +61,12 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(. > 0 && prob(25))
+	if(. > 0 && SSrng.probability(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
-		if(prob(40))
-			step(B, pick(GLOB.cardinals))
+		if(SSrng.probability(40))
+			step(B, SSrng.pick_from_list(GLOB.cardinals))
 		else
-			B.setDir(pick(GLOB.cardinals))
+			B.setDir(SSrng.pick_from_list(GLOB.cardinals))
 
 /obj/effect/decal/cleanable/blood/gibs/bubblegum
 	name = "thick blood"
@@ -91,14 +91,14 @@ Difficulty: Hard
 	if(!try_bloodattack())
 		INVOKE_ASYNC(src, .proc/blood_spray)
 		warped = blood_warp()
-		if(warped && prob(100 - anger_modifier))
+		if(warped && SSrng.probability(100 - anger_modifier))
 			return
 
-	if(prob(90 - anger_modifier) || slaughterlings())
+	if(SSrng.probability(90 - anger_modifier) || slaughterlings())
 		if(health > maxHealth * 0.5)
 			INVOKE_ASYNC(src, .proc/charge)
 		else
-			if(prob(70) || warped)
+			if(SSrng.probability(70) || warped)
 				INVOKE_ASYNC(src, .proc/charge, 2)
 			else
 				INVOKE_ASYNC(src, .proc/warp_charge)
@@ -208,7 +208,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()
 	if(targets.len)
-		INVOKE_ASYNC(src, .proc/bloodattack, targets, prob(50))
+		INVOKE_ASYNC(src, .proc/bloodattack, targets, SSrng.probability(50))
 
 		return TRUE
 	return FALSE
@@ -220,7 +220,7 @@ Difficulty: Hard
 	if(targets.len)
 		target_two = pick_n_take(targets)
 		var/turf/target_two_turf = get_turf(target_two)
-		if(target_two.stat != CONSCIOUS || prob(10))
+		if(target_two.stat != CONSCIOUS || SSrng.probability(10))
 			bloodgrab(target_two_turf, handedness)
 		else
 			bloodsmack(target_two_turf, handedness)
@@ -230,7 +230,7 @@ Difficulty: Hard
 		if(pools.len)
 			target_one_turf = get_turf(target_one)
 			if(target_one_turf)
-				if(target_one.stat != CONSCIOUS || prob(10))
+				if(target_one.stat != CONSCIOUS || SSrng.probability(10))
 					bloodgrab(target_one_turf, !handedness)
 				else
 					bloodsmack(target_one_turf, !handedness)
@@ -240,7 +240,7 @@ Difficulty: Hard
 		if(poolstwo.len)
 			target_one_turf = get_turf(target_one)
 			if(target_one_turf)
-				if(target_one.stat != CONSCIOUS || prob(10))
+				if(target_one.stat != CONSCIOUS || SSrng.probability(10))
 					bloodgrab(target_one_turf, handedness)
 				else
 					bloodsmack(target_one_turf, handedness)
@@ -255,7 +255,7 @@ Difficulty: Hard
 		if(!faction_check_mob(L))
 			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
 			playsound(T, attack_sound, 100, 1, -1)
-			var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
+			var/limb_to_hit = L.get_bodypart(SSrng.pick_from_list("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 			L.apply_damage(25, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
 	sleep(3)
 
@@ -332,7 +332,7 @@ Difficulty: Hard
 	pools -= pools_to_remove
 	if(pools.len)
 		shuffle_inplace(pools)
-		found_bloodpool = pick(pools)
+		found_bloodpool = SSrng.pick_from_list(pools)
 	if(found_bloodpool)
 		visible_message("<span class='danger'>[src] sinks into the blood...</span>")
 		playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)

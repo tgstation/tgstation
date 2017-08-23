@@ -45,8 +45,8 @@
 
 /obj/item/paper/Initialize()
 	. = ..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
+	pixel_y = SSrng.random(-8, 8)
+	pixel_x = SSrng.random(-9, 9)
 	update_icon()
 	updateinfolinks()
 
@@ -91,7 +91,7 @@
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		if(H.disabilities & CLUMSY && prob(25))
+		if(H.disabilities & CLUMSY && SSrng.probability(25))
 			to_chat(H, "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>")
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
@@ -334,8 +334,8 @@
 
 		stamps += "<img src=large_[P.icon_state].png>"
 		var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[P.icon_state]")
-		stampoverlay.pixel_x = rand(-2, 2)
-		stampoverlay.pixel_y = rand(-3, 2)
+		stampoverlay.pixel_x = SSrng.random(-2, 2)
+		stampoverlay.pixel_y = SSrng.random(-3, 2)
 
 		LAZYADD(stamped, P.icon_state)
 		add_overlay(stampoverlay)
@@ -343,7 +343,7 @@
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	if(P.is_hot())
-		if(user.disabilities & CLUMSY && prob(10))
+		if(user.disabilities & CLUMSY && SSrng.probability(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)
@@ -380,7 +380,7 @@
 
 /obj/item/paper/construction/Initialize()
 	. = ..()
-	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
+	color = SSrng.pick_from_list("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
 
 /*
  * Natural paper

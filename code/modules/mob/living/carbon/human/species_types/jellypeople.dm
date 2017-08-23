@@ -36,7 +36,7 @@
 			H.blood_volume += 3
 			H.nutrition -= 2.5
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
-		if(prob(5))
+		if(SSrng.probability(5))
 			to_chat(H, "<span class='danger'>You feel drained!</span>")
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(H)
@@ -50,7 +50,7 @@
 		return
 	if(H.get_num_legs()) //Legs go before arms
 		limbs_to_consume -= list("r_arm", "l_arm")
-	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
+	consumed_limb = H.get_bodypart(SSrng.pick_from_list(limbs_to_consume))
 	consumed_limb.drop_limb()
 	to_chat(H, "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>")
 	qdel(consumed_limb)
@@ -86,7 +86,7 @@
 		return
 	else if(H.blood_volume >= 40)//We can partially heal some limbs
 		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
-			var/healed_limb = pick(limbs_to_heal)
+			var/healed_limb = SSrng.pick_from_list(limbs_to_heal)
 			H.regenerate_limb(healed_limb)
 			limbs_to_heal -= healed_limb
 			H.blood_volume -= 40
@@ -142,7 +142,7 @@
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
-		if(prob(5))
+		if(SSrng.probability(5))
 			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		H.blood_volume += 3
@@ -193,12 +193,12 @@
 
 	spare.underwear = "Nude"
 	H.dna.transfer_identity(spare, transfer_SE=1)
-	spare.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	spare.dna.features["mcolor"] = SSrng.pick_from_list("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	spare.real_name = spare.dna.real_name
 	spare.name = spare.dna.real_name
 	spare.updateappearance(mutcolor_update=1)
 	spare.domutcheck()
-	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
+	spare.Move(get_step(H.loc, SSrng.pick_from_list(NORTH,SOUTH,EAST,WEST)))
 
 	H.blood_volume = BLOOD_VOLUME_SAFE
 	H.notransform = 0

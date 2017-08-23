@@ -29,7 +29,7 @@
 				icon_state = "light_on-[coloredlights[currentcolor]]"
 				set_light(1)
 			if(1)
-				var/num = pick("1","2","3","4")
+				var/num = SSrng.pick_from_list("1","2","3","4")
 				icon_state = "light_on_flicker[num]"
 				set_light(1)
 			if(2)

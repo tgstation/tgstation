@@ -69,7 +69,7 @@
 	end_month = JANUARY
 
 /datum/holiday/new_year/getStationPrefix()
-	return pick("Party","New","Hangover","Resolution")
+	return SSrng.pick_from_list("Party","New","Hangover","Resolution")
 
 /datum/holiday/groundhog
 	name = "Groundhog Day"
@@ -83,7 +83,7 @@
 	begin_month = FEBRUARY
 
 /datum/holiday/valentines/getStationPrefix()
-	return pick("Love","Amore","Single","Smootch","Hug")
+	return SSrng.pick_from_list("Love","Amore","Single","Smootch","Hug")
 
 /datum/holiday/birthday
 	name = "Birthday of Space Station 13"
@@ -141,7 +141,7 @@
 	begin_month = MARCH
 
 /datum/holiday/no_this_is_patrick/getStationPrefix()
-	return pick("Blarney","Green","Leprechaun","Booze")
+	return SSrng.pick_from_list("Blarney","Green","Leprechaun","Booze")
 
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
@@ -161,7 +161,7 @@
 	begin_month = APRIL
 
 /datum/holiday/fourtwenty/getStationPrefix()
-	return pick("Snoop","Blunt","Toke","Dank")
+	return SSrng.pick_from_list("Snoop","Blunt","Toke","Dank")
 
 /datum/holiday/earth
 	name = "Earth Day"
@@ -179,7 +179,7 @@
 	begin_month = MAY
 
 /datum/holiday/firefighter/getStationPrefix()
-	return pick("Burning","Blazing","Plasma","Fire")
+	return SSrng.pick_from_list("Burning","Blazing","Plasma","Fire")
 
 /datum/holiday/summersolstice
 	name = "Summer Solstice"
@@ -197,7 +197,7 @@
 	begin_month = JULY
 
 /datum/holiday/UFO/getStationPrefix() //Is such a thing even possible?
-	return pick("Ayy","Truth","Tsoukalos","Mulder") //Yes it is!
+	return SSrng.pick_from_list("Ayy","Truth","Tsoukalos","Mulder") //Yes it is!
 
 /datum/holiday/writer
 	name = "Writer's Day"
@@ -226,7 +226,7 @@
 	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
 
 /datum/holiday/pirate/getStationPrefix()
-	return pick("Yarr","Scurvy","Yo-ho-ho")
+	return SSrng.pick_from_list("Yarr","Scurvy","Yo-ho-ho")
 
 /datum/holiday/programmers
 	name = "Programmers' Day"
@@ -242,7 +242,7 @@
 	return 0
 
 /datum/holiday/programmers/getStationPrefix()
-	return pick("span>","DEBUG: ","null","/list","EVENT PREFIX NOT FOUND") //Portability
+	return SSrng.pick_from_list("span>","DEBUG: ","null","/list","EVENT PREFIX NOT FOUND") //Portability
 
 /datum/holiday/questions
 	name = "Stupid-Questions Day"
@@ -258,7 +258,7 @@
 	begin_month = OCTOBER
 
 /datum/holiday/animal/getStationPrefix()
-	return pick("Parrot","Corgi","Cat","Pug","Goat","Fox")
+	return SSrng.pick_from_list("Parrot","Corgi","Cat","Pug","Goat","Fox")
 
 /datum/holiday/smile
 	name = "Smiling Day"
@@ -281,7 +281,7 @@
 	return "Have a spooky Halloween!"
 
 /datum/holiday/halloween/getStationPrefix()
-	return pick("Bone-Rattling","Mr. Bones' Own","2SPOOKY","Spooky","Scary","Skeletons")
+	return SSrng.pick_from_list("Bone-Rattling","Mr. Bones' Own","2SPOOKY","Spooky","Scary","Skeletons")
 
 /datum/holiday/vegan
 	name = "Vegan Day"
@@ -304,7 +304,7 @@
 	begin_month = NOVEMBER
 
 /datum/holiday/hello/greet()
-	return "[pick(list("Aloha", "Bonjour", "Hello", "Hi", "Greetings", "Salutations", "Bienvenidos", "Hola", "Howdy"))]! " + ..()
+	return "[SSrng.pick_from_list(list("Aloha", "Bonjour", "Hello", "Hi", "Greetings", "Salutations", "Bienvenidos", "Hola", "Howdy"))]! " + ..()
 
 /datum/holiday/human_rights
 	name = "Human-Rights Day"
@@ -370,7 +370,7 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	return FALSE
 
 /datum/holiday/ramadan/getStationPrefix()
-	return pick("Harm","Halaal","Jihad","Muslim")
+	return SSrng.pick_from_list("Harm","Halaal","Jihad","Muslim")
 
 /datum/holiday/ramadan/end
 	name = "End of Ramadan"
@@ -417,7 +417,7 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	return FALSE
 
 /datum/holiday/friday_thirteenth/getStationPrefix()
-	return pick("Mike","Friday","Evil","Myers","Murder","Deathly","Stabby")
+	return SSrng.pick_from_list("Mike","Friday","Evil","Myers","Murder","Deathly","Stabby")
 
 /datum/holiday/easter
 	name = EASTER

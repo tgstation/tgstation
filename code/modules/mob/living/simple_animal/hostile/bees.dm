@@ -140,7 +140,7 @@
 			var/mob/living/L = target
 			if(L.reagents)
 				beegent.reaction_mob(L, INJECT)
-				L.reagents.add_reagent(beegent.id, rand(1,5))
+				L.reagents.add_reagent(beegent.id, SSrng.random(1,5))
 
 
 /mob/living/simple_animal/hostile/poison/bees/proc/assign_reagent(datum/reagent/R)
@@ -165,12 +165,12 @@
 	var/growth = health //Health also means how many bees are in the swarm, roughly.
 	//better healthier plants!
 	Hydro.adjustHealth(growth*0.5)
-	if(prob(BEE_POLLINATE_PEST_CHANCE))
+	if(SSrng.probability(BEE_POLLINATE_PEST_CHANCE))
 		Hydro.adjustPests(-10)
-	if(prob(BEE_POLLINATE_YIELD_CHANCE))
+	if(SSrng.probability(BEE_POLLINATE_YIELD_CHANCE))
 		Hydro.myseed.adjust_yield(1)
 		Hydro.yieldmod = 2
-	if(prob(BEE_POLLINATE_POTENCY_CHANCE))
+	if(SSrng.probability(BEE_POLLINATE_POTENCY_CHANCE))
 		Hydro.myseed.adjust_potency(1)
 
 	if(beehome)
@@ -185,11 +185,11 @@
 	if(!isqueen)
 		if(loc == beehome)
 			idle = min(100, ++idle)
-			if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
+			if(idle >= BEE_IDLE_ROAMING && SSrng.probability(BEE_PROB_GOROAM))
 				loc = get_turf(beehome)
 		else
 			idle = max(0, --idle)
-			if(idle <= BEE_IDLE_GOHOME && prob(BEE_PROB_GOHOME))
+			if(idle <= BEE_IDLE_GOHOME && SSrng.probability(BEE_PROB_GOHOME))
 				if(!FindTarget())
 					wanted_objects |= typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
 					target = beehome
@@ -202,7 +202,7 @@
 
 /mob/living/simple_animal/hostile/poison/bees/toxin/Initialize()
 	. = ..()
-	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
+	var/datum/reagent/R = SSrng.pick_from_list(typesof(/datum/reagent/toxin))
 	assign_reagent(GLOB.chemical_reagents_list[initial(R.id)])
 
  /mob/living/simple_animal/hostile/poison/bees/queen
@@ -223,7 +223,7 @@
 	if(. && beegent && isliving(target))
 		var/mob/living/L = target
 		beegent.reaction_mob(L, TOUCH)
-		L.reagents.add_reagent(beegent.id, rand(1,5))
+		L.reagents.add_reagent(beegent.id, SSrng.random(1,5))
 
 
 //PEASENT BEES

@@ -375,7 +375,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(prob(final_block_chance))
+	if(SSrng.probability(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
 	return 0
@@ -512,7 +512,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	M.adjust_blurriness(3)
-	M.adjust_eye_damage(rand(2,4))
+	M.adjust_eye_damage(SSrng.random(2,4))
 	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
 	if (!eyes)
 		return
@@ -523,14 +523,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(!(M.disabilities & (NEARSIGHT | BLIND)))
 			if(M.become_nearsighted())
 				to_chat(M, "<span class='danger'>You become nearsighted!</span>")
-		if(prob(50))
+		if(SSrng.probability(50))
 			if(M.stat != DEAD)
 				if(M.drop_item())
 					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
 			M.Knockdown(40)
-		if (prob(eyes.eye_damage - 10 + 1))
+		if (SSrng.probability(eyes.eye_damage - 10 + 1))
 			if(M.become_blind())
 				to_chat(M, "<span class='danger'>You go blind!</span>")
 
@@ -602,7 +602,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(damtype == BURN)
 		. = 'sound/weapons/sear.ogg'
 	else
-		. = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
+		. = SSrng.pick_from_list('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
 
 /obj/item/proc/open_flame(flame_heat=700)
 	var/turf/location = loc
@@ -653,8 +653,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
 		var/obj/effect/decal/cleanable/molten_object/MO = new(T)
-		MO.pixel_x = rand(-16,16)
-		MO.pixel_y = rand(-16,16)
+		MO.pixel_x = SSrng.random(-16,16)
+		MO.pixel_y = SSrng.random(-16,16)
 		MO.desc = "Looks like this was \an [src] some time ago."
 		..()
 

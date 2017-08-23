@@ -22,8 +22,8 @@
 
 /obj/item/computer_hardware/New(var/obj/L)
 	..()
-	pixel_x = rand(-8, 8)
-	pixel_y = rand(-8, 8)
+	pixel_x = SSrng.random(-8, 8)
+	pixel_y = SSrng.random(-8, 8)
 
 /obj/item/computer_hardware/Destroy()
 	if(holder)
@@ -68,7 +68,7 @@
 		return FALSE
 
 	if(damage > damage_malfunction) // Still working. Well, sometimes...
-		if(prob(malfunction_probability))
+		if(SSrng.probability(malfunction_probability))
 			return FALSE
 
 	return TRUE // Good to go.

@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. = ..()
-	if(. && prob(12) && iscarbon(target))
+	if(. && SSrng.probability(12) && iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.Knockdown(60)
 		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \

@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	if(antag_candidates.len>0)
 		for(var/i = 0, i < num_changelings, i++)
 			if(!antag_candidates.len) break
-			var/datum/mind/changeling = pick(antag_candidates)
+			var/datum/mind/changeling = SSrng.pick_from_list(antag_candidates)
 			antag_candidates -= changeling
 			changelings += changeling
 			changeling.special_role = "Changeling"
@@ -88,8 +88,8 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 		if(changelings.len >= initial(CTO.min_lings))
 			possible_team_objectives += T
 
-	if(possible_team_objectives.len && prob(20*changelings.len))
-		changeling_team_objective_type = pick(possible_team_objectives)
+	if(possible_team_objectives.len && SSrng.probability(20*changelings.len))
+		changeling_team_objective_type = SSrng.pick_from_list(possible_team_objectives)
 
 	for(var/datum/mind/changeling in changelings)
 		log_game("[changeling.key] (ckey) has been selected as a changeling")
@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	var/changelingcap = min( round(GLOB.joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(GLOB.joined_player_list.len/config.changeling_scaling_coeff) )
 	if(SSticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
-	if(SSticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
+	if(SSticker.mode.changelings.len <= (changelingcap - 2) || SSrng.probability(100 - (config.changeling_scaling_coeff*2)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
 			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))
@@ -129,20 +129,20 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	absorb_objective.gen_amount_goal(6, 8)
 	changeling.objectives += absorb_objective
 
-	if(prob(60))
+	if(SSrng.probability(60))
 		var/datum/objective/steal/steal_objective = new
 		steal_objective.owner = changeling
 		steal_objective.find_target()
 		changeling.objectives += steal_objective
 
 	var/list/active_ais = active_ais()
-	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
+	if(active_ais.len && SSrng.probability(100/GLOB.joined_player_list.len))
 		var/datum/objective/destroy/destroy_objective = new
 		destroy_objective.owner = changeling
 		destroy_objective.find_target()
 		changeling.objectives += destroy_objective
 	else
-		if(prob(70))
+		if(SSrng.probability(70))
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = changeling
 			if(team_mode) //No backstabbing while in a team
@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 				escape_objective_possible = FALSE
 
 	if (!(locate(/datum/objective/escape) in changeling.objectives) && escape_objective_possible)
-		if(prob(50))
+		if(SSrng.probability(50))
 			var/datum/objective/escape/escape_objective = new
 			escape_objective.owner = changeling
 			changeling.objectives += escape_objective
@@ -309,11 +309,11 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	else
 		honorific = "Mr."
 	if(GLOB.possible_changeling_IDs.len)
-		changelingID = pick(GLOB.possible_changeling_IDs)
+		changelingID = SSrng.pick_from_list(GLOB.possible_changeling_IDs)
 		GLOB.possible_changeling_IDs -= changelingID
 		changelingID = "[honorific] [changelingID]"
 	else
-		changelingID = "[honorific] [rand(1,999)]"
+		changelingID = "[honorific] [SSrng.random(1,999)]"
 
 	cellular_emporium = new(src)
 	emporium_action = new(cellular_emporium)

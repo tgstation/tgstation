@@ -19,8 +19,8 @@
 	var/proper_name = name
 	. = ..()
 	name = proper_name
-	if(prob(floor_variance))
-		icon_state = "[environment_type][rand(0,12)]"
+	if(SSrng.probability(floor_variance))
+		icon_state = "[environment_type][SSrng.random(0,12)]"
 
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
@@ -37,7 +37,7 @@
 		if(3)
 			return
 		if(2)
-			if(prob(20))
+			if(SSrng.probability(20))
 				src.gets_dug()
 		if(1)
 			src.gets_dug()
@@ -108,13 +108,13 @@
 		return
 	switch(current_size)
 		if(STAGE_THREE)
-			if(!prob(30))
+			if(!SSrng.probability(30))
 				gets_dug()
 		if(STAGE_FOUR)
-			if(prob(50))
+			if(SSrng.probability(50))
 				gets_dug()
-		else 
-			if(current_size >= STAGE_FIVE && prob(70))
+		else
+			if(current_size >= STAGE_FIVE && SSrng.probability(70))
 				gets_dug()
 
 
@@ -214,12 +214,12 @@
 /turf/open/floor/plating/asteroid/airless/cave/proc/get_cave_data(set_length, exclude_dir = -1)
 	// If set_length (arg1) isn't defined, get a random length; otherwise assign our length to the length arg.
 	if(!set_length)
-		length = rand(25, 50)
+		length = SSrng.random(25, 50)
 	else
 		length = set_length
 
 	// Get our directiosn
-	forward_cave_dir = pick(GLOB.alldirs - exclude_dir)
+	forward_cave_dir = SSrng.pick_from_list(GLOB.alldirs - exclude_dir)
 	// Get the opposite direction of our facing direction
 	backward_cave_dir = angle2dir(dir2angle(forward_cave_dir) + 180)
 
@@ -234,7 +234,7 @@
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/make_tunnel(dir)
 	var/turf/closed/mineral/tunnel = src
-	var/next_angle = pick(45, -45)
+	var/next_angle = SSrng.pick_from_list(45, -45)
 
 	for(var/i = 0; i < length; i++)
 		if(!sanity)
@@ -258,17 +258,17 @@
 
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
-			if(i > 3 && prob(20))
+			if(i > 3 && SSrng.probability(20))
 				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type,FALSE,FALSE,TRUE)
 				C.going_backwards = FALSE
-				C.produce_tunnel_from_data(rand(10, 15), dir)
+				C.produce_tunnel_from_data(SSrng.random(10, 15), dir)
 			else
 				SpawnFloor(tunnel)
 		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
 			break
 
 		// Chance to change our direction left or right.
-		if(i > 2 && prob(33))
+		if(i > 2 && SSrng.probability(33))
 			// We can't go a full loop though
 			next_angle = -next_angle
 			setDir(angle2dir(dir2angle(dir) )+ next_angle)
@@ -288,7 +288,7 @@
 	T.ChangeTurf(turf_type,FALSE,FALSE,TRUE)
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
-	if(prob(30))
+	if(SSrng.probability(30))
 		if(istype(loc, /area/mine/explored) || !istype(loc, /area/lavaland/surface/outdoors/unexplored))
 			return
 		var/randumb = pickweight(mob_spawn_list)
@@ -317,7 +317,7 @@
 #undef SPAWN_BUBBLEGUM
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFlora(turf/T)
-	if(prob(12))
+	if(SSrng.probability(12))
 		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
 			return
 		var/randumb = pickweight(flora_spawn_list)

@@ -75,7 +75,7 @@
 		if(initial(T.icon_state) && !initial(T.never_random))
 			approved_types |= T
 
-	var/obj/structure/sign/poster/selected = pick(approved_types)
+	var/obj/structure/sign/poster/selected = SSrng.pick_from_list(approved_types)
 
 	name = initial(selected.name)
 	desc = initial(selected.desc)

@@ -97,10 +97,10 @@
 						S.adjustHealth(-heal_amount)
 						new /obj/effect/temp_visual/heal(T, "#1E8CE1")
 						if(i == heal_attempts && S.health >= S.maxHealth) //we finished healing on the last tick, give them the message
-							to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+							to_chat(S, "<span class='inathneq'>\"[text2ratvar(SSrng.pick_from_list(heal_finish_messages))]\"</span>")
 							break
 					else
-						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+						to_chat(S, "<span class='inathneq'>\"[text2ratvar(SSrng.pick_from_list(heal_finish_messages))]\"</span>")
 						break
 			else if(issilicon(M))
 				var/mob/living/silicon/S = M
@@ -112,10 +112,10 @@
 						S.heal_ordered_damage(heal_amount, damage_heal_order)
 						new /obj/effect/temp_visual/heal(T, "#1E8CE1")
 						if(i == heal_attempts && S.health >= S.maxHealth)
-							to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+							to_chat(S, "<span class='inathneq'>\"[text2ratvar(SSrng.pick_from_list(heal_finish_messages))]\"</span>")
 							break
 					else
-						to_chat(S, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+						to_chat(S, "<span class='inathneq'>\"[text2ratvar(SSrng.pick_from_list(heal_finish_messages))]\"</span>")
 						break
 			else if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -141,10 +141,10 @@
 							H.heal_ordered_damage(heal_amount, damage_heal_order)
 							new /obj/effect/temp_visual/heal(T, "#1E8CE1")
 							if(i == heal_ticks && H.health >= H.maxHealth)
-								to_chat(H, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+								to_chat(H, "<span class='inathneq'>\"[text2ratvar(SSrng.pick_from_list(heal_finish_messages))]\"</span>")
 								break
 						else
-							to_chat(H, "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>")
+							to_chat(H, "<span class='inathneq'>\"[text2ratvar(SSrng.pick_from_list(heal_finish_messages))]\"</span>")
 							break
 		else if(is_type_in_typecache(M, heal_target_typecache))
 			var/obj/structure/destructible/clockwork/C = M

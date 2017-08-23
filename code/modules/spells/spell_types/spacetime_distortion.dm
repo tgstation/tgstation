@@ -28,9 +28,9 @@
 	for(var/i in 1 to length)
 		turf_steps[pick_n_take(turfs)] = pick_n_take(turfs)
 	if(turfs.len > 0)
-		var/turf/loner = pick(turfs)
+		var/turf/loner = SSrng.pick_from_list(turfs)
 		var/area/A = get_area(user)
-		turf_steps[loner] = get_turf(pick(A.contents))
+		turf_steps[loner] = get_turf(SSrng.pick_from_list(A.contents))
 
 	perform(turf_steps,user=user)
 
@@ -76,7 +76,7 @@
 /obj/effect/cross_action/spacetime_dist/Initialize(mapload)
 	. = ..()
 	sound = "sound/guitar/[safepick(GLOB.guitar_notes)]"
-	dir = pick(GLOB.cardinals)
+	dir = SSrng.pick_from_list(GLOB.cardinals)
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(linked_dist && walks_left > 0)

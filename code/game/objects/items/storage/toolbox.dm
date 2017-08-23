@@ -21,9 +21,9 @@
 /obj/item/storage/toolbox/Initialize()
 	..()
 	if(has_latches)
-		if(prob(10))
+		if(SSrng.probability(10))
 			latches = "double_latch"
-			if(prob(1))
+			if(SSrng.probability(1))
 				latches = "triple_latch"
 	update_icon()
 
@@ -47,7 +47,7 @@
 	new /obj/item/crowbar/red(src)
 	new /obj/item/weldingtool/mini(src)
 	new /obj/item/extinguisher/mini(src)
-	switch(rand(1,3))
+	switch(SSrng.random(1,3))
 		if(1)
 			new /obj/item/device/flashlight(src)
 		if(2)
@@ -85,14 +85,14 @@
 	item_state = "toolbox_yellow"
 
 /obj/item/storage/toolbox/electrical/PopulateContents()
-	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/pickedcolor = SSrng.pick_from_list("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/screwdriver(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	new /obj/item/stack/cable_coil(src,30,pickedcolor)
-	if(prob(5))
+	if(SSrng.probability(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	else
 		new /obj/item/stack/cable_coil(src,30,pickedcolor)
@@ -121,7 +121,7 @@
 	item_state = "toolbox_blue"
 
 /obj/item/storage/toolbox/drone/PopulateContents()
-	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/pickedcolor = SSrng.pick_from_list("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/screwdriver(src)
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool(src)

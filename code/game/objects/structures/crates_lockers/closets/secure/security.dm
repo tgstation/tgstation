@@ -6,7 +6,7 @@
 /obj/structure/closet/secure_closet/captains/PopulateContents()
 	..()
 	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
-	if(prob(50))
+	if(SSrng.probability(50))
 		new /obj/item/storage/backpack/captain(src)
 	else
 		new /obj/item/storage/backpack/satchel/cap(src)

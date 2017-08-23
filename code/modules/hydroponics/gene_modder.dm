@@ -427,8 +427,8 @@
 /obj/item/disk/plantgene/New()
 	..()
 	add_overlay("datadisk_gene")
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = SSrng.random(-5, 5)
+	src.pixel_y = SSrng.random(-5, 5)
 
 /obj/item/disk/plantgene/proc/update_name()
 	if(gene)

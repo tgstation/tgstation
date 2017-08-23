@@ -105,11 +105,11 @@ Contents:
 
 //Randomizes suit parameters.
 /obj/item/clothing/suit/space/space_ninja/proc/randomize_param()
-	s_cost = rand(1,20)
-	s_acost = rand(20,100)
-	s_delay = rand(10,100)
-	s_bombs = rand(5,20)
-	a_boost = rand(1,7)
+	s_cost = SSrng.random(1,20)
+	s_acost = SSrng.random(20,100)
+	s_delay = SSrng.random(10,100)
+	s_bombs = SSrng.random(5,20)
+	a_boost = SSrng.random(1,7)
 
 
 //This proc prevents the suit from being taken off.

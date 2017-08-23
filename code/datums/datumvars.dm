@@ -38,7 +38,7 @@
 	set category = "Debug"
 	set name = "View Variables"
 	//set src in world
-	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
+	var/static/cookieoffset = SSrng.random(1, 9999) //to force cookies to reset after the round.
 
 	if(!usr.client || !usr.client.holder)
 		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>")
@@ -409,7 +409,7 @@
 	else if (isicon(value))
 		#ifdef VARSICON
 		var/icon/I = new/icon(value)
-		var/rnd = rand(1,10000)
+		var/rnd = SSrng.random(1,10000)
 		var/rname = "tmp\ref[I][rnd].png"
 		usr << browse_rsc(I, rname)
 		item = "[VV_HTML_ENCODE(name)] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
@@ -419,7 +419,7 @@
 
 /*		else if (istype(value, /image))
 		#ifdef VARSICON
-		var/rnd = rand(1, 10000)
+		var/rnd = SSrng.random(1, 10000)
 		var/image/I = value
 
 		src << browse_rsc(I.icon, "tmp\ref[value][rnd].png")

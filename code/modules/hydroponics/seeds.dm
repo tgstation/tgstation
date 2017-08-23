@@ -37,8 +37,8 @@
 
 /obj/item/seeds/New(loc, nogenes = 0)
 	..()
-	pixel_x = rand(-8, 8)
-	pixel_y = rand(-8, 8)
+	pixel_x = SSrng.random(-8, 8)
+	pixel_y = SSrng.random(-8, 8)
 
 	if(!icon_grow)
 		icon_grow = "[species]-grow"
@@ -95,14 +95,14 @@
 		reagents_add[R.reagent_id] = R.rate
 
 /obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0)
-	adjust_lifespan(rand(-lifemut,lifemut))
-	adjust_endurance(rand(-endmut,endmut))
-	adjust_production(rand(-productmut,productmut))
-	adjust_yield(rand(-yieldmut,yieldmut))
-	adjust_potency(rand(-potmut,potmut))
-	adjust_weed_rate(rand(-wrmut, wrmut))
-	adjust_weed_chance(rand(-wcmut, wcmut))
-	if(prob(traitmut))
+	adjust_lifespan(SSrng.random(-lifemut,lifemut))
+	adjust_endurance(SSrng.random(-endmut,endmut))
+	adjust_production(SSrng.random(-productmut,productmut))
+	adjust_yield(SSrng.random(-yieldmut,yieldmut))
+	adjust_potency(SSrng.random(-potmut,potmut))
+	adjust_weed_rate(SSrng.random(-wrmut, wrmut))
+	adjust_weed_chance(SSrng.random(-wcmut, wcmut))
+	if(SSrng.probability(traitmut))
 		add_random_traits(1, 1)
 
 
@@ -116,7 +116,7 @@
 
 		if(yield == 0)//Oh god don't divide by zero you'll doom us all.
 			adjust_yield(1 * rating)
-		else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+		else if(SSrng.probability(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			adjust_yield(1 * rating)
 	else
 		return ..()
@@ -346,19 +346,19 @@
 				to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!")
 
 /obj/item/seeds/proc/randomize_stats()
-	set_lifespan(rand(25, 60))
-	set_endurance(rand(15, 35))
-	set_production(rand(2, 10))
-	set_yield(rand(1, 10))
-	set_potency(rand(10, 35))
-	set_weed_rate(rand(1, 10))
-	set_weed_chance(rand(5, 100))
-	maturation = rand(6, 12)
+	set_lifespan(SSrng.random(25, 60))
+	set_endurance(SSrng.random(15, 35))
+	set_production(SSrng.random(2, 10))
+	set_yield(SSrng.random(1, 10))
+	set_potency(SSrng.random(10, 35))
+	set_weed_rate(SSrng.random(1, 10))
+	set_weed_chance(SSrng.random(5, 100))
+	maturation = SSrng.random(6, 12)
 
 /obj/item/seeds/proc/add_random_reagents(lower = 0, upper = 2)
-	var/amount_random_reagents = rand(lower, upper)
+	var/amount_random_reagents = SSrng.random(lower, upper)
 	for(var/i in 1 to amount_random_reagents)
-		var/random_amount = rand(4, 15) * 0.01 // this must be multiplied by 0.01, otherwise, it will not properly associate
+		var/random_amount = SSrng.random(4, 15) * 0.01 // this must be multiplied by 0.01, otherwise, it will not properly associate
 		var/datum/plant_gene/reagent/R = new(get_random_reagent_id(), random_amount)
 		if(R.can_add(src))
 			genes += R
@@ -367,9 +367,9 @@
 	reagents_from_genes()
 
 /obj/item/seeds/proc/add_random_traits(lower = 0, upper = 2)
-	var/amount_random_traits = rand(lower, upper)
+	var/amount_random_traits = SSrng.random(lower, upper)
 	for(var/i in 1 to amount_random_traits)
-		var/random_trait = pick((subtypesof(/datum/plant_gene/trait)-typesof(/datum/plant_gene/trait/plant_type)))
+		var/random_trait = SSrng.pick_from_list((subtypesof(/datum/plant_gene/trait)-typesof(/datum/plant_gene/trait/plant_type)))
 		var/datum/plant_gene/trait/T = new random_trait
 		if(T.can_add(src))
 			genes += T
@@ -377,8 +377,8 @@
 			qdel(T)
 
 /obj/item/seeds/proc/add_random_plant_type(normal_plant_chance = 75)
-	if(prob(normal_plant_chance))
-		var/random_plant_type = pick(subtypesof(/datum/plant_gene/trait/plant_type))
+	if(SSrng.probability(normal_plant_chance))
+		var/random_plant_type = SSrng.pick_from_list(subtypesof(/datum/plant_gene/trait/plant_type))
 		var/datum/plant_gene/trait/plant_type/P = new random_plant_type
 		if(P.can_add(src))
 			genes += P
