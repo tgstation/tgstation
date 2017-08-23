@@ -3,6 +3,7 @@
 	cost = 500
 	unit_name = "technology data disk"
 	export_types = list(/obj/item/disk/tech_disk)
+	var/list/datum/techweb_node/sold_nodes = list()
 
 /datum/export/tech/get_cost(obj/O)
 	var/obj/item/disk/tech_disk/D = O

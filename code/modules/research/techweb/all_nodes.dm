@@ -142,7 +142,7 @@
 	description = "Modern engineering techonlogy."
 	display_name = "Industrial Engineering"
 	prereq_ids = list("base")
-	designs_ids = list("rped", "adv_scanning", "adv_matter_bin", "high_micro_laser", "nano_mani", "weldingmask", "mesons")
+	design_ids = list("rped", "adv_scanning", "adv_matter_bin", "high_micro_laser", "nano_mani", "weldingmask", "mesons")
 	research_cost = 5000
 	export_price = 5000
 

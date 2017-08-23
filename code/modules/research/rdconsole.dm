@@ -343,7 +343,7 @@ doesn't have toxins access.
 			else
 				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
 		if("Resync")
-			to_chat(usr, "<span class='boldnotice'>[bicon(src)]: Resynced with nearby machinery.</span>")
+			to_chat(usr, "<span class='boldnotice'>[icon2html(src)]: Resynced with nearby machinery.</span>")
 			SyncRDevices()
 		if("textSearch")
 			var/text = params["inputText"]
