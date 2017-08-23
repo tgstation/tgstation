@@ -12,6 +12,7 @@
 	var/obj/item/clothing/suit/space/hardsuit/suit
 	item_color = "engineering" //Determines used sprites: hardsuit[on]-[color] and hardsuit[on]-[color]2 (lying down sprite)
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+	dynamic_hair_suffix = ""
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
