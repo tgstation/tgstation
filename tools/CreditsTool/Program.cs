@@ -128,7 +128,7 @@ namespace CreditsTool
 			foreach (var I in splits)
 				if (I.Contains("rel=\"last\"")) //our boy
 				{
-					var pagestrIndex = I.IndexOf("page=") + 5;
+					var pagestrIndex = I.IndexOf("&page=") + 6;
 					var closingIndex = I.IndexOf('>', pagestrIndex + 1);
 					var thedroidswerelookingfor = I.Substring(pagestrIndex, closingIndex - pagestrIndex);
 					return Convert.ToInt32(thedroidswerelookingfor);
@@ -138,7 +138,7 @@ namespace CreditsTool
 
 		static WebResponse GetPageResponse(string repoOwner, string repoName, string authToken, int pageNumber)
 		{
-			HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(String.Format("https://api.github.com/repos/{0}/{1}/contributors?page={2}", repoOwner, repoName, pageNumber));
+			HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(String.Format("https://api.github.com/repos/{0}/{1}/contributors?per_page=100&page={2}", repoOwner, repoName, pageNumber));
 			httpWebRequest.Method = WebRequestMethods.Http.Get;
 			httpWebRequest.Accept = "application/json";
 			httpWebRequest.UserAgent = "tgstation-13-credits-tool";
