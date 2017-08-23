@@ -48873,15 +48873,9 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cqv" = (
-<<<<<<< HEAD
-/obj/machinery/rnd/circuit_imprinter,
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-=======
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "RoboticsShutters"
->>>>>>> tgstation/master
 	},
 /turf/open/floor/plating,
 /area/science/robotics/lab)
@@ -49336,7 +49330,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "crz" = (
-/obj/machinery/rnd/destructive_analyzer,
+/obj/machinery/r_n_d/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -49349,7 +49343,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "crB" = (
-/obj/machinery/rnd/protolathe,
+/obj/machinery/r_n_d/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -50028,13 +50022,8 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "csW" = (
-<<<<<<< HEAD
-/obj/machinery/rnd/circuit_imprinter,
-/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
-=======
 /obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
->>>>>>> tgstation/master
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -52367,15 +52356,8 @@
 /turf/open/floor/plating/astplate,
 /area/maintenance/asteroid/aft/science)
 "cxQ" = (
-<<<<<<< HEAD
-/obj/machinery/rnd/server/core,
-/turf/open/floor/circuit{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-=======
 /obj/machinery/r_n_d/server/core,
 /turf/open/floor/circuit,
->>>>>>> tgstation/master
 /area/science/server)
 "cxR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
@@ -53053,15 +53035,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "czp" = (
-<<<<<<< HEAD
-/obj/machinery/rnd/server/robotics,
-/turf/open/floor/circuit{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-=======
 /obj/machinery/r_n_d/server/robotics,
 /turf/open/floor/circuit,
->>>>>>> tgstation/master
 /area/science/server)
 "czq" = (
 /obj/machinery/camera{
@@ -53952,15 +53927,8 @@
 /area/science/misc_lab)
 "cBg" = (
 /obj/effect/landmark/event_spawn,
-<<<<<<< HEAD
-/obj/machinery/rnd/experimentor,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
-=======
 /obj/machinery/r_n_d/experimentor,
 /turf/open/floor/plating,
->>>>>>> tgstation/master
 /area/science/misc_lab)
 "cBh" = (
 /obj/structure/cable/orange{

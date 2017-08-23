@@ -29016,7 +29016,7 @@
 	},
 /area/science/robotics/lab)
 "blM" = (
-/obj/machinery/rnd/server/core,
+/obj/machinery/r_n_d/server/core,
 /obj/structure/sign/poster/random{
 	pixel_x = 0;
 	pixel_y = 32
@@ -29035,7 +29035,7 @@
 /turf/open/floor/plasteel/black/telecomms/server/walkway,
 /area/science/server)
 "blO" = (
-/obj/machinery/rnd/server/robotics,
+/obj/machinery/r_n_d/server/robotics,
 /obj/structure/sign/poster/random{
 	pixel_x = 0;
 	pixel_y = 32
@@ -29051,7 +29051,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "blQ" = (
-/obj/machinery/rnd/experimentor,
+/obj/machinery/r_n_d/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "blR" = (
@@ -29883,7 +29883,7 @@
 /turf/open/floor/plasteel,
 /area/science/research/lobby)
 "bnO" = (
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/r_n_d/circuit_imprinter,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -33033,7 +33033,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "bup" = (
-/obj/machinery/rnd/destructive_analyzer,
+/obj/machinery/r_n_d/destructive_analyzer,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/explab)
@@ -33044,7 +33044,7 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bur" = (
-/obj/machinery/rnd/protolathe,
+/obj/machinery/r_n_d/protolathe,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/explab)
@@ -33635,7 +33635,7 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bvy" = (
-/obj/machinery/rnd/circuit_imprinter{
+/obj/machinery/r_n_d/circuit_imprinter{
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/glass/beaker/sulphuric,

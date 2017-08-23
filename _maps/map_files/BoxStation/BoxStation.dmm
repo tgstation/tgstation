@@ -25187,7 +25187,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/r_n_d/circuit_imprinter,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bhy" = (
@@ -27180,14 +27180,14 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "blI" = (
-/obj/machinery/rnd/destructive_analyzer,
+/obj/machinery/r_n_d/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "blJ" = (
-/obj/machinery/rnd/protolathe,
+/obj/machinery/r_n_d/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -27894,13 +27894,8 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bno" = (
-<<<<<<< HEAD
-/obj/machinery/rnd/circuit_imprinter,
-/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
-=======
 /obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
->>>>>>> tgstation/master
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bnp" = (
@@ -33508,16 +33503,8 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bzu" = (
-<<<<<<< HEAD
-/obj/machinery/rnd/server/robotics,
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
-=======
 /obj/machinery/r_n_d/server/robotics,
 /turf/open/floor/circuit/telecomms/server,
->>>>>>> tgstation/master
 /area/science/server)
 "bzv" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -34179,7 +34166,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bAR" = (
-/obj/machinery/rnd/experimentor,
+/obj/machinery/r_n_d/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "bAS" = (
@@ -34665,16 +34652,8 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bBT" = (
-<<<<<<< HEAD
-/obj/machinery/rnd/server/core,
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
-=======
 /obj/machinery/r_n_d/server/core,
 /turf/open/floor/circuit/telecomms/server,
->>>>>>> tgstation/master
 /area/science/server)
 "bBU" = (
 /obj/machinery/atmospherics/pipe/simple{
