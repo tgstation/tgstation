@@ -43,7 +43,7 @@
 		if("harm")
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			if (prob(75))
-				visible_message("<span class='danger'>[M] punched [name]!</span>", \
+				visible_message("<span class='danger'>[M] punched [src]!</span>", \
 						"<span class='userdanger'>[M] punched you!</span>", null, COMBAT_MESSAGE_RANGE)
 
 				playsound(loc, "punch", 25, 1, -1)
@@ -52,7 +52,7 @@
 					damage = rand(10, 15)
 					if(AmountUnconscious() < 100 && health > 0)
 						Unconscious(rand(200, 300))
-						visible_message("<span class='danger'>[M] knocked [name] out!</span>", \
+						visible_message("<span class='danger'>[M] knocked [src] out!</span>", \
 									"<span class='userdanger'>[M] knocked you out!</span>", null, 5)
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 				if(!affecting)
@@ -63,7 +63,7 @@
 
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] attempted to punch [name]!</span>", \
+				visible_message("<span class='danger'>[M] attempted to punch [src]!</span>", \
 					"<span class='userdanger'>[M] attempted to punch you!</span>", null, COMBAT_MESSAGE_RANGE)
 		if("disarm")
 			if(!IsUnconscious())
@@ -90,10 +90,10 @@
 					damage = rand(20, 40)
 					if(AmountUnconscious() < 300)
 						Unconscious(rand(200, 300))
-					visible_message("<span class='danger'>[M] wounded [name]!</span>", \
+					visible_message("<span class='danger'>[M] wounded [src]!</span>", \
 							"<span class='userdanger'>[M] wounded you!</span>", null, COMBAT_MESSAGE_RANGE)
 				else
-					visible_message("<span class='danger'>[M] slashed [name]!</span>", \
+					visible_message("<span class='danger'>[M] slashed [src]!</span>", \
 							"<span class='userdanger'>[M] slashed you!</span>", null, COMBAT_MESSAGE_RANGE)
 
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
@@ -107,7 +107,7 @@
 
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] attempted to lunge at [name]!</span>", \
+				visible_message("<span class='danger'>[M] attempted to lunge at [src]!</span>", \
 						"<span class='userdanger'>[M] attempted to lunge at you!</span>", null, COMBAT_MESSAGE_RANGE)
 
 		if (M.a_intent == INTENT_DISARM)
@@ -115,12 +115,12 @@
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(prob(95))
 				Knockdown(20)
-				visible_message("<span class='danger'>[M] tackled [name] down!</span>", \
+				visible_message("<span class='danger'>[M] tackled [src] down!</span>", \
 						"<span class='userdanger'>[M] tackled you down!</span>", null, COMBAT_MESSAGE_RANGE)
 			else
 				I = get_active_held_item()
 				if(drop_item())
-					visible_message("<span class='danger'>[M] disarmed [name]!</span>", \
+					visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 							"<span class='userdanger'>[M] disarmed you!</span>", null, COMBAT_MESSAGE_RANGE)
 				else
 					I = null//did not manage to actually disarm the item, gross but no time to refactor
