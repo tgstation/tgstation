@@ -54,7 +54,7 @@
 
 	PopulateContents()
 
-/obj/item/weapon/storage/Destroy()
+/obj/item/storage/Destroy()
 	for(var/obj/O in src)
 		O.mouse_opacity = initial(O.mouse_opacity)
 
@@ -182,7 +182,7 @@
 		user.s_active = null
 	is_seeing -= user
 
-/obj/item/weapon/proc/can_see_contents()
+/obj/item/proc/can_see_contents()
 	. = list()
 	for(var/mob/M in is_seeing)
 		if(M.s_active == src && M.client)
@@ -317,7 +317,7 @@
 			to_chat(user, "<span class='warning'>[W] won't fit in [src], make some space!</span>")
 		return FALSE
 
-	if(W.w_class >= w_class && istype(W, /obj/item/weapon/storage) && !istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
+	if(W.w_class >= w_class && istype(W, /obj/item/storage) && !istype(src, /obj/item/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 		if(!stop_messages)
 			to_chat(user, "<span class='warning'>[src] cannot hold [W] as it's a storage item of the same size!</span>")
 		return FALSE //To prevent the stacking of same sized storage items.
