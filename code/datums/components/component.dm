@@ -75,7 +75,7 @@
 	LAZYCLEARLIST(signal_procs)
 	return ..()
 
-/datum/component/ui_host()	//makes sense
+/datum/component/ui_host()	//our parent is our host for uis
 	return parent
 
 /datum/component/proc/_RemoveNoSignal()
