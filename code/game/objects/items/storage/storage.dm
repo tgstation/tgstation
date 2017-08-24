@@ -182,7 +182,7 @@
 		user.s_active = null
 	is_seeing -= user
 
-/obj/item/proc/can_see_contents()
+/obj/item/storage/proc/can_see_contents()
 	. = list()
 	for(var/mob/M in is_seeing)
 		if(M.s_active == src && M.client)
