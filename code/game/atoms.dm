@@ -29,8 +29,6 @@
 	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
 
 	var/datum/proximity_monitor/proximity_monitor
-	
-	var/multitile = FALSE
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
