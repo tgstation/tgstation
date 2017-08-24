@@ -103,7 +103,7 @@
 	description = "Explodes. Violently."
 	reagent_state = LIQUID
 	color = "#000000"
-	metabolization_rate = 1.5
+	metabolization_rate = 0.05
 	taste_description = "salt"
 
 /datum/reagent/blackpowder/on_ex_act()
