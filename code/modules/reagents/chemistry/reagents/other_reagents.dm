@@ -233,6 +233,8 @@
 			M.adjustOxyLoss(-2, 0)
 			M.adjustBruteLoss(-0.75, 0)
 		M.adjustBrainLoss(0.5*current_cycle)
+		if(M.reagents.has_reagent("mannitol"))
+			M.reagents.remove_reagent("mannitol", current_cycle*.85)
 	holder.remove_reagent(id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
 /datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
