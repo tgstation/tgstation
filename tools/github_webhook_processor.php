@@ -138,7 +138,7 @@ function apisend($url, $method = 'GET', $content = NULL) {
 		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
 	));
 	if ($content)
-		$scontext['content'] = $content;
+		$scontext['http']['content'] = $content;
 	
 	return file_get_contents($url, false, stream_context_create($scontext));
 }
@@ -171,19 +171,19 @@ function validate_user($payload) {
 function tag_pr($payload, $opened) {
 	//get the mergeable state
 	$url = $payload['pull_request']['url'];
-	$payload['pull_request'] = json_decode(apisend($url));
+	$payload['pull_request'] = json_decode(apisend($url), true);
 	if($payload['pull_request']['mergeable'] == null) {
 		//STILL not ready. Give it a bit, then try one more time
 		sleep(10);
-		$payload['pull_request'] = json_decode(apisend($url));
+		$payload['pull_request'] = json_decode(apisend($url), true);
 	}
 
 	$tags = array();
 	$title = $payload['pull_request']['title'];
+	$lowertitle = strtolower($title);
 	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
 		$tags = checkchangelog($payload, true, false);
 
-		$lowertitle = strtolower($title);
 		if(strpos($lowertitle, 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
 		
@@ -219,7 +219,7 @@ function tag_pr($payload, $opened) {
 
 	$url = $payload['pull_request']['issue_url'] . '/labels';
 
-	$existing_labels = file_get_contents($url, false, stream_context_create($scontext));
+	$existing_labels = apisend($url);
 	$existing_labels = json_decode($existing_labels, true);
 
 	$existing = array();
@@ -292,11 +292,11 @@ function create_comment($payload, $comment){
 
 //returns the payload issue's labels as a flat array
 function get_pr_labels_array($payload){
-	$issue = json_decode(apisend($url));
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	$issue = json_decode(apisend($url), true);
 	$result = array();
-	if(isset($issue['labels']))
-		foreach($issue['labels'] as $l)
-			$result[] = $l['name'];
+	foreach($issue as $l)
+		$result[] = $l['name'];
 	return $result;
 }
 
@@ -316,8 +316,10 @@ function pr_balances(){
 }
 
 //returns the difference in PR balance a pull request would cause
-function get_pr_code_friendliness($payload, $oldbalance){
+function get_pr_code_friendliness($payload, $oldbalance = null){
 	global $startingPRBalance;
+	if($oldbalance == null)
+		$oldbalance = $startingPRBalance;
 	$labels = get_pr_labels_array($payload);
 	//anything not in this list defaults to 0
 	$label_values = array(
@@ -333,34 +335,39 @@ function get_pr_code_friendliness($payload, $oldbalance){
 		'Feature' => -1,
 		'Balance/Rebalance' => -1,
 		'Tweak' => -1,
-		'PRB: Reset' => max($affecting, $startingPRBalance - $oldbalance),
+		'PRB: Reset' => $startingPRBalance - $oldbalance,
 	);
 
 	$affecting = 0;
 	$is_neutral = FALSE;
+	$found_something_positive = false;
 	foreach($labels as $l){
 		if($l == 'PRB: No Update') {	//no effect on balance
 			$affecting = 0;
 			break;
 		}
-		else if(isset($label_values[$l]))
-			$affecting = max($affecting, $label_values[$l]);
+		else if(isset($label_values[$l])) {
+			$friendliness = $label_values[$l];
+			if($friendliness > 0)
+				$found_something_positive = true;
+			$affecting = $found_something_positive ? max($affecting, $friendliness) : $friendliness;
+		}
 	}
 	return $affecting;
 }
 
 function is_maintainer($payload, $author){
 	global $maintainer_team_id;
-	$repo_is_org = $payload['pull_request']['repo']['owner']['type'] == 'Organization';
+	$repo_is_org = $payload['pull_request']['base']['repo']['owner']['type'] == 'Organization';
 	if($maintainer_team_id == null || !$repo_is_org) {
-		$collaburl = $payload['pull_request']['repo']['collaborators_url'] . '/' . $author . '/permissions';
-		$perms = json_decode(apisend($collaburl));
+		$collaburl = $payload['pull_request']['base']['repo']['collaborators_url'] . '/' . $author . '/permissions';
+		$perms = json_decode(apisend($collaburl), true);
 		$permlevel = $perms['permission'];
 		return $permlevel == 'admin' || $permlevel == 'write';
 	}
 	else {
 		$check_url = 'https://api.github.com/teams/' . $maintainer_team_id . '/memberships/' . $author;
-		$result = json_decode(apisend($check_url));
+		$result = json_decode(apisend($check_url), true);
 		return isset($result['state']);	//this field won't be here if they aren't a member
 	}
 }
@@ -380,7 +387,7 @@ function update_pr_balance($payload) {
 	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
 	$balances[$author] += $friendliness;
 	if($balances[$author] < 0)
-		create_comment($payload, 'Your Fix/Feature pull request detla is currently below zero (' . $balances[$author] . '). Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
+		create_comment($payload, 'Your Fix/Feature pull request delta is currently below zero (' . $balances[$author] . '). Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
 	$balances_file = fopen(pr_balance_json_path(), 'w');
 	fwrite($balances_file, json_encode($balances));
 	fclose($balances_file);
