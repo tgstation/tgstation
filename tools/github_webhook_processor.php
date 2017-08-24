@@ -132,7 +132,9 @@ function apisend($url, $method = 'GET', $content = NULL) {
 		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
 	));
 	if ($content)
-		$scontext['content'] = $content;
+		$scontext['http']['content'] = $content;
+	print_r($scontext);
+	print_r($url);
 	
 	return file_get_contents($url, false, stream_context_create($scontext));
 }
@@ -165,11 +167,11 @@ function validate_user($payload) {
 function tag_pr($payload, $opened) {
 	//get the mergeable state
 	$url = $payload['pull_request']['url'];
-	$payload['pull_request'] = json_decode(apisend($url));
+	$payload['pull_request'] = json_decode(apisend($url), TRUE);
 	if($payload['pull_request']['mergeable'] == null) {
 		//STILL not ready. Give it a bit, then try one more time
 		sleep(10);
-		$payload['pull_request'] = json_decode(apisend($url));
+		$payload['pull_request'] = json_decode(apisend($url), TRUE);
 	}
 
 	$tags = array();
@@ -177,11 +179,10 @@ function tag_pr($payload, $opened) {
 	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
 		$tags = checkchangelog($payload, true, false);
 
-		$lowertitle = strtolower($title);
-		if(strpos($lowertitle, 'refactor') !== FALSE)
+		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
 		
-		if(strpos($lowertitle, 'revert') !== FALSE || strpos($lowertitle, 'removes') !== FALSE)
+		if(strpos(strtolower($title), 'revert') !== FALSE || strpos($lowertitle, 'removes') !== FALSE)
 			$tags[] = 'Revert/Removal';
 	}
 
@@ -205,16 +206,15 @@ function tag_pr($payload, $opened) {
 			$tags[] = $tag;
 
 	//only maintners should be able to remove these
-	if(strpos($lowertitle, '[dnm]') !== FALSE)
+	if(strpos(strtolower($title), '[dnm]') !== FALSE)
 		$tags[] = 'Do Not Merge';
 
-	if(strpos($lowertitle, '[wip]') !== FALSE)
+	if(strpos(strtolower($title), '[wip]') !== FALSE)
 		$tags[] = 'Work In Progress';
 
 	$url = $payload['pull_request']['base']['repo']['url'] . '/issues/' . $payload['pull_request']['number'] . '/labels';
 
-	$existing_labels = file_get_contents($url, false, stream_context_create($scontext));
-	$existing_labels = json_decode($existing_labels, true);
+	$existing_labels = json_decode(apisend($url), true);
 
 	$existing = array();
 	foreach($existing_labels as $label)
