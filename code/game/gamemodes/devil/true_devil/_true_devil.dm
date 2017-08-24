@@ -66,7 +66,7 @@
 	//Left hand items
 	for(var/obj/item/I in held_items)
 		if(!(I.flags_1 & ABSTRACT_1))
-			if(LAZYLEN(I.forensics.blood))
+			if(I.blood_DNA)
 				msg += "<span class='warning'>It is holding [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else
 				msg += "It is holding [icon2html(I, user)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"

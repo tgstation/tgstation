@@ -79,7 +79,7 @@
 	if(!B)
 		B = new(T)
 	if(data["blood_DNA"])
-		B.forensics.blood[data["blood_DNA"]] = data["blood_type"]
+		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 
 
 /datum/reagent/liquidgibs
@@ -941,12 +941,12 @@
 	else
 		if(O)
 			O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			O.forensics.clean_blood()
+			O.clean_blood()
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
 		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		T.forensics.clean_blood()
+		T.clean_blood()
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
@@ -964,7 +964,7 @@
 					H.lip_style = null
 					H.update_body()
 			for(var/obj/item/I in C.held_items)
-				I.forensics.clean_blood()
+				I.clean_blood()
 			if(C.wear_mask)
 				if(C.wear_mask.clean_blood())
 					C.update_inv_wear_mask()
@@ -983,7 +983,7 @@
 					if(H.shoes.clean_blood())
 						H.update_inv_shoes()
 				H.wash_cream()
-			M.forensics.clean_blood()
+			M.clean_blood()
 
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"

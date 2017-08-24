@@ -46,6 +46,6 @@
 		user.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(do_after(user,30, target = A))
 			user.visible_message("[user] finishes wiping off the [A]!", "<span class='notice'>You finish wiping off the [A].</span>")
-			A.forensics.clean_blood()
+			A.clean_blood()
 			A.wash_cream()
 	return
