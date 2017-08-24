@@ -133,8 +133,6 @@ function apisend($url, $method = 'GET', $content = NULL) {
 	));
 	if ($content)
 		$scontext['http']['content'] = $content;
-	print_r($scontext);
-	print_r($url);
 	
 	return file_get_contents($url, false, stream_context_create($scontext));
 }
