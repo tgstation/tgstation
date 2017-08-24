@@ -226,7 +226,7 @@
 				holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 				return
 	else
-		if prob(45)
+		if(prob(45))
 			M.drowsyness = max(M.drowsyness-5, 0)
 			M.adjustToxLoss(-0.5, 0)
 			M.adjustFireLoss(-0.75, 0)
