@@ -293,9 +293,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(!sharer)
 		return 0
 
-	archive()
-	sharer.archive()
-
 	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases
 
