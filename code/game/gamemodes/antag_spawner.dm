@@ -108,6 +108,7 @@
 		new_objective.explanation_text = "Protect [usr.real_name], the wizard."
 		M.mind.objectives += new_objective
 	SSticker.mode.apprentices += M.mind
+	M.mind.assigned_role = "Apprentice"
 	M.mind.special_role = "apprentice"
 	SSticker.mode.update_wiz_icons_added(M.mind)
 	SEND_SOUND(M, sound('sound/effects/magic.ogg'))

@@ -1714,8 +1714,7 @@
 	},
 /area/shuttle/syndicate)
 "adC" = (
-/obj/structure/table/reinforced,
-/obj/item/folder/red,
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -1840,10 +1839,11 @@
 	pixel_x = -32
 	},
 /obj/item/clipboard,
-/obj/item/toy/figure/syndie,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/folder/red,
+/obj/item/toy/figure/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -10203,7 +10203,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "avQ" = (
-/obj/machinery/power/supermatter_shard/crystal,
+/obj/machinery/power/supermatter_shard/crystal/engine,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "avR" = (
@@ -24806,6 +24806,10 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/structure/fireaxecabinet{
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/caution{
 	dir = 8
 	},
@@ -29280,10 +29284,10 @@
 "bgT" = (
 /obj/machinery/computer/atmos_control/tank{
 	frequency = 1441;
-	input_tag = "co2_in";
-	name = "Carbon Dioxide Supply Control";
-	output_tag = "co2_out";
-	sensors = list("co2_sensor" = "Tank")
+	input_tag = "n2o_in";
+	name = "Nitrous Oxide Supply Control";
+	output_tag = "n2o_out";
+	sensors = list("n2o_sensor" = "Tank")
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -137673,7 +137677,7 @@ aRf
 aSV
 aUs
 aIU
-aIU
+aSV
 aIU
 aSV
 aSV
@@ -138758,13 +138762,13 @@ bZC
 duO
 cJx
 cHS
-cMI
-cMI
-cMI
+cHX
+cHX
+cHX
 cRJ
-cMI
-cMI
-cMI
+cHX
+cHX
+cHX
 cHS
 cJA
 cFm
@@ -139272,13 +139276,13 @@ cBp
 erO
 cJz
 cHS
-cMI
-cMI
-cMI
-cMI
-cMI
-cMI
-cMI
+cHX
+cHX
+cHX
+cHX
+cHX
+cHX
+cHX
 cHS
 cZL
 dbc
@@ -139531,8 +139535,8 @@ cJA
 cHS
 cHS
 cOs
-cMI
-cMI
+cHX
+cHX
 cTv
 cOs
 cHS
@@ -155468,7 +155472,7 @@ cPm
 cLL
 cSA
 cUj
-cVW
+cUu
 cXJ
 cZi
 dap
