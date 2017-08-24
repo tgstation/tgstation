@@ -49330,7 +49330,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "crz" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -49343,7 +49343,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "crB" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/rnd/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -50022,7 +50022,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "csW" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -52356,7 +52356,7 @@
 /turf/open/floor/plating/astplate,
 /area/maintenance/asteroid/aft/science)
 "cxQ" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server/core,
 /turf/open/floor/circuit,
 /area/science/server)
 "cxR" = (
@@ -53035,7 +53035,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "czp" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server/robotics,
 /turf/open/floor/circuit,
 /area/science/server)
 "czq" = (
@@ -53927,7 +53927,7 @@
 /area/science/misc_lab)
 "cBg" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/r_n_d/experimentor,
+/obj/machinery/rnd/experimentor,
 /turf/open/floor/plating,
 /area/science/misc_lab)
 "cBh" = (
@@ -60848,7 +60848,7 @@
 /turf/open/floor/plasteel/black,
 /area/hydroponics)
 "cTT" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/machinery/requests_console{
 	department = "Robotics";
 	departmentType = 2;

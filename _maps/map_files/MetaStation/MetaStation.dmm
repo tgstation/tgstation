@@ -59034,7 +59034,7 @@
 	},
 /area/medical/chemistry)
 "ciB" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
@@ -59051,7 +59051,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "ciD" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/rnd/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -59224,7 +59224,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "ciU" = (
-/obj/machinery/r_n_d/experimentor,
+/obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "ciV" = (
@@ -59726,7 +59726,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cjZ" = (
-/obj/machinery/r_n_d/circuit_imprinter{
+/obj/machinery/rnd/circuit_imprinter{
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/glass/beaker/sulphuric,
@@ -72010,7 +72010,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
@@ -72717,7 +72717,7 @@
 /turf/open/floor/plating,
 /area/science/server)
 "cIe" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server/robotics,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "cIf" = (
@@ -73681,7 +73681,7 @@
 /turf/open/floor/plating,
 /area/science/server)
 "cJV" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server/core,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "cJW" = (

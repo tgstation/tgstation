@@ -79364,7 +79364,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/science/lab)
 "cXv" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -79377,7 +79377,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cXx" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/rnd/protolathe,
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
@@ -80072,7 +80072,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cYX" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -87731,7 +87731,7 @@
 	},
 /area/science/explab)
 "dpa" = (
-/obj/machinery/r_n_d/experimentor,
+/obj/machinery/rnd/experimentor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -93568,7 +93568,7 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dAj" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/machinery/airalarm{
 	dir = 8;
@@ -95582,7 +95582,7 @@
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dEe" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server/core,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 5
 	},
@@ -95595,7 +95595,7 @@
 	},
 /area/science/server)
 "dEg" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server/robotics,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},

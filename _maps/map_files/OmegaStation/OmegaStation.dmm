@@ -27520,7 +27520,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/central)
 "aUA" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -27533,7 +27533,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aUC" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/rnd/protolathe,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -27962,7 +27962,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aVv" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -28431,7 +28431,7 @@
 	},
 /area/science/research)
 "aWs" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server/core,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -28446,7 +28446,7 @@
 	},
 /area/science/research)
 "aWu" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server/robotics,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
