@@ -238,7 +238,6 @@ function tag_pr($payload, $opened) {
 }
 
 function handle_pr($payload) {
-	global $featuresPerFix;
 	$action = 'opened';
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
@@ -288,17 +287,7 @@ function handle_pr($payload) {
 
 //creates a comment on the payload issue
 function create_comment($payload, $comment){
-	global $apiKey;
-	$scontext = array('http' => array(
-		'method'	=> 'POST',
-		'header'	=>
-			"Content-type: application/json\r\n".
-			'Authorization: token ' . $apiKey,
-		'ignore_errors' => true,
-		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools',
-		'content' => json_encode(array('body' => $comment))
-	));
-	echo file_get_contents($payload['pull_request']['comments_url'], false, stream_context_create($scontext));
+	apisend($payload['pull_request']['comments_url'], 'POST', json_encode(array('body' => $comment)));
 }
 
 //returns the payload issue's labels as a flat array
@@ -313,6 +302,7 @@ function get_pr_labels_array($payload){
 
 //helper for getting the path the the balance json file
 function pr_balance_json_path(){
+	global $prBalanceJson;
 	return $prBalanceJson != '' ? $prBalanceJson : 'pr_balances.json';
 }
 
