@@ -542,7 +542,7 @@
 	if(!link)
 		return
 	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-		if(md5(H.dna.uni_identity) in link.fingerprints)
+		if(md5(H.dna.uni_identity) in link.forensics.prints)
 			possible |= H
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)

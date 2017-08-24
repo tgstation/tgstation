@@ -31,13 +31,13 @@
 
 		for(var/obj/item/I in held_items)
 			if(!(I.flags_1 & ABSTRACT_1))
-				if(I.blood_DNA)
+				if(I.forensics && I.forensics.blood)
 					msg += "<span class='warning'>It has [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 				else
 					msg += "It has [icon2html(I, user)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 		if(internal_storage && !(internal_storage.flags_1&ABSTRACT_1))
-			if(internal_storage.blood_DNA)
+			if(internal_storage.forensics && internal_storage.forensics.blood)
 				msg += "<span class='warning'>It is holding [icon2html(internal_storage, user)] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
 			else
 				msg += "It is holding [icon2html(internal_storage, user)] \a [internal_storage] in its internal storage.\n"
