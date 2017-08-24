@@ -23,7 +23,7 @@
 		qdel(timer)
 	var/list/dc = datum_components
 	for(var/I in dc)
-		var/datum/component/C = I
+		var/datum/component/C = DC[I]
 		C._RemoveNoSignal()
 		qdel(C)
 	if(dc)
