@@ -110,7 +110,7 @@
 	SSticker.mode.apprentices += M.mind
 	M.mind.special_role = "apprentice"
 	SSticker.mode.update_wiz_icons_added(M.mind)
-	M << sound('sound/effects/magic.ogg')
+	SEND_SOUND(M, sound('sound/effects/magic.ogg'))
 	var/newname = copytext(sanitize(input(M, "You are [wizard_name]'s apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
 	if (!newname)
 		newname = randomname

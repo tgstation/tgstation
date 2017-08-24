@@ -37,10 +37,7 @@
 		src.update_chassis_page()
 		chassis.occupant_message("<span class='danger'>The [src] is destroyed!</span>")
 		chassis.log_append_to_last("[src] is destroyed.",1)
-		if(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon))
-			chassis.occupant << sound('sound/mecha/weapdestr.ogg',volume=50)
-		else
-			chassis.occupant << sound('sound/mecha/critdestr.ogg',volume=50)
+		SEND_SOUND(chassis.occupant, sound(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon) ? 'sound/mecha/weapdestr.ogg' : 'sound/mecha/critdestr.ogg', volume=50))
 		chassis = null
 	return ..()
 
