@@ -269,13 +269,20 @@ Applications: 8 servants, 3 caches, and 100 CV
 	put_object_in_hands = FALSE
 	var/construct_type //The type of construct that the scripture is made to create, even if not directly
 	var/construct_limit = 1 //How many constructs of this type can exist
+	var/combat_construct = FALSE //If this construct is meant for fighting and shouldn't be at the base before the assault phase
 
 /datum/clockwork_scripture/create_object/construct/check_special_requirements()
 	update_construct_limit()
 	var/constructs = get_constructs()
 	if(constructs >= construct_limit)
-		to_chat(invoker, "<span class='warning'>There are too many constructs of this type ([constructs])! You may only have [construct_limit].</span>")
+		to_chat(invoker, "<span class='warning'>There are too many constructs of this type ([constructs])! You may only have [round(construct_limit)] at once.</span>")
 		return
+	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+	if(G && !G.active && combat_construct && invoker.z == ZLEVEL_CITYOFCOGS) //Putting marauders on the base during the prep phase is a bad idea mmkay
+		if(alert(invoker, "This is a combat construct, and you cannot easily get it to the station. Are you sure you want to make one here?", "Construct Alert", "Yes", "Cancel") == "Cancel")
+			return
+		if(!is_servant_of_ratvar(invoker) || !invoker.canUseTopic(src))
+			return
 	return TRUE
 
 /datum/clockwork_scripture/create_object/construct/post_recital()

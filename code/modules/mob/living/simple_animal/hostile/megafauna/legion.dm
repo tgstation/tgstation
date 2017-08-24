@@ -164,6 +164,7 @@ Difficulty: Medium
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
+	var/static/list/excluded_areas = list(/area/reebe/city_of_cogs)
 
 /obj/item/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
@@ -171,6 +172,9 @@ Difficulty: Medium
 		return
 
 	var/area/user_area = get_area(user)
+	if(user_area.type in excluded_areas)
+		to_chat(user, "<span class='warning'>Something is preventing you from using the staff here.</span>")
+		return
 	var/datum/weather/A
 	for(var/V in SSweather.existing_weather)
 		var/datum/weather/W = V

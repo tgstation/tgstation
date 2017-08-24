@@ -89,18 +89,15 @@
 
 /obj/structure/destructible/clockwork/heralds_beacon/proc/herald_the_justiciar()
 	priority_announce("A powerful group of fanatical zealots following the cause of Ratvar have brazenly sacrificed stealth for power, and dare anyone \
-	to try and stop them.", title = "The Justiciar Comes", sound = 'sound/ambience/antag/new_clock.ogg')
+	to try and stop them.", title = "The Justiciar Comes", sound = 'sound/magic/clockwork/herald_the_justiciar.ogg')
 	GLOB.ratvar_approaches = TRUE
 	available = FALSE
 	STOP_PROCESSING(SSprocessing, src)
 	icon_state = "interdiction_lens_active"
-	hierophant_message("<span class='big bold brass'>The beacon's activation has given your team great power! Many of your objects are permanently empowered, and \
-	you have an extra ten minutes to prepare before the Ark activates.</span>")
+	hierophant_message("<span class='big bold brass'>The beacon's activation has given your team great power! Many of your objects are permanently empowered!</span>")
 	for(var/mob/living/simple_animal/hostile/clockwork/C in GLOB.all_clockwork_mobs)
 		if(C.stat == DEAD)
 			continue
 		C.update_values()
 		to_chat(C, C.empower_string)
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-	G.seconds_until_activation += 600
-	SSshuttle.registerHostileEnvironment(G) //no leaving when we need to purge you, heretics
+	SSshuttle.registerHostileEnvironment(GLOB.ark_of_the_clockwork_justiciar) //no leaving when we need to purge you, heretics

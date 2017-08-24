@@ -164,7 +164,7 @@
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
 	desc = "A glowing orange sigil. The air around it feels staticky."
-	clockwork_desc = "A sigil that serves as power generation and a battery for clockwork structures."
+	clockwork_desc = "A sigil that serves as power generation and a battery for clockwork structures, linked to all other sigils of its type."
 	icon_state = "sigiltransmission"
 	alpha = 50
 	color = "#EC8A2D"
@@ -172,7 +172,7 @@
 	resist_string = "glows faintly"
 	sigil_name = "Sigil of Transmission"
 	affects_servants = TRUE
-	var/power_charge = 0 //starts with no power
+	var/static/power_charge = 0 //starts with no power
 	var/drain_range = 14
 
 /obj/effect/clockwork/sigil/transmission/Initialize()
@@ -192,7 +192,7 @@
 		var/structure_number = 0
 		for(var/obj/structure/destructible/clockwork/powered/P in range(SIGIL_ACCESS_RANGE, src))
 			structure_number++
-		to_chat(user, "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[GLOB.ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power, \
+		to_chat(user, "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[GLOB.ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of shared power, \
 		and <b>[structure_number]</b> Clockwork Structure[structure_number == 1 ? " is":"s are"] in range.</span>")
 		to_chat(user, "<span class='brass'>While active, it will gradually drain power from nearby electronics. It is currently [isprocessing ? "active":"disabled"].</span>")
 		if(iscyborg(user))
@@ -293,6 +293,10 @@
 	return TRUE
 
 /obj/effect/clockwork/sigil/transmission/proc/update_glow()
+	for(var/obj/effect/clockwork/sigil/transmission/T in GLOB.all_clockwork_objects)
+		T.update_icon()
+
+/obj/effect/clockwork/sigil/transmission/update_icon()
 	if(GLOB.ratvar_awakens)
 		alpha = 255
 	else

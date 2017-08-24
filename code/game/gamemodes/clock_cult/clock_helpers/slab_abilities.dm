@@ -93,29 +93,51 @@
 	if(!isturf(T))
 		return TRUE
 
-	if(isliving(target) && (target in view(7, get_turf(ranged_ability_user))))
-		var/mob/living/L = target
-		if(is_servant_of_ratvar(L))
-			to_chat(ranged_ability_user, "<span class='danger'>You can't Kindle servants.</span>")
-			return TRUE
-		if(L.stat)
-			to_chat(ranged_ability_user, "<span class='danger'>You can't Kindle the dead and dying.</span>")
-			return TRUE
-		if(get_dist(ranged_ability_user, target) > 2)
-			to_chat(ranged_ability_user, "<span class='danger'>They're too far away.</span>")
-			return
+	if(target in view(7, get_turf(ranged_ability_user)))
 
 		successful = TRUE
 
-		to_chat(ranged_ability_user, "<span class='brass'>You release the light of Ratvar upon [L]!</span>")
+		var/turf/U = get_turf(target)
+		to_chat(ranged_ability_user, "<span class='brass'>You release the light of Ratvar!</span>")
 		clockwork_say(ranged_ability_user, text2ratvar("Purge all untruths and honor Engine!"))
-		add_logs(ranged_ability_user, L, "struck with Kindle")
-		playsound(L, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
+		add_logs(ranged_ability_user, U, "fired at with Kindle")
+		playsound(ranged_ability_user, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
+		var/obj/item/projectile/kindle/A = new(T)
+		A.original = target
+		A.starting = T
+		A.current = T
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+		A.fire()
+
+		remove_ranged_ability()
+
+	return TRUE
+
+/obj/item/projectile/kindle
+	name = "kindled flame"
+	icon_state = "pulse0"
+	nodamage = TRUE
+	damage = 0 //We're just here for the stunning!
+	damage_type = BURN
+	flag = "bomb"
+	range = 3
+	log_override = TRUE
+
+/obj/item/projectile/kindle/Destroy()
+	visible_message("<span class='warning'>[src] flickers out!</span>")
+	. = ..()
+
+/obj/item/projectile/kindle/on_hit(atom/target, blocked = FALSE)
+	if(isliving(target))
+		var/mob/living/L = target
+		if(!is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
+			return
 		var/obj/O = L.null_rod_check()
+		playsound(L, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
 		if(O)
 			L.visible_message("<span class='warning'>[L]'s eyes flare with dim light as they stumble!</span>", \
 			"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs some sort of power!</span>")
-			to_chat(ranged_ability_user, "<span class='boldannounce'>[L]'s [O.name] absorbs the light's power!</span>")
 			L.adjustFireLoss(5)
 			L.Stun(40)
 			playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
@@ -127,10 +149,8 @@
 			L.flash_act(1, 1)
 			if(iscultist(L))
 				L.adjustFireLoss(15)
+	..()
 
-		remove_ranged_ability()
-
-	return TRUE
 
 //For the cyborg Linked Vanguard scripture, grants you and a nearby ally Vanguard
 /obj/effect/proc_holder/slab/vanguard

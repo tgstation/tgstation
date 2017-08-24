@@ -8,10 +8,10 @@
 	descname = "Well-Rounded Combat Construct"
 	name = "Clockwork Marauder"
 	desc = "Creates a shell for a clockwork marauder, a balanced frontline construct."
-	invocations = list("Arise, avatar of Bulwark!", "Defend this place and its Ark.")
+	invocations = list("Arise, avatar of Bulwark!", "Defend the Ark with vengeful zeal.")
 	channel_time = 50
 	consumed_components = list(BELLIGERENT_EYE = 4, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 2)
-	creator_message = "<span class='brass'>Your slab disgorges several chunks of replicant alloy with form into a suit of thrumming armor.</span>"
+	creator_message = "<span class='brass'>Your slab disgorges several chunks of replicant alloy that form into a suit of thrumming armor.</span>"
 	usage_tip = "The marauder's shield can effectively deflect energy-based projectiles."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
@@ -21,6 +21,7 @@
 	quickbind_desc = "Creates a clockwork marauder, used for frontline combat."
 	object_path = /obj/item/clockwork/construct_chassis/clockwork_marauder
 	construct_type = /mob/living/simple_animal/hostile/clockwork/marauder
+	combat_construct = TRUE
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/update_construct_limit()
 	var/human_servants = 0
