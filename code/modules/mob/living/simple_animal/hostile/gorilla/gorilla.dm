@@ -32,6 +32,7 @@
 	stat_attack = UNCONSCIOUS
 	minbodytemp = 270
 	maxbodytemp = 350
+	unique_name = TRUE
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 
 // Gorillas like to dismember limbs from unconcious mobs.
@@ -75,3 +76,6 @@
 		playsound(src, "sound/creatures/gorilla.ogg", 200)
 	..()
 
+/mob/living/simple_animal/hostile/gorilla/can_use_guns(obj/item/G)
+	to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
+	return FALSE
