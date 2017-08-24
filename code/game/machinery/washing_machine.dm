@@ -49,7 +49,7 @@
 /obj/machinery/washing_machine/proc/wash_cycle()
 	for(var/X in contents)
 		var/atom/movable/AM = X
-		AM.forensics.clean_blood()
+		AM.clean_blood()
 		AM.machine_wash(src)
 
 	busy = FALSE

@@ -23982,7 +23982,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aOa" = (
-/obj/machinery/power/supermatter_shard{
+/obj/machinery/power/supermatter_shard/engine{
 	anchored = 1;
 	base_icon_state = "darkmatter";
 	explosion_power = 20;
