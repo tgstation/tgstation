@@ -525,7 +525,7 @@ AI MODULES
 	laws[1] = generate_ion_law()
 	to_chat(user, "<span class='notice'>You press the button on [src].</span>")
 	playsound(user, 'sound/machines/click.ogg', 20, 1)
-	src.loc.visible_message("<span class='warning'>[bicon(src)] [laws[1]]</span>")
+	src.loc.visible_message("<span class='warning'>[icon2html(src, viewers(loc))] [laws[1]]</span>")
 
 /******************** Mother Drone  ******************/
 

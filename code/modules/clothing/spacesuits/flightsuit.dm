@@ -138,7 +138,7 @@
 		targ = mob_override
 	if(!istype(targ))
 		return
-	to_chat(targ, "[bicon(src)]<span class='[span]'>|[message]</span>")
+	to_chat(targ, "[icon2html(src, targ)]<span class='[span]'>|[message]</span>")
 
 /obj/item/device/flightpack/proc/sync_processing(datum/controller/subsystem/processing/flightpacks/FPS)
 	processing_mode = FPS.flightsuit_processing
@@ -924,7 +924,7 @@
 		targ = loc
 	if(!istype(targ))
 		return
-	to_chat(targ, "[bicon(src)]<span class='[span]'>|[message]</span>")
+	to_chat(targ, "[icon2html(src, targ)]<span class='[span]'>|[message]</span>")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/examine(mob/user)
 	..()

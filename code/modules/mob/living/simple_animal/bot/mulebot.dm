@@ -596,7 +596,7 @@
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
-				to_chat(calling_ai, "<span class='notice'>[bicon(src)] [src] wirelessly plays a chiming sound!</span>")
+				to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [src] wirelessly plays a chiming sound!</span>")
 				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
 				calling_ai = null
 				radio_channel = "AI Private" //Report on AI Private instead if the AI is controlling us.
