@@ -78,8 +78,8 @@
 			adjustOxyLoss(rand(50,75))
 		else if(prob(15))
 			to_chat(src, "<span class='userdanger'>You forget how to walk properly...</span>")
-			M.Dizzy(30)
-			M.confused = rand(100, 250) //this is deciseconds, right?
+			Dizzy(30)
+			confused = rand(100, 250) //this is deciseconds, right?
 			
 	if(getBrainLoss() >= 210 && stat != DEAD) //<atlanta_ned> fwoosh is a good example of brain damage not being lethal
 		visible_message("<span class='alert'><B>[src]</B> goes limp, their facial expression utterly blank.</span>")
