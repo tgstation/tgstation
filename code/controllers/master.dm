@@ -60,18 +60,17 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
-	subsystems = list()
-	if (Master != src)
-		if (istype(Master))
-			Recover()
-			qdel(Master)
-		else
-			var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
-			sortTim(subsytem_types, /proc/cmp_subsystem_init)
-			var/list/_sss = subsystems
-			for(var/I in subsytem_types)
-				_sss += new I
-		Master = src
+	var/list/_subsystems = list()
+	subsystems = _subsystems
+	if (istype(Master))
+		Recover()
+		qdel(Master)
+	else
+		var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
+		sortTim(subsytem_types, /proc/cmp_subsystem_init)
+		for(var/I in subsytem_types)
+			_subsystems += new I
+	Master = src
 
 	if(!GLOB)
 		new /datum/controller/global_vars
