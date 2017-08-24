@@ -245,7 +245,7 @@ function handle_pr($payload) {
 				$balances = pr_balances();
 				$author = $payload['pull_request']['user']['login'];
 				if(isset($balances[$author]) && $balances[$author] < 0)
-					create_comment($payload, "You currently have a higher Feature/Fix pull request ratio than the configured rate of " . $featuresPerFix . ". Maintainers may close this PR at will. Fixing issues or improving the codebase will improve this score.");
+					create_comment($payload, 'You currently have a negative Fix/Feature pull request delta of ' . $balances[$author] . '. Maintainers may close this PR at will. Fixing issues or improving the codebase will improve this score.');
 			}
 			break;
 		case 'edited':
