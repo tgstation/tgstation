@@ -68,3 +68,7 @@
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	hardness = 15
+
+/turf/closed/wall/shuttle
+	name = "shuttle wall"
+	desc = "Keeps you in the shuttle."
