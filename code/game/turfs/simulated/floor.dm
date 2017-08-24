@@ -193,11 +193,6 @@
 	if(.)
 		ChangeTurf(/turf/open/floor/engine/cult)
 
-/turf/open/floor/ratvar_act(force, ignore_mobs)
-	. = ..()
-	if(.)
-		ChangeTurf(/turf/open/floor/clockwork)
-
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)
 

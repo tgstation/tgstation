@@ -191,11 +191,6 @@
 	glass_name = "glass of Holy Water"
 	glass_desc = "A glass of holy water."
 
-/datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(is_servant_of_ratvar(M))
-		to_chat(M, "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>")
-	..()
-
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
 	if(!data) data = 1
 	data++
@@ -207,21 +202,10 @@
 		M.Dizzy(5)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
-		else if(is_servant_of_ratvar(M) && prob(8))
-			switch(pick("speech", "message", "emote"))
-				if("speech")
-					clockwork_say(M, "...[text2ratvar(pick("Engine... your light grows dark...", "Where are you, master?", "He lies rusting in Error...", "Purge all untruths and... and... something..."))]")
-				if("message")
-					to_chat(M, "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
-					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
-				if("emote")
-					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data >= 75)	// 30 units, 135 seconds
-		if(iscultist(M) || is_servant_of_ratvar(M))
+		if(iscultist(M))
 			if(iscultist(M))
 				SSticker.mode.remove_cultist(M.mind, 1, 1)
-			else if(is_servant_of_ratvar(M))
-				remove_servant_of_ratvar(M)
 			M.jitteriness = 0
 			M.stuttering = 0
 			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??

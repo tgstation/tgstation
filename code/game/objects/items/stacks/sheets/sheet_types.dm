@@ -301,45 +301,6 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 /obj/item/stack/sheet/runed_metal/five
 	amount = 5
 
-/*
- * Brass
- */
-GLOBAL_LIST_INIT(brass_recipes, list ( \
-	new/datum/stack_recipe("wall gear", /obj/structure/destructible/clockwork/wall_gear, 3, time = 30, one_per_turf = TRUE, on_floor = TRUE), \
-	null,
-	new/datum/stack_recipe("pinion airlock", /obj/machinery/door/airlock/clockwork, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("brass pinion airlock", /obj/machinery/door/airlock/clockwork/brass, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("brass windoor", /obj/machinery/door/window/clockwork, 2, time = 30, on_floor = TRUE, window_checks = TRUE), \
-	null,
-	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/clockwork/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile brass window", /obj/structure/window/reinforced/clockwork/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = TRUE, on_floor = TRUE) \
-))
-
-/obj/item/stack/tile/brass
-	name = "brass"
-	desc = "Sheets made out of brass."
-	singular_name = "brass sheet"
-	icon_state = "sheet-brass"
-	icon = 'icons/obj/items_and_weapons.dmi'
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	throwforce = 10
-	max_amount = 50
-	throw_speed = 1
-	throw_range = 3
-	turf_type = /turf/open/floor/clockwork
-	novariants = FALSE
-
-/obj/item/stack/tile/brass/narsie_act()
-	new /obj/item/stack/sheet/runed_metal(loc, amount)
-	qdel(src)
-
-/obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.brass_recipes
-	. = ..()
-	pixel_x = 0
-	pixel_y = 0
-
 /obj/item/stack/sheet/lessergem
 	name = "lesser gems"
 	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."

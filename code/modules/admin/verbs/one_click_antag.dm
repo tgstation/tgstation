@@ -174,44 +174,6 @@
 	return 0
 
 
-/datum/admins/proc/makeClockCult()
-	var/datum/game_mode/clockwork_cult/temp = new
-	if(config.protect_roles_from_antagonist)
-		temp.restricted_jobs += temp.protected_jobs
-
-	if(config.protect_assistant_from_antagonist)
-		temp.restricted_jobs += "Assistant"
-
-	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(ROLE_SERVANT_OF_RATVAR in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
-				if(!jobban_isbanned(applicant, ROLE_SERVANT_OF_RATVAR) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
-
-	if(candidates.len)
-		var/numCultists = min(candidates.len, 4)
-
-		for(var/i = 0, i<numCultists, i++)
-			H = pick(candidates)
-			to_chat(H, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. You hear the whooshing steam and clanking cogs of a billion billion machines, and all at once \
-			you see the truth. Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm, and he has selected you as one of his harbringers. You are now a servant of \
-			Ratvar, and you will bring him back.</span>")
-			H.playsound_local(get_turf(H), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
-			add_servant_of_ratvar(H, TRUE)
-			SSticker.mode.equip_servant(H)
-			candidates.Remove(H)
-
-		return 1
-
-	return 0
-
-
 
 /datum/admins/proc/makeNukeTeam()
 

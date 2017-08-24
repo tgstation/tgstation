@@ -127,7 +127,6 @@ SUBSYSTEM_DEF(ticker)
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
-			scripture_states = scripture_unlock_alert(scripture_states)
 
 			if(!mode.explosion_in_progress && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED

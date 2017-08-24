@@ -107,12 +107,6 @@
 	to_chat(user, "<span class='notice'>You emag [src]'s interface.</span>")
 	emag_cooldown = world.time + 100
 
-	if(is_servant_of_ratvar(src))
-		to_chat(src, "<span class='nezbere'>\"[text2ratvar("You will serve Engine above all else")]!\"</span>\n\
-		<span class='danger'>ALERT: Subversion attempt denied.</span>")
-		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they serve only Ratvar.")
-		return
-
 	if(syndicate)
 		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were a syndicate cyborg.")

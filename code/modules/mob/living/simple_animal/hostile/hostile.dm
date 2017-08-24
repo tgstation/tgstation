@@ -106,7 +106,7 @@
 	if(!search_objects)
 		. = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 
-		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden))
+		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha))
 
 		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
 			if(can_see(targets_from, HM, vision_range))
@@ -199,12 +199,6 @@
 			if(P.stat & BROKEN) //Or turrets that are already broken
 				return 0
 			return 1
-
-		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
-			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
-			if(OW.target != src)
-				return FALSE
-			return TRUE
 
 
 	if(isobj(the_target))

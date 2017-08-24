@@ -23,8 +23,8 @@
 			return FALSE
 	else
 		return FALSE
-	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
-		return FALSE //can't convert machines, shielded, or ratvar's dogs
+	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M))
+		return FALSE //can't convert machines or shielded
 	return TRUE
 
 /datum/game_mode/cult
