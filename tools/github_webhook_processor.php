@@ -23,10 +23,11 @@
 //This is required as otherwise somebody could trick the script into leaking the api key.
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
+$trackPRBalance = true;	//set this to false to disable PR balance tracking
 $prBalanceJson = '';	//Set this to the path you'd like the writable pr balance file to be stored, not setting it writes it to the working directory
 $startingPRBalance = 3;	//Starting balance for never before seen users
-//TODO: configure to pull from an org team maybe?
-$maintainers = array('AnturK', 'ChangelingRain', 'Cheridan', 'Cyberboss', 'Jordie0608', 'lzimann', 'KorPhaeron', 'optimumtact', 'Razharas', 'RemieRichards', 'WJohn');
+//team 133041: tgstation/commit-access
+$maintainer_team_id = 133041;	//org team id that is exempt from PR balance system, setting this to null will use anyone with write access to the repo. Get from https://api.github.com/orgs/:org/teams
 
 //Api key for pushing changelogs.
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
@@ -368,12 +369,30 @@ function get_pr_code_friendliness($payload, $oldbalance){
 	return $affecting;
 }
 
+function is_maintainer($payload, $author){
+	global $maintainer_team_id;
+	$repo_is_org = $payload['pull_request']['repo']['owner']['type'] == 'Organization';
+	if($maintainer_team_id == null || !$repo_is_org) {
+		$collaburl = $payload['pull_request']['repo']['collaborators_url'] . '/' . $author . '/permissions';
+		$perms = json_decode(apisend($collaburl));
+		$permlevel = $perms['permission'];
+		return $permlevel == 'admin' || $permlevel == 'write';
+	}
+	else {
+		$check_url = 'https://api.github.com/teams/' . $maintainer_team_id . '/memberships/' . $author;
+		$result = json_decode(apisend($check_url));
+		return isset($result['state']);	//this field won't be here if they aren't a member
+	}
+}
+
 //payload is a merged pull request, updates the pr balances file with the correct positive or negative balance based on comments
 function update_pr_balance($payload) {
 	global $startingPRBalance;
-	global $maintainers;
+	global $trackPRBalance;
+	if(!$trackPRBalance)
+		return;
 	$author = $payload['pull_request']['user']['login'];
-	if(in_array($author, $maintainers))	//immune
+	if(is_maintainer($payload, $author))	//immune
 		return;
 	$balances = pr_balances();
 	if(!isset($balances[$author]))
@@ -381,8 +400,8 @@ function update_pr_balance($payload) {
 	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
 	$balances[$author] += $friendliness;
 	if($balances[$author] < 0)
-		create_comment($payload, "Your Fix/Feature pull request detla is currently below zero. Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.");
-	$balances_file = fopen(pr_balance_json_path(), "w");
+		create_comment($payload, 'Your Fix/Feature pull request detla is currently below zero. Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
+	$balances_file = fopen(pr_balance_json_path(), 'w');
 	fwrite($balances_file, json_encode($balances));
 	fclose($balances_file);
 }
