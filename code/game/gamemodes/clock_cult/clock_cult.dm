@@ -233,9 +233,8 @@ Credit where due:
 /datum/outfit/servant_of_ratvar
 	name = "Servant of Ratvar"
 
-	head = /obj/item/clothing/head/hardhat/white
-	uniform = /obj/item/clothing/under/color/yellow
-	shoes = /obj/item/clothing/shoes/sneakers/green
+	uniform = /obj/item/clothing/under/chameleon/ratvar
+	shoes = /obj/item/clothing/shoes/workboots
 	back = /obj/item/storage/backpack
 	ears = /obj/item/device/radio/headset
 	gloves = /obj/item/clothing/gloves/color/yellow
@@ -265,7 +264,7 @@ Credit where due:
 	<li>Once the Ark activates, the station will be alerted. Portals to Reebe will open up in nearly every room. When they take these portals, \
 	the crewmembers will arrive in the area that you can't access, but can get through it freely - whereas you can't. Treat this as the \"spawn\" of the \
 	crew and defend it accordingly.</li>\
-	<li></li></ol>\
+	</ol>\
 	<hr>\
 	Here is the layout of Reebe, from left to right:\
 	<ul>\

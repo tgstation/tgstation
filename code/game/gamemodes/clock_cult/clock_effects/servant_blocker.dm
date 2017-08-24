@@ -6,6 +6,11 @@
 	mouse_opacity = 0
 	density = TRUE
 
+/obj/effect/clockwork/servant_blocker/Destroy(force)
+	if(!force)
+		return
+	. = ..()
+
 /obj/effect/clockwork/servant_blocker/CanPass(atom/movable/M, turf/target)
 	var/list/target_contents = M.GetAllContents() + M
 	for(var/mob/living/L in target_contents)
