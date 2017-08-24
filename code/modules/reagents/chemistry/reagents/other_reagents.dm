@@ -198,10 +198,8 @@
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
 	if(M.mind.assigned_role != "Chaplain")
-		if(!data) data = 1
-		data++
 		M.jitteriness = min(M.jitteriness+4,10)
-		if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
+		if(current_cycle >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 			if(!M.stuttering)
 				M.stuttering = 1
 			M.stuttering = min(M.stuttering+4, 10)
@@ -217,7 +215,7 @@
 						"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
 					if("emote")
 						M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
-		if(data >= 75)	// 30 units, 135 seconds
+		if(current_cycle >= 75)	// 30 units, 135 seconds
 			if(iscultist(M) || is_servant_of_ratvar(M))
 				if(iscultist(M))
 					SSticker.mode.remove_cultist(M.mind, 1, 1)
