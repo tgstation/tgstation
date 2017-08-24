@@ -804,7 +804,7 @@
 		var/total_health = (health - staminaloss)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			Knockdown(160)
+			Knockdown(140)
 			setStaminaLoss(health - 2)
 	update_health_hud()
 
