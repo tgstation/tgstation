@@ -478,8 +478,8 @@
 
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						if(blood_DNA && blood_DNA.len)
-							B.blood_DNA |= blood_DNA.Copy()
+						if(forensics.blood && forensics.blood.len)
+							B.forensics.blood |= forensics.blood.Copy()
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
 							B.setDir(newdir)
@@ -662,11 +662,8 @@
 	H.apply_damage(0.5*damage, BRUTE, "r_arm", run_armor_check("r_arm", "melee"))
 
 	var/turf/T = get_turf(src)
-	T.add_mob_blood(H)
+	T.forensics.add_mob_blood(H)
 
-	var/list/blood_dna = H.get_blood_dna_list()
-	if(blood_dna)
-		transfer_blood_dna(blood_dna)
 	bloodiness += 4
 
 // player on mulebot attempted to move

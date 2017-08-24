@@ -193,7 +193,6 @@
 	var/invis_view = SEE_INVISIBLE_LIVING
 	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
 	var/lighting_alpha
-	var/emagged = FALSE
 	var/list/icon/current = list() //the current hud icons
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	strip_delay = 20
@@ -224,13 +223,12 @@ BLIND     // can't see anything
 	strip_delay = 20
 	equip_delay_other = 40
 
-
 /obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
-		if(blood_DNA)
+		if(forensics.blood)
 			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaging = TRUE)
@@ -266,7 +264,7 @@ BLIND     // can't see anything
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
-		if(blood_DNA)
+		if(forensics.blood)
 			. += mutable_appearance('icons/effects/blood.dmi', "helmetblood")
 
 /obj/item/clothing/head/update_clothes_damaged_state(damaging = TRUE)
@@ -301,7 +299,7 @@ BLIND     // can't see anything
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-			if(blood_DNA)
+			if(forensics.blood)
 				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 
@@ -323,7 +321,7 @@ BLIND     // can't see anything
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-			if(blood_DNA)
+			if(forensics.blood)
 				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/mask/update_clothes_damaged_state(damaging = TRUE)
@@ -385,7 +383,7 @@ BLIND     // can't see anything
 	. = list()
 	if(!isinhands)
 		var/bloody = 0
-		if(blood_DNA)
+		if(forensics.blood)
 			bloody = 1
 		else
 			bloody = bloody_shoes[BLOOD_STATE_HUMAN]
@@ -447,7 +445,7 @@ BLIND     // can't see anything
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
-		if(blood_DNA)
+		if(forensics.blood)
 			. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
 		var/mob/living/carbon/human/M = loc
 		if(ishuman(M) && M.w_uniform)
@@ -475,6 +473,8 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 80, acid = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	dynamic_hair_suffix = ""
+	dynamic_fhair_suffix = ""
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -534,7 +534,7 @@ BLIND     // can't see anything
 
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-		if(blood_DNA)
+		if(forensics.blood)
 			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
 		if(accessory_overlay)
 			. += accessory_overlay

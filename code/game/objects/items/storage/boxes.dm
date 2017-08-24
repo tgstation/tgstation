@@ -732,16 +732,17 @@
 /obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "donk_kit"
-	item_state = null
+	icon_state = null
 
 /obj/item/storage/box/ingredients/Initialize()
 	..()
-	if(item_state)
-		name = "[name] ([item_state])"
-		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."
+	if(icon_state)
+		name = "[name] ([icon_state])"
+		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[icon_state]'."
+		item_state = "syringe_kit"
 
 /obj/item/storage/box/ingredients/wildcard
-	item_state = "wildcard"
+	icon_state = "wildcard"
 
 /obj/item/storage/box/ingredients/wildcard/PopulateContents()
 	for(var/i in 1 to 7)
@@ -762,7 +763,7 @@
 		new randomFood(src)
 
 /obj/item/storage/box/ingredients/fiesta
-	item_state = "fiesta"
+	icon_state = "fiesta"
 
 /obj/item/storage/box/ingredients/fiesta/PopulateContents()
 	new /obj/item/reagent_containers/food/snacks/tortilla(src)
@@ -772,7 +773,7 @@
 		new /obj/item/reagent_containers/food/snacks/grown/chili(src)
 
 /obj/item/storage/box/ingredients/italian
-	item_state = "italian"
+	icon_state = "italian"
 
 /obj/item/storage/box/ingredients/italian/PopulateContents()
 	for(var/i in 1 to 3)
@@ -781,7 +782,7 @@
 	new /obj/item/reagent_containers/food/drinks/bottle/wine(src)
 
 /obj/item/storage/box/ingredients/vegetarian
-	item_state = "vegetarian"
+	icon_state = "vegetarian"
 
 /obj/item/storage/box/ingredients/vegetarian/PopulateContents()
 	for(var/i in 1 to 2)
@@ -793,7 +794,7 @@
 	new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
 
 /obj/item/storage/box/ingredients/american
-	item_state = "american"
+	icon_state = "american"
 
 /obj/item/storage/box/ingredients/american/PopulateContents()
 	for(var/i in 1 to 2)
@@ -803,7 +804,7 @@
 	new /obj/item/reagent_containers/food/snacks/faggot(src)
 
 /obj/item/storage/box/ingredients/fruity
-	item_state = "fruity"
+	icon_state = "fruity"
 
 /obj/item/storage/box/ingredients/fruity/PopulateContents()
 	for(var/i in 1 to 2)
@@ -814,7 +815,7 @@
 	new /obj/item/reagent_containers/food/snacks/grown/watermelon(src)
 
 /obj/item/storage/box/ingredients/sweets
-	item_state = "sweets"
+	icon_state = "sweets"
 
 /obj/item/storage/box/ingredients/sweets/PopulateContents()
 	for(var/i in 1 to 2)
@@ -825,7 +826,7 @@
 	new /obj/item/reagent_containers/food/snacks/grown/apple(src)
 
 /obj/item/storage/box/ingredients/delights
-	item_state = "delights"
+	icon_state = "delights"
 
 /obj/item/storage/box/ingredients/delights/PopulateContents()
 	for(var/i in 1 to 2)
@@ -836,7 +837,7 @@
 	new /obj/item/reagent_containers/food/snacks/grown/berries(src)
 
 /obj/item/storage/box/ingredients/grains
-	item_state = "grains"
+	icon_state = "grains"
 
 /obj/item/storage/box/ingredients/grains/PopulateContents()
 	for(var/i in 1 to 3)
@@ -847,7 +848,7 @@
 	new /obj/item/seeds/poppy(src)
 
 /obj/item/storage/box/ingredients/carnivore
-	item_state = "carnivore"
+	icon_state = "carnivore"
 
 /obj/item/storage/box/ingredients/carnivore/PopulateContents()
 	new /obj/item/reagent_containers/food/snacks/meat/slab/bear(src)
@@ -859,7 +860,7 @@
 	new /obj/item/reagent_containers/food/snacks/faggot(src)
 
 /obj/item/storage/box/ingredients/exotic
-	item_state = "exotic"
+	icon_state = "exotic"
 
 /obj/item/storage/box/ingredients/exotic/PopulateContents()
 	for(var/i in 1 to 2)
