@@ -19,6 +19,8 @@
 	var/icon_off = "debug_off"
 	var/icon_on = "debug"
 
+	var/uses_reagents = FALSE
+
 	var/type_to_process_into = /obj/item/reagent_containers/food/ingredient/processed
 
 /obj/machinery/ingredient_creation/examine()
@@ -27,12 +29,14 @@
 		to_chat(usr, "You can make out [cooking] in [src]")
 
 /obj/machinery/ingredient_creation/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/food/ingredient) || istype(I,/obj/item/reagent_containers/food/snacks/grown))
-		if(user.drop_item() && !cooking)
-			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-			frying = I
-			frying.forceMove(src)
-			icon_state = icon_on
+	if(!uses_reagents)
+		if(istype(I, /obj/item/reagent_containers/food/ingredient) || istype(I,/obj/item/reagent_containers/food/snacks/grown))
+			if(user.drop_item() && !cooking)
+				to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
+				cooking = I
+				cooking.forceMove(src)
+				icon_state = icon_on
+	else
 
 /obj/machinery/ingredient_creation/process()
 	..()
