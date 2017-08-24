@@ -11,7 +11,7 @@
 
 /obj/item/stack/telecrystal/attack(mob/target, mob/user)
 	if(target == user) //You can't go around smacking people with crystals to find out if they have an uplink or not.
-		for(var/obj/item/weapon/implant/uplink/I in target)
+		for(var/obj/item/implant/uplink/I in target)
 			if(I && I.imp_in)
 				I.hidden_uplink.telecrystals += amount
 				use(amount)
@@ -24,8 +24,8 @@
 		I.hidden_uplink.telecrystals += amount
 		use(amount)
 		to_chat(user, "<span class='notice'>You slot [src] into the [I] and charge its internal uplink.</span>")
-	else if(istype(I, /obj/item/weapon/cartridge/virus/frame))
-		var/obj/item/weapon/cartridge/virus/frame/cart = I
+	else if(istype(I, /obj/item/cartridge/virus/frame))
+		var/obj/item/cartridge/virus/frame/cart = I
 		if(!cart.charges)
 			to_chat(user, "<span class='notice'>The [cart] is out of charges, it's refusing to accept the [src]</span>")
 			return

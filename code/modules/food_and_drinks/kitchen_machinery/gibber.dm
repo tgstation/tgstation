@@ -48,22 +48,22 @@
 /obj/machinery/gibber/Initialize()
 	. = ..()
 	add_overlay("grjam")
-	var/obj/item/weapon/circuitboard/machine/gibber/B = new
+	var/obj/item/circuitboard/machine/gibber/B = new
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/gibber
+/obj/item/circuitboard/machine/gibber
 	name = "Gibber (Machine Board)"
 	build_path = /obj/machinery/gibber
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
+							/obj/item/stock_parts/matter_bin = 1,
+							/obj/item/stock_parts/manipulator = 1)
 
 /obj/machinery/gibber/RefreshParts()
 	var/gib_time = 40
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		gib_time -= 5 * M.rating
 		gibtime = gib_time
 		if(M.rating >= 2)
@@ -176,10 +176,10 @@
 		sourcejob = gibee.job
 	var/sourcenutriment = mob_occupant.nutrition / 15
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
-	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
+	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human
 	var/typeofskin = /obj/item/stack/sheet/animalhide/human
 
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
+	var/obj/item/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
 	var/obj/item/stack/sheet/animalhide/allskin
 
 	if(ishuman(occupant))
@@ -199,7 +199,7 @@
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
 
 	for (var/i=1 to meat_produced)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
+		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))

@@ -84,19 +84,19 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 
 /obj/machinery/telecomms/broadcaster/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/broadcaster(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/telecomms/broadcaster(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/telecomms/broadcaster
+/obj/item/circuitboard/machine/telecomms/broadcaster
 	name = "Subspace Broadcaster (Machine Board)"
 	build_path = /obj/machinery/telecomms/broadcaster
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/subspace/filter = 1,
-							/obj/item/weapon/stock_parts/subspace/crystal = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 2)
+							/obj/item/stock_parts/subspace/filter = 1,
+							/obj/item/stock_parts/subspace/crystal = 1,
+							/obj/item/stock_parts/micro_laser = 2)
 
 /obj/machinery/telecomms/broadcaster/Destroy()
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.

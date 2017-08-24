@@ -55,7 +55,7 @@
 //However if a player wants to move an existing showcase or remove one, this is for that.
 
 /obj/structure/showcase/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver) && !anchored)
+	if(istype(W, /obj/item/screwdriver) && !anchored)
 		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
 			to_chat(user, "<span class='notice'>You screw the screws back into the showcase.</span>")
 			playsound(loc, W.usesound, 100, 1)
@@ -65,7 +65,7 @@
 			playsound(loc, W.usesound, 100, 1)
 			deconstruction_state = SHOWCASE_SCREWDRIVERED
 
-	if(istype(W, /obj/item/weapon/crowbar) && deconstruction_state == SHOWCASE_SCREWDRIVERED)
+	if(istype(W, /obj/item/crowbar) && deconstruction_state == SHOWCASE_SCREWDRIVERED)
 		if(do_after(user, 20*W.toolspeed, target = src))
 			playsound(loc, W.usesound, 100, 1)
 			to_chat(user, "<span class='notice'>You start to crowbar the showcase apart...</span>")

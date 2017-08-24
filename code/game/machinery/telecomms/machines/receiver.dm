@@ -53,18 +53,18 @@
 
 /obj/machinery/telecomms/receiver/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/receiver(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/telecomms/receiver(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/telecomms/receiver
+/obj/item/circuitboard/machine/telecomms/receiver
 	name = "Subspace Receiver (Machine Board)"
 	build_path = /obj/machinery/telecomms/receiver
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(
-							/obj/item/weapon/stock_parts/subspace/ansible = 1,
-							/obj/item/weapon/stock_parts/subspace/filter = 1,
-							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/weapon/stock_parts/micro_laser = 1)
+							/obj/item/stock_parts/subspace/ansible = 1,
+							/obj/item/stock_parts/subspace/filter = 1,
+							/obj/item/stock_parts/manipulator = 2,
+							/obj/item/stock_parts/micro_laser = 1)
 
 
 

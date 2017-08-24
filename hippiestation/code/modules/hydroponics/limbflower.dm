@@ -5,7 +5,7 @@
 	icon_state = "seed-limb"
 	species = "limb"
 	plantname = "Replica Limb Flower"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/limb_spawn
+	product = /obj/item/reagent_containers/food/snacks/grown/limb_spawn
 	lifespan = 25
 	endurance = 10
 	maturation = 8
@@ -16,17 +16,17 @@
 	growthstages = 3
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/limb_spawn
+/obj/item/reagent_containers/food/snacks/grown/limb_spawn
 	icon = 'hippiestation/icons/obj/hydroponics/harvest.dmi'
 	seed = /obj/item/seeds/limbseed
 	name = "limbplant"
 	desc = "A cluster of limbs sprouting from a stem."
 	icon_state = "limbplant"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/limb_spawn/canconsume(mob/eater, mob/user)
+/obj/item/reagent_containers/food/snacks/grown/limb_spawn/canconsume(mob/eater, mob/user)
 	return 0
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/limb_spawn/attack_self(mob/user as mob)
+/obj/item/reagent_containers/food/snacks/grown/limb_spawn/attack_self(mob/user as mob)
 	if(user)
 		user.dropItemToGround(src)
 	var/obj/item/bodypart/limb

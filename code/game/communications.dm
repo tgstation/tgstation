@@ -292,7 +292,7 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 
 /datum/signal/proc/debug_print()
 	if (source)
-		. = "signal = {source = '[source]' ([source:x],[source:y],[source:z])\n"
+		. = "signal = {source = '[source]' [COORD(source)]\n"
 	else
 		. = "signal = {source = '[source]' ()\n"
 	for (var/i in data)

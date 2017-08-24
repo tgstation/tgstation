@@ -3,7 +3,7 @@
 	number_of_shots = 20
 
 /obj/machinery/manned_turret/attackby(obj/item/W, mob/user, params)
-    if(istype(W, /obj/item/weapon/wrench))
+    if(istype(W, /obj/item/wrench))
         default_unfasten_wrench(user, W, 20)
     else
         return ..()

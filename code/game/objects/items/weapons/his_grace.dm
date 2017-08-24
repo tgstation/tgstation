@@ -4,12 +4,12 @@
 //If the wielder fails to feed His Grace in time, He will devour them and become incredibly aggressive.
 //Leaving His Grace alone for some time will reset His thirst and put Him to sleep.
 //Using His Grace effectively requires extreme speed and care.
-/obj/item/weapon/his_grace
+/obj/item/his_grace
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
 	icon_state = "his_grace"
 	item_state = "artistic_toolbox"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	origin_tech = "combat=4;engineering=4;syndicate=2"
 	force = 12
@@ -20,30 +20,32 @@
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
 	var/force_bonus = 0
 
-/obj/item/weapon/his_grace/New()
-	..()
+/obj/item/his_grace/Initialize()
+	. = ..()
 	START_PROCESSING(SSprocessing, src)
+	GLOB.poi_list += src
 
-/obj/item/weapon/his_grace/Destroy()
+/obj/item/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
+	GLOB.poi_list -= src
 	for(var/mob/living/L in src)
 		L.forceMove(get_turf(src))
 	return ..()
 
-/obj/item/weapon/his_grace/attack_self(mob/living/user)
+/obj/item/his_grace/attack_self(mob/living/user)
 	if(!awakened)
 		INVOKE_ASYNC(src, .proc/awaken, user)
 
-/obj/item/weapon/his_grace/attack(mob/living/M, mob/user)
+/obj/item/his_grace/attack(mob/living/M, mob/user)
 	if(awakened && M.stat)
 		consume(M)
 	else
 		..()
 
-/obj/item/weapon/his_grace/CtrlClick(mob/user) //you can't pull his grace
+/obj/item/his_grace/CtrlClick(mob/user) //you can't pull his grace
 	return
 
-/obj/item/weapon/his_grace/examine(mob/user)
+/obj/item/his_grace/examine(mob/user)
 	..()
 	if(awakened)
 		switch(bloodthirst)
@@ -62,12 +64,12 @@
 	else
 		to_chat(user, "<span class='his_grace'>[src] is latched closed.</span>")
 
-/obj/item/weapon/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
+/obj/item/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
 		user.forceMove(get_turf(src))
 		user.visible_message("<span class='warning'>[user] scrambles out of [src]!</span>", "<span class='notice'>You climb out of [src]!</span>")
 
-/obj/item/weapon/his_grace/process()
+/obj/item/his_grace/process()
 	if(!bloodthirst)
 		drowse()
 		return
@@ -114,7 +116,7 @@
 		else
 			consume(L)
 
-/obj/item/weapon/his_grace/proc/awaken(mob/user) //Good morning, Mr. Grace.
+/obj/item/his_grace/proc/awaken(mob/user) //Good morning, Mr. Grace.
 	if(awakened)
 		return
 	awakened = TRUE
@@ -127,7 +129,7 @@
 	playsound(user, 'sound/effects/pope_entry.ogg', 100)
 	icon_state = "his_grace_awakened"
 
-/obj/item/weapon/his_grace/proc/drowse() //Good night, Mr. Grace.
+/obj/item/his_grace/proc/drowse() //Good night, Mr. Grace.
 	if(!awakened)
 		return
 	var/turf/T = get_turf(src)
@@ -142,7 +144,7 @@
 	awakened = FALSE
 	bloodthirst = 0
 
-/obj/item/weapon/his_grace/proc/consume(mob/living/meal) //Here's your dinner, Mr. Grace.
+/obj/item/his_grace/proc/consume(mob/living/meal) //Here's your dinner, Mr. Grace.
 	if(!meal)
 		return
 	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='his_grace big bold'>[src] consumes you!</span>")
@@ -158,7 +160,7 @@
 		bloodthirst = HIS_GRACE_CONSUME_OWNER
 	update_stats()
 
-/obj/item/weapon/his_grace/proc/adjust_bloodthirst(amt)
+/obj/item/his_grace/proc/adjust_bloodthirst(amt)
 	prev_bloodthirst = bloodthirst
 	if(prev_bloodthirst < HIS_GRACE_CONSUME_OWNER)
 		bloodthirst = Clamp(bloodthirst + amt, HIS_GRACE_SATIATED, HIS_GRACE_CONSUME_OWNER)
@@ -166,7 +168,7 @@
 		bloodthirst = Clamp(bloodthirst + amt, HIS_GRACE_CONSUME_OWNER, HIS_GRACE_FALL_ASLEEP)
 	update_stats()
 
-/obj/item/weapon/his_grace/proc/update_stats()
+/obj/item/his_grace/proc/update_stats()
 	flags &= ~NODROP
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
 	switch(bloodthirst)

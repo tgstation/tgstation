@@ -97,7 +97,6 @@
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(H), slot_head)
 			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(H), slot_gloves)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(H), slot_wear_mask)
-			H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(H), slot_glasses)
 			H.set_species(/datum/species/shadow/ling) //can't be a shadowling without being a shadowling
 
 			H.mind.RemoveSpell(src)
@@ -185,7 +184,10 @@
 				H.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
 				H.loc = A
 				if(!SSticker.mode.shadowling_ascended)
+					set_security_level(3)
+					SSshuttle.emergencyCallTime = 1800
 					SSshuttle.emergency.request(null, 0.3)
+					SSshuttle.emergencyNoRecall = TRUE
 				SSticker.mode.shadowling_ascended = 1
 				A.mind.RemoveSpell(src)
 				qdel(H)

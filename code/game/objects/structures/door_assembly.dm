@@ -10,7 +10,7 @@
 	var/mineral = null
 	var/typetext = ""
 	var/icontext = ""
-	var/obj/item/weapon/electronics/airlock/electronics = null
+	var/obj/item/electronics/airlock/electronics = null
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
 	var/glass_type = /obj/machinery/door/airlock/glass
 	var/created_name = null
@@ -364,7 +364,7 @@
 	state = 1
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/pen))
+	if(istype(W, /obj/item/pen))
 		var/t = stripped_input(user, "Enter the name for the door.", src.name, src.created_name,MAX_NAME_LEN)
 		if(!t)
 			return
@@ -372,14 +372,14 @@
 			return
 		created_name = t
 
-	else if(istype(W, /obj/item/weapon/airlock_painter)) // |- Ricotez
+	else if(istype(W, /obj/item/airlock_painter)) // |- Ricotez
 	//INFORMATION ABOUT ADDING A NEW AIRLOCK TO THE PAINT LIST:
 	//If your airlock has a regular version, add it to the list with regular versions.
 	//If your airlock has a glass version, add it to the list with glass versions.
 	//Don't forget to also set has_solid and has_glass to the proper value.
 	//Do NOT add your airlock to a list if it does not have a version for that list,
 	//	or you will get broken icons.
-		var/obj/item/weapon/airlock_painter/WT = W
+		var/obj/item/airlock_painter/WT = W
 		if(WT.can_use(user))
 			var/icontype
 			var/optionlist
@@ -502,8 +502,8 @@
 				mineral = null //I know this is stupid, but until we change glass to a boolean it's how this code works.
 			to_chat(user, "<span class='notice'>You change the paintjob on the airlock assembly.</span>")
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(istype(W, /obj/item/weldingtool) && !anchored )
+		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
 								"You start to disassemble the airlock assembly...")
@@ -515,7 +515,7 @@
 				to_chat(user, "<span class='notice'>You disassemble the airlock assembly.</span>")
 				deconstruct(TRUE)
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		if(!anchored )
 			var/door_check = 1
 			for(var/obj/machinery/door/D in loc)
@@ -564,7 +564,7 @@
 			to_chat(user, "<span class='notice'>You wire the airlock assembly.</span>")
 			src.name = "wired airlock assembly"
 
-	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
+	else if(istype(W, /obj/item/wirecutters) && state == 1 )
 		playsound(src.loc, W.usesound, 100, 1)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", \
 							"<span class='notice'>You start to cut the wires from the airlock assembly...</span>")
@@ -577,7 +577,7 @@
 			src.state = 0
 			src.name = "secured airlock assembly"
 
-	else if(istype(W, /obj/item/weapon/electronics/airlock) && state == 1 )
+	else if(istype(W, /obj/item/electronics/airlock) && state == 1 )
 		playsound(src.loc, W.usesound, 100, 1)
 		user.visible_message("[user] installs the electronics into the airlock assembly.", \
 							"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
@@ -594,7 +594,7 @@
 			src.electronics = W
 
 
-	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
+	else if(istype(W, /obj/item/crowbar) && state == 2 )
 		playsound(src.loc, W.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 								"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
@@ -605,9 +605,9 @@
 			to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 			src.state = 1
 			src.name = "wired airlock assembly"
-			var/obj/item/weapon/electronics/airlock/ae
+			var/obj/item/electronics/airlock/ae
 			if (!electronics)
-				ae = new/obj/item/weapon/electronics/airlock( src.loc )
+				ae = new/obj/item/electronics/airlock( src.loc )
 			else
 				ae = electronics
 				electronics = null
@@ -657,7 +657,7 @@
 							airlock_type = text2path ("/obj/machinery/door/airlock/[M]")
 							glass_type = /obj/machinery/door/airlock/glass
 
-	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
+	else if(istype(W, /obj/item/screwdriver) && state == 2 )
 		playsound(src.loc, W.usesound, 100, 1)
 		user.visible_message("[user] finishes the airlock.", \
 							 "<span class='notice'>You start finishing the airlock...</span>")
@@ -709,7 +709,7 @@
 					else
 						new /obj/item/stack/sheet/glass(T)
 				else
-					new /obj/item/weapon/shard(T)
+					new /obj/item/shard(T)
 			else
 				var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 				new mineral_path(T, 2)

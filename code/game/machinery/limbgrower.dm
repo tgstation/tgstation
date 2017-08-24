@@ -36,18 +36,18 @@
 /obj/machinery/limbgrower/New()
 	..()
 	create_reagents(0)
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/limbgrower(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/limbgrower(null)
 	B.apply_default_parts(src)
 	files = new /datum/research/limbgrower(src)
 
-/obj/item/weapon/circuitboard/machine/limbgrower
+/obj/item/circuitboard/machine/limbgrower
 	name = "Limb Grower (Machine Board)"
 	build_path = /obj/machinery/limbgrower
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/reagent_containers/glass/beaker = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+							/obj/item/stock_parts/manipulator = 1,
+							/obj/item/reagent_containers/glass/beaker = 2,
+							/obj/item/stock_parts/console_screen = 1)
 
 /obj/machinery/limbgrower/interact(mob/user)
 	if(!is_operational())
@@ -68,7 +68,7 @@
 	popup.open()
 
 /obj/machinery/limbgrower/on_deconstruction()
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	..()
 
@@ -162,11 +162,11 @@
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
 	var/T=1.2
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T -= M.rating*0.2
 	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
 

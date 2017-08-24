@@ -122,14 +122,14 @@
 	var/msg2 = "<span class='notice'>[src] already has that upgrade!</span>"
 
 	// DECONSTRUCTION
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 		playsound(src.loc, W.usesound, 50, 1)
 		return
 
 	if(panel_open)
-		if(istype(W, /obj/item/weapon/wirecutters)) //enable/disable the camera
+		if(istype(W, /obj/item/wirecutters)) //enable/disable the camera
 			toggle_cam(user, 1)
 			obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 			return
@@ -139,7 +139,7 @@
 			to_chat(user, "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>")
 			return
 
-		else if(istype(W, /obj/item/weapon/weldingtool))
+		else if(istype(W, /obj/item/weldingtool))
 			if(weld(W, user))
 				visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame bolted to the wall.</span>", "<span class='warning'>You unweld [src], leaving it as just a frame bolted to the wall</span>")
 				deconstruct(TRUE)
@@ -176,14 +176,14 @@
 			return
 
 	// OTHER
-	if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+	if((istype(W, /obj/item/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
 		var/mob/living/U = user
-		var/obj/item/weapon/paper/X = null
+		var/obj/item/paper/X = null
 		var/obj/item/device/pda/P = null
 
 		var/itemname = ""
 		var/info = ""
-		if(istype(W, /obj/item/weapon/paper))
+		if(istype(W, /obj/item/paper))
 			X = W
 			itemname = X.name
 			info = X.info
@@ -222,8 +222,8 @@
 			bug.bugged_cameras[src.c_tag] = src
 		return
 
-	else if(istype(W, /obj/item/weapon/pai_cable))
-		var/obj/item/weapon/pai_cable/cable = W
+	else if(istype(W, /obj/item/pai_cable))
+		var/obj/item/pai_cable/cable = W
 		cable.plugin(src, user)
 		return
 
@@ -346,7 +346,7 @@
 
 	return null
 
-/obj/machinery/camera/proc/weld(obj/item/weapon/weldingtool/WT, mob/living/user)
+/obj/machinery/camera/proc/weld(obj/item/weldingtool/WT, mob/living/user)
 	if(busy)
 		return FALSE
 	if(!WT.remove_fuel(0, user))

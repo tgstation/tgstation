@@ -1,4 +1,4 @@
-/obj/item/weapon/tank/jetpack
+/obj/item/tank/jetpack
 	name = "jetpack (empty)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
@@ -14,7 +14,7 @@
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/weapon/tank/jetpack/New()
+/obj/item/tank/jetpack/New()
 	..()
 	if(gas_type)
 		air_contents.assert_gas(gas_type)
@@ -23,7 +23,7 @@
 	ion_trail = new
 	ion_trail.set_up(src)
 
-/obj/item/weapon/tank/jetpack/ui_action_click(mob/user, action)
+/obj/item/tank/jetpack/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_jetpack))
 		cycle(user)
 	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
@@ -34,7 +34,7 @@
 		toggle_internals(user)
 
 
-/obj/item/weapon/tank/jetpack/proc/cycle(mob/user)
+/obj/item/tank/jetpack/proc/cycle(mob/user)
 	if(user.incapacitated())
 		return
 
@@ -49,18 +49,18 @@
 		A.UpdateButtonIcon()
 
 
-/obj/item/weapon/tank/jetpack/proc/turn_on()
+/obj/item/tank/jetpack/proc/turn_on()
 	on = TRUE
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
 
-/obj/item/weapon/tank/jetpack/proc/turn_off()
+/obj/item/tank/jetpack/proc/turn_off()
 	on = FALSE
 	stabilizers = FALSE
 	icon_state = initial(icon_state)
 	ion_trail.stop()
 
-/obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user)
+/obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)
 	if(!on)
 		return
 	if((num < 0.005 || air_contents.total_moles() < num))
@@ -77,7 +77,7 @@
 
 	return 1
 
-/obj/item/weapon/tank/jetpack/suicide_act(mob/user)
+/obj/item/tank/jetpack/suicide_act(mob/user)
 	if (istype(user, /mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = user
 		H.forcesay("WHAT THE FUCK IS CARBON DIOXIDE?")
@@ -86,19 +86,19 @@
 	else
 		..()
 
-/obj/item/weapon/tank/jetpack/void
+/obj/item/tank/jetpack/void
 	name = "void jetpack (oxygen)"
 	desc = "It works well in a void."
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
 
-/obj/item/weapon/tank/jetpack/oxygen
+/obj/item/tank/jetpack/oxygen
 	name = "jetpack (oxygen)"
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
 	item_state = "jetpack"
 
-/obj/item/weapon/tank/jetpack/oxygen/harness
+/obj/item/tank/jetpack/oxygen/harness
 	name = "jet harness (oxygen)"
 	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
 	icon_state = "jetpack-mini"
@@ -107,7 +107,7 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/weapon/tank/jetpack/oxygen/captain
+/obj/item/tank/jetpack/oxygen/captain
 	name = "\improper Captain's jetpack"
 	desc = "A compact, lightweight jetpack containing a high amount of compressed oxygen."
 	icon_state = "jetpack-captain"
@@ -116,13 +116,13 @@
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 
-/obj/item/weapon/tank/jetpack/oxygen/security
+/obj/item/tank/jetpack/oxygen/security
 	name = "security jetpack (oxygen)"
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
 	icon_state = "jetpack-sec"
 	item_state = "jetpack-sec"
 
-/obj/item/weapon/tank/jetpack/carbondioxide
+/obj/item/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
 	icon_state = "jetpack-black"
@@ -131,7 +131,7 @@
 	gas_type = "co2"
 
 
-/obj/item/weapon/tank/jetpack/suit
+/obj/item/tank/jetpack/suit
 	name = "hardsuit jetpack upgrade"
 	desc = "A modular, compact set of thrusters designed to integrate with a hardsuit. It is fueled by a tank inserted into the suit's storage compartment."
 	origin_tech = "materials=4;magnets=4;engineering=5"
@@ -144,28 +144,28 @@
 	gas_type = null
 	full_speed = FALSE
 	var/datum/gas_mixture/temp_air_contents
-	var/obj/item/weapon/tank/internals/tank = null
+	var/obj/item/tank/internals/tank = null
 
-/obj/item/weapon/tank/jetpack/suit/New()
+/obj/item/tank/jetpack/suit/New()
 	..()
 	STOP_PROCESSING(SSobj, src)
 	temp_air_contents = air_contents
 
-/obj/item/weapon/tank/jetpack/suit/attack_self()
+/obj/item/tank/jetpack/suit/attack_self()
 	return
 
-/obj/item/weapon/tank/jetpack/suit/cycle(mob/user)
+/obj/item/tank/jetpack/suit/cycle(mob/user)
 	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit))
 		to_chat(user, "<span class='warning'>\The [src] must be connected to a hardsuit!</span>")
 		return
 
 	var/mob/living/carbon/human/H = user
-	if(!istype(H.s_store, /obj/item/weapon/tank/internals))
+	if(!istype(H.s_store, /obj/item/tank/internals))
 		to_chat(user, "<span class='warning'>You need a tank in your suit storage!</span>")
 		return
 	..()
 
-/obj/item/weapon/tank/jetpack/suit/turn_on()
+/obj/item/tank/jetpack/suit/turn_on()
 	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
 		return
 	var/mob/living/carbon/human/H = loc.loc
@@ -174,13 +174,13 @@
 	START_PROCESSING(SSobj, src)
 	..()
 
-/obj/item/weapon/tank/jetpack/suit/turn_off()
+/obj/item/tank/jetpack/suit/turn_off()
 	tank = null
 	air_contents = temp_air_contents
 	STOP_PROCESSING(SSobj, src)
 	..()
 
-/obj/item/weapon/tank/jetpack/suit/process()
+/obj/item/tank/jetpack/suit/process()
 	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
 		turn_off()
 		return
@@ -199,12 +199,12 @@
 	return
 
 /mob/living/carbon/get_jetpack()
-	var/obj/item/weapon/tank/jetpack/J = back
+	var/obj/item/tank/jetpack/J = back
 	if(istype(J))
 		return J
 
 /mob/living/carbon/human/get_jetpack()
-	var/obj/item/weapon/tank/jetpack/J = ..()
+	var/obj/item/tank/jetpack/J = ..()
 	if(!istype(J) && istype(wear_suit, /obj/item/clothing/suit/space/hardsuit))
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack

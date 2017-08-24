@@ -1,19 +1,19 @@
 #define HORN_BRAIN_DAMAGE 10
 
-/obj/item/weapon/bikehorn/golden/retardhorn
+/obj/item/bikehorn/golden/retardhorn
 	origin_tech = "engineering=4;syndicate=3" //Science can uncover if this is a regular bike horn or not using science goggles.
 
-/obj/item/weapon/bikehorn/golden/retardhorn/attack()
+/obj/item/bikehorn/golden/retardhorn/attack()
 	flip_mobs()
 	retardify()
 	return ..()
 
-/obj/item/weapon/bikehorn/golden/retardhorn/attack_self(mob/user)
+/obj/item/bikehorn/golden/retardhorn/attack_self(mob/user)
 	flip_mobs()
 	retardify()
 	..()
 
-/obj/item/weapon/bikehorn/golden/retardhorn/proc/retardify(mob/living/carbon/M, mob/user)
+/obj/item/bikehorn/golden/retardhorn/proc/retardify(mob/living/carbon/M, mob/user)
 	if(!(next_usable > world.time))
 		var/turf/T = get_turf(src)
 		for(M in ohearers(7, T))

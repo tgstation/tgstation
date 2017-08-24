@@ -15,7 +15,7 @@
 	var/srange = 6 //The range of the search for pool turfs, change this for bigger or smaller pools.
 	var/linkedmist = list() //Used to keep track of created mist
 	var/misted = FALSE //Used to check for mist.
-	var/obj/item/weapon/reagent_containers/beaker = null
+	var/obj/item/reagent_containers/beaker = null
 	var/cur_reagent = "water"
 	var/drainable = FALSE
 	var/drained = FALSE
@@ -51,12 +51,12 @@
 			log_say("[key_name(user)] emagged the poolcontroller")
 			message_admins("[key_name_admin(user)] emagged the poolcontroller")
 
-/obj/machinery/poolcontroller/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/poolcontroller/attackby(obj/item/W, mob/user)
 	if(shocked && !(stat & NOPOWER))
 		shock(user,50)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (istype(W,/obj/item/weapon/reagent_containers/glass/beaker))
+	if (istype(W,/obj/item/reagent_containers/glass/beaker))
 		if(beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return
@@ -77,7 +77,7 @@
 			to_chat(user, "<span class='notice'>This machine only accepts full large beakers of one reagent.</span>")
 		return
 
-	if (istype(W,/obj/item/weapon/screwdriver))
+	if (istype(W,/obj/item/screwdriver))
 		cut_overlays()
 		panel_open = !panel_open
 		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
@@ -290,7 +290,7 @@
 			handle_temp()
 		if("eject")
 			if(beaker)
-				var/obj/item/weapon/reagent_containers/glass/B = beaker
+				var/obj/item/reagent_containers/glass/B = beaker
 				B.loc = loc
 				beaker = null
 				. = TRUE

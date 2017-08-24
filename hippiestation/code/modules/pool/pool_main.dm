@@ -422,8 +422,8 @@
 					L.emote("cough")
 				L.adjustStaminaLoss(4) //You need to give em a break!
 
-/turf/open/pool/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/mop) && filled)
+/turf/open/pool/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/mop) && filled)
 		W.reagents.add_reagent("water", 5)
 		to_chat(user, "<span class='notice'>You wet [W] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)

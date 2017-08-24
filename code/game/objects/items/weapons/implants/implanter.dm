@@ -1,7 +1,7 @@
-/obj/item/weapon/implanter
+/obj/item/implanter
 	name = "implanter"
 	desc = "A sterile automatic implant injector."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "implanter0"
 	item_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -11,11 +11,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
-	var/obj/item/weapon/implant/imp = null
+	var/obj/item/implant/imp = null
 	var/imp_type = null
 
 
-/obj/item/weapon/implanter/update_icon()
+/obj/item/implanter/update_icon()
 	if(imp)
 		icon_state = "implanter1"
 		origin_tech = imp.origin_tech
@@ -24,7 +24,7 @@
 		origin_tech = initial(origin_tech)
 
 
-/obj/item/weapon/implanter/attack(mob/living/M, mob/user)
+/obj/item/implanter/attack(mob/living/M, mob/user)
 	if(!istype(M))
 		return
 	if(user && imp)
@@ -44,8 +44,8 @@
 				else
 					to_chat(user, "<span class='warning'>[src] fails to implant [M].</span>")
 
-/obj/item/weapon/implanter/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/pen))
+/obj/item/implanter/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
 		if(user.get_active_held_item() != W)
 			return
@@ -58,16 +58,16 @@
 	else
 		return ..()
 
-/obj/item/weapon/implanter/Initialize(mapload)
+/obj/item/implanter/Initialize(mapload)
 	..()
 	if(imp_type)
 		imp = new imp_type(src)
 	update_icon()
 
-/obj/item/weapon/implanter/adrenalin
+/obj/item/implanter/adrenalin
 	name = "implanter (adrenalin)"
-	imp_type = /obj/item/weapon/implant/adrenalin
+	imp_type = /obj/item/implant/adrenalin
 
-/obj/item/weapon/implanter/emp
+/obj/item/implanter/emp
 	name = "implanter (EMP)"
-	imp_type = /obj/item/weapon/implant/emp
+	imp_type = /obj/item/implant/emp

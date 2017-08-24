@@ -1,6 +1,6 @@
 #define CHRONO_BEAM_RANGE 3
 #define CHRONO_FRAME_COUNT 22
-/obj/item/weapon/chrono_eraser
+/obj/item/chrono_eraser
 	name = "Timestream Eradication Device"
 	desc = "The result of outlawed time-bluespace research, this device is capable of wiping a being from the timestream. They never are, they never were, they never will be."
 	icon = 'icons/obj/chronos.dmi'
@@ -10,22 +10,22 @@
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/equip_unequip_TED_Gun)
-	var/obj/item/weapon/gun/energy/chrono_gun/PA = null
+	var/obj/item/gun/energy/chrono_gun/PA = null
 	var/list/erased_minds = list() //a collection of minds from the dead
 
-/obj/item/weapon/chrono_eraser/proc/pass_mind(datum/mind/M)
+/obj/item/chrono_eraser/proc/pass_mind(datum/mind/M)
 	erased_minds += M
 
-/obj/item/weapon/chrono_eraser/dropped()
+/obj/item/chrono_eraser/dropped()
 	..()
 	if(PA)
 		qdel(PA)
 
-/obj/item/weapon/chrono_eraser/Destroy()
+/obj/item/chrono_eraser/Destroy()
 	dropped()
 	return ..()
 
-/obj/item/weapon/chrono_eraser/ui_action_click(mob/user)
+/obj/item/chrono_eraser/ui_action_click(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(C.back == src)
@@ -35,11 +35,11 @@
 				PA = new(src)
 				user.put_in_hands(PA)
 
-/obj/item/weapon/chrono_eraser/item_action_slot_check(slot, mob/user)
+/obj/item/chrono_eraser/item_action_slot_check(slot, mob/user)
 	if(slot == slot_back)
 		return 1
 
-/obj/item/weapon/gun/energy/chrono_gun
+/obj/item/gun/energy/chrono_gun
 	name = "T.E.D. Projection Apparatus"
 	desc = "It's as if they never existed in the first place."
 	icon = 'icons/obj/chronos.dmi'
@@ -50,27 +50,27 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
 	can_charge = 0
 	fire_delay = 50
-	var/obj/item/weapon/chrono_eraser/TED = null
+	var/obj/item/chrono_eraser/TED = null
 	var/obj/effect/chrono_field/field = null
 	var/turf/startpos = null
 
-/obj/item/weapon/gun/energy/chrono_gun/Initialize()
+/obj/item/gun/energy/chrono_gun/Initialize()
 	. = ..()
-	if(istype(loc, /obj/item/weapon/chrono_eraser))
+	if(istype(loc, /obj/item/chrono_eraser))
 		TED = loc
 	else //admin must have spawned it
 		TED = new(src.loc)
 		qdel(src)
 
-/obj/item/weapon/gun/energy/chrono_gun/update_icon()
+/obj/item/gun/energy/chrono_gun/update_icon()
 	return
 
-/obj/item/weapon/gun/energy/chrono_gun/process_fire()
+/obj/item/gun/energy/chrono_gun/process_fire()
 	if(field)
 		field_disconnect(field)
 	..()
 
-/obj/item/weapon/gun/energy/chrono_gun/Destroy()
+/obj/item/gun/energy/chrono_gun/Destroy()
 	if(TED)
 		TED.PA = null
 		TED = null
@@ -78,7 +78,7 @@
 		field_disconnect(field)
 	return ..()
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_connect(obj/effect/chrono_field/F)
+/obj/item/gun/energy/chrono_gun/proc/field_connect(obj/effect/chrono_field/F)
 	var/mob/living/user = src.loc
 	if(F.gun)
 		if(isliving(user) && F.captured)
@@ -92,7 +92,7 @@
 			to_chat(user, "<span class='notice'>Connection established with target: <b>[F.captured]</b></span>")
 
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_disconnect(obj/effect/chrono_field/F)
+/obj/item/gun/energy/chrono_gun/proc/field_disconnect(obj/effect/chrono_field/F)
 	if(F && field == F)
 		var/mob/living/user = src.loc
 		if(F.gun == src)
@@ -102,7 +102,7 @@
 	field = null
 	startpos = null
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_check(obj/effect/chrono_field/F)
+/obj/item/gun/energy/chrono_gun/proc/field_check(obj/effect/chrono_field/F)
 	if(F)
 		if(field == F)
 			var/turf/currentpos = get_turf(src)
@@ -112,7 +112,7 @@
 		field_disconnect(F)
 		return 0
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/pass_mind(datum/mind/M)
+/obj/item/gun/energy/chrono_gun/proc/pass_mind(datum/mind/M)
 	if(TED)
 		TED.pass_mind(M)
 
@@ -122,7 +122,7 @@
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
 	nodamage = 1
-	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
+	var/obj/item/gun/energy/chrono_gun/gun = null
 
 /obj/item/projectile/energy/chrono_beam/fire()
 	gun = firer.get_active_held_item()
@@ -153,13 +153,13 @@
 	anchored = TRUE
 	blend_mode = BLEND_MULTIPLY
 	var/mob/living/captured = null
-	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
+	var/obj/item/gun/energy/chrono_gun/gun = null
 	var/tickstokill = 15
 	var/mutable_appearance/mob_underlay
 	var/preloaded = 0
 	var/RPpos = null
 
-/obj/effect/chrono_field/New(loc, var/mob/living/target, var/obj/item/weapon/gun/energy/chrono_gun/G)
+/obj/effect/chrono_field/New(loc, var/mob/living/target, var/obj/item/gun/energy/chrono_gun/G)
 	if(target && isliving(target) && G)
 		target.loc = src
 		src.captured = target
@@ -227,7 +227,7 @@
 /obj/effect/chrono_field/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy/chrono_beam))
 		var/obj/item/projectile/energy/chrono_beam/beam = P
-		var/obj/item/weapon/gun/energy/chrono_gun/Pgun = beam.gun
+		var/obj/item/gun/energy/chrono_gun/Pgun = beam.gun
 		if(Pgun && istype(Pgun))
 			Pgun.field_connect(src)
 	else

@@ -1,4 +1,4 @@
-/obj/item/weapon/storage/book
+/obj/item/storage/book
 	name = "hollowed book"
 	desc = "I guess someone didn't like it."
 	icon = 'icons/obj/library.dmi'
@@ -10,14 +10,14 @@
 	resistance_flags = FLAMMABLE
 	var/title = "book"
 
-/obj/item/weapon/storage/book/attack_self(mob/user)
+/obj/item/storage/book/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 
 GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon"))
 GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning",       "honk1",       "honk2",        "creeper",       "white",       "holylight",   "atheist",          "tome",        "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon"))
 GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",         "bible",       "bible",        "syringe_kit",   "syringe_kit", "syringe_kit", "syringe_kit",      "syringe_kit", "kingyellow",         "ithaqua", "scientology", "melted",       "necronomicon"))
 
-/obj/item/weapon/storage/book/bible
+/obj/item/storage/book/bible
 	name = "bible"
 	desc = "Apply to head repeatedly."
 	icon = 'icons/obj/storage.dmi'
@@ -29,11 +29,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	var/deity_name = "Christ"
 	force_string = "holy"
 
-/obj/item/weapon/storage/book/bible/suicide_act(mob/user)
+/obj/item/storage/book/bible/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/weapon/storage/book/bible/attack_self(mob/living/carbon/human/H)
+/obj/item/storage/book/bible/attack_self(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
@@ -47,13 +47,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		dat += "</table></body></html>"
 		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
 
-/obj/item/weapon/storage/book/bible/Topic(href, href_list)
+/obj/item/storage/book/bible/Topic(href, href_list)
 	if(!usr.canUseTopic(src))
 		return
 	if(href_list["seticon"] && SSreligion && !SSreligion.bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 		var/biblename = GLOB.biblenames[iconi]
-		var/obj/item/weapon/storage/book/bible/B = locate(href_list["src"])
+		var/obj/item/storage/book/bible/B = locate(href_list["src"])
 		B.icon_state = GLOB.biblestates[iconi]
 		B.item_state = GLOB.bibleitemstates[iconi]
 
@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		SSblackbox.set_details("religion_book","[biblename]")
 		usr << browse(null, "window=editicon")
 
-/obj/item/weapon/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
+/obj/item/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
 	for(var/X in H.bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(BP.status == BODYPART_ROBOTIC)
@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		playsound(src.loc, "punch", 25, 1, -1)
 	return 1
 
-/obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
+/obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
 
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
 
-/obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user, proximity)
+/obj/item/storage/book/bible/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
 	if(isfloorturf(A))
@@ -157,13 +157,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
 
-/obj/item/weapon/storage/book/bible/booze
+/obj/item/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."
 
-/obj/item/weapon/storage/book/bible/booze/PopulateContents()
-	new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
+/obj/item/storage/book/bible/booze/PopulateContents()
+	new /obj/item/reagent_containers/food/drinks/bottle/whiskey(src)
 
-/obj/item/weapon/storage/book/bible/syndicate
+/obj/item/storage/book/bible/syndicate
 	icon_state ="ebook"
 	deity_name = "The Syndicate"
 	throw_speed = 2
@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 
 
 
-/obj/item/weapon/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
+/obj/item/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)
 		H.mind.isholy = TRUE
 		uses -= 1
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		var/ownername = H.real_name
 		desc += "<span class='warning'>The name [ownername] is written in blood inside the cover.</span>"
 
-/obj/item/weapon/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
+/obj/item/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
 	if (user.a_intent == INTENT_HELP)
 		return ..()
 	else

@@ -34,7 +34,7 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell
 	var/state = 0
 	var/list/log = new
 	var/last_message = 0
@@ -210,7 +210,7 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
-/obj/mecha/proc/add_cell(var/obj/item/weapon/stock_parts/cell/C=null)
+/obj/mecha/proc/add_cell(var/obj/item/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -713,8 +713,8 @@
 	AI.remote_control = src
 	AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
-	to_chat(AI, "[AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
-	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]")
+	to_chat(AI, AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" :\
+		"<span class='notice'>You have been uploaded to a mech's onboard computer.</span>")
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
 	if(interaction == AI_TRANS_FROM_CARD)
 		GrantActions(AI, FALSE) //No eject/return to core action for AI uploaded by card

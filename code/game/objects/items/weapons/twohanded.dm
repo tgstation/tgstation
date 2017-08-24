@@ -22,14 +22,14 @@
 /*
  * Twohanded
  */
-/obj/item/weapon/twohanded
+/obj/item/twohanded
 	var/wielded = 0
 	var/force_unwielded = 0
 	var/force_wielded = 0
 	var/wieldsound = null
 	var/unwieldsound = null
 
-/obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE)
+/obj/item/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(!wielded || !user)
 		return
 	wielded = 0
@@ -48,12 +48,12 @@
 			to_chat(user, "<span class='notice'>You are now carrying [src] with one hand.</span>")
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
-	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_held_item()
+	var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 	if(O && istype(O))
 		O.unwield()
 	return
 
-/obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
+/obj/item/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
 		return
 	if(ismonkey(user))
@@ -76,63 +76,63 @@
 		to_chat(user, "<span class='notice'>You grab [src] with both hands.</span>")
 	if (wieldsound)
 		playsound(loc, wieldsound, 50, 1)
-	var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
+	var/obj/item/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
 	O.name = "[name] - offhand"
 	O.desc = "Your second grip on [src]."
 	O.wielded = TRUE
 	user.put_in_inactive_hand(O)
 	return
 
-/obj/item/weapon/twohanded/dropped(mob/user)
+/obj/item/twohanded/dropped(mob/user)
 	. = ..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(!wielded)
 		return
 	unwield(user)
 
-/obj/item/weapon/twohanded/update_icon()
+/obj/item/twohanded/update_icon()
 	return
 
-/obj/item/weapon/twohanded/attack_self(mob/user)
+/obj/item/twohanded/attack_self(mob/user)
 	. = ..()
 	if(wielded) //Trying to unwield it
 		unwield(user)
 	else //Trying to wield it
 		wield(user)
 
-/obj/item/weapon/twohanded/equip_to_best_slot(mob/M)
+/obj/item/twohanded/equip_to_best_slot(mob/M)
 	if(..())
-		if(istype(src, /obj/item/weapon/twohanded/required))
+		if(istype(src, /obj/item/twohanded/required))
 			return // unwield forces twohanded-required items to be dropped.
 		unwield(M)
 		return
 
-/obj/item/weapon/twohanded/equipped(mob/user, slot)
+/obj/item/twohanded/equipped(mob/user, slot)
 	..()
-	if(!user.is_holding(src) && wielded && !istype(src, /obj/item/weapon/twohanded/required))
+	if(!user.is_holding(src) && wielded && !istype(src, /obj/item/twohanded/required))
 		unwield(user)
 
 ///////////OFFHAND///////////////
-/obj/item/weapon/twohanded/offhand
+/obj/item/twohanded/offhand
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	flags = ABSTRACT | NODROP
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/item/weapon/twohanded/offhand/unwield()
+/obj/item/twohanded/offhand/unwield()
 	if(wielded)//Only delete if we're wielded
 		wielded = FALSE
 		qdel(src)
 
-/obj/item/weapon/twohanded/offhand/wield()
+/obj/item/twohanded/offhand/wield()
 	if(wielded)//Only delete if we're wielded
 		wielded = FALSE
 		qdel(src)
 
-/obj/item/weapon/twohanded/offhand/attack_self(mob/living/carbon/user)		//You should never be able to do this in standard use of two handed items. This is a backup for lingering offhands.
-	var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
-	if (istype(O) && !istype(O, /obj/item/weapon/twohanded/offhand/))		//If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
+/obj/item/twohanded/offhand/attack_self(mob/living/carbon/user)		//You should never be able to do this in standard use of two handed items. This is a backup for lingering offhands.
+	var/obj/item/twohanded/O = user.get_inactive_held_item()
+	if (istype(O) && !istype(O, /obj/item/twohanded/offhand/))		//If you have a proper item in your other hand that the offhand is for, do nothing. This should never happen.
 		return
 	if (QDELETED(src))
 		return
@@ -140,20 +140,20 @@
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
-/obj/item/weapon/twohanded/required
+/obj/item/twohanded/required
 	w_class = WEIGHT_CLASS_HUGE
 
-/obj/item/weapon/twohanded/required/attack_self()
+/obj/item/twohanded/required/attack_self()
 	return
 
-/obj/item/weapon/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+/obj/item/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(wielded && !slot_flags)
 		to_chat(M, "<span class='warning'>[src] is too cumbersome to carry with anything but your hands!</span>")
 		return 0
 	return ..()
 
-/obj/item/weapon/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
-	var/obj/item/weapon/twohanded/required/H = user.get_inactive_held_item()
+/obj/item/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
+	var/obj/item/twohanded/required/H = user.get_inactive_held_item()
 	if(get_dist(src,user) > 1)
 		return
 	if(H != null)
@@ -163,11 +163,11 @@
 		wield(user)
 	..()
 
-/obj/item/weapon/twohanded/required/equipped(mob/user, slot)
+/obj/item/twohanded/required/equipped(mob/user, slot)
 	..()
 	var/slotbit = slotdefine2slotbit(slot)
 	if(slot_flags & slotbit)
-		var/datum/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
+		var/datum/O = user.is_holding_item_of_type(/obj/item/twohanded/offhand)
 		if(!O || QDELETED(O))
 			return
 		qdel(O)
@@ -177,16 +177,16 @@
 	else
 		unwield(user)
 
-/obj/item/weapon/twohanded/required/dropped(mob/living/user, show_message = TRUE)
+/obj/item/twohanded/required/dropped(mob/living/user, show_message = TRUE)
 	unwield(user, show_message)
 	..()
 
-/obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
+/obj/item/twohanded/required/wield(mob/living/carbon/user)
 	..()
 	if(!wielded)
 		user.dropItemToGround(src)
 
-/obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
+/obj/item/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(!wielded)
 		return
 	if(show_message)
@@ -196,7 +196,7 @@
 /*
  * Fireaxe
  */
-/obj/item/weapon/twohanded/fireaxe  // DEM AXES MAN, marker -Agouri
+/obj/item/twohanded/fireaxe  // DEM AXES MAN, marker -Agouri
 	icon_state = "fireaxe0"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
@@ -215,15 +215,15 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
 	return
 
-/obj/item/weapon/twohanded/fireaxe/suicide_act(mob/user)
+/obj/item/twohanded/fireaxe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
 	if(wielded) //destroys windows and grilles in one hit
@@ -238,7 +238,7 @@
 /*
  * Double-Bladed Energy Swords - Cheridan
  */
-/obj/item/weapon/twohanded/dualsaber
+/obj/item/twohanded/dualsaber
 	icon_state = "dualsaber0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -268,7 +268,7 @@
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
-/obj/item/weapon/twohanded/dualsaber/Initialize()
+/obj/item/twohanded/dualsaber/Initialize()
 	. = ..()
 	if(LAZYLEN(possible_colors))
 		item_color = pick(possible_colors)
@@ -282,18 +282,18 @@
 			if("purple")
 				light_color = LIGHT_COLOR_LAVENDER
 
-/obj/item/weapon/twohanded/dualsaber/Destroy()
+/obj/item/twohanded/dualsaber/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/weapon/twohanded/dualsaber/update_icon()
+/obj/item/twohanded/dualsaber/update_icon()
 	if(wielded)
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 
-/obj/item/weapon/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
+/obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
 		if(user.dna.check_mutation(HULK))
 			to_chat(user, "<span class='warning'>You grip the blade too hard and accidentally close it!</span>")
@@ -306,31 +306,31 @@
 	if((wielded) && prob(50))
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
-/obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
+/obj/item/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
 	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
 		user.setDir(i)
 		if(i == WEST)
 			user.emote("flip")
 		sleep(1)
 
-/obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
+/obj/item/twohanded/dualsaber/proc/impale(mob/living/user)
 	to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>")
 	if (force_wielded)
 		user.take_bodypart_damage(20,25)
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		return ..()
 	return 0
 
-/obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
+/obj/item/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
 	if(wielded)
 		to_chat(user, "<span class='warning'>You can't pick up such dangerous item with your meaty hands without losing fingers, better not to!</span>")
 		return 1
 
-/obj/item/weapon/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
+/obj/item/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
 	if(M.has_dna())
 		if(M.dna.check_mutation(HULK))
 			to_chat(M, "<span class='warning'>You lack the grace to wield this!</span>")
@@ -343,7 +343,7 @@
 		START_PROCESSING(SSobj, src)
 		set_light(brightness_on)
 
-/obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
+/obj/item/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
 	w_class = initial(w_class)
 	..()
@@ -351,7 +351,7 @@
 	STOP_PROCESSING(SSobj, src)
 	set_light(0)
 
-/obj/item/weapon/twohanded/dualsaber/process()
+/obj/item/twohanded/dualsaber/process()
 	if(wielded)
 		if(hacked)
 			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
@@ -359,12 +359,12 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/twohanded/dualsaber/IsReflect()
+/obj/item/twohanded/dualsaber/IsReflect()
 	if(wielded)
 		return 1
 
-/obj/item/weapon/twohanded/dualsaber/ignition_effect(atom/A, mob/user)
-	// same as /obj/item/weapon/melee/transforming/energy, mostly
+/obj/item/twohanded/dualsaber/ignition_effect(atom/A, mob/user)
+	// same as /obj/item/melee/transforming/energy, mostly
 	if(!wielded)
 		return ""
 	var/in_mouth = ""
@@ -378,19 +378,19 @@
 	// Light your candles while spinning around the room
 	INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
-/obj/item/weapon/twohanded/dualsaber/green
+/obj/item/twohanded/dualsaber/green
 	possible_colors = list("green")
 
-/obj/item/weapon/twohanded/dualsaber/red
+/obj/item/twohanded/dualsaber/red
 	possible_colors = list("red")
 
-/obj/item/weapon/twohanded/dualsaber/blue
+/obj/item/twohanded/dualsaber/blue
 	possible_colors = list("blue")
 
-/obj/item/weapon/twohanded/dualsaber/purple
+/obj/item/twohanded/dualsaber/purple
 	possible_colors = list("purple")
 
-/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/twohanded/dualsaber/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		if(!hacked)
 			hacked = TRUE
@@ -403,7 +403,7 @@
 		return ..()
 
 //spears
-/obj/item/weapon/twohanded/spear
+/obj/item/twohanded/spear
 	icon_state = "spearglass0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
@@ -424,16 +424,16 @@
 	sharpness = IS_SHARP
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
-	var/obj/item/weapon/grenade/explosive = null
+	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
 
-/obj/item/weapon/twohanded/spear/update_icon()
+/obj/item/twohanded/spear/update_icon()
 	if(explosive)
 		icon_state = "spearbomb[wielded]"
 	else
 		icon_state = "spearglass[wielded]"
 
-/obj/item/weapon/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
+/obj/item/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
 		return
 	if(isopenturf(AM)) //So you can actually melee with it
@@ -445,14 +445,14 @@
 		qdel(src)
 
  //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
-/obj/item/weapon/twohanded/spear/throw_impact(atom/target)
+/obj/item/twohanded/spear/throw_impact(atom/target)
 	. = ..()
 	if(!.) //not caught
 		if(explosive)
 			explosive.prime()
 			qdel(src)
 
-/obj/item/weapon/twohanded/spear/AltClick()
+/obj/item/twohanded/spear/AltClick()
 	..()
 	if(!explosive)
 		return
@@ -462,8 +462,8 @@
 		if(input)
 			src.war_cry = input
 
-/obj/item/weapon/twohanded/spear/CheckParts(list/parts_list)
-	var/obj/item/weapon/twohanded/spear/S = locate() in parts_list
+/obj/item/twohanded/spear/CheckParts(list/parts_list)
+	var/obj/item/twohanded/spear/S = locate() in parts_list
 	if(S)
 		if(S.explosive)
 			S.explosive.forceMove(get_turf(src))
@@ -471,7 +471,7 @@
 		parts_list -= S
 		qdel(S)
 	..()
-	var/obj/item/weapon/grenade/G = locate() in contents
+	var/obj/item/grenade/G = locate() in contents
 	if(G)
 		explosive = G
 		name = "explosive lance"
@@ -479,7 +479,7 @@
 	update_icon()
 
 // CHAINSAW
-/obj/item/weapon/twohanded/required/chainsaw
+/obj/item/twohanded/required/chainsaw
 	name = "chainsaw"
 	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
 	icon_state = "chainsaw_off"
@@ -500,7 +500,7 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = FALSE
 
-/obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
+/obj/item/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
 	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
 	force = on ? force_on : initial(force)
@@ -518,17 +518,17 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/weapon/twohanded/required/chainsaw/get_dismemberment_chance()
+/obj/item/twohanded/required/chainsaw/get_dismemberment_chance()
 	if(wielded)
 		. = ..()
 
-/obj/item/weapon/twohanded/required/chainsaw/doomslayer
+/obj/item/twohanded/required/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
@@ -536,7 +536,7 @@
 	return 0
 
 //GREY TIDE
-/obj/item/weapon/twohanded/spear/grey_tide
+/obj/item/twohanded/spear/grey_tide
 	icon_state = "spearglass0"
 	name = "\improper Grey Tide"
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
@@ -546,7 +546,7 @@
 	throw_speed = 4
 	attack_verb = list("gored")
 
-/obj/item/weapon/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
+/obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	..()
 	if(!proximity)
 		return
@@ -561,7 +561,7 @@
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
 
-/obj/item/weapon/twohanded/pitchfork
+/obj/item/twohanded/pitchfork
 	icon_state = "pitchfork0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
@@ -579,7 +579,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/weapon/twohanded/pitchfork/demonic
+/obj/item/twohanded/pitchfork/demonic
 	name = "demonic pitchfork"
 	desc = "A red pitchfork, it looks like the work of the devil."
 	force = 19
@@ -587,30 +587,30 @@
 	force_unwielded = 19
 	force_wielded = 25
 
-/obj/item/weapon/twohanded/pitchfork/demonic/Initialize()
+/obj/item/twohanded/pitchfork/demonic/Initialize()
 	. = ..()
 	set_light(3,6,LIGHT_COLOR_RED)
 
-/obj/item/weapon/twohanded/pitchfork/demonic/greater
+/obj/item/twohanded/pitchfork/demonic/greater
 	force = 24
 	throwforce = 50
 	force_unwielded = 24
 	force_wielded = 34
 
-/obj/item/weapon/twohanded/pitchfork/demonic/ascended
+/obj/item/twohanded/pitchfork/demonic/ascended
 	force = 100
 	throwforce = 100
 	force_unwielded = 100
 	force_wielded = 500000 // Kills you DEAD.
 
-/obj/item/weapon/twohanded/pitchfork/update_icon()
+/obj/item/twohanded/pitchfork/update_icon()
 	icon_state = "pitchfork[wielded]"
 
-/obj/item/weapon/twohanded/pitchfork/suicide_act(mob/user)
+/obj/item/twohanded/pitchfork/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] impales [user.p_them()]self in [user.p_their()] abdomen with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/living/user)
+/obj/item/twohanded/pitchfork/demonic/pickup(mob/living/user)
 	if(isliving(user) && user.mind && user.owns_soul() && !is_devil(user))
 		var/mob/living/U = user
 		U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
@@ -621,13 +621,13 @@
 		else
 			U.adjustFireLoss(rand(force/2,force))
 
-/obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
+/obj/item/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
 	if(user.mind && user.owns_soul() && !is_devil(user))
 		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
 	..()
 
-/obj/item/weapon/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
+/obj/item/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !wielded)
 		return
 	if(iswallturf(target))
@@ -640,7 +640,7 @@
 
 //HF blade
 
-/obj/item/weapon/twohanded/vibro_weapon
+/obj/item/twohanded/vibro_weapon
 	icon_state = "hfrequency0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -658,7 +658,7 @@
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
 	if(wielded || attack_type != PROJECTILE_ATTACK)
@@ -672,25 +672,25 @@
 				return 1
 	return 0
 
-/obj/item/weapon/twohanded/vibro_weapon/update_icon()
+/obj/item/twohanded/vibro_weapon/update_icon()
 	icon_state = "hfrequency[wielded]"
 
 /*
  * Bone Axe
  */
-/obj/item/weapon/twohanded/fireaxe/boneaxe  // Blatant imitation of the fireaxe, but made out of bone.
+/obj/item/twohanded/fireaxe/boneaxe  // Blatant imitation of the fireaxe, but made out of bone.
 	icon_state = "bone_axe0"
 	name = "bone axe"
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
 	force_wielded = 23
 
-/obj/item/weapon/twohanded/fireaxe/boneaxe/update_icon()
+/obj/item/twohanded/fireaxe/boneaxe/update_icon()
 	icon_state = "bone_axe[wielded]"
 
 /*
  * Bone Spear
  */
-/obj/item/weapon/twohanded/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+/obj/item/twohanded/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
 	icon_state = "bone_spear0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
@@ -709,5 +709,5 @@
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
 
-/obj/item/weapon/twohanded/bonespear/update_icon()
+/obj/item/twohanded/bonespear/update_icon()
 	icon_state = "bone_spear[wielded]"

@@ -1,11 +1,11 @@
-/obj/item/weapon/card/id/admin
+/obj/item/card/id/admin
 	name = "Admin ID"
 	desc = "Magic card that opens everything."
 	icon_state = "fingerprint1"
 	registered_name = null
 	assignment = "General"
 
-/obj/item/weapon/card/id/admin/Initialize()
+/obj/item/card/id/admin/Initialize()
 	. = ..()
 	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()+get_ert_access("commander")
 
@@ -19,10 +19,10 @@
 	usr.client.cmd_assume_direct_control(D)
 	D.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(D), slot_w_uniform)
 	D.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(D), slot_shoes)
-	D.equip_to_slot_or_del(new /obj/item/weapon/card/id/admin(D), slot_wear_id)
+	D.equip_to_slot_or_del(new /obj/item/card/id/admin(D), slot_wear_id)
 	D.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(D), slot_ears)
-	D.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(D), slot_back)
-	D.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(D.back), slot_in_backpack)
+	D.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel(D), slot_back)
+	D.equip_to_slot_or_del(new /obj/item/storage/box/engineer(D.back), slot_in_backpack)
 	D.name = "Admin"
 	D.real_name = "Admin"
 	var/newname = ""

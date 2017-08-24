@@ -10,7 +10,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	mutant_bodyparts = list("tail_human","ears")
 	mutant_organs = list(/obj/item/organ/tail/cat/tcat,/obj/item/organ/ears/cat/tcat)
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/cat
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/cat
 	skinned_type = /obj/item/stack/sheet/animalhide/cat
 	exotic_bloodtype = "O-" //universal donor, more reason to drain their blood
 	burnmod = 1.25
