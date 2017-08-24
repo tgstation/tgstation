@@ -279,11 +279,10 @@ Credit where due:
 	<hr>\
 	<h2>Things that have changed:</h2>\
 	<ul>\
-	<li><b>Servants may now vote to declare war on the station</b> by using the herald's beacon in the center of their spawn room. It requires a 66% vote, \
-	and will announce their presence to crew, but will heavily empower many of their tools and gain an extra 10 minutes to prepare.</li>\
-	<li><b>Clockwork marauders have been heavily revamped</b> and now serve as frontline fighters that are not bound to any servants.</li>\
-	<li><font size=3><b>Geis has been removed</b></font> and replaced with a new scripture called Kindle. Kindle serves as a stun and silence from short \
-	distance against one target. Note that if the target takes damage, the stun will be reduced in duration.</li>\
+	<li><b>Power is now shared</b> between all Sigils of Transmission.</li>\
+	<li><b>Kindle is now a projectile</b> with a range of approximately three tiles.</li>\
+	<li><b>Heralding Ratvar</b> no longer adds ten minutes to the Ark timer.</li>\
+	<li><b>You are warned when attempting to create a combat marauder at Reebe</b>, as they will likely be useless.</li>\
 	</ul>\
 	<hr>\
 	<b>Good luck!</b>"
