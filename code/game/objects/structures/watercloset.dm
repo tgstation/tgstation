@@ -286,8 +286,8 @@
 			wash_obj(O)
 
 
-/obj/machinery/shower/proc/wash_obj(atom/movable/O)
-	. = O.forensics.clean_blood()
+/obj/machinery/shower/proc/wash_obj(obj/O)
+	. = O.clean_blood()
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
 		var/obj/item/I = O
@@ -299,7 +299,7 @@
 	if(isturf(loc))
 		var/turf/tile = loc
 		tile.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		tile.forensics.clean_blood()
+		tile.clean_blood()
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
 				qdel(E)
@@ -349,7 +349,7 @@
 			else if(H.w_uniform && wash_obj(H.w_uniform))
 				H.update_inv_w_uniform()
 			if(washgloves)
-				H.forensics.clean_blood()
+				H.clean_blood()
 			if(H.shoes && washshoes && wash_obj(H.shoes))
 				H.update_inv_shoes()
 			if(H.wear_mask && washmask && wash_obj(H.wear_mask))
@@ -366,9 +366,9 @@
 		else
 			if(M.wear_mask && wash_obj(M.wear_mask))
 				M.update_inv_wear_mask(0)
-			M.forensics.clean_blood()
+			M.clean_blood()
 	else
-		L.forensics.clean_blood()
+		L.clean_blood()
 
 
 /obj/machinery/shower/process()
@@ -452,7 +452,7 @@
 			H.regenerate_icons()
 		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else
-		user.forensics.clean_blood()
+		user.clean_blood()
 
 
 /obj/structure/sink/attackby(obj/item/O, mob/living/user, params)
@@ -509,7 +509,7 @@
 			busy = FALSE
 			return 1
 		busy = FALSE
-		O.forensics.clean_blood()
+		O.clean_blood()
 		O.acid_level = 0
 		create_reagents(5)
 		reagents.add_reagent("[dispensedreagent]", 5)

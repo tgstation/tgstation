@@ -718,7 +718,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(..())
 			dropItemToGround(I)
 
-/mob/living/carbon/human/proc/clean_blood()
+/mob/living/carbon/human/clean_blood()
 	var/mob/living/carbon/human/H = src
 	if(H.gloves)
 		if(H.gloves.clean_blood())

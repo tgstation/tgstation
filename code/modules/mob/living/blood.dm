@@ -255,7 +255,7 @@
 				return
 			else
 				temp_blood_DNA = list()
-				temp_blood_DNA |= drop.forensics.blood.Copy() //we transfer the dna from the drip to the splatter
+				temp_blood_DNA |= drop.blood_DNA.Copy() //we transfer the dna from the drip to the splatter
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(T)
@@ -268,7 +268,7 @@
 		B = new /obj/effect/decal/cleanable/blood/splatter(T)
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
-		B.forensics.blood |= temp_blood_DNA
+		B.blood_DNA |= temp_blood_DNA
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
 	if(!(NOBLOOD in dna.species.species_traits))
@@ -280,7 +280,7 @@
 	var/obj/effect/decal/cleanable/xenoblood/B = locate() in T.contents
 	if(!B)
 		B = new(T)
-	B.forensics.blood["UNKNOWN DNA"] = "X*"
+	B.blood_DNA["UNKNOWN DNA"] = "X*"
 
 /mob/living/silicon/robot/add_splatter_floor(turf/T, small_drip)
 	if(!T)
