@@ -244,7 +244,7 @@ function handle_pr($payload) {
 	switch ($payload["action"]) {
 		case 'opened':
 			tag_pr($payload, true);
-			if(get_pr_code_friendliness($payload) === -1){
+			if(get_pr_code_friendliness($payload) < 0){
 				$balances = pr_balances();
 				$author = $payload['pull_request']['user']['login'];
 				if(isset($balances[$author]) && $balances[$author] < 0)
@@ -325,11 +325,11 @@ function pr_balances(){
 		return array();
 }
 
-//returns 1 if it's a fix/feature/etc, 0 if it's a neutral, -1 if it's a Feature/Tweak/Balance
+//returns the difference in PR balance a pull request would cause
 function get_pr_code_friendliness($payload, $oldbalance){
 	global $startingPRBalance;
 	$labels = get_pr_labels_array($payload);
-	//anything not in this list defaults to -1
+	//anything not in this list defaults to 0
 	$label_values = array(
 		'Fix' => 2,
 		'Refactor' => 2,
@@ -340,26 +340,16 @@ function get_pr_code_friendliness($payload, $oldbalance){
 		'Logging' => 1,
 		'Feedback' => 1,
 		'Performance' => 3,
-		'Grammar and Formatting' => 0,
-		'Tools' => 0,
-		'Map Edit' => 0,
-		'SQL' => 0,
-		'Documentation' => 0,
-		'Repository' => 0,
-		'Revert/Removal' => 0,
-		'UI' => 0,
-		'Sprites' => 0,
-		'Sound' => 0,
+		'Feature' => -1,
+		'Balance/Rebalance' => -1,
+		'Tweak' => -1,
+		'PRB: Reset' => max($affecting, $startingPRBalance - $oldbalance),
 	);
 
-	$affecting = -1;
+	$affecting = 0;
 	$is_neutral = FALSE;
 	foreach($labels as $l){
-		if($l == 'PRB: Reset') {	//sets back to starting balance
-			$affecting = max($affecting, $startingPRBalance - $oldbalance);
-			break;
-		}
-		else if($l == 'PRB: No Update') {	//no effect on balance
+		if($l == 'PRB: No Update') {	//no effect on balance
 			$affecting = 0;
 			break;
 		}
