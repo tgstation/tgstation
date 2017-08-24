@@ -390,7 +390,7 @@ function update_pr_balance($payload) {
 	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
 	$balances[$author] += $friendliness;
 	if($balances[$author] < 0)
-		create_comment($payload, 'Your Fix/Feature pull request detla is currently below zero. Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
+		create_comment($payload, 'Your Fix/Feature pull request detla is currently below zero (' . $balances[$author] . '). Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
 	$balances_file = fopen(pr_balance_json_path(), 'w');
 	fwrite($balances_file, json_encode($balances));
 	fclose($balances_file);
