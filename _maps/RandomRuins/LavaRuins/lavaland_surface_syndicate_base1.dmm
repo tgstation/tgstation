@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -508,7 +508,6 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe/syndicate,
 /obj/item/storage/box/beakers,
 /turf/open/floor/plasteel/vault{
 	dir = 8

@@ -30629,7 +30629,6 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe,
 /obj/machinery/light,
 /obj/structure/noticeboard{
 	dir = 1;

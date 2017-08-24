@@ -516,9 +516,6 @@
 			if(islist(EG.ammo_type) && EG.ammo_type.len)
 				var/obj/item/ammo_casing/AC = EG.ammo_type[1]
 				set_chameleon_ammo(AC)
-		else if(istype(G, /obj/item/gun/syringe))
-			var/obj/item/ammo_casing/AC = new /obj/item/ammo_casing/syringegun(src)
-			set_chameleon_ammo(AC)
 
 /obj/item/gun/energy/laser/chameleon/proc/get_chameleon_projectile(guntype)
 	reset_chameleon_vars()

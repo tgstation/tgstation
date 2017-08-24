@@ -34254,7 +34254,6 @@
 /area/medical/medbay/central)
 "bHu" = (
 /obj/item/folder/white,
-/obj/item/gun/syringe,
 /obj/item/reagent_containers/dropper,
 /obj/item/soap/nanotrasen,
 /obj/machinery/newscaster{
@@ -36496,7 +36495,6 @@
 /area/medical/medbay/zone2)
 "bMI" = (
 /obj/item/hand_labeler,
-/obj/item/gun/syringe,
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/medbay/zone2)

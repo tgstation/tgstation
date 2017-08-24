@@ -76169,7 +76169,6 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe,
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
@@ -83126,7 +83125,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/light/small,
 /obj/structure/bedsheetbin,
-/obj/item/gun/syringe,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault,
 /area/medical/abandoned)
@@ -89965,7 +89963,6 @@
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/sunglasses/blindfold,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/gun/syringe,
 /obj/item/clothing/glasses/eyepatch,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8

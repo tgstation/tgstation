@@ -809,8 +809,6 @@
 /area/ruin/unpowered)
 "cB" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/syringe/syndicate,
-/obj/item/gun/syringe/rapidsyringe,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cC" = (

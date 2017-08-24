@@ -672,14 +672,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cant_discount = TRUE
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
-/datum/uplink_item/stealthy_weapons/dart_pistol
-	name = "Dart Pistol"
-	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
-			space a small item can."
-	item = /obj/item/gun/syringe/syndicate
-	cost = 4
-	surplus = 50
-
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
 	desc = "When inserted into a personal digital assistant, this cartridge gives you four opportunities to \
@@ -1306,13 +1298,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 2
 	restricted_roles = list("Curator")
 	limited_stock = 1 //please don't spam deadchat
-
-/datum/uplink_item/role_restricted/modified_syringe_gun
-	name = "Modified Syringe Gun"
-	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
-	item = /obj/item/gun/syringe/dna
-	cost = 14
-	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/pressure_mod
 	name = "Kinetic Accelerator Pressure Mod"

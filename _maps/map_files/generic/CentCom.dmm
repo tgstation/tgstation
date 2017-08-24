@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space/basic,
 /area/space)
@@ -9391,7 +9391,6 @@
 "yr" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe/rapidsyringe,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = -32
 	},
@@ -40574,7 +40573,7 @@ AR
 Ay
 Ay
 Ay
-CN
+CL
 CV
 CV
 zV
