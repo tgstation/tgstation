@@ -26,7 +26,7 @@ $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 $prBalanceJson = '';	//Set this to the path you'd like the writable pr balance file to be stored, not setting it writes it to the working directory
 $featuresPerFix = 1;	//Number of allowed 'feature' PRs per merged 'fix' PR
 //TODO: configure to pull from an org team maybe?
-$maintainers = array('AnturK', 'ChangelingRain', 'Cheridan', 'Cyberboss', 'Jordie0608', 'lzimann', 'KorPhaeron', 'Razharas', 'RemieRichards', 'WJohn');
+$maintainers = array('AnturK', 'ChangelingRain', 'Cheridan', 'Cyberboss', 'Jordie0608', 'lzimann', 'KorPhaeron', 'optimumtact', 'Razharas', 'RemieRichards', 'WJohn');
 
 //Api key for pushing changelogs.
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
