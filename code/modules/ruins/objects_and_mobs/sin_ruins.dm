@@ -61,7 +61,7 @@
 		<span class='danger'>And see a bag full of dice. Confused, \
 		you take one... and the bag vanishes.</span>")
 	var/turf/T = get_turf(user)
-	var/obj/item/weapon/dice/d20/fate/one_use/critical_fail = new(T)
+	var/obj/item/dice/d20/fate/one_use/critical_fail = new(T)
 	user.put_in_hands(critical_fail)
 	qdel(src)
 
@@ -106,18 +106,20 @@
 
 //can't be bothered to do sloth right now, will make later
 
-/obj/item/weapon/kitchen/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
+/obj/item/kitchen/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
 	name = "envy's knife"
 	desc = "Their success will be yours."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
-	item_state = "render"
+	item_state = "knife"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	force = 18
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/kitchen/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
+/obj/item/kitchen/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
 	..()
 	if(!proximity)
 		return

@@ -130,6 +130,6 @@
 	if(hex_combo) //YOU BUILT A HEXAGON
 		hex_combo.pixel_x = -16
 		hex_combo.pixel_y = -16
-		hex_combo.mouse_opacity = 0
+		hex_combo.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		hex_combo.plane = GAME_PLANE
 		new /obj/effect/temp_visual/ratvar/prolonging_prism(T, hex_combo)

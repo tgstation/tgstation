@@ -10,7 +10,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
 	layer = ABOVE_WINDOW_LAYER
 	state_open = FALSE
-	circuit = /obj/item/weapon/circuitboard/machine/cryo_tube
+	circuit = /obj/item/circuitboard/machine/cryo_tube
 
 	var/on = FALSE
 	var/autoeject = FALSE
@@ -22,7 +22,7 @@
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.30
 
-	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	var/obj/item/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0
 
 	var/obj/item/device/radio/radio
@@ -48,7 +48,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
 	var/C
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		C += M.rating
 
 	efficiency = initial(efficiency) * C
@@ -266,7 +266,7 @@
 	close_machine(target)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+	if(istype(I, /obj/item/reagent_containers/glass))
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")

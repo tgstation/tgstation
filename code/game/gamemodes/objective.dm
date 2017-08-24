@@ -442,7 +442,8 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal/New()
 	..()
 	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
-		init_subtypes(/datum/objective_item/steal,GLOB.possible_items)
+		for(var/I in subtypesof(/datum/objective_item/steal))
+			new I
 
 /datum/objective/steal/find_target()
 	var/approved_targets = list()
@@ -507,8 +508,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal/special/New()
 	..()
 	if(!GLOB.possible_items_special.len)
-		init_subtypes(/datum/objective_item/special,GLOB.possible_items_special)
-		init_subtypes(/datum/objective_item/stack,GLOB.possible_items_special)
+		for(var/I in subtypesof(/datum/objective_item/special) + subtypesof(/datum/objective_item/stack))
+			new I
 
 /datum/objective/steal/special/find_target()
 	return set_target(pick(GLOB.possible_items_special))
@@ -682,11 +683,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal_five_of_type/summon_guns
 	explanation_text = "Steal at least five guns!"
-	wanted_items = list(/obj/item/weapon/gun)
+	wanted_items = list(/obj/item/gun)
 
 /datum/objective/steal_five_of_type/summon_magic
 	explanation_text = "Steal at least five magical artefacts!"
-	wanted_items = list(/obj/item/weapon/spellbook, /obj/item/weapon/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/weapon/scrying, /obj/item/weapon/antag_spawner/contract, /obj/item/device/necromantic_stone)
+	wanted_items = list(/obj/item/spellbook, /obj/item/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/scrying, /obj/item/antag_spawner/contract, /obj/item/device/necromantic_stone)
 
 /datum/objective/steal_five_of_type/check_completion()
 	if(!isliving(owner.current))

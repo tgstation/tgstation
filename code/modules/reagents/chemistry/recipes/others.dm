@@ -51,7 +51,7 @@
 	name = "Solid Plasma"
 	id = "solidplasma"
 	required_reagents = list("iron" = 5, "frostoil" = 5, "plasma" = 20)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -62,7 +62,7 @@
 	name = "Solid Gold"
 	id = "solidgold"
 	required_reagents = list("frostoil" = 5, "gold" = 20, "iron" = 1)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -80,19 +80,19 @@
 	id = "soapification"
 	required_reagents = list("liquidgibs" = 10, "lye"  = 10) // requires two scooped gib tiles
 	required_temp = 374
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/soap/homemade(location)
+		new /obj/item/soap/homemade(location)
 
 /datum/chemical_reaction/candlefication
 	name = "Candlefication"
 	id = "candlefication"
 	required_reagents = list("liquidgibs" = 5, "oxygen"  = 5) //
 	required_temp = 374
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -103,12 +103,12 @@
 	name = "Meatification"
 	id = "meatification"
 	required_reagents = list("liquidgibs" = 10, "nutriment" = 10, "carbon" = 10)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct(location)
+		new /obj/item/reagent_containers/food/snacks/meat/slab/meatproduct(location)
 	return
 
 /datum/chemical_reaction/carbondioxide
@@ -436,7 +436,7 @@
 	name = "Foam"
 	id = "foam"
 	required_reagents = list("fluorosurfactant" = 1, "water" = 1)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -453,7 +453,7 @@
 	name = "Metal Foam"
 	id = "metalfoam"
 	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "facid" = 1)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -466,11 +466,25 @@
 	s.start()
 	holder.clear_reagents()
 
+/datum/chemical_reaction/smart_foam
+	name = "Smart Metal Foam"
+	id = "smart_metal_foam"
+	required_reagents = list("aluminium" = 3, "smart_foaming_agent" = 1, "facid" = 1)
+	mob_react = TRUE
+
+/datum/chemical_reaction/smart_foam/on_reaction(datum/reagents/holder, created_volume)
+	var/turf/location = get_turf(holder.my_atom)
+	location.visible_message("<span class='danger'>The solution spews out metallic foam!</span>")
+	var/datum/effect_system/foam_spread/metal/smart/s = new()
+	s.set_up(created_volume * 5, location, holder, TRUE)
+	s.start()
+	holder.clear_reagents()
+
 /datum/chemical_reaction/ironfoam
 	name = "Iron Foam"
 	id = "ironlfoam"
 	required_reagents = list("iron" = 3, "foaming_agent" = 1, "facid" = 1)
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -486,6 +500,13 @@
 	id = "foaming_agent"
 	results = list("foaming_agent" = 1)
 	required_reagents = list("lithium" = 1, "hydrogen" = 1)
+
+/datum/chemical_reaction/smart_foaming_agent
+	name = "Smart foaming Agent"
+	id = "smart_foaming_agent"
+	results = list("smart_foaming_agent" = 3)
+	required_reagents = list("foaming_agent" = 3, "acetone" = 1, "iron" = 1)
+	mix_message = "The solution mixes into a frothy metal foam and conforms to the walls of its container."
 
 
 /////////////////////////////// Cleaning and hydroponics /////////////////////////////////////////////////

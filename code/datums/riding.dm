@@ -255,7 +255,7 @@
 
 ///////////////BOATS////////////
 /datum/riding/boat
-	keytype = /obj/item/weapon/oar
+	keytype = /obj/item/oar
 
 /datum/riding/boat/handle_ride(mob/user, direction)
 	var/turf/next = get_step(ridden, direction)
@@ -416,10 +416,10 @@
 
 /obj/item/riding_offhand
 	name = "offhand"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | DROPDEL | NOBLUDGEON
+	flags_1 = ABSTRACT_1 | DROPDEL_1 | NOBLUDGEON_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/rider
 	var/mob/living/ridden
