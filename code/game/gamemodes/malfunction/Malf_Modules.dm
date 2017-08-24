@@ -375,8 +375,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 			minor_announce("[key] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = ZLEVEL_STATION)
-	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/alarm.ogg'
+	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
 	for(var/mob/living/L in GLOB.mob_list)
 		var/turf/T = get_turf(L)

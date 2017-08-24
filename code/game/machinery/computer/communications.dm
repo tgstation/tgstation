@@ -89,7 +89,7 @@
 					playsound(src, 'sound/machines/terminal_alert.ogg', 25, 0)
 					if(prob(25))
 						for(var/mob/living/silicon/ai/AI in active_ais())
-							AI << sound('sound/machines/terminal_alert.ogg', volume = 10) //Very quiet for balance reasons
+							SEND_SOUND(AI, sound('sound/machines/terminal_alert.ogg', volume = 10)) //Very quiet for balance reasons
 		if("logout")
 			authenticated = 0
 			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
