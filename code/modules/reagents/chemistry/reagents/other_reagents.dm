@@ -226,11 +226,12 @@
 				holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 				return
 	else
-		M.drowsyness = max(M.drowsyness-5, 0)
-		M.adjustToxLoss(-0.5, 0)
-		M.adjustFireLoss(-0.75, 0)
-		M.adjustOxyLoss(-2, 0)
-		M.adjustBruteLoss(-0.75, 0)
+		if prob(45)
+			M.drowsyness = max(M.drowsyness-5, 0)
+			M.adjustToxLoss(-0.5, 0)
+			M.adjustFireLoss(-0.75, 0)
+			M.adjustOxyLoss(-2, 0)
+			M.adjustBruteLoss(-0.75, 0)
 		M.adjustBrainLoss(-1)
 	holder.remove_reagent(id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
