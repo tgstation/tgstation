@@ -702,7 +702,7 @@
 /datum/reagent/toxin/heparin/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.bleed_rate = min(H.bleed_rate + 1, 2)
+		H.bleed_rate = min(H.bleed_rate + 2, 8)
 		H.adjustBruteLoss(0.5, 0) //Brute damage increases with the amount they're bleeding
 		. = 1
 	return ..() || .
