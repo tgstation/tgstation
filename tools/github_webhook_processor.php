@@ -24,7 +24,7 @@
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
 $prBalanceJson = '';	//Set this to the path you'd like the writable pr balance file to be stored, not setting it writes it to the working directory
-$featuresPerFix = 1;	//Number of allowed 'feature' PRs per merged 'fix' PR
+$startingPRBalance = 3;	//Number of allowed 'feature' PRs per merged 'fix' PR
 //TODO: configure to pull from an org team maybe?
 $maintainers = array('AnturK', 'ChangelingRain', 'Cheridan', 'Cyberboss', 'Jordie0608', 'lzimann', 'KorPhaeron', 'optimumtact', 'Razharas', 'RemieRichards', 'WJohn');
 
@@ -302,19 +302,7 @@ function create_comment($payload, $comment){
 
 //returns the payload issue's labels as a flat array
 function get_pr_labels_array($payload){
-	global $apiKey;
-	$url = $payload['pull_request']['issue_url'];
-
-	$scontext = array('http' => array(
-		'method'	=> 'GET',
-		'header'	=>
-			"Content-type: application/json\r\n".
-			'Authorization: token ' . $apiKey,
-		'ignore_errors' => true,
-		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
-	));
-
-	$issue = json_decode(file_get_contents($url, false, stream_context_create($scontext)), true);
+	$issue = json_decode(apisend($url));
 	$result = array();
 	if(isset($issue['labels']))
 		foreach($issue['labels'] as $l)
@@ -337,43 +325,63 @@ function pr_balances(){
 }
 
 //returns 1 if it's a fix/feature/etc, 0 if it's a neutral, -1 if it's a Feature/Tweak/Balance
-function get_pr_code_friendliness($payload){
+function get_pr_code_friendliness($payload, $oldbalance){
+	global $startingPRBalance;
 	$labels = get_pr_labels_array($payload);
-	//doing one of these increases your positive score
-	$improvement_labels = array('Fix', 'Refactor', 'Code Improvement', 'Priority: High', 'Priority: CRITICAL', 'Atmospherics', 'Grammar and Formatting', 'Logging', 'Performance');
-	//doing one of these prevents your negative score from increasing
-	$neutral_labels = array('Tools', 'Map Edit', 'SQL', 'Documentation', 'Repository', 'Revert/Removal', 'UI', 'Sprites', 'Sound');
+	//anything not in this list defaults to -1
+	$label_values = array(
+		'Fix' => 2,
+		'Refactor' => 2,
+		'Code Improvement' => 1,
+		'Priority: High' => 4,
+		'Priority: CRITICAL' => 5,
+		'Atmospherics' => 4,
+		'Logging' => 1,
+		'Feedback' => 1,
+		'Performance' => 3,
+		'Grammar and Formatting' => 0,
+		'Tools' => 0,
+		'Map Edit' => 0,
+		'SQL' => 0,
+		'Documentation' => 0,
+		'Repository' => 0,
+		'Revert/Removal' => 0,
+		'UI' => 0,
+		'Sprites' => 0,
+		'Sound' => 0,
+	);
 
+	$affecting = -1;
 	$is_neutral = FALSE;
 	foreach($labels as $l){
-		if(in_array($l, $improvement_labels))
-			return 1;
-		if(in_array($l, $neutral_labels))
-			$is_neutral = TRUE;
+		if($l == 'PRB: Reset') {	//sets back to starting balance
+			$affecting = max($affecting, $startingPRBalance - $oldbalance);
+			break;
+		}
+		else if($l == 'PRB: No Update') {	//no effect on balance
+			$affecting = 0;
+			break;
+		}
+		else if(isset($label_values[$l]))
+			$affecting = max($affecting, $label_values[$l]);
 	}
-
-	return $is_neutral ? 0 : -1;
+	return $affecting;
 }
 
 //payload is a merged pull request, updates the pr balances file with the correct positive or negative balance based on comments
 function update_pr_balance($payload) {
-	global $featuresPerFix;
+	global $startingPRBalance;
 	global $maintainers;
 	$author = $payload['pull_request']['user']['login'];
 	if(in_array($author, $maintainers))	//immune
 		return;
-	$friendliness = get_pr_code_friendliness($payload);
-	if($friendliness === 0)
-		return;
-	else if($friendliness === 1)
-		$friendliness *= $featuresPerFix;
-
 	$balances = pr_balances();
 	if(!isset($balances[$author]))
-		$balances[$author] = $featuresPerFix;
+		$balances[$author] = $startingPRBalance;
+	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
 	$balances[$author] += $friendliness;
 	if($balances[$author] < 0)
-		create_comment($payload, "Your Fix/Feature pull request ratio has just gone below the configured amout of " . $featuresPerFix . " features per fix. Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or improving the codebase will improve this score.");
+		create_comment($payload, "Your Fix/Feature pull request detla is currently below zero. Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.");
 	$balances_file = fopen(pr_balance_json_path(), "w");
 	fwrite($balances_file, json_encode($balances));
 	fclose($balances_file);
