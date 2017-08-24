@@ -24,7 +24,7 @@
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
 $prBalanceJson = '';	//Set this to the path you'd like the writable pr balance file to be stored, not setting it writes it to the working directory
-$startingPRBalance = 3;	//Number of allowed 'feature' PRs per merged 'fix' PR
+$startingPRBalance = 3;	//Starting balance for never before seen users
 //TODO: configure to pull from an org team maybe?
 $maintainers = array('AnturK', 'ChangelingRain', 'Cheridan', 'Cyberboss', 'Jordie0608', 'lzimann', 'KorPhaeron', 'optimumtact', 'Razharas', 'RemieRichards', 'WJohn');
 
