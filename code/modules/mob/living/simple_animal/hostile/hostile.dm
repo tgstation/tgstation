@@ -370,7 +370,7 @@
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
-				if(is_type_in_typecache(A, environment_target_typecache))
+				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
 					A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
