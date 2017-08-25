@@ -12,7 +12,7 @@
 	var/deconstruction_state = SHOWCASE_CONSTRUCTED
 
 /obj/structure/showcase/fakeid
-	name = "\improper Centcom identification console"
+	name = "\improper CentCom identification console"
 	desc = "You can use this to change ID's."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
@@ -23,7 +23,7 @@
 	add_overlay("id_key")
 
 /obj/structure/showcase/fakesec
-	name = "\improper Centcom security records"
+	name = "\improper CentCom security records"
 	desc = "Used to view and edit personnel's security records"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
@@ -55,7 +55,7 @@
 //However if a player wants to move an existing showcase or remove one, this is for that.
 
 /obj/structure/showcase/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver) && !anchored)
+	if(istype(W, /obj/item/screwdriver) && !anchored)
 		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
 			to_chat(user, "<span class='notice'>You screw the screws back into the showcase.</span>")
 			playsound(loc, W.usesound, 100, 1)
@@ -65,7 +65,7 @@
 			playsound(loc, W.usesound, 100, 1)
 			deconstruction_state = SHOWCASE_SCREWDRIVERED
 
-	if(istype(W, /obj/item/weapon/crowbar) && deconstruction_state == SHOWCASE_SCREWDRIVERED)
+	if(istype(W, /obj/item/crowbar) && deconstruction_state == SHOWCASE_SCREWDRIVERED)
 		if(do_after(user, 20*W.toolspeed, target = src))
 			playsound(loc, W.usesound, 100, 1)
 			to_chat(user, "<span class='notice'>You start to crowbar the showcase apart...</span>")

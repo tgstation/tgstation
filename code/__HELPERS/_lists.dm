@@ -91,16 +91,23 @@
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	. = list()
-	for (var/thing in atoms)
+	for(var/thing in atoms)
 		var/atom/A = thing
 		if (typecache[A.type])
 			. += A
 
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
 	. = list()
-	for (var/thing in atoms)
+	for(var/thing in atoms)
 		var/atom/A = thing
-		if (!typecache[A.type])
+		if(!typecache[A.type])
+			. += A
+
+/proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if(typecache_include[A.type] && !typecache_exclude[A.type])
 			. += A
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
@@ -177,7 +184,11 @@
 		result = first ^ second
 	return result
 
-//Pretends to pick an element based on its weight but really just seems to pick a random element.
+//Picks a random element from a list based on a weighting system:
+//1. Adds up the total of weights for each element
+//2. Gets a number between 1 and that total
+//3. For each element in the list, subtracts its weighting from that number
+//4. If that makes the number 0 or less, return that element.
 /proc/pickweight(list/L)
 	var/total = 0
 	var/item
@@ -309,7 +320,7 @@
 	return r
 
 // Returns the key based on the index
-#define KEYBYINDEX(L, index) (((index <= L:len) && (index > 0)) ? L[index] : null)
+#define KEYBYINDEX(L, index) (((index <= length(L)) && (index > 0)) ? L[index] : null)
 
 /proc/count_by_type(list/L, type)
 	var/i = 0
@@ -457,7 +468,7 @@
 		. |= key_list[key]
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
-#define DEFAULTPICK(L, default) ((islist(L) && L:len) ? pick(L) : default)
+#define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }

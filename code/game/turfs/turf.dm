@@ -11,7 +11,7 @@
 
 	var/blocks_air = FALSE
 
-	flags = CAN_BE_DIRTY
+	flags_1 = CAN_BE_DIRTY_1
 
 	var/image/obscured	//camerachunks
 
@@ -77,6 +77,7 @@
 		return
 	SSair.remove_from_active(src)
 	visibilityChanged()
+	QDEL_LIST(blueprint_data)
 	initialized = FALSE
 	requires_activation = FALSE
 	..()
@@ -84,7 +85,7 @@
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
-/turf/proc/handleRCL(obj/item/weapon/twohanded/rcl/C, mob/user)
+/turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
 	if(C.loaded)
 		for(var/obj/structure/cable/LC in src)
 			if(!LC.d1 || !LC.d2)
@@ -103,7 +104,7 @@
 		coil.place_turf(src, user)
 		return TRUE
 
-	else if(istype(C, /obj/item/weapon/twohanded/rcl))
+	else if(istype(C, /obj/item/twohanded/rcl))
 		handleRCL(C, user)
 
 	return FALSE
@@ -132,7 +133,7 @@
 
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
-		if(border_obstacle.flags & ON_BORDER)
+		if(border_obstacle.flags_1 & ON_BORDER_1)
 			if(!border_obstacle.CanPass(mover, mover.loc, 1) && (forget != border_obstacle))
 				mover.Collide(border_obstacle)
 				return FALSE
@@ -159,33 +160,21 @@
 	return TRUE //Nothing found to block so return success!
 
 /turf/Entered(atom/movable/AM)
+	..()
 	if(explosion_level && AM.ex_check(explosion_id))
 		AM.ex_act(explosion_level)
 
+	// If an opaque movable atom moves around we need to potentially update visibility.
+	if (AM.opacity)
+		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
+		reconsider_lights()
+
 /turf/open/Entered(atom/movable/AM)
 	..()
-	//slipping
-	if (istype(AM, /mob/living/carbon))
-		var/mob/living/carbon/M = AM
-		if(M.movement_type & FLYING)
-			return
-		switch(wet)
-			if(TURF_WET_WATER)
-				if(!M.slip(60, null, NO_SLIP_WHEN_WALKING))
-					M.inertia_dir = 0
-			if(TURF_WET_LUBE)
-				if(M.slip(80, null, (SLIDE|GALOSHES_DONT_HELP)))
-					M.confused = max(M.confused, 8)
-			if(TURF_WET_ICE)
-				M.slip(120, null, (SLIDE|GALOSHES_DONT_HELP))
-			if(TURF_WET_PERMAFROST)
-				M.slip(120, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
-			if(TURF_WET_SLIDE)
-				M.slip(80, null, (SLIDE|GALOSHES_DONT_HELP))
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(HAS_SECONDARY_FLAG(O, FROZEN))
+		if(O.flags_2 & FROZEN_2)
 			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
@@ -219,8 +208,20 @@
 	if(!GLOB.use_preloader && path == type && !forceop) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
+	var/old_opacity = opacity
+	var/old_dynamic_lighting = dynamic_lighting
+	var/old_affecting_lights = affecting_lights
+	var/old_lighting_object = lighting_object
+	var/old_corners = corners
+
+	var/old_exl = explosion_level
+	var/old_exi = explosion_id
+	var/old_bp = blueprint_data
+	blueprint_data = null
+
 	var/old_baseturf = baseturf
 	changing_turf = TRUE
+
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
 
@@ -229,8 +230,30 @@
 	else
 		W.baseturf = old_baseturf
 
+	W.explosion_id = old_exi
+	W.explosion_level = old_exl
+
 	if(!defer_change)
 		W.AfterChange(ignore_air)
+
+	W.blueprint_data = old_bp
+
+	if(SSlighting.initialized)
+		recalc_atom_opacity()
+		lighting_object = old_lighting_object
+		affecting_lights = old_affecting_lights
+		corners = old_corners
+		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
+			reconsider_lights()
+
+		if (dynamic_lighting != old_dynamic_lighting)
+			if (IS_DYNAMIC_LIGHTING(src))
+				lighting_build_overlay()
+			else
+				lighting_clear_overlay()
+
+		for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+			S.update_starlight()
 
 	return W
 
@@ -300,9 +323,9 @@
 		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
-	flags |= NOJAUNT
+	flags_1 |= NOJAUNT_1
 
-/turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/turf/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(src_object.contents.len)
 		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
 		if(!do_after(usr,20,target=src_object))
@@ -310,7 +333,7 @@
 
 	var/list/things = src_object.contents.Copy()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/weapon/storage.proc/mass_remove_from_storage, src, things, progress)))
+	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/storage.proc/mass_remove_from_storage, src, things, progress)))
 		sleep(1)
 	qdel(progress)
 
@@ -350,8 +373,7 @@
 	return can_have_cabling() & !intact
 
 /turf/proc/visibilityChanged()
-	if(SSticker)
-		GLOB.cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 
 /turf/proc/burn_tile()
 
@@ -410,26 +432,24 @@
 	I.setDir(AM.dir)
 	I.alpha = 128
 
-	if(!blueprint_data)
-		blueprint_data = list()
-	blueprint_data += I
+	LAZYADD(blueprint_data, I)
 
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
 	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
-/turf/proc/empty(turf_type=/turf/open/space, baseturf_type, delmobs = TRUE, forceop = FALSE)
+/turf/proc/empty(turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, forceop = FALSE)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
-	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(),delmobs? ignored_atoms : ignored_atoms + typecacheof(list(/mob)))
+	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(ignore_typecache), ignored_atoms)
 	allowed_contents -= src
 	for(var/i in 1 to allowed_contents.len)
 		var/thing = allowed_contents[i]
 		qdel(thing, force=TRUE)
 
 	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE, forceop = forceop)
-    
+
 	SSair.remove_from_active(newT)
 	newT.CalculateAdjacentTurfs()
 	SSair.add_to_active(newT,1)
@@ -515,3 +535,6 @@
 		else
 			return I
 	return I
+
+/turf/AllowDrop()
+	return TRUE

@@ -7,9 +7,13 @@
 	desc = "It produces items using metal and glass."
 	icon_state = "autolathe"
 	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 100
+	circuit = /obj/item/circuitboard/machine/autolathe
 
 	var/operating = FALSE
-	anchored = TRUE
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = FALSE
@@ -18,9 +22,7 @@
 	var/hack_wire
 	var/disable_wire
 	var/shock_wire
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
+
 	var/busy = FALSE
 	var/prod_coeff = 1
 
@@ -45,30 +47,16 @@
 							"Imported"
 							)
 
-/obj/machinery/autolathe/New()
-	..()
+/obj/machinery/autolathe/Initialize()
 	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS))
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/autolathe(null)
-	B.apply_default_parts(src)
-
 	wires = new /datum/wires/autolathe(src)
 	files = new /datum/research/autolathe(src)
 	matching_designs = list()
-
-/obj/item/weapon/circuitboard/machine/autolathe
-	name = "Autolathe (Machine Board)"
-	build_path = /obj/machinery/autolathe
-	origin_tech = "engineering=2;programming=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 3,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+	return ..()
 
 /obj/machinery/autolathe/Destroy()
-	qdel(wires)
-	wires = null
-	qdel(materials)
-	materials = null
+	QDEL_NULL(wires)
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/autolathe/interact(mob/user)
@@ -108,7 +96,7 @@
 		return
 
 	if(panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
+		if(istype(O, /obj/item/crowbar))
 			default_deconstruction_crowbar(O)
 			return 1
 		else if(is_wire_tool(O))
@@ -121,12 +109,12 @@
 	if(stat)
 		return 1
 
-	if(istype(O, /obj/item/weapon/disk/design_disk))
+	if(istype(O, /obj/item/disk/design_disk))
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",
 			"You begin to load a design from \the [O]...",
 			"You hear the chatter of a floppy drive.")
 		busy = TRUE
-		var/obj/item/weapon/disk/design_disk/D = O
+		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 14.4, target = src))
 			for(var/B in D.blueprints)
 				if(B)
@@ -135,7 +123,7 @@
 		busy = FALSE
 		return 1
 
-	if(HAS_SECONDARY_FLAG(O, HOLOGRAM))
+	if(O.flags_2 & HOLOGRAM_2)
 		return 1
 
 	var/material_amount = materials.get_item_material_amount(O)
@@ -256,11 +244,11 @@
 
 /obj/machinery/autolathe/RefreshParts()
 	var/T = 0
-	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/MB in component_parts)
 		T += MB.rating*75000
 	materials.max_amount = T
 	T=1.2
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T -= M.rating*0.2
 	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
 

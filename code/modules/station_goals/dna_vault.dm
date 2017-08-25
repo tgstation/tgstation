@@ -67,7 +67,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/list/animals = list()
 	var/list/plants = list()
 	var/list/dna = list()
@@ -117,16 +117,6 @@
 			return
 		dna[H.dna.uni_identity] = 1
 		to_chat(user, "<span class='notice'>Humanoid data added to local storage.<span>")
-
-
-/obj/item/weapon/circuitboard/machine/dna_vault
-	name = "DNA Vault (Machine Board)"
-	build_path = /obj/machinery/dna_vault
-	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
-	req_components = list(
-							/obj/item/weapon/stock_parts/capacitor/super = 5,
-							/obj/item/weapon/stock_parts/manipulator/pico = 5,
-							/obj/item/stack/cable_coil = 2)
 
 /obj/machinery/dna_vault
 	name = "DNA Vault"

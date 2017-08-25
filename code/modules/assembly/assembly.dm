@@ -3,7 +3,7 @@
 	desc = "A small electronic device that should never exist."
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = ""
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=100)
 	throwforce = 2
@@ -81,7 +81,7 @@
 	return secured
 
 
-/obj/item/device/assembly/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/attackby(obj/item/W, mob/user, params)
 	if(isassembly(W))
 		var/obj/item/device/assembly/A = W
 		if((!A.secured) && (!secured))
@@ -91,7 +91,7 @@
 		else
 			to_chat(user, "<span class='warning'>Both devices must be in attachable mode to be attached together.</span>")
 		return
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(toggle_secure())
 			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 		else

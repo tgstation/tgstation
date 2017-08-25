@@ -24,15 +24,10 @@
 //For the Geis scripture; binds a target to convert.
 /obj/effect/proc_holder/slab/geis
 	ranged_mousepointer = 'icons/effects/geis_target.dmi'
-	var/obj/structure/destructible/clockwork/geis_binding/binding //we always have a reference to the binding
-	var/obj/structure/destructible/clockwork/geis_binding/pulled_binding //we use this to see if we're pulling it or not
-
-/obj/effect/proc_holder/slab/geis/remove_ranged_ability(msg)
-	..()
-	binding = null
-	pulled_binding = null
 
 /obj/effect/proc_holder/slab/geis/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return TRUE
 	var/turf/T = ranged_ability_user.loc
 	if(!isturf(T))
 		return TRUE
@@ -40,20 +35,6 @@
 	var/target_is_binding = istype(target, /obj/structure/destructible/clockwork/geis_binding)
 
 	if((target_is_binding || isliving(target)) && ranged_ability_user.Adjacent(target))
-		if(in_progress || ..())
-			var/mob/living/L = target
-			if(!pulled_binding)
-				if(target == binding || (isliving(target) && L.buckled == binding))
-					pulled_binding = binding
-					ranged_ability_user.start_pulling(binding)
-					remove_mousepointer(ranged_ability_user.client)
-					ranged_mousepointer = 'icons/effects/geis_target_remove.dmi'
-					add_mousepointer(ranged_ability_user.client)
-			else if(target == pulled_binding || (isliving(target) && L.buckled == pulled_binding))
-				ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] dispels [pulled_binding]!</span>", "<span class='danger'>You dispel the binding!</span>")
-				binding.take_damage(obj_integrity)
-				remove_ranged_ability()
-			return TRUE
 		if(target_is_binding)
 			var/obj/structure/destructible/clockwork/geis_binding/GB = target
 			GB.repair_and_interrupt()
@@ -80,42 +61,19 @@
 				add_logs(ranged_ability_user, L, "rebound with Geis")
 				successful = TRUE
 			else
-				in_progress = TRUE
 				clockwork_say(ranged_ability_user, text2ratvar("Be bound, heathen!"))
-				remove_mousepointer(ranged_ability_user.client)
-				ranged_mousepointer = 'icons/effects/geis_target_remove.dmi'
-				add_mousepointer(ranged_ability_user.client)
 				add_logs(ranged_ability_user, L, "bound with Geis")
-				playsound(target, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
+				playsound(target, 'sound/magic/blink.ogg', 50, TRUE, -4, frequency = 0.5)
 				if(slab.speed_multiplier >= 0.5) //excuse my debug...
 					ranged_ability_user.notransform = TRUE
-					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 5) //stop us moving for a little bit so we don't break the binding immediately
+					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 4) //stop us moving for a little bit so we don't break the binding immediately
 				if(L.buckled)
 					L.buckled.unbuckle_mob(target, TRUE)
-				binding = new(get_turf(target))
+				var/obj/structure/destructible/clockwork/geis_binding/binding = new(get_turf(target))
 				binding.setDir(target.dir)
 				binding.buckle_mob(target, TRUE)
-				pulled_binding = binding
 				ranged_ability_user.start_pulling(binding)
-				slab.busy = "sustaining Geis"
-				slab.flags |= NODROP
-				while(!QDELETED(binding) && !QDELETED(ranged_ability_user))
-					if(ranged_ability_user.pulling == binding)
-						pulled_binding = binding
-						if(ranged_ability_user.client.mouse_pointer_icon == 'icons/effects/geis_target.dmi')
-							remove_mousepointer(ranged_ability_user.client)
-							ranged_mousepointer = 'icons/effects/geis_target_remove.dmi'
-							add_mousepointer(ranged_ability_user.client)
-					else //if we're not pulling it, swap our mousepointer
-						pulled_binding = null
-						if(ranged_ability_user.client.mouse_pointer_icon == 'icons/effects/geis_target_remove.dmi')
-							remove_mousepointer(ranged_ability_user.client)
-							ranged_mousepointer = 'icons/effects/geis_target.dmi'
-							add_mousepointer(ranged_ability_user.client)
-					sleep(1)
-				if(!QDELETED(slab))
-					slab.flags &= ~NODROP
-				in_progress = FALSE
+				ranged_ability_user.apply_status_effect(STATUS_EFFECT_GEISTRACKER, binding)
 				successful = TRUE
 
 		remove_ranged_ability()
@@ -149,48 +107,43 @@
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
 			return TRUE
 
-		if(sentinels_compromise(L, ranged_ability_user))
-			remove_ranged_ability()
+		var/brutedamage = L.getBruteLoss()
+		var/burndamage = L.getFireLoss()
+		var/oxydamage = L.getOxyLoss()
+		var/totaldamage = brutedamage + burndamage + oxydamage
+		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent("holywater")))
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] is unhurt and untainted.\"</span>")
+			return TRUE
 
-	return TRUE
+		successful = TRUE
 
-/proc/sentinels_compromise(mob/living/target, mob/user)
-	var/brutedamage = target.getBruteLoss()
-	var/burndamage = target.getFireLoss()
-	var/oxydamage = target.getOxyLoss()
-	var/totaldamage = brutedamage + burndamage + oxydamage
-	if(!totaldamage && (!target.reagents || !target.reagents.has_reagent("holywater")))
-		to_chat(user, "<span class='inathneq'>\"[target] is unhurt and untainted.\"</span>")
-		return FALSE
+		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
+		var/targetturf = get_turf(L)
+		var/has_holy_water = (L.reagents && L.reagents.has_reagent("holywater"))
+		var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
+		for(var/i in 1 to healseverity)
+			new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
+		if(totaldamage)
+			L.adjustBruteLoss(-brutedamage)
+			L.adjustFireLoss(-burndamage)
+			L.adjustOxyLoss(-oxydamage)
+			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
+			clockwork_say(ranged_ability_user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
+			add_logs(ranged_ability_user, L, "healed with Sentinel's Compromise")
+			L.visible_message("<span class='warning'>A blue light washes over [L], [has_holy_water ? "causing [L.p_them()] to briefly glow as it mends" : " mending"] [L.p_their()] bruises and burns!</span>", \
+			"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds[has_holy_water ? " and purging the darkness within you" : ""], but a deep nausea overcomes you!</span>")
+		else
+			clockwork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
+			add_logs(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
+			L.visible_message("<span class='warning'>A blue light washes over [L], causing [L.p_them()] to briefly glow!</span>", \
+			"<span class='heavy_brass'>You feel Inath-neq's power purging the darkness within you!</span>")
+		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
 
-	to_chat(user, "<span class='brass'>You bathe [target == user ? "yourself" : target] in Inath-neq's power!</span>")
-	var/targetturf = get_turf(target)
-	var/has_holy_water = (target.reagents && target.reagents.has_reagent("holywater"))
-	var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
-	for(var/i in 1 to healseverity)
-		new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
-	if(totaldamage)
-		target.adjustBruteLoss(-brutedamage)
-		target.adjustFireLoss(-burndamage)
-		target.adjustOxyLoss(-oxydamage)
-		var/damage_to_do = max(0, totaldamage - (GLOB.clockwork_vitality * 2))
-		GLOB.clockwork_vitality = max(0, GLOB.clockwork_vitality - (totaldamage * 0.5)) //heals 2 damage for every 1 vitality
-		target.adjustToxLoss(damage_to_do * 0.75, TRUE, TRUE)
-		if(user)
-			clockwork_say(user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
-		add_logs(user, target, "healed with Sentinel's Compromise")
-		target.visible_message("<span class='warning'>A blue light washes over [target], [has_holy_water ? "causing [target.p_them()] to briefly glow as it mends" : " mending"] [target.p_their()] bruises and burns!</span>", \
-		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds[has_holy_water ? " and purging the darkness within you" : ""], but a deep nausea overcomes you!</span>")
-	else
-		if(user)
-			clockwork_say(user, text2ratvar("Purge foul darkness!"))
-		add_logs(user, target, "purged of holy water with Sentinel's Compromise")
-		target.visible_message("<span class='warning'>A blue light washes over [target], causing [target.p_them()] to briefly glow!</span>", \
-		"<span class='heavy_brass'>You feel Inath-neq's power purging the darkness within you!</span>")
-	playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
+		if(has_holy_water)
+			L.reagents.remove_reagent("holywater", 1000)
 
-	if(has_holy_water)
-		target.reagents.remove_reagent("holywater", 1000)
+		remove_ranged_ability()
+
 	return TRUE
 
 //For the cyborg Linked Vanguard scripture, grants you and a nearby ally Vanguard

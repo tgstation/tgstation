@@ -8,7 +8,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	name = "circuit imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
+	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 
 	var/datum/material_container/materials
 	var/efficiency_coeff
@@ -28,37 +29,26 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								)
 
 /obj/machinery/r_n_d/circuit_imprinter/Initialize()
-	. = ..()
 	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE))
 	create_reagents(0)
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/circuit_imprinter(null)
-	B.apply_default_parts(src)
-
-/obj/machinery/r_n_d/circuit_imprinter/Destroy()
-	qdel(materials)
 	return ..()
 
-/obj/item/weapon/circuitboard/machine/circuit_imprinter
-	name = "Circuit Imprinter (Machine Board)"
-	build_path = /obj/machinery/r_n_d/circuit_imprinter
-	origin_tech = "engineering=2;programming=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/reagent_containers/glass/beaker = 2)
+/obj/machinery/r_n_d/circuit_imprinter/Destroy()
+	QDEL_NULL(materials)
+	return ..()
 
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
 	reagents.maximum_volume = 0
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
 
 	materials.max_amount = 0
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		materials.max_amount += M.rating * 75000
 
 	var/T = 0
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T += M.rating
 	efficiency_coeff = 2 ** (T - 1) //Only 1 manipulator here, you're making runtimes Razharas
 
@@ -77,7 +67,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 //we eject the materials upon deconstruction.
 /obj/machinery/r_n_d/circuit_imprinter/on_deconstruction()
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	materials.retrieve_all()
 	..()
@@ -113,7 +103,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			to_chat(user, "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>")
 		updateUsrDialog()
 
-	else if(istype(O, /obj/item/weapon/ore/bluespace_crystal)) //Bluespace crystals can be either a stack or an item
+	else if(istype(O, /obj/item/ore/bluespace_crystal)) //Bluespace crystals can be either a stack or an item
 		. = 1
 		if(!is_insertion_ready(user))
 			return

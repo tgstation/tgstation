@@ -5,7 +5,7 @@
 	return 0
 
 /mob/living/carbon/isloyal()
-	for(var/obj/item/weapon/implant/mindshield/L in implants)
+	for(var/obj/item/implant/mindshield/L in implants)
 		return 1
 
 
@@ -281,7 +281,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/abiotic(full_body = 0)
 	for(var/obj/item/I in held_items)
-		if(!(I.flags & NODROP))
+		if(!(I.flags_1 & NODROP_1))
 			return 1
 	return 0
 
@@ -387,7 +387,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if(O.client)
 			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")
 			if(ghost_sound)
-				O << sound(ghost_sound)
+				SEND_SOUND(O, sound(ghost_sound))
 			if(flashwindow)
 				window_flash(O.client)
 			if(source)

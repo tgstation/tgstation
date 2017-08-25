@@ -22,8 +22,7 @@
 
 
 /obj/item/device/assembly/signaler/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()
@@ -98,7 +97,7 @@ Code:
 
 	return
 
-/obj/item/device/assembly/signaler/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/signaler/attackby(obj/item/W, mob/user, params)
 	if(issignaler(W))
 		var/obj/item/device/assembly/signaler/signaler2 = W
 		if(secured && signaler2.secured)
@@ -144,7 +143,7 @@ Code:
 	if(!(src.wires & WIRE_RADIO_RECEIVE))
 		return 0
 	pulse(1)
-	audible_message("[bicon(src)] *beep* *beep*", null, 1)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
 	return
 
 
@@ -202,5 +201,5 @@ Code:
 /obj/item/device/assembly/signaler/cyborg
 	origin_tech = null
 
-/obj/item/device/assembly/signaler/cyborg/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
 	return

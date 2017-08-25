@@ -1,11 +1,11 @@
-/obj/item/weapon/melee/cultblade
+/obj/item/melee/cultblade
 	name = "eldritch longsword"
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
 	icon_state = "cultblade"
 	item_state = "cultblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30
@@ -14,7 +14,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 
 
-/obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
 		user.Knockdown(100)
 		user.dropItemToGround(src, TRUE)
@@ -28,12 +28,12 @@
 		return
 	..()
 
-/obj/item/weapon/melee/cultblade/ghost
+/obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
 	force = 19 //can't break normal airlocks
-	flags = NODROP|DROPDEL
+	flags_1 = NODROP_1|DROPDEL_1
 
-/obj/item/weapon/melee/cultblade/pickup(mob/living/user)
+/obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
 	if(!iscultist(user))
 		if(!is_servant_of_ratvar(user))
@@ -47,17 +47,20 @@
 			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
 			user.dropItemToGround(src)
 
-/obj/item/weapon/melee/cultblade/dagger
+/obj/item/melee/cultblade/dagger
 	name = "sacrificial dagger"
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
+	item_state = "knife"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
 	embed_chance = 75
 
-/obj/item/weapon/melee/cultblade/dagger/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/melee/cultblade/dagger/attack(mob/living/target, mob/living/carbon/human/user)
 	..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -66,7 +69,7 @@
 			C.reagents.add_reagent("heparin", 1)
 
 
-/obj/item/weapon/restraints/legcuffs/bola/cult
+/obj/item/restraints/legcuffs/bola/cult
 	name = "nar'sien bola"
 	desc = "A strong bola, bound with dark magic. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
@@ -92,7 +95,7 @@
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/tome, /obj/item/weapon/melee/cultblade)
+	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
@@ -108,7 +111,7 @@
 	item_state = "cult_hoodalt"
 
 /obj/item/clothing/head/culthood/alt/ghost
-	flags = NODROP|DROPDEL
+	flags_1 = NODROP_1|DROPDEL_1
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
@@ -117,7 +120,7 @@
 	item_state = "cultrobesalt"
 
 /obj/item/clothing/suit/cultrobes/alt/ghost
-	flags = NODROP|DROPDEL
+	flags_1 = NODROP_1|DROPDEL_1
 
 
 /obj/item/clothing/head/magus
@@ -135,7 +138,7 @@
 	icon_state = "magusred"
 	item_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/tome, /obj/item/weapon/melee/cultblade)
+	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -154,17 +157,21 @@
 	item_state = "cult_armor"
 	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	w_class = WEIGHT_CLASS_SMALL
-	allowed = list(/obj/item/weapon/tome, /obj/item/weapon/melee/cultblade, /obj/item/weapon/tank/internals/)
+	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 40, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
 
-/obj/item/weapon/sharpener/cult
+/obj/item/sharpener/cult
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
+	icon_state = "cult_sharpener"
 	used = 0
 	increment = 5
 	max = 40
 	prefix = "darkened"
+
+/obj/item/sharpener/cult/update_icon()
+	icon_state = "cult_sharpener[used ? "_used" : ""]"
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -174,7 +181,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30, fire = 50, acid = 60)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/weapon/tome, /obj/item/weapon/melee/cultblade)
+	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	var/current_charges = 3
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
 
@@ -224,7 +231,7 @@
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
 	flags_inv = HIDEJUMPSUIT
-	allowed = list(/obj/item/weapon/tome, /obj/item/weapon/melee/cultblade)
+	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(melee = -50, bullet = -50, laser = -50,energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
 	slowdown = -1
@@ -271,7 +278,7 @@
 		user.Knockdown(100)
 		user.blind_eyes(30)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
+/obj/item/reagent_containers/food/drinks/bottle/unholywater
 	name = "flask of unholy water"
 	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
 	icon_state = "holyflask"
@@ -391,7 +398,7 @@
 	if(!iscultist(user))
 		to_chat(user, "That doesn't seem to do anything useful.")
 		return
-		
+
 	if(istype(A, /obj/item))
 
 		var/list/cultists = list()

@@ -11,30 +11,28 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 
-/obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user, params)
+/obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/living/user, params)
 	if (istype(O, /obj/item/stack/sheet/metal))
-		if (src.metal_amount < 150000)
-			var/count = 0
-			src.add_overlay("fab-load-metal")
-			spawn(15)
-				if(O)
-					if(!O:amount)
-						return
-					while(metal_amount < 150000 && O:amount)
-						src.metal_amount += O:materials[MAT_METAL] /*O:height * O:width * O:length * 100000*/
-						O:amount--
-						count++
-
-					if (O:amount < 1)
-						qdel(O)
-
-					to_chat(user, "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>")
-					cut_overlay("fab-load-metal")
-					updateDialog()
+		if (metal_amount < 150000)
+			add_overlay("fab-load-metal")
+			addtimer(CALLBACK(src, .proc/FinishLoadingMetal, O, user), 15)
 		else
 			to_chat(user, "\The [src] is full.")
 	else
 		return ..()
+
+/obj/machinery/robotic_fabricator/proc/FinishLoadingMetal(obj/item/stack/sheet/metal/M, mob/living/user)
+	cut_overlay("fab-load-metal")
+	if(QDELETED(M) || QDELETED(user))
+		return
+	var/count = 0
+	while(metal_amount < 150000 && !QDELETED(M))
+		metal_amount += M.materials[MAT_METAL]
+		M.use(1)
+		count++
+
+	to_chat(user, "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>")
+	updateDialog()
 
 /obj/machinery/robotic_fabricator/power_change()
 	if (powered())

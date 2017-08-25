@@ -8,16 +8,16 @@
 /datum/recipe/sugarcookie/spookyskull
 	reagents = list("flour" = 5, "sugar" = 5, "milk" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/reagent_containers/food/snacks/egg,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull
+	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull
 
 /datum/recipe/sugarcookie/spookycoffin
 	reagents = list("flour" = 5, "sugar" = 5, "coffee" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/reagent_containers/food/snacks/egg,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin
+	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin
 
 //////////////////////////////
 //Spookoween trapped closets//
@@ -234,7 +234,7 @@
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/nullrod))
+	if(istype(O, /obj/item/nullrod))
 		if(prob(5))
 			visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
 			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
@@ -255,12 +255,12 @@
 	name = "Candy Corn Crossbow"
 	desc = "A standard miniature energy crossbow that uses a hard-light projector to transform bolts into candy corn. Happy Halloween!"
 	category = "Holiday"
-	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/halloween
+	item = /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	surplus = 0
 
 /datum/uplink_item/device_tools/emag/hack_o_lantern
 	name = "Hack-o'-Lantern"
 	desc = "An emag fitted to support the Halloween season. Candle not included."
 	category = "Holiday"
-	item = /obj/item/weapon/card/emag/halloween
+	item = /obj/item/card/emag/halloween
 	surplus = 0

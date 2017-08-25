@@ -27,7 +27,7 @@
 /area/awaymission/listeningpost)
 "h" = (
 /obj/structure/table,
-/obj/item/weapon/paper/monitorkey,
+/obj/item/paper/monitorkey,
 /obj/item/device/radio/intercom{
 	desc = "Talk through this. Evilly";
 	freerange = 1;
@@ -69,8 +69,8 @@
 /area/awaymission/listeningpost)
 "o" = (
 /obj/structure/table,
-/obj/item/weapon/paper/fluff/ruins/listeningstation/reports/november,
-/obj/item/weapon/pen,
+/obj/item/paper/fluff/ruins/listeningstation/reports/november,
+/obj/item/pen,
 /turf/open/floor/plasteel,
 /area/awaymission/listeningpost)
 "p" = (
@@ -95,8 +95,8 @@
 "r" = (
 /obj/machinery/door/airlock,
 /obj/structure/safe/floor,
-/obj/item/weapon/paper/fluff/ruins/listeningstation/odd_report,
-/obj/item/weapon/gun/ballistic/automatic/pistol,
+/obj/item/paper/fluff/ruins/listeningstation/odd_report,
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/plasteel,
 /area/awaymission/listeningpost)
 "s" = (
@@ -123,7 +123,7 @@
 /area/ruin/unpowered/no_grav)
 "v" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/brown,
+/obj/item/bedsheet/brown,
 /turf/open/floor/plasteel,
 /area/awaymission/listeningpost)
 "w" = (
@@ -150,19 +150,19 @@
 /area/awaymission/listeningpost)
 "B" = (
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/fluff/ruins/listeningstation/reports/april,
-/obj/item/weapon/paper/fluff/ruins/listeningstation/reports/may,
-/obj/item/weapon/paper/fluff/ruins/listeningstation/reports/june,
-/obj/item/weapon/paper/fluff/ruins/listeningstation/reports/july,
-/obj/item/weapon/paper/fluff/ruins/listeningstation/reports/august,
-/obj/item/weapon/paper/fluff/ruins/listeningstation/reports/september,
-/obj/item/weapon/paper/fluff/ruins/listeningstation/reports/october,
-/obj/item/weapon/paper/fluff/ruins/listeningstation/receipt,
+/obj/item/paper/fluff/ruins/listeningstation/reports/april,
+/obj/item/paper/fluff/ruins/listeningstation/reports/may,
+/obj/item/paper/fluff/ruins/listeningstation/reports/june,
+/obj/item/paper/fluff/ruins/listeningstation/reports/july,
+/obj/item/paper/fluff/ruins/listeningstation/reports/august,
+/obj/item/paper/fluff/ruins/listeningstation/reports/september,
+/obj/item/paper/fluff/ruins/listeningstation/reports/october,
+/obj/item/paper/fluff/ruins/listeningstation/receipt,
 /turf/open/floor/plasteel,
 /area/awaymission/listeningpost)
 "C" = (
 /obj/structure/table,
-/obj/item/weapon/paper/fluff/ruins/listeningstation/briefing,
+/obj/item/paper/fluff/ruins/listeningstation/briefing,
 /turf/open/floor/plasteel,
 /area/awaymission/listeningpost)
 "D" = (

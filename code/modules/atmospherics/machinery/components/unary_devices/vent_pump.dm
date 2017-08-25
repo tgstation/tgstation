@@ -56,8 +56,7 @@
 	A.air_vent_names -= id_tag
 	A.air_vent_info -= id_tag
 
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	radio_connection = null
 	return ..()
 
@@ -261,8 +260,8 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
 			playsound(loc, WT.usesound, 40, 1)
 			to_chat(user, "<span class='notice'>You begin welding the vent...</span>")

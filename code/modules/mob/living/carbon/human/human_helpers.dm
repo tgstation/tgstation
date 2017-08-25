@@ -12,7 +12,7 @@
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job")
-	var/obj/item/weapon/card/id/id = get_idcard()
+	var/obj/item/card/id/id = get_idcard()
 	if(id)
 		. = id.assignment
 	else
@@ -27,7 +27,7 @@
 //gets name from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_authentification_name(if_no_id = "Unknown")
-	var/obj/item/weapon/card/id/id = get_idcard()
+	var/obj/item/card/id/id = get_idcard()
 	if(id)
 		return id.registered_name
 	var/obj/item/device/pda/pda = wear_id
@@ -63,9 +63,9 @@
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
-	var/obj/item/weapon/storage/wallet/wallet = wear_id
+	var/obj/item/storage/wallet/wallet = wear_id
 	var/obj/item/device/pda/pda = wear_id
-	var/obj/item/weapon/card/id/id = wear_id
+	var/obj/item/card/id/id = wear_id
 	var/obj/item/device/modular_computer/tablet/tablet = wear_id
 	if(istype(wallet))
 		id = wallet.front_id
@@ -74,7 +74,7 @@
 	else if(istype(pda))
 		. = pda.owner
 	else if(istype(tablet))
-		var/obj/item/weapon/computer_hardware/card_slot/card_slot = tablet.all_components[MC_CARD]
+		var/obj/item/computer_hardware/card_slot/card_slot = tablet.all_components[MC_CARD]
 		if(card_slot && (card_slot.stored_card2 || card_slot.stored_card))
 			if(card_slot.stored_card2) //The second card is the one used for authorization in the ID changing program, so we prioritize it here for consistency
 				. = card_slot.stored_card2.registered_name
@@ -94,10 +94,10 @@
 /mob/living/carbon/human/abiotic(full_body = 0)
 	var/abiotic_hands = FALSE
 	for(var/obj/item/I in held_items)
-		if(!(I.flags & NODROP))
+		if(!(I.flags_1 & NODROP_1))
 			abiotic_hands = TRUE
 			break
-	if(full_body && abiotic_hands && ((back && !(back.flags&NODROP)) || (wear_mask && !(wear_mask.flags&NODROP)) || (head && !(head.flags&NODROP)) || (shoes && !(shoes.flags&NODROP)) || (w_uniform && !(w_uniform.flags&NODROP)) || (wear_suit && !(wear_suit.flags&NODROP)) || (glasses && !(glasses.flags&NODROP)) || (ears && !(ears.flags&NODROP)) || (gloves && !(gloves.flags&NODROP)) ) )
+	if(full_body && abiotic_hands && ((back && !(back.flags_1&NODROP_1)) || (wear_mask && !(wear_mask.flags_1&NODROP_1)) || (head && !(head.flags_1&NODROP_1)) || (shoes && !(shoes.flags_1&NODROP_1)) || (w_uniform && !(w_uniform.flags_1&NODROP_1)) || (wear_suit && !(wear_suit.flags_1&NODROP_1)) || (glasses && !(glasses.flags_1&NODROP_1)) || (ears && !(ears.flags_1&NODROP_1)) || (gloves && !(gloves.flags_1&NODROP_1)) ) )
 		return TRUE
 	return abiotic_hands
 
@@ -114,7 +114,7 @@
 
 
 /mob/living/carbon/human/can_track(mob/living/user)
-	if(wear_id && istype(wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
+	if(wear_id && istype(wear_id.GetID(), /obj/item/card/id/syndicate))
 		return 0
 	if(istype(head, /obj/item/clothing/head))
 		var/obj/item/clothing/head/hat = head
@@ -143,19 +143,19 @@
 	var/protection = (prot["head"] + prot["arms"] + prot["feet"] + prot["legs"] + prot["groin"] + prot["chest"] + prot["hands"])/7
 	return protection
 
-/mob/living/carbon/human/can_use_guns(var/obj/item/weapon/gun/G)
+/mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
 
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
 		if(src.dna.check_mutation(HULK))
 			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
-			return 0
+			return FALSE
 		if(NOGUNS in src.dna.species.species_traits)
 			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
-			return 0
+			return FALSE
 	if(mind)
 		if(mind.martial_art && mind.martial_art.no_guns) //great dishonor to famiry
 			to_chat(src, "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>")
-			return 0
+			return FALSE
 
 	return .

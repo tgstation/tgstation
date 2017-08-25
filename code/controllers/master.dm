@@ -60,13 +60,17 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
-	subsystems = list()
+	var/list/_subsystems = list()
+	subsystems = _subsystems
 	if (Master != src)
 		if (istype(Master))
 			Recover()
 			qdel(Master)
 		else
-			init_subtypes(/datum/controller/subsystem, subsystems)
+			var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
+			sortTim(subsytem_types, /proc/cmp_subsystem_init)
+			for(var/I in subsytem_types)
+				_subsystems += new I
 		Master = src
 
 	if(!GLOB)
@@ -124,7 +128,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/FireHim = FALSE
 	if(istype(BadBoy))
 		msg = null
-		switch(++BadBoy.failure_strikes)
+		LAZYINITLIST(BadBoy.failure_strikes)
+		switch(++BadBoy.failure_strikes[BadBoy.type])
 			if(2)
 				msg = "The [BadBoy.name] subsystem was the last to fire for 2 controller restarts. It will be recovered now and disabled if it happens again."
 				FireHim = TRUE

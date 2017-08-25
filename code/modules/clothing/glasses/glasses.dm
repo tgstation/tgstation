@@ -280,7 +280,7 @@
 	name = "thermoncle"
 	desc = "Never before has seeing through walls felt so gentlepersonly."
 	icon_state = "thermoncle"
-	flags = null //doesn't protect eyes because it's a monocle, duh
+	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 
 /obj/item/clothing/glasses/thermal/monocle/examine(mob/user) //Different examiners see a different description!
 	var/desk = desc
@@ -331,10 +331,10 @@
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	darkness_view = 8
 	scan_reagents = 1
-	flags = NODROP
+	flags_1 = NODROP_1
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
-/obj/item/clothing/glasses/godeye/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/clothing/glasses/godeye/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)
 		if(W.icon_state == "godeye")
 			W.icon_state = "doublegodeye"

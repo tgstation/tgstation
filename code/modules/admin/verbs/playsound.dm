@@ -30,7 +30,7 @@
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
-			M << admin_sound
+			SEND_SOUND(M, admin_sound)
 
 	SSblackbox.add_details("admin_verb","Play Global Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -68,5 +68,5 @@
 	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")
 	for(var/mob/M in GLOB.player_list)
 		if(M.client)
-			M << sound(null)
+			SEND_SOUND(M, sound(null))
 	SSblackbox.add_details("admin_verb","Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

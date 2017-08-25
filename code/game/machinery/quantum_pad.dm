@@ -8,36 +8,21 @@
 	idle_power_usage = 200
 	active_power_usage = 5000
 	unique_rename = 1
+	circuit = /obj/item/circuitboard/machine/quantumpad
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
 	var/teleport_speed = 50
 	var/last_teleport //to handle the cooldown
 	var/teleporting = 0 //if it's in the process of teleporting
 	var/power_efficiency = 1
-	var/obj/machinery/quantumpad/linked_pad = null
-
-/obj/machinery/quantumpad/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/quantumpad(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/quantumpad
-	name = "Quantum Pad (Machine Board)"
-	build_path = /obj/machinery/quantumpad
-	origin_tech = "programming=3;engineering=3;plasmatech=3;bluespace=4"
-	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 1,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/stack/cable_coil = 1)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
+	var/obj/machinery/quantumpad/linked_pad
 
 /obj/machinery/quantumpad/RefreshParts()
 	var/E = 0
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		E += C.rating
 	power_efficiency = E
 	E = 0
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	teleport_speed = initial(teleport_speed)
 	teleport_speed -= (E*10)
@@ -152,6 +137,6 @@
 				do_teleport(ROI, get_turf(linked_pad))
 
 
-/obj/item/weapon/paper/guides/quantumpad
+/obj/item/paper/guides/quantumpad
 	name = "Quantum Pad For Dummies"
 	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>"

@@ -12,7 +12,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = WALL_OBJ_LAYER
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	animate_movement = 0
 	var/metal = 0
@@ -29,6 +29,12 @@
 	metal = ALUMINUM_FOAM
 	icon_state = "mfoam"
 
+/obj/effect/particle_effect/foam/metal/MakeSlippery()
+	return
+
+/obj/effect/particle_effect/foam/metal/smart
+	name = "smart foam"
+
 /obj/effect/particle_effect/foam/metal/iron
 	name = "iron foam"
 	metal = IRON_FOAM
@@ -38,11 +44,15 @@
 	metal = RESIN_FOAM
 
 
-/obj/effect/particle_effect/foam/New(loc)
-	..(loc)
+/obj/effect/particle_effect/foam/Initialize()
+	. = ..()
+	MakeSlippery()
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
+
+/obj/effect/particle_effect/foam/proc/MakeSlippery()
+	AddComponent(/datum/component/slippery, 100)
 
 /obj/effect/particle_effect/foam/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -58,6 +68,20 @@
 			new /obj/structure/foamedmetal/iron(get_turf(src))
 		if(RESIN_FOAM)
 			new /obj/structure/foamedmetal/resin(get_turf(src))
+	flick("[icon_state]-disolve", src)
+	QDEL_IN(src, 5)
+
+/obj/effect/particle_effect/foam/smart/kill_foam() //Smart foam adheres to area borders for walls
+	STOP_PROCESSING(SSfastprocess, src)
+	if(metal)
+		var/turf/T = get_turf(src)
+		if(isspaceturf(T)) //Block up any exposed space
+			T.ChangeTurf(/turf/open/floor/plating/foam)
+		for(var/direction in GLOB.cardinals)
+			var/turf/cardinal_turf = get_step(T, direction)
+			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
+				new/obj/structure/foamedmetal(T)
+				break
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 5)
 
@@ -101,15 +125,6 @@
 	lifetime--
 	return 1
 
-/obj/effect/particle_effect/foam/Crossed(atom/movable/AM)
-	if(istype(AM, /mob/living/carbon))
-		var/mob/living/carbon/M = AM
-		M.slip(100, src)
-
-/obj/effect/particle_effect/foam/metal/Crossed(atom/movable/AM)
-	return
-
-
 /obj/effect/particle_effect/foam/proc/spread_foam()
 	var/turf/t_loc = get_turf(src)
 	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
@@ -149,6 +164,10 @@
 
 /datum/effect_system/foam_spread/metal
 	effect_type = /obj/effect/particle_effect/foam/metal
+
+
+/datum/effect_system/foam_spread/metal/smart
+	effect_type = /obj/effect/particle_effect/foam/smart
 
 
 /datum/effect_system/foam_spread/New()
@@ -252,6 +271,7 @@
 	. = ..()
 	if(isopenturf(loc))
 		var/turf/open/O = loc
+		O.ClearWet()
 		if(O.air)
 			var/datum/gas_mixture/G = O.air
 			G.temperature = 293.15

@@ -1,5 +1,5 @@
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/weapon/gun/energy, /obj/item/weapon/reagent_containers/spray/pepper, /obj/item/weapon/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/device/flashlight/seclite, /obj/item/weapon/melee/classic_baton/telescopic, /obj/item/weapon/kitchen/knife/combat, /obj/item/weapon/tank/internals/emergency_oxygen)
+	allowed = list(/obj/item/gun/energy, /obj/item/reagent_containers/spray/pepper, /obj/item/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/device/flashlight/seclite, /obj/item/melee/classic_baton/telescopic, /obj/item/kitchen/knife/combat, /obj/item/tank/internals/emergency_oxygen)
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -153,7 +153,7 @@
 	name = "detective's armor vest"
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
-	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/reagent_containers/spray/pepper, /obj/item/device/flashlight, /obj/item/weapon/gun/energy, /obj/item/weapon/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/storage/fancy/cigarettes, /obj/item/weapon/lighter, /obj/item/device/detective_scanner, /obj/item/device/taperecorder, /obj/item/weapon/melee/classic_baton)
+	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/reagent_containers/spray/pepper, /obj/item/device/flashlight, /obj/item/gun/energy, /obj/item/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/device/detective_scanner, /obj/item/device/taperecorder, /obj/item/melee/classic_baton)
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
 
@@ -341,14 +341,14 @@
 //All of the armor below is mostly unused
 
 /obj/item/clothing/suit/armor/centcom
-	name = "\improper Centcom armor"
+	name = "\improper CentCom armor"
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
 	item_state = "centcom"
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/weapon/restraints/handcuffs, /obj/item/weapon/tank/internals/emergency_oxygen)
-	flags = THICKMATERIAL
+	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals/emergency_oxygen)
+	flags_1 = THICKMATERIAL_1
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -363,7 +363,7 @@
 	item_state = "swat_suit"
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.90
-	flags = THICKMATERIAL
+	flags_1 = THICKMATERIAL_1
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -372,7 +372,7 @@
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	flags = THICKMATERIAL
+	flags_1 = THICKMATERIAL_1
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 90, acid = 90)

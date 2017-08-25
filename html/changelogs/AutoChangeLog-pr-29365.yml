@@ -1,6 +1,0 @@
-author: "Anonmare"
-delete-after: True
-changes: 
-  - rscadd: "Surgical toolarm to protolathe and exofab"
-  - tweak: "Toolarm tools are less robust but more efficient at surgery"
-  - tweak: "Arm augments are no longer a huge item"

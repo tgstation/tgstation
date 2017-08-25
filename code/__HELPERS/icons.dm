@@ -167,7 +167,7 @@ mob
 
 		Output_Icon()
 			set name = "2. Output Icon"
-			to_chat(src, "Icon is: [bicon(getFlatIcon(src))]")
+			to_chat(src, "Icon is: [icon2base64html(getFlatIcon(src))]")
 
 		Label_Icon()
 			set name = "3. Label Icon"
@@ -712,7 +712,8 @@ The _flatIcons list is a cache for generated icon files.
 			if(!current)
 				curIndex++ //Try the next layer
 				continue
-			currentLayer = current:layer
+			var/image/I = current
+			currentLayer = I.layer
 			if(currentLayer<0) // Special case for FLY_LAYER
 				if(currentLayer <= -1000) return flat
 				if(pSet == 0) // Underlay
@@ -747,22 +748,22 @@ The _flatIcons list is a cache for generated icon files.
 		// Dimensions of overlay being added
 	var/{addX1;addX2;addY1;addY2}
 
-	for(var/I in layers)
-
-		if(I:alpha == 0)
+	for(var/V in layers)
+		var/image/I = V
+		if(I.alpha == 0)
 			continue
 
 		if(I == copy) // 'I' is an /image based on the object being flattened.
 			curblend = BLEND_OVERLAY
-			add = icon(I:icon, I:icon_state, I:dir)
+			add = icon(I.icon, I.icon_state, I.dir)
 		else // 'I' is an appearance object.
 			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend)
 
 		// Find the new dimensions of the flat icon to fit the added overlay
-		addX1 = min(flatX1, I:pixel_x+1)
-		addX2 = max(flatX2, I:pixel_x+add.Width())
-		addY1 = min(flatY1, I:pixel_y+1)
-		addY2 = max(flatY2, I:pixel_y+add.Height())
+		addX1 = min(flatX1, I.pixel_x+1)
+		addX2 = max(flatX2, I.pixel_x+add.Width())
+		addY1 = min(flatY1, I.pixel_y+1)
+		addY2 = max(flatY2, I.pixel_y+add.Height())
 
 		if(addX1!=flatX1 || addX2!=flatX2 || addY1!=flatY1 || addY2!=flatY2)
 			// Resize the flattened icon so the new icon fits
@@ -771,7 +772,7 @@ The _flatIcons list is a cache for generated icon files.
 			flatY1=addY1;flatY2=addY2
 
 		// Blend the overlay into the flattened icon
-		flat.Blend(add, blendMode2iconMode(curblend), I:pixel_x + 2 - flatX1, I:pixel_y + 2 - flatY1)
+		flat.Blend(add, blendMode2iconMode(curblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
 
 	if(A.color)
 		flat.Blend(A.color, ICON_MULTIPLY)
@@ -782,10 +783,11 @@ The _flatIcons list is a cache for generated icon files.
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
-	for(var/I in A.overlays)//For every image in overlays. var/image/I will not work, don't try it.
-		if(I:layer>A.layer)
+	for(var/V in A.overlays)//For every image in overlays. var/image/I will not work, don't try it.
+		var/image/I = V
+		if(I.layer>A.layer)
 			continue//If layer is greater than what we need, skip it.
-		var/icon/image_overlay = new(I:icon,I:icon_state)//Blend only works with icon objects.
+		var/icon/image_overlay = new(I.icon,I.icon_state)//Blend only works with icon objects.
 		//Also, icons cannot directly set icon_state. Slower than changing variables but whatever.
 		alpha_mask.Blend(image_overlay,ICON_OR)//OR so they are lumped together in a nice overlay.
 	return alpha_mask//And now return the mask.
@@ -968,32 +970,135 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /image/proc/setDir(newdir)
 	dir = newdir
 
-/atom/proc/freeze_icon_index()
-	return "\ref[initial(icon)]-[initial(icon_state)]"
+#define FROZEN_RED_COLOR "#2E5E69"
+#define FROZEN_GREEN_COLOR "#60A2A8"
+#define FROZEN_BLUE_COLOR "#A1AFB1"
 
 /obj/proc/make_frozen_visual()
 	// Used to make the frozen item visuals for Freon.
-	var/static/list/freeze_item_icons = list()
 	if(resistance_flags & FREEZE_PROOF)
 		return
-	if(!HAS_SECONDARY_FLAG(src, FROZEN) && (initial(icon) && initial(icon_state)))
-		var/index = freeze_icon_index()
-		var/icon/IC
-		var/icon/P = freeze_item_icons[index]
-		if(!P)
-			P = new /icon
-			for(var/iconstate in icon_states(icon))
-				var/icon/O = new('icons/effects/freeze.dmi', "ice_cube")
-				IC = new(icon, iconstate)
-				O.Blend(IC, ICON_ADD)
-				P.Insert(O, iconstate)
-			freeze_item_icons[index] = P
-		icon = P
+	if(!(flags_2 & FROZEN_2))
 		name = "frozen [name]"
-		SET_SECONDARY_FLAG(src, FROZEN)
+		add_atom_colour(list(FROZEN_RED_COLOR, FROZEN_GREEN_COLOR, FROZEN_BLUE_COLOR, rgb(0,0,0)), TEMPORARY_COLOUR_PRIORITY)
+		alpha -= 25
+		flags_2 |= FROZEN_2
 
 //Assumes already frozed
 /obj/proc/make_unfrozen()
-	icon = initial(icon)
-	name = replacetext(name, "frozen ", "")
-	CLEAR_SECONDARY_FLAG(src, FROZEN)
+	if(flags_2 & FROZEN_2)
+		name = replacetext(name, "frozen ", "")
+		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, list(FROZEN_RED_COLOR, FROZEN_GREEN_COLOR, FROZEN_BLUE_COLOR, rgb(0,0,0)))
+		alpha += 25
+		flags_2 &= ~FROZEN_2
+
+#undef FROZEN_RED_COLOR
+#undef FROZEN_GREEN_COLOR
+#undef FROZEN_BLUE_COLOR
+
+
+//Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
+// exporting it as text, and then parsing the base64 from that.
+// (This relies on byond automatically storing icons in savefiles as base64)
+/proc/icon2base64(icon/icon, iconKey = "misc")
+	if (!isicon(icon))
+		return FALSE
+	WRITE_FILE(GLOB.iconCache[iconKey], icon)
+	var/iconData = GLOB.iconCache.ExportText(iconKey)
+	var/list/partial = splittext(iconData, "{")
+	return replacetext(copytext(partial[2], 3, -5), "\n", "")
+
+/proc/icon2html(thing, target, icon_state, dir, frame = 1, moving = FALSE)
+	if (!thing)
+		return
+
+	var/key
+	var/icon/I = thing
+	if (!target)
+		return
+	if (target == world)
+		target = GLOB.clients
+
+	var/list/targets
+	if (!islist(target))
+		targets = list(target)
+	else
+		targets = target
+		if (!targets.len)
+			return
+	if (!isicon(I))
+		if (isfile(thing)) //special snowflake
+			var/name = sanitize_filename("[generate_asset_name(thing)].png")
+			register_asset(name, thing)
+			for (var/thing2 in targets)
+				send_asset(thing2, key, FALSE)
+			return "<img class='icon icon-misc' src=\"[url_encode(name)]\">"
+		var/atom/A = thing
+		if (isnull(dir))
+			dir = A.dir
+		if (isnull(icon_state))
+			icon_state = A.icon_state
+		I = A.icon
+		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
+			var/icon/temp = I
+			I = icon()
+			I.Insert(temp, dir = SOUTH)
+			dir = SOUTH
+	else
+		if (isnull(dir))
+			dir = SOUTH
+		if (isnull(icon_state))
+			icon_state = ""
+
+	I = icon(I, icon_state, dir, frame, moving)
+
+	key = "[generate_asset_name(I)].png"
+	register_asset(key, I)
+	for (var/thing2 in targets)
+		send_asset(thing2, key, FALSE)
+
+	return "<img class='icon icon-[icon_state]' src=\"[url_encode(key)]\">"
+
+/proc/icon2base64html(thing)
+	if (!thing)
+		return
+	var/static/list/bicon_cache = list()
+	if (isicon(thing))
+		var/icon/I = thing
+		var/icon_base64 = icon2base64(I)
+
+		if (I.Height() > world.icon_size || I.Width() > world.icon_size)
+			var/icon_md5 = md5(icon_base64)
+			icon_base64 = bicon_cache[icon_md5]
+			if (!icon_base64) // Doesn't exist yet, make it.
+				bicon_cache[icon_md5] = icon_base64 = icon2base64(I)
+
+
+		return "<img class='icon icon-misc' src='data:image/png;base64,[icon_base64]'>"
+
+	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
+	var/atom/A = thing
+	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
+
+
+	if (!bicon_cache[key]) // Doesn't exist, make it.
+		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
+		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
+			var/icon/temp = I
+			I = icon()
+			I.Insert(temp, dir = SOUTH)
+
+		bicon_cache[key] = icon2base64(I, key)
+
+	return "<img class='icon icon-[A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
+
+//Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
+/proc/costly_icon2html(thing, target)
+	if (!thing)
+		return
+
+	if (isicon(thing))
+		return icon2html(thing, target)
+
+	var/icon/I = getFlatIcon(thing)
+	return icon2html(I, target)
