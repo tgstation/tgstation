@@ -27,12 +27,12 @@
 		</ui-section><hr>
 		<ui-section>
 		{{#each data.scripture}}
-			<div><ui-button tooltip='{{{tip}}}' tooltip-side='right' action='recite' params='{"category": "{{type}}"}'>Recite{{{required}}}</ui-button>
+			<div><ui-button tooltip='{{{tip}}}' tooltip-side='right' state='{{usable ? null : 'disabled'}}' action='recite' params='{"category": "{{type}}"}'>Recite{{{required}}}</ui-button>
 		 	 {{#if quickbind}}
 				{{#if bound}}
 					<ui-button action='bind' params='{"category": "{{type}}"}'>Unbind {{{bound}}}</ui-button>
 				{{else}}
-					<ui-button action='bind' params='{"category": "{{type}}"}'>Quickbind</ui-button>
+					<ui-button state='{{usable ? null : 'disabled'}}' action='bind' params='{"category": "{{type}}"}'>Quickbind</ui-button>
 				{{/if}}
 		  	{{/if}}
 		  	{{{name}}} {{{descname}}} {{{invokers}}}</div>

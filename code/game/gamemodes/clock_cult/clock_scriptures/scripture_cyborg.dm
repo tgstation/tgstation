@@ -6,7 +6,7 @@
 /datum/clockwork_scripture/ranged_ability/linked_vanguard
 	name = "Linked Vanguard"
 	invocations = list("Shield us...", "...from darkness!")
-	channel_time = 30
+	channel_time = 25
 	primary_component = VANGUARD_COGWHEEL
 	quickbind_desc = "Allows you to grant a Servant and yourself stun immunity, as the Vanguard scripture.<br><b>Click your slab to disable.</b>"
 	slab_overlay = "vanguard"

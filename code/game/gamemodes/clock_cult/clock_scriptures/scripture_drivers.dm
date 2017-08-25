@@ -43,6 +43,7 @@
 	sort_priority = 2
 	quickbind = TRUE
 	quickbind_desc = "Creates a Judicial Visor, which can smite an area, applying Belligerent and briefly stunning."
+	cyborg_usable = FALSE
 
 
 //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
@@ -58,6 +59,7 @@
 	sort_priority = 3
 	quickbind = TRUE
 	quickbind_desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
+	cyborg_usable = FALSE
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
 	if(!GLOB.ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
@@ -150,6 +152,7 @@
 	sort_priority = 6
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Submission, which will convert non-Servants that remain on it."
+	cyborg_usable = FALSE
 
 
 //Replicant: Creates a new clockwork slab.
@@ -221,6 +224,7 @@
 	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
+	cyborg_usable = FALSE
 
 
 //Sigil of Transgression: Creates a sigil of transgression, which stuns the first nonservant to cross it.

@@ -246,7 +246,7 @@
 		ui.open()
 
 /obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user)
-	if(!scripture || !user || !user.canUseTopic(src) || (!no_cost && !can_recite_scripture(user)))
+	if(!scripture || !user || !user.canUseTopic(src) || (!no_cost && !can_recite_scripture(user)) || (!initial(scripture.cyborg_usable) && iscyborg(user)))
 		return FALSE
 	if(user.get_active_held_item() != src)
 		to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
@@ -586,7 +586,8 @@
 			"tip" = "[S.desc]\n[S.usage_tip]",
 			"required" = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0),
 			"type" = "[S.type]",
-			"quickbind" = S.quickbind)
+			"quickbind" = (S.quickbind && (S.cyborg_usable || !iscyborg(user))),
+			"usable" = (SSticker.scripture_states[S.tier] && (S.cyborg_usable || !iscyborg(user))))
 			var/found = quickbound.Find(S.type)
 			if(found)
 				temp_info["bound"] = "<b>[found]</b>"
@@ -651,6 +652,8 @@
 					quickbound[found_index] = null //otherwise, leave it as a null so the scripture maintains position
 				update_quickbind()
 			else
+				if(!SSticker.scripture_states[S.tier] || (!initial(path.cyborg_usable) && iscyborg(usr)))
+					return 1
 				var/target_index = input("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
 				if(isnum(target_index) && target_index > 0 && target_index <= maximum_quickbound && !..())
 					var/datum/clockwork_scripture/S
