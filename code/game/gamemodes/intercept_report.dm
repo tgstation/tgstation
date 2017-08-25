@@ -63,6 +63,10 @@
 		if("abduction")
 			text += "Nearby spaceships report crewmembers having been kidnapped and tortured by mysterious grey humanoids, before being sent back.  Be advised that the kidnapped crewmembers behave \
 			strangely upon return to duties."
+		if("traitor+changeling")
+			text += "The Syndicate union has started some experimental research regarding humanoid shapeshifting.  There are rumors that this technology will be field tested on a Nanotrasen station \
+			for infiltration purposes.  Be advised that support personell may also be deployed to defend these shapeshifters. Trust nobody - suspect everybody. Do not announce this to the crew, \
+			as paranoia may spread and inhibit workplace efficiency."
 		else
 			EXCEPTION("An intercept report tried to generate a report for an invalid gamemode, \"[mode_type]\"")
 	return text

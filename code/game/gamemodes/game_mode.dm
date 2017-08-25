@@ -295,7 +295,8 @@
 	"Devil Agents" = 1,
 	"cult" = 10,
 	"clockwork cult" = 10,
-	"changeling" = 10
+	"changeling" = 10,
+	"traitor+changeling" = 10
 	)
 	
 	
