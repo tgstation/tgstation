@@ -171,6 +171,6 @@
 			qdel(target)
 			return TRUE
 		var/atom/movable/M = target
-		M.forensics.clean_blood()
+		M.clean_blood()
 		visible_message("[src] polishes \the [target].")
 		return TRUE
