@@ -26,15 +26,22 @@
 /obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
-		active = 1
+		playsound(loc, 'sound/weapons/armbomb.ogg', 60, 1)
+		active = TRUE
 		icon_state = initial(icon_state) + "_active"
-		playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+		add_fingerprint(user)
+		var/turf/bombturf = get_turf(src)
+		var/area/A = get_area(bombturf)
+		var/message = "[ADMIN_LOOKUPFLW(user)]) has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]"
+		GLOB.bombers += message
+		message_admins(message)
+		log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
 		spawn(5)
 			if(user)
 				user.drop_item()
 			prime()
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /obj/item/grenade/examine(mob/user)
