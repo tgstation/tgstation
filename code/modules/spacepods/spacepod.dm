@@ -86,6 +86,8 @@
 
 	hud_possible = list(DIAG_HUD, DIAG_BATT_HUD)
 
+	var/armor_multiplier_applied = FALSE //used for determining if the construction process already applied the armorer multiplier
+
 	var/datum/pod_armor/pod_armor
 
 
@@ -137,8 +139,9 @@
 	diag_hud.add_to_hud(src)
 	diag_hud_set_podhealth()
 	diag_hud_set_podcharge()
-	max_integrity *= pod_armor.armor_multiplier
-	obj_integrity *= pod_armor.armor_multiplier
+	if (!armor_multiplier_applied)
+		max_integrity *= pod_armor.armor_multiplier
+		obj_integrity *= pod_armor.armor_multiplier
 	cargo_hold = new/obj/item/storage/internal(src)
 	cargo_hold.w_class = 5	//so you can put bags in
 	cargo_hold.storage_slots = 0	//You need to install cargo modules to use it.
@@ -247,6 +250,11 @@
 	visible_message("<span class='warning'>The [user] slashes at [name]'s armor!</span>")
 	return
 
+/obj/spacepod/proc/explodify()
+	essage_to_riders("<span class='userdanger'>Exit the spacepod immediately, explosion immi-</span>")
+	explosion(loc, 2, 4, 8)
+	qdel(src)
+
 /obj/spacepod/proc/deal_damage(var/damage)
 	var/oldhealth = obj_integrity
 	obj_integrity = max(0, obj_integrity - damage)
@@ -256,14 +264,9 @@
 		play_sound_to_riders('sound/effects/alert.ogg')
 	if(oldhealth > obj_integrity && !obj_integrity)
 		play_sound_to_riders('sound/effects/alert.ogg')
-	if(!obj_integrity)
+	if(!obj_integrity || obj_integrity < 0)
 		message_to_riders("<span class='userdanger'>Critical damage to the vessel detected, core explosion imminent!</span>")
-		for(var/i = 10, i >= 0; --i)
-			message_to_riders("<span class='warning'>[i]</span>")
-			if(i == 0)
-				explosion(loc, 2, 4, 8)
-				qdel(src)
-			sleep(10)
+		addtimer(CALLBACK(src, .proc/explodify), 50)
 
 	update_icons()
 	diag_hud_set_podhealth()
