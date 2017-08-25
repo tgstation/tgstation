@@ -652,7 +652,7 @@
 					quickbound[found_index] = null //otherwise, leave it as a null so the scripture maintains position
 				update_quickbind()
 			else
-				if(!SSticker.scripture_states[S.tier] || (!initial(path.cyborg_usable) && iscyborg(usr)))
+				if(!SSticker.scripture_states[path.tier] || (!initial(path.cyborg_usable) && iscyborg(usr)))
 					return 1
 				var/target_index = input("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
 				if(isnum(target_index) && target_index > 0 && target_index <= maximum_quickbound && !..())
