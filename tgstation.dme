@@ -140,6 +140,7 @@
 #include "code\_onclick\hud\blobbernauthud.dm"
 #include "code\_onclick\hud\clockwork_marauder.dm"
 #include "code\_onclick\hud\constructs.dm"
+#include "code\_onclick\hud\credits.dm"
 #include "code\_onclick\hud\devil.dm"
 #include "code\_onclick\hud\drones.dm"
 #include "code\_onclick\hud\fullscreen.dm"

@@ -1266,6 +1266,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
+#define QDEL_IN_CLIENT_TIME(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE | TIMER_CLIENT_TIME)
 #define QDEL_NULL(item) qdel(item); item = null
 #define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
 #define QDEL_LIST_IN(L, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/______qdel_list_wrapper, L), time, TIMER_STOPPABLE)
