@@ -51,7 +51,7 @@
 
 /obj/screen/alert/status_effect/vanguard
 	name = "Vanguard"
-	desc = "You're absorbing stuns! 30% of all stuns taken will affect you after this effect ends."
+	desc = "You're absorbing stuns! 25% of all stuns taken will affect you after this effect ends."
 	icon_state = "vanguard"
 	alerttooltipstyle = "clockcult"
 
@@ -61,7 +61,7 @@
 		var/vanguard = L.stun_absorption["vanguard"]
 		desc = initial(desc)
 		desc += "<br><b>[Floor(vanguard["stuns_absorbed"] * 0.1)]</b> seconds of stuns held back.\
-		[GLOB.ratvar_awakens ? "":"<br><b>[Floor(min(vanguard["stuns_absorbed"] * 0.030, 20))]</b> seconds of stun will affect you."]"
+		[GLOB.ratvar_awakens ? "":"<br><b>[Floor(min(vanguard["stuns_absorbed"] * 0.025, 20))]</b> seconds of stun will affect you."]"
 	..()
 
 /datum/status_effect/vanguard_shield/Destroy()
@@ -87,7 +87,7 @@
 	var/vanguard = owner.stun_absorption["vanguard"]
 	var/stuns_blocked = 0
 	if(vanguard)
-		stuns_blocked = round(min(vanguard["stuns_absorbed"] * 0.3, 20))
+		stuns_blocked = round(min(vanguard["stuns_absorbed"] * 0.25, 200))
 		vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
 	if(owner.stat != DEAD)
 		var/message_to_owner = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
