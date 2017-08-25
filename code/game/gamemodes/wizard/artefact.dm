@@ -246,7 +246,7 @@
 			assigned = "[user.real_name]"
 			user.faction = list("[user.real_name]")
 			to_chat(user, "You bind the sword to yourself. You can now use it to summon help.")
-			if(!is_gangster(user))
+			if(!user.mind.gang_datum)
 				var/datum/gang/multiverse/G = new(src, "[user.real_name]")
 				SSticker.mode.gangs += G
 				G.bosses[user.mind] = 0

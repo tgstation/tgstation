@@ -1,13 +1,16 @@
 //gang_datum.dm
 //Bare minimum of gang datum - for multiverse.
 
+GLOBAL_LIST_INIT(gang_name_pool, list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp"))
+GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","purple", "white"))
+GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather, /obj/item/clothing/suit/jacket/leather/overcoat, /obj/item/clothing/suit/jacket/puffer, /obj/item/clothing/suit/jacket/miljacket, /obj/item/clothing/suit/jacket/puffer, /obj/item/clothing/suit/pirate, /obj/item/clothing/suit/poncho, /obj/item/clothing/suit/apron/overalls, /obj/item/clothing/suit/jacket/letterman))
+
 /datum/gang
 	var/name = "ERROR"
 	var/color = "white"
 	var/color_hex = "#FFFFFF"
 	var/list/datum/mind/gangsters = list() //gang B Members
 	var/list/datum/mind/bosses = list() //gang A Bosses
-	var/list/obj/item/device/gangtool/gangtools = list()
 	var/list/tags_by_mind = list()				//Assoc list in format of tags_by_mind[mind_of_gangster] = list(tag1, tag2, tag3) where tags are the actual object decals.
 	var/style
 	var/fighting_style = "normal"
@@ -72,18 +75,6 @@
 	SSticker.mode.set_antag_hud(defector_mind.current, null)
 
 //////////////////////////////////////////// MESSAGING
-
-
-/datum/gang/proc/message_gangtools(message,beep=1,warning)
-	if(!gangtools.len || !message)
-		return
-	for(var/obj/item/device/gangtool/tool in gangtools)
-		var/mob/living/mob = get(tool.loc, /mob/living)
-		if(mob && mob.mind && mob.stat == CONSCIOUS)
-			if(mob.mind.gang_datum == src)
-				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>[icon2html(tool, mob)] [message]</span>")
-			return
-
 //Multiverse
 
 /datum/gang/multiverse
@@ -94,6 +85,3 @@
 /datum/gang/multiverse/New(loc, multiverse_override)
 	name = multiverse_override
 	ganghud = new()
-
-/datum/gang/multiverse/income()
-	return
