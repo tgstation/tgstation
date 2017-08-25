@@ -4,6 +4,7 @@
 #define TICK_LIMIT_MC_INIT_DEFAULT 98
 
 #define TICK_USAGE world.tick_usage
+#define TICK_USAGE_REAL world.tick_usage
 
 #define TICK_CHECK ( world.tick_usage > Master.current_ticklimit )
 #define CHECK_TICK if TICK_CHECK stoplag()
