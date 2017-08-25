@@ -280,12 +280,35 @@
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
 	likely threats to appear in your sector.</b>"
-	var/list/possible_modes = list()
-	possible_modes.Add("blob", "changeling", "clock_cult", "cult", "extended", "gang", "malf", "nuclear", "revolution", "traitor", "wizard")
-	possible_modes -= name //remove the current gamemode to prevent it from being randomly deleted, it will be readded later
+	var/list/mode_weights = list(
+	"wizard" = 10,
+	"traitor" = 20,
+	"Internal Affairs" = 10,
+	"revolution" = 10,
+	"nuclear emergency" = 10,
+	"monkey" = 1,
+	"abduction" = 1,
+	"meteor" = 1,
+	"gang war" = 5,
+	"secret extended" = 5,
+	"devil" = 1,
+	"Devil Agents" = 1,
+	"cult" = 10,
+	"clockwork cult" = 10,
+	"changeling" = 10
+	)
+	
+	
+	//"extended" and "blob" both have their own custom send_intercept, so it makes no sense to put them as a possibility here, else their existance could be meta'ed to simply reduce the size of the list.
+	
+	
+	mode_weights[name] = 0//remove the current gamemode to prevent it from being randomly deleted, it will be readded later
 
-	for(var/i in 1 to 6) //Remove a few modes to leave four
-		possible_modes -= pick(possible_modes)
+	var/list/possible_modes = list()
+	for(var/i in 1 to rand(3,5)) //Only pick a few modes,
+		var/selected_mode = pickweight(mode_weights)
+		mode_weights[selected_mode] = 0
+		possible_modes += selected_mode
 
 	possible_modes |= name //Re-add the actual gamemode - the intercept will thus always have the correct mode in its list
 	possible_modes = shuffle(possible_modes) //Meta prevention
