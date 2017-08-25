@@ -5,6 +5,9 @@
 #define SECURITY_HAS_MAINT_ACCESS 2
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
+GLOBAL_VAR_INIT(config_dir, "config/")
+GLOBAL_PROTECT(config_dir)
+
 /datum/configuration/can_vv_get(var_name)
 	var/static/list/banned_gets = list("autoadmin", "autoadmin_rank")
 	if (var_name in banned_gets)
@@ -294,19 +297,19 @@
 	Reload()
 
 /datum/configuration/proc/Reload()
-	load("config/config.txt")
-	load("config/game_options.txt","game_options")
-	load("config/policies.txt", "policies")
-	loadsql("config/dbconfig.txt")
+	load("config.txt")
+	load("game_options.txt","game_options")
+	load("policies.txt", "policies")
+	loadsql("dbconfig.txt")
 	if (maprotation)
-		loadmaplist("config/maps.txt")
+		loadmaplist("maps.txt")
 
 	// apply some settings from config..
 	GLOB.abandon_allowed = respawn
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
 	var/list/Lines = world.file2list(filename)
-
+	filename = "[GLOB.config_dir][filename]"
 	for(var/t in Lines)
 		if(!t)
 			continue
@@ -862,6 +865,7 @@
 
 
 /datum/configuration/proc/loadsql(filename)
+	filename = "[GLOB.config_dir][filename]"
 	var/list/Lines = world.file2list(filename)
 	for(var/t in Lines)
 		if(!t)
