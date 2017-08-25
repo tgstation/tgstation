@@ -1,10 +1,24 @@
 Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
 
-The latest database version is 3.2; The query to update the schema revision table is:
+The latest database version is 3.3; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (3, 2);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (3, 3);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (3, 2);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (3, 3);
+
+----------------------------------------------------
+In any query remember to add a prefix to the table names if you use one.
+----------------------------------------------------
+
+25 August 2017, by Jordie0608
+
+Modified tables 'connection_log', 'legacy_population', 'library', 'messages' and 'player' to add additional 'round_id' tracking in various forms and 'server_ip' and 'server_port' to the table 'messages'.
+
+ALTER TABLE `connection_log` ADD COLUMN `round_id` INT(11) UNSIGNED NOT NULL AFTER `server_port`;
+ALTER TABLE `legacy_population` ADD COLUMN `round_id` INT(11) UNSIGNED NOT NULL AFTER `server_port`;
+ALTER TABLE `library` ADD COLUMN `round_id_created` INT(11) UNSIGNED NOT NULL AFTER `deleted`;
+ALTER TABLE `messages` ADD COLUMN `server_ip` INT(10) UNSIGNED NOT NULL AFTER `server`, ADD COLUMN `server_port` SMALLINT(5) UNSIGNED NOT NULL AFTER `server_ip`, ADD COLUMN `round_id` INT(11) UNSIGNED NOT NULL AFTER `server_port`;
+ALTER TABLE `player` ADD COLUMN `firstseen_round_id` INT(11) UNSIGNED NOT NULL AFTER `firstseen`, ADD COLUMN `lastseen_round_id` INT(11) UNSIGNED NOT NULL AFTER `lastseen`;
 
 ----------------------------------------------------
 
