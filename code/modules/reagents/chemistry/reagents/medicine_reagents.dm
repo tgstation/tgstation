@@ -394,7 +394,7 @@
 	taste_description = "ash"
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/M)
-	M.adjustToxLoss(-2*REM, 0)
+	M.adjustToxLoss(-1*REM, 0)
 	. = 1
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
@@ -960,8 +960,6 @@
 
 /datum/reagent/medicine/antitoxin/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
-	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.id,1)
 	..()
 	. = 1
 
