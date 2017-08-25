@@ -61,12 +61,12 @@
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
 
-//Sigil of Transgression: Stuns the first non-servant to walk on it and flashes all nearby non_servants. Nar-Sian cultists are damaged and knocked down for a longer time
+//Sigil of Transgression: Stuns the first non-servant to walk on it. Nar-Sian cultists are damaged and knocked down for a longer time.
 /obj/effect/clockwork/sigil/transgression
 	name = "dull sigil"
 	desc = "A dull, barely-visible golden sigil. It's as though light was carved into the ground."
 	icon = 'icons/effects/clockwork_effects.dmi'
-	clockwork_desc = "A sigil that will stun the next non-Servant to cross it."
+	clockwork_desc = "A sigil that will briefly stun and apply Belligerent to the next non-Servant to cross it."
 	icon_state = "sigildull"
 	layer = HIGH_SIGIL_LAYER
 	alpha = 75
@@ -78,18 +78,16 @@
 	component_refund = list(BELLIGERENT_EYE = 1)
 
 /obj/effect/clockwork/sigil/transgression/sigil_effects(mob/living/L)
-	var/target_flashed = L.flash_act()
-	for(var/mob/living/M in viewers(5, src))
-		if(!is_servant_of_ratvar(M) && M != L)
-			M.flash_act()
-	if(iscultist(L))
-		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
-		L.adjustBruteLoss(10)
-		L.Knockdown(140, FALSE)
-	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
-	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
-	L.Stun(100)
-	new /obj/effect/temp_visual/ratvar/sigil/transgression(get_turf(src))
+	var/datum/status_effect/belligerent/B = L.has_status_effect(STATUS_EFFECT_BELLIGERENT)
+	if(QDELETED(B))
+		if(iscultist(L))
+			to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
+			L.adjustBruteLoss(8)
+			L.Knockdown(60, FALSE)
+		else
+			L.Stun(30)
+	L.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
+	new /obj/effect/temp_visual/ratvar/sigil/transgression(get_turf(src), !QDELETED(B))
 	qdel(src)
 
 
