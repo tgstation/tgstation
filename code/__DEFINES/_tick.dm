@@ -6,5 +6,5 @@
 #define TICK_USAGE world.tick_usage //for general usage
 #define TICK_USAGE_REAL world.tick_usage    //to be used where the result isn't checked
 
-#define TICK_CHECK ( world.tick_usage > Master.current_ticklimit )
+#define TICK_CHECK ( TICK_USAGE > Master.current_ticklimit )
 #define CHECK_TICK if TICK_CHECK stoplag()
