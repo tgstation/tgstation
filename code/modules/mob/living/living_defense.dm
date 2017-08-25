@@ -306,12 +306,6 @@
 	if(status_flags & GODMODE)
 		return
 
-	if(is_servant_of_ratvar(src) && !stat)
-		to_chat(src, "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>")
-		adjustBruteLoss(35)
-		if(src && reagents)
-			reagents.add_reagent("heparin", 5)
-		return FALSE
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
 		GLOB.cult_narsie.souls_needed -= src
 		GLOB.cult_narsie.souls += 1
@@ -339,16 +333,15 @@
 	if(status_flags & GODMODE)
 		return
 
-	if(stat != DEAD && !is_servant_of_ratvar(src))
+	if(stat != DEAD)
 		for(var/obj/item/implant/mindshield/M in implants)
 			qdel(M)
-		if(!add_servant_of_ratvar(src))
-			to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
-			adjustFireLoss(35)
-			if(src)
-				adjust_fire_stacks(1)
-				IgniteMob()
-			return FALSE
+		to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
+		adjustFireLoss(35)
+		if(src)
+			adjust_fire_stacks(1)
+			IgniteMob()
+		return FALSE
 	return TRUE
 
 

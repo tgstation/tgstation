@@ -194,13 +194,6 @@
 			new/obj/machinery/door/airlock/cult/unruned(T)
 	qdel(src)
 
-/obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
-	if(glass)
-		new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
-	else
-		new/obj/machinery/door/airlock/clockwork(get_turf(src))
-	qdel(src)
-
 /obj/machinery/door/airlock/Destroy()
 	QDEL_NULL(wires)
 	if(charge)

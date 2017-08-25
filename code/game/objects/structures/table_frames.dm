@@ -94,10 +94,6 @@
 	new /obj/structure/table_frame/wood(src.loc)
 	qdel(src)
 
-/obj/structure/table_frame/ratvar_act()
-	new /obj/structure/table_frame/brass(src.loc)
-	qdel(src)
-
 /*
  * Wooden Frames
  */
@@ -130,39 +126,3 @@
 			make_new_table(/obj/structure/table/wood/poker)
 	else
 		return ..()
-
-/obj/structure/table_frame/brass
-	name = "brass table frame"
-	desc = "Four pieces of brass arranged in a square. It's slightly warm to the touch."
-	icon_state = "brass_frame"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	framestack = /obj/item/stack/tile/brass
-	framestackamount = 1
-
-/obj/structure/table_frame/brass/New()
-	change_construction_value(1)
-	..()
-
-/obj/structure/table_frame/brass/Destroy()
-	change_construction_value(-1)
-	return ..()
-
-/obj/structure/table_frame/brass/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/tile/brass))
-		var/obj/item/stack/tile/brass/W = I
-		if(W.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one brass sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [W] to [src]...</span>")
-		if(do_after(user, 20, target = src) && W.use(1))
-			make_new_table(/obj/structure/table/reinforced/brass)
-	else
-		return ..()
-
-/obj/structure/table_frame/brass/narsie_act()
-	..()
-	if(src) //do we still exist?
-		var/previouscolor = color
-		color = "#960000"
-		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)

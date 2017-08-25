@@ -34,9 +34,6 @@
 	if(cell && cell.charge <= 0)
 		msg += "<span class='warning'>Its battery indicator is blinking red!</span>\n"
 
-	if(is_servant_of_ratvar(src) && get_dist(user, src) <= 1 && !stat) //To counter pseudo-stealth by using headlamps
-		msg += "<span class='warning'>Its eyes are glowing a blazing yellow!</span>\n"
-
 	switch(stat)
 		if(CONSCIOUS)
 			if(shell)

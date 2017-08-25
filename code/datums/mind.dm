@@ -330,9 +330,6 @@
 	else if(is_revolutionary_in_general(creator))
 		SSticker.mode.add_revolutionary(src)
 
-	else if(is_servant_of_ratvar(creator))
-		add_servant_of_ratvar(current)
-
 	else if(is_nuclear_operative(creator))
 		make_Nuke(null, null, 0, FALSE)
 
@@ -559,28 +556,6 @@
 		text += "|Disabled in Prefs"
 
 	sections["cult"] = text
-
-	/** CLOCKWORK CULT **/
-	text = "clockwork cult"
-	if(SSticker.mode.config_tag == "clockwork cult")
-		text = uppertext(text)
-	text = "<i><b>[text]</b></i>: "
-	if(is_servant_of_ratvar(current))
-		text += "loyal|<a href='?src=\ref[src];clockcult=clear'>employee</a>|<b>SERVANT</b>"
-		text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
-	else if(current.isloyal())
-		text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
-	else if(is_eligible_servant(current))
-		text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
-	else
-		text += "loyal|<b>EMPLOYEE</b>|<i>cannot serve Ratvar</i>"
-
-	if(current && current.client && (ROLE_SERVANT_OF_RATVAR in current.client.prefs.be_special))
-		text += "|Enabled in Prefs"
-	else
-		text += "|Disabled in Prefs"
-
-	sections["clockcult"] = text
 
 	/** TRAITOR ***/
 	text = "traitor"
@@ -1093,23 +1068,6 @@
 			if("amulet")
 				if (!SSticker.mode.equip_cultist(current))
 					to_chat(usr, "<span class='danger'>Spawning amulet failed!</span>")
-
-	else if(href_list["clockcult"])
-		switch(href_list["clockcult"])
-			if("clear")
-				remove_servant_of_ratvar(current, TRUE)
-				message_admins("[key_name_admin(usr)] has removed clockwork servant status from [current].")
-				log_admin("[key_name(usr)] has removed clockwork servant status from [current].")
-			if("servant")
-				if(!is_servant_of_ratvar(current))
-					add_servant_of_ratvar(current, TRUE)
-					message_admins("[key_name_admin(usr)] has made [current] into a servant of Ratvar.")
-					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
-			if("slab")
-				if(!SSticker.mode.equip_servant(current))
-					to_chat(usr, "<span class='warning'>Failed to outfit [current] with a slab!</span>")
-				else
-					to_chat(usr, "<span class='notice'>Successfully gave [current] a clockwork slab!</span>")
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])

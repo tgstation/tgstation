@@ -17,8 +17,7 @@
 		/datum/language/codespeak,
 		/datum/language/monkey,
 		/datum/language/narsie,
-		/datum/language/beachbum,
-		/datum/language/ratvar
+		/datum/language/beachbum
 	))
 
 /obj/item/organ/tongue/get_spans()
@@ -132,7 +131,6 @@
 		/datum/language/xenocommon,
 		/datum/language/common,
 		/datum/language/draconic,
-		/datum/language/ratvar,
 		/datum/language/monkey))
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
