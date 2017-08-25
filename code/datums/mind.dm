@@ -56,6 +56,7 @@
 	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
+	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 	var/hasSoul = TRUE // If false, renders the character unable to sell their soul.
@@ -223,8 +224,6 @@
 	remove_objectives()
 	remove_antag_equip()
 
-
-
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
@@ -248,6 +247,8 @@
 	SSticker.mode.update_wiz_icons_removed(src)
 	SSticker.mode.update_cult_icons_removed(src)
 	SSticker.mode.update_rev_icons_removed(src)
+	if(gang_datum)
+		gang_datum.remove_gang_hud(src)
 
 /datum/mind/proc/equip_traitor(var/employer = "The Syndicate", var/silent = FALSE)
 	if(!current)
