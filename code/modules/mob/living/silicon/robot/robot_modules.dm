@@ -503,10 +503,6 @@
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
 		/obj/item/pinpointer/syndicate/cyborg)
-
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
