@@ -354,20 +354,22 @@
 		P.fire()
 		return P
 
+/mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
+	return iswallturf(T) || ismineralturf(T)
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(targets_from, dir)
-			if(iswallturf(T) || ismineralturf(T))
+			if(CanSmashTurfs(T))
 				if(T.Adjacent(targets_from))
 					T.attack_animal(src)
 			for(var/a in T)
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
-				if(is_type_in_typecache(A, environment_target_typecache))
+				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
 					A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()

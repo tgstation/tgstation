@@ -30,14 +30,18 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Lazy associated list of type -> component/list of components.
 1. `/datum/component/var/enabled` (protected, boolean)
     * If the component is enabled. If not, it will not react to signals
-    * TRUE by default
+    * `TRUE` by default
 1. `/datum/component/var/dupe_mode` (protected, enum)
-    * How multiple components of the exact same type are handled when added to the datum.
+    * How duplicate component types are handled when added to the datum.
         * `COMPONENT_DUPE_HIGHLANDER` (default): Old component will be deleted, new component will first have `/datum/component/proc/InheritComponent(datum/component/old, FALSE)` on it
         * `COMPONENT_DUPE_ALLOWED`: The components will be treated as separate, `GetComponent()` will return the first added
         * `COMPONENT_DUPE_UNIQUE`: New component will be deleted, old component will first have `/datum/component/proc/InheritComponent(datum/component/new, TRUE)` on it
+1. `/datum/component/var/dupe_type` (protected, type)
+    * Definition of a duplicate component type
+        * `null` means exact match on `type`
+        * Any other type means that and all subtypes
 1. `/datum/component/var/list/signal_procs` (private)
-    * Associated lazy list of signals -> callbacks that will be run when the parent datum recieves that signal
+    * Associated lazy list of signals -> `/datum/callback`s that will be run when the parent datum recieves that signal
 1. `/datum/component/var/datum/parent` (protected, read-only)
     * The datum this component belongs to
 
@@ -56,6 +60,8 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Sends the `COMSIG_COMPONENT_ADDED` signal to the datum
     * All components a datum owns are deleted with the datum
     * Returns the component that was created. Or the old component in a dupe situation where `COMPONENT_DUPE_UNIQUE` was set
+1. `/datum/proc/LoadComponent(component_type(type), ...) -> datum/component` (public, final)
+    * Equivalent to calling `GetComponent(component_type)` where, if the result would be `null`, returns `AddComponent(component_type, ...)` instead
 1. `/datum/proc/ComponentActivated(datum/component/C)` (abstract)
     * Called on a component's `parent` after a signal recieved causes it to activate. `src` is the parameter
     * Will only be called if a component's callback returns `TRUE`
@@ -66,18 +72,24 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/proc/SendSignal(signal, ...)` (public, final)
     * Call to send a signal to the components of the target datum
     * Extra arguments are to be specified in the signal definition
-1. `/datum/component/New(datum/parent, ...)` (protected, virtual)
-    * Forwarded the arguments from `AddComponent()`
-1. `/datum/component/Destroy()` (virtual)
+1. `/datum/component/New(datum/parent, ...)` (private, final)
+    * Runs internal setup for the component
+    * Extra arguments are passed to `Initialize()`
+1. `/datum/component/Initialize(...)` (abstract, no-sleep)
+    * Called by `New()` with the same argments excluding `parent`
+    * Component does not exist in `parent`'s `datum_components` list yet, although `parent` is set and may be used
+    * Signals will not be recieved while this function is running
+    * Component may be deleted after this function completes without being attached
+1. `/datum/component/Destroy()` (virtual, no-sleep)
     * Sends the `COMSIG_COMPONENT_REMOVING` signal to the parent datum if the `parent` isn't being qdeleted
     * Properly removes the component from `parent` and cleans up references
-1. `/datum/component/proc/InheritComponent(datum/component/C, i_am_original(boolean))` (abstract)
+1. `/datum/component/proc/InheritComponent(datum/component/C, i_am_original(boolean))` (abstract, no-sleep)
     * Called on a component when a component of the same type was added to the same parent
     * See `/datum/component/var/dupe_mode`
     * `C`'s type will always be the same of the called component
 1. `/datum/component/proc/AfterComponentActivated()` (abstract)
     * Called on a component that was activated after it's `parent`'s `ComponentActivated()` is called
-1. `/datum/component/proc/OnTransfer(datum/new_parent)` (abstract)
+1. `/datum/component/proc/OnTransfer(datum/new_parent)` (abstract, no-sleep)
     * Called before the new `parent` is assigned in `TakeComponent()`, after the remove signal, before the added signal
     * Allows the component to react to ownership transfers
 1. `/datum/component/proc/_RemoveNoSignal()` (private, final)
@@ -93,9 +105,4 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Called when a component recieves any signal and is enabled
     * Default implementation looks if the signal is registered and runs the appropriate proc
 
-### See signals and their arguments in __DEFINES\components.dm
-
-## Examples
-    Material Containers: #29268 (Too many GetComponent calls, but not bad)
-    Slips: #00000 (PR DIS)
-    Powercells: (TODO)
+### See/Define signals and their arguments in __DEFINES\components.dm

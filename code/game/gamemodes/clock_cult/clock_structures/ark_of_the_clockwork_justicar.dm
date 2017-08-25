@@ -17,6 +17,7 @@
 	var/first_sound_played = FALSE
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
+	var/fourth_sound_played = FALSE
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
 
@@ -48,10 +49,8 @@
 		if(!is_blocked_turf(OT, TRUE))
 			open_turfs |= OT
 	if(open_turfs.len)
-		for(var/a in T)
-			var/atom/movable/A = a
-			if(!A.anchored || isliving(A))
-				A.forceMove(pick(open_turfs))
+		for(var/mob/living/L in T)
+			L.forceMove(pick(open_turfs))
 	resistance_flags &= ~INDESTRUCTIBLE
 	density = TRUE
 	invisibility = 0
@@ -134,16 +133,14 @@
 				to_chat(user, "<span class='boldwarning'>Something is coming through!</span>")
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
-	if(!obj_integrity)
-		return
 	if(!first_sound_played || prob(7))
 		for(var/M in GLOB.player_list)
 			if(M && !isnewplayer(M))
 				to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
-	var/turf/own_turf = get_turf(src)
+	if(!obj_integrity)
+		return 0
 	var/convert_dist = 1 + (round(Floor(progress_in_seconds, 15) * 0.067))
-	var/list/open_turfs = list()
-	for(var/t in RANGE_TURFS(convert_dist, own_turf))
+	for(var/t in RANGE_TURFS(convert_dist, loc))
 		var/turf/T = t
 		if(!T)
 			continue
@@ -153,16 +150,9 @@
 				W.dismantle_wall()
 			else if(t && (isclosedturf(T) || !is_blocked_turf(T)))
 				T.ChangeTurf(/turf/open/floor/clockwork)
-			if(!is_blocked_turf(T, TRUE))
-				open_turfs += T
 		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
 		if(dist < convert_dist)
 			T.ratvar_act(FALSE, TRUE, 3)
-	if(LAZYLEN(open_turfs))
-		for(var/a in own_turf)
-			var/atom/movable/A = a
-			if(!A.anchored || isliving(A))
-				A.forceMove(pick(open_turfs))
 	for(var/obj/O in orange(1, src))
 		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
@@ -171,23 +161,26 @@
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
-			if(!first_sound_played)
+			if(!second_sound_played)
+				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
 				sound_to_playing_players(volume = 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', 1))
-				first_sound_played = TRUE
+				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-			if(!second_sound_played)
+			if(!third_sound_played)
 				var/area/gate_area = get_area(src)
 				priority_announce("Location of massive energy anomaly has been triangulated. Location: [gate_area.map_name].", "Anomaly Alert")
+				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
 				sound_to_playing_players(volume = 35, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', 1))
-				second_sound_played = TRUE
+				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
-			if(!third_sound_played)
+			if(!fourth_sound_played)
+				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
 				sound_to_playing_players(volume = 40, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', 1))
-				third_sound_played = TRUE
+				fourth_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
 		if(GATEWAY_RATVAR_ARRIVAL to INFINITY)
@@ -196,20 +189,20 @@
 				resistance_flags |= INDESTRUCTIBLE
 				purpose_fulfilled = TRUE
 				make_glow()
-				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
-				sound_to_playing_players(volume = 100, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/ratvar_rises.ogg', 0)) //End the sounds
+				animate(glow, transform = matrix() * 3, time = 125)
+				sound_to_playing_players('sound/effects/ratvar_rises.ogg', channel = CHANNEL_JUSTICAR_ARK) //End the sounds
 				sleep(125)
-				make_glow()
-				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
 				var/turf/startpoint = get_turf(src)
-				QDEL_IN(src, 3)
-				sleep(3)
+				make_glow()
+				glow.transform = matrix() * 4.5
+				animate(glow, transform = matrix() * 0.1, time = 10)
+				QDEL_IN(src, 10)
 				GLOB.clockwork_gateway_activated = TRUE
 				new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				send_to_playing_players("<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
 				<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")].\"</span>")
-				sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg')
+				sound_to_playing_players('sound/effects/empulse.ogg')
 				var/x0 = startpoint.x
 				var/y0 = startpoint.y
 				for(var/I in spiral_range_turfs(255, startpoint))

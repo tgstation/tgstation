@@ -63,7 +63,7 @@
 			else
 				clockwork_say(ranged_ability_user, text2ratvar("Be bound, heathen!"))
 				add_logs(ranged_ability_user, L, "bound with Geis")
-				playsound(target, 'sound/magic/blink.ogg', 50, TRUE, -5, frequency = 0.5)
+				playsound(target, 'sound/magic/blink.ogg', 50, TRUE, -4, frequency = 0.5)
 				if(slab.speed_multiplier >= 0.5) //excuse my debug...
 					ranged_ability_user.notransform = TRUE
 					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 4) //stop us moving for a little bit so we don't break the binding immediately
@@ -107,48 +107,43 @@
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
 			return TRUE
 
-		if(sentinels_compromise(L, ranged_ability_user))
-			remove_ranged_ability()
+		var/brutedamage = L.getBruteLoss()
+		var/burndamage = L.getFireLoss()
+		var/oxydamage = L.getOxyLoss()
+		var/totaldamage = brutedamage + burndamage + oxydamage
+		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent("holywater")))
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] is unhurt and untainted.\"</span>")
+			return TRUE
 
-	return TRUE
+		successful = TRUE
 
-/proc/sentinels_compromise(mob/living/target, mob/user)
-	var/brutedamage = target.getBruteLoss()
-	var/burndamage = target.getFireLoss()
-	var/oxydamage = target.getOxyLoss()
-	var/totaldamage = brutedamage + burndamage + oxydamage
-	if(!totaldamage && (!target.reagents || !target.reagents.has_reagent("holywater")))
-		to_chat(user, "<span class='inathneq'>\"[target] is unhurt and untainted.\"</span>")
-		return FALSE
+		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
+		var/targetturf = get_turf(L)
+		var/has_holy_water = (L.reagents && L.reagents.has_reagent("holywater"))
+		var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
+		for(var/i in 1 to healseverity)
+			new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
+		if(totaldamage)
+			L.adjustBruteLoss(-brutedamage)
+			L.adjustFireLoss(-burndamage)
+			L.adjustOxyLoss(-oxydamage)
+			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
+			clockwork_say(ranged_ability_user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
+			add_logs(ranged_ability_user, L, "healed with Sentinel's Compromise")
+			L.visible_message("<span class='warning'>A blue light washes over [L], [has_holy_water ? "causing [L.p_them()] to briefly glow as it mends" : " mending"] [L.p_their()] bruises and burns!</span>", \
+			"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds[has_holy_water ? " and purging the darkness within you" : ""], but a deep nausea overcomes you!</span>")
+		else
+			clockwork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
+			add_logs(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
+			L.visible_message("<span class='warning'>A blue light washes over [L], causing [L.p_them()] to briefly glow!</span>", \
+			"<span class='heavy_brass'>You feel Inath-neq's power purging the darkness within you!</span>")
+		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
 
-	to_chat(user, "<span class='brass'>You bathe [target == user ? "yourself" : target] in Inath-neq's power!</span>")
-	var/targetturf = get_turf(target)
-	var/has_holy_water = (target.reagents && target.reagents.has_reagent("holywater"))
-	var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
-	for(var/i in 1 to healseverity)
-		new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
-	if(totaldamage)
-		target.adjustBruteLoss(-brutedamage)
-		target.adjustFireLoss(-burndamage)
-		target.adjustOxyLoss(-oxydamage)
-		var/damage_to_do = max(0, totaldamage - (GLOB.clockwork_vitality * 2))
-		GLOB.clockwork_vitality = max(0, GLOB.clockwork_vitality - (totaldamage * 0.5)) //heals 2 damage for every 1 vitality
-		target.adjustToxLoss(damage_to_do * 0.75, TRUE, TRUE)
-		if(user)
-			clockwork_say(user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
-		add_logs(user, target, "healed with Sentinel's Compromise")
-		target.visible_message("<span class='warning'>A blue light washes over [target], [has_holy_water ? "causing [target.p_them()] to briefly glow as it mends" : " mending"] [target.p_their()] bruises and burns!</span>", \
-		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds[has_holy_water ? " and purging the darkness within you" : ""], but a deep nausea overcomes you!</span>")
-	else
-		if(user)
-			clockwork_say(user, text2ratvar("Purge foul darkness!"))
-		add_logs(user, target, "purged of holy water with Sentinel's Compromise")
-		target.visible_message("<span class='warning'>A blue light washes over [target], causing [target.p_them()] to briefly glow!</span>", \
-		"<span class='heavy_brass'>You feel Inath-neq's power purging the darkness within you!</span>")
-	playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
+		if(has_holy_water)
+			L.reagents.remove_reagent("holywater", 1000)
 
-	if(has_holy_water)
-		target.reagents.remove_reagent("holywater", 1000)
+		remove_ranged_ability()
+
 	return TRUE
 
 //For the cyborg Linked Vanguard scripture, grants you and a nearby ally Vanguard

@@ -1,0 +1,5 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - spellcheck: "fixed inconsistent grammar between machines that derive from /obj/machinery/chem_dispenser"
+  - spellcheck: "touched up some chat messages to include references to objects instead of \"that\" or \"the machine\" etc., also removed references to beakers being loaded in machines that can accept any container"

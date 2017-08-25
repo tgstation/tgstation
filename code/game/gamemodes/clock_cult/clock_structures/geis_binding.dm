@@ -19,6 +19,7 @@
 	buckle_lying = 0
 	var/mob_layer = MOB_LAYER
 	var/last_mob_health = 0
+	var/apply_time = 0
 
 /obj/structure/destructible/clockwork/geis_binding/Initialize(mapload, obj/item/clockwork/slab/the_slab)
 	. = ..()
@@ -35,9 +36,14 @@
 
 /obj/structure/destructible/clockwork/geis_binding/process()
 	var/tick_damage = 1
+	if(locate(/obj/effect/clockwork/sigil/submission) in loc)
+		tick_damage *= 0.5
 	if(LAZYLEN(buckled_mobs))
 		for(var/V in buckled_mobs)
 			var/mob/living/L = V
+			if(is_servant_of_ratvar(L)) //servants are freed automatically
+				take_damage(obj_integrity)
+				return
 			if(last_mob_health > L.health)
 				tick_damage += last_mob_health - L.health
 			last_mob_health = L.health
@@ -46,12 +52,7 @@
 				layer = mob_layer - 0.01
 				cut_overlays()
 				add_overlay(mutable_appearance('icons/effects/clockwork_effects.dmi', "geisbinding_top", mob_layer + 0.01))
-			if(is_servant_of_ratvar(L)) //servants are freed automatically
-				take_damage(obj_integrity)
-				return
 			break
-	if(anchored)
-		tick_damage *= 0.5
 	take_damage(tick_damage, sound_effect = FALSE)
 	playsound(src, 'sound/effects/empulse.ogg', tick_damage * 40, TRUE, -4)
 
@@ -81,6 +82,7 @@
 		layer = mob_layer - 0.01
 		add_overlay(mutable_appearance('icons/effects/clockwork_effects.dmi', "geisbinding_top", mob_layer + 0.01))
 		last_mob_health = M.health
+		apply_time = world.time
 		for(var/obj/item/I in M.held_items)
 			M.dropItemToGround(I)
 		for(var/i in M.get_empty_held_indexes())
@@ -90,7 +92,6 @@
 			var/mob/living/carbon/C = M
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/restraints/handcuffs/energy/clock(C)
-				C.update_handcuffed()
 		M.regenerate_icons()
 		M.visible_message("<span class='warning'>A [name] appears around [M]!</span>", "<span class='warning'>A [name] appears around you!</span>")
 		repair_and_interrupt()
@@ -104,6 +105,10 @@
 		animate(G, transform = matrix()*2, alpha = 0, time = 8, easing = EASE_OUT)
 		animate(T, transform = matrix()*2, alpha = 0, time = 8, easing = EASE_OUT)
 		M.visible_message("<span class='warning'>[src] snaps into glowing pieces and dissipates!</span>")
+		M.AdjustStun(min(-130 + (apply_time - world.time), 0), 1, 1) //remove exactly as much stun as was applied
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.silent = max(C.silent - 7, 0)
 		for(var/obj/item/geis_binding/GB in M.held_items)
 			M.dropItemToGround(GB, TRUE)
 		if(iscarbon(M))
