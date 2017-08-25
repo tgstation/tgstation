@@ -255,21 +255,6 @@
 			owner.adjustToxLoss(severity * 0.02, TRUE, TRUE) //2% of severity per second
 		severity--
 
-/datum/status_effect/geis_tracker
-	id = "geis_tracker"
-	duration = -1
-	alert_type = null
-	var/obj/structure/destructible/clockwork/geis_binding/binding
-
-/datum/status_effect/geis_tracker/on_creation(mob/living/new_owner, obj/structure/destructible/clockwork/geis_binding/new_binding)
-	. = ..()
-	if(.)
-		binding = new_binding
-
-/datum/status_effect/geis_tracker/tick()
-	if(QDELETED(binding))
-		qdel(src)
-
 /datum/status_effect/cultghost //is a cult ghost and can't use manifest runes
 	id = "cult_ghost"
 	duration = -1
