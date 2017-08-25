@@ -92,7 +92,7 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_angle = 90;
+	port_direction = 4;
 	preferred_direction = 1;
 	roundstart_move = "whiteship_away";
 	timid = 1;

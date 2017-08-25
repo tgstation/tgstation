@@ -212,7 +212,7 @@
 	// The direction the shuttle prefers to travel in
 	var/preferred_direction = NORTH
 	// And the angle from the front of the shuttle to the port
-	var/port_angle = 0 // used to be travelDir
+	var/port_direction = NORTH // used to be travelDir
 
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous

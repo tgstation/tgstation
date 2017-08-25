@@ -198,7 +198,7 @@
 	dir = 8;
 	dwidth = 6;
 	height = 18;
-	port_angle = 90;
+	port_direction = 4;
 	width = 14;
 	timid = 1;
 	name = "Birdboat emergency escape shuttle"

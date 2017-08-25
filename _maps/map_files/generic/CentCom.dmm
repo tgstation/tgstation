@@ -8091,7 +8091,7 @@
 /obj/docking_port/mobile/assault_pod{
 	dwidth = 3;
 	name = "steel rain";
-	port_angle = 90;
+	port_direction = 4;
 	preferred_direction = 4
 	},
 /turf/open/floor/plating,

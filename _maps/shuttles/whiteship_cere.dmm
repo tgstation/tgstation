@@ -21,7 +21,7 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "NT Recovery White-Ship";
-	port_angle = -90;
+	port_direction = 8;
 	preferred_direction = 1;
 	roundstart_move = "whiteship_away";
 	width = 16

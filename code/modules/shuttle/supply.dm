@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	callTime = 600
 
 	dir = WEST
-	port_angle = 90
+	port_direction = EAST
 	width = 12
 	dwidth = 5
 	height = 7

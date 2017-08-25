@@ -113,7 +113,7 @@
 	id = "ferry";
 	name = "ferry shuttle";
 	roundstart_move = "ferry_away";
-	port_angle = 180;
+	port_direction = 2;
 	width = 5;
 	timid = 1
 	},

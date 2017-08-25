@@ -9503,7 +9503,7 @@
 	height = 5;
 	id = "mining";
 	name = "mining shuttle";
-	port_angle = 90;
+	port_direction = 4;
 	width = 7
 	},
 /obj/docking_port/stationary{
@@ -37383,7 +37383,7 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
-	port_angle = 0;
+	port_direction = 1;
 	roundstart_move = "syndicate_away";
 	width = 18
 	},
@@ -39906,7 +39906,7 @@
 	height = 13;
 	id = "ferry";
 	name = "ferry shuttle";
-	port_angle = 0;
+	port_direction = 1;
 	preferred_direction = 4;
 	roundstart_move = "ferry_away";
 	width = 5
