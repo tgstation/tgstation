@@ -52,8 +52,8 @@
 			text += "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "bananna blight")] outbreak that turn humans into monkies has been \
 			reported in your quadrant.  Any such infections may be treated with bananna juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at Centcom."
 		if("meteor")
-			text += "[pick("Asteroids have", "Meteors have", "Large rocks have", "Stellar minerals have", "Space hail has", "Debris has")] been detected near your station, and a collision is possible, though unlikely.  Be prepared \
-			for largescale impacts and destruction.  Please note that the debris will prevent the escape shuttle from arriving quickly."
+			text += "[pick("Asteroids have", "Meteors have", "Large rocks have", "Stellar minerals have", "Space hail has", "Debris has")] been detected near your station, and a collision is possible, \
+			though unlikely.  Be prepared for largescale impacts and destruction.  Please note that the debris will prevent the escape shuttle from arriving quickly."
 		if("devil")
 			text += "Infernal creatures have been seen nearby offering great boons in exchange for souls.  This is considered theft against Nanotrasen, as all employment contracts contain a lien on the \
 			employee's soul.  If anyone sells their soul in error, contact an attorney to overrule the sale.  Be warned that if the devil purchases enough souls, a gateway to hell may open."
@@ -61,8 +61,8 @@
 			text += "Multiple soul merchants have been spotted in the quadrant, and appear to be competing over who can purchase the most souls.  Be advised that they are likely to manufacture \
 			emergencies to encourage employees to sell their souls. If anyone sells their soul in error, contact an attorney to overrule the sale."
 		if("abduction")
-			text += "Nearby spaceships report crewmembers having been kidnapped and tortured by mysterious grey humanoids, before being sent back.  Be advised that the kidnapped crewmembers behave \
-			strangely upon return to duties."
+			text += "Nearby spaceships report crewmembers having been [pick("kidnapped", "abducted", "captured")] and [pick("tortured", "experimented on", "probed", "implanted")] by mysterious \
+			grey humanoids, before being sent back.  Be advised that the kidnapped crewmembers behave strangely upon return to duties."
 		if("traitor+changeling")
 			text += "The Syndicate union has started some experimental research regarding humanoid shapeshifting.  There are rumors that this technology will be field tested on a Nanotrasen station \
 			for infiltration purposes.  Be advised that support personel may also be deployed to defend these shapeshifters. Trust nobody - suspect everybody. Do not announce this to the crew, \
