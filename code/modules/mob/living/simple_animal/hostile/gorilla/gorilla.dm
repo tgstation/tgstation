@@ -71,6 +71,9 @@
 	var/list/parts = target_bodyparts(target)
 	return ..() && !istype(the_target, /mob/living/carbon/monkey) && (!parts  || parts.len > 3)
 
+/mob/living/simple_animal/hostile/gorilla/CanSmashTurfs(turf/T)
+	return iswallturf(T)
+
 /mob/living/simple_animal/hostile/gorilla/handle_automated_speech(override)
 	if(speak_chance && (override || prob(speak_chance)))
 		playsound(src, "sound/creatures/gorilla.ogg", 200)
