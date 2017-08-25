@@ -197,35 +197,44 @@
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
-	if(!data) data = 1
-	data++
-	M.jitteriness = min(M.jitteriness+4,10)
-	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
-		if(!M.stuttering)
-			M.stuttering = 1
-		M.stuttering = min(M.stuttering+4, 10)
-		M.Dizzy(5)
-		if(iscultist(M) && prob(5))
-			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
-		else if(is_servant_of_ratvar(M) && prob(8))
-			switch(pick("speech", "message", "emote"))
-				if("speech")
-					clockwork_say(M, "...[text2ratvar(pick("Engine... your light grows dark...", "Where are you, master?", "He lies rusting in Error...", "Purge all untruths and... and... something..."))]")
-				if("message")
-					to_chat(M, "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
-					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
-				if("emote")
-					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
-	if(data >= 75)	// 30 units, 135 seconds
-		if(iscultist(M) || is_servant_of_ratvar(M))
-			if(iscultist(M))
-				SSticker.mode.remove_cultist(M.mind, 1, 1)
-			else if(is_servant_of_ratvar(M))
-				remove_servant_of_ratvar(M)
-			M.jitteriness = 0
-			M.stuttering = 0
-			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
-			return
+	if(M.mind.assigned_role != "Chaplain")
+		M.jitteriness = min(M.jitteriness+4,10)
+		if(current_cycle >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
+			if(!M.stuttering)
+				M.stuttering = 1
+			M.stuttering = min(M.stuttering+4, 10)
+			M.Dizzy(5)
+			if(iscultist(M) && prob(5))
+				M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
+			else if(is_servant_of_ratvar(M) && prob(8))
+				switch(pick("speech", "message", "emote"))
+					if("speech")
+						clockwork_say(M, "...[text2ratvar(pick("Engine... your light grows dark...", "Where are you, master?", "He lies rusting in Error...", "Purge all untruths and... and... something..."))]")
+					if("message")
+						to_chat(M, "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
+						"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
+					if("emote")
+						M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
+		if(current_cycle >= 75)	// 30 units, 135 seconds
+			if(iscultist(M) || is_servant_of_ratvar(M))
+				if(iscultist(M))
+					SSticker.mode.remove_cultist(M.mind, 1, 1)
+				else if(is_servant_of_ratvar(M))
+					remove_servant_of_ratvar(M)
+				M.jitteriness = 0
+				M.stuttering = 0
+				holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
+				return
+	else
+		if(prob(45))
+			M.drowsyness = max(M.drowsyness-5, 0)
+			M.adjustToxLoss(-0.5, 0)
+			M.adjustFireLoss(-0.75, 0)
+			M.adjustOxyLoss(-2, 0)
+			M.adjustBruteLoss(-0.75, 0)
+		M.adjustBrainLoss(0.5*current_cycle)
+		if(M.reagents.has_reagent("mannitol"))
+			M.reagents.remove_reagent("mannitol", current_cycle * 0.85)
 	holder.remove_reagent(id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
 /datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
