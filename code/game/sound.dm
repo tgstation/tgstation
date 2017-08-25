@@ -145,4 +145,6 @@
 				soundin = pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
 			if ("can_open")
 				soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
+			if ("fire")
+				soundin = pick('sound/effects/fire1.ogg', 'sound/effects/fire2.ogg')
 	return soundin

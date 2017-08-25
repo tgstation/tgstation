@@ -57,6 +57,9 @@
 	var/just_spawned = 1
 	var/bypassing = 0
 
+	var/sound_start_time = 0 //when did we start playing the sound?
+	var/sound_length = 10 //how long is the sound in deciseconds?
+
 /obj/effect/hotspot/New()
 	..()
 	SSair.hotspots += src
@@ -144,6 +147,9 @@
 		/*if(prob(25))
 			location.ReplaceWithSpace()
 			return 0*/
+	if(world.time - sound_start_time >= sound_length) //looping sound
+		playsound(src, "fire", 30, TRUE, 5, 3)
+		sound_start_time = world.time
 	return 1
 
 /obj/effect/hotspot/Destroy()
