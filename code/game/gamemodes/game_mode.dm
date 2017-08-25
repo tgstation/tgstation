@@ -297,10 +297,11 @@
 	"clockwork cult" = 10,
 	"changeling" = 10,
 	"traitor+changeling" = 10
+	"blob" = 5
 	)
 	
 	
-	//"extended" and "blob" both have their own custom send_intercept, so it makes no sense to put them as a possibility here, else their existance could be meta'ed to simply reduce the size of the list.
+	//"extended" has it's own custom send_intercept, so it makes no sense to put them as a possibility here, else their existance could be meta'ed to simply reduce the size of the list.
 	
 	
 	mode_weights[name] = 0//remove the current gamemode to prevent it from being randomly deleted, it will be readded later

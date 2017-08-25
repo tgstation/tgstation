@@ -6,6 +6,11 @@
 /datum/intercept_text/proc/build(mode_type)
 	text = "<hr>"
 	switch(mode_type)
+		if("blob")
+			text += "A CMP scientist by the name of [pick("Griff", "Pasteur", "Chamberland", "Buist", "Rivers", "Stanley")] boasted about his corporation's \"finest creation\" - a macrobiological \
+			virus capable of self-reproduction and hellbent on consuming whatever it touches. He went on to query Cybersun for permission to utilize the virus in biochemical warfare, to which \
+			CMP subsequently gained. Be vigilant for any large organisms rapidly spreading across the station, as they are classified as a level 5 biohazard and critically dangerous. Note that \
+			this organism seems to be weak to extreme heat; concentrated fire (such as welding tools and lasers) will be effective against it."
 		if("changeling")
 			text += "The Gorlex Marauders have announced the successful raid and destruction of Central Command containment ship #S-[rand(1111, 9999)]. This ship housed only a single prisoner - \
 			codenamed \"Thing\", and it was highly adaptive and extremely dangerous. We have reason to believe that the Thing has allied with the Syndicate, and you should note that likelihood \
@@ -64,7 +69,7 @@
 			text += "Nearby spaceships report crewmembers having been [pick("kidnapped", "abducted", "captured")] and [pick("tortured", "experimented on", "probed", "implanted")] by mysterious \
 			grey humanoids, before being sent back.  Be advised that the kidnapped crewmembers behave strangely upon return to duties."
 		if("traitor+changeling")
-			text += "The Syndicate union has started some experimental research regarding humanoid shapeshifting.  There are rumors that this technology will be field tested on a Nanotrasen station \
+			text += "The Syndicate has started some experimental research regarding humanoid shapeshifting.  There are rumors that this technology will be field tested on a Nanotrasen station \
 			for infiltration purposes.  Be advised that support personel may also be deployed to defend these shapeshifters. Trust nobody - suspect everybody. Do not announce this to the crew, \
 			as paranoia may spread and inhibit workplace efficiency."
 		else
