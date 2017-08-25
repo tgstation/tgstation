@@ -221,11 +221,11 @@
 
 /obj/spacepod/bullet_act(var/obj/item/projectile/P)
 	if(P.damage_type == BRUTE || P.damage_type == BURN)
-		deal_damage(P.damage)
+		take_damage(P.damage)
 	P.on_hit(src)
 
 /obj/spacepod/blob_act()
-	deal_damage(30)
+	take_damage(30)
 	return
 
 /obj/spacepod/attack_animal(mob/living/simple_animal/user as mob)
@@ -233,7 +233,7 @@
 		user.emote(1, "[user.friendly] [src]")
 	else
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		deal_damage(damage)
+		take_damage(damage)
 		visible_message("<span class='danger'>[user]</span> [user.attacktext] [src]!")
 		log_attack("<font color='red'>attacked [name]</font>")
 	return
@@ -244,7 +244,7 @@
 
 /obj/spacepod/attack_alien(mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	deal_damage(15)
+	take_damage(15)
 	playsound(loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 	to_chat(user, "<span class='warning'>You slash at [src]!</span>")
 	visible_message("<span class='warning'>The [user] slashes at [name]'s armor!</span>")
@@ -253,21 +253,16 @@
 /obj/spacepod/proc/explodify()
 	message_to_riders("<span class='userdanger'>Exit the spacepod immediately, explosion immi-</span>")
 	explosion(loc, 2, 4, 8)
+	visible_message("<span class='danger'>[src] violently explodes!</span>")
 	qdel(src)
 
-/obj/spacepod/proc/deal_damage(var/damage)
-	var/oldhealth = obj_integrity
-	obj_integrity = max(0, obj_integrity - damage)
+/obj/spacepod/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
 	var/percentage = (obj_integrity / max_integrity) * 100
 	occupant_sanity_check()
-	if(oldhealth > obj_integrity && percentage <= 25 && percentage > 0)
+	if(percentage <= 25 && percentage > 0)
 		play_sound_to_riders('sound/effects/alert.ogg')
-	if(oldhealth > obj_integrity && !obj_integrity)
-		play_sound_to_riders('sound/effects/alert.ogg')
-	if(!obj_integrity || obj_integrity < 0)
-		message_to_riders("<span class='userdanger'>Critical damage to the vessel detected, core explosion imminent!</span>")
-		addtimer(CALLBACK(src, .proc/explodify), 50)
-
+		message_to_riders("<span class='danger'>Pod integrity at [percentage]%!</span>")
 	update_icons()
 	diag_hud_set_podhealth()
 
@@ -276,6 +271,10 @@
 		obj_integrity = min(max_integrity, obj_integrity + repair_amount)
 		update_icons()
 		diag_hud_set_podhealth()
+
+/obj/spacepod/obj_destruction(damage_flag)
+	message_to_riders("<span class='userdanger'>Critical damage to the vessel detected, core explosion imminent!</span>")
+	addtimer(CALLBACK(src, .proc/explodify), 50)
 
 
 /obj/spacepod/ex_act(severity)
@@ -292,10 +291,10 @@
 			qdel(ion_trail)
 			qdel(src)
 		if(2)
-			deal_damage(100)
+			take_damage(100)
 		if(3)
 			if(prob(40))
-				deal_damage(50)
+				take_damage(50)
 
 /obj/spacepod/emp_act(severity)
 	occupant_sanity_check()
@@ -303,7 +302,7 @@
 
 	if(cell && cell.charge > 0)
 		cell.use((cell.charge/3)/(severity*2))
-	deal_damage(80 / severity)
+	take_damage(80 / severity)
 	if(empcounter < (40 / severity))
 		empcounter = 40 / severity
 
@@ -339,7 +338,7 @@
 /obj/spacepod/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(user.a_intent == INTENT_HARM)
 		..()
-		deal_damage(W.force)
+		take_damage(W.force)
 	else
 		if(istype(W, /obj/item/crowbar))
 			if(!equipment_system.lock_system || unlocked || hatch_open)
