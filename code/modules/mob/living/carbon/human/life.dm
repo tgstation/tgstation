@@ -71,6 +71,19 @@
 				emote("drool")
 			else
 				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
+	
+	if(getBrainLoss() >= 120 && stat != DEAD)
+		if(prob(10) && getOxyLoss() < 50)
+			to_chat(src, "<span class='userdanger'>You forget to breathe!</span>")
+			adjustOxyLoss(rand(50,65))
+		else if(prob(15) && confused < 50)
+			to_chat(src, "<span class='userdanger'>You forget how to walk properly...</span>")
+			Dizzy(30)
+			confused = rand(100, 250) //this is deciseconds, right?
+			
+	if(getBrainLoss() >= 210 && stat != DEAD) //<atlanta_ned> fwoosh is a good example of brain damage not being lethal
+		visible_message("<span class='alert'><B>[src]</B> goes limp, their facial expression utterly blank.</span>")
+		death()
 
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
