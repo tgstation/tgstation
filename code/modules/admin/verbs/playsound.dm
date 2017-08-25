@@ -9,6 +9,11 @@
 		freq = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
 		to_chat(src, "You feel the Honkmother messing with your song...")
 
+	var/vol = input(usr, "What volume would you like the sound to play at?",,) as null|num
+	if(!vol)
+		return
+	vol = Clamp(vol, 1, 100)
+
 	var/sound/admin_sound = new()
 	admin_sound.file = S
 	admin_sound.priority = 250
@@ -17,7 +22,8 @@
 	admin_sound.wait = 1
 	admin_sound.repeat = 0
 	admin_sound.status = SOUND_STREAM
-		
+	admin_sound.volume = vol
+
 	var/res = alert(usr, "Show the title of this song to the players?",, "No", "Yes", "Cancel")
 	switch(res)
 		if("Yes")
