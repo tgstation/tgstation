@@ -295,7 +295,7 @@
 
 /datum/configuration/proc/Reload()
 	load("config/config.txt")
-	load("config/comms.txt")
+	load("config/comms.txt", "comms")
 	load("config/game_options.txt","game_options")
 	load("config/policies.txt", "policies")
 	loadsql("config/dbconfig.txt")
