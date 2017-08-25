@@ -147,9 +147,25 @@
 		/*if(prob(25))
 			location.ReplaceWithSpace()
 			return 0*/
-	if(world.time - sound_start_time >= sound_length) //looping sound
-		playsound(src, "fire", 30, TRUE, 5, 3)
-		sound_start_time = world.time
+
+	var/list/canHear = list()
+	for(var/m in hearers(world.view, src))
+		var/mob/M = m
+		if(!M.client)
+			continue
+
+		canHear[M] = TRUE
+		var/turf/T = get_turf(M)
+		var/sound/firesound = M.client.firesound
+		if(get_dist(locate(firesound.x, firesound.y, M.z), src) <= M.client.view)
+			firesound.x = x - T.x
+			firesound.z = y - T.y
+			firesound.status = SOUND_UPDATE
+
+	for(var/m in GLOB.player_list)
+		var/mob/M = m
+		if(M.client && !canHear[m])
+			M.client.firesound.status = SOUND_UPDATE | SOUND_MUTE
 	return 1
 
 /obj/effect/hotspot/Destroy()

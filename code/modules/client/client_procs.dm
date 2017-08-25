@@ -150,6 +150,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
+	firesound = sound(get_sfx("fire"), repeat = 1, wait = 0, volume = 80, channel = CHANNEL_FIRE)
 	chatOutput = new /datum/chatOutput(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
 
@@ -353,7 +354,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/Del()
 	if(credits)
-		QDEL_LIST(credits)	
+		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)

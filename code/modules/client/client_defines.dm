@@ -70,3 +70,5 @@
 	var/datum/chatOutput/chatOutput
 
 	var/list/credits //lazy list of all credit object bound to this client
+
+	var/sound/firesound
