@@ -9,7 +9,7 @@
 		freq = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
 		to_chat(src, "You feel the Honkmother messing with your song...")
 
-	var/vol = input(usr, "What volume would you like the sound to play at?",,) as null|num
+	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
 	if(!vol)
 		return
 	vol = Clamp(vol, 1, 100)
