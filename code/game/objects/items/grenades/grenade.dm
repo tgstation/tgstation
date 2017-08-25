@@ -44,9 +44,6 @@
 	if(!active)
 		if(clown_check(user))
 			preprime(user)
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.throw_mode_on()
 
 /obj/item/grenade/proc/log(mob/user)
 	var/turf/T = get_turf(src)
@@ -58,6 +55,9 @@
 
 /obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE)
 	log(user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.throw_mode_on()
 	if(msg)
 		to_chat(user, "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>")
 	playsound(loc, 'sound/weapons/armbomb.ogg', 60, 1)
@@ -105,4 +105,4 @@
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
 		prime()
-		return 1 //It hit the grenade, not them
+		return TRUE //It hit the grenade, not them
