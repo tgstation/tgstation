@@ -251,7 +251,7 @@
 	return
 
 /obj/spacepod/proc/explodify()
-	essage_to_riders("<span class='userdanger'>Exit the spacepod immediately, explosion immi-</span>")
+	message_to_riders("<span class='userdanger'>Exit the spacepod immediately, explosion immi-</span>")
 	explosion(loc, 2, 4, 8)
 	qdel(src)
 
