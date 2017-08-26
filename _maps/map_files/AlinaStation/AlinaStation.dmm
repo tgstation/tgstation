@@ -4791,6 +4791,10 @@
 	dir = 1
 	},
 /obj/machinery/light/small,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel,
 /area/science/server)
 "lq" = (
@@ -8128,6 +8132,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 25
+	},
 /turf/open/floor/plasteel,
 /area/teleporter)
 "uz" = (
@@ -10145,6 +10153,10 @@
 /area/medical/chemistry)
 "zq" = (
 /obj/structure/closet/crate/bin,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "zr" = (
@@ -12329,6 +12341,10 @@
 "Fs" = (
 /obj/machinery/computer/cloning,
 /obj/item/book/manual/medical_cloning,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "Ft" = (
@@ -13317,6 +13333,10 @@
 /area/security/detectives_office)
 "HQ" = (
 /obj/machinery/computer/security/wooden_tv,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 25
+	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "HR" = (
