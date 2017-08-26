@@ -28,22 +28,22 @@
 		_drops[I] += other_drops[I]
 
 /datum/component/archaeology/proc/Dig(mob/user, obj/item/W)
-		var/digging_speed
-		if (istype(W, /obj/item/shovel))
-			var/obj/item/shovel/S = W
-			digging_speed = S.digspeed
-		else if (istype(W, /obj/item/pickaxe))
-			var/obj/item/pickaxe/P = W
-			digging_speed = P.digspeed
-		if (digging_speed && isturf(user.loc))
-			to_chat(user, "<span class='notice'>You start digging...</span>")
-			playsound(parent, 'sound/effects/shovel_dig.ogg', 50, 1)
+	var/digging_speed
+	if (istype(W, /obj/item/shovel))
+		var/obj/item/shovel/S = W
+		digging_speed = S.digspeed
+	else if (istype(W, /obj/item/pickaxe))
+		var/obj/item/pickaxe/P = W
+		digging_speed = P.digspeed
+	if (digging_speed && isturf(user.loc))
+		to_chat(user, "<span class='notice'>You start digging...</span>")
+		playsound(parent, 'sound/effects/shovel_dig.ogg', 50, 1)
 
-			if(do_after(user, digging_speed, target = parent))
-				to_chat(user, "<span class='notice'>You dig a hole.</span>")
-				gets_dug()
-				return TRUE
-		return FALSE
+		if(do_after(user, digging_speed, target = parent))
+			to_chat(user, "<span class='notice'>You dig a hole.</span>")
+			gets_dug()
+			return TRUE
+	return FALSE
 
 /datum/component/archaeology/proc/gets_dug()
 	for(var/thing in drops)
