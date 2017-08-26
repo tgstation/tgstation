@@ -246,168 +246,56 @@
 	research_cost = 5000
 	export_price = 5000
 
+/datum/techweb_node/mecha
+	id = "mecha"
+	display_name = "Mechanical Exosuits"
+	description = "Mechanized exosuits that are several magnitudes stronger and more powerful than the average human."
+	prereq_ids = list("robotics", "adv_engi")
+	research_cost = 5000
+	export_price = 5000
 
-//Ripley
-/datum/design/ripley_chassis
-	name = "Exosuit Chassis (APLU \"Ripley\")"
-	id = "ripley_chassis"
-	build_path = /obj/item/mecha_parts/chassis/ripley
-	construction_time = 100
-//firefighter subtype
-/datum/design/firefighter_chassis
-	name = "Exosuit Chassis (APLU \"Firefighter\")"
-	id = "firefighter_chassis"
-	build_path = /obj/item/mecha_parts/chassis/firefighter
-	construction_time = 100
-/datum/design/ripley_torso
-	name = "Exosuit Torso (APLU \"Ripley\")"
-	id = "ripley_torso"
-	build_path = /obj/item/mecha_parts/part/ripley_torso
-	construction_time = 200
-/datum/design/ripley_left_arm
-	name = "Exosuit Left Arm (APLU \"Ripley\")"
-	id = "ripley_left_arm"
-	build_path = /obj/item/mecha_parts/part/ripley_left_arm
-	construction_time = 150
-/datum/design/ripley_right_arm
-	name = "Exosuit Right Arm (APLU \"Ripley\")"
-	id = "ripley_right_arm"
-	build_path = /obj/item/mecha_parts/part/ripley_right_arm
-	construction_time = 150
-/datum/design/ripley_left_leg
-	name = "Exosuit Left Leg (APLU \"Ripley\")"
-	id = "ripley_left_leg"
-	build_path = /obj/item/mecha_parts/part/ripley_left_leg
-	construction_time = 150
-/datum/design/ripley_right_leg
-	name = "Exosuit Right Leg (APLU \"Ripley\")"
-	id = "ripley_right_leg"
-	build_path = /obj/item/mecha_parts/part/ripley_right_leg
-	construction_time = 150
-//Odysseus
-/datum/design/odysseus_chassis
-	name = "Exosuit Chassis (\"Odysseus\")"
-	id = "odysseus_chassis"
-	build_path = /obj/item/mecha_parts/chassis/odysseus
-	construction_time = 100
-/datum/design/odysseus_torso
-	name = "Exosuit Torso (\"Odysseus\")"
-	id = "odysseus_torso"
-	build_path = /obj/item/mecha_parts/part/odysseus_torso
-	construction_time = 180
-/datum/design/odysseus_head
-	name = "Exosuit Head (\"Odysseus\")"
-	id = "odysseus_head"
-	build_path = /obj/item/mecha_parts/part/odysseus_head
-	construction_time = 100
-/datum/design/odysseus_left_arm
-	name = "Exosuit Left Arm (\"Odysseus\")"
-	id = "odysseus_left_arm"
-	build_path = /obj/item/mecha_parts/part/odysseus_left_arm
-	construction_time = 120
-/datum/design/odysseus_right_arm
-	name = "Exosuit Right Arm (\"Odysseus\")"
-	id = "odysseus_right_arm"
-	build_path = /obj/item/mecha_parts/part/odysseus_right_arm
-	construction_time = 120
-/datum/design/odysseus_left_leg
-	name = "Exosuit Left Leg (\"Odysseus\")"
-	id = "odysseus_left_leg"
-	build_path = /obj/item/mecha_parts/part/odysseus_left_leg
-	construction_time = 130
-/datum/design/odysseus_right_leg
-	name = "Exosuit Right Leg (\"Odysseus\")"
-	id = "odysseus_right_leg"
-	build_path = /obj/item/mecha_parts/part/odysseus_right_leg
-	construction_time = 130
-/*/datum/design/odysseus_armor
-	name = "Exosuit Armor (\"Odysseus\")"
-	id = "odysseus_armor"
-	build_path = /obj/item/mecha_parts/part/odysseus_armor
-	construction_time = 200
-	*/
-//Gygax
-/datum/design/gygax_chassis
-	name = "Exosuit Chassis (\"Gygax\")"
-	id = "gygax_chassis"
-	build_path = /obj/item/mecha_parts/chassis/gygax
-	construction_time = 100
-/datum/design/gygax_torso
-	name = "Exosuit Torso (\"Gygax\")"
-	id = "gygax_torso"
-	build_path = /obj/item/mecha_parts/part/gygax_torso
-	construction_time = 300
-/datum/design/gygax_head
-	name = "Exosuit Head (\"Gygax\")"
-	id = "gygax_head"
-	build_path = /obj/item/mecha_parts/part/gygax_head
-	construction_time = 200
-/datum/design/gygax_left_arm
-	name = "Exosuit Left Arm (\"Gygax\")"
-	id = "gygax_left_arm"
-	build_path = /obj/item/mecha_parts/part/gygax_left_arm
-	construction_time = 200
-/datum/design/gygax_right_arm
-	name = "Exosuit Right Arm (\"Gygax\")"
-	id = "gygax_right_arm"
-	build_path = /obj/item/mecha_parts/part/gygax_right_arm
-	construction_time = 200
-/datum/design/gygax_left_leg
-	name = "Exosuit Left Leg (\"Gygax\")"
-	id = "gygax_left_leg"
-	build_path = /obj/item/mecha_parts/part/gygax_left_leg
-	construction_time = 200
-/datum/design/gygax_right_leg
-	name = "Exosuit Right Leg (\"Gygax\")"
-	id = "gygax_right_leg"
-	build_path = /obj/item/mecha_parts/part/gygax_right_leg
-	construction_time = 200
-/datum/design/gygax_armor
-	name = "Exosuit Armor (\"Gygax\")"
-	id = "gygax_armor"
-	build_path = /obj/item/mecha_parts/part/gygax_armor
-	construction_time = 600
-//Durand
-/datum/design/durand_chassis
-	name = "Exosuit Chassis (\"Durand\")"
-	id = "durand_chassis"
-	build_path = /obj/item/mecha_parts/chassis/durand
-	construction_time = 100
-/datum/design/durand_torso
-	name = "Exosuit Torso (\"Durand\")"
-	id = "durand_torso"
-	build_path = /obj/item/mecha_parts/part/durand_torso
-	construction_time = 300
-/datum/design/durand_head
-	name = "Exosuit Head (\"Durand\")"
-	id = "durand_head"
-	build_path = /obj/item/mecha_parts/part/durand_head
-	construction_time = 200
-/datum/design/durand_left_arm
-	name = "Exosuit Left Arm (\"Durand\")"
-	id = "durand_left_arm"
-	build_path = /obj/item/mecha_parts/part/durand_left_arm
-	construction_time = 200
-/datum/design/durand_right_arm
-	name = "Exosuit Right Arm (\"Durand\")"
-	id = "durand_right_arm"
-	build_path = /obj/item/mecha_parts/part/durand_right_arm
-	construction_time = 200
-/datum/design/durand_left_leg
-	name = "Exosuit Left Leg (\"Durand\")"
-	id = "durand_left_leg"
-	build_path = /obj/item/mecha_parts/part/durand_left_leg
-	construction_time = 200
-/datum/design/durand_right_leg
-	name = "Exosuit Right Leg (\"Durand\")"
-	id = "durand_right_leg"
-	build_path = /obj/item/mecha_parts/part/durand_right_leg
-	construction_time = 200
-/datum/design/durand_armor
-	name = "Exosuit Armor (\"Durand\")"
-	id = "durand_armor"
-	build_path = /obj/item/mecha_parts/part/durand_armor
-	construction_time = 600
+/datum/techweb_node/ripley
+	id = "mecha_ripley"
+	display_name = "EXOSUIT: Ripley APLU"
+	description = "Ripley APLU exosuit designs"
+	prereq_ids = list("mecha")
+	design_ids = list("ripley_chassis", "firefighter_chassis", "ripley_torso", "ripley_left_arm", "ripley_right_arm", "ripley_left_leg", "ripley_right_leg",
+	"ripley_main", "ripley_peri")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/odysseus
+	id = "mecha_odysseus"
+	display_name = "EXOSUIT: Odysseus"
+	description = "Odysseus exosuit designs"
+	prereq_ids = list("mecha")
+	design_ids = list("odysseus_chassis", "odysseus_torso", "odysseus_head", "oddyesus_left_arm", "odysseus_right_arm" ,"odysseus_left_leg", "odysseus_right_leg",
+	"odysseus_main", "odysseus_peri")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/gygax
+	id = "mecha_gygax"
+	display_name = "EXOSUIT: Gygax"
+	description = "Gygax exosuit designs"
+	prereq_ids = list("mecha")
+	design_ids = list("gygax_chassis", "gygax_torso", "gygax_head", "gygax_left_arm", "gygax_right_arm", "gygax_left_leg", "gygax_right_leg", "gygax_main",
+	"gygax_peri", "gygax_targ", "gygax_armor")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/durand
+	id = "mecha_durand"
+	display_name = "EXOSUIT: Durand"
+	description = "Durand exosuit designs"
+	prereq_ids = list("mecha")
+	design_ids = list("durand_chassis", "durand_torso", "durand_head", "durand_left_arm", "durand_right_arm", "durand_left_leg", "durand_right_leg", "durand_main",
+	"durand_peri", "durand_target", "durand_armor")
+	research_cost = 5000
+	export_price = 5000
+
+
+
 //Phazon
 /datum/design/phazon_chassis
 	name = "Exosuit Chassis (\"Phazon\")"
@@ -449,49 +337,7 @@
 	id = "phazon_armor"
 	build_path = /obj/item/mecha_parts/part/phazon_armor
 	construction_time = 300
-///////////////////////////////////
-//////////Mecha Module Disks///////
-///////////////////////////////////
-/datum/design/board/ripley_main
-	name = "APLU \"Ripley\" Central Control module"
-	desc = "Allows for the construction of a \"Ripley\" Central Control module."
-	id = "ripley_main"
-/datum/design/board/ripley_peri
-	name = "APLU \"Ripley\" Peripherals Control module"
-	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
-	id = "ripley_peri"
-/datum/design/board/odysseus_main
-	name = "\"Odysseus\" Central Control module"
-	desc = "Allows for the construction of a \"Odysseus\" Central Control module."
-	id = "odysseus_main"
-/datum/design/board/odysseus_peri
-	name = "\"Odysseus\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Odysseus\" Peripheral Control module."
-	id = "odysseus_peri"
-/datum/design/board/gygax_main
-	name = "\"Gygax\" Central Control module"
-	desc = "Allows for the construction of a \"Gygax\" Central Control module."
-	id = "gygax_main"
-/datum/design/board/gygax_peri
-	name = "\"Gygax\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
-	id = "gygax_peri"
-/datum/design/board/gygax_targ
-	name = "\"Gygax\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
-	id = "gygax_targ"
-/datum/design/board/durand_main
-	name = "\"Durand\" Central Control module"
-	desc = "Allows for the construction of a \"Durand\" Central Control module."
-	id = "durand_main"
-/datum/design/board/durand_peri
-	name = "\"Durand\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Durand\" Peripheral Control module."
-	id = "durand_peri"
-/datum/design/board/durand_targ
-	name = "\"Durand\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
-	id = "durand_targ"
+
 /datum/design/board/phazon_main
 	name = "\"Phazon\" Central Control module"
 	desc = "Allows for the construction of a \"Phazon\" Central Control module."

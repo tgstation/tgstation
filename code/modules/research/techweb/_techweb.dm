@@ -27,7 +27,7 @@
 	for(var/i in SSresearch.techweb_nodes)
 		var/datum/techweb_node/TN = SSresearch.techweb_nodes[i]
 		research_node(TN, TRUE)
-	hidden_nodes = list()		//Admin > everyone else :D
+	hidden_nodes = list()
 
 /datum/techweb/science	//Global science techweb for RND consoles.
 
