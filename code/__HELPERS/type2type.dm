@@ -207,6 +207,8 @@
 		. += "[seperator]+SOUND"
 	if(rights & R_SPAWN)
 		. += "[seperator]+SPAWN"
+	if(rights & R_MENTOR)
+		. += "[seperator]+MENTOR"
 
 	for(var/verbpath in adds)
 		. += "[seperator]+[verbpath]"

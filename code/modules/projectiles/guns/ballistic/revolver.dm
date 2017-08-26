@@ -27,11 +27,15 @@
 		return
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
-		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
-		playsound(user, 'sound/weapons/bulletinsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
 		chamber_round(0)
+		if(istype(A, /obj/item/ammo_casing))
+			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
+			playsound(user, 'hippiestation/sound/weapons/loadbullet.ogg', 60, 1)
+		else if(istype(A, /obj/item/ammo_box))
+			to_chat(user, "<span class='notice'>You slam [num_loaded] shell\s into \the [src]. Badass.</span>")
+			playsound(user, 'hippiestation/sound/weapons/speedload.ogg', 60, 1)
 
 /obj/item/gun/ballistic/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0

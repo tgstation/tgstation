@@ -37,36 +37,35 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//kinda localization -- rastaf0
 	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	// Location
-	"ê" = "right hand",
-	"ä" = "left hand",
-	"ø" = "intercom",
+	"?" = "right hand",
+	"?" = "left hand",
+	"?" = "intercom",
 
 	// Department
-	"ð" = "department",
-	"ñ" = "Command",
-	"ò" = "Science",
-	"ü" = "Medical",
-	"ó" = "Engineering",
-	"û" = "Security",
-	"ã" = "Supply",
-	"ì" = "Service",
+	"?" = "department",
+	"?" = "Command",
+	"?" = "Science",
+	"?" = "Medical",
+	"?" = "Engineering",
+	"?" = "Security",
+	"?" = "Supply",
+	"?" = "Service",
 
 	// Faction
 	"å" = "Syndicate",
 	"í" = "CentCom",
-
 	// Species
-	"è" = "binary",
-	"ï" = "changeling",
-	"ô" = "alientalk",
+	"?" = "binary",
+	"?" = "changeling",
+	"?" = "alientalk",
 
 	// Admin
-	"ç" = "admin",
-	"â" = "deadmin",
+	"?" = "admin",
+	"?" = "deadmin",
 
 	// Misc
-	"ù" = "AI Private",
-	"÷" = "cords"
+	"?" = "AI Private",
+	"?" = "cords"
 ))
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
@@ -102,11 +101,17 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 
 	if(stat == DEAD)
+		if(message == "*fart" || message == "*scream") //Avoid deachat spam via the hotkeys
+			return
 		say_dead(original_message)
 		return
 
 	if(check_emote(original_message) || !can_speak_basic(original_message))
 		return
+
+	if(is_nearcrit()) //in_critical variable is handled separately.
+		if(!(message_mode in crit_allowed_modes))
+			message_mode = MODE_WHISPER_CRIT
 
 	if(in_critical)
 		if(!(crit_allowed_modes[message_mode]))
@@ -157,7 +162,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message = Ellipsis(message, 10, 1)
 			last_words = message
 			message_mode = MODE_WHISPER_CRIT
-			succumbed = TRUE
 	else
 		log_talk(src,"[name]/[key] : [message]",LOGSAY)
 
@@ -420,7 +424,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(message_mode == MODE_WHISPER)
 		. = verb_whisper
 	else if(message_mode == MODE_WHISPER_CRIT)
-		. = "[verb_whisper] in [p_their()] last breath"
+		. = "painfully [verb_whisper]"
 	else if(stuttering)
 		. = "stammers"
 	else if(getBrainLoss() >= 60)

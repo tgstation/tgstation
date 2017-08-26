@@ -477,7 +477,7 @@
 /obj/effect/golemrune
 	anchored = TRUE
 	desc = "a strange rune used to create golems. It glows when spirits are nearby."
-	name = "rune"
+	name = "golem rune"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "golem"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -486,7 +486,7 @@
 /obj/effect/golemrune/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	notify_ghosts("Golem rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
+	notify_ghosts("[src] has been created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 
 /obj/effect/golemrune/Destroy()
 	STOP_PROCESSING(SSobj, src)

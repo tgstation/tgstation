@@ -1,0 +1,33 @@
+{{#if data.timer}}
+<ui-notice>
+  <span>The pool cannot be modified for {{data.timer}} seconds!</span>
+</ui-notice>
+{{/if}}
+<ui-display title='Drain Control'>
+  <ui-section label='Status'>
+    <span class='{{data.draining ? "bad" : "good"}}'>{{data.draining ? "Empty" : "Full"}}</span>
+  </ui-section>
+   <ui-section label='Activate'>
+  <ui-button icon='refresh' state='{{data.candrain && (data.timer == 0) ? null : "disabled"}}'
+      action='drain'>{{data.draining ? "Refill" : "Drain"}}</ui-button>
+</ui-display>
+<ui-display title='Temperature Control'>
+  <ui-section label='Status'>
+    <ui-bar min='1' max='5' value='{{data.temperature}}'>{{Math.round(data.temperature)}}</ui-bar>
+  </ui-section>
+  <ui-section label='Modify'>
+    <ui-button icon='minus' state='{{data.canminus && (data.timer == 0) ? null : "disabled"}}'
+      action='decrease'>Decrease</ui-button>
+	<span class='{{data.temperature == 2 ? "average" : data.temperature == 3 ? "good" : data.temperature == 4 ? "average" : "bad"}}'>{{data.temperature == 1 ? "Frigid" : data.temperature == 2 ? "Cool" : data.temperature == 3 ? "Normal" : data.temperature == 4 ? "Warm" : "Scalding"}}</span>
+    <ui-button icon='plus' state='{{data.canplus && (data.timer == 0) ? null : "disabled"}}'
+      action='increase'>Increase</ui-button>
+  </ui-section>
+</ui-display>
+<ui-display title='Chemical Control'>
+  <ui-section label='Status'>
+	<span class='{{data.beaker ? "good" : "average"}}'>{{data.beaker ? "Beaker Loaded" : "No Beaker"}}</span> <ui-button icon='eject' action='eject' state='{{data.beaker && (data.timer == 0) ? null : "disabled"}}'>Eject</ui-button>
+  </ui-section>
+  <ui-section label='Chemicals'>
+    <span class='{{data.beaker ? "average" : "good"}}'>{{data.beaker ? data.chemical : "none"}}</span>
+  </ui-section>
+</ui-display>

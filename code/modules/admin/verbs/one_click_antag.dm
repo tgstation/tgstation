@@ -23,6 +23,8 @@
 		<a href='?src=\ref[src];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
+		<a href='?src=\ref[src];makeAntag=messiah'>Make Messiah (Requires Ghost)</a><br>
+		<a href='?src=\ref[src];makeAntag=shadowling'>Make Shadowling</a><br>
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)

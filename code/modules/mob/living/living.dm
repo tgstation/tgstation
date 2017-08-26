@@ -964,7 +964,7 @@
 			fall()
 		else if(ko || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || has_status_effect(STATUS_EFFECT_STUN) || has_status_effect(/datum/status_effect/freon) || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !((is_nearcrit() ? 0 : ko) || resting || has_status_effect(STATUS_EFFECT_STUN) || has_status_effect(/datum/status_effect/freon) || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.

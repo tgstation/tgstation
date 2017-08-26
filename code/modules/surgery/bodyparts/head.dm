@@ -70,6 +70,7 @@
 	else if(!animal_origin)
 		var/mob/living/carbon/human/H = C
 		var/datum/species/S = H.dna.species
+		H.checknoosedrop()
 
 		//Facial hair
 		if(H.facial_hair_style && (FACEHAIR in S.species_traits))

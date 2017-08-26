@@ -63,6 +63,8 @@
 	var/msg = "<b>Current Admins:</b>\n"
 	if(holder)
 		for(var/client/C in GLOB.admins)
+			if(check_rights_for(src, R_ADMIN))
+				continue
 			msg += "\t[C] is a [C.holder.rank]"
 
 			if(C.holder.fakekey)

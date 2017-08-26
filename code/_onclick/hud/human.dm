@@ -6,6 +6,9 @@
 	icon_state = "toggle"
 
 /obj/screen/human/toggle/Click()
+	var/mob/living/carbon/human/H = usr
+	if(H.quick_equip_and_return_success())
+		return //Successful hotswap.
 
 	var/mob/targetmob = usr
 
