@@ -10,6 +10,7 @@
 	var/prob2drop
 	var/mob/user
 	var/obj/item/W
+	var/dug = FALSE
 
 /datum/component/archaeology/Initialize(_prob2drop)
 	prob2drop = Clamp(_prob2drop, 0, 100)
@@ -21,6 +22,7 @@
 /datum/component/archaeology/Destroy()
 	user = null
 	W = null
+	dug = TRUE
 	return ..()
 
 /datum/component/archaeology/InheritComponent(datum/component/archaeology/A, i_am_original)
@@ -30,6 +32,10 @@
 		_drops[I] += other_drops[I]
 
 /datum/component/archaeology/proc/Dig(mob/user, obj/item/W)
+	if(dug)
+		to_chat(user, "<span class='notice'> Looks like someone had dug here already.</span>")
+		return
+
 	var/digging_speed
 	if (istype(W, /obj/item/shovel))
 		var/obj/item/shovel/S = W
@@ -49,6 +55,9 @@
 	return FALSE
 
 /datum/component/archaeology/proc/gets_dug()
+	if(dug) //for things like singulo_act and ex_act even though we have it in Dig() too.
+		return
+
 	if(isopenturf(parent))
 		var/turf/open/OT = parent
 		for(var/thing in drops)
