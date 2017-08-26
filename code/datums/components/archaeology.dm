@@ -1,10 +1,8 @@
 /* How this works:
-	In the turf [must be turf/open of some sort] you want to give drops on:
-		In turf.Initialize() , AddComponent(/datum/component/archaeology, prob2drop). prob2drop is a base number that affects each drop in list/drop the same. Good for if you want to randomize a common turf. Basalt is weird so it gets its own subtype
-		In AttackBy() [open turfs are vastly different and don't typically call inheritance so we have to cheese], call ArchaeologySignal(user, W). This will send the signal to the component as well.
-		In this file, create a new type with the ONLY thing set being drops. each line in the list must be type = num where num is the max amount of that type that can be dropped.
-
-		Need to figure out where's the best place to set drops because as of now snow will drop sand.
+		In turf.Initialize() , AddComponent(/datum/component/archaeology, prob2drop). prob2drop is a base number that affects each drop in list/drop the same. Good for if you want to have turfs be a bit more dynamic.
+		In the turf's vars, you can set the drop list with the archdrops var. Format is type = num where num is the max it could possibly drop. postdig
+		In the turf's AttackBy() [open turfs are vastly different and don't typically call inheritance hence component], call ArchaeologySignal(user, W). This will send the signal to the component as well.
+		If your turf has a unique post-dig sprite like basalt/asteroid, put that in postdig_icon as a text string AND set postdig_icon_change = TRUE.
 */
 /datum/component/archaeology
 	dupe_type = COMPONENT_DUPE_UNIQUE
