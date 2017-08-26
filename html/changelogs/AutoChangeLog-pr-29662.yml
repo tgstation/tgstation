@@ -1,8 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - balance: "Geis bindings no longer decay faster if not pulled by a Servant, but last for 20 seconds, from 25."
-  - tweak: "Geis bindings will decay slower when on a Sigil of Submission, and, if being pulled by a Servant when crossing a Sigil of Submission, will helpfully remove the pull."
-  - tweak: "Removing Geis bindings is no longer instant and can be done by any Servant with a slab, not just the initiator."
-  - wip: "Geis no longer prevents you from taking actions, but you remain unable to recite scripture while the target is bound. In addition, dealing damage to a bound target will cause the bindings to decay much more rapidly."
-  - rscadd: "You can now remove sigils by hitting them with a clockwork slab for a small refund."
