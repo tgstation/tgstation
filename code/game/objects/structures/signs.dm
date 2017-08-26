@@ -137,6 +137,11 @@
 	desc = "A framed picture of the station.\nClockwise from the top, you see Security (<b>red</b>), Dorms (<b>light-green</b>), Bridge (<b>dark-blue</b>), AI Core (<b>gray</b>), \
 	Cargo (<b>brown</b>), Medbay (<b>blue</b>), Arrivals/Departures(<b>orange/cyan</b>), Research (<b>purple</b>), Service (<b>dark-green</b>), and Engineering in the center (<b>yellow</b>)."
 
+/obj/structure/sign/map/left/alina
+	icon_state = "map-alina"
+	desc = "A framed picture of the station. \n<b>Red</b> for Security, <b>dark-blue</b> for Bridge, <b>purple</b> for Research, <b>blue</b> for Medbay, <b>grey</b> for Maintenance, \
+	<b>orange</b> for Engineering, <b>brown</b> for Cargo, <b>cyan/orange</b> for Arrivals/Departures, <b>dark-green</b> for Service and <b>light-green</b> for Dorms."
+
 /obj/structure/sign/securearea
 	name = "\improper SECURE AREA"
 	desc = "A warning sign which reads 'SECURE AREA'."

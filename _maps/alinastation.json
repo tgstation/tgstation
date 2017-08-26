@@ -1,0 +1,7 @@
+{
+    "map_name": "AlinaStation",
+    "map_path": "map_files/AlinaStation",
+    "map_file": "AlinaStation.dmm",
+    "minetype": "lavaland",
+    "transition_config": "default"
+}
