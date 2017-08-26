@@ -139,6 +139,20 @@
 	if(owner.m_intent == MOVE_INTENT_WALK)
 		owner.toggle_move_intent()
 
+/datum/status_effect/geis_tracker
+	id = "geis_tracker"
+	duration = -1
+	alert_type = null
+	var/obj/structure/destructible/clockwork/geis_binding/binding
+
+/datum/status_effect/geis_tracker/on_creation(mob/living/new_owner, obj/structure/destructible/clockwork/geis_binding/new_binding)
+	. = ..()
+	if(.)
+		binding = new_binding
+
+/datum/status_effect/geis_tracker/tick()
+	if(QDELETED(binding))
+		qdel(src)
 
 /datum/status_effect/maniamotor
 	id = "maniamotor"

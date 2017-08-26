@@ -122,21 +122,20 @@
 		if (istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1) )
 >>>>>>> d50b0c6e63f02be4b833ad3063363077c1d769c8
 				if (!beaker)
-						if(!user.drop_item())
+						if(!user.transferItemToLoc(I, src))
 								return 1
 						beaker =  I
-						beaker.loc = src
 						update_icon()
 						src.updateUsrDialog()
 				else
-						to_chat(user, "<span class='warning'>There's already a container inside.</span>")
+						to_chat(user, "<span class='warning'>There's already a container inside [src].</span>")
 				return 1 //no afterattack
 
 		if(is_type_in_list(I, dried_items))
 				if(istype(I, /obj/item/reagent_containers/food/snacks/grown))
 						var/obj/item/reagent_containers/food/snacks/grown/G = I
 						if(!G.dry)
-								to_chat(user, "<span class='warning'>You must dry that first!</span>")
+								to_chat(user, "<span class='warning'>You must dry [G] first!</span>")
 								return 1
 
 		if(holdingitems && holdingitems.len >= limit)
@@ -150,11 +149,11 @@
 						B.remove_from_storage(G, src)
 						holdingitems += G
 						if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
-								to_chat(user, "<span class='notice'>You fill the All-In-One grinder to the brim.</span>")
+								to_chat(user, "<span class='notice'>You fill [src] to the brim.</span>")
 								break
 
 				if(!I.contents.len)
-						to_chat(user, "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>")
+						to_chat(user, "<span class='notice'>You empty [I] into [src].</span>")
 
 				src.updateUsrDialog()
 				return 1
@@ -166,8 +165,7 @@
 						to_chat(user, "<span class='warning'>Cannot refine into a reagent!</span>")
 						return 1
 
-		if(user.drop_item())
-				I.loc = src
+		if(user.transferItemToLoc(I, src))
 				holdingitems += I
 				src.updateUsrDialog()
 				return 0

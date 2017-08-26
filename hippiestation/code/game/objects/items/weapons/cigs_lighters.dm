@@ -628,7 +628,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/vapetime = 0 //this so it won't puff out clouds every tick
 	var/screw = FALSE //Vape is opened by screwdriver
 	var/super = FALSE //Power has been increased with a multitool
-	var/emagged = FALSE
 
 /obj/item/clothing/mask/vape/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>Oh no, [user] is trying to eat the [name]! You can't do that!</span>")

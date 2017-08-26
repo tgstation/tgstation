@@ -34,20 +34,20 @@
 	..(process, D, copy)
 
 
-// Hullucigen
+// Hallucigen
 
-/datum/disease/advance/hullucigen/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
+/datum/disease/advance/hallucigen/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
 	if(!D)
-		name = "Reality Impairment"
+		name = "Second Sight"
 		symptoms = list(new/datum/symptom/hallucigen)
 	..(process, D, copy)
 
 // Sensory Restoration
 
-/datum/disease/advance/sensory_restoration/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
+/datum/disease/advance/mind_restoration/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
 	if(!D)
-		name = "Reality Enhancer"
-		symptoms = list(new/datum/symptom/sensory_restoration)
+		name = "Intelligence Booster"
+		symptoms = list(new/datum/symptom/mind_restoration)
 	..(process, D, copy)
 
 // Sensory Destruction

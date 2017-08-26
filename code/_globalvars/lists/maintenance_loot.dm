@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/wirecutters = 1,
 	/obj/item/wrench = 4,
 	/obj/item/relic = 3,
-	/obj/itemcrafting/receiver = 2,
+	/obj/item/weaponcrafting/receiver = 2,
 	/obj/item/clothing/head/cone = 2,
 	/obj/item/grenade/smokebomb = 2,
 	/obj/item/device/geiger_counter = 3,

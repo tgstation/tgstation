@@ -194,7 +194,6 @@
 	var/invis_view = SEE_INVISIBLE_LIVING
 	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
 	var/lighting_alpha
-	var/emagged = FALSE
 	var/list/icon/current = list() //the current hud icons
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	strip_delay = 20
@@ -476,6 +475,8 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 80, acid = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	dynamic_hair_suffix = ""
+	dynamic_fhair_suffix = ""
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD

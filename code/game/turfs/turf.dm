@@ -535,3 +535,6 @@
 		else
 			return I
 	return I
+
+/turf/AllowDrop()
+	return TRUE

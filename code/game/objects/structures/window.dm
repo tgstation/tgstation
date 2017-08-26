@@ -394,8 +394,8 @@
 		take_damage(round(exposed_volume / 100), BURN, 0, 0)
 	..()
 
-/obj/structure/window/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	return 0
+/obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
+	return null
 
 /obj/structure/window/CanAStarPass(ID, to_dir)
 	if(!density)
