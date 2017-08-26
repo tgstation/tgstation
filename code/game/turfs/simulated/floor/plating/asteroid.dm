@@ -9,10 +9,9 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
+	postdig_icon_change = TRUE
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
-	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	var/sand_type = /obj/item/ore/glass
 	var/floor_variance = 20 //probability floor has a different icon state
 
 /turf/open/floor/plating/asteroid/Initialize()
@@ -21,6 +20,7 @@
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
+	AddComponent(/datum/component/archaeology/asteroid, 100)
 
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
@@ -45,31 +45,7 @@
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
 	//note that this proc does not call ..()
 	if(!W || !user)
-		return 0
-	var/digging_speed = 0
-	if (istype(W, /obj/item/shovel))
-		var/obj/item/shovel/S = W
-		digging_speed = S.digspeed
-	else if (istype(W, /obj/item/pickaxe))
-		var/obj/item/pickaxe/P = W
-		digging_speed = P.digspeed
-	if (digging_speed)
-		var/turf/T = user.loc
-		if(!isturf(T))
-			return
-
-		if (dug)
-			to_chat(user, "<span class='warning'>This area has already been dug!</span>")
-			return
-
-		to_chat(user, "<span class='notice'>You start digging...</span>")
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
-
-		if(do_after(user, digging_speed, target = src))
-			if(istype(src, /turf/open/floor/plating/asteroid))
-				to_chat(user, "<span class='notice'>You dig a hole.</span>")
-				gets_dug()
-				SSblackbox.add_details("pick_used_mining","[W.type]")
+		return FALSE
 
 	if(istype(W, /obj/item/storage/bag/ore))
 		var/obj/item/storage/bag/ore/S = W
@@ -89,16 +65,7 @@
 			F.state = L.state
 		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 
-/turf/open/floor/plating/asteroid/proc/gets_dug()
-	if(dug)
-		return
-	for(var/i in 1 to 5)
-		new sand_type(src)
-	dug = 1
-	icon_plating = "[environment_type]_dug"
-	icon_state = "[environment_type]_dug"
-	slowdown = 0
-	return
+	ArchaeologySignal(user,W)
 
 /turf/open/floor/plating/asteroid/singularity_act()
 	return
@@ -113,7 +80,7 @@
 		if(STAGE_FOUR)
 			if(prob(50))
 				gets_dug()
-		else 
+		else
 			if(current_size >= STAGE_FIVE && prob(70))
 				gets_dug()
 

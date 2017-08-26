@@ -4,6 +4,7 @@
 	var/wet = 0
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
 	var/mutable_appearance/wet_overlay
+	var/postdig_icon_change = FALSE
 
 /turf/open/indestructible
 	name = "floor"
@@ -309,3 +310,8 @@
 	if(wet_overlay)
 		cut_overlay(wet_overlay)
 
+/turf/open/proc/ArchaeologySignal(mob/user, obj/item/W)
+	if(istype(W,/obj/item/shovel) || istype(W, /obj/item/pickaxe)
+		SendSignal(COMSIG_OPENTURF_ATTACKBY, user, W)
+	else
+		return
