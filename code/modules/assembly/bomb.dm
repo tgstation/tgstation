@@ -8,7 +8,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 4
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	var/status = FALSE   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
@@ -64,7 +64,7 @@
 	return
 
 /obj/item/device/onetankbomb/receive_signal()	//This is mainly called by the sensor through sense() to the holder, and from the holder to here.
-	visible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
+	visible_message("[icon2html(src, viewers(src))] *beep* *beep*", "*beep* *beep*")
 	sleep(10)
 	if(!src)
 		return

@@ -4,16 +4,16 @@
 /obj/item/reagent_containers/food
 	possible_transfer_amounts = list()
 	volume = 50	//Sets the default container amount for all food items.
-	container_type = INJECTABLE
+	container_type = INJECTABLE_1
 	resistance_flags = FLAMMABLE
 	var/foodtype = NONE
 	var/last_check_time
 
-/obj/item/reagent_containers/food/New()
-		..()
-		pixel_x = rand(-5, 5)	//Randomizes postion slightly.
+/obj/item/reagent_containers/food/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		pixel_x = rand(-5, 5)
 		pixel_y = rand(-5, 5)
-
 
 /obj/item/reagent_containers/food/proc/checkLiked(var/fraction, mob/M)
 	if(last_check_time + 50 < world.time)

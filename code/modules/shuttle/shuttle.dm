@@ -71,6 +71,12 @@
 		_y + (-dwidth+width-1)*sin + (-dheight+height-1)*cos
 		)
 
+//returns turfs within our projected rectangle in no particular order
+/obj/docking_port/proc/return_turfs()
+	var/list/L = return_coords()
+	var/turf/T0 = locate(L[1],L[2],z)
+	var/turf/T1 = locate(L[3],L[4],z)
+	return block(T0,T1)
 
 //returns turfs within our projected rectangle in a specific order.
 //this ensures that turfs are copied over in the same order, regardless of any rotation
@@ -178,7 +184,7 @@
 		var/turf/T = assigned_turfs[i]
 		if(T.type == turf_type)
 			T.ChangeTurf(/turf/open/space,/turf/open/space)
-			T.flags |= UNUSED_TRANSIT_TURF
+			T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
@@ -535,7 +541,7 @@
 			continue
 		for(var/thing in oldT) //Needs to be this kind of loop in case, because of shuttle rotation shenanigans, the destination turf is the same as the source turf
 			var/atom/movable/moving_atom = thing
-			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction)				//atoms
+			moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock)	//atoms
 			moved_atoms += moving_atom
 		oldT.onShuttleMove(newT, turf_type, baseturf_type, rotation, movement_force, movement_direction) 	//turfs
 		var/area/shuttle_area = oldT.loc
@@ -838,13 +844,13 @@
 
 //Called when emergency shuttle docks at centcom
 /obj/docking_port/mobile/proc/on_emergency_dock()
-	//Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
+	//Mapping a new docking point for each ship mappers could potentially want docking with centcom would take up lots of space, just let them keep flying off into the sunset for their greentext
 	if(launch_status == ENDGAME_LAUNCHED)
 		launch_status = ENDGAME_TRANSIT
 
 /obj/docking_port/mobile/pod/on_emergency_dock()
 	if(launch_status == ENDGAME_LAUNCHED)
-		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcomm
+		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcom
 		mode = SHUTTLE_ENDGAME
 
 /obj/docking_port/mobile/emergency/on_emergency_dock()

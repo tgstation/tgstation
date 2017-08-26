@@ -3,7 +3,7 @@
 	desc = "A smooth, metallic metal cylinder with an indigo screen."
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "hive_main-crash"
-	flags = CONDUCT | NOBLUDGEON
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
 	origin_tech = "engineering=5;magnets=4;programming=4"

@@ -5,7 +5,7 @@
 	item_state = "cultblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30
@@ -31,7 +31,7 @@
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
 	force = 19 //can't break normal airlocks
-	flags = NODROP|DROPDEL
+	flags_1 = NODROP_1|DROPDEL_1
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
@@ -52,6 +52,9 @@
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
+	item_state = "knife"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
@@ -108,7 +111,7 @@
 	item_state = "cult_hoodalt"
 
 /obj/item/clothing/head/culthood/alt/ghost
-	flags = NODROP|DROPDEL
+	flags_1 = NODROP_1|DROPDEL_1
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
@@ -117,7 +120,7 @@
 	item_state = "cultrobesalt"
 
 /obj/item/clothing/suit/cultrobes/alt/ghost
-	flags = NODROP|DROPDEL
+	flags_1 = NODROP_1|DROPDEL_1
 
 
 /obj/item/clothing/head/magus
@@ -161,10 +164,14 @@
 /obj/item/sharpener/cult
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
+	icon_state = "cult_sharpener"
 	used = 0
 	increment = 5
 	max = 40
 	prefix = "darkened"
+
+/obj/item/sharpener/cult/update_icon()
+	icon_state = "cult_sharpener[used ? "_used" : ""]"
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -391,7 +398,7 @@
 	if(!iscultist(user))
 		to_chat(user, "That doesn't seem to do anything useful.")
 		return
-		
+
 	if(istype(A, /obj/item))
 
 		var/list/cultists = list()

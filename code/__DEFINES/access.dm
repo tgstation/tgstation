@@ -76,7 +76,7 @@
 #define ACCESS_CENT_STORAGE 106//Generic storage areas.
 #define ACCESS_CENT_TELEPORTER 107//Teleporter.
 #define ACCESS_CENT_CAPTAIN 109//Captain's office/ID comp/AI.
-#define ACCESS_CENT_BAR 110 // The non-existent Centcom Bar
+#define ACCESS_CENT_BAR 110 // The non-existent CentCom Bar
 
 	//The Syndicate
 #define ACCESS_SYNDICATE 150//General Syndicate Access

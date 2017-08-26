@@ -811,7 +811,7 @@
 					/obj/item/reagent_containers/glass/bottle/magnitis,
 					/obj/item/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/reagent_containers/glass/bottle/brainrot,
-					/obj/item/reagent_containers/glass/bottle/hullucigen_virion,
+					/obj/item/reagent_containers/glass/bottle/hallucigen_virion,
 					/obj/item/reagent_containers/glass/bottle/anxiety,
 					/obj/item/reagent_containers/glass/bottle/beesease,
 					/obj/item/storage/box/syringes,
@@ -1782,9 +1782,7 @@
 	name = "Shield System Control Board"
 	cost = 5000
 	special = TRUE
-	contains = list(
-					/obj/item/circuitboard/machine/computer/sat_control
-					)
+	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
 
 /datum/supply_pack/misc/bicycle

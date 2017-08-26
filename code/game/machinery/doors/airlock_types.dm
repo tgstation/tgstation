@@ -266,7 +266,7 @@
 
 //////////////////////////////////
 /*
-	Centcom Airlocks
+	CentCom Airlocks
 */
 
 /obj/machinery/door/airlock/centcom
@@ -390,7 +390,7 @@
 		new /obj/effect/temp_visual/cult/sac(loc)
 		var/atom/throwtarget
 		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-		L << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
+		SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
 		flash_color(L, flash_color="#960000", flash_time=20)
 		L.Knockdown(40)
 		L.throw_at(throwtarget, 5, 1,src)
@@ -498,7 +498,7 @@
 
 /obj/machinery/door/airlock/clockwork/deconstruct(disassembled = TRUE)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = get_turf(src)
 		if(disassembled)
 			new/obj/item/stack/tile/brass(T, 4)

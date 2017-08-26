@@ -63,7 +63,7 @@
 	LAZYINITLIST(holdingitems)
 	if(operating) //to avoid weird bugs
 		return ..()
-	if (istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER) ) //All open containers. Too bad they all look like beakers in the machine.
+	if (istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1) ) //All open containers. Too bad they all look like beakers in the machine.
 		if (!beaker)
 			if(!user.drop_item())
 				return 1
@@ -293,7 +293,7 @@ var/list/global/blend_items = list (
 	/obj/item/coin/clown = list("banana" = 4),
 	/obj/item/stack/sheet/bluespace_crystal = list("bluespace = 20"),
 	/obj/item/ore/bluespace_crystal = list("bluespace = 20"), //This isn't a sheet actually, but you break it off
-	
+
 	//Crayons (for overriding colours)
 	/obj/item/toy/crayon/red = list("redcrayonpowder" = 50),
 	/obj/item/toy/crayon/orange = list("orangecrayonpowder" = 50),

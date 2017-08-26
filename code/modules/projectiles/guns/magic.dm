@@ -4,8 +4,10 @@
 	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "staffofnothing"
 	item_state = "staff"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	fire_sound = 'sound/weapons/emitter.ogg'
-	flags =  CONDUCT
+	flags_1 =  CONDUCT_1
 	w_class = WEIGHT_CLASS_HUGE
 	var/max_charges = 6
 	var/charges = 0

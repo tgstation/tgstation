@@ -34,8 +34,8 @@ SUBSYSTEM_DEF(shuttle)
 	var/obj/docking_port/mobile/supply/supply
 	var/ordernum = 1					//order number given to next order
 	var/points = 5000					//number of trade-points we have
-	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
-	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
+	var/centcom_message = ""			//Remarks from CentCom on how well you checked the last order.
+	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentCom, associated with their potencies
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
 		transit_turfs += T
-		T.flags |= UNUSED_TRANSIT_TURF
+		T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
@@ -98,8 +98,6 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			T.color = "#00ffff"
 #endif
-
-	//world.log << "[transit_turfs.len] transit turfs registered"
 
 /datum/controller/subsystem/shuttle/fire()
 	for(var/thing in mobile)
@@ -183,7 +181,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			to_chat(user, "The emergency shuttle may not be called while returning to Centcom.")
+			to_chat(user, "The emergency shuttle may not be called while returning to CentCom.")
 			return
 		if(SHUTTLE_CALL)
 			to_chat(user, "The emergency shuttle is already on its way.")
@@ -198,7 +196,7 @@ SUBSYSTEM_DEF(shuttle)
 			to_chat(user, "The emergency shuttle is moving away to a safe distance.")
 			return
 		if(SHUTTLE_STRANDED)
-			to_chat(user, "The emergency shuttle has been disabled by Centcom.")
+			to_chat(user, "The emergency shuttle has been disabled by CentCom.")
 			return
 
 	call_reason = trim(html_encode(call_reason))
@@ -405,13 +403,13 @@ SUBSYSTEM_DEF(shuttle)
 		for(var/i in transit_turfs)
 			CHECK_TICK
 			var/turf/topleft = i
-			if(!(topleft.flags & UNUSED_TRANSIT_TURF))
+			if(!(topleft.flags_1 & UNUSED_TRANSIT_TURF_1))
 				continue
 			var/turf/bottomright = locate(topleft.x + transit_width,
 				topleft.y + transit_height, topleft.z)
 			if(!bottomright)
 				continue
-			if(!(bottomright.flags & UNUSED_TRANSIT_TURF))
+			if(!(bottomright.flags_1 & UNUSED_TRANSIT_TURF_1))
 				continue
 
 			proposed_zone = block(topleft, bottomright)
@@ -421,7 +419,7 @@ SUBSYSTEM_DEF(shuttle)
 				var/turf/T = j
 				if(!T)
 					continue base
-				if(!(T.flags & UNUSED_TRANSIT_TURF))
+				if(!(T.flags_1 & UNUSED_TRANSIT_TURF_1))
 					continue base
 			//to_chat(world, "[COORD(topleft)] and [COORD(bottomright)]")
 			break base
@@ -493,7 +491,7 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/i in new_transit_dock.assigned_turfs)
 		var/turf/T = i
 		T.ChangeTurf(transit_path)
-		T.flags &= ~(UNUSED_TRANSIT_TURF)
+		T.flags_1 &= ~(UNUSED_TRANSIT_TURF_1)
 
 	M.assigned_transit = new_transit_dock
 	return TRUE

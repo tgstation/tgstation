@@ -22,7 +22,7 @@
 #define SHUTTLE_ALREADY_DOCKED "we_are_already_docked"
 #define SHUTTLE_SOMEONE_ELSE_DOCKED "someone_else_docked"
 
-//Launching Shuttles to Centcomm
+//Launching Shuttles to CentCom
 #define NOLAUNCH -1
 #define UNLAUNCHED 0
 #define ENDGAME_LAUNCHED 1

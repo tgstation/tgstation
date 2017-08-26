@@ -24,9 +24,9 @@
 
 /mob/living/carbon/get_ear_protection()
 	var/number = ..()
-	if(ears && HAS_SECONDARY_FLAG(ears, BANG_PROTECT))
+	if(ears && (ears.flags_2 & BANG_PROTECT_2))
 		number += 1
-	if(head && HAS_SECONDARY_FLAG(head, BANG_PROTECT))
+	if(head && (head.flags_2 & BANG_PROTECT_2))
 		number += 1
 	var/obj/item/organ/ears/E = getorganslot("ears")
 	if(!E)
@@ -210,7 +210,7 @@
 	..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
+	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
 		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
@@ -334,7 +334,7 @@
 					// you need earmuffs, inacusiate, or replacement
 			else if(ears.ear_damage >= 5)
 				to_chat(src, "<span class='warning'>Your ears start to ring!</span>")
-			src << sound('sound/weapons/flash_ring.ogg',0,1,0,250)
+			SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',0,1,0,250))
 		return effect_amount //how soundbanged we are
 
 

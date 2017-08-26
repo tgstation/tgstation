@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			icon_state = "req_comp0"
 
 /obj/machinery/requests_console/Initialize()
-	..()
+	. = ..()
 	name = "\improper [department] requests console"
 	GLOB.allConsoles += src
 	switch(departmentType)

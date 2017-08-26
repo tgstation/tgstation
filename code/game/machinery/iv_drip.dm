@@ -15,7 +15,7 @@
 									/obj/item/reagent_containers/glass)
 
 /obj/machinery/iv_drip/Initialize()
-	..()
+	. = ..()
 	update_icon()
 	drip_containers = typecacheof(drip_containers)
 
@@ -107,7 +107,7 @@
 		return ..()
 
 /obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc)
 	qdel(src)
 

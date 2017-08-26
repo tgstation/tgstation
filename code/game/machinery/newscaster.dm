@@ -197,16 +197,15 @@ GLOBAL_LIST_EMPTY(allCasters)
 	name = "security newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/New(loc, ndir, building)
-	..()
+/obj/machinery/newscaster/Initialize(mapload, ndir, building)
+	. = ..()
 	if(building)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
 		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
 	GLOB.allCasters += src
-	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-		unit_no++
+	unit_no = GLOB.allCasters.len
 	update_icon()
 
 /obj/machinery/newscaster/Destroy()
@@ -759,14 +758,14 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 
 /obj/machinery/newscaster/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc, 2)
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)
 	qdel(src)
 
 /obj/machinery/newscaster/obj_break()
-	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 		update_icon()

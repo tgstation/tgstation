@@ -20,7 +20,7 @@
 		<a href='?src=\ref[src];makeAntag=gangs'>Make Gangsters</a><br>
 		<a href='?src=\ref[src];makeAntag=wizard'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=nukeops'>Make Nuke Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=centcom'>Make Centcom Response Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
 		<a href='?src=\ref[src];makeAntag=messiah'>Make Messiah (Requires Ghost)</a><br>
@@ -399,7 +399,7 @@
 
 /datum/admins/proc/makeOfficial()
 	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered to be a Centcom Official?", "deathsquad")
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered to be a CentCom Official?", "deathsquad")
 
 	if(candidates.len)
 		var/mob/dead/observer/chosen_candidate = pick(candidates)
@@ -410,7 +410,7 @@
 		newmob.real_name = newmob.dna.species.random_name(newmob.gender,1)
 		newmob.dna.update_dna_identity()
 		newmob.key = chosen_candidate.key
-		newmob.mind.assigned_role = "Centcom Official"
+		newmob.mind.assigned_role = "CentCom Official"
 		newmob.equipOutfit(/datum/outfit/centcom_official)
 
 		//Assign antag status and the mission
@@ -426,12 +426,12 @@
 			newmob.set_species(/datum/species/human)
 
 		//Greet the official
-		to_chat(newmob, "<B><font size=3 color=red>You are a Centcom Official.</font></B>")
+		to_chat(newmob, "<B><font size=3 color=red>You are a CentCom Official.</font></B>")
 		to_chat(newmob, "<BR>Central Command is sending you to [station_name()] with the task: [mission]")
 
 		//Logging and cleanup
-		message_admins("Centcom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
-		log_game("[key_name(newmob)] has been selected as a Centcom Official")
+		message_admins("CentCom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
+		log_game("[key_name(newmob)] has been selected as a CentCom Official")
 
 		return 1
 
@@ -439,7 +439,7 @@
 
 // CENTCOM RESPONSE TEAM
 /datum/admins/proc/makeEmergencyresponseteam()
-	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: Centcom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Delta: Deathsquad")
+	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: CentCom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Delta: Deathsquad")
 	if(!alert)
 		return
 	switch(alert)
@@ -451,7 +451,7 @@
 			alert = "Amber"
 		if("Blue: Light ERT (No Armoury Access)")
 			alert = "Blue"
-		if("Green: Centcom Official")
+		if("Green: CentCom Official")
 			return makeOfficial()
 	var/teamcheck = input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num
 	if(isnull(teamcheck))

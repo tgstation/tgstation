@@ -157,7 +157,7 @@
 			H = target.current
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey || (H && H.dna.species.id == "memezombies")) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
-		if(target.current.onCentcom() || target.current.onSyndieBase())
+		if(target.current.onCentCom() || target.current.onSyndieBase())
 			return 0
 	return 1
 
@@ -357,7 +357,7 @@
 	if(istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
-	if(location.onCentcom() || location.onSyndieBase())
+	if(location.onCentCom() || location.onSyndieBase())
 		return 1
 
 	return 0
@@ -442,7 +442,8 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal/New()
 	..()
 	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
-		init_subtypes(/datum/objective_item/steal,GLOB.possible_items)
+		for(var/I in subtypesof(/datum/objective_item/steal))
+			new I
 
 /datum/objective/steal/find_target()
 	var/approved_targets = list()
@@ -507,8 +508,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal/special/New()
 	..()
 	if(!GLOB.possible_items_special.len)
-		init_subtypes(/datum/objective_item/special,GLOB.possible_items_special)
-		init_subtypes(/datum/objective_item/stack,GLOB.possible_items_special)
+		for(var/I in subtypesof(/datum/objective_item/special) + subtypesof(/datum/objective_item/stack))
+			new I
 
 /datum/objective/steal/special/find_target()
 	return set_target(pick(GLOB.possible_items_special))
@@ -832,15 +833,15 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 	var/list/check_names = department_real_names.Copy()
 
-	//Check each department member's mind to see if any of them made it to centcomm alive, if they did it's an automatic fail
+	//Check each department member's mind to see if any of them made it to centcom alive, if they did it's an automatic fail
 	for(var/datum/mind/M in department_minds)
 		if(M in SSticker.mode.changelings) //Lings aren't picked for this, but let's be safe
 			continue
 
 		if(M.current)
 			var/turf/mloc = get_turf(M.current)
-			if(mloc.onCentcom() && (M.current.stat != DEAD))
-				return 0 //A Non-ling living target got to centcomm, fail
+			if(mloc.onCentCom() && (M.current.stat != DEAD))
+				return 0 //A Non-ling living target got to centcom, fail
 
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
@@ -851,11 +852,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			if(ishuman(changeling.current))
 				var/mob/living/carbon/human/H = changeling.current
 				var/turf/cloc = get_turf(changeling.current)
-				if(cloc && cloc.onCentcom() && (changeling.current.stat != DEAD)) //Living changeling on centcomm....
+				if(cloc && cloc.onCentCom() && (changeling.current.stat != DEAD)) //Living changeling on centcom....
 					for(var/name in check_names) //Is he (disguised as) one of the staff?
 						if(H.dna.real_name == name)
 							check_names -= name //This staff member is accounted for, remove them, so the team don't succeed by escape as 7 of the same engineer
-							success++ //A living changeling staff member made it to centcomm
+							success++ //A living changeling staff member made it to centcom
 							continue changelings
 
 	if(success >= department_minds.len)

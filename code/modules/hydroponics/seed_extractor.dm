@@ -44,22 +44,10 @@
 	icon_state = "sextractor"
 	density = TRUE
 	anchored = TRUE
+	circuit = /obj/item/circuitboard/machine/seed_extractor
 	var/piles = list()
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
-
-/obj/machinery/seed_extractor/New()
-	..()
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/seed_extractor(null)
-	B.apply_default_parts(src)
-
-/obj/item/circuitboard/machine/seed_extractor
-	name = "Seed Extractor (Machine Board)"
-	build_path = /obj/machinery/seed_extractor
-	origin_tech = "programming=1"
-	req_components = list(
-							/obj/item/stock_parts/matter_bin = 1,
-							/obj/item/stock_parts/manipulator = 1)
 
 /obj/machinery/seed_extractor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)

@@ -11,7 +11,7 @@
 	icon_state = "noose"
 	icon = 'hippiestation/icons/obj/objects.dmi'
 	layer = FLY_LAYER
-	flags = NODECONSTRUCT
+	flags_1 = NODECONSTRUCT_1
 	var/image/over
 
 /obj/structure/chair/noose/attackby(obj/item/W, mob/user, params)

@@ -97,7 +97,7 @@
 	if(voice_saved)
 		return
 	var/savefile/S = new /savefile("data/npc_saves/snpc.sav")
-	S["knownStrings"] << knownStrings
+	WRITE_FILE(S["knownStrings"], knownStrings)
 
 //botPool funcs
 /mob/living/carbon/human/interactive/proc/takeDelegate(mob/living/carbon/human/interactive/from,doReset=TRUE)
@@ -284,7 +284,7 @@
 	//job specific favours
 	switch(myjob.title)
 		if("Assistant")
-			favoured_types = list(/obj/item/clothing, /obj/item/weapon)
+			favoured_types = list(/obj/item/clothing, /obj/item)
 		if("Captain","Head of Personnel")
 			favoured_types = list(/obj/item/clothing, /obj/item/stamp/captain, /obj/item/disk/nuclear)
 		if("Cook")
@@ -296,14 +296,14 @@
 			functions += "bartend"
 			restrictedJob = 1
 		if("Station Engineer","Chief Engineer","Atmospheric Technician")
-			favoured_types = list(/obj/item/stack, /obj/item/weapon, /obj/item/clothing)
+			favoured_types = list(/obj/item/stack, /obj/item, /obj/item/clothing)
 		if("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist")
 			favoured_types = list(/obj/item/reagent_containers/glass/beaker, /obj/item/storage/firstaid, /obj/item/stack/medical, /obj/item/reagent_containers/syringe)
 			functions += "healpeople"
 		if("Research Director","Scientist","Roboticist")
 			favoured_types = list(/obj/item/reagent_containers/glass/beaker, /obj/item/stack, /obj/item/reagent_containers)
 		if("Head of Security","Warden","Security Officer","Detective")
-			favoured_types = list(/obj/item/clothing, /obj/item/weapon, /obj/item/restraints)
+			favoured_types = list(/obj/item/clothing, /obj/item, /obj/item/restraints)
 		if("Janitor")
 			favoured_types = list(/obj/item/mop, /obj/item/reagent_containers/glass/bucket, /obj/item/reagent_containers/spray/cleaner, /obj/effect/decal/cleanable)
 			functions += "dojanitor"
@@ -313,7 +313,7 @@
 		if("Mime")
 			functions -= "chatter"
 		if("Botanist")
-			favoured_types = list(/obj/machinery/hydroponics,  /obj/item/reagent_containers, /obj/item/weapon)
+			favoured_types = list(/obj/machinery/hydroponics,  /obj/item/reagent_containers, /obj/item)
 			functions += "botany"
 			restrictedJob = 1
 		else
@@ -633,7 +633,7 @@
 			insert_into_backpack() // dump random item into backpack to make space
 			//---------ITEMS
 			if(isitem(TARGET))
-				if(istype(TARGET, /obj/item/weapon))
+				if(istype(TARGET, /obj/item))
 					var/obj/item/W = TARGET
 					if(W.force >= best_force || prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
 						if(!get_item_for_held_index(1) || !get_item_for_held_index(2))
@@ -1473,7 +1473,7 @@
 				foundFav = 1
 				return
 		if(!foundFav)
-			if(istype(test, /obj/item/weapon))
+			if(istype(test, /obj/item))
 				var/obj/item/R = test
 				if(R.force > 2) // make sure we don't equip any non-weaponlike items, ie bags and stuff
 					if(!best)
@@ -1498,7 +1498,7 @@
 					if(istype(A, /obj/item/gun))	// guns are for shooting, not throwing.
 						continue
 					if(prob(robustness))
-						if(istype(A, /obj/item/weapon))
+						if(istype(A, /obj/item))
 							var/obj/item/W = A
 							if(W.throwforce > 19) // Only throw worthwile stuff, no more lobbing wrenches at wenches
 								npcDrop(W,1)

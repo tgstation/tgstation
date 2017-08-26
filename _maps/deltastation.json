@@ -3,5 +3,6 @@
     "map_path": "map_files/Deltastation",
     "map_file": "DeltaStation2.dmm",
     "minetype": "lavaland",
-    "transition_config": "default"
+    "transition_config": "default",
+	"allow_custom_shuttles": "yes"
 }

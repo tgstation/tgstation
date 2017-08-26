@@ -94,10 +94,10 @@
 /mob/living/carbon/human/abiotic(full_body = 0)
 	var/abiotic_hands = FALSE
 	for(var/obj/item/I in held_items)
-		if(!(I.flags & NODROP))
+		if(!(I.flags_1 & NODROP_1))
 			abiotic_hands = TRUE
 			break
-	if(full_body && abiotic_hands && ((back && !(back.flags&NODROP)) || (wear_mask && !(wear_mask.flags&NODROP)) || (head && !(head.flags&NODROP)) || (shoes && !(shoes.flags&NODROP)) || (w_uniform && !(w_uniform.flags&NODROP)) || (wear_suit && !(wear_suit.flags&NODROP)) || (glasses && !(glasses.flags&NODROP)) || (ears && !(ears.flags&NODROP)) || (gloves && !(gloves.flags&NODROP)) ) )
+	if(full_body && abiotic_hands && ((back && !(back.flags_1&NODROP_1)) || (wear_mask && !(wear_mask.flags_1&NODROP_1)) || (head && !(head.flags_1&NODROP_1)) || (shoes && !(shoes.flags_1&NODROP_1)) || (w_uniform && !(w_uniform.flags_1&NODROP_1)) || (wear_suit && !(wear_suit.flags_1&NODROP_1)) || (glasses && !(glasses.flags_1&NODROP_1)) || (ears && !(ears.flags_1&NODROP_1)) || (gloves && !(gloves.flags_1&NODROP_1)) ) )
 		return TRUE
 	return abiotic_hands
 
@@ -143,19 +143,19 @@
 	var/protection = (prot["head"] + prot["arms"] + prot["feet"] + prot["legs"] + prot["groin"] + prot["chest"] + prot["hands"])/7
 	return protection
 
-/mob/living/carbon/human/can_use_guns(var/obj/item/gun/G)
+/mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
 
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
 		if(src.dna.check_mutation(HULK))
 			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
-			return 0
+			return FALSE
 		if(NOGUNS in src.dna.species.species_traits)
 			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
-			return 0
+			return FALSE
 	if(mind)
 		if(mind.martial_art && mind.martial_art.no_guns) //great dishonor to famiry
 			to_chat(src, "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>")
-			return 0
+			return FALSE
 
 	return .

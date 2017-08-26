@@ -9,6 +9,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
+	circuit = /obj/item/circuitboard/machine/microwave
 	var/operating = FALSE // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
@@ -21,22 +22,9 @@
 *   Initialising
 ********************/
 
-/obj/machinery/microwave/New()
+/obj/machinery/microwave/Initialize()
+	. = ..()
 	create_reagents(100)
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/microwave(null)
-	B.apply_default_parts(src)
-	..()
-
-/obj/item/circuitboard/machine/microwave
-	name = "Microwave (Machine Board)"
-	build_path = /obj/machinery/microwave
-	origin_tech = "programming=2;magnets=2"
-	req_components = list(
-							/obj/item/stock_parts/micro_laser = 1,
-							/obj/item/stock_parts/matter_bin = 1,
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/stock_parts/console_screen = 1,
-							/obj/item/stack/sheet/glass = 1)
 
 /obj/machinery/microwave/RefreshParts()
 	var/E
@@ -91,7 +79,7 @@
 				src.icon_state = "mw"
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
-				src.container_type = OPENCONTAINER
+				src.container_type = OPENCONTAINER_1
 				return 0 //to use some fuel
 		else
 			to_chat(user, "<span class='warning'>It's broken!</span>")
@@ -108,7 +96,7 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER
+			src.container_type = OPENCONTAINER_1
 			src.updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
@@ -129,7 +117,7 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER
+			src.container_type = OPENCONTAINER_1
 
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		to_chat(user, "<span class='warning'>It's dirty!</span>")
@@ -321,7 +309,7 @@
 	icon_state = "mwb" // Make it look all busted up and shit
 	visible_message("<span class='warning'>The microwave breaks!</span>") //Let them know they're stupid
 	broken = 2 // Make it broken so it can't be used util fixed
-	flags = null //So you can't add condiments
+	flags_1 = null //So you can't add condiments
 	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
 

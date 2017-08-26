@@ -1,5 +1,5 @@
 /* How it works:
- The shuttle arrives at Centcom dock and calls sell(), which recursively loops through all the shuttle contents that are unanchored.
+ The shuttle arrives at CentCom dock and calls sell(), which recursively loops through all the shuttle contents that are unanchored.
  The loop only checks contents of storage types, see supply.dm shuttle code.
 
  Each object in the loop is checked for applies_to() of various export datums, except the invalid ones.
@@ -115,7 +115,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		return FALSE
 	if(!get_cost(O, contr, emag))
 		return FALSE
-	if(HAS_SECONDARY_FLAG(O, HOLOGRAM))
+	if(O.flags_2 & HOLOGRAM_2)
 		return FALSE
 	return TRUE
 

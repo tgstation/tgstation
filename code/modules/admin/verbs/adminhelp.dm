@@ -24,7 +24,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	QDEL_NULL(cstatclick)
 	QDEL_NULL(rstatclick)
 	return ..()
-	
+
 /datum/admin_help_tickets/proc/TicketByID(id)
 	var/list/lists = list(active_tickets, closed_tickets, resolved_tickets)
 	for(var/I in lists)
@@ -255,14 +255,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [parsed_msg]</span>"
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
-	
+
 	//send this msg to all admins
-	for(var/C in GLOB.admins)
-		var/client/X = C
+	for(var/client/X in GLOB.admins)
 		if(!check_rights_for(X, R_ADMIN))
 			continue
 		if(X.prefs.toggles & SOUND_ADMINHELP)
-			X << 'sound/effects/adminhelp.ogg'
+			SEND_SOUND(X, sound('sound/effects/adminhelp.ogg'))
 		window_flash(X, ignorepref = TRUE)
 		to_chat(X, admin_msg)
 
@@ -350,7 +349,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		initiator.giveadminhelpverb()
 
-		initiator << 'sound/effects/adminhelp.ogg'
+		SEND_SOUND(initiator, sound('sound/effects/adminhelp.ogg'))
 
 		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
 		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")

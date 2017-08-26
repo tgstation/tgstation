@@ -60,7 +60,7 @@
 	if(ishuman(W) && (user.zone_selected == "mouth"))
 		var/mob/living/carbon/human/H = W
 		if( \
-				(H.head && H.head.flags & HEADCOVERSMOUTH) || \
+				(H.head && H.head.flags_cover & HEADCOVERSMOUTH) || \
 				(H.wear_mask) \
 			)
 			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet first.</span>")

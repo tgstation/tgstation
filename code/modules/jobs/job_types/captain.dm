@@ -4,7 +4,7 @@ Captain
 /datum/job/captain
 	title = "Captain"
 	flag = CAPTAIN
-	department_head = list("Centcom")
+	department_head = list("CentCom")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -13,6 +13,8 @@ Captain
 	selection_color = "#ccccff"
 	req_admin_notify = 1
 	minimal_player_age = 14
+	exp_requirements = 180
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/captain
 
@@ -64,6 +66,9 @@ Head of Personnel
 	selection_color = "#ddddff"
 	req_admin_notify = 1
 	minimal_player_age = 10
+	exp_requirements = 180
+	exp_type = EXP_TYPE_CREW
+	exp_type_department = EXP_TYPE_SUPPLY
 
 	outfit = /datum/outfit/job/hop
 
@@ -94,3 +99,4 @@ Head of Personnel
 	backpack_contents = list(/obj/item/storage/box/ids=1,\
 		/obj/item/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced = 1)
 	implants = list(/obj/item/implant/mindshield)
+

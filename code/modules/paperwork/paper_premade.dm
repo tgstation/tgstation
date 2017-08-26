@@ -70,7 +70,7 @@
 /obj/item/paper/fluff/stations/cere/journal/journal
 	name = "Journal Log"
 	info = "<b><center>2XXX - 2nd Trimester</center></b><br><br><center>I hide in here, away from the masses, not like it matters much considering how fucking huge this place is. "
-	
+
 /obj/item/paper/fluff/stations/cere/journal/journal_2
 	name = "Journal Log 2"
 	info = "<b><center>2XXX - 3rd Trimester</center></b><br><br><center>I hear strange whispers from the halls, longing for blood. Something isn't right here. Why did they transfer us here to work in the first place? "
@@ -91,18 +91,18 @@
 	info = "...EMPTY HALLS...USELESS SPACE..."
 
 
-///////////	Centcom
+///////////	CentCom
 
 /obj/item/paper/fluff/stations/centcom/disk_memo
 	name = "memo"
 	info = "GET DAT FUKKEN DISK"
 
 /obj/item/paper/fluff/stations/centcom/broken_evac
-	info = "Due to circumstances beyond our control, your Emergency Evacuation Shuttle is out of service.<br><br>We apologize for the inconvenience this may cause you.<br><br>Please enjoy the use of this complementary book.<br><br>Sincerely,<br>Centcom Operations Demolitions Examination Retribution Bugfixing Underlining Services"
+	info = "Due to circumstances beyond our control, your Emergency Evacuation Shuttle is out of service.<br><br>We apologize for the inconvenience this may cause you.<br><br>Please enjoy the use of this complementary book.<br><br>Sincerely,<br>CentCom Operations Demolitions Examination Retribution Bugfixing Underlining Services"
 
 /obj/item/paper/fluff/stations/centcom/bulletin
 	name = "paper- 'Official Bulletin'"
-	info = "<BR>Centcom Security<BR>Port Division<BR>Official Bulletin<BR><BR>Inspector,<BR>There is an emergency shuttle arriving today.<BR><BR>Approval is restricted to Nanotrasen employees only. Deny all other entrants.<BR><BR>Centcom Port Commissioner"
+	info = "<BR>CentCom Security<BR>Port Division<BR>Official Bulletin<BR><BR>Inspector,<BR>There is an emergency shuttle arriving today.<BR><BR>Approval is restricted to Nanotrasen employees only. Deny all other entrants.<BR><BR>CentCom Port Commissioner"
 
 
 ///////////	Lavaland

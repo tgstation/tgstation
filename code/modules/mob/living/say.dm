@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Faction
 	"t" = "Syndicate",
-	"y" = "Centcom",
+	"y" = "CentCom",
 
 	// Species
 	"b" = "binary",
@@ -52,9 +52,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"?" = "Service",
 
 	// Faction
-	"?" = "Syndicate",
-	"?" = "Centcom",
-
+	"å" = "Syndicate",
+	"í" = "CentCom",
 	// Species
 	"?" = "binary",
 	"?" = "changeling",
@@ -161,6 +160,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			var/message_len = length(message)
 			message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 			message = Ellipsis(message, 10, 1)
+			last_words = message
 			message_mode = MODE_WHISPER_CRIT
 	else
 		log_talk(src,"[name]/[key] : [message]",LOGSAY)

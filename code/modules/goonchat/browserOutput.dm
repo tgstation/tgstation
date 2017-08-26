@@ -100,7 +100,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	sendClientData()
 
 	//do not convert to to_chat()
-	owner << {"<span class="userdanger">If you can see this, update byond.</span>"}
+	SEND_TEXT(owner, "<span class=\"userdanger\">If you can see this, update byond.</span>")
 
 	pingLoop()
 
@@ -166,57 +166,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 //Global chat procs
 
-//Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
-// exporting it as text, and then parsing the base64 from that.
-// (This relies on byond automatically storing icons in savefiles as base64)
-/proc/icon2base64(icon/icon, iconKey = "misc")
-	if (!isicon(icon))
-		return FALSE
-	GLOB.iconCache[iconKey] << icon
-	var/iconData = GLOB.iconCache.ExportText(iconKey)
-	var/list/partial = splittext(iconData, "{")
-	return replacetext(copytext(partial[2], 3, -5), "\n", "")
-
-/proc/bicon(thing)
-	if (!thing)
-		return
-	var/static/list/bicon_cache = list()
-	if (isicon(thing))
-		var/icon/I = thing
-		var/icon_md5 = md5(I)
-		if (!bicon_cache[icon_md5]) // Doesn't exist yet, make it.
-			I = icon(I) //copy it
-			I.Scale(16,16) //scale it
-			bicon_cache[icon_md5] = icon2base64(thing) //base64 it
-		return "<img class='icon misc' src='data:image/png;base64,[bicon_cache[icon_md5]]'>"
-
-	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
-	var/atom/A = thing
-	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
-
-
-	if (!bicon_cache[key]) // Doesn't exist, make it.
-		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
-		I.Scale(16,16)
-		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
-			var/icon/temp = I
-			I = icon()
-			I.Insert(temp, dir = SOUTH)
-		bicon_cache[key] = icon2base64(I, key)
-
-	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
-
-//Costlier version of bicon() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
-/proc/costly_bicon(thing)
-	if (!thing)
-		return
-
-	if (isicon(thing))
-		return bicon(thing)
-
-	var/icon/I = getFlatIcon(thing)
-	return bicon(I)
-
 /proc/to_chat(target, message)
 	if(!target)
 		return
@@ -224,7 +173,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
 	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
 	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile))
-		target << message
 		CRASH("Invalid message! [message]")
 
 	if(!istext(message))
@@ -255,7 +203,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			continue
 
 		//Send it to the old style output window.
-		C << original_message
+		SEND_TEXT(C, original_message)
 
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
 			continue

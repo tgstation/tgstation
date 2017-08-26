@@ -4,4 +4,5 @@
     "map_file": "MetaStation.dmm",
     "minetype": "lavaland",
     "transition_config": "default"
+	"allow_custom_shuttles": "yes"
 }

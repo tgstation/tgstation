@@ -75,9 +75,9 @@
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
 	if(emagged)
-		to_chat(user, "<span class='warning'>\The [src] has no functional safeties to emag.</span>")
+		to_chat(user, "<span class='warning'>[src] has no functional safeties to emag.</span>")
 		return
-	to_chat(user, "<span class='notice'>You short out \the [src]'s safeties.</span>")
+	to_chat(user, "<span class='notice'>You short out [src]'s safeties.</span>")
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
 	emagged = TRUE
 
@@ -178,25 +178,24 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER))
+	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
 		var/obj/item/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into the machine!</span>")
+			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
 			return
 
-		if(!user.drop_item()) // Can't let go?
+		if(!user.transferItemToLoc(B, src))
 			return
 
 		beaker = B
-		beaker.loc = src
-		to_chat(user, "<span class='notice'>You add \the [B] to the machine.</span>")
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 
 		beaker_overlay = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
 		beaker_overlay.pixel_x = rand(-10, 5)//randomize beaker overlay position.
 		add_overlay(beaker_overlay)
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
-		to_chat(user, "<span class='warning'>You can't load \the [I] into the machine!</span>")
+		to_chat(user, "<span class='warning'>You can't load [I] into [src]!</span>")
 		return ..()
 	else
 		return ..()
@@ -229,7 +228,8 @@
 	amount = 5
 	recharge_delay = 30
 	dispensable_reagents = list()
-	var/list/dispensable_reagent_tiers = list(
+	circuit = /obj/item/circuitboard/machine/chem_dispenser
+	var/static/list/dispensable_reagent_tiers = list(
 		list(
 			"hydrogen",
 			"oxygen",
@@ -271,23 +271,6 @@
 			"diethylamine"
 		)
 	)
-
-/obj/machinery/chem_dispenser/constructable/Initialize()
-	. = ..()
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/chem_dispenser(null)
-	B.apply_default_parts(src)
-
-/obj/item/circuitboard/machine/chem_dispenser
-	name = "Portable Chem Dispenser (Machine Board)"
-	build_path = /obj/machinery/chem_dispenser/constructable
-	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
-	req_components = list(
-							/obj/item/stock_parts/matter_bin = 2,
-							/obj/item/stock_parts/capacitor = 1,
-							/obj/item/stock_parts/manipulator = 1,
-							/obj/item/stock_parts/console_screen = 1,
-							/obj/item/stock_parts/cell = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	var/time = 0
