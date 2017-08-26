@@ -767,14 +767,14 @@
 				user.forceMove(src)
 				add_fingerprint(user)
 				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-				Grant_Actions(user)
+				action_sanity_check()
 				return
 			if(passengers.len < max_passengers)
 				user.stop_pulling()
 				passengers += user
 				user.forceMove(src)
 				add_fingerprint(user)
-				Grant_Actions(user)
+				action_sanity_check()
 				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 			else
 				to_chat(user, "<span class='notice'>You were too slow. Try better next time, loser.</span>")
@@ -816,11 +816,13 @@
 		Remove_Actions(user)
 		user.clear_alert("charge")
 		user.clear_alert("mech damage")
+		action_sanity_check()
 	if(user in passengers)
 		user.forceMove(get_turf(src))
 		passengers -= user
 		to_chat(user, "<span class='notice'>You climb out of [src].</span>")
 		Remove_Actions(user)
+		action_sanity_check()
 
 /obj/spacepod/proc/lock_pod(var/mob/user)
 

@@ -1,14 +1,15 @@
 
 
 /obj/spacepod/proc/Grant_Actions(mob/living/user)
+	if(user == pilot)
+		unload_action.Grant(user, src)
+		fire_action.Grant(user, src)
+		tank_action.Grant(user, src)
+		door_action.Grant(user, src) //so asshats dont try to lock the pilot out
+		lock_action.Grant(user, src)
 	exit_action.Grant(user, src)
-	lock_action.Grant(user, src)
-	door_action.Grant(user, src)
-	fire_action.Grant(user, src)
-	unload_action.Grant(user, src)
 	light_action.Grant(user, src)
 	seat_action.Grant(user, src)
-	tank_action.Grant(user, src)
 
 
 /obj/spacepod/proc/Remove_Actions(mob/living/user)
@@ -20,6 +21,15 @@
 	light_action.Remove(user)
 	seat_action.Remove(user)
 	tank_action.Remove(user)
+
+/obj/spacepod/proc/action_sanity_check() // this ensures everyone has the right actions
+	if(pilot)
+		Remove_Actions(pilot)
+		Grant_Actions(pilot)
+	for(var/mob/living/M in passengers)
+		Remove_Actions(M)
+		Grant_Actions(M)
+
 
 /datum/action/innate/spacepod
 	var/obj/spacepod/S
