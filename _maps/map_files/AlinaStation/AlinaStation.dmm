@@ -16336,7 +16336,7 @@
 /area/tcommsat/server)
 "OQ" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "OR" = (
 /obj/structure/table,
@@ -18276,7 +18276,7 @@
 	})
 "Tt" = (
 /obj/structure/closet/coffin,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered{
 	name = "Asteroid"
 	})
