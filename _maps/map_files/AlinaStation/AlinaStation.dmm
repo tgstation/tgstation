@@ -1916,13 +1916,6 @@
 /turf/open/floor/engine,
 /area/science/mixing)
 "eM" = (
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
-	tag = "icon-dpvent_map (EAST)";
-	icon_state = "dpvent_map";
-	dir = 4;
-	frequency = 1449;
-	id = "tox_airlock_pump"
-	},
 /turf/open/floor/engine,
 /area/science/mixing)
 "eN" = (
@@ -15622,6 +15615,11 @@
 /area/engine/gravity_generator)
 "Ns" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "Nt" = (
@@ -18524,10 +18522,15 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "Uk" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/engine/gravity_generator)
+"Ul" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/aisat/hallway)
-"Ul" = (
+"Um" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -28996,7 +28999,7 @@ LD
 LD
 Ns
 NQ
-Ns
+Uk
 LD
 Ph
 PJ
@@ -30553,7 +30556,7 @@ RY
 Si
 So
 Su
-Ul
+Um
 SN
 Ru
 Ru
@@ -32089,7 +32092,7 @@ PO
 Pq
 OP
 NK
-Uk
+Ul
 LJ
 Ru
 Ry
