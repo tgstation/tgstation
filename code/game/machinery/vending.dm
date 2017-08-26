@@ -24,6 +24,7 @@
 	max_integrity = 300
 	integrity_failure = 100
 	armor = list(melee = 20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+	circuit = /obj/item/circuitboard/machine/vendor
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 
@@ -60,12 +61,20 @@
 	var/refill_count = 3		//The number of canisters the vending machine uses
 
 /obj/machinery/vending/Initialize()
+	var/build_inv = FALSE
+	if(!refill_canister)
+		circuit = null
+		build_inv = TRUE
 	. = ..()
 	wires = new /datum/wires/vending(src)
+<<<<<<< HEAD
 	if(refill_canister) //constructable vending machine
 		var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/vendor(null)
 		B.apply_default_parts(src)
 	else
+=======
+	if(build_inv) //non-constructable vending machine
+>>>>>>> d50b0c6e63f02be4b833ad3063363077c1d769c8
 		build_inventory(products)
 		build_inventory(contraband, 1)
 		build_inventory(premium, 0, 1)
@@ -77,6 +86,7 @@
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
 
+<<<<<<< HEAD
 /obj/item/circuitboard/machine/vendor
 	name = "Booze-O-Mat Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/boozeomat
@@ -117,6 +127,8 @@
 			break
 	..()
 
+=======
+>>>>>>> d50b0c6e63f02be4b833ad3063363077c1d769c8
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
@@ -125,9 +137,13 @@
 
 /obj/machinery/vending/snack/Destroy()
 	for(var/obj/item/reagent_containers/food/snacks/S in contents)
+<<<<<<< HEAD
 		S.loc = get_turf(src)
 	qdel(wires)
 	wires = null
+=======
+		S.forceMove(get_turf(src))
+>>>>>>> d50b0c6e63f02be4b833ad3063363077c1d769c8
 	return ..()
 
 /obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
@@ -146,14 +162,14 @@
 
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
-		if(!(flags & NODECONSTRUCT))
+		if(!(flags_1 & NODECONSTRUCT_1))
 			new /obj/item/stack/sheet/metal(loc, 3)
 		qdel(src)
 	else
 		..()
 
 /obj/machinery/vending/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		var/dump_amount = 0
 		for(var/datum/data/vending_product/R in product_records)
 			if(R.amount <= 0) //Try to use a record that actually has something to dump.
@@ -795,7 +811,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	desc = "Uh oh!"
 
 /obj/machinery/vending/cola/random/Initialize()
-    ..()
+    . = ..()
     var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
     new T(get_turf(src))
     qdel(src)

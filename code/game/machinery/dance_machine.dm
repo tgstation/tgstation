@@ -50,7 +50,7 @@
 	songs += T
 
 /obj/machinery/disco/Initialize()
-	..()
+	. = ..()
 	selection = songs[1]
 
 

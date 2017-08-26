@@ -18,7 +18,7 @@
 	pixel_x = rand(-9, 9)
 	if(newPaper)
 		internalPaper = newPaper
-		flags = newPaper.flags
+		flags_1 = newPaper.flags_1
 		color = newPaper.color
 		newPaper.forceMove(src)
 	else

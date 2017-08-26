@@ -9,7 +9,7 @@
 
 /datum/outfit/jesus/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-	
+
 	H.skin_tone = "latino"
 	H.hair_color = "754"
 	H.facial_hair_color = "754"
@@ -47,7 +47,7 @@
 
 /obj/item/clothing/head/hippie/halo/spacejesus
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/suit/hippie/jesus
 	name = "Messiah Robes"
@@ -57,15 +57,15 @@
 
 /obj/item/clothing/suit/hippie/jesus/spacejesus
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/under/rank/chef/spacejesus
 	name = "Sacred Jumpsuit"
 	desc = "It seems very holy."
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/shoes/sandal/spacejesus
 	name = "Holy Sandals"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags = NODROP
+	flags_1 = NODROP_1

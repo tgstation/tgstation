@@ -390,7 +390,7 @@
 					var/obj/docking_port/mobile/M = A
 					M.on_emergency_dock()
 
-				// now move the actual emergency shuttle to centcomm
+				// now move the actual emergency shuttle to centcom
 				// unless the shuttle is "hijacked"
 				var/destination_dock = "emergency_away"
 				if(is_hijacked())

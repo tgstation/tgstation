@@ -147,7 +147,7 @@
 	if(W.is_hot())
 		StartBurning()
 	if(grill)
-		if(user.a_intent != INTENT_HARM && !(W.flags & ABSTRACT))
+		if(user.a_intent != INTENT_HARM && !(W.flags_1 & ABSTRACT_1))
 			if(user.temporarilyRemoveItemFromInventory(W))
 				W.forceMove(get_turf(src))
 				var/list/click_params = params2list(params)

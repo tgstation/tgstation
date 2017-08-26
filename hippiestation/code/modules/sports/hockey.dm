@@ -10,7 +10,7 @@
 	item_state = "hockey_bag"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
-	flags = NODROP
+	flags_1 = NODROP_1
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 	actions_types = list(/datum/action/item_action/toggle_stick)
 	var/obj/item/twohanded/hockeystick/packstick
@@ -108,7 +108,7 @@
 	specthrow_sound = 'sound/weapons/resonator_blast.ogg'
 	throwforce = 3
 	throw_speed = 4
-	flags = NODROP
+	flags_1 = NODROP_1
 	attack_verb = list("smacked", "thwacked", "bashed", "struck", "battered")
 	specthrow_forcemult = 1.4
 	specthrow_msg = list("chipped", "shot")
@@ -178,7 +178,7 @@
 	item_state = "hockey_belt"
 	actions_types = list(/datum/action/item_action/make_puck)
 	storage_slots = 2
-	flags = NODROP
+	flags_1 = NODROP_1
 	can_hold = list(/obj/item/holopuck)
 	var/recharge_time = 100
 	var/charged = TRUE
@@ -251,7 +251,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	flags = THICKMATERIAL | NODROP | STOPSPRESSUREDMAGE
+	flags_1 = THICKMATERIAL_1 | NODROP_1 | STOPSPRESSUREDMAGE_1
 	armor = list(melee = 70, bullet = 45, laser = 80, energy = 45, bomb = 75, bio = 0, rad = 30, fire = 80, acid = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 
@@ -260,7 +260,7 @@
 	desc = "A pair of all terrain techno-skates, enabling a skilled skater to move freely and quickly."
 	icon_state = "hockey_shoes"
 	item_state = "hockey_shoes"
-	flags = NODROP
+	flags_1 = NODROP_1
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 	slowdown = -1
 
@@ -269,7 +269,7 @@
 	desc = "The iconic mask of the Ka-Nada special sports forces, guaranteed to strike terror into the hearts of men and goalies."
 	icon_state = "hockey_mask"
 	item_state = "hockey_mask"
-	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | NODROP
+	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1 | NODROP_1
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/hippie/hockey
@@ -280,7 +280,7 @@
 	armor = list(melee = 80, bullet = 40, laser = 80,energy = 45, bomb = 50, bio = 10, rad = 0, fire = 80, acid = 100)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	flags = STOPSPRESSUREDMAGE | NODROP
+	flags_1 = STOPSPRESSUREDMAGE_1 | NODROP_1
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 
 /datum/action/item_action/toggle_stick

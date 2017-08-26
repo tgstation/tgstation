@@ -8,7 +8,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	name = "circuit imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
+	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 
 	var/datum/material_container/materials
 	var/efficiency_coeff
@@ -28,24 +29,13 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								)
 
 /obj/machinery/r_n_d/circuit_imprinter/Initialize()
-	. = ..()
 	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE))
 	create_reagents(0)
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/circuit_imprinter(null)
-	B.apply_default_parts(src)
-
-/obj/machinery/r_n_d/circuit_imprinter/Destroy()
-	qdel(materials)
 	return ..()
 
-/obj/item/circuitboard/machine/circuit_imprinter
-	name = "Circuit Imprinter (Machine Board)"
-	build_path = /obj/machinery/r_n_d/circuit_imprinter
-	origin_tech = "engineering=2;programming=2"
-	req_components = list(
-							/obj/item/stock_parts/matter_bin = 1,
-							/obj/item/stock_parts/manipulator = 1,
-							/obj/item/reagent_containers/glass/beaker = 2)
+/obj/machinery/r_n_d/circuit_imprinter/Destroy()
+	QDEL_NULL(materials)
+	return ..()
 
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
 	reagents.maximum_volume = 0

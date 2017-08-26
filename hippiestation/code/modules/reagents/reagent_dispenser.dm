@@ -42,13 +42,13 @@
 
 /obj/structure/reagent_dispensers/chemical/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver))
-		if(container_type & DRAWABLE)
-			container_type |= OPENCONTAINER
-			container_type &= ~DRAWABLE
+		if(container_type & DRAWABLE_1)
+			container_type |= OPENCONTAINER_1
+			container_type &= ~DRAWABLE_1
 			to_chat(user, "<span class='notice'>You unfasten the tank's cap.</span>")
-		else if(container_type & OPENCONTAINER)
-			container_type |= DRAWABLE
-			container_type &= ~OPENCONTAINER
+		else if(container_type & OPENCONTAINER_1)
+			container_type |= DRAWABLE_1
+			container_type &= ~OPENCONTAINER_1
 			to_chat(user, "<span class='notice'>You fasten the tank's cap.</span>")
 		update_icon()
 		playsound(src.loc, 'sound/machines/click.ogg', 20, 1)
@@ -67,7 +67,7 @@
 
 /obj/structure/reagent_dispensers/chemical/update_icon()
 	..()
-	if(container_type & DRAWABLE)
+	if(container_type & DRAWABLE_1)
 		add_overlay("chemlid")
 
 /obj/structure/reagent_dispensers/watertank

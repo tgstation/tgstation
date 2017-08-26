@@ -342,7 +342,7 @@ BLIND     // can't see anything
 		src.icon_state = initial(icon_state)
 		gas_transfer_coefficient = initial(gas_transfer_coefficient)
 		permeability_coefficient = initial(permeability_coefficient)
-		flags |= visor_flags
+		flags_1 |= visor_flags
 		flags_inv |= visor_flags_inv
 		flags_cover |= visor_flags_cover
 		to_chat(user, "<span class='notice'>You push \the [src] back into place.</span>")
@@ -352,7 +352,7 @@ BLIND     // can't see anything
 		to_chat(user, "<span class='notice'>You push \the [src] out of the way.</span>")
 		gas_transfer_coefficient = null
 		permeability_coefficient = null
-		flags &= ~visor_flags
+		flags_1 &= ~visor_flags
 		flags_inv &= ~visor_flags_inv
 		flags_cover &= ~visor_flags_cover
 		if(adjusted_flags)
@@ -471,7 +471,7 @@ BLIND     // can't see anything
 	name = "space helmet"
 	icon_state = "spaceold"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
-	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1
 	item_state = "spaceold"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 80, acid = 70)
@@ -495,7 +495,7 @@ BLIND     // can't see anything
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals)
 	slowdown = 1
@@ -540,13 +540,15 @@ BLIND     // can't see anything
 		if(accessory_overlay)
 			. += accessory_overlay
 
-/obj/item/clothing/under/attackby(obj/item/W, mob/user, params)
-	if((has_sensor == BROKEN_SENSORS) && istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = W
+/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
+	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = I
 		C.use(1)
 		has_sensor = HAS_SENSORS
 		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
 		return 1
+	if(!attach_accessory(I, user))
+		return ..()
 
 /obj/item/clothing/under/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -592,10 +594,6 @@ BLIND     // can't see anything
 				H.update_inv_wear_suit()
 
 	..()
-
-/obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
-	if(!attach_accessory(I, user))
-		..()
 
 /obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
 	. = FALSE
@@ -788,7 +786,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
-	flags ^= visor_flags
+	flags_1 ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= initial(flags_cover)
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"

@@ -4,7 +4,7 @@
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
-	flags = ABSTRACT
+	flags_1 = ABSTRACT_1
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	hitsound = 'sound/weapons/pierce.ogg'
@@ -170,7 +170,7 @@
 			permutated.Add(A)
 		return FALSE
 	else
-		if(A && A.density && !ismob(A) && !(A.flags & ON_BORDER)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
+		if(A && A.density && !ismob(A) && !(A.flags_1 & ON_BORDER_1)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
 			var/list/mobs_list = list()
 			for(var/mob/living/L in target_turf)
 				mobs_list += L
@@ -188,7 +188,7 @@
 	return FALSE
 
 /obj/item/projectile/proc/check_ricochet_flag(atom/A)
-	if(A.flags & CHECK_RICOCHET)
+	if(A.flags_1 & CHECK_RICOCHET_1)
 		return TRUE
 	return FALSE
 

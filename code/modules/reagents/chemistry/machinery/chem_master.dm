@@ -3,11 +3,13 @@
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	density = TRUE
 	anchored = TRUE
+	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	circuit = /obj/item/circuitboard/machine/chem_master
 	var/obj/item/reagent_containers/beaker = null
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
@@ -15,38 +17,11 @@
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
-	layer = BELOW_OBJ_LAYER
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
 	add_overlay("waitlight")
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/chem_master(null)
-	B.apply_default_parts(src)
 	. = ..()
-
-/obj/item/circuitboard/machine/chem_master
-	name = "ChemMaster 3000 (Machine Board)"
-	build_path = /obj/machinery/chem_master
-	origin_tech = "materials=3;programming=2;biotech=3"
-	req_components = list(
-							/obj/item/reagent_containers/glass/beaker = 2,
-							/obj/item/stock_parts/manipulator = 1,
-							/obj/item/stock_parts/console_screen = 1)
-
-/obj/item/circuitboard/machine/chem_master/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
-		var/new_name = "ChemMaster"
-		var/new_path = /obj/machinery/chem_master
-
-		if(build_path == /obj/machinery/chem_master)
-			new_name = "CondiMaster"
-			new_path = /obj/machinery/chem_master/condimaster
-
-		build_path = new_path
-		name = "[new_name] 3000 (Machine Board)"
-		to_chat(user, "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>")
-	else
-		return ..()
 
 /obj/machinery/chem_master/RefreshParts()
 	reagents.maximum_volume = 0
@@ -104,7 +79,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER))
+	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
 		. = 1 // no afterattack
 		if(panel_open)
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
@@ -360,7 +335,3 @@
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = 1
-
-/obj/item/circuitboard/machine/chem_master/condi
-	name = "CondiMaster 3000 (Machine Board)"
-	build_path = /obj/machinery/chem_master/condimaster

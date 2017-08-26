@@ -15,20 +15,18 @@
 	var/portion = 10
 	var/selected_drink
 	var/list/stored_food = list()
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	var/obj/item/reagent_containers/mixer
 
-/obj/machinery/food_cart/New()
-	..()
+/obj/machinery/food_cart/Initialize()
+	. = ..()
 	create_reagents(LIQUID_CAPACIY)
 	reagents.set_reacting(FALSE)
 	mixer = new /obj/item/reagent_containers(src, MIXER_CAPACITY)
 	mixer.name = "Mixer"
 
 /obj/machinery/food_cart/Destroy()
-	if(mixer)
-		qdel(mixer)
-		mixer = null
+	QDEL_NULL(mixer)
 	return ..()
 
 /obj/machinery/food_cart/attack_hand(mob/user)
@@ -157,7 +155,7 @@
 	return
 
 /obj/machinery/food_cart/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc, 4)
 	qdel(src)
 

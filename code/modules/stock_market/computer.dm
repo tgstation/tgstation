@@ -11,8 +11,8 @@
 
 	light_color = LIGHT_COLOR_GREEN
 
-/obj/machinery/computer/stockexchange/New()
-	..()
+/obj/machinery/computer/stockexchange/Initialize()
+	. = ..()
 	logged_in = "[station_name()] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()

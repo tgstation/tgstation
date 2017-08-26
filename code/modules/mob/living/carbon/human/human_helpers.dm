@@ -94,10 +94,10 @@
 /mob/living/carbon/human/abiotic(full_body = 0)
 	var/abiotic_hands = FALSE
 	for(var/obj/item/I in held_items)
-		if(!(I.flags & NODROP))
+		if(!(I.flags_1 & NODROP_1))
 			abiotic_hands = TRUE
 			break
-	if(full_body && abiotic_hands && ((back && !(back.flags&NODROP)) || (wear_mask && !(wear_mask.flags&NODROP)) || (head && !(head.flags&NODROP)) || (shoes && !(shoes.flags&NODROP)) || (w_uniform && !(w_uniform.flags&NODROP)) || (wear_suit && !(wear_suit.flags&NODROP)) || (glasses && !(glasses.flags&NODROP)) || (ears && !(ears.flags&NODROP)) || (gloves && !(gloves.flags&NODROP)) ) )
+	if(full_body && abiotic_hands && ((back && !(back.flags_1&NODROP_1)) || (wear_mask && !(wear_mask.flags_1&NODROP_1)) || (head && !(head.flags_1&NODROP_1)) || (shoes && !(shoes.flags_1&NODROP_1)) || (w_uniform && !(w_uniform.flags_1&NODROP_1)) || (wear_suit && !(wear_suit.flags_1&NODROP_1)) || (glasses && !(glasses.flags_1&NODROP_1)) || (ears && !(ears.flags_1&NODROP_1)) || (gloves && !(gloves.flags_1&NODROP_1)) ) )
 		return TRUE
 	return abiotic_hands
 
@@ -143,7 +143,7 @@
 	var/protection = (prot["head"] + prot["arms"] + prot["feet"] + prot["legs"] + prot["groin"] + prot["chest"] + prot["hands"])/7
 	return protection
 
-/mob/living/carbon/human/can_use_guns(var/obj/item/gun/G)
+/mob/living/carbon/human/can_use_guns(var/obj/item/G)
 	. = ..()
 
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)

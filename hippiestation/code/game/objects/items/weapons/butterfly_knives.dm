@@ -2,7 +2,7 @@
 /obj/item/melee/transforming/butterfly
 	name = "butterfly knife"
 	desc = "A stealthy knife famously used by spy organisations. Capable of piercing armour and causing massive backstab damage when used with harm intent."
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 0
 	force_on = 10
 	icon = 'hippiestation/icons/obj/items_and_weapons.dmi'

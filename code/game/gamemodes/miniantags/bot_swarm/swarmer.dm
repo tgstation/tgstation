@@ -654,7 +654,7 @@
 			to_chat(M, "[link] [rendered]")
 
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
-	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
+	var/message = stripped_input(src, "Announce to other swarmers", "Swarmer contact")
 	// TODO get swarmers their own colour rather than just boldtext
 	if(message)
 		swarmer_chat(message)

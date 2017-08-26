@@ -5,6 +5,7 @@
 	icon_state = "dnamod"
 	density = TRUE
 	anchored = TRUE
+	circuit = /obj/item/circuitboard/machine/plantgenes
 
 	var/obj/item/seeds/seed
 	var/obj/item/disk/plantgene/disk
@@ -21,21 +22,6 @@
 	var/max_endurance = 10 // IMPT: ALSO AFFECTS LIFESPAN
 	var/min_wchance = 67
 	var/min_wrate = 10
-
-/obj/machinery/plantgenes/New()
-	..()
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/plantgenes(null)
-	B.apply_default_parts(src)
-
-/obj/item/circuitboard/machine/plantgenes
-	name = "Plant DNA Manipulator (Machine Board)"
-	build_path = /obj/machinery/plantgenes
-	origin_tech = "programming=3;biotech=3"
-	req_components = list(
-							/obj/item/stock_parts/manipulator = 1,
-							/obj/item/stock_parts/micro_laser = 1,
-							/obj/item/stock_parts/console_screen = 1,
-							/obj/item/stock_parts/scanning_module = 1)
 
 /obj/machinery/plantgenes/RefreshParts() // Comments represent the max you can set per tier, respectively. seeds.dm [219] clamps these for us but we don't want to mislead the viewer.
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -57,7 +43,7 @@
 	for(var/obj/item/stock_parts/micro_laser/ML in component_parts)
 		var/wratemod = ML.rating * 2.5
 		min_wrate = Floor(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
-		min_wchance = 67-(ML.rating*16) // 51,35,19,3 	Clamps at 0 and 67	You want this low
+		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
 	for(var/obj/item/circuitboard/machine/plantgenes/vaultcheck in component_parts)
 		if(istype(vaultcheck, /obj/item/circuitboard/machine/plantgenes/vault)) // DUMB BOTANY TUTS
 			max_potency = 100
@@ -421,23 +407,9 @@
 	seed.name = "experimental " + seed.name
 	seed.icon_state = "seed-x"
 
-
-
 // Gene modder for seed vault ship, built with high tech alien parts.
-/obj/machinery/plantgenes/seedvault/New()
-	..()
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/plantgenes/vault(null)
-	B.apply_default_parts(src)
-
-/obj/item/circuitboard/machine/plantgenes/vault
-	name = "alien board (Plant DNA Manipulator)"
-	icon_state = "abductor_mod"
-	origin_tech = "programming=5;biotech=5"
-	// It wasn't made by actual abductors race, so no abductor tech here.
-	def_components = list(
-		/obj/item/stock_parts/manipulator = /obj/item/stock_parts/manipulator/femto,
-		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra,
-		/obj/item/stock_parts/scanning_module = /obj/item/stock_parts/scanning_module/triphasic)
+/obj/machinery/plantgenes/seedvault
+	circuit = /obj/item/circuitboard/machine/plantgenes/vault
 
 /*
  *  Plant DNA disk

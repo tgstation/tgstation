@@ -99,7 +99,7 @@
 	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-10, 10)
-	animate(src, alpha = 0, time = 3, easing = EASE_OUT)
+	animate(src, alpha = 0, time = duration, easing = EASE_OUT)
 
 /obj/effect/temp_visual/ratvar/prolonging_prism
 	icon = 'icons/effects/64x64.dmi'

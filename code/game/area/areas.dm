@@ -41,7 +41,7 @@
 	var/static_environ
 
 	var/has_gravity = FALSE
-	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
+	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
 	var/hidden = FALSE 			//Hides area from player Teleport function.
 	var/safe = FALSE 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
@@ -58,7 +58,7 @@
 									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
 									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
 									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
-	flags = CAN_BE_DIRTY
+	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/firedoors
 	var/firedoors_last_closed_on = 0

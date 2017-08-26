@@ -258,7 +258,7 @@
 				var/obj/item/clothing/mask/M = C.wear_mask
 				if(M.mask_adjusted) // if mask on face but pushed down
 					M.adjustmask(C) // adjust it back
-				if( !(M.flags & MASKINTERNALS) )
+				if( !(M.flags_1 & MASKINTERNALS_1) )
 					to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")
 					return
 

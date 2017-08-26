@@ -4,7 +4,7 @@ Captain
 /datum/job/captain
 	title = "Captain"
 	flag = CAPTAIN
-	department_head = list("Centcom")
+	department_head = list("CentCom")
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -94,3 +94,4 @@ Head of Personnel
 	backpack_contents = list(/obj/item/storage/box/ids=1,\
 		/obj/item/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced = 1)
 	implants = list(/obj/item/implant/mindshield)
+

@@ -205,7 +205,7 @@
 				var/mob/living/carbon/H = M
 				if(filled)
 					wash_mob(H)
-					if (H.wear_mask && H.wear_mask.flags & MASKCOVERSMOUTH)
+					if (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSMOUTH)
 						H.visible_message("<span class='danger'>[H] falls in the water!</span>",
 											"<span class='userdanger'>You fall in the water!</span>")
 						playsound(src, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)

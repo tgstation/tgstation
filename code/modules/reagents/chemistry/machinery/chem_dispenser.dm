@@ -178,7 +178,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER))
+	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
 		var/obj/item/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
@@ -229,6 +229,7 @@
 	amount = 5
 	recharge_delay = 30
 	dispensable_reagents = list()
+	circuit = /obj/item/circuitboard/machine/chem_dispenser
 	var/list/dispensable_reagent_tiers = list(
 		list(
 			"hydrogen",
@@ -271,23 +272,6 @@
 			"diethylamine"
 		)
 	)
-
-/obj/machinery/chem_dispenser/constructable/Initialize()
-	. = ..()
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/chem_dispenser(null)
-	B.apply_default_parts(src)
-
-/obj/item/circuitboard/machine/chem_dispenser
-	name = "Portable Chem Dispenser (Machine Board)"
-	build_path = /obj/machinery/chem_dispenser/constructable
-	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
-	req_components = list(
-							/obj/item/stock_parts/matter_bin = 2,
-							/obj/item/stock_parts/capacitor = 1,
-							/obj/item/stock_parts/manipulator = 1,
-							/obj/item/stock_parts/console_screen = 1,
-							/obj/item/stock_parts/cell = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	var/time = 0

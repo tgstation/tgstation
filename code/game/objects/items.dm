@@ -112,6 +112,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/tip_timer
 	var/force_string_override
 
+	var/trigger_guard = TRIGGER_GUARD_NONE
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
@@ -126,8 +128,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(force_string)
 		force_string_override = TRUE
 
+	if(!hitsound)
+		if(damtype == "fire")
+			hitsound = 'sound/items/welder.ogg'
+		if(damtype == "brute")
+			hitsound = "swing_hit"
+
 /obj/item/Destroy()
-	flags &= ~DROPDEL	//prevent reqdels
+	flags_1 &= ~DROPDEL_1	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -378,7 +386,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
-	if(DROPDEL & flags)
+	if(DROPDEL_1 & flags_1)
 		qdel(src)
 	in_inventory = FALSE
 

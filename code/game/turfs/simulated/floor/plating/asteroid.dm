@@ -328,7 +328,7 @@
 	slowdown = 2
 	environment_type = "snow"
 	sand_type = /obj/item/stack/sheet/mineral/snow
-	flags = NONE
+	flags_1 = NONE
 
 /turf/open/floor/plating/asteroid/snow/airless
 	initial_gas_mix = "TEMP=2.7"

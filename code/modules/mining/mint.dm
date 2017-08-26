@@ -15,17 +15,15 @@
 	speed_process = 1
 
 
-/obj/machinery/mineral/mint/New()
-	..()
+/obj/machinery/mineral/mint/Initialize()
+	. = ..()
 	materials = new /datum/material_container(src,
 		list(MAT_METAL, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_URANIUM, MAT_DIAMOND, MAT_BANANIUM),
 		max_amt = MINERAL_MATERIAL_AMOUNT*50)
 
 /obj/machinery/mineral/mint/Destroy()
-	qdel(materials)
-	materials = null
+	QDEL_NULL(materials)
 	return ..()
-
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)

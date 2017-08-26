@@ -67,7 +67,7 @@
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
-		if(istype(I, /obj/item/weapon)) //If the item is a weapon...
+		if(istype(I, /obj/item)) //If the item is a weapon...
 			var/obj/item/W = I
 			dtype = W.damtype
 
@@ -277,7 +277,7 @@
 	return 1
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
+	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
 		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)

@@ -8,6 +8,7 @@
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	anchored = TRUE
 	density = TRUE
+	circuit = /obj/item/circuitboard/machine/recycler
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
 	var/icon_name = "grinder-o"
 	var/blood = 0
@@ -18,20 +19,10 @@
 	var/eat_victim_items = TRUE
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
-/obj/machinery/recycler/New()
-	..()
+/obj/machinery/recycler/Initialize()
 	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/recycler(null)
-	B.apply_default_parts(src)
 	update_icon()
-
-/obj/item/circuitboard/machine/recycler
-	name = "Recycler (Machine Board)"
-	build_path = /obj/machinery/recycler
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/stock_parts/matter_bin = 1,
-							/obj/item/stock_parts/manipulator = 1)
+	return ..()
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
@@ -196,7 +187,7 @@
 	name = "dangerous old crusher"
 	emagged = TRUE
 	crush_damage = 120
-	flags = NODECONSTRUCT
+	flags_1 = NODECONSTRUCT_1
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"
