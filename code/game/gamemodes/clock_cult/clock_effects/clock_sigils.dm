@@ -118,7 +118,7 @@
 		if(is_servant_of_ratvar(L.pulledby))
 			L.pulledby.stop_pulling()
 		if(is_servant_of_ratvar(L.buckled.pulledby))
-			L.pulledby.stop_pulling()
+			L.buckled.pulledby.stop_pulling()
 	L.visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>", "<span class='sevtug'>You feel something start to invade your mind...</span>")
 	var/oldcolor = color
 	animate(src, color = "#AF0AAF", time = convert_time, flags = ANIMATION_END_NOW)

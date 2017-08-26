@@ -12,7 +12,7 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	machinetype = 6
-	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
+	var/intercept = FALSE // if TRUE, broadcasts all (non-syndie) messages to syndicate channel
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
 
@@ -33,12 +33,21 @@
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
 
 		/* ###### Broadcast a message using signal.data ###### */
-		if(signal.frequency == GLOB.SYND_FREQ) // if syndicate broadcast, just
+		Broadcast_Message(signal.data["mob"],
+						  signal.data["vmask"],
+						  signal.data["radio"], signal.data["message"],
+						  signal.data["name"], signal.data["job"],
+						  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency, signal.data["spans"],
+						  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"],
+						  signal.data["language"])
+		
+		/* ###### Copy all non-syndie communications to the Syndicate Frequency ###### */
+		if(intercept && signal.frequency != GLOB.SYND_FREQ)
 			Broadcast_Message(signal.data["mob"],
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency, signal.data["spans"],
+							  signal.data["realname"],, signal.data["compression"], list(0, z), GLOB.SYND_FREQ, signal.data["spans"],
 							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"],
 							  signal.data["language"])
 

@@ -1573,6 +1573,18 @@
 		ZI.Insert(H)
 	..()
 
+/datum/reagent/magillitis
+	name = "Magillitis"
+	id = "magillitis"
+	description = "An experimental serum which causes rapid muscular growth in basic primates. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
+	reagent_state = LIQUID
+	color = "#00f041"
+
+/datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
+	..()
+	if(ismonkey(M) && current_cycle >= 10)
+		return M.gorillize()
+
 /datum/reagent/growthserum
 	name = "Growth Serum"
 	id = "growthserum"
