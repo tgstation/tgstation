@@ -50,31 +50,26 @@
 	else	//wtf make your ladders properly assholes
 		icon_state = "ladder00"
 
-/obj/structure/ladder/proc/go_up(mob/user,is_ghost)
 	if(!is_ghost)
-		show_fluff_message(1,user)
-		up.add_fingerprint(user)
-	user.loc = get_turf(up)
-
-/obj/structure/ladder/proc/go_down(mob/user,is_ghost)
-	if(!is_ghost)
-		show_fluff_message(0,user)
-		down.add_fingerprint(user)
-	user.loc = get_turf(down)
+		show_fluff_message(going_up,user)
+		ladder.add_fingerprint(user)
+	user.forceMove(get_turf(ladder))
+	if(user.pulling)
+		user.pulling.forceMove(get_turf(ladder))
 
 /obj/structure/ladder/proc/use(mob/user,is_ghost=0)
 	if(up && down)
 		switch( alert("Go up or down the ladder?", "Ladder", "Up", "Down", "Cancel") )
 			if("Up")
-				go_up(user,is_ghost)
+				travel(1, user, is_ghost, up)
 			if("Down")
-				go_down(user,is_ghost)
+				travel(0, user, is_ghost, down)
 			if("Cancel")
 				return
 	else if(up)
-		go_up(user,is_ghost)
+		travel(1, user, is_ghost, up)
 	else if(down)
-		go_down(user,is_ghost)
+		travel(0, user,is_ghost, down)
 	else
 		to_chat(user, "<span class='warning'>[src] doesn't seem to lead anywhere!</span>")
 
