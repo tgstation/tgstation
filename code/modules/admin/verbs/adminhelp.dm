@@ -24,7 +24,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	QDEL_NULL(cstatclick)
 	QDEL_NULL(rstatclick)
 	return ..()
-	
+
 /datum/admin_help_tickets/proc/TicketByID(id)
 	var/list/lists = list(active_tickets, closed_tickets, resolved_tickets)
 	for(var/I in lists)
@@ -185,8 +185,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	TimeoutVerb()
 
-	var/parsed_message = keywords_lookup(msg)
-
 	statclick = new(null, src)
 	_interactions = list()
 
@@ -194,7 +192,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		AddInteraction("<font color='blue'>[key_name_admin(usr)] PM'd [LinkedReplyName()]</font>")
 		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
 	else
-		MessageNoRecipient(msg, parsed_message)
+		MessageNoRecipient(msg)
 
 		//send it to irc if nobody is on and tell us how many were on
 		var/admin_number_present = send2irc_adminless_only(initiator_ckey, "Ticket #[id]: [name]")
@@ -249,13 +247,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //message from the initiator without a target, all admins will see this
 //won't bug irc
-/datum/admin_help/proc/MessageNoRecipient(msg, parsed_msg)
+/datum/admin_help/proc/MessageNoRecipient(msg)
 	var/ref_src = "\ref[src]"
 	//Message to be sent to all admins
-	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [parsed_msg]</span>"
+	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [keywords_lookup(msg)]</span>"
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
-	
+
 	//send this msg to all admins
 	for(var/client/X in GLOB.admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)

@@ -208,6 +208,8 @@
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
 	item_state = "lamp"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	brightness_on = 5
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
