@@ -44,12 +44,13 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/pshoom.ogg'
 	alt_sound = 'sound/items/pshoom_2.ogg'
 
-/obj/item/storage/part_replacer/bluespace/content_can_dump(atom/dest_object, mob/user)
+/obj/item/storage/part_replacer/bluespace/dump_content_at(atom/dest_object, mob/user)
 	if(Adjacent(user))
-		if(get_dist(user, dest_object) < 8)
-			if(dest_object.storage_contents_dump_act(src, user))
+		var/atom/dumping_location = dest_object.get_dumping_location()
+		if(get_dist(user, dumping_location) < 8)
+			if(dumping_location.storage_contents_dump_act(src, user))
 				play_rped_sound()
-				user.Beam(dest_object,icon_state="rped_upgrade",time=5)
+				user.Beam(dumping_location,icon_state="rped_upgrade",time=5)
 				return 1
 		to_chat(user, "The [src.name] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)

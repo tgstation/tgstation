@@ -5,7 +5,7 @@
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
 		damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir)
-		if(damage_amount >= 1)
+		if(damage_amount >= 0.1)
 			. = damage_amount
 			obj_integrity = max(obj_integrity - damage_amount, 0)
 			if(obj_integrity <= 0)

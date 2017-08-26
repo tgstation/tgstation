@@ -178,6 +178,7 @@
 					E.prev_throwforce = E.throwforce
 					E.throwforce = round(E.throwforce * B.specthrow_forcemult)
 		visible_message("<span class='danger'>[src] has [action] [thrown_thing].</span>")
+		add_logs(src, thrown_thing, "has thrown")
 		newtonian_move(get_dir(target, src))
 		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
 

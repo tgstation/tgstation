@@ -47,7 +47,7 @@
 
 		if(!M.incapacitated())
 			if(!istype(over_object, /obj/screen))
-				return content_can_dump(over_object, M)
+				return dump_content_at(over_object, M)
 
 			if(loc != usr || (loc && loc.loc == usr))
 				return
@@ -71,10 +71,14 @@
 					handle_item_insertion(I, 0 , L)
 
 
-//Check if this storage can dump the items
-/obj/item/storage/proc/content_can_dump(atom/dest_object, mob/user)
-	if(Adjacent(user) && dest_object.Adjacent(user))
-		if(dest_object.storage_contents_dump_act(src, user))
+/obj/item/storage/get_dumping_location(obj/item/storage/source,mob/user)
+	return src
+
+//Tries to dump content
+/obj/item/storage/proc/dump_content_at(atom/dest_object, mob/user)
+	var/atom/dump_destination = dest_object.get_dumping_location()
+	if(Adjacent(user) && dump_destination && user.Adjacent(dump_destination))
+		if(dump_destination.storage_contents_dump_act(src, user))
 			playsound(loc, "rustle", 50, 1, -5)
 			return 1
 	return 0
@@ -412,6 +416,8 @@
 
 	handle_item_insertion(W, 0 , user)
 
+/obj/item/storage/AllowDrop()
+	return TRUE
 
 /obj/item/storage/attack_hand(mob/user)
 	if(user.s_active == src && loc == user) //if you're already looking inside the storage item

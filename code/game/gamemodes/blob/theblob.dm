@@ -19,16 +19,6 @@
 	var/atmosblock = 0 //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
 
-/obj/structure/blob/attack_hand(mob/M)
-	. = ..()
-	M.changeNext_move(CLICK_CD_MELEE)
-	var/a = pick("gently stroke", "nuzzle", "affectionatly pet", "cuddle")
-	M.visible_message("<span class='notice'>[M] [a]s [src]!</span>", "<span class='notice'>You [a] [src]!</span>")
-	to_chat(overmind, "<span class='notice'>[M] [a]s you!</span>")
-	playsound(src, 'sound/effects/blobattack.ogg', 50, 1) //SQUISH SQUISH
-	
-
-
 /obj/structure/blob/Initialize()
 	var/area/Ablob = get_area(loc)
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
