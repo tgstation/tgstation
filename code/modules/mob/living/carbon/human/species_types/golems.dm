@@ -12,7 +12,7 @@
 	punchstunthreshold = 11 //about 40% chance to stun
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
 	nojumpsuit = 1
-	sexes = 1
+	sexes = TRUE
 	damage_overlay_type = ""
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 	// To prevent golem subtypes from overwhelming the odds when random species
@@ -435,6 +435,7 @@
 /datum/action/innate/unstable_teleport
 	name = "Unstable Teleport"
 	check_flags = AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "jaunt"
 	var/cooldown = 150
 	var/last_teleport = 0
@@ -696,3 +697,169 @@
 /datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.ventcrawler = initial(C.ventcrawler)
+
+//Weird golems able to shift their flesh to heal or make weapons
+/datum/species/golem/flesh
+	name = "Flesh Golem"
+	id = "flesh golem"
+	limbs_id = "fleshgolem"
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human
+	//If someone removes nodismember please add a check for missing limbs in the armblade skill
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,RADIMMUNE,VIRUSIMMUNE,NODISMEMBER,NO_UNDERWEAR)
+	info_text = "As a <span class='danger'>Flesh Golem</span>, you can gain extra flesh by eating, which you can then use to heal or to form armblades."
+	prefix = "Flesh"
+	armor = 25 //not rock, but very thick skin is still hard to damage
+	sexes = FALSE
+	var/flesh = 0 //excess flesh, used for abilities
+	var/max_flesh = 300
+	var/datum/action/innate/flesh/shifting_flesh/shifting_flesh
+	var/datum/action/innate/flesh/blade/armblade
+	disliked_food = 0 //eats everything
+	liked_food = MEAT | RAW //but especially FRESH MEAT
+
+/datum/species/golem/flesh/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	if(C.hud_used)
+		C.hud_used.fleshdisplay.invisibility = 0
+	if(ishuman(C))
+		shifting_flesh = new(src)
+		shifting_flesh.Grant(C)
+		armblade = new(src)
+		armblade.Grant(C)
+
+/datum/species/golem/flesh/on_species_loss(mob/living/carbon/C)
+	if(C.hud_used)
+		C.hud_used.fleshdisplay.invisibility = INVISIBILITY_ABSTRACT
+	if(shifting_flesh)
+		shifting_flesh.owner_species = null
+		shifting_flesh.Remove(C)
+	if(armblade)
+		armblade.owner_species = null
+		armblade.Remove(C)
+	..()
+
+/datum/species/golem/flesh/spec_life(mob/living/carbon/human/H)
+	H.hud_used.fleshdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[flesh]</font></div>"
+	switch(H.nutrition)
+		if(0 to NUTRITION_LEVEL_STARVING)
+			flesh = max(flesh - 1, 0)
+		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+			flesh = max(flesh - 0.5, 0)
+		if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+			flesh = min(flesh + 1, max_flesh)
+		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+			flesh = min(flesh + 2, max_flesh)
+		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FAT)
+			flesh = min(flesh + 3, max_flesh)
+		if(NUTRITION_LEVEL_FAT to INFINITY)
+			flesh = min(flesh + 5, max_flesh)
+			H.nutrition = NUTRITION_LEVEL_FAT - 1 //it's not fat, it's extra flesh
+	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		flesh = max(flesh-5, 0)
+	if(H.hud_used) //because the body does not have a HUD until inhabited
+		H.hud_used.fleshdisplay.invisibility = 0
+
+/datum/action/innate/flesh
+	name = "Flesh Skill"
+	desc = "Something went wrong if you see this, warn a coder"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	var/datum/species/golem/flesh/owner_species
+	var/flesh_cost = 0 // how much flesh it costs
+	var/use_without_flesh = FALSE // can be used without remaining flesh
+	var/available = TRUE
+
+/datum/action/innate/flesh/New(species)
+	. = ..()
+	owner_species = species
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/action/innate/flesh/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSfastprocess, src)
+
+/datum/action/innate/flesh/process()
+	var/now_available = IsAvailable()
+	if((!available && now_available) || (available && !now_available))
+		available = now_available
+		UpdateButtonIcon()
+
+/datum/action/innate/flesh/IsAvailable()
+	if((owner_species.flesh < flesh_cost) && !use_without_flesh)
+		return FALSE
+	return ..()
+
+/datum/action/innate/flesh/Activate()
+	owner_species.flesh = max(owner_species.flesh - flesh_cost, 0)
+
+/datum/action/innate/flesh/shifting_flesh
+	name = "Shifting Flesh"
+	desc = "Use your excess flesh to patch your wounds. <br>Costs 50 flesh."
+	button_icon_state = "shift_flesh"
+	var/healing_ticks = 8 // 5 per tick
+	var/total_healing = 40
+	flesh_cost = 50
+	var/ongoing = FALSE //Only one activation at a time
+
+/datum/action/innate/flesh/shifting_flesh/IsAvailable()
+	if(ongoing)
+		return FALSE
+	return ..()
+
+/datum/action/innate/flesh/shifting_flesh/Activate()
+	..()
+	var/mob/living/carbon/human/H = owner
+	H.visible_message("<span class='warning'>[H]'s flesh twists and shifts along [H.p_their()] body!</span>", "<span class='notice'>You shift your flesh, using it to patch up your wounds.</span>")
+	playsound(H, 'sound/effects/blobattack.ogg', 30, 1)
+	INVOKE_ASYNC(src, .proc/fleshmend)
+
+/datum/action/innate/flesh/shifting_flesh/proc/fleshmend()
+	var/mob/living/carbon/human/H = owner
+	ongoing = TRUE
+	for(var/i in 1 to healing_ticks)
+		if(H)
+			var/healpertick = -(total_healing / healing_ticks)
+			H.adjustBruteLoss(healpertick, 0)
+			H.adjustFireLoss(healpertick, 0)
+			H.updatehealth()
+		else
+			break
+		sleep(10)
+	ongoing = FALSE
+
+
+/datum/action/innate/flesh/blade
+	name = "Armblade"
+	desc = "Temporarily turn one of your arms into a sharp armblade. <br>Costs 100 flesh."
+	button_icon_state = "flesh_blade"
+	flesh_cost = 100
+	use_without_flesh = TRUE
+	var/duration = 450
+
+/datum/action/innate/flesh/blade/Activate()
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/I = H.get_active_held_item()
+	if(istype(I, /obj/item/melee/arm_blade))
+		drop_blade(I)
+	else
+		if(!H.drop_item())
+			to_chat(H, "<span class='warning'>The [H.get_active_held_item()] is stuck to your hand, you cannot grow an armblade over it!</span>")
+			return
+		if(owner_species.flesh < flesh_cost)
+			to_chat(H, "<span class='warning'>You don't have enough flesh to do this!</span>")
+			return
+		var/obj/item/melee/arm_blade/W = new(H, silent = TRUE)
+		owner_species.flesh = max(owner_species.flesh - flesh_cost, 0)
+		H.visible_message("<span class='warning'>[H]'s arm rapidly grows into a sharp blade!</span>", "<span class='warning'>Your flesh gathers around your arm and hardens into a sharp blade!</span>")
+		playsound(H, 'sound/effects/blobattack.ogg', 30, 1)
+		H.put_in_hands(W)
+		addtimer(CALLBACK(src, .proc/drop_blade, W), duration)
+
+/datum/action/innate/flesh/blade/proc/drop_blade(obj/item/melee/arm_blade/blade)
+	if(QDELETED(blade))
+		return
+	var/mob/living/carbon/human/H = owner
+	H.temporarilyRemoveItemFromInventory(blade, TRUE) //DROPDEL will delete the item
+	playsound(H, 'sound/effects/blobattack.ogg', 30, 1)
+	H.visible_message("<span class='warning'>[H]'s [blade] quickly rots and drops off in a mass of flesh!</span>", "<span class='notice'>Your [blade] melts and falls off, freeing your arm.</span>")
+	new /obj/effect/decal/cleanable/blood/gibs(H.drop_location())
+	H.update_inv_hands()

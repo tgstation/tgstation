@@ -26,6 +26,7 @@
 #define ui_crafting	"12:-10,1:5"
 #define ui_building "12:-10,1:21"
 #define ui_language_menu "11:6,2:-11"
+#define ui_speciesresourcedisplay "WEST,CENTER+1:15"
 
 #define ui_devilsouldisplay "WEST:6,CENTER-1:15"
 
@@ -104,7 +105,7 @@
 #define ui_health "EAST-1:28,CENTER-1:15"
 #define ui_internal "EAST-1:28,CENTER:17"
 
-//borgs 
+//borgs
 #define ui_borg_health "EAST-1:28,CENTER-1:15"		//borgs have the health display where humans have the pressure damage indicator.
 
 //aliens

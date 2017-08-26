@@ -186,20 +186,6 @@
 	can_transfer = FALSE
 	mob_species = /datum/species/golem/adamantine
 
-/obj/effect/mob_spawn/human/meatgolem
-	name = "meat golem shell"
-	desc = "A human shape, empty, lifeless, and full of potential."
-	icon = 'icons/mob/human.dmi'
-	icon_state = "fleshgolem"
-	mob_species = /datum/species/human
-	mob_name = "a meat golem"
-	roundstart = FALSE
-	death = FALSE
-	anchored = FALSE
-	density = FALSE
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem... wait, no. You're not. You're a human. As you realize this, you feel the wave of ancestral golem knowledge falter and stop, \
-	leaving nothing aside from a mild headache. You're left not knowing anything about your past, if you even had one.</b>"
-
 /obj/effect/mob_spawn/human/golem/Initialize(mapload)
 	. = ..()
 	var/area/A = get_area(src)

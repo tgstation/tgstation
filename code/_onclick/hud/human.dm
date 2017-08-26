@@ -80,6 +80,12 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
+/obj/screen/flesh //used by flesh golems
+	name = "excess flesh"
+	icon_state = "flesh_display"
+	screen_loc = ui_speciesresourcedisplay
+	invisibility = INVISIBILITY_ABSTRACT
+
 /mob/living/carbon/human/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud/human(src, ui_style2icon(client.prefs.UI_style))
@@ -297,6 +303,9 @@
 
 	devilsouldisplay = new /obj/screen/devil/soul_counter
 	infodisplay += devilsouldisplay
+
+	fleshdisplay = new /obj/screen/flesh
+	infodisplay += fleshdisplay
 
 	zone_select =  new /obj/screen/zone_sel()
 	zone_select.icon = ui_style

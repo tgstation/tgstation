@@ -112,13 +112,14 @@
 			species = /datum/species/golem/plastic
 
 		if(istype(O, /obj/item/reagent_containers/food/snacks/meat/slab))
+			species = /datum/species/golem/flesh
 			qdel(O)
 			meat++
 			if(meat < 10)
 				to_chat(user, "You add [O] to the golem shell. It now has [meat]/10 slabs of meat.")
 			else
 				to_chat(user, "You finish up the golem shell with [O].[isgolem(user) ? " You feel weird about this." : ""]")
-				new /obj/effect/mob_spawn/human/meatgolem(get_turf(src))
+				new shell_type(drop_location(), species, user)
 				qdel(src)
 			return
 
@@ -130,7 +131,7 @@
 				var/obj/item/stack/S = O
 				if(S.use(10))
 					to_chat(user, "You finish up the golem shell with ten sheets of [O].")
-					new shell_type(get_turf(src), species, user)
+					new shell_type(drop_location(), species, user)
 					qdel(src)
 				else
 					to_chat(user, "You need at least ten sheets to finish a golem.")
