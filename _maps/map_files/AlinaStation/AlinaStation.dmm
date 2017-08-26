@@ -19500,6 +19500,10 @@
 	},
 /turf/open/space,
 /area/space)
+"aWA" = (
+/obj/machinery/portable_atmospherics/canister/freon,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -57719,7 +57723,7 @@ aMC
 aRv
 aRO
 aSo
-aOg
+aWA
 aTo
 aMC
 aTU
