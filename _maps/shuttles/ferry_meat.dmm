@@ -6,13 +6,13 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "c" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "d" = (
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "e" = (
 /turf/open/floor/plasteel/freezer,
@@ -123,16 +123,11 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "s" = (
 /turf/open/floor/plasteel/freezer,
-/turf/closed/wall/mineral/titanium/interior{
-	icon_state = "swall_f10"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "t" = (
 /obj/structure/closet/chefcloset,
@@ -156,10 +151,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "x" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 
 (1,1,1) = {"
