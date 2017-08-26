@@ -53,7 +53,7 @@
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange
 	seed = /obj/item/seeds/orange
 	name = "orange"
-	desc = "It's an tangy fruit."
+	desc = "It's a tangy fruit."
 	icon_state = "orange"
 	filling_color = "#FFA500"
 

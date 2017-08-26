@@ -3,5 +3,6 @@
     "map_path": "map_files/Cerestation",
     "map_file": "cerestation.dmm",
     "minetype": "lavaland",
-    "transition_config": "default"
+    "transition_config": "default",
+	"allow_custom_shuttles": "yes"
 }

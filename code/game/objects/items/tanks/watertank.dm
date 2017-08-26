@@ -324,7 +324,7 @@
 
 /obj/effect/resin_container/proc/Smoke()
 	var/obj/effect/particle_effect/foam/metal/resin/S = new /obj/effect/particle_effect/foam/metal/resin(get_turf(loc))
-	S.amount = 3
+	S.amount = 4
 	playsound(src,'sound/effects/bamf.ogg',100,1)
 	qdel(src)
 

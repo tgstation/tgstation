@@ -137,8 +137,8 @@
 				new mineral(loc)
 	qdel(src)
 
-/obj/structure/falsewall/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	return 0
+/obj/structure/falsewall/get_dumping_location(obj/item/storage/source,mob/user)
+	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
 	return null

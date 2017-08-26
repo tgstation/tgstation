@@ -22,10 +22,16 @@
 			continue
 		qdel(timer)
 	var/list/dc = datum_components
-	for(var/I in dc)
-		var/datum/component/C = I
-		C._RemoveNoSignal()
-		qdel(C)
 	if(dc)
+		var/all_components = dc[/datum/component]
+		if(islist(all_components))
+			for(var/I in all_components)
+				var/datum/component/C = I
+				C._RemoveNoSignal()
+				qdel(C)
+		else
+			var/datum/component/C = all_components
+			C._RemoveNoSignal()
+			qdel(C)
 		dc.Cut()
 	return QDEL_HINT_QUEUE

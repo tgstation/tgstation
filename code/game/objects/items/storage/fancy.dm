@@ -45,7 +45,7 @@
 	fancy_open = !fancy_open
 	update_icon()
 
-/obj/item/storage/fancy/content_can_dump(atom/dest_object, mob/user)
+/obj/item/storage/fancy/dump_content_at(atom/dest_object, mob/user)
 	. = ..()
 	if(.)
 		fancy_open = TRUE
