@@ -359,6 +359,8 @@
 	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/vault/telecomms/mainframe
 	name = "Mainframe Floor"
+/turf/open/floor/plasteel/vault/killroom
+	name = "Killroom Floor"
 
 /turf/open/floor/plasteel/cult
 	icon_state = "cult"
