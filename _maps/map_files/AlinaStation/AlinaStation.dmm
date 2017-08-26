@@ -5285,9 +5285,9 @@
 	d2 = 4
 	},
 /obj/machinery/power/apc{
+	areastring = "/area/science";
 	dir = 1;
-	name = "Research Division Server Room APC";
-	areastring = "/area/science/server";
+	name = "Research Division APC";
 	pixel_y = 25
 	},
 /turf/open/floor/plating,
@@ -8896,6 +8896,7 @@
 /area/medical/chemistry)
 "wg" = (
 /obj/machinery/chem_master,
+/obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "wh" = (
@@ -10895,11 +10896,21 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "BB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -10911,6 +10922,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -11521,6 +11537,11 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Construction Area";
 	req_access_txt = "32"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -14231,6 +14252,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "JZ" = (
@@ -14448,6 +14474,11 @@
 /area/maintenance/aft)
 "Kz" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "KA" = (
@@ -17237,7 +17268,7 @@
 "Rf" = (
 /obj/structure/grille,
 /turf/closed/wall/r_wall,
-/area/engine/atmos)
+/area/engine/engineering)
 "Rg" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
@@ -17297,7 +17328,7 @@
 	})
 "Rq" = (
 /turf/open/floor/engine/air,
-/area/engine/atmos)
+/area/engine/engineering)
 "Rr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
@@ -17306,7 +17337,7 @@
 	name = "distro out"
 	},
 /turf/open/floor/engine/air,
-/area/engine/atmos)
+/area/engine/engineering)
 "Rs" = (
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat/hallway";
@@ -17376,7 +17407,7 @@
 "RB" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/engine/air,
-/area/engine/atmos)
+/area/engine/engineering)
 "RC" = (
 /obj/machinery/camera{
 	c_tag = "ai minisat external west";
@@ -17476,7 +17507,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine/air,
-/area/engine/atmos)
+/area/engine/engineering)
 "RN" = (
 /obj/structure/showcase{
 	density = 0;
@@ -18468,39 +18499,117 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "Uc" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
+"Ud" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/escape,
+/area/hallway/primary/port)
+"Ue" = (
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/machinery/power/apc{
+	areastring = "/area/construction";
+	dir = 1;
+	name = "Consturction Area APC";
+	pixel_y = 25
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plating,
+/area/construction)
+"Uf" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/construction)
+"Ug" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/construction)
+"Uh" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plating,
 /area/construction)
-"Ud" = (
+"Ui" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
-"Ue" = (
+"Uj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"Uf" = (
+"Uk" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"Ug" = (
+"Ul" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/port/aft";
+	dir = 1;
+	name = "Port Quarter Maintenance APC";
+	pixel_y = 25
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"Um" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"Uh" = (
+"Un" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"Ui" = (
+"Uo" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"Up" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
@@ -18517,20 +18626,52 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/aft)
-"Uj" = (
+"Uq" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"Ur" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"Us" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/aft";
+	dir = 1;
+	name = "Aft Maintenance APC";
+	pixel_y = 25
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"Ut" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/engine,
 /area/engine/supermatter)
-"Uk" = (
+"Uu" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
-"Ul" = (
+"Uv" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/aisat/hallway)
-"Um" = (
+"Uw" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -28999,7 +29140,7 @@ LD
 LD
 Ns
 NQ
-Uk
+Uu
 LD
 Ph
 PJ
@@ -30556,7 +30697,7 @@ RY
 Si
 So
 Su
-Um
+Uw
 SN
 Ru
 Ru
@@ -32092,7 +32233,7 @@ PO
 Pq
 OP
 NK
-Ul
+Uv
 LJ
 Ru
 Ry
@@ -39003,8 +39144,8 @@ AI
 pv
 Cp
 Dd
-Eb
-Uc
+Ue
+Uh
 Ec
 Ec
 GK
@@ -39260,7 +39401,7 @@ AJ
 Bz
 Cp
 Dd
-Ec
+Uf
 Ec
 Ec
 Eb
@@ -39514,10 +39655,10 @@ aa
 aa
 oE
 AJ
-pv
-Cp
+Uc
+Ud
 De
-Ec
+Ug
 Ec
 Fv
 Eb
@@ -48517,7 +48658,7 @@ EY
 FJ
 BQ
 GV
-Ue
+Uj
 BQ
 IJ
 Jn
@@ -52117,8 +52258,8 @@ pj
 Hb
 nN
 In
-HD
-Js
+Ul
+Uo
 IN
 Ko
 KM
@@ -52374,7 +52515,7 @@ ml
 mS
 nN
 In
-Ug
+Um
 Jt
 IN
 Kp
@@ -53926,7 +54067,7 @@ LR
 Mr
 MN
 Ng
-Uj
+Ut
 Mr
 Lt
 OW
@@ -54191,7 +54332,7 @@ Pv
 PV
 Qw
 Qw
-Rg
+PV
 Rr
 RB
 RM
@@ -54431,7 +54572,7 @@ He
 Ey
 le
 IV
-Ui
+Up
 JO
 JO
 KR
@@ -55201,7 +55342,7 @@ mk
 Hg
 nN
 le
-Uh
+Un
 Jz
 JT
 JT
@@ -58032,8 +58173,8 @@ Hp
 Hp
 JY
 Kz
-mD
-hB
+Uq
+Ur
 hB
 hB
 MU
@@ -58290,7 +58431,7 @@ JF
 JZ
 IX
 fr
-hB
+Us
 hB
 hB
 hB
@@ -59825,7 +59966,7 @@ wj
 wj
 GD
 wj
-Uf
+Uk
 wj
 GC
 GC
@@ -61621,7 +61762,7 @@ wj
 DS
 EN
 EN
-Ud
+Ui
 GH
 DT
 HW
