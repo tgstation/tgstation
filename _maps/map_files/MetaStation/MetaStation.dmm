@@ -30389,12 +30389,10 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 10
 	},
-/obj/item/stack/sheet/mineral/uranium{
-	amount = 2
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/pod_parts/core,
 /turf/open/floor/plasteel/darkyellow/side,
 /area/engine/pod_construction)
 "bgb" = (
@@ -91083,7 +91081,7 @@
 	},
 /area/engine/pod_construction)
 "dEs" = (
-/obj/machinery/spod_part_fabricator,
+/obj/machinery/mecha_part_fabricator/spacepod,
 /obj/machinery/light{
 	dir = 1
 	},

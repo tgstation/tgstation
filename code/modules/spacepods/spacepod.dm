@@ -20,8 +20,7 @@
 
 	anchored = TRUE
 
-	layer = 3.9
-	infra_luminosity = 15
+	layer = SPACEPOD_LAYER
 
 	var/list/mob/living/pilot	//There is only ever one pilot and he gets all the privledge
 	var/list/mob/living/passengers = list() //passengers can't do anything and are variable in number
@@ -87,6 +86,8 @@
 
 	hud_possible = list(DIAG_HUD, DIAG_BATT_HUD)
 
+	var/armor_multiplier_applied = FALSE //used for determining if the construction process already applied the armorer multiplier
+
 	var/datum/pod_armor/pod_armor
 
 
@@ -120,7 +121,7 @@
 	else
 		pod_armor = new
 	update_icons()
-	dir = EAST
+	setDir(EAST)
 	cell = new cell_type(src)
 	add_cabin()
 	add_airtank()
@@ -138,8 +139,9 @@
 	diag_hud.add_to_hud(src)
 	diag_hud_set_podhealth()
 	diag_hud_set_podcharge()
-	max_integrity *= pod_armor.armor_multiplier
-	obj_integrity *= pod_armor.armor_multiplier
+	if (!armor_multiplier_applied)
+		max_integrity *= pod_armor.armor_multiplier
+		obj_integrity *= pod_armor.armor_multiplier
 	cargo_hold = new/obj/item/storage/internal(src)
 	cargo_hold.w_class = 5	//so you can put bags in
 	cargo_hold.storage_slots = 0	//You need to install cargo modules to use it.
@@ -219,11 +221,11 @@
 
 /obj/spacepod/bullet_act(var/obj/item/projectile/P)
 	if(P.damage_type == BRUTE || P.damage_type == BURN)
-		deal_damage(P.damage)
+		take_damage(P.damage)
 	P.on_hit(src)
 
 /obj/spacepod/blob_act()
-	deal_damage(30)
+	take_damage(30)
 	return
 
 /obj/spacepod/attack_animal(mob/living/simple_animal/user as mob)
@@ -231,7 +233,7 @@
 		user.emote(1, "[user.friendly] [src]")
 	else
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		deal_damage(damage)
+		take_damage(damage)
 		visible_message("<span class='danger'>[user]</span> [user.attacktext] [src]!")
 		log_attack("<font color='red'>attacked [name]</font>")
 	return
@@ -242,30 +244,25 @@
 
 /obj/spacepod/attack_alien(mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
-	deal_damage(15)
+	take_damage(15)
 	playsound(loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 	to_chat(user, "<span class='warning'>You slash at [src]!</span>")
 	visible_message("<span class='warning'>The [user] slashes at [name]'s armor!</span>")
 	return
 
-/obj/spacepod/proc/deal_damage(var/damage)
-	var/oldhealth = obj_integrity
-	obj_integrity = max(0, obj_integrity - damage)
+/obj/spacepod/proc/explodify()
+	message_to_riders("<span class='userdanger'>Exit the spacepod immediately, explosion immi-</span>")
+	explosion(loc, 2, 4, 8)
+	visible_message("<span class='danger'>[src] violently explodes!</span>")
+	qdel(src)
+
+/obj/spacepod/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
 	var/percentage = (obj_integrity / max_integrity) * 100
 	occupant_sanity_check()
-	if(oldhealth > obj_integrity && percentage <= 25 && percentage > 0)
+	if(percentage <= 25 && percentage > 0)
 		play_sound_to_riders('sound/effects/alert.ogg')
-	if(oldhealth > obj_integrity && !obj_integrity)
-		play_sound_to_riders('sound/effects/alert.ogg')
-	if(!obj_integrity)
-		message_to_riders("<span class='userdanger'>Critical damage to the vessel detected, core explosion imminent!</span>")
-		for(var/i = 10, i >= 0; --i)
-			message_to_riders("<span class='warning'>[i]</span>")
-			if(i == 0)
-				explosion(loc, 2, 4, 8)
-				qdel(src)
-			sleep(10)
-
+		message_to_riders("<span class='danger'>Pod integrity at [percentage]%!</span>")
 	update_icons()
 	diag_hud_set_podhealth()
 
@@ -274,6 +271,10 @@
 		obj_integrity = min(max_integrity, obj_integrity + repair_amount)
 		update_icons()
 		diag_hud_set_podhealth()
+
+/obj/spacepod/obj_destruction(damage_flag)
+	message_to_riders("<span class='userdanger'>Critical damage to the vessel detected, core explosion imminent!</span>")
+	addtimer(CALLBACK(src, .proc/explodify), 50)
 
 
 /obj/spacepod/ex_act(severity)
@@ -290,10 +291,10 @@
 			qdel(ion_trail)
 			qdel(src)
 		if(2)
-			deal_damage(100)
+			take_damage(100)
 		if(3)
 			if(prob(40))
-				deal_damage(50)
+				take_damage(50)
 
 /obj/spacepod/emp_act(severity)
 	occupant_sanity_check()
@@ -301,7 +302,7 @@
 
 	if(cell && cell.charge > 0)
 		cell.use((cell.charge/3)/(severity*2))
-	deal_damage(80 / severity)
+	take_damage(80 / severity)
 	if(empcounter < (40 / severity))
 		empcounter = 40 / severity
 
@@ -326,7 +327,7 @@
 	S.channel = 0 //Any channel
 	S.volume = 50
 	for(var/mob/living/M in passengers | pilot)
-		M << S
+		SEND_SOUND(M, S)
 
 /obj/spacepod/proc/message_to_riders(mymessage)
 	if(length(passengers | pilot) == 0)
@@ -337,7 +338,7 @@
 /obj/spacepod/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(user.a_intent == INTENT_HARM)
 		..()
-		deal_damage(W.force)
+		take_damage(W.force)
 	else
 		if(istype(W, /obj/item/crowbar))
 			if(!equipment_system.lock_system || unlocked || hatch_open)
@@ -870,7 +871,7 @@
 	if(!equipment_system.weapon_system)
 		to_chat(user, "<span class='warning'>[src] has no weapons!</span>")
 		return
-	equipment_system.weapon_system.fire_weapons()
+	equipment_system.weapon_system.fire_weapons(user)
 
 /obj/spacepod/proc/unload(var/mob/user)
 	if(user.incapacitated())
@@ -952,7 +953,7 @@
 	else
 		move_delay = 2
 	if(cell && cell.charge >= 1 && obj_integrity > 0 && empcounter == 0)
-		dir = direction
+		setDir(direction)
 		switch(direction)
 			if(NORTH)
 				if(inertia_dir == SOUTH)
@@ -1065,6 +1066,21 @@
 	diag_hud_set_podcharge()
 	diag_hud_set_podhealth()
 
+
+/obj/spacepod/verb/rename_pod(new_name as text)
+	set name = "Rename Pod"
+	set desc = "Rename your spacepod"
+	set category = "Spacepod"
+	set src = usr.loc
+	set popup_menu = 0
+
+	if(usr.incapacitated())
+		return
+
+	if(usr != pilot)
+		to_chat(usr, "<span class='danger'>You are unable to rename the pod, as you are not the pilot!</span>")
+	else
+		name = new_name
 
 
 #undef DAMAGE

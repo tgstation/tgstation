@@ -72,6 +72,10 @@
 		return FALSE
 	if(loc.Adjacent(neighbor,target = neighbor, mover = src))
 		return TRUE
+	if((bound_width != world.icon_size || bound_height != world.icon_size) && (locs && locs.len > 1))
+		for(var/turf/T in locs)
+			if(T.Adjacent(neighbor,src))
+				return TRUE
 	return FALSE
 
 // This is necessary for storage items not on your person.

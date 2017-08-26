@@ -132,8 +132,8 @@
 /datum/construction/reversible/custom_action(index, diff, used_atom, user)
 	return TRUE
 
-#define state_next "next"
-#define state_prev "prev"
+#define STATE_NEXT "next"
+#define STATE_PREV "prev"
 
 
 /datum/construction/reversible2
@@ -158,14 +158,14 @@
 
 /datum/construction/reversible2/is_right_key(mob/user as mob,atom/used_atom) // returns index step
 	var/list/state = steps[index]
-	if(state_next in state)
-		var/list/step = state[state_next]
+	if(STATE_NEXT in state)
+		var/list/step = state[STATE_NEXT]
 		if(istype(used_atom, step["key"]))
 			//if(L["consume"] && !try_consume(used_atom,L["consume"]))
 			//	return FALSE
 			return FORWARD //to the first step -> forward
-	else if(state_prev in state)
-		var/list/step = state[state_prev]
+	else if(STATE_PREV in state)
+		var/list/step = state[STATE_PREV]
 		if(istype(used_atom, step["key"]))
 			//if(L["consume"] && !try_consume(used_atom,L["consume"]))
 			//	return FALSE
@@ -191,7 +191,7 @@
 		return FALSE
 
 	var/list/step = steps[index]
-	var/list/state = step[diff==FORWARD ? state_next : state_prev]
+	var/list/state = step[diff==FORWARD ? STATE_NEXT : STATE_PREV]
 	user.visible_message(fixText(state["vis_msg"],user),fixText(state["self_msg"],user))
 
 	if("delete" in state)

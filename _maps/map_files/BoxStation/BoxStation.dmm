@@ -10218,9 +10218,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 10
 	},
-/obj/item/stack/sheet/mineral/uranium{
-	amount = 2
-	},
+/obj/item/pod_parts/core,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -58289,7 +58287,7 @@
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "cCt" = (
-/obj/machinery/spod_part_fabricator,
+/obj/machinery/mecha_part_fabricator/spacepod,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
