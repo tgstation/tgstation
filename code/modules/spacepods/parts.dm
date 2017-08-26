@@ -60,7 +60,7 @@
 		var/obj/item/stack/rods/R = O
 		var/list/linkedparts = find_square()
 		if(!linkedparts)
-			to_chat(user, "<span class='rose'>You cannot assemble a pod frame because you do not have the necessary assembly.</span>")
+			to_chat(user, "<span class='rose'>You cannot assemble a pod frame because you do not have the necessary assembly. Did you ensure to align the frame properly and wrench all of it down?</span>")
 			return
 		var/obj/structure/spacepod_frame/pod = new /obj/structure/spacepod_frame(loc)
 		pod.dir = dir

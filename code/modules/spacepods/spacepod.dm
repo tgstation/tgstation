@@ -148,6 +148,12 @@
 	cargo_hold.max_w_class = 5		//fit almost anything
 	cargo_hold.max_combined_w_class = 0 //you can optimize your stash with larger items
 
+	for(var/turf/T in locs)
+		for(var/obj/I in T.contents)
+			if(istype(I, /obj/structure/spacepod_frame))
+				QDEL_NULL(I)
+
+
 /obj/spacepod/Destroy()
 	if(equipment_system.cargo_system)
 		equipment_system.cargo_system.removed(null)

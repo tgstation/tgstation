@@ -21,10 +21,11 @@
 	construct = new /datum/construction/reversible2/pod(src)
 
 	setDir(EAST)
+	desc = "An unwired pod frame."
 
 /obj/structure/spacepod_frame/Destroy()
+	. = ..()
 	QDEL_NULL(construct)
-	return ..()
 
 /obj/structure/spacepod_frame/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(!construct || !construct.action(W, user))
@@ -49,6 +50,7 @@
 		A.max_integrity *= pod_armor.armor_multiplier
 		A.obj_integrity *= pod_armor.armor_multiplier
 		qdel(holder)
+		qdel(src)
 	return
 
 
