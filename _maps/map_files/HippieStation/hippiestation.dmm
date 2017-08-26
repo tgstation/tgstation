@@ -56756,7 +56756,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "cud" = (
 /obj/machinery/turretid{
-	control_area = null;
+	control_area = "AI Satellite Antechamber";
 	enabled = 1;
 	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
@@ -57057,7 +57057,7 @@
 	start_active = 1
 	},
 /obj/machinery/turretid{
-	control_area = "AI Satellite Atmospherics";
+	control_area = "AI Satellite Atmos";
 	enabled = 1;
 	icon_state = "control_standby";
 	name = "Atmospherics Turret Control";
@@ -58118,6 +58118,7 @@
 	dir = 8
 	},
 /obj/machinery/turretid{
+	control_area = "AI Chamber";
 	name = "AI Chamber turret control";
 	pixel_x = 5;
 	pixel_y = -24
