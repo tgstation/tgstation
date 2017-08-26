@@ -57,6 +57,9 @@
 	var/just_spawned = 1
 	var/bypassing = 0
 
+	var/sound_start_time = 0 //when did we start playing the sound?
+	var/sound_length = 10 //how long is the sound in deciseconds?
+
 /obj/effect/hotspot/New()
 	..()
 	SSair.hotspots += src
@@ -144,6 +147,25 @@
 		/*if(prob(25))
 			location.ReplaceWithSpace()
 			return 0*/
+
+	var/list/canHear = list()
+	for(var/m in hearers(world.view, src))
+		var/mob/M = m
+		if(!M.client)
+			continue
+
+		canHear[M] = TRUE
+		var/turf/T = get_turf(M)
+		var/sound/firesound = M.client.firesound
+		if(get_dist(locate(firesound.x, firesound.y, M.z), src) <= M.client.view)
+			firesound.x = x - T.x
+			firesound.z = y - T.y
+			firesound.status = SOUND_UPDATE
+
+	for(var/m in GLOB.player_list)
+		var/mob/M = m
+		if(M.client && !canHear[m])
+			M.client.firesound.status = SOUND_UPDATE | SOUND_MUTE
 	return 1
 
 /obj/effect/hotspot/Destroy()
