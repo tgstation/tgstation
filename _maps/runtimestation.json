@@ -4,5 +4,5 @@
     "map_file": "runtimestation.dmm",
     "minetype": "lavaland",
     "transition_config": "default",
-	"allow_custom_shuttles": "no"
+    "allow_custom_shuttles": "no"
 }
