@@ -10,7 +10,6 @@
 	var/prob2drop
 	var/mob/user
 	var/obj/item/W
-	var/dug = FALSE
 
 /datum/component/archaeology/Initialize(_prob2drop)
 	prob2drop = Clamp(_prob2drop, 0, 100)
@@ -22,7 +21,6 @@
 /datum/component/archaeology/Destroy()
 	user = null
 	W = null
-	dug = TRUE
 	return ..()
 
 /datum/component/archaeology/InheritComponent(datum/component/archaeology/A, i_am_original)
@@ -32,34 +30,36 @@
 		_drops[I] += other_drops[I]
 
 /datum/component/archaeology/proc/Dig(mob/user, obj/item/W)
-	if(dug)
-		to_chat(user, "<span class='notice'> Looks like someone had dug here already.</span>")
-		return
-
-	var/digging_speed
-	if (istype(W, /obj/item/shovel))
-		var/obj/item/shovel/S = W
-		digging_speed = S.digspeed
-	else if (istype(W, /obj/item/pickaxe))
-		var/obj/item/pickaxe/P = W
-		digging_speed = P.digspeed
-
-	if (digging_speed && isturf(user.loc))
-		to_chat(user, "<span class='notice'>You start digging...</span>")
-		playsound(parent, 'sound/effects/shovel_dig.ogg', 50, 1)
-
-		if(do_after(user, digging_speed, target = parent))
-			to_chat(user, "<span class='notice'>You dig a hole.</span>")
-			gets_dug()
-			return TRUE
-	return FALSE
-
-/datum/component/archaeology/proc/gets_dug()
-	if(dug) //for things like singulo_act and ex_act even though we have it in Dig() too.
-		return
-
 	if(isopenturf(parent))
 		var/turf/open/OT = parent
+		if(OT.dug)
+			to_chat(user, "<span class='notice'> Looks like someone has dug here already.</span>")
+			return
+
+		var/digging_speed
+		if (istype(W, /obj/item/shovel))
+			var/obj/item/shovel/S = W
+			digging_speed = S.digspeed
+		else if (istype(W, /obj/item/pickaxe))
+			var/obj/item/pickaxe/P = W
+			digging_speed = P.digspeed
+
+		if (digging_speed && isturf(user.loc))
+			to_chat(user, "<span class='notice'>You start digging...</span>")
+			playsound(parent, 'sound/effects/shovel_dig.ogg', 50, 1)
+
+			if(do_after(user, digging_speed, target = parent))
+				to_chat(user, "<span class='notice'>You dig a hole.</span>")
+				gets_dug()
+				return TRUE
+		return FALSE
+
+/datum/component/archaeology/proc/gets_dug()
+	if(isopenturf(parent))
+		var/turf/open/OT = parent
+		if(OT.dug)
+			return
+
 		for(var/thing in drops)
 			var/maxtodrop = drops[thing]
 			for(var/i in 1 to maxtodrop)
@@ -80,6 +80,7 @@
 		if(OT.slowdown) //Things like snow slow you down until you dig them.
 			OT.slowdown = 0
 		SSblackbox.add_details("pick_used_mining",W.type)
+		OT.dug = TRUE
 		qdel(src)
 
 /******************************************************
