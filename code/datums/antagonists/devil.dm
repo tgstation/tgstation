@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	if(form == BLOOD_LIZARD && SOULVALUE < BLOOD_THRESHOLD)
 		regress_humanoid()
 	if(SOULVALUE < 0)
-		remove_spells()
+		give_appropriate_spells()
 		to_chat(owner.current, "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked.")
 
 /datum/antagonist/devil/proc/regress_humanoid()
@@ -408,7 +408,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		reviveNumber += LOSS_PER_DEATH
 		update_hud()
 	if(body)
-		body.revive(1,0)
+		body.revive(TRUE, TRUE) //Adminrevive also recovers organs, preventing someone from resurrecting without a heart.
 		if(istype(body.loc, /obj/effect/dummy/slaughter/))
 			body.forceMove(get_turf(body))//Fixes dying while jaunted leaving you permajaunted.
 		if(istype(body, /mob/living/carbon/true_devil))

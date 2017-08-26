@@ -34,6 +34,7 @@
 	maxbodytemp = 350
 	unique_name = TRUE
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
+	var/oogas = 0
 
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
@@ -50,6 +51,8 @@
 			return parts
 
 /mob/living/simple_animal/hostile/gorilla/AttackingTarget()
+	if(client)
+		oogaooga()
 	var/list/parts = target_bodyparts(target)
 	if(parts)
 		if(!parts.len)
@@ -82,3 +85,11 @@
 /mob/living/simple_animal/hostile/gorilla/can_use_guns(obj/item/G)
 	to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 	return FALSE
+
+
+/mob/living/simple_animal/hostile/gorilla/proc/oogaooga()
+	oogas++
+	if(oogas >= rand(2,6))
+		playsound(src, "sound/creatures/gorilla.ogg", 200)
+		oogas = 0
+
