@@ -124,7 +124,7 @@
 		if(NORTH)
 			pixel_y = 23
 		if(SOUTH)
-			pixel_y = -25
+			pixel_y = -23
 		if(EAST)
 			pixel_x = 24
 		if(WEST)
