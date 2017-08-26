@@ -32,7 +32,6 @@
 	var/obj/item/pod_parts/pod_frame/pointer
 	var/list/connectedparts =  list()
 	neededparts -= src
-	//log_admin("Starting with [src]")
 	linked = src
 	for(var/i in 1 to 4)
 		T = get_turf(get_step(linked, turn(linked.dir, -linked.link_angle))) //get the next place that we want to look at
@@ -50,12 +49,12 @@
 		var/obj/item/pod_parts/pod_frame/F = connectedparts[i]
 		if(F.type in neededparts) //if one of the items can be founded in neededparts
 			neededparts -= F.type
-			//log_admin("Found [F.type]")
 		else //because neededparts has 4 distinct items, this must be called if theyre not all in place and wrenched
 			return
 	return connectedparts
 
 /obj/item/pod_parts/pod_frame/attackby(var/obj/item/O, mob/user)
+	. = ..()
 	if(istype(O, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = O
 		var/list/linkedparts = find_square()
@@ -68,7 +67,6 @@
 		R.use(10)
 		for(var/obj/item/pod_parts/pod_frame/F in linkedparts)
 			if(NORTH == turn(F.dir, -F.link_angle)) //if the part links north during construction, as the bottom left part always does
-				//log_admin("Repositioning")
 				pod.loc = F.loc
 			qdel(F)
 		playsound(get_turf(src), O.usesound, 50, 1)

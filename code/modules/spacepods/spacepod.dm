@@ -75,7 +75,7 @@
 	var/move_delay = 2
 	var/next_move = 0
 
-	var/datum/action/innate/spacepod/exit/exit_action = new
+	var/list/datum/action/innate/spacepod/exit/exit_action = list
 	var/datum/action/innate/spacepod/lockpod/lock_action = new
 	var/datum/action/innate/spacepod/poddoor/door_action = new
 	var/datum/action/innate/spacepod/weapons/fire_action = new
@@ -113,7 +113,7 @@
 /obj/spacepod/proc/get_intergrity()
 	return obj_integrity/max_integrity*100
 
-/obj/spacepod/Initialize(var/mapload, var/datum/pod_armor/p_armor)
+/obj/spacepod/Initialize(mapload, datum/pod_armor/p_armor)
 	. = ..(mapload)
 	if (p_armor)
 		pod_armor = new p_armor
@@ -225,7 +225,7 @@
 	bound_width = 64
 	bound_height = 64
 
-/obj/spacepod/bullet_act(var/obj/item/projectile/P)
+/obj/spacepod/bullet_act(obj/item/projectile/P)
 	if(P.damage_type == BRUTE || P.damage_type == BURN)
 		take_damage(P.damage)
 	P.on_hit(src)
@@ -272,7 +272,7 @@
 	update_icons()
 	diag_hud_set_podhealth()
 
-/obj/spacepod/proc/repair_damage(var/repair_amount)
+/obj/spacepod/proc/repair_damage(repair_amount)
 	if(obj_integrity)
 		obj_integrity = min(max_integrity, obj_integrity + repair_amount)
 		update_icons()
@@ -329,8 +329,6 @@
 	if(length(passengers | pilot) == 0)
 		return
 	var/sound/S = sound(mysound)
-	S.wait = 0 //No queue
-	S.channel = 0 //Any channel
 	S.volume = 50
 	for(var/mob/living/M in passengers | pilot)
 		SEND_SOUND(M, S)
@@ -618,7 +616,7 @@
 			pod_armor = /datum/pod_armor/industrial
 	update_icons()
 
-/obj/spacepod/proc/toggle_internal_tank(var/mob/user)
+/obj/spacepod/proc/toggle_internal_tank(mob/user)
 
 	if(user.incapacitated())
 		return
@@ -664,7 +662,7 @@
     if(t_air)
         return t_air.return_temperature()
 
-/obj/spacepod/proc/moved_other_inside(var/mob/living/carbon/human/H as mob)
+/obj/spacepod/proc/moved_other_inside(mob/living/carbon/human/H as mob)
 	occupant_sanity_check()
 	if(passengers.len < max_passengers)
 		H.stop_pulling()
@@ -800,7 +798,7 @@
 				log_game("##SPACEPOD WARNING: OCCUPANT [M] ESCAPED, TURF [get_turf(src)] | AREA [get_area(src)] | COORDS [x], [y], [z]")
 				passengers -= M
 
-/obj/spacepod/proc/exit_pod(var/mob/user)
+/obj/spacepod/proc/exit_pod(mob/user)
 	if(!istype(user))
 		return
 
@@ -824,7 +822,7 @@
 		Remove_Actions(user)
 		action_sanity_check()
 
-/obj/spacepod/proc/lock_pod(var/mob/user)
+/obj/spacepod/proc/lock_pod(mob/user)
 
 	if(user.incapacitated())
 		return
@@ -837,7 +835,7 @@
 	to_chat(user, "<span class='warning'>You [unlocked ? "unlock" : "lock"] the doors.</span>")
 
 
-/obj/spacepod/proc/toggleDoors(var/mob/user)
+/obj/spacepod/proc/toggleDoors(mob/user)
 
 	if(user.incapacitated())
 		return
@@ -868,7 +866,7 @@
 
 	to_chat(user, "<span class='warning'>You are not close to any pod doors.</span>")
 
-/obj/spacepod/proc/fireWeapon(var/mob/user)
+/obj/spacepod/proc/fireWeapon(mob/user)
 
 	if(user.incapacitated())
 		return
@@ -881,7 +879,7 @@
 		return
 	equipment_system.weapon_system.fire_weapons(user)
 
-/obj/spacepod/proc/unload(var/mob/user)
+/obj/spacepod/proc/unload(mob/user)
 	if(user.incapacitated())
 		return
 
@@ -893,7 +891,7 @@
 		return
 	equipment_system.cargo_system.unload()
 
-/obj/spacepod/proc/toggleLights(var/mob/user)
+/obj/spacepod/proc/toggleLights(mob/user)
 
 	if(user.incapacitated())
 		return
@@ -913,7 +911,7 @@
 	for(var/mob/living/M in passengers)
 		to_chat(M, "Lights toggled [lights ? "on" : "off"].")
 
-/obj/spacepod/proc/checkSeat(var/mob/user)
+/obj/spacepod/proc/checkSeat(mob/user)
 	if(user.incapacitated())
 		return
 

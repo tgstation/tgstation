@@ -1,4 +1,4 @@
-/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons(var/mob/user)
+/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons(mob/user)
 	if(my_atom.next_firetime > world.time)
 		to_chat(user, "<span class='warning'>Your weapons are recharging.</span>")
 		return
@@ -33,7 +33,6 @@
 		projtwo.firer = user
 		projtwo.def_zone = "chest"
 		INVOKE_ASYNC(src, .proc/do_fire, projone, projtwo)
-		sleep(2)
 	my_atom.next_firetime = world.time + fire_delay
 
 
@@ -53,7 +52,7 @@
 	var/obj/item/device/spacepod_equipment/lock/lock_system // lock system
 	var/obj/item/device/spacepod_equipment/thruster/thruster_system
 
-/datum/spacepod/equipment/New(var/obj/spacepod/SP)
+/datum/spacepod/equipment/New(obj/spacepod/SP)
 	..()
 	if(istype(SP))
 		my_atom = SP
@@ -64,7 +63,7 @@
 	var/occupant_mod = 0	// so any module can modify occupancy
 	var/list/storage_mod = list("slots" = 0, "w_class" = 0)		// so any module can modify storage slots
 
-/obj/item/device/spacepod_equipment/proc/removed(var/mob/user) // So that you can unload cargo when you remove the module
+/obj/item/device/spacepod_equipment/proc/removed(mob/user) // So that you can unload cargo when you remove the module
 	return
 
 /*
@@ -192,7 +191,7 @@
 	icon_state = "cargo_blank"
 	var/obj/storage = null
 
-/obj/item/device/spacepod_equipment/cargo/proc/passover(var/obj/item/I)
+/obj/item/device/spacepod_equipment/cargo/proc/passover(obj/item/I)
 	return
 
 /obj/item/device/spacepod_equipment/cargo/proc/unload() // called by unload verb
@@ -200,7 +199,7 @@
 		storage.forceMove(get_turf(my_atom))
 		storage = null
 
-/obj/item/device/spacepod_equipment/cargo/removed(var/mob/user) // called when system removed
+/obj/item/device/spacepod_equipment/cargo/removed(mob/user) // called when system removed
 	. = ..()
 	unload()
 
@@ -210,7 +209,7 @@
 	desc = "An ore storage system for spacepods. Scoops up any ore you drive over."
 	icon_state = "cargo_ore"
 
-/obj/item/device/spacepod_equipment/cargo/ore/passover(var/obj/item/I)
+/obj/item/device/spacepod_equipment/cargo/ore/passover(obj/item/I)
 	if(storage && istype(I,/obj/item/ore))
 		I.forceMove(storage)
 
