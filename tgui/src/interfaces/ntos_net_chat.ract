@@ -39,7 +39,7 @@
 					<tr><td><ui-button action='PRG_deletechannel'>Delete channel</ui-button>
 				{{/if}}
 			</table>
-		</div>		
+		</div>
 		<b>Chat Window</b>
 			<div class="statusDisplay" style="overflow: auto;">
 			<div class="item">
@@ -49,7 +49,7 @@
 					{{/each}}
 				</div>
 			</div>
-			</div>	
+			</div>
 		<b>Connected Users</b><br>
 		{{#each data.clients}}
 			{{name}}<br>
@@ -63,7 +63,7 @@
 		</table>
 		<b>Available channels:</b>
 		<table>
-		{{#each data.all_channels}}		
+		{{#each data.all_channels}}
 			<tr><td><ui-button action='PRG_joinchannel' params='{"id": "{{id}}"}'>{{chan}}</ui-button><br>
 		{{/each}}
 		</table>

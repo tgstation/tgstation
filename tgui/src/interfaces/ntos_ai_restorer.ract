@@ -58,7 +58,7 @@
 		</div>
 		<div class="itemContent">
 			<ui-bar min='0' max='100' value='{{data.health}}'
-			state='{{healthState}}'>{{Math.round(adata.health)}}%</ui-bar>			
+			state='{{healthState}}'>{{Math.round(adata.health)}}%</ui-bar>
 		</div>
 		<div class="itemLabel">
 			Active Laws:

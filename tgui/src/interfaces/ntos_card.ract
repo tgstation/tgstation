@@ -111,7 +111,7 @@
 		<ui-button action='PRG_togglea' icon='gear'>{{data.assignments ? "Hide assignments" : "Show assignments"}}</ui-button>
 	<div class='item'>
 	  <span id='allvalue.jobsslot'>
-		
+
 	  </span>
 	</div>
 	<div class='item'>

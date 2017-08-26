@@ -14,7 +14,7 @@
 					{{data.enabled ? "ENABLED" : "DISABLED"}}
 			</ui-button>
 		</ui-section>
-			
+
 		<ui-section label='Network buffer status'>
 			{{data.dos_overload}} / {{data.dos_capacity}} GQ
 		</ui-section>

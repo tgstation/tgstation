@@ -21,7 +21,7 @@
   {{#if data.recharge_port}}
 	{{#if data.recharge_port.mech}}
 	  <ui-section label='Integrity'>
-	    <ui-bar min='0' max='{{adata.recharge_port.mech.maxhealth}}' value='{{adata.recharge_port.mech.health}}'state='{{mechHealthState(adata.recharge_port.mech.health)}}'>{{Math.round(adata.recharge_port.mech.health)}}/{{adata.recharge_port.mech.maxhealth}}</ui-bar>	
+	    <ui-bar min='0' max='{{adata.recharge_port.mech.maxhealth}}' value='{{adata.recharge_port.mech.health}}'state='{{mechHealthState(adata.recharge_port.mech.health)}}'>{{Math.round(adata.recharge_port.mech.health)}}/{{adata.recharge_port.mech.maxhealth}}</ui-bar>
       </ui-section>
 	  {{#if data.recharge_port.mech.cell}}
 		{{#if data.recharge_port.mech.cell.critfail}}

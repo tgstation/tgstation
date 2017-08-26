@@ -69,7 +69,7 @@
 			{{/if}}
 			<ui-button action='PRG_newtextfile'>NEW DATA FILE</ui-button>
 		{{/if}}
-		
+
 	{{/if}}
 
 </ui-display>
