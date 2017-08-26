@@ -7,7 +7,7 @@
 /datum/component/archaeology
 	dupe_type = COMPONENT_DUPE_UNIQUE
 	var/list/drops = list()
-	var/prob2drop
+	var/prob2drop = 0
 	var/mob/user
 	var/obj/item/W
 

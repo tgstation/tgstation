@@ -16,4 +16,4 @@
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"				//before a datum's Destroy() is called: ()
 #define COMSIG_ATOM_ENTERED "atom_entered"						//from base of atom/Entered(): (atom/movable, atom)
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"				//from base of atom/movable/Crossed(): (atom/movable)
-#define COMSIG_OPENTURF_ATTACKBY "turf_open_attackby"
+#define COMSIG_ATTACKBY "attackby"
