@@ -7,7 +7,7 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "detective"
 	item_state = "gun"
-	flags =  CONDUCT
+	flags_1 =  CONDUCT_1
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=2000)
 	w_class = WEIGHT_CLASS_NORMAL
@@ -27,7 +27,7 @@
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
-	var/trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
+	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_state = SAWN_INTACT
 	var/burst_size = 1					//how large a burst is
@@ -188,12 +188,10 @@
 
 
 
-/obj/item/gun/proc/can_trigger_gun(var/mob/living/user)
-
-	if(!handle_pins(user) || !user.can_use_guns(src))
-		return 0
-
-	return 1
+/obj/item/gun/can_trigger_gun(mob/living/user)
+	. = ..()
+	if(!handle_pins(user))
+		return FALSE
 
 /obj/item/gun/proc/handle_pins(mob/living/user)
 	if(pin)

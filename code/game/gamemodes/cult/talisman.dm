@@ -343,7 +343,7 @@
 	desc = "Shackles that bind the wrists with sinister magic."
 	trashtype = /obj/item/restraints/handcuffs/energy/used
 	origin_tech = "materials=2;magnets=5"
-	flags = DROPDEL
+	flags_1 = DROPDEL_1
 
 /obj/item/restraints/handcuffs/energy/cult/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s shackles shatter in a discharge of dark magic!</span>", \

@@ -107,7 +107,7 @@
 				chance = 70
 				M = "close your eyes and boldly step forward"
 				U = "closes his eyes and boldly steps forward"
-			else if(istype(T) && T.wet && isobj(user.shoes) && user.shoes.flags&NOSLIP)
+			else if(istype(T) && T.wet && isobj(user.shoes) && user.shoes.flags_1&NOSLIP_1)
 				chance = 60
 				M = "slip and fall inside"
 				U = "slips and falls inside"

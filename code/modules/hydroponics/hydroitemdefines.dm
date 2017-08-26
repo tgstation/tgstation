@@ -23,7 +23,7 @@
 	icon_state = "weedspray"
 	item_state = "spray"
 	volume = 100
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -47,7 +47,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -71,7 +71,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	origin_tech = "engineering=2;biotech=2"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
@@ -87,7 +87,7 @@
 	item_state = "hatchet"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 12
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 15
@@ -115,7 +115,7 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	armour_penetration = 20
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=3;combat=2"

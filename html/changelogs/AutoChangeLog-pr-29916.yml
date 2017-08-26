@@ -1,0 +1,5 @@
+author: "NewSta"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the wiki button"
+  - spellcheck: "Fixes a typo in the wiki button description"

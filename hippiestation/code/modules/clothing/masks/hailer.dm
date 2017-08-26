@@ -7,10 +7,10 @@
 	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
 	item_state = "sechailer"
-	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
 	flags_inv = HIDEFACIALHAIR|HIDEFACE
 	w_class = WEIGHT_CLASS_SMALL
-	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
@@ -76,7 +76,7 @@
 		var/mob/living/carbon/H = user
 		if(H.wear_mask == src)
 			emagged = TRUE
-			flags |= NODROP // If I pull that off will you die?
+			flags_1 |= NODROP_1 // If I pull that off will you die?
 			to_chat(user, "<span class='warning'>You overload \the [src]'s Big Guy synthesizer.")
 			aggressiveness = 5
 		else

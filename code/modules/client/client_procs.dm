@@ -72,8 +72,9 @@
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
 
-	//Logs all hrefs
-	WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+	//Logs all hrefs, except chat pings
+	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
+		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -294,7 +295,7 @@ GLOBAL_LIST(external_rsc_urls)
 		adminGreet()
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			to_chat(src, "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
-		
+
 		if(!check_rights_for(src, R_ADMIN) && check_rights_for(src, R_MENTOR))
 			mentor_memo_output("Show")
 

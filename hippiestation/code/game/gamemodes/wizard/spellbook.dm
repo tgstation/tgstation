@@ -151,7 +151,7 @@
 	name = "Mindswap"
 	spell_type = /obj/effect/proc_holder/spell/targeted/mind_transfer
 	category = "Mobility"
-
+F
 /datum/spellbook_entry/forcewall
 	name = "Force Wall"
 	spell_type = /obj/effect/proc_holder/spell/targeted/forcewall
@@ -209,7 +209,7 @@
 
 /datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return 1 on success
 	. = ..()
-	SET_SECONDARY_FLAG(user, TESLA_IGNORE)
+	user.flags_2 |= TESLA_IGNORE_2
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
@@ -899,7 +899,7 @@
 	if(ishuman(user))
 		to_chat(user,"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>")
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
-		magichead.flags |= NODROP		//curses!
+		magichead.flags_1 |= NODROP_1		//curses!
 		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
 		if(!user.dropItemToGround(user.wear_mask))

@@ -10,22 +10,21 @@
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
-	container_type = OPENCONTAINER
-
-	var/operating = FALSE
+	container_type = OPENCONTAINER_1
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
-	var/disabled = 0
 	idle_power_usage = 10
 	active_power_usage = 100
+	circuit = /obj/item/circuitboard/machine/limbgrower
+
+	var/operating = FALSE
+	var/disabled = FALSE
 	var/busy = FALSE
 	var/prod_coeff = 1
-
 	var/datum/design/being_built
 	var/datum/research/files
 	var/selected_category
 	var/screen = 1
-
 	var/list/categories = list(
 							"human",
 							"lizard",
@@ -33,21 +32,10 @@
 							"special"
 							)
 
-/obj/machinery/limbgrower/New()
-	..()
+/obj/machinery/limbgrower/Initialize()
+	. = ..()
 	create_reagents(0)
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/limbgrower(null)
-	B.apply_default_parts(src)
 	files = new /datum/research/limbgrower(src)
-
-/obj/item/circuitboard/machine/limbgrower
-	name = "Limb Grower (Machine Board)"
-	build_path = /obj/machinery/limbgrower
-	origin_tech = "programming=2;biotech=2"
-	req_components = list(
-							/obj/item/stock_parts/manipulator = 1,
-							/obj/item/reagent_containers/glass/beaker = 2,
-							/obj/item/stock_parts/console_screen = 1)
 
 /obj/machinery/limbgrower/interact(mob/user)
 	if(!is_operational())

@@ -18,8 +18,8 @@
 	var/sun_angle = 0		// sun angle as set by sun datum
 	var/obj/machinery/power/solar_control/control = null
 
-/obj/machinery/power/tracker/New(var/turf/loc, var/obj/item/solar_assembly/S)
-	..(loc)
+/obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
+	. = ..()
 	Make(S)
 	connect_to_network()
 
@@ -73,13 +73,13 @@
 		return ..()
 
 /obj/machinery/power/tracker/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 		stat |= BROKEN
 		unset_control()
 
 /obj/machinery/power/solar/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)

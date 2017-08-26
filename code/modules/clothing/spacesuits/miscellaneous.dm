@@ -57,7 +57,7 @@ Contains:
 	name = "officer's beret"
 	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
 	icon_state = "beret_badge"
-	flags = STOPSPRESSUREDMAGE
+	flags_1 = STOPSPRESSUREDMAGE_1
 	flags_inv = 0
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
@@ -82,7 +82,7 @@ Contains:
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
 	name = "NASA Void Helmet"
-	desc = "An old, NASA Centcom branch designed, dark red space suit helmet."
+	desc = "An old, NASA CentCom branch designed, dark red space suit helmet."
 	icon_state = "void"
 	item_state = "void"
 
@@ -90,12 +90,12 @@ Contains:
 	name = "NASA Voidsuit"
 	icon_state = "void"
 	item_state = "void"
-	desc = "An old, NASA Centcom branch designed, dark red space suit."
+	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/device/multitool)
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
 	name = "Engineering Void Helmet"
-	desc = "A Centcom engineering dark red space suit helmet. While old and dusty, it still gets the job done."
+	desc = "A CentCom engineering dark red space suit helmet. While old and dusty, it still gets the job done."
 	icon_state = "void"
 	item_state = "void"
 
@@ -103,7 +103,7 @@ Contains:
 	name = "Engineering Voidsuit"
 	icon_state = "void"
 	item_state = "void"
-	desc = "A Centcom engineering dark red space suit. Age has degraded the suit making is difficult to move around in."
+	desc = "A CentCom engineering dark red space suit. Age has degraded the suit making is difficult to move around in."
 	slowdown = 4
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/device/multitool)
 
@@ -112,7 +112,7 @@ Contains:
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags = STOPSPRESSUREDMAGE
+	flags_1 = STOPSPRESSUREDMAGE_1
 	flags_cover = HEADCOVERSEYES
 
 	dog_fashion = /datum/dog_fashion/head/santa
@@ -123,7 +123,7 @@ Contains:
 	icon_state = "santa"
 	item_state = "santa"
 	slowdown = 0
-	flags = STOPSPRESSUREDMAGE
+	flags_1 = STOPSPRESSUREDMAGE_1
 	allowed = list(/obj/item) //for stuffing exta special presents
 
 
@@ -134,7 +134,7 @@ Contains:
 	icon_state = "pirate"
 	item_state = "pirate"
 	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
-	flags = STOPSPRESSUREDMAGE
+	flags_1 = STOPSPRESSUREDMAGE_1
 	strip_delay = 40
 	equip_delay_other = 20
 	flags_cover = HEADCOVERSEYES
@@ -161,7 +161,7 @@ Contains:
 	item_color = "ert_commander"
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 80, acid = 80)
 	strip_delay = 130
-	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
+	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1 | NODROP_1
 	brightness_on = 7
 
 /obj/item/clothing/suit/space/hardsuit/ert
@@ -261,7 +261,7 @@ Contains:
 	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75, fire = 60, acid = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
-	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
+	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1 | NODROP_1
 
 
 /obj/item/clothing/suit/space/hardsuit/carp
@@ -343,7 +343,7 @@ Contains:
 /obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!torn && prob(50))
 		to_chat(owner, "<span class='warning'>[src] tears from the damage, breaking the air-tight seal!</span>")
-		src.flags -= STOPSPRESSUREDMAGE
+		src.flags_1 &= ~STOPSPRESSUREDMAGE_1
 		src.name = "torn [src]."
 		src.desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
 		src.torn = TRUE

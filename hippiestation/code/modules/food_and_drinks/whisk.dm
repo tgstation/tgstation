@@ -7,7 +7,7 @@
 /obj/item/whisk/afterattack(atom/target, mob/user)
 	if(istype(target, /obj))
 		var/obj/O = target
-		if(O.container_type & OPENCONTAINER && O.reagents.total_volume)
+		if(O.container_type & OPENCONTAINER_1 && O.reagents.total_volume)
 			to_chat(user, "<span class='notice'>You begin to stir the contents inside [O].</span>")
 			while(O.reagents.get_reagent_amount("milk") >= 15) //Butter
 				if(do_mob(user, user, 5))

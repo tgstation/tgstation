@@ -23,20 +23,18 @@
 	armour_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
+	flags_2 = SLOWS_WHILE_IN_HAND_2
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
 /obj/item/twohanded/ctf/Destroy()
-	if(reset)
-		qdel(reset)
-		reset = null
-	. = ..()
+	QDEL_NULL(reset)
+	return ..()
 
 /obj/item/twohanded/ctf/Initialize()
-	..()
-	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
+	. = ..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
@@ -475,14 +473,14 @@
 	W.registered_name = H.real_name
 	W.update_label(W.registered_name, W.assignment)
 
-	// The shielded hardsuit is already NODROP
+	// The shielded hardsuit is already NODROP_1
 	no_drops += H.get_item_by_slot(slot_gloves)
 	no_drops += H.get_item_by_slot(slot_shoes)
 	no_drops += H.get_item_by_slot(slot_w_uniform)
 	no_drops += H.get_item_by_slot(slot_ears)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		I.flags |= NODROP
+		I.flags_1 |= NODROP_1
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill

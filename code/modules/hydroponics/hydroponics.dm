@@ -6,6 +6,7 @@
 	anchored = TRUE
 	pixel_y = 8
 	unique_rename = 1
+	circuit = /obj/item/circuitboard/machine/hydroponics
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10		//The amount of nutrient in the tray (max 10)
@@ -36,20 +37,6 @@
 	name = "hydroponics tray"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
-
-/obj/machinery/hydroponics/constructable/New()
-	..()
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/hydroponics(null)
-	B.apply_default_parts(src)
-
-/obj/item/circuitboard/machine/hydroponics
-	name = "Hydroponics Tray (Machine Board)"
-	build_path = /obj/machinery/hydroponics/constructable
-	origin_tech = "programming=1;biotech=2"
-	req_components = list(
-							/obj/item/stock_parts/matter_bin = 2,
-							/obj/item/stock_parts/manipulator = 1,
-							/obj/item/stock_parts/console_screen = 1)
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	var/tmp_capacity = 0
@@ -742,9 +729,8 @@
 			var/datum/reagents/S = new /datum/reagents() //This is a strange way, but I don't know of a better one so I can't fix it at the moment...
 			S.my_atom = H
 
+			reagent_source.reagents.trans_to(S,split)
 			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
-				while (reagent_source.reagents.total_volume > 0) //keep transferring reagents until the produce or pill is empty
-					reagent_source.reagents.trans_to(S,split)
 				qdel(reagent_source)
 			else
 				reagent_source.reagents.trans_to(S,split)

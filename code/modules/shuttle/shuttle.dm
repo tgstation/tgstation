@@ -72,6 +72,13 @@
 		)
 
 
+//returns turfs within our projected rectangle in no particular order
+/obj/docking_port/proc/return_turfs()
+	var/list/L = return_coords()
+	var/turf/T0 = locate(L[1],L[2],z)
+	var/turf/T1 = locate(L[3],L[4],z)
+	return block(T0,T1)
+
 //returns turfs within our projected rectangle in a specific order.
 //this ensures that turfs are copied over in the same order, regardless of any rotation
 /obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir, area_type)
@@ -178,7 +185,7 @@
 		var/turf/T = assigned_turfs[i]
 		if(T.type == turf_type)
 			T.ChangeTurf(/turf/open/space,/turf/open/space)
-			T.flags |= UNUSED_TRANSIT_TURF
+			T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
@@ -838,13 +845,13 @@
 
 //Called when emergency shuttle docks at centcom
 /obj/docking_port/mobile/proc/on_emergency_dock()
-	//Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
+	//Mapping a new docking point for each ship mappers could potentially want docking with centcom would take up lots of space, just let them keep flying off into the sunset for their greentext
 	if(launch_status == ENDGAME_LAUNCHED)
 		launch_status = ENDGAME_TRANSIT
 
 /obj/docking_port/mobile/pod/on_emergency_dock()
 	if(launch_status == ENDGAME_LAUNCHED)
-		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcomm
+		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcom
 		mode = SHUTTLE_ENDGAME
 
 /obj/docking_port/mobile/emergency/on_emergency_dock()

@@ -34,7 +34,7 @@
 	light_color = LIGHT_COLOR_BROWN
 
 /obj/machinery/computer/slot_machine/Initialize()
-	..()
+	. = ..()
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
 

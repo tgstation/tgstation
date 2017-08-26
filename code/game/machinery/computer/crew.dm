@@ -66,7 +66,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	jobs["Janitor"] = 68
 	jobs["Lawyer"] = 69
 	jobs["Admiral"] = 200
-	jobs["Centcom Commander"] = 210
+	jobs["CentCom Commander"] = 210
 	jobs["Custodian"] = 211
 	jobs["Medical Officer"] = 212
 	jobs["Research Officer"] = 213
