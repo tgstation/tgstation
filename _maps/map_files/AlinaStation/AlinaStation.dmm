@@ -3865,6 +3865,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/nuke_storage)
 "ji" = (
@@ -5682,7 +5683,6 @@
 	},
 /obj/effect/landmark/blobstart,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "np" = (
@@ -18403,14 +18403,18 @@
 /turf/open/space,
 /area/space)
 "TL" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/open/floor/plating/airless/astplate,
+/area/science/test_area)
+"TM" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai_upload)
-"TM" = (
+"TN" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
-"TN" = (
+"TO" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -18424,19 +18428,19 @@
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"TO" = (
+"TP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"TP" = (
+"TQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel,
 /area/science/research)
-"TQ" = (
+"TR" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -18445,43 +18449,34 @@
 /obj/effect/landmark/observer_start,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"TR" = (
+"TS" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
-"TS" = (
+"TT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"TT" = (
-/obj/effect/baseturf_helper/asteroid,
-/turf/open/floor/plasteel,
-/area/science/robotics/mechbay)
 "TU" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel,
-/area/hydroponics)
+/area/science/robotics/mechbay)
 "TV" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plasteel,
+/area/hydroponics)
+"TW" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered{
 	name = "Asteroid"
 	})
-"TW" = (
+"TX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel/chapel{
 	dir = 4
-	},
-/area/chapel/main)
-"TX" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/baseturf_helper/asteroid,
-/turf/open/floor/plasteel/chapel{
-	dir = 8
 	},
 /area/chapel/main)
 "TY" = (
@@ -18501,13 +18496,9 @@
 /area/medical/chemistry)
 "Ub" = (
 /obj/effect/baseturf_helper/asteroid,
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
-"Uc" = (
-/obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel,
 /area/janitor)
-"Ud" = (
+"Uc" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -18515,7 +18506,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
-"Ue" = (
+"Ud" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -18526,7 +18517,7 @@
 	},
 /turf/open/floor/plasteel/escape,
 /area/hallway/primary/port)
-"Uf" = (
+"Ue" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/machinery/power/apc{
 	areastring = "/area/construction";
@@ -18540,7 +18531,7 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
-"Ug" = (
+"Uf" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -18548,7 +18539,7 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
-"Uh" = (
+"Ug" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -18556,6 +18547,10 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
+"Uh" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plasteel,
+/area/crew_quarters/heads/hop)
 "Ui" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plating,
@@ -18565,17 +18560,24 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "Uk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating,
+/area/maintenance/port)
+"Ul" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"Ul" = (
+"Um" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"Um" = (
+"Un" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -18591,21 +18593,21 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"Un" = (
+"Uo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"Uo" = (
+"Up" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"Up" = (
+"Uq" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -18618,7 +18620,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"Uq" = (
+"Ur" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
@@ -18635,7 +18637,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/aft)
-"Ur" = (
+"Us" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
@@ -18646,7 +18648,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"Us" = (
+"Ut" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -18654,7 +18656,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"Ut" = (
+"Uu" = (
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -18667,20 +18669,20 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"Uu" = (
+"Uv" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/engine,
 /area/engine/supermatter)
-"Uv" = (
+"Uw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
-"Uw" = (
+"Ux" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/aisat/hallway)
-"Ux" = (
+"Uy" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -29149,7 +29151,7 @@ LD
 LD
 Ns
 NQ
-Uv
+Uw
 LD
 Ph
 PJ
@@ -30706,7 +30708,7 @@ RY
 Si
 So
 Su
-Ux
+Uy
 SN
 Ru
 Ru
@@ -32242,7 +32244,7 @@ PO
 Pq
 OP
 NK
-Uw
+Ux
 LJ
 Ru
 Ry
@@ -39153,7 +39155,7 @@ AI
 pv
 Cp
 Dd
-Uf
+Ue
 Ui
 Ec
 Ec
@@ -39410,7 +39412,7 @@ AJ
 Bz
 Cp
 Dd
-Ug
+Uf
 Ec
 Ec
 Eb
@@ -39664,10 +39666,10 @@ aa
 aa
 oE
 AJ
+Uc
 Ud
-Ue
 De
-Uh
+Ug
 Ec
 Fv
 Eb
@@ -44793,7 +44795,7 @@ ad
 ad
 ar
 ar
-TV
+TW
 ar
 ar
 ve
@@ -45064,7 +45066,7 @@ pv
 AR
 Cw
 Do
-Dp
+Uh
 ES
 AQ
 Gq
@@ -45839,7 +45841,7 @@ AQ
 AQ
 AQ
 Gq
-GQ
+Uk
 Eo
 GS
 GS
@@ -46592,7 +46594,7 @@ qg
 qW
 rL
 sm
-TW
+TX
 tI
 ur
 oH
@@ -47364,7 +47366,7 @@ qh
 qh
 qh
 qf
-TX
+tJ
 qf
 oH
 oH
@@ -48667,7 +48669,7 @@ EY
 FJ
 BQ
 GV
-Uk
+Ul
 BQ
 IJ
 Jn
@@ -49402,7 +49404,7 @@ dC
 fx
 gn
 gV
-TN
+TO
 ip
 iW
 jv
@@ -51973,7 +51975,7 @@ fE
 gu
 ha
 hO
-TO
+TP
 ha
 jA
 fD
@@ -52267,8 +52269,8 @@ pj
 Hb
 nN
 In
-Um
-Up
+Un
+Uq
 IN
 Ko
 KM
@@ -52524,7 +52526,7 @@ ml
 mS
 nN
 In
-Un
+Uo
 Jt
 IN
 Kp
@@ -54025,7 +54027,7 @@ ad
 ef
 ex
 eZ
-TL
+TM
 gx
 he
 hP
@@ -54076,7 +54078,7 @@ LR
 Mr
 MN
 Ng
-Uu
+Uv
 Mr
 Lt
 OW
@@ -54301,7 +54303,7 @@ pQ
 qy
 pQ
 rZ
-TU
+TV
 tf
 og
 uG
@@ -54567,7 +54569,7 @@ vU
 wV
 xG
 xG
-Uc
+Ub
 xG
 Bi
 vU
@@ -54581,7 +54583,7 @@ He
 Ey
 le
 IV
-Uq
+Ur
 JO
 JO
 KR
@@ -55064,7 +55066,7 @@ kv
 hP
 le
 mj
-TQ
+TR
 nE
 og
 pc
@@ -55351,7 +55353,7 @@ mk
 Hg
 nN
 le
-Uo
+Up
 Jz
 JT
 JT
@@ -56611,7 +56613,7 @@ nK
 on
 pf
 pf
-TS
+TT
 rn
 ol
 ok
@@ -58182,8 +58184,8 @@ Hp
 Hp
 JY
 Kz
-Ur
 Us
+Ut
 hB
 hB
 MU
@@ -58440,7 +58442,7 @@ JF
 JZ
 IX
 fr
-Ut
+Uu
 hB
 hB
 hB
@@ -59182,7 +59184,7 @@ os
 pl
 ll
 qI
-TT
+TU
 se
 sJ
 qL
@@ -59691,7 +59693,7 @@ lm
 lm
 mx
 nb
-TR
+TS
 ou
 pm
 ll
@@ -59706,7 +59708,7 @@ vw
 wi
 xg
 xg
-Ub
+xg
 zq
 vw
 Bs
@@ -59975,7 +59977,7 @@ wj
 wj
 GD
 wj
-Ul
+Um
 wj
 GC
 GC
@@ -60457,7 +60459,7 @@ ie
 iO
 jo
 jV
-TP
+TQ
 ln
 lk
 lk
@@ -60669,7 +60671,7 @@ cp
 cp
 ct
 cx
-cx
+TL
 cx
 cL
 cp
@@ -60707,7 +60709,7 @@ dz
 dw
 eJ
 eJ
-TM
+TN
 gK
 hx
 if
