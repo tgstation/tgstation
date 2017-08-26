@@ -67,14 +67,7 @@
 		build_inv = TRUE
 	. = ..()
 	wires = new /datum/wires/vending(src)
-<<<<<<< HEAD
-	if(refill_canister) //constructable vending machine
-		var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/vendor(null)
-		B.apply_default_parts(src)
-	else
-=======
 	if(build_inv) //non-constructable vending machine
->>>>>>> d50b0c6e63f02be4b833ad3063363077c1d769c8
 		build_inventory(products)
 		build_inventory(contraband, 1)
 		build_inventory(premium, 0, 1)
@@ -86,49 +79,6 @@
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
 
-<<<<<<< HEAD
-/obj/item/circuitboard/machine/vendor
-	name = "Booze-O-Mat Vendor (Machine Board)"
-	build_path = /obj/machinery/vending/boozeomat
-	origin_tech = "programming=1"
-	req_components = list(
-							/obj/item/vending_refill/boozeomat = 3)
-
-	var/list/names_paths = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-							/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
-							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
-							/obj/machinery/vending/cola = "Robust Softdrinks",
-							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
-							/obj/machinery/vending/autodrobe = "AutoDrobe",
-							/obj/machinery/vending/clothing = "ClothesMate",
-							/obj/machinery/vending/medical = "NanoMed Plus",
-							/obj/machinery/vending/wallmed = "NanoMed")
-
-/obj/item/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
-		var/position = names_paths.Find(build_path)
-		position = (position == names_paths.len) ? 1 : (position + 1)
-		var/typepath = names_paths[position]
-
-		to_chat(user, "<span class='notice'>You set the board to \"[names_paths[typepath]]\".</span>")
-		set_type(typepath)
-	else
-		return ..()
-
-/obj/item/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
-	build_path = typepath
-	name = "[names_paths[build_path]] Vendor (Machine Board)"
-	req_components = list(initial(typepath.refill_canister) = initial(typepath.refill_count))
-
-/obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
-	for(var/typepath in names_paths)
-		if(istype(M, typepath))
-			set_type(typepath)
-			break
-	..()
-
-=======
->>>>>>> d50b0c6e63f02be4b833ad3063363077c1d769c8
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
@@ -137,13 +87,7 @@
 
 /obj/machinery/vending/snack/Destroy()
 	for(var/obj/item/reagent_containers/food/snacks/S in contents)
-<<<<<<< HEAD
-		S.loc = get_turf(src)
-	qdel(wires)
-	wires = null
-=======
 		S.forceMove(get_turf(src))
->>>>>>> d50b0c6e63f02be4b833ad3063363077c1d769c8
 	return ..()
 
 /obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
