@@ -13,6 +13,7 @@
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
+	archdrops = list(/obj/item/ore/glass = 5)
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
@@ -20,7 +21,7 @@
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
-	AddComponent(/datum/component/archaeology/asteroid, 100)
+	AddComponent(/datum/component/archaeology, 100)
 
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
@@ -33,14 +34,15 @@
 
 /turf/open/floor/plating/asteroid/ex_act(severity, target)
 	contents_explosion(severity, target)
-	switch(severity)
-		if(3)
-			return
-		if(2)
-			if(prob(20))
-				src.gets_dug()
-		if(1)
-			src.gets_dug()
+	for(var/datum/component/archaeology/archy in datum_components)
+		switch(severity)
+			if(3)
+				return
+			if(2)
+				if(prob(20))
+					archy.gets_dug()
+			if(1)
+				archy.gets_dug()
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
 	//note that this proc does not call ..()
@@ -71,18 +73,17 @@
 	return
 
 /turf/open/floor/plating/asteroid/singularity_pull(S, current_size)
-	if(dug)
-		return
-	switch(current_size)
-		if(STAGE_THREE)
-			if(!prob(30))
-				gets_dug()
-		if(STAGE_FOUR)
-			if(prob(50))
-				gets_dug()
-		else
-			if(current_size >= STAGE_FIVE && prob(70))
-				gets_dug()
+	for(var/datum/component/archaeology/archy in datum_components)
+		switch(current_size)
+			if(STAGE_THREE)
+				if(!prob(30))
+					archy.gets_dug()
+			if(STAGE_FOUR)
+				if(prob(50))
+					archy.gets_dug()
+			else
+				if(current_size >= STAGE_FIVE && prob(70))
+					archy.gets_dug()
 
 
 /turf/open/floor/plating/asteroid/basalt
@@ -92,7 +93,7 @@
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
-	sand_type = /obj/item/ore/glass/basalt
+	archdrops = list(/obj/item/ore/glass/basalt = 5)
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
@@ -103,6 +104,7 @@
 
 /turf/open/floor/plating/asteroid/basalt/Initialize()
 	. = ..()
+	AddComponent(/datum/component/archaeology/basalt, 100)
 	set_basalt_light(src)
 
 /proc/set_basalt_light(turf/open/floor/B)
@@ -111,11 +113,6 @@
 			B.set_light(2, 0.6, LIGHT_COLOR_LAVA) //more light
 		if("basalt5", "basalt9")
 			B.set_light(1.4, 0.6, LIGHT_COLOR_LAVA) //barely anything!
-
-/turf/open/floor/plating/asteroid/basalt/gets_dug()
-	if(!dug)
-		set_light(0)
-	..()
 
 
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
@@ -305,8 +302,8 @@
 	initial_gas_mix = "TEMP=180"
 	slowdown = 2
 	environment_type = "snow"
-	sand_type = /obj/item/stack/sheet/mineral/snow
 	flags_1 = NONE
+	archdrops= list(/obj/item/stack/sheet/mineral/snow = 5)
 
 /turf/open/floor/plating/asteroid/snow/airless
 	initial_gas_mix = "TEMP=2.7"
