@@ -5285,7 +5285,7 @@
 	d2 = 4
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/science";
+	areastring = "/area/science/research";
 	dir = 1;
 	name = "Research Division APC";
 	pixel_y = 25
