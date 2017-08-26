@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(garbage)
 		msg += "n/a|"
 	else
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
-	msg += "|P:[pass_counts.Join(",")]"
+	msg += " P:[pass_counts.Join(",")]"
 	msg += "|F:[fail_counts.Join(",")]"
 	..(msg)
 
@@ -111,9 +111,9 @@ SUBSYSTEM_DEF(garbage)
 		Queue(ref, GC_QUEUE_PREQUEUE+1)
 		if (MC_TICK_CHECK)
 			break
-
-	tobequeued.Cut(1,count+1)
-	count = 0
+	if (count)
+		tobequeued.Cut(1,count+1)
+		count = 0
 
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
 	if (level == GC_QUEUE_CHECK)
@@ -126,7 +126,8 @@ SUBSYSTEM_DEF(garbage)
 	if (count) //runtime last run before we could do this.
 		var/c = count
 		count = 0 //so if we runtime on the Cut, we don't try again.
-		queue.Cut(1,c+1)
+		var/list/lastqueue = queues[lastlevel]
+		lastqueue.Cut(1,c+1)
 
 	lastlevel = level
 
@@ -172,9 +173,9 @@ SUBSYSTEM_DEF(garbage)
 				continue
 
 		Queue(D, ++level)
-
-	queue.Cut(1,count+1)
-	count = 0
+	if (count)
+		queue.Cut(1,count+1)
+		count = 0
 
 
 //a root canal is called a "final restoration" because you basically gut everything out and hope that keeps it from being a pain.
