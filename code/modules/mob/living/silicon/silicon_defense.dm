@@ -11,8 +11,8 @@
 		if (prob(90))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-							"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			visible_message("<span class='danger'>[M] slashed at [src]!</span>", \
+							"<span class='userdanger'>[M] slashed at you!</span>")
 			if(prob(8))
 				flash_act(affect_silicon = 1)
 			add_logs(M, src, "attacked")
@@ -21,7 +21,7 @@
 		else
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
-							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
+							"<span class='userdanger'>[M] took a swipe at you!</span>")
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	. = ..()
@@ -58,8 +58,8 @@
 		..(user, 1)
 		adjustBruteLoss(rand(10, 15))
 		playsound(loc, "punch", 25, 1, -1)
-		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
-				"<span class='userdanger'>[user] has punched [src]!</span>")
+		visible_message("<span class='danger'>[user] punched [src]!</span>", \
+				"<span class='userdanger'>[user] punched you!</span>")
 		return 1
 	return 0
 

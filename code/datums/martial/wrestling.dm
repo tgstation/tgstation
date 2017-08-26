@@ -432,8 +432,8 @@
 	if(A.pulling == D)
 		return 1
 	A.start_pulling(D)
-	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
-								"<span class='userdanger'>[A] gets [D] in a cinch!</span>")
+	D.visible_message("<span class='danger'>[A] got [D] in a cinch!</span>", \
+								"<span class='userdanger'>[A] got you in a cinch!</span>")
 	D.Stun(rand(60,100))
 	add_logs(A, D, "cinched")
 	return 1

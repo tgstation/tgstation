@@ -16,8 +16,8 @@
 			step_away(src,user,15)
 			hitverb = "slammed"
 		playsound(loc, "punch", 25, 1, -1)
-		visible_message("<span class='danger'>[user] has [hitverb] [src]!</span>", \
-		"<span class='userdanger'>[user] has [hitverb] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>[user] [hitverb] [src]!</span>", \
+		"<span class='userdanger'>[user] [hitverb] you!</span>", null, COMBAT_MESSAGE_RANGE)
 		return 1
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
@@ -27,19 +27,19 @@
 				var/damage = rand(1, 9)
 				if (prob(90))
 					playsound(loc, "punch", 25, 1, -1)
-					visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-							"<span class='userdanger'>[M] has punched [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+					visible_message("<span class='danger'>[M] punched [src]!</span>", \
+							"<span class='userdanger'>[M] punched you!</span>", null, COMBAT_MESSAGE_RANGE)
 					if ((stat != DEAD) && (damage > 9 || prob(5)))//Regular humans have a very small chance of knocking an alien down.
 						Unconscious(40)
-						visible_message("<span class='danger'>[M] has knocked [src] down!</span>", \
-								"<span class='userdanger'>[M] has knocked [src] down!</span>")
+						visible_message("<span class='danger'>[M] knocked [src] down!</span>", \
+								"<span class='userdanger'>[M] knocked you down!</span>")
 					var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 					apply_damage(damage, BRUTE, affecting)
 					add_logs(M, src, "attacked")
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-					visible_message("<span class='userdanger'>[M] has attempted to punch [src]!</span>", \
-						"<span class='userdanger'>[M] has attempted to punch [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+					visible_message("<span class='userdanger'>[M] attempted to punch [src]!</span>", \
+						"<span class='userdanger'>[M] attempted to punch you!</span>", null, COMBAT_MESSAGE_RANGE)
 
 			if ("disarm")
 				if (!lying)
@@ -47,18 +47,18 @@
 						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						add_logs(M, src, "pushed")
-						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
-							"<span class='userdanger'>[M] has pushed down [src]!</span>")
+						visible_message("<span class='danger'>[M] pushed [src] down!</span>", \
+							"<span class='userdanger'>[M] pushed you down!</span>")
 					else
 						if (prob(50))
 							drop_item()
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
-							"<span class='userdanger'>[M] has disarmed [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+							visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
+							"<span class='userdanger'>[M] disarmed you!</span>", null, COMBAT_MESSAGE_RANGE)
 						else
 							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-							visible_message("<span class='userdanger'>[M] has attempted to disarm [src]!</span>",\
-								"<span class='userdanger'>[M] has attempted to disarm [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+							visible_message("<span class='userdanger'>[M] attempted to disarm [src]!</span>",\
+								"<span class='userdanger'>[M] attempted to disarm you!</span>", null, COMBAT_MESSAGE_RANGE)
 
 
 

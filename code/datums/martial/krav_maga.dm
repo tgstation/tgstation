@@ -152,12 +152,12 @@
 		if(I)
 			if(D.drop_item())
 				A.put_in_hands(I)
-		D.visible_message("<span class='danger'>[A] has disarmed [D]!</span>", \
-							"<span class='userdanger'>[A] has disarmed [D]!</span>")
+		D.visible_message("<span class='danger'>[A] disarmed [D]!</span>", \
+							"<span class='userdanger'>[A] disarmed you!</span>")
 		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	else
 		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
-							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
+							"<span class='userdanger'>[A] attempted to disarm you!</span>")
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	add_logs(A, D, "disarmed with krav maga", "[I ? " removing \the [I]" : ""]")
 	return 1

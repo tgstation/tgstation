@@ -69,11 +69,12 @@
 	add_logs(user, target, "attempted to inject", src)
 
 	if(target != user)
-		target.visible_message("<span class='danger'>[user] is trying to inject [target] with [src]!</span>", "<span class='userdanger'>[user] is trying to inject [target] with [src]!</span>")
+		target.visible_message("<span class='danger'>[user] tries to inject [target] with [src]...</span>", \
+						"<span class='userdanger'>[user] tries to inject you with [src]...</span>")
 		if(!do_mob(user, target) || used)
 			return
-		target.visible_message("<span class='danger'>[user] injects [target] with the syringe with [src]!", \
-						"<span class='userdanger'>[user] injects [target] with the syringe with [src]!")
+		target.visible_message("<span class='danger'>[user] injected [target] with the syringe with [src]!", \
+						"<span class='userdanger'>[user] injected you with the syringe with [src]!")
 
 	else
 		to_chat(user, "<span class='notice'>You inject yourself with [src].</span>")
