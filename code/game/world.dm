@@ -95,6 +95,7 @@
 	var/playing = ("players" in input)
 
 	if(!pinging && !playing && config && config.log_world_topic)
+		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 	if(input[SERVICE_CMD_PARAM_KEY])
 		return ServiceCommand(input)
