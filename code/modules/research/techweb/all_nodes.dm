@@ -98,7 +98,8 @@
 	prereq_ids = list("datatheory", "bluespace_basic")
 	research_cost = 5000
 	export_price = 5000
-	design_ids = list("s-reciever", "s-bus", "s-broadcaster", "s-processor", "s-hub", "s-server", "s-relay")
+	design_ids = list("s-reciever", "s-bus", "s-broadcaster", "s-processor", "s-hub", "s-server", "s-relay", "comm_monitor", "comm_server",
+	"s-ansible", "s-filter", "s-amplifier", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter")
 
 /datum/techweb_node/comp_recordkeeping
 	id = "comp_recordkeeping"
@@ -151,7 +152,7 @@
 	description = "Advanced engineering research"
 	display_name = "Advanced Engineering"
 	prereq_ids = list("industrial_engineering", "emp_basic")
-	design_ids = list("enginegoggles", "diagnostic_hud")
+	design_ids = list("enginegoggles", "diagnostic_hud", "magboots")
 	research_cost = 5000
 	export_price = 5000
 
@@ -178,7 +179,7 @@
 	display_name = "Integrated HUDs"
 	description = "The usefulness of computerized records, projected straight onto your eyepiece!"
 	prereq_ids = list("comp_recordkeeping", "emp_basic", "datatheory")
-	design_ids = list("health_hud", "security+hud", "diagnostic_hud")
+	design_ids = list("health_hud", "security+hud", "diagnostic_hud", "scigoggles")
 	research_cost = 5000
 	export_price = 5000
 
@@ -210,234 +211,42 @@
 	research_cost = 5000
 	export_price = 5000
 
+/datum/techweb_node/janitor
+	id = "janitor"
+	display_name = "Advanced Sanitation Technology"
+	description = "Clean things better, faster, stronger, and harder!"
+	prereq_ids = list("adv_engi")
+	design_ids = list("advmop", "buffer", "blutrash", "light_replacer")
+	research_cost = 5000
+	export_price = 5000
 
-/////////////////////////////////////////
-//////////////////Misc///////////////////
-/////////////////////////////////////////
-/datum/design/portaseeder
-	name = "Portable Seed Extractor"
-/datum/design/magboots
-	name = "Magnetic Boots"
-	id = "magboots"
-/datum/design/sci_goggles
-	name = "Science Goggles"
-	id = "scigoggles"
-/datum/design/handdrill
-	name = "Hand Drill"
-	id = "handdrill"
-/datum/design/jawsoflife
-	name = "Jaws of Life"
-	id = "jawsoflife"
-/datum/design/diskplantgene
-	name = "Plant Data Disk"
-	id = "diskplantgene"
-/////////////////////////////////////////
-////////////Janitor Designs//////////////
-/////////////////////////////////////////
-/datum/design/advmop
-	name = "Advanced Mop"
-	id = "advmop"
-/datum/design/blutrash
-	name = "Trashbag of Holding"
-	id = "blutrash"
-/datum/design/buffer
-	name = "Floor Buffer Upgrade"
-	id = "buffer"
-/////////////////////////////////////////
-////////////Tools//////////////
-/////////////////////////////////////////
-/datum/design/exwelder
-	name = "Experimental Welding Tool"
-	id = "exwelder"
-/////////////////////////////////////////
-/////////////////Mining//////////////////
-/////////////////////////////////////////
-/datum/design/drill
-	name = "Mining Drill"
-	id = "drill"
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) //expensive, but no need for miners.
-/datum/design/drill_diamond
-	name = "Diamond-Tipped Mining Drill"
-	desc = "Yours is the drill that will pierce the heavens!"
-	id = "drill_diamond"
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000, MAT_DIAMOND = 2000) //Yes, a whole diamond is needed.
-/datum/design/plasmacutter
-	name = "Plasma Cutter"
-	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-	id = "plasmacutter"
-/datum/design/plasmacutter_adv
-	name = "Advanced Plasma Cutter"
-	desc = "It's an advanced plasma cutter, oh my god."
-	id = "plasmacutter_adv"
-/datum/design/jackhammer
-	name = "Sonic Jackhammer"
-	id = "jackhammer"
-/datum/design/superresonator
-	name = "Upgraded Resonator"
-	id = "superresonator"
-/datum/design/trigger_guard_mod
-	name = "Kinetic Accelerator Trigger Guard Mod"
-	id = "triggermod"
-	build_path = /obj/item/borg/upgrade/modkit/trigger_guard
-/datum/design/damage_mod
-	name = "Kinetic Accelerator Damage Mod"
-	id = "damagemod"
-/datum/design/cooldown_mod
-	name = "Kinetic Accelerator Cooldown Mod"
-	id = "cooldownmod"
-/datum/design/range_mod
-	name = "Kinetic Accelerator Range Mod"
-	id = "rangemod"
-/datum/design/hyperaccelerator
-	name = "Kinetic Accelerator Mining AoE Mod"
-	id = "hypermod"
-/////////////////////////////////////////
-////////////Medical Tools////////////////
-/////////////////////////////////////////
-/datum/design/adv_mass_spectrometer
-	name = "Advanced Mass-Spectrometer"
-	id = "adv_mass_spectrometer"
-	build_path = /obj/item/device/mass_spectrometer/adv
-/datum/design/piercesyringe
-	name = "Piercing Syringe"
-	id = "piercesyringe"
-	build_path = /obj/item/reagent_containers/syringe/piercing
-/datum/design/plasmarefiller
-	name = "Plasma-Man Jumpsuit Refill"
-	id = "plasmarefiller"
-	req_tech = list("materials" = 2, "plasmatech" = 3) //Why did this have no plasmatech
-	build_path = /obj/item/device/extinguisher_refill
+/datum/techweb_node/robotics
+	id = "robotics"
+	display_name = "Basic Robotics Research"
+	description = "Programmable machines that make our lives lazier."
+	prereq_ids = list("base")
+	research_cost = 5000
+	export_price = 5000
 
-/////////////////////////////////////////
-//////////Cybernetic Implants////////////
-/////////////////////////////////////////
-/datum/design/cyberimp_welding
-	name = "Welding Shield Eyes"
-	id = "ci-welding"
-	construction_time = 40
-/datum/design/cyberimp_gloweyes
-	name = "Luminescent Eyes"
-	id = "ci-gloweyes"
-	construction_time = 40
-/datum/design/cyberimp_breather
-	name = "Breathing Tube Implant"
-	id = "ci-breather"
-	construction_time = 35
-	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
-/datum/design/cyberimp_surgical
-    name = "Surgical Arm Implant"
-    desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
-    id = "ci-surgery"
-    materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
-    construction_time = 200
-/datum/design/cyberimp_toolset
-	name = "Toolset Arm Implant"
-	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
-	id = "ci-toolset"
-	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
-	construction_time = 200
-/datum/design/cyberimp_medical_hud
-	name = "Medical HUD Implant"
-	id = "ci-medhud"
-	construction_time = 50
-/datum/design/cyberimp_security_hud
-	name = "Security HUD Implant"
-	id = "ci-sechud"
-	construction_time = 50
-/datum/design/cyberimp_xray
-	name = "X-Ray Eyes"
-	id = "ci-xray"
-	construction_time = 60
-/datum/design/cyberimp_thermals
-	name = "Thermal Eyes"
-	id = "ci-thermals"
-	construction_time = 60
-/datum/design/cyberimp_antidrop
-	name = "Anti-Drop Implant"
-	id = "ci-antidrop"
-	construction_time = 60
-	build_path = /obj/item/organ/cyberimp/brain/anti_drop
-/datum/design/cyberimp_antistun
-	name = "CNS Rebooter Implant"
-	id = "ci-antistun"
-	construction_time = 60
-	build_path = /obj/item/organ/cyberimp/brain/anti_stun
-/datum/design/cyberimp_nutriment
-	name = "Nutriment Pump Implant"
-	id = "ci-nutriment"
-	construction_time = 40
-/datum/design/cyberimp_nutriment_plus
-	name = "Nutriment Pump Implant PLUS"
-	id = "ci-nutrimentplus"
-	construction_time = 50
-/datum/design/cyberimp_reviver
-	name = "Reviver Implant"
-	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
-	id = "ci-reviver"
-	construction_time = 60
-/datum/design/cyberimp_thrusters
-	name = "Thrusters Set Implant"
-	id = "ci-thrusters"
-	construction_time = 80
-/////////////////////////////////////////
-////////////Regular Implants/////////////
-/////////////////////////////////////////
-/datum/design/implanter
-	name = "Implanter"
-	id = "implanter"
-/datum/design/implantcase
-	name = "Implant Case"
-	id = "implantcase"
-/datum/design/implant_chem
-	name = "Chemical Implant Case"
-	id = "implant_chem"
-/datum/design/implant_tracking
-	name = "Tracking Implant Case"
-	id = "implant_tracking"
-//Cybernetic organs
-/datum/design/cybernetic_liver
-	name = "Cybernetic Liver"
-	id = "cybernetic_liver"
-/datum/design/cybernetic_heart
-	name = "Cybernetic Heart"
-	id = "cybernetic_heart"
-/datum/design/cybernetic_liver_u
-	name = "Upgraded Cybernetic Liver"
-	id = "cybernetic_liver_u"
-//Cyborg
-/datum/design/borg_suit
-	name = "Cyborg Endoskeleton"
-	id = "borg_suit"
-	build_path = /obj/item/robot_suit
-	construction_time = 500
-/datum/design/borg_chest
-	name = "Cyborg Torso"
-	id = "borg_chest"
-	construction_time = 350
-/datum/design/borg_head
-	name = "Cyborg Head"
-	id = "borg_head"
-	construction_time = 350
-/datum/design/borg_l_arm
-	name = "Cyborg Left Arm"
-	id = "borg_l_arm"
-	build_path = /obj/item/bodypart/l_arm/robot
-	construction_time = 200
-/datum/design/borg_r_arm
-	name = "Cyborg Right Arm"
-	id = "borg_r_arm"
-	build_path = /obj/item/bodypart/r_arm/robot
-	construction_time = 200
-/datum/design/borg_l_leg
-	name = "Cyborg Left Leg"
-	id = "borg_l_leg"
-	build_path = /obj/item/bodypart/l_leg/robot
-	construction_time = 200
-/datum/design/borg_r_leg
-	name = "Cyborg Right Leg"
-	id = "borg_r_leg"
-	build_path = /obj/item/bodypart/r_leg/robot
-	construction_time = 200
+/datum/techweb_node/cyborg
+	id = "cyborg"
+	display_name = "Cyborg Construction"
+	description = "Sapient robots with preloaded tool modules and programmable laws."
+	prereq_ids = list("mmi", "robotics")
+	research_cost = 5000
+	export_price = 5000
+	design_ids = list("borg_suit", "borg_head", "borg_chest", "borg_r_arm", "borg_l_arm", "borg_r_leg", "borg_l_leg")
+
+/datum/techweb_node/exp_tools
+	id = "exp_tools"
+	display_name = "Experimental Tools"
+	description = "Highly advanced construction tools."
+	design_ids = list("ex_welder", "jawsoflife", "handdrill")
+	prereq_ids = list("adv_engi")
+	research_cost = 5000
+	export_price = 5000
+
+
 //Ripley
 /datum/design/ripley_chassis
 	name = "Exosuit Chassis (APLU \"Ripley\")"
@@ -640,6 +449,227 @@
 	id = "phazon_armor"
 	build_path = /obj/item/mecha_parts/part/phazon_armor
 	construction_time = 300
+///////////////////////////////////
+//////////Mecha Module Disks///////
+///////////////////////////////////
+/datum/design/board/ripley_main
+	name = "APLU \"Ripley\" Central Control module"
+	desc = "Allows for the construction of a \"Ripley\" Central Control module."
+	id = "ripley_main"
+/datum/design/board/ripley_peri
+	name = "APLU \"Ripley\" Peripherals Control module"
+	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
+	id = "ripley_peri"
+/datum/design/board/odysseus_main
+	name = "\"Odysseus\" Central Control module"
+	desc = "Allows for the construction of a \"Odysseus\" Central Control module."
+	id = "odysseus_main"
+/datum/design/board/odysseus_peri
+	name = "\"Odysseus\" Peripherals Control module"
+	desc = "Allows for the construction of a \"Odysseus\" Peripheral Control module."
+	id = "odysseus_peri"
+/datum/design/board/gygax_main
+	name = "\"Gygax\" Central Control module"
+	desc = "Allows for the construction of a \"Gygax\" Central Control module."
+	id = "gygax_main"
+/datum/design/board/gygax_peri
+	name = "\"Gygax\" Peripherals Control module"
+	desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
+	id = "gygax_peri"
+/datum/design/board/gygax_targ
+	name = "\"Gygax\" Weapons & Targeting Control module"
+	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
+	id = "gygax_targ"
+/datum/design/board/durand_main
+	name = "\"Durand\" Central Control module"
+	desc = "Allows for the construction of a \"Durand\" Central Control module."
+	id = "durand_main"
+/datum/design/board/durand_peri
+	name = "\"Durand\" Peripherals Control module"
+	desc = "Allows for the construction of a \"Durand\" Peripheral Control module."
+	id = "durand_peri"
+/datum/design/board/durand_targ
+	name = "\"Durand\" Weapons & Targeting Control module"
+	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
+	id = "durand_targ"
+/datum/design/board/phazon_main
+	name = "\"Phazon\" Central Control module"
+	desc = "Allows for the construction of a \"Phazon\" Central Control module."
+	id = "phazon_main"
+/datum/design/board/phazon_peri
+	name = "\"Phazon\" Peripherals Control module"
+	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
+	id = "phazon_peri"
+/datum/design/board/phazon_targ
+	name = "\"Phazon\" Weapons & Targeting Control module"
+	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
+	id = "phazon_targ"
+
+/////////////////////////////////////////
+//////////////////Misc///////////////////
+/////////////////////////////////////////
+/datum/design/portaseeder
+	name = "Portable Seed Extractor"
+/datum/design/diskplantgene
+	name = "Plant Data Disk"
+	id = "diskplantgene"
+
+/////////////////////////////////////////
+/////////////////Mining//////////////////
+/////////////////////////////////////////
+/datum/design/drill
+	name = "Mining Drill"
+	id = "drill"
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) //expensive, but no need for miners.
+/datum/design/drill_diamond
+	name = "Diamond-Tipped Mining Drill"
+	desc = "Yours is the drill that will pierce the heavens!"
+	id = "drill_diamond"
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000, MAT_DIAMOND = 2000) //Yes, a whole diamond is needed.
+/datum/design/plasmacutter
+	name = "Plasma Cutter"
+	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	id = "plasmacutter"
+/datum/design/plasmacutter_adv
+	name = "Advanced Plasma Cutter"
+	desc = "It's an advanced plasma cutter, oh my god."
+	id = "plasmacutter_adv"
+/datum/design/jackhammer
+	name = "Sonic Jackhammer"
+	id = "jackhammer"
+/datum/design/superresonator
+	name = "Upgraded Resonator"
+	id = "superresonator"
+/datum/design/trigger_guard_mod
+	name = "Kinetic Accelerator Trigger Guard Mod"
+	id = "triggermod"
+	build_path = /obj/item/borg/upgrade/modkit/trigger_guard
+/datum/design/damage_mod
+	name = "Kinetic Accelerator Damage Mod"
+	id = "damagemod"
+/datum/design/cooldown_mod
+	name = "Kinetic Accelerator Cooldown Mod"
+	id = "cooldownmod"
+/datum/design/range_mod
+	name = "Kinetic Accelerator Range Mod"
+	id = "rangemod"
+/datum/design/hyperaccelerator
+	name = "Kinetic Accelerator Mining AoE Mod"
+	id = "hypermod"
+/////////////////////////////////////////
+////////////Medical Tools////////////////
+/////////////////////////////////////////
+/datum/design/adv_mass_spectrometer
+	name = "Advanced Mass-Spectrometer"
+	id = "adv_mass_spectrometer"
+	build_path = /obj/item/device/mass_spectrometer/adv
+/datum/design/piercesyringe
+	name = "Piercing Syringe"
+	id = "piercesyringe"
+	build_path = /obj/item/reagent_containers/syringe/piercing
+/datum/design/plasmarefiller
+	name = "Plasma-Man Jumpsuit Refill"
+	id = "plasmarefiller"
+	req_tech = list("materials" = 2, "plasmatech" = 3) //Why did this have no plasmatech
+	build_path = /obj/item/device/extinguisher_refill
+
+/////////////////////////////////////////
+//////////Cybernetic Implants////////////
+/////////////////////////////////////////
+/datum/design/cyberimp_welding
+	name = "Welding Shield Eyes"
+	id = "ci-welding"
+	construction_time = 40
+/datum/design/cyberimp_gloweyes
+	name = "Luminescent Eyes"
+	id = "ci-gloweyes"
+	construction_time = 40
+/datum/design/cyberimp_breather
+	name = "Breathing Tube Implant"
+	id = "ci-breather"
+	construction_time = 35
+	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
+/datum/design/cyberimp_surgical
+    name = "Surgical Arm Implant"
+    desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
+    id = "ci-surgery"
+    materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
+    construction_time = 200
+/datum/design/cyberimp_toolset
+	name = "Toolset Arm Implant"
+	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
+	id = "ci-toolset"
+	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
+	construction_time = 200
+/datum/design/cyberimp_medical_hud
+	name = "Medical HUD Implant"
+	id = "ci-medhud"
+	construction_time = 50
+/datum/design/cyberimp_security_hud
+	name = "Security HUD Implant"
+	id = "ci-sechud"
+	construction_time = 50
+/datum/design/cyberimp_xray
+	name = "X-Ray Eyes"
+	id = "ci-xray"
+	construction_time = 60
+/datum/design/cyberimp_thermals
+	name = "Thermal Eyes"
+	id = "ci-thermals"
+	construction_time = 60
+/datum/design/cyberimp_antidrop
+	name = "Anti-Drop Implant"
+	id = "ci-antidrop"
+	construction_time = 60
+	build_path = /obj/item/organ/cyberimp/brain/anti_drop
+/datum/design/cyberimp_antistun
+	name = "CNS Rebooter Implant"
+	id = "ci-antistun"
+	construction_time = 60
+	build_path = /obj/item/organ/cyberimp/brain/anti_stun
+/datum/design/cyberimp_nutriment
+	name = "Nutriment Pump Implant"
+	id = "ci-nutriment"
+	construction_time = 40
+/datum/design/cyberimp_nutriment_plus
+	name = "Nutriment Pump Implant PLUS"
+	id = "ci-nutrimentplus"
+	construction_time = 50
+/datum/design/cyberimp_reviver
+	name = "Reviver Implant"
+	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
+	id = "ci-reviver"
+	construction_time = 60
+/datum/design/cyberimp_thrusters
+	name = "Thrusters Set Implant"
+	id = "ci-thrusters"
+	construction_time = 80
+/////////////////////////////////////////
+////////////Regular Implants/////////////
+/////////////////////////////////////////
+/datum/design/implanter
+	name = "Implanter"
+	id = "implanter"
+/datum/design/implantcase
+	name = "Implant Case"
+	id = "implantcase"
+/datum/design/implant_chem
+	name = "Chemical Implant Case"
+	id = "implant_chem"
+/datum/design/implant_tracking
+	name = "Tracking Implant Case"
+	id = "implant_tracking"
+//Cybernetic organs
+/datum/design/cybernetic_liver
+	name = "Cybernetic Liver"
+	id = "cybernetic_liver"
+/datum/design/cybernetic_heart
+	name = "Cybernetic Heart"
+	id = "cybernetic_heart"
+/datum/design/cybernetic_liver_u
+	name = "Upgraded Cybernetic Liver"
+	id = "cybernetic_liver_u"
+
 //Exosuit Equipment
 /datum/design/mech_hydraulic_clamp
 	name = "Exosuit Engineering Equipment (Hydraulic Clamp)"
@@ -959,61 +989,6 @@
 	id = "deepfryer"
 	build_path = /obj/item/circuitboard/machine/deep_fryer
 	category = list ("Misc. Machinery")
-///////////////////////////////////
-//////////Mecha Module Disks///////
-///////////////////////////////////
-/datum/design/board/ripley_main
-	name = "APLU \"Ripley\" Central Control module"
-	desc = "Allows for the construction of a \"Ripley\" Central Control module."
-	id = "ripley_main"
-/datum/design/board/ripley_peri
-	name = "APLU \"Ripley\" Peripherals Control module"
-	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
-	id = "ripley_peri"
-/datum/design/board/odysseus_main
-	name = "\"Odysseus\" Central Control module"
-	desc = "Allows for the construction of a \"Odysseus\" Central Control module."
-	id = "odysseus_main"
-/datum/design/board/odysseus_peri
-	name = "\"Odysseus\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Odysseus\" Peripheral Control module."
-	id = "odysseus_peri"
-/datum/design/board/gygax_main
-	name = "\"Gygax\" Central Control module"
-	desc = "Allows for the construction of a \"Gygax\" Central Control module."
-	id = "gygax_main"
-/datum/design/board/gygax_peri
-	name = "\"Gygax\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
-	id = "gygax_peri"
-/datum/design/board/gygax_targ
-	name = "\"Gygax\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
-	id = "gygax_targ"
-/datum/design/board/durand_main
-	name = "\"Durand\" Central Control module"
-	desc = "Allows for the construction of a \"Durand\" Central Control module."
-	id = "durand_main"
-/datum/design/board/durand_peri
-	name = "\"Durand\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Durand\" Peripheral Control module."
-	id = "durand_peri"
-/datum/design/board/durand_targ
-	name = "\"Durand\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
-	id = "durand_targ"
-/datum/design/board/phazon_main
-	name = "\"Phazon\" Central Control module"
-	desc = "Allows for the construction of a \"Phazon\" Central Control module."
-	id = "phazon_main"
-/datum/design/board/phazon_peri
-	name = "\"Phazon\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
-	id = "phazon_peri"
-/datum/design/board/phazon_targ
-	name = "\"Phazon\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
-	id = "phazon_targ"
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////
@@ -1230,18 +1205,6 @@
 /datum/design/board/mining
 	name = "Computer Design (Outpost Status Display)"
 	id = "mining"
-/datum/design/board/comm_monitor
-	name = "Computer Design (Telecommunications Monitoring Console)"
-	id = "comm_monitor"
-	build_path = /obj/item/circuitboard/computer/comm_monitor
-/datum/design/board/comm_server
-	name = "Computer Design (Telecommunications Server Monitoring Console)"
-	id = "comm_server"
-	build_path = /obj/item/circuitboard/computer/comm_server
-/datum/design/board/message_monitor
-	name = "Computer Design (Messaging Monitor Console)"
-	id = "message_monitor"
-	build_path = /obj/item/circuitboard/computer/message_monitor
 /datum/design/board/aifixer
 	name = "Computer Design (AI Integrity Restorer)"
 	id = "aifixer"
@@ -1424,35 +1387,7 @@
 	id = "bluespace_matter_bin"
 	build_path = /obj/item/stock_parts/matter_bin/bluespace
 	lathe_time_factor = 0.2
-//T-Comms devices
-/datum/design/subspace_ansible
-	name = "Subspace Ansible"
-	id = "s-ansible"
-	build_path = /obj/item/stock_parts/subspace/ansible
-/datum/design/hyperwave_filter
-	name = "Hyperwave Filter"
-	id = "s-filter"
-	build_path = /obj/item/stock_parts/subspace/filter
-/datum/design/subspace_amplifier
-	name = "Subspace Amplifier"
-	id = "s-amplifier"
-	build_path = /obj/item/stock_parts/subspace/amplifier
-/datum/design/subspace_treatment
-	name = "Subspace Treatment Disk"
-	id = "s-treatment"
-	build_path = /obj/item/stock_parts/subspace/treatment
-/datum/design/subspace_analyzer
-	name = "Subspace Analyzer"
-	id = "s-analyzer"
-	build_path = /obj/item/stock_parts/subspace/analyzer
-/datum/design/subspace_crystal
-	name = "Ansible Crystal"
-	id = "s-crystal"
-	build_path = /obj/item/stock_parts/subspace/crystal
-/datum/design/subspace_transmitter
-	name = "Subspace Transmitter"
-	id = "s-transmitter"
-	build_path = /obj/item/stock_parts/subspace/transmitter
+
 ////////////////////////////////////////
 //////////////////Power/////////////////
 ////////////////////////////////////////
@@ -1481,8 +1416,7 @@
 	id = "bluespace_cell"
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/bluespace
-/datum/design/light_replacer
-	name = "Light Replacer"///////////////////////////////////
+
 //////////AI Module Disks//////////
 ///////////////////////////////////
 /datum/design/board/aicore
