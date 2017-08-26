@@ -16,6 +16,9 @@ SUBSYSTEM_DEF(garbage)
 	var/highest_del_time = 0
 	var/highest_del_tickusage = 0
 
+	var/list/pass_counts = list(0, 0, 0, 0)
+	var/list/fail_counts = list(0, 0, 0, 0)
+
 
 	//Queues
 	var/list/queues = list(list(), list(), list(), list())
@@ -52,6 +55,8 @@ SUBSYSTEM_DEF(garbage)
 		msg += "n/a|"
 	else
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
+	msg += "|P:[pass_counts.Join(",")]"
+	msg += "|F:[fail_counts.Join(",")]"
 	..(msg)
 
 /datum/controller/subsystem/garbage/Shutdown()
@@ -95,21 +100,20 @@ SUBSYSTEM_DEF(garbage)
 //Don't attempt to optimize, not worth the effort.
 /datum/controller/subsystem/garbage/proc/HandlePreQueue()
 	var/list/tobequeued = queues[GC_QUEUE_PREQUEUE]
-	var/static/list/queued
-
-	if (queued) //runtime last run before we could do this.
-		tobequeued -= queued
-
-	queued = list()
+	var/static/count = 0
+	if (count)
+		var/c = count
+		count = 0 //so if we runtime on the Cut, we don't try again.
+		tobequeued.Cut(1,c+1)
 
 	for (var/ref in tobequeued)
+		count++
+		Queue(ref, GC_QUEUE_PREQUEUE+1)
 		if (MC_TICK_CHECK)
 			break
-		queued += ref
-		Queue(ref, GC_QUEUE_PREQUEUE+1)
 
-	tobequeued -= queued
-	queued = null
+	tobequeued.Cut(1,count+1)
+	count = 0
 
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
 	if (level == GC_QUEUE_CHECK)
@@ -118,25 +122,26 @@ SUBSYSTEM_DEF(garbage)
 	var/cut_off_time = world.time - collection_timeout[level] //ignore entries newer then this
 	var/list/queue = queues[level]
 	var/static/lastlevel
-	var/static/list/queued
-	if (queued) //runtime last run before we could do this.
-		queues[lastlevel] -= queued
+	var/static/count = 0
+	if (count) //runtime last run before we could do this.
+		var/c = count
+		count = 0 //so if we runtime on the Cut, we don't try again.
+		queue.Cut(1,c+1)
 
-	queued = list()
 	lastlevel = level
 
 	for (var/refID in queue)
 		if (MC_TICK_CHECK)
 			break
 
-		queued += refID
-
 		if (!refID)
+			count++
 			continue
 
 		var/GCd_at_time = queue[refID]
 		if(GCd_at_time > cut_off_time)
 			break // Everything else is newer, skip them
+		count++
 
 		var/datum/D
 		D = locate(refID)
@@ -145,9 +150,11 @@ SUBSYSTEM_DEF(garbage)
 			if (level == GC_QUEUE_CHECK)
 				++gcedlasttick
 				++totalgcs
+			pass_counts[level]++
 			continue
-		// Something's still referring to the qdel'd object.
 
+		// Something's still referring to the qdel'd object.
+		fail_counts[level]++
 		switch (level)
 			if (GC_QUEUE_CHECK)
 				#ifdef GC_FAILURE_HARD_LOOKUP
@@ -166,8 +173,8 @@ SUBSYSTEM_DEF(garbage)
 
 		Queue(D, ++level)
 
-	queue -= queued
-	queued = null
+	queue.Cut(1,count+1)
+	count = 0
 
 
 //a root canal is called a "final restoration" because you basically gut everything out and hope that keeps it from being a pain.
@@ -177,10 +184,7 @@ SUBSYSTEM_DEF(garbage)
 	for (var/V in D.vars - exclude)
 		var/value = D.vars[V]
 		switch(V)
-			if ("ckey")
-				D.vars[V] = null
-				continue
-			if ("tag")
+			if ("ckey", "tag")
 				D.vars[V] = null
 				continue
 			if ("contents")
@@ -195,6 +199,8 @@ SUBSYSTEM_DEF(garbage)
 
 		if (islist(value))
 			value -= D
+			if (IS_NORMAL_LIST(value))
+				D.vars[V] = null
 		else if (isdatum(value))
 			var/datum/DD = value
 			for (var/VV in DD.vars - exclude)
