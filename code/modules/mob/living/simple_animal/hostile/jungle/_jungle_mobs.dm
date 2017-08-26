@@ -10,7 +10,7 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
-	status_flags = 0
+	status_flags = NONE
 	a_intent = INTENT_HARM
 	see_in_dark = 4
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
