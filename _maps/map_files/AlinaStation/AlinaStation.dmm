@@ -1585,9 +1585,9 @@
 	},
 /obj/structure/transit_tube/station/reverse,
 /obj/structure/transit_tube_pod{
-	tag = "icon-pod (EAST)";
+	dir = 8;
 	icon_state = "pod";
-	dir = 4
+	tag = "icon-pod (EAST)"
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/asteroid/central)
@@ -1596,13 +1596,13 @@
 /turf/open/floor/plasteel,
 /area/maintenance/asteroid/central)
 "aed" = (
-/obj/structure/transit_tube/station/reverse/flipped{
-	tag = "icon-closed_terminus1 (NORTH)";
-	icon_state = "closed_terminus1";
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/structure/transit_tube/station/reverse{
+	tag = "icon-closed_terminus0 (NORTH)";
+	icon_state = "closed_terminus0";
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/asteroid/central)
@@ -3863,16 +3863,8 @@
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "ajA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "security eva";
-	dir = 2
-	},
-/turf/open/floor/plasteel/black,
+/obj/machinery/flasher/portable,
+/turf/open/floor/plasteel,
 /area/security/brig)
 "ajB" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -3883,11 +3875,6 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "ajC" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3940,8 +3927,8 @@
 /area/security/brig)
 "ajG" = (
 /obj/machinery/door_timer{
-	id = "Cell";
-	name = "Cell";
+	id = "Cell 1";
+	name = "Cell 1";
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
@@ -3954,7 +3941,7 @@
 /area/security/brig)
 "ajI" = (
 /obj/machinery/flasher{
-	id = "Cell";
+	id = "Cell 1";
 	pixel_y = 26
 	},
 /turf/open/floor/plating,
@@ -4179,7 +4166,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel,
 /area/security/brig)
 "akk" = (
 /obj/machinery/door/airlock/glass_security{
@@ -4235,7 +4222,7 @@
 /area/security/brig)
 "akq" = (
 /obj/machinery/camera{
-	c_tag = "security brig";
+	c_tag = "security cell 1";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -5342,9 +5329,12 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "amQ" = (
-/mob/living/simple_animal/pet/dog/corgi/puppy/void,
+/obj/machinery/camera{
+	c_tag = "security cell 2";
+	dir = 1
+	},
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/security/brig)
 "amR" = (
 /obj/machinery/holopad,
 /obj/structure/cable{
@@ -5812,7 +5802,7 @@
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/hallway/primary/fore)
 "anV" = (
 /turf/open/floor/plasteel/red/side{
 	dir = 1
@@ -6138,7 +6128,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/hallway/primary/fore)
 "aoH" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -6423,7 +6413,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "apl" = (
-/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/structure/closet/coffin,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "apm" = (
@@ -7188,8 +7178,10 @@
 	},
 /area/chapel/main)
 "arE" = (
-/obj/structure/chair/stool,
-/turf/open/floor/plasteel/chapel,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
 /area/chapel/main)
 "arF" = (
 /turf/open/floor/plasteel/chapel{
@@ -7413,9 +7405,7 @@
 /area/chapel/main)
 "aso" = (
 /obj/structure/closet/coffin,
-/turf/open/floor/plasteel/chapel{
-	dir = 4
-	},
+/turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "asp" = (
 /obj/structure/closet/coffin,
@@ -7424,9 +7414,14 @@
 	},
 /area/chapel/main)
 "asq" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
+/obj/structure/bodycontainer/crematorium{
+	id = "burn"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
 "asr" = (
 /mob/living/carbon/monkey/punpun,
 /turf/open/floor/carpet,
@@ -7940,14 +7935,20 @@
 	},
 /area/hallway/primary/port)
 "atT" = (
-/obj/machinery/door/poddoor{
-	id = "chapelgun";
-	name = "Chapel Launcher Door"
+/obj/structure/chair{
+	dir = 1
 	},
-/turf/open/floor/plating,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
 /area/chapel/main)
 "atU" = (
-/turf/open/floor/plating,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
 /area/chapel/main)
 "atV" = (
 /obj/machinery/door/window/eastright,
@@ -7964,10 +7965,12 @@
 	},
 /area/chapel/main)
 "atX" = (
-/obj/structure/chair/stool,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/table/wood,
+/obj/item/candle{
+	lit = 1
+	},
 /turf/open/floor/plasteel/chapel{
-	dir = 4
+	dir = 1
 	},
 /area/chapel/main)
 "atY" = (
@@ -7980,10 +7983,12 @@
 	},
 /area/chapel/main)
 "atZ" = (
-/obj/structure/chair/comfy/brown,
-/turf/open/floor/plasteel/chapel{
-	dir = 4
+/obj/structure/bodycontainer/morgue,
+/obj/item/device/radio/intercom{
+	pixel_x = -28;
+	pixel_y = 0
 	},
+/turf/open/floor/plasteel/black,
 /area/chapel/main)
 "aua" = (
 /obj/structure/table/wood,
@@ -8140,18 +8145,15 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "aux" = (
-/obj/structure/chair/stool,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "auy" = (
-/obj/structure/chair/stool,
-/obj/machinery/camera{
-	c_tag = "chapel";
-	dir = 8;
-	network = list("SS13")
+/obj/structure/table/wood/fancy,
+/obj/item/device/flashlight/lantern,
+/turf/open/floor/plasteel/chapel{
+	dir = 4
 	},
-/turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "auz" = (
 /obj/structure/table/wood,
@@ -8160,9 +8162,9 @@
 	},
 /area/chapel/main)
 "auA" = (
-/obj/structure/table/wood,
-/obj/item/storage/book/bible,
-/turf/open/floor/plasteel/chapel,
+/obj/structure/closet/coffin,
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/black,
 /area/chapel/main)
 "auB" = (
 /obj/structure/extinguisher_cabinet{
@@ -8421,16 +8423,15 @@
 	name = "Asteroid"
 	})
 "avi" = (
-/obj/structure/chair{
-	dir = 8
+/obj/machinery/door/airlock/hatch{
+	name = "Mortuary"
 	},
-/turf/open/floor/plasteel/chapel{
-	dir = 4
-	},
+/turf/open/floor/plasteel/black,
 /area/chapel/main)
 "avj" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/baseturf_helper/asteroid,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
@@ -8660,20 +8661,16 @@
 	},
 /area/chapel/main)
 "avX" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/chapel,
-/area/chapel/main)
-"avY" = (
-/obj/structure/chair/stool,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
+/area/chapel/main)
+"avY" = (
+/obj/item/device/radio/intercom{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "avZ" = (
 /obj/structure/chair/stool,
@@ -8690,11 +8687,10 @@
 	},
 /area/chapel/main)
 "awb" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel/chapel{
+	dir = 8
 	},
-/turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "awc" = (
 /obj/machinery/firealarm{
@@ -8924,11 +8920,12 @@
 	},
 /area/chapel/main)
 "awI" = (
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/chapel{
-	dir = 4
+	dir = 1
 	},
 /area/chapel/main)
 "awJ" = (
@@ -9151,8 +9148,9 @@
 	pixel_y = -26
 	},
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -9161,19 +9159,20 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "axf" = (
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/power/apc{
 	areastring = "/area/medical/medbay/central";
 	dir = 2;
 	name = "Medbay APC";
 	pixel_y = -26
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -9305,10 +9304,17 @@
 /turf/open/floor/plating,
 /area/security/vacantoffice)
 "axv" = (
-/obj/machinery/door/morgue{
-	name = "Confession Booth"
+/obj/machinery/camera{
+	c_tag = "chapel";
+	dir = 4;
+	network = list("SS13")
 	},
-/turf/open/floor/plasteel/black,
+/obj/machinery/newscaster{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
 /area/chapel/main)
 "axw" = (
 /obj/structure/chair/stool,
@@ -9582,11 +9588,21 @@
 /area/security/vacantoffice)
 "aya" = (
 /obj/item/crowbar,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "ayb" = (
 /obj/structure/chair/office/dark{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
@@ -9602,13 +9618,9 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "aye" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
-/turf/open/floor/plasteel/chapel{
-	dir = 4
-	},
+/obj/structure/chair/stool,
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "ayf" = (
 /obj/machinery/airalarm{
@@ -9895,24 +9907,22 @@
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "ayO" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "ayP" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "ayQ" = (
-/obj/machinery/light/small,
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "ayR" = (
@@ -9920,7 +9930,9 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "ayS" = (
-/obj/structure/table/wood,
+/obj/machinery/door/morgue{
+	name = "Private Study"
+	},
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "ayT" = (
@@ -9932,7 +9944,9 @@
 /obj/machinery/light_switch{
 	pixel_y = -24
 	},
-/turf/open/floor/plasteel/chapel,
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
 /area/chapel/main)
 "ayV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -9942,11 +9956,16 @@
 /area/chapel/main)
 "ayW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/chapel,
+/turf/open/floor/plasteel/chapel{
+	dir = 8
+	},
 /area/chapel/main)
 "ayX" = (
-/obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/chapel,
+/obj/structure/table/wood,
+/obj/item/storage/crayons,
+/turf/open/floor/plasteel/chapel{
+	dir = 8
+	},
 /area/chapel/main)
 "ayY" = (
 /turf/open/floor/plasteel/neutral/corner{
@@ -10244,7 +10263,7 @@
 /obj/machinery/door/window/northright,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/black,
 /area/chapel/main)
 "azN" = (
 /obj/machinery/vending/snack,
@@ -13072,19 +13091,19 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "aHu" = (
-/obj/structure/cable,
 /obj/machinery/power/apc{
 	areastring = "/area/crew_quarters/heads/hop";
 	dir = 8;
 	name = "Head of Personnel APC";
 	pixel_x = -28
 	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aHv" = (
@@ -19504,6 +19523,384 @@
 /obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"aWB" = (
+/obj/machinery/camera{
+	c_tag = "security eva";
+	dir = 2
+	},
+/turf/open/floor/plasteel/black,
+/area/security/brig)
+"aWC" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/black,
+/area/security/brig)
+"aWD" = (
+/obj/machinery/door/airlock/glass_security{
+	name = "Security EVA Storage";
+	req_access_txt = "63"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/black,
+/area/security/brig)
+"aWE" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door_timer{
+	id = "Cell 2";
+	name = "Cell 2";
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
+"aWF" = (
+/obj/machinery/flasher{
+	id = "Cell 2";
+	pixel_x = -24;
+	pixel_y = 0
+	},
+/turf/open/floor/plating,
+/area/security/brig)
+"aWG" = (
+/obj/structure/closet/coffin,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"aWH" = (
+/obj/machinery/door/poddoor{
+	id = "chapel";
+	name = "Chapel Launcher Door"
+	},
+/turf/open/floor/plating/airless,
+/area/chapel/main)
+"aWI" = (
+/obj/structure/table/wood,
+/obj/item/candle{
+	lit = 1
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/chapel/main)
+"aWJ" = (
+/obj/structure/noticeboard{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 8
+	},
+/area/chapel/main)
+"aWK" = (
+/obj/structure/bodycontainer/morgue,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aWL" = (
+/obj/machinery/button/crematorium{
+	id = "burn";
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aWM" = (
+/obj/structure/sign/vacuum{
+	pixel_x = -32
+	},
+/turf/open/floor/plating/airless,
+/area/chapel/main)
+"aWN" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/chapel/main)
+"aWO" = (
+/obj/structure/bodycontainer/morgue,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aWP" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/pod/old{
+	id = "chapel";
+	name = "Mass Driver Control Console"
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aWQ" = (
+/obj/machinery/door/window/southleft,
+/obj/machinery/mass_driver{
+	dir = 1;
+	id = "chapel";
+	name = "Holy Driver"
+	},
+/turf/open/floor/plating/airless,
+/area/chapel/main)
+"aWR" = (
+/obj/structure/bookcase,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aWS" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/hatch{
+	name = "Mini-Morgue";
+	req_access_txt = "6"
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aWT" = (
+/obj/item/paper{
+	icon_state = "paper_words";
+	name = "angrily-written note";
+	text = "Are you serious? Who built this transit tube here! One of you better fix this shit real quick. - Command"
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aWU" = (
+/obj/machinery/camera{
+	c_tag = "chapel mortuary";
+	dir = 2;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aWV" = (
+/obj/machinery/newscaster{
+	pixel_x = 28
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aWW" = (
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/plasteel/chapel{
+	dir = 8
+	},
+/area/chapel/main)
+"aWX" = (
+/obj/structure/table,
+/obj/item/storage/box/bodybags,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aWY" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aWZ" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/chapel/main)
+"aXa" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/book/bible,
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/chapel/main)
+"aXb" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/plasteel/chapel,
+/area/chapel/main)
+"aXc" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Mini-Morgue";
+	req_access_txt = "6"
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aXd" = (
+/obj/structure/table/wood,
+/obj/item/storage/book/bible,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aXe" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/candle_box,
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aXf" = (
+/obj/structure/table/wood,
+/obj/item/candle{
+	lit = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aXg" = (
+/obj/structure/closet/coffin,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aXh" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/grown/harebell,
+/obj/item/reagent_containers/food/snacks/grown/harebell,
+/obj/item/reagent_containers/food/snacks/grown/poppy,
+/obj/item/reagent_containers/food/snacks/grown/poppy,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aXi" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/grown/poppy,
+/obj/item/reagent_containers/food/snacks/grown/poppy,
+/obj/item/reagent_containers/food/snacks/grown/harebell,
+/obj/item/reagent_containers/food/snacks/grown/harebell,
+/obj/structure/noticeboard{
+	desc = "A board for remembering the fallen of the station.";
+	dir = 1;
+	name = "memorial board";
+	pixel_y = -32
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aXj" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/grown/harebell,
+/obj/item/reagent_containers/food/snacks/grown/poppy,
+/obj/machinery/light_switch{
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aXk" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/holywater{
+	name = "flask of holy water";
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/chapel/main)
+"aXl" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/chapel,
+/area/chapel/main)
+"aXm" = (
+/obj/structure/chair/stool,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/chapel/main)
+"aXn" = (
+/obj/structure/chair/stool,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/chapel/main)
+"aXo" = (
+/obj/structure/chair/stool,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 8
+	},
+/area/chapel/main)
+"aXp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/chapel/main)
+"aXq" = (
+/obj/structure/table/wood,
+/obj/item/device/paicard,
+/turf/open/floor/plasteel/chapel,
+/area/chapel/main)
+"aXr" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aXs" = (
+/obj/structure/table/wood,
+/obj/item/device/flashlight/lamp/green,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"aXt" = (
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 8
+	},
+/area/chapel/main)
+"aXu" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/chapel/main)
+"aXv" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug/tea,
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/chapel/main)
+"aXw" = (
+/obj/structure/closet,
+/turf/open/floor/wood,
+/area/security/vacantoffice)
+"aXx" = (
+/turf/open/floor/wood,
+/area/security/vacantoffice)
+"aXy" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/wood,
+/area/security/vacantoffice)
+"aXz" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/chapel{
+	dir = 8
+	},
+/area/chapel/main)
+"aXA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/chapel,
+/area/chapel/main)
+"aXB" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/machinery/light,
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/chapel/main)
 
 (1,1,1) = {"
 aaa
@@ -36933,7 +37330,7 @@ aad
 aad
 aad
 aad
-aWp
+aar
 aar
 aad
 aad
@@ -43810,7 +44207,7 @@ aaa
 aaa
 aaa
 ane
-avR
+apW
 avR
 avR
 avR
@@ -44064,7 +44461,7 @@ aad
 aar
 aaa
 aaa
-aar
+avh
 aaa
 aar
 avS
@@ -44822,8 +45219,8 @@ aar
 aad
 aar
 aar
-aar
-aar
+aad
+aad
 aar
 aar
 aar
@@ -44834,12 +45231,12 @@ aad
 aad
 aad
 aar
-aar
-aar
-aar
-aar
-avR
-avR
+aqI
+aqI
+aqI
+aqI
+aqJ
+axs
 axs
 axs
 axt
@@ -45072,34 +45469,34 @@ ade
 aad
 aad
 aad
-aad
-aad
-aad
-aar
-aar
-aar
-aar
-aar
-aar
-aar
-aar
-aad
-aad
-aad
-aad
-aad
-aad
-aar
-aar
-aar
-aar
-aar
 avg
 aar
 aar
+aar
+aar
+aar
+aar
+aar
+aar
+aar
+aar
+aad
+aad
+aad
+aad
+aad
+aad
+aar
+aar
+aqI
+aWP
+ayd
+ayd
+aXd
 axt
 axY
 ayL
+aXw
 axt
 arz
 aBe
@@ -45328,35 +45725,35 @@ aeS
 ade
 aad
 aad
-aad
-aad
-aad
-aad
 aar
 aar
 aar
 aar
 aar
 aar
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
 aar
 aar
 aar
 aar
 aar
-axu
+aar
+aar
+aad
+aad
+aad
+aad
+aad
+aad
+aqJ
+aqJ
+aqJ
+aWT
+ayd
+aXe
+axt
 axZ
 ayM
+aXx
 axt
 arz
 aBe
@@ -45583,37 +45980,37 @@ adm
 adm
 aeT
 ade
-aad
-aad
-aad
-aad
-aad
-aad
-aar
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
+avg
 aar
 aar
-aad
-aad
-aad
 aar
 aar
-avh
 aar
 aar
-axu
+aar
+aar
+aar
+aar
+aar
+aar
+aar
+aar
+aar
+aar
+aar
+aar
+aar
+aar
+aWH
+aWM
+aWQ
+ayd
+ayd
+aXf
+axt
 axZ
 ayN
+aXy
 azJ
 auw
 aBf
@@ -45845,22 +46242,11 @@ aad
 aad
 aad
 aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
 aar
 aar
+aar
+aar
+aad
 aad
 aad
 aar
@@ -45868,6 +46254,17 @@ aar
 aar
 aar
 aar
+aar
+aar
+aar
+aar
+aqI
+aqI
+aqI
+aWU
+ayd
+aXg
+axt
 axt
 aya
 ayO
@@ -46104,12 +46501,7 @@ aad
 aad
 aad
 aad
-aad
-aad
-aad
-aad
-aad
-aad
+aar
 aad
 aad
 aad
@@ -46119,12 +46511,17 @@ aar
 aar
 aar
 aar
-aqJ
-atT
+aar
+aar
+aar
+aar
+aar
 aqI
-aar
-aar
-avg
+atT
+ayd
+aWY
+ayd
+aXh
 axt
 ayb
 ayP
@@ -46368,21 +46765,21 @@ aad
 aad
 aad
 aad
-aft
-aft
-aad
-aad
+aar
+aar
+aar
+aar
+aar
+aar
+aar
 aar
 aqI
-aqI
-aqI
-aqJ
 atU
-aqI
-aqI
-aqI
-aqI
-aqJ
+ayd
+ayd
+ayd
+aXi
+axt
 ayc
 axZ
 axt
@@ -46622,23 +47019,23 @@ aad
 aad
 aad
 aad
-aft
-aft
-aft
-aft
-aft
+aad
+aad
 aad
 aad
 aar
+aar
+aar
+aar
+aar
+aar
+aar
 aqI
-arB
-asj
-aqJ
-atV
-aqI
-aua
-auz
-awE
+atU
+aWV
+ayd
+ayd
+aXj
 aqJ
 aqJ
 aqJ
@@ -46881,23 +47278,23 @@ aft
 aft
 aft
 aft
-aft
-aft
-aft
+aad
+aad
+aad
 aad
 aad
 aar
-aqI
-arC
-ask
-atd
-atW
-arC
+aad
+aad
+aad
+aqJ
+aWR
+aqJ
 avi
-avU
 avi
 aqJ
-ayd
+aqJ
+aXr
 ayQ
 aqJ
 arz
@@ -47140,22 +47537,22 @@ aft
 aft
 aft
 aft
-aft
 aad
-aad
-aar
-aqI
-arD
+amd
+amd
+amd
+amd
+aqJ
+aqJ
+aqJ
+aqJ
+aqJ
 asl
-arF
-asl
-arF
-asl
-arF
-asl
-axv
+arC
+aXk
+aqJ
+aXs
 ayd
-ayR
 aqJ
 arz
 aBk
@@ -47399,17 +47796,17 @@ aft
 aft
 aft
 amd
-amd
-amd
-aqI
-arE
-asm
-ate
+aWG
+apl
+apl
+aqJ
+aWI
+auz
 atX
-aux
+asn
 avj
-avV
-awF
+arF
+awE
 aqJ
 aqJ
 ayS
@@ -47657,19 +48054,19 @@ aft
 anR
 amd
 apl
-ame
-anU
+apl
+apl
+aqJ
+aWJ
+atW
+arC
+asl
 arF
-asl
-atf
-asl
-arF
-asl
-avW
-asl
+atW
+aXl
 axv
-ayd
-ayT
+aXt
+atW
 aqJ
 arz
 aBi
@@ -47915,18 +48312,18 @@ anR
 amd
 ame
 ame
-anU
+ame
 arE
-asm
-arE
-atY
+atW
+arF
+asl
 auy
-atW
+aWZ
 avX
-atW
-aqJ
-ayd
-ayQ
+aXm
+arC
+asm
+aXz
 aqJ
 arz
 aBl
@@ -48160,10 +48557,10 @@ aad
 aad
 aad
 aad
-aad
-aad
-aad
-aad
+afu
+afu
+afu
+afu
 aad
 aad
 aad
@@ -48172,18 +48569,18 @@ anS
 amd
 apm
 ame
+amd
 aqJ
-aqJ
-asn
-asn
-asn
-asn
-asl
-avW
-asl
-aqJ
-aqJ
-aqJ
+asp
+arC
+atW
+aWW
+aXa
+arC
+aXn
+arF
+aXu
+arC
 aqJ
 aAt
 aBi
@@ -48417,11 +48814,11 @@ aad
 aad
 aad
 aad
-aad
-aad
-aad
-aad
-aad
+afu
+ajz
+akh
+afu
+afu
 aad
 aad
 amd
@@ -48432,13 +48829,13 @@ apX
 aqK
 aqJ
 aso
-arC
+aWN
+arF
+auy
+aXb
+asl
+aXo
 atW
-arC
-atW
-avX
-atW
-arC
 aye
 ayU
 aqJ
@@ -48675,10 +49072,10 @@ afu
 afu
 afu
 afu
-aad
-aad
-aad
-aad
+aWB
+afW
+akR
+afu
 aad
 aad
 amd
@@ -48688,16 +49085,16 @@ apo
 apY
 aqK
 aqJ
-asp
-arF
-asl
-auz
-avk
+aqJ
+aqJ
+aqJ
+aqJ
+aqJ
 avY
-awG
-axw
-awG
+aXp
 ayV
+awG
+aXA
 azL
 auw
 aBm
@@ -48931,11 +49328,11 @@ afu
 agK
 aho
 aig
+aiR
+aWC
+aki
+akS
 afu
-afu
-afu
-afu
-aad
 aad
 aad
 amd
@@ -48945,13 +49342,13 @@ app
 apZ
 aqL
 aqJ
-aso
-arC
+aWK
+aWO
 atZ
 auA
-atW
-avZ
-awH
+aqJ
+arD
+asl
 aux
 awH
 ayW
@@ -49189,29 +49586,29 @@ agL
 ahp
 aih
 afu
-ajz
-akh
+aiR
+aWD
 afu
 afu
-amd
-amd
-amd
+afu
+afu
+afu
 anT
 aoF
 ame
 ame
 ame
 aqJ
-aqJ
-aqJ
-aua
-auz
-asl
-awa
-asl
-awa
+aWL
+ayd
+ayd
+ayd
+aXc
+atW
+arC
 asl
 arF
+aXB
 asn
 arz
 aBi
@@ -49445,29 +49842,29 @@ agm
 agM
 ahq
 aii
-aiR
-ajA
-aki
-akR
 afu
-ame
+ajA
+aWE
+afu
+ajJ
+aWF
 amQ
-amd
+afu
 ame
 aoF
 apq
 apq
 aqM
-amd
-asq
 aqJ
-atW
-arC
-atW
+asq
+ayd
+ayd
+aWX
+aqJ
 awb
 awI
-arC
-atW
+aXq
+aXv
 ayX
 aqJ
 aAv
@@ -49703,22 +50100,22 @@ afu
 ahr
 aij
 afu
-afW
+agp
 akj
-akS
+akp
+ajJ
+ajJ
+ajJ
 afu
-ame
-ame
-amd
 anU
 aoG
 amV
 amV
 anf
-anf
-anf
 aqJ
 aqJ
+aqJ
+aWS
 aqJ
 aqJ
 aqJ
@@ -49960,8 +50357,8 @@ afu
 ahs
 aik
 afu
-ajB
-akk
+agp
+akj
 afu
 afu
 afu
