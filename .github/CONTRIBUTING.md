@@ -233,6 +233,8 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * All changes to the database's layout(schema) must be specified in the database changelog in SQL, as well as reflected in the schema files
 
+* Any time the schema is changed the `schema_revision` table and `DB_MAJOR_VERSION` or `DB_MINOR_VERSION` defines must be incremented.
+
 * Queries must never specify the database, be it in code, or in text files in the repo.
 
 
@@ -245,6 +247,8 @@ This prevents nesting levels from getting deeper then they need to be.
 * You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
 
 * Do not divide when you can easily convert it to multiplication. (ie `4/2` should be done as `4*0.5`)
+
+* If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
 
 #### Enforced not enforced
 The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
