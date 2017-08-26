@@ -35001,7 +35001,6 @@
 "bCG" = (
 /obj/structure/table,
 /obj/item/folder/white,
-/obj/item/gun/syringe,
 /obj/item/reagent_containers/dropper,
 /obj/item/soap/nanotrasen,
 /turf/open/floor/plasteel/white,
@@ -36887,7 +36886,6 @@
 "bGR" = (
 /obj/structure/table,
 /obj/item/hand_labeler,
-/obj/item/gun/syringe,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGS" = (

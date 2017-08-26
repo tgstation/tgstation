@@ -41959,7 +41959,6 @@
 /obj/machinery/light,
 /obj/item/soap/nanotrasen,
 /obj/item/clothing/neck/stethoscope,
-/obj/item/gun/syringe,
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/medbay/central)

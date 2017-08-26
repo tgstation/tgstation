@@ -405,7 +405,6 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aW" = (
 /obj/structure/table/reinforced,
-/obj/item/gun/syringe,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
