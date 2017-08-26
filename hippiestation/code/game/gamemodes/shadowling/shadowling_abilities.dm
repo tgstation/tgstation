@@ -37,10 +37,6 @@
 
 /obj/effect/proc_holder/spell/targeted/sling/InterceptClickOn(mob/living/caller, params, atom/t)
 	if(!ishuman(t))
-		to_chat(caller, "<span class='warning'>You can't use this ability on that!</span>")
-		revert_cast()
-		return
-	if(!ishuman(t))
 		to_chat(caller, "<span class='warning'>You may only use this ability on humans!</span>")
 		revert_cast()
 		return
@@ -61,7 +57,7 @@
 
 /obj/effect/proc_holder/spell/targeted/sling/glare //Stuns and mutes a human target for 10 seconds
 	name = "Glare"
-	desc = "Causes damage to the target's motor and speech abilities."
+	desc = "Disrupts the target's motor and speech abilities."
 	panel = "Shadowling Abilities"
 	charge_max = 300
 	human_req = 1
