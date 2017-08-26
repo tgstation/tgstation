@@ -91,7 +91,7 @@
 				for(var/datum/d in objs)
 					world.SDQL_var(d, query_tree["call"][1], source = d)
 					CHECK_TICK
-					
+
 			if("delete")
 				for(var/datum/d in objs)
 					SDQL_qdel_datum(d)

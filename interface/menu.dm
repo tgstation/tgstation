@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(menulist)
 	var/atom/verb/verbpath = Get_checked(C)
 	if (!verbpath || !(verbpath in typesof("[type]/verb")))
 		return
-	
+
 	if (copytext(verbpath.name,1,2) == "@")
 		winset(C, null, list2params(list("command" = copytext(verbpath.name,2))))
 	else

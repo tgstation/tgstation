@@ -40,7 +40,7 @@
 						  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency, signal.data["spans"],
 						  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"],
 						  signal.data["language"])
-		
+
 		/* ###### Copy all non-syndie communications to the Syndicate Frequency ###### */
 		if(intercept && signal.frequency != GLOB.SYND_FREQ)
 			Broadcast_Message(signal.data["mob"],

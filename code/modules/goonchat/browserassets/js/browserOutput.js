@@ -834,11 +834,11 @@ $(function() {
 		$messages.empty();
 		opts.messageCount = 0;
 	});
-	
+
 	$('img.icon').error(iconError);
-	
-	
-		
+
+
+
 
 	/*****************************************
 	*

@@ -92,7 +92,7 @@
 			entry["command"] = copytext(verbpath.name,2)
 		else
 			entry["command"] = replacetext(verbpath.name, " ", "-")
-		
+
 		.[verbpath] = HandleVerb(arglist(list(entry, verbpath) + args))
 
 /world/proc/LoadVerbs(verb_type)

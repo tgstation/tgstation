@@ -4,7 +4,7 @@ body
 	background-image: url(uiBg.png);
 	background-repeat: repeat-x;
 	background-position: center top;
-	
+
 	font-family: verdana,Geneva,sans-serif;
 	font-size: 12px;
 	color: #FFFFFF;
@@ -204,7 +204,7 @@ h4
 }
 
 .notice.icon
-{	
+{
 	padding: 2px 4px 0 20px;
 }
 

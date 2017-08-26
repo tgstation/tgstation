@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(garbage)
 	HandleToBeQueued()
 	if(state == SS_RUNNING)
 		HandleQueue()
-	
+
 	if (state == SS_PAUSED) //make us wait again before the next run.
 		state = SS_RUNNING 
 
@@ -114,7 +114,7 @@ SUBSYSTEM_DEF(garbage)
 			var/type = A.type
 			testing("GC: -- \ref[A] | [type] was unable to be GC'd and was deleted --")
 			didntgc["[type]"]++
-			
+
 			HardDelete(A)
 
 			++delslasttick
@@ -149,12 +149,12 @@ SUBSYSTEM_DEF(garbage)
 	var/time = world.timeofday
 	var/tick = world.tick_usage
 	var/ticktime = world.time
-	
+
 	var/type = A.type
 	var/refID = "\ref[A]"
-	
+
 	del(A)
-	
+
 	tick = (world.tick_usage-tick+((world.time-ticktime)/world.tick_lag*100))
 	if (tick > highest_del_tickusage)
 		highest_del_tickusage = tick
@@ -167,7 +167,7 @@ SUBSYSTEM_DEF(garbage)
 		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
 		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
 		postpone(time/5)
-	
+
 /datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A

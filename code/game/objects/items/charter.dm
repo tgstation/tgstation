@@ -45,7 +45,7 @@
 	if(response_timer_id)
 		to_chat(user, "You're still waiting for approval from your employers about your proposed name change, it'd be best to wait for now.")
 		return
-		
+
 	if(!new_name)
 		return
 	log_game("[key_name(user)] has proposed to name the station as \

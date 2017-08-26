@@ -7,7 +7,7 @@
 
 /obj/item/cartridge/virus/message_header()
 	return "<b>[charges] viral files left.</b><HR>"
-	
+
 /obj/item/cartridge/virus/message_special(obj/item/device/pda/target)
 	if (!istype(loc, /obj/item/device/pda))
 		return ""  //Sanity check, this shouldn't be possible.

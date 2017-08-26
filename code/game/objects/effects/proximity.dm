@@ -33,7 +33,7 @@
 	if(!force_rebuild && range == current_range)
 		return FALSE
 	. = TRUE
-	
+
 	current_range = range
 
 	var/list/checkers_local = checkers

@@ -3,8 +3,8 @@
 /obj/item/paper/fluff/ruins/crashedship/scribbled
 	name = "scribbled note"
 	info = "The next person who takes one of my screwdrivers gets stabbed with one. They are MINE. - Love, Madsen"
-	
-	
+
+
 /obj/item/paper/fluff/ruins/crashedship/captains_log
 	name = "Captain's log entry"
 	info = "I'm no scientist, but judging from the design and components, it seems to be some kind of teleporter. This thing is gonna be worth a lot of cash to the right man. The boys are excited, as they have every right to be, and I've let them crack into that case of beer we got. I normally wouldn't allow such a thing, but this is a time for celebration! It's not like a couple drinks will hurt anything."

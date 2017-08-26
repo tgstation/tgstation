@@ -117,7 +117,7 @@ All ShuttleMove procs go here
 
 	var/area/old_dest_area = newT.loc
 	parallax_movedir = old_dest_area.parallax_movedir
-	
+
 	old_dest_area.contents -= newT
 	contents += newT
 	newT.change_area(old_dest_area, src)

@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(lighting)
 
 		create_all_lighting_objects()
 		initialized = TRUE
-	
+
 	fire(FALSE, TRUE)
 
 	..()

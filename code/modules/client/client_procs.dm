@@ -353,7 +353,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/Del()
 	if(credits)
-		QDEL_LIST(credits)	
+		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)

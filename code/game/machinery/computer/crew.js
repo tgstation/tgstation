@@ -243,7 +243,7 @@ $(window).on("onUpdateContent", function()
 		minimap_mousedown_scrollTop = this.scrollTop;
 		minimap_mousedown_clientX = e.clientX;
 		minimap_mousedown_clientY = e.clientY;
-		
+
 		var c = ++minimap_mousedown_counter;
 		setTimeout(function()
 		{
@@ -254,14 +254,14 @@ $(window).on("onUpdateContent", function()
 			}
 		}, 100);
 	});
-	
+
 	$(document).on("mousemove", function(e)
 	{
 		if (minimap_mousedown)
 		{
 			var offsetX = minimap_mousedown_clientX - e.clientX;
 			var offsetY = minimap_mousedown_clientY - e.clientY;
-			
+
 			var minimap = document.getElementById("minimap");
 			minimap.scrollLeft = minimap_mousedown_scrollLeft + offsetX;
 			minimap.scrollTop = minimap_mousedown_scrollTop + offsetY;
@@ -469,16 +469,16 @@ function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, 
 	}
 
 	spanElem					= $("<span></span>").text(name);
-	
+
 	if (italics)
 	{
 		spanElem.css("font-style", "italic");
 	}
 
 	if (isHead(ijob))			{ spanElem.css("font-weight", "bold"); }
-	
+
 	var color					= getColor(ijob);
-	
+
 	if (color)					{ spanElem.css("color", color); }
 
 	tdElem.append(spanElem);

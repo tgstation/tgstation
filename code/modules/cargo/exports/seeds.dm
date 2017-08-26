@@ -33,5 +33,5 @@
 		return 0
 
 	var/potDiff = (S.potency - discoveredPlants[S.type])
-		
+
 	return round(..() * potDiff)
