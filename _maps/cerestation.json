@@ -4,5 +4,5 @@
     "map_file": "cerestation.dmm",
     "minetype": "lavaland",
     "transition_config": "default",
-	"allow_custom_shuttles": "yes"
+    "allow_custom_shuttles": "yes"
 }
