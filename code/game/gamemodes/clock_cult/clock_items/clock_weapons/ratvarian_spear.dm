@@ -20,7 +20,6 @@
 		bonus_burn = 10
 		throwforce = 40
 		armour_penetration = 50
-		clockwork_desc = initial(clockwork_desc)
 	else
 		force = initial(force)
 		bonus_burn = initial(bonus_burn)

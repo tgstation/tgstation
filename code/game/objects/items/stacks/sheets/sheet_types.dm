@@ -313,7 +313,9 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	null,
 	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/clockwork/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile brass window", /obj/structure/window/reinforced/clockwork/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = TRUE, on_floor = TRUE) \
+	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = TRUE, on_floor = TRUE), \
+	null,
+	new/datum/stack_recipe("trap base", /obj/structure/destructible/clockwork/trap/base, 3, time = 25, one_per_turf = TRUE, on_floor = TRUE) \
 ))
 
 /obj/item/stack/tile/brass
@@ -333,6 +335,12 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 /obj/item/stack/tile/brass/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
 	qdel(src)
+
+/obj/item/stack/tile/brass/attack_self(mob/living/user)
+	if(!is_servant_of_ratvar(user))
+		to_chat(user, "<span class='danger'>[src] seems far too fragile and rigid to build with.</span>") //haha that's because it's actually replicant alloy you DUMMY
+		return
+	..()
 
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.brass_recipes

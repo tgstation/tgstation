@@ -13,5 +13,3 @@
 	if(new_action)
 		action = new_action
 		action.weapon = src
-
-
