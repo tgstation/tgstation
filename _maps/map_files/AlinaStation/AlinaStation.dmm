@@ -4147,7 +4147,7 @@
 	req_access_txt = "7"
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/science/mixing)
 "akh" = (
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/plasteel/black,
@@ -5776,7 +5776,7 @@
 	})
 "anR" = (
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating/astplate,
+/turf/open/floor/plating/asteroid,
 /area/ruin/unpowered{
 	name = "Asteroid"
 	})
@@ -5802,7 +5802,7 @@
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/fore)
+/area/maintenance/port/fore)
 "anV" = (
 /turf/open/floor/plasteel/red/side{
 	dir = 1
@@ -6128,7 +6128,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/fore)
+/area/maintenance/port/fore)
 "aoH" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -9220,7 +9220,7 @@
 /area/medical/sleeper)
 "axk" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 2;
+	cyclelinkeddir = 4;
 	name = "External Access";
 	req_access = null;
 	req_access_txt = "13"
@@ -9896,9 +9896,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/item/device/radio/intercom{
-	pixel_y = -28
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -11580,14 +11577,14 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/hallway/primary/port)
+/area/maintenance/port)
 "aDm" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/hallway/primary/port)
+/area/maintenance/port)
 "aDn" = (
 /obj/machinery/door/window/southleft,
 /turf/open/floor/plating,
@@ -12472,6 +12469,7 @@
 /area/hallway/primary/port)
 "aFB" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
 	name = "Transport Airlock"
 	},
 /turf/open/floor/plating,
@@ -13365,7 +13363,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/port)
+/area/maintenance/port)
 "aIb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -13476,7 +13474,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/aft)
+/area/maintenance/central)
 "aIr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -13608,8 +13606,8 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "aIM" = (
-/obj/machinery/computer/shuttle/mining,
 /obj/machinery/light,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/escape{
 	dir = 8
 	},
@@ -13650,7 +13648,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/port)
+/area/maintenance/port)
 "aIQ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -13852,7 +13850,7 @@
 /area/shuttle/transport)
 "aJp" = (
 /obj/machinery/door/airlock/glass_mining{
-	cyclelinkeddir = 8;
+	cyclelinkeddir = 2;
 	name = "Mining Dock";
 	req_access_txt = "48"
 	},
@@ -14398,10 +14396,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "aKF" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "aKG" = (
@@ -14634,7 +14632,7 @@
 /area/maintenance/aft)
 "aLi" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 4;
+	cyclelinkeddir = 1;
 	name = "Mining Dock Airlock";
 	req_access = null;
 	req_access_txt = "48";
@@ -14668,7 +14666,7 @@
 /area/quartermaster/storage)
 "aLn" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
+	cyclelinkeddir = 2;
 	name = "Supply Dock Airlock";
 	req_access_txt = "31"
 	},
@@ -16931,7 +16929,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/engine/gravity_generator)
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aQA" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -17818,7 +17816,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "aSx" = (
 /obj/machinery/holopad,
@@ -18240,7 +18238,7 @@
 	req_access_txt = "65"
 	},
 /turf/open/floor/plating,
-/area/tcommsat/server)
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aTD" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -19880,10 +19878,16 @@
 /area/security/vacantoffice)
 "aXy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/device/radio/intercom{
+	pixel_y = -28
+	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "aXz" = (
 /obj/machinery/light,
+/obj/structure/sign/poster/random{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
@@ -19901,6 +19905,89 @@
 	dir = 4
 	},
 /area/chapel/main)
+"aXC" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/asteroid/central)
+"aXD" = (
+/obj/item/stack/tile/plasteel,
+/turf/open/floor/plating,
+/area/maintenance/asteroid/central)
+"aXE" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "Asteroid Outpost";
+	req_access = null;
+	req_access_txt = "13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/asteroid/central)
+"aXF" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "Asteroid Outpost";
+	req_access = null;
+	req_access_txt = "13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/asteroid/central)
+"aXG" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Access";
+	req_access = null;
+	req_access_txt = "13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"aXH" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/port)
+"aXI" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 2;
+	name = "Arrival Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/port)
+"aXJ" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Transport Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/port)
+"aXK" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Supply Dock Airlock";
+	req_access_txt = "31"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
+"aXL" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Supply Dock Airlock";
+	req_access_txt = "31"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
+"aXM" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "External Access";
+	req_access = null;
+	req_access_txt = "13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 
 (1,1,1) = {"
 aaa
@@ -34669,10 +34756,10 @@ aaa
 aaa
 adZ
 aad
-acd
-acd
-acd
-acd
+adf
+adf
+adf
+adf
 aar
 aar
 aar
@@ -36724,8 +36811,8 @@ adv
 ads
 adK
 ads
-ads
-adB
+aXC
+aXD
 ads
 afj
 aad
@@ -36980,11 +37067,11 @@ aad
 aad
 adf
 ads
-ads
-aeu
-adB
 aeR
-aad
+adf
+aXE
+adf
+ads
 aad
 aad
 aar
@@ -37239,9 +37326,9 @@ adf
 adB
 ads
 adf
-aeD
-adq
+adB
 adf
+adq
 aad
 aad
 aar
@@ -37496,9 +37583,9 @@ adf
 adL
 aed
 adf
-aeE
+aXF
+adf
 aar
-aad
 aad
 aar
 aar
@@ -37753,7 +37840,7 @@ adf
 adM
 aee
 adf
-aar
+aeE
 aar
 aar
 aad
@@ -38303,7 +38390,7 @@ aaa
 aqH
 azI
 aqH
-aAY
+avc
 aqH
 aaa
 aaa
@@ -39074,7 +39161,7 @@ axU
 aqH
 avd
 auv
-aAZ
+avd
 aqH
 apW
 apW
@@ -41643,7 +41730,7 @@ awz
 awz
 avI
 axn
-aAo
+aXH
 atO
 aAo
 aDc
@@ -42422,7 +42509,7 @@ aDV
 aEJ
 aFB
 atO
-aFB
+aXJ
 aHX
 aIK
 aIK
@@ -43442,7 +43529,7 @@ avI
 avI
 avI
 axn
-aAo
+aXI
 atO
 aAo
 aDc
@@ -46267,7 +46354,7 @@ aXg
 axt
 axt
 aya
-ayO
+aXx
 axt
 arz
 aBg
@@ -46757,7 +46844,7 @@ aad
 aad
 aad
 aad
-aad
+acd
 aad
 aad
 aad
@@ -47013,15 +47100,15 @@ aad
 aad
 aad
 aad
+acd
+acd
+acd
 aad
 aad
 aad
-aad
-aad
-aad
-aad
-aad
-aad
+acd
+acd
+acd
 aad
 aar
 aar
@@ -47266,9 +47353,9 @@ adm
 aeT
 ade
 aad
-aad
-aad
-aad
+acd
+acd
+acd
 aft
 aft
 aft
@@ -47278,7 +47365,7 @@ aft
 aft
 aft
 aft
-aad
+acd
 aad
 aad
 aad
@@ -47523,7 +47610,7 @@ adm
 aeT
 ade
 aft
-aft
+acd
 aft
 aft
 aft
@@ -47787,18 +47874,18 @@ aft
 aft
 aft
 aft
+acd
 aft
 aft
 aft
 aft
-aar
 aft
 aft
 aft
 amd
 aWG
-apl
-apl
+aWG
+aWG
 aqJ
 aWI
 auz
@@ -48042,9 +48129,9 @@ aft
 aft
 aft
 aad
-aad
-aad
-aad
+acd
+acd
+acd
 aad
 aad
 aad
@@ -48053,9 +48140,9 @@ aft
 aft
 anR
 amd
-apl
-apl
-apl
+aWG
+aWG
+aWG
 aqJ
 aWJ
 atW
@@ -48295,8 +48382,8 @@ aeV
 afk
 aft
 aft
-aft
-aad
+acd
+acd
 aad
 aad
 aad
@@ -48313,7 +48400,7 @@ amd
 ame
 ame
 ame
-arE
+anU
 atW
 arF
 asl
@@ -48552,8 +48639,8 @@ aeW
 afl
 aft
 aad
-aad
-aad
+acd
+acd
 aad
 aad
 aad
@@ -49343,7 +49430,7 @@ apZ
 aqL
 aqJ
 aWK
-aWO
+aWK
 atZ
 auA
 aqJ
@@ -49883,7 +49970,7 @@ aKb
 aEk
 aLn
 aLU
-aLn
+aXK
 aMU
 aNq
 aNq
@@ -50397,7 +50484,7 @@ aGP
 aEk
 aLn
 aLU
-aLn
+aXL
 aMV
 aNq
 aNq
@@ -52454,7 +52541,7 @@ aKO
 aKO
 aLW
 aKO
-aLW
+aXM
 aNu
 aNV
 aNu
@@ -54243,8 +54330,8 @@ awe
 aEp
 awe
 avv
-ayo
-ayo
+anf
+anf
 anf
 aok
 aoQ
@@ -64768,7 +64855,7 @@ aad
 aad
 aad
 aeI
-axk
+aXG
 aeI
 afs
 azF
