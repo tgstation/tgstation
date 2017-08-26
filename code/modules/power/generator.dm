@@ -162,14 +162,11 @@
 
 		t += "<div class='statusDisplay'>"
 		
-		var/displaygen = lastgenlev
-		if(displaygen < 1000000) //less than a MW
-			displaygen /= 1000
-			t += "Output: [round(displaygen,0.01)] kW"
+		if(lastgenlev < 1000000) //less than a MW
+			t += "Output: [round((lastgenlev * 0.001),0.01)] kW"
 		else
-			displaygen /= 1000000
-			t += "Output: [round(displaygen,0.01)] MW"
-		
+			t += "Output: [round((lastgenlev * 0.000001),0.01)] MW"
+
 		t += "<BR>"
 
 		t += "<B><font color='blue'>Cold loop</font></B><BR>"
