@@ -35,6 +35,7 @@
 /datum/action/innate/spacepod
 	var/obj/spacepod/S
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/mob/actions/actions_spacepod.dmi'
 
 /datum/action/innate/spacepod/Grant(mob/living/L, obj/spacepod/M)
 	if(M)
@@ -44,6 +45,7 @@
 /datum/action/innate/spacepod/exit
 	name = "Exit Spacepod"
 	desc = "Exits the spacepod"
+	button_icon_state = "exit"
 
 /datum/action/innate/spacepod/exit/Activate()
 	if(!S)
@@ -53,15 +55,19 @@
 /datum/action/innate/spacepod/lockpod
 	name = "Lock Pod"
 	desc = "Locks or unlocks the pod"
+	button_icon_state = "lock_off"
 
 /datum/action/innate/spacepod/lockpod/Activate()
 	if(!S)
 		return
 	S.lock_pod(owner)
+	button_icon_state = "lock_[S.unlocked ? "off" : "on"]"
+	UpdateButtonIcon()
 
 /datum/action/innate/spacepod/poddoor
 	name = "Toggle Nearby Pod Doors"
 	desc = "Opens any nearby pod doors"
+	button_icon_state = "bay_open"
 
 /datum/action/innate/spacepod/poddoor/Activate()
 	if(!S)
@@ -71,6 +77,7 @@
 /datum/action/innate/spacepod/weapons
 	name = "Fire Pod Weapons"
 	desc = "Fires the pods weapon system if there is one"
+	button_icon_state = "fire"
 
 /datum/action/innate/spacepod/weapons/Activate()
 	if(!S)
@@ -80,6 +87,7 @@
 /datum/action/innate/spacepod/cargo
 	name = "Unload Cargo"
 	desc = "Unloads the pod's cargo, if any"
+	button_icon_state = "unload"
 
 /datum/action/innate/spacepod/cargo/Activate()
 	if(!S)
@@ -89,15 +97,19 @@
 /datum/action/innate/spacepod/lights
 	name = "Toggle Lights"
 	desc = "Toggle the pod's lights"
+	button_icon_state = "lights_off"
 
 /datum/action/innate/spacepod/lights/Activate()
 	if(!S)
 		return
 	S.toggleLights(owner)
+	button_icon_state = "lights_[S.lights?"on":"off"]"
+	UpdateButtonIcon()
 
 /datum/action/innate/spacepod/checkseat
 	name = "Check Under Seat"
 	desc = "Check under the pod's seat for anything that might've been dropped."
+	button_icon_state = "chair"
 
 /datum/action/innate/spacepod/checkseat/Activate()
 	if(!S)
@@ -108,8 +120,11 @@
 /datum/action/innate/spacepod/airtank
 	name = "Toggle internal airtank usage"
 	desc = "Toggle whether you want to take air from outside or use the internal air tank."
+	button_icon_state = "air_on"
 
 /datum/action/innate/spacepod/airtank/Activate()
 	if(!S)
 		return
 	S.toggle_internal_tank(owner)
+	button_icon_state = "air_[S.use_internal_tank ? "on" : "off"]"
+	UpdateButtonIcon()

@@ -22,7 +22,7 @@
 
 	layer = SPACEPOD_LAYER
 
-	var/list/mob/living/pilot	//There is only ever one pilot and he gets all the privledge
+	var/list/mob/living/pilot //There is only ever one pilot and he gets all the privledge
 	var/list/mob/living/passengers = list() //passengers can't do anything and are variable in number
 	var/max_passengers = 0
 	var/obj/item/storage/internal/cargo_hold
