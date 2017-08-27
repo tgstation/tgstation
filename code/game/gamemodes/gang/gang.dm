@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather, 
 	name = "gang war"
 	config_tag = "gang"
 	antag_flag = ROLE_GANG
+	false_report_weight = 5
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 2
@@ -91,6 +92,12 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather, 
 			greet_gang(boss_mind)
 			equip_gang(boss_mind.current,G)
 			modePlayer += boss_mind
+
+/datum/game_mode/gang/generate_report()
+	return "Cybersun Industries representatives claimed that they, in joint research with the Tiger Cooperative, have made a major breakthrough in brainwashing technology, and have \
+			made the nanobots that apply the \"conversion\" very small and capable of fitting into usually innocent objects - namely, pens. While they refused to outsource this technology for \
+			months to come due to its flaws, they reported some as missing but passed it off to carelessness. At Central Command, we don't like mysteries, and we have reason to believe that this \
+			technology was stolen for anti-Nanotrasen use. Be on the lookout for territory claims and unusually violent crew behavior, applying mindshield implants as necessary."
 
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)

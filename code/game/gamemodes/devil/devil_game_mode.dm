@@ -2,6 +2,7 @@
 	name = "devil"
 	config_tag = "devil"
 	antag_flag = ROLE_DEVIL
+	false_report_weight = 1
 	protected_jobs = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
 	required_players = 0
 	required_enemies = 1
@@ -53,6 +54,10 @@
 	modePlayer += devils
 	..()
 	return 1
+
+/datum/game_mode/devil/generate_report()
+	return "Infernal creatures have been seen nearby offering great boons in exchange for souls.  This is considered theft against Nanotrasen, as all employment contracts contain a lien on the \
+			employee's soul.  If anyone sells their soul in error, contact an attorney to overrule the sale.  Be warned that if the devil purchases enough souls, a gateway to hell may open."
 
 /datum/game_mode/devil/proc/post_setup_finalize(datum/mind/devil)
 	add_devil(devil.current, ascendable = TRUE) //Devil gamemode devils are ascendable.

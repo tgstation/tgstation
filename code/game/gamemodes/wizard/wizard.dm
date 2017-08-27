@@ -6,6 +6,7 @@
 	name = "wizard"
 	config_tag = "wizard"
 	antag_flag = ROLE_WIZARD
+	false_report_weight = 10
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
@@ -46,6 +47,10 @@
 	..()
 	return
 
+/datum/game_mode/wizard/generate_report()
+	return "A dangerous Wizards' Federation individual by the name of [pick(GLOB.wizard_first)] [pick(GLOB.wizard_second)] has recently escaped confinement from an unlisted prison facility. This \
+		man is a dangerous mutant with the ability to alter himself and the world around him by what he and his leaders believe to be magic. If this man attempts an attack on your station, \
+		his execution is highly encouraged, as is the preservation of his body for later study."
 
 /datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
 	switch(rand(1,100))
