@@ -8006,11 +8006,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
 	},
-/turf/closed/wall/shuttle{
-	dir = 3;
-	icon_state = "swall_f10";
-	layer = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8270,19 +8266,13 @@
 	name = "MO19 Arrivals"
 	})
 "ly" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "lz" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8295,19 +8285,13 @@
 	name = "MO19 Arrivals"
 	})
 "lB" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "lC" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8528,10 +8512,7 @@
 	name = "MO19 Arrivals"
 	})
 "lY" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9122,10 +9103,7 @@
 	name = "MO19 Arrivals"
 	})
 "mX" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall2";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9194,24 +9172,13 @@
 	name = "MO19 Arrivals"
 	})
 "nd" = (
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "ne" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9306,10 +9273,7 @@
 	name = "MO19 Arrivals"
 	})
 "nn" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9409,14 +9373,7 @@
 	name = "MO19 Arrivals"
 	})
 "nv" = (
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
