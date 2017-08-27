@@ -219,19 +219,30 @@
 	HandleWet()
 
 /turf/open/proc/UpdateSlip()
+	var/intensity
+	var/lube_flags
 	switch(wet)
 		if(TURF_WET_WATER)
-			AddComponent(/datum/component/slippery, 60, NO_SLIP_WHEN_WALKING)
+			intensity = 60
+			lube_flags = NO_SLIP_WHEN_WALKING
 		if(TURF_WET_LUBE)
-			AddComponent(/datum/component/slippery, 80, SLIDE | GALOSHES_DONT_HELP)
+			intensity = 80
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
 		if(TURF_WET_ICE)
-			AddComponent(/datum/component/slippery, 120, SLIDE | GALOSHES_DONT_HELP)
+			intensity = 120
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
 		if(TURF_WET_PERMAFROST)
-			AddComponent(/datum/component/slippery, 120, SLIDE_ICE | GALOSHES_DONT_HELP)
+			intensity = 120
+			lube_flags = SLIDE_ICE | GALOSHES_DONT_HELP
 		if(TURF_WET_SLIDE)
-			AddComponent(/datum/component/slippery, 80, SLIDE | GALOSHES_DONT_HELP)
+			intensity = 80
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
 		else
 			qdel(GetComponent(/datum/component/slippery))
+			return
+	var/datum/component/slippery/S = LoadComponent(/datum/component/slippery)
+	S.intensity = intensity
+	S.lube_flags = lube_flags
 
 /turf/open/ComponentActivated(datum/component/C)
 	..()
