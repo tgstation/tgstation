@@ -55,7 +55,7 @@
 	var/light_amount = T.get_lumcount()
 	if(light_amount > 0.2) // jaunt ends
 		end_jaunt(TRUE)
-	else if (light_amount < 0.2 && jaunter) //heal in the dark
+	else if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
 		jaunter.heal_overall_damage(1,1)
 
 /obj/effect/dummy/shadow/proc/end_jaunt(forced = FALSE)
