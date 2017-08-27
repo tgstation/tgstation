@@ -149,6 +149,8 @@
 	cargo_hold.max_w_class = 5		//fit almost anything
 	cargo_hold.max_combined_w_class = 0 //you can optimize your stash with larger items
 
+	armorDesc()
+
 	for(var/turf/T in locs)
 		for(var/obj/I in T.contents)
 			if(istype(I, /obj/structure/spacepod_frame))
@@ -248,6 +250,22 @@
 /obj/spacepod/proc/fixReg()
 	internal_temp_regulation = 1
 	message_to_riders("<span class='notice'>The pod console displays 'Temperature regulation online. Have a safe day!'.</span>")
+
+/obj/spacepod/proc/armorDesc()
+	switch(pod_armor.name)
+		if("civ")
+			desc = "A sleek civilian space pod."
+		if("black")
+			desc = "An all black space pod with no insignias."
+		if("mil")
+			desc = "A dark grey space pod brandishing the Nanotrasen Military insignia"
+		if("pod_synd")
+			desc = "A menacing military space pod with Fuck NT stenciled onto the side"
+		if("gold")
+			desc = "A civilian space pod with a gold body, must have cost somebody a pretty penny"
+		if("industrial")
+			desc = "A rough looking space pod meant for industrial work"
+	update_icons()
 
 /obj/spacepod/attack_alien(mob/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
