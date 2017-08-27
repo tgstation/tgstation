@@ -223,6 +223,9 @@
 		add_overlay(pod_overlays[DAMAGE])
 		if(obj_integrity <= round(max_integrity/4))
 			add_overlay(pod_overlays[FIRE])
+	if(equipment_system.weapon_system && equipment_system.weapon_system.overlay_icon)
+		var/mutable_appearance/weapon_overlay = mutable_appearance(icon, icon_state = equipment_system.weapon_system.overlay_icon)
+		add_overlay(weapon_overlay)
 	light_color = icon_light_color[icon_state]
 	bound_width = 64
 	bound_height = 64
@@ -395,6 +398,7 @@
 				return
 			if(istype(W, /obj/item/device/spacepod_equipment/weaponry))
 				add_equipment(user, W, "weapon_system")
+				update_icons()
 				return
 			if(istype(W, /obj/item/device/spacepod_equipment/misc))
 				add_equipment(user, W, "misc_system")
@@ -1025,7 +1029,15 @@
 /obj/effect/landmark/spacepod/random/Initialize()
 	. = ..()
 
+/obj/spacepod/shuttleRotate(rotation)
+	setDir(turn(dir, -rotation))
 
+/obj/spacepod/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+	if(rotation)
+		shuttleRotate(rotation)
+	loc = newT
+	if(pilot || passengers.len > 0)
+		update_parallax_contents()
 
 /obj/spacepod/process()
 	if(internal_temp_regulation)

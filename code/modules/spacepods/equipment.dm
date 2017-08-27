@@ -82,6 +82,7 @@
 	var/shots_per = 1
 	var/fire_sound
 	var/fire_delay = 15
+	var/overlay_icon
 
 /obj/item/device/spacepod_equipment/weaponry/disabler
 	name = "disabler system"
@@ -90,6 +91,7 @@
 	projectile_type = /obj/item/projectile/beam/disabler
 	shot_cost = 400
 	fire_sound = 'sound/weapons/taser2.ogg'
+	overlay_icon = "pod_weapon_disabler"
 
 /obj/item/device/spacepod_equipment/weaponry/burst_disabler
 	name = "burst disabler system"
@@ -100,6 +102,7 @@
 	shots_per = 3
 	fire_sound = 'sound/weapons/taser2.ogg'
 	fire_delay = 30
+	overlay_icon = "pod_weapon_disabler"
 
 /obj/item/device/spacepod_equipment/weaponry/laser
 	name = "laser system"
@@ -108,6 +111,7 @@
 	projectile_type = /obj/item/projectile/beam
 	shot_cost = 600
 	fire_sound = 'sound/weapons/Laser.ogg'
+	overlay_icon = "pod_weapon_laser"
 
 // MINING LASERS
 /obj/item/device/spacepod_equipment/weaponry/basic_pod_ka
@@ -139,6 +143,7 @@
 	shot_cost = 250
 	fire_delay = 10
 	fire_sound = 'sound/weapons/plasma_cutter.ogg'
+	overlay_icon = "pod_weapon_plasma"
 
 /obj/item/device/spacepod_equipment/weaponry/plasma_cutter/adv
 	name = "enhanced plasma cutter system"
