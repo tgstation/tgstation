@@ -287,8 +287,8 @@
 	for(var/i in 1 to rand(3,5)) //Between three and five wrong entries on the list.
 		var/false_report_type = pickweightAllowZero(report_weights)
 		report_weights[false_report_type] = 0 //Make it so the same false report won't be selected twice
-		reports.Add(config.mode_reports[false_report_type])
-	reports.Add(config.mode_reports[config_tag])
+		reports += config.mode_reports[false_report_type]
+	reports += config.mode_reports[config_tag]
 	reports = shuffle(reports) //Randomize the order, so the real one is at a random position.
 
 	for(var/report in reports)
