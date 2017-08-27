@@ -142,9 +142,61 @@
 	user.set_machine(src)
 	interact(user)
 
+
+
+/obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "smartvend", "Smartfridge", 440, 550, master_ui, state)
+		ui.open()
+
+/obj/machinery/smartfridge/ui_data(mob/user)
+	var/list/data = list()
+
+	var/listofitems = list()
+	for (var/atom/movable/O in contents)
+		if (listofitems[O.name])
+			listofitems[O.name]["amount"]++
+		else
+			listofitems[O.name] = list("name" = O.name, "id" = O.type, "amount" = 1)
+	sortList(listofitems)
+
+	data["contents"] = listofitems
+
+	return data
+
+/obj/machinery/smartfridge/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("Release")
+			var/ghettodebug = jointext(params,";")
+			var/ghettoid = params["id"]
+			var/sheets = params["sheets"]
+			to_chat(usr, "<span class='warning'>[action] [ghettodebug] [ghettoid] [sheets] [src]</span>")
+			var/desired = 0
+			if (params["sheets"])
+				desired = text2num(params["sheets"])
+			else
+				desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
+
+			for(var/obj/item/O in contents)
+				if(desired <= 0)
+					break
+				if("[O.type]" == params["id"])
+					to_chat(usr, "<span class='warning'>[O] found, popping</span>")
+					O.loc = src.loc
+					desired--
+				else
+					to_chat(usr, "<span class='warning'>[O.type] is not [ghettoid]</span>")
+		else
+			return TRUE
+	return TRUE
+
+
 /*******************
 *   SmartFridge Menu
-********************/
+*******************
 
 /obj/machinery/smartfridge/interact(mob/user)
 	if(stat)
@@ -205,7 +257,7 @@
 
 
 	updateUsrDialog()
-
+*/
 
 // ----------------------------
 //  Drying Rack 'smartfridge'
