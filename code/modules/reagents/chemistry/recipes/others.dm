@@ -69,6 +69,49 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/gold(location)
 
+/datum/chemical_reaction/ironsolidification
+	name = "Solid Iron"
+	id = "solidiron"
+	required_reagents = list("frostoil" = 5, "iron" = 20)
+	mob_react = 1
+
+/datum/chemical_reaction/ironsolidification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/sheet/metal(location)
+
+/datum/chemical_reaction/uraniumsolidification
+	name = "Solid Uranium"
+	id = "soliduranium"
+	required_reagents = list("frostoil" = 5, "uranium" = 20)
+	mob_react = 1
+
+/datum/chemical_reaction/uraniumsolidification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/sheet/mineral/uranium(location)
+
+/datum/chemical_reaction/silversolidification
+	name = "Solid Silver"
+	id = "solidsilver"
+	required_reagents = list("frostoil" = 5, "silver" = 20)
+	mob_react = 1
+
+/datum/chemical_reaction/silversolidification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/sheet/mineral/silver(location)
+
+/datum/chemical_reaction/bluespacesolidification
+	name = "Solid Bluespace"
+	id = "solidbluespace"
+	required_reagents = list("frostoil" = 5, "bluespace" = 45)
+	mob_react = 1
+
+/datum/chemical_reaction/bluespacesolidification/on_reaction(datum/reagents/holder, created_volume)
+	new /obj/item/weapon/ore/bluespace_crystal(get_turf(holder.my_atom))
+
+
 /datum/chemical_reaction/capsaicincondensation
 	name = "Capsaicincondensation"
 	id = "capsaicincondensation"
@@ -552,6 +595,12 @@
 	results = list("oil" = 3)
 	required_reagents = list("welding_fuel" = 1, "carbon" = 1, "hydrogen" = 1)
 
+/datum/chemical_reaction/oil2
+	name = "Oil"
+	id = "oil2"
+	results = list("oil" = 4)
+	required_reagents = list("cornoil" = 4, "hydrogen" = 1)
+
 /datum/chemical_reaction/phenol
 	name = "phenol"
 	id = "phenol"
@@ -650,3 +699,35 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to 10)
 		new /obj/item/stack/sheet/plastic(location)
+
+/datum/chemical_reaction/bluespace_dust
+	name = "bluespace dust"
+	id = "bluespace"
+	results = list("bluespace" = 1)
+	required_reagents = list("strange_reagent" = 1, "stable_plasma" = 1, "teslium" = 1)
+
+/datum/chemical_reaction/monkey
+	name = "monkey"
+	id = "spawn_monkey"
+	required_reagents = list("strange_reagent" = 5, "banana" = 5, "uranium" = 5)
+
+/datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	if(prob(90))
+		new /mob/living/carbon/monkey(location)
+	else
+		new /mob/living/carbon/monkey/angry(location) //kek lol
+
+/datum/chemical_reaction/animatin
+	name = "animatin"
+	id = "animatin"
+	results = list("animatin" = 1)
+	required_reagents = list("strange_reagent" = 1, "mercury" = 1, "mutagen" = 1)
+
+/datum/chemical_reaction/vacuum
+	name = "liquid vacuum"
+	id = "vacuum"
+	results = list("vacuum" = 1)
+	required_reagents = list("strange_reagent" = 1, "nothing" = 1)
+
+
