@@ -54,10 +54,9 @@
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
 		board.challenge = TRUE
 
-	var/obj/item/device/radio/uplink/nuclear/U = new(get_turf(user))
-	U.hidden_uplink.owner = "[user.key]"
-	U.hidden_uplink.telecrystals = CHALLENGE_TELECRYSTALS
-	U.hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
+	var/obj/item/device/radio/uplink/nuclear/U = new(get_turf(user), user.key)
+	GET_COMPONENT_FROM(UP, /datum/component/uplink, U)
+	UP.telecrystals = CHALLENGE_TELECRYSTALS
 	config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
 	SSblackbox.set_val("nuclear_challenge_mode",1)
 	qdel(src)

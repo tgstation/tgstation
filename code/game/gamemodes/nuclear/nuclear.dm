@@ -281,10 +281,11 @@
 		var/TC_uses = 0
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayer(syndicate)
-			for(var/obj/item/device/uplink/H in GLOB.uplinks)
-				if(H && H.owner && H.owner == syndicate.key)
-					TC_uses += H.spent_telecrystals
-					purchases += H.purchase_log
+			if(GLOB.uplink_purchase_logs)
+				for(var/I in GLOB.uplink_purchase_logs[syndicate.key])
+					var/datum/uplink_purchase_log/plog = I
+					TC_uses += plog.spent_telecrystals
+					purchases += plog.GetPurchaseLog()
 		text += "<br>"
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
@@ -342,9 +343,9 @@
 	R.freqlock = 1
 
 	if(tc)
-		var/obj/item/device/radio/uplink/nuclear/U = new(H)
-		U.hidden_uplink.owner = "[H.key]"
-		U.hidden_uplink.telecrystals = tc
+		var/obj/item/device/radio/uplink/nuclear/U = new(H, H.key)
+		GET_COMPONENT_FROM(UP, /datum/component/uplink, U)
+		UP.telecrystals = tc
 		H.equip_to_slot_or_del(U, slot_in_backpack)
 
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)

@@ -56,7 +56,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
-	var/obj/item/device/uplink/hidden_uplink = null
 	var/equip_delay_self = 0 //In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
@@ -221,9 +220,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
-	if(hidden_uplink && hidden_uplink.active)
-		hidden_uplink.interact(user)
-		return 1
+	GET_COMPONENT(uplink, /datum/component/uplink)
+	if(uplink && uplink.enabled)
+		uplink.Open(user)
+		return TRUE
 	ui_interact(user)
 
 /obj/item/ui_act(action, params)

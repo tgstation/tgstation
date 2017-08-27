@@ -296,10 +296,7 @@
 		if(!silent) to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
 		. = 0
 	else
-		var/obj/item/device/uplink/U = new(uplink_loc)
-		U.owner = "[traitor_mob.key]"
-		uplink_loc.hidden_uplink = U
-
+		uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
@@ -732,7 +729,7 @@
 	if(((src in SSticker.mode.head_revolutionaries) || (src in SSticker.mode.traitors) || (src in SSticker.mode.syndicates)) && ishuman(current))
 
 		text = "Uplink: <a href='?src=\ref[src];common=uplink'>give</a>"
-		var/obj/item/device/uplink/U = find_syndicate_uplink()
+		var/datum/component/uplink/U = find_syndicate_uplink()
 		if(U)
 			text += "|<a href='?src=\ref[src];common=takeuplink'>take</a>"
 			if (check_rights(R_FUN, 0))
@@ -1409,7 +1406,7 @@
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
 				if(check_rights(R_FUN, 0))
-					var/obj/item/device/uplink/U = find_syndicate_uplink()
+					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
 						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals) as null|num
 						if(!isnull(crystals))
@@ -1438,15 +1435,14 @@
 
 /datum/mind/proc/find_syndicate_uplink()
 	var/list/L = current.GetAllContents()
-	for (var/obj/item/I in L)
-		if (I.hidden_uplink)
-			return I.hidden_uplink
-	return null
+	for (var/I in L)
+		var/atom/movable/AM = I
+		. = AM.GetComponent(/datum/component/uplink)
+		if (.)
+			break
 
 /datum/mind/proc/take_uplink()
-	var/obj/item/device/uplink/H = find_syndicate_uplink()
-	if(H)
-		qdel(H)
+	qdel(find_syndicate_uplink())
 
 /datum/mind/proc/make_Traitor()
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))

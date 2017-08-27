@@ -99,13 +99,14 @@
 			text += printplayer(traitor)
 
 			var/TC_uses = 0
-			var/uplink_true = 0
+			var/uplink_true = FALSE
 			var/purchases = ""
-			for(var/obj/item/device/uplink/H in GLOB.uplinks)
-				if(H && H.owner && H.owner == traitor.key)
-					TC_uses += H.spent_telecrystals
-					uplink_true = 1
-					purchases += H.purchase_log
+			if(GLOB.uplink_purchase_logs)
+				for(var/I in GLOB.uplink_purchase_logs[traitor.key])
+					var/datum/uplink_purchase_log/plog = I
+					TC_uses += plog.spent_telecrystals
+					purchases += plog.GetPurchaseLog()
+					uplink_true = TRUE
 
 			var/objectives = ""
 			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.

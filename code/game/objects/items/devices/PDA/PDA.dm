@@ -117,8 +117,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	user.set_machine(src)
 
-	if(hidden_uplink && hidden_uplink.active)
-		hidden_uplink.interact(user)
+	GET_COMPONENT(uplink, /datum/component/uplink)
+	if(uplink && uplink.enabled)
+		uplink.Open(user)
 		return
 
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
@@ -417,8 +418,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Ringtone")
 				var/t = input(U, "Please enter new ringtone", name, ttone) as text
 				if(in_range(src, U) && loc == U && t)
-					if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
-						hidden_uplink.interact(U)
+					GET_COMPONENT(uplink, /datum/component/uplink)
+					if(uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
+						uplink.Open(U)
 						to_chat(U, "The PDA softly beeps.")
 						U << browse(null, "window=pda")
 						src.mode = 0
@@ -743,8 +745,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/obj/item/photo/P = C
 		photo = P.img
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
-	else if(hidden_uplink && hidden_uplink.active)
-		hidden_uplink.attackby(C, user, params)
 	else
 		return ..()
 
