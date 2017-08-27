@@ -147,7 +147,7 @@
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "smartvend", name, 440, 550, master_ui, state)
+		ui = new(user, src, ui_key, "smartvend", "Smartfridge", 440, 550, master_ui, state)
 		ui.open()
 
 /obj/machinery/smartfridge/ui_data(mob/user)
@@ -158,12 +158,10 @@
 		if (listofitems[O.name])
 			listofitems[O.name]["amount"]++
 		else
-			listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
+			listofitems[O.name] = list("name" = O.name, "id" = O.type, "amount" = 1)
 	sortList(listofitems)
 
 	data["contents"] = listofitems
-	data["name"] = name
-	data["isdryer"] = FALSE
 
 	return data
 
@@ -172,23 +170,94 @@
 		return
 	switch(action)
 		if("Release")
+			var/ghettodebug = jointext(params,";")
+			var/ghettoid = params["id"]
+			var/sheets = params["sheets"]
+			to_chat(usr, "<span class='warning'>[action] [ghettodebug] [ghettoid] [sheets] [src]</span>")
 			var/desired = 0
-
-			if (params["amount"])
-				desired = text2num(params["amount"])
+			if (params["sheets"])
+				desired = text2num(params["sheets"])
 			else
-				desired = input("How many items?", "How many items would you like to take out?", 1) as null|num
+				desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
 			for(var/obj/item/O in contents)
 				if(desired <= 0)
 					break
-				if(O.name == params["name"])
+				if("[O.type]" == params["id"])
+					to_chat(usr, "<span class='warning'>[O] found, popping</span>")
 					O.loc = src.loc
 					desired--
+				else
+					to_chat(usr, "<span class='warning'>[O.type] is not [ghettoid]</span>")
 		else
 			return TRUE
 	return TRUE
 
+
+/*******************
+*   SmartFridge Menu
+*******************
+
+/obj/machinery/smartfridge/interact(mob/user)
+	if(stat)
+		return FALSE
+
+	var/dat = "<TT><b>Select an item:</b><br>"
+
+	if (contents.len == 0)
+		dat += "<font color = 'red'>No product loaded!</font>"
+	else
+		var/listofitems = list()
+		for (var/atom/movable/O in contents)
+			if (listofitems[O.name])
+				listofitems[O.name]++
+			else
+				listofitems[O.name] = 1
+		sortList(listofitems)
+
+		for (var/O in listofitems)
+			if(listofitems[O] <= 0)
+				continue
+			var/N = listofitems[O]
+			var/itemName = url_encode(O)
+			dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
+			dat += " [N] </font>"
+			dat += "<a href='byond://?src=\ref[src];vend=[itemName];amount=1'>Vend</A> "
+			if(N > 5)
+				dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=5'>x5</A>)"
+				if(N > 10)
+					dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=10'>x10</A>)"
+					if(N > 25)
+						dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=25'>x25</A>)"
+			if(N > 1)
+				dat += "(<a href='?src=\ref[src];vend=[itemName];amount=[N]'>All</A>)"
+
+			dat += "<br>"
+
+		dat += "</TT>"
+	user << browse("<HEAD><TITLE>[src] supplies</TITLE></HEAD><TT>[dat]</TT>", "window=smartfridge")
+	onclose(user, "smartfridge")
+	return dat
+
+/obj/machinery/smartfridge/Topic(var/href, var/list/href_list)
+	if(..())
+		return
+	usr.set_machine(src)
+
+	var/N = href_list["vend"]
+	var/amount = text2num(href_list["amount"])
+
+	var/i = amount
+	for(var/obj/O in contents)
+		if(i <= 0)
+			break
+		if(O.name == N)
+			O.loc = src.loc
+			i--
+
+
+	updateUsrDialog()
+*/
 
 // ----------------------------
 //  Drying Rack 'smartfridge'
@@ -223,32 +292,20 @@
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/crowbar/C, ignore_panel = 1)
 	..()
 
-/obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
-	var/list/data = list()
+/obj/machinery/smartfridge/drying_rack/interact(mob/user)
+	var/dat = ..()
+	if(dat)
+		dat += "<br>"
+		dat += "<a href='byond://?src=\ref[src];dry=1'>Toggle Drying</A> "
+		user << browse("<HEAD><TITLE>[src] supplies</TITLE></HEAD><TT>[dat]</TT>", "window=smartfridge")
+	onclose(user, "smartfridge")
 
-	var/listofitems = list()
-	for (var/atom/movable/O in contents)
-		if (listofitems[O.name])
-			listofitems[O.name]["amount"]++
-		else
-			listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
-	sortList(listofitems)
-
-	data["contents"] = listofitems
-	data["name"] = name
-	data["isdryer"] = TRUE
-	data["drying"] = drying
-
-	return data
-
-/obj/machinery/smartfridge/drying_rack/ui_act(action, params)
-	switch(action)
-		if("Dry")
-			toggle_drying(FALSE)
-		else
-			if(..())
-				return
-	return TRUE
+/obj/machinery/smartfridge/drying_rack/Topic(href, list/href_list)
+	..()
+	if(href_list["dry"])
+		toggle_drying(FALSE)
+	updateUsrDialog()
+	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/power_change()
 	if(powered() && anchored)
