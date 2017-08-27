@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(garbage)
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
-	var/list/collection_timeout = list(0, 1200, 0, 2400)	// deciseconds to wait before moving something up in the queue to the next level
+	var/list/collection_timeout = list(0, 600, 0, 1200, 2400)	// deciseconds to wait before moving something up in the queue to the next level
 
 	//Stat tracking
 	var/delslasttick = 0			// number of del()'s we've done this tick
@@ -16,17 +16,19 @@ SUBSYSTEM_DEF(garbage)
 	var/highest_del_time = 0
 	var/highest_del_tickusage = 0
 
-	var/list/pass_counts = list(0, 0, 0, 0)
-	var/list/fail_counts = list(0, 0, 0, 0)
+	var/list/pass_counts = list(0, 0, 0, 0, 0)
+	var/list/fail_counts = list(0, 0, 0, 0, 0)
 
 
 	//Queues
-	var/list/queues = list(list(), list(), list(), list())
+	var/list/queues = list(list(), list(), list(), list(), list())
 
 
 	//Bad boy tracking
 	var/list/didntgc = list()		// list of all types that have failed to GC associated with the number of times that's happened.
 									// the types are stored as strings
+
+	var/list/harddeletetime = list()// Same as above but the total amount of milliseconds spent hard deleting this type
 
 	var/list/sleptDestroy = list()	// Same as above but these are paths that slept during their Destroy call
 
@@ -34,9 +36,7 @@ SUBSYSTEM_DEF(garbage)
 
 	var/list/noforcerespect = list()// all types that did not respect qdel(A, force=TRUE) and returned one of the immortality qdel hints
 
-#ifdef TESTING
-	var/list/qdel_list = list()	// list of all types that have been qdel()eted
-#endif
+	var/list/qdel_list = list()	// list of all types that have been qdel()eted (and the number)
 
 
 /datum/controller/subsystem/garbage/stat_entry(msg)
@@ -60,19 +60,21 @@ SUBSYSTEM_DEF(garbage)
 	..(msg)
 
 /datum/controller/subsystem/garbage/Shutdown()
-	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
+	//Adds the del() log to the qdel log file
 	if(didntgc.len || sleptDestroy.len)
 		var/list/dellog = list()
 		for(var/path in didntgc)
-			dellog += "Path : [path] \n"
-			dellog += "Failures : [didntgc[path]] \n"
-			if(path in sleptDestroy)
-				dellog += "Sleeps : [sleptDestroy[path]] \n"
-				sleptDestroy -= path
-		for(var/path in sleptDestroy)
-			dellog += "Path : [path] \n"
-			dellog += "Sleeps : [sleptDestroy[path]] \n"
-		text2file(dellog.Join(), "[GLOB.log_directory]/qdel.log")
+			dellog += "Path : [path]\n"
+			dellog += "Failures : [didntgc[path]]\n"
+			var/info
+			if((info = sleptDestroy[path]))
+				dellog += "Sleeps : [info]\n"
+			if((info = harddeletetime[path]))
+				dellog += "Time Wasted: [info]\n"
+		for(var/path in sleptDestroy - didntgc)
+			dellog += "Path : [path]\n"
+			dellog += "Sleeps : [sleptDestroy[path]]\n"
+		log_qdel(dellog.Join())
 
 /datum/controller/subsystem/garbage/fire()
 	//the fact that this resets its processing each fire (rather then resume where it left off) is intentional.
@@ -89,6 +91,9 @@ SUBSYSTEM_DEF(garbage)
 			if (GC_QUEUE_ENDODONTICS)
 				HandleQueue(GC_QUEUE_ENDODONTICS)
 				queue = GC_QUEUE_ENDODONTICS+1
+			if (GC_QUEUE_DAMNATIOMEMORIAE)
+				HandleQueue(GC_QUEUE_DAMNATIOMEMORIAE)
+				queue = GC_QUEUE_DAMNATIOMEMORIAE+1
 			if (GC_QUEUE_HARDDELETE)
 				HandleQueue(GC_QUEUE_HARDDELETE)
 				break
@@ -127,16 +132,15 @@ SUBSYSTEM_DEF(garbage)
 		var/c = count
 		count = 0 //so if we runtime on the Cut, we don't try again.
 		var/list/lastqueue = queues[lastlevel]
-		lastqueue.Cut(1,c+1)
+		lastqueue.Cut(1, c+1)
 
 	lastlevel = level
 
 	for (var/refID in queue)
-		if (MC_TICK_CHECK)
-			break
-
 		if (!refID)
 			count++
+			if (MC_TICK_CHECK)
+				break
 			continue
 
 		var/GCd_at_time = queue[refID]
@@ -152,6 +156,8 @@ SUBSYSTEM_DEF(garbage)
 				++gcedlasttick
 				++totalgcs
 			pass_counts[level]++
+			if (MC_TICK_CHECK)
+				break
 			continue
 
 		// Something's still referring to the qdel'd object.
@@ -168,11 +174,18 @@ SUBSYSTEM_DEF(garbage)
 				++totaldels
 			if (GC_QUEUE_ENDODONTICS)
 				EndodonticTherapy(D)
+			if (GC_QUEUE_DAMNATIOMEMORIAE)
+				DamnatioMemoriae(D)
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
+				if (MC_TICK_CHECK)
+					break
 				continue
 
-		Queue(D, ++level)
+		Queue(D, level+1)
+
+		if (MC_TICK_CHECK)
+			break
 	if (count)
 		queue.Cut(1,count+1)
 		count = 0
@@ -181,39 +194,99 @@ SUBSYSTEM_DEF(garbage)
 //a root canal is called a "final restoration" because you basically gut everything out and hope that keeps it from being a pain.
 //	ie: its the final attempt to fix the issue before just removing it.
 /datum/controller/subsystem/garbage/proc/EndodonticTherapy(datum/D)
-	var/static/list/exclude = list("locs", "color", "transform", "parent_type", "vars", "verbs", "type", "gc_destroyed")
+	var/static/list/exclude = list("icon", "icon_state", "locs", "color", "transform", "parent_type", "vars", "verbs", "type", "gc_destroyed")
 	for (var/V in D.vars - exclude)
 		var/value = D.vars[V]
+		if (isnull(value))
+			continue
+		if (value == D)
+			log_qdel("[D]([D.type]) had a reference to itself in var [V]")
+			D.vars[V] = null
+			continue
 		switch(V)
 			if ("ckey", "tag")
+				log_qdel("[D]([D.type]) had a non-null [V] preventing soft deletion")
 				D.vars[V] = null
 				continue
 			if ("contents")
 				var/list/L = value
-				if (islist(L))
+				if (LAZYLEN(L))
+					log_qdel("[D]([D.type]) had a non-empty [V] preventing soft deletion")
 					L.Cut()
 				continue
 			if ("loc") //this is where we assume that a turf would never enter the qdel queue. one day this assumption will be wrong.
+				if (isturf(D))
+					log_qdel("[D]([D.type]) is a turf and should not be in the fucking qdel queue")
+					stack_trace("qdel: TURF IN THE QUEUE!") //this error message to be read in the voice of Professor Quirrel saying "TROLL IN THE DUNGEON"
+					continue
+				log_qdel("[D]([D.type]) had a non-null [V] preventing soft deletion")
 				D.vars[V] = null
 				continue
 
 
+
 		if (islist(value))
-			value -= D
-			if (IS_NORMAL_LIST(value))
+			var/list/L = value
+			var/i = 0
+			while ((i = L.Find(D)))
+				value[i] = null
+				log_qdel("[D]([D.type]) had a reference to itself in list [V] at index [i]")
+			if (IS_NORMAL_LIST(L))
 				D.vars[V] = null
+
 		else if (isdatum(value))
 			var/datum/DD = value
 			for (var/VV in DD.vars - exclude)
 				value = DD.vars[VV]
 				if (islist(value))
-					value -= D
+					var/list/L = value
+					var/i = 0
+					while ((i = L.Find(D)))
+						value[i] = null
+						log_qdel("[D]([D.type]) had a reference to a datum ([V] = [DD]([DD.type])) that had a reference back to it in list [VV] at index [i]")
 				else
 					if (value == D)
 						value = null
+						log_qdel("[D]([D.type]) had a reference to a datum ([V] = [DD]([DD.type])) that had a reference back to it in var [VV]")
 			D.vars[V] = null
 
 
+//It is not known exactly how many people the Romans decided to erase from existance after their death
+//	... because they had been erased from existance
+/datum/controller/subsystem/garbage/proc/DamnatioMemoriae(datum/D)
+	for (var/V in GLOB.vars)
+		var/value = GLOB.vars[V]
+		if (isnull(value))
+			continue
+		if (value == D)
+			log_qdel("[D]([D.type]): A reference to it was found in var GLOB.[V]")
+			D.vars[V] = null
+			continue
+		if (islist(value))
+			var/list/L = value
+			var/i = 0
+			while ((i = L.Find(D)))
+				value[i] = null
+				log_qdel("[D]([D.type]): A reference to it was found in list GLOB.[V] at index [i]")
+			if (IS_NORMAL_LIST(L))
+				D.vars[V] = null
+
+		else if (isdatum(value))
+			var/static/list/exclude = list("icon", "icon_state", "locs", "color", "transform", "parent_type", "vars", "verbs", "type", "gc_destroyed")
+			var/datum/DD = value
+			for (var/VV in DD.vars - exclude)
+				value = DD.vars[VV]
+				if (islist(value))
+					var/list/L = value
+					var/i = 0
+					while ((i = L.Find(D)))
+						value[i] = null
+						log_qdel("[D]([D.type]): A reference to it was found in list GLOB.[V].[VV] at index [i]")
+				else
+					if (value == D)
+						value = null
+						log_qdel("[D]([D.type]) A reference to it was found in var GLOB.[V].[VV]")
+			D.vars[V] = null
 
 /datum/controller/subsystem/garbage/proc/PreQueue(datum/D)
 	if (D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
@@ -250,6 +323,9 @@ SUBSYSTEM_DEF(garbage)
 	del(D)
 
 	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))
+
+	harddeletetime["[type]"] += TICK_DELTA_TO_MS(tick)
+
 	if (tick > highest_del_tickusage)
 		highest_del_tickusage = tick
 	time = world.timeofday - time
@@ -260,7 +336,7 @@ SUBSYSTEM_DEF(garbage)
 	if (time > 10)
 		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
 		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
-		postpone(time/5)
+		postpone(time)
 
 /datum/controller/subsystem/garbage/proc/HardQueue(datum/D)
 	if (D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
@@ -281,6 +357,8 @@ SUBSYSTEM_DEF(garbage)
 		return
 #ifdef TESTING
 	SSgarbage.qdel_list += "[D.type]"
+#else
+	SSgarbage.qdel_list["[D.type]"]++
 #endif
 	if(isnull(D.gc_destroyed))
 		D.SendSignal(COMSIG_PARENT_QDELETED)
