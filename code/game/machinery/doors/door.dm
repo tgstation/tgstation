@@ -91,6 +91,18 @@
 			else
 				do_animate("deny")
 		return
+	if(istype(AM, /obj/spacepod))
+		var/obj/spacepod/pod = AM
+		if(density)
+			if(pod.pilot)
+				if(world.time - pod.pilot.last_bumped <= 10)
+					return
+				pod.pilot.last_bumped = world.time
+			if(pod.pilot && src.allowed(pod.pilot))
+				open()
+			else
+				do_animate("deny")
+		return
 	return
 
 /obj/machinery/door/Move()

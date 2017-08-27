@@ -78,6 +78,9 @@
 			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
+			else if(istype(target, /obj/spacepod))
+				var/obj/spacepod/M = target
+				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
 			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(target))
 
@@ -93,6 +96,9 @@
 			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
 				to_chat(M.occupant, "<span class='heavy_brass'>\"I SEE YOU!\"</span>" )
+			else if(istype(target, /obj/spacepod))
+				var/obj/spacepod/SP = target
+				to_chat(SP.pilot, "<span class='heavy_brass'>\"I SEE YOU!\"</span>" )
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
 				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
@@ -126,6 +132,10 @@
 	for(var/N in GLOB.mechas_list)
 		var/obj/mecha/M = N
 		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
+			. += M
+	for(var/N in GLOB.spacepods_list)
+		var/obj/spacepod/M = N
+		if(get_dist(M, src) <= sight_range && M.pilot && !is_servant_of_ratvar(M.pilot) && (M in view(sight_range, src)))
 			. += M
 
 /obj/structure/destructible/clockwork/ocular_warden/proc/lose_target()
