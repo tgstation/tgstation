@@ -744,10 +744,6 @@
 		to_chat(user, "<span class='warning'>[src]'s doors are locked!</span>")
 		return FALSE
 
-	if(get_dist(src, user) > 2)
-		to_chat(user, "They are too far away to put inside")
-		return FALSE
-
 	if(!istype(user))
 		return FALSE
 
@@ -758,7 +754,7 @@
 	if(!ishuman(user))
 		return FALSE
 
-	if(fukkendisk)
+	if(fukkendisk) //to prevent the captain from fucking off into space with the disk during ops.
 		to_chat(user, "<span class='danger'><B>The nuke-disk is locking the door every time you try to open it. You get the feeling that it doesn't want to go into the spacepod.</b></span>")
 		return FALSE
 

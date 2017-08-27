@@ -80,10 +80,27 @@
 	set name = "Rotate Frame"
 	set category = "Object"
 	set src in oview(1)
+	if(isobserver(usr))
+		to_chat(usr, "<span class='notice'>No, you can't rotate [src]. You're a ghost!</span>")
 	if(anchored)
 		to_chat(usr, "\The [src] is securely bolted!")
 		return FALSE
 	dir = turn(dir, -90)
+	return TRUE
+
+/obj/item/pod_parts/pod_frame/verb/flip()
+	set name = "Flip Frame"
+	set category = "Object"
+	set src in oview(1)
+	if ( usr.stat || usr.restrained() || !usr.canmove )
+		return FALSE
+	if(isobserver(usr))
+		to_chat(usr, "<span class='notice'>No, you can't flip [src]. You're a ghost!</span>")
+		return FALSE
+	if(anchored)
+		to_chat(usr, "\The [src] is securely bolted!")
+		return FALSE
+	dir = turn(dir, -180)
 	return TRUE
 
 /obj/item/pod_parts/pod_frame/attack_hand()
