@@ -113753,6 +113753,7 @@
 	},
 /obj/item/device/gps/engineering,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/pod_paint_bucket,
 /turf/open/floor/plating,
 /area/engine/pod_construction)
 "euA" = (

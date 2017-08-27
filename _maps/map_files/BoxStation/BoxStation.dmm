@@ -15431,6 +15431,7 @@
 	},
 /obj/item/device/gps/engineering,
 /obj/item/device/gps/engineering,
+/obj/item/pod_paint_bucket,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},

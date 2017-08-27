@@ -31,7 +31,7 @@
 
 	var/internal_temp_regulation = TRUE
 
-	var/cell_type = "/obj/item/stock_parts/cell/high"
+	var/cell_type = /obj/item/stock_parts/cell/high
 	var/obj/item/stock_parts/cell/cell
 
 	var/datum/gas_mixture/cabin_air

@@ -30373,6 +30373,7 @@
 /obj/item/clothing/under/rank/mechanic{
 	desc = "It's a pair of dusty overalls that kinda look like what a mechanic would wear."
 	},
+/obj/item/pod_paint_bucket,
 /turf/open/floor/plasteel/darkyellow/side,
 /area/engine/pod_construction)
 "bfZ" = (
