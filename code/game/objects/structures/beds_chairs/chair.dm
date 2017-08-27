@@ -112,6 +112,9 @@
 	else
 		rotate()
 
+/obj/structure/chair/relaymove(mob/living/user)
+	user.resist_buckle()
+
 // Chair types
 /obj/structure/chair/wood
 	icon_state = "wooden_chair"
