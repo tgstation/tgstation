@@ -53,7 +53,7 @@
 	flags_2 = UNACIDABLE | HEAR_1
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-	var/list/pod_overlays
+	var/mutable_appearance/list/pod_overlays
 	var/list/pod_paint_effect
 	var/list/colors = new/list(4)
 
@@ -187,19 +187,18 @@
 	return ..()
 
 /obj/spacepod/proc/update_icons()
-	bound_width = 64
-	bound_height = 64
+	cut_overlays()
 	icon_state = pod_armor.icon_state
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
-		pod_overlays[DAMAGE] = image(icon, icon_state="pod_damage")
-		pod_overlays[FIRE] = image(icon, icon_state="pod_fire")
+		pod_overlays[DAMAGE] = mutable_appearance(icon, "pod_damage")
+		pod_overlays[FIRE] = mutable_appearance(icon, "pod_fire")
 	if(!pod_paint_effect)
 		pod_paint_effect = new/list(4)
-		pod_paint_effect[LIGHT] = image(icon,icon_state = "LIGHTS")
-		pod_paint_effect[WINDOW] = image(icon,icon_state = "Windows")
-		pod_paint_effect[RIM] = image(icon,icon_state = "RIM")
-		pod_paint_effect[PAINT] = image(icon,icon_state = "PAINT")
+		pod_paint_effect[LIGHT] = mutable_appearance(icon,icon_state = "LIGHTS")
+		pod_paint_effect[WINDOW] = mutable_appearance(icon,icon_state = "Windows")
+		pod_paint_effect[RIM] = mutable_appearance(icon,icon_state = "RIM")
+		pod_paint_effect[PAINT] = mutable_appearance(icon,icon_state = "PAINT")
 	overlays.Cut()
 
 	if(has_paint)
@@ -207,23 +206,23 @@
 		if(!isnull(pod_paint_effect[LIGHT]))
 			to_add = pod_paint_effect[LIGHT]
 			to_add.color = colors[LIGHT]
-			overlays += to_add
+			add_overlay(to_add)
 		if(!isnull(pod_paint_effect[WINDOW]))
 			to_add = pod_paint_effect[WINDOW]
 			to_add.color = colors[WINDOW]
-			overlays += to_add
+			add_overlay(to_add)
 		if(!isnull(pod_paint_effect[RIM]))
 			to_add = pod_paint_effect[RIM]
 			to_add.color = colors[RIM]
-			overlays += to_add
+			add_overlay(to_add)
 		if(!isnull(pod_paint_effect[PAINT]))
 			to_add = pod_paint_effect[PAINT]
 			to_add.color = colors[PAINT]
-			overlays += to_add
+			add_overlay(to_add)
 	if(obj_integrity <= round(max_integrity/2))
-		overlays += pod_overlays[DAMAGE]
+		add_overlay(pod_overlays[DAMAGE])
 		if(obj_integrity <= round(max_integrity/4))
-			overlays += pod_overlays[FIRE]
+			add_overlay(pod_overlays[FIRE])
 	light_color = icon_light_color[icon_state]
 	bound_width = 64
 	bound_height = 64
@@ -279,6 +278,8 @@
 	message_to_riders("<span class='userdanger'>Exit the spacepod immediately, explosion immi-</span>")
 	explosion(loc, 2, 4, 8)
 	visible_message("<span class='danger'>[src] violently explodes!</span>")
+	var/turf/T = get_turf(src)
+	log_game("The spacepod \[[name]\] exploded at [COORD(T)]!")
 	qdel(src)
 
 /obj/spacepod/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
@@ -298,7 +299,9 @@
 		diag_hud_set_podhealth()
 
 /obj/spacepod/obj_destruction(damage_flag)
+	var/turf/T = get_turf(src)
 	message_to_riders("<span class='userdanger'>Critical damage to the vessel detected, core explosion imminent!</span>")
+	message_admins("The spacepod, \[[name]\], is about to explode at [ADMIN_JMP(T)]!")
 	addtimer(CALLBACK(src, .proc/explodify), 50)
 
 
