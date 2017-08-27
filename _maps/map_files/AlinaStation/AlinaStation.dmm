@@ -4458,6 +4458,9 @@
 /area/maintenance/aft)
 "akR" = (
 /obj/machinery/light/small,
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/shoes/magboots/advance,
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "akS" = (
@@ -4851,6 +4854,8 @@
 	dir = 1;
 	network = list("MiniSat")
 	},
+/obj/item/clothing/suit/armor/reactive/teleport,
+/obj/item/areaeditor/blueprints,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/nuke_storage)
 "alM" = (
@@ -5153,6 +5158,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/gun/energy/e_gun/hos,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "amv" = (
@@ -14568,7 +14574,7 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/storage/belt/medical,
 /obj/item/reagent_containers/hypospray,
-/obj/item/reagent_containers/hypospray,
+/obj/item/reagent_containers/hypospray/CMO,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "aLd" = (
@@ -43529,7 +43535,7 @@ avI
 avI
 avI
 axn
-aXI
+aXH
 atO
 aAo
 aDc
@@ -50484,7 +50490,7 @@ aGP
 aEk
 aLn
 aLU
-aXL
+aXK
 aMV
 aNq
 aNq
