@@ -6554,8 +6554,8 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
@@ -7056,7 +7056,6 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/hippie/pool)
 "aoJ" = (
@@ -7361,8 +7360,8 @@
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
@@ -23276,7 +23275,7 @@
 	d2 = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Escape Arm Holding Area";
+	c_tag = "Escape Hallway West";
 	dir = 4
 	},
 /turf/open/floor/plasteel/escape{
@@ -103619,7 +103618,7 @@ bkV
 anc
 anD
 aoI
-apX
+arj
 asb
 asV
 aus
@@ -103875,8 +103874,8 @@ anF
 aod
 ahn
 apx
-ahn
-arj
+aqc
+apX
 arn
 asV
 aur
