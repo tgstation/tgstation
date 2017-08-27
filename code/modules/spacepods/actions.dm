@@ -1,35 +1,36 @@
+/obj/spacepod/proc/Grant(mob/living/user, list/thing, type)
+	thing[user] = new type
+	var/datum/action/innate/spacepod/crap = thing[user]
+	crap.Grant(user, src)
+	return thing
 
+/obj/spacepod/proc/Delete(mob/living/user, list/thing, type)
+	var/datum/action/innate/spacepod/crap = thing[user]
+	crap.Remove(user)
+	QDEL_NULL(thing[user])
+	return thing
 
 /obj/spacepod/proc/Grant_Actions(mob/living/user)
 	if(user == pilot)
-		unload_action.Grant(user, src)
-		fire_action.Grant(user, src)
-		tank_action.Grant(user, src)
-		door_action.Grant(user, src) //so asshats dont try to lock the pilot out
-		lock_action.Grant(user, src)
-	exit_action.Grant(user, src)
-	light_action.Grant(user, src)
-	seat_action.Grant(user, src)
+		unload_action = Grant(user, unload_action, /datum/action/innate/spacepod/cargo)
+		fire_action = Grant(user, fire_action, /datum/action/innate/spacepod/weapons)
+		door_action = Grant(user, door_action	, /datum/action/innate/spacepod/poddoor)
+		tank_action = Grant(user, tank_action, /datum/action/innate/spacepod/airtank)
+		lock_action = Grant(user, lock_action, /datum/action/innate/spacepod/lockpod)
+	exit_action = Grant(user, exit_action, /datum/action/innate/spacepod/exit)
+	light_action = Grant(user, light_action, /datum/action/innate/spacepod/lights)
+	seat_action = Grant(user, seat_action, /datum/action/innate/spacepod/checkseat)
 
 
 /obj/spacepod/proc/Remove_Actions(mob/living/user)
-	exit_action.Remove(user)
-	lock_action.Remove(user)
-	door_action.Remove(user)
-	fire_action.Remove(user)
-	unload_action.Remove(user)
-	light_action.Remove(user)
-	seat_action.Remove(user)
-	tank_action.Remove(user)
-
-/obj/spacepod/proc/action_sanity_check() // this ensures everyone has the right actions
-	if(pilot)
-		Remove_Actions(pilot)
-		Grant_Actions(pilot)
-	for(var/mob/living/M in passengers)
-		Remove_Actions(M)
-		Grant_Actions(M)
-
+	unload_action = Delete(user, unload_action, /datum/action/innate/spacepod/cargo)
+	fire_action = Delete(user, fire_action, /datum/action/innate/spacepod/weapons)
+	door_action = Delete(user, door_action	, /datum/action/innate/spacepod/poddoor)
+	tank_action = Delete(user, tank_action, /datum/action/innate/spacepod/airtank)
+	lock_action = Delete(user, lock_action, /datum/action/innate/spacepod/lockpod)
+	exit_action = Delete(user, exit_action, /datum/action/innate/spacepod/exit)
+	light_action = Delete(user, light_action, /datum/action/innate/spacepod/lights)
+	seat_action = Delete(user, seat_action, /datum/action/innate/spacepod/checkseat)
 
 /datum/action/innate/spacepod
 	var/obj/spacepod/S

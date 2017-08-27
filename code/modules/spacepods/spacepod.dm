@@ -75,14 +75,15 @@
 	var/move_delay = 2
 	var/next_move = 0
 
-	var/list/datum/action/innate/spacepod/exit/exit_action = list
-	var/datum/action/innate/spacepod/lockpod/lock_action = new
-	var/datum/action/innate/spacepod/poddoor/door_action = new
-	var/datum/action/innate/spacepod/weapons/fire_action = new
-	var/datum/action/innate/spacepod/cargo/unload_action = new
-	var/datum/action/innate/spacepod/lights/light_action = new
-	var/datum/action/innate/spacepod/checkseat/seat_action = new
-	var/datum/action/innate/spacepod/airtank/tank_action = new
+	var/datum/action/innate/spacepod/exit/list/exit_action = list()
+	var/datum/action/innate/spacepod/lockpod/list/lock_action = list()
+	var/datum/action/innate/spacepod/poddoor/list/door_action = list()
+	var/datum/action/innate/spacepod/weapons/list/fire_action = list()
+	var/datum/action/innate/spacepod/cargo/list/unload_action = list()
+	var/datum/action/innate/spacepod/lights/list/light_action = list()
+	var/datum/action/innate/spacepod/checkseat/list/seat_action = list()
+	var/datum/action/innate/spacepod/airtank/list/tank_action = list()
+
 
 	hud_possible = list(DIAG_HUD, DIAG_BATT_HUD)
 
@@ -160,7 +161,6 @@
 	QDEL_NULL(equipment_system)
 	QDEL_NULL(cargo_hold)
 	QDEL_NULL(cell)
-	STOP_PROCESSING(SSobj, src)
 	if(loc)
 		loc.assume_air(cabin_air)
 		air_update_turf()
@@ -181,6 +181,7 @@
 			passengers -= M
 	GLOB.spacepods_list -= src
 	GLOB.poi_list.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/spacepod/proc/update_icons()
@@ -765,14 +766,14 @@
 				user.forceMove(src)
 				add_fingerprint(user)
 				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-				action_sanity_check()
+				Grant_Actions(pilot)
 				return
 			if(passengers.len < max_passengers)
 				user.stop_pulling()
 				passengers += user
 				user.forceMove(src)
 				add_fingerprint(user)
-				action_sanity_check()
+				Grant_Actions(user)
 				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 			else
 				to_chat(user, "<span class='notice'>You were too slow. Try better next time, loser.</span>")
@@ -814,13 +815,11 @@
 		Remove_Actions(user)
 		user.clear_alert("charge")
 		user.clear_alert("mech damage")
-		action_sanity_check()
 	if(user in passengers)
 		user.forceMove(get_turf(src))
 		passengers -= user
 		to_chat(user, "<span class='notice'>You climb out of [src].</span>")
 		Remove_Actions(user)
-		action_sanity_check()
 
 /obj/spacepod/proc/lock_pod(mob/user)
 
