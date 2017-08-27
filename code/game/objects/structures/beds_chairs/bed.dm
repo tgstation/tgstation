@@ -37,6 +37,9 @@
 	else
 		return ..()
 
+/obj/structure/bed/relaymove(mob/living/user)
+	to_chat(user, "<span class='warning'>You can't move while buckled to \the [src]!</span>")
+
 /*
  * Roller beds
  */

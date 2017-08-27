@@ -112,6 +112,9 @@
 	else
 		rotate()
 
+/obj/structure/chair/relaymove(mob/living/user)
+	to_chat(user, "<span class='warning'>You can't move while buckled to \the [src]!</span>")
+
 // Chair types
 /obj/structure/chair/wood
 	icon_state = "wooden_chair"
