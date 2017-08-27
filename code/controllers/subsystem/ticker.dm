@@ -66,8 +66,8 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
-	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
-	login_music = pick(music)
+	var/music = world.file2text(ROUND_START_MUSIC_LIST)
+	login_music = pick(splittext(trim(music), "\n"))
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
