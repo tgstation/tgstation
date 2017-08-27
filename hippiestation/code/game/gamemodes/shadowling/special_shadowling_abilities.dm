@@ -91,12 +91,8 @@
 			H.faction |= "faithless"
 			H.shadow_walk = TRUE
 
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(H), slot_w_uniform)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(H), slot_shoes)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(H), slot_wear_suit)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(H), slot_head)
-			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(H), slot_gloves)
-			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(H), slot_wear_mask)
 			H.set_species(/datum/species/shadow/ling) //can't be a shadowling without being a shadowling
 
 			H.mind.RemoveSpell(src)
@@ -104,7 +100,7 @@
 			sleep(10)
 			to_chat(H, "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>")
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall(null))
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/sling/glare(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/collective_mind(null))
@@ -172,8 +168,8 @@
 				for(var/obj/effect/proc_holder/spell/S in H.mind.spell_list)
 					if(S == src) continue
 					H.mind.RemoveSpell(S)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/annihilate(null))
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/hypnosis(null))
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/sling/annihilate(null))
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/sling/hypnosis(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_phase_shift(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/ascendant_storm(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_hivemind_ascendant(null))

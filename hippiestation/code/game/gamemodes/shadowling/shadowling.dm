@@ -50,6 +50,7 @@ Made by Xhuis
 	var/shadowling_ascended = 0 //If at least one shadowling has ascended
 	var/shadowling_dead = 0 //is shadowling kill
 	var/objective_explanation
+	var/thrall_ratio = 1
 
 
 /proc/is_thrall(var/mob/living/M)
@@ -99,6 +100,8 @@ Made by Xhuis
 
 	var/thrall_scaling = round(num_players() / 3)
 	required_thralls = Clamp(thrall_scaling, 15, 30)
+
+	thrall_ratio = required_thralls / 15
 
 	return 1
 
@@ -267,7 +270,9 @@ Made by Xhuis
 	name = "Shadowling"
 	id = "shadowling"
 	say_mod = "chitters"
-	species_traits = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NO_UNDERWEAR)
+	no_equip = list(slot_wear_mask, slot_glasses, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
+	nojumpsuit = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision/alien/sling
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
