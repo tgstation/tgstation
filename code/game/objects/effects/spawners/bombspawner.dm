@@ -19,7 +19,7 @@
 	V.tank_two = OT
 	PT.master = V
 	OT.master = V
-	
+
 	if(assembly_type)
 		var/obj/item/device/assembly/A = new assembly_type(V)
 		V.attached_device = A
@@ -27,7 +27,7 @@
 		A.toggle_secure()
 
 	V.update_icon()
-	
+
 	qdel(src)
 
 /obj/effect/spawner/newbomb/timer
@@ -42,5 +42,5 @@
 
 /obj/effect/spawner/newbomb/radio
 	assembly_type = /obj/item/device/assembly/signaler
-	
+
 

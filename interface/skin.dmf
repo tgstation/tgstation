@@ -824,7 +824,7 @@ macro "robot-hotkeys"
 	elem 
 		name = "CTRL+B"
 		command = "resist"
-		is-disabled = false	
+		is-disabled = false
 	elem 
 		name = "M"
 		command = "me"
@@ -1633,7 +1633,7 @@ window "outputwindow"
 		auto-format = false
 		use-title = false
 		on_show = ""
-		on_hide = ""		
+		on_hide = ""
 
 window "statwindow"
 	elem "statwindow"

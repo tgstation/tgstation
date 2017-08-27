@@ -15,7 +15,7 @@
 			<td><b>Current Price:</b>
 			<td>{{data.totalprice}}C
 		</tr>
-		<tr>	
+		<tr>
 			<td><b>Battery:</b>
 			<td><ui-button action='hw_battery' params='{"battery" : "1"}' state='{{data.hw_battery == 1 ? "selected" : null}}'>Standard</ui-button>
 			<td><ui-button action='hw_battery' params='{"battery" : "2"}' state='{{data.hw_battery == 2 ? "selected" : null}}'>Upgraded</ui-button>
@@ -44,7 +44,7 @@
 			<td><ui-button action='hw_card' params='{"card" : "1"}' state='{{data.hw_card == 1 ? "selected" : null}}'>Standard</ui-button>
 		</tr>
 		</table>
-		
+
 		{{#if data.devtype != 2}} {{! No tablets}}
 			<table>
 				<tr>
@@ -65,7 +65,7 @@
 				<td><ui-button action='confirm_order'>CONFIRM</ui-button>
 			</tr>
 		</table>
-	
+
 	<hr>
 	<b>Battery</b> allows your device to operate without external utility power source. Advanced batteries increase battery life.<br>
 	<b>Hard Drive</b> stores file on your device. Advanced drives can store more files, but use more power, shortening battery life.<br>
@@ -82,7 +82,7 @@
 	<i>Current credits: <b>{{data.credits}}C</b></i><br>
 	<i>Total price: <b>{{data.totalprice}}C</b></i><br><br>
 	<ui-button action='purchase' state='{{data.credits >= data.totalprice ? null : "disabled"}}'>PURCHASE</ui-button>
-	
+
 {{elseif data.state == 3}}
 	<h2>Step 4: Thank you for your purchase</h2><br>
 	<b>Should you experience any issues with your new device, contact your local network admin for assistance.</b>

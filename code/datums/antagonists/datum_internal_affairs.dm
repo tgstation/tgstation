@@ -9,7 +9,7 @@
 	human_datum = ANTAG_DATUM_IAA_HUMAN
 	ai_datum = ANTAG_DATUM_IAA_AI
 
-	
+
 
 /datum/antagonist/traitor/AI/internal_affairs
 	name = "Internal Affairs Agent"
@@ -33,7 +33,7 @@
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE
 	var/list/datum/mind/targets_stolen
-	
+
 /datum/antagonist/traitor/human/internal_affairs/custom
 	silent = TRUE
 	should_give_codewords = FALSE
@@ -55,7 +55,7 @@
 /datum/antagonist/traitor/human/internal_affairs/proc/give_pinpointer()
 	if(owner && owner.current)
 		owner.current.apply_status_effect(/datum/status_effect/agent_pinpointer)
-	
+
 /datum/antagonist/traitor/human/internal_affairs/apply_innate_effects()
 	.=..() //in case the base is used in future
 	if(owner&&owner.current)
@@ -155,7 +155,7 @@
 		if(!(istype(objective_, /datum/objective/escape)||istype(objective_, /datum/objective/survive)))
 			continue
 		remove_objective(objective_)
-		
+
 	var/datum/objective/martyr/martyr_objective = new
 	martyr_objective.owner = owner
 	add_objective(martyr_objective)
@@ -182,7 +182,7 @@
 
 /datum/antagonist/traitor/proc/steal_targets(datum/mind/victim)
 	var/datum/antagonist/traitor/human/internal_affairs/this = src //Should only use this if IAA
-	
+
 	if(!owner.current||owner.current.stat==DEAD) 
 		return
 	to_chat(owner.current, "<span class='userdanger'> Target eliminated: [victim.name]</span>")
@@ -280,7 +280,7 @@
 			owner.special_role = TRAITOR_AGENT_ROLE
 			special_role = TRAITOR_AGENT_ROLE
 			this.syndicate = TRUE
-			forge_single_objective()	
+			forge_single_objective()
 
 	else
 		..() // Give them standard objectives.

@@ -59,16 +59,16 @@
 				<h1>NETWORK INCURSION DETECTED</h1>
 			</ui-notice>
 				<i>An abnormal activity has been detected in the network. Please verify system logs for more information</i>
-			
+
 		{{/if}}
 		<ui-section label='Intrusion Detection System'>
 			<b>{{data.idsstatus ? 'ENABLED' : 'DISABLED'}}</b>
 		</ui-section>
-		
+
 		<ui-section label='Maximal Log Count'>
 			<b>{{data.ntnetmaxlogs}}</b>
 		</ui-section>
-		
+
 		<ui-section label='Controls'>
 		</ui-section>
 			<table>
@@ -89,5 +89,5 @@
 		</div>
         </div>
 	</ui-display>
-		
+
 </ui-display>

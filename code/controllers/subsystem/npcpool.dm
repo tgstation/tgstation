@@ -134,12 +134,12 @@ SUBSYSTEM_DEF(npcpool)
 
 		if(facCount == 1 && helpProb)
 			helpProb = 100
-	
+
 		if(prob(helpProb) && candidate.takeDelegate(check,FALSE))
 			--canBeUsed.len
 			candidate.eye_color = "yellow"
 			candidate.update_icons()
-			
+
 		if(!currentrun.len || MC_TICK_CHECK)	//don't change SS state if it isn't necessary
 			return
 

@@ -37,7 +37,7 @@ GLOBAL_PROTECT(reboot_mode)
 	var/command = params[SERVICE_CMD_PARAM_COMMAND]
 	if(!command)
 		return "No command!"
-	
+
 	var/static/last_irc_status = 0
 	switch(command)
 		if(SERVICE_CMD_HARD_REBOOT)

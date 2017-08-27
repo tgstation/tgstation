@@ -241,7 +241,7 @@ By default, all atom have a reagents var - but its empty. if you want to use an 
 			Checks if something can be injected to.
 			If this returns 1, you can use syringes and droppers
 			to draw from and add to the contents of this object.
-			
+
 		atom/proc/is_drawable()
 			Checks if something can be drawn from.
 			If this returns 1, you can use syringes and droppers

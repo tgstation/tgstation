@@ -29,15 +29,15 @@
 				if(COMPONENT_DUPE_HIGHLANDER)
 					InheritComponent(old, FALSE)
 					qdel(old)
-	
+
 	//let the others know
 	P.SendSignal(COMSIG_COMPONENT_ADDED, src)
-	
+
 	//lazy init the parent's dc list
 	var/list/dc = P.datum_components
 	if(!dc)
 		P.datum_components = dc = list()
-	
+
 	//set up the typecache
 	var/our_type = type
 	for(var/I in _GetInverseTypeList(our_type))
@@ -102,12 +102,12 @@
 	if(!procs)
 		procs = list()
 		signal_procs = procs
-	
+
 	if(!override)
 		. = procs[sig_type]
 		if(.)
 			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
-	
+
 	procs[sig_type] = CALLBACK(src, proc_on_self)    
 
 /datum/component/proc/ReceiveSignal(sigtype, ...)

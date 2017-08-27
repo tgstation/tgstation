@@ -122,7 +122,7 @@ function apisend($url, $method = 'GET', $content = NULL) {
 	global $apiKey;
 	if (is_array($content))
 		$content = json_encode($content);
-	
+
 	$scontext = array('http' => array(
 		'method'	=> $method,
 		'header'	=>
@@ -133,7 +133,7 @@ function apisend($url, $method = 'GET', $content = NULL) {
 	));
 	if ($content)
 		$scontext['http']['content'] = $content;
-	
+
 	return file_get_contents($url, false, stream_context_create($scontext));
 }
 function validate_user($payload) {
@@ -159,7 +159,7 @@ function validate_user($payload) {
 	$res = apisend('https://api.github.com/search/issues?q='.$querystring);
 	$res = json_decode($res, TRUE);
 	return $res['total_count'] >= (int)$validation_count;
-	
+
 }
 //rip bs-12
 function tag_pr($payload, $opened) {
@@ -179,7 +179,7 @@ function tag_pr($payload, $opened) {
 
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
-		
+
 		if(strpos(strtolower($title), 'revert') !== FALSE || strpos($lowertitle, 'removes') !== FALSE)
 			$tags[] = 'Revert/Removal';
 	}
@@ -256,7 +256,7 @@ function handle_pr($payload) {
 		default:
 			return;
 	} 
-	
+
 	if (strpos(strtolower($payload['pull_request']['title']), '[s]') !== false) {
 		echo "PR Announcement Halted; Secret tag detected.\n";
 		return;
@@ -265,7 +265,7 @@ function handle_pr($payload) {
 		echo "PR Announcement Halted; User not validated.\n";
 		return;
 	}
-		
+
 	$msg = '['.$payload['pull_request']['base']['repo']['full_name'].'] Pull Request '.$action.' by '.htmlSpecialChars($payload['sender']['login']).': <a href="'.$payload['pull_request']['html_url'].'">'.htmlSpecialChars('#'.$payload['pull_request']['number'].' '.$payload['pull_request']['user']['login'].' - '.$payload['pull_request']['title']).'</a>';
 	sendtoallservers('?announce='.urlencode($msg), $payload);
 
@@ -323,7 +323,7 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 		}
 		if (!$incltag)
 			continue;
-		
+
 		$firstword = explode(' ', $line)[0];
 		$pos = strpos($line, " ");
 		$item = '';
@@ -333,7 +333,7 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 		} else {
 			$firstword = $line;
 		}
-		
+
 		if (!strlen($firstword)) {
 			$currentchangelogblock[count($currentchangelogblock)-1]['body'] .= "\n";
 			continue;
@@ -480,10 +480,10 @@ function sendtoallservers($str, $payload = null) {
 function export($addr, $port, $str) {
 	// All queries must begin with a question mark (ie "?players")
 	if($str{0} != '?') $str = ('?' . $str);
-	
+
 	/* --- Prepare a packet to send to the server (based on a reverse-engineered packet structure) --- */
 	$query = "\x00\x83" . pack('n', strlen($str) + 6) . "\x00\x00\x00\x00\x00" . $str . "\x00";
-	
+
 	/* --- Create a socket and connect it to the server --- */
 	$server = socket_create(AF_INET,SOCK_STREAM,SOL_TCP) or exit("ERROR");
 	socket_set_option($server, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 2, 'usec' => 0)); //sets connect and send timeout to 2 seconds
@@ -491,7 +491,7 @@ function export($addr, $port, $str) {
 		return "ERROR: Connection failed";
 	}
 
-	
+
 	/* --- Send bytes to the server. Loop until all bytes have been sent --- */
 	$bytestosend = strlen($query);
 	$bytessent = 0;
@@ -503,18 +503,18 @@ function export($addr, $port, $str) {
 			return "ERROR: " . socket_strerror(socket_last_error());
 		$bytessent += $result;
 	}
-	
+
 	/* --- Idle for a while until recieved bytes from game server --- */
 	$result = socket_read($server, 10000, PHP_BINARY_READ);
 	socket_close($server); // we don't need this anymore
-	
+
 	if($result != "") {
 		if($result{0} == "\x00" || $result{1} == "\x83") { // make sure it's the right packet format
-			
+
 			// Actually begin reading the output:
 			$sizebytes = unpack('n', $result{2} . $result{3}); // array size of the type identifier and content
 			$size = $sizebytes[1] - 1; // size of the string/floating-point (minus the size of the identifier byte)
-			
+
 			if($result{4} == "\x2a") { // 4-byte big-endian floating-point
 				$unpackint = unpack('f', $result{5} . $result{6} . $result{7} . $result{8}); // 4 possible bytes: add them up together, unpack them as a floating-point
 				return $unpackint[1];
@@ -522,7 +522,7 @@ function export($addr, $port, $str) {
 			else if($result{4} == "\x06") { // ASCII string
 				$unpackstr = ""; // result string
 				$index = 5; // string index
-				
+
 				while($size > 0) { // loop through the entire ASCII string
 					$size--;
 					$unpackstr .= $result{$index}; // add the string position to return string

@@ -125,7 +125,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold/orange/hidden
 	level = PIPE_HIDDEN_LEVEL
-	
+
 /obj/machinery/atmospherics/pipe/manifold/purple
 	pipe_color=rgb(128,0,182)
 	color=rgb(128,0,182)

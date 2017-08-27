@@ -27,7 +27,7 @@
 		i++
 		if(i + 1 > pre_traitors.len)
 			i = 0
-		target_list[traitor] = pre_traitors[i+1]	
+		target_list[traitor] = pre_traitors[i+1]
 	..()
 
 

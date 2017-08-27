@@ -36,7 +36,7 @@
 				<span class='{{bigState(data.SM_ambienttemp,4000,5000)}}'>{{data.SM_ambienttemp}} K</span>
 		</ui-section>
 		<ui-section label='Pressure'>
-				<span class='{{bigState(data.SM_ambientpressure,5000,10000)}}'>{{data.SM_ambientpressure}} kPa</span>	
+				<span class='{{bigState(data.SM_ambientpressure,5000,10000)}}'>{{data.SM_ambientpressure}} kPa</span>
 		</ui-section>
 		</ui-display>
 		<hr><br>
@@ -59,7 +59,7 @@
 		</ui-section>
 		<ui-section label='Options'>
 				<ui-button action='PRG_set' params='{"target" : "{{uid}}"}'>View Details</ui-button>
-		</ui-section>		
+		</ui-section>
 	{{/each}}
 	</ui-display>
 {{/if}}

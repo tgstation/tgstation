@@ -6,7 +6,7 @@
 			action='eject'
 			>{{data.isBeakerLoaded ? "Eject and Clear Buffer" : "No beaker"}}
 		</ui-button>
-			
+
 		<ui-section>
 			{{#if data.isBeakerLoaded}}
 				{{#each data.beakerContents}}
@@ -56,7 +56,7 @@
 			{{else}}
 				<span class='average'>No Pillbottle</span>
 			{{/if}}
-			
+
 			<br/>
 			<br/>
 			<ui-button action='createPill' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Pill (max 50µ)</ui-button>
@@ -72,7 +72,7 @@
 			<ui-button action='createBottle' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Bottle (max 30µ)</ui-button>
 			<br/>
 			<ui-button action='createBottle' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Dispense Buffer to Bottles</ui-button>
-			
+
 	</ui-display>
 
 	{{else}}

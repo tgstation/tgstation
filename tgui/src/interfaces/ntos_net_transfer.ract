@@ -16,7 +16,7 @@
 		</div>
 		<div class="itemContent">
 			{{data.download_name}}
-		</div>	
+		</div>
 		<div class="itemLabel">
 			Download progress: 
 		</div>
@@ -92,7 +92,7 @@
 				{{#if !haspassword}}
 					<td>Disabled
 				{{/if}}
-				
+
 				<td><ui-button action='PRG_downloadfile' params='{"id": "{{uid}}"}'>Download</ui-button>
 			{{/each}}
 		</table>
