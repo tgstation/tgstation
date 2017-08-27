@@ -190,6 +190,12 @@
 				if(CanAttack(M.occupant))
 					return 1
 
+		if(istype(the_target, /obj/spacepod))
+			var/obj/spacepod/M = the_target
+			if(M.pilot)//Just so we don't attack empty mechs
+				if(CanAttack(M.pilot))
+					return 1
+
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
 			if(P.faction in faction)
