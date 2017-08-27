@@ -45,20 +45,13 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "i" = (
-/turf/closed/wall/shuttle{
-	icon_state = "wall_space";
-	dir = 8
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "j" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "k" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "l" = (
 /obj/machinery/vending/wallmed,
@@ -70,9 +63,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "n" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "o" = (
 /turf/open/floor/mineral/titanium/blue,
@@ -161,14 +152,10 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "C" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "D" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "E" = (
 /obj/machinery/door/airlock/glass{
@@ -227,22 +214,14 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "N" = (
-/turf/closed/wall/shuttle{
-	icon_state = "wall_space";
-	dir = 4
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "O" = (
-/turf/closed/wall/shuttle{
-	icon_state = "wall_floor";
-	dir = 8
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "P" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle{
-	icon_state = "swall0"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "Q" = (
 /obj/machinery/light,
