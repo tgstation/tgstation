@@ -1,0 +1,4 @@
+author: "PopNotes"
+delete-after: True
+changes: 
+  - rscadd: "You can now snap your fingers with *snap, *snap2 and *snap3 for single, double and triple snaps respectively. Riveting."
