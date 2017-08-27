@@ -45,16 +45,16 @@
 		if(clown_check(user))
 			preprime(user)
 
-/obj/item/grenade/proc/log(mob/user)
+/obj/item/grenade/proc/glog(mob/user)
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(T)
-	var/message = "[ADMIN_LOOKUPFLW(user)]) has primed a [name] for detonation at [ADMIN_COORDJMP(T)]"
+	var/message = "[ADMIN_LOOKUPFLW(user)]) has primed \a [name] for detonation at [ADMIN_COORDJMP(T)]"
 	GLOB.bombers += message
 	message_admins(message)
-	log_game("[key_name(user)] has primed a [name] for detonation at [A.name] [COORD(T)].")
+	log_game("[key_name(user)] has primed \a [name] for detonation at [A.name] [COORD(T)].")
 
 /obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE)
-	log(user)
+	glog(user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()
