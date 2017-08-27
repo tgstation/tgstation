@@ -363,7 +363,6 @@
 	name = "Implant Case"
 	desc = "A glass case for containing an implant."
 	id = "implantcase"
-	req_tech = list("biotech" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 500)
 	build_path = /obj/item/implantcase

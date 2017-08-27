@@ -190,7 +190,6 @@
 	name = "Machine Design (Hydroponics Tray Board)"
 	desc = "The circuit board for a hydroponics tray."
 	id = "hydro_tray"
-	req_tech = list("biotech" = 2)
 	build_path = /obj/item/circuitboard/machine/hydroponics
 	category = list ("Hydroponics Machinery")
 
@@ -230,7 +229,6 @@
 	name = "Computer Design (R&D Server Control Console Board)"
 	desc = "The circuit board for an R&D Server Control Console."
 	id = "rdservercontrol"
-	req_tech = list("programming" = 3)
 	build_path = /obj/item/circuitboard/computer/rdservercontrol
 	category = list("Research Machinery")
 
@@ -238,7 +236,6 @@
 	name = "Machine Design (R&D Server Board)"
 	desc = "The circuit board for an R&D Server."
 	id = "rdserver"
-	req_tech = list("programming" = 3)
 	build_path = /obj/item/circuitboard/machine/rdserver
 	category = list("Research Machinery")
 
@@ -286,7 +283,6 @@
 	name = "Machine Design (Smartfridge Board)"
 	desc = "The circuit board for a smartfridge."
 	id = "smartfridge"
-	req_tech = list("programming" = 1)
 	build_path = /obj/item/circuitboard/machine/smartfridge
 	category = list ("Misc. Machinery")
 
@@ -294,7 +290,6 @@
 	name = "Machine Design (Monkey Recycler Board)"
 	desc = "The circuit board for a monkey recycler."
 	id = "monkey_recycler"
-	req_tech = list("programming" = 1)
 	build_path = /obj/item/circuitboard/machine/monkey_recycler
 	category = list ("Misc. Machinery")
 
@@ -302,7 +297,6 @@
 	name = "Machine Design (Seed Extractor Board)"
 	desc = "The circuit board for a seed extractor."
 	id = "seed_extractor"
-	req_tech = list("programming" = 1)
 	build_path = /obj/item/circuitboard/machine/seed_extractor
 	category = list ("Misc. Machinery")
 
@@ -310,7 +304,6 @@
 	name = "Machine Design (Processor Board)"
 	desc = "The circuit board for a processor."
 	id = "processor"
-	req_tech = list("programming" = 1)
 	build_path = /obj/item/circuitboard/machine/processor
 	category = list ("Misc. Machinery")
 
@@ -326,7 +319,6 @@
 	name = "Machine Design (AI Holopad Board)"
 	desc = "The circuit board for a holopad."
 	id = "holopad"
-	req_tech = list("programming" = 1)
 	build_path = /obj/item/circuitboard/machine/holopad
 	category = list ("Misc. Machinery")
 
@@ -351,7 +343,6 @@
 	name = "Machine Design (Vendor Board)"
 	desc = "The circuit board for a Vendor."
 	id = "vendor"
-	req_tech = list("programming" = 1)
 	build_path = /obj/item/circuitboard/machine/vendor
 	category = list ("Misc. Machinery")
 
@@ -367,7 +358,6 @@
 	name = "Machine Design (Mining Rewards Vender Board)"
 	desc = "The circuit board for a Mining Rewards Vender."
 	id = "mining_equipment_vendor"
-	req_tech = list("engineering" = 3)
 	build_path = /obj/item/circuitboard/machine/mining_equipment_vendor
 	category = list ("Misc. Machinery")
 
@@ -415,6 +405,5 @@
 	name = "Machine Design (Deep Fryer)"
 	desc = "The circuit board for a Deep Fryer."
 	id = "deepfryer"
-	req_tech = list("programming" = 1)
 	build_path = /obj/item/circuitboard/machine/deep_fryer
 	category = list ("Misc. Machinery")

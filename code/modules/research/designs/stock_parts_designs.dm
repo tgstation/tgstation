@@ -6,7 +6,6 @@
 	name = "Rapid Part Exchange Device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	id = "rped"
-	req_tech = list("engineering" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000) //hardcore
 	build_path = /obj/item/storage/part_replacer
@@ -27,7 +26,6 @@
 	name = "Basic Capacitor"
 	desc = "A stock part used in the construction of various devices."
 	id = "basic_capacitor"
-	req_tech = list("powerstorage" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/stock_parts/capacitor
@@ -38,7 +36,6 @@
 	name = "Advanced Capacitor"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_capacitor"
-	req_tech = list("powerstorage" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
 	build_path = /obj/item/stock_parts/capacitor/adv
@@ -72,7 +69,6 @@
 	name = "Basic Scanning Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "basic_scanning"
-	req_tech = list("magnets" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 50)
 	build_path = /obj/item/stock_parts/scanning_module
@@ -83,7 +79,6 @@
 	name = "Advanced Scanning Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_scanning"
-	req_tech = list("magnets" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 150, MAT_GLASS = 100)
 	build_path = /obj/item/stock_parts/scanning_module/adv
@@ -117,7 +112,6 @@
 	name = "Micro Manipulator"
 	desc = "A stock part used in the construction of various devices."
 	id = "micro_mani"
-	req_tech = list("materials" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 100)
 	build_path = /obj/item/stock_parts/manipulator
@@ -162,7 +156,6 @@
 	name = "Basic Micro-Laser"
 	desc = "A stock part used in the construction of various devices."
 	id = "basic_micro_laser"
-	req_tech = list("magnets" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 50)
 	build_path = /obj/item/stock_parts/micro_laser
@@ -173,7 +166,6 @@
 	name = "High-Power Micro-Laser"
 	desc = "A stock part used in the construction of various devices."
 	id = "high_micro_laser"
-	req_tech = list("magnets" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 150, MAT_GLASS = 100)
 	build_path = /obj/item/stock_parts/micro_laser/high
@@ -206,7 +198,6 @@
 	name = "Basic Matter Bin"
 	desc = "A stock part used in the construction of various devices."
 	id = "basic_matter_bin"
-	req_tech = list("materials" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 100)
 	build_path = /obj/item/stock_parts/matter_bin
@@ -217,7 +208,6 @@
 	name = "Advanced Matter Bin"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_matter_bin"
-	req_tech = list("materials" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 150)
 	build_path = /obj/item/stock_parts/matter_bin/adv

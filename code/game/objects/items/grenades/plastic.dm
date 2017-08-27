@@ -2,7 +2,7 @@
 	name = "plastic explosive"
 	desc = "Used to put holes in specific areas without too much extra hole."
 	icon_state = "plastic-explosive0"
-	item_state = "plastic-explosive"
+	item_state = "plasticx"
 	flags_1 = NOBLUDGEON_1
 	flags_2 = NO_EMP_WIRES_2
 	det_time = 10

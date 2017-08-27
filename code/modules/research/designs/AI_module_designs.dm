@@ -6,7 +6,6 @@
 	name = "AI Design (AI Core)"
 	desc = "Allows for the construction of circuit boards used to build new AI cores."
 	id = "aicore"
-	req_tech = list("programming" = 3)
 	build_path = /obj/item/circuitboard/aicore
 	category = list("AI Modules")
 

@@ -6,7 +6,6 @@
 	name = "APLU \"Ripley\" Central Control module"
 	desc = "Allows for the construction of a \"Ripley\" Central Control module."
 	id = "ripley_main"
-	req_tech = list("programming" = 2)
 	build_path = /obj/item/circuitboard/mecha/ripley/main
 	category = list("Exosuit Modules")
 
@@ -14,7 +13,6 @@
 	name = "APLU \"Ripley\" Peripherals Control module"
 	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
 	id = "ripley_peri"
-	req_tech = list("programming" = 2)
 	build_path = /obj/item/circuitboard/mecha/ripley/peripherals
 	category = list("Exosuit Modules")
 
@@ -147,7 +145,6 @@
 	desc = "Allows for the construction of LBX AC 10."
 	id = "mech_scattershot"
 	build_type = MECHFAB
-	req_tech = list("combat" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
@@ -367,7 +364,6 @@
 	desc = "A weapon for combat exosuits. Shoots non-lethal stunning electrodes."
 	id = "mech_taser"
 	build_type = MECHFAB
-	req_tech = list("combat" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
@@ -378,7 +374,6 @@
 	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
 	id = "mech_lmg"
 	build_type = MECHFAB
-	req_tech = list("combat" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	materials = list(MAT_METAL=10000)
 	construction_time = 100

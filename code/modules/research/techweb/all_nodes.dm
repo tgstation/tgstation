@@ -294,62 +294,73 @@
 	research_cost = 5000
 	export_price = 5000
 
+/datum/techweb_node/phazon
+	id = "mecha_phazon"
+	display_name = "EXOSUIT: Phazon"
+	description = "Phazon exosuit designs"
+	prereq_ids = list("mecha")
+	design_ids = list("phazon_chassis", "phazon_torso", "phazon_head", "phazon_left_arm", "phazon_right_arm", "phazon_left_leg", "phazon_right_leg", "phazon_main",
+	"phazon_peri", "phazon_target", "phazon_armor")
+	research_cost = 5000
+	export_price = 5000
 
-
-//Phazon
-/datum/design/phazon_chassis
-	name = "Exosuit Chassis (\"Phazon\")"
-	id = "phazon_chassis"
-	build_path = /obj/item/mecha_parts/chassis/phazon
-	construction_time = 100
-/datum/design/phazon_torso
-	name = "Exosuit Torso (\"Phazon\")"
-	id = "phazon_torso"
-	build_path = /obj/item/mecha_parts/part/phazon_torso
-	construction_time = 300
-/datum/design/phazon_head
-	name = "Exosuit Head (\"Phazon\")"
-	id = "phazon_head"
-	build_path = /obj/item/mecha_parts/part/phazon_head
-	construction_time = 200
-/datum/design/phazon_left_arm
-	name = "Exosuit Left Arm (\"Phazon\")"
-	id = "phazon_left_arm"
-	build_path = /obj/item/mecha_parts/part/phazon_left_arm
-	construction_time = 200
-/datum/design/phazon_right_arm
-	name = "Exosuit Right Arm (\"Phazon\")"
-	id = "phazon_right_arm"
-	build_path = /obj/item/mecha_parts/part/phazon_right_arm
-	construction_time = 200
-/datum/design/phazon_left_leg
-	name = "Exosuit Left Leg (\"Phazon\")"
-	id = "phazon_left_leg"
-	build_path = /obj/item/mecha_parts/part/phazon_left_leg
-	construction_time = 200
-/datum/design/phazon_right_leg
-	name = "Exosuit Right Leg (\"Phazon\")"
-	id = "phazon_right_leg"
-	build_path = /obj/item/mecha_parts/part/phazon_right_leg
-	construction_time = 200
-/datum/design/phazon_armor
-	name = "Exosuit Armor (\"Phazon\")"
-	id = "phazon_armor"
-	build_path = /obj/item/mecha_parts/part/phazon_armor
-	construction_time = 300
-
-/datum/design/board/phazon_main
-	name = "\"Phazon\" Central Control module"
-	desc = "Allows for the construction of a \"Phazon\" Central Control module."
-	id = "phazon_main"
-/datum/design/board/phazon_peri
-	name = "\"Phazon\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
-	id = "phazon_peri"
-/datum/design/board/phazon_targ
-	name = "\"Phazon\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
-	id = "phazon_targ"
+//////////AI Module Disks//////////
+///////////////////////////////////
+/datum/design/board/aicore
+	name = "AI Design (AI Core)"
+	id = "aicore"
+/datum/design/board/safeguard_module
+	name = "Module Design (Safeguard)"
+	id = "safeguard_module"
+/datum/design/board/onehuman_module
+	name = "Module Design (OneHuman)"
+	id = "onehuman_module"
+/datum/design/board/protectstation_module
+	name = "Module Design (ProtectStation)"
+	id = "protectstation_module"
+/datum/design/board/quarantine_module
+	name = "Module Design (Quarantine)"
+	id = "quarantine_module"
+/datum/design/board/oxygen_module
+	name = "Module Design (OxygenIsToxicToHumans)"
+	id = "oxygen_module"
+/datum/design/board/freeform_module
+	name = "Module Design (Freeform)"
+	id = "freeform_module"
+/datum/design/board/reset_module
+	name = "Module Design (Reset)"
+	id = "reset_module"
+/datum/design/board/purge_module
+	name = "Module Design (Purge)"
+	id = "purge_module"
+/datum/design/board/remove_module
+	name = "Module Design (Law Removal)"
+	id = "remove_module"
+/datum/design/board/freeformcore_module
+	name = "AI Core Module (Freeform)"
+	id = "freeformcore_module"
+/datum/design/board/asimov
+	name = "Core Module Design (Asimov)"
+	id = "asimov_module"
+/datum/design/board/paladin_module
+	name = "Core Module Design (P.A.L.A.D.I.N.)"
+	id = "paladin_module"
+/datum/design/board/tyrant_module
+	name = "Core Module Design (T.Y.R.A.N.T.)"
+	id = "tyrant_module"
+/datum/design/board/corporate_module
+	name = "Core Module Design (Corporate)"
+	id = "corporate_module"
+/datum/design/board/default_module
+	name = "Core Module Design (Default)"
+	id = "default_module"/datum/design/boris_ai_controller
+	name = "B.O.R.I.S. AI-Cyborg Remote Control Module"
+	id = "borg_ai_control"
+	construction_time = 50/datum/design/mecha_tracking_ai_control
+	name = "AI Control Beacon"
+	id = "mecha_tracking_ai_control"
+	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
+	construction_time = 50
 
 /////////////////////////////////////////
 //////////////////Misc///////////////////
@@ -608,21 +619,15 @@
 	name = "Cyborg Upgrade (Defibrillator)"
 	id = "borg_upgrade_defibrillator"
 	construction_time = 120
-/datum/design/boris_ai_controller
-	name = "B.O.R.I.S. AI-Cyborg Remote Control Module"
-	id = "borg_ai_control"
-	construction_time = 50
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"
 	id = "mecha_tracking"
 	build_path =/obj/item/mecha_parts/mecha_tracking
 	construction_time = 50
-/datum/design/mecha_tracking_ai_control
-	name = "AI Control Beacon"
-	id = "mecha_tracking_ai_control"
-	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
-	construction_time = 50
+
+
 /datum/design/drone_shell
 	name = "Drone Shell"
 	id = "drone_shell"
@@ -1263,56 +1268,6 @@
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/bluespace
 
-//////////AI Module Disks//////////
-///////////////////////////////////
-/datum/design/board/aicore
-	name = "AI Design (AI Core)"
-	id = "aicore"
-/datum/design/board/safeguard_module
-	name = "Module Design (Safeguard)"
-	id = "safeguard_module"
-/datum/design/board/onehuman_module
-	name = "Module Design (OneHuman)"
-	id = "onehuman_module"
-/datum/design/board/protectstation_module
-	name = "Module Design (ProtectStation)"
-	id = "protectstation_module"
-/datum/design/board/quarantine_module
-	name = "Module Design (Quarantine)"
-	id = "quarantine_module"
-/datum/design/board/oxygen_module
-	name = "Module Design (OxygenIsToxicToHumans)"
-	id = "oxygen_module"
-/datum/design/board/freeform_module
-	name = "Module Design (Freeform)"
-	id = "freeform_module"
-/datum/design/board/reset_module
-	name = "Module Design (Reset)"
-	id = "reset_module"
-/datum/design/board/purge_module
-	name = "Module Design (Purge)"
-	id = "purge_module"
-/datum/design/board/remove_module
-	name = "Module Design (Law Removal)"
-	id = "remove_module"
-/datum/design/board/freeformcore_module
-	name = "AI Core Module (Freeform)"
-	id = "freeformcore_module"
-/datum/design/board/asimov
-	name = "Core Module Design (Asimov)"
-	id = "asimov_module"
-/datum/design/board/paladin_module
-	name = "Core Module Design (P.A.L.A.D.I.N.)"
-	id = "paladin_module"
-/datum/design/board/tyrant_module
-	name = "Core Module Design (T.Y.R.A.N.T.)"
-	id = "tyrant_module"
-/datum/design/board/corporate_module
-	name = "Core Module Design (Corporate)"
-	id = "corporate_module"
-/datum/design/board/default_module
-	name = "Core Module Design (Default)"
-	id = "default_module"
 	id = "light_replacer"
 /datum/design/board/pacman
 	name = "Machine Design (PACMAN-type Generator Board)"
