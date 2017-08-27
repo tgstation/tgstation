@@ -315,6 +315,6 @@
 
 /turf/open/proc/ArchaeologySignal(mob/user, obj/item/W)
 	if(istype(W,/obj/item/shovel) || istype(W, /obj/item/pickaxe))
-		SendSignal(COMSIG_ATTACKBY, user, W)
+		SendSignal(COMSIG_PARENT_ATTACKBY, user, W)
 	else
 		return

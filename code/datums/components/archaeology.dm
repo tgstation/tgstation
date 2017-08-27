@@ -16,7 +16,7 @@
 	if(isopenturf(parent))
 		var/turf/open/OT = parent
 		drops = OT.archdrops
-		RegisterSignal(COMSIG_ATTACKBY,.proc/Dig)
+		RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
 
 /datum/component/archaeology/Destroy()
 	user = null
