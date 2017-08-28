@@ -43,7 +43,7 @@ GLOBAL_PROTECT(exp_to_update)
 		return FALSE
 	return TRUE
 
-/client/proc/calc_exp_type(exptype)
+/datum/client_base/proc/calc_exp_type(exptype)
 	var/list/explist = prefs.exp.Copy()
 	var/amount = 0
 	var/list/typelist = GLOB.exp_jobsmap[exptype]
@@ -54,7 +54,7 @@ GLOBAL_PROTECT(exp_to_update)
 			amount += explist[job]
 	return amount
 
-/client/proc/get_exp_report()
+/datum/client_base/proc/get_exp_report()
 	if(!config.use_exp_tracking)
 		return "Tracking is disabled in the server configuration file."
 	var/list/play_records = prefs.exp
@@ -111,7 +111,7 @@ GLOBAL_PROTECT(exp_to_update)
 	return return_text
 
 
-/client/proc/get_exp_living()
+/datum/client_base/proc/get_exp_living()
 	if(!prefs.exp)
 		return "No data"
 	var/exp_living = text2num(prefs.exp[EXP_TYPE_LIVING])
@@ -128,17 +128,17 @@ GLOBAL_PROTECT(exp_to_update)
 /datum/controller/subsystem/blackbox/proc/update_exp(mins, ann = FALSE)
 	if(!SSdbcore.Connect())
 		return -1
-	for(var/client/L in GLOB.clients)
+	for(var/datum/client_base/L in GLOB.clients)
 		if(L.is_afk())
 			continue
-		addtimer(CALLBACK(L,/client/proc/update_exp_list,mins,ann),10)
+		addtimer(CALLBACK(L,/datum/client_base/proc/update_exp_list,mins,ann),10)
 
 /datum/controller/subsystem/blackbox/proc/update_exp_db()
 	SSdbcore.MassInsert(format_table_name("role_time"),GLOB.exp_to_update,TRUE)
 	LAZYCLEARLIST(GLOB.exp_to_update)
 
 //resets a client's exp to what was in the db.
-/client/proc/set_exp_from_db()
+/datum/client_base/proc/set_exp_from_db()
 	if(!config.use_exp_tracking)
 		return -1
 	if(!SSdbcore.Connect())
@@ -161,7 +161,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 
 //updates player db flags
-/client/proc/update_flag_db(newflag, state = FALSE)
+/datum/client_base/proc/update_flag_db(newflag, state = FALSE)
 
 	if(!SSdbcore.Connect())
 		return -1
@@ -180,7 +180,7 @@ GLOBAL_PROTECT(exp_to_update)
 		return -1
 
 
-/client/proc/update_exp_list(minutes, announce_changes = FALSE)
+/datum/client_base/proc/update_exp_list(minutes, announce_changes = FALSE)
 	if(!config.use_exp_tracking)
 		return -1
 	if(!SSdbcore.Connect())
@@ -252,7 +252,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 
 //ALWAYS call this at beginning to any proc touching player flags, or your database admin will probably be mad
-/client/proc/set_db_player_flags()
+/datum/client_base/proc/set_db_player_flags()
 	if(!SSdbcore.Connect())
 		return FALSE
 

@@ -435,7 +435,7 @@
 
 		if(L.ckey)
 			var/found = 0
-			for(var/client/C in GLOB.clients)
+			for(var/datum/client_base/C in GLOB.clients)
 				if(C.ckey == L.ckey)
 					found = 1
 					break

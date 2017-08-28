@@ -4,7 +4,7 @@ GLOBAL_PROTECT(admin_datums)
 /datum/admins
 	var/datum/admin_rank/rank
 
-	var/client/owner	= null
+	var/datum/client_base/owner	= null
 	var/fakekey			= null
 
 	var/datum/marked_datum
@@ -40,7 +40,7 @@ GLOBAL_PROTECT(admin_datums)
 		owner = C
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
-		owner.verbs -= /client/proc/readmin
+		owner.verbs -= /datum/client_base/proc/readmin
 		GLOB.admins |= C
 
 /datum/admins/proc/disassociate()

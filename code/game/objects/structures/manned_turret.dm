@@ -76,7 +76,7 @@
 	var/mob/living/controller = buckled_mobs[1]
 	if(!istype(controller))
 		return
-	var/client/C = controller.client
+	var/datum/client_base/C = controller.client
 	if(C)
 		var/atom/A = C.mouseObject
 		var/turf/T = get_turf(A)

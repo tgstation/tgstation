@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(server_maint)
 	var/round_started = SSticker.HasRoundStarted()
 
 	for(var/I in currentrun)
-		var/client/C = I
+		var/datum/client_base/C = I
 		//handle kicking inactive players
 		if(round_started && config.kick_inactive)
 			if(C.is_afk(config.afk_period))
@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(server_maint)
 	for(var/thing in GLOB.clients)
 		if(!thing)
 			continue
-		var/client/C = thing
+		var/datum/client_base/C = thing
 		var/datum/chatOutput/co = C.chatOutput
 		if(co)
 			co.ehjax_send(data = "roundrestart")

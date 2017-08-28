@@ -1,6 +1,6 @@
 /datum/html_interface_client
 	// The /client object represented by this model.
-	var/client/client
+	var/datum/client_base/client
 
 	// The layout currently visible to the client.
 	var/layout

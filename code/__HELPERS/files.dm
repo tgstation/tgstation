@@ -1,9 +1,9 @@
 //Sends resource files to client cache
-/client/proc/getFiles()
+/datum/client_base/proc/getFiles()
 	for(var/file in args)
 		src << browse_rsc(file)
 
-/client/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
+/datum/client_base/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
 	var/path = root
 
 	for(var/i=0, i<max_iterations, i++)
@@ -40,7 +40,7 @@
 	This can be changed by modifying FTPDELAY's value above.
 
 	PLEASE USE RESPONSIBLY, Some log files can reach sizes of 4MB!	*/
-/client/proc/file_spam_check()
+/datum/client_base/proc/file_spam_check()
 	var/time_to_wait = GLOB.fileaccess_timer - world.time
 	if(time_to_wait > 0)
 		to_chat(src, "<font color='red'>Error: file_spam_check(): Spam. Please wait [round(time_to_wait/10)] seconds.</font>")

@@ -25,7 +25,7 @@
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 
-/client/Topic(href, href_list, hsrc)
+/datum/client_base/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 
@@ -104,13 +104,13 @@
 
 	..()	//redirect to hsrc.Topic()
 
-/client/proc/is_content_unlocked()
+/datum/client_base/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
 		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>.")
 		return 0
 	return 1
 
-/client/proc/handle_spam_prevention(message, mute_type)
+/datum/client_base/proc/handle_spam_prevention(message, mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
@@ -126,7 +126,7 @@
 		return 0
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
-/client/AllowUpload(filename, filelength)
+/datum/client_base/proc/AllowUpload(filename, filelength)
 	if(filelength > UPLOAD_LIMIT)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
 		return 0
@@ -148,7 +148,7 @@ GLOBAL_LIST(external_rsc_urls)
 #endif
 
 
-/client/New(TopicData)
+/datum/client_base/New(TopicData)
 	var/tdata = TopicData //save this for later use
 	chatOutput = new /datum/chatOutput(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
@@ -209,7 +209,7 @@ GLOBAL_LIST(external_rsc_urls)
 		for(var/I in GLOB.clients)
 			if(!I || I == src)
 				continue
-			var/client/C = I
+			var/datum/client_base/C = I
 			if(C.key && (C.key != key) )
 				var/matches
 				if( (C.address == address) )
@@ -351,7 +351,7 @@ GLOBAL_LIST(external_rsc_urls)
 //DISCONNECT//
 //////////////
 
-/client/Del()
+/datum/client_base/Del()
 	if(credits)
 		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
@@ -386,10 +386,10 @@ GLOBAL_LIST(external_rsc_urls)
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	return ..()
 
-/client/Destroy()
+/datum/client_base/Destroy()
 	return QDEL_HINT_HARDDEL_NOW
 
-/client/proc/set_client_age_from_db(connectiontopic)
+/datum/client_base/proc/set_client_age_from_db(connectiontopic)
 	if (IsGuestKey(src.key))
 		return
 	if(!SSdbcore.Connect())
@@ -471,7 +471,7 @@ GLOBAL_LIST(external_rsc_urls)
 		player_age = -1
 	. = player_age
 
-/client/proc/findJoinDate()
+/datum/client_base/proc/findJoinDate()
 	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
 	if(!http)
 		log_world("Failed to connect to byond age check for [ckey]")
@@ -484,7 +484,7 @@ GLOBAL_LIST(external_rsc_urls)
 		else
 			CRASH("Age check regex failed for [src.ckey]")
 
-/client/proc/check_randomizer(topic)
+/datum/client_base/proc/check_randomizer(topic)
 	. = FALSE
 	if (connection != "seeker")
 		return
@@ -552,7 +552,7 @@ GLOBAL_LIST(external_rsc_urls)
 			qdel(src)
 			return TRUE
 
-/client/proc/cid_check_reconnect()
+/datum/client_base/proc/cid_check_reconnect()
 	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][address][rand(0,9999)][computer_id][rand(0,9999)]")
 	. = token
 	log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
@@ -561,7 +561,7 @@ GLOBAL_LIST(external_rsc_urls)
 	src << browse({"<a id='link' href="byond://[url]?token=[token]">byond://[url]?token=[token]</a><script type="text/javascript">document.getElementById("link").click();window.location="byond://winset?command=.quit"</script>"}, "border=0;titlebar=0;size=1x1;window=redirect")
 	to_chat(src, {"<a href="byond://[url]?token=[token]">You will be automatically taken to the game, if not, click here to be taken manually</a>"})
 
-/client/proc/note_randomizer_user()
+/datum/client_base/proc/note_randomizer_user()
 	var/const/adminckey = "CID-Error"
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
@@ -580,7 +580,7 @@ GLOBAL_LIST(external_rsc_urls)
 	create_message("note", sql_ckey, adminckey, "Detected as using a cid randomizer.", null, null, 0, 0)
 
 
-/client/proc/check_ip_intel()
+/datum/client_base/proc/check_ip_intel()
 	set waitfor = 0 //we sleep when getting the intel, no need to hold up the client connection while we sleep
 	if (config.ipintel_email)
 		var/datum/ipintel/res = get_ip_intel(address)
@@ -589,9 +589,9 @@ GLOBAL_LIST(external_rsc_urls)
 		ip_intel = res.intel
 
 
-/client/proc/add_verbs_from_config()
+/datum/client_base/proc/add_verbs_from_config()
 	if(config.see_own_notes)
-		verbs += /client/proc/self_notes
+		verbs += /datum/client_base/proc/self_notes
 
 
 #undef TOPIC_SPAM_DELAY
@@ -600,7 +600,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 //checks if a client is afk
 //3000 frames = 5 minutes
-/client/proc/is_afk(duration = config.inactivity_period)
+/datum/client_base/proc/is_afk(duration = config.inactivity_period)
 	if(inactivity > duration)
 		return inactivity
 	return FALSE
@@ -608,8 +608,8 @@ GLOBAL_LIST(external_rsc_urls)
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.
 // So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
-/client/Stat()
+// See: http://www.byond.com/docs/ref/info.html#/datum/client_base/proc/Stat
+/datum/client_base/proc/Stat()
 	. = ..()
 	if (holder)
 		sleep(1)
@@ -618,7 +618,7 @@ GLOBAL_LIST(external_rsc_urls)
 		stoplag()
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
-/client/proc/send_resources()
+/datum/client_base/proc/send_resources()
 	//get the common files
 	getFiles(
 		'html/search.js',
@@ -634,10 +634,10 @@ GLOBAL_LIST(external_rsc_urls)
 
 //Hook, override it to run code when dir changes
 //Like for /atoms, but clients are their own snowflake FUCK
-/client/proc/setDir(newdir)
+/datum/client_base/proc/setDir(newdir)
 	dir = newdir
 
-/client/vv_edit_var(var_name, var_value)
+/datum/client_base/vv_edit_var(var_name, var_value)
 	switch (var_name)
 		if ("holder")
 			return FALSE
@@ -647,22 +647,25 @@ GLOBAL_LIST(external_rsc_urls)
 			return FALSE
 
 
-/client/proc/change_view(new_size)
+/datum/client_base/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
 
 	view = new_size
 	apply_clickcatcher()
 
-/client/proc/generate_clickcatcher()
+/datum/client_base/proc/generate_clickcatcher()
 	if(!void)
 		void = new()
 		screen += void
 
-/client/proc/apply_clickcatcher()
+/datum/client_base/proc/apply_clickcatcher()
 	generate_clickcatcher()
 	void.UpdateGreed(view,view)
 
-/client/proc/AnnouncePR(announcement)
+/datum/client_base/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)
 		to_chat(src, announcement)
+
+/datum/client_base/proc/IsByondMember()
+	return ..()

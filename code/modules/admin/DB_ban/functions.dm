@@ -94,14 +94,14 @@
 			return
 
 	var/who
-	for(var/client/C in GLOB.clients)
+	for(var/datum/client_base/C in GLOB.clients)
 		if(!who)
 			who = "[C]"
 		else
 			who += ", [C]"
 
 	var/adminwho
-	for(var/client/C in GLOB.admins)
+	for(var/datum/client_base/C in GLOB.admins)
 		if(!adminwho)
 			adminwho = "[C]"
 		else
@@ -322,7 +322,7 @@
 		return
 	message_admins("[key_name_admin(usr)] has lifted [pckey]'s ban.",1)
 
-/client/proc/DB_ban_panel()
+/datum/client_base/proc/DB_ban_panel()
 	set category = "Admin"
 	set name = "Banning Panel"
 	set desc = "Edit admin permissions"

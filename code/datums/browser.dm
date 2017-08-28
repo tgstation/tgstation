@@ -205,8 +205,8 @@
 //Same shit, but it returns the button number, could at some point support unlimited button amounts.
 /proc/askuser(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
 	if (!istype(User))
-		if (istype(User, /client/))
-			var/client/C = User
+		if (istype(User, /datum/client_base/))
+			var/datum/client_base/C = User
 			User = C.mob
 		else
 			return
@@ -264,7 +264,7 @@
 // if a valid atom reference is supplied, call the atom's Topic() with "close=1"
 // otherwise, just reset the client mob's machine var.
 //
-/client/verb/windowclose(atomref as text)
+/datum/client_base/verb/windowclose(atomref as text)
 	set hidden = 1						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 

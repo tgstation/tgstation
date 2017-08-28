@@ -263,7 +263,7 @@
 		else
 			var/list/candidates = get_candidates(ROLE_WIZARD)
 			if(candidates.len)
-				var/client/C = pick(candidates)
+				var/datum/client_base/C = pick(candidates)
 				spawn_copy(C, get_turf(user.loc), user)
 				to_chat(user, "<span class='warning'><B>The sword flashes, and you find yourself face to face with...you!</B></span>")
 				cooldown = world.time + 400
@@ -277,7 +277,7 @@
 		to_chat(user, "<span class='warning'><B>[src] is recharging! Keep in mind it shares a cooldown with the swords wielded by your copies.</span>")
 
 
-/obj/item/multisword/proc/spawn_copy(var/client/C, var/turf/T, mob/user)
+/obj/item/multisword/proc/spawn_copy(var/datum/client_base/C, var/turf/T, mob/user)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M, icon_updates=0)
 	M.key = C.key

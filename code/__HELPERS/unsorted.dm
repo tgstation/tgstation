@@ -359,7 +359,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 /proc/key_name(whom, include_link = null, include_name = 1)
 	var/mob/M
-	var/client/C
+	var/datum/client_base/C
 	var/key
 	var/ckey
 
@@ -1247,7 +1247,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
-	var/client/C
+	var/datum/client_base/C
 	if(ismob(mob_or_client))
 		var/mob/M = mob_or_client
 		if(M.client)

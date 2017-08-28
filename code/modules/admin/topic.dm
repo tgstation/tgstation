@@ -34,7 +34,7 @@
 	else if(href_list["toggleexempt"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/client/C = locate(href_list["toggleexempt"]) in GLOB.clients
+		var/datum/client_base/C = locate(href_list["toggleexempt"]) in GLOB.clients
 		if(!C)
 			to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
 			return
@@ -1552,7 +1552,7 @@
 
 		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
 
-		var/client/C = usr.client
+		var/datum/client_base/C = usr.client
 		if(!isobserver(usr))
 			C.admin_ghost()
 		var/mob/dead/observer/A = C.mob
@@ -1566,7 +1566,7 @@
 		var/y = text2num(href_list["Y"])
 		var/z = text2num(href_list["Z"])
 
-		var/client/C = usr.client
+		var/datum/client_base/C = usr.client
 		if(!isobserver(usr))
 			C.admin_ghost()
 		sleep(2)
@@ -2265,7 +2265,7 @@
 			error_viewer.show_to(owner, null, href_list["viewruntime_linear"])
 
 	else if(href_list["showrelatedacc"])
-		var/client/C = locate(href_list["client"]) in GLOB.clients
+		var/datum/client_base/C = locate(href_list["client"]) in GLOB.clients
 		var/thing_to_check
 		if(href_list["showrelatedacc"] == "cid")
 			thing_to_check = C.related_accounts_cid

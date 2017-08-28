@@ -1,4 +1,4 @@
-/client/proc/cmd_admin_drop_everything(mob/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_drop_everything(mob/M in GLOB.mob_list)
 	set category = null
 	set name = "Drop Everything"
 	if(!holder)
@@ -20,7 +20,7 @@
 	admin_ticket_log(M, msg)
 	SSblackbox.add_details("admin_verb","Drop Everything") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_subtle_message(mob/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_subtle_message(mob/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "Subtle Message"
 
@@ -47,7 +47,7 @@
 	admin_ticket_log(M, msg)
 	SSblackbox.add_details("admin_verb","Subtle Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_world_narrate()
+/datum/client_base/proc/cmd_admin_world_narrate()
 	set category = "Special Verbs"
 	set name = "Global Narrate"
 
@@ -64,7 +64,7 @@
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] Sent a global narrate</span>")
 	SSblackbox.add_details("admin_verb","Global Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_direct_narrate(mob/M)
+/datum/client_base/proc/cmd_admin_direct_narrate(mob/M)
 	set category = "Special Verbs"
 	set name = "Direct Narrate"
 
@@ -90,7 +90,7 @@
 	admin_ticket_log(M, msg)
 	SSblackbox.add_details("admin_verb","Direct Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_local_narrate(atom/A)
+/datum/client_base/proc/cmd_admin_local_narrate(atom/A)
 	set category = "Special Verbs"
 	set name = "Local Narrate"
 
@@ -112,7 +112,7 @@
 	message_admins("<span class='adminnotice'><b> LocalNarrate: [key_name_admin(usr)] at [get_area(A)][ADMIN_JMP(A)]:</b> [msg]<BR></span>")
 	SSblackbox.add_details("admin_verb","Local Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_godmode(mob/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_godmode(mob/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "Godmode"
 	if(!holder)
@@ -157,7 +157,7 @@
 		else
 			return
 
-	var/client/C
+	var/datum/client_base/C
 	if(istype(whom, /client))
 		C = whom
 	else if(istext(whom))
@@ -257,7 +257,7 @@ If a guy was gibbed and you want to revive him, this is a good way to do so.
 Works kind of like entering the game with a new character. Character receives a new mind if they didn't have one.
 Traitors and the like can also be revived with the previous role mostly intact.
 /N */
-/client/proc/respawn_character()
+/datum/client_base/proc/respawn_character()
 	set category = "Special Verbs"
 	set name = "Respawn Character"
 	set desc = "Respawn a person that has been gibbed/dusted/killed. They must be a ghost for this to work and preferably should not have a body to go back into."
@@ -428,7 +428,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	SSblackbox.add_details("admin_verb","Respawn Character") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return new_character
 
-/client/proc/cmd_admin_add_freeform_ai_law()
+/datum/client_base/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Fun"
 	set name = "Add Custom AI law"
 	if(!holder)
@@ -450,7 +450,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	SSblackbox.add_details("admin_verb","Add Custom AI Law") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_rejuvenate(mob/living/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_rejuvenate(mob/living/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "Rejuvenate"
 	if(!holder)
@@ -469,7 +469,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	admin_ticket_log(M, msg)
 	SSblackbox.add_details("admin_verb","Rejuvinate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_create_centcom_report()
+/datum/client_base/proc/cmd_admin_create_centcom_report()
 	set category = "Special Verbs"
 	set name = "Create Command Report"
 	if(!holder)
@@ -494,7 +494,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(src)] has created a command report")
 	SSblackbox.add_details("admin_verb","Create Command Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_change_command_name()
+/datum/client_base/proc/cmd_change_command_name()
 	set category = "Special Verbs"
 	set name = "Change Command Name"
 	if(!holder)
@@ -507,7 +507,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(src)] has changed Central Command's name to [input]")
 	log_admin("[key_name(src)] has changed the Central Command name to: [input]")
 
-/client/proc/cmd_admin_delete(atom/A as obj|mob|turf in world)
+/datum/client_base/proc/cmd_admin_delete(atom/A as obj|mob|turf in world)
 	set category = "Admin"
 	set name = "Delete"
 
@@ -517,7 +517,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	admin_delete(A)
 
-/client/proc/admin_delete(datum/D)
+/datum/client_base/proc/admin_delete(datum/D)
 	var/atom/A = D
 	var/coords = istype(A) ? " at ([A.x], [A.y], [A.z])" : ""
 	if (alert(src, "Are you sure you want to delete:\n[D]\nat[coords]?", "Confirmation", "Yes", "No") == "Yes")
@@ -530,7 +530,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else
 			qdel(D)
 
-/client/proc/cmd_admin_list_open_jobs()
+/datum/client_base/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
 	set name = "Manage Job Slots"
 
@@ -540,7 +540,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	holder.manage_free_slots()
 	SSblackbox.add_details("admin_verb","Manage Job Slots") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_explosion(atom/O as obj|mob|turf in world)
+/datum/client_base/proc/cmd_admin_explosion(atom/O as obj|mob|turf in world)
 	set category = "Special Verbs"
 	set name = "Explosion"
 
@@ -572,7 +572,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		return
 
-/client/proc/cmd_admin_emp(atom/O as obj|mob|turf in world)
+/datum/client_base/proc/cmd_admin_emp(atom/O as obj|mob|turf in world)
 	set category = "Special Verbs"
 	set name = "EM Pulse"
 
@@ -596,7 +596,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		return
 
-/client/proc/cmd_admin_gib(mob/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_gib(mob/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "Gib"
 
@@ -623,7 +623,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		M.gib(1)
 	SSblackbox.add_details("admin_verb","Gib") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_gib_self()
+/datum/client_base/proc/cmd_admin_gib_self()
 	set name = "Gibself"
 	set category = "Fun"
 
@@ -634,7 +634,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		SSblackbox.add_details("admin_verb","Gib Self") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		mob.gib(1, 1, 1)
 
-/client/proc/cmd_admin_check_contents(mob/living/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_check_contents(mob/living/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "Check Contents"
 
@@ -643,7 +643,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "[t]")
 	SSblackbox.add_details("admin_verb","Check Contents") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggle_view_range()
+/datum/client_base/proc/toggle_view_range()
 	set category = "Special Verbs"
 	set name = "Change View Range"
 	set desc = "switches between 1x and custom views"
@@ -658,7 +658,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	SSblackbox.add_details("admin_toggle","Change View Range|[view]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/admin_call_shuttle()
+/datum/client_base/proc/admin_call_shuttle()
 
 	set category = "Admin"
 	set name = "Call Shuttle"
@@ -680,7 +680,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] admin-called the emergency shuttle.</span>")
 	return
 
-/client/proc/admin_cancel_shuttle()
+/datum/client_base/proc/admin_cancel_shuttle()
 	set category = "Admin"
 	set name = "Cancel Shuttle"
 	if(!check_rights(0))
@@ -698,7 +698,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	return
 
-/client/proc/everyone_random()
+/datum/client_base/proc/everyone_random()
 	set category = "Fun"
 	set name = "Make Everyone Random"
 	set desc = "Make everyone have a random appearance. You can only use this before rounds!"
@@ -730,7 +730,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	SSblackbox.add_details("admin_verb","Make Everyone Random") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/toggle_random_events()
+/datum/client_base/proc/toggle_random_events()
 	set category = "Server"
 	set name = "Toggle random events on/off"
 	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off"
@@ -745,7 +745,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	SSblackbox.add_details("admin_toggle","Toggle Random Events|[config.allow_random_events]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/admin_change_sec_level()
+/datum/client_base/proc/admin_change_sec_level()
 	set category = "Special Verbs"
 	set name = "Set Security Level"
 	set desc = "Changes the security level. Announcement only, i.e. setting to Delta won't activate nuke"
@@ -762,7 +762,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("[key_name_admin(usr)] changed the security level to [level]")
 		SSblackbox.add_details("admin_verb","Set Security Level [capitalize(level)]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in GLOB.nuke_list)
+/datum/client_base/proc/toggle_nuke(obj/machinery/nuclearbomb/N in GLOB.nuke_list)
 	set name = "Toggle Nuke"
 	set category = "Fun"
 	set popup_menu = 0
@@ -783,7 +783,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
-/client/proc/create_outfits()
+/datum/client_base/proc/create_outfits()
 	set category = "Debug"
 	set name = "Create Custom Outfit"
 
@@ -957,7 +957,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	"}
 	usr << browse(dat, "window=dressup;size=550x600")
 
-/client/proc/toggle_antag_hud()
+/datum/client_base/proc/toggle_antag_hud()
 	set category = "Admin"
 	set name = "Toggle AntagHUD"
 	set desc = "Toggles the Admin AntagHUD"
@@ -979,11 +979,11 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	SSblackbox.add_details("admin_toggle","Toggle Antag HUD|[adding_hud]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/has_antag_hud()
+/datum/client_base/proc/has_antag_hud()
 	var/datum/atom_hud/A = GLOB.huds[ANTAG_HUD_TRAITOR]
 	return A.hudusers[mob]
 
-/client/proc/open_shuttle_manipulator()
+/datum/client_base/proc/open_shuttle_manipulator()
 	set category = "Admin"
 	set name = "Shuttle Manipulator"
 	set desc = "Opens the shuttle manipulator UI."
@@ -991,7 +991,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	for(var/obj/machinery/shuttle_manipulator/M in GLOB.machines)
 		M.ui_interact(usr)
 
-/client/proc/mass_zombie_infection()
+/datum/client_base/proc/mass_zombie_infection()
 	set category = "Fun"
 	set name = "Mass Zombie Infection"
 	set desc = "Infects all humans with a latent organ that will zombify \
@@ -1011,7 +1011,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
 	SSblackbox.add_details("admin_verb","Mass Zombie Infection")
 
-/client/proc/mass_zombie_cure()
+/datum/client_base/proc/mass_zombie_cure()
 	set category = "Fun"
 	set name = "Mass Zombie Cure"
 	set desc = "Removes the zombie infection from all humans, returning them to normal."
@@ -1029,7 +1029,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	log_admin("[key_name(usr)] cured all zombies.")
 	SSblackbox.add_details("admin_verb","Mass Zombie Cure")
 
-/client/proc/polymorph_all()
+/datum/client_base/proc/polymorph_all()
 	set category = "Fun"
 	set name = "Polymorph All"
 	set desc = "Applies the effects of the bolt of change to every single mob."
@@ -1062,7 +1062,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	message_admins("Mass polymorph started by [who_did_it] is complete.")
 
 
-/client/proc/show_tip()
+/datum/client_base/proc/show_tip()
 	set category = "Admin"
 	set name = "Show Tip"
 	set desc = "Sends a tip (that you specify) to all players. After all \
@@ -1136,7 +1136,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 #undef ON_PURRBATION
 
-/client/proc/modify_goals()
+/datum/client_base/proc/modify_goals()
 	set category = "Debug"
 	set name = "Modify goals"
 
@@ -1153,7 +1153,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	usr << browse(dat, "window=goals;size=400x400")
 
 
-/client/proc/toggle_hub()
+/datum/client_base/proc/toggle_hub()
 	set category = "Server"
 	set name = "Toggle Hub"
 
@@ -1166,7 +1166,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	SSblackbox.add_details("admin_toggle","Toggled Hub Visibility|[GLOB.hub_visibility]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/smite(mob/living/carbon/human/target as mob)
+/datum/client_base/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
 	set category = "Fun"
 	if(!holder)
@@ -1199,7 +1199,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")
 
 
-/client/proc/trigger_centcom_recall()
+/datum/client_base/proc/trigger_centcom_recall()
 	if(!holder)
 		return
 	var/message = pick(GLOB.admiral_messages)
@@ -1212,7 +1212,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
 
-/client/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
+/datum/client_base/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
 	set category = "Admin"
 	set name = "Player Playtime"
 	if(!check_rights(R_ADMIN))
@@ -1220,7 +1220,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	var/list/msg = list()
 	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
-	for(var/client/C in GLOB.clients)
+	for(var/datum/client_base/C in GLOB.clients)
 		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")

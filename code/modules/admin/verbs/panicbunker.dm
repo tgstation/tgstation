@@ -1,4 +1,4 @@
-/client/proc/panicbunker()
+/datum/client_base/proc/panicbunker()
 	set category = "Server"
 	set name = "Toggle Panic Bunker"
 	if (!config.sql_enabled)

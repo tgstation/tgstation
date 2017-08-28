@@ -262,7 +262,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 /datum/crewmonitor/proc/queueUpdate(z)
 	addtimer(CALLBACK(src, .proc/update, z), 5, TIMER_UNIQUE)
 
-/datum/crewmonitor/proc/sendResources(var/client/client)
+/datum/crewmonitor/proc/sendResources(var/datum/client_base/client)
 	send_asset(client, "crewmonitor.js")
 	send_asset(client, "crewmonitor.css")
 	SSminimap.send(client)

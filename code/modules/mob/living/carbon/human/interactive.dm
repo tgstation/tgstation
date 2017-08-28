@@ -145,7 +145,7 @@
 		retal_target = potentialAssault
 	..()
 
-/client/proc/resetSNPC(var/mob/A in SSnpcpool.processing)
+/datum/client_base/proc/resetSNPC(var/mob/A in SSnpcpool.processing)
 	set name = "Reset SNPC"
 	set desc = "Reset the SNPC"
 	set category = "Debug"
@@ -162,7 +162,7 @@
 			T.retal = 0
 			T.doing = 0
 
-/client/proc/customiseSNPC(var/mob/A in SSnpcpool.processing)
+/datum/client_base/proc/customiseSNPC(var/mob/A in SSnpcpool.processing)
 	set name = "Customize SNPC"
 	set desc = "Customise the SNPC"
 	set category = "Debug"

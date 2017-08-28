@@ -59,7 +59,7 @@
 
 GLOBAL_DATUM_INIT(debugFileOutput, /datum/debugFileOutput, new)
 
-/client/Topic(href, href_list)
+/datum/client_base/Topic(href, href_list)
 	..()
 
 	if (href_list["action"] && href_list["action"] == "debugFileOutput" && href_list["file"] && href_list["message"])
@@ -67,7 +67,7 @@ GLOBAL_DATUM_INIT(debugFileOutput, /datum/debugFileOutput, new)
 		var/message = href_list["message"]
 		GLOB.debugFileOutput.error(file, message, src)
 
-/client/proc/deleteJsLogFile(fileName as text)
+/datum/client_base/proc/deleteJsLogFile(fileName as text)
 	set category = "Debug"
 	set name = "Delete JS Logfile"
 	set desc = "Delete a logfile for JS error reporting. Be sure you want to do this!"
@@ -82,7 +82,7 @@ GLOBAL_DATUM_INIT(debugFileOutput, /datum/debugFileOutput, new)
 	log_admin("[key_name(usr)] deleted the '[fileName]' JS logfile")
 	message_admins("[key_name_admin(usr)] deleted the '[fileName]' JS logfile")
 
-/client/proc/deleteAllJsLogFiles()
+/datum/client_base/proc/deleteAllJsLogFiles()
 	set category = null
 	set name = "Delete All JS Logfiles"
 	set desc = "Delete all logfiles for JS error reporting. Be extra sure you want to do this!"

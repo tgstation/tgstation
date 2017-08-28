@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(VVpixelmovement, list("step_x", "step_y", "bound_height", "boun
 GLOBAL_PROTECT(VVpixelmovement)
 
 
-/client/proc/vv_get_class(var/var_value)
+/datum/client_base/proc/vv_get_class(var/var_value)
 	if(isnull(var_value))
 		. = VV_NULL
 
@@ -52,7 +52,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	else
 		. = VV_NULL
 
-/client/proc/vv_get_value(class, default_class, current_value, list/restricted_classes, list/extra_classes, list/classes)
+/datum/client_base/proc/vv_get_value(class, default_class, current_value, list/restricted_classes, list/extra_classes, list/classes)
 	. = list("class" = class, "value" = null)
 	if (!class)
 		if (!classes)
@@ -244,7 +244,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			.["value"] = list()
 			.["type"] = /list
 
-/client/proc/vv_parse_text(O, new_var)
+/datum/client_base/proc/vv_parse_text(O, new_var)
 	if(O && findtext(new_var,"\["))
 		var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
 		if(process_vars == "Yes")
@@ -254,7 +254,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 //FALSE = no subtypes, strict exact type pathing (or the type doesn't have subtypes)
 //TRUE = Yes subtypes
 //NULL = User cancelled at the prompt or invalid type given
-/client/proc/vv_subtype_prompt(var/type)
+/datum/client_base/proc/vv_subtype_prompt(var/type)
 	if (!ispath(type))
 		return
 	var/list/subtypes = subtypesof(type)
@@ -269,7 +269,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			else
 				return
 
-/client/proc/vv_reference_list(type, subtypes)
+/datum/client_base/proc/vv_reference_list(type, subtypes)
 	. = list()
 	var/list/types = list(type)
 	if (subtypes)
@@ -301,7 +301,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 		.["[D]([shorttype])\ref[D]#[i]"] = D
 
-/client/proc/mod_list_add_ass(atom/O) //hehe
+/datum/client_base/proc/mod_list_add_ass(atom/O) //hehe
 
 	var/list/L = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 	var/class = L["class"]
@@ -317,7 +317,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	return var_value
 
 
-/client/proc/mod_list_add(list/L, atom/O, original_name, objectvar)
+/datum/client_base/proc/mod_list_add(list/L, atom/O, original_name, objectvar)
 	var/list/LL = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 	var/class = LL["class"]
 	if (!class)
@@ -345,7 +345,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
 
-/client/proc/mod_list(list/L, atom/O, original_name, objectvar, index, autodetect_class = FALSE)
+/datum/client_base/proc/mod_list(list/L, atom/O, original_name, objectvar, index, autodetect_class = FALSE)
 	if(!check_rights(R_VAREDIT))
 		return
 	if(!istype(L, /list))
@@ -505,7 +505,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: [original_var]=[new_var]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
 
-/client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
+/datum/client_base/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))
 		return
 

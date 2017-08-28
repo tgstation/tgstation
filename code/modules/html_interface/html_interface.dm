@@ -64,7 +64,7 @@ When working with byond:// links make sure to reference the HTML interface objec
 your object, but it will pass through the HTML interface first allowing interception at a higher level.
 
 If you want to use custom resources(images/css/js) with an existing interface:
-You have to use modules/client/asset_cache to ensure they get sent BEFORE the interface opens
+You have to use modules/datum/client_base/asset_cache to ensure they get sent BEFORE the interface opens
 
 	** Sample code **
 

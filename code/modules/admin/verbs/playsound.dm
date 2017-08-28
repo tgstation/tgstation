@@ -1,4 +1,4 @@
-/client/proc/play_sound(S as sound)
+/datum/client_base/proc/play_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Global Sound"
 	if(!check_rights(R_SOUNDS))
@@ -41,7 +41,7 @@
 	SSblackbox.add_details("admin_verb","Play Global Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/play_local_sound(S as sound)
+/datum/client_base/proc/play_local_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Local Sound"
 	if(!check_rights(R_SOUNDS))
@@ -52,7 +52,7 @@
 	playsound(get_turf(src.mob), S, 50, 0, 0)
 	SSblackbox.add_details("admin_verb","Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/set_round_end_sound(S as sound)
+/datum/client_base/proc/set_round_end_sound(S as sound)
 	set category = "Fun"
 	set name = "Set Round End Sound"
 	if(!check_rights(R_SOUNDS))
@@ -64,7 +64,7 @@
 	message_admins("[key_name_admin(src)] set the round end sound to [S]")
 	SSblackbox.add_details("admin_verb","Set Round End Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/stop_sounds()
+/datum/client_base/proc/stop_sounds()
 	set category = "Debug"
 	set name = "Stop All Playing Sounds"
 	if(!src.holder)

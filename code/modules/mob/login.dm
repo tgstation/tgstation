@@ -27,7 +27,7 @@
 	reload_fullscreen() // Reload any fullscreen overlays this mob has.
 
 	if(ckey in GLOB.deadmins)
-		verbs += /client/proc/readmin
+		verbs += /datum/client_base/proc/readmin
 
 	add_click_catcher()
 

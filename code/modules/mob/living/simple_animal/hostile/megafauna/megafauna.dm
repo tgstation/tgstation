@@ -131,7 +131,7 @@
 			if(L.stat)
 				continue
 			if(L.client)
-				var/client/C = L.client
+				var/datum/client_base/C = L.client
 				var/suffixm = BOSS_KILL_MEDAL
 				UnlockMedal("Boss [suffixm]",C)
 				UnlockMedal("[medaltype] [suffixm]",C)

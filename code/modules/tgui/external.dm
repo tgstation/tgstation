@@ -75,7 +75,7 @@
   *
   * required uiref ref The UI that was closed.
  **/
-/client/verb/uiclose(ref as text)
+/datum/client_base/verb/uiclose(ref as text)
 	// Name the verb, and hide it from the user panel.
 	set name = "uiclose"
 	set hidden = 1

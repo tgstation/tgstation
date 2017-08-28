@@ -34,7 +34,7 @@
 	return
 
 
-/client/proc/debug_variables(datum/D in world)
+/datum/client_base/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
 	//set src in world
@@ -432,7 +432,7 @@
 		item = "[VV_HTML_ENCODE(name)] = <span class='value'>'[value]'</span>"
 
 	//else if (istype(value, /client))
-	//	var/client/C = value
+	//	var/datum/client_base/C = value
 	//	item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [C] [C.type]"
 
 	else if (istype(value, /datum))
@@ -469,7 +469,7 @@
 
 #undef VV_HTML_ENCODE
 
-/client/proc/view_var_Topic(href, href_list, hsrc)
+/datum/client_base/proc/view_var_Topic(href, href_list, hsrc)
 	if( (usr.client != src) || !src.holder )
 		return
 	if(href_list["Vars"])

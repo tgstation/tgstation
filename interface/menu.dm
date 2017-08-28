@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(menulist)
 		C.prefs.save_preferences()
 		winset(C, "[verbpath]", "is-checked = [!checked]")
 
-/client/verb/updatemenuchecked(menutype as text, verbpath as text)
+/datum/client_base/verb/updatemenuchecked(menutype as text, verbpath as text)
 	set name = ".updatemenuchecked"
 	menutype = text2path(menutype)
 	verbpath = text2path(verbpath)

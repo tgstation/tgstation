@@ -32,7 +32,7 @@ Notes:
 
 
 /datum/tooltip
-	var/client/owner
+	var/datum/client_base/owner
 	var/control = "mainwindow.tooltip"
 	var/showing = 0
 	var/queueHide = 0

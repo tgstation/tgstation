@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(ghost_forms, list("ghost","ghostking","ghostian2","skeleghost",
 							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
 							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
 							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire", "catghost"))
-/client/proc/pick_form()
+/datum/client_base/proc/pick_form()
 	if(!is_content_unlocked())
 		alert("This setting is for accounts with BYOND premium only.")
 		return
@@ -264,7 +264,7 @@ GLOBAL_LIST_INIT(ghost_forms, list("ghost","ghostking","ghostian2","skeleghost",
 
 GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON))
 
-/client/proc/pick_ghost_orbit()
+/datum/client_base/proc/pick_ghost_orbit()
 	if(!is_content_unlocked())
 		alert("This setting is for accounts with BYOND premium only.")
 		return
@@ -276,7 +276,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 			var/mob/dead/observer/O = mob
 			O.ghost_orbit = new_orbit
 
-/client/proc/pick_ghost_accs()
+/datum/client_base/proc/pick_ghost_accs()
 	var/new_ghost_accs = alert("Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,"full accessories", "only directional sprites", "default sprites")
 	if(new_ghost_accs)
 		switch(new_ghost_accs)
@@ -291,7 +291,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 			var/mob/dead/observer/O = mob
 			O.update_icon()
 
-/client/verb/pick_ghost_customization()
+/datum/client_base/verb/pick_ghost_customization()
 	set name = "Ghost Customization"
 	set category = "Preferences"
 	set desc = "Customize your ghastly appearance."
@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	else
 		pick_ghost_accs()
 
-/client/verb/pick_ghost_others()
+/datum/client_base/verb/pick_ghost_others()
 	set name = "Ghosts of Others"
 	set category = "Preferences"
 	set desc = "Change display settings for the ghosts of other players."
@@ -324,7 +324,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 			var/mob/dead/observer/O = mob
 			O.update_sight()
 
-/client/verb/toggle_intent_style()
+/datum/client_base/verb/toggle_intent_style()
 	set name = "Toggle Intent Selection Style"
 	set category = "Preferences"
 	set desc = "Toggle between directly clicking the desired intent or clicking to rotate through."
@@ -333,7 +333,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	SSblackbox.add_details("preferences_verb","Toggle Intent Selection|[prefs.toggles & INTENT_STYLE]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/toggle_ghost_hud_pref()
+/datum/client_base/verb/toggle_ghost_hud_pref()
 	set name = "Toggle Ghost HUD"
 	set category = "Preferences"
 	set desc = "Hide/Show Ghost HUD"
@@ -345,7 +345,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		mob.hud_used.show_hud()
 	SSblackbox.add_details("preferences_verb","Toggle Ghost HUD|[prefs.ghost_hud]")
 
-/client/verb/toggle_inquisition() // warning: unexpected inquisition
+/datum/client_base/verb/toggle_inquisition() // warning: unexpected inquisition
 	set name = "Toggle Inquisitiveness"
 	set desc = "Sets whether your ghost examines everything on click by default"
 	set category = "Preferences"
@@ -359,7 +359,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	SSblackbox.add_details("preferences_verb","Toggle Ghost Inquisitiveness|[prefs.inquisitive_ghost]")
 
 //Admin Preferences
-/client/proc/toggleadminhelpsound()
+/datum/client_base/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
 	set category = "Preferences"
 	set desc = "Toggle hearing a notification when admin PMs are received"
@@ -370,7 +370,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(usr, "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive.")
 	SSblackbox.add_details("admin_toggle","Toggle Adminhelp Sound|[prefs.toggles & SOUND_ADMINHELP]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggleannouncelogin()
+/datum/client_base/proc/toggleannouncelogin()
 	set name = "Do/Don't Announce Login"
 	set category = "Preferences"
 	set desc = "Toggle if you want an announcement to admins when you login during a round"
@@ -381,7 +381,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(usr, "You will [(prefs.toggles & ANNOUNCE_LOGIN) ? "now" : "no longer"] have an announcement to other admins when you login.")
 	SSblackbox.add_details("admin_toggle","Toggle Login Announcement|[prefs.toggles & ANNOUNCE_LOGIN]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggle_hear_radio()
+/datum/client_base/proc/toggle_hear_radio()
 	set name = "Show/Hide Radio Chatter"
 	set category = "Preferences"
 	set desc = "Toggle seeing radiochatter from nearby radios and speakers"
@@ -391,7 +391,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(usr, "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers")
 	SSblackbox.add_details("admin_toggle","Toggle Radio Chatter|[prefs.chat_toggles & CHAT_RADIO]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/deadchat()
+/datum/client_base/proc/deadchat()
 	set name = "Show/Hide Deadchat"
 	set category = "Preferences"
 	set desc ="Toggles seeing deadchat"
@@ -400,7 +400,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_DEAD) ? "now" : "no longer"] see deadchat.")
 	SSblackbox.add_details("admin_toggle","Toggle Deadchat Visibility|[prefs.chat_toggles & CHAT_DEAD]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggleprayers()
+/datum/client_base/proc/toggleprayers()
 	set name = "Show/Hide Prayers"
 	set category = "Preferences"
 	set desc = "Toggles seeing prayers"

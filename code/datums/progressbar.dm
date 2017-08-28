@@ -5,7 +5,7 @@
 	var/image/bar
 	var/shown = 0
 	var/mob/user
-	var/client/client
+	var/datum/client_base/client
 	var/listindex
 
 /datum/progressbar/New(mob/User, goal_number, atom/target)

@@ -7,7 +7,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 //On client, created on login
 /datum/chatOutput
-	var/client/owner	 //client ref
+	var/datum/client_base/owner	 //client ref
 	var/loaded       = FALSE // Has the client loaded the browser output area?
 	var/list/messageQueue //If they haven't loaded chat, this is where messages will go until they do
 	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
@@ -197,7 +197,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	for(var/I in targets)
 		//Grab us a client if possible
-		var/client/C = grab_client(I)
+		var/datum/client_base/C = grab_client(I)
 
 		if (!C)
 			continue

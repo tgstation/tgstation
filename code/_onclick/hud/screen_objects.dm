@@ -547,7 +547,7 @@
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
-	var/client/holder
+	var/datum/client_base/holder
 
 /obj/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE
 	holder = C

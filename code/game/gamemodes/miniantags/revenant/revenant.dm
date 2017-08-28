@@ -330,7 +330,7 @@
 	var/essence = 75 //the maximum essence of the reforming revenant
 	var/reforming = TRUE
 	var/inert = FALSE
-	var/client/client_to_revive
+	var/datum/client_base/client_to_revive
 	var/mob/living/simple_animal/revenant/revenant
 
 /obj/item/ectoplasm/revenant/New()
@@ -391,7 +391,7 @@
 			inert = TRUE
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
-		var/client/C = pick(candidates)
+		var/datum/client_base/C = pick(candidates)
 		revenant.client = C
 		key_of_revenant = C.key
 		if(!key_of_revenant)

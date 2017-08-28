@@ -4,102 +4,102 @@ GLOBAL_PROTECT(admin_verbs_default)
 GLOBAL_LIST_INIT(admin_verbs_default, world.AVerbsDefault())
 /world/proc/AVerbsDefault()
 	return list(
-	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
-	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
-	/client/proc/hide_verbs,			/*hides all our adminverbs*/
-	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
-	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
-	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
-	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
-	/client/proc/secrets,
-	/client/proc/toggle_hear_radio,		/*allows admins to hide all radio output*/
-	/client/proc/reload_admins,
-	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
-	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
-	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
-	/client/proc/cmd_admin_ticket_panel,
-	/client/proc/stop_sounds
+	/datum/client_base/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
+	/datum/client_base/proc/cmd_admin_say,			/*admin-only ooc chat*/
+	/datum/client_base/proc/hide_verbs,			/*hides all our adminverbs*/
+	/datum/client_base/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
+	/datum/client_base/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+	/datum/client_base/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
+	/datum/client_base/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
+	/datum/client_base/proc/secrets,
+	/datum/client_base/proc/toggle_hear_radio,		/*allows admins to hide all radio output*/
+	/datum/client_base/proc/reload_admins,
+	/datum/client_base/proc/reestablish_db_connection, /*reattempt a connection to the database*/
+	/datum/client_base/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
+	/datum/client_base/proc/cmd_admin_pm_panel,		/*admin-pm list*/
+	/datum/client_base/proc/cmd_admin_ticket_panel,
+	/datum/client_base/proc/stop_sounds
 	)
 GLOBAL_PROTECT(admin_verbs_admin)
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 /world/proc/AVerbsAdmin()
 	return list(
-	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
+	/datum/client_base/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
-	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
-	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
+	/datum/client_base/proc/game_panel,			/*game panel, allows to change game-mode etc*/
+	/datum/client_base/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
 	/datum/admins/proc/toggleguests,	/*toggles whether guests can join the current game*/
 	/datum/admins/proc/announce,		/*priority announce something to all clients.*/
 	/datum/admins/proc/set_admin_notice, /*announcement all clients see when joining the server.*/
-	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
-	/client/proc/toggle_view_range,		/*changes how far we can see*/
+	/datum/client_base/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
+	/datum/client_base/proc/toggle_view_range,		/*changes how far we can see*/
 	/datum/admins/proc/view_txt_log,	/*shows the server log (world_game_log) for today*/
 	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
-	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
-	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
-	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
-	/client/proc/check_antagonists,		/*shows all antags*/
+	/datum/client_base/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
+	/datum/client_base/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
+	/datum/client_base/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
+	/datum/client_base/proc/check_antagonists,		/*shows all antags*/
 	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
-	/client/proc/getserverlog,			/*allows us to fetch server logs (world_game_log) for other days*/
-	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
-	/client/proc/Getmob,				/*teleports a mob to our location*/
-	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
-//	/client/proc/sendmob,				/*sends a mob somewhere*/ -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage
-	/client/proc/jumptoarea,
-	/client/proc/jumptokey,				/*allows us to jump to the location of a mob with a certain ckey*/
-	/client/proc/jumptomob,				/*allows us to jump to a specific mob*/
-	/client/proc/jumptoturf,			/*allows us to jump to a specific turf*/
-	/client/proc/admin_call_shuttle,	/*allows us to call the emergency shuttle*/
-	/client/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcom*/
-	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
-	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
-	/client/proc/cmd_admin_local_narrate,	/*sends text to all mobs within view of atom*/
-	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/cmd_change_command_name,
-	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
-	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
-	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
-	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
-	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
-	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
-	/client/proc/deadchat,
-	/client/proc/toggleprayers,
-	/client/proc/toggleadminhelpsound,
-	/client/proc/respawn_character
+	/datum/client_base/proc/getserverlog,			/*allows us to fetch server logs (world_game_log) for other days*/
+	/datum/client_base/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
+	/datum/client_base/proc/Getmob,				/*teleports a mob to our location*/
+	/datum/client_base/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
+//	/datum/client_base/proc/sendmob,				/*sends a mob somewhere*/ -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage
+	/datum/client_base/proc/jumptoarea,
+	/datum/client_base/proc/jumptokey,				/*allows us to jump to the location of a mob with a certain ckey*/
+	/datum/client_base/proc/jumptomob,				/*allows us to jump to a specific mob*/
+	/datum/client_base/proc/jumptoturf,			/*allows us to jump to a specific turf*/
+	/datum/client_base/proc/admin_call_shuttle,	/*allows us to call the emergency shuttle*/
+	/datum/client_base/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcom*/
+	/datum/client_base/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
+	/datum/client_base/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
+	/datum/client_base/proc/cmd_admin_local_narrate,	/*sends text to all mobs within view of atom*/
+	/datum/client_base/proc/cmd_admin_create_centcom_report,
+	/datum/client_base/proc/cmd_change_command_name,
+	/datum/client_base/proc/cmd_admin_check_player_exp, /* shows players by playtime */
+	/datum/client_base/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
+	/datum/client_base/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
+	/datum/client_base/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
+	/datum/client_base/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
+	/datum/client_base/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
+	/datum/client_base/proc/deadchat,
+	/datum/client_base/proc/toggleprayers,
+	/datum/client_base/proc/toggleadminhelpsound,
+	/datum/client_base/proc/respawn_character
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
-GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
+GLOBAL_LIST_INIT(admin_verbs_ban, list(/datum/client_base/proc/unban_panel, /datum/client_base/proc/DB_ban_panel, /datum/client_base/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_sounds)
-GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound, /client/proc/play_sound, /client/proc/set_round_end_sound))
+GLOBAL_LIST_INIT(admin_verbs_sounds, list(/datum/client_base/proc/play_local_sound, /datum/client_base/proc/play_sound, /datum/client_base/proc/set_round_end_sound))
 GLOBAL_PROTECT(admin_verbs_fun)
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
-	/client/proc/cmd_admin_dress,
-	/client/proc/cmd_admin_gib_self,
-	/client/proc/drop_bomb,
-	/client/proc/set_dynex_scale,
-	/client/proc/drop_dynex_bomb,
-	/client/proc/cinematic,
-	/client/proc/one_click_antag,
-	/client/proc/cmd_admin_add_freeform_ai_law,
-	/client/proc/object_say,
-	/client/proc/toggle_random_events,
-	/client/proc/set_ooc,
-	/client/proc/reset_ooc,
-	/client/proc/forceEvent,
-	/client/proc/admin_change_sec_level,
-	/client/proc/toggle_nuke,
-	/client/proc/mass_zombie_infection,
-	/client/proc/mass_zombie_cure,
-	/client/proc/polymorph_all,
-	/client/proc/show_tip,
-	/client/proc/smite
+	/datum/client_base/proc/cmd_admin_dress,
+	/datum/client_base/proc/cmd_admin_gib_self,
+	/datum/client_base/proc/drop_bomb,
+	/datum/client_base/proc/set_dynex_scale,
+	/datum/client_base/proc/drop_dynex_bomb,
+	/datum/client_base/proc/cinematic,
+	/datum/client_base/proc/one_click_antag,
+	/datum/client_base/proc/cmd_admin_add_freeform_ai_law,
+	/datum/client_base/proc/object_say,
+	/datum/client_base/proc/toggle_random_events,
+	/datum/client_base/proc/set_ooc,
+	/datum/client_base/proc/reset_ooc,
+	/datum/client_base/proc/forceEvent,
+	/datum/client_base/proc/admin_change_sec_level,
+	/datum/client_base/proc/toggle_nuke,
+	/datum/client_base/proc/mass_zombie_infection,
+	/datum/client_base/proc/mass_zombie_cure,
+	/datum/client_base/proc/polymorph_all,
+	/datum/client_base/proc/show_tip,
+	/datum/client_base/proc/smite
 	))
 GLOBAL_PROTECT(admin_verbs_spawn)
-GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /client/proc/respawn_character))
+GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/client_base/proc/respawn_character))
 GLOBAL_PROTECT(admin_verbs_server)
 GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 /world/proc/AVerbsServer()
@@ -109,138 +109,141 @@ GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 	/datum/admins/proc/end_round,
 	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
-	/client/proc/everyone_random,
+	/datum/client_base/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
-	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
-	/client/proc/cmd_debug_del_all,
-	/client/proc/toggle_random_events,
-	/client/proc/forcerandomrotate,
-	/client/proc/adminchangemap,
-	/client/proc/panicbunker,
-	/client/proc/toggle_hub
+	/datum/client_base/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
+	/datum/client_base/proc/cmd_debug_del_all,
+	/datum/client_base/proc/toggle_random_events,
+	/datum/client_base/proc/forcerandomrotate,
+	/datum/client_base/proc/adminchangemap,
+	/datum/client_base/proc/panicbunker,
+	/datum/client_base/proc/toggle_hub
 	)
 GLOBAL_PROTECT(admin_verbs_debug)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 /world/proc/AVerbsDebug()
 	return list(
-	/client/proc/restart_controller,
-	/client/proc/cmd_admin_list_open_jobs,
-	/client/proc/Debug2,
-	/client/proc/cmd_debug_make_powernets,
-	/client/proc/cmd_debug_mob_lists,
-	/client/proc/cmd_admin_delete,
-	/client/proc/cmd_debug_del_all,
-	/client/proc/restart_controller,
-	/client/proc/enable_debug_verbs,
-	/client/proc/callproc,
-	/client/proc/callproc_datum,
-	/client/proc/SDQL2_query,
-	/client/proc/test_movable_UI,
-	/client/proc/test_snap_UI,
-	/client/proc/debugNatureMapGenerator,
-	/client/proc/check_bomb_impacts,
+	/datum/client_base/proc/restart_controller,
+	/datum/client_base/proc/cmd_admin_list_open_jobs,
+	/datum/client_base/proc/Debug2,
+	/datum/client_base/proc/cmd_debug_make_powernets,
+	/datum/client_base/proc/cmd_debug_mob_lists,
+	/datum/client_base/proc/cmd_admin_delete,
+	/datum/client_base/proc/cmd_debug_del_all,
+	/datum/client_base/proc/restart_controller,
+	/datum/client_base/proc/enable_debug_verbs,
+	/datum/client_base/proc/callproc,
+	/datum/client_base/proc/callproc_datum,
+	/datum/client_base/proc/SDQL2_query,
+	/datum/client_base/proc/test_movable_UI,
+	/datum/client_base/proc/test_snap_UI,
+	/datum/client_base/proc/debugNatureMapGenerator,
+	/datum/client_base/proc/check_bomb_impacts,
 	/proc/machine_upgrade,
-	/client/proc/populate_world,
-	/client/proc/get_dynex_power,		//*debug verbs for dynex explosions.
-	/client/proc/get_dynex_range,		//*debug verbs for dynex explosions.
-	/client/proc/set_dynex_scale,
-	/client/proc/cmd_display_del_log,
-	/client/proc/create_outfits,
-	/client/proc/modify_goals,
-	/client/proc/debug_huds,
-	/client/proc/map_template_load,
-	/client/proc/map_template_upload,
-	/client/proc/jump_to_ruin,
-	/client/proc/clear_dynamic_transit,
-	/client/proc/toggle_medal_disable,
-	/client/proc/view_runtimes,
-	/client/proc/pump_random_event,
-	/client/proc/cmd_display_init_log
+	/datum/client_base/proc/populate_world,
+	/datum/client_base/proc/get_dynex_power,		//*debug verbs for dynex explosions.
+	/datum/client_base/proc/get_dynex_range,		//*debug verbs for dynex explosions.
+	/datum/client_base/proc/set_dynex_scale,
+	/datum/client_base/proc/cmd_display_del_log,
+	/datum/client_base/proc/create_outfits,
+	/datum/client_base/proc/modify_goals,
+	/datum/client_base/proc/debug_huds,
+	/datum/client_base/proc/map_template_load,
+	/datum/client_base/proc/map_template_upload,
+	/datum/client_base/proc/jump_to_ruin,
+	/datum/client_base/proc/clear_dynamic_transit,
+	/datum/client_base/proc/toggle_medal_disable,
+	/datum/client_base/proc/view_runtimes,
+	/datum/client_base/proc/pump_random_event,
+	/datum/client_base/proc/cmd_display_init_log
 	)
 GLOBAL_PROTECT(admin_verbs_possess)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_permissions)
-GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissions))
+GLOBAL_LIST_INIT(admin_verbs_permissions, list(/datum/client_base/proc/edit_admin_permissions))
 GLOBAL_PROTECT(admin_verbs_poll)
-GLOBAL_LIST_INIT(admin_verbs_poll, list(/client/proc/create_poll))
+GLOBAL_LIST_INIT(admin_verbs_poll, list(/datum/client_base/proc/create_poll))
 
 //verbs which can be hidden - needs work
 GLOBAL_PROTECT(admin_verbs_hideable)
 GLOBAL_LIST_INIT(admin_verbs_hideable, list(
-	/client/proc/set_ooc,
-	/client/proc/reset_ooc,
-	/client/proc/deadmin,
+	/datum/client_base/proc/set_ooc,
+	/datum/client_base/proc/reset_ooc,
+	/datum/client_base/proc/deadmin,
 	/datum/admins/proc/show_traitor_panel,
 	/datum/admins/proc/toggleenter,
 	/datum/admins/proc/toggleguests,
 	/datum/admins/proc/announce,
 	/datum/admins/proc/set_admin_notice,
-	/client/proc/admin_ghost,
-	/client/proc/toggle_view_range,
+	/datum/client_base/proc/admin_ghost,
+	/datum/client_base/proc/toggle_view_range,
 	/datum/admins/proc/view_txt_log,
 	/datum/admins/proc/view_atk_log,
-	/client/proc/cmd_admin_subtle_message,
-	/client/proc/cmd_admin_check_contents,
+	/datum/client_base/proc/cmd_admin_subtle_message,
+	/datum/client_base/proc/cmd_admin_check_contents,
 	/datum/admins/proc/access_news_network,
-	/client/proc/admin_call_shuttle,
-	/client/proc/admin_cancel_shuttle,
-	/client/proc/cmd_admin_direct_narrate,
-	/client/proc/cmd_admin_world_narrate,
-	/client/proc/cmd_admin_local_narrate,
-	/client/proc/play_local_sound,
-	/client/proc/play_sound,
-	/client/proc/set_round_end_sound,
-	/client/proc/cmd_admin_dress,
-	/client/proc/cmd_admin_gib_self,
-	/client/proc/drop_bomb,
-	/client/proc/drop_dynex_bomb,
-	/client/proc/get_dynex_range,
-	/client/proc/get_dynex_power,
-	/client/proc/set_dynex_scale,
-	/client/proc/cinematic,
-	/client/proc/cmd_admin_add_freeform_ai_law,
-	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/cmd_change_command_name,
-	/client/proc/object_say,
-	/client/proc/toggle_random_events,
+	/datum/client_base/proc/admin_call_shuttle,
+	/datum/client_base/proc/admin_cancel_shuttle,
+	/datum/client_base/proc/cmd_admin_direct_narrate,
+	/datum/client_base/proc/cmd_admin_world_narrate,
+	/datum/client_base/proc/cmd_admin_local_narrate,
+	/datum/client_base/proc/play_local_sound,
+	/datum/client_base/proc/play_sound,
+	/datum/client_base/proc/set_round_end_sound,
+	/datum/client_base/proc/cmd_admin_dress,
+	/datum/client_base/proc/cmd_admin_gib_self,
+	/datum/client_base/proc/drop_bomb,
+	/datum/client_base/proc/drop_dynex_bomb,
+	/datum/client_base/proc/get_dynex_range,
+	/datum/client_base/proc/get_dynex_power,
+	/datum/client_base/proc/set_dynex_scale,
+	/datum/client_base/proc/cinematic,
+	/datum/client_base/proc/cmd_admin_add_freeform_ai_law,
+	/datum/client_base/proc/cmd_admin_create_centcom_report,
+	/datum/client_base/proc/cmd_change_command_name,
+	/datum/client_base/proc/object_say,
+	/datum/client_base/proc/toggle_random_events,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
-	/client/proc/everyone_random,
+	/datum/client_base/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
-	/client/proc/restart_controller,
-	/client/proc/cmd_admin_list_open_jobs,
-	/client/proc/callproc,
-	/client/proc/callproc_datum,
-	/client/proc/Debug2,
-	/client/proc/reload_admins,
-	/client/proc/cmd_debug_make_powernets,
-	/client/proc/startSinglo,
-	/client/proc/cmd_debug_mob_lists,
-	/client/proc/cmd_debug_del_all,
-	/client/proc/enable_debug_verbs,
+	/datum/client_base/proc/restart_controller,
+	/datum/client_base/proc/cmd_admin_list_open_jobs,
+	/datum/client_base/proc/callproc,
+	/datum/client_base/proc/callproc_datum,
+	/datum/client_base/proc/Debug2,
+	/datum/client_base/proc/reload_admins,
+	/datum/client_base/proc/cmd_debug_make_powernets,
+	/datum/client_base/proc/startSinglo,
+	/datum/client_base/proc/cmd_debug_mob_lists,
+	/datum/client_base/proc/cmd_debug_del_all,
+	/datum/client_base/proc/enable_debug_verbs,
 	/proc/possess,
 	/proc/release,
-	/client/proc/reload_admins,
-	/client/proc/panicbunker,
-	/client/proc/admin_change_sec_level,
-	/client/proc/toggle_nuke,
-	/client/proc/cmd_display_del_log,
-	/client/proc/toggle_antag_hud,
-	/client/proc/debug_huds,
-	/client/proc/customiseSNPC,
-	/client/proc/resetSNPC,
+	/datum/client_base/proc/reload_admins,
+	/datum/client_base/proc/panicbunker,
+	/datum/client_base/proc/admin_change_sec_level,
+	/datum/client_base/proc/toggle_nuke,
+	/datum/client_base/proc/cmd_display_del_log,
+	/datum/client_base/proc/toggle_antag_hud,
+	/datum/client_base/proc/debug_huds,
+	/datum/client_base/proc/customiseSNPC,
+	/datum/client_base/proc/resetSNPC,
 	))
 
-/client/proc/add_admin_verbs()
+/client/add_admin_verbs()
 	if(holder)
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
+	return ..()
 
+/datum/client_base/proc/add_admin_verbs()
+	if(holder)
 		var/rights = holder.rank.rights
 		verbs += GLOB.admin_verbs_default
 		if(rights & R_BUILDMODE)
-			verbs += /client/proc/togglebuildmodeself
+			verbs += /datum/client_base/proc/togglebuildmodeself
 		if(rights & R_ADMIN)
 			verbs += GLOB.admin_verbs_admin
 		if(rights & R_BAN)
@@ -256,7 +259,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		if(rights & R_PERMISSIONS)
 			verbs += GLOB.admin_verbs_permissions
 		if(rights & R_STEALTH)
-			verbs += /client/proc/stealth
+			verbs += /datum/client_base/proc/stealth
 		if(rights & R_ADMIN)
 			verbs += GLOB.admin_verbs_poll
 		if(rights & R_SOUNDS)
@@ -269,10 +272,10 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		for(var/path in holder.rank.subs)
 			verbs -= path
 
-/client/proc/remove_admin_verbs()
+/datum/client_base/proc/remove_admin_verbs()
 	verbs.Remove(
 		GLOB.admin_verbs_default,
-		/client/proc/togglebuildmodeself,
+		/datum/client_base/proc/togglebuildmodeself,
 		GLOB.admin_verbs_admin,
 		GLOB.admin_verbs_ban,
 		GLOB.admin_verbs_fun,
@@ -280,58 +283,58 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		GLOB.admin_verbs_debug,
 		GLOB.admin_verbs_possess,
 		GLOB.admin_verbs_permissions,
-		/client/proc/stealth,
+		/datum/client_base/proc/stealth,
 		GLOB.admin_verbs_poll,
 		GLOB.admin_verbs_sounds,
 		GLOB.admin_verbs_spawn,
 		/*Debug verbs added by "show debug verbs"*/
-		/client/proc/Cell,
-		/client/proc/camera_view,
-		/client/proc/sec_camera_report,
-		/client/proc/intercom_view,
-		/client/proc/air_status,
-		/client/proc/atmosscan,
-		/client/proc/powerdebug,
-		/client/proc/count_objects_on_z_level,
-		/client/proc/count_objects_all,
-		/client/proc/cmd_assume_direct_control,
-		/client/proc/startSinglo,
-		/client/proc/set_server_fps,
-		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/cmd_admin_areatest_all,
-		/client/proc/cmd_admin_areatest_station,
-		/client/proc/readmin
+		/datum/client_base/proc/Cell,
+		/datum/client_base/proc/camera_view,
+		/datum/client_base/proc/sec_camera_report,
+		/datum/client_base/proc/intercom_view,
+		/datum/client_base/proc/air_status,
+		/datum/client_base/proc/atmosscan,
+		/datum/client_base/proc/powerdebug,
+		/datum/client_base/proc/count_objects_on_z_level,
+		/datum/client_base/proc/count_objects_all,
+		/datum/client_base/proc/cmd_assume_direct_control,
+		/datum/client_base/proc/startSinglo,
+		/datum/client_base/proc/set_server_fps,
+		/datum/client_base/proc/cmd_admin_grantfullaccess,
+		/datum/client_base/proc/cmd_admin_areatest_all,
+		/datum/client_base/proc/cmd_admin_areatest_station,
+		/datum/client_base/proc/readmin
 		)
 	if(holder)
 		verbs.Remove(holder.rank.adds)
 
-/client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
+/datum/client_base/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Adminverbs - Hide Most"
 	set category = "Admin"
 
-	verbs.Remove(/client/proc/hide_most_verbs, GLOB.admin_verbs_hideable)
-	verbs += /client/proc/show_verbs
+	verbs.Remove(/datum/client_base/proc/hide_most_verbs, GLOB.admin_verbs_hideable)
+	verbs += /datum/client_base/proc/show_verbs
 
 	to_chat(src, "<span class='interface'>Most of your adminverbs have been hidden.</span>")
 	SSblackbox.add_details("admin_verb","Hide Most Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/client/proc/hide_verbs()
+/datum/client_base/proc/hide_verbs()
 	set name = "Adminverbs - Hide All"
 	set category = "Admin"
 
 	remove_admin_verbs()
-	verbs += /client/proc/show_verbs
+	verbs += /datum/client_base/proc/show_verbs
 
 	to_chat(src, "<span class='interface'>Almost all of your adminverbs have been hidden.</span>")
 	SSblackbox.add_details("admin_verb","Hide All Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/client/proc/show_verbs()
+/datum/client_base/proc/show_verbs()
 	set name = "Adminverbs - Show"
 	set category = "Admin"
 
-	verbs -= /client/proc/show_verbs
+	verbs -= /datum/client_base/proc/show_verbs
 	add_admin_verbs()
 
 	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>")
@@ -340,7 +343,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 
 
 
-/client/proc/admin_ghost()
+/datum/client_base/proc/admin_ghost()
 	set category = "Admin"
 	set name = "Aghost"
 	if(!holder)
@@ -369,7 +372,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		SSblackbox.add_details("admin_verb","Admin Ghost") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/invisimin()
+/datum/client_base/proc/invisimin()
 	set name = "Invisimin"
 	set category = "Admin"
 	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
@@ -381,7 +384,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			mob.invisibility = INVISIBILITY_OBSERVER
 			to_chat(mob, "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>")
 
-/client/proc/check_antagonists()
+/datum/client_base/proc/check_antagonists()
 	set name = "Check Antagonists"
 	set category = "Admin"
 	if(holder)
@@ -391,7 +394,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			message_admins("[key_name_admin(usr)] checked antagonists.")
 	SSblackbox.add_details("admin_verb","Check Antagonists") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/unban_panel()
+/datum/client_base/proc/unban_panel()
 	set name = "Unban Panel"
 	set category = "Admin"
 	if(holder)
@@ -401,14 +404,14 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			holder.DB_ban_panel()
 	SSblackbox.add_details("admin_verb","Unban Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/game_panel()
+/datum/client_base/proc/game_panel()
 	set name = "Game Panel"
 	set category = "Admin"
 	if(holder)
 		holder.Game()
 	SSblackbox.add_details("admin_verb","Game Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/secrets()
+/datum/client_base/proc/secrets()
 	set name = "Secrets"
 	set category = "Admin"
 	if (holder)
@@ -416,7 +419,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	SSblackbox.add_details("admin_verb","Secrets Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/findStealthKey(txt)
+/datum/client_base/proc/findStealthKey(txt)
 	if(txt)
 		for(var/P in GLOB.stealthminID)
 			if(GLOB.stealthminID[P] == txt)
@@ -424,7 +427,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	txt = GLOB.stealthminID[ckey]
 	return txt
 
-/client/proc/createStealthKey()
+/datum/client_base/proc/createStealthKey()
 	var/num = (rand(0,1000))
 	var/i = 0
 	while(i == 0)
@@ -435,7 +438,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 				i = 0
 	GLOB.stealthminID["[ckey]"] = "@[num2text(num)]"
 
-/client/proc/stealth()
+/datum/client_base/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
 	if(holder)
@@ -463,7 +466,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	SSblackbox.add_details("admin_verb","Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/drop_bomb()
+/datum/client_base/proc/drop_bomb()
 	set category = "Special Verbs"
 	set name = "Drop Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
@@ -505,7 +508,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 	SSblackbox.add_details("admin_verb","Drop Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/drop_dynex_bomb()
+/datum/client_base/proc/drop_dynex_bomb()
 	set category = "Special Verbs"
 	set name = "Drop DynEx Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
@@ -518,7 +521,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 		SSblackbox.add_details("admin_verb","Drop Dynamic Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/get_dynex_range()
+/datum/client_base/proc/get_dynex_range()
 	set category = "Debug"
 	set name = "Get DynEx Range"
 	set desc = "Get the estimated range of a bomb, using explosive power."
@@ -527,7 +530,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	var/range = round((2 * ex_power)**GLOB.DYN_EX_SCALE)
 	to_chat(usr, "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])")
 
-/client/proc/get_dynex_power()
+/datum/client_base/proc/get_dynex_power()
 	set category = "Debug"
 	set name = "Get DynEx Power"
 	set desc = "Get the estimated required power of a bomb, to reach a specific range."
@@ -536,7 +539,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	var/power = (0.5 * ex_range)**(1/GLOB.DYN_EX_SCALE)
 	to_chat(usr, "Estimated Explosive Power: [power]")
 
-/client/proc/set_dynex_scale()
+/datum/client_base/proc/set_dynex_scale()
 	set category = "Debug"
 	set name = "Set DynEx Scale"
 	set desc = "Set the scale multiplier of dynex explosions. The default is 0.5."
@@ -548,7 +551,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
-/client/proc/give_spell(mob/T in GLOB.mob_list)
+/datum/client_base/proc/give_spell(mob/T in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
@@ -572,7 +575,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		T.AddSpell(new S)
 		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
 
-/client/proc/remove_spell(mob/T in GLOB.mob_list)
+/datum/client_base/proc/remove_spell(mob/T in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Remove Spell"
 	set desc = "Remove a spell from the selected mob."
@@ -585,7 +588,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed the spell [S] from [key_name(T)].</span>")
 			SSblackbox.add_details("admin_verb","Remove Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/give_disease(mob/T in GLOB.mob_list)
+/datum/client_base/proc/give_disease(mob/T in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
@@ -596,7 +599,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
 
-/client/proc/object_say(obj/O in world)
+/datum/client_base/proc/object_say(obj/O in world)
 	set category = "Special Verbs"
 	set name = "OSay"
 	set desc = "Makes an object say something."
@@ -607,20 +610,20 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>")
 	SSblackbox.add_details("admin_verb","Object Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/client/proc/togglebuildmodeself()
+/datum/client_base/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
 	if(src.mob)
 		togglebuildmode(src.mob)
 	SSblackbox.add_details("admin_verb","Toggle Build Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/check_ai_laws()
+/datum/client_base/proc/check_ai_laws()
 	set name = "Check AI Laws"
 	set category = "Admin"
 	if(holder)
 		src.holder.output_ai_laws()
 
-/client/proc/deadmin()
+/datum/client_base/proc/deadmin()
 	set name = "Deadmin"
 	set category = "Admin"
 	set desc = "Shed your admin powers."
@@ -636,14 +639,14 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 
 	GLOB.deadmins += ckey
 	GLOB.admin_datums -= ckey
-	verbs += /client/proc/readmin
+	verbs += /datum/client_base/proc/readmin
 
 	to_chat(src, "<span class='interface'>You are now a normal player.</span>")
 	log_admin("[src] deadmined themself.")
 	message_admins("[src] deadmined themself.")
 	SSblackbox.add_details("admin_verb","Deadmin")
 
-/client/proc/readmin()
+/datum/client_base/proc/readmin()
 	set name = "Readmin"
 	set category = "Admin"
 	set desc = "Regain your admin powers."
@@ -654,14 +657,14 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		return
 
 	GLOB.deadmins -= ckey
-	verbs -= /client/proc/readmin
+	verbs -= /datum/client_base/proc/readmin
 
 	to_chat(src, "<span class='interface'>You are now an admin.</span>")
 	message_admins("[src] re-adminned themselves.")
 	log_admin("[src] re-adminned themselves.")
 	SSblackbox.add_details("admin_verb","Readmin")
 
-/client/proc/populate_world(amount = 50 as num)
+/datum/client_base/proc/populate_world(amount = 50 as num)
 	set name = "Populate World"
 	set category = "Debug"
 	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."
@@ -694,7 +697,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 							testing("Spawned test mob at [tile.x],[tile.y],[tile.z]")
 			while (!area && --j > 0)
 
-/client/proc/toggle_AI_interact()
+/datum/client_base/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"
 	set category = "Admin"
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"

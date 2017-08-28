@@ -22,7 +22,7 @@
 // Add an AI eye to the chunk, then update if changed.
 
 /datum/camerachunk/proc/add(mob/camera/aiEye/eye)
-	var/client/client = eye.GetViewerClient()
+	var/datum/client_base/client = eye.GetViewerClient()
 	if(client)
 		client.images += obscured
 	eye.visibleCameraChunks += src
@@ -34,7 +34,7 @@
 // Remove an AI eye from the chunk, then update if changed.
 
 /datum/camerachunk/proc/remove(mob/camera/aiEye/eye)
-	var/client/client = eye.GetViewerClient()
+	var/datum/client_base/client = eye.GetViewerClient()
 	if(client)
 		client.images -= obscured
 	eye.visibleCameraChunks -= src
@@ -106,7 +106,7 @@
 				var/mob/camera/aiEye/m = eye
 				if(!m)
 					continue
-				var/client/client = m.GetViewerClient()
+				var/datum/client_base/client = m.GetViewerClient()
 				if(client)
 					client.images -= t.obscured
 
@@ -122,7 +122,7 @@
 				if(!m)
 					seenby -= m
 					continue
-				var/client/client = m.GetViewerClient()
+				var/datum/client_base/client = m.GetViewerClient()
 				if(client)
 					client.images += t.obscured
 

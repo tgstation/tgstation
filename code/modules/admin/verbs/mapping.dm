@@ -21,28 +21,28 @@
 
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
-	/client/proc/camera_view, 				//-errorage
-	/client/proc/sec_camera_report, 		//-errorage
-	/client/proc/intercom_view, 			//-errorage
-	/client/proc/air_status, //Air things
-	/client/proc/Cell, //More air things
-	/client/proc/atmosscan, //check plumbing
-	/client/proc/powerdebug, //check power
-	/client/proc/count_objects_on_z_level,
-	/client/proc/count_objects_all,
-	/client/proc/cmd_assume_direct_control,	//-errorage
-	/client/proc/startSinglo,
-	/client/proc/set_server_fps,	//allows you to set the ticklag.
-	/client/proc/cmd_admin_grantfullaccess,
-	/client/proc/cmd_admin_areatest_all,
-	/client/proc/cmd_admin_areatest_station,
-	/client/proc/cmd_admin_rejuvenate,
+	/datum/client_base/proc/camera_view, 				//-errorage
+	/datum/client_base/proc/sec_camera_report, 		//-errorage
+	/datum/client_base/proc/intercom_view, 			//-errorage
+	/datum/client_base/proc/air_status, //Air things
+	/datum/client_base/proc/Cell, //More air things
+	/datum/client_base/proc/atmosscan, //check plumbing
+	/datum/client_base/proc/powerdebug, //check power
+	/datum/client_base/proc/count_objects_on_z_level,
+	/datum/client_base/proc/count_objects_all,
+	/datum/client_base/proc/cmd_assume_direct_control,	//-errorage
+	/datum/client_base/proc/startSinglo,
+	/datum/client_base/proc/set_server_fps,	//allows you to set the ticklag.
+	/datum/client_base/proc/cmd_admin_grantfullaccess,
+	/datum/client_base/proc/cmd_admin_areatest_all,
+	/datum/client_base/proc/cmd_admin_areatest_station,
+	/datum/client_base/proc/cmd_admin_rejuvenate,
 	/datum/admins/proc/show_traitor_panel,
-	/client/proc/disable_communication,
-	/client/proc/print_pointers,
-	/client/proc/cmd_show_at_list,
-	/client/proc/cmd_show_at_markers,
-	/client/proc/manipulate_organs
+	/datum/client_base/proc/disable_communication,
+	/datum/client_base/proc/print_pointers,
+	/datum/client_base/proc/cmd_show_at_list,
+	/datum/client_base/proc/cmd_show_at_markers,
+	/datum/client_base/proc/manipulate_organs
 ))
 
 /obj/effect/debugging/mapfix_marker
@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 /obj/effect/debugging/marker/Move()
 	return 0
 
-/client/proc/camera_view()
+/datum/client_base/proc/camera_view()
 	set category = "Mapping"
 	set name = "Camera Range Display"
 
@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 
 
-/client/proc/sec_camera_report()
+/datum/client_base/proc/sec_camera_report()
 	set category = "Mapping"
 	set name = "Camera Report"
 
@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	usr << browse(output,"window=airreport;size=1000x500")
 	SSblackbox.add_details("admin_verb","Show Camera Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/intercom_view()
+/datum/client_base/proc/intercom_view()
 	set category = "Mapping"
 	set name = "Intercom Range Display"
 
@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 					qdel(F)
 	SSblackbox.add_details("admin_verb","Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_show_at_list()
+/datum/client_base/proc/cmd_show_at_list()
 	set category = "Mapping"
 	set name = "Show roundstart AT list"
 	set desc = "Displays a list of active turfs coordinates at roundstart"
@@ -154,7 +154,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	SSblackbox.add_details("admin_verb","Show Roundstart Active Turfs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_show_at_markers()
+/datum/client_base/proc/cmd_show_at_markers()
 	set category = "Mapping"
 	set name = "Show roundstart AT markers"
 	set desc = "Places a marker on all active-at-roundstart turfs"
@@ -174,23 +174,23 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	SSblackbox.add_details("admin_verb","Show Roundstart Active Turf Markers")
 
-/client/proc/enable_debug_verbs()
+/datum/client_base/proc/enable_debug_verbs()
 	set category = "Debug"
 	set name = "Debug verbs - Enable"
 	if(!check_rights(R_DEBUG))
 		return
-	verbs -= /client/proc/enable_debug_verbs
-	verbs.Add(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
+	verbs -= /datum/client_base/proc/enable_debug_verbs
+	verbs.Add(/datum/client_base/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
 	SSblackbox.add_details("admin_verb","Enable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/disable_debug_verbs()
+/datum/client_base/proc/disable_debug_verbs()
 	set category = "Debug"
 	set name = "Debug verbs - Disable"
-	verbs.Remove(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
-	verbs += /client/proc/enable_debug_verbs
+	verbs.Remove(/datum/client_base/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
+	verbs += /datum/client_base/proc/enable_debug_verbs
 	SSblackbox.add_details("admin_verb", "Disable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/count_objects_on_z_level()
+/datum/client_base/proc/count_objects_on_z_level()
 	set category = "Mapping"
 	set name = "Count Objects On Level"
 	var/level = input("Which z-level?","Level?") as text
@@ -233,7 +233,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]")
 	SSblackbox.add_details("admin_verb","Count Objects Zlevel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/count_objects_all()
+/datum/client_base/proc/count_objects_all()
 	set category = "Mapping"
 	set name = "Count Objects All"
 
@@ -263,7 +263,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 //This proc is intended to detect lag problems relating to communication procs
 GLOBAL_VAR_INIT(say_disabled, FALSE)
-/client/proc/disable_communication()
+/datum/client_base/proc/disable_communication()
 	set category = "Mapping"
 	set name = "Disable all communication verbs"
 

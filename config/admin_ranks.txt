@@ -6,7 +6,7 @@
 # These keywords represent groups of verbs and abilities.                                                    #
 # keywords are preceded by either a '+' or a '-', + adds permissions, - takes them away.                     #
 # +@ (or +prev) is a special shorthand which adds all the rights of the rank above it.                       #
-# You can also specify verbs like so +/client/proc/some_added_verb or -/client/proc/some_restricted_verb     #
+# You can also specify verbs like so +/datum/client_base/proc/some_added_verb or -/datum/client_base/proc/some_restricted_verb     #
 # Ranks with no keywords will just be given the most basic verbs and abilities                ~Carn          #
 ##############################################################################################################
 # PLEASE NOTE: depending on config options, some abilities will be unavailable regardless if you have permission to use them!

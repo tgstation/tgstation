@@ -1,4 +1,4 @@
-/client/verb/ooc(msg as text)
+/datum/client_base/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
 
@@ -57,7 +57,7 @@
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
 
-	for(var/client/C in GLOB.clients)
+	for(var/datum/client_base/C in GLOB.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
@@ -82,19 +82,19 @@
 
 GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 
-/client/proc/set_ooc(newColor as color)
+/datum/client_base/proc/set_ooc(newColor as color)
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"
 	set category = "Fun"
 	GLOB.normal_ooc_colour = sanitize_ooccolor(newColor)
 
-/client/proc/reset_ooc()
+/datum/client_base/proc/reset_ooc()
 	set name = "Reset Player OOC Color"
 	set desc = "Returns player OOC Color to default"
 	set category = "Fun"
 	GLOB.normal_ooc_colour = OOC_COLOR
 
-/client/verb/colorooc()
+/datum/client_base/verb/colorooc()
 	set name = "Set Your OOC Color"
 	set category = "Preferences"
 
@@ -109,7 +109,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	SSblackbox.add_details("admin_verb","Set OOC Color") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/client/verb/resetcolorooc()
+/datum/client_base/verb/resetcolorooc()
 	set name = "Reset Your OOC Color"
 	set desc = "Returns your OOC Color to default"
 	set category = "Preferences"
@@ -122,7 +122,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 		prefs.save_preferences()
 
 //Checks admin notice
-/client/verb/admin_notice()
+/datum/client_base/verb/admin_notice()
 	set name = "Adminnotice"
 	set category = "Admin"
 	set desc ="Check the admin notice if it has been set"
@@ -132,7 +132,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	else
 		to_chat(src, "<span class='notice'>There are no admin notices at the moment.</span>")
 
-/client/verb/fix_chat()
+/datum/client_base/verb/fix_chat()
 	set name = "Fix chat"
 	set category = "OOC"
 	if (!chatOutput || !istype(chatOutput))
@@ -215,7 +215,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 
 
 
-/client/verb/motd()
+/datum/client_base/verb/motd()
 	set name = "MOTD"
 	set category = "OOC"
 	set desc ="Check the Message of the Day"
@@ -225,7 +225,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	else
 		to_chat(src, "<span class='notice'>The Message of the Day has not been set.</span>")
 
-/client/proc/self_notes()
+/datum/client_base/proc/self_notes()
 	set name = "View Admin Remarks"
 	set category = "OOC"
 	set desc = "View the notes that admins have written about you"
@@ -236,8 +236,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 
 	browse_messages(null, usr.ckey, null, 1)
 
-/client/proc/ignore_key(client)
-	var/client/C = client
+/datum/client_base/proc/ignore_key(client)
+	var/datum/client_base/C = client
 	if(C.key in prefs.ignoring)
 		prefs.ignoring -= C.key
 	else
@@ -245,7 +245,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	to_chat(src, "You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [C.key] on the OOC channel.")
 	prefs.save_preferences()
 
-/client/verb/select_ignore()
+/datum/client_base/verb/select_ignore()
 	set name = "Ignore"
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"

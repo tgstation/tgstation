@@ -300,7 +300,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	GLOB.explosions -= src
 	return ..()
 
-/client/proc/check_bomb_impacts()
+/datum/client_base/proc/check_bomb_impacts()
 	set name = "Check Bomb Impact"
 	set category = "Debug"
 

@@ -1,5 +1,5 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
-/client/verb/wiki(query as text)
+/datum/client_base/verb/wiki(query as text)
 	set name = "wiki"
 	set desc = "Type what you want to know about.  This will open the wiki in your web browser. Type nothing to go to the main page."
 	set hidden = 1
@@ -13,7 +13,7 @@
 		to_chat(src, "<span class='danger'>The wiki URL is not set in the server configuration.</span>")
 	return
 
-/client/verb/forum()
+/datum/client_base/verb/forum()
 	set name = "forum"
 	set desc = "Visit the forum."
 	set hidden = 1
@@ -25,7 +25,7 @@
 		to_chat(src, "<span class='danger'>The forum URL is not set in the server configuration.</span>")
 	return
 
-/client/verb/rules()
+/datum/client_base/verb/rules()
 	set name = "rules"
 	set desc = "Show Server Rules."
 	set hidden = 1
@@ -37,7 +37,7 @@
 		to_chat(src, "<span class='danger'>The rules URL is not set in the server configuration.</span>")
 	return
 
-/client/verb/github()
+/datum/client_base/verb/github()
 	set name = "github"
 	set desc = "Visit Github"
 	set hidden = 1
@@ -49,7 +49,7 @@
 		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
 
-/client/verb/reportissue()
+/datum/client_base/verb/reportissue()
 	set name = "report-issue"
 	set desc = "Report an issue"
 	set hidden = 1
@@ -65,7 +65,7 @@
 		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
 
-/client/verb/hotkeys_help()
+/datum/client_base/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"
 
@@ -82,7 +82,7 @@ Admin:
 	if(holder)
 		to_chat(src, adminhotkeys)
 
-/client/verb/changelog()
+/datum/client_base/verb/changelog()
 	set name = "Changelog"
 	set category = "OOC"
 	var/datum/asset/changelog = get_asset_datum(/datum/asset/simple/changelog)
@@ -208,7 +208,7 @@ Any-Mode: (hotkey doesn't need to be on)
 
 // Needed to circumvent a bug where .winset does not work when used on the window.on-size event in skins.
 // Used by /datum/html_interface/nanotrasen (code/modules/html_interface/nanotrasen/nanotrasen.dm)
-/client/verb/_swinset(var/x as text)
+/datum/client_base/verb/_swinset(var/x as text)
 	set name = ".swinset"
 	set hidden = 1
 	winset(src, null, x)

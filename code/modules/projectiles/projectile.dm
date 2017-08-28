@@ -329,7 +329,7 @@
 		var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
 
 		//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
-		var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
+		var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/datum/client_base/var/view for mad maths
 
 		var/ox = round(screenview/2) - user.client.pixel_x //"origin" x
 		var/oy = round(screenview/2) - user.client.pixel_y //"origin" y

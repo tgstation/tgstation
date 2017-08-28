@@ -1,6 +1,3 @@
-/client/var/adminhelptimerid = 0	//a timer id for returning the ahelp verb
-/client/var/datum/admin_help/current_ticket	//the current ticket the (usually) not-admin client is dealing with
-
 //
 //TICKET MANAGER
 //
@@ -149,7 +146,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/opened_at
 	var/closed_at
 
-	var/client/initiator	//semi-misnomer, it's the person who ahelped/was bwoinked
+	var/datum/client_base/initiator	//semi-misnomer, it's the person who ahelped/was bwoinked
 	var/initiator_ckey
 	var/initiator_key_name
 
@@ -213,8 +210,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //Removes the ahelp verb and returns it after 2 minutes
 /datum/admin_help/proc/TimeoutVerb()
-	initiator.verbs -= /client/verb/adminhelp
-	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
+	initiator.verbs -= /datum/client_base/verb/adminhelp
+	initiator.adminhelptimerid = addtimer(CALLBACK(initiator, /datum/client_base/proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
 
 //private
 /datum/admin_help/proc/FullMonty(ref_src)
@@ -255,7 +252,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 
 	//send this msg to all admins
-	for(var/client/X in GLOB.admins)
+	for(var/datum/client_base/X in GLOB.admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			SEND_SOUND(X, sound('sound/effects/adminhelp.ogg'))
 		window_flash(X, ignorepref = TRUE)
@@ -465,12 +462,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 // CLIENT PROCS
 //
 
-/client/proc/giveadminhelpverb()
-	src.verbs |= /client/verb/adminhelp
+/datum/client_base/proc/giveadminhelpverb()
+	src.verbs |= /datum/client_base/verb/adminhelp
 	deltimer(adminhelptimerid)
 	adminhelptimerid = 0
 
-/client/verb/adminhelp(msg as text)
+/datum/client_base/verb/adminhelp(msg as text)
 	set category = "Admin"
 	set name = "Adminhelp"
 
@@ -504,7 +501,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	new /datum/admin_help(msg, src, FALSE)
 
 //admin proc
-/client/proc/cmd_admin_ticket_panel()
+/datum/client_base/proc/cmd_admin_ticket_panel()
 	set name = "Show Ticket List"
 	set category = "Admin"
 
@@ -532,7 +529,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //Use this proc when an admin takes action that may be related to an open ticket on what
 //what can be a client, ckey, or mob
 /proc/admin_ticket_log(what, message)
-	var/client/C
+	var/datum/client_base/C
 	var/mob/Mob = what
 	if(istype(Mob))
 		C = Mob.client
@@ -553,7 +550,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 /proc/get_admin_counts(requiredflags = R_BAN)
 	. = list("total" = list(), "noflags" = list(), "afk" = list(), "stealth" = list(), "present" = list())
-	for(var/client/X in GLOB.admins)
+	for(var/datum/client_base/X in GLOB.admins)
 		.["total"] += X
 		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
 			.["noflags"] += X
@@ -604,7 +601,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/list/message = list("Admins: ")
 	var/list/admin_keys = list()
 	for(var/adm in GLOB.admins)
-		var/client/C = adm
+		var/datum/client_base/C = adm
 		admin_keys += "[C][C.holder.fakekey ? "(Stealth)" : ""][C.is_afk() ? "(AFK)" : ""]"
 
 	for(var/admin in admin_keys)

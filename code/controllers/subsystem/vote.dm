@@ -22,12 +22,12 @@ SUBSYSTEM_DEF(vote)
 
 		if(time_remaining < 0)
 			result()
-			for(var/client/C in voting)
+			for(var/datum/client_base/C in voting)
 				C << browse(null, "window=vote;can_close=0")
 			reset()
 		else
 			var/datum/browser/client_popup
-			for(var/client/C in voting)
+			for(var/datum/client_base/C in voting)
 				client_popup = new(C, "vote", "Voting Panel")
 				client_popup.set_window_options("can_close=0")
 				client_popup.set_content(interface(C))
@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(vote)
 		var/list/non_voters = GLOB.directory.Copy()
 		non_voters -= voted
 		for (var/non_voter_ckey in non_voters)
-			var/client/C = non_voters[non_voter_ckey]
+			var/datum/client_base/C = non_voters[non_voter_ckey]
 			if (!C || C.is_afk())
 				non_voters -= non_voter_ckey
 		if(non_voters.len > 0)
@@ -125,7 +125,7 @@ SUBSYSTEM_DEF(vote)
 						GLOB.master_mode = .
 	if(restart)
 		var/active_admins = 0
-		for(var/client/C in GLOB.admins)
+		for(var/datum/client_base/C in GLOB.admins)
 			if(!C.is_afk() && check_rights_for(C, R_SERVER))
 				active_admins = 1
 				break
@@ -192,7 +192,7 @@ SUBSYSTEM_DEF(vote)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 		for(var/c in GLOB.clients)
-			var/client/C = c
+			var/datum/client_base/C = c
 			var/datum/action/vote/V = new
 			if(question)
 				V.name = "Vote: [question]"

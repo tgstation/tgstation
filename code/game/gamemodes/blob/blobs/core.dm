@@ -85,7 +85,7 @@
 	if(overmind)
 		qdel(overmind)
 
-	var/client/C = null
+	var/datum/client_base/C = null
 	var/list/candidates = list()
 
 	if(!new_overmind)

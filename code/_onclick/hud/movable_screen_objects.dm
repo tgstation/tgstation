@@ -50,7 +50,7 @@
 
 
 //Debug procs
-/client/proc/test_movable_UI()
+/datum/client_base/proc/test_movable_UI()
 	set category = "Debug"
 	set name = "Spawn Movable UI Object"
 
@@ -69,7 +69,7 @@
 	screen += M
 
 
-/client/proc/test_snap_UI()
+/datum/client_base/proc/test_snap_UI()
 	set category = "Debug"
 	set name = "Spawn Snap UI Object"
 

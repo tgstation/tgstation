@@ -13,37 +13,37 @@
 
 //The byond version of these verbs wait for the next tick before acting.
 //	instant verbs however can run mid tick or even during the time between ticks.
-/client/verb/moveup()
+/datum/client_base/verb/moveup()
 	set name = ".moveup"
 	set instant = 1
 	Move(get_step(mob, NORTH), NORTH)
 
-/client/verb/movedown()
+/datum/client_base/verb/movedown()
 	set name = ".movedown"
 	set instant = 1
 	Move(get_step(mob, SOUTH), SOUTH)
 
-/client/verb/moveright()
+/datum/client_base/verb/moveright()
 	set name = ".moveright"
 	set instant = 1
 	Move(get_step(mob, EAST), EAST)
 
-/client/verb/moveleft()
+/datum/client_base/verb/moveleft()
 	set name = ".moveleft"
 	set instant = 1
 	Move(get_step(mob, WEST), WEST)
 
-/client/Northeast()
+/datum/client_base/proc/Northeast()
 	swap_hand()
 	return
 
 
-/client/Southeast()
+/datum/client_base/proc/Southeast()
 	attack_self()
 	return
 
 
-/client/Southwest()
+/datum/client_base/proc/Southwest()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
@@ -52,14 +52,14 @@
 	return
 
 
-/client/Northwest()
+/datum/client_base/proc/Northwest()
 	if(!usr.get_active_held_item())
 		to_chat(usr, "<span class='warning'>You have nothing to drop in your hand!</span>")
 		return
 	usr.drop_item()
 
 //This gets called when you press the delete button.
-/client/verb/delete_key_pressed()
+/datum/client_base/verb/delete_key_pressed()
 	set hidden = 1
 
 	if(!usr.pulling)
@@ -67,28 +67,28 @@
 		return
 	usr.stop_pulling()
 
-/client/verb/swap_hand()
+/datum/client_base/verb/swap_hand()
 	set category = "IC"
 	set name = "Swap hands"
 
 	if(mob)
 		mob.swap_hand()
 
-/client/verb/attack_self()
+/datum/client_base/verb/attack_self()
 	set hidden = 1
 	if(mob)
 		mob.mode()
 	return
 
 
-/client/verb/drop_item()
+/datum/client_base/verb/drop_item()
 	set hidden = 1
 	if(!iscyborg(mob))
 		mob.drop_item_v()
 	return
 
 
-/client/Center()
+/datum/client_base/proc/Center()
 	if(isobj(mob.loc))
 		var/obj/O = mob.loc
 		if(mob.canmove)
@@ -96,7 +96,7 @@
 	return
 
 
-/client/proc/Move_object(direct)
+/datum/client_base/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
 			step(mob.control_object,direct)
@@ -109,7 +109,7 @@
 
 #define MOVEMENT_DELAY_BUFFER 0.75
 #define MOVEMENT_DELAY_BUFFER_DELTA 1.25
-/client/Move(n, direct)
+/datum/client_base/proc/Move(n, direct)
 	if(world.time < move_delay)
 		return FALSE
 	var/old_move_delay = move_delay
@@ -203,7 +203,7 @@
 ///Process_Grab()
 ///Called by client/Move()
 ///Checks to see if you are being grabbed and if so attemps to break it
-/client/proc/Process_Grab()
+/datum/client_base/proc/Process_Grab()
 	if(mob.pulledby)
 		if(mob.incapacitated(ignore_restraints = 1))
 			move_delay = world.time + 10
@@ -218,7 +218,7 @@
 ///Process_Incorpmove
 ///Called by client/Move()
 ///Allows mobs to run though walls
-/client/proc/Process_Incorpmove(direct)
+/datum/client_base/proc/Process_Incorpmove(direct)
 	var/turf/mobloc = get_turf(mob)
 	if(!isliving(mob))
 		return
@@ -283,7 +283,7 @@
 
 
 ///Process_Spacemove
-///Called by /client/Move()
+///Called by /datum/client_base/Move()
 ///For moving in space
 ///return TRUE for movement 0 for none
 /mob/Process_Spacemove(movement_dir = 0)
@@ -359,10 +359,10 @@
 //4: r-arm 5: chest 6: l-arm
 //1: r-leg 2: groin 3: l-leg
 
-/client/proc/check_has_body_select()
+/datum/client_base/proc/check_has_body_select()
 	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /obj/screen/zone_sel)
 
-/client/verb/body_toggle_head()
+/datum/client_base/verb/body_toggle_head()
 	set name = "body-toggle-head"
 	set hidden = 1
 
@@ -381,7 +381,7 @@
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(next_in_line, mob)
 
-/client/verb/body_r_arm()
+/datum/client_base/verb/body_r_arm()
 	set name = "body-r-arm"
 	set hidden = 1
 
@@ -391,7 +391,7 @@
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone("r_arm", mob)
 
-/client/verb/body_chest()
+/datum/client_base/verb/body_chest()
 	set name = "body-chest"
 	set hidden = 1
 
@@ -401,7 +401,7 @@
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone("chest", mob)
 
-/client/verb/body_l_arm()
+/datum/client_base/verb/body_l_arm()
 	set name = "body-l-arm"
 	set hidden = 1
 
@@ -411,7 +411,7 @@
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone("l_arm", mob)
 
-/client/verb/body_r_leg()
+/datum/client_base/verb/body_r_leg()
 	set name = "body-r-leg"
 	set hidden = 1
 
@@ -421,7 +421,7 @@
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone("r_leg", mob)
 
-/client/verb/body_groin()
+/datum/client_base/verb/body_groin()
 	set name = "body-groin"
 	set hidden = 1
 
@@ -431,7 +431,7 @@
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone("groin", mob)
 
-/client/verb/body_l_leg()
+/datum/client_base/verb/body_l_leg()
 	set name = "body-l-leg"
 	set hidden = 1
 
@@ -441,7 +441,7 @@
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone("l_leg", mob)
 
-/client/verb/toggle_walk_run()
+/datum/client_base/verb/toggle_walk_run()
 	set name = "toggle-walk-run"
 	set hidden = TRUE
 	set instant = TRUE

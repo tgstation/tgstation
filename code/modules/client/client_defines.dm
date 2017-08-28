@@ -9,7 +9,38 @@
 
 	preload_rsc = PRELOAD_RSC
 
+/datum/client_base/vv_edit_var(var_name, var_value)
+	var/static/list/banned_client_base_edits = list("ckey", "key", "computer_id", "byond_version", "address", "mob", "gender", "connection")
+	return !(var_name in banned_client_base_edits) && ..()
+
 /datum/client_base
+	//sumfuk in voodoo shit right here
+	//tl;dr real clients will populate these fields for us
+	//READONLY
+	var/ckey
+	var/key
+	var/computer_id
+	var/byond_version
+	var/address
+	var/connection
+	var/gender
+	var/inactivity
+	var/mob/mob
+
+	//writable
+	var/color
+	var/view
+	var/dir
+	var/pixel_x
+	var/pixel_y
+	var/pixel_z
+	var/show_popup_menus
+	var/list/verbs
+	var/list/images
+	var/list/screen
+	var/atom/eye
+	//end voodoo
+
 		////////////////
 		//ADMIN THINGS//
 		////////////////
@@ -72,3 +103,37 @@
 	var/datum/chatOutput/chatOutput
 
 	var/list/credits //lazy list of all credit object bound to this client
+	
+	//ASSET CACHE
+
+	var/list/cache = list() // List of all assets sent to this client by the asset cache.
+	var/list/completed_asset_jobs = list() // List of all completed jobs, awaiting acknowledgement.
+	var/list/sending = list()
+	var/last_asset_job = 0 // Last job done.
+
+	//AUTOCLICK
+
+	var/list/atom/selected_target[2]
+	var/obj/item/active_mousedown_item = null
+	var/mouseParams = ""
+	var/mouseLocation = null
+	var/mouseObject = null
+	var/mouseControlObject = null
+
+	//ADMIN HELP
+
+	var/adminhelptimerid = 0	//a timer id for returning the ahelp verb
+	var/datum/admin_help/current_ticket	//the current ticket the (usually) not-admin client is dealing with
+
+	//PARALLAX
+
+	var/list/parallax_layers
+	var/list/parallax_layers_cached
+	var/atom/movable/movingmob
+	var/turf/previous_turf
+	var/dont_animate_parallax //world.time of when we can state animate()ing parallax again
+	var/last_parallax_shift //world.time of last update
+	var/parallax_throttle = 0 //ds between updates
+	var/parallax_movedir = 0
+	var/parallax_layers_max = 3
+	var/parallax_animate_timer

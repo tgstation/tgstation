@@ -1,19 +1,6 @@
-
-/client
-	var/list/parallax_layers
-	var/list/parallax_layers_cached
-	var/atom/movable/movingmob
-	var/turf/previous_turf
-	var/dont_animate_parallax //world.time of when we can state animate()ing parallax again
-	var/last_parallax_shift //world.time of last update
-	var/parallax_throttle = 0 //ds between updates
-	var/parallax_movedir = 0
-	var/parallax_layers_max = 3
-	var/parallax_animate_timer
-
 /datum/hud/proc/create_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
-	var/client/C = screenmob.client
+	var/datum/client_base/C = screenmob.client
 	if (!apply_parallax_pref(viewmob)) //don't want shit computers to crash when specing someone with insane parallax, so use the viewer's pref
 		return
 
@@ -44,7 +31,7 @@
 
 /datum/hud/proc/remove_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
-	var/client/C = screenmob.client
+	var/datum/client_base/C = screenmob.client
 	C.screen -= (C.parallax_layers_cached)
 	var/obj/screen/plane_master/PM = screenmob.hud_used.plane_masters["[PLANE_SPACE]"]
 	if(screenmob != mymob)
@@ -55,7 +42,7 @@
 
 /datum/hud/proc/apply_parallax_pref(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
-	var/client/C = screenmob.client
+	var/datum/client_base/C = screenmob.client
 	if(C.prefs)
 		var/pref = C.prefs.parallax
 		if (isnull(pref))
@@ -92,7 +79,7 @@
 // This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)
 /datum/hud/proc/set_parallax_movedir(new_parallax_movedir, skip_windups)
 	. = FALSE
-	var/client/C = mymob.client
+	var/datum/client_base/C = mymob.client
 	if(new_parallax_movedir == C.parallax_movedir)
 		return
 	var/animatedir = new_parallax_movedir
@@ -171,7 +158,7 @@
 		animate(L, transform = matrix(), time = T, loop = -1, flags = ANIMATION_END_NOW)
 
 /datum/hud/proc/update_parallax()
-	var/client/C = mymob.client
+	var/datum/client_base/C = mymob.client
 	var/turf/posobj = get_turf(C.eye)
 	var/area/areaobj = posobj.loc
 

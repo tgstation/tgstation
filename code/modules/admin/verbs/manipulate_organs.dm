@@ -1,4 +1,4 @@
-/client/proc/manipulate_organs(mob/living/carbon/C in world)
+/datum/client_base/proc/manipulate_organs(mob/living/carbon/C in world)
 	set name = "Manipulate Organs"
 	set category = "Debug"
 	var/operation = input("Select organ operation.", "Organ Manipulation", "cancel") in list("add organ", "add implant", "drop organ/implant", "remove organ/implant", "cancel")

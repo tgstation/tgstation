@@ -3,11 +3,11 @@
 #define CREDIT_ANIMATE_HEIGHT (14 * world.icon_size)
 #define CREDIT_EASE_DURATION 22
 
-/client/proc/RollCredits()
+/datum/client_base/proc/RollCredits()
 	set waitfor = FALSE
 	LAZYINITLIST(credits)
 	var/list/_credits = credits
-	verbs += /client/proc/ClearCredits
+	verbs += /datum/client_base/proc/ClearCredits
 	var/static/list/credit_order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states('icons/credits.dmi')) - "Thanks for playing!")
 	for(var/I in credit_order_for_this_round)
 		if(!credits)
@@ -15,12 +15,12 @@
 		_credits += new /obj/screen/credit(null, I, src)
 		sleep(CREDIT_SPAWN_SPEED)
 	sleep(CREDIT_ROLL_SPEED - CREDIT_SPAWN_SPEED)
-	verbs -= /client/proc/ClearCredits
+	verbs -= /datum/client_base/proc/ClearCredits
 
-/client/proc/ClearCredits()
+/datum/client_base/proc/ClearCredits()
 	set name = "Hide Credits"
 	set category = "OOC"
-	verbs -= /client/proc/ClearCredits
+	verbs -= /datum/client_base/proc/ClearCredits
 	QDEL_LIST(credits)
 	credits = null
 
@@ -30,7 +30,7 @@
 	alpha = 0
 	screen_loc = "12,1"
 	layer = SPLASHSCREEN_LAYER
-	var/client/parent
+	var/datum/client_base/parent
 	var/matrix/target
 
 /obj/screen/credit/Initialize(mapload, credited, client/P)
@@ -51,7 +51,7 @@
 	P.screen += src
 
 /obj/screen/credit/Destroy()
-	var/client/P = parent
+	var/datum/client_base/P = parent
 	P.screen -= src
 	LAZYREMOVE(P.credits, src)
 	parent = null

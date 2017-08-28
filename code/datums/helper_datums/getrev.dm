@@ -83,7 +83,7 @@
 			continue
 		. += "<a href=\"[config.githuburl]/pull/[line]\">#[line][details]</a><br>"
 
-/client/verb/showrevinfo()
+/datum/client_base/verb/showrevinfo()
 	set category = "OOC"
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"

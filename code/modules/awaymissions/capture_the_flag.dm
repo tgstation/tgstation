@@ -212,7 +212,7 @@
 		if(user.ckey in recently_dead_ckeys)
 			to_chat(user, "It must be more than [respawn_cooldown/10] seconds from your last death to respawn!")
 			return
-		var/client/new_team_member = user.client
+		var/datum/client_base/new_team_member = user.client
 		if(user.mind && user.mind.current)
 			ctf_dust_old(user.mind.current)
 		spawn_team_member(new_team_member)
@@ -228,7 +228,7 @@
 			to_chat(user, "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up.")
 			return
 	team_members |= user.ckey
-	var/client/new_team_member = user.client
+	var/datum/client_base/new_team_member = user.client
 	if(user.mind && user.mind.current)
 		ctf_dust_old(user.mind.current)
 	spawn_team_member(new_team_member)
