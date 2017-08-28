@@ -37,36 +37,36 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//kinda localization -- rastaf0
 	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	// Location
-	"ê" = "right hand",
-	"ä" = "left hand",
-	"ø" = "intercom",
+	"Ãª" = "right hand",
+	"Ã¤" = "left hand",
+	"Ã¸" = "intercom",
 
 	// Department
-	"ð" = "department",
-	"ñ" = "Command",
-	"ò" = "Science",
-	"ü" = "Medical",
-	"ó" = "Engineering",
-	"û" = "Security",
-	"ã" = "Supply",
-	"ì" = "Service",
+	"Ã°" = "department",
+	"Ã±" = "Command",
+	"Ã²" = "Science",
+	"Ã¼" = "Medical",
+	"Ã³" = "Engineering",
+	"Ã»" = "Security",
+	"Ã£" = "Supply",
+	"Ã¬" = "Service",
 
 	// Faction
-	"å" = "Syndicate",
-	"í" = "CentCom",
+	"Ã¥" = "Syndicate",
+	"Ã­" = "CentCom",
 
 	// Species
-	"è" = "binary",
-	"ï" = "changeling",
-	"ô" = "alientalk",
+	"Ã¨" = "binary",
+	"Ã¯" = "changeling",
+	"Ã´" = "alientalk",
 
 	// Admin
-	"ç" = "admin",
-	"â" = "deadmin",
+	"Ã§" = "admin",
+	"Ã¢" = "deadmin",
 
 	// Misc
-	"ù" = "AI Private",
-	"÷" = "cords"
+	"Ã¹" = "AI Private",
+	"Ã·" = "cords"
 ))
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
@@ -108,7 +108,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(check_emote(original_message) || !can_speak_basic(original_message))
 		return
 
+	var/in_full_critical = InFullCritical()
+		
 	if(in_critical)
+		if(!in_full_critical && !message_mode)
+			message_mode = MODE_WHISPER
 		if(!(crit_allowed_modes[message_mode]))
 			return
 	else if(stat == UNCONSCIOUS)
@@ -149,7 +153,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		message_range = 1
 		spans |= SPAN_ITALICS
 		log_talk(src,"[key_name(src)] : [message]",LOGWHISPER)
-		if(in_critical)
+		if(in_full_critical)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
 			var/message_len = length(message)

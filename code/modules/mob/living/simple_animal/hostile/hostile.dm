@@ -2,7 +2,7 @@
 	faction = list("hostile")
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
-	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Bitflags. Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
 	var/atom/target
 	var/ranged = 0
 	var/rapid = 0
@@ -253,7 +253,7 @@
 		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range) //We can't see our target, but he's in our vision range still
 			if(ranged_ignores_vision && ranged_cooldown <= world.time) //we can't see our target... but we can fire at them!
 				OpenFire(target)
-			if(environment_smash >= 2) //If we're capable of smashing through walls, forget about vision completely after finding our target
+			if((environment_smash & ENVIRONMENT_SMASH_WALLS) || (environment_smash & ENVIRONMENT_SMASH_RWALLS)) //If we're capable of smashing through walls, forget about vision completely after finding our target
 				Goto(target,move_to_delay,minimum_distance)
 				FindHidden()
 				return 1
@@ -357,20 +357,22 @@
 		P.fire()
 		return P
 
+/mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
+	return iswallturf(T) || ismineralturf(T)
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(targets_from, dir)
-			if(iswallturf(T) || ismineralturf(T))
+			if(CanSmashTurfs(T))
 				if(T.Adjacent(targets_from))
 					T.attack_animal(src)
 			for(var/a in T)
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
-				if(is_type_in_typecache(A, environment_target_typecache))
+				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
 					A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()

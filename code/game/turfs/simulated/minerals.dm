@@ -87,7 +87,7 @@
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 
 /turf/closed/mineral/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash >= 2)
+	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		gets_drilled()
 	..()
 

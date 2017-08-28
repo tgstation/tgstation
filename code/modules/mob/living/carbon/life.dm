@@ -53,7 +53,7 @@
 
 	var/datum/gas_mixture/breath
 
-	if(health <= HEALTH_THRESHOLD_CRIT || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
+	if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
 		losebreath++
 
 	//Suffocate

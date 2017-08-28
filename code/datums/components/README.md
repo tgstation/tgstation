@@ -56,7 +56,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `GET_COMPONENT(varname, component_type)` OR `GET_COMPONENT_FROM(varname, component_type, src)`
     * Shorthand for `var/component_type/varname = src.GetComponent(component_type)`
 1. `/datum/proc/AddComponent(component_type(type), ...) -> datum/component`  (public, final)
-    * Creates an instance of `component_type` in the datum and passes `...` to it's `New()` call
+    * Creates an instance of `component_type` in the datum and passes `...` to its `Initialize()` call
     * Sends the `COMSIG_COMPONENT_ADDED` signal to the datum
     * All components a datum owns are deleted with the datum
     * Returns the component that was created. Or the old component in a dupe situation where `COMPONENT_DUPE_UNIQUE` was set
