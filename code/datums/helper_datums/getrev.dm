@@ -6,7 +6,12 @@
 	var/date
 
 /datum/getrev/New()
-	if(world.RunningService() && fexists(SERVICE_PR_TEST_JSON))
+	if(world.RunningService())
+		var/file_name
+		if(ServiceVersion())	//will return null for versions < 3.0.91.0
+			file_name = SERVICE_PR_TEST_JSON_OLD
+		else
+			file_name = SERVICE_PR_TEST_JSON
 		testmerge = json_decode(file2text(SERVICE_PR_TEST_JSON))
 #ifdef SERVERTOOLS
 	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
