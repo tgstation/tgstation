@@ -58,12 +58,12 @@
 			human = 1
 
 		var/name = M.name
-		if (name in track.names)
+		while(name in track.names)
 			track.namecounts[name]++
 			name = text("[] ([])", name, track.namecounts[name])
-		else
-			track.names.Add(name)
-			track.namecounts[name] = 1
+		track.names.Add(name)
+		track.namecounts[name] = 1
+
 		if(human)
 			track.humans[name] = M
 		else
