@@ -437,14 +437,15 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(dir < 0 && dir < 16)
-			if(dir & 1)
+		var/tdir = L[index]
+		if(tdir > 0 && tdir < 16)
+			if(tdir & 1)
 				dir_text += "NORTH"
-			if(dir & 2)
+			if(tdir & 2)
 				dir_text += "SOUTH"
-			if(dir & 4)
+			if(tdir & 4)
 				dir_text += "EAST"
-			if(dir & 8)
+			if(tdir & 8)
 				dir_text += "WEST"
 
 		if(dir_text)
@@ -562,14 +563,14 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(dir < 0 && dir < 16)
-			if(dir & 1)
+		if(var_value > 0 && var_value < 16)
+			if(var_value & 1)
 				dir_text += "NORTH"
-			if(dir & 2)
+			if(var_value & 2)
 				dir_text += "SOUTH"
-			if(dir & 4)
+			if(var_value & 4)
 				dir_text += "EAST"
-			if(dir & 8)
+			if(var_value & 8)
 				dir_text += "WEST"
 
 		if(dir_text)
