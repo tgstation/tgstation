@@ -1000,7 +1000,7 @@
 					moveship = 0
 		if(moveship)
 			var/datum/gas_mixture/current = loc.return_air()
-			if(current.return_pressure() > ONE_ATMOSPHERE * 0.5 && get_area(src) != /area/engine/pod_construction) //so you can't podrace inside, but you can still explore ruins or exploded parts of the station
+			if(current.return_pressure() > ONE_ATMOSPHERE * 0.5 && !istype(get_area(src), /area/engine/pod_construction)) //so you can't podrace inside, but you can still explore ruins or exploded parts of the station
 				move_delay = 6
 				extra_cell += 5
 			Move(get_step(src, direction), direction)
