@@ -110,6 +110,7 @@ CREATE TABLE `SS13_connection_log` (
   `datetime` datetime DEFAULT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   `ckey` varchar(45) DEFAULT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(45) DEFAULT NULL,
@@ -202,6 +203,7 @@ CREATE TABLE `SS13_legacy_population` (
   `time` datetime NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -222,6 +224,7 @@ CREATE TABLE `SS13_library` (
   `ckey` varchar(32) NOT NULL DEFAULT 'LEGACY',
   `datetime` datetime NOT NULL,
   `deleted` tinyint(1) unsigned DEFAULT NULL,
+  `round_id_created` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `deleted_idx` (`deleted`),
   KEY `idx_lib_id_del` (`id`,`deleted`),
@@ -245,6 +248,9 @@ CREATE TABLE `SS13_messages` (
   `text` varchar(2048) NOT NULL,
   `timestamp` datetime NOT NULL,
   `server` varchar(32) DEFAULT NULL,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   `secret` tinyint(1) unsigned NOT NULL,
   `lasteditor` varchar(32) DEFAULT NULL,
   `edits` text,
@@ -280,7 +286,9 @@ DROP TABLE IF EXISTS `SS13_player`;
 CREATE TABLE `SS13_player` (
   `ckey` varchar(32) NOT NULL,
   `firstseen` datetime NOT NULL,
+  `firstseen_round_id` int(11) unsigned NOT NULL,
   `lastseen` datetime NOT NULL,
+  `lastseen_round_id` int(11) unsigned NOT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
