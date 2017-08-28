@@ -8,8 +8,9 @@
 	starting_node = TRUE
 	display_name = "Basic Research Technology"
 	description = "NT default research technologies."
-	design_ids = list("basic_matter_bin", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani",
-	"destructive_analyzer", "protolathe", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab")			//Default research tech, prevents bricking
+	design_ids = list("basic_matter_bin", "basic_cell" "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani",
+	"destructive_analyzer", "protolathe", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
+	"space_heater")			//Default research tech, prevents bricking
 
 /datum/techweb_node/biotech
 	id = "biotech"
@@ -143,7 +144,8 @@
 	description = "Modern engineering techonlogy."
 	display_name = "Industrial Engineering"
 	prereq_ids = list("base")
-	design_ids = list("rped", "adv_scanning", "adv_matter_bin", "high_micro_laser", "nano_mani", "weldingmask", "mesons")
+	design_ids = list("solarcontrol", "power_monitor", "rped", "pacman", "adv_capacitor" "adv_scanning", "emitter" "high_cell" "adv_matter_bin",
+	"atmosalerts", "atmos_control", "high_micro_laser", "nano_mani", "weldingmask", "mesons", "thermomachine")
 	research_cost = 5000
 	export_price = 5000
 
@@ -161,7 +163,7 @@
 	display_name = "Applied Bluespace Research"
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "industrial_engineering")
-	design_ids = list("bs_rped", "telesci_gps", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag")
+	design_ids = list("bs_rped", "telesci_gps", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning")
 	research_cost = 5000
 	export_price = 5000
 
@@ -187,7 +189,7 @@
 	id = "NVGtech"
 	display_name = "Night Vision Technology"
 	description = "Allows seeing in the dark without actual light!"
-	prereq_ids = list("integrated_HUDs", "adv_engi")
+	prereq_ids = list("integrated_HUDs", "adv_engi", "emp_adv")
 	design_ids = list("health_hud_night", "security_hud_night", "diagnostic_hud_night", "night_visision_goggles", "nvgmesons")
 	research_cost = 5000
 	export_price = 5000
@@ -225,6 +227,7 @@
 	display_name = "Basic Robotics Research"
 	description = "Programmable machines that make our lives lazier."
 	prereq_ids = list("base")
+	design_ids = list("paicard")
 	research_cost = 5000
 	export_price = 5000
 
@@ -235,7 +238,8 @@
 	prereq_ids = list("mmi", "robotics")
 	research_cost = 5000
 	export_price = 5000
-	design_ids = list("borg_suit", "borg_head", "borg_chest", "borg_r_arm", "borg_l_arm", "borg_r_leg", "borg_l_leg")
+	design_ids = list("robocontrol", "sflash", "borg_suit", "borg_head", "borg_chest", "borg_r_arm", "borg_l_arm", "borg_r_leg", "borg_l_leg", "borgupload",
+	"cyborgrecharger")
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
@@ -251,6 +255,7 @@
 	display_name = "Mechanical Exosuits"
 	description = "Mechanized exosuits that are several magnitudes stronger and more powerful than the average human."
 	prereq_ids = list("robotics", "adv_engi")
+	design_ids = list("mecha_tracking", "mechacontrol", "mechapower", "mech_recharger")
 	research_cost = 5000
 	export_price = 5000
 
@@ -304,73 +309,108 @@
 	research_cost = 5000
 	export_price = 5000
 
-//////////AI Module Disks//////////
-///////////////////////////////////
-/datum/design/board/aicore
-	name = "AI Design (AI Core)"
-	id = "aicore"
-/datum/design/board/safeguard_module
-	name = "Module Design (Safeguard)"
-	id = "safeguard_module"
-/datum/design/board/onehuman_module
-	name = "Module Design (OneHuman)"
-	id = "onehuman_module"
-/datum/design/board/protectstation_module
-	name = "Module Design (ProtectStation)"
-	id = "protectstation_module"
-/datum/design/board/quarantine_module
-	name = "Module Design (Quarantine)"
-	id = "quarantine_module"
-/datum/design/board/oxygen_module
-	name = "Module Design (OxygenIsToxicToHumans)"
-	id = "oxygen_module"
-/datum/design/board/freeform_module
-	name = "Module Design (Freeform)"
-	id = "freeform_module"
-/datum/design/board/reset_module
-	name = "Module Design (Reset)"
-	id = "reset_module"
-/datum/design/board/purge_module
-	name = "Module Design (Purge)"
-	id = "purge_module"
-/datum/design/board/remove_module
-	name = "Module Design (Law Removal)"
-	id = "remove_module"
-/datum/design/board/freeformcore_module
-	name = "AI Core Module (Freeform)"
-	id = "freeformcore_module"
-/datum/design/board/asimov
-	name = "Core Module Design (Asimov)"
-	id = "asimov_module"
-/datum/design/board/paladin_module
-	name = "Core Module Design (P.A.L.A.D.I.N.)"
-	id = "paladin_module"
-/datum/design/board/tyrant_module
-	name = "Core Module Design (T.Y.R.A.N.T.)"
-	id = "tyrant_module"
-/datum/design/board/corporate_module
-	name = "Core Module Design (Corporate)"
-	id = "corporate_module"
-/datum/design/board/default_module
-	name = "Core Module Design (Default)"
-	id = "default_module"/datum/design/boris_ai_controller
-	name = "B.O.R.I.S. AI-Cyborg Remote Control Module"
-	id = "borg_ai_control"
-	construction_time = 50/datum/design/mecha_tracking_ai_control
-	name = "AI Control Beacon"
-	id = "mecha_tracking_ai_control"
-	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
-	construction_time = 50
+/datum/techweb_node/ai
+	id = "ai"
+	display_name = "Artificial Intelligence"
+	description = "AI unit research."
+	prereq_ids = list("robotics", "neural_programming")
+	design_ids = list("aicore", "safeguard_module", "onehuman_module", "protectstation_module", "quarantine_module", "oxygen_module", "freeform_module",
+	"reset_module", "purge_module", "remove_module", "freeformcore_module", "asimov_module", "paladin_module", "tyrant_module", "corporate_module",
+	"default_module", "borg_ai_control", "mecha_tracking_ai_control", "ai_upload", "intellicard"
+	research_cost = 5000
+	export_price = 5000
 
-/////////////////////////////////////////
-//////////////////Misc///////////////////
-/////////////////////////////////////////
-/datum/design/portaseeder
-	name = "Portable Seed Extractor"
-/datum/design/diskplantgene
-	name = "Plant Data Disk"
-	id = "diskplantgene"
+/datum/techweb_node/cloning
+	id = "cloning"
+	display_name = "Cloning Technology"
+	description = "We have the technology to remake him.")
+	prereq_ids = list("biotech")
+	design_ids = list("clonecontrol", "clonepod", "clonescanner")
+	research_cost = 5000
+	export_price = 5000
 
+/datum/techweb_node/subdermal_implants
+	id = "subdermal_implants"
+	display_name = "Subdermal Implants"
+	description = "Electronic implants buried beneath the skin."
+	prereq_ids = list("biotech")
+	design_ids = list("implanter", "implantcase", "implant_chem", "implant_tracking")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/adv_biotech
+	id = "adv_biotech"
+	display_name = "Advanced Biotechnology"
+	description = "Advanced Biotechnology"
+	prereq_ids = list("biotech")
+	design_ids = list("piercesyringe", "adv_mass_spectrometer", "plasmarefiller")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/botany
+	id = "botany"
+	display_name = "Botanical Engineering"
+	description = "Botanical tools"
+	prereq_ids = list("biotech", "adv_engi")
+	design_ids = list("diskplantgene", "portaseeder", "plantgenes", "flora_gun", "hydro_tray", "biogenerator")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/high_efficiency
+	id = "high_efficiency"
+	display_name = "High Efficiency Parts"
+	description = "High Efficiency Parts"
+	prereq_ids = list("industrial_engineering", "datatheory")
+	design_ids = list("pico_mani", "super_matter_bin")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/adv_bluespace
+	id = "adv_bluespace"
+	display_name = "Advanced Bluespace Research"
+	description = "Deeper understanding of how the Bluespace dimension works")
+	prereq_ids = list("practical_bluespace", "high_efficiency")
+	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console",
+	"teleconsole")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/adv_power
+	id = "adv_power"
+	display_name = "Advanced Power Manipulation"
+	description = "How to get more zap."
+	prereq_ids = list("industrial_engineering")
+	design_ids = list("smes", "super_cell", "hyper_cell", "super_capacitor", "superpacman", "mrspacman", "power_turbine", "power_turbine_console", "power_compressor")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/bluespace_power
+	id = "bluespace_power"
+	display_name = "Bluespace Power Technology"
+	description = "Even more powerful.. power!"
+	prereq_ids = list("adv_power", "adv_bluespace")
+	design_ids = list("bluespace_cell", "quadratic_capcitor")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/emp_adv
+	id = "emp_adv"
+	display_name = "Advanced Electromagnetic Theory"
+	prereq_ids = list("emp_basic")
+	design_ids = list("ultra_micro_laser")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/emp_super
+	id = "emp_super"
+	display_name = "Quantum Electromagnetic Technology"	//bs
+	description = "Even better electromagnetic technology"
+	prereq_ids = list("emp_adv")
+	design_ids = list("quad_ultra_micro_laser")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/
 /////////////////////////////////////////
 /////////////////Mining//////////////////
 /////////////////////////////////////////
@@ -413,22 +453,6 @@
 /datum/design/hyperaccelerator
 	name = "Kinetic Accelerator Mining AoE Mod"
 	id = "hypermod"
-/////////////////////////////////////////
-////////////Medical Tools////////////////
-/////////////////////////////////////////
-/datum/design/adv_mass_spectrometer
-	name = "Advanced Mass-Spectrometer"
-	id = "adv_mass_spectrometer"
-	build_path = /obj/item/device/mass_spectrometer/adv
-/datum/design/piercesyringe
-	name = "Piercing Syringe"
-	id = "piercesyringe"
-	build_path = /obj/item/reagent_containers/syringe/piercing
-/datum/design/plasmarefiller
-	name = "Plasma-Man Jumpsuit Refill"
-	id = "plasmarefiller"
-	req_tech = list("materials" = 2, "plasmatech" = 3) //Why did this have no plasmatech
-	build_path = /obj/item/device/extinguisher_refill
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
@@ -501,21 +525,7 @@
 	name = "Thrusters Set Implant"
 	id = "ci-thrusters"
 	construction_time = 80
-/////////////////////////////////////////
-////////////Regular Implants/////////////
-/////////////////////////////////////////
-/datum/design/implanter
-	name = "Implanter"
-	id = "implanter"
-/datum/design/implantcase
-	name = "Implant Case"
-	id = "implantcase"
-/datum/design/implant_chem
-	name = "Chemical Implant Case"
-	id = "implant_chem"
-/datum/design/implant_tracking
-	name = "Tracking Implant Case"
-	id = "implant_tracking"
+
 //Cybernetic organs
 /datum/design/cybernetic_liver
 	name = "Cybernetic Liver"
@@ -620,23 +630,13 @@
 	id = "borg_upgrade_defibrillator"
 	construction_time = 120
 
-//Misc
-/datum/design/mecha_tracking
-	name = "Exosuit Tracking Beacon"
-	id = "mecha_tracking"
-	build_path =/obj/item/mecha_parts/mecha_tracking
-	construction_time = 50
-
 
 /datum/design/drone_shell
 	name = "Drone Shell"
 	id = "drone_shell"
 	construction_time=150
 	build_path = /obj/item/drone_shell
-/datum/design/synthetic_flash
-	name = "Flash"
-	id = "sflash"
-	construction_time = 100
+
 /datum/design/flightsuit		//Multi step build process/redo WIP
 	name = "Flight Suit"
 	id = "flightsuit"
@@ -654,68 +654,12 @@
 ////////////////////////////////////////
 //////////////MISC Boards///////////////
 ////////////////////////////////////////
-/datum/design/board/smes
-	name = "Machine Design (SMES Board)"
-	id = "smes"
-	category = list ("Engineering Machinery")
+
 /datum/design/board/announcement_system
 	name = "Machine Design (Automated Announcement System Board)"
 	id = "automated_announcement"
 	build_path = /obj/item/circuitboard/machine/announcement_system
-/datum/design/board/turbine_computer
-	name = "Computer Design (Power Turbine Console Board)"
-	id = "power_turbine_console"
-	build_path = /obj/item/circuitboard/computer/turbine_computer
-	category = list ("Engineering Machinery")
-/datum/design/board/emitter
-	name = "Machine Design (Emitter Board)"
-	id = "emitter"
-	category = list ("Engineering Machinery")
-/datum/design/board/power_compressor
-	name = "Machine Design (Power Compressor Board)"
-	id = "power_compressor"
-	build_path = /obj/item/circuitboard/machine/power_compressor
-	category = list ("Engineering Machinery")
-/datum/design/board/power_turbine
-	name = "Machine Design (Power Turbine Board)"
-	id = "power_turbine"
-	build_path = /obj/item/circuitboard/machine/power_turbine
-	category = list ("Engineering Machinery")
-/datum/design/board/thermomachine
-	name = "Machine Design (Freezer/Heater Board)"
-	id = "thermomachine"
-	category = list ("Engineering Machinery")
-/datum/design/board/space_heater
-	name = "Machine Design (Space Heater Board)"
-	id = "space_heater"
-	build_path = /obj/item/circuitboard/machine/space_heater
-	category = list ("Engineering Machinery")
-/datum/design/board/teleport_station
-	name = "Machine Design (Teleportation Station Board)"
-	id = "tele_station"
-	build_path = /obj/item/circuitboard/machine/teleporter_station
-	category = list ("Teleportation Machinery")
-/datum/design/board/teleport_hub
-	name = "Machine Design (Teleportation Hub Board)"
-	id = "tele_hub"
-	build_path = /obj/item/circuitboard/machine/teleporter_hub
-	category = list ("Teleportation Machinery")
-/datum/design/board/quantumpad
-	name = "Machine Design (Quantum Pad Board)"
-	id = "quantumpad"
-	category = list ("Teleportation Machinery")
-/datum/design/board/launchpad
-	name = "Machine Design (Bluespace Launchpad Board)"
-	id = "launchpad"
-	category = list ("Teleportation Machinery")
-/datum/design/board/launchpad_console
-	name = "Machine Design (Bluespace Launchpad Console Board)"
-	id = "launchpad_console"
-	build_path = /obj/item/circuitboard/computer/launchpad_console
-	category = list ("Teleportation Machinery")
-/datum/design/board/teleconsole
-	name = "Computer Design (Teleporter Console)"
-	id = "teleconsole"
+
 /datum/design/board/sleeper
 	name = "Machine Design (Sleeper Board)"
 	id = "sleeper"
@@ -735,30 +679,7 @@
 	id = "chem_heater"
 	build_path = /obj/item/circuitboard/machine/chem_heater
 	category = list ("Medical Machinery")
-/datum/design/board/clonecontrol
-	name = "Computer Design (Cloning Machine Console)"
-	id = "clonecontrol"
-/datum/design/board/clonepod
-	name = "Machine Design (Clone Pod)"
-	id = "clonepod"
-/datum/design/board/clonescanner
-	name = "Machine Design (Cloning Scanner)"
-	id = "clonescanner"
-/datum/design/board/biogenerator
-	name = "Machine Design (Biogenerator Board)"
-	id = "biogenerator"
-	category = list ("Hydroponics Machinery")
-/datum/design/board/hydroponics
-	name = "Machine Design (Hydroponics Tray Board)"
-	id = "hydro_tray"
-	category = list ("Hydroponics Machinery")
-/datum/design/board/cyborgrecharger
-	name = "Machine Design (Cyborg Recharger Board)"
-	id = "cyborgrecharger"
-/datum/design/board/mech_recharger
-	name = "Machine Design (Mechbay Recharger Board)"
-	id = "mech_recharger"
-	build_path = /obj/item/circuitboard/machine/mech_recharger
+
 /datum/design/board/microwave
 	name = "Machine Design (Microwave Board)"
 	id = "microwave"
@@ -823,10 +744,6 @@
 	name = "Machine Design (Grounding Rod Board)"
 	id = "grounding_rod"
 	build_path = /obj/item/circuitboard/machine/grounding_rod
-	category = list ("Misc. Machinery")
-/datum/design/board/plantgenes
-	name = "Machine Design (Plant DNA Manipulator Board)"
-	id = "plantgenes"
 	category = list ("Misc. Machinery")
 /datum/design/board/ntnet_relay
 	name = "Machine Design (NTNet Relay Board)"
@@ -973,12 +890,7 @@
 ///////////////////////////////////
 /////Non-Board Computer Stuff//////
 ///////////////////////////////////
-/datum/design/intellicard
-	name = "Intellicard AI Transportation System"
-	id = "intellicard"
-/datum/design/paicard
-	name = "Personal Artificial Intelligence Card"
-	id = "paicard"
+
 ///////////////////Computer Boards///////////////////////////////////
 /datum/design/board/seccamera
 	name = "Computer Design (Security Camera)"
@@ -986,12 +898,6 @@
 /datum/design/board/xenobiocamera
 	name = "Computer Design (Xenobiology Console)"
 	id = "xenobioconsole"
-/datum/design/board/aiupload
-	name = "Computer Design (AI Upload)"
-	id = "aiupload"
-/datum/design/board/borgupload
-	name = "Computer Design (Cyborg Upload)"
-	id = "borgupload"
 /datum/design/board/operating
 	name = "Computer Design (Operating Computer)"
 	id = "operating"
@@ -1011,39 +917,12 @@
 /datum/design/board/crewconsole
 	name = "Computer Design (Crew monitoring computer)"
 	id = "crewconsole"
-/datum/design/board/atmosalerts
-	name = "Computer Design (Atmosphere Alert)"
-	id = "atmosalerts"
-	build_path = /obj/item/circuitboard/computer/atmos_alert
-/datum/design/board/atmos_control
-	name = "Computer Design (Atmospheric Monitor)"
-	id = "atmos_control"
-	build_path = /obj/item/circuitboard/computer/atmos_control
-/datum/design/board/robocontrol
-	name = "Computer Design (Robotics Control Console)"
-	id = "robocontrol"
-/datum/design/board/powermonitor
-	name = "Computer Design (Power Monitor)"
-	id = "powermonitor"
-/datum/design/board/solarcontrol
-	name = "Computer Design (Solar Control)"
-	id = "solarcontrol"
-	build_path = /obj/item/circuitboard/computer/solar_control
+
 /datum/design/board/prisonmanage
 	name = "Computer Design (Prisoner Management Console)"
 	id = "prisonmanage"
-/datum/design/board/mechacontrol
-	name = "Computer Design (Exosuit Control Console)"
-	id = "mechacontrol"
-	build_path = /obj/item/circuitboard/computer/mecha_control
-/datum/design/board/mechapower
-	name = "Computer Design (Mech Bay Power Control Console)"
-	id = "mechapower"
+
 	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
-/datum/design/board/rdconsole
-	name = "Computer Design (R&D Console)"
-	desc = "Allows for the construction of circuit boards used to build a new R&D console."
-	id = "rdconsole"
 /datum/design/board/cargo
 	name = "Computer Design (Supply Console)"
 	id = "cargo"
@@ -1117,10 +996,6 @@
 	name = "Temperature Gun"
 	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
 	id = "temp_gun"
-/datum/design/flora_gun
-	name = "Floral Somatoray"
-	id = "flora_gun"
-	reagents_list = list("radium" = 20)
 /datum/design/large_grenade
 	name = "Large Grenade"
 	id = "large_Grenade"
@@ -1179,102 +1054,3 @@
 	name = "Energy Crossbow"
 	id = "largecrossbow"
 	build_path = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
-////////////////////////////////////////
-/////////////Stock Parts////////////////
-////////////////////////////////////////
-//Capacitors
-/datum/design/adv_capacitor
-	name = "Advanced Capacitor"
-	id = "adv_capacitor"
-	build_path = /obj/item/stock_parts/capacitor/adv
-	lathe_time_factor = 0.2
-/datum/design/super_capacitor
-	name = "Super Capacitor"
-	id = "super_capacitor"
-	build_path = /obj/item/stock_parts/capacitor/super
-	lathe_time_factor = 0.2
-/datum/design/quadratic_capacitor
-	name = "Quadratic Capacitor"
-	id = "quadratic_capacitor"
-	build_path = /obj/item/stock_parts/capacitor/quadratic
-	lathe_time_factor = 0.2
-/datum/design/phasic_scanning
-	name = "Phasic Scanning Module"
-	id = "phasic_scanning"
-	build_path = /obj/item/stock_parts/scanning_module/phasic
-	lathe_time_factor = 0.2
-/datum/design/triphasic_scanning
-	name = "Triphasic Scanning Module"
-	id = "triphasic_scanning"
-	build_path = /obj/item/stock_parts/scanning_module/triphasic
-	lathe_time_factor = 0.2
-/datum/design/pico_mani
-	name = "Pico Manipulator"
-	id = "pico_mani"
-	build_path = /obj/item/stock_parts/manipulator/pico
-	lathe_time_factor = 0.2
-/datum/design/femto_mani
-	name = "Femto Manipulator"
-	id = "femto_mani"
-	build_path = /obj/item/stock_parts/manipulator/femto
-	lathe_time_factor = 0.2
-/datum/design/ultra_micro_laser
-	name = "Ultra-High-Power Micro-Laser"
-	id = "ultra_micro_laser"
-	build_path = /obj/item/stock_parts/micro_laser/ultra
-	lathe_time_factor = 0.2
-/datum/design/quadultra_micro_laser
-	name = "Quad-Ultra Micro-Laser"
-	id = "quadultra_micro_laser"
-	build_path = /obj/item/stock_parts/micro_laser/quadultra
-	lathe_time_factor = 0.2
-/datum/design/super_matter_bin
-	name = "Super Matter Bin"
-	id = "super_matter_bin"
-	build_path = /obj/item/stock_parts/matter_bin/super
-	lathe_time_factor = 0.2
-/datum/design/bluespace_matter_bin
-	name = "Bluespace Matter Bin"
-	id = "bluespace_matter_bin"
-	build_path = /obj/item/stock_parts/matter_bin/bluespace
-	lathe_time_factor = 0.2
-
-////////////////////////////////////////
-//////////////////Power/////////////////
-////////////////////////////////////////
-/datum/design/basic_cell
-	name = "Basic Power Cell"
-	id = "basic_cell"
-	construction_time=100
-	build_path = /obj/item/stock_parts/cell
-/datum/design/high_cell
-	name = "High-Capacity Power Cell"
-	id = "high_cell"
-	construction_time=100
-	build_path = /obj/item/stock_parts/cell/high
-/datum/design/super_cell
-	name = "Super-Capacity Power Cell"
-	id = "super_cell"
-	construction_time=100
-	build_path = /obj/item/stock_parts/cell/super
-/datum/design/hyper_cell
-	name = "Hyper-Capacity Power Cell"
-	id = "hyper_cell"
-	construction_time=100
-	build_path = /obj/item/stock_parts/cell/hyper
-/datum/design/bluespace_cell
-	name = "Bluespace Power Cell"
-	id = "bluespace_cell"
-	construction_time=100
-	build_path = /obj/item/stock_parts/cell/bluespace
-
-	id = "light_replacer"
-/datum/design/board/pacman
-	name = "Machine Design (PACMAN-type Generator Board)"
-	id = "pacman"
-/datum/design/board/pacman/super
-	name = "Machine Design (SUPERPACMAN-type Generator Board)"
-	id = "superpacman"
-/datum/design/board/pacman/mrs
-	name = "Machine Design (MRSPACMAN-type Generator Board)"
-	id = "mrspacman"
