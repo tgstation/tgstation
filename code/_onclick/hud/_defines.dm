@@ -23,7 +23,7 @@
 //Middle left indicators
 #define ui_lingchemdisplay "WEST,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
-#define ui_crafting	"12:-10,1:5"
+#define ui_crafting "EAST:-5,SOUTH+2:7"
 #define ui_building "12:-10,1:21"
 #define ui_language_menu "11:6,2:-11"
 
@@ -34,6 +34,7 @@
 #define ui_id "CENTER-4:12,SOUTH:5"
 #define ui_belt "CENTER-3:14,SOUTH:5"
 #define ui_back "CENTER-2:14,SOUTH:5"
+#define ui_pda "CENTER+3:22,SOUTH:5"
 
 /proc/ui_hand_position(i) //values based on old hand ui positions (CENTER:-/+16,SOUTH:5)
 	var/x_off = -(!(i % 2))
@@ -104,7 +105,7 @@
 #define ui_health "EAST-1:28,CENTER-1:15"
 #define ui_internal "EAST-1:28,CENTER:17"
 
-//borgs 
+//borgs
 #define ui_borg_health "EAST-1:28,CENTER-1:15"		//borgs have the health display where humans have the pressure damage indicator.
 
 //aliens

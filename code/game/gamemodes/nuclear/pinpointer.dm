@@ -5,7 +5,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinoff"
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_BELT | SLOT_PDA
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

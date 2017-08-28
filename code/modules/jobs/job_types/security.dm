@@ -40,7 +40,7 @@ Head of Security
 	jobtype = /datum/job/hos
 
 	id = /obj/item/card/id/silver
-	belt = /obj/item/device/pda/heads/hos
+	pda = /obj/item/device/pda/heads/hos
 	ears = /obj/item/device/radio/headset/heads/hos/alt
 	uniform = /obj/item/clothing/under/rank/head_of_security
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -91,7 +91,7 @@ Warden
 	name = "Warden"
 	jobtype = /datum/job/warden
 
-	belt = /obj/item/device/pda/warden
+	pda = /obj/item/device/pda/warden
 	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/warden
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -138,7 +138,7 @@ Detective
 	name = "Detective"
 	jobtype = /datum/job/detective
 
-	belt = /obj/item/device/pda/detective
+	pda = /obj/item/device/pda/detective
 	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/det
 	shoes = /obj/item/clothing/shoes/sneakers/brown
@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	name = "Security Officer"
 	jobtype = /datum/job/officer
 
-	belt = /obj/item/device/pda/security
+	pda = /obj/item/device/pda/security
 	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/security
 	gloves = /obj/item/clothing/gloves/color/black

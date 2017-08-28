@@ -133,7 +133,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	id = /obj/item/card/id
 	ears = /obj/item/device/radio/headset
-	belt = /obj/item/device/pda
+	pda = /obj/item/device/pda
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 

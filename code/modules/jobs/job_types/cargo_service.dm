@@ -21,7 +21,7 @@ Quartermaster
 	name = "Quartermaster"
 	jobtype = /datum/job/qm
 
-	belt = /obj/item/device/pda/quartermaster
+	pda = /obj/item/device/pda/quartermaster
 	ears = /obj/item/device/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
@@ -51,7 +51,7 @@ Cargo Technician
 	name = "Cargo Technician"
 	jobtype = /datum/job/cargo_tech
 
-	belt = /obj/item/device/pda/cargo
+	pda = /obj/item/device/pda/cargo
 	ears = /obj/item/device/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargotech
 
@@ -79,7 +79,7 @@ Shaft Miner
 	name = "Shaft Miner (Lavaland)"
 	jobtype = /datum/job/mining
 
-	belt = /obj/item/device/pda/shaftminer
+	pda = /obj/item/device/pda/shaftminer
 	ears = /obj/item/device/radio/headset/headset_cargo/mining
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
@@ -159,7 +159,7 @@ Bartender
 	jobtype = /datum/job/bartender
 
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	belt = /obj/item/device/pda/bar
+	pda = /obj/item/device/pda/bar
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/bartender
 	suit = /obj/item/clothing/suit/armor/vest
@@ -190,7 +190,7 @@ Cook
 	name = "Cook"
 	jobtype = /datum/job/cook
 
-	belt = /obj/item/device/pda/cook
+	pda = /obj/item/device/pda/cook
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
@@ -241,7 +241,7 @@ Botanist
 	name = "Botanist"
 	jobtype = /datum/job/hydro
 
-	belt = /obj/item/device/pda/botanist
+	pda = /obj/item/device/pda/botanist
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/hydroponics
 	suit = /obj/item/clothing/suit/apron
@@ -276,7 +276,7 @@ Janitor
 	name = "Janitor"
 	jobtype = /datum/job/janitor
 
-	belt = /obj/item/device/pda/janitor
+	pda = /obj/item/device/pda/janitor
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor
 	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)

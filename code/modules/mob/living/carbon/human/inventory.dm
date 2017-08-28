@@ -38,6 +38,8 @@
 			return r_store
 		if(slot_s_store)
 			return s_store
+		if(slot_pda)
+			return pda
 	return null
 
 /mob/living/carbon/human/proc/get_all_slots()
@@ -56,7 +58,8 @@
 		wear_id,
 		l_store,
 		r_store,
-		w_uniform
+		w_uniform,
+		pda,
 		)
 
 /mob/living/carbon/human/proc/get_head_slots()
@@ -75,6 +78,7 @@
 		l_store,
 		r_store,
 		s_store,
+		pda,
 		)
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
@@ -133,6 +137,9 @@
 		if(slot_s_store)
 			s_store = I
 			update_inv_s_store()
+		if(slot_pda)
+			pda = I
+			update_inv_pda()
 		else
 			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 
@@ -221,6 +228,10 @@
 		s_store = null
 		if(!QDELETED(src))
 			update_inv_s_store()
+	else if(I == pda)
+		pda = null
+		if(!QDELETED(src))
+			update_inv_pda()
 
 /mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
 	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))

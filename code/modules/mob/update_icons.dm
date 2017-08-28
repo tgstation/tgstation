@@ -22,6 +22,9 @@
 /mob/proc/update_inv_hands()
 	return
 
+/mob/proc/update_inv_pda()
+	return
+
 /mob/proc/update_inv_wear_mask()
 	return
 

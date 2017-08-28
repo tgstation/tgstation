@@ -348,6 +348,20 @@ There are several things that need to be remembered:
 				client.screen += r_store
 			update_observer_view(r_store)
 
+/mob/living/carbon/human/update_inv_pda()
+	if(client && hud_used)
+		var/obj/screen/inventory/inv
+
+		inv = hud_used.inv_slots[slot_pda]
+		inv.update_icon()
+
+		if(pda)
+			pda.screen_loc = ui_storage1
+			if(hud_used.hud_shown)
+				client.screen += pda
+			update_observer_view(pda)
+
+
 
 /mob/living/carbon/human/update_inv_wear_mask()
 	..()

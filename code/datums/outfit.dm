@@ -16,6 +16,7 @@
 	var/id = null
 	var/l_pocket = null
 	var/r_pocket = null
+	var/pda = null
 	var/suit_store = null
 	var/r_hand = null
 	var/l_hand = null
@@ -52,6 +53,8 @@
 		H.equip_to_slot_or_del(new shoes(H),slot_shoes)
 	if(head)
 		H.equip_to_slot_or_del(new head(H),slot_head)
+	if(pda)
+		H.equip_to_slot_or_del(new pda(H),slot_pda)
 	if(mask)
 		H.equip_to_slot_or_del(new mask(H),slot_wear_mask)
 	if(neck)

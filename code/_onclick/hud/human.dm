@@ -120,6 +120,14 @@
 	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
+	inv_box.name = "pda"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "pda"
+	inv_box.screen_loc = ui_pda
+	inv_box.slot_id = slot_pda
+	static_inventory += inv_box
+
+	inv_box = new /obj/screen/inventory()
 	inv_box.name = "i_clothing"
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_w_uniform
@@ -397,6 +405,9 @@
 			if(H.r_store)
 				H.r_store.screen_loc = ui_storage2
 				screenmob.client.screen += H.r_store
+			if(H.pda)
+				H.pda.screen_loc = ui_pda
+				screenmob.client.screen += H.pda
 		else
 			if(H.s_store)
 				screenmob.client.screen -= H.s_store
@@ -410,6 +421,8 @@
 				screenmob.client.screen -= H.l_store
 			if(H.r_store)
 				screenmob.client.screen -= H.r_store
+			if(H.pda)
+				screenmob.client.screen -= H.pda
 
 	if(hud_version != HUD_STYLE_NOHUD)
 		for(var/obj/item/I in H.held_items)
