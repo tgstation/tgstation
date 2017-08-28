@@ -283,13 +283,13 @@
 	explosion(loc, 2, 4, 8)
 	visible_message("<span class='danger'>[src] violently explodes!</span>")
 	var/turf/T = get_turf(src)
-	log_game("The spacepod \[name: [name], pilot: [pilot]] exploded at [COORD(T)]!")
+	log_game("The spacepod \[name: [name], pilot: [pilot]([pilot.ckey]) exploded at [COORD(T)]!")
 	message_admins("The spacepod \[name: [name], pilot: [pilot]\] exploded at [ADMIN_JMP(T)]!")
 	qdel(src)
 
 /obj/spacepod/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	log_attack("[user] attacked the spacepod \[name: [name], pilot: [pilot]\] with [I]!")
+	log_attack("[user] attacked the spacepod \[name: [name], pilot: [pilot]([pilot.ckey])\] with [I]!")
 
 /obj/spacepod/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
