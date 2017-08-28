@@ -1,5 +1,0 @@
-author: "Thefastfoodguy"
-delete-after: True
-changes: 
-  - balance: "Shadowlings glare now deals stamina damage and stuttering based on distance. It still stuns at melee range."
-  - tweak: "Shadowling glare, annihilate, and hypnosis all are now click abilities."

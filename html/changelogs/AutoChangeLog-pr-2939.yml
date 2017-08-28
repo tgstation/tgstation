@@ -1,4 +1,0 @@
-author: "Pyko"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the Ai turret controllers"
