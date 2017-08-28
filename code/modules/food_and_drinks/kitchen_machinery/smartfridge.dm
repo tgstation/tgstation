@@ -147,7 +147,7 @@
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "smartvend", "Smartfridge", 440, 550, master_ui, state)
+		ui = new(user, src, ui_key, "smartvend", name, 440, 550, master_ui, state)
 		ui.open()
 
 /obj/machinery/smartfridge/ui_data(mob/user)
@@ -158,10 +158,11 @@
 		if (listofitems[O.name])
 			listofitems[O.name]["amount"]++
 		else
-			listofitems[O.name] = list("name" = O.name, "id" = O.type, "amount" = 1)
+			listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
 	sortList(listofitems)
 
 	data["contents"] = listofitems
+	data["name"] = name
 
 	return data
 
@@ -170,25 +171,19 @@
 		return
 	switch(action)
 		if("Release")
-			var/ghettodebug = jointext(params,";")
-			var/ghettoid = params["id"]
-			var/sheets = params["sheets"]
-			to_chat(usr, "<span class='warning'>[action] [ghettodebug] [ghettoid] [sheets] [src]</span>")
 			var/desired = 0
-			if (params["sheets"])
-				desired = text2num(params["sheets"])
+
+			if (params["amount"])
+				desired = text2num(params["amount"])
 			else
-				desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
+				desired = input("How many items?", "How many items would you like to take out?", 1) as null|num
 
 			for(var/obj/item/O in contents)
 				if(desired <= 0)
 					break
-				if("[O.type]" == params["id"])
-					to_chat(usr, "<span class='warning'>[O] found, popping</span>")
+				if(O.name == params["name"])
 					O.loc = src.loc
 					desired--
-				else
-					to_chat(usr, "<span class='warning'>[O.type] is not [ghettoid]</span>")
 		else
 			return TRUE
 	return TRUE

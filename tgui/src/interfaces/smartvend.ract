@@ -1,22 +1,12 @@
-<ui-display>
-	<ui-section>
-		Smartfridge
-	</ui-section>
-</ui-display>
 <div class="display tabular">
 	<section class="candystripe">
 			<section class="cell">
-				Crop
+				Item
 			</section>
 			<section class="cell">
-				Amount
+				Quantity
 			</section>
 			<section class="cell">
-			</section>
-			<section class="cell">
-				<ui-button class='center mineral' grid action='Release' params='{"id" : "all"}'>
-					Release All
-				</ui-button>
 			</section>
 		</section>
 	{{#each data.contents}}
@@ -28,11 +18,11 @@
 				{{amount}}
 			</section>
 			<section class="cell">
-				<input value={{sheets}} placeholder='###' class="number"/>
+				<input value={{amount}} placeholder='###' class="number"/>
 			</section>
 			<section class="cell" align='right'>
-				<ui-button class='center' grid action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{ "id" : {{id}}, "sheets" : {{sheets}} }' >
-					Release
+				<ui-button class='center' grid action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{ "name" : {{name}}, "amount" : {{amount}} }' >
+					Take
 				</ui-button>
 			</section>
 		</section>
