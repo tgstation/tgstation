@@ -251,6 +251,10 @@
 	duration = -1
 	alert_type = null
 
+/datum/status_effect/cultghost/tick()
+	if(owner.reagents)
+		owner.reagents.remove_reagent("holywater", 1000) //can't be deconverted
+
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
