@@ -7,7 +7,6 @@
 	var/postdig_icon_change = FALSE
 	var/postdig_icon
 	var/list/archdrops = list()
-	var/dug = FALSE
 
 /turf/open/indestructible
 	name = "floor"

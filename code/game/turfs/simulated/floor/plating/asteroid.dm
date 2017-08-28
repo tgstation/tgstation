@@ -14,6 +14,7 @@
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
 	archdrops = list(/obj/item/ore/glass = 5)
+	var/archcomponent = /datum/component/archaeology
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
@@ -21,7 +22,7 @@
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
-	AddComponent(/datum/component/archaeology, 100)
+	AddComponent(archcomponent, 100)
 
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
@@ -94,6 +95,7 @@
 	icon_plating = "basalt"
 	environment_type = "basalt"
 	archdrops = list(/obj/item/ore/glass/basalt = 5)
+	archcomponent =  /datum/component/archaeology/basalt
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
@@ -104,7 +106,6 @@
 
 /turf/open/floor/plating/asteroid/basalt/Initialize()
 	. = ..()
-	AddComponent(/datum/component/archaeology/basalt, 100)
 	set_basalt_light(src)
 
 /proc/set_basalt_light(turf/open/floor/B)
