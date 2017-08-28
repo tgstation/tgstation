@@ -384,8 +384,10 @@ function update_pr_balance($payload) {
 		$balances[$author] = $startingPRBalance;
 	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
 	$balances[$author] += $friendliness;
-	if($balances[$author] < 0)
+	if($balances[$author] < 0 && $friendliness < 0)
 		create_comment($payload, 'Your Fix/Feature pull request delta is currently below zero (' . $balances[$author] . '). Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
+	else if($balances[$author] >= 0 && ($balances[$author] - $friendliness) < 0)
+		create_comment($payload, 'Your Fix/Feature pull request delta is now above zero (' . $balances[$author] . '). Feel free to make Feature/Tweak/Balance PRs.');
 	$balances_file = fopen(pr_balance_json_path(), 'w');
 	fwrite($balances_file, json_encode($balances));
 	fclose($balances_file);
