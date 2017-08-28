@@ -41,38 +41,38 @@ https://discordapp.com/api/channels/$CHANNELID/messages
 
 # We need to make sure we are always on a clean master when creating the new branch.
 # So we forcefully reset, clean and then checkout the master branch
-git fetch --all
-git checkout master
-git reset --hard origin/master
-git clean -f
+git fetch --all --verbose
+git checkout master --verbose
+git reset --hard origin/master --verbose
+git clean -f --verbose
 
 # Remove the other branches
 git branch | grep -v "master" | xargs git branch -D
 
 # Create a new branch
-git checkout -b "$BASE_BRANCH_NAME$1"
+git checkout -b "$BASE_BRANCH_NAME$1" --verbose
 
 # Grab the SHA of the merge commit
 MERGE_SHA=$(curl --silent "$BASE_PULL_URL/$1" | jq '.merge_commit_sha' -r)
 
 # Cherry pick onto the new branch
-CHERRY_PICK_OUTPUT=$(git cherry-pick -m 1 "$MERGE_SHA" 2>&1)
+CHERRY_PICK_OUTPUT=$(git cherry-pick -m 1 "$MERGE_SHA" --verbose 2>&1)
 echo "$CHERRY_PICK_OUTPUT"
 
 # If it's a squash commit, you can't use -m 1, you need to remove it
 if echo "$CHERRY_PICK_OUTPUT" | grep 'error: mainline was specified but commit'; then
   echo "Commit was a squash, retrying"
-  git cherry-pick "$MERGE_SHA"
+  git cherry-pick "$MERGE_SHA" --verbose
   # Add all files onto this branch
-  git add -A .
-  git cherry-pick --continue
+  git add -A . --verbose
+  git cherry-pick --continue --verbose
 else
   # Add all files onto this branch
-  git add -A .
+  git add -A . --verbose
 fi
 
 # Commit these changes
-git commit --allow-empty -m "$2"
+git commit --allow-empty -m "$2" --verbose
 
 # Push them onto the branch
-git push -u origin "$BASE_BRANCH_NAME$1"
+git push -u origin "$BASE_BRANCH_NAME$1" --verbose
