@@ -464,7 +464,7 @@ Auto Patrol[]"},
 		new /obj/effect/temp_visual/emp(loc)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12,src))
-			if(C.stat==2)
+			if(C.stat==DEAD)
 				continue
 			targets += C
 		if(targets.len)

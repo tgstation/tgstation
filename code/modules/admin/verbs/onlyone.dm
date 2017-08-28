@@ -84,7 +84,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 		return
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(H.stat == 2 || !(H.client)) continue
+		if(H.stat == DEAD || !(H.client)) continue
 		if(is_special_character(H)) continue
 
 		SSticker.mode.traitors += H.mind

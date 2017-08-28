@@ -89,7 +89,7 @@ Frequency:
 						continue
 					else
 						var/mob/M = W.loc
-						if (M.stat == 2)
+						if (M.stat == DEAD)
 							if (M.timeofdeath + 6000 < world.time)
 								continue
 

@@ -856,7 +856,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/list/plist = list()
 	var/list/namecounts = list()
 
-	if(user.stat == 2)
+	if(user.stat == DEAD)
 		return //won't work if dead
 
 	if(src.aiPDA.toff)
@@ -889,7 +889,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /mob/living/silicon/ai/verb/cmd_toggle_pda_receiver()
 	set category = "AI Commands"
 	set name = "PDA - Toggle Sender/Receiver"
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return //won't work if dead
 	if(!isnull(aiPDA))
 		aiPDA.toff = !aiPDA.toff
@@ -900,7 +900,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /mob/living/silicon/ai/verb/cmd_toggle_pda_silent()
 	set category = "AI Commands"
 	set name = "PDA - Toggle Ringer"
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return //won't work if dead
 	if(!isnull(aiPDA))
 		//0
@@ -910,7 +910,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
 
 /mob/living/silicon/ai/proc/cmd_show_message_log(mob/user)
-	if(user.stat == 2)
+	if(user.stat == DEAD)
 		return //won't work if dead
 	if(!isnull(aiPDA))
 		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"

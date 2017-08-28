@@ -2,7 +2,7 @@
 
 	track.cameras.Cut()
 
-	if(src.stat == 2)
+	if(src.stat == DEAD)
 		return
 
 	var/list/L = list()
@@ -45,7 +45,7 @@
 	track.humans.Cut()
 	track.others.Cut()
 
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return list()
 
 	for(var/mob/living/M in GLOB.mob_list)

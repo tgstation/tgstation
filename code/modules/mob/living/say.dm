@@ -108,11 +108,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(check_emote(original_message) || !can_speak_basic(original_message))
 		return
 
-	var/in_full_critical = InFullCritical()
-		
 	if(in_critical)
-		if(!in_full_critical && !message_mode)
-			message_mode = MODE_WHISPER
 		if(!(crit_allowed_modes[message_mode]))
 			return
 	else if(stat == UNCONSCIOUS)
@@ -153,7 +149,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		message_range = 1
 		spans |= SPAN_ITALICS
 		log_talk(src,"[key_name(src)] : [message]",LOGWHISPER)
-		if(in_full_critical)
+		if(InFullCritical())
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
 			var/message_len = length(message)
@@ -169,7 +165,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message)
 		return
 
-	spans += get_spans()
+	spans |= get_spans()
 
 	if(language)
 		var/datum/language/L = GLOB.language_datum_instances[language]
@@ -300,10 +296,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/get_message_mode(message)
 	var/key = copytext(message, 1, 2)
-	if(key == ";")
-		return MODE_HEADSET
-	else if(key == "#")
+	if((InCritical() && !InFullCritical()) || key == "#")
 		return MODE_WHISPER
+	else if(key == ";")
+		return MODE_HEADSET
 	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
 		var/key_symbol = lowertext(copytext(message, 2, 3))
 		return GLOB.department_radio_keys[key_symbol]

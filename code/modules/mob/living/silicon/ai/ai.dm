@@ -465,7 +465,7 @@
 	set category = "AI Commands"
 	set name = "Access Robot Control"
 	set desc = "Wirelessly control various automatic robots."
-	if(stat == 2)
+	if(stat == DEAD)
 		return //won't work if dead
 
 	if(control_disabled)
@@ -522,7 +522,7 @@
 /mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
 		return
-	if (stat == 2)
+	if (stat == DEAD)
 		return 1
 	var/list/L = alarms[class]
 	for (var/I in L)
@@ -585,7 +585,7 @@
 	cameraFollow = null
 	var/cameralist[0]
 
-	if(stat == 2)
+	if(stat == DEAD)
 		return //won't work if dead
 
 	var/mob/living/silicon/ai/U = usr
@@ -629,7 +629,7 @@
 	set category = "AI Commands"
 	set name = "AI Status"
 
-	if(stat == 2)
+	if(stat == DEAD)
 		return //won't work if dead
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
@@ -652,7 +652,7 @@
 	set desc = "Change the default hologram available to AI to something else."
 	set category = "AI Commands"
 
-	if(stat == 2)
+	if(stat == DEAD)
 		return //won't work if dead
 	var/input
 	switch(alert("Would you like to select a hologram based on a crew member, an animal, or switch to a unique avatar?",,"Crew Member","Unique","Animal"))
@@ -774,7 +774,7 @@
 	set desc = "Allows you to change settings of your radio."
 	set category = "AI Commands"
 
-	if(stat == 2)
+	if(stat == DEAD)
 		return //won't work if dead
 
 	to_chat(src, "Accessing Subspace Transceiver control...")
@@ -790,7 +790,7 @@
 	set desc = "Modify the default radio setting for your automatic announcements."
 	set category = "AI Commands"
 
-	if(stat == 2)
+	if(stat == DEAD)
 		return //won't work if dead
 	set_autosay()
 

@@ -1,5 +1,5 @@
 /mob/living/silicon/ai/say(message, language)
-	if(parent && istype(parent) && parent.stat != 2) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
+	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		parent.say(message, language)
 		return
 	..(message)
@@ -71,7 +71,7 @@
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
 
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return //won't work if dead
 
 	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
