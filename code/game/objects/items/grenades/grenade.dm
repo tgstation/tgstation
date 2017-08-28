@@ -64,7 +64,7 @@
 	icon_state = initial(icon_state) + "_active"
 	add_fingerprint(user)
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
-	glog(user)
+	glog(user, T)
 
 /obj/item/grenade/proc/prime()
 
