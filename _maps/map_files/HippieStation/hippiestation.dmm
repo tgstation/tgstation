@@ -19,7 +19,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aad" = (
-/turf/closed/wall/shuttle{
+/area/ruin/space/has_grav/hotel/shuttle{
 	icon_state = "wall3"
 	},
 /area/shuttle/syndicate)
