@@ -3,7 +3,13 @@
 		//////////////////////
 		//BLACK MAGIC THINGS//
 		//////////////////////
-	parent_type = /datum
+	parent_type = /datum/client_base
+	// comment out the line below when debugging locally to enable the options & messages menu
+	control_freak = CONTROL_FREAK_ALL
+
+	preload_rsc = PRELOAD_RSC
+
+/datum/client_base
 		////////////////
 		//ADMIN THINGS//
 		////////////////
@@ -33,8 +39,6 @@
 		////////////
 		//SECURITY//
 		////////////
-	// comment out the line below when debugging locally to enable the options & messages menu
-	control_freak = 1
 
 		////////////////////////////////////
 		//things that require the database//
@@ -45,8 +49,6 @@
 	var/related_accounts_cid = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this computer id
 	var/account_join_date = null	//Date of byond account creation in ISO 8601 format
 	var/account_age = -1	//Age of byond account in days
-
-	preload_rsc = PRELOAD_RSC
 
 	var/obj/screen/click_catcher/void
 
