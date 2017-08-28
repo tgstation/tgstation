@@ -12,7 +12,8 @@
 			file_name = SERVICE_PR_TEST_JSON_OLD
 		else
 			file_name = SERVICE_PR_TEST_JSON
-		testmerge = json_decode(file2text(SERVICE_PR_TEST_JSON))
+		if(fexists(file_name))
+			testmerge = json_decode(file2text(file_name))
 #ifdef SERVERTOOLS
 	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
 		var/list/tmp = world.file2list("..\\prtestjob.lk")
