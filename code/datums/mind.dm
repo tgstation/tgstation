@@ -663,25 +663,26 @@
 		sections["ninja"] = text
 
 
-	/** CULT ***/
-	text = "cult"
-	if (SSticker.mode.config_tag=="cult")
-		text = uppertext(text)
-	text = "<i><b>[text]</b></i>: "
-	if(iscultist(current))
-		text += "not mindshielded | <a href='?src=\ref[src];cult=clear'>employee</a> | <b>CULTIST</b>"
-		text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a> | <a href='?src=\ref[src];cult=amulet'>amulet</a>."
-	else if(is_convertable_to_cult(current))
-		text += "not mindshielded | <b>EMPLOYEE</b> | <a href='?src=\ref[src];cult=cultist'>cultist</a>"
-	else
-		text += "[!current.isloyal() ? "not mindshielded" : "<b>MINDSHIELDED</b>"] | <b>EMPLOYEE</b> | <i>cannot serve Nar-Sie</i>"
+	if(!issilicon(current))
+		/** CULT ***/
+		text = "cult"
+		if (SSticker.mode.config_tag=="cult")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if(iscultist(current))
+			text += "not mindshielded | <a href='?src=\ref[src];cult=clear'>employee</a> | <b>CULTIST</b>"
+			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a> | <a href='?src=\ref[src];cult=amulet'>amulet</a>."
+		else if(is_convertable_to_cult(current))
+			text += "not mindshielded | <b>EMPLOYEE</b> | <a href='?src=\ref[src];cult=cultist'>cultist</a>"
+		else
+			text += "[!current.isloyal() ? "not mindshielded" : "<b>MINDSHIELDED</b>"] | <b>EMPLOYEE</b> | <i>cannot serve Nar-Sie</i>"
 
-	if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_special))
-		text += " | Enabled in Prefs"
-	else
-		text += " | Disabled in Prefs"
+		if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_special))
+			text += " | Enabled in Prefs"
+		else
+			text += " | Disabled in Prefs"
 
-	sections["cult"] = text
+		sections["cult"] = text
 
 
 	if(ishuman(current) || issilicon(current))
