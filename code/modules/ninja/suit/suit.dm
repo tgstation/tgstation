@@ -99,7 +99,7 @@ Contents:
 	if(!istype(H))
 		return 0
 	if(!is_ninja(H))
-		to_chat(H, "<span class='danger'> <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...</span>")
+		to_chat(H, "<span class='danger'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...</span>")
 		H.gib()
 		return FALSE
 	if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
@@ -152,7 +152,7 @@ Contents:
 	..()
 	if(s_initialized)
 		if(user == affecting)
-			to_chat(user, "All systems operational. Current energy capacity: <B>[cell.maxcharge]</B>.")
+			to_chat(user, "All systems operational. Current energy capacity: <b>[round(cell.maxcharge/100)]</b>%.")
 			to_chat(user, "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>.")
 			to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
 			to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")

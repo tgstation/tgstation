@@ -413,7 +413,7 @@
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 
 /datum/action/item_action/ninjaboost
-	check_flags = 0
+	check_flags = NONE
 	name = "Adrenaline Boost"
 	desc = "Inject a secret chemical that will counteract all movement-impairing effect."
 	button_icon_state = "repulse"
