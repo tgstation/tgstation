@@ -143,6 +143,7 @@
 	if (!armor_multiplier_applied)
 		max_integrity *= pod_armor.armor_multiplier
 		obj_integrity *= pod_armor.armor_multiplier
+		armor_multiplier_applied = TRUE
 	cargo_hold = new/obj/item/storage/internal(src)
 	cargo_hold.w_class = 5	//so you can put bags in
 	cargo_hold.storage_slots = 0	//You need to install cargo modules to use it.
