@@ -774,13 +774,13 @@
 		return
 
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role) as null | anything in get_all_jobs()
+		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
 		if (!new_role)
 			return
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
-		var/new_memo = copytext(sanitize(input("Write new memory", "Memory", memory) as null | message),1,MAX_MESSAGE_LEN)
+		var/new_memo = copytext(sanitize(input("Write new memory", "Memory", memory) as null|message),1,MAX_MESSAGE_LEN)
 		if (isnull(new_memo))
 			return
 		memory = new_memo
@@ -802,7 +802,7 @@
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null | anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
+		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type)
 			return
 
@@ -820,7 +820,7 @@
 				if (is_type_in_typecache(objective, objective_list) && objective.target)
 					def_target = objective.target.current
 
-				var/mob/new_target = input("Select target:", "Objective target", def_target) as null | anything in possible_targets
+				var/mob/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
 				if (!new_target)
 					return
 
@@ -840,7 +840,7 @@
 			if ("destroy")
 				var/list/possible_targets = active_ais(1)
 				if(possible_targets.len)
-					var/mob/new_target = input("Select target:", "Objective target") as null | anything in possible_targets
+					var/mob/new_target = input("Select target:", "Objective target") as null|anything in possible_targets
 					new_objective = new /datum/objective/destroy
 					new_objective.target = new_target.mind
 					new_objective.owner = src
@@ -1045,7 +1045,7 @@
 			if("new")
 				if(GLOB.gang_colors_pool.len)
 					var/list/names = list("Random") + GLOB.gang_name_pool
-					var/gangname = input("Pick a gang name.","Select Name") as null | anything in names
+					var/gangname = input("Pick a gang name.","Select Name") as null|anything in names
 					if(gangname && GLOB.gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
 						if(!(gangname in GLOB.gang_name_pool))
 							gangname = null
