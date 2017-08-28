@@ -1625,7 +1625,7 @@
 	for(var/mob/living/silicon/ai/AI in GLOB.living_mob_list)
 		if(!AI.client)
 			continue
-		to_chat(AI, "<span class='info'>[user.name] is requesting you to open [src]<a href='?src=\ref[AI];remotedoor=\ref[src]'>(Open)</a></span>)
+		to_chat(AI, "<span class='info'>[user.name] is requesting you to open [src]<a href='?src=\ref[AI];remotedoor=\ref[src]'>(Open)</a></span>")
 	request_cooldown = world.time + 100
 	to_chat(user, "<span class='info'>Request sent.</span>")
 
