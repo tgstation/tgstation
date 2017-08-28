@@ -272,7 +272,7 @@
 		fabricator.recharging = null
 		if(user)
 			user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops draining glowing orange energy from [src].</span>", \
-			"<span class='alloy'>You finish recharging your [fabricator.name]. It now contains <b>[fabricator.get_power()]W/[fabricator.get_max_power()]W</b> power.</span>")
+			"<span class='alloy'>You finish recharging your [fabricator.name]. It now contains <b>[DisplayPower(fabricator.get_power())]/[DisplayPower(fabricator.get_max_power())]</b> power.</span>")
 
 //Fabricator mob heal proc, to avoid as much copypaste as possible.
 /mob/living/proc/fabricator_heal(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator)
