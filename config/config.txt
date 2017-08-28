@@ -225,6 +225,12 @@ TICKLAG 0.5
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
 #SEE_OWN_NOTES
 
+### Comment these two out to prevent notes fading out over time for admins.
+## Notes older then this will start fading out.
+NOTE_FRESH_DAYS 91.31055
+## Notes older then this will be completely faded out.
+NOTE_STALE_DAYS 365.2422
+
 ##Note: all population caps can be used with each other if desired.
 
 ## Uncomment for 'soft' population caps, players will be warned while joining if the living crew exceeds the listed number.
