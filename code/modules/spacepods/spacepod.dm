@@ -282,8 +282,13 @@
 	explosion(loc, 2, 4, 8)
 	visible_message("<span class='danger'>[src] violently explodes!</span>")
 	var/turf/T = get_turf(src)
-	log_game("The spacepod \[[name]\] exploded at [COORD(T)]!")
+	log_game("The spacepod \[name: [name], pilot: [pilot]] exploded at [COORD(T)]!")
+	message_admins("The spacepod \[name: [name], pilot: [pilot]\] exploded at [ADMIN_JMP(T)]!")
 	qdel(src)
+
+/obj/spacepod/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
+	log_attack("[user] attacked the spacepod \[name: [name], pilot: [pilot]\] with [I]!")
 
 /obj/spacepod/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
@@ -976,7 +981,7 @@
 	var/moveship = 1
 	var/extra_cell = 0
 	move_delay = 2
-	if( istype(equipment_system.thruster_system, /obj/item/device/spacepod_equipment/thruster/vtec) )
+	if( istype(equipment_system.thruster_system, /obj/item/device/spacepod_equipment/thruster) )
 		move_delay = equipment_system.thruster_system.delay
 		extra_cell += equipment_system.thruster_system.power_usage
 	if(cell && cell.charge >= 1 && obj_integrity > 0 && empcounter == 0)

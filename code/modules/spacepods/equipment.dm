@@ -297,8 +297,10 @@
 		..()
 
 /obj/item/device/spacepod_equipment/thruster
+	name = "Pod Thruster"
+	desc = "You shouldn't have this."
 	var/delay = 2
-	var/power_usage = 1
+	var/power_usage = 0
 
 /obj/item/device/spacepod_equipment/thruster/vtec
 	name = "vtec thruster upgrade"
