@@ -2094,28 +2094,20 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gK" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gL" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gM" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gN" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gO" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gP" = (
 /obj/structure/chair,
@@ -2125,22 +2117,16 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gR" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/wwrefine)
 "gT" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc2"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gU" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gV" = (
 /obj/effect/landmark/awaystart,
