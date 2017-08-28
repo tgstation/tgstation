@@ -687,9 +687,6 @@
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
 			if(stat == CONSCIOUS)
-				stat = SOFT_CRIT
-				update_canmove()
-			if(health <= HEALTH_THRESHOLD_FULLCRIT && stat == SOFT_CRIT)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
 				update_canmove()
