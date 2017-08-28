@@ -711,17 +711,19 @@
 		var/needs_unconscious = IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_FULLCRIT
 		if((stat == CONSCIOUS || stat == SOFT_CRIT) && needs_unconscious)
 			stat = UNCONSCIOUS
-			blind_eyes(1)
 			update_canmove()
 		else if(!needs_unconscious)
 			if(health <= HEALTH_THRESHOLD_CRIT)
 				stat = SOFT_CRIT
 			else
 				stat = CONSCIOUS
-			adjust_blindness(-1)
 			update_canmove()
 		else if(health <= HEALTH_THRESHOLD_CRIT)
 			update_canmove()
+		if(stat == UNCONSCIOUS)
+			blind_eyes(1)
+		else
+			adjust_blindness(-1)
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()
