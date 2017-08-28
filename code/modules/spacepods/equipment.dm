@@ -296,9 +296,13 @@
 	else
 		..()
 
+/obj/item/device/spacepod_equipment/thruster
+	var/delay = 2
+
 /obj/item/device/spacepod_equipment/thruster/vtec
 	name = "vtec thruster upgrade"
 	w_class = WEIGHT_CLASS_BULKY
 	desc = "An upgrade to the thrusters in a spacepod, allowing it to move faster."
 	icon = 'goon/icons/pods/pod_parts.dmi'
 	icon_state = "pod_vtec"
+	delay = 1

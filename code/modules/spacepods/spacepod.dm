@@ -974,10 +974,9 @@
 	if(world.time < next_move)
 		return FALSE
 	var/moveship = 1
+	move_delay = 2
 	if( istype(equipment_system.thruster_system, /obj/item/device/spacepod_equipment/thruster/vtec) )
-		move_delay = 1.5
-	else
-		move_delay = 2
+		move_delay = equipment_system.thruster_system.delay
 	if(cell && cell.charge >= 1 && obj_integrity > 0 && empcounter == 0)
 		setDir(direction)
 		switch(direction)
@@ -998,6 +997,10 @@
 					inertia_dir = 0
 					moveship = 0
 		if(moveship)
+			var/datum/gas_mixture/current = loc.return_air()
+			if(current.return_pressure() > ONE_ATMOSPHERE * 0.5 && get_area(src) != /area/engine/pod_construction) //so you can't podrace inside
+				move_delay = 6
+				cell.charge = max(0, cell.charge - 5)
 			Move(get_step(src, direction), direction)
 			if(equipment_system.cargo_system)
 				for(var/turf/T in locs)
