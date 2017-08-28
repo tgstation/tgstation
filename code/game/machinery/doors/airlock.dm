@@ -1607,27 +1607,27 @@
 
 /obj/machinery/door/airlock/AltClick(mob/living/user)
 	if(!istype(user))
-		user << "<span class='info'>Nice try, ghosts.</span>"
+		to_chat(user, "<span class='info'>Nice try, ghosts.</span>")
 		return
 
 	if (!user.canUseTopic(src))
-		user << "<span class='info'>You can't do this right now!</span>"
+		to_chat(user, "<span class='info'>You can't do this right now!</span>")
 		return
 
 	if(stat & (NOPOWER|BROKEN) || emagged)
-		user << "<span class='info'>The door isn't working!</span>"
+		to_chat(user, "<span class='info'>The door isn't working!</span>")
 		return
 
 	if(request_cooldown > world.time)
-		user << "<span class='info'>The airlocks spam filter is blocking your request. Please wait at least 10 seconds between requests.</span>"
+		to_chat(user, "<span class='info'>The airlocks spam filter is blocking your request. Please wait at least 10 seconds between requests.</span>")
 		return
 
 	for(var/mob/living/silicon/ai/AI in GLOB.living_mob_list)
 		if(!AI.client)
 			continue
-		AI << "<span class='info'>[user.name] is requesting you to open [src]<a href='?src=\ref[AI];remotedoor=\ref[src]'>(Open)</a></span>"
+		to_chat(AI, "<span class='info'>[user.name] is requesting you to open [src]<a href='?src=\ref[AI];remotedoor=\ref[src]'>(Open)</a></span>)
 	request_cooldown = world.time + 100
-	user << "<span class='info'>Request sent.</span>"
+	to_chat(user, "<span class='info'>Request sent.</span>")
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING

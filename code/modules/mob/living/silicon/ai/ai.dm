@@ -396,9 +396,9 @@
 		if(stat == CONSCIOUS)
 			if(A && near_camera(A))
 				A.AIShiftClick(src)
-				src << "<span class='notice'>[A] opened.</span>"
+				to_chat(src, "<span class='notice'>[A] opened.</span>")
 			else
-				src << "<span class='notice'>Unable to locate airlock. It may be out of camera range.</span>"
+				to_chat(src, "<span class='notice'>Unable to locate airlock. It may be out of camera range.</span>")
 
 	if(href_list["track"])
 		var/string = href_list["track"]
