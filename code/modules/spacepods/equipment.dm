@@ -298,6 +298,7 @@
 
 /obj/item/device/spacepod_equipment/thruster
 	var/delay = 2
+	var/power_usage = 1
 
 /obj/item/device/spacepod_equipment/thruster/vtec
 	name = "vtec thruster upgrade"
@@ -305,4 +306,5 @@
 	desc = "An upgrade to the thrusters in a spacepod, allowing it to move faster."
 	icon = 'goon/icons/pods/pod_parts.dmi'
 	icon_state = "pod_vtec"
-	delay = 1
+	delay = 1.25
+	power_usage = 1.5

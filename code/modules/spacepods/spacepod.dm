@@ -974,9 +974,11 @@
 	if(world.time < next_move)
 		return FALSE
 	var/moveship = 1
+	var/extra_cell = 0
 	move_delay = 2
 	if( istype(equipment_system.thruster_system, /obj/item/device/spacepod_equipment/thruster/vtec) )
 		move_delay = equipment_system.thruster_system.delay
+		extra_cell += equipment_system.thruster_system.power_usage
 	if(cell && cell.charge >= 1 && obj_integrity > 0 && empcounter == 0)
 		setDir(direction)
 		switch(direction)
@@ -998,9 +1000,9 @@
 					moveship = 0
 		if(moveship)
 			var/datum/gas_mixture/current = loc.return_air()
-			if(current.return_pressure() > ONE_ATMOSPHERE * 0.5 && get_area(src) != /area/engine/pod_construction) //so you can't podrace inside
+			if(current.return_pressure() > ONE_ATMOSPHERE * 0.5 && get_area(src) != /area/engine/pod_construction) //so you can't podrace inside, but you can still explore ruins or exploded parts of the station
 				move_delay = 6
-				cell.charge = max(0, cell.charge - 5)
+				extra_cell += 5
 			Move(get_step(src, direction), direction)
 			if(equipment_system.cargo_system)
 				for(var/turf/T in locs)
@@ -1019,7 +1021,7 @@
 		else
 			to_chat(user, "<span class='warning'>Unknown error has occurred, yell at the coders.</span>")
 		return FALSE
-	cell.charge = max(0, cell.charge - 1)
+	cell.charge = max(0, cell.charge - (1 + extra_cell))
 	next_move = world.time + move_delay
 
 /obj/effect/landmark/spacepod/random
