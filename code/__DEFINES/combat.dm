@@ -68,6 +68,9 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
+//slowdown when in softcrit
+#define SOFTCRIT_SLOWDOWN 3
+
 //Attack types for checking shields/hit reactions
 #define MELEE_ATTACK 1
 #define UNARMED_ATTACK 2
