@@ -1,0 +1,6 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - balance: "You no longer take damage/are as heavily blinded in crit while above -30HP"
+  - balance: "Whispering in crit above -30HP will not cause you to succumb"
+  - balance: "You can now hear in crit above -30HP"
