@@ -72,8 +72,9 @@
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
 
-	//Logs all hrefs
-	GLOB.world_href_log << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	//Logs all hrefs, except chat pings
+	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
+		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -282,17 +283,6 @@ GLOBAL_LIST(external_rsc_urls)
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		player_age = 0
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
-		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
-			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
-			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
-			if(config.allow_panic_bunker_bounce && tdata != "redirect")
-				to_chat(src, "<span class='notice'>Sending you to [config.panic_server_name].</span>")
-				winset(src, null, "command=.options")
-				src << link("[config.panic_address]?redirect")
-			qdel(src)
-			return 0
-
 		if (config.notify_new_player_age >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (config.irc_first_connection_alert)
@@ -310,10 +300,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 	send_resources()
 
-	if(!void)
-		void = new()
-
-	screen += void
+	generate_clickcatcher()
+	apply_clickcatcher()
 
 	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
@@ -364,6 +352,8 @@ GLOBAL_LIST(external_rsc_urls)
 //////////////
 
 /client/Del()
+	if(credits)
+		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)
@@ -430,9 +420,21 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!query_client_in_db.Execute())
 		return
 	if(!query_client_in_db.NextRow())
+		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
+			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
+			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
+			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
+			var/list/connectiontopic_a = params2list(connectiontopic)
+			if(config.panic_address && !connectiontopic_a["redirect"])
+				to_chat(src, "<span class='notice'>Sending you to [config.panic_server_name ? config.panic_server_name : config.panic_address].</span>")
+				winset(src, null, "command=.options")
+				src << link("[config.panic_address]?redirect=1")
+			qdel(src)
+			return
+
 		new_player = 1
 		account_join_date = sanitizeSQL(findJoinDate())
-		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `lastseen`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
+		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
 		if(!query_add_player.Execute())
 			return
 		if(!account_join_date)
@@ -458,12 +460,12 @@ GLOBAL_LIST(external_rsc_urls)
 					if(query_datediff.NextRow())
 						account_age = text2num(query_datediff.item[1])
 	if(!new_player)
-		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
+		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = '[GLOB.round_id]', ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
 		if(!query_log_player.Execute())
 			return
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 	if(new_player)
 		player_age = -1
@@ -556,8 +558,8 @@ GLOBAL_LIST(external_rsc_urls)
 	log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
 	var/url = winget(src, null, "url")
 	//special javascript to make them reconnect under a new window.
-	src << browse("<a id='link' href='byond://[url]?token=[token]'>byond://[url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
-	src << browse("<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>", "window=browseroutput")
+	src << browse({"<a id='link' href="byond://[url]?token=[token]">byond://[url]?token=[token]</a><script type="text/javascript">document.getElementById("link").click();window.location="byond://winset?command=.quit"</script>"}, "border=0;titlebar=0;size=1x1;window=redirect")
+	to_chat(src, {"<a href="byond://[url]?token=[token]">You will be automatically taken to the game, if not, click here to be taken manually</a>"})
 
 /client/proc/note_randomizer_user()
 	var/const/adminckey = "CID-Error"
@@ -627,7 +629,7 @@ GLOBAL_LIST(external_rsc_urls)
 		)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, SSassets.cache, register_asset = FALSE)
+		getFilesSlow(src, SSassets.preload, register_asset = FALSE)
 
 
 //Hook, override it to run code when dir changes
@@ -650,6 +652,16 @@ GLOBAL_LIST(external_rsc_urls)
 		CRASH("change_view called without argument.")
 
 	view = new_size
+	apply_clickcatcher()
+
+/client/proc/generate_clickcatcher()
+	if(!void)
+		void = new()
+		screen += void
+
+/client/proc/apply_clickcatcher()
+	generate_clickcatcher()
+	void.UpdateGreed(view,view)
 
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)

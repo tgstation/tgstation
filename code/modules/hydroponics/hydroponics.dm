@@ -2,10 +2,11 @@
 	name = "hydroponics tray"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	pixel_y = 8
 	unique_rename = 1
+	circuit = /obj/item/circuitboard/machine/hydroponics
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10		//The amount of nutrient in the tray (max 10)
@@ -37,25 +38,11 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 
-/obj/machinery/hydroponics/constructable/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/hydroponics(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/hydroponics
-	name = "Hydroponics Tray (Machine Board)"
-	build_path = /obj/machinery/hydroponics/constructable
-	origin_tech = "programming=1;biotech=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
-
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	var/tmp_capacity = 0
-	for (var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for (var/obj/item/stock_parts/matter_bin/M in component_parts)
 		tmp_capacity += M.rating
-	for (var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for (var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = tmp_capacity * 5 // Up to 30
@@ -81,7 +68,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/crowbar))
 		if(using_irrigation)
 			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
 		else if(default_deconstruction_crowbar(I, 1))
@@ -95,7 +82,7 @@
 
 	while(processing_atoms.len)
 		var/atom/a = processing_atoms[1]
-		for(var/step_dir in GLOB.cardinal)
+		for(var/step_dir in GLOB.cardinals)
 			var/obj/machinery/hydroponics/h = locate() in get_step(a, step_dir)
 			// Soil plots aren't dense
 			if(h && h.using_irrigation && h.density && !(h in connected) && !(h in processing_atoms))
@@ -110,9 +97,9 @@
 /obj/machinery/hydroponics/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
 		return ..()
-	if(istype(Proj ,/obj/item/projectile/energy/floramut))
+	if(istype(Proj , /obj/item/projectile/energy/floramut))
 		mutate()
-	else if(istype(Proj ,/obj/item/projectile/energy/florayield))
+	else if(istype(Proj , /obj/item/projectile/energy/florayield))
 		return myseed.bullet_act(Proj)
 	else
 		return ..()
@@ -281,7 +268,7 @@
 
 /obj/machinery/hydroponics/proc/update_icon_hoses()
 	var/n = 0
-	for(var/Dir in GLOB.cardinal)
+	for(var/Dir in GLOB.cardinals)
 		var/obj/machinery/hydroponics/t = locate() in get_step(src,Dir)
 		if(t && t.using_irrigation && using_irrigation)
 			n += Dir
@@ -601,9 +588,10 @@
 
 	// why, just why
 	if(S.has_reagent("napalm", 1))
-		adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
-		adjustToxic(round(S.get_reagent_amount("napalm") * 7))
-		adjustWeeds(-rand(5,9))
+		if(!(myseed.resistance_flags & FIRE_PROOF))
+			adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
+			adjustToxic(round(S.get_reagent_amount("napalm") * 7))
+			adjustWeeds(-rand(5,9))
 
 	//Weed Spray
 	if(S.has_reagent("weedkiller", 1))
@@ -688,11 +676,11 @@
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
-	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
-		var/obj/item/weapon/reagent_containers/reagent_source = O
+	if(istype(O, /obj/item/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
+		var/obj/item/reagent_containers/reagent_source = O
 
-		if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
-			var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
+		if(istype(reagent_source, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/syringe/syr = reagent_source
 			if(syr.mode != 1)
 				to_chat(user, "<span class='warning'>You can't get any extract out of this plant.</span>"		)
 				return
@@ -706,15 +694,15 @@
 		var/visi_msg = ""
 		var/irrigate = 0	//How am I supposed to irrigate pill contents?
 
-		if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
+		if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
 			visi_msg="[user] composts [reagent_source], spreading it through [target]"
 		else
-			if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe/))
-				var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
+			if(istype(reagent_source, /obj/item/reagent_containers/syringe/))
+				var/obj/item/reagent_containers/syringe/syr = reagent_source
 				visi_msg="[user] injects [target] with [syr]"
 				if(syr.reagents.total_volume <= syr.amount_per_transfer_from_this)
 					syr.mode = 0
-			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray/))
+			else if(istype(reagent_source, /obj/item/reagent_containers/spray/))
 				visi_msg="[user] sprays [target] with [reagent_source]"
 				playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 				irrigate = 1
@@ -722,7 +710,7 @@
 				visi_msg="[user] uses [reagent_source] on [target]"
 				irrigate = 1
 			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
-			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
+			if(istype(reagent_source, /obj/item/reagent_containers/glass/))
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
 		if(irrigate && reagent_source.amount_per_transfer_from_this > 30 && reagent_source.reagents.total_volume >= 30 && using_irrigation)
@@ -742,7 +730,7 @@
 			S.my_atom = H
 
 			reagent_source.reagents.trans_to(S,split)
-			if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
+			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
 
 			H.applyChemicals(S, user)
@@ -786,7 +774,7 @@
 		to_chat(user, "- Nutrition level: <span class='notice'>[nutrilevel] / [maxnutri]</span>")
 		to_chat(user, "")
 
-	else if(istype(O, /obj/item/weapon/cultivator))
+	else if(istype(O, /obj/item/cultivator))
 		if(weedlevel > 0)
 			user.visible_message("[user] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
@@ -794,15 +782,15 @@
 		else
 			to_chat(user, "<span class='warning'>This plot is completely devoid of weeds! It doesn't need uprooting.</span>")
 
-	else if(istype(O, /obj/item/weapon/storage/bag/plants))
+	else if(istype(O, /obj/item/storage/bag/plants))
 		attack_hand(user)
-		var/obj/item/weapon/storage/bag/plants/S = O
-		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
+		var/obj/item/storage/bag/plants/S = O
+		for(var/obj/item/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
 			if(!S.can_be_inserted(G))
 				return
 			S.handle_item_insertion(G, 1)
 
-	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
+	else if(istype(O, /obj/item/wrench) && unwrenchable)
 		if(using_irrigation)
 			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
 			return
@@ -814,7 +802,7 @@
 			if (do_after(user, 20*O.toolspeed, target = src))
 				if(anchored)
 					return
-				anchored = 1
+				anchored = TRUE
 				user.visible_message("[user] wrenches [src] into place.", \
 									"<span class='notice'>You wrench [src] in place.</span>")
 		else if(anchored)
@@ -824,11 +812,11 @@
 			if (do_after(user, 20*O.toolspeed, target = src))
 				if(!anchored)
 					return
-				anchored = 0
+				anchored = FALSE
 				user.visible_message("[user] unwrenches [src].", \
 									"<span class='notice'>You unwrench [src].</span>")
 
-	else if(istype(O, /obj/item/weapon/wirecutters) && unwrenchable)
+	else if(istype(O, /obj/item/wirecutters) && unwrenchable)
 		using_irrigation = !using_irrigation
 		playsound(src, O.usesound, 50, 1)
 		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
@@ -836,7 +824,7 @@
 		for(var/obj/machinery/hydroponics/h in range(1,src))
 			h.update_icon()
 
-	else if(istype(O, /obj/item/weapon/shovel/spade) && unwrenchable)
+	else if(istype(O, /obj/item/shovel/spade))
 		if(!myseed && !weedlevel)
 			to_chat(user, "<span class='warning'>[src] doesn't have any plants or weeds!</span>")
 			return
@@ -876,7 +864,7 @@
 /obj/machinery/hydroponics/proc/update_tray(mob/user = usr)
 	harvest = 0
 	lastproduce = age
-	if(istype(myseed,/obj/item/seeds/replicapod))
+	if(istype(myseed, /obj/item/seeds/replicapod))
 		to_chat(user, "<span class='notice'>You harvest from the [myseed.plantname].</span>")
 	else if(myseed.getYield() <= 0)
 		to_chat(user, "<span class='warning'>You fail to harvest anything useful!</span>")
@@ -927,8 +915,8 @@
 	name = "soil"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
-	density = 0
-	use_power = 0
+	density = FALSE
+	use_power = NO_POWER_USE
 	unwrenchable = 0
 
 /obj/machinery/hydroponics/soil/update_icon_hoses()
@@ -938,7 +926,7 @@
 	return // Has no lights
 
 /obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/shovel) && !istype(O, /obj/item/weapon/shovel/spade)) //Doesn't include spades because of uprooting plants
+	if(istype(O, /obj/item/shovel) && !istype(O, /obj/item/shovel/spade)) //Doesn't include spades because of uprooting plants
 		to_chat(user, "<span class='notice'>You clear up [src]!</span>")
 		qdel(src)
 	else

@@ -9,19 +9,20 @@
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
 	var/obj/machinery/power/master = null
-	anchored = 1
+	anchored = TRUE
 	layer = WIRE_TERMINAL_LAYER //a bit above wires
 
 
-/obj/machinery/power/terminal/New()
-	..()
-	var/turf/T = src.loc
-	if(level==1) hide(T.intact)
-	return
+/obj/machinery/power/terminal/Initialize()
+	. = ..()
+	var/turf/T = get_turf(src)
+	if(level == 1)
+		hide(T.intact)
 
 /obj/machinery/power/terminal/Destroy()
 	if(master)
 		master.disconnect_terminal()
+		master = null
 	return ..()
 
 /obj/machinery/power/terminal/hide(i)
@@ -70,7 +71,7 @@
 
 
 /obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(istype(W, /obj/item/wirecutters))
 		dismantle(user, W)
 	else
 		return ..()

@@ -20,7 +20,7 @@
 	A non null 'fixed_underlay' list var will skip copying the previous turf appearance and always use the list. If the list is
 	not set properly, the underlay will default to regular floor plating.
 
-	To see an example of a diagonal wall, see '/turf/closed/wall/shuttle' and its subtypes.
+	To see an example of a diagonal wall, see '/turf/closed/wall/mineral/titanium' and its subtypes.
 */
 
 //Redefinitions of the diagonal directions so they can be stored in one var without conflicts
@@ -51,7 +51,7 @@
 /atom/var/bottom_left_corner
 /atom/var/bottom_right_corner
 /atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
-/atom/movable/var/can_be_unanchored = 0
+/atom/movable/var/can_be_unanchored = FALSE
 /turf/var/list/fixed_underlay = null
 
 /proc/calculate_adjacencies(atom/A)
@@ -61,12 +61,12 @@
 	var/adjacencies = 0
 
 	var/atom/movable/AM
-	if(istype(A, /atom/movable))
+	if(ismovableatom(A))
 		AM = A
 		if(AM.can_be_unanchored && !AM.anchored)
 			return 0
 
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		AM = find_type_in_direction(A, direction)
 		if(AM == NULLTURF_BORDER)
 			if((A.smooth & SMOOTH_BORDER))

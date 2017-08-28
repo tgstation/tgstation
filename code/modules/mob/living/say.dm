@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Faction
 	"t" = "Syndicate",
-	"y" = "Centcom",
+	"y" = "CentCom",
 
 	// Species
 	"b" = "binary",
@@ -37,36 +37,36 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//kinda localization -- rastaf0
 	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	// Location
-	"ê" = "right hand",
-	"ä" = "left hand",
-	"ø" = "intercom",
+	"Ãª" = "right hand",
+	"Ã¤" = "left hand",
+	"Ã¸" = "intercom",
 
 	// Department
-	"ð" = "department",
-	"ñ" = "Command",
-	"ò" = "Science",
-	"ü" = "Medical",
-	"ó" = "Engineering",
-	"û" = "Security",
-	"ã" = "Supply",
-	"ì" = "Service",
+	"Ã°" = "department",
+	"Ã±" = "Command",
+	"Ã²" = "Science",
+	"Ã¼" = "Medical",
+	"Ã³" = "Engineering",
+	"Ã»" = "Security",
+	"Ã£" = "Supply",
+	"Ã¬" = "Service",
 
 	// Faction
-	"å" = "Syndicate",
-	"í" = "Centcom",
+	"Ã¥" = "Syndicate",
+	"Ã­" = "CentCom",
 
 	// Species
-	"è" = "binary",
-	"ï" = "changeling",
-	"ô" = "alientalk",
+	"Ã¨" = "binary",
+	"Ã¯" = "changeling",
+	"Ã´" = "alientalk",
 
 	// Admin
-	"ç" = "admin",
-	"â" = "deadmin",
+	"Ã§" = "admin",
+	"Ã¢" = "deadmin",
 
 	// Misc
-	"ù" = "AI Private",
-	"÷" = "cords"
+	"Ã¹" = "AI Private",
+	"Ã·" = "cords"
 ))
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
@@ -152,17 +152,18 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(message_mode == MODE_WHISPER)
 		message_range = 1
 		spans |= SPAN_ITALICS
-		log_whisper("[src.name]/[src.key] : [message]")
+		log_talk(src,"[key_name(src)] : [message]",LOGWHISPER)
 		if(in_full_critical)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
 			var/message_len = length(message)
 			message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 			message = Ellipsis(message, 10, 1)
+			last_words = message
 			message_mode = MODE_WHISPER_CRIT
 			succumbed = TRUE
 	else
-		log_say("[name]/[key] : [message]")
+		log_talk(src,"[name]/[key] : [message]",LOGSAY)
 
 	message = treat_message(message)
 	if(!message)
@@ -337,7 +338,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
+				log_talk(src,"[mind.changeling.changelingID]/[key] : [message]",LOGSAY)
 				for(var/_M in GLOB.mob_list)
 					var/mob/M = _M
 					if(M in GLOB.dead_mob_list)

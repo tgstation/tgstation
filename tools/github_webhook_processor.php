@@ -26,6 +26,17 @@ $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 //Api key for pushing changelogs.
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
 
+//anti-spam measures. Don't announce PRs in game to people unless they've gotten a pr merged before
+//options are:
+//	"repo" - user has to have a pr merged in the repo before.
+//	"org" - user has to have a pr merged in any repo in the organization (for repos owned directly by users, this applies to any repo directly owned by the same user.)
+//	"disable" - disables.
+//defaults to org if left blank or given invalid values.
+$validation = "org";
+
+//how many merged prs must they have under the rules above to have their pr announced to the game servers.
+$validation_count = 1;
+
 //servers to announce PRs to.
 $servers = array();
 /*
@@ -38,6 +49,7 @@ $servers[1]['address'] = 'game.tgstation13.org';
 $servers[1]['port'] = '2337';
 $servers[1]['comskey'] = '89aj90cq2fm0amc90832mn9rm90';
 */
+
 
 //CONFIG END
 set_error_handler(function($severity, $message, $file, $line) {
@@ -106,27 +118,58 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 		die();
 }
 
-//rip bs-12
-function tag_pr($payload, $opened) {
+function apisend($url, $method = 'GET', $content = NULL) {
 	global $apiKey;
-
-	//We need to reget the pull_request part of the payload to actually see the mergeable field populated
-	//http://stackoverflow.com/questions/30619549/why-does-github-api-return-an-unknown-mergeable-state-in-a-pull-request
+	if (is_array($content))
+		$content = json_encode($content);
+	
 	$scontext = array('http' => array(
-		'method'	=> 'GET',
+		'method'	=> $method,
 		'header'	=>
 			"Content-type: application/json\r\n".
 			'Authorization: token ' . $apiKey,
 		'ignore_errors' => true,
 		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
 	));
-
+	if ($content)
+		$scontext['http']['content'] = $content;
+	
+	return file_get_contents($url, false, stream_context_create($scontext));
+}
+function validate_user($payload) {
+	global $validation, $validation_count;
+	$query = array();
+	if (empty($validation))
+		$validation = 'org';
+	switch (strtolower($validation)) {
+		case 'disable':
+			return TRUE;
+		case 'repo':
+			$query['repo'] = $payload['pull_request']['base']['repo']['full_name'];
+			break;
+		default:
+			$query['user'] = $payload['pull_request']['base']['repo']['owner']['login'];
+			break;
+	}
+	$query['author'] = $payload['pull_request']['user']['login'];
+	$query['is'] = 'merged';
+	$querystring = '';
+	foreach($query as $key => $value)
+		$querystring .= ($querystring == '' ? '' : '+') . urlencode($key) . ':' . urlencode($value);
+	$res = apisend('https://api.github.com/search/issues?q='.$querystring);
+	$res = json_decode($res, TRUE);
+	return $res['total_count'] >= (int)$validation_count;
+	
+}
+//rip bs-12
+function tag_pr($payload, $opened) {
+	//get the mergeable state
 	$url = $payload['pull_request']['url'];
-	$payload['pull_request'] = json_decode(file_get_contents($url, false, stream_context_create($scontext)), true);
+	$payload['pull_request'] = json_decode(apisend($url), TRUE);
 	if($payload['pull_request']['mergeable'] == null) {
 		//STILL not ready. Give it a bit, then try one more time
 		sleep(10);
-		$payload['pull_request'] = json_decode(file_get_contents($url, false, stream_context_create($scontext)), true);
+		$payload['pull_request'] = json_decode(apisend($url), TRUE);
 	}
 
 	$tags = array();
@@ -136,6 +179,9 @@ function tag_pr($payload, $opened) {
 
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
+		
+		if(strpos(strtolower($title), 'revert') !== FALSE || strpos($lowertitle, 'removes') !== FALSE)
+			$tags[] = 'Revert/Removal';
 	}
 
 	$remove = array();
@@ -146,27 +192,27 @@ function tag_pr($payload, $opened) {
 	else if ($mergable === FALSE)
 		$tags[] = 'Merge Conflict';
 
-	if(has_tree_been_edited($payload, '_maps'))
-		$tags[] = 'Map Edit';
-	else
-		$remove[] = 'Map Edit';
-
-	if(has_tree_been_edited($payload, 'tools'))
-		$tags[] = 'Tools';
-	else
-		$remove[] = 'Tools';
+	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL');
+	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound');
+	foreach($treetags as $tree => $tag)
+		if(has_tree_been_edited($payload, $tree))
+			$tags[] = $tag;
+		else
+			$remove[] = $tag;
+	foreach($addonlytags as $tree => $tag)
+		if(has_tree_been_edited($payload, $tree))
+			$tags[] = $tag;
 
 	//only maintners should be able to remove these
-	if(strpos($title, '[DNM]') !== FALSE)
+	if(strpos(strtolower($title), '[dnm]') !== FALSE)
 		$tags[] = 'Do Not Merge';
 
-	if(strpos($title, '[WIP]') !== FALSE)
+	if(strpos(strtolower($title), '[wip]') !== FALSE)
 		$tags[] = 'Work In Progress';
 
 	$url = $payload['pull_request']['base']['repo']['url'] . '/issues/' . $payload['pull_request']['number'] . '/labels';
 
-	$existing_labels = file_get_contents($url, false, stream_context_create($scontext));
-	$existing_labels = json_decode($existing_labels, true);
+	$existing_labels = json_decode(apisend($url), true);
 
 	$existing = array();
 	foreach($existing_labels as $label)
@@ -179,14 +225,13 @@ function tag_pr($payload, $opened) {
 	foreach($tags as $t)
 		$final[] = $t;
 
-	$scontext['http']['method'] = 'PUT';
-	$scontext['http']['content'] = json_encode($final);
 
-	echo file_get_contents($url, false, stream_context_create($scontext));
+	echo apisend($url, 'PUT', $final);
 }
 
 function handle_pr($payload) {
 	$action = 'opened';
+	$validated = validate_user($payload);
 	switch ($payload["action"]) {
 		case 'opened':
 			tag_pr($payload, true);
@@ -205,17 +250,22 @@ function handle_pr($payload) {
 			else {
 				$action = 'merged';
 				checkchangelog($payload, true, true);
+				$validated = TRUE; //pr merged events always get announced.
 			}
 			break;
 		default:
 			return;
 	} 
 	
-	if (strtolower(substr($payload['pull_request']['title'], 0, 3)) == '[s]') {
+	if (strpos(strtolower($payload['pull_request']['title']), '[s]') !== false) {
 		echo "PR Announcement Halted; Secret tag detected.\n";
 		return;
 	}
-	
+	if (!$validated) {
+		echo "PR Announcement Halted; User not validated.\n";
+		return;
+	}
+		
 	$msg = '['.$payload['pull_request']['base']['repo']['full_name'].'] Pull Request '.$action.' by '.htmlSpecialChars($payload['sender']['login']).': <a href="'.$payload['pull_request']['html_url'].'">'.htmlSpecialChars('#'.$payload['pull_request']['number'].' '.$payload['pull_request']['user']['login'].' - '.$payload['pull_request']['title']).'</a>';
 	sendtoallservers('?announce='.urlencode($msg), $payload);
 
@@ -231,7 +281,6 @@ function has_tree_been_edited($payload, $tree){
 }
 
 function checkchangelog($payload, $merge = false, $compile = true) {
-	global $apiKey;
 	if (!$merge)
 		return;
 	if (!isset($payload['pull_request']) || !isset($payload['pull_request']['body'])) {
@@ -408,17 +457,9 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 		'message' 	=> 'Automatic changelog generation for PR #'.$payload['pull_request']['number'].' [ci skip]',
 		'content' 	=> base64_encode($file)
 	);
-	$scontext = array('http' => array(
-        'method'	=> 'PUT',
-        'header'	=>
-			"Content-type: application/json\r\n".
-			'Authorization: token ' . $apiKey,
-        'content'	=> json_encode($content),
-		'ignore_errors' => true,
-		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
-    ));
+
 	$filename = '/html/changelogs/AutoChangeLog-pr-'.$payload['pull_request']['number'].'.yml';
-	echo file_get_contents($payload['pull_request']['base']['repo']['url'].'/contents'.$filename, false, stream_context_create($scontext));
+	echo apisend($payload['pull_request']['base']['repo']['url'].'/contents'.$filename, 'PUT', $content);
 }
 
 function sendtoallservers($str, $payload = null) {

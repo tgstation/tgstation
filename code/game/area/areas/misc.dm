@@ -4,7 +4,7 @@
 	name = "Hell Lobby"
 	//icon = "ICON FILENAME"
 	//icon_state = "NAME OF ICON"
-	requires_power = 0
+	requires_power = FALSE
 
 /area/hell/trial1
 	name = "Hell Trial1"
@@ -22,22 +22,6 @@
 
 //Misc
 
-/area/wreck/ai
-	name = "AI Chamber"
-	icon_state = "ai"
-
-/area/wreck/main
-	name = "Wreck"
-	icon_state = "storage"
-
-/area/wreck/engineering
-	name = "Power Room"
-	icon_state = "engine"
-
-/area/wreck/bridge
-	name = "Bridge"
-	icon_state = "bridge"
-
 /area/generic
 	name = "Unknown"
 	icon_state = "storage"
@@ -52,7 +36,7 @@
 /area/prison/arrival_airlock
 	name = "Prison Station Airlock"
 	icon_state = "green"
-	requires_power = 0
+	requires_power = FALSE
 
 /area/prison/control
 	name = "Prison Security Checkpoint"
@@ -102,7 +86,7 @@
 /area/prison/solar
 	name = "Prison Solar Array"
 	icon_state = "storage"
-	requires_power = 0
+	requires_power = FALSE
 
 /area/prison/podbay
 	name = "Prison Podbay"

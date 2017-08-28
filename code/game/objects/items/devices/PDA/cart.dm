@@ -15,12 +15,14 @@
 #define CART_DRONEPHONE	(1<<14)
 
 
-/obj/item/weapon/cartridge
+/obj/item/cartridge
 	name = "generic cartridge"
 	desc = "A data cartridge for portable microcomputers."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 
 	var/obj/item/radio/integrated/radio = null
@@ -33,7 +35,7 @@
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
-	var/mode = null
+	var/obj/item/device/pda/host_pda = null
 	var/menu
 	var/datum/data/record/active1 = null //General
 	var/datum/data/record/active2 = null //Medical
@@ -48,137 +50,143 @@
 	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
 
-/obj/item/weapon/cartridge/engineering
+/obj/item/cartridge/Initialize()
+	. = ..()
+	var/obj/item/device/pda/pda = loc
+	if(istype(pda))
+		host_pda = pda
+
+/obj/item/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
 	access = CART_ENGINE | CART_DRONEPHONE
 	bot_access_flags = FLOOR_BOT
 
-/obj/item/weapon/cartridge/atmos
+/obj/item/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
 	access = CART_ATMOS | CART_DRONEPHONE
 	bot_access_flags = FLOOR_BOT
 
-/obj/item/weapon/cartridge/medical
+/obj/item/cartridge/medical
 	name = "\improper Med-U cartridge"
 	icon_state = "cart-m"
 	access = CART_MEDICAL
 	bot_access_flags = MED_BOT
 
-/obj/item/weapon/cartridge/chemistry
+/obj/item/cartridge/chemistry
 	name = "\improper ChemWhiz cartridge"
 	icon_state = "cart-chem"
 	access = CART_REAGENT_SCANNER
 	bot_access_flags = MED_BOT
 
-/obj/item/weapon/cartridge/security
+/obj/item/cartridge/security
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
 	access = CART_SECURITY
 	bot_access_flags = SEC_BOT
 
-/obj/item/weapon/cartridge/detective
+/obj/item/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
 	icon_state = "cart-s"
 	access = CART_SECURITY | CART_MEDICAL | CART_MANIFEST
 	bot_access_flags = SEC_BOT
 
-/obj/item/weapon/cartridge/janitor
+/obj/item/cartridge/janitor
 	name = "\improper CustodiPRO cartridge"
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
 	access = CART_JANITOR | CART_DRONEPHONE
 	bot_access_flags = CLEAN_BOT
 
-/obj/item/weapon/cartridge/lawyer
+/obj/item/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
 	icon_state = "cart-s"
 	access = CART_SECURITY
 	spam_enabled = 1
 
-/obj/item/weapon/cartridge/curator
+/obj/item/cartridge/curator
 	name = "\improper Lib-Tweet cartridge"
 	icon_state = "cart-s"
 	access = CART_NEWSCASTER
 
 /*
-/obj/item/weapon/cartridge/botanist
+/obj/item/cartridge/botanist
 	name = "\improper Green Thumb v4.20 cartridge"
 	icon_state = "cart-b"
 	access_flora = 1
 */
 
-/obj/item/weapon/cartridge/roboticist
+/obj/item/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty triple-bot interlink!"
 	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
 	access = CART_DRONEPHONE
 
-/obj/item/weapon/cartridge/signal
+/obj/item/cartridge/signal
 	name = "generic signaler cartridge"
 	desc = "A data cartridge with an integrated radio signaler module."
 
-/obj/item/weapon/cartridge/signal/toxins
+/obj/item/cartridge/signal/toxins
 	name = "\improper Signal Ace 2 cartridge"
 	desc = "Complete with integrated radio signaler!"
 	icon_state = "cart-tox"
 	access = CART_REAGENT_SCANNER | CART_ATMOS
 
-/obj/item/weapon/cartridge/signal/New()
+/obj/item/cartridge/signal/Initialize()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
 
 
-/obj/item/weapon/cartridge/quartermaster
+/obj/item/cartridge/quartermaster
 	name = "space parts & space vendors cartridge"
 	desc = "Perfect for the Quartermaster on the go!"
 	icon_state = "cart-q"
 	access = CART_QUARTERMASTER
 	bot_access_flags = MULE_BOT
 
-/obj/item/weapon/cartridge/head
+/obj/item/cartridge/head
 	name = "\improper Easy-Record DELUXE cartridge"
 	icon_state = "cart-h"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY
 
-/obj/item/weapon/cartridge/hop
+/obj/item/cartridge/hop
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_JANITOR | CART_SECURITY | CART_NEWSCASTER | CART_QUARTERMASTER | CART_DRONEPHONE
 	bot_access_flags = MULE_BOT | CLEAN_BOT
 
-/obj/item/weapon/cartridge/hos
+/obj/item/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
 	icon_state = "cart-hos"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_SECURITY
 	bot_access_flags = SEC_BOT
 
 
-/obj/item/weapon/cartridge/ce
+/obj/item/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE
 	bot_access_flags = FLOOR_BOT
 
-/obj/item/weapon/cartridge/cmo
+/obj/item/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
 	icon_state = "cart-cmo"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_MEDICAL
 	bot_access_flags = MED_BOT
 
-/obj/item/weapon/cartridge/rd
+/obj/item/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS | CART_DRONEPHONE
 	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
 
-/obj/item/weapon/cartridge/rd/New()
+/obj/item/cartridge/rd/Initialize()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
-/obj/item/weapon/cartridge/captain
+/obj/item/cartridge/captain
 	name = "\improper Value-PAK cartridge"
 	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime and Clown)
 	icon_state = "cart-c"
@@ -186,31 +194,11 @@
 	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
 	spam_enabled = 1
 
-/obj/item/weapon/cartridge/captain/New()
+/obj/item/cartridge/captain/New()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
-/obj/item/weapon/cartridge/proc/unlock()
-	if (!istype(loc, /obj/item/device/pda))
-		return
-
-	generate_menu()
-	print_to_host(menu)
-	return
-
-/obj/item/weapon/cartridge/proc/print_to_host(text)
-	if (!istype(loc, /obj/item/device/pda))
-		return
-	var/obj/item/device/pda/P = loc
-	P.cart = text
-
-	for (var/mob/M in viewers(1, loc.loc))
-		if (M.client && M.machine == loc)
-			P.attack_self(M)
-
-	return
-
-/obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
+/obj/item/cartridge/proc/post_status(command, data1, data2)
 
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
 
@@ -231,8 +219,10 @@
 	frequency.post_signal(src, status_signal)
 
 
-/obj/item/weapon/cartridge/proc/generate_menu(mob/user)
-	switch(mode)
+/obj/item/cartridge/proc/generate_menu(mob/user)
+	if(!host_pda)
+		return
+	switch(host_pda.mode)
 		if(40) //signaller
 			var/obj/item/radio/integrated/signal/S = radio
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
@@ -450,12 +440,12 @@ Code:
 					if(SSshuttle.supply.z != ZLEVEL_STATION)
 						menu += "station"
 					else
-						menu += "centcomm"
+						menu += "centcom"
 					menu += " ([SSshuttle.supply.timeLeft(600)] Mins)"
 				else
 					menu += "At "
 					if(SSshuttle.supply.z != ZLEVEL_STATION)
-						menu += "centcomm"
+						menu += "centcom"
 					else
 						menu += "station"
 			menu += "<BR>Current approved orders: <BR><ol>"
@@ -480,7 +470,7 @@ Code:
 				menu += "<h4>Located Mops:</h4>"
 
 				var/ldat
-				for (var/obj/item/weapon/mop/M in world)
+				for (var/obj/item/mop/M in world)
 					var/turf/ml = get_turf(M)
 
 					if(ml)
@@ -557,8 +547,12 @@ Code:
 		if (54) // Beepsky, Medibot, Floorbot, and Cleanbot access
 			menu = "<h4><img src=pda_medbot.png> Bots Interlink</h4>"
 			bot_control()
+		if (99) //Newscaster message permission error
+			menu = "<h5> ERROR : NOT AUTHORIZED [host_pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
 
-/obj/item/weapon/cartridge/Topic(href, href_list)
+	return menu
+
+/obj/item/cartridge/Topic(href, href_list)
 	..()
 
 	if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
@@ -566,15 +560,12 @@ Code:
 		usr << browse(null, "window=pda")
 		return
 
-	var/obj/item/device/pda/pda = loc
-
 	switch(href_list["choice"])
 		if("Medical Records")
 			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
 				active2 = find_record("id", href_list["target"], GLOB.data_core.medical)
-			pda.mode = 441
-			mode = 441
+			host_pda.mode = 441
 			if(!active2)
 				active1 = null
 
@@ -582,8 +573,7 @@ Code:
 			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
 				active3 = find_record("id", href_list["target"], GLOB.data_core.security)
-			pda.mode = 451
-			mode = 451
+			host_pda.mode = 451
 			if(!active3)
 				active1 = null
 
@@ -622,34 +612,32 @@ Code:
 		if("Power Select")
 			var/pnum = text2num(href_list["target"])
 			powmonitor = powermonitors[pnum]
-			pda.mode = 433
-			mode = 433
+			host_pda.mode = 433
 
 		if("Supply Orders")
-			pda.mode =47
-			mode = 47
+			host_pda.mode =47
 
 		if("Newscaster Access")
-			mode = 53
+			host_pda.mode = 53
 
 		if("Newscaster Message")
-			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
-			var/message = pda.msg_input()
+			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
+			var/message = host_pda.msg_input()
 			var/datum/newscaster/feed_channel/current
 			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
-			if(current.locked && current.author != pda_owner_name)
-				pda.cart += "<h5> ERROR : NOT AUTHORIZED [pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
-				pda.Topic(null,list("choice"="Refresh"))
+			if(current.locked && current.author != host_pda_owner_name)
+				host_pda.mode = 99
+				host_pda.Topic(null,list("choice"="Refresh"))
 				return
-			GLOB.news_network.SubmitArticle(message,pda.owner,current_channel)
-			pda.Topic(null,list("choice"=num2text(mode)))
+			GLOB.news_network.SubmitArticle(message,host_pda.owner,current_channel)
+			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
 			return
 
 		if("Newscaster Switch Channel")
-			current_channel = pda.msg_input()
-			pda.Topic(null,list("choice"=num2text(mode)))
+			current_channel = host_pda.msg_input()
+			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
 			return
 
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.
@@ -662,7 +650,7 @@ Code:
 			if("botlist")
 				active_bot = null
 			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
-				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= pda.GetAccess())
+				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= host_pda.GetAccess())
 			else //Forward all other bot commands to the bot itself!
 				active_bot.bot_control(command= href_list["op"], user= usr)
 
@@ -670,12 +658,12 @@ Code:
 
 		active_bot.bot_control(command= href_list["mule"], user= usr, pda= 1)
 
-	generate_menu(usr)
-	print_to_host(menu)
+	if(!host_pda)
+		return
+	host_pda.attack_self(usr)
 
 
-
-/obj/item/weapon/cartridge/proc/bot_control()
+/obj/item/cartridge/proc/bot_control()
 
 
 	var/mob/living/simple_animal/bot/Bot
@@ -738,12 +726,12 @@ Code:
 	return menu
 
 //If the cartridge adds a special line to the top of the messaging app
-/obj/item/weapon/cartridge/proc/message_header()
+/obj/item/cartridge/proc/message_header()
 	return ""
 
 //If the cartridge adds something to each potetial messaging target
-/obj/item/weapon/cartridge/proc/message_special(obj/item/device/pda/target)
+/obj/item/cartridge/proc/message_special(obj/item/device/pda/target)
 	return ""
 
 //This is called for special abilities of cartridges
-/obj/item/weapon/cartridge/proc/special(mov/living/user, list/params)
+/obj/item/cartridge/proc/special(mov/living/user, list/params)

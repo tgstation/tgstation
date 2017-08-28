@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 2, 4, 20), \
 	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("Breakdown into sand", /obj/item/weapon/ore/glass, 1, one_per_turf = 0, on_floor = 1) \
+	new/datum/stack_recipe("Breakdown into sand", /obj/item/ore/glass, 1, one_per_turf = 0, on_floor = 1) \
 	))
 
 /obj/item/stack/sheet/mineral/sandstone
@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/sandbags
 	name = "sandbags"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "sandbags"
 	singular_name = "sandbag"
 	layer = LOW_ITEM_LAYER
@@ -78,15 +78,15 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	recipes = GLOB.sandbag_recipes
 	. = ..()
 
-/obj/item/weapon/emptysandbag
+/obj/item/emptysandbag
 	name = "empty sandbag"
 	desc = "A bag to be filled with sand."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "sandbag"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/ore/glass))
+/obj/item/emptysandbag/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/ore/glass))
 		to_chat(user, "<span class='notice'>You fill the sandbag.</span>")
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
 		qdel(src)
@@ -152,7 +152,6 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	origin_tech = "plasmatech=2;materials=2"
 	sheettype = "plasma"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 100
 	max_integrity = 100
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 
@@ -166,7 +165,7 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	recipes = GLOB.plasma_recipes
 	. = ..()
 
-/obj/item/stack/sheet/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/stack/sheet/mineral/plasma/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
 		message_admins("Plasma sheets ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
@@ -313,7 +312,7 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	origin_tech = "materials=1"
 
 GLOBAL_LIST_INIT(snow_recipes, list ( \
-	new/datum/stack_recipe("Snow Wall",/turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Snow Wall", /turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Snowball", /obj/item/toy/snowball, 1), \
 	))

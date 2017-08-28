@@ -80,31 +80,31 @@
 	staticOverlays["animal"] = staticOverlay
 
 
-//Generic Bump(). Override MobBump() and ObjBump() instead of this.
-/mob/living/Bump(atom/A, yes)
+//Generic Collide(). Override MobCollide() and ObjCollide() instead of this.
+/mob/living/Collide(atom/A)
 	if(..()) //we are thrown onto something
 		return
-	if (buckled || !yes || now_pushing)
+	if (buckled || now_pushing)
 		return
 	if(ismob(A))
 		var/mob/M = A
-		if(MobBump(M))
+		if(MobCollide(M))
 			return
 	if(isobj(A))
 		var/obj/O = A
-		if(ObjBump(O))
+		if(ObjCollide(O))
 			return
-	if(istype(A, /atom/movable))
+	if(ismovableatom(A))
 		var/atom/movable/AM = A
 		if(PushAM(AM))
 			return
 
-/mob/living/Bumped(atom/movable/AM)
+/mob/living/CollidedWith(atom/movable/AM)
 	..()
 	last_bumped = world.time
 
 //Called when we bump onto a mob
-/mob/living/proc/MobBump(mob/M)
+/mob/living/proc/MobCollide(mob/M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
@@ -135,7 +135,7 @@
 		//the puller can always swap with its victim if on grab intent
 		if(M.pulledby == src && a_intent == INTENT_GRAB)
 			mob_swap = 1
-		//restrained people act if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+		//restrained people act if they were on 'help' intent to prevent a person being pulled from being separated from their puller
 		else if((M.restrained() || M.a_intent == INTENT_HELP) && (restrained() || a_intent == INTENT_HELP))
 			mob_swap = 1
 		if(mob_swap)
@@ -174,7 +174,7 @@
 				return 1
 
 //Called when we bump onto an obj
-/mob/living/proc/ObjBump(obj/O)
+/mob/living/proc/ObjCollide(obj/O)
 	return
 
 //Called when we want to push an atom/movable
@@ -237,7 +237,7 @@
 		death()
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat || unconscious || stun || knockdown || (!ignore_restraints && restrained(ignore_grab)))
+	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_restraints && restrained(ignore_grab)))
 		return 1
 
 /mob/living/proc/InCritical()
@@ -284,7 +284,7 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(sleeping)
+	if(IsSleeping())
 		to_chat(src, "<span class='notice'>You are already sleeping.</span>")
 		return
 	else
@@ -303,7 +303,7 @@
 	update_canmove()
 
 //Recursive function to find everything a mob is holding.
-/mob/living/get_contents(obj/item/weapon/storage/Storage = null)
+/mob/living/get_contents(obj/item/storage/Storage = null)
 	var/list/L = list()
 
 	if(Storage) //If it called itself
@@ -311,11 +311,11 @@
 		return L
 	else
 		L += src.contents
-		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
+		for(var/obj/item/storage/S in src.contents)	//Check for storage items
 			L += get_contents(S)
 		for(var/obj/item/clothing/under/U in src.contents)	//Check for jumpsuit accessories
 			L += U.contents
-		for(var/obj/item/weapon/folder/F in src.contents)	//Check for folders
+		for(var/obj/item/folder/F in src.contents)	//Check for folders
 			L += F.contents
 		return L
 
@@ -360,8 +360,13 @@
 		updatehealth() //then we check if the mob should wake up.
 		update_canmove()
 		update_sight()
+		clear_alert("not_enough_oxy")
 		reload_fullscreen()
 		. = 1
+		if(mind)
+			for(var/S in mind.spell_list)
+				var/obj/effect/proc_holder/spell/spell = S
+				spell.updateButtonIcon()
 
 //proc used to completely heal a mob.
 /mob/living/proc/fully_heal(admin_revive = 0)
@@ -371,10 +376,11 @@
 	setCloneLoss(0, 0)
 	setBrainLoss(0)
 	setStaminaLoss(0, 0)
-	SetUnconscious(0, 0)
-	SetStun(0, 0)
-	SetKnockdown(0, 0)
-	SetSleeping(0, 0)
+	SetUnconscious(0, FALSE)
+	set_disgust(0)
+	SetStun(0, FALSE)
+	SetKnockdown(0, FALSE)
+	SetSleeping(0, FALSE)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
@@ -410,7 +416,7 @@
 		if(client)
 			to_chat(src, "[src]'s Metainfo:<br>[client.prefs.metadata]")
 		else
-			to_chat(src, "[src] does not have any stored infomation!")
+			to_chat(src, "[src] does not have any stored information!")
 	else
 		to_chat(src, "OOC Metadata is not supported by this server!")
 
@@ -488,7 +494,7 @@
 						newdir = NORTH
 					else if(newdir == 12) //E + W
 						newdir = EAST
-				if((newdir in GLOB.cardinal) && (prob(50)))
+				if((newdir in GLOB.cardinals) && (prob(50)))
 					newdir = turn(get_dir(T, src.loc), 180)
 				if(!blood_exists)
 					new /obj/effect/decal/cleanable/trail_holder(src.loc)
@@ -548,6 +554,7 @@
 	if(!restrained(ignore_grab = 1) && pulledby)
 		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
 		resist_grab()
+		add_logs(pulledby, src, "resisted grab")
 		return
 
 	//unbuckling yourself
@@ -582,6 +589,7 @@
 	if(pulledby.grab_state)
 		if(prob(30/pulledby.grab_state))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
+			add_logs(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
 			return 0
 		if(moving_resist && client) //we resisted by trying to move
@@ -630,7 +638,7 @@
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
-	if(what.flags & NODROP)
+	if(what.flags_1 & NODROP_1)
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
@@ -651,7 +659,7 @@
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
-	if(what && (what.flags & NODROP))
+	if(what && (what.flags_1 & NODROP_1))
 		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
 		return
 	if(what)
@@ -664,13 +672,13 @@
 		else
 			final_where = where
 
-		if(!what.mob_can_equip(who, src, final_where, TRUE))
+		if(!what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
 
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.equip_delay_other))
-			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
+			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
 					if(where_list)
 						if(!who.put_in_hand(what, where_list[2]))
@@ -749,7 +757,7 @@
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0
-	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcomm
+	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcom
 		return 0
 	if(T.z >= ZLEVEL_SPACEMAX)
 		return 0
@@ -790,11 +798,11 @@
 	else
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 	return
-/mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
+/mob/living/proc/can_use_guns(obj/item/G)
 	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/proc/update_stamina()
 	if(staminaloss)
@@ -891,7 +899,7 @@
 		ExtinguishMob()
 
 //Share fire evenly between the two mobs
-//Called in MobBump() and Crossed()
+//Called in MobCollide() and Crossed()
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return
@@ -934,3 +942,42 @@
 
 /mob/living/can_be_pulled()
 	return ..() && !(buckled && buckled.buckle_prevents_pull)
+
+//Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
+//Robots, animals and brains have their own version so don't worry about them
+/mob/living/proc/update_canmove()
+	var/ko = IsKnockdown() || IsUnconscious() || stat || (status_flags & FAKEDEATH)
+	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
+	var/buckle_lying = !(buckled && !buckled.buckle_lying)
+	var/has_legs = get_num_legs()
+	var/has_arms = get_num_arms()
+	var/ignore_legs = get_leg_ignore()
+	if(ko || resting || has_status_effect(STATUS_EFFECT_STUN) || chokehold)
+		drop_all_held_items()
+		unset_machine()
+		if(pulling)
+			stop_pulling()
+	else if(has_legs || ignore_legs)
+		lying = 0
+
+	if(buckled)
+		lying = 90*buckle_lying
+	else if(!lying)
+		if(resting)
+			fall()
+		else if(ko || (!has_legs && !ignore_legs) || chokehold)
+			fall(forced = 1)
+	canmove = !(ko || resting || has_status_effect(STATUS_EFFECT_STUN) || has_status_effect(/datum/status_effect/freon) || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	density = !lying
+	if(lying)
+		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
+			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
+	else
+		if(layer == LYING_MOB_LAYER)
+			layer = initial(layer)
+	update_transform()
+	if(!lying && lying_prev)
+		if(client)
+			client.move_delay = world.time + movement_delay()
+	lying_prev = lying
+	return canmove

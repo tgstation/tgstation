@@ -11,8 +11,7 @@
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)
-	for(var/infection in viruses)
-		qdel(infection)
+	QDEL_LIST(viruses)
 	for(var/cc in client_colours)
 		qdel(cc)
 	client_colours = null
@@ -246,7 +245,7 @@
 
 /mob/proc/reset_perspective(atom/A)
 	if(client)
-		if(istype(A, /atom/movable))
+		if(ismovableatom(A))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
@@ -327,6 +326,7 @@
 	if(AM.pulledby)
 		if(!supress_message)
 			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+		add_logs(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
 	pulling = AM
@@ -337,6 +337,7 @@
 
 	if(ismob(AM))
 		var/mob/M = AM
+		add_logs(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 		if(!iscarbon(src))
@@ -369,9 +370,9 @@
 
 	if(pulling)
 		pulling.pulledby = null
-		if(ismob(pulling))
-			var/mob/M = pulling
-			M.update_canmove()// mob gets up if it was lyng down in a chokehold
+		if(isliving(pulling))
+			var/mob/living/L = pulling
+			L.update_canmove()// mob gets up if it was lyng down in a chokehold
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
@@ -386,7 +387,7 @@
 	set category = "Object"
 	set src = usr
 
-	if(istype(loc,/obj/mecha))
+	if(istype(loc, /obj/mecha))
 		return
 
 	if(incapacitated())
@@ -505,7 +506,7 @@
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				if(!(what.flags & ABSTRACT))
+				if(!(what.flags_1 & ABSTRACT_1))
 					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
@@ -657,52 +658,6 @@
 		return 0
 	return 1
 
-
-//Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
-//Robots, animals and brains have their own version so don't worry about them
-/mob/proc/update_canmove()
-	var/ko = knockdown || unconscious || stat || (status_flags & FAKEDEATH)
-	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
-	var/buckle_lying = !(buckled && !buckled.buckle_lying)
-	var/has_legs = get_num_legs()
-	var/has_arms = get_num_arms()
-	var/ignore_legs = get_leg_ignore()
-	if(ko || resting || stun || chokehold)
-		drop_all_held_items()
-		unset_machine()
-		if(pulling)
-			stop_pulling()
-	else if(has_legs || ignore_legs)
-		lying = 0
-
-	if(buckled)
-		lying = 90*buckle_lying
-	else if(!lying)
-		if(resting)
-			fall()
-		else if(ko || (!has_legs && !ignore_legs) || chokehold)
-			fall(forced = 1)
-	canmove = !(ko || resting || stun || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
-	density = !lying
-	if(lying)
-		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
-			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
-	else
-		if(layer == LYING_MOB_LAYER)
-			layer = initial(layer)
-	update_transform()
-	update_action_buttons_icon(status_only=TRUE)
-	if(isliving(src))
-		var/mob/living/L = src
-		if(L.has_status_effect(/datum/status_effect/freon))
-			canmove = 0
-	if(!lying && lying_prev)
-		if(client)
-			client.move_delay = world.time + movement_delay()
-	lying_prev = lying
-	return canmove
-
-
 /mob/proc/fall(forced)
 	drop_all_held_items()
 
@@ -750,8 +705,8 @@
 /mob/proc/activate_hand(selhand)
 	return
 
-/mob/proc/assess_threat() //For sec bot threat assessment
-	return
+/mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
+	return 0
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
@@ -791,7 +746,7 @@
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
-		density = 0
+		density = FALSE
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
@@ -907,8 +862,8 @@
 	var/search_pda = 1
 
 	for(var/A in searching)
-		if( search_id && istype(A,/obj/item/weapon/card/id) )
-			var/obj/item/weapon/card/id/ID = A
+		if( search_id && istype(A, /obj/item/card/id) )
+			var/obj/item/card/id/ID = A
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname
 				ID.update_label()
@@ -916,7 +871,7 @@
 					break
 				search_id = 0
 
-		else if( search_pda && istype(A,/obj/item/device/pda) )
+		else if( search_pda && istype(A, /obj/item/device/pda) )
 			var/obj/item/device/pda/PDA = A
 			if(PDA.owner == oldname)
 				PDA.owner = newname

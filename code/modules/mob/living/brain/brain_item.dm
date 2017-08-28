@@ -46,10 +46,6 @@
 
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0)
 	..()
-	if(!special)
-		if(C.has_brain_worms())
-			var/mob/living/simple_animal/borer/B = C.has_brain_worms()
-			B.leave_victim() //Should remove borer if the brain is removed - RR
 	if(!gc_destroyed || (owner && !owner.gc_destroyed))
 		transfer_identity(C)
 	C.update_hair()
@@ -112,7 +108,7 @@
 	if(user.zone_selected != "head")
 		return ..()
 
-	if((C.head && (C.head.flags_cover & HEADCOVERSEYES)) || (C.wear_mask && (C.wear_mask.flags_cover & MASKCOVERSEYES)) || (C.glasses && (C.glasses.flags & GLASSESCOVERSEYES)))
+	if((C.head && (C.head.flags_cover & HEADCOVERSEYES)) || (C.wear_mask && (C.wear_mask.flags_cover & MASKCOVERSEYES)) || (C.glasses && (C.glasses.flags_1 & GLASSESCOVERSEYES)))
 		to_chat(user, "<span class='warning'>You're going to need to remove their head cover first!</span>")
 		return
 

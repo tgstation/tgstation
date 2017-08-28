@@ -35,7 +35,7 @@
 	return 0
 
 /datum/martial_art/the_sleeping_carp/proc/wristWrench(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.stun && !D.knockdown)
+	if(!D.stat && !D.IsStun() && !D.IsKnockdown())
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] grabs [D]'s wrist and wrenches it sideways!</span>", \
 						  "<span class='userdanger'>[A] grabs your wrist and violently wrenches it to the side!</span>")
@@ -49,7 +49,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(A.dir == D.dir && !D.stat && !D.knockdown)
+	if(A.dir == D.dir && !D.stat && !D.IsKnockdown())
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
@@ -61,7 +61,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.knockdown)
+	if(!D.stat && !D.IsKnockdown())
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] knees [D] in the stomach!</span>", \
 						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
@@ -74,7 +74,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/headKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.knockdown)
+	if(!D.stat && !D.IsKnockdown())
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
@@ -87,7 +87,7 @@
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(D.knockdown || D.resting || D.stat)
+	if(D.IsKnockdown() || D.resting || D.stat)
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] elbow drops [D]!</span>", \
 						  "<span class='userdanger'>[A] piledrives you with their elbow!</span>")
@@ -154,13 +154,13 @@
 	to_chat(usr, "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand.")
 	to_chat(usr, "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition.")
 
-/obj/item/weapon/sleeping_carp_scroll
+/obj/item/sleeping_carp_scroll
 	name = "mysterious scroll"
 	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 
-/obj/item/weapon/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user)
+/obj/item/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
 	var/message = "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
@@ -173,7 +173,7 @@
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	qdel(src)
 
-/obj/item/weapon/twohanded/bostaff
+/obj/item/twohanded/bostaff
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
@@ -184,15 +184,17 @@
 	throwforce = 20
 	throw_speed = 2
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bostaff0"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	block_chance = 50
 
-/obj/item/weapon/twohanded/bostaff/update_icon()
+/obj/item/twohanded/bostaff/update_icon()
 	icon_state = "bostaff[wielded]"
 	return
 
-/obj/item/weapon/twohanded/bostaff/attack(mob/target, mob/living/user)
+/obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
 	if((CLUMSY in user.disabilities) && prob(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
@@ -231,7 +233,7 @@
 			H.visible_message("<span class='warning'>[H] collapses!</span>", \
 								   "<span class='userdanger'>Your legs give out!</span>")
 			H.Knockdown(80)
-		if(H.staminaloss && !H.sleeping)
+		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
 				H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking them out cold!</span>", \
@@ -241,7 +243,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		return ..()
 	return 0

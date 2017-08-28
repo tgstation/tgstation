@@ -5,8 +5,8 @@
 	desc = "A gravitational singularity."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	layer = MASSIVE_OBJ_LAYER
 	luminosity = 6
 	appearance_flags = 0
@@ -26,7 +26,7 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	dangerous_possession = TRUE
 
 /obj/singularity/Initialize(mapload, starting_energy = 50)
@@ -72,7 +72,7 @@
 /obj/singularity/attack_animal(mob/user)
 	consume(user)
 
-/obj/singularity/attackby(obj/item/weapon/W, mob/user, params)
+/obj/singularity/attackby(obj/item/W, mob/user, params)
 	consume(user)
 	return 1
 
@@ -102,14 +102,13 @@
 	return 0 //Will there be an impact? Who knows.  Will we see it? No.
 
 
-/obj/singularity/Bump(atom/A)
+/obj/singularity/Collide(atom/A)
 	consume(A)
 	return
 
 
-/obj/singularity/Bumped(atom/A)
-	consume(A)
-	return
+/obj/singularity/CollidedWith(atom/movable/AM)
+	consume(AM)
 
 
 /obj/singularity/process()
@@ -407,7 +406,7 @@
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(istype(M, /mob/living/brain)) //Ignore brains
+		if(isbrain(M)) //Ignore brains
 			continue
 
 		if(M.stat == CONSCIOUS)

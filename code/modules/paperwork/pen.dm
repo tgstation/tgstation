@@ -10,7 +10,7 @@
 /*
  * Pens
  */
-/obj/item/weapon/pen
+/obj/item/pen
 	desc = "It's a normal black ink pen."
 	name = "pen"
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -28,31 +28,31 @@
 	var/degrees = 0
 	var/font = PEN_FONT
 
-/obj/item/weapon/pen/suicide_act(mob/user)
+/obj/item/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return(BRUTELOSS)
 
-/obj/item/weapon/pen/blue
+/obj/item/pen/blue
 	desc = "It's a normal blue ink pen."
 	icon_state = "pen_blue"
 	colour = "blue"
 
-/obj/item/weapon/pen/red
+/obj/item/pen/red
 	desc = "It's a normal red ink pen."
 	icon_state = "pen_red"
 	colour = "red"
 
-/obj/item/weapon/pen/invisible
+/obj/item/pen/invisible
 	desc = "It's an invisble pen marker."
 	icon_state = "pen"
 	colour = "white"
 
-/obj/item/weapon/pen/fourcolor
+/obj/item/pen/fourcolor
 	desc = "It's a fancy four-color ink pen, set to black."
 	name = "four-color pen"
 	colour = "black"
 
-/obj/item/weapon/pen/fourcolor/attack_self(mob/living/carbon/user)
+/obj/item/pen/fourcolor/attack_self(mob/living/carbon/user)
 	switch(colour)
 		if("black")
 			colour = "red"
@@ -65,13 +65,13 @@
 	to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
 	desc = "It's a fancy four-color ink pen, set to [colour]."
 
-/obj/item/weapon/pen/fountain
+/obj/item/pen/fountain
 	name = "fountain pen"
 	desc = "It's a common fountain pen, with a faux wood body."
 	icon_state = "pen-fountain"
 	font = FOUNTAIN_PEN_FONT
 
-/obj/item/weapon/pen/fountain/captain
+/obj/item/pen/fountain/captain
 	name = "captain's fountain pen"
 	desc = "It's an expensive Oak fountain pen. The nib is quite sharp."
 	icon_state = "pen-fountain-o"
@@ -82,27 +82,19 @@
 	materials = list(MAT_GOLD = 750)
 	sharpness = IS_SHARP
 	resistance_flags = FIRE_PROOF
-	var/unique_reskin = TRUE
-	var/list/skins = list("Oak" = "pen-fountain-o", "Gold" = "pen-fountain-g", "Rosewood" = "pen-fountain-r", "Black and Silver" = "pen-fountain-b","Command Blue" = "pen-fountain-cb")
+	unique_reskin = list("Oak" = "pen-fountain-o",
+						"Gold" = "pen-fountain-g",
+						"Rosewood" = "pen-fountain-r",
+						"Black and Silver" = "pen-fountain-b",
+						"Command Blue" = "pen-fountain-cb"
+						)
 
-/obj/item/weapon/pen/fountain/captain/AltClick()
-	var/mob/living/carbon/user = usr
-	if(!istype(user))
-		return
-	if(unique_reskin)
-		var/choice = input(user,"Choose the finish for your pen.","Reskin Pen") as null|anything in skins
-		if(!QDELETED(src) && choice && !user.incapacitated() && in_range(user,src))
-			icon_state = skins[choice]
-			unique_reskin = FALSE
-			to_chat(user, "Your pen now has a [choice] finish.")
-			desc = "It's an expensive [choice] fountain pen. The nib is quite sharp."
-
-/obj/item/weapon/pen/fountain/captain/examine(mob/user)
+/obj/item/pen/fountain/captain/reskin_obj(mob/M)
 	..()
-	if(unique_reskin)
-		to_chat(user, "<span class='notice'>This item can be reskinned. Alt-click to select a skin.</span>")
+	if(current_skin)
+		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
 
-/obj/item/weapon/pen/attack_self(mob/living/carbon/user)
+/obj/item/pen/attack_self(mob/living/carbon/user)
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
@@ -113,14 +105,14 @@
 			hidden_uplink.interact(user)
 
 
-/obj/item/weapon/pen/attackby(obj/item/I, mob/user, params)
+/obj/item/pen/attackby(obj/item/I, mob/user, params)
 	if(hidden_uplink)
 		return hidden_uplink.attackby(I, user, params)
 	else
 		return ..()
 
 
-/obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
+/obj/item/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
 		return
 
@@ -136,7 +128,7 @@
 	else
 		. = ..()
 
-/obj/item/weapon/pen/afterattack(obj/O, mob/living/user, proximity)
+/obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
 	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
 	if(isobj(O) && proximity)
 		if(O.unique_rename)
@@ -174,12 +166,12 @@
 /*
  * Sleepypens
  */
-/obj/item/weapon/pen/sleepy
+/obj/item/pen/sleepy
 	origin_tech = "engineering=4;syndicate=2"
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 
 
-/obj/item/weapon/pen/sleepy/attack(mob/living/M, mob/user)
+/obj/item/pen/sleepy/attack(mob/living/M, mob/user)
 	if(!istype(M))
 		return
 
@@ -189,7 +181,7 @@
 				reagents.trans_to(M, reagents.total_volume)
 
 
-/obj/item/weapon/pen/sleepy/New()
+/obj/item/pen/sleepy/New()
 	create_reagents(45)
 	reagents.add_reagent("chloralhydrate2", 20)
 	reagents.add_reagent("mutetoxin", 15)
@@ -199,14 +191,14 @@
 /*
  * (Alan) Edaggers
  */
-/obj/item/weapon/pen/edagger
+/obj/item/pen/edagger
 	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
-	var/on = 0
+	var/on = FALSE
 
-/obj/item/weapon/pen/edagger/attack_self(mob/living/user)
+/obj/item/pen/edagger/attack_self(mob/living/user)
 	if(on)
-		on = 0
+		on = FALSE
 		force = initial(force)
 		w_class = initial(w_class)
 		name = initial(name)
@@ -216,7 +208,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
 	else
-		on = 1
+		on = TRUE
 		force = 18
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
@@ -227,10 +219,14 @@
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	update_icon()
 
-/obj/item/weapon/pen/edagger/update_icon()
+/obj/item/pen/edagger/update_icon()
 	if(on)
 		icon_state = "edagger"
 		item_state = "edagger"
+		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	else
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
+		lefthand_file = initial(lefthand_file)
+		righthand_file = initial(righthand_file)

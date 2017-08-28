@@ -4,7 +4,7 @@
 	name = "water"
 	icon_state = "extinguish"
 	var/life = 15
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 
 /obj/effect/particle_effect/water/New()
@@ -19,7 +19,7 @@
 		return 0
 	.=..()
 
-/obj/effect/particle_effect/water/Bump(atom/A)
+/obj/effect/particle_effect/water/Collide(atom/A)
 	if(reagents)
 		reagents.reaction(A)
 	return ..()
@@ -43,7 +43,7 @@ steam.start() -- spawns the effect
 /obj/effect/particle_effect/steam
 	name = "steam"
 	icon_state = "extinguish"
-	density = 0
+	density = FALSE
 
 /obj/effect/particle_effect/steam/New()
 	..()

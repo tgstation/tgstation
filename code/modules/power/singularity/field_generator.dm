@@ -23,10 +23,9 @@ field_generator power level display
 	desc = "A large thermal battery that projects a high amount of energy when powered."
 	icon = 'icons/obj/machines/field_generator.dmi'
 	icon_state = "Field_Gen"
-	anchored = 0
-	density = 1
-	use_power = 0
-	obj_integrity = 500
+	anchored = FALSE
+	density = TRUE
+	use_power = NO_POWER_USE
 	max_integrity = 500
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
 	armor = list(melee = 25, bullet = 10, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
@@ -50,8 +49,8 @@ field_generator power level display
 		add_overlay("+p[power_level]")
 
 
-/obj/machinery/field/generator/New()
-	..()
+/obj/machinery/field/generator/Initialize()
+	. = ..()
 	fields = list()
 	connected_gens = list()
 
@@ -84,7 +83,7 @@ field_generator power level display
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
@@ -96,11 +95,11 @@ field_generator power level display
 	if(active)
 		to_chat(user, "<span class='warning'>[src] needs to be off!</span>")
 		return
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		default_unfasten_wrench(user, W, 0)
 
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		switch(state)
 			if(FG_UNSECURED)
 				to_chat(user, "<span class='warning'>The [name] needs to be wrenched to the floor!</span>")
@@ -129,7 +128,7 @@ field_generator power level display
 		return ..()
 
 /obj/machinery/field/generator/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash >= 3 && active == FG_OFFLINE && state != FG_UNSECURED)
+	if(M.environment_smash & ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
 		state = FG_UNSECURED
 		anchored = FALSE
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
@@ -203,7 +202,7 @@ field_generator power level display
 		return 0
 
 //This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
-/obj/machinery/field/generator/proc/draw_power(draw = 0, failsafe = 0, obj/machinery/field/generator/G = null, obj/machinery/field/generator/last = null)
+/obj/machinery/field/generator/proc/draw_power(draw = 0, failsafe = FALSE, obj/machinery/field/generator/G = null, obj/machinery/field/generator/last = null)
 	if((G && (G == src)) || (failsafe >= 8))//Loopin, set fail
 		return 0
 	else

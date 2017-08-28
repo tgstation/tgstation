@@ -10,7 +10,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
-	flags = NOBLUDGEON
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_ID | SLOT_BELT
 	origin_tech = "programming=2"
@@ -21,7 +23,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	//Main variables
 	var/owner = null // String name of owner
 	var/default_cartridge = 0 // Access level defined by cartridge
-	var/obj/item/weapon/cartridge/cartridge = null //current cartridge
+	var/obj/item/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
 	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
 
@@ -41,19 +43,18 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
 	var/notehtml = ""
 	var/notescanned = 0 // True if what is in the notekeeper was from a paper.
-	var/cart = "" //A place to stick cartridge menu information
 	var/detonatable = TRUE // Can the PDA be blown up?
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
 	var/emped = 0
 
-	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
+	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 	var/icon/photo //Scanned photo
 
-	var/list/contained_item = list(/obj/item/weapon/pen, /obj/item/toy/crayon, /obj/item/weapon/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
+	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
@@ -68,7 +69,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(inserted_item)
 		inserted_item = new inserted_item(src)
 	else
-		inserted_item =	new /obj/item/weapon/pen(src)
+		inserted_item =	new /obj/item/pen(src)
 	update_icon()
 
 /obj/item/device/pda/proc/update_label()
@@ -286,7 +287,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
-				dat += cart
+				dat += cartridge.generate_menu()
 
 	dat += "</body></html>"
 	user << browse(dat, "window=pda;size=400x450;border=1;can_resize=1;can_minimize=0")
@@ -313,14 +314,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 					mode = round(mode/10)
 					if(mode==4 || mode == 5)//Fix for cartridges. Redirects to hub.
 						mode = 0
-					else if(mode >= 40 && mode <= 59)//Fix for cartridges. Redirects to refresh the menu.
-						cartridge.mode = mode
-						cartridge.unlock()
 			if ("Authenticate")//Checks for ID
 				id_check(U)
 			if("UpdateInfo")
 				ownjob = id.assignment
-				if(istype(id, /obj/item/weapon/card/id/syndicate))
+				if(istype(id, /obj/item/card/id/syndicate))
 					owner = id.registered_name
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
@@ -328,8 +326,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					U.put_in_hands(cartridge)
 					to_chat(U, "<span class='notice'>You remove [cartridge] from [src].</span>")
 					scanmode = 0
-					if (cartridge.radio)
-						cartridge.radio.hostpda = null
+					cartridge.host_pda = null
 					cartridge = null
 					update_icon()
 
@@ -388,11 +385,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 				else if((!isnull(cartridge)) && (cartridge.access & CART_ATMOS))
 					scanmode = 5
 			if("Drone Phone")
-				var/area/A = get_area(U)
 				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
-				if(A && alert_s)
+				var/area/A = get_area(U)
+				if(A && alert_s && !QDELETED(U))
 					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
-					_alert_drones(msg, TRUE)
+					_alert_drones(msg, TRUE, U)
 					to_chat(U, msg)
 
 
@@ -469,10 +466,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 //LINK FUNCTIONS===================================
 
 			else//Cartridge menu linking
-				mode = text2num(href_list["choice"])
-				if(cartridge)
-					cartridge.mode = mode
-					cartridge.unlock()
+				mode = max(text2num(href_list["choice"]), 0)
+
 	else//If not in range, can't interact or not using the pda.
 		U.unset_machine()
 		U << browse(null, "window=pda")
@@ -480,7 +475,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 //EXTRA FUNCTIONS===================================
 
-	if (mode == 2||mode == 21)//To clear message overlays.
+	if (mode == 2 || mode == 21)//To clear message overlays.
 		update_icon()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
@@ -543,7 +538,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			P.show_recieved_message(msg,src)
 			if(!multiple)
 				show_to_ghosts(user,msg)
-				log_pda("[user] (PDA: [src.name]) sent \"[message]\" to [P.name]")
+				log_talk(user,"[user] (PDA: [name]) sent \"[message]\" to [P.name]",LOGPDA)
 		else
 			if(!multiple)
 				to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
@@ -553,7 +548,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(multiple)
 		show_to_sender(last_sucessful_msg,1)
 		show_to_ghosts(user,last_sucessful_msg,1)
-		log_pda("[user] (PDA: [src.name]) sent \"[message]\" to Everyone")
+		log_talk(user,"[user] (PDA: [name]) sent \"[message]\" to Everyone",LOGPDA)
 
 /obj/item/device/pda/proc/show_to_sender(datum/data_pda_msg/msg,multiple = 0)
 	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
@@ -563,7 +558,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if (!silent)
 		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-		audible_message("[bicon(src)] *[ttone]*", null, 3)
+		audible_message("[icon2html(src, hearers(src))] *[ttone]*", null, 3)
 	//Search for holder of the PDA.
 	var/mob/living/L = null
 	if(loc && isliving(loc))
@@ -580,7 +575,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			hrefstart = "<a href='?src=\ref[L];track=[html_encode(source.owner)]'>"
 			hrefend = "</a>"
 
-		to_chat(L, "[\bicon(src)] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
+		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	update_icon()
 	add_overlay(icon_alert)
@@ -679,13 +674,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(usr, "<span class='warning'>This PDA does not have a pen in it!</span>")
 
 //trying to insert or remove an id
-/obj/item/device/pda/proc/id_check(mob/user, obj/item/weapon/card/id/I)
+/obj/item/device/pda/proc/id_check(mob/user, obj/item/card/id/I)
 	if(!I)
 		if(id)
 			remove_id()
 			return 1
 		else
-			var/obj/item/weapon/card/id/C = user.get_active_held_item()
+			var/obj/item/card/id/C = user.get_active_held_item()
 			if(istype(C))
 				I = C
 
@@ -701,17 +696,16 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
+	if(istype(C, /obj/item/cartridge) && !cartridge)
 		if(!user.transferItemToLoc(C, src))
 			return
 		cartridge = C
+		cartridge.host_pda = src
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
-		if(cartridge.radio)
-			cartridge.radio.hostpda = src
 		update_icon()
 
-	else if(istype(C, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/idcard = C
+	else if(istype(C, /obj/item/card/id))
+		var/obj/item/card/id/idcard = C
 		if(!idcard.registered_name)
 			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
 			return
@@ -745,8 +739,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 			inserted_item = C
 			update_icon()
-	else if(istype(C, /obj/item/weapon/photo))
-		var/obj/item/weapon/photo/P = C
+	else if(istype(C, /obj/item/photo))
+		var/obj/item/photo/P = C
 		photo = P.img
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
 	else if(hidden_uplink && hidden_uplink.active)
@@ -792,8 +786,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
 
 		if(5)
-			if (istype(A, /obj/item/weapon/tank))
-				var/obj/item/weapon/tank/T = A
+			if (istype(A, /obj/item/tank))
+				var/obj/item/tank/T = A
 				atmosanalyzer_scan(T.air_contents, user, T)
 			else if (istype(A, /obj/machinery/portable_atmospherics))
 				var/obj/machinery/portable_atmospherics/PA = A
@@ -805,13 +799,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 				var/obj/machinery/power/rad_collector/RC = A
 				if(RC.loaded_tank)
 					atmosanalyzer_scan(RC.loaded_tank.air_contents, user, RC)
-			else if (istype(A, /obj/item/weapon/flamethrower))
-				var/obj/item/weapon/flamethrower/F = A
+			else if (istype(A, /obj/item/flamethrower))
+				var/obj/item/flamethrower/F = A
 				if(F.ptank)
 					atmosanalyzer_scan(F.ptank.air_contents, user, F)
 
-	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
-		var/obj/item/weapon/paper/PP = A
+	if (!scanmode && istype(A, /obj/item/paper) && owner)
+		var/obj/item/paper/PP = A
 		if (!PP.info)
 			to_chat(user, "<span class='warning'>Unable to scan! Paper is blank.</span>")
 			return
@@ -837,7 +831,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if(T)
 		T.hotspot_expose(700,125)
-		if(istype(cartridge, /obj/item/weapon/cartridge/virus/syndicate))
+		if(istype(cartridge, /obj/item/cartridge/virus/syndicate))
 			explosion(T, -1, 1, 3, 4)
 		else
 			explosion(T, -1, -1, 2, 3)
@@ -846,18 +840,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/device/pda/Destroy()
 	GLOB.PDAs -= src
-	if(id)
-		qdel(id)
-		id = null
-	if(cartridge)
-		qdel(cartridge)
-		cartridge = null
-	if(pai)
-		qdel(pai)
-		pai = null
-	if(inserted_item)
-		qdel(inserted_item)
-		inserted_item = null
+	if(istype(id))
+		QDEL_NULL(id)
+	if(istype(cartridge))
+		QDEL_NULL(cartridge)
+	if(istype(pai))
+		QDEL_NULL(pai)
+	if(istype(inserted_item))
+		QDEL_NULL(inserted_item)
 	return ..()
 
 //AI verb and proc for sending PDA messages.

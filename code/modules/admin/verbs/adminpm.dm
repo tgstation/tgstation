@@ -44,7 +44,7 @@
 		if(cmptext(copytext(whom,1,2),"@"))
 			whom = findStealthKey(whom)
 		C = GLOB.directory[whom]
-	else if(istype(whom,/client))
+	else if(istype(whom, /client))
 		C = whom
 	if(!C)
 		if(holder)
@@ -82,7 +82,7 @@
 			irc = 1
 		else
 			recipient = GLOB.directory[whom]
-	else if(istype(whom,/client))
+	else if(istype(whom, /client))
 		recipient = whom
 	
 
@@ -167,7 +167,7 @@
 
 			//play the recieving admin the adminhelp sound (if they have them enabled)
 			if(recipient.prefs.toggles & SOUND_ADMINHELP)
-				recipient << 'sound/effects/adminhelp.ogg'
+				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 
 		else
 			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
@@ -182,7 +182,7 @@
 				admin_ticket_log(recipient, "<font color='blue'>PM From [key_name_admin(src)]: [keywordparsedmsg]</font>")
 
 				//always play non-admin recipients the adminhelp sound
-				recipient << 'sound/effects/adminhelp.ogg'
+				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 
 				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
 				if(config.popup_admin_pm)
@@ -217,6 +217,7 @@
 
 #define IRC_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
 /proc/IrcPm(target,msg,sender)
+	target = ckey(target)
 	var/client/C = GLOB.directory[target]
 
 	var/datum/admin_help/ticket = C ? C.current_ticket : GLOB.ahelp_tickets.CKey2ActiveTicket(target)
@@ -300,7 +301,7 @@
 
 	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound
-	C << 'sound/effects/adminhelp.ogg'
+	SEND_SOUND(C, 'sound/effects/adminhelp.ogg')
 
 	C.ircreplyamount = IRCREPLYCOUNT
 

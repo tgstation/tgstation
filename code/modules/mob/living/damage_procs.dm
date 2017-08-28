@@ -8,7 +8,7 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (hit_percent <= 0))
 		return 0
@@ -25,6 +25,8 @@
 			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			adjustStaminaLoss(damage * hit_percent)
+		if(BRAIN)
+			adjustBrainLoss(damage * hit_percent)
 	return 1
 
 /mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
@@ -41,6 +43,8 @@
 			return adjustCloneLoss(damage)
 		if(STAMINA)
 			return adjustStaminaLoss(damage)
+		if(BRAIN)
+			return adjustBrainLoss(damage)
 
 /mob/living/proc/get_damage_amount(damagetype = BRUTE)
 	switch(damagetype)
@@ -56,9 +60,11 @@
 			return getCloneLoss()
 		if(STAMINA)
 			return getStaminaLoss()
+		if(BRAIN)
+			return getBrainLoss()
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
 	if(blocked >= 100)
 		return 0
 	if(brute)
@@ -73,11 +79,13 @@
 		apply_damage(clone, CLONE, def_zone, blocked)
 	if(stamina)
 		apply_damage(stamina, STAMINA, def_zone, blocked)
+	if(brain)
+		apply_damage(brain, BRAIN, def_zone, blocked)
 	return 1
 
 
 
-/mob/living/proc/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
+/mob/living/proc/apply_effect(effect = 0,effecttype = STUN, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!effect || (hit_percent <= 0))
 		return 0
@@ -105,7 +113,7 @@
 	return 1
 
 
-/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0)
+/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0)
 	if(blocked >= 100)
 		return 0
 	if(stun)

@@ -1,6 +1,6 @@
 /obj/structure/destructible/cult
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
 	var/cooldowntime = 0
 	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
@@ -33,7 +33,7 @@
 		..()
 
 /obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
+	if(istype(I, /obj/item/tome) && iscultist(user))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>")
 		if(!anchored)
@@ -78,11 +78,11 @@
 	var/pickedtype
 	switch(choice)
 		if("Eldritch Whetstone")
-			pickedtype = /obj/item/weapon/sharpener/cult
+			pickedtype = /obj/item/sharpener/cult
 		if("Zealot's Blindfold")
 			pickedtype = /obj/item/clothing/glasses/night/cultblind
 		if("Flask of Unholy Water")
-			pickedtype = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
+			pickedtype = /obj/item/reagent_containers/food/drinks/bottle/unholywater
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
@@ -175,7 +175,7 @@
 				/turf/closed,
 				/turf/open/floor/engine/cult,
 				/turf/open/space,
-				/turf/open/floor/plating/lava,
+				/turf/open/lava,
 				/turf/open/chasm))
 			if(is_type_in_typecache(T, blacklisted_pylon_turfs))
 				continue
@@ -218,7 +218,7 @@
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Supply Talisman")
-			pickedtype += /obj/item/weapon/paper/talisman/supply/weak
+			pickedtype += /obj/item/paper/talisman/supply/weak
 		if("Shuttle Curse")
 			pickedtype += /obj/item/device/shuttle_curse
 		if("Veil Walker Set")
@@ -235,5 +235,5 @@
 	desc = "You're pretty sure that abyss is staring back."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE

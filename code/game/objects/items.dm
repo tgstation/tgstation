@@ -6,7 +6,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item
 	name = "item"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -24,9 +24,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
 	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
 
-	obj_integrity = 200
 	max_integrity = 200
-
 
 	var/hitsound = null
 	var/usesound = null
@@ -66,11 +64,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/materials
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
+	var/emagged = FALSE
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
-	var/suittoggled = 0
+	var/suittoggled = FALSE
 	var/hooded = 0
 
 	var/mob/thrownby = null
@@ -114,6 +113,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/tip_timer
 	var/force_string_override
 
+	var/trigger_guard = TRIGGER_GUARD_NONE
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
@@ -128,8 +129,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(force_string)
 		force_string_override = TRUE
 
+	if(!hitsound)
+		if(damtype == "fire")
+			hitsound = 'sound/items/welder.ogg'
+		if(damtype == "brute")
+			hitsound = "swing_hit"
+
 /obj/item/Destroy()
-	flags &= ~DROPDEL	//prevent reqdels
+	flags_1 &= ~DROPDEL_1	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -206,6 +213,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		msg += "*--------*"
 		to_chat(user, msg)
 
+/obj/item/proc/speechModification(message)		//For speech modification by mask slot items.
+	return message
 
 /obj/item/attack_self(mob/user)
 	interact(user)
@@ -252,9 +261,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					C.update_damage_overlays()
 
 
-	if(istype(loc, /obj/item/weapon/storage))
+	if(istype(loc, /obj/item/storage))
 		//If the item is in a storage item, take it out
-		var/obj/item/weapon/storage/S = loc
+		var/obj/item/storage/S = loc
 		S.remove_from_storage(src, user.loc)
 
 	if(throwing)
@@ -275,8 +284,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(anchored)
 		return
 
-	if(istype(loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = loc
+	if(istype(loc, /obj/item/storage))
+		var/obj/item/storage/S = loc
 		S.remove_from_storage(src, user.loc)
 
 	if(throwing)
@@ -301,7 +310,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	attack_paw(A)
 
 /obj/item/attack_ai(mob/user)
-	if(istype(src.loc, /obj/item/weapon/robot_module))
+	if(istype(src.loc, /obj/item/robot_module))
 		//If the item is part of a cyborg module, equip it
 		if(!iscyborg(user))
 			return
@@ -313,9 +322,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 // The lack of ..() is intentional, do not add one
-/obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = W
+/obj/item/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/storage))
+		var/obj/item/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
 				if(isturf(loc))
@@ -341,7 +350,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 
-/obj/item/proc/handle_mass_pickup(obj/item/weapon/storage/S, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
+/obj/item/proc/handle_mass_pickup(obj/item/storage/S, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
 	for(var/obj/item/I in things)
 		things -= I
 		if(I.loc != thing_loc)
@@ -378,7 +387,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
-	if(DROPDEL & flags)
+	if(DROPDEL_1 & flags_1)
 		qdel(src)
 	in_inventory = FALSE
 
@@ -389,11 +398,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
-/obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
+/obj/item/proc/on_exit_storage(obj/item/storage/S)
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
-/obj/item/proc/on_enter_storage(obj/item/weapon/storage/S)
+/obj/item/proc/on_enter_storage(obj/item/storage/S)
 	return
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
@@ -504,7 +513,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	M.adjust_blurriness(3)
 	M.adjust_eye_damage(rand(2,4))
-	if(M.eye_damage >= 10)
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
+	if (!eyes)
+		return
+	if(eyes.eye_damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
@@ -518,7 +530,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
 			M.Knockdown(40)
-		if (prob(M.eye_damage - 10 + 1))
+		if (prob(eyes.eye_damage - 10 + 1))
 			if(M.become_blind())
 				to_chat(M, "<span class='danger'>You go blind!</span>")
 
@@ -563,14 +575,17 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	throw_speed = initial(throw_speed) //explosions change this.
 	in_inventory = FALSE
 
-/obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
+/obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
 	if(!newLoc)
 		return 0
-	if(istype(loc,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = loc
+	if(istype(loc, /obj/item/storage))
+		var/obj/item/storage/S = loc
 		S.remove_from_storage(src,newLoc)
 		return 1
 	return 0
+
+/obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
 
 /obj/item/proc/is_hot()
 	return heat
@@ -670,7 +685,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/openTip(location, control, params, user)
 	if(last_force_string_check != force && !force_string_override)
 		set_force_string()
-	openToolTip(user,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
+	if(!force_string_override)
+		openToolTip(user,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
+	else
+		openToolTip(user,src,params,title = name,content = "[desc]<br><b>Force:</b> [force_string]",theme = "")
 
 /obj/item/MouseEntered(location, control, params)
 	if(in_inventory && usr.client.prefs.enable_tips)

@@ -20,7 +20,7 @@ this dire fate:
 it's data to every other device in the game. Each console has a "disconnect from network" option that'll will cause data base sync
 operations to skip that console. This is useful if you want to make a "public" R&D console or, for example, give the engineers
 a circuit imprinter with certain designs on it and don't want it accidentally updating. The downside of this method is that you have
-to have physical access to the other console to send data back. Note: An R&D console is on Centcom so if a random griffan happens to
+to have physical access to the other console to send data back. Note: An R&D console is on CentCom so if a random griffan happens to
 cause a ton of data to be lost, an admin can go send it back.
 - The second method is with Technology Disks and Design Disks. Each of these disks can hold technology or design datums in
 their entirety. You can then take the disk to any R&D console and upload it's data to it. This method is a lot more secure (since it
@@ -33,10 +33,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	name = "R&D Console"
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
-	circuit = /obj/item/weapon/circuitboard/computer/rdconsole
+	circuit = /obj/item/circuitboard/computer/rdconsole
 	var/datum/research/files							//Stores all the collected research data.
-	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
-	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
+	var/obj/item/disk/tech_disk/t_disk = null	//Stores the technology disk.
+	var/obj/item/disk/design_disk/d_disk = null	//Stores the design disk.
 
 	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
 	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
@@ -47,7 +47,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 	var/first_use = 1	//If first_use = 1, it will try to auto-connect with nearby devices
 
-	req_access = list(GLOB.access_tox)	//Data and setting manipulation requires scientist access.
+	req_access = list(ACCESS_TOX)	//DATA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
 
 	var/selected_category
 	var/list/datum/design/matching_designs = list() //for the search function
@@ -112,17 +112,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	griefProtection()
 */
 
-/obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
+/obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
 
 	//Loading a disk into it.
-	if(istype(D, /obj/item/weapon/disk))
+	if(istype(D, /obj/item/disk))
 		if(t_disk || d_disk)
 			to_chat(user, "A disk is already loaded into the machine.")
 			return
 
-		if(istype(D, /obj/item/weapon/disk/tech_disk))
+		if(istype(D, /obj/item/disk/tech_disk))
 			t_disk = D
-		else if (istype(D, /obj/item/weapon/disk/design_disk))
+		else if (istype(D, /obj/item/disk/design_disk))
 			d_disk = D
 		else
 			to_chat(user, "<span class='danger'>Machine cannot accept disks in that format.</span>")
@@ -150,10 +150,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
-	if(!emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
+	if(emagged)
+		return
+	playsound(src, "sparks", 75, 1)
+	emagged = TRUE
+	to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
@@ -295,13 +296,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(!cancontinue)
 			var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?") in list("Proceed", "Cancel")
 			if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item) return
-		linked_destroy.busy = 1
+		linked_destroy.busy = TRUE
 		screen = 0.1
 		updateUsrDialog()
 		flick("d_analyzer_process", linked_destroy)
 		spawn(24)
 			if(linked_destroy)
-				linked_destroy.busy = 0
+				linked_destroy.busy = FALSE
 				if(!linked_destroy.loaded_item)
 					screen = 1.0
 					return
@@ -320,7 +321,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/obj/I in linked_destroy.contents)
 					for(var/mob/M in I.contents)
 						M.death()
-					if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
+					if(istype(I, /obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
 						var/obj/item/stack/sheet/S = I
 						if(S.amount > 1)
 							S.amount--
@@ -412,7 +413,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		var/g2g = 1
 		var/enough_materials = 1
-		linked_lathe.busy = 1
+		linked_lathe.busy = TRUE
 		flick("protolathe_n",linked_lathe)
 		use_power(power)
 
@@ -446,16 +447,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					var/already_logged = 0
 					for(var/i = 0, i<amount, i++)
 						var/obj/item/new_item = new P(src)
-						if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+						if( new_item.type == /obj/item/storage/backpack/holding )
 							new_item.investigate_log("built by [key]", INVESTIGATE_SINGULO)
-						if(!istype(new_item, /obj/item/stack/sheet) && !istype(new_item, /obj/item/weapon/ore/bluespace_crystal)) // To avoid materials dupe glitches
+						if(!istype(new_item, /obj/item/stack/sheet) && !istype(new_item, /obj/item/ore/bluespace_crystal)) // To avoid materials dupe glitches
 							new_item.materials = efficient_mats.Copy()
 						new_item.loc = linked_lathe.loc
 						if(!already_logged)
 							SSblackbox.add_details("item_printed","[new_item.type]|[amount]")
 							already_logged = 1
 				screen = old_screen
-				linked_lathe.busy = 0
+				linked_lathe.busy = FALSE
 			else
 				say("Protolathe connection failed. Production halted.")
 				screen = 1.0
@@ -488,7 +489,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		var/g2g = 1
 		var/enough_materials = 1
-		linked_imprinter.busy = 1
+		linked_imprinter.busy = TRUE
 		flick("circuit_imprinter_ani", linked_imprinter)
 		use_power(power)
 
@@ -521,7 +522,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					new_item.materials = efficient_mats.Copy()
 					SSblackbox.add_details("circuit_printed","[new_item.type]")
 				screen = old_screen
-				linked_imprinter.busy = 0
+				linked_imprinter.busy = FALSE
 			else
 				say("Circuit Imprinter connection failed. Production halted.")
 				screen = 1.0

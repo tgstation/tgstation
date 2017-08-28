@@ -8,6 +8,7 @@
 
 	var/sight_flags = 0
 	var/see_in_dark = 2
+	var/eye_damage = 0
 	var/tint = 0
 	var/eye_color = "" //set to a hex code to override a mob's eye color
 	var/old_eye_color = "fff"

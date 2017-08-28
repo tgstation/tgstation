@@ -4,7 +4,7 @@
 	desc = "A gently thrumming tear in reality."
 	clockwork_desc = "A gateway in reality."
 	icon_state = "spatial_gateway"
-	density = 1
+	density = TRUE
 	light_range = 2
 	light_power = 3
 	light_color = "#6A4D2F"
@@ -80,7 +80,7 @@
 	return TRUE
 
 /obj/effect/clockwork/spatial_gateway/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/nullrod))
+	if(istype(I, /obj/item/nullrod))
 		user.visible_message("<span class='warning'>[user] dispels [src] with [I]!</span>", "<span class='danger'>You close [src] with [I]!</span>")
 		qdel(linked_gateway)
 		qdel(src)
@@ -109,10 +109,10 @@
 		return TRUE
 	return FALSE
 
-/obj/effect/clockwork/spatial_gateway/Bumped(atom/A)
+/obj/effect/clockwork/spatial_gateway/CollidedWith(atom/movable/AM)
 	..()
-	if(A && !QDELETED(A))
-		pass_through_gateway(A)
+	if(!QDELETED(AM))
+		pass_through_gateway(AM, FALSE)
 
 /obj/effect/clockwork/spatial_gateway/proc/pass_through_gateway(atom/movable/A, no_cost)
 	if(!linked_gateway)
@@ -130,13 +130,19 @@
 	playsound(src, 'sound/effects/empulse.ogg', 50, 1)
 	playsound(linked_gateway, 'sound/effects/empulse.ogg', 50, 1)
 	transform = matrix() * 1.5
-	animate(src, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
 	linked_gateway.transform = matrix() * 1.5
-	animate(linked_gateway, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
 	A.forceMove(get_turf(linked_gateway))
 	if(!no_cost)
 		uses = max(0, uses - 1)
 		linked_gateway.uses = max(0, linked_gateway.uses - 1)
+	if(!uses)
+		animate(src, transform = matrix() * 0.1, time = 10, flags = ANIMATION_END_NOW)
+		animate(linked_gateway, transform = matrix() * 0.1, time = 10, flags = ANIMATION_END_NOW)
+		density = FALSE
+		linked_gateway.density = FALSE
+	else
+		animate(src, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
+		animate(linked_gateway, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
 	addtimer(CALLBACK(src, .proc/check_uses), 10)
 	return TRUE
 
@@ -165,7 +171,7 @@
 		return FALSE
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!src || !input_target_key || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
+	if(!src || !input_target_key || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (isitem(src) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
 	if(!target) //if we have no target, but did have a key, let them retry
 		to_chat(invoker, "<span class='warning'>That target no longer exists!</span>")

@@ -106,9 +106,6 @@
 	if(ridden.has_gravity())
 		return 1
 
-	if(ridden.pulledby)
-		return 1
-
 	return 0
 
 /datum/riding/space/Process_Spacemove(direction)
@@ -258,13 +255,13 @@
 
 ///////////////BOATS////////////
 /datum/riding/boat
-	keytype = /obj/item/weapon/oar
+	keytype = /obj/item/oar
 
 /datum/riding/boat/handle_ride(mob/user, direction)
 	var/turf/next = get_step(ridden, direction)
 	var/turf/current = get_turf(ridden)
 
-	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
+	if(istype(next, /turf/open/lava) || istype(current, /turf/open/lava)) //We can move from land to lava, or lava to land, but not from land to land
 		..()
 	else
 		to_chat(user, "Boats don't go on land!")
@@ -342,7 +339,7 @@
 /datum/riding/cyborg/ride_check(mob/user)
 	if(user.incapacitated())
 		var/kick = TRUE
-		if(istype(ridden, /mob/living/silicon/robot))
+		if(iscyborg(ridden))
 			var/mob/living/silicon/robot/R = ridden
 			if(R.module && R.module.ride_allow_incapacitated)
 				kick = FALSE
@@ -350,7 +347,7 @@
 			to_chat(user, "<span class='userdanger'>You fall off of [ridden]!</span>")
 			Unbuckle(user)
 			return
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.get_num_arms())
 			Unbuckle(user)
@@ -419,10 +416,10 @@
 
 /obj/item/riding_offhand
 	name = "offhand"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | DROPDEL | NOBLUDGEON
+	flags_1 = ABSTRACT_1 | DROPDEL_1 | NOBLUDGEON_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/rider
 	var/mob/living/ridden

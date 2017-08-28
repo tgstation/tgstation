@@ -3,8 +3,8 @@
 	desc = "A security robot.  He looks less than thrilled."
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "ed2090"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	health = 100
 	maxHealth = 100
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
@@ -59,7 +59,7 @@
 			shot_delay = 6//Longer shot delay because JESUS CHRIST
 			check_records = 0//Don't actively target people set to arrest
 			arrest_type = 1//Don't even try to cuff
-			bot_core.req_access = list(GLOB.access_maint_tunnels, GLOB.access_theatre)
+			bot_core.req_access = list(ACCESS_MAINT_TUNNELS, ACCESS_THEATRE)
 			arrest_type = 1
 			if((lasercolor == "b") && (name == "\improper ED-209 Security Robot"))//Picks a name if there isn't already a custome one
 				name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
@@ -83,7 +83,7 @@
 	..()
 	target = null
 	oldtarget_name = null
-	anchored = 0
+	anchored = FALSE
 	walk_to(src,0)
 	last_found = world.time
 	set_weapon()
@@ -152,8 +152,23 @@ Auto Patrol[]"},
 			declare_arrests = !declare_arrests
 			update_controls()
 
+/mob/living/simple_animal/bot/ed209/proc/judgement_criteria()
+	var/final = FALSE
+	if(idcheck)
+		final = final|JUDGE_IDCHECK
+	if(check_records)
+		final = final|JUDGE_RECORDCHECK
+	if(weaponscheck)
+		final = final|JUDGE_WEAPONCHECK
+	if(emagged)
+		final = final|JUDGE_EMAGGED
+	//ED209's ignore monkeys
+	final = final|JUDGE_IGNOREMONKEYS
+	return final
+
 /mob/living/simple_animal/bot/ed209/proc/retaliate(mob/living/carbon/human/H)
-	threatlevel = H.assess_threat(src)
+	var/judgement_criteria = judgement_criteria()
+	threatlevel = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 	threatlevel += 6
 	if(threatlevel >= 4)
 		target = H
@@ -164,11 +179,11 @@ Auto Patrol[]"},
 		retaliate(H)
 	return ..()
 
-/mob/living/simple_animal/bot/ed209/attackby(obj/item/weapon/W, mob/user, params)
+/mob/living/simple_animal/bot/ed209/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
+	if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
 		return
-	if(!istype(W, /obj/item/weapon/screwdriver) && (!target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+	if(!istype(W, /obj/item/screwdriver) && (!target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		if(W.force && W.damtype != STAMINA)//If force is non-zero and damage type isn't stamina.
 			retaliate(user)
 			if(lasercolor)//To make up for the fact that lasertag bots don't hunt
@@ -186,7 +201,7 @@ Auto Patrol[]"},
 		set_weapon()
 
 /mob/living/simple_animal/bot/ed209/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam/laser)||istype(Proj,/obj/item/projectile/bullet))
+	if(istype(Proj , /obj/item/projectile/beam/laser)||istype(Proj, /obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health)
 				retaliate(Proj.firer)
@@ -199,12 +214,13 @@ Auto Patrol[]"},
 	if(disabled)
 		return
 
+	var/judgement_criteria = judgement_criteria()
 	var/list/targets = list()
 	for(var/mob/living/carbon/C in view(7,src)) //Let's find us a target
 		var/threatlevel = 0
 		if((C.stat) || (C.lying))
 			continue
-		threatlevel = C.assess_threat(src, lasercolor)
+		threatlevel = C.assess_threat(judgement_criteria, lasercolor, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 		//speak(C.real_name + text(": threat: []", threatlevel))
 		if(threatlevel < 4 )
 			continue
@@ -238,7 +254,7 @@ Auto Patrol[]"},
 					stun_attack(target)
 
 					mode = BOT_PREP_ARREST
-					anchored = 1
+					anchored = TRUE
 					target_lastloc = target.loc
 					return
 
@@ -255,7 +271,7 @@ Auto Patrol[]"},
 		if(BOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if(!Adjacent(target) || !isturf(target.loc) ||  target.knockdown < 2)
+			if(!Adjacent(target) || !isturf(target.loc) ||  target.AmountKnockdown() < 40)
 				back_to_hunt()
 				return
 
@@ -272,7 +288,7 @@ Auto Patrol[]"},
 
 		if(BOT_ARREST)
 			if(!target)
-				anchored = 0
+				anchored = FALSE
 				mode = BOT_IDLE
 				last_found = world.time
 				frustration = 0
@@ -282,12 +298,12 @@ Auto Patrol[]"},
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && target.knockdown < 2)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && target.AmountKnockdown() < 40)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
 				back_to_hunt()
 				return
 			else
 				mode = BOT_PREP_ARREST
-				anchored = 0
+				anchored = FALSE
 
 		if(BOT_START_PATROL)
 			look_for_perp()
@@ -301,7 +317,7 @@ Auto Patrol[]"},
 	return
 
 /mob/living/simple_animal/bot/ed209/proc/back_to_idle()
-	anchored = 0
+	anchored = FALSE
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
@@ -309,7 +325,7 @@ Auto Patrol[]"},
 	INVOKE_ASYNC(src, .proc/handle_automated_action) //ensure bot quickly responds
 
 /mob/living/simple_animal/bot/ed209/proc/back_to_hunt()
-	anchored = 0
+	anchored = FALSE
 	frustration = 0
 	mode = BOT_HUNT
 	INVOKE_ASYNC(src, .proc/handle_automated_action) //ensure bot quickly responds
@@ -319,8 +335,9 @@ Auto Patrol[]"},
 /mob/living/simple_animal/bot/ed209/proc/look_for_perp()
 	if(disabled)
 		return
-	anchored = 0
+	anchored = FALSE
 	threatlevel = 0
+	var/judgement_criteria = judgement_criteria()
 	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
 		if((C.stat) || (C.handcuffed))
 			continue
@@ -328,7 +345,7 @@ Auto Patrol[]"},
 		if((C.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
 
-		threatlevel = C.assess_threat(src, lasercolor)
+		threatlevel = C.assess_threat(judgement_criteria, lasercolor, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 
 		if(!threatlevel)
 			continue
@@ -356,22 +373,22 @@ Auto Patrol[]"},
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
-	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
+	var/obj/item/ed209_assembly/Sa = new /obj/item/ed209_assembly(Tsec)
 	Sa.build_step = 1
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(!lasercolor)
-		var/obj/item/weapon/gun/energy/e_gun/advtaser/G = new /obj/item/weapon/gun/energy/e_gun/advtaser(Tsec)
+		var/obj/item/gun/energy/e_gun/advtaser/G = new /obj/item/gun/energy/e_gun/advtaser(Tsec)
 		G.cell.charge = 0
 		G.update_icon()
 	else if(lasercolor == "b")
-		var/obj/item/weapon/gun/energy/laser/bluetag/G = new /obj/item/weapon/gun/energy/laser/bluetag(Tsec)
+		var/obj/item/gun/energy/laser/bluetag/G = new /obj/item/gun/energy/laser/bluetag(Tsec)
 		G.cell.charge = 0
 		G.update_icon()
 	else if(lasercolor == "r")
-		var/obj/item/weapon/gun/energy/laser/redtag/G = new /obj/item/weapon/gun/energy/laser/redtag(Tsec)
+		var/obj/item/gun/energy/laser/redtag/G = new /obj/item/gun/energy/laser/redtag(Tsec)
 		G.cell.charge = 0
 		G.update_icon()
 
@@ -459,7 +476,7 @@ Auto Patrol[]"},
 						emagged = 2
 						set_weapon()
 						shootAt(toshoot)
-						emagged = 0
+						emagged = FALSE
 						set_weapon()
 					else
 						shootAt(toshoot)
@@ -504,7 +521,7 @@ Auto Patrol[]"},
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(!C.stun || arrest_type)
+		if(!C.IsStun() || arrest_type)
 			stun_attack(A)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
 			cuff(A)
@@ -526,7 +543,8 @@ Auto Patrol[]"},
 	C.stuttering = 5
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		threat = H.assess_threat(src)
+		var/judgement_criteria = judgement_criteria()
+		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 	add_logs(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
@@ -544,6 +562,6 @@ Auto Patrol[]"},
 		if( !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 			return
 		if(!C.handcuffed)
-			C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
+			C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
 			C.update_handcuffed()
 			back_to_idle()

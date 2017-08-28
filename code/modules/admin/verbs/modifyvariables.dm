@@ -30,7 +30,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	else if (isloc(var_value))
 		. = VV_ATOM_REFERENCE
 
-	else if (istype(var_value,/client))
+	else if (istype(var_value, /client))
 		. = VV_CLIENT
 
 	else if (istype(var_value, /datum))
@@ -44,7 +44,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		else
 			. = VV_TYPE
 
-	else if (istype(var_value,/list))
+	else if (islist(var_value))
 		. = VV_LIST
 
 	else if (isfile(var_value))
@@ -528,7 +528,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		variable = input("Which var?","Var") as null|anything in names
 		if(!variable)
 			return
-	
+
 	if(!O.can_vv_get(variable))
 		return
 
@@ -594,7 +594,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	switch(class)
 		if(VV_LIST)
-			if(!istype(var_value,/list))
+			if(!islist(var_value))
 				mod_list(list(), O, original_name, variable)
 
 			mod_list(var_value, O, original_name, variable)

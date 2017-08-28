@@ -6,16 +6,10 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "c" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "d" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "e" = (
 /obj/machinery/conveyor{
@@ -148,10 +142,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/supply)
 "t" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "u" = (
 /obj/structure/window/reinforced{
@@ -161,18 +152,13 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "v" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "w" = (
 /turf/open/space,
 /area/space)
 "x" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_l"
-	},
+/obj/structure/shuttle/engine/propulsion/burst/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "y" = (
@@ -180,9 +166,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "z" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_r"
-	},
+/obj/structure/shuttle/engine/propulsion/burst/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "A" = (
@@ -198,7 +182,6 @@
 /area/shuttle/supply)
 "B" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,

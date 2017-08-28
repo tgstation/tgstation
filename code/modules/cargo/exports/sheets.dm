@@ -26,7 +26,7 @@
 // Human skin. Illegal
 /datum/export/stack/skin/human
 	cost = 2000
-	contraband = 1
+	contraband = TRUE
 	unit_name = "piece"
 	message = "of human skin"
 	export_types = list(/obj/item/stack/sheet/animalhide/human)
@@ -40,14 +40,14 @@
 // Cat hide. Just in case Runtime is catsploding again.
 /datum/export/stack/skin/cat
 	cost = 2000
-	contraband = 1
+	contraband = TRUE
 	unit_name = "cat hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/cat)
 
 // Corgi hide. You monster.
 /datum/export/stack/skin/corgi
 	cost = 2500
-	contraband = 1
+	contraband = TRUE
 	unit_name = "corgi hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/corgi)
 
@@ -79,8 +79,7 @@
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
-// Bluespace Polycrystals. About as common on the asteroid as
-
+// Bluespace Polycrystals. Uncommon.
 /datum/export/stack/bscrystal
 	cost = 750
 	message = "of bluespace crystals"

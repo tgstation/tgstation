@@ -13,7 +13,8 @@
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
-		for(var/datum/disease/D in data["viruses"])
+		for(var/thing in data["viruses"])
+			var/datum/disease/D = thing
 
 			if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
 				continue
@@ -61,6 +62,13 @@
 				data["viruses"] = preserve
 	return 1
 
+/datum/reagent/blood/proc/get_diseases()
+	. = list()
+	if(data && data["viruses"])
+		for(var/thing in data["viruses"])
+			var/datum/disease/D = thing
+			. += D
+
 /datum/reagent/blood/reaction_turf(turf/T, reac_volume)//splash the blood all over the place
 	if(!istype(T))
 		return
@@ -72,11 +80,6 @@
 		B = new(T)
 	if(data["blood_DNA"])
 		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
-
-	for(var/datum/disease/D in data["viruses"])
-		var/datum/disease/newVirus = D.Copy(1)
-		B.viruses += newVirus
-		newVirus.holder = B
 
 
 /datum/reagent/liquidgibs
@@ -96,7 +99,8 @@
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(islist(data) && (method == INGEST || method == INJECT))
-		for(var/datum/disease/D in M.viruses)
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
 			if(D.GetDiseaseID() in data)
 				D.cure()
 		M.resistances |= data
@@ -151,12 +155,12 @@
 	O.extinguish()
 	O.acid_level = 0
 	// Monkey cube
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
-		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
+	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
+		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
-	else if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
+	else if(istype(O, /obj/item/toy/carpplushie/dehy_carp))
 		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
@@ -410,7 +414,7 @@
 		return
 	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Knockdown(60, 0)
+	H.Knockdown(60)
 	addtimer(CALLBACK(src, .proc/mutate, H), 30)
 	return
 
@@ -669,7 +673,7 @@
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
 	if(M.canmove && !isspaceturf(M.loc))
-		step(M, pick(GLOB.cardinal))
+		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	M.adjustBrainLoss(2)
@@ -749,7 +753,7 @@
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
 	if(M.canmove && !isspaceturf(M.loc))
-		step(M, pick(GLOB.cardinal))
+		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	..()
@@ -932,7 +936,7 @@
 	taste_description = "sourness"
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/effect/decal/cleanable))
+	if(istype(O, /obj/effect/decal/cleanable))
 		qdel(O)
 	else
 		if(O)
@@ -1078,6 +1082,14 @@
 	name = "Foaming agent"
 	id = "foaming_agent"
 	description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
+	reagent_state = SOLID
+	color = "#664B63" // rgb: 102, 75, 99
+	taste_description = "metal"
+
+/datum/reagent/smart_foaming_agent //Smart foaming agent. Functions similarly to metal foam, but conforms to walls.
+	name = "Smart foaming agent"
+	id = "smart_foaming_agent"
+	description = "A agent that yields metallic foam which conforms to area boundaries when mixed with light metal and a strong acid."
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
 	taste_description = "metal"
@@ -1560,6 +1572,18 @@
 		var/obj/item/organ/zombie_infection/ZI = new()
 		ZI.Insert(H)
 	..()
+
+/datum/reagent/magillitis
+	name = "Magillitis"
+	id = "magillitis"
+	description = "An experimental serum which causes rapid muscular growth in basic primates. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
+	reagent_state = LIQUID
+	color = "#00f041"
+
+/datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
+	..()
+	if(ismonkey(M) && current_cycle >= 10)
+		return M.gorillize()
 
 /datum/reagent/growthserum
 	name = "Growth Serum"

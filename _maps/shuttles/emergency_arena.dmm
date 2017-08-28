@@ -10,7 +10,7 @@
 /turf/open/indestructible/necropolis/air,
 /area/shuttle_arena)
 "d" = (
-/turf/open/floor/plating/lava/smooth,
+/turf/open/lava/smooth,
 /area/shuttle_arena)
 "e" = (
 /obj/effect/landmark/shuttle_arena_entrance,
@@ -26,7 +26,6 @@
 	})
 "h" = (
 /turf/open/indestructible{
-	tag = "icon-cult";
 	icon_state = "cult"
 	},
 /area/shuttle/escape{
@@ -35,7 +34,6 @@
 "i" = (
 /obj/structure/closet/crate/necropolis/dragon,
 /turf/open/indestructible{
-	tag = "icon-cult";
 	icon_state = "cult"
 	},
 /area/shuttle/escape{
@@ -49,7 +47,6 @@
 "k" = (
 /obj/structure/fluff/drake_statue,
 /turf/open/indestructible{
-	tag = "icon-cult";
 	icon_state = "cult"
 	},
 /area/shuttle/escape{

@@ -1,9 +1,11 @@
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
-	flags = CONDUCT | NOBLUDGEON
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
@@ -15,7 +17,7 @@
 
 /obj/item/device/chameleon/New()
 	..()
-	var/obj/item/weapon/cigbutt/butt = /obj/item/weapon/cigbutt
+	var/obj/item/cigbutt/butt = /obj/item/cigbutt
 	saved_appearance = initial(butt.appearance)
 
 /obj/item/device/chameleon/dropped()
@@ -34,7 +36,7 @@
 	if(!check_sprite(target))
 		return
 	if(!active_dummy)
-		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
+		if(isitem(target) && !istype(target, /obj/item/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			to_chat(user, "<span class='notice'>Scanned [target].</span>")
 			var/obj/temp = new/obj()
@@ -89,7 +91,7 @@
 /obj/effect/dummy/chameleon
 	name = ""
 	desc = ""
-	density = 0
+	density = FALSE
 	var/can_move = 0
 	var/obj/item/device/chameleon/master = null
 

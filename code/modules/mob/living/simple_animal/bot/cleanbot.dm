@@ -4,8 +4,8 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "cleanbot0"
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	health = 25
 	maxHealth = 25
 	radio_key = /obj/item/device/encryptionkey/headset_service
@@ -61,8 +61,8 @@
 	text_dehack = "[name]'s software has been reset!"
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
-/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/device/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
@@ -197,7 +197,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
 	if(istype(A, /obj/effect/decal/cleanable))
-		anchored = 1
+		anchored = TRUE
 		icon_state = "cleanbot-c"
 		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
 		mode = BOT_CLEANING
@@ -208,7 +208,7 @@
 					if(istype(AM, /obj/effect/decal/cleanable))
 						qdel(AM)
 
-				anchored = 0
+				anchored = FALSE
 				target = null
 			mode = BOT_IDLE
 			icon_state = "cleanbot[on]"
@@ -250,11 +250,11 @@
 		..()
 
 /mob/living/simple_animal/bot/cleanbot/explode()
-	on = 0
+	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
-	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)
+	new /obj/item/reagent_containers/glass/bucket(Tsec)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
@@ -265,7 +265,7 @@
 	..()
 
 /obj/machinery/bot_core/cleanbot
-	req_one_access = list(GLOB.access_janitor, GLOB.access_robotics)
+	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
 
 
 /mob/living/simple_animal/bot/cleanbot/get_controls(mob/user)

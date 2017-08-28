@@ -4,9 +4,11 @@
 	desc = "A box of ammo."
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	materials = list(MAT_METAL=30000)
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY

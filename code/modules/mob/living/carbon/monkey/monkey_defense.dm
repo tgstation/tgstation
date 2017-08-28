@@ -48,9 +48,9 @@
 
 				playsound(loc, "punch", 25, 1, -1)
 				var/damage = rand(5, 10)
-				if (prob(40))
+				if(prob(40))
 					damage = rand(10, 15)
-					if ( (unconscious < 5)  && (health > 0) )
+					if(AmountUnconscious() < 100 && health > 0)
 						Unconscious(rand(200, 300))
 						visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
 									"<span class='userdanger'>[M] has knocked out [name]!</span>", null, 5)
@@ -66,7 +66,7 @@
 				visible_message("<span class='danger'>[M] has attempted to punch [name]!</span>", \
 					"<span class='userdanger'>[M] has attempted to punch [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 		if("disarm")
-			if (!unconscious)
+			if(!IsUnconscious())
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (prob(25))
 					Knockdown(40)
@@ -88,7 +88,7 @@
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
-					if (unconscious < 15)
+					if(AmountUnconscious() < 300)
 						Unconscious(rand(200, 300))
 					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
 							"<span class='userdanger'>[M] has wounded [name]!</span>", null, COMBAT_MESSAGE_RANGE)

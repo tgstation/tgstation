@@ -3,9 +3,9 @@
 	desc = "A large man-sized tube sporting a complex array of surgical machinery."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
-	density = 0
-	anchored = 1
-	state_open = 1
+	density = FALSE
+	anchored = TRUE
+	state_open = TRUE
 	var/points = 0
 	var/credits = 0
 	var/list/history
@@ -98,7 +98,7 @@
 	var/dat
 	dat += "<h3> Experiment </h3>"
 	if(occupant)
-		var/obj/item/weapon/photo/P = new
+		var/obj/item/photo/P = new
 		P.photocreate(null, icon(dissection_icon(occupant), dir = SOUTH))
 		user << browse_rsc(P.img, "dissection_img")
 		dat += "<table><tr><td>"

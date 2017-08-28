@@ -2,7 +2,7 @@
 	name = "landmark"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
-	anchored = 1
+	anchored = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/landmark/New()
@@ -18,7 +18,7 @@
 	name = "start"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x"
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/landmark/start/New()
 	GLOB.start_landmarks_list += src

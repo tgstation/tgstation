@@ -38,7 +38,7 @@
 	msg = replace_pronoun(user, msg)
 
 	var/mob/living/L = user
-	for(var/obj/item/weapon/implant/I in L.implants)
+	for(var/obj/item/implant/I in L.implants)
 		I.trigger(key, L)
 
 	if(!msg)
@@ -58,7 +58,7 @@
 		user.audible_message(msg)
 	else
 		user.visible_message(msg)
-	log_emote("[key_name(user)] : [msg]")
+	log_talk(user,"[key_name(user)] : [msg]",LOGEMOTE)
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))
@@ -85,7 +85,7 @@
 		. = message_AI
 	else if(ismonkey(user) && message_monkey)
 		. = message_monkey
-	else if(istype(user, /mob/living/simple_animal) && message_simple)
+	else if(isanimal(user) && message_simple)
 		. = message_simple
 
 /datum/emote/proc/select_param(mob/user, params)

@@ -105,15 +105,14 @@
 
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
-			if(SSjob)
-				for(var/line in SSjob.job_debug)
-					dat += "[line]<BR>"
-				dat+= "*******<BR><BR>"
-				for(var/datum/job/job in SSjob.occupations)
-					if(!job)
-						continue
-					dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-				usr << browse(dat, "window=jobdebug;size=600x500")
+			for(var/line in SSjob.job_debug)
+				dat += "[line]<BR>"
+			dat+= "*******<BR><BR>"
+			for(var/datum/job/job in SSjob.occupations)
+				if(!job)
+					continue
+				dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
+			usr << browse(dat, "window=jobdebug;size=600x500")
 
 		if("show_admins")
 			var/dat = "<B>Current admins:</B><HR>"
@@ -138,7 +137,7 @@
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
 			for(var/obj/obj in thunderdome)
-				if(!istype(obj,/obj/machinery/camera))
+				if(!istype(obj, /obj/machinery/camera))
 					qdel(obj) //Clear objects
 
 			var/area/template = locate(/area/tdome/arena_source)
@@ -149,8 +148,9 @@
 			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
 			if(choice == "Yes")
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
-				for(var/datum/disease/D in SSdisease.processing)
-					D.cure(D)
+				for(var/thing in SSdisease.active_diseases)
+					var/datum/disease/D = thing
+					D.cure(0)
 		if("set_name")
 			if(!check_rights(R_ADMIN))
 				return
@@ -214,7 +214,7 @@
 		if("moveferry")
 			if(!check_rights(R_ADMIN))
 				return
-			SSblackbox.add_details("admin_secrets_fun_used","Send Centcom Ferry")
+			SSblackbox.add_details("admin_secrets_fun_used","Send CentCom Ferry")
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
 				message_admins("[key_name_admin(usr)] moved the centcom ferry")
 				log_admin("[key_name(usr)] moved the centcom ferry")
@@ -335,7 +335,7 @@
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Traitor All ([objective])")
 			for(var/mob/living/H in GLOB.player_list)
-				if(!(istype(H, /mob/living/carbon/human)||istype(H, /mob/living/silicon/))) continue
+				if(!(ishuman(H)||istype(H, /mob/living/silicon/))) continue
 				if(H.stat == 2 || !H.client || !H.mind || ispAI(H)) continue
 				if(is_special_character(H)) continue
 				H.mind.add_antag_datum(ANTAG_DATUM_TRAITOR_CUSTOM)
@@ -390,7 +390,7 @@
 			SSblackbox.add_details("admin_secrets_fun_used","Chinese Cartoons")
 			message_admins("[key_name_admin(usr)] made everything kawaii.")
 			for(var/mob/living/carbon/human/H in GLOB.mob_list)
-				H << sound('sound/ai/animes.ogg')
+				SEND_SOUND(H, sound('sound/ai/animes.ogg'))
 
 				if(H.dna.species.id == "human")
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
@@ -410,7 +410,7 @@
 						H.equip_to_slot_or_del(I, slot_w_uniform)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							I.flags |= NODROP
+							I.flags_1 |= NODROP_1
 				else
 					to_chat(H, "You're not kawaii enough for this.")
 
@@ -457,7 +457,7 @@
 				if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
-			priority_announce("Centcom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/ai/commandreport.ogg')
+			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/ai/commandreport.ogg')
 
 		if("guns")
 			if(!check_rights(R_FUN))
@@ -517,14 +517,14 @@
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only One")
 			usr.client.only_one()
-			send_to_playing_players('sound/misc/highlander.ogg')
+			sound_to_playing_players('sound/misc/highlander.ogg')
 
 		if("delayed_onlyone")
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only One")
 			usr.client.only_one_delayed()
-			send_to_playing_players('sound/misc/highlander_delayed.ogg')
+			sound_to_playing_players('sound/misc/highlander_delayed.ogg')
 
 		if("onlyme")
 			if(!check_rights(R_FUN))
@@ -537,17 +537,17 @@
 				return
 			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
 				M.check_access()
-				if (GLOB.access_maint_tunnels in M.req_access)
-					M.req_access = list(GLOB.access_brig)
+				if (ACCESS_MAINT_TUNNELS in M.req_access)
+					M.req_access = list(ACCESS_BRIG)
 			message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 		if("maint_access_engiebrig")
 			if(!check_rights(R_DEBUG))
 				return
 			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
 				M.check_access()
-				if (GLOB.access_maint_tunnels in M.req_access)
+				if (ACCESS_MAINT_TUNNELS in M.req_access)
 					M.req_access = list()
-					M.req_one_access = list(GLOB.access_brig,GLOB.access_engine)
+					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINE)
 			message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
 		if("infinite_sec")
 			if(!check_rights(R_DEBUG))
@@ -578,11 +578,11 @@
 			log_admin("[key_name(usr)] has removed everyone from purrbation.")
 
 	if(E)
-		E.processing = 0
+		E.processing = FALSE
 		if(E.announceWhen>0)
 			if(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
 				E.announceWhen = -1
-		E.processing = 1
+		E.processing = TRUE
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")
 		if (ok)

@@ -12,10 +12,12 @@ MASS SPECTROMETER
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
-	var/on = 0
+	var/on = FALSE
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=150)
 	origin_tech = "magnets=1;engineering=1"
 
@@ -57,9 +59,11 @@ MASS SPECTROMETER
 /obj/item/device/healthanalyzer
 	name = "health analyzer"
 	icon_state = "health"
-	item_state = "analyzer"
+	item_state = "healthanalyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = CONDUCT | NOBLUDGEON
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = WEIGHT_CLASS_TINY
@@ -118,12 +122,9 @@ MASS SPECTROMETER
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
-			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>")
-
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(C.has_brain_worms())
-			to_chat(user, "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>")
+			to_chat(user, "<span class='danger'>Subject suffering from heart attack: apply defibrillator immediately!</span>")
+		if(H.undergoing_liver_failure() && H.stat != DEAD)
+			to_chat(user, "<span class='danger'>Subject suffering from liver failure: apply corazone and begin a liver transplant immediately!</span>")
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
@@ -141,7 +142,7 @@ MASS SPECTROMETER
 	if (M.getCloneLoss())
 		to_chat(user, "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>")
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
-		to_chat(user, "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>")
+		to_chat(user, "\t<span class='info'>Bloodstream analysis located [M.reagents.get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>")
 	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
 		to_chat(user, "\t<span class='alert'>Subject brain function is non-existent.</span>")
 	else if (M.getBrainLoss() >= 60)
@@ -149,7 +150,13 @@ MASS SPECTROMETER
 	else if (M.getBrainLoss() >= 10)
 		to_chat(user, "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>")
 
-	// Organ damage report
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/ldamage = H.return_liver_damage()
+		if(ldamage > 10)
+			to_chat(user, "\t<span class='alert'>[ldamage > 45 ? "severe" : "minor"] liver damage detected.</span>")
+
+	// Body part damage report
 	if(iscarbon(M) && mode == 1)
 		var/mob/living/carbon/C = M
 		var/list/damaged = C.get_damaged_bodyparts(1,1)
@@ -171,7 +178,8 @@ MASS SPECTROMETER
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
 			to_chat(user, "<span class='danger'>Subject died [tdelta / 10] seconds ago, defibrillation may be possible!</span>")
 
-	for(var/datum/disease/D in M.viruses)
+	for(var/thing in M.viruses)
+		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			to_chat(user, "<span class='alert'><b>Warning: [D.form] detected</b>\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</span>")
 
@@ -244,8 +252,10 @@ MASS SPECTROMETER
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT | NOBLUDGEON
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	throw_speed = 3
@@ -318,10 +328,12 @@ MASS SPECTROMETER
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -379,9 +391,11 @@ MASS SPECTROMETER
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	origin_tech = "biotech=2"
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7

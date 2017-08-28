@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		tracking = TRUE
 
 
-/obj/item/device/gps/ui_interact(mob/user, ui_key = "gps", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
+/obj/item/device/gps/ui_interact(mob/user, ui_key = "gps", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
 	if(emped)
 		to_chat(user, "[src] fizzles weakly.")
 		return
@@ -158,11 +158,11 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	icon_state = "gps-b"
 	gpstag = "BORG0"
 	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/device/gps/internal
 	icon_state = null
-	flags = ABSTRACT
+	flags_1 = ABSTRACT_1
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
 	invisibility = INVISIBILITY_MAXIMUM

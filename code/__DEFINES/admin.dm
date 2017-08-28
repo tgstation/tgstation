@@ -30,10 +30,16 @@
 #define R_POSSESS		64
 #define R_PERMISSIONS	128
 #define R_STEALTH		256
-#define R_REJUVINATE	512
+#define R_POLL			512
 #define R_VAREDIT		1024
 #define R_SOUNDS		2048
 #define R_SPAWN			4096
+
+#if DM_VERSION > 512
+#error Remove the flag below , its been long enough
+#endif
+//legacy , remove post 512, it was replaced by R_POLL
+#define R_REJUVINATE	2 
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
@@ -44,7 +50,7 @@
 #define ADMIN_SM(user) "(<a href='?_src_=holder;subtlemessage=\ref[user]'>SM</a>)"
 #define ADMIN_TP(user) "(<a href='?_src_=holder;traitor=\ref[user]'>TP</a>)"
 #define ADMIN_KICK(user) "(<a href='?_src_=holder;boot2=\ref[user]'>KICK</a>)"
-#define ADMIN_CENTCOM_REPLY(user) "(<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)"
+#define ADMIN_CENTCOM_REPLY(user) "(<a href='?_src_=holder;CentComReply=\ref[user]'>RPLY</a>)"
 #define ADMIN_SYNDICATE_REPLY(user) "(<a href='?_src_=holder;SyndicateReply=\ref[user]'>RPLY</a>)"
 #define ADMIN_SC(user) "(<a href='?_src_=holder;adminspawncookie=\ref[user]'>SC</a>)"
 #define ADMIN_SMITE(user) "(<a href='?_src_=holder;adminsmite=\ref[user]'>SMITE</a>)"

@@ -3,10 +3,12 @@
 	desc = null //Different examine for traitors
 	item_state = "electronic"
 	icon_state = "doorCharge"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	throw_range = 4
 	throw_speed = 1
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	force = 3
 	attack_verb = list("blown up", "exploded", "detonated")
 	materials = list(MAT_METAL=50, MAT_GLASS=30)
@@ -20,10 +22,10 @@
 			qdel(src)
 		if(2)
 			if(prob(50))
-				ex_act(1)
+				ex_act(EXPLODE_DEVASTATE)
 		if(3)
 			if(prob(25))
-				ex_act(1)
+				ex_act(EXPLODE_DEVASTATE)
 
 /obj/item/device/doorCharge/Destroy()
 	if(istype(loc, /obj/machinery/door/airlock))

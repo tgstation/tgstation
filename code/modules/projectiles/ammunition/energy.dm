@@ -30,6 +30,11 @@
 	e_cost = 83
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/lasergun/old
+	projectile_type = /obj/item/projectile/beam/laser
+	e_cost = 200
+	select_name = "kill"
+
 /obj/item/ammo_casing/energy/laser/hos
 	e_cost = 100
 
@@ -87,6 +92,9 @@
 
 /obj/item/ammo_casing/energy/electrode/hos
 	e_cost = 200
+
+/obj/item/ammo_casing/energy/electrode/old
+	e_cost = 1000
 
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/item/projectile/ion
@@ -150,7 +158,7 @@
 	projectile_type = /obj/item/projectile/beam/wormhole
 	e_cost = 0
 	fire_sound = 'sound/weapons/pulse3.ogg'
-	var/obj/item/weapon/gun/energy/wormhole_projector/gun = null
+	var/obj/item/gun/energy/wormhole_projector/gun = null
 	select_name = "blue"
 
 /obj/item/ammo_casing/energy/wormhole/orange
@@ -203,9 +211,9 @@
 	fire_sound = 'sound/weapons/wave.ogg'
 	select_name = "repulse"
 	delay = 50
-	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
+	var/obj/item/gun/energy/gravity_gun/gun = null
 
-/obj/item/ammo_casing/energy/gravityrepulse/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
+/obj/item/ammo_casing/energy/gravityrepulse/New(var/obj/item/gun/energy/gravity_gun/G)
 	gun = G
 
 /obj/item/ammo_casing/energy/gravityattract
@@ -214,10 +222,10 @@
 	fire_sound = 'sound/weapons/wave.ogg'
 	select_name = "attract"
 	delay = 50
-	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
+	var/obj/item/gun/energy/gravity_gun/gun = null
 
 
-/obj/item/ammo_casing/energy/gravityattract/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
+/obj/item/ammo_casing/energy/gravityattract/New(var/obj/item/gun/energy/gravity_gun/G)
 	gun = G
 
 /obj/item/ammo_casing/energy/gravitychaos
@@ -226,9 +234,9 @@
 	fire_sound = 'sound/weapons/wave.ogg'
 	select_name = "chaos"
 	delay = 50
-	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
+	var/obj/item/gun/energy/gravity_gun/gun = null
 
-/obj/item/ammo_casing/energy/gravitychaos/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
+/obj/item/ammo_casing/energy/gravitychaos/New(var/obj/item/gun/energy/gravity_gun/G)
 	gun = G
 
 /obj/item/ammo_casing/energy/plasma

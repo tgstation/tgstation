@@ -2,7 +2,7 @@
 	icon_state = "black"
 	dir = SOUTH
 	baseturf = /turf/open/space/transit
-	flags = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
+	flags_1 = NOJAUNT_1 //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 
 /turf/open/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()
@@ -25,11 +25,15 @@
 	dir = EAST
 
 /turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
-	throw_atom(AM)
+	..()
+	if(!locate(/obj/structure/lattice) in src)
+		throw_atom(AM)
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)
 	if(!AM || istype(AM, /obj/docking_port))
 		return
+	if(AM.loc != src) 	// Multi-tile objects are "in" multiple locs but its loc is it's true placement.
+		return			// Don't move multi tile objects if their origin isnt in transit
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 

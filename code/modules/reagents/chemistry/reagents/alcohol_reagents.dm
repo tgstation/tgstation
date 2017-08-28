@@ -38,16 +38,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/mob/living/carbon/human/H = M
 		if(H.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 			H.drunkenness = max((H.drunkenness + (sqrt(volume) * boozepwr * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
+			var/obj/item/organ/liver/L = H.getorganslot("liver")
+			H.applyLiverDamage((max(sqrt(volume) * boozepwr * L.alcohol_tolerance, 0))/10)
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/item/weapon/paper))
-		var/obj/item/weapon/paper/paperaffected = O
+	if(istype(O, /obj/item/paper))
+		var/obj/item/paper/paperaffected = O
 		paperaffected.clearpaper()
 		to_chat(usr, "<span class='notice'>[paperaffected]'s ink washes away.</span>")
-	if(istype(O,/obj/item/weapon/book))
+	if(istype(O, /obj/item/book))
 		if(reac_volume >= 5)
-			var/obj/item/weapon/book/affectedbook = O
+			var/obj/item/book/affectedbook = O
 			affectedbook.dat = null
 			to_chat(usr, "<span class='notice'>Through thorough application, you wash away [affectedbook]'s writing.</span>")
 		else
@@ -114,9 +116,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
-	M.AdjustSleeping(-40, 0)
+	M.AdjustSleeping(-40, FALSE)
 	M.Jitter(5)
-	return ..()
+	..()
+	. = 1
 
 /datum/reagent/consumable/ethanol/whiskey
 	name = "Whiskey"
@@ -1051,7 +1054,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 
 /datum/reagent/consumable/ethanol/fetching_fizz/on_mob_life(mob/living/M)
-	for(var/obj/item/weapon/ore/O in orange(3, M))
+	for(var/obj/item/ore/O in orange(3, M))
 		step_towards(O, get_turf(M))
 	return ..()
 
@@ -1111,10 +1114,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.slurring += 3
 	switch(current_cycle)
 		if(51 to 200)
-			M.Sleeping(100, 0)
+			M.Sleeping(100, FALSE)
 			. = 1
 		if(201 to INFINITY)
-			M.AdjustSleeping(40, 0)
+			M.AdjustSleeping(40, FALSE)
 			M.adjustToxLoss(2, 0)
 			. = 1
 	..()

@@ -82,7 +82,7 @@
 	id = "derelict4"
 	suffix = "derelict4.dmm"
 	name = "Derelict 4"
-	description = "Centcom ferries have never crashed, will never crash, there is no current investigation into a crashed ferry, and we will not let Internal Affairs trample over high security \
+	description = "CentCom ferries have never crashed, will never crash, there is no current investigation into a crashed ferry, and we will not let Internal Affairs trample over high security \
 	information in the name of this baseless witchhunt."
 
 /datum/map_template/ruin/space/derelict5
@@ -236,6 +236,12 @@
 	description = "There seems to be a pair of buses that pulled over for repairs. What were they doing..? Their shipment sure  seems to be filled with a strange mix. \
 	Anyway, it looks like some people tried to fix it up for a long time but didn't really get anywhere..."
 
+/datum/map_template/ruin/space/oldstation
+	id = "oldstation"
+	suffix = "oldstation.dmm"
+	name = "Ancient Space Station"
+	description = "The crew of a space station awaken one hundred years after a crisis. Awaking to a derelict space station on the verge of collapse, and a hostile force of invading \
+	hivebots. Can the surviving crew overcome the odds and survive and rebuild, or will the cold embrace of the stars become their new home?"
 
 /datum/map_template/ruin/space/miracle
 	id = "miracle"

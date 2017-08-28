@@ -71,9 +71,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	desc = "A wizard spell"
 	panel = "Spells"
 	var/sound = null //The sound the spell makes when it is cast
-	anchored = 1 // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
+	anchored = TRUE // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
-	density = 0
+	density = FALSE
 	opacity = 0
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/critfailchance = 0
 	var/centcom_cancast = 1 //Whether or not the spell should be allowed on z2
 
-	var/action_icon = 'icons/mob/actions.dmi'
+	var/action_icon = 'icons/mob/actions/actions_spells.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/datum/action/spell_action/action
@@ -288,8 +288,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			var/obj/effect/overlay/spell = new /obj/effect/overlay(location)
 			spell.icon = overlay_icon
 			spell.icon_state = overlay_icon_state
-			spell.anchored = 1
-			spell.density = 0
+			spell.anchored = TRUE
+			spell.density = FALSE
 			QDEL_IN(spell, overlay_lifespan)
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
@@ -448,6 +448,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return
 
 	perform(targets,user=user)
+
+/obj/effect/proc_holder/spell/proc/updateButtonIcon()
+	action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))

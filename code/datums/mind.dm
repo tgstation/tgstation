@@ -13,7 +13,7 @@
 			mind.transfer_to(new_mob)
 
 	-	You must not assign key= or ckey= after transfer_to() since the transfer_to transfers the client for you.
-		By setting key or ckey explicitly after transfering the mind with transfer_to you will cause bugs like DCing
+		By setting key or ckey explicitly after transferring the mind with transfer_to you will cause bugs like DCing
 		the player.
 
 	-	IMPORTANT NOTE 2, if you want a player to become a ghost, use mob.ghostize() It does all the hard work for you.
@@ -97,7 +97,7 @@
 		language_holder = mob_holder.copy(src)
 
 	if(key)
-		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
+		if(new_character.key != key)					//if we're transferring into a body with a key associated which is not ours
 			new_character.ghostize(1)						//we'll need to ghostize so that key isn't mobless.
 	else
 		key = new_character.key
@@ -117,7 +117,7 @@
 		C.last_mind = src
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
-
+	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
 
@@ -267,7 +267,7 @@
 	var/list/all_contents = traitor_mob.GetAllContents()
 	var/obj/item/device/pda/PDA = locate() in all_contents
 	var/obj/item/device/radio/R = locate() in all_contents
-	var/obj/item/weapon/pen/P = locate() in all_contents //including your PDA-pen!
+	var/obj/item/pen/P = locate() in all_contents //including your PDA-pen!
 
 	var/obj/item/uplink_loc
 
@@ -396,7 +396,15 @@
 		if (assigned_role in GLOB.command_positions)
 			text += "<b>HEAD</b>|loyal|employee|headrev|rev"
 		else if (src in SSticker.mode.head_revolutionaries)
-			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+			var/last_healthy_headrev = TRUE
+			for(var/I in SSticker.mode.head_revolutionaries)
+				if(I == src)
+					continue
+				var/mob/M = I
+				if(M.z == ZLEVEL_STATION && !M.stat)
+					last_healthy_headrev = FALSE
+					break
+			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 			text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
 
 			var/list/L = current.get_contents()
@@ -629,10 +637,11 @@
 		text = "<i><b>[text]</b></i>: "
 		if (ishuman(current))
 			text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<b>HUMAN</b>|other"
-		else if (ismonkey(current))
-			var/found = 0
-			for(var/datum/disease/D in current.viruses)
-				if(istype(D, /datum/disease/transformation/jungle_fever)) found = 1
+		else if(ismonkey(current))
+			var/found = FALSE
+			for(var/datum/disease/transformation/jungle_fever/JF in current.viruses)
+				found = TRUE
+				break
 
 			if(found)
 				text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<b>INFECTED</b>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
@@ -800,11 +809,11 @@
 						possible_targets += possible_target.current
 
 				var/mob/def_target = null
-				var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain, /datum/objective/maroon)
-				if (objective&&(objective.type in objective_list) && objective:target)
-					def_target = objective:target.current
+				var/list/objective_list = typecacheof(list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain, /datum/objective/maroon))
+				if (is_type_in_typecache(objective, objective_list) && objective.target)
+					def_target = objective.target.current
 
-				var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
+				var/mob/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
 				if (!new_target)
 					return
 
@@ -812,12 +821,12 @@
 				if (new_target == "Free objective")
 					new_objective = new objective_path
 					new_objective.owner = src
-					new_objective:target = null
+					new_objective.target = null
 					new_objective.explanation_text = "Free objective"
 				else
 					new_objective = new objective_path
 					new_objective.owner = src
-					new_objective:target = new_target:mind
+					new_objective.target = new_target.mind
 					//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
 					new_objective.update_explanation_text()
 
@@ -1019,7 +1028,7 @@
 
 			if("takeequip")
 				var/list/L = current.get_contents()
-				for(var/obj/item/weapon/pen/gang/pen in L)
+				for(var/obj/item/pen/gang/pen in L)
 					qdel(pen)
 				for(var/obj/item/device/gangtool/gangtool in L)
 					qdel(gangtool)
@@ -1149,7 +1158,7 @@
 				to_chat(usr, "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>")
 
 			if("initialdna")
-				if( !changeling || !changeling.stored_profiles.len || !istype(current, /mob/living/carbon))
+				if( !changeling || !changeling.stored_profiles.len || !iscarbon(current))
 					to_chat(usr, "<span class='danger'>Resetting DNA failed!</span>")
 				else
 					var/mob/living/carbon/C = current
@@ -1342,7 +1351,8 @@
 						src = M.mind
 						//to_chat(world, "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!")
 					else if (istype(M) && length(M.viruses))
-						for(var/datum/disease/D in M.viruses)
+						for(var/thing in M.viruses)
+							var/datum/disease/D = thing
 							D.cure(0)
 			if("infected")
 				if (check_rights(R_ADMIN, 0))
@@ -1362,10 +1372,9 @@
 					var/mob/living/carbon/human/H = current
 					var/mob/living/carbon/monkey/M = current
 					if (istype(M))
-						for(var/datum/disease/D in M.viruses)
-							if (istype(D,/datum/disease/transformation/jungle_fever))
-								D.cure(0)
-								sleep(0) //because deleting of virus is doing throught spawn(0)
+						for(var/datum/disease/transformation/jungle_fever/JF in M.viruses)
+							JF.cure(0)
+							sleep(0) //because deleting of virus is doing throught spawn(0) //What
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						H = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
@@ -1443,12 +1452,13 @@
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
 		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
 		return traitordatum
-		
+
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in SSticker.mode.syndicates))
 		SSticker.mode.syndicates += src
 		SSticker.mode.update_synd_icons_added(src)
+		assigned_role = "Syndicate"
 		special_role = "Syndicate"
 		SSticker.mode.forge_syndicate_objectives(src)
 		SSticker.mode.greet_syndicate(src)
@@ -1592,9 +1602,9 @@
 	agent_landmarks.len = 4
 	scientist_landmarks.len = 4
 	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
-		if(istype(A,/obj/effect/landmark/abductor/agent))
+		if(istype(A, /obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A,/obj/effect/landmark/abductor/scientist))
+		else if(istype(A, /obj/effect/landmark/abductor/scientist))
 			scientist_landmarks[text2num(A.team)] = A
 
 	var/obj/effect/landmark/L
@@ -1623,6 +1633,15 @@
 			spell_list -= S
 			qdel(S)
 
+/datum/mind/proc/transfer_martial_arts(mob/living/new_character)
+	if(!ishuman(new_character))
+		return
+	if(martial_art)
+		if(martial_art.base) //Is the martial art temporary?
+			martial_art.remove(new_character)
+		else
+			martial_art.teach(new_character)
+
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
@@ -1641,6 +1660,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
+		S.updateButtonIcon()
 		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
@@ -1673,10 +1693,7 @@
 
 	else
 		mind = new /datum/mind(key)
-		if(SSticker)
-			SSticker.minds += mind
-		else
-			stack_trace("mind_initialize(): No SSticker ready")
+		SSticker.minds += mind
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src
@@ -1689,7 +1706,7 @@
 /mob/living/carbon/human/mind_initialize()
 	..()
 	if(!mind.assigned_role)
-		mind.assigned_role = "Assistant" //defualt
+		mind.assigned_role = "Unassigned" //default
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()

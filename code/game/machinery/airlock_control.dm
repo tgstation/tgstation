@@ -20,28 +20,28 @@
 			close(1)
 
 		if("unlock")
-			locked = 0
+			locked = FALSE
 			update_icon()
 
 		if("lock")
-			locked = 1
+			locked = TRUE
 			update_icon()
 
 		if("secure_open")
-			locked = 0
+			locked = FALSE
 			update_icon()
 
 			sleep(2)
 			open(1)
 
-			locked = 1
+			locked = TRUE
 			update_icon()
 
 		if("secure_close")
-			locked = 0
+			locked = FALSE
 			close(1)
 
-			locked = 1
+			locked = TRUE
 			sleep(2)
 			update_icon()
 
@@ -88,7 +88,7 @@
 	name = "airlock sensor"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	anchored = 1
+	anchored = TRUE
 	power_channel = ENVIRON
 
 	var/id_tag
@@ -97,8 +97,8 @@
 
 	var/datum/radio_frequency/radio_connection
 
-	var/on = 1
-	var/alert = 0
+	var/on = TRUE
+	var/alert = FALSE
 
 
 /obj/machinery/airlock_sensor/update_icon()
@@ -147,6 +147,5 @@
 	set_frequency(frequency)
 
 /obj/machinery/airlock_sensor/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()

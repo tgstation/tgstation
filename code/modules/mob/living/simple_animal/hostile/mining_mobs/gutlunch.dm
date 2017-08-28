@@ -11,7 +11,7 @@
 	emote_see = list("sniffs.", "burps.")
 	weather_immunities = list("lava","ash")
 	faction = list("mining", "ashwalker")
-	density = 0
+	density = FALSE
 	speak_chance = 1
 	turns_per_move = 8
 	obj_damage = 0
@@ -56,7 +56,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/attackby(obj/item/O, mob/user, params)
-	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+	if(stat == CONSCIOUS && istype(O, /obj/item/reagent_containers/glass))
 		udder.milkAnimal(O, user)
 		regenerate_icons()
 	else

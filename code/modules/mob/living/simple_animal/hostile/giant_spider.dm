@@ -29,7 +29,7 @@
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 10
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "hits"
@@ -80,7 +80,7 @@
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
 	gender = FEMALE
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8, /obj/item/weapon/reagent_containers/food/snacks/spidereggs = 4)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8, /obj/item/reagent_containers/food/snacks/spidereggs = 4)
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 5
@@ -145,7 +145,7 @@
 		if(busy == MOVING_TO_TARGET)
 			if(cocoon_target == C && get_dist(src,cocoon_target) > 1)
 				cocoon_target = null
-			busy = 0
+			busy = FALSE
 			stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/handle_automated_action()
@@ -154,7 +154,7 @@
 		if(!busy && prob(30))	//30% chance to stop wandering and do something
 			//first, check for potential food nearby to cocoon
 			for(var/mob/living/C in can_see)
-				if(C.stat && !istype(C,/mob/living/simple_animal/hostile/poison/giant_spider) && !C.anchored)
+				if(C.stat && !istype(C, /mob/living/simple_animal/hostile/poison/giant_spider) && !C.anchored)
 					cocoon_target = C
 					busy = MOVING_TO_TARGET
 					Goto(C, move_to_delay)
@@ -177,7 +177,7 @@
 						if(O.anchored)
 							continue
 
-						if(istype(O, /obj/item) || istype(O, /obj/structure) || istype(O, /obj/machinery))
+						if(isitem(O) || istype(O, /obj/structure) || istype(O, /obj/machinery))
 							cocoon_target = O
 							busy = MOVING_TO_TARGET
 							stop_automated_movement = 1

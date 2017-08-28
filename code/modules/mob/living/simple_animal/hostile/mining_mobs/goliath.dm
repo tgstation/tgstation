@@ -8,7 +8,7 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 40
 	ranged = 1
 	ranged_cooldown_time = 120
@@ -49,7 +49,7 @@
 		. = 1
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
-	anchored = 0
+	anchored = FALSE
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
@@ -86,7 +86,7 @@
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
 	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
 	loot = list()
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
@@ -114,10 +114,9 @@
 	for(var/obj/effect/goliath_tentacle/original/O in loc)//No more GG NO RE from 2+ goliaths simultaneously tentacling you
 		if(O != src)
 			qdel(src)
-	var/list/directions = GLOB.cardinal.Copy()
+	var/list/directions = GLOB.cardinals.Copy()
 	for(var/i in 1 to 3)
-		var/spawndir = pick(directions)
-		directions -= spawndir
+		var/spawndir = pick_n_take(directions)
 		var/turf/T = get_step(src,spawndir)
 		if(T)
 			new /obj/effect/goliath_tentacle(T)

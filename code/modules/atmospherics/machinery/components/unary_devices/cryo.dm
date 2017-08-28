@@ -4,15 +4,15 @@
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "pod-off"
-	density = 1
-	anchored = 1
-	obj_integrity = 350
+	density = TRUE
+	anchored = TRUE
 	max_integrity = 350
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
 	layer = ABOVE_WINDOW_LAYER
+	state_open = FALSE
+	circuit = /obj/item/circuitboard/machine/cryo_tube
 
 	var/on = FALSE
-	state_open = FALSE
 	var/autoeject = FALSE
 	var/volume = 100
 
@@ -22,7 +22,7 @@
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.30
 
-	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	var/obj/item/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0
 
 	var/obj/item/device/radio/radio
@@ -31,11 +31,11 @@
 
 	var/running_bob_anim = FALSE
 
+	var/escape_in_progress = FALSE
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
 	initialize_directions = dir
-	var/obj/item/weapon/circuitboard/machine/cryo_tube/B = new
-	B.apply_default_parts(src)
 
 	radio = new(src)
 	radio.keyslot = new radio_key
@@ -43,22 +43,12 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
-/obj/item/weapon/circuitboard/machine/cryo_tube
-	name = "Cryotube (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
-	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/stack/sheet/glass = 2)
-
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
 	var/C
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		C += M.rating
 
 	efficiency = initial(efficiency) * C
@@ -68,11 +58,8 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
-	qdel(radio)
-	radio = null
-	if(beaker)
-		qdel(beaker)
-		beaker = null
+	QDEL_NULL(radio)
+	QDEL_NULL(beaker)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/contents_explosion(severity, target)
@@ -104,13 +91,13 @@
 
 		else if(isalienadult(occupant))
 
-			if(istype(occupant, /mob/living/carbon/alien/humanoid/royal)) // Queen and prae
+			if(isalienroyal(occupant)) // Queen and prae
 				occupant_overlay = image(CRYOMOBS, "alienq")
 
-			else if(istype(occupant, /mob/living/carbon/alien/humanoid/hunter)) // Hunter
+			else if(isalienhunter(occupant)) // Hunter
 				occupant_overlay = image(CRYOMOBS, "alienh")
 
-			else if(istype(occupant, /mob/living/carbon/alien/humanoid/sentinel)) // Sentinel
+			else if(isaliensentinel(occupant)) // Sentinel
 				occupant_overlay = image(CRYOMOBS, "aliens")
 
 			else // Drone (or any other alien that isn't any of the above)
@@ -252,11 +239,16 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
+	if(escape_in_progress)
+		to_chat(user, "<span class='notice'>You are already trying to exit (This will take around 30 seconds)</span>")
+		return
+	escape_in_progress = TRUE
 	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300))
 		if(occupant == user) // Check they're still here.
 			open_machine()
+	escape_in_progress = FALSE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	..()
@@ -274,7 +266,7 @@
 	close_machine(target)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+	if(istype(I, /obj/item/reagent_containers/glass))
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")
@@ -301,7 +293,7 @@
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

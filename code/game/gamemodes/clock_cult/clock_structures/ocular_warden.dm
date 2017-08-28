@@ -5,7 +5,6 @@
 	clockwork_desc = "A fragile turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	icon_state = "ocular_warden"
 	unanchored_icon = "ocular_warden_unwrenched"
-	obj_integrity = 25
 	max_integrity = 25
 	construction_value = 15
 	layer = WALL_OBJ_LAYER
@@ -33,16 +32,12 @@
 	return 25
 
 /obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user, silent)
-	if(anchored)
-		if(obj_integrity <= max_integrity * 0.25)
-			if(!silent)
-				to_chat(user, "<span class='warning'>[src] is too damaged to unsecure!</span>")
-			return FAILED_UNFASTEN
-	else
+	if(!anchored)
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(OCULAR_WARDEN_EXCLUSION_RANGE, src))
-			if(!silent)
-				to_chat(user, "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>")
-			return FAILED_UNFASTEN
+			if(W.anchored)
+				if(!silent)
+					to_chat(user, "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>")
+				return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
 /obj/structure/destructible/clockwork/ocular_warden/ratvar_act()
@@ -80,7 +75,7 @@
 					if(GLOB.ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
-			else if(istype(target,/obj/mecha))
+			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
@@ -95,23 +90,23 @@
 			if(isliving(target))
 				var/mob/living/L = target
 				to_chat(L, "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [GLOB.ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
-			else if(istype(target,/obj/mecha))
+			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
 				to_chat(M.occupant, "<span class='heavy_brass'>\"I SEE YOU!\"</span>" )
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
 				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
 			else
-				setDir(pick(GLOB.cardinal))//Random rotation
+				setDir(pick(GLOB.cardinals))//Random rotation
 
 /obj/structure/destructible/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		var/obj/item/weapon/storage/book/bible/B = L.bible_check()
+		var/obj/item/storage/book/bible/B = L.bible_check()
 		if(B)
 			if(!(B.resistance_flags & ON_FIRE))
 				to_chat(L, "<span class='warning'>Your [B.name] bursts into flames!</span>")
-			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
+			for(var/obj/item/storage/book/bible/BI in L.GetAllContents())
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
 			continue

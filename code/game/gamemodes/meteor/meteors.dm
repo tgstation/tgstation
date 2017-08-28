@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
 	while(!isspaceturf(pickedstart))
-		var/startSide = pick(GLOB.cardinal)
+		var/startSide = pick(GLOB.cardinals)
 		pickedstart = spaceDebrisStartLoc(startSide, ZLEVEL_STATION)
 		pickedgoal = spaceDebrisFinishLoc(startSide, ZLEVEL_STATION)
 		max_i--
@@ -88,8 +88,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	desc = "You should probably run instead of gawking at this."
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "small"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/hits = 4
 	var/hitpwr = 2 //Level of ex_act to be called on hit.
 	var/dest
@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/threat = 0 // used for determining which meteors are most interesting
 	var/lifetime = DEFAULT_METEOR_LIFETIME
 
-	var/list/meteordrop = list(/obj/item/weapon/ore/iron)
+	var/list/meteordrop = list(/obj/item/ore/iron)
 	var/dropamt = 2
 
 /obj/effect/meteor/Move()
@@ -125,12 +125,11 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/New()
 	..()
 	GLOB.meteor_list += src
-	if(SSaugury)
-		SSaugury.register_doom(src, threat)
+	SSaugury.register_doom(src, threat)
 	SpinAnimation()
 	QDEL_IN(src, lifetime)
 
-/obj/effect/meteor/Bump(atom/A)
+/obj/effect/meteor/Collide(atom/A)
 	if(A)
 		ram_turf(get_turf(A))
 		playsound(src.loc, meteorsound, 40, 1)
@@ -171,8 +170,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 #undef METEOR_MEDAL
 
-/obj/effect/meteor/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/pickaxe))
+/obj/effect/meteor/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/pickaxe))
 		make_debris()
 		qdel(src)
 	else
@@ -185,6 +184,9 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/proc/meteor_effect()
 	if(heavy)
+		var/sound/meteor_sound = sound(meteorsound)
+		var/random_frequency = get_rand_frequency()
+
 		for(var/mob/M in GLOB.player_list)
 			if((M.orbiting) && (SSaugury.watchers[M]))
 				continue
@@ -193,7 +195,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 				continue
 			var/dist = get_dist(M.loc, src.loc)
 			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
-			M.playsound_local(src.loc, meteorsound, 50, 1, get_rand_frequency(), 10)
+			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, S = meteor_sound)
 
 ///////////////////////
 //Meteor types
@@ -207,7 +209,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	hits = 1
 	hitpwr = 3
 	meteorsound = 'sound/weapons/gunshot_smg.ogg'
-	meteordrop = list(/obj/item/weapon/ore/glass)
+	meteordrop = list(/obj/item/ore/glass)
 	threat = 1
 
 //Medium-sized
@@ -240,7 +242,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	hits = 5
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = list(/obj/item/weapon/ore/plasma)
+	meteordrop = list(/obj/item/ore/plasma)
 	threat = 20
 
 /obj/effect/meteor/flaming/meteor_effect()
@@ -252,7 +254,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	name = "glowing meteor"
 	icon_state = "glowing"
 	heavy = 1
-	meteordrop = list(/obj/item/weapon/ore/uranium)
+	meteordrop = list(/obj/item/ore/uranium)
 	threat = 15
 
 
@@ -270,13 +272,13 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	hits = 2
 	heavy = 1
 	meteorsound = 'sound/effects/blobattack.ogg'
-	meteordrop = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human, /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
+	meteordrop = list(/obj/item/reagent_containers/food/snacks/meat/slab/human, /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
 
 /obj/effect/meteor/meaty/New()
 	for(var/path in meteordrop)
-		if(path == /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant)
+		if(path == /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant)
 			meteordrop -= path
 			meteordrop += pick(subtypesof(path))
 
@@ -295,14 +297,14 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	if(!isspaceturf(T))
 		new /obj/effect/decal/cleanable/blood(T)
 
-/obj/effect/meteor/meaty/Bump(atom/A)
+/obj/effect/meteor/meaty/Collide(atom/A)
 	A.ex_act(hitpwr)
 	get_hit()
 
 //Meaty Ore Xeno edition
 /obj/effect/meteor/meaty/xeno
 	color = "#5EFF00"
-	meteordrop = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno, /obj/item/organ/tongue/alien)
+	meteordrop = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno, /obj/item/organ/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
 
 /obj/effect/meteor/meaty/xeno/New()
@@ -322,7 +324,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	hitpwr = 1
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = list(/obj/item/weapon/ore/plasma)
+	meteordrop = list(/obj/item/ore/plasma)
 	threat = 50
 
 /obj/effect/meteor/tunguska/Move()
@@ -334,7 +336,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	..()
 	explosion(src.loc, 5, 10, 15, 20, 0)
 
-/obj/effect/meteor/tunguska/Bump()
+/obj/effect/meteor/tunguska/Collide()
 	..()
 	if(prob(20))
 		explosion(src.loc,2,4,6,8)
@@ -353,7 +355,7 @@ GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 	hits = 10
 	heavy = 1
 	dropamt = 1
-	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin)
+	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/reagent_containers/food/snacks/grown/pumpkin)
 	threat = 100
 
 /obj/effect/meteor/pumpkin/New()

@@ -4,7 +4,7 @@
 	name = "mk-honk prototype shoes"
 	desc = "Lost prototype of advanced clown tech. Powered by bananium, these shoes leave a trail of chaos in their wake."
 	icon_state = "clown_prototype_off"
-	var/on = 0
+	var/on = FALSE
 	var/datum/material_container/bananium
 	actions_types = list(/datum/action/item_action/toggle)
 
@@ -20,11 +20,11 @@
 		else
 			footstep++
 
-		new/obj/item/weapon/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180))) //honk
+		new/obj/item/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180))) //honk
 		bananium.use_amount_type(100, MAT_BANANIUM)
 		if(bananium.amount(MAT_BANANIUM) < 100)
 			on = !on
-			flags &= ~NOSLIP
+			flags_1 &= ~NOSLIP_1
 			update_icon()
 			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
 	else
@@ -63,9 +63,9 @@
 		update_icon()
 		to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>")
 		if(on)
-			flags |= NOSLIP
+			flags_1 |= NOSLIP_1
 		else
-			flags &= ~NOSLIP
+			flags_1 &= ~NOSLIP_1
 	else
 		to_chat(user, "<span class='warning'>You need bananium to turn the prototype shoes on!</span>")
 

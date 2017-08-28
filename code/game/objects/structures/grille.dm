@@ -3,13 +3,12 @@
 	name = "grille"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
-	density = 1
-	anchored = 1
-	flags = CONDUCT
+	density = TRUE
+	anchored = TRUE
+	flags_1 = CONDUCT_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = BELOW_OBJ_LAYER
 	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
-	obj_integrity = 50
 	max_integrity = 50
 	integrity_failure = 20
 	var/rods_type = /obj/item/stack/rods
@@ -18,7 +17,7 @@
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
 
-/obj/structure/grille/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+/obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
@@ -28,7 +27,7 @@
 			else return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
 	return FALSE
 
-/obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+/obj/structure/grille/rcd_act(mob/user, var/obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the grille.</span>")
@@ -50,17 +49,11 @@
 		new /obj/structure/grille/ratvar(src.loc)
 	qdel(src)
 
-/obj/structure/grille/Bumped(atom/user)
-	if(ismob(user))
-		var/tile_density = FALSE
-		for(var/atom/movable/AM in get_turf(src))
-			if(AM == src)
-				continue
-			if(AM.density && AM.layer >= layer)
-				tile_density = TRUE
-				break
-		if(!tile_density)
-			shock(user, 70)
+/obj/structure/grille/CollidedWith(atom/movable/AM)
+	if(!ismob(AM))
+		return
+	var/mob/M = AM
+	shock(M, 70)
 
 
 /obj/structure/grille/attack_paw(mob/user)
@@ -90,8 +83,7 @@
 		take_damage(20, BRUTE, "melee", 1)
 
 
-/obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0) return 1
+/obj/structure/grille/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
 		return 1
 	else
@@ -106,14 +98,14 @@
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSGRILLE)
 
-/obj/structure/grille/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(istype(W, /obj/item/wirecutters))
 		if(!shock(user, 100))
 			playsound(loc, W.usesound, 100, 1)
 			deconstruct()
-	else if((istype(W, /obj/item/weapon/screwdriver)) && (isturf(loc) || anchored))
+	else if((istype(W, /obj/item/screwdriver)) && (isturf(loc) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, W.usesound, 100, 1)
 			anchored = !anchored
@@ -157,14 +149,14 @@
 					WD = new/obj/structure/window/fulltile(loc) //normal window
 				WD.setDir(dir_to_set)
 				WD.ini_dir = dir_to_set
-				WD.anchored = 0
+				WD.anchored = FALSE
 				WD.state = 0
 				ST.use(2)
 				to_chat(user, "<span class='notice'>You place [WD] on [src].</span>")
 			return
 //window placing end
 
-	else if(istype(W, /obj/item/weapon/shard) || !shock(user, 70))
+	else if(istype(W, /obj/item/shard) || !shock(user, 70))
 		return ..()
 
 /obj/structure/grille/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -181,14 +173,14 @@
 /obj/structure/grille/deconstruct(disassembled = TRUE)
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
-	if(!(flags&NODECONSTRUCT))
+	if(!(flags_1&NODECONSTRUCT_1))
 		var/obj/R = new rods_type(src.loc, rods_amount)
 		transfer_fingerprints_to(R)
 		qdel(src)
 	..()
 
 /obj/structure/grille/obj_break()
-	if(!broken && !(flags & NODECONSTRUCT))
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		new broken_type(src.loc)
 		var/obj/R = new rods_type(src.loc, rods_broken)
 		transfer_fingerprints_to(R)
@@ -234,12 +226,12 @@
 				C.powernet.load += C.powernet.avail * 0.0375 // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
 
-/obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
-	return 0
+/obj/structure/grille/get_dumping_location(obj/item/storage/source,mob/user)
+	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
 	icon_state = "brokengrille"
-	density = 0
+	density = FALSE
 	obj_integrity = 20
 	broken = 1
 	rods_amount = 1
@@ -275,7 +267,7 @@
 
 /obj/structure/grille/ratvar/broken
 	icon_state = "brokenratvargrille"
-	density = 0
+	density = FALSE
 	obj_integrity = 20
 	broken = 1
 	rods_amount = 1

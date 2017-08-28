@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(user)
 		ui_interact(user)
 
-/obj/item/device/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/item/device/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -140,6 +140,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 /obj/item/device/radio/uplink/Initialize()
 	. = ..()
 	icon_state = "radio"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	hidden_uplink = new(src)
 	hidden_uplink.active = TRUE
 	hidden_uplink.lockable = FALSE
@@ -154,7 +156,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	hidden_uplink.active = TRUE
 	hidden_uplink.lockable = FALSE
 
-/obj/item/weapon/pen/uplink/Initialize()
+/obj/item/pen/uplink/Initialize()
 	. = ..()
 	hidden_uplink = new(src)
 	traitor_unlock_degrees = 360

@@ -149,10 +149,10 @@
 
 /datum/teleport/instant/science/setPrecision(aprecision)
 	..()
-	if(istype(teleatom, /obj/item/weapon/storage/backpack/holding))
+	if(istype(teleatom, /obj/item/storage/backpack/holding))
 		precision = rand(1,100)
 
-	var/list/bagholding = teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)
+	var/list/bagholding = teleatom.search_contents_for(/obj/item/storage/backpack/holding)
 	if(bagholding.len)
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(isliving(teleatom))
@@ -206,8 +206,8 @@
 			continue
 
 		if(extended_safety_checks)
-			if(istype(F, /turf/open/floor/plating/lava)) //chasms aren't /floor, and so are pre-filtered
-				var/turf/open/floor/plating/lava/L = F
+			if(istype(F, /turf/open/lava)) //chasms aren't /floor, and so are pre-filtered
+				var/turf/open/lava/L = F
 				if(!L.is_safe())
 					continue
 

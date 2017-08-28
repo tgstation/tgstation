@@ -97,11 +97,11 @@
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
-	M.AdjustSleeping(600, 0)
+	M.AdjustSleeping(600, FALSE)
 	. = 1
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M)
-	M.AdjustSleeping(40, 0)
+	M.AdjustSleeping(40, FALSE)
 	..()
 	. = 1
 
@@ -390,7 +390,7 @@
 	T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume*2)
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
-		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
 		T.assume_air(lowertemp)

@@ -16,8 +16,8 @@
 	name = "AI"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	canmove = 0
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
@@ -78,8 +78,6 @@
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
-
-	var/obj/machinery/camera/portable/builtInCamera
 
 	var/obj/structure/AIcore/deactivated/linked_core //For exosuit control
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
@@ -151,7 +149,7 @@
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
 
-	builtInCamera = new /obj/machinery/camera/portable(src)
+	builtInCamera = new (src)
 	builtInCamera.network = list("SS13")
 
 
@@ -164,6 +162,9 @@
 
 	. = ..()
 
+/mob/living/silicon/ai/IgniteMob()
+	fire_stacks = 0
+	. = ..()
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
@@ -874,10 +875,10 @@
 /mob/living/silicon/ai/reset_perspective(atom/A)
 	if(camera_light_on)
 		light_cameras()
-	if(istype(A,/obj/machinery/camera))
+	if(istype(A, /obj/machinery/camera))
 		current = A
 	if(client)
-		if(istype(A, /atom/movable))
+		if(ismovableatom(A))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
@@ -960,6 +961,7 @@
 /datum/action/innate/deploy_shell
 	name = "Deploy to AI Shell"
 	desc = "Wirelessly control a specialized cyborg shell."
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_shell"
 
 /datum/action/innate/deploy_shell/Trigger()
@@ -971,6 +973,7 @@
 /datum/action/innate/deploy_last_shell
 	name = "Reconnect to shell"
 	desc = "Reconnect to the most recently used AI shell."
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_last_shell"
 	var/mob/living/silicon/robot/last_used_shell
 

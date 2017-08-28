@@ -81,7 +81,7 @@
 
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
+	if(istype(I, /obj/item/screwdriver) && stat != DEAD)
 		if(health < maxHealth)
 			to_chat(user, "<span class='notice'>You start to tighten loose screws on [src]...</span>")
 			if(do_after(user,80*I.toolspeed,target=user))
@@ -92,7 +92,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src]'s screws can't get any tighter!</span>")
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
-	else if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
+	else if(istype(I, /obj/item/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
 							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
 		playsound(src, I.usesound, 50, 1)
@@ -136,7 +136,7 @@
 			"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
 		to_chat(src, laws)
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
-		hacked = 1
+		hacked = TRUE
 		mind.special_role = "hacked drone"
 		seeStatic = 0 //I MUST SEE THEIR TERRIFIED FACES
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
@@ -152,7 +152,7 @@
 		laws = initial(laws)
 		to_chat(src, laws)
 		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
-		hacked = 0
+		hacked = FALSE
 		mind.special_role = null
 		seeStatic = initial(seeStatic)
 		ventcrawler = initial(ventcrawler)
@@ -196,5 +196,6 @@
 
 /datum/action/generic/drone/select_filter
 	name = "Select Vision Filter"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "drone_vision"
 	procname = /mob/living/simple_animal/drone/verb/toggle_statics

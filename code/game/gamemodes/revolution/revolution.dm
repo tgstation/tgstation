@@ -70,7 +70,7 @@
 
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.
-		if(istype(rev_mind.current,/mob/dead/new_player))
+		if(isnewplayer(rev_mind.current))
 			head_revolutionaries -= rev_mind
 			var/list/newcandidates = shuffle(antag_candidates)
 			if(newcandidates.len == 0)
@@ -79,7 +79,7 @@
 				var/datum/mind/lenin = M
 				antag_candidates -= lenin
 				newcandidates -= lenin
-				if(istype(lenin.current,/mob/dead/new_player)) //We don't want to make the same mistake again
+				if(isnewplayer(lenin.current)) //We don't want to make the same mistake again
 					continue
 				else
 					var/mob/Nm = lenin.current
@@ -360,7 +360,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
 	var/list/targets = list()
-	if(head_revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
+	if(head_revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution))
 		var/num_revs = 0
 		var/num_survivors = 0
 		for(var/mob/living/carbon/survivor in GLOB.living_mob_list)
@@ -377,14 +377,14 @@
 		text += "<br>"
 		to_chat(world, text)
 
-	if(revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
+	if(revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution))
 		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
 		for(var/datum/mind/rev in revolutionaries)
 			text += printplayer(rev, 1)
 		text += "<br>"
 		to_chat(world, text)
 
-	if( head_revolutionaries.len || revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution) )
+	if( head_revolutionaries.len || revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution) )
 		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
 		var/list/heads = get_all_heads()
 		for(var/datum/mind/head in heads)

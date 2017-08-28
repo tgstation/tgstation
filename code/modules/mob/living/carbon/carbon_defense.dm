@@ -24,9 +24,9 @@
 
 /mob/living/carbon/get_ear_protection()
 	var/number = ..()
-	if(ears && HAS_SECONDARY_FLAG(ears, BANG_PROTECT))
+	if(ears && (ears.flags_2 & BANG_PROTECT_2))
 		number += 1
-	if(head && HAS_SECONDARY_FLAG(head, BANG_PROTECT))
+	if(head && (head.flags_2 & BANG_PROTECT_2))
 		number += 1
 	var/obj/item/organ/ears/E = getorganslot("ears")
 	if(!E)
@@ -52,22 +52,27 @@
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
 
-/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked = 0)
+/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
 	if(!skipcatch)	//ugly, but easy
 		if(in_throw_mode && !get_active_held_item())	//empty active hand and we're in throw mode
 			if(canmove && !restrained())
 				if(istype(AM, /obj/item))
 					var/obj/item/I = AM
 					if(isturf(I.loc))
-						put_in_active_hand(I)
-						visible_message("<span class='warning'>[src] catches [I]!</span>")
-						throw_mode_off()
-						return 1
+						I.attack_hand(src)
+						if(get_active_held_item() == I) //if our attack_hand() picks up the item...
+							visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
+							throw_mode_off()
+							return 1
 	..()
 
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
-	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
+	var/obj/item/bodypart/affecting
+	if(user == src)
+		affecting = get_bodypart(check_zone(user.zone_selected)) //we're self-mutilating! yay!
+	else
+		affecting = get_bodypart(ran_zone(user.zone_selected))
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	send_item_attack_message(I, user, affecting.name)
@@ -106,11 +111,13 @@
 
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
 
-	for(var/datum/disease/D in viruses)
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
 		if(D.IsSpreadByTouch())
 			user.ContractDisease(D)
 
-	for(var/datum/disease/D in user.viruses)
+	for(var/thing in user.viruses)
+		var/datum/disease/D = thing
 		if(D.IsSpreadByTouch())
 			ContractDisease(D)
 
@@ -123,11 +130,13 @@
 
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
-	for(var/datum/disease/D in viruses)
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
 		if(D.IsSpreadByTouch())
 			M.ContractDisease(D)
 
-	for(var/datum/disease/D in M.viruses)
+	for(var/thing in M.viruses)
+		var/datum/disease/D = thing
 		if(D.IsSpreadByTouch())
 			ContractDisease(D)
 
@@ -136,7 +145,8 @@
 		return 0
 
 	if(..()) //successful monkey bite.
-		for(var/datum/disease/D in M.viruses)
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
 			ForceContractDisease(D)
 		return 1
 
@@ -200,7 +210,7 @@
 	..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
+	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
 		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
@@ -261,6 +271,9 @@
 
 	var/damage = intensity - get_eye_protection()
 	if(.) // we've been flashed
+		var/obj/item/organ/eyes/eyes = getorganslot("eye_sight")
+		if (!eyes)
+			return
 		if(visual)
 			return
 
@@ -277,15 +290,15 @@
 			to_chat(src, "<span class='warning'>Your eyes itch and burn severely!</span>")
 			adjust_eye_damage(rand(12, 16))
 
-		if(eye_damage > 10)
+		if(eyes.eye_damage > 10)
 			blind_eyes(damage)
 			blur_eyes(damage * rand(3, 6))
 
-			if(eye_damage > 20)
-				if(prob(eye_damage - 20))
+			if(eyes.eye_damage > 20)
+				if(prob(eyes.eye_damage - 20))
 					if(become_nearsighted())
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
-				else if(prob(eye_damage - 25))
+				else if(prob(eyes.eye_damage - 25))
 					if(become_blind())
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 			else
@@ -321,7 +334,7 @@
 					// you need earmuffs, inacusiate, or replacement
 			else if(ears.ear_damage >= 5)
 				to_chat(src, "<span class='warning'>Your ears start to ring!</span>")
-			src << sound('sound/weapons/flash_ring.ogg',0,1,0,250)
+			SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',0,1,0,250))
 		return effect_amount //how soundbanged we are
 
 

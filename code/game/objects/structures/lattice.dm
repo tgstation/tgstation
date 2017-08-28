@@ -3,10 +3,9 @@
 	desc = "A lightweight support lattice. These hold our station together."
 	icon = 'icons/obj/smooth_structures/lattice.dmi'
 	icon_state = "lattice"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 50)
-	obj_integrity = 50
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	var/number_of_rods = 1
@@ -15,7 +14,7 @@
 	/turf/closed/wall,
 	/obj/structure/falsewall)
 	smooth = SMOOTH_MORE
-	//	flags = CONDUCT
+	//	flags = CONDUCT_1
 
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()
@@ -33,7 +32,7 @@
 		new /obj/structure/lattice/clockwork/large(loc)
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/weapon/wirecutters))
+	if(istype(C, /obj/item/wirecutters))
 		to_chat(user, "<span class='notice'>Slicing [name] joints ...</span>")
 		deconstruct()
 	else
@@ -41,7 +40,7 @@
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
 /obj/structure/lattice/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/rods(get_turf(src), number_of_rods)
 	qdel(src)
 

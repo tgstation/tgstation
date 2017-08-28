@@ -199,7 +199,7 @@
 			//Cut out the name so it doesn't trigger commands
 			found_string = L.first_name()
 
-		else if(L.mind && dd_hasprefix(message, L.mind.assigned_role))
+		else if(L.mind && L.mind.assigned_role && dd_hasprefix(message, L.mind.assigned_role))
 			specific_listeners += L //focus on those with the specified job
 			//Cut out the job so it doesn't trigger commands
 			found_string = L.mind.assigned_role
@@ -290,9 +290,8 @@
 	//HALLUCINATE
 	else if((findtext(message, hallucinate_words)))
 		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			new /obj/effect/hallucination/delusion(get_turf(L),L,null,150 * power_multiplier,0)
+		for(var/mob/living/carbon/C in listeners)
+			new /datum/hallucination/delusion(C, TRUE, null,150 * power_multiplier,0)
 
 	//WAKE UP
 	else if((findtext(message, wakeup_words)))
@@ -407,7 +406,7 @@
 		for(var/i=1, i<=(5*power_multiplier), i++)
 			for(var/V in listeners)
 				var/mob/living/L = V
-				step(L, direction ? direction : pick(GLOB.cardinal))
+				step(L, direction ? direction : pick(GLOB.cardinals))
 			sleep(10)
 
 	//WALK
@@ -555,7 +554,7 @@
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/items/bikehorn.ogg', 300, 1), 25)
 		if(user.mind && user.mind.assigned_role == "Clown")
 			for(var/mob/living/carbon/C in listeners)
-				C.slip(0,7 * power_multiplier)
+				C.slip(140 * power_multiplier)
 			cooldown = COOLDOWN_MEME
 
 	//RIGHT ROUND
