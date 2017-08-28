@@ -718,7 +718,6 @@
 				stat = SOFT_CRIT
 			else
 				stat = CONSCIOUS
-			resting = FALSE
 			adjust_blindness(-1)
 			update_canmove()
 		else if(health <= HEALTH_THRESHOLD_CRIT)
