@@ -4,15 +4,17 @@ All ShuttleMove procs go here
 
 /************************************Base procs************************************/
 
-// Called on every turf in the shuttle region, return false if it doesn't want to move
-/turf/proc/fromShuttleMove(turf/newT, turf_type, baseturf_type)
-	if(type == turf_type && baseturf == baseturf_type)
-		return FALSE
-	return TRUE
+// Called on every turf in the shuttle region, returns a bitflag for allowed movements of that turf
+// returns the new move_mode (based on the old)
+/turf/proc/fromShuttleMove(turf/newT, turf_type, list/baseturf_cache, move_mode)
+	if(!(move_mode & MOVE_AREA) || (istype(src, turf_type) && baseturf_cache[baseturf]))
+		return move_mode
+	return move_mode | MOVE_TURF | MOVE_CONTENTS
 
 // Called from the new turf before anything has been moved
 // Only gets called if fromShuttleMove returns true first
-/turf/proc/toShuttleMove(turf/oldT, shuttle_dir)
+// returns the new move_mode (based on the old)
+/turf/proc/toShuttleMove(turf/oldT, shuttle_dir, move_mode)
 	for(var/i in contents)
 		var/atom/movable/thing = i
 		if(ismob(thing))
@@ -38,7 +40,7 @@ All ShuttleMove procs go here
 			else
 				qdel(thing)
 
-	return TRUE
+	return move_mode
 
 // Called on the old turf to move the turf data
 /turf/proc/onShuttleMove(turf/newT, turf_type, baseturf_type, rotation, list/movement_force, move_dir)
@@ -102,13 +104,16 @@ All ShuttleMove procs go here
 /////////////////////////////////////////////////////////////////////////////////////
 
 // Called on areas before anything has been moved
-/area/proc/beforeShuttleMove()
-	return TRUE
+// returns the new move_mode (based on the old)
+/area/proc/beforeShuttleMove(list/shuttle_areas)
+	if(!shuttle_areas[src])
+		return NONE
+	return MOVE_AREA
 
 // Called on areas to move their turf between areas
 /area/proc/onShuttleMove(turf/oldT, turf/newT, area/underlying_old_area)
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
-		return
+		return TRUE
 
 	contents -= oldT
 	underlying_old_area.contents += oldT
