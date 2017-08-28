@@ -11,9 +11,12 @@ GLOBAL_PROTECT(reboot_mode)
 	ExportService("[SERVICE_REQUEST_IRC_BROADCAST] [msg]")
 
 /world/proc/ServiceEndProcess()
-	log_world("Sending shutdown request!");
-	sleep(1)	//flush the buffers
-	ExportService(SERVICE_REQUEST_KILL_PROCESS)
+	log_world("Self terminating!");
+	sleep(1)	//flush the chat buffers
+	call("code/modules/server_tools/terminate/terminate.dll", "TerminateSelf")()
+	//if we get here...
+	log_world("Failed to self terminate!")
+	SEND_SOUND(world, sound('sound/voice/binsult.ogg'))
 
 //called at the exact moment the world is supposed to reboot
 /world/proc/ServiceReboot()

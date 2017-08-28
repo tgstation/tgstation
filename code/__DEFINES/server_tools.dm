@@ -26,7 +26,7 @@
 #define SERVICE_CMD_PARAM_TARGET "target"
 #define SERVICE_CMD_PARAM_SENDER "sender"
 
-#define SERVICE_REQUEST_KILL_PROCESS "killme"
+//#define SERVICE_REQUEST_KILL_PROCESS "killme"	deprecated
 #define SERVICE_REQUEST_IRC_BROADCAST "irc"
 #define SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE "send2irc"
 #define SERVICE_REQUEST_WORLD_REBOOT "worldreboot"
