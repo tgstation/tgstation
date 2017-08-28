@@ -34,6 +34,7 @@
 		projtwo.def_zone = "chest"
 		INVOKE_ASYNC(src, .proc/do_fire, projone, projtwo)
 	my_atom.next_firetime = world.time + fire_delay
+	log_attack("The spacepod \[name: [my_atom.name], pilot: [my_atom.pilot]\], fired the [name].")
 
 
 /obj/item/device/spacepod_equipment/weaponry/proc/do_fire(obj/item/projectile/projone, obj/item/projectile/projtwo)
