@@ -390,6 +390,16 @@
 				H.attack_ai(src) //may as well recycle
 			else
 				to_chat(src, "<span class='notice'>Unable to locate the holopad.</span>")
+
+	if(href_list["remotedoor"])
+		var/obj/machinery/door/airlock/A = locate(href_list["remotedoor"])
+		if(stat == CONSCIOUS)
+			if(A && near_camera(A))
+				A.AIShiftClick(src)
+				src << "<span class='notice'>[A] opened.</span>"
+			else
+				src << "<span class='notice'>Unable to locate airlock. It may be out of camera range.</span>"
+
 	if(href_list["track"])
 		var/string = href_list["track"]
 		trackable_mobs()
