@@ -375,16 +375,16 @@
 	var/list/sections = list(
 		"traitor", // "traitorchan",
 		"changeling",
-		"monkey",
 		"nuclear",
 		"wizard",
 		"revolution",
 		"gang",
-		"devil",
-		"ninja",
 		"cult",
 		"clockcult",
-		"abductor"
+		"abductor",
+		"devil",
+		"ninja",
+		"monkey"
 	)
 	var/text = ""
 
@@ -766,7 +766,10 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	usr << browse(out, "window=edit_memory[src];size=575x600")
+	var/datum/browser/popup = new(usr, "edit_memory", "", 600, 600)
+	popup.set_content(out)
+	popup.open()
+	//usr << browse(out, "window=edit_memory[src];size=575x600")
 
 
 /datum/mind/Topic(href, href_list)
