@@ -1200,7 +1200,7 @@
 				qdel(H.head)
 				qdel(H.shoes)
 				qdel(H.wear_id)
-				qdel(H.wear_pda)
+				qdel(H.pda)
 				qdel(H.wear_suit)
 				qdel(H.w_uniform)
 
@@ -1477,7 +1477,7 @@
 			qdel(H.head)
 			qdel(H.shoes)
 			qdel(H.wear_id)
-			qdel(H.wear_pda)
+			qdel(H.pda)
 			qdel(H.wear_suit)
 			qdel(H.w_uniform)
 

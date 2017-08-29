@@ -20,6 +20,8 @@
 	var/obj/item/tank/internal = null
 	var/obj/item/head = null
 
+	var/obj/item/pda/pda = null
+
 	var/obj/item/gloves = null //only used by humans
 	var/obj/item/shoes = null //only used by humans.
 	var/obj/item/clothing/glasses/glasses = null //only used by humans.
