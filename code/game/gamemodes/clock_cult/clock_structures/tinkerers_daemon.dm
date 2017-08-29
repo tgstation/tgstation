@@ -33,7 +33,7 @@
 				to_chat(user, "<span class='brass'>It is currently producing random components.</span>")
 		to_chat(user, "<span class='nezbere_small'>It will produce a component every <b>[round((production_cooldown*0.1) * get_efficiency_mod(TRUE), 0.1)]</b> seconds and requires at least the following power for each component type:</span>")
 		for(var/i in GLOB.clockwork_component_cache)
-			to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)]:</i> <b>[get_component_cost(i)]W</b> <i>([GLOB.clockwork_component_cache[i]] exist[GLOB.clockwork_component_cache[i] == 1 ? "s" : ""])</i></span>")
+			to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)]:</i> <b>[DisplayPower(get_component_cost(i))]</b> <i>([GLOB.clockwork_component_cache[i]] exist[GLOB.clockwork_component_cache[i] == 1 ? "s" : ""])</i></span>")
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/forced_disable(bad_effects)
 	if(active)
@@ -80,7 +80,7 @@
 			if("Specific Component")
 				var/list/components = list()
 				for(var/i in GLOB.clockwork_component_cache)
-					components["[get_component_name(i)] ([get_component_cost(i)]W)"] = i
+					components["[get_component_name(i)] ([DisplayPower(get_component_cost(i))])"] = i
 				var/input_component = input(user, "Choose a component type.", name) as null|anything in components
 				component_id_to_produce = components[input_component]
 				servants = 0

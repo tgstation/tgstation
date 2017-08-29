@@ -357,6 +357,17 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/M = E/(SPEED_OF_LIGHT_SQ)
 	return M
 
+//Takes the value of energy used/produced/ect.
+//Returns a text value of that number in W, kW, MW, or GW.
+/proc/DisplayPower(var/powerused)
+	if(powerused < 1000) //Less than a kW
+		return "[powerused] W"
+	else if(powerused < 1000000) //Less than a MW
+		return "[round((powerused * 0.001),0.01)] kW"
+	else if(powerused < 1000000000) //Less than a GW
+		return "[round((powerused * 0.000001),0.001)] MW"
+	return "[round((powerused * 0.000000001),0.0001)] GW"
+
 /proc/key_name(whom, include_link = null, include_name = 1)
 	var/mob/M
 	var/client/C

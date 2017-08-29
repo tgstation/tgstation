@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - tweak: "All power systems will now report their wattage values in Watts, Kilowatts, Megawatts, and Gigawatts. Gone are the days of seeing 48760 W total load when working with an APC!"
