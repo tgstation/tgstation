@@ -82,8 +82,9 @@
 /obj/effect/nettingportal/proc/pop(teletarget)
 	to_chat(world, "pop: [teletarget]")//debug
 	if(teletarget)
+		var/TT = get_turf(teletarget)
 		for(var/mob/living/L in get_turf(src))
-			do_teleport(L, get_turf(teletarget), 2)//teleport what's in the tile to the beacon
+			do_teleport(L, TT, 2)//teleport what's in the tile to the beacon
 	else
 		for(var/mob/living/L in get_turf(src))
 			do_teleport(L, L, 15) //Otherwise it just warps you off somewhere.
