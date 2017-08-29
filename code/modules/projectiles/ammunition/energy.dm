@@ -185,8 +185,9 @@
 	variance = 40
 	var/obj/item/gun/energy/e_gun/dragnet/drag
 
-/obj/item/ammo_casing/energy/net/New(var/obj/item/gun/energy/e_gun/dragnet/D)
-	drag = D
+/obj/item/ammo_casing/energy/net/Initialize(var/obj/item/gun/energy/e_gun/dragnet)
+	. = ..()
+	drag = loc
 
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap
