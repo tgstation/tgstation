@@ -56,23 +56,23 @@ git checkout -b "$BASE_BRANCH_NAME$1"
 MERGE_SHA=$(curl --silent "$BASE_PULL_URL/$1" | jq '.merge_commit_sha' -r)
 
 # Cherry pick onto the new branch
-CHERRY_PICK_OUTPUT=$(git cherry-pick -m 1 "$MERGE_SHA" --verbose 2>&1)
+CHERRY_PICK_OUTPUT=$(git cherry-pick -m 1 "$MERGE_SHA" 2>&1)
 echo "$CHERRY_PICK_OUTPUT"
 
 # If it's a squash commit, you can't use -m 1, you need to remove it
 if echo "$CHERRY_PICK_OUTPUT" | grep 'error: mainline was specified but commit'; then
   echo "Commit was a squash, retrying"
-  git cherry-pick "$MERGE_SHA" --verbose
+  git cherry-pick "$MERGE_SHA"
   # Add all files onto this branch
-  git add -A . --verbose
-  git cherry-pick --continue --verbose
+  git add -A .
+  git cherry-pick --continue
 else
   # Add all files onto this branch
-  git add -A . --verbose
+  git add -A .
 fi
 
 # Commit these changes
-git commit --allow-empty -m "$2" --verbose
+git commit --allow-empty -m "$2"
 
 # Push them onto the branch
-git push -u origin "$BASE_BRANCH_NAME$1" --verbose
+git push -u origin "$BASE_BRANCH_NAME$1"
