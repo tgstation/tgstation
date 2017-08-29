@@ -62,6 +62,7 @@
 
 /obj/item/projectile/energy/net/on_range()
 	do_sparks(1, TRUE, src)
+	to_chat(world, "on_range() triggered")//pls dont lag me lmao
 	..()
 
 /obj/effect/nettingportal
