@@ -72,15 +72,15 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	can_flashlight = 0
 	ammo_x_offset = 1
-	var/teletarget
+	var/obj/item/device/radio/beacon/teletarget
 
 /obj/item/gun/energy/e_gun/dragnet/proc/set_target(target, user)
-	teletarget = target
+	src.teletarget = target
 	to_chat(user, "<span class='notice'>[src] has locked onto [target].</span>")
 
 /obj/item/gun/energy/e_gun/dragnet/examine(mob/user)
 	..()
-	if(teletarget)
+	if(src.teletarget)
 		to_chat(user, "<span class='notice'>[src] has locked onto [teletarget].</span>")
 
 /obj/item/gun/energy/e_gun/dragnet/process_fire()
@@ -90,7 +90,7 @@
 
 		if(istype(C.BB, /obj/item/projectile/energy/net))
 			var/obj/item/projectile/energy/net/B = C.BB
-			B.teletarget = teletarget
+			B.teletarget = src.teletarget
 			to_chat(world, "process fire: [B.teletarget]")
 
 /obj/item/gun/energy/e_gun/dragnet/snare

@@ -42,7 +42,7 @@
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
-	var/teletarget
+	var/obj/item/device/radio/beacon/teletarget
 
 /obj/item/projectile/energy/net/Initialize()
 	. = ..()
@@ -53,7 +53,7 @@
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
 			var/obj/effect/nettingportal/portal = new /obj/effect/nettingportal(Tloc)
-			portal.teletarget = teletarget
+			portal.teletarget = src.teletarget
 			to_chat(world, "on hit:[portal.teletarget]")
 	..()
 
