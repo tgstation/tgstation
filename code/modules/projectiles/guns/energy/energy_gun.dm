@@ -74,16 +74,18 @@
 	ammo_x_offset = 1
 	var/obj/item/device/radio/beacon/guntarget
 
-/obj/item/gun/energy/e_gun/dragnet/proc/set_target(target, user)
+/obj/item/gun/energy/e_gun/dragnet/proc/set_target(target, user)//called on beacon's attackby()
 	guntarget = target
 	to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")
+	//qdel(chambered)
+	//recharge_newshot()
 
 /obj/item/gun/energy/e_gun/dragnet/examine(mob/user)
 	..()
 	if(guntarget)
 		to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")//improve this
 
-/obj/item/gun/energy/e_gun/dragnet/process_fire()
+/*/obj/item/gun/energy/e_gun/dragnet/process_fire()
 	if(guntarget)//the code should work without this If, but It's against my principles to remove it
 		if(istype(chambered, /obj/item/ammo_casing/energy/net) && chambered.BB)
 			var/obj/item/ammo_casing/energy/net/C = chambered
@@ -92,7 +94,7 @@
 				var/obj/item/projectile/energy/net/B = C.BB
 				B.projtarget = guntarget
 				to_chat(world, "process fire: [B.projtarget]")//debug
-	..()
+	..()*/
 
 /obj/item/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"
