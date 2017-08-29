@@ -241,6 +241,7 @@
 #include "code\datums\ruins.dm"
 #include "code\datums\shuttles.dm"
 #include "code\datums\soullink.dm"
+#include "code\datums\spawners_menu.dm"
 #include "code\datums\verbs.dm"
 #include "code\datums\antagonists\antag_datum.dm"
 #include "code\datums\antagonists\datum_clockcult.dm"
