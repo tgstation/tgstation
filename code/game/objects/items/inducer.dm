@@ -157,7 +157,7 @@
 /obj/item/inducer/examine(mob/living/M)
 	..()
 	if(cell)
-		to_chat(M, "<span class='notice'>It's display shows: [cell.charge]W</span>")
+		to_chat(M, "<span class='notice'>It's display shows: [DisplayPower(cell.charge)]</span>")
 	else
 		to_chat(M,"<span class='notice'>It's display is dark.</span>")
 	if(opened)
