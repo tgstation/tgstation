@@ -53,8 +53,8 @@
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
 			var/obj/effect/nettingportal/portal = new /obj/effect/nettingportal(Tloc)
-			portal.teletarget = src.teletarget
-			to_chat(world, "on hit:[portal.teletarget]")
+			portal.teletarget = teletarget
+			to_chat(world, "on hit:[portal.teletarget]")//debug
 	..()
 
 /obj/item/projectile/energy/net/on_range()
@@ -75,7 +75,7 @@
 	addtimer(CALLBACK(src, .proc/pop, teletarget), 30)
 
 /obj/effect/nettingportal/proc/pop(teletarget)
-	to_chat(world, "pop: [teletarget]")
+	to_chat(world, "pop: [teletarget]")//debug
 	if(teletarget)
 		for(var/mob/living/L in get_turf(src))
 			do_teleport(L, teletarget, 2)//teleport what's in the tile to the beacon

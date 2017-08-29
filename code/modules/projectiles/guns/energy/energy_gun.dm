@@ -72,26 +72,27 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	can_flashlight = 0
 	ammo_x_offset = 1
-	var/obj/item/device/radio/beacon/teletarget
+	var/obj/item/device/radio/beacon/guntarget
 
 /obj/item/gun/energy/e_gun/dragnet/proc/set_target(target, user)
-	src.teletarget = target
-	to_chat(user, "<span class='notice'>[src] has locked onto [target].</span>")
+	guntarget = target
+	to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")
 
 /obj/item/gun/energy/e_gun/dragnet/examine(mob/user)
 	..()
-	if(src.teletarget)
-		to_chat(user, "<span class='notice'>[src] has locked onto [teletarget].</span>")
+	if(guntarget)
+		to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")//improve this
 
 /obj/item/gun/energy/e_gun/dragnet/process_fire()
-	..()
-	if(istype(chambered, /obj/item/ammo_casing/energy/net) && chambered.BB)
-		var/obj/item/ammo_casing/energy/net/C = chambered
+	if(guntarget)//the code should work without this If, but It's against my principles to remove it
+		if(istype(chambered, /obj/item/ammo_casing/energy/net) && chambered.BB)
+			var/obj/item/ammo_casing/energy/net/C = chambered
 
-		if(istype(C.BB, /obj/item/projectile/energy/net))
-			var/obj/item/projectile/energy/net/B = C.BB
-			B.teletarget = src.teletarget
-			to_chat(world, "process fire: [B.teletarget]")
+			if(istype(C.BB, /obj/item/projectile/energy/net))
+				var/obj/item/projectile/energy/net/B = C.BB
+				B.teletarget = guntarget
+				to_chat(world, "process fire: [B.teletarget]")//debug
+	..()
 
 /obj/item/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"
