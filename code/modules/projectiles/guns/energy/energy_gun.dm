@@ -63,7 +63,7 @@
 
 /obj/item/gun/energy/e_gun/dragnet
 	name = "\improper DRAGnet"
-	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
+	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology. Hit a teleport beacon with it to set the bluespace net teleport destination."
 	icon_state = "dragnet"
 	item_state = "dragnet"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -72,6 +72,25 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	can_flashlight = 0
 	ammo_x_offset = 1
+	var/teletarget
+
+/obj/item/gun/energy/e_gun/dragnet/proc/set_target(target, user)
+	teletarget = target
+	to_chat(user, "<span class='notice'>[src] has locked onto [target].</span>")
+
+/obj/item/gun/energy/e_gun/dragnet/examine(mob/user)
+	..()
+	if(teletarget)
+		to_chat(user, "<span class='notice'>[src] has locked onto [teletarget].</span>")
+
+/obj/item/gun/energy/e_gun/dragnet/process_fire()
+	..()
+	if(istype(chambered, /obj/item/ammo_casing/energy/net) && chambered.BB)
+		var/obj/item/ammo_casing/energy/net/C = chambered
+
+		if(istype(C.BB, /obj/item/projectile/energy/net))
+			var/obj/item/projectile/energy/net/B = C.BB
+			B.teletarget = teletarget
 
 /obj/item/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"

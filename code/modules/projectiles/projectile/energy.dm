@@ -42,6 +42,7 @@
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
+	var/teletarget
 
 /obj/item/projectile/energy/net/Initialize()
 	. = ..()
@@ -51,7 +52,8 @@
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
-			new /obj/effect/nettingportal(Tloc)
+			var/obj/effect/nettingportal/portal = new /obj/effect/nettingportal(Tloc)
+			portal.teletarget = teletarget
 	..()
 
 /obj/item/projectile/energy/net/on_range()
@@ -65,15 +67,10 @@
 	icon_state = "dragnetfield"
 	light_range = 3
 	anchored = TRUE
+	var/teletarget
 
 /obj/effect/nettingportal/Initialize()
 	. = ..()
-	var/obj/item/device/radio/beacon/teletarget = null
-	for(var/obj/machinery/computer/teleporter/com in GLOB.machines)
-		if(com.target)
-			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
-				teletarget = com.target
-
 	addtimer(CALLBACK(src, .proc/pop, teletarget), 30)
 
 /obj/effect/nettingportal/proc/pop(teletarget)
