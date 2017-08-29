@@ -52,7 +52,7 @@
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
-			new /obj/effect/nettingportal(Tloc, target = projtarget)
+			new /obj/effect/nettingportal(loc = Tloc, target = projtarget)
 	..()
 
 /obj/item/projectile/energy/net/on_range()
