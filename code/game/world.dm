@@ -243,7 +243,7 @@
 
 	if (!host && config && config.hostedby)
 		s += "<br>Hosted by <b>[config.hostedby]</b>."
-
+	s += "<img src=\"http://i.imgur.com/xH6DuHE.jpg\">" //Banner image
 	s += "<br>("
 	s += "<a href=\"[config.forumurl]\">"
 	s += "Forums"
