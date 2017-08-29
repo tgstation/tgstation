@@ -222,11 +222,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	return integrity
 
 /obj/machinery/power/supermatter_shard/proc/explode()
-	var/turf/T = get_turf(src)
-	for(var/mob/M in GLOB.mob_list)
+	for(var/I in GLOB.mob_list)
+		var/mob/M = I
 		if(M.z == z)
 			SEND_SOUND(M, 'sound/magic/charge.ogg')
 			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
+			var/mob/living/L = M
+			if(istype(L))
+				//Hilariously enough, running into a closet should make you get hit the hardest.
+				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(L, src) + 1) )
+				L.rad_act(rads)
+				var/mob/living/carbon/human/H = L
+				if(istype(H))
+					H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
+	var/turf/T = get_turf(src)
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
 		if(T)
@@ -422,16 +431,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 				radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel, get_spans(), get_default_language())
 
 		if(damage > explosion_point)
-			for(var/mob in GLOB.living_mob_list)
-				var/mob/living/L = mob
-				if(istype(L) && L.z == z)
-					if(ishuman(mob))
-						//Hilariously enough, running into a closet should make you get hit the hardest.
-						var/mob/living/carbon/human/H = mob
-						H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
-					var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(L, src) + 1) )
-					L.rad_act(rads)
-
 			explode()
 
 
