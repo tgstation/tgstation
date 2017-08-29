@@ -50,6 +50,7 @@
 	var/obj/item/ammo_casing/energy/net/N = loc
 	if(istype(N))
 		projtarget = N.drag.guntarget
+		to_chat(world, "proj init: [projtarget]")//debug
 
 /obj/item/projectile/energy/net/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
