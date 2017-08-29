@@ -46,11 +46,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	active = TRUE
 	update_icon()
 
-/obj/effect/proc_holder/proc/add_mousepointer(client/C)
+/obj/effect/proc_holder/proc/add_mousepointer(datum/client_base/C)
 	if(C && ranged_mousepointer && C.mouse_pointer_icon == initial(C.mouse_pointer_icon))
 		C.mouse_pointer_icon = ranged_mousepointer
 
-/obj/effect/proc_holder/proc/remove_mousepointer(client/C)
+/obj/effect/proc_holder/proc/remove_mousepointer(datum/client_base/C)
 	if(C && ranged_mousepointer && C.mouse_pointer_icon == ranged_mousepointer)
 		C.mouse_pointer_icon = initial(C.mouse_pointer_icon)
 

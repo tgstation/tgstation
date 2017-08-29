@@ -139,7 +139,7 @@
 				SetScore(score_type,C,1)
 	return TRUE
 
-/proc/UnlockMedal(medal,client/player)
+/proc/UnlockMedal(medal,datum/client_base/player)
 
 	if(!player || !medal)
 		return
@@ -154,7 +154,7 @@
 				to_chat(player, "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>")
 
 
-/proc/SetScore(score,client/player,increment,force)
+/proc/SetScore(score,datum/client_base/player,increment,force)
 
 	if(!score || !player)
 		return
@@ -180,7 +180,7 @@
 				message_admins("Error! Failed to contact hub to set [score] score for [player.ckey]!")
 
 
-/proc/GetScore(score,client/player,returnlist)
+/proc/GetScore(score,datum/client_base/player,returnlist)
 
 	if(!score || !player)
 		return
@@ -201,7 +201,7 @@
 			return scoregetlist[score]
 
 
-/proc/CheckMedal(medal,client/player)
+/proc/CheckMedal(medal,datum/client_base/player)
 
 	if(!player || !medal)
 		return
@@ -216,7 +216,7 @@
 		else if (result)
 			to_chat(player, "[medal] is unlocked")
 
-/proc/LockMedal(medal,client/player)
+/proc/LockMedal(medal,datum/client_base/player)
 
 	if(!player || !medal)
 		return
@@ -234,7 +234,7 @@
 			message_admins("Medal: [medal] was not found for [player.ckey]. Unable to clear.")
 
 
-/proc/ClearScore(client/player)
+/proc/ClearScore(datum/client_base/player)
 	world.SetScores(player.ckey, "", global.medal_hub, global.medal_pass)
 
 #undef MEDAL_PREFIX

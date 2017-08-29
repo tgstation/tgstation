@@ -201,7 +201,7 @@
 
 
 ///Process_Grab()
-///Called by client/Move()
+///Called by datum/client_base/Move()
 ///Checks to see if you are being grabbed and if so attemps to break it
 /datum/client_base/proc/Process_Grab()
 	if(mob.pulledby)
@@ -216,7 +216,7 @@
 			return mob.resist_grab(1)
 
 ///Process_Incorpmove
-///Called by client/Move()
+///Called by datum/client_base/Move()
 ///Allows mobs to run though walls
 /datum/client_base/proc/Process_Incorpmove(direct)
 	var/turf/mobloc = get_turf(mob)

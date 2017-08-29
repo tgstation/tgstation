@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(menulist)
 /datum/verbs/menu/GetList()
 	return GLOB.menulist
 
-/datum/verbs/menu/HandleVerb(list/entry, verbpath, client/C)
+/datum/verbs/menu/HandleVerb(list/entry, verbpath, datum/client_base/C)
 	var/datum/verbs/menu/verb_true_parent = GLOB.menulist[verblist[verbpath]]
 	var/true_checkbox = verb_true_parent.checkbox
 	if (true_checkbox != CHECKBOX_NONE)
@@ -34,13 +34,13 @@ GLOBAL_LIST_EMPTY(menulist)
 		entry["group"] = "[verb_true_parent.type]"
 	return list2params(entry)
 
-/datum/verbs/menu/proc/Get_checked(client/C)
+/datum/verbs/menu/proc/Get_checked(datum/client_base/C)
 	return C.prefs.menuoptions[type] || default || FALSE
 
-/datum/verbs/menu/proc/Load_checked(client/C) //Loads the checked menu item into a new client. Used by icon menus to invoke the checked item.
+/datum/verbs/menu/proc/Load_checked(datum/client_base/C) //Loads the checked menu item into a new client. Used by icon menus to invoke the checked item.
 	return
 
-/datum/verbs/menu/proc/Set_checked(client/C, verbpath)
+/datum/verbs/menu/proc/Set_checked(datum/client_base/C, verbpath)
 	if (checkbox == CHECKBOX_GROUP)
 		C.prefs.menuoptions[type] = verbpath
 		C.prefs.save_preferences()
@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(menulist)
 	M.Set_checked(src, verbpath)
 
 
-/datum/verbs/menu/Icon/Load_checked(client/C) //So we can be lazy, we invoke the "checked" menu item on menu load.
+/datum/verbs/menu/Icon/Load_checked(datum/client_base/C) //So we can be lazy, we invoke the "checked" menu item on menu load.
 	var/atom/verb/verbpath = Get_checked(C)
 	if (!verbpath || !(verbpath in typesof("[type]/verb")))
 		return
