@@ -11415,6 +11415,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/dorms)
 "azW" = (
@@ -11467,6 +11468,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -25
 	},
+/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/dorms)
 "aAe" = (
@@ -11487,6 +11489,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
+/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/dorms)
 "aAh" = (
@@ -14190,6 +14193,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Security Post - Engineering";
+	dir = 8;
+	network = list("SS13")
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aGn" = (
@@ -14200,6 +14208,11 @@
 	dir = 8
 	},
 /obj/effect/landmark/blobstart,
+/obj/machinery/camera{
+	c_tag = "Security Post - Engineering";
+	dir = 8;
+	network = list("SS13")
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aGo" = (
@@ -14229,6 +14242,11 @@
 	dir = 8
 	},
 /obj/machinery/recharge_station,
+/obj/machinery/camera{
+	c_tag = "Security Post - Engineering";
+	dir = 8;
+	network = list("SS13")
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aGq" = (
