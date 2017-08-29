@@ -1,0 +1,4 @@
+author: "Cobby & Cyberboss"
+delete-after: True
+changes: 
+  - rscadd: "A stealth option for the traitor microlaser has been added. When used, it adds 30 seconds to the cooldown of the device."
