@@ -1241,7 +1241,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 //Increases delay as the server gets more overloaded,
 //as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
-#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
+#define DELTA_CALC max(((max(TICK_USAGE, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
 
 /proc/stoplag()
 	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
@@ -1253,7 +1253,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		. += round(i*DELTA_CALC)
 		sleep(i*world.tick_lag*DELTA_CALC)
 		i *= 2
-	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
+	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
 
