@@ -13086,6 +13086,9 @@
 /obj/item/storage/fancy/cigarettes/cigars/cohiba,
 /obj/item/lighter,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "aCO" = (
@@ -13557,6 +13560,9 @@
 "aDP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
+	},
+/obj/machinery/shower{
+	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
@@ -67612,6 +67618,9 @@
 	name = "Stronk Russian APC";
 	pixel_y = 24
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/maintenance/commiespy)
 "cXa" = (
@@ -67667,6 +67676,10 @@
 	icon_state = "1-2"
 	},
 /obj/item/bedsheet/syndie,
+/obj/machinery/firealarm/partyalarm{
+	name = "\improper Sooka Blyat - Missionk Akkomblished!-buttonk";
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel/black,
 /area/maintenance/commiespy)
 "cXj" = (
@@ -67865,6 +67878,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -28
 	},
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/black,
 /area/maintenance/commiespy)
 "cXY" = (
@@ -67885,7 +67899,7 @@
 /turf/open/floor/plasteel/black,
 /area/maintenance/commiespy)
 "cYa" = (
-/obj/item/projectile/bullet/reusable/foam_dart,
+/obj/item/ammo_casing/caseless/foam_dart,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/starboard/fore)
 "cYb" = (
@@ -67941,7 +67955,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/commiespy)
+/area/maintenance/starboard/fore)
 "cYn" = (
 /obj/item/ammo_box/foambox,
 /turf/open/floor/plasteel/floorgrime,
@@ -68105,6 +68119,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "cYP" = (
+/obj/machinery/light/small,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -69080,6 +69095,26 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"dbH" = (
+/obj/item/ammo_casing/caseless/foam_dart,
+/turf/open/floor/plasteel/floorgrime,
+/area/maintenance/starboard/fore)
+"dbI" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/maintenance/starboard/fore)
+"dbJ" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/starboard/fore)
+"dbK" = (
+/obj/item/ammo_casing/caseless/foam_dart/riot,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 
 (1,1,1) = {"
 aaa
@@ -103106,10 +103141,10 @@ ahn
 arl
 asM
 cZr
-cZt
-cZv
+cZr
+cZr
 axQ
-cZz
+cZr
 aAh
 aAh
 aAh
@@ -105167,7 +105202,7 @@ att
 aur
 aur
 cZB
-cZJ
+cZG
 alP
 aaa
 alP
@@ -105675,10 +105710,10 @@ aaa
 arj
 cZk
 cZq
-cZs
-cZu
-cZw
-cZy
+cZr
+cZr
+cZr
+cZr
 asr
 cZC
 cZL
@@ -111836,8 +111871,8 @@ alP
 cXP
 cYh
 cYu
-cYH
-cYQ
+cYu
+cXR
 cYX
 anf
 anf
@@ -112091,14 +112126,14 @@ aaS
 alP
 alP
 cXQ
-cYi
-cYv
-cYI
-cYR
+cXR
+cXR
+cXA
+cXR
 cYY
-cZe
-cZg
-cZl
+cYM
+cYM
+cYM
 asw
 ayc
 avF
@@ -112348,10 +112383,10 @@ aaS
 alP
 cXz
 cXR
-cYj
-cYw
-cYJ
-cYS
+cXR
+cXR
+cXR
+cXR
 cYZ
 aqz
 aru
@@ -112604,12 +112639,12 @@ aaa
 aaf
 alP
 cXA
-cXS
-cYk
-cYx
-cYK
-cYT
-cZa
+cXR
+cYh
+cXR
+cXR
+cXR
+cYZ
 anf
 anf
 asy
@@ -112852,7 +112887,7 @@ aaa
 aaa
 cUa
 aaa
-cWF
+cWE
 aaa
 aaa
 aaa
@@ -112861,12 +112896,12 @@ aaa
 cUa
 alP
 cXB
-cXT
-cYl
+cXR
+dbJ
 cYy
 cYL
 cYU
-cZb
+cYZ
 aqA
 anf
 alP
@@ -113109,7 +113144,7 @@ aaa
 aaa
 cUa
 cUa
-cWG
+cWE
 cUa
 aaa
 aaa
@@ -113122,7 +113157,7 @@ alP
 alP
 cYz
 cYM
-cYV
+cYM
 cZc
 alP
 alP
@@ -113366,7 +113401,7 @@ aaa
 aaa
 aaa
 cUa
-cWH
+cWE
 cUa
 cUa
 cUa
@@ -113624,18 +113659,18 @@ aaa
 aaa
 aaa
 cUa
-cWI
+cWE
 aaa
 cUF
-cWP
-cWV
-cXe
-cXl
-cXC
-cXV
-amx
-cYB
-cYN
+alP
+alP
+alP
+alP
+alP
+alP
+alP
+cYA
+cXr
 anf
 anf
 arw
@@ -113881,17 +113916,17 @@ aaa
 aaa
 aaa
 cUa
-cWJ
+cWE
 aaa
 cUa
-cWQ
+alP
 cWW
 cXf
 cXm
 cXD
 cXW
-amx
-cYC
+alP
+cYA
 alP
 anf
 anf
@@ -114138,17 +114173,17 @@ aaa
 aaa
 aaa
 aaa
-cWK
+cWE
 cUa
 cUa
-cWR
+alP
 cWX
 cXg
 cXn
-cXE
+cXh
 cXX
-amx
-cYD
+alP
+cYA
 alP
 aoQ
 aqB
@@ -114396,13 +114431,13 @@ aaa
 aaa
 aaa
 cUa
-cWL
+cWE
 cUa
-cWS
+alP
 cWY
 cXh
-cXo
-cXF
+cXh
+cXh
 cXY
 cYm
 cYE
@@ -114653,15 +114688,15 @@ aaa
 aaa
 aaa
 cUa
-cWM
+cWE
 aaa
-cWT
+alP
 cWZ
 cXi
 cXp
 cXG
 cXZ
-amx
+alP
 anf
 alP
 anf
@@ -114910,17 +114945,17 @@ aaa
 aaa
 aaa
 cUa
-cWN
+cWE
 cUa
-cWU
-cXa
-cXj
-cXq
-cXH
-amx
-amx
+alP
+alP
+alP
+alP
+alP
+alP
+alP
 aty
-cYO
+cXr
 anf
 alP
 alP
@@ -115425,7 +115460,7 @@ aaa
 aaa
 aaa
 cUa
-cWO
+cWE
 cTZ
 cXb
 alP
@@ -115687,7 +115722,7 @@ aaa
 cTZ
 alP
 cXs
-cXI
+cXs
 cYa
 cYn
 anf
@@ -115941,11 +115976,11 @@ aaa
 aaa
 aaa
 aaa
-cXc
+cWE
 alO
-cXt
+cXs
 cXJ
-cYb
+anf
 anf
 anf
 alP
@@ -116200,11 +116235,11 @@ aaa
 aaa
 aaa
 alP
-cXu
-cXK
-cYc
-cYo
-anf
+cXs
+dbH
+cXs
+cYa
+auC
 alP
 alP
 alP
@@ -116458,13 +116493,13 @@ aaa
 aaa
 alP
 cXv
-cXL
-cYd
-cYp
+cXs
+cXs
+cXs
 anf
 alP
 anf
-anf
+dbK
 alP
 anf
 asB
@@ -116971,10 +117006,10 @@ aaa
 aaa
 aaa
 alP
-cXx
-cXN
-cYf
-cYr
+cXs
+cXs
+cXs
+cXs
 anf
 apE
 anf
@@ -116995,7 +117030,7 @@ bfb
 aFz
 aRS
 aRS
-dat
+das
 aCO
 aCR
 aCR
@@ -117229,13 +117264,13 @@ aaa
 aaa
 alP
 cXy
-cXO
-cYg
-cYs
+dbI
+cXs
+cYa
 anf
 alP
 cYW
-cZd
+cYF
 alP
 anf
 anf
@@ -117509,7 +117544,7 @@ aCR
 cZZ
 dad
 dal
-dav
+daq
 aCO
 daG
 aMZ
@@ -117764,7 +117799,7 @@ alP
 cZR
 cZW
 daa
-dae
+daa
 dam
 daw
 daC
@@ -118039,7 +118074,7 @@ dbs
 aZk
 bcz
 aTm
-dbE
+dbb
 bgd
 bhG
 bhG
@@ -118280,7 +118315,7 @@ cEr
 aHq
 daf
 aQv
-day
+daq
 aCO
 aCR
 aMZ
@@ -118291,9 +118326,9 @@ aOU
 aZi
 dbg
 dbj
-dbn
+dbj
 dbt
-dbx
+dbj
 bcC
 cBl
 aOU
@@ -118548,9 +118583,9 @@ aPq
 aZi
 dbh
 dbk
-dbo
-dbu
-dby
+dbj
+dbj
+dbj
 dbC
 aPq
 aPq
@@ -118792,7 +118827,7 @@ cEr
 aaa
 cEr
 aHq
-dag
+daf
 aQv
 aFz
 daE
@@ -118805,8 +118840,8 @@ aPq
 aZi
 dbi
 dbl
-dbp
-dbv
+dbl
+dbl
 dbz
 dbD
 aPq
@@ -119053,7 +119088,7 @@ aHo
 aQu
 aFz
 aFz
-daL
+daK
 aMZ
 daS
 aPq
@@ -119062,9 +119097,9 @@ aPq
 aZi
 aPq
 dbm
-dbq
-dbw
-dbA
+dbm
+dbm
+dbm
 aPq
 aPq
 aPq
@@ -119312,7 +119347,7 @@ aHq
 aHq
 aHq
 aNa
-daT
+daS
 aPq
 aPq
 aPq
