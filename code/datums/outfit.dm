@@ -135,6 +135,8 @@
 		H.gloves.add_fingerprint(H,1)
 	if(H.ears)
 		H.ears.add_fingerprint(H,1)
+	if(H.pda)
+		H.pda.add_fingerprint(H,1)
 	if(H.glasses)
 		H.glasses.add_fingerprint(H,1)
 	if(H.belt)

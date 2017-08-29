@@ -24,8 +24,8 @@
 #define ui_lingchemdisplay "WEST,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
 #define ui_crafting "EAST:-5,SOUTH+2:7"
-#define ui_building "12:-10,1:21"
-#define ui_language_menu "11:6,2:-11"
+#define ui_language_menu "EAST:-22,SOUTH+2:7"
+#define ui_building "EAST:-39,SOUTH+2:7"
 
 #define ui_devilsouldisplay "WEST:6,CENTER-1:15"
 
