@@ -707,7 +707,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.bleed_rate = min(H.bleed_rate + 2, 8)
-		H.adjustBruteLoss(1, 0) //Brute damage increases with the amount they're bleeding
+		H.adjustBruteLoss(0.5, 0) //Brute damage increases with the amount they're bleeding
 		. = 1
 	return ..() || .
 
