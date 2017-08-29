@@ -42,7 +42,7 @@
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
-	var/obj/item/device/radio/beacon/teletarget
+	var/obj/item/device/radio/beacon/projtarget
 
 /obj/item/projectile/energy/net/Initialize()
 	. = ..()
@@ -52,9 +52,7 @@
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
-			var/obj/effect/nettingportal/portal = new /obj/effect/nettingportal(Tloc)
-			portal.teletarget = teletarget
-			to_chat(world, "on hit:[portal.teletarget]")//debug
+			new /obj/effect/nettingportal(Tloc, target = projtarget)
 	..()
 
 /obj/item/projectile/energy/net/on_range()
@@ -70,15 +68,17 @@
 	anchored = TRUE
 	var/obj/item/device/radio/beacon/teletarget
 
-/obj/effect/nettingportal/Initialize()
+/obj/effect/nettingportal/Initialize(target)
 	. = ..()
+
+	teletarget = target
 	addtimer(CALLBACK(src, .proc/pop, teletarget), 30)
 
 /obj/effect/nettingportal/proc/pop(teletarget)
 	to_chat(world, "pop: [teletarget]")//debug
 	if(teletarget)
 		for(var/mob/living/L in get_turf(src))
-			do_teleport(L, teletarget, 2)//teleport what's in the tile to the beacon
+			do_teleport(L, get_turf(teletarget), 2)//teleport what's in the tile to the beacon
 	else
 		for(var/mob/living/L in get_turf(src))
 			do_teleport(L, L, 15) //Otherwise it just warps you off somewhere.

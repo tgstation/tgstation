@@ -90,7 +90,7 @@
 
 			if(istype(C.BB, /obj/item/projectile/energy/net))
 				var/obj/item/projectile/energy/net/B = C.BB
-				B.teletarget = guntarget
+				B.projtarget = guntarget
 				to_chat(world, "process fire: [B.teletarget]")//debug
 	..()
 
