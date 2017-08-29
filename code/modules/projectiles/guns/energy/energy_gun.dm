@@ -91,6 +91,7 @@
 		if(istype(C.BB, /obj/item/projectile/energy/net))
 			var/obj/item/projectile/energy/net/B = C.BB
 			B.teletarget = teletarget
+			to_chat(world, "process fire: [B.teletarget]")
 
 /obj/item/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"
