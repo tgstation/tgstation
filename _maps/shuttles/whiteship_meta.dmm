@@ -9,20 +9,14 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "ad" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "ae" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "af" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc1";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "ag" = (
 /obj/docking_port/mobile{
@@ -58,16 +52,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ai" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc2";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aj" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "ak" = (
 /obj/structure/shuttle/engine/propulsion/left{
@@ -76,16 +64,10 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "al" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "am" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "an" = (
 /obj/structure/toilet{
@@ -122,10 +104,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ap" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aq" = (
 /obj/structure/closet/wardrobe/mixed,
@@ -195,9 +174,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "av" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aw" = (
 /obj/structure/sign/vacuum{
@@ -329,16 +306,10 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aE" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aF" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aG" = (
 /obj/machinery/door/airlock/titanium{
@@ -601,9 +572,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aZ" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall2"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "ba" = (
 /obj/effect/decal/cleanable/oil,
@@ -645,10 +614,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "be" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bf" = (
 /obj/machinery/door/airlock/titanium{
@@ -671,16 +637,10 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bh" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bi" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bj" = (
 /obj/machinery/door/airlock/titanium{
@@ -697,10 +657,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bk" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bl" = (
 /obj/machinery/door/airlock/titanium{
@@ -1180,10 +1137,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cc" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cd" = (
 /obj/machinery/vending/snack/random,
@@ -1287,10 +1241,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cp" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cq" = (
 /obj/item/storage/bag/plants/portaseeder,

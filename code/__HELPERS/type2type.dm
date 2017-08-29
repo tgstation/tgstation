@@ -72,7 +72,9 @@
 	return .
 
 //Splits the text of a file at seperator and returns them in a list.
-/world/proc/file2list(filename, seperator="\n")
+/world/proc/file2list(filename, seperator="\n", trim = TRUE)
+	if (trim)
+		return splittext(trim(file2text(filename)),seperator)
 	return splittext(file2text(filename),seperator)
 
 //Turns a direction into text

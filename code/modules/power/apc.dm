@@ -120,8 +120,15 @@
 	if(auto_name)
 		name = "\improper [get_area(src)] APC"
 
-	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 26 : -27)
-	pixel_y = (src.tdir & 3)? (src.tdir == 1 ? 25 : -25) : 0
+	switch(tdir)
+		if(NORTH)
+			pixel_y = 23
+		if(SOUTH)
+			pixel_y = -23
+		if(EAST)
+			pixel_x = 24
+		if(WEST)
+			pixel_x = -25
 	if (building)
 		area = get_area(src)
 		opened = 1
@@ -658,7 +665,7 @@
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
-		"totalLoad" = lastused_total,
+		"totalLoad" = DisplayPower(lastused_total),
 		"coverLocked" = coverlocked,
 		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
 		"malfStatus" = get_malf_status(user),
@@ -666,7 +673,7 @@
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
-				"powerLoad" = lastused_equip,
+				"powerLoad" = DisplayPower(lastused_equip),
 				"status" = equipment,
 				"topicParams" = list(
 					"auto" = list("eqp" = 3),
@@ -676,7 +683,7 @@
 			),
 			list(
 				"title" = "Lighting",
-				"powerLoad" = lastused_light,
+				"powerLoad" = DisplayPower(lastused_light),
 				"status" = lighting,
 				"topicParams" = list(
 					"auto" = list("lgt" = 3),
@@ -686,7 +693,7 @@
 			),
 			list(
 				"title" = "Environment",
-				"powerLoad" = lastused_environ,
+				"powerLoad" = DisplayPower(lastused_environ),
 				"status" = environ,
 				"topicParams" = list(
 					"auto" = list("env" = 3),

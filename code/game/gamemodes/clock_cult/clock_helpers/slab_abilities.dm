@@ -140,7 +140,7 @@
 		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
 
 		if(has_holy_water)
-			L.reagents.remove_reagent("holywater", 1000)
+			L.reagents.del_reagent("holywater")
 
 		remove_ranged_ability()
 
