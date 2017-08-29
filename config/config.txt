@@ -222,22 +222,6 @@ TICKLAG 0.5
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
 
-## Communication key for receiving data through world/Topic(), you don't want to give this out
-#COMMS_KEY default_pwd
-
-## World address and port for server recieving cross server messages
-#CROSS_SERVER_ADDRESS byond:\\address:port
-
-## Name that the server calls itself in communications
-#CROSS_COMMS_NAME
-
-## Hub address for tracking stats
-## example: Hubmakerckey.Hubname
-#MEDAL_HUB_ADDRESS 
-
-## Password for the hub page
-#MEDAL_HUB_PASSWORD
-
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
 #SEE_OWN_NOTES
 
