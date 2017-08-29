@@ -341,6 +341,8 @@
 		items += wear_suit
 	if(w_uniform)
 		items += w_uniform
+	if(pda)
+		items += pda
 	return items
 
 /mob/living/proc/unequip_everything()
