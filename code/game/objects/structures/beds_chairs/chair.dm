@@ -12,7 +12,6 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
-	var/cooldown = 0
 	layer = OBJ_LAYER
 
 /obj/structure/chair/Initialize()
@@ -112,11 +111,6 @@
 		return
 	else
 		rotate()
-
-/obj/structure/chair/relaymove(mob/living/user)
-	if(cooldown <= world.time)
-		cooldown = world.time + 50
-		to_chat(user, "<span class='warning'>You can't move while buckled to \the [src]!</span>")
 
 // Chair types
 /obj/structure/chair/wood

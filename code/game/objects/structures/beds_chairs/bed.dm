@@ -20,7 +20,6 @@
 	integrity_failure = 30
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
-	var/cooldown = 0
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -37,11 +36,6 @@
 		deconstruct(TRUE)
 	else
 		return ..()
-
-/obj/structure/bed/relaymove(mob/living/user)
-	if(cooldown <= world.time)
-		cooldown = world.time + 50
-		to_chat(user, "<span class='warning'>You can't move while buckled to \the [src]!</span>")
 
 /*
  * Roller beds
