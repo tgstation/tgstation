@@ -1314,6 +1314,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 14
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
+/datum/uplink_item/role_restricted/magillitis_serum
+	name = "Magillitis Serum Autoinjector"
+	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in basic primates."
+	item = /obj/item/reagent_containers/hypospray/magillitis
+	cost = 15
+	restricted_roles = list("Geneticist", "Chief Medical Officer")
+
 /datum/uplink_item/role_restricted/pressure_mod
 	name = "Kinetic Accelerator Pressure Mod"
 	desc = "A modification kit which allows Kinetic Accelerators to do greatly increased damage while indoors. Occupies 35% mod capacity."
@@ -1393,8 +1400,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		if(crate_value < I.cost)
 			continue
 		crate_value -= I.cost
-		new I.item(C)
-		U.purchase_log += "<big>[icon2base64html(I.item)]</big>"
+		var/obj/goods = new I.item(C)
+		U.purchase_log += "<big>[icon2base64html(goods)]</big>"
 
 	SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
 	return C

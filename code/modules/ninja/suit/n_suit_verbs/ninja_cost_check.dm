@@ -3,7 +3,7 @@
 //Cost function for suit Procs/Verbs/Abilities
 /obj/item/clothing/suit/space/space_ninja/proc/ninjacost(cost = 0, specificCheck = 0)
 	var/mob/living/carbon/human/H = affecting
-	if((H.stat || H.incorporeal_move) && (specificCheck != N_ADRENALINE))//Will not return if user is using an adrenaline booster since you can use them when stat==1.
+	if((H.stat || H.incorporeal_move) && (specificCheck != N_ADRENALINE))//Will not return if user is using an adrenaline booster since you can use them when stat==UNCONSCIOUS.
 		to_chat(H, "<span class='danger'>You must be conscious and solid to do this.</span>")
 		return 1
 

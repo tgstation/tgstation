@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(blackbox)
 		if(M.client)
 			playercount += 1
 	var/admincount = GLOB.admins.len
-	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
+	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port, round_id) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]')")
 	query_record_playercount.Execute()
 
 	if(config.use_exp_tracking)
@@ -265,16 +265,14 @@ SUBSYSTEM_DEF(blackbox)
 /datum/feedback_variable/proc/get_variable()
 	return variable
 
-/datum/feedback_variable/proc/set_details(text)
-	if (istext(text))
-		details = text
+/datum/feedback_variable/proc/set_details(deets)
+	details = "\"[deets]\""
 
-/datum/feedback_variable/proc/add_details(text)
-	if (istext(text))
-		if (!details)
-			details = "\"[text]\""
-		else
-			details += " | \"[text]\""
+/datum/feedback_variable/proc/add_details(deets)
+	if (!details)
+		set_details(deets)
+	else
+		details += " | \"[deets]\""
 
 /datum/feedback_variable/proc/get_details()
 	return details

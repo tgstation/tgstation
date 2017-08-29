@@ -290,28 +290,29 @@
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/stock_parts/console_screen = 1)
 
+#define PATH_FREEZER /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+#define PATH_HEATER  /obj/machinery/atmospherics/components/unary/thermomachine/heater
+
 /obj/item/circuitboard/machine/thermomachine/Initialize()
 	. = ..()
-	if(prob(50))
-		name = "Freezer (Machine Board)"
-		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
-	else
-		name = "Heater (Machine Board)"
-		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
-
-#define FREEZER /obj/item/circuitboard/machine/thermomachine/freezer
-#define HEATER /obj/item/circuitboard/machine/thermomachine/heater
+	if(!build_path)
+		if(prob(50))
+			name = "Freezer (Machine Board)"
+			build_path = PATH_FREEZER
+		else
+			name = "Heater (Machine Board)"
+			build_path = PATH_HEATER
 
 /obj/item/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
 		var/obj/item/circuitboard/new_type
 		var/new_setting
 		switch(build_path)
-			if(FREEZER)
-				new_type = HEATER
+			if(PATH_FREEZER)
+				new_type = /obj/item/circuitboard/machine/thermomachine/heater
 				new_setting = "Heater"
-			if(HEATER)
-				new_type = FREEZER
+			if(PATH_HEATER)
+				new_type = /obj/item/circuitboard/machine/thermomachine/freezer
 				new_setting = "Freezer"
 		name = initial(new_type.name)
 		build_path = initial(new_type.build_path)
@@ -320,16 +321,16 @@
 	else
 		return ..()
 
-#undef FREEZER
-#undef HEATER
-
 /obj/item/circuitboard/machine/thermomachine/heater
 	name = "Heater (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
+	build_path = PATH_HEATER
 
 /obj/item/circuitboard/machine/thermomachine/freezer
 	name = "Freezer (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+	build_path = PATH_FREEZER
+
+#undef PATH_FREEZER
+#undef PATH_HEATER
 
 /obj/item/circuitboard/machine/deep_fryer
 	name = "circuit board (Deep Fryer)"

@@ -19,15 +19,16 @@
 			old = P.GetExactComponent(type)
 		else
 			old = P.GetComponent(dt)
-		switch(dm)
-			if(COMPONENT_DUPE_UNIQUE)
-				old.InheritComponent(src, TRUE)
-				parent = null	//prevent COMPONENT_REMOVING signal
-				qdel(src)
-				return
-			if(COMPONENT_DUPE_HIGHLANDER)
-				InheritComponent(old, FALSE)
-				qdel(old)
+		if(old)
+			switch(dm)
+				if(COMPONENT_DUPE_UNIQUE)
+					old.InheritComponent(src, TRUE)
+					parent = null	//prevent COMPONENT_REMOVING signal
+					qdel(src)
+					return
+				if(COMPONENT_DUPE_HIGHLANDER)
+					InheritComponent(old, FALSE)
+					qdel(old)
 	
 	//let the others know
 	P.SendSignal(COMSIG_COMPONENT_ADDED, src)

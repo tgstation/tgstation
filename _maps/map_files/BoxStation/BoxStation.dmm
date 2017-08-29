@@ -19,9 +19,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aad" = (
-/turf/closed/wall/shuttle{
-	icon_state = "wall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aae" = (
 /obj/effect/landmark/carpspawn,
@@ -57251,7 +57249,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cAm" = (
-/obj/machinery/power/supermatter_shard/crystal,
+/obj/machinery/power/supermatter_shard/crystal/engine,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cAn" = (

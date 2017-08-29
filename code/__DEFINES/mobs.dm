@@ -97,13 +97,11 @@
 #define AI_IDLE		2
 #define AI_OFF		3
 
+//determines if a mob can smash through it
 #define ENVIRONMENT_SMASH_NONE 0
-
-#define ENVIRONMENT_SMASH_STRUCTURES 1
-
-#define ENVIRONMENT_SMASH_WALLS 2
-
-#define ENVIRONMENT_SMASH_RWALLS 3
+#define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
+#define ENVIRONMENT_SMASH_WALLS 2   //walls
+#define ENVIRONMENT_SMASH_RWALLS 4  //rwalls
 
 
 //SNPCs

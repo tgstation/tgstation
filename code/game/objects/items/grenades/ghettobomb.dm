@@ -47,19 +47,8 @@
 	if(!active)
 		if(clown_check(user))
 			to_chat(user, "<span class='warning'>You light the [name]!</span>")
-			active = TRUE
 			cut_overlay("improvised_grenade_filled")
-			icon_state = initial(icon_state) + "_active"
-			add_fingerprint(user)
-			var/turf/bombturf = get_turf(src)
-			var/area/A = get_area(bombturf)
-
-			message_admins("[ADMIN_LOOKUPFLW(user)] has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)].")
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.throw_mode_on()
-			addtimer(CALLBACK(src, .proc/prime), det_time)
+			preprime(user, null, FALSE)
 
 /obj/item/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()

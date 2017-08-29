@@ -65,6 +65,14 @@
 	volume = 100
 	list_reagents = list("nanites" = 80, "synaptizine" = 20)
 
+/obj/item/reagent_containers/hypospray/magillitis
+	name = "experimental autoinjector"
+	desc = "A modified air-needle autoinjector with a small single-use reservoir. It contains an experimental serum."
+	icon_state = "combat_hypo"
+	volume = 5
+	container_type = NONE
+	list_reagents = list("magillitis" = 5)
+
 //MediPens
 
 /obj/item/reagent_containers/hypospray/medipen
@@ -88,7 +96,7 @@
 	..()
 	if(!iscyborg(user))
 		reagents.maximum_volume = 0 //Makes them useless afterwards
-		container_type = 0
+		container_type = NONE
 	update_icon()
 	spawn(80)
 		if(iscyborg(user) && !reagents.total_volume)

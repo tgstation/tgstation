@@ -26,8 +26,8 @@
 			to_chat(user, "<span class='inathneq'>An emergency shuttle has arrived and this prism is no longer useful; attempt to activate it to gain a partial refund of components used.</span>")
 		else
 			var/efficiency = get_efficiency_mod(TRUE)
-			to_chat(user, "<span class='inathneq_small'>It requires at least <b>[get_delay_cost()]W</b> of power to attempt to delay the arrival of an emergency shuttle by <b>[2 * efficiency]</b> minutes.</span>")
-			to_chat(user, "<span class='inathneq_small'>This cost increases by <b>[delay_cost_increase]W</b> for every previous activation.</span>")
+			to_chat(user, "<span class='inathneq_small'>It requires at least <b>[DisplayPower(get_delay_cost())]</b> of power to attempt to delay the arrival of an emergency shuttle by <b>[2 * efficiency]</b> minutes.</span>")
+			to_chat(user, "<span class='inathneq_small'>This cost increases by <b>[DisplayPower(delay_cost_increase)]</b> for every previous activation.</span>")
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/forced_disable(bad_effects)
 	if(active)

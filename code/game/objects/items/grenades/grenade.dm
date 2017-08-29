@@ -26,15 +26,9 @@
 /obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
-		active = 1
-		icon_state = initial(icon_state) + "_active"
-		playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-		spawn(5)
-			if(user)
-				user.drop_item()
-			prime()
-		return 0
-	return 1
+		preprime(user, 5, FALSE)
+		return FALSE
+	return TRUE
 
 
 /obj/item/grenade/examine(mob/user)
@@ -50,26 +44,27 @@
 	if(!active)
 		if(clown_check(user))
 			preprime(user)
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.throw_mode_on()
 
-/obj/item/grenade/proc/preprime(mob/user)
-	if(user)
-		to_chat(user, "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>")
+/obj/item/grenade/proc/log_grenade(mob/user, turf/T)
+	var/area/A = get_area(T)
+	var/message = "[ADMIN_LOOKUPFLW(user)]) has primed \a [src] for detonation at [ADMIN_COORDJMP(T)]"
+	GLOB.bombers += message
+	message_admins(message)
+	log_game("[key_name(user)] has primed \a [src] for detonation at [A.name] [COORD(T)].")
+
+/obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE)
+	var/turf/T = get_turf(src)
+	log_grenade(user, T)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.throw_mode_on()
+	if(msg)
+		to_chat(user, "<span class='warning'>You prime \the [src]! [det_time/10] seconds!</span>")
 	playsound(loc, 'sound/weapons/armbomb.ogg', 60, 1)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	add_fingerprint(user)
-	var/turf/bombturf = get_turf(src)
-	var/area/A = get_area(bombturf)
-	if(user)
-		var/message = "[ADMIN_LOOKUPFLW(user)]) has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]"
-		GLOB.bombers += message
-		message_admins(message)
-		log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
-
-	addtimer(CALLBACK(src, .proc/prime), det_time)
+	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
 /obj/item/grenade/proc/prime()
 
@@ -110,4 +105,4 @@
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
 		prime()
-		return 1 //It hit the grenade, not them
+		return TRUE //It hit the grenade, not them

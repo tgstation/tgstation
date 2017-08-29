@@ -495,15 +495,10 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/academy/classrooms)
 "bG" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/academy/classrooms)
 "bH" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc1"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/academy/classrooms)
 "bI" = (
 /obj/machinery/light{
@@ -603,10 +598,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/awaymission/academy/classrooms)
 "bW" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/academy/classrooms)
 "bX" = (
 /obj/effect/decal/cleanable/ash,
@@ -727,9 +719,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "cs" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/academy/classrooms)
 "ct" = (
 /obj/structure/chair,
