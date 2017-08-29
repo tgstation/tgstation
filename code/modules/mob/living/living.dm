@@ -229,8 +229,8 @@
 /mob/living/verb/succumb(whispered as null)
 	set hidden = 1
 	if (InCritical())
-		src.log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
-		src.adjustOxyLoss(src.health - HEALTH_THRESHOLD_DEAD)
+		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
+		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 		if(!whispered)
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
@@ -437,20 +437,19 @@
 		stop_pulling()
 	var/turf/T = loc
 	. = ..()
-	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
-		if(pulling.anchored)
-			stop_pulling()
-			return
-
-		var/pull_dir = get_dir(src, pulling)
-		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
-			if(isliving(pulling))
-				var/mob/living/M = pulling
-				if(M.lying && !M.buckled && (prob(M.getBruteLoss()*200/M.maxHealth)))
-					M.makeTrail(T)
-			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
-			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
+	if(.)
+		if(lying && !buckled && prob(getBruteLoss() * 200 / maxHealth))
+			makeTrail(T)
+		if(pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
+			if(pulling.anchored)
 				stop_pulling()
+				return
+
+			var/pull_dir = get_dir(src, pulling)
+			if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
+				pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
+				if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
+					stop_pulling()
 
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
@@ -474,31 +473,31 @@
 			if(MOVE_INTENT_WALK)
 				. += config.walk_speed
 
-/mob/living/proc/makeTrail(turf/T)
+/mob/living/proc/makeTrail(turf/previous_turf)
 	if(!has_gravity())
 		return
-	var/blood_exists = 0
+	var/blood_exists = FALSE
 
-	for(var/obj/effect/decal/cleanable/trail_holder/C in src.loc) //checks for blood splatter already on the floor
-		blood_exists = 1
-	if (isturf(src.loc))
+	for(var/obj/effect/decal/cleanable/trail_holder/C in previous_turf) //checks for blood splatter already on the floor
+		blood_exists = TRUE
+	if(isturf(previous_turf))
 		var/trail_type = getTrail()
 		if(trail_type)
-			var/brute_ratio = round(getBruteLoss()/maxHealth, 0.1)
+			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
 				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
-				var/newdir = get_dir(T, src.loc)
-				if(newdir != src.dir)
-					newdir = newdir | src.dir
+				var/newdir = get_dir(loc, previous_turf)
+				if(newdir != dir)
+					newdir = newdir | dir
 					if(newdir == 3) //N + S
 						newdir = NORTH
 					else if(newdir == 12) //E + W
 						newdir = EAST
 				if((newdir in GLOB.cardinals) && (prob(50)))
-					newdir = turn(get_dir(T, src.loc), 180)
+					newdir = turn(get_dir(loc, previous_turf), 180)
 				if(!blood_exists)
-					new /obj/effect/decal/cleanable/trail_holder(src.loc)
-				for(var/obj/effect/decal/cleanable/trail_holder/TH in src.loc)
+					new /obj/effect/decal/cleanable/trail_holder(previous_turf)
+				for(var/obj/effect/decal/cleanable/trail_holder/TH in previous_turf)
 					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 						TH.existing_dirs += newdir
 						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
