@@ -311,7 +311,19 @@
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		occupantData["name"] = mob_occupant.name
-		occupantData["stat"] = mob_occupant.stat
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "good"
+			if(SOFT_CRIT)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "average"
+			if(UNCONSCIOUS)
+				data["occupant"]["stat"] = "Unconscious"
+				data["occupant"]["statstate"] = "average"
+			if(DEAD)
+				data["occupant"]["stat"] = "Dead"
+				data["occupant"]["statstate"] = "bad"
 		occupantData["health"] = mob_occupant.health
 		occupantData["maxHealth"] = mob_occupant.maxHealth
 		occupantData["minHealth"] = HEALTH_THRESHOLD_DEAD
@@ -320,6 +332,13 @@
 		occupantData["toxLoss"] = mob_occupant.getToxLoss()
 		occupantData["fireLoss"] = mob_occupant.getFireLoss()
 		occupantData["bodyTemperature"] = mob_occupant.bodytemperature
+		if(mob_occupant.bodytemperature < 225)
+			occupantData["temperaturestatus"] = "good"
+		else if(mob_occupant.bodytemperature < 273.15)
+			occupantData["temperaturestatus"] = "average"
+		else
+			occupantData["temperaturestatus"] = "bad"
+
 	data["occupant"] = occupantData
 
 
