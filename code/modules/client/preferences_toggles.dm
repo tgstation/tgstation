@@ -4,7 +4,7 @@
 //Example usage TOGGLE_CHECKBOX(datum/verbs/menu/Settings/Ghost/chatterbox, toggle_ghost_ears)()
 
 //override because we don't want to save preferences twice.
-/datum/verbs/menu/Settings/Set_checked(client/C, verbpath)
+/datum/verbs/menu/Settings/Set_checked(datum/client_base/C, verbpath)
 	if (checkbox == CHECKBOX_GROUP)
 		C.prefs.menuoptions[type] = verbpath
 	else if (checkbox == CHECKBOX_TOGGLE)
@@ -31,7 +31,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox, toggle_ghost_ears)(
 	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"].")
 	usr.client.prefs.save_preferences()
 	SSblackbox.add_details("preferences_verb","Toggle Ghost Ears|[usr.client.prefs.chat_toggles & CHAT_GHOSTEARS]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Ghost/chatterbox/toggle_ghost_ears/Get_checked(client/C)
+/datum/verbs/menu/Settings/Ghost/chatterbox/toggle_ghost_ears/Get_checked(datum/client_base/C)
 	return C.prefs.chat_toggles & CHAT_GHOSTEARS
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox, toggle_ghost_sight)()
@@ -42,7 +42,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox, toggle_ghost_sight)
 	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"].")
 	usr.client.prefs.save_preferences()
 	SSblackbox.add_details("preferences_verb","Toggle Ghost Sight|[usr.client.prefs.chat_toggles & CHAT_GHOSTSIGHT]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Ghost/chatterbox/toggle_ghost_sight/Get_checked(client/C)
+/datum/verbs/menu/Settings/Ghost/chatterbox/toggle_ghost_sight/Get_checked(datum/client_base/C)
 	return C.prefs.chat_toggles & CHAT_GHOSTSIGHT
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox, toggle_ghost_whispers)()
@@ -53,7 +53,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox, toggle_ghost_whispe
 	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTWHISPER) ? "see all whispers in the world" : "only see whispers from nearby mobs"].")
 	usr.client.prefs.save_preferences()
 	SSblackbox.add_details("preferences_verb","Toggle Ghost Whispers|[usr.client.prefs.chat_toggles & CHAT_GHOSTWHISPER]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Ghost/chatterbox/toggle_ghost_whispers/Get_checked(client/C)
+/datum/verbs/menu/Settings/Ghost/chatterbox/toggle_ghost_whispers/Get_checked(datum/client_base/C)
 	return C.prefs.chat_toggles & CHAT_GHOSTWHISPER
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox, toggle_ghost_radio)()
@@ -64,7 +64,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox, toggle_ghost_radio)
 	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTRADIO) ? "see radio chatter" : "not see radio chatter"].")
 	usr.client.prefs.save_preferences()
 	SSblackbox.add_details("preferences_verb","Toggle Ghost Radio|[usr.client.prefs.chat_toggles & CHAT_GHOSTRADIO]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc! //social experiment, increase the generation whenever you copypaste this shamelessly GENERATION 1
-/datum/verbs/menu/Settings/Ghost/chatterbox/toggle_ghost_radio/Get_checked(client/C)
+/datum/verbs/menu/Settings/Ghost/chatterbox/toggle_ghost_radio/Get_checked(datum/client_base/C)
 	return C.prefs.chat_toggles & CHAT_GHOSTRADIO
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox, toggle_ghost_pda)()
@@ -75,7 +75,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox, toggle_ghost_pda)()
 	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTPDA) ? "see all pda messages in the world" : "only see pda messages from nearby mobs"].")
 	usr.client.prefs.save_preferences()
 	SSblackbox.add_details("preferences_verb","Toggle Ghost PDA|[usr.client.prefs.chat_toggles & CHAT_GHOSTPDA]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Ghost/chatterbox/toggle_ghost_pda/Get_checked(client/C)
+/datum/verbs/menu/Settings/Ghost/chatterbox/toggle_ghost_pda/Get_checked(datum/client_base/C)
 	return C.prefs.chat_toggles & CHAT_GHOSTPDA
 
 /datum/verbs/menu/Settings/Ghost/chatterbox/Events
@@ -90,7 +90,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox/Events, toggle_death
 	usr.client.prefs.save_preferences()
 	to_chat(usr, "You will [(usr.client.prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get messages when a sentient mob dies.")
 	SSblackbox.add_details("preferences_verb", "Toggle Deathrattle|[!(usr.client.prefs.toggles & DISABLE_DEATHRATTLE)]") //If you are copy-pasting this, maybe you should spend some time reading the comments.
-/datum/verbs/menu/Settings/Ghost/chatterbox/Events/toggle_deathrattle/Get_checked(client/C)
+/datum/verbs/menu/Settings/Ghost/chatterbox/Events/toggle_deathrattle/Get_checked(datum/client_base/C)
 	return !(C.prefs.toggles & DISABLE_DEATHRATTLE)
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox/Events, toggle_arrivalrattle)()
@@ -101,7 +101,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox/Events, toggle_arriv
 	to_chat(usr, "You will [(usr.client.prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get messages when someone joins the station.")
 	usr.client.prefs.save_preferences()
 	SSblackbox.add_details("preferences_verb", "Toggle Arrivalrattle|[!(usr.client.prefs.toggles & DISABLE_ARRIVALRATTLE)]") //If you are copy-pasting this, maybe you should rethink where your life went so wrong.
-/datum/verbs/menu/Settings/Ghost/chatterbox/Events/toggle_arrivalrattle/Get_checked(client/C)
+/datum/verbs/menu/Settings/Ghost/chatterbox/Events/toggle_arrivalrattle/Get_checked(datum/client_base/C)
 	return !(C.prefs.toggles & DISABLE_ARRIVALRATTLE)
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost, togglemidroundantag)()
@@ -112,7 +112,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost, togglemidroundantag)()
 	usr.client.prefs.save_preferences()
 	to_chat(usr, "You will [(usr.client.prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be considered for midround antagonist positions.")
 	SSblackbox.add_details("preferences_verb","Toggle Midround Antag|[usr.client.prefs.toggles & MIDROUND_ANTAG]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Ghost/togglemidroundantag/Get_checked(client/C)
+/datum/verbs/menu/Settings/Ghost/togglemidroundantag/Get_checked(datum/client_base/C)
 	return C.prefs.toggles & MIDROUND_ANTAG
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggletitlemusic)()
@@ -129,7 +129,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggletitlemusic)()
 		to_chat(usr, "You will no longer hear music in the game lobby.")
 		usr.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	SSblackbox.add_details("preferences_verb","Toggle Lobby Music|[usr.client.prefs.toggles & SOUND_LOBBY]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Sound/toggletitlemusic/Get_checked(client/C)
+/datum/verbs/menu/Settings/Sound/toggletitlemusic/Get_checked(datum/client_base/C)
 	return C.prefs.toggles & SOUND_LOBBY
 
 
@@ -145,7 +145,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglemidis)()
 		to_chat(usr, "You will no longer hear sounds uploaded by admins")
 		usr.stop_sound_channel(CHANNEL_ADMIN)
 	SSblackbox.add_details("preferences_verb","Toggle Hearing Midis|[usr.client.prefs.toggles & SOUND_MIDI]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Sound/togglemidis/Get_checked(client/C)
+/datum/verbs/menu/Settings/Sound/togglemidis/Get_checked(datum/client_base/C)
 	return C.prefs.toggles & SOUND_MIDI
 
 
@@ -160,7 +160,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_instruments)()
 	else
 		to_chat(usr, "You will no longer hear musical instruments.")
 	SSblackbox.add_details("preferences_verb","Toggle Instruments|[usr.client.prefs.toggles & SOUND_INSTRUMENTS]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Sound/toggle_instruments/Get_checked(client/C)
+/datum/verbs/menu/Settings/Sound/toggle_instruments/Get_checked(datum/client_base/C)
 	return C.prefs.toggles & SOUND_INSTRUMENTS
 
 
@@ -177,7 +177,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, Toggle_Soundscape)()
 		usr.stop_sound_channel(CHANNEL_AMBIENCE)
 		usr.stop_sound_channel(CHANNEL_BUZZ)
 	SSblackbox.add_details("preferences_verb","Toggle Ambience|[usr.client.prefs.toggles & SOUND_AMBIENCE]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Sound/Toggle_Soundscape/Get_checked(client/C)
+/datum/verbs/menu/Settings/Sound/Toggle_Soundscape/Get_checked(datum/client_base/C)
 	return C.prefs.toggles & SOUND_AMBIENCE
 
 
@@ -194,7 +194,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_ship_ambience)()
 		usr.stop_sound_channel(CHANNEL_BUZZ)
 		usr.client.ambience_playing = 0
 	SSblackbox.add_details("preferences_verb", "Toggle Ship Ambience|[usr.client.prefs.toggles & SOUND_SHIP_AMBIENCE]") //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
-/datum/verbs/menu/Settings/Sound/toggle_ship_ambience/Get_checked(client/C)
+/datum/verbs/menu/Settings/Sound/toggle_ship_ambience/Get_checked(datum/client_base/C)
 	return C.prefs.toggles & SOUND_SHIP_AMBIENCE
 
 
@@ -206,7 +206,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_announcement_sound)()
 	to_chat(usr, "You will now [(usr.client.prefs.toggles & SOUND_ANNOUNCEMENTS) ? "hear announcement sounds" : "no longer hear announcements"].")
 	usr.client.prefs.save_preferences()
 	SSblackbox.add_details("preferences_verb","Toggle Announcement Sound|[usr.client.prefs.toggles & SOUND_ANNOUNCEMENTS]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Sound/toggle_announcement_sound/Get_checked(client/C)
+/datum/verbs/menu/Settings/Sound/toggle_announcement_sound/Get_checked(datum/client_base/C)
 	return C.prefs.toggles & SOUND_ANNOUNCEMENTS
 
 
@@ -221,7 +221,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleprayersounds)()
 	else
 		to_chat(usr, "You will no longer prayer sounds.")
 	SSblackbox.add_details("admin_toggle", "Toggle Prayer Sounds|[usr.client.prefs.toggles & SOUND_PRAYERS]")
-/datum/verbs/menu/Settings/Sound/toggleprayersounds/Get_checked(client/C)
+/datum/verbs/menu/Settings/Sound/toggleprayersounds/Get_checked(datum/client_base/C)
 	return C.prefs.toggles & SOUND_PRAYERS
 
 
@@ -241,7 +241,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings, listen_ooc)()
 	usr.client.prefs.save_preferences()
 	to_chat(usr, "You will [(usr.client.prefs.chat_toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel.")
 	SSblackbox.add_details("preferences_verb","Toggle Seeing OOC|[usr.client.prefs.chat_toggles & CHAT_OOC]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/listen_ooc/Get_checked(client/C)
+/datum/verbs/menu/Settings/listen_ooc/Get_checked(datum/client_base/C)
 	return C.prefs.chat_toggles & CHAT_OOC
 
 

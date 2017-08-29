@@ -21,7 +21,7 @@
 		return (reason) ? reason : 1 //see above for why we need to do this
 	return 0
 
-/proc/jobban_buildcache(client/C)
+/proc/jobban_buildcache(datum/client_base/C)
 	if(C && istype(C))
 		C.jobbancache = list()
 		var/datum/DBQuery/query_jobban_build_cache = SSdbcore.NewQuery("SELECT job, reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(C.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")

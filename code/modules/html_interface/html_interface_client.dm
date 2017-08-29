@@ -20,10 +20,10 @@
 	// A list of extra variables, for use by extensions.
 	var/list/extra_vars
 
-/datum/html_interface_client/New(client/client)
+/datum/html_interface_client/New(datum/client_base/C)
 	. = ..()
 
-	src.client = client
+	src.client = C
 
 /datum/html_interface_client/proc/putExtraVar(key, value)
 	if (!src.extra_vars) src.extra_vars = new/list()

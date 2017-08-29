@@ -126,7 +126,7 @@
 //end pool funcs
 
 /mob/living/carbon/human/interactive/proc/random()
-	//this is here because this has no client/prefs/brain whatever.
+	//this is here because this has no datum/client_base/prefs/brain whatever.
 	age = rand(AGE_MIN,AGE_MAX)
 	//job handling
 	myjob = new/datum/job/assistant()

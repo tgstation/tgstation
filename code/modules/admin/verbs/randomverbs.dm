@@ -1225,7 +1225,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
 
-/datum/admins/proc/cmd_show_exp_panel(client/C)
+/datum/admins/proc/cmd_show_exp_panel(datum/client_base/C)
 	if(!check_rights(R_ADMIN))
 		return
 	if(!C)
@@ -1239,7 +1239,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	body += "</BODY></HTML>"
 	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
 
-/datum/admins/proc/toggle_exempt_status(client/C)
+/datum/admins/proc/toggle_exempt_status(datum/client_base/C)
 	if(!check_rights(R_ADMIN))
 		return
 	if(!C)

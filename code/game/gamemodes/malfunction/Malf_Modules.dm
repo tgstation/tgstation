@@ -676,7 +676,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	to_chat(owner, "<span class='warning'>You are no longer able to shunt your core to APCs.</span>")
 	adjust_uses(-1)
 
-/mob/living/silicon/ai/proc/remove_transformer_image(client/C, image/I, turf/T)
+/mob/living/silicon/ai/proc/remove_transformer_image(datum/client_base/C, image/I, turf/T)
 	if(C && I.loc == T)
 		C.images -= I
 

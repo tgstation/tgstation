@@ -201,7 +201,7 @@ SUBSYSTEM_DEF(vote)
 		return 1
 	return 0
 
-/datum/controller/subsystem/vote/proc/interface(client/C)
+/datum/controller/subsystem/vote/proc/interface(datum/client_base/C)
 	if(!C)
 		return
 	var/admin = 0

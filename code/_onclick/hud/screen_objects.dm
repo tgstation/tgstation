@@ -3,7 +3,7 @@
 	Todo: improve/re-implement
 
 	Screen objects are only used for the hud and should not appear anywhere "in-game".
-	They are used with the client/screen list and the screen_loc var.
+	They are used with the datum/client_base/screen list and the screen_loc var.
 	For more information, see the byond documentation on the screen_loc and screen vars.
 */
 /obj/screen
@@ -549,7 +549,7 @@
 	plane = SPLASHSCREEN_PLANE
 	var/datum/client_base/holder
 
-/obj/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE
+/obj/screen/splash/New(datum/client_base/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE
 	holder = C
 
 	if(!visible)

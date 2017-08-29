@@ -374,7 +374,7 @@
 		if(preserve.len)
 			R.data["viruses"] = preserve
 
-/proc/AdminCreateVirus(client/user)
+/proc/AdminCreateVirus(datum/client_base/user)
 
 	if(!user)
 		return

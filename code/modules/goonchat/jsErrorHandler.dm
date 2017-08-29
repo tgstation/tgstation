@@ -20,7 +20,7 @@
 		"stationNamer"
 	)
 
-/datum/debugFileOutput/proc/error(fileName, message, client/C)
+/datum/debugFileOutput/proc/error(fileName, message, datum/client_base/C)
 	if (!fileName || !message) return 0
 
 	if (!(fileName in src.validFiles))

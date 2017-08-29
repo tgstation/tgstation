@@ -33,7 +33,7 @@
 	var/datum/client_base/parent
 	var/matrix/target
 
-/obj/screen/credit/Initialize(mapload, credited, client/P)
+/obj/screen/credit/Initialize(mapload, credited, datum/client_base/P)
 	. = ..()
 	parent = P
 	icon_state = credited

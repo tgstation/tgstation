@@ -1,4 +1,4 @@
-/datum/verbs/menu/Admin/Generate_list(client/C)
+/datum/verbs/menu/Admin/Generate_list(datum/client_base/C)
 	if (C.holder)
 		. = ..()
 

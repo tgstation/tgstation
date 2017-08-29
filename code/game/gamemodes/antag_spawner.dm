@@ -4,7 +4,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/used = 0
 
-/obj/item/antag_spawner/proc/spawn_antag(client/C, turf/T, type = "")
+/obj/item/antag_spawner/proc/spawn_antag(datum/client_base/C, turf/T, type = "")
 	return
 
 /obj/item/antag_spawner/proc/equip_antag(mob/target)
@@ -69,7 +69,7 @@
 			else
 				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
-/obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, type = "")
+/obj/item/antag_spawner/contract/spawn_antag(datum/client_base/C, turf/T, type = "")
 	new /obj/effect/particle_effect/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
@@ -170,7 +170,7 @@
 	else
 		to_chat(user, "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")
 
-/obj/item/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T)
+/obj/item/antag_spawner/nuke_ops/spawn_antag(datum/client_base/C, turf/T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
@@ -199,7 +199,7 @@
 	name = "syndicate medical teleporter"
 	borg_to_spawn = "Medical"
 
-/obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T)
+/obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(datum/client_base/C, turf/T)
 	var/mob/living/silicon/robot/R
 	switch(borg_to_spawn)
 		if("Medical")
@@ -258,7 +258,7 @@
 		to_chat(user, "<span class='notice'>You can't seem to work up the nerve to shatter the bottle. Perhaps you should try again later.</span>")
 
 
-/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
+/obj/item/antag_spawner/slaughter_demon/spawn_antag(datum/client_base/C, turf/T, type = "")
 
 	var /obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
 	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)

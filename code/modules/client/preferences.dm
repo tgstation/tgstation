@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/exp
 	var/list/menuoptions
 
-/datum/preferences/New(client/C)
+/datum/preferences/New(datum/client_base/C)
 	parent = C
 	custom_names["ai"] = pick(GLOB.ai_names)
 	custom_names["cyborg"] = pick(GLOB.ai_names)

@@ -244,7 +244,7 @@
 /obj/machinery/capture_the_flag/proc/clear_cooldown(var/ckey)
 	recently_dead_ckeys -= ckey
 
-/obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
+/obj/machinery/capture_the_flag/proc/spawn_team_member(datum/client_base/new_team_member)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
 	new_team_member.prefs.copy_to(M)
 	M.set_species(/datum/species/synth)

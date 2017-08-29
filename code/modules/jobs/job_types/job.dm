@@ -100,13 +100,13 @@
 		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/addtimer, CALLBACK(pick(GLOB.announcement_systems), /obj/machinery/announcement_system/proc/announce, "NEWHEAD", H.real_name, H.job, channels), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
-/datum/job/proc/player_old_enough(client/C)
+/datum/job/proc/player_old_enough(datum/client_base/C)
 	if(available_in_days(C) == 0)
 		return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
 
 
-/datum/job/proc/available_in_days(client/C)
+/datum/job/proc/available_in_days(datum/client_base/C)
 	if(!C)
 		return 0
 	if(!config.use_age_restriction_for_jobs)

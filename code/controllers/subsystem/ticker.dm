@@ -801,7 +801,7 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	round_end_sound_sent = FALSE
 	round_end_sound = fcopy_rsc(the_sound)
-	for(var/client/C in GLOB.clients)
+	for(var/client/C in GLOB.clients)	//keep as /client
 		C.Export("##action=load_rsc", round_end_sound)
 	round_end_sound_sent = TRUE
 

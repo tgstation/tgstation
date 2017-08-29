@@ -3,7 +3,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 
 // Procs
-/datum/job/proc/required_playtime_remaining(client/C)
+/datum/job/proc/required_playtime_remaining(datum/client_base/C)
 	if(!C)
 		return 0
 	if(!config.use_exp_tracking)

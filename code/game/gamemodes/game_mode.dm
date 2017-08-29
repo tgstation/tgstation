@@ -508,13 +508,13 @@
 	return text
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
-/datum/game_mode/proc/age_check(client/C)
+/datum/game_mode/proc/age_check(datum/client_base/C)
 	if(get_remaining_days(C) == 0)
 		return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
 
 
-/datum/game_mode/proc/get_remaining_days(client/C)
+/datum/game_mode/proc/get_remaining_days(datum/client_base/C)
 	if(!C)
 		return 0
 	if(!config.use_age_restriction_for_jobs)

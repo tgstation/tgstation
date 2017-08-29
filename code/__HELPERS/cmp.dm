@@ -23,10 +23,10 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_records_dsc(datum/data/record/a, datum/data/record/b)
 	return sorttext(a.fields[GLOB.cmp_field], b.fields[GLOB.cmp_field])
 
-/proc/cmp_ckey_asc(client/a, client/b)
+/proc/cmp_ckey_asc(datum/client_base/a, datum/client_base/b)
 	return sorttext(b.ckey, a.ckey)
 
-/proc/cmp_ckey_dsc(client/a, client/b)
+/proc/cmp_ckey_dsc(datum/client_base/a, datum/client_base/b)
 	return sorttext(a.ckey, b.ckey)
 
 /proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)

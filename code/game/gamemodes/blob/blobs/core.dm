@@ -14,7 +14,7 @@
 	var/point_rate = 2
 
 
-/obj/structure/blob/core/Initialize(mapload, client/new_overmind = null, new_rate = 2, placed = 0)
+/obj/structure/blob/core/Initialize(mapload, datum/client_base/new_overmind = null, new_rate = 2, placed = 0)
 	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
@@ -76,7 +76,7 @@
 	..()
 
 
-/obj/structure/blob/core/proc/create_overmind(client/new_overmind, override_delay)
+/obj/structure/blob/core/proc/create_overmind(datum/client_base/new_overmind, override_delay)
 	if(overmind_get_delay > world.time && !override_delay)
 		return
 
