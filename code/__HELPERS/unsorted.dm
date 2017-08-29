@@ -1465,3 +1465,7 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449) //0133333 and 0111111 respectively
 	temp = ((temp + (temp>>3))&29127) % 63	//070707
 	return temp
+
+//checks if a turf is in the planet z list.
+/proc/turf_z_is_planet(turf/T)
+	return GLOB.z_is_planet["[T.z]"]
