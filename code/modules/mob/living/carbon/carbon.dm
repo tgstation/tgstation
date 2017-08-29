@@ -705,21 +705,19 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health<= HEALTH_THRESHOLD_DEAD)
+		if(health <= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_FULLCRIT)
-			if(stat == CONSCIOUS || stat == SOFT_CRIT)
-				stat = UNCONSCIOUS
-				blind_eyes(1)
-				update_canmove()
-		else if(stat == UNCONSCIOUS)
+			stat = UNCONSCIOUS
+			blind_eyes(1)
+		else
 			if(health <= HEALTH_THRESHOLD_CRIT)
 				stat = SOFT_CRIT
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
-			update_canmove()
+		update_canmove()
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()
