@@ -157,7 +157,7 @@
 			variable_html += debug_variable(i, value, 0, D)
 	else
 
-		names = sortList(names)
+		names = uniqueList(sortList(names))
 		for (var/V in names)
 			if(D.can_vv_get(V))
 				variable_html += D.vv_get_var(V)
