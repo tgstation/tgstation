@@ -31,25 +31,24 @@
 /obj/item/pinpointer/attack_self(mob/living/user)
 	active = !active
 	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates their pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
-	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
+	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 	if(active)
 		START_PROCESSING(SSfastprocess, src)
 	else
 		target = null
 		STOP_PROCESSING(SSfastprocess, src)
-	update_pointer_overlay()
+	update_icon()
 
 /obj/item/pinpointer/process()
 	if(!active)
-		STOP_PROCESSING(SSfastprocess, src)
-		return
+		return PROCESS_KILL
 	scan_for_target()
-	update_pointer_overlay()
+	update_icon()
 
 /obj/item/pinpointer/proc/scan_for_target()
 	return
 
-/obj/item/pinpointer/proc/update_pointer_overlay()
+/obj/item/pinpointer/update_icon()
 	cut_overlays()
 	if(!active)
 		return
@@ -95,10 +94,10 @@
 	if(active)
 		active = FALSE
 		user.visible_message("<span class='notice'>[user] deactivates their pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
-		playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
+		playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 		target = null //Restarting the pinpointer forces a target reset
 		STOP_PROCESSING(SSfastprocess, src)
-		update_pointer_overlay()
+		update_icon()
 		return
 
 	var/list/name_counts = list()
@@ -108,31 +107,31 @@
 		if(!trackable(H))
 			continue
 
-		var/name = "Unknown"
+		var/crewmember_name = "Unknown"
 		if(H.wear_id)
 			var/obj/item/card/id/I = H.wear_id.GetID()
-			name = I.registered_name
+			crewmember_name = I.registered_name
 
-		while(name in name_counts)
-			name_counts[name]++
-			name = text("[] ([])", name, name_counts[name])
-		names[name] = H
-		name_counts[name] = 1
+		while(crewmember_name in name_counts)
+			name_counts[crewmember_name]++
+			crewmember_name = text("[] ([])", crewmember_name, name_counts[crewmember_name])
+		names[crewmember_name] = H
+		name_counts[crewmember_name] = 1
 
 	if(!names.len)
 		user.visible_message("<span class='notice'>[user]'s pinpointer fails to detect a signal.</span>", "<span class='notice'>Your pinpointer fails to detect a signal.</span>")
 		return
 
 	var/A = input(user, "Person to track", "Pinpoint") in names
-	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A)
+	if(!A || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
 		return
 
 	target = names[A]
 	active = TRUE
 	user.visible_message("<span class='notice'>[user] activates their pinpointer.</span>", "<span class='notice'>You activate your pinpointer.</span>")
-	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
+	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 	START_PROCESSING(SSfastprocess, src)
-	update_pointer_overlay()
+	update_icon()
 
 /obj/item/pinpointer/crew/scan_for_target()
 	if(target)
@@ -140,13 +139,12 @@
 			var/mob/living/carbon/human/H = target
 			if(!trackable(H))
 				target = null
-	if(!target)
+	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
 
 /obj/item/pinpointer/process()
 	if(!active)
-		STOP_PROCESSING(SSfastprocess, src)
-		return
+		return PROCESS_KILL
 	scan_for_target()
-	update_pointer_overlay()
+	update_icon()
 
