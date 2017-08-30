@@ -78,10 +78,8 @@
 	guntarget = target
 	to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")
 
-	var/obj/item/ammo_casing/energy/net/C = chambered
-	var/obj/item/projectile/energy/net/B = C.BB
-	if(istype(C) && istype(B))
-		C.B.set_projtarget()
+	if(chambered && chambered.BB)
+		chambered.BB.set_projtarget()
 
 /obj/item/gun/energy/e_gun/dragnet/examine(mob/user)
 	..()
