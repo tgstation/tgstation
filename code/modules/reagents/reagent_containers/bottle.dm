@@ -363,6 +363,7 @@
 
 /obj/item/reagent_containers/glass/bottle/lube
 	name = "Space Lube bottle"
-	desc = "One day while Andy was masturbating..."
+	desc = "A large bottle containing the clown's favorite reagant."
 	icon_state = "bottle17"
-	list_reagents = list("lube" = 10)
+	volume = 200
+	list_reagents = list("lube" = 200)
