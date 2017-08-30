@@ -753,6 +753,7 @@
 #include "code\game\objects\items\mop.dm"
 #include "code\game\objects\items\paint.dm"
 #include "code\game\objects\items\paiwire.dm"
+#include "code\game\objects\items\pinpointer.dm"
 #include "code\game\objects\items\pneumaticCannon.dm"
 #include "code\game\objects\items\powerfist.dm"
 #include "code\game\objects\items\RCD.dm"

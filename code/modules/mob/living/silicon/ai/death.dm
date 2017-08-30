@@ -35,9 +35,9 @@
 	if(nuking)
 		set_security_level("red")
 		nuking = FALSE
-		for(var/obj/item/pinpointer/P in GLOB.pinpointer_list)
+		for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 			P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone
-			P.nuke_warning = FALSE
+			P.alert = FALSE
 
 	if(doomsday_device)
 		doomsday_device.timing = FALSE

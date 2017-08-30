@@ -53210,7 +53210,7 @@
 /area/tcommsat/server)
 "bYo" = (
 /obj/structure/table/wood,
-/obj/item/pinpointer,
+/obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
