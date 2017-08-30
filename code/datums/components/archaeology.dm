@@ -6,18 +6,18 @@
 */
 /datum/component/archaeology
 	dupe_type = COMPONENT_DUPE_UNIQUE
-	var/list/drops = list()
+	var/list/archdrops = list()
 	var/prob2drop = 0
 	var/mob/user
 	var/obj/item/W
 	var/dug = FALSE
 
-/datum/component/archaeology/Initialize(_prob2drop)
+/datum/component/archaeology/Initialize(_prob2drop, _archdrops)
 	prob2drop = Clamp(_prob2drop, 0, 100)
 	if(isopenturf(parent))
-		var/turf/open/OT = parent
-		drops = OT.archdrops
 		RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
+		RegisterSignal(COMSIG_ATOM_EX_ACT, .proc/BombDig)
+		RegisterSignal(COMSIG_ATOM_SING_PULL, .proc/SingDig)
 
 /datum/component/archaeology/Destroy()
 	user = null
@@ -32,8 +32,8 @@
 
 /datum/component/archaeology/proc/Dig(mob/user, obj/item/W)
 	if(dug)
-		to_chat(user, "<span class='notice'> Looks like someone has dug here already.</span>")
-		return
+		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
+		return FALSE
 	else
 		var/digging_speed
 		if (istype(W, /obj/item/shovel))
@@ -84,14 +84,26 @@
 	user = null
 	W = null
 
-/******************************************************
-***************** MISC ******************************/
+/datum/component/archaeology/proc/SingDig(S, current_size)
+	switch(current_size)
+		if(STAGE_THREE)
+			if(!prob(30))
+				gets_dug()
+		if(STAGE_FOUR)
+			if(prob(50))
+				gets_dug()
+		else
+			if(current_size >= STAGE_FIVE && prob(70))
+				gets_dug()
 
-/datum/component/archaeology/basalt
-
-/datum/component/archaeology/basalt/gets_dug()
-	..()
-	if(istype(parent,/turf/open/floor/plating/asteroid/basalt))
-		var/turf/open/floor/plating/asteroid/basalt/BT
-		BT.set_light(0)
-
+/datum/component/archaeology/proc/BombDig(severity, target)
+	var/turf/open/OT = parent
+	OT.contents_explosion(severity, target)
+	switch(severity)
+		if(3)
+			return
+		if(2)
+			if(prob(20))
+				gets_dug()
+		if(1)
+			gets_dug()

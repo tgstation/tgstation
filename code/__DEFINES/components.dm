@@ -17,4 +17,6 @@
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from the base of atom/attackby: (obj/item, mob/living, params)
 #define COMSIG_PARENT_EXAMINE "atom_examine"                    //from the base of atom/examine: (mob)
 #define COMSIG_ATOM_ENTERED "atom_entered"                      //from base of atom/Entered(): (atom/movable, atom)
+#define COMSIG_ATOM_EX_ACT "atom_ex_act"						//from base of atom/ex_act()
+#define COMSIG_ATOM_SING_PULL "atom_sing_pull"					//from base of atom/singularity_pull()
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"                //from base of atom/movable/Crossed(): (atom/movable)
