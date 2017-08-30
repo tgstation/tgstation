@@ -6,7 +6,7 @@
 	var/mutable_appearance/wet_overlay
 	var/postdig_icon_change = FALSE
 	var/postdig_icon
-	var/list/archdrops = list()
+	var/list/archdrops
 
 /turf/open/indestructible
 	name = "floor"
