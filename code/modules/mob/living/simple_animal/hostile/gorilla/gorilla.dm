@@ -79,7 +79,7 @@
 			var/targettingviewer
 			//the following code attempts to find a non-jungle mob within sight range of the gorilla
 			//if it finds one or more, it picks one to throw its current attack target at
-			for(var/mob/living/M in src.viewers())
+			for(var/mob/living/M in src.viewers)
 				if(!("jungle" in M.faction))
 					targetviewers += M
 			if(targetviewers.len)
