@@ -56,7 +56,7 @@ git checkout -b "$BASE_BRANCH_NAME$1"
 readonly MERGE_SHA=$(curl --silent "$BASE_PULL_URL/$1" | jq '.merge_commit_sha' -r)
 
 # Get the commits
-readonly COMMITS=$(curl --silent "$BASE_PULL_URL/$1" | jq '.merge_commit_sha' -r)
+readonly COMMITS=$(curl "$BASE_PULL_URL/$1/commits" | jq '.[].sha' -r)
 
 # Cherry pick onto the new branch
 CHERRY_PICK_OUTPUT=$(git cherry-pick -m 1 "$MERGE_SHA" 2>&1)
