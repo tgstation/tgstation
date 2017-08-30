@@ -78,8 +78,9 @@
 	guntarget = target
 	to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")
 
-	if(chambered && chambered.BB)
-		chambered.BB.set_projtarget()
+	var/obj/item/projectile/energy/net/MEME = chambered.BB
+
+	MEME.set_projtarget()
 
 /obj/item/gun/energy/e_gun/dragnet/examine(mob/user)
 	..()
