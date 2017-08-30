@@ -200,8 +200,9 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 		var/datum/data/record/G = record
 		if(!G)
 			continue
-		if(G.fields["reference"])
-			addFile(G.fields["reference"])
+		var/datum/mind/M = G.fields["mindref"]
+		if(M && ishuman(M.current))
+			addFile(M.current)
 
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
