@@ -289,7 +289,7 @@ Difficulty: Very Hard
 	memory_saved = TRUE
 
 /obj/machinery/smartfridge/black_box/proc/ReadMemory()
-	if(fexists("data/npc_saves/Blackbox.sav"))
+	if(fexists("data/npc_saves/Blackbox.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
 		S["stored_items"] >> stored_items
 		fdel(S)

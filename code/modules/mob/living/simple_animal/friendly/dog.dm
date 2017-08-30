@@ -327,7 +327,7 @@
 	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Read_Memory()
-	if(fexists("data/npc_saves/Ian.sav"))
+	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
 		S["age"] 		>> age
 		S["record_age"]	>> record_age

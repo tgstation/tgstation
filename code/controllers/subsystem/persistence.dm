@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(persistence)
 	var/placed_satchel = 0
 	var/path
 	var/obj/item/storage/backpack/satchel/flat/F = new()
-	if(fexists("data/npc_saves/SecretSatchels.sav"))
+	if(fexists("data/npc_saves/SecretSatchels.sav")) //legacy compatability to convert old format to new
 		var/savefile/secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
 		var/sav_text
 		secret_satchels[SSmapping.config.map_name] >> sav_text
@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/LoadChiselMessages()
 	var/list/saved_messages = list()
-	if(fexists("data/npc_saves/ChiselMessages.sav"))
+	if(fexists("data/npc_saves/ChiselMessages.sav")) //legacy compatability to convert old format to new
 		var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
 		var/saved_json
 		chisel_messages_sav[SSmapping.config.map_name] >> saved_json
@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(persistence)
 	log_world("Loaded [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
-	if(fexists("data/npc_saves/TrophyItems.sav"))
+	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/TrophyItems.sav")
 		var/saved_json
 		S >> saved_json

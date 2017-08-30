@@ -112,7 +112,7 @@
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
-	if(fexists("data/npc_saves/Runtime.sav"))
+	if(fexists("data/npc_saves/Runtime.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 		S["family"] >> family
 		fdel(S)
