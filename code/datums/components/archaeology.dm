@@ -1,21 +1,18 @@
 /datum/component/archaeology
 	dupe_type = COMPONENT_DUPE_UNIQUE
-	var/list/archdrops = list()
-	var/prob2drop = 0
-	var/mob/user
-	var/obj/item/W
-	var/dug = FALSE
+	var/list/archdrops
+	var/prob2drop
+	var/dug
 
-/datum/component/archaeology/Initialize(_prob2drop, _archdrops)
+/datum/component/archaeology/Initialize(_prob2drop, list/_archdrops = list())
 	prob2drop = Clamp(_prob2drop, 0, 100)
+	archdrops = _archdrops
 	if(isopenturf(parent))
 		RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
 		RegisterSignal(COMSIG_ATOM_EX_ACT, .proc/BombDig)
 		RegisterSignal(COMSIG_ATOM_SING_PULL, .proc/SingDig)
 
 /datum/component/archaeology/Destroy()
-	user = null
-	W = null
 	return ..()
 
 /datum/component/archaeology/InheritComponent(datum/component/archaeology/A, i_am_original)
@@ -45,6 +42,7 @@
 				to_chat(user, "<span class='notice'>You dig a hole.</span>")
 				gets_dug()
 				dug = TRUE
+				SSblackbox.add_details("pick_used_mining",W.type)
 				return TRUE
 		return FALSE
 
@@ -73,10 +71,7 @@
 
 			if(OT.slowdown) //Things like snow slow you down until you dig them.
 				OT.slowdown = 0
-			SSblackbox.add_details("pick_used_mining",W.type)
 	dug = TRUE
-	user = null
-	W = null
 
 /datum/component/archaeology/proc/SingDig(S, current_size)
 	switch(current_size)
@@ -91,8 +86,6 @@
 				gets_dug()
 
 /datum/component/archaeology/proc/BombDig(severity, target)
-	var/turf/open/OT = parent
-	OT.contents_explosion(severity, target)
 	switch(severity)
 		if(3)
 			return

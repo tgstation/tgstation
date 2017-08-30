@@ -21,7 +21,9 @@
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
-	AddComponent(/datum/component/archaeology, 100, archdrops)
+
+	if(LAZYLEN(archdrops))
+		AddComponent(/datum/component/archaeology, 100, archdrops)
 
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
@@ -33,7 +35,8 @@
 	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
-	//note that this proc does not call ..()
+	..()
+
 	if(!W || !user)
 		return FALSE
 
