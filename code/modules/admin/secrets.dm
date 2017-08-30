@@ -60,7 +60,6 @@
 			<A href='?src=\ref[src];secrets=events'>Summon Events (Toggle)</A><BR>
 			<A href='?src=\ref[src];secrets=onlyone'>There can only be one!</A><BR>
 			<A href='?src=\ref[src];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
-			<A href='?src=\ref[src];secrets=onlyme'>There can only be me!</A><BR>
 			<A href='?src=\ref[src];secrets=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secrets=eagles'>Egalitarian Station Mode</A><BR>
 			<A href='?src=\ref[src];secrets=blackout'>Break all lights</A><BR>
@@ -525,12 +524,6 @@
 			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only One")
 			usr.client.only_one_delayed()
 			sound_to_playing_players('sound/misc/highlander_delayed.ogg')
-
-		if("onlyme")
-			if(!check_rights(R_FUN))
-				return
-			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only Me")
-			only_me()
 
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))

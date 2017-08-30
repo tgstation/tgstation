@@ -331,16 +331,3 @@
 		adjust_influence(bawss, amount/bosses.len)
 		announce_to_mind(bawss, "<span class='notice'>[name] Gang: [amount/bosses.len] influence given from internal automatic restructuring.</span>")
 
-//Multiverse
-
-/datum/gang/multiverse
-	dom_attempts = 0
-	fighting_style = "multiverse"
-	is_deconvertible = FALSE
-
-/datum/gang/multiverse/New(loc, multiverse_override)
-	name = multiverse_override
-	ganghud = new()
-
-/datum/gang/multiverse/income()
-	return
