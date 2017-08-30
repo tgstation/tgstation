@@ -77,7 +77,6 @@
 			var/targetviewers = list()
 			var/atom/throw_target
 			var/targettingviewer
-			var/call
 			//the following code attempts to find a non-jungle mob within sight range of the gorilla
 			//if it finds one or more, it picks one to throw its current attack target at
 			for(var/mob/living/M in oviewers(7, src))
@@ -91,9 +90,10 @@
 				targettingviewer = FALSE
 
 			if(targettingviewer && ishuman(throw_target))
-				call = CALLBACK(throw_target, /mob/living/carbon/human/.Knockdown, 20)
-			L.throw_at(throw_target, rand(1,2), 7, src, callback = call)
-			L.Knockdown(20)
+				L.throw_at(throw_target, rand(1,2), 7, src, callback = CALLBACK(throw_target, /mob/living/carbon/human/.Knockdown, 20))
+			else
+				L.throw_at(throw_target, rand(1,2), 7, src)
+				L.Knockdown(20)
 			visible_message("<span class='danger'>[src] hurls [L] [targettingviewer ? "at [throw_target.name]" : "at [throw_target]"] with a mighty swing!</span>")
 		else
 			L.Knockdown(20)
@@ -114,7 +114,6 @@
 /mob/living/simple_animal/hostile/gorilla/can_use_guns(obj/item/G)
 	to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 	return FALSE
-
 
 /mob/living/simple_animal/hostile/gorilla/proc/oogaooga()
 	oogas++
