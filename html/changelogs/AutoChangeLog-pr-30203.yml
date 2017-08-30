@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Added Shadow Walk, a new form of jaunt that lasts for an unlimited amount of time, but ends if you enter a well lit tile. It is planned for use in a Shadowling rework, but feel free to hassle admins to test it out in the mean time."
