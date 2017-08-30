@@ -93,8 +93,7 @@
 			if(targettingviewer && ishuman(throw_target))
 				call = CALLBACK(throw_target, /mob/living/carbon/human/.Knockdown, 20)
 			L.throw_at(throw_target, rand(1,2), 7, src, callback = call)
-			if(ishuman(L))
-				L.Knockdown(20)
+			L.Knockdown(20)
 			visible_message("<span class='danger'>[src] hurls [L] [targettingviewer ? "at [throw_target.name]" : "at [throw_target]"] with a mighty swing!</span>")
 		else
 			L.Knockdown(20)
