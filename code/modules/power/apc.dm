@@ -874,9 +874,9 @@
 			occupier.loc = src.loc
 			occupier.death()
 			occupier.gib()
-			for(var/obj/item/pinpointer/P in GLOB.pinpointer_list)
+			for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
-				P.nuke_warning = FALSE
+				P.alert = FALSE
 
 /obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(card.AI)
