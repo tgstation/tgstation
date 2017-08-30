@@ -76,7 +76,7 @@
 /datum/component/archaeology/proc/SingDig(S, current_size)
 	switch(current_size)
 		if(STAGE_THREE)
-			if(!prob(30))
+			if(prob(30))
 				gets_dug()
 		if(STAGE_FOUR)
 			if(prob(50))
