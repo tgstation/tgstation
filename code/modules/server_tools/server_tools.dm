@@ -12,7 +12,7 @@ GLOBAL_PROTECT(reboot_mode)
 
 /world/proc/ServiceEndProcess()
 	log_world("Self terminating!");
-	sleep(1)	//flush the chat buffers
+	sleep(world.tick_lag)	//flush the chat buffers
 	call("code/modules/server_tools/terminate/terminate.dll", "TerminateSelf")()
 	//if we get here...
 	log_world("Failed to self terminate!")
