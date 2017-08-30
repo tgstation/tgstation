@@ -286,7 +286,7 @@
 	slowdown = 2
 	environment_type = "snow"
 	flags_1 = NONE
-	archdrops= list(/obj/item/stack/sheet/mineral/snow = 5)
+	archdrops = list(/obj/item/stack/sheet/mineral/snow = 5)
 
 /turf/open/floor/plating/asteroid/snow/airless
 	initial_gas_mix = "TEMP=2.7"
