@@ -605,13 +605,15 @@
 		return
 
 	if(health <= HEALTH_THRESHOLD_CRIT)
-		var/severity = 1
+		var/severity = 0
 		switch(health)
 			if(-20 to -10)
-				severity = 2
+				severity = 1
 			if(-30 to -20)
+				severity = 2
+			if(-40 to -30)
 				severity = 3
-			if(-50 to -30)
+			if(-50 to -40)
 				severity = 4
 			if(-50 to -40)
 				severity = 5
@@ -625,9 +627,28 @@
 				severity = 9
 			if(-INFINITY to -95)
 				severity = 10
+		if(!InFullCritical())
+			var/visionseverity = 4
+			switch(health)
+				if(-8 to -4)
+					visionseverity = 5
+				if(-12 to -8)
+					visionseverity = 6
+				if(-16 to -12)
+					visionseverity = 7
+				if(-20 to -16)
+					visionseverity = 8
+				if(-24 to -20)
+					visionseverity = 9
+				if(-INFINITY to -24)
+					visionseverity = 10
+			overlay_fullscreen("critvision", /obj/screen/fullscreen/crit/vision, visionseverity)
+		else
+			clear_fullscreen("critvision")
 		overlay_fullscreen("crit", /obj/screen/fullscreen/crit, severity)
 	else
 		clear_fullscreen("crit")
+		clear_fullscreen("critvision")
 
 	//Oxygen damage overlay
 	if(oxyloss)

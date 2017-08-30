@@ -1013,8 +1013,6 @@
 	else if(flightpack && F.brake)
 		. += 2
 
-	if(H.stat)
-		. = max(SOFTCRIT_SLOWDOWN, . + SOFTCRIT_SLOWDOWN) //regardless of how fast you are, you move at a maximum of SOFTCRIT_SLOWDOWN while in softcrit
 	if(!ignoreslow && !flightpack && gravity)
 		if(H.wear_suit)
 			. += H.wear_suit.slowdown
@@ -1038,6 +1036,8 @@
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
+	if(H.stat)
+		. = max(SOFTCRIT_MIN_SLOWDOWN, . + SOFTCRIT_ADD_SLOWDOWN) //regardless of how fast you are, you move at a maximum of SOFTCRIT_MIN_SLOWDOWN while in softcrit
 	return .
 
 //////////////////
