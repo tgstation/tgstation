@@ -1274,7 +1274,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/role_restricted/sprayer
 	name = "Mass Chemical Sprayer"
-	desc = "A chemical sprayer that allows a wide dispersal of selected chemicals. Does not come with chemicals pre included."
+	desc = "A chemical sprayer that allows a wide dispersal of selected chemicals. Does not come with chemicals pre loaded into the sprayer.\
+	Bonus Space Lube bottle included!
+	."
 	item = /obj/item/storage/box/syndie_kit/lubepocolypse
 	cost = 16 //maybe get yourself some noslips and a syndiekey or some shit
 	surplus = 20
