@@ -39,7 +39,6 @@
 	search_objects = 1
 	wanted_objects = list(/obj/item/reagent_containers/food/snacks/grown/banana)
 	emote_taunt = list("hollars", "thumps their chest", "stomps their feet")
-	aggro_vision_range = 9
 	taunt_chance = 90
 
 
