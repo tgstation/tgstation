@@ -360,3 +360,9 @@
 	desc = "A small bottle containing Bio Virus Antidote Kit."
 	icon_state = "bottle5"
 	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
+
+/obj/item/reagent_containers/glass/bottle/lube
+	name = "Space Lube bottle"
+	desc = "One day while Andy was masturbating..."
+	icon_state = "bottle17"
+	list_reagents = list("lube" = 10)
