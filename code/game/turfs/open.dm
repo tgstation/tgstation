@@ -171,7 +171,7 @@
 			if(prob(95))
 				playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 			else
-				playsound(C.loc, 'sound/misc/oof.ogg', 50, 1, -3)
+				playsound(C.loc, 'hippiestation/sound/misc/oof.ogg', 50, 1, -3)
 
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
