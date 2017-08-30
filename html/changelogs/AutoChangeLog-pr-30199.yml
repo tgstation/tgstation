@@ -1,0 +1,5 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "fixed portable chem dispensers charging 50% slower than intended when initialized."
+  - bugfix: "fixed portable chem dispensers getting faster charging rate every time refreshparts() is called"

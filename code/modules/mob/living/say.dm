@@ -37,35 +37,36 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//kinda localization -- rastaf0
 	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	// Location
-	"?" = "right hand",
-	"?" = "left hand",
-	"?" = "intercom",
+	"ê" = "right hand",
+	"ä" = "left hand",
+	"ø" = "intercom",
 
 	// Department
-	"?" = "department",
-	"?" = "Command",
-	"?" = "Science",
-	"?" = "Medical",
-	"?" = "Engineering",
-	"?" = "Security",
-	"?" = "Supply",
-	"?" = "Service",
+	"ð" = "department",
+	"ñ" = "Command",
+	"ò" = "Science",
+	"ü" = "Medical",
+	"ó" = "Engineering",
+	"û" = "Security",
+	"ã" = "Supply",
+	"ì" = "Service",
 
 	// Faction
-	"�" = "Syndicate",
-	"�" = "CentCom",
+	"å" = "Syndicate",
+	"í" = "CentCom",
+
 	// Species
-	"?" = "binary",
-	"?" = "changeling",
-	"?" = "alientalk",
+	"è" = "binary",
+	"ï" = "changeling",
+	"ô" = "alientalk",
 
 	// Admin
-	"?" = "admin",
-	"?" = "deadmin",
+	"ç" = "admin",
+	"â" = "deadmin",
 
 	// Misc
-	"?" = "AI Private",
-	"?" = "cords"
+	"ù" = "AI Private",
+	"÷" = "cords"
 ))
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
