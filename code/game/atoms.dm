@@ -290,6 +290,7 @@
 				to_chat(user, "[total_volume] units of various reagents")
 		else
 			to_chat(user, "Nothing.")
+	SendSignal(COMSIG_PARENT_EXAMINE, user)
 
 /atom/proc/relaymove()
 	return

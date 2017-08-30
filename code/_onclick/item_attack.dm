@@ -16,10 +16,10 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return
+	return SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params)
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return I.attack_obj(src, user)
+	return ..() || I.attack_obj(src, user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
