@@ -47,17 +47,20 @@
 /obj/item/projectile/energy/net/Initialize()
 	. = ..()
 	SpinAnimation()
+	set_projtarget()
+
+/obj/item/projectile/energy/net/proc/set_projtarget()
 	var/obj/item/ammo_casing/energy/net/N = loc
 	if(istype(N))
 		projtarget = N.drag.guntarget
-		to_chat(world, "proj init: [projtarget]")//debug
+		to_chat(world, "proj target: [projtarget]")//debug
 
 /obj/item/projectile/energy/net/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
 			var/obj/effect/nettingportal/NP = new /obj/effect/nettingportal(Tloc)
-			NP.teletarget = projtarget
+			NP.teletarget = projtarget //if this doesnt work try doing it by passing src as an arg to the nettingportal and doing it all in init
 	..()
 
 /obj/item/projectile/energy/net/on_range()
@@ -74,7 +77,7 @@
 	anchored = TRUE
 	var/obj/item/device/radio/beacon/teletarget
 
-/obj/effect/nettingportal/Initialize()//might need to make loc an arg and set loc in init
+/obj/effect/nettingportal/Initialize()
 	. = ..()
 
 	addtimer(CALLBACK(src, .proc/pop, teletarget), 30)
