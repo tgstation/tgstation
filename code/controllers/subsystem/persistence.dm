@@ -24,10 +24,11 @@ SUBSYSTEM_DEF(persistence)
 	var/obj/item/storage/backpack/satchel/flat/F = new()
 	if(fexists("data/npc_saves/SecretSatchels.sav"))
 		var/savefile/secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
-		secret_satchels[SSmapping.config.map_name] >> old_secret_satchels
+		var/sav_text
+		secret_satchels[SSmapping.config.map_name] >> sav_text
 		fdel(secret_satchels)
-		if(old_secret_satchels)
-			old_secret_satchels = splittext(old_secret_satchels,"#")
+		if(sav_text)
+			old_secret_satchels = splittext(sav_text,"#")
 			if(old_secret_satchels.len >= 20)
 				var/satchel_string = pick_n_take(old_secret_satchels)
 				var/list/chosen_satchel = splittext(satchel_string,"|")
