@@ -2429,6 +2429,10 @@
 /area/bridge)
 "agg" = (
 /obj/structure/table,
+/obj/machinery/recharger{
+	pixel_x = 7;
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "agh" = (
@@ -2574,14 +2578,14 @@
 /area/bridge)
 "agA" = (
 /obj/machinery/keycard_auth{
-	pixel_x = 29;
-	pixel_y = 28
+	pixel_x = 27;
+	pixel_y = 29
 	},
 /obj/machinery/button/door{
 	id = "spacebridge";
 	name = "Bridge Blast Door Control";
 	pixel_x = 28;
-	pixel_y = 38;
+	pixel_y = 39;
 	req_access_txt = "19"
 	},
 /obj/structure/chair/comfy/brown{
@@ -2634,11 +2638,18 @@
 	dir = 1
 	},
 /obj/machinery/airlock_sensor{
+	id_tag = "tox_airlock_sensor";
+	master_tag = "tox_airlock_control";
 	pixel_x = -24
 	},
 /turf/open/floor/engine,
 /area/science/mixing)
 "agH" = (
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
+	dir = 2;
+	frequency = 1449;
+	id = "tox_airlock_pump"
+	},
 /turf/open/floor/engine,
 /area/science/mixing)
 "agI" = (
@@ -3227,6 +3238,12 @@
 "aib" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/embedded_controller/radio/airlock_controller{
+	airpump_tag = "tox_airlock_pump";
+	exterior_door_tag = "tox_airlock_exterior";
+	id_tag = "tox_airlock_control";
+	interior_door_tag = "tox_airlock_interior";
+	sanitize_external = 1;
+	sensor_tag = "tox_airlock_sensor";
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/white,
@@ -4147,7 +4164,7 @@
 	req_access_txt = "7"
 	},
 /turf/open/floor/plating,
-/area/science/mixing)
+/area/maintenance/aft)
 "akh" = (
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/plasteel/black,
@@ -4280,12 +4297,13 @@
 /area/crew_quarters/heads/captain/private)
 "akw" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/recharger,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "akx" = (
@@ -11858,6 +11876,10 @@
 /area/crew_quarters/heads/hop)
 "aDZ" = (
 /obj/structure/table,
+/obj/machinery/recharger{
+	step_x = 7;
+	step_y = 6
+	},
 /obj/item/folder/blue,
 /obj/item/stamp/hop,
 /turf/open/floor/plasteel,
@@ -12908,7 +12930,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_mining{
 	name = "Cargo Office";
-	req_access_txt = "50"
+	req_access_txt = "31"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -13021,7 +13043,7 @@
 	name = "Medbay Doors Control";
 	normaldoorcontrol = 1;
 	pixel_x = -26;
-	req_access_txt = "5"
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -13728,7 +13750,7 @@
 /area/quartermaster/storage)
 "aIW" = (
 /obj/machinery/conveyor{
-	dir = 1;
+	dir = 2;
 	id = "cargo2"
 	},
 /turf/open/floor/plating,
@@ -14183,7 +14205,7 @@
 	dir = 4
 	},
 /obj/machinery/conveyor{
-	dir = 1;
+	dir = 2;
 	id = "cargo2"
 	},
 /turf/open/floor/plating,
@@ -14684,7 +14706,7 @@
 	name = "supply dock loading door"
 	},
 /obj/machinery/conveyor{
-	dir = 1;
+	dir = 2;
 	id = "cargo2"
 	},
 /turf/open/floor/plating,
@@ -14777,9 +14799,10 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/engineering{
+	cyclelinkeddir = 1;
 	name = "Engineering";
 	req_access_txt = "0";
-	req_one_access_txt = "32;19"
+	req_one_access_txt = "10;19"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -14963,7 +14986,7 @@
 "aLV" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
-	dir = 1;
+	dir = 2;
 	id = "cargo2"
 	},
 /turf/open/floor/plating,
@@ -15448,7 +15471,7 @@
 	name = "supply dock loading door"
 	},
 /obj/machinery/conveyor{
-	dir = 1;
+	dir = 2;
 	id = "cargo2"
 	},
 /turf/open/floor/plating,
@@ -15487,9 +15510,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
+	cyclelinkeddir = 2;
 	name = "Engineering";
 	req_access_txt = "0";
-	req_one_access_txt = "32;19"
+	req_one_access_txt = "10;19"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -17169,7 +17193,7 @@
 	id = "supermatter";
 	name = "supermatter blast door button";
 	pixel_x = 26;
-	req_one_access_txt = "32;19"
+	req_one_access_txt = "10"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -18481,6 +18505,7 @@
 /obj/item/stack/sheet/glass{
 	amount = 50
 	},
+/obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
 "aUk" = (
@@ -53821,7 +53846,7 @@ aCx
 aDx
 aAz
 aCs
-aFV
+aGb
 anD
 axL
 axL
