@@ -59,7 +59,7 @@
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
 			var/obj/effect/nettingportal/NP = new /obj/effect/nettingportal(Tloc)
-			NP.teletarget = projtarget //if this doesnt work try doing it by passing src as an arg to the nettingportal and doing it all in init
+			NP.teletarget = projtarget
 	..()
 
 /obj/item/projectile/energy/net/on_range()
