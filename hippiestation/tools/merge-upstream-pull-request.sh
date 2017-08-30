@@ -73,7 +73,7 @@ echo "$CHERRY_PICK_OUTPUT"
 # You also can't use -m 1 if it's a rebase and merge...
 if echo "$CHERRY_PICK_OUTPUT" | grep 'error: mainline was specified but commit'; then
   echo "Commit was a squash, retrying"
-  if containsElement "$MERGE_SHA" "${$COMMITS}"; then
+  if containsElement "$MERGE_SHA" "${$COMMITS[@]}"; then
     for commit in $COMMITS; do
   	  echo "Cherry-picking: $commit"
 	  git cherry-pick "$commit"
