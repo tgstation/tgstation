@@ -88,8 +88,11 @@
 			else//couldn't find a valid mob
 				throw_target = get_edge_target_turf(L, dir)
 				targettingviewer = FALSE
-			L.throw_at(throw_target, rand(1,2), 7, src, callback = CALLBACK(throw_target, /mob/living/carbon/human/.Knockdown, 20))
-			L.Knockdown(20)
+			if(targettingviewer)
+				L.throw_at(throw_target, rand(1,2), 7, src, callback = CALLBACK(throw_target, /mob/living/carbon/human/.Knockdown, 20))
+				L.Knockdown(20)
+			else
+				L.throw_at(throw_target, rand(1,2), 7, src)
 			visible_message("<span class='danger'>[src] hurls [L] [targettingviewer ? "at [throw_target.name]" : "at [throw_target]"] with a mighty swing!</span>")
 		else
 			L.Knockdown(20)
