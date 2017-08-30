@@ -80,8 +80,8 @@
 			//the following code attempts to find a non-jungle mob within sight range of the gorilla
 			//if it finds one or more, it picks one to throw its current attack target at
 			for(var/mob/living/M in oviewers(src))
-				if(!("jungle" in M.faction))
-					targetviewers += M
+				if(!("jungle" in M.faction) && M != L)
+					targetviewers.Add(M)
 			if(targetviewers.len)
 				throw_target = pick(targetviewers)
 				targettingviewer = TRUE
