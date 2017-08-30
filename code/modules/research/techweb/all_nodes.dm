@@ -227,7 +227,7 @@
 	display_name = "Basic Robotics Research"
 	description = "Programmable machines that make our lives lazier."
 	prereq_ids = list("base")
-	design_ids = list("paicard")
+	design_ids = list("paicard", "drone_shell")
 	research_cost = 5000
 	export_price = 5000
 
@@ -322,10 +322,10 @@
 
 /datum/techweb_node/cloning
 	id = "cloning"
-	display_name = "Cloning Technology"
-	description = "We have the technology to remake him.")
+	display_name = "Genetic Engineering"
+	description = "We have the technology to make him.")
 	prereq_ids = list("biotech")
-	design_ids = list("clonecontrol", "clonepod", "clonescanner")
+	design_ids = list("clonecontrol", "clonepod", "clonescanner", "scan_console")
 	research_cost = 5000
 	export_price = 5000
 
@@ -410,49 +410,29 @@
 	research_cost = 5000
 	export_price = 5000
 
-/datum/
-/////////////////////////////////////////
-/////////////////Mining//////////////////
-/////////////////////////////////////////
-/datum/design/drill
-	name = "Mining Drill"
-	id = "drill"
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) //expensive, but no need for miners.
-/datum/design/drill_diamond
-	name = "Diamond-Tipped Mining Drill"
-	desc = "Yours is the drill that will pierce the heavens!"
-	id = "drill_diamond"
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000, MAT_DIAMOND = 2000) //Yes, a whole diamond is needed.
-/datum/design/plasmacutter
-	name = "Plasma Cutter"
-	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-	id = "plasmacutter"
-/datum/design/plasmacutter_adv
-	name = "Advanced Plasma Cutter"
-	desc = "It's an advanced plasma cutter, oh my god."
-	id = "plasmacutter_adv"
-/datum/design/jackhammer
-	name = "Sonic Jackhammer"
-	id = "jackhammer"
-/datum/design/superresonator
-	name = "Upgraded Resonator"
-	id = "superresonator"
-/datum/design/trigger_guard_mod
-	name = "Kinetic Accelerator Trigger Guard Mod"
-	id = "triggermod"
-	build_path = /obj/item/borg/upgrade/modkit/trigger_guard
-/datum/design/damage_mod
-	name = "Kinetic Accelerator Damage Mod"
-	id = "damagemod"
-/datum/design/cooldown_mod
-	name = "Kinetic Accelerator Cooldown Mod"
-	id = "cooldownmod"
-/datum/design/range_mod
-	name = "Kinetic Accelerator Range Mod"
-	id = "rangemod"
-/datum/design/hyperaccelerator
-	name = "Kinetic Accelerator Mining AoE Mod"
-	id = "hypermod"
+/datum/techweb_node/basic_mining
+	id = "basic_mining"
+	display_name = "Mining Technology"
+	description = "Better than Efficiency V."
+	prereq_ids = list("industrial_engineering")
+	design_ids = list("drill", "superresonator", "triggermod", "damagemod", "cooldownmod", "rangemod")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/adv_mining
+	id = "adv_mining"
+	display_name = "Advanced Mining Technology"
+	description = "Efficiency Level 127"	//dumb mc references
+	prereq_ids = list("basic_mining", "adv_engi", "adv_power", "adv_plasma")
+	design_ids = list("drill_diamond", "jackhammer", "hypermod", "plasmacutter", "plasmacutter_adv")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/basic_plasma
+	id = "basic_plasma"
+
+/datum/techweb_node/adv_plasma
+	id = "adv_plasma"
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
@@ -630,12 +610,6 @@
 	id = "borg_upgrade_defibrillator"
 	construction_time = 120
 
-
-/datum/design/drone_shell
-	name = "Drone Shell"
-	id = "drone_shell"
-	construction_time=150
-	build_path = /obj/item/drone_shell
 
 /datum/design/flightsuit		//Multi step build process/redo WIP
 	name = "Flight Suit"
@@ -904,10 +878,7 @@
 /datum/design/board/pandemic
 	name = "Computer Design (PanD.E.M.I.C. 2200)"
 	id = "pandemic"
-/datum/design/board/scan_console
-	name = "Computer Design (DNA Machine)"
-	id = "scan_console"
-	build_path = /obj/item/circuitboard/computer/scan_consolenew
+
 /datum/design/board/comconsole
 	name = "Computer Design (Communications)"
 	id = "comconsole"
