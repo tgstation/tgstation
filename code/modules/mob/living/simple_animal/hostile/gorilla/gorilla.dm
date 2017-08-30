@@ -20,7 +20,7 @@
 	speed = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 18
-	damage_coeff = list(BRUTE = 0.5, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 0.6, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1)
 	obj_damage = 20
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attacktext = "pummels"
@@ -82,14 +82,14 @@
 			for(var/mob/living/M in oviewers(7, src))
 				if(!("jungle" in M.faction) && M != L)
 					targetviewers += M
-					to_chat(world, "[M]")//debug
 			if(targetviewers)
 				throw_target = pick(targetviewers)
 				targettingviewer = TRUE
-			else
+			else//couldn't find a valid mob
 				throw_target = get_edge_target_turf(L, dir)
 				targettingviewer = FALSE
-			L.throw_at(throw_target, rand(1,2), 7, src)
+			L.throw_at(throw_target, rand(1,2), 7, src, callback = CALLBACK(throw_target, /mob/living/carbon/human/.Knockdown, 20))
+			L.Knockdown(20)
 			visible_message("<span class='danger'>[src] hurls [L] [targettingviewer ? "at [throw_target.name]" : "at [throw_target]"] with a mighty swing!</span>")
 		else
 			L.Knockdown(20)
