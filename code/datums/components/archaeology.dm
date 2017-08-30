@@ -5,7 +5,7 @@
 		If your turf has a unique post-dig sprite like basalt/asteroid, put that in postdig_icon as a text string AND set postdig_icon_change = TRUE.
 */
 /datum/component/archaeology
-	dupe_type = COMPONENT_DUPE_HIGHLANDER
+	dupe_type = COMPONENT_DUPE_UNIQUE
 	var/list/drops = list()
 	var/prob2drop = 0
 	var/mob/user
