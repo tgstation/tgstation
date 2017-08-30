@@ -1279,7 +1279,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/storage/box/syndie_kit/lubepocolypse
 	cost = 16 //maybe get yourself some noslips and a syndiekey or some shit
 	surplus = 20
-	restricted_roles = list("Chemist", "Clown")
+	restricted_roles = list("Chemist", "Janitor", "Clown")
 
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
