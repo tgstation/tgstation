@@ -77,7 +77,11 @@
 /obj/item/gun/energy/e_gun/dragnet/proc/set_target(target, user)//called on beacon's attackby()
 	guntarget = target
 	to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")
-	chambered.BB.set_projtarget()
+
+	var/obj/item/ammo_casing/energy/net/C = chambered
+	var/obj/item/projectile/energy/net/B = C.BB
+	if(istype(C) && istype(B))
+		C.B.set_projtarget()
 
 /obj/item/gun/energy/e_gun/dragnet/examine(mob/user)
 	..()
