@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 source ~/.discordauth
 
+# ~/.discordauth contains:
+# CHANNELID=x
+# TOKEN=x
+# CHANNELID being the Discord Channel ID
+# Token being the bot token
+
 set -u # don't expand unbound variable
 set -f # disable pathname expansion
 set -C # noclobber
