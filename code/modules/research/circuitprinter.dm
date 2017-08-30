@@ -11,7 +11,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	container_type = OPENCONTAINER_1
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 
-	var/datum/material_container/materials
 	var/efficiency_coeff
 
 	var/list/categories = list(
@@ -29,12 +28,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								)
 
 /obj/machinery/r_n_d/circuit_imprinter/Initialize()
-	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE))
+	AddComponent(/datum/component/material_container, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE),
+		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready))
 	create_reagents(0)
-	return ..()
-
-/obj/machinery/r_n_d/circuit_imprinter/Destroy()
-	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
@@ -43,6 +39,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.max_amount = 0
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		materials.max_amount += M.rating * 75000
@@ -59,6 +56,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
 	var/list/all_materials = being_built.reagents_list + being_built.materials
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	var/A = materials.amount(M)
 	if(!A)
 		A = reagents.get_reagent_amount(M)
@@ -69,6 +67,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/on_deconstruction()
 	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 	..()
 
@@ -77,52 +76,20 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	linked_console.linked_imprinter = null
 	..()
 
-/obj/machinery/r_n_d/circuit_imprinter/Insert_Item(obj/item/O, mob/user)
-
-	if(istype(O, /obj/item/stack/sheet))
-		. = 1
-		if(!is_insertion_ready(user))
+/obj/machinery/r_n_d/circuit_imprinter/ComponentActivated(datum/component/C)
+	..()
+	if(istype(C, /datum/component/material_container))
+		var/datum/component/material_container/M = C
+		if(!M.last_insert_success)
 			return
-		var/sheet_material = materials.get_item_material_amount(O)
-		if(!sheet_material)
-			return
-
-		if(!materials.has_space(sheet_material))
-			to_chat(user, "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>")
-			return 1
-
-		var/obj/item/stack/sheet/stack = O
-		var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
-		if(!in_range(src, stack) || !user.Adjacent(src))
-			return
-		var/amount_inserted = materials.insert_stack(O,amount)
-		if(!amount_inserted)
-			return 1
+		var/lit = M.last_inserted_type
+		var/stack_name
+		if(ispath(lit, /obj/item/ore/bluespace_crystal))
+			stack_name = "bluespace"
+			use_power(MINERAL_MATERIAL_AMOUNT / 10)
 		else
-			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
-			to_chat(user, "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>")
-		updateUsrDialog()
-
-	else if(istype(O, /obj/item/ore/bluespace_crystal)) //Bluespace crystals can be either a stack or an item
-		. = 1
-		if(!is_insertion_ready(user))
-			return
-		var/bs_material = materials.get_item_material_amount(O)
-		if(!bs_material)
-			return
-
-		if(!materials.has_space(bs_material))
-			to_chat(user, "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>")
-			return 1
-
-		materials.insert_item(O)
-		use_power(MINERAL_MATERIAL_AMOUNT/10)
-		to_chat(user, "<span class='notice'>You add [O] to the [src.name].</span>")
-		qdel(O)
-		updateUsrDialog()
-
-	else if(user.a_intent != INTENT_HARM)
-		to_chat(user, "<span class='warning'>You cannot insert this item into the [name]!</span>")
-		return 1
-	else
-		return 0
+			var/obj/item/stack/S = lit
+			stack_name = initial(S.name)
+			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT * M.last_amount_inserted / 10)))
+		add_overlay("protolathe_[stack_name]")
+		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[stack_name]"), 10)
