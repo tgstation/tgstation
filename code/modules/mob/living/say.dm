@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/get_message_mode(message)
 	var/key = copytext(message, 1, 2)
-	if((InCritical() && !InFullCritical()) || key == "#")
+	if(InCritical() || key == "#")
 		return MODE_WHISPER
 	else if(key == ";")
 		return MODE_HEADSET
@@ -385,6 +385,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/radio(message, message_mode, list/spans, language)
 	switch(message_mode)
+		if(MODE_WHISPER)
+			return ITALICS
 		if(MODE_R_HAND)
 			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
 				if (r_hand)
