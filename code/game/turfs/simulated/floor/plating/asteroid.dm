@@ -71,7 +71,9 @@
 	ArchaeologySignal(user,W)
 
 /turf/open/floor/plating/asteroid/singularity_act()
-	return
+	if(turf_z_is_planet(src))
+		return ..()
+	ChangeTurf(/turf/open/space)
 
 /turf/open/floor/plating/asteroid/singularity_pull(S, current_size)
 	for(var/datum/component/archaeology/archy in datum_components)

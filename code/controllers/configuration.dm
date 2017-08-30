@@ -295,6 +295,7 @@
 
 /datum/configuration/proc/Reload()
 	load("config/config.txt")
+	load("config/comms.txt", "comms")
 	load("config/game_options.txt","game_options")
 	load("config/policies.txt", "policies")
 	loadsql("config/dbconfig.txt")
@@ -462,27 +463,12 @@
 					fps = text2num(value)
 				if("automute_on")
 					automute_on = 1
-				if("comms_key")
-					global.comms_key = value
-					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
-						global.comms_allowed = 1
-				if("cross_server_address")
-					cross_address = value
-					if(value != "byond:\\address:port")
-						cross_allowed = 1
-				if("cross_comms_name")
-					cross_name = value
 				if("panic_server_name")
 					if (value != "\[Put the name here\]")
 						panic_server_name = value
 				if("panic_server_address")
 					if(value != "byond://address:port")
 						panic_address = value
-
-				if("medal_hub_address")
-					global.medal_hub = value
-				if("medal_hub_password")
-					global.medal_pass = value
 				if("show_irc_name")
 					showircname = 1
 				if("see_own_notes")
@@ -567,8 +553,12 @@
 				if("irc_announce_new_game")
 					irc_announce_new_game = TRUE
 				else
-					WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
-
+#if DM_VERSION > 511
+#error Replace the line below with WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
+#endif
+					HandleCommsConfig(name, value)	//TODO: Deprecate this eventually
+		else if(type == "comms")
+			HandleCommsConfig(name, value)
 		else if(type == "game_options")
 			switch(name)
 				if("damage_multiplier")
@@ -808,6 +798,24 @@
 	if(fps <= 0)
 		fps = initial(fps)
 
+/datum/configuration/proc/HandleCommsConfig(name, value)
+	switch(name)
+		if("comms_key")
+			global.comms_key = value
+			if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
+				global.comms_allowed = TRUE
+		if("cross_server_address")
+			cross_address = value
+			if(value != "byond:\\address:port")
+				cross_allowed = TRUE
+		if("cross_comms_name")
+			cross_name = value
+		if("medal_hub_address")
+			global.medal_hub = value
+		if("medal_hub_password")
+			global.medal_pass = value
+		else
+			WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 
 /datum/configuration/proc/loadmaplist(filename)
 	var/list/Lines = world.file2list(filename)

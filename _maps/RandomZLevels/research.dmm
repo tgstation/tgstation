@@ -4403,10 +4403,7 @@
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 8
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/research/exterior)
 "mA" = (
 /obj/structure/chair{

@@ -160,7 +160,7 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/powered = total_accessable_power()
 		var/sigil_number = LAZYLEN(check_apc_and_sigils())
-		to_chat(user, "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power, \
+		to_chat(user, "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITE</b>":"[DisplayPower(powered)]</b> of"] power, \
 		and <b>[sigil_number]</b> Sigil[sigil_number == 1 ? "":"s"] of Transmission [sigil_number == 1 ? "is":"are"] in range.</span>")
 
 /obj/structure/destructible/clockwork/powered/Destroy()

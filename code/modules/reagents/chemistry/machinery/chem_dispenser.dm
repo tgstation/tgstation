@@ -226,7 +226,7 @@
 	icon_state = "minidispenser"
 	powerefficiency = 0.001
 	amount = 5
-	recharge_delay = 30
+	recharge_delay = 20
 	dispensable_reagents = list()
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
 	var/static/list/dispensable_reagent_tiers = list(
@@ -281,7 +281,7 @@
 		time += M.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		time += C.rating
-	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
+	recharge_delay = 30/(time/2)         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]

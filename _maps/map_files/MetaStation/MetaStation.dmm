@@ -79656,9 +79656,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cVW" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cVX" = (
 /obj/structure/tank_dispenser/oxygen{
