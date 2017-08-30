@@ -1187,7 +1187,7 @@
 	pixel_x = 32;
 	pixel_y = 24
 	},
-/obj/item/pinpointer,
+/obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10

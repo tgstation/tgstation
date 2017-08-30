@@ -13937,7 +13937,7 @@
 /area/storage/primary)
 "aEx" = (
 /obj/structure/table/wood,
-/obj/item/pinpointer,
+/obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
 /obj/machinery/light{
 	dir = 8
