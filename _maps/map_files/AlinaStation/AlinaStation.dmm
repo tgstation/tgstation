@@ -11877,8 +11877,8 @@
 "aDZ" = (
 /obj/structure/table,
 /obj/machinery/recharger{
-	step_x = 7;
-	step_y = 6
+	pixel_x = 7;
+	pixel_y = 6
 	},
 /obj/item/folder/blue,
 /obj/item/stamp/hop,
@@ -20019,6 +20019,22 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"aXN" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/conveyor_switch/oneway{
+	convdir = -1;
+	id = "garbage";
+	name = "disposal conveyor"
+	},
+/turf/open/floor/plating,
+/area/maintenance/central)
+"aXO" = (
+/turf/open/floor/plating,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -54875,7 +54891,7 @@ aCz
 ayo
 awe
 aFX
-awe
+aXO
 awe
 anf
 aok
@@ -55131,7 +55147,7 @@ aCA
 aCA
 ayk
 aFg
-aFY
+aXN
 aFW
 aHH
 anf
