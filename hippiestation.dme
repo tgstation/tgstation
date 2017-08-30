@@ -2230,8 +2230,6 @@
 #include "hippiestation\code\game\machinery\doors\blastco.dm"
 #include "hippiestation\code\game\machinery\pipe\pipe_dispenser.dm"
 #include "hippiestation\code\game\mecha\mech_fabricator.dm"
-#include "hippiestation\code\game\mecha\makeshift\lockermech.dm"
-#include "hippiestation\code\game\mecha\makeshift\makeshift_tools.dm"
 #include "hippiestation\code\game\objects\inflatables.dm"
 #include "hippiestation\code\game\objects\noose.dm"
 #include "hippiestation\code\game\objects\effects\effect_system\effects_cloud.dm"
