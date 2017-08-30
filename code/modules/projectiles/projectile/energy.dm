@@ -80,9 +80,9 @@
 /obj/effect/nettingportal/Initialize()
 	. = ..()
 
-	addtimer(CALLBACK(src, .proc/pop, teletarget), 30)
+	addtimer(CALLBACK(src, .proc/pop), 30)
 
-/obj/effect/nettingportal/proc/pop(teletarget)
+/obj/effect/nettingportal/proc/pop()
 	to_chat(world, "pop: [teletarget]")//debug
 	if(teletarget)
 		var/TT = get_turf(teletarget)

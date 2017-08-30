@@ -185,7 +185,7 @@
 	variance = 40
 	var/obj/item/gun/energy/e_gun/dragnet/drag
 
-/obj/item/ammo_casing/energy/net/Initialize(var/obj/item/gun/energy/e_gun/dragnet)
+/obj/item/ammo_casing/energy/net/Initialize()
 	. = ..()
 	drag = loc
 
