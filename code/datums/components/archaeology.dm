@@ -1,9 +1,3 @@
-/* How this works:
-		In turf.Initialize() , AddComponent(/datum/component/archaeology, prob2drop). prob2drop is a base number that affects each drop in list/drop the same. Good for if you want to have turfs be a bit more dynamic.
-		In the turf's vars, you can set the drop list with the archdrops var. Format is type = num where num is the max it could possibly drop. postdig
-		In the turf's AttackBy() [open turfs are vastly different and don't typically call inheritance hence component], call ArchaeologySignal(user, W). This will send the signal to the component as well.
-		If your turf has a unique post-dig sprite like basalt/asteroid, put that in postdig_icon as a text string AND set postdig_icon_change = TRUE.
-*/
 /datum/component/archaeology
 	dupe_type = COMPONENT_DUPE_UNIQUE
 	var/list/archdrops = list()
@@ -25,10 +19,10 @@
 	return ..()
 
 /datum/component/archaeology/InheritComponent(datum/component/archaeology/A, i_am_original)
-	var/list/other_drops = A.drops
-	var/list/_drops = drops
-	for(var/I in other_drops)
-		_drops[I] += other_drops[I]
+	var/list/other_archdrops = A.archdrops
+	var/list/_archdrops = archdrops
+	for(var/I in other_archdrops)
+		_archdrops[I] += other_archdrops[I]
 
 /datum/component/archaeology/proc/Dig(mob/user, obj/item/W)
 	if(dug)
@@ -60,8 +54,8 @@
 	else
 		if(isopenturf(parent))
 			var/turf/open/OT = parent
-			for(var/thing in drops)
-				var/maxtodrop = drops[thing]
+			for(var/thing in archdrops)
+				var/maxtodrop = archdrops[thing]
 				for(var/i in 1 to maxtodrop)
 					if(prob(prob2drop)) // can't win them all!
 						new thing(OT)
