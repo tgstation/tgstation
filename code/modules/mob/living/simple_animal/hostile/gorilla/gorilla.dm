@@ -83,7 +83,7 @@
 				if(!("jungle" in M.faction) && M != L)
 					targetviewers += M
 					to_chat(world, "[M]")//debug
-			if(targetviewers.len)
+			if(targetviewers)
 				throw_target = pick(targetviewers)
 				targettingviewer = TRUE
 			else
