@@ -74,14 +74,14 @@
 	if(. && isliving(target))
 		var/mob/living/L = target
 		if(prob(80))
-			var/list/targetviewers
+			var/targetviewers = list()
 			var/atom/throw_target
 			var/targettingviewer
 			//the following code attempts to find a non-jungle mob within sight range of the gorilla
 			//if it finds one or more, it picks one to throw its current attack target at
 			for(var/mob/living/M in oviewers(src))
 				if(!("jungle" in M.faction) && M != L)
-					targetviewers.Add(M)
+					targetviewers += M
 			if(targetviewers.len)
 				throw_target = pick(targetviewers)
 				targettingviewer = TRUE
