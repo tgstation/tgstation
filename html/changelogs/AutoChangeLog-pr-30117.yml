@@ -1,0 +1,5 @@
+author: "Pubby"
+delete-after: True
+changes: 
+  - rscadd: "Crew-tracking pinpointers to replace laggy crew monitoring console functionality"
+  - rscadd: "Crew-tracking pinpointers in medical vendors and the detective's office"
