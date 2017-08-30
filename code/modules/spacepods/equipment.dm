@@ -211,8 +211,8 @@
 
 // Ore System
 /obj/item/device/spacepod_equipment/cargo/ore
-	name = "spacepod ore storage system"
-	desc = "An ore storage system for spacepods. Scoops up any ore you drive over."
+	name = "spacepod ore scoop system"
+	desc = "An ore storage system for spacepods. Scoops up any ore you drive over. Requires a loaded ore box."
 	icon_state = "cargo_ore"
 
 /obj/item/device/spacepod_equipment/cargo/ore/passover(obj/item/I)
