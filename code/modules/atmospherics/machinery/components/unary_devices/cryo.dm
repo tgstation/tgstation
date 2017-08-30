@@ -303,14 +303,14 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
 	var/list/data = list()
 	data["isOperating"] = on
-	data["hasOccupant"] = occupant ? 1 : 0
+	data["hasOccupant"] = occupant ? TRUE : FALSE
 	data["isOpen"] = state_open
 	data["autoEject"] = autoeject
 
-	var/list/occupantData = list()
+	data["occupant"] = list()
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
-		occupantData["name"] = mob_occupant.name
+		data["occupant"]["name"] = mob_occupant.name
 		switch(mob_occupant.stat)
 			if(CONSCIOUS)
 				data["occupant"]["stat"] = "Conscious"
@@ -324,28 +324,25 @@
 			if(DEAD)
 				data["occupant"]["stat"] = "Dead"
 				data["occupant"]["statstate"] = "bad"
-		occupantData["health"] = mob_occupant.health
-		occupantData["maxHealth"] = mob_occupant.maxHealth
-		occupantData["minHealth"] = HEALTH_THRESHOLD_DEAD
-		occupantData["bruteLoss"] = mob_occupant.getBruteLoss()
-		occupantData["oxyLoss"] = mob_occupant.getOxyLoss()
-		occupantData["toxLoss"] = mob_occupant.getToxLoss()
-		occupantData["fireLoss"] = mob_occupant.getFireLoss()
-		occupantData["bodyTemperature"] = mob_occupant.bodytemperature
+		data["occupant"]["health"] = round(mob_occupant.health, 1)
+		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
+		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+		data["occupant"]["bruteLoss"] = round(mob_occupant.getBruteLoss(), 1)
+		data["occupant"]["oxyLoss"] = round(mob_occupant.getOxyLoss(), 1)
+		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
+		data["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss(), 1)
+		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
 		if(mob_occupant.bodytemperature < 225)
-			occupantData["temperaturestatus"] = "good"
+			data["occupant"]["temperaturestatus"] = "good"
 		else if(mob_occupant.bodytemperature < 273.15)
-			occupantData["temperaturestatus"] = "average"
+			data["occupant"]["temperaturestatus"] = "average"
 		else
-			occupantData["temperaturestatus"] = "bad"
-
-	data["occupant"] = occupantData
-
+			data["occupant"]["temperaturestatus"] = "bad"
 
 	var/datum/gas_mixture/air1 = AIR1
-	data["cellTemperature"] = round(air1.temperature)
+	data["cellTemperature"] = round(air1.temperature, 1)
 
-	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
 	var beakerContents = list()
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)

@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a problem with shuttles being unrepairable under certain circumstances."
