@@ -3065,6 +3065,10 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
+"kM" = (
+/obj/effect/mapping_helpers/planet_z,
+/turf/closed/mineral/random,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -3321,7 +3325,7 @@ aa
 aa
 aa
 aa
-aa
+kM
 "}
 (2,1,1) = {"
 aa
@@ -38141,17 +38145,17 @@ bT
 cd
 bT
 bT
-eF
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
+cY
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
 ha
 bT
 bT
@@ -48177,7 +48181,7 @@ jS
 jS
 bT
 kd
-ko
+ki
 ix
 ab
 ab
@@ -48691,7 +48695,7 @@ jS
 jS
 bT
 kd
-ko
+ki
 kr
 kx
 ab
@@ -49205,7 +49209,7 @@ jS
 jS
 bT
 kd
-ko
+ki
 kr
 kx
 ab
@@ -49719,7 +49723,7 @@ jS
 jS
 bT
 kd
-ko
+ki
 kr
 kz
 ab

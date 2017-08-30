@@ -2973,6 +2973,10 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
+"gW" = (
+/obj/effect/mapping_helpers/planet_z,
+/turf/closed/indestructible/rock,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -3229,7 +3233,7 @@ aa
 aa
 aa
 aa
-aa
+gW
 "}
 (2,1,1) = {"
 aa

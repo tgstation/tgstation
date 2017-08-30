@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - imageadd: "Cult blades have updated item and inhand sprites."

@@ -970,7 +970,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/aiModule/syndicate
-	cost = 14
+	cost = 9
 
 /datum/uplink_item/device_tools/briefcase_launchpad
 	name = "Briefcase Launchpad"
@@ -1400,8 +1400,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		if(crate_value < I.cost)
 			continue
 		crate_value -= I.cost
-		new I.item(C)
-		U.purchase_log += "<big>[icon2base64html(I.item)]</big>"
+		var/obj/goods = new I.item(C)
+		U.purchase_log += "<big>[icon2base64html(goods)]</big>"
 
 	SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
 	return C
