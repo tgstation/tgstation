@@ -77,6 +77,7 @@
 		if(prob(80))
 			var/list/targetviewers
 			var/atom/throw_target
+			var/targettingviewer
 			//the following code attempts to find a non-jungle mob within sight range of the gorilla
 			//if it finds one or more, it picks one to throw its current attack target at
 			for(var/mob/living/M in src.viewers())
@@ -84,10 +85,12 @@
 					targetviewers += M
 			if(targetviewers.len)
 				throw_target = pick(targetviewers)
+				targettingviewer = TRUE
 			else
 				throw_target = get_edge_target_turf(L, dir)
+				targettingviewer = FALSE
 			L.throw_at(throw_target, rand(1,2), 7, src)
-			visible_message("<span class='danger'>[src] hurls [L] with a mighty swing!</span>")
+			visible_message("<span class='danger'>[src] hurls [L] [targettingviewer ? 'at [throw_target.name]' : 'at [throw_target]'] with a mighty swing!</span>")
 		else
 			L.Knockdown(20)
 			visible_message("<span class='danger'>[src] knocks [L] down!</span>")
