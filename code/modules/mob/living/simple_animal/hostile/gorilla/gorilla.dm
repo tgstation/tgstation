@@ -83,7 +83,7 @@
 				if(!("jungle" in M.faction))
 					targetviewers += M
 			if(targetviewers.len)
-				throwtarget = pick(targetviewers)
+				throw_target = pick(targetviewers)
 			else
 				throw_target = get_edge_target_turf(L, dir)
 			L.throw_at(throw_target, rand(1,2), 7, src)
