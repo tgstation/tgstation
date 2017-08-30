@@ -53,7 +53,6 @@
 	var/obj/item/ammo_casing/energy/net/N = loc
 	if(istype(N))
 		projtarget = N.drag.guntarget
-		to_chat(world, "proj target: [projtarget]")//debug
 
 /obj/item/projectile/energy/net/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
@@ -65,7 +64,6 @@
 
 /obj/item/projectile/energy/net/on_range()
 	do_sparks(1, TRUE, src)
-	to_chat(world, "on_range() triggered")//pls dont lag me lmao
 	..()
 
 /obj/effect/nettingportal
@@ -83,11 +81,10 @@
 	addtimer(CALLBACK(src, .proc/pop), 30)
 
 /obj/effect/nettingportal/proc/pop()
-	to_chat(world, "pop: [teletarget]")//debug
 	if(teletarget)
 		var/TT = get_turf(teletarget)
 		for(var/mob/living/L in get_turf(src))
-			do_teleport(L, TT, 2)//teleport what's in the tile to the beacon
+			do_teleport(L, TT, 1)//teleport what's in the tile to the beacon
 	else
 		for(var/mob/living/L in get_turf(src))
 			do_teleport(L, L, 15) //Otherwise it just warps you off somewhere.

@@ -85,7 +85,7 @@
 /obj/item/gun/energy/e_gun/dragnet/examine(mob/user)
 	..()
 	if(guntarget)
-		to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")//improve this
+		to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")
 
 /obj/item/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"
