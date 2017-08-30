@@ -79,9 +79,10 @@
 			var/targettingviewer
 			//the following code attempts to find a non-jungle mob within sight range of the gorilla
 			//if it finds one or more, it picks one to throw its current attack target at
-			for(var/mob/living/M in oviewers(src))
+			for(var/mob/living/M in oviewers(7, src))
 				if(!("jungle" in M.faction) && M != L)
 					targetviewers += M
+					to_chat(world, "[M]")//debug
 			if(targetviewers.len)
 				throw_target = pick(targetviewers)
 				targettingviewer = TRUE
