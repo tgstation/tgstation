@@ -3,7 +3,7 @@
 
 /mob/living/simple_animal/hostile/gorilla
 	name = "Gorilla"
-	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the forests of central Africa."
+	desc = "A ground-dwelling, predominantly herbivorous ape descended from an ancient race of creatures that lived on makind's homeworld."
 	icon = 'icons/mob/gorilla.dmi'
 	icon_state = "crawling"
 	icon_state = "crawling"
@@ -20,7 +20,7 @@
 	speed = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 18
-	damage_coeff = list(BRUTE = 0.6, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 0.8, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1)
 	obj_damage = 20
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attacktext = "pummels"
@@ -37,10 +37,11 @@
 	var/oogas = 0
 
 	search_objects = 1
-	wanted_objects = list(/obj/item/reagent_containers/food/snacks/grown/banana)
-	emote_taunt = list("hollars", "thumps their chest", "stomps their feet")
+	//Gorillas hate technology, especially the cloning tech used to experiment on them
+	wanted_objects = list(/obj/machinery/clonepod, /obj/machinery/computer)
 	taunt_chance = 90
-
+	force_threshold = 5
+	deathmessage = "screams in pain as it succumbs to its wounds."
 
 /mob/living/simple_animal/hostile/gorilla/Aggro()
 	visible_message("<span class='danger'>[src] charges wildly at [target]!</span>")
