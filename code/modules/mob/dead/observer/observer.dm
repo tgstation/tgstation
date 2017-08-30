@@ -51,11 +51,14 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	// Used for displaying in ghost chat, without changing the actual name
 	// of the mob
 	var/deadchat_name
+	var/datum/spawners_menu/spawners_menu
 
 /mob/dead/observer/Initialize()
 	set_invisibility(GLOB.observer_default_invisibility)
 
-	verbs += /mob/dead/observer/proc/dead_tele
+	verbs += list(
+		/mob/dead/observer/proc/dead_tele,
+		/mob/dead/observer/proc/open_spawners_menu)
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -148,6 +151,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	QDEL_NULL(ghostimage_simple)
 
 	updateallghostimages()
+
+	QDEL_NULL(spawners_menu)
 	return ..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target)
@@ -815,3 +820,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(message)
 			to_chat(G, message)
 	GLOB.observer_default_invisibility = amount
+
+/mob/dead/observer/proc/open_spawners_menu()
+	set name = "Mob spawners menu"
+	set desc = "See all currently available ghost spawners"
+	set category = "Ghost"
+	if(!spawners_menu)
+		spawners_menu = new(src)
+
+	spawners_menu.ui_interact(src)

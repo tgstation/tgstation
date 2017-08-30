@@ -9,7 +9,9 @@
 
 //keep these in sync with TGS3
 #define SERVICE_WORLD_PARAM "server_service"
-#define SERVICE_PR_TEST_JSON "..\\..\\prtestjob.json"
+#define SERVICE_VERSION_PARAM "server_service_version"
+#define SERVICE_PR_TEST_JSON "prtestjob.json"
+#define SERVICE_PR_TEST_JSON_OLD "..\\..\\[SERVICE_PR_TEST_JSON]"
 
 #define SERVICE_CMD_HARD_REBOOT "hard_reboot"
 #define SERVICE_CMD_GRACEFUL_SHUTDOWN "graceful_shutdown"

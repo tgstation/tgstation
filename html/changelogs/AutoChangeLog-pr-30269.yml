@@ -1,0 +1,4 @@
+author: "CPTANT"
+delete-after: True
+changes: 
+  - balance: "Hacked AI module cost is reduced to 9TC"

@@ -913,7 +913,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/ghosts_on_rune = list()
 	for(var/mob/dead/observer/O in get_turf(src))
 		if(O.client && !jobban_isbanned(O, ROLE_CULTIST))
-			ghosts_on_rune |= O
+			ghosts_on_rune += O
 	if(!ghosts_on_rune.len)
 		to_chat(user, "<span class='cultitalic'>There are no spirits near [src]!</span>")
 		fail_invoke()
@@ -926,9 +926,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/ghosts_on_rune = list()
 	for(var/mob/dead/observer/O in get_turf(src))
 		if(O.client && !jobban_isbanned(O, ROLE_CULTIST))
-			ghosts_on_rune |= O
+			ghosts_on_rune += O
 	var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
-	var/mob/living/carbon/human/new_human = new(get_turf(src))
+	var/mob/living/carbon/human/cult_ghost/new_human = new(get_turf(src))
 	new_human.real_name = ghost_to_spawn.real_name
 	new_human.alpha = 150 //Makes them translucent
 	new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
@@ -959,3 +959,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/obj/I in new_human)
 			new_human.dropItemToGround(I, TRUE)
 		new_human.dust()
+
+/mob/living/carbon/human/cult_ghost/spill_organs(no_brain, no_organs, no_bodyparts) //cult ghosts never drop a brain
+	no_brain = TRUE
+	. = ..()
+
+/mob/living/carbon/human/cult_ghost/getorganszone(zone, subzones = 0)
+	. = ..()
+	for(var/obj/item/organ/brain/B in .) //they're not that smart, really
+		. -= B

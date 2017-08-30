@@ -24,7 +24,7 @@
 	..()
 
 	//These have to be after the parent new to ensure that the monkey
-	//bodyparts are actually created before we try to equip things to 
+	//bodyparts are actually created before we try to equip things to
 	//those slots
 	if(relic_hat)
 		equip_to_slot_or_del(new relic_hat, slot_head)
@@ -42,32 +42,40 @@
 	..()
 
 /mob/living/carbon/monkey/punpun/proc/Read_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
-	S["ancestor_name"] 		>> ancestor_name
-	S["ancestor_chain"]		>> ancestor_chain
-	S["relic_hat"]			>> relic_hat
-	S["relic_mask"]			>> relic_mask
+	if(fexists("data/npc_saves/Punpun.sav"))
+		var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
+		S["ancestor_name"]	>> ancestor_name
+		S["ancestor_chain"] >> ancestor_chain
+		S["relic_hat"]		>> relic_hat
+		S["relic_mask"]		>> relic_mask
+		fdel(S)
+	else
+		var/json_file = file("data/npc_saves/Punpun.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		ancestor_name = json["ancestor_name"]
+		ancestor_chain = json["ancestor_chain"]
+		relic_hat = json["relic_hat"]
+		relic_mask = json["relic_hat"]
 
 /mob/living/carbon/monkey/punpun/proc/Write_Memory(dead, gibbed)
-	var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
+	var/json_file = file("data/npc_saves/Punpun.json")
+	var/list/file_data = list()
 	if(gibbed)
-		WRITE_FILE(S["ancestor_name"], null)
-		WRITE_FILE(S["ancestor_chain"], 1)
-		WRITE_FILE(S["relic_hat"], null)
-		WRITE_FILE(S["relic_mask"], null)
-		return
+		file_data["ancestor_name"] = null
+		file_data["ancestor_chain"] = null
+		file_data["relic_hat"] = null
+		file_data["relic_mask"] = null
 	if(dead)
-		WRITE_FILE(S["ancestor_name"], ancestor_name)
-		WRITE_FILE(S["ancestor_chain"], ancestor_chain + 1)
-	if(!ancestor_name)	//new monkey name this round
-		WRITE_FILE(S["ancestor_name"], name)
-	if(head)
-		WRITE_FILE(S["relic_hat"], head.type)
-	else
-		WRITE_FILE(S["relic_hat"], null)
-	if(wear_mask)
-		WRITE_FILE(S["relic_mask"], wear_mask.type)
-	else
-		WRITE_FILE(S["relic_mask"], null)
+		file_data["ancestor_name"] = ancestor_name
+		file_data["ancestor_chain"] = ancestor_chain + 1
+	file_data["relic_hat"] = head ? head.type : null
+	file_data["relic_mask"] = wear_mask ? wear_mask.type : null
+	if(!ancestor_name)
+		file_data["ancestor_name"] = name
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(json_file))
 	if(!dead)
 		memory_saved = 1
