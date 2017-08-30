@@ -87,12 +87,17 @@
 /// SNPC voice handling
 
 /mob/living/carbon/human/interactive/proc/loadVoice()
-	var/json_file = file("data/npc_saves/snpc.json")
-	if(!fexists(json_file))
-		return
-	var/list/json = list()
-	json = json_decode(file2text(json_file))
-	knownStrings = json["knownStrings"]
+	if(fexists("data/npc_saves/snpc.sav"))
+		var/savefile/S = new /savefile("data/npc_saves/snpc.sav")
+		S["knownStrings"] >> knownStrings
+		fdel(S)
+	else
+		var/json_file = file("data/npc_saves/snpc.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		knownStrings = json["knownStrings"]
 	if(isnull(knownStrings))
 		knownStrings = list()
 

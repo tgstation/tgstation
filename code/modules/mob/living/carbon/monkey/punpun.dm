@@ -42,15 +42,23 @@
 	..()
 
 /mob/living/carbon/monkey/punpun/proc/Read_Memory()
-	var/json_file = file("data/npc_saves/Punpun.json")
-	if(!fexists(json_file))
-		return
-	var/list/json = list()
-	json = json_decode(file2text(json_file))
-	ancestor_name = json["ancestor_name"]
-	ancestor_chain = json["ancestor_chain"]
-	relic_hat = json["relic_hat"]
-	relic_mask = json["relic_hat"]
+	if(fexists("data/npc_saves/Punpun.sav"))
+		var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
+		S["ancestor_name"]	>> ancestor_name
+		S["ancestor_chain"] >> ancestor_chain
+		S["relic_hat"]		>> relic_hat
+		S["relic_mask"]		>> relic_mask
+		fdel(S)
+	else
+		var/json_file = file("data/npc_saves/Punpun.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		ancestor_name = json["ancestor_name"]
+		ancestor_chain = json["ancestor_chain"]
+		relic_hat = json["relic_hat"]
+		relic_mask = json["relic_hat"]
 
 /mob/living/carbon/monkey/punpun/proc/Write_Memory(dead, gibbed)
 	var/json_file = file("data/npc_saves/Punpun.json")

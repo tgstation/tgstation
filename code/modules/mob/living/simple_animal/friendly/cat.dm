@@ -112,12 +112,17 @@
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
-	var/json_file = file("data/npc_saves/Runtime.json")
-	if(!fexists(json_file))
-		return
-	var/list/json = list()
-	json = json_decode(file2text(json_file))
-	family = json["family"]
+	if(fexists("data/npc_saves/Runtime.sav"))
+		var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+		S["family"] >> family
+		fdel(S)
+	else
+		var/json_file = file("data/npc_saves/Runtime.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		family = json["family"]
 	if(isnull(family))
 		family = list()
 

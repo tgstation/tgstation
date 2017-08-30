@@ -327,14 +327,21 @@
 	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Read_Memory()
-	var/json_file = file("data/npc_saves/Ian.json")
-	if(!fexists(json_file))
-		return
-	var/list/json = list()
-	json = json_decode(file2text(json_file))
-	age = json["age"]
-	record_age = json["record_age"]
-	saved_head = json["saved_head"]
+	if(fexists("data/npc_saves/Ian.sav"))
+		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
+		S["age"] 		>> age
+		S["record_age"]	>> record_age
+		S["saved_head"] >> saved_head
+		fdel(S)
+	else
+		var/json_file = file("data/npc_saves/Ian.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		age = json["age"]
+		record_age = json["record_age"]
+		saved_head = json["saved_head"]
 	if(isnull(age))
 		age = 0
 	if(isnull(record_age))

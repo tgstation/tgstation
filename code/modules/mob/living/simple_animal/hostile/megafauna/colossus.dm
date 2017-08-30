@@ -289,12 +289,17 @@ Difficulty: Very Hard
 	memory_saved = TRUE
 
 /obj/machinery/smartfridge/black_box/proc/ReadMemory()
-	var/json_file = file("data/npc_saves/Blackbox.json")
-	if(!fexists(json_file))
-		return
-	var/list/json = list()
-	json = json_decode(file2text(json_file))
-	stored_items = json["data"]
+	if(fexists("data/npc_saves/Blackbox.sav"))
+		var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
+		S["stored_items"] >> stored_items
+		fdel(S)
+	else
+		var/json_file = file("data/npc_saves/Blackbox.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		stored_items = json["data"]
 	if(isnull(stored_items))
 		stored_items = list()
 

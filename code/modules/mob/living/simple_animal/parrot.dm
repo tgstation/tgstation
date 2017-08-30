@@ -923,15 +923,23 @@
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
-	var/json_file = file("data/npc_saves/Poly.json")
-	if(!fexists(json_file))
-		return
-	var/list/json = list()
-	json = json_decode(file2text(json_file))
-	speech_buffer = json["phrases"]
-	rounds_survived = json["roundssurvived"]
-	longest_survival = json["longestsurvival"]
-	longest_deathstreak = json["longestdeathstreak"]
+	if(fexists("data/npc_saves/Poly.sav"))
+		var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+		S["phrases"] 			>> speech_buffer
+		S["roundssurvived"]		>> rounds_survived
+		S["longestsurvival"]	>> longest_survival
+		S["longestdeathstreak"] >> longest_deathstreak
+		fdel(S)
+	else
+		var/json_file = file("data/npc_saves/Poly.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		speech_buffer = json["phrases"]
+		rounds_survived = json["roundssurvived"]
+		longest_survival = json["longestsurvival"]
+		longest_deathstreak = json["longestdeathstreak"]
 	if(!islist(speech_buffer))
 		speech_buffer = list()
 
