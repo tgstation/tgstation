@@ -4,6 +4,10 @@ GLOBAL_PROTECT(reboot_mode)
 /world/proc/RunningService()
 	return params[SERVICE_WORLD_PARAM]
 
+/proc/ServiceVersion()
+	if(world.RunningService())
+		return world.params[SERVICE_VERSION_PARAM]
+
 /world/proc/ExportService(command)
 	return RunningService() && shell("python code/modules/server_tools/nudge.py \"[command]\"") == 0
 

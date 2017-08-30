@@ -75,14 +75,16 @@ effective or pretty fucking useless.
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 	var/used = 0 // is it cooling down?
+	var/stealth = FALSE
 
 /obj/item/device/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
-	..()
+	if(!stealth || !irradiate)
+		..()
 	if(!irradiate)
 		return
 	if(!used)
 		add_logs(user, M, "irradiated", src)
-		var/cooldown = round(max(10, (intensity*5 - wavelength/4))) * 10
+		var/cooldown = GetCooldown()
 		used = 1
 		icon_state = "health1"
 		handle_cooldown(cooldown) // splits off to handle the cooldown while handling wavelength
@@ -103,11 +105,15 @@ effective or pretty fucking useless.
 /obj/item/device/healthanalyzer/rad_laser/attack_self(mob/user)
 	interact(user)
 
+/obj/item/device/healthanalyzer/rad_laser/proc/GetCooldown()
+	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
+
 /obj/item/device/healthanalyzer/rad_laser/interact(mob/user)
 	user.set_machine(src)
 
-	var/cooldown = round(max(10, (intensity*5 - wavelength/4)))
+	var/cooldown = GetCooldown()
 	var/dat = "Irradiation: <A href='?src=\ref[src];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
+	dat += "Stealth Mode (NOTE: Deactivates automatically while Irradiation is off): <A href='?src=\ref[src];stealthy=[TRUE]'>[stealth ? "On" : "Off"]</A><br>"
 	dat += "Scan Mode: <a href='?src=\ref[src];mode=1'>"
 	if(!scanmode)
 		dat += "Scan Health"
@@ -141,6 +147,9 @@ effective or pretty fucking useless.
 	usr.set_machine(src)
 	if(href_list["rad"])
 		irradiate = !irradiate
+	
+	else if(href_list["stealthy"])
+		stealth = !stealth
 
 	else if(href_list["mode"])
 		scanmode += 1

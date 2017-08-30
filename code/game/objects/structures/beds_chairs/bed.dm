@@ -37,6 +37,9 @@
 	else
 		return ..()
 
+/obj/structure/bed/relaymove(mob/living/user)
+	user.resist_buckle()
+
 /*
  * Roller beds
  */

@@ -22,7 +22,6 @@
 	var/icon_recharging = "recharge"
 	var/icon_creating = "make"
 
-	var/datum/material_container/materials
 	var/list/using_materials
 	var/starting_amount = 0
 	var/metal_cost = 1000
@@ -55,13 +54,9 @@
 
 /obj/machinery/droneDispenser/Initialize()
 	. = ..()
-	materials = new(src, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT*MAX_STACK_SIZE*2)
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE)
 	materials.insert_amount(starting_amount)
 	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
-
-/obj/machinery/droneDispenser/Destroy()
-	QDEL_NULL(materials)
-	return ..()
 
 /obj/machinery/droneDispenser/preloaded
 	starting_amount = 5000
@@ -148,10 +143,6 @@
 	..()
 	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
 		to_chat(user, "<span class='warning'>[recharging_text]</span>")
-	if(metal_cost)
-		to_chat(user, "<span class='notice'>It has [materials.amount(MAT_METAL)] units of metal stored.</span>")
-	if(glass_cost)
-		to_chat(user, "<span class='notice'>It has [materials.amount(MAT_GLASS)] units of glass stored.</span>")
 
 /obj/machinery/droneDispenser/power_change()
 	..()
@@ -166,6 +157,7 @@
 	if((stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	if(!materials.has_materials(using_materials))
 		return // We require more minerals
 
@@ -232,25 +224,8 @@
 		icon_state = icon_on
 
 /obj/machinery/droneDispenser/attackby(obj/item/O, mob/living/user)
-	if(istype(O, /obj/item/stack))
-		if(!O.materials[MAT_METAL] && !O.materials[MAT_GLASS])
-			return ..()
-		if(!metal_cost && !glass_cost)
-			to_chat(user, "<span class='warning'>There isn't a place to insert [O]!</span>")
-			return
-		var/obj/item/stack/sheets = O
-		if(!user.canUnEquip(sheets))
-			to_chat(user, "<span class='warning'>[O] is stuck to your hand, you can't get it off!</span>")
-			return
-
-		var/used = materials.insert_stack(sheets, sheets.amount)
-
-		if(used)
-			to_chat(user, "<span class='notice'>You insert [used] sheet[used > 1 ? "s" : ""] into [src].</span>")
-		else
-			to_chat(user, "<span class='warning'>The [src] isn't accepting the [sheets].</span>")
-
-	else if(istype(O, /obj/item/crowbar))
+	if(istype(O, /obj/item/crowbar))
+		GET_COMPONENT(materials, /datum/component/material_container)
 		materials.retrieve_all()
 		playsound(loc, O.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
