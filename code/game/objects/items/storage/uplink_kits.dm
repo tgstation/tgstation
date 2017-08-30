@@ -190,6 +190,14 @@
 /obj/item/storage/box/syndie_kit/imp_storage/PopulateContents()
 	new /obj/item/implanter/storage(src)
 
+/obj/item/storage/box/syndie_kit/lubepocolypse
+	name = "boxed chemical sprayer"
+	desc = "It's a crimson red box. It says \"Bonus Lube Bottle included!\""
+
+/obj/item/storage/box/syndie_kit/lubepocolypse/PopulateContents()
+	new /obj/item/reagent_containers/spray/chemsprayer(src)
+	new /obj/item/reagent_containers/glass/bottle/lube(src)
+
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
 	can_hold = list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate)
