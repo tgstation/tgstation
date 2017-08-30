@@ -36,6 +36,17 @@
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 	var/oogas = 0
 
+	search_objects = 1
+	wanted_objects = list(/obj/item/reagent_containers/food/snacks/grown/banana)
+	emote_taunt = list("hollars", "thumps their chest", "stomps their feet")
+	aggro_vision_range = 9
+	taunt_chance = 90
+
+
+/mob/living/simple_animal/hostile/gorilla/Aggro()
+	visible_message("<span class='danger'>[src] charges wildly at [target]!</span>")
+
+
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
 /mob/living/simple_animal/hostile/gorilla/proc/target_bodyparts(atom/the_target)
@@ -64,8 +75,19 @@
 	if(. && isliving(target))
 		var/mob/living/L = target
 		if(prob(80))
-			var/atom/throw_target = get_edge_target_turf(L, dir)
-			L.throw_at(throw_target, rand(1,2), 7, src) 
+			var/list/targetviewers
+			var/atom/throw_target
+			//the following code attempts to find a non-jungle mob within sight range of the gorilla
+			//if it finds one or more, it picks one to throw its current attack target at
+			for(var/mob/living/M in src.viewers())
+				if(!("jungle" in M.faction))
+					targetviewers += M
+			if(targetviewers.len)
+				throwtarget = pick(targetviewers)
+			else
+				throw_target = get_edge_target_turf(L, dir)
+			L.throw_at(throw_target, rand(1,2), 7, src)
+			visible_message("<span class='danger'>[src] hurls [L] with a mighty swing!</span>")
 		else
 			L.Knockdown(20)
 			visible_message("<span class='danger'>[src] knocks [L] down!</span>")
