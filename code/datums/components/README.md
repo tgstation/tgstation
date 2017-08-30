@@ -105,8 +105,4 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Called when a component recieves any signal and is enabled
     * Default implementation looks if the signal is registered and runs the appropriate proc
 
-<<<<<<< HEAD
-### See signals and their arguments in __DEFINES\components.dm
-=======
 ### See/Define signals and their arguments in __DEFINES\components.dm
->>>>>>> master
