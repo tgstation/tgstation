@@ -163,6 +163,7 @@
 
 	data["contents"] = listofitems
 	data["name"] = name
+	data["isdryer"] = FALSE
 
 	return data
 
@@ -188,71 +189,6 @@
 			return TRUE
 	return TRUE
 
-
-/*******************
-*   SmartFridge Menu
-*******************
-
-/obj/machinery/smartfridge/interact(mob/user)
-	if(stat)
-		return FALSE
-
-	var/dat = "<TT><b>Select an item:</b><br>"
-
-	if (contents.len == 0)
-		dat += "<font color = 'red'>No product loaded!</font>"
-	else
-		var/listofitems = list()
-		for (var/atom/movable/O in contents)
-			if (listofitems[O.name])
-				listofitems[O.name]++
-			else
-				listofitems[O.name] = 1
-		sortList(listofitems)
-
-		for (var/O in listofitems)
-			if(listofitems[O] <= 0)
-				continue
-			var/N = listofitems[O]
-			var/itemName = url_encode(O)
-			dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
-			dat += " [N] </font>"
-			dat += "<a href='byond://?src=\ref[src];vend=[itemName];amount=1'>Vend</A> "
-			if(N > 5)
-				dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=5'>x5</A>)"
-				if(N > 10)
-					dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=10'>x10</A>)"
-					if(N > 25)
-						dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=25'>x25</A>)"
-			if(N > 1)
-				dat += "(<a href='?src=\ref[src];vend=[itemName];amount=[N]'>All</A>)"
-
-			dat += "<br>"
-
-		dat += "</TT>"
-	user << browse("<HEAD><TITLE>[src] supplies</TITLE></HEAD><TT>[dat]</TT>", "window=smartfridge")
-	onclose(user, "smartfridge")
-	return dat
-
-/obj/machinery/smartfridge/Topic(var/href, var/list/href_list)
-	if(..())
-		return
-	usr.set_machine(src)
-
-	var/N = href_list["vend"]
-	var/amount = text2num(href_list["amount"])
-
-	var/i = amount
-	for(var/obj/O in contents)
-		if(i <= 0)
-			break
-		if(O.name == N)
-			O.loc = src.loc
-			i--
-
-
-	updateUsrDialog()
-*/
 
 // ----------------------------
 //  Drying Rack 'smartfridge'
@@ -287,20 +223,32 @@
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/crowbar/C, ignore_panel = 1)
 	..()
 
-/obj/machinery/smartfridge/drying_rack/interact(mob/user)
-	var/dat = ..()
-	if(dat)
-		dat += "<br>"
-		dat += "<a href='byond://?src=\ref[src];dry=1'>Toggle Drying</A> "
-		user << browse("<HEAD><TITLE>[src] supplies</TITLE></HEAD><TT>[dat]</TT>", "window=smartfridge")
-	onclose(user, "smartfridge")
+/obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
+	var/list/data = list()
 
-/obj/machinery/smartfridge/drying_rack/Topic(href, list/href_list)
-	..()
-	if(href_list["dry"])
-		toggle_drying(FALSE)
-	updateUsrDialog()
-	update_icon()
+	var/listofitems = list()
+	for (var/atom/movable/O in contents)
+		if (listofitems[O.name])
+			listofitems[O.name]["amount"]++
+		else
+			listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
+	sortList(listofitems)
+
+	data["contents"] = listofitems
+	data["name"] = name
+	data["isdryer"] = TRUE
+	data["drying"] = drying
+
+	return data
+
+/obj/machinery/smartfridge/drying_rack/ui_act(action, params)
+	switch(action)
+		if("Dry")
+			toggle_drying(FALSE)
+		else
+			if(..())
+				return
+	return TRUE
 
 /obj/machinery/smartfridge/drying_rack/power_change()
 	if(powered() && anchored)
