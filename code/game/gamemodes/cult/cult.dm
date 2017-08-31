@@ -104,7 +104,6 @@
 	if(!GLOB.summon_spots.len)
 		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
 			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
-			if((summon.z == ZLEVEL_STATION) && summon.valid_territory)
 				GLOB.summon_spots += summon
 	cult_objectives += "eldergod"
 

@@ -5,7 +5,7 @@
 	anchored = TRUE
 	density = TRUE
 	var/question = "Travel back?"
-	var/zlevels = list(ZLEVEL_STATION)
+	var/zlevels = list(ZLEVEL_STATION_PRIMARY)
 
 /obj/structure/signpost/New()
 	. = ..()

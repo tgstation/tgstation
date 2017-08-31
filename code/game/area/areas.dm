@@ -75,7 +75,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(GLOB.teleportlocs[AR.name])
 			continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
-		if (picked && (picked.z == ZLEVEL_STATION))
 			GLOB.teleportlocs[AR.name] = AR
 
 	sortTim(GLOB.teleportlocs, /proc/cmp_text_dsc)

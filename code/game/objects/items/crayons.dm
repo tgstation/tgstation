@@ -389,7 +389,7 @@
 	// Check area validity.
 	// Reject space, player-created areas, and non-station z-levels.
 	var/area/A = get_area(target)
-	if(!A || (A.z != ZLEVEL_STATION) || !A.valid_territory)
+	if(!A || !(A.z in GLOB.station_z_levels) || !A.valid_territory)
 		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
 		return FALSE
 
