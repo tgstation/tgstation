@@ -552,47 +552,6 @@
 
 		sections["revolution"] = text
 
-<<<<<<< HEAD
-		/** GANG ***/
-		text = "gang"
-		if (SSticker.mode.config_tag=="gang")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		text += "[current.isloyal() ? "<B>MINDSHIELDED</B>" : "not mindshielded"] | "
-		if(src in SSticker.mode.get_all_gangsters())
-			text += "<a href='?src=\ref[src];gang=clear'>none</a>"
-		else
-			text += "<B>NONE</B>"
-
-		if(current && current.client && (ROLE_GANG in current.client.prefs.be_special))
-			text += " | Enabled in Prefs<BR>"
-		else
-			text += " | Disabled in Prefs<BR>"
-
-		for(var/datum/gang/G in SSticker.mode.gangs)
-			text += "<i>[G.name]</i>: "
-			if(src in (G.gangsters))
-				text += "<B>GANGSTER</B>"
-			else
-				text += "<a href='?src=\ref[src];gangster=\ref[G]'>gangster</a>"
-			text += " | "
-			if(src in (G.bosses))
-				text += "<B>GANG LEADER</B>"
-				text += " | Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-				var/list/L = current.get_contents()
-				var/obj/item/device/gangtool/gangtool = locate() in L
-				if (gangtool)
-					text += " | <a href='?src=\ref[src];gang=takeequip'>take</a>"
-
-			else
-				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
-			text += "<BR>"
-
-		if(GLOB.gang_colors_pool.len)
-			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
-
-		sections["gang"] = text
-		
 		/** SHADOWLING **/
 		text = "shadowling"
 		if(SSticker.mode.config_tag == "shadowling")
@@ -612,8 +571,6 @@
 
 		sections["shadowling"] = text
 
-=======
->>>>>>> c48def94d8... Removes gangs (#30056)
 		/** ABDUCTION **/
 		text = "abductor"
 		if(SSticker.mode.config_tag == "abductor")
