@@ -32,6 +32,7 @@
     "html5shiv": "3.7.3",
     "ie8": "0.3.2",
     "minimist": "1.2.0",
+	"minimatch": "3.0.2",
     "paths-js": "0.4.2",
     "pleeease-filters": "2.0.0",
     "postcss": "5.0.16",
