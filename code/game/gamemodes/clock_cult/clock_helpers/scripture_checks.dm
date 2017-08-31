@@ -31,6 +31,7 @@
 		var/mob/living/silicon/ai/AI = ai
 		if(AI.deployed_shell && is_servant_of_ratvar(AI.deployed_shell))
 			continue
+		if(is_servant_of_ratvar(AI) || !isturf(AI.loc) || !(AI.z in GLOB.station_z_levels) || AI.stat == DEAD)
 			continue
 		.++
 
