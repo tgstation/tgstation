@@ -117,7 +117,7 @@
 		if(query_check_adminban_amt.NextRow())
 			var/adm_bans = text2num(query_check_adminban_amt.item[1])
 			var/max_bans = MAX_ADMIN_BANS_PER_ADMIN
-			if (check_rights(R_PERMISSION, FALSE))
+			if (check_rights(R_PERMISSIONS, FALSE))
 				max_bans = MAX_ADMIN_BANS_PER_HEADMIN
 			if(adm_bans >= max_bans)
 				to_chat(usr, "<span class='danger'>You already logged [max_bans] admin ban(s) or more. Do not abuse this function!</span>")
