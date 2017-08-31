@@ -204,9 +204,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 0.001
 	armour_penetration = 1000
-	sharpness = IS_SHARP
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
+	sharpness = IS_SHARP
 	origin_tech = "combat=7;materials=6"
 	force_string = "INFINITE"
 
