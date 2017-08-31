@@ -17,6 +17,7 @@
 				Quantity
 			</section>
 			<section class="cell">
+				Take
 			</section>
 			<section class="cell">
 			</section>
@@ -31,12 +32,12 @@
 			</section>
 			<section class="cell" align='right'>
 				<ui-button class='left' grid action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{ "name" : {{name}}, "amount" : 1 }' >
-					Take one
+					One
 				</ui-button>
 			</section>
 			<section class="cell" align='right'>
 				<ui-button class='right' grid action='Release' state={{(amount > 1) ? null : 'disabled'}} params='{ "name" : {{name}} }' >
-					Take many
+					Many
 				</ui-button>
 			</section>
 		</section>
