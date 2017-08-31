@@ -190,6 +190,12 @@
 			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 		return 1
 
+/turf/open/copyTurf(turf/T)
+	. = ..()
+	if(. && isopenturf(T) && wet_time)
+		var/turf/open/O = T
+		O.MakeSlippery(wet_setting = wet, wet_time_to_add = wet_time) //we're copied, copy how wet we are also
+
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide
 	wet_time = max(wet_time+wet_time_to_add, min_wet_time)
 	if(wet >= wet_setting)
@@ -219,19 +225,30 @@
 	HandleWet()
 
 /turf/open/proc/UpdateSlip()
+	var/intensity
+	var/lube_flags
 	switch(wet)
 		if(TURF_WET_WATER)
-			AddComponent(/datum/component/slippery, 60, NO_SLIP_WHEN_WALKING)
+			intensity = 60
+			lube_flags = NO_SLIP_WHEN_WALKING
 		if(TURF_WET_LUBE)
-			AddComponent(/datum/component/slippery, 80, SLIDE | GALOSHES_DONT_HELP)
+			intensity = 80
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
 		if(TURF_WET_ICE)
-			AddComponent(/datum/component/slippery, 120, SLIDE | GALOSHES_DONT_HELP)
+			intensity = 120
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
 		if(TURF_WET_PERMAFROST)
-			AddComponent(/datum/component/slippery, 120, SLIDE_ICE | GALOSHES_DONT_HELP)
+			intensity = 120
+			lube_flags = SLIDE_ICE | GALOSHES_DONT_HELP
 		if(TURF_WET_SLIDE)
-			AddComponent(/datum/component/slippery, 80, SLIDE | GALOSHES_DONT_HELP)
+			intensity = 80
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
 		else
 			qdel(GetComponent(/datum/component/slippery))
+			return
+	var/datum/component/slippery/S = LoadComponent(/datum/component/slippery)
+	S.intensity = intensity
+	S.lube_flags = lube_flags
 
 /turf/open/ComponentActivated(datum/component/C)
 	..()

@@ -353,30 +353,29 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/Del()
 	if(credits)
-		QDEL_LIST(credits)	
+		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
 		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
-			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
-				var/cheesy_message = pick(
-					"I have no admins online!",\
-					"I'm all alone :(",\
-					"I'm feeling lonely :(",\
-					"I'm so lonely :(",\
-					"Why does nobody love me? :(",\
-					"I want a man :(",\
-					"Where has everyone gone?",\
-					"I need a hug :(",\
-					"Someone come hold me :(",\
-					"I need someone on me :(",\
-					"What happened? Where has everyone gone?",\
-					"Forever alone :("\
-				)
+			var/cheesy_message = pick(
+				"I have no admins online!",\
+				"I'm all alone :(",\
+				"I'm feeling lonely :(",\
+				"I'm so lonely :(",\
+				"Why does nobody love me? :(",\
+				"I want a man :(",\
+				"Where has everyone gone?",\
+				"I need a hug :(",\
+				"Someone come hold me :(",\
+				"I need someone on me :(",\
+				"What happened? Where has everyone gone?",\
+				"Forever alone :("\
+			)
 
-				send2irc("Server", "[cheesy_message] (No admins online)")
+			send2irc("Server", "[cheesy_message] (No admins online)")
 
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
@@ -434,7 +433,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 		new_player = 1
 		account_join_date = sanitizeSQL(findJoinDate())
-		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `lastseen`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
+		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
 		if(!query_add_player.Execute())
 			return
 		if(!account_join_date)
@@ -460,12 +459,12 @@ GLOBAL_LIST(external_rsc_urls)
 					if(query_datediff.NextRow())
 						account_age = text2num(query_datediff.item[1])
 	if(!new_player)
-		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
+		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = '[GLOB.round_id]', ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
 		if(!query_log_player.Execute())
 			return
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 	if(new_player)
 		player_age = -1

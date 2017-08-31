@@ -5278,6 +5278,10 @@
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
+"nR" = (
+/obj/effect/mapping_helpers/planet_z,
+/turf/closed/indestructible/rock/snow,
+/area/awaymission/snowdin)
 
 (1,1,1) = {"
 aa
@@ -5534,7 +5538,7 @@ aa
 aa
 aa
 aa
-aa
+nR
 "}
 (2,1,1) = {"
 aa

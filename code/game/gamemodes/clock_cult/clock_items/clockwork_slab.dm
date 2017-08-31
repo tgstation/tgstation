@@ -500,7 +500,7 @@
 			anything but a last resort. Instead, it is recommended that a <b>Sigil of Transmission</b> is created. This sigil serves as both battery  and power generator for nearby clockwork \
 			structures, and those structures will happily draw power from the sigil before they resort to APCs.<br><br>"
 			dat += "Generating power is less easy. The most reliable and efficient way is using brass sheets; attacking a sigil of transmission with brass sheets will convert them \
-			to power, at a rate of <b>[POWER_FLOOR]W</b> per sheet. (Brass sheets are created from replica fabricators, which are explained more in detail in the <b>Conversion</b> section.) \
+			to power, at a rate of <b>[DisplayPower(POWER_FLOOR)]</b> per sheet. (Brass sheets are created from replica fabricators, which are explained more in detail in the <b>Conversion</b> section.) \
 			Activating a sigil of transmission will also cause it to drain power from the nearby area, which, while effective, serves as an obvious tell that there is something wrong.<br><br>"
 			dat += "Without power, many structures will not function, making a base vulnerable to attack. For this reason, it is critical that you keep an eye on your power reserves and \
 			ensure that they remain comfortably high.<br><br>"

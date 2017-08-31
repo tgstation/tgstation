@@ -44,7 +44,7 @@
 	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
 	var/area/A = get_area(boomturf)
-	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [A.name] [ADMIN_JMP(boomturf)].")
+	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [A.name] [ADMIN_JMP(boomturf)], with cause of [cause].")
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
 		explosion(src,heavy,medium,weak,weak, flame_range = weak)

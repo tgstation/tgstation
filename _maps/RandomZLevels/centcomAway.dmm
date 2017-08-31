@@ -365,10 +365,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "bs" = (
 /obj/structure/closet/crate,
@@ -429,16 +426,10 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "bD" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "bE" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "bF" = (
 /obj/machinery/door/airlock/external{
@@ -447,22 +438,13 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "bG" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "bH" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "bI" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "bJ" = (
 /obj/structure/chair/comfy/brown,
@@ -557,19 +539,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "bZ" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "ca" = (
-/turf/open/floor/plating,
-/turf/closed/wall/shuttle{
-	dir = 2;
-	icon_state = "swall_f10";
-	layer = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "cb" = (
 /obj/item/paper_bin,
@@ -667,13 +640,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/maint)
 "cw" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "cx" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -682,13 +649,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "cy" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "cz" = (
 /turf/closed/wall,
@@ -726,10 +687,7 @@
 /turf/open/floor/plasteel/hydrofloor,
 /area/awaymission/centcomAway/cafe)
 "cI" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc1";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "cJ" = (
 /obj/structure/table/reinforced,
@@ -770,10 +728,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "cQ" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc2";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "cR" = (
 /turf/open/floor/plating,
@@ -930,10 +885,7 @@
 	},
 /area/awaymission/centcomAway/cafe)
 "du" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall0";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "dv" = (
 /obj/structure/closet/crate,
@@ -1061,10 +1013,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/cafe)
 "dR" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall2";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "dS" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end/west,
@@ -1199,23 +1148,13 @@
 /turf/open/floor/plasteel/red,
 /area/awaymission/centcomAway/cafe)
 "eq" = (
-/turf/open/floor/plating,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "er" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "es" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "et" = (
 /obj/machinery/door/airlock/hatch{
@@ -2054,21 +1993,13 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "hv" = (
-/turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "hw" = (
-/turf/open/floor/plasteel/black,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "hx" = (
 /obj/structure/table,
