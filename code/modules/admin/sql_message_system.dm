@@ -199,6 +199,7 @@
 		var/messagedata
 		var/watchdata
 		var/notedata
+		var/skipped = FALSE
 		while(query_get_messages.NextRow())
 			type = query_get_messages.item[1]
 			if(type == "memo")
@@ -217,9 +218,12 @@
 			if (agegate && type == "note" && isnum(config.note_stale_days) && isnum(config.note_fresh_days) && config.note_stale_days > config.note_fresh_days)
 				var/alpha = Clamp(100 - (age - config.note_fresh_days) * (85 / (config.note_stale_days - config.note_fresh_days)), 15, 100)
 				if (alpha < 100)
-					alphatext = "filter: alpha(opacity=[alpha]); opacity: [alpha/100];"
 					if (alpha <= 15)
-						alphatext += " display:none;"
+						if (skipped)
+							break
+						alpha = 10
+						skipped = TRUE
+					alphatext = "filter: alpha(opacity=[alpha]); opacity: [alpha/100];"
 
 			var/data
 			data += "<p style='margin:0px;[alphatext]'> <b>[timestamp] | [server] | [admin_ckey]</b>"
@@ -265,7 +269,11 @@
 			output += notedata
 			if(!linkless)
 				if (agegate)
-					output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1'>\[Show All\]</center>"
+					if (skipped) //the first skipped message is still shown so that we can put this link over it.
+						output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1' style='position: relative; top: -3em;'>\[Show All\]</center>"
+					else
+						output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1'>\[Show All\]</center>"
+
 				else
 					output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey]'>\[Hide Old\]</center>"
 	if(index)
