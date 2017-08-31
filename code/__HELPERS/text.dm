@@ -420,6 +420,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/pos = findtext(t, tag)
 	var/taglength = length(tag)
 	while(pos)
+		world << pos
 		if(posstart)
 			. = replacetext(t, regex(".+", "g"), "<" + html + htmlattr ? (" " + htmlattr + ">") : ">", posstart, posstart + taglength)
 			. = replacetext(t, regex(".+", "g"), "</" + html + ">", pos, pos + taglength)
@@ -431,8 +432,6 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/parsemarkdown(t, mob/user=null, limited=FALSE)
 	if (length(t) < 1)		//No input means nothing needs to be parsed
 		return
-
-//	t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 
 	// Replace escaped chars
 
@@ -483,7 +482,6 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	// Replace to unescape chars
 
-	/*
 	t = replacetext(t, "%A", "\\")
 	t = replacetext(t, "%B", "%")
 	t = replacetext(t, "%C", "**")
@@ -493,7 +491,6 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	t = replacetext(t, "%H", "_")
 	t = replacetext(t, "%I", "|")
 	t = replacetext(t, "%J", "+")
-	*/
 
 	// Whitespace be whitespace!
 
