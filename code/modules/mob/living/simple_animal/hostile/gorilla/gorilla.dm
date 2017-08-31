@@ -3,7 +3,7 @@
 
 /mob/living/simple_animal/hostile/gorilla
 	name = "Gorilla"
-	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the forests of central Africa."
+	desc = "A ground-dwelling, predominantly herbivorous ape descended from an ancient race of creatures that lived on makind's homeworld."
 	icon = 'icons/mob/gorilla.dmi'
 	icon_state = "crawling"
 	icon_state = "crawling"
@@ -20,7 +20,7 @@
 	speed = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 18
-	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1.5)
+	damage_coeff = list(BRUTE = 0.8, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1)
 	obj_damage = 20
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attacktext = "pummels"
@@ -35,6 +35,20 @@
 	unique_name = TRUE
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 	var/oogas = 0
+
+	search_objects = 1
+	//Gorillas hate technology, especially the cloning tech used to experiment on them
+	wanted_objects = list(/obj/machinery/clonepod, /obj/machinery/computer)
+	taunt_chance = 90
+	force_threshold = 5
+	deathmessage = "screams in pain as it succumbs to its wounds."
+
+/mob/living/simple_animal/hostile/gorilla/Aggro()
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(!(C.stat >= UNCONSCIOUS))
+			visible_message("<span class='danger'>[src] charges wildly at [target]!</span>")
+
 
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
@@ -64,15 +78,31 @@
 	if(. && isliving(target))
 		var/mob/living/L = target
 		if(prob(80))
-			var/atom/throw_target = get_edge_target_turf(L, dir)
-			L.throw_at(throw_target, rand(1,2), 7, src) 
+			var/targetviewers[]
+			var/atom/throw_target
+			var/targettingviewer
+			//the following code attempts to find a non-jungle mob within sight range of the gorilla
+			//if it finds one or more, it picks one to throw its current attack target at
+			for(var/mob/living/M in oviewers(7, src))
+				if(!faction_check_mob(M) && get_dir(throw_target, src) == dir)//don't throw at yourself
+					targetviewers += M
+			if(targetviewers.len)
+				throw_target = pick(targetviewers - L)
+				targettingviewer = TRUE
+			else//couldn't find a valid mob
+				throw_target = get_edge_target_turf(L, dir)
+				targettingviewer = FALSE
+
+
+			L.throw_at(throw_target, rand(1,2), 7, src)
+			visible_message("<span class='danger'>[src] hurls [L] [targettingviewer ? "at [throw_target.name]" : "at [throw_target]"] with a mighty swing!</span>")
 		else
 			L.Knockdown(20)
 			visible_message("<span class='danger'>[src] knocks [L] down!</span>")
 
 /mob/living/simple_animal/hostile/gorilla/CanAttack(atom/the_target)
 	var/list/parts = target_bodyparts(target)
-	return ..() && !istype(the_target, /mob/living/carbon/monkey) && (!parts  || parts.len > 3)
+	return ..() && (!parts  || parts.len > 3)
 
 /mob/living/simple_animal/hostile/gorilla/CanSmashTurfs(turf/T)
 	return iswallturf(T)
@@ -85,7 +115,6 @@
 /mob/living/simple_animal/hostile/gorilla/can_use_guns(obj/item/G)
 	to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 	return FALSE
-
 
 /mob/living/simple_animal/hostile/gorilla/proc/oogaooga()
 	oogas++
