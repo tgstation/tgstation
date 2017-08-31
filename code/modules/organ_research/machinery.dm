@@ -7,9 +7,6 @@
 	var/hacked = FALSE
 	var/disabled = 0
 	var/shocked = FALSE
-	//var/obj/machinery/computer/ornd/linked_console
-	var/obj/item/loaded_item = null
-	var/panel_open
 
 /obj/machinery/ornd/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
@@ -29,13 +26,22 @@
 	if(panel_open)
 		return //todo
 
+/obj/machinery/ornd/proc/locate_computer(type_)
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		var/C = locate(type_, get_step(src, dir))
+		if(C)
+			return C
+	return null
+
+///////////////
+//BODYSCANNER//
+//////////////
 /obj/machinery/ornd/bodyscanner
 	name = "\improper ORND body scanner"
 	desc = "Scans people to reveal information about all of their organs."
 	icon_state = "bodyscanner"
 	//todo: add circuit
 	var/isopen
-	var/mob/living/carbon/human/occupant
 
 /obj/machinery/ornd/bodyscanner/Initialize()
 	.=..()
