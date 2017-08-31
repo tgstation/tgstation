@@ -3,6 +3,8 @@
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
+	idle_power_usage = 50
+	active_power_usage = 300
 	var/busy = FALSE
 	var/hacked = FALSE
 	var/disabled = 0
@@ -41,10 +43,12 @@
 	desc = "Scans people to reveal information about all of their organs."
 	icon_state = "bodyscanner"
 	//todo: add circuit
-	var/isopen
+	density = FALSE //spawn in the open state
+	occupant_typecache = list(/mob/living/carbon/human)
+	var/scannedOrgans = list()
 
 /obj/machinery/ornd/bodyscanner/Initialize()
-	.=..()
+	. = ..()
 	update_icon()
 
 /obj/machinery/ornd/bodyscanner/relaymove(mob/user as mob)
@@ -56,11 +60,14 @@
 		to_chat(user, "<span class='notice'>The maintenance panel must be closed before use.</span>")
 		return
 
-	if(isopen)
-		isopen = FALSE
+	if(state_open)
 		close_machine()
+		if(occupant)
+			scannedOrgans = null
+			for(var/obj/item/organ/O in occupant.contents)
+				if(istype(O))
+					scannedOrgans += O
 		return
-	isopen = TRUE
 	open_machine()
 
 /obj/machinery/ornd/bodyscanner/attack_hand(mob/user)
@@ -71,7 +78,7 @@
 	cut_overlays()
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
-		icon_state = initial(icon_state)+ (state_open ? "-0" : "")
+		icon_state = initial(icon_state)
 		return
 
 	if((stat & MAINT) || panel_open)
@@ -83,6 +90,9 @@
 		icon_state = initial(icon_state)+ "-2"
 		return
 
-	//running
-	icon_state = initial(icon_state)+ (state_open ? "-1" : "")
+	icon_state = initial(icon_state)+ "[state_open ? "" : "-1"]"
+
+/obj/machinery/ornd/bodyscanner/power_change()
+	..()
+	update_icon()
 
