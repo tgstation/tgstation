@@ -1786,7 +1786,7 @@
 "aeB" = (
 /obj/item/device/multitool,
 /obj/machinery/power/apc{
-	areastring = "area/maintenance/asteroid/central";
+	areastring = "/area/maintenance/asteroid/central";
 	dir = 8;
 	name = "Central Asteroid Maintenance APC";
 	pixel_x = -28;
