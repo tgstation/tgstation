@@ -199,7 +199,7 @@
 		var/messagedata
 		var/watchdata
 		var/notedata
-		var/skipped = FALSE
+		var/skipped = 0
 		while(query_get_messages.NextRow())
 			type = query_get_messages.item[1]
 			if(type == "memo")
@@ -220,7 +220,8 @@
 				if (alpha < 100)
 					if (alpha <= 15)
 						if (skipped)
-							break
+							skipped++
+							continue
 						alpha = 10
 						skipped = TRUE
 					alphatext = "filter: alpha(opacity=[alpha]); opacity: [alpha/100];"
@@ -270,7 +271,7 @@
 			if(!linkless)
 				if (agegate)
 					if (skipped) //the first skipped message is still shown so that we can put this link over it.
-						output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1' style='position: relative; top: -3em;'>\[Show All\]</center>"
+						output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1' style='position: relative; top: -3em;'>\[Show [skipped] hidden messages\]</center>"
 					else
 						output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1'>\[Show All\]</center>"
 
