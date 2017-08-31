@@ -2249,6 +2249,8 @@
 #include "hippiestation\code\game\objects\items\devices\meeseeks_box.dm"
 #include "hippiestation\code\game\objects\items\devices\multitool.dm"
 #include "hippiestation\code\game\objects\items\devices\powersink.dm"
+#include "hippiestation\code\game\objects\items\grenades\clusterbuster.dm"
+#include "hippiestation\code\game\objects\items\grenades\spawnergrenade.dm"
 #include "hippiestation\code\game\objects\items\stacks\medical.dm"
 #include "hippiestation\code\game\objects\items\weapons\butterfly_knives.dm"
 #include "hippiestation\code\game\objects\items\weapons\cigs_lighters.dm"

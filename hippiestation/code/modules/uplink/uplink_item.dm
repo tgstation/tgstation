@@ -113,7 +113,7 @@
 	cost = 4
 	item = /obj/item/storage/box/syndie_kit/firesuit/
 	restricted_roles = list("Atmospheric Technician")
-	
+
 /datum/uplink_item/role_restricted/fire_axe
 	name = "Fire Axe"
 	desc = "A rather blunt fire axe recovered from the burnt out wreck of an old space station. \
@@ -147,3 +147,10 @@
 	cost = 12//80 backstab damage and armour pierce isn't a fucking joke
 	item = /obj/item/melee/transforming/butterfly/energy
 	surplus = 15
+
+/datum/uplink_item/dangerous/beenade
+	name = "Bee delivery grenade"
+	desc = "This grenade is filled with several random posionous bees. Fun for the whole family!"
+	cost = 4
+	item = /obj/item/grenade/spawnergrenade/beenade
+	surplus = 30
