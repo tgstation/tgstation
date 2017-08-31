@@ -1,0 +1,5 @@
+author: "GuyonBroadway"
+delete-after: True
+changes: 
+  - rscadd: "Syndicate agents may now buy a grenade that releases bees from their uplinks."
+  - rscadd: "Admins can spawn a cluster version."
