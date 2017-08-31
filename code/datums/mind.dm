@@ -378,26 +378,6 @@
 		"monkey"
 	)
 	var/text = ""
-  
-	if(ishuman(current))
-		/** REVOLUTION ***/
-		text = "revolution"
-		if (SSticker.mode.config_tag=="revolution")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if (assigned_role in GLOB.command_positions)
-			text += "<b>HEAD</b>|loyal|employee|headrev|rev"
-		else if (src in SSticker.mode.head_revolutionaries)
-			var/last_healthy_headrev = TRUE
-			for(var/I in SSticker.mode.head_revolutionaries)
-				if(I == src)
-					continue
-				var/mob/M = I
-				if(M.z in GLOB.station_z_levels && !M.stat)
-					last_healthy_headrev = FALSE
-					break
-			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
-			text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
 
 	/** TRAITOR ***/
 	text = "traitor"
@@ -539,7 +519,7 @@
 				if(I == src)
 					continue
 				var/mob/M = I
-				if(M.z == ZLEVEL_STATION && !M.stat)
+				if(M.z in GLOB.z_levels_station && !M.stat)
 					last_healthy_headrev = FALSE
 					break
 			text += "head | not mindshielded | <a href='?src=\ref[src];revolution=clear'>employee</a> | <b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b> | <a href='?src=\ref[src];revolution=rev'>rev</a>"
