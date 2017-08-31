@@ -143,7 +143,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	else if(istype(W, /obj/item/device/multitool))
 		if(powernet && (powernet.avail > 0))		// is it powered?
-			to_chat(user, "<span class='danger'>[powernet.avail]W in power network.</span>")
+			to_chat(user, "<span class='danger'>[DisplayPower(powernet.avail)] in power network.</span>")
 		else
 			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
 		shock(user, 5, 0.2)

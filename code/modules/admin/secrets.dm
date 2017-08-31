@@ -45,7 +45,6 @@
 		dat += {"
 			<B>Fun Secrets</B><BR>
 			<BR>
-
 			<A href='?src=\ref[src];[HrefToken()];secrets=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=monkey'>Turn all humans into monkeys</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=anime'>Chinese Cartoons</A><BR>
@@ -60,12 +59,11 @@
 			<A href='?src=\ref[src];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=onlyme'>There can only be me!</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR
 			<BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
@@ -525,12 +523,6 @@
 			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only One")
 			usr.client.only_one_delayed()
 			sound_to_playing_players('sound/misc/highlander_delayed.ogg')
-
-		if("onlyme")
-			if(!check_rights(R_FUN))
-				return
-			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only Me")
-			only_me()
 
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))

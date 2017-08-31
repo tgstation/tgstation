@@ -67,16 +67,11 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "o" = (
 /turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/mineral/titanium/interior{
-	icon_state = "swall_f10"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "p" = (
 /obj/structure/closet/crate,
@@ -89,10 +84,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "r" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 
 (1,1,1) = {"

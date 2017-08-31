@@ -11,10 +11,6 @@
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
-/mob/living/carbon/human/dummy/Destroy()
-	..()
-	return QDEL_HINT_QUEUE
-
 /mob/living/carbon/human/dummy/Life()
 	return
 
