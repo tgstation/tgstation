@@ -18,7 +18,6 @@
 #define ROLE_BLOB				"blob"
 #define ROLE_NINJA				"space ninja"
 #define ROLE_MONKEY				"monkey"
-#define ROLE_GANG				"gangster"
 #define ROLE_ABDUCTOR			"abductor"
 #define ROLE_REVENANT			"revenant"
 #define ROLE_DEVIL				"devil"
@@ -41,7 +40,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_BLOB = /datum/game_mode/blob,
 	ROLE_NINJA,
 	ROLE_MONKEY = /datum/game_mode/monkey,
-	ROLE_GANG = /datum/game_mode/gang,
 	ROLE_REVENANT,
 	ROLE_ABDUCTOR = /datum/game_mode/abduction,
 	ROLE_DEVIL = /datum/game_mode/devil,
