@@ -44,7 +44,10 @@
 	deathmessage = "screams in pain as it succumbs to its wounds."
 
 /mob/living/simple_animal/hostile/gorilla/Aggro()
-	visible_message("<span class='danger'>[src] charges wildly at [target]!</span>")
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(!(C.stat >= UNCONSCIOUS))
+			visible_message("<span class='danger'>[src] charges wildly at [target]!</span>")
 
 
 // Gorillas like to dismember limbs from unconcious mobs.
@@ -75,26 +78,23 @@
 	if(. && isliving(target))
 		var/mob/living/L = target
 		if(prob(80))
-			var/targetviewers = list()
+			var/targetviewers[]
 			var/atom/throw_target
 			var/targettingviewer
 			//the following code attempts to find a non-jungle mob within sight range of the gorilla
 			//if it finds one or more, it picks one to throw its current attack target at
 			for(var/mob/living/M in oviewers(7, src))
-				if(!faction_check_mob(M))
+				if(!faction_check_mob(M) && get_dir(throw_target, src) == dir)//don't throw at yourself
 					targetviewers += M
-			if(targetviewers)
+			if(targetviewers.len)
 				throw_target = pick(targetviewers - L)
 				targettingviewer = TRUE
 			else//couldn't find a valid mob
 				throw_target = get_edge_target_turf(L, dir)
 				targettingviewer = FALSE
 
-			if(ishuman(throw_target))
-				L.throw_at(throw_target, rand(1,2), 7, src, callback = CALLBACK(throw_target, /mob/living/carbon/human/.Knockdown, 20))
-			else
-				L.throw_at(throw_target, rand(1,2), 7, src)
-				L.Knockdown(20)
+
+			L.throw_at(throw_target, rand(1,2), 7, src)
 			visible_message("<span class='danger'>[src] hurls [L] [targettingviewer ? "at [throw_target.name]" : "at [throw_target]"] with a mighty swing!</span>")
 		else
 			L.Knockdown(20)
