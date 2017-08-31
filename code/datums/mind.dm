@@ -56,7 +56,6 @@
 	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
-	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 	var/hasSoul = TRUE // If false, renders the character unable to sell their soul.
@@ -225,10 +224,6 @@
 	remove_antag_equip()
 
 
-/datum/mind/proc/remove_gang()
-		SSticker.mode.remove_gangster(src,0,1,1)
-		remove_objectives()
-
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
@@ -247,14 +242,11 @@
 	remove_wizard()
 	remove_cultist()
 	remove_rev()
-	remove_gang()
 	SSticker.mode.update_changeling_icons_removed(src)
 	SSticker.mode.update_traitor_icons_removed(src)
 	SSticker.mode.update_wiz_icons_removed(src)
 	SSticker.mode.update_cult_icons_removed(src)
 	SSticker.mode.update_rev_icons_removed(src)
-	if(gang_datum)
-		gang_datum.remove_gang_hud(src)
 
 /datum/mind/proc/equip_traitor(var/employer = "The Syndicate", var/silent = FALSE)
 	if(!current)
@@ -324,9 +316,6 @@
 	if(iscultist(creator))
 		SSticker.mode.add_cultist(src)
 
-	else if(is_gangster(creator))
-		SSticker.mode.add_gangster(src, creator.mind.gang_datum, TRUE)
-
 	else if(is_revolutionary_in_general(creator))
 		SSticker.mode.add_revolutionary(src)
 
@@ -381,7 +370,6 @@
 		"nuclear",
 		"wizard",
 		"revolution",
-		"gang",
 		"cult",
 		"clockcult",
 		"abductor",
@@ -563,46 +551,6 @@
 			text += " | Disabled in Prefs"
 
 		sections["revolution"] = text
-
-		/** GANG ***/
-		text = "gang"
-		if (SSticker.mode.config_tag=="gang")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		text += "[current.isloyal() ? "<B>MINDSHIELDED</B>" : "not mindshielded"] | "
-		if(src in SSticker.mode.get_all_gangsters())
-			text += "<a href='?src=\ref[src];gang=clear'>none</a>"
-		else
-			text += "<B>NONE</B>"
-
-		if(current && current.client && (ROLE_GANG in current.client.prefs.be_special))
-			text += " | Enabled in Prefs<BR>"
-		else
-			text += " | Disabled in Prefs<BR>"
-
-		for(var/datum/gang/G in SSticker.mode.gangs)
-			text += "<i>[G.name]</i>: "
-			if(src in (G.gangsters))
-				text += "<B>GANGSTER</B>"
-			else
-				text += "<a href='?src=\ref[src];gangster=\ref[G]'>gangster</a>"
-			text += " | "
-			if(src in (G.bosses))
-				text += "<B>GANG LEADER</B>"
-				text += " | Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-				var/list/L = current.get_contents()
-				var/obj/item/device/gangtool/gangtool = locate() in L
-				if (gangtool)
-					text += " | <a href='?src=\ref[src];gang=takeequip'>take</a>"
-
-			else
-				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
-			text += "<BR>"
-
-		if(GLOB.gang_colors_pool.len)
-			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
-
-		sections["gang"] = text
 
 		/** ABDUCTION **/
 		text = "abductor"
@@ -1018,73 +966,6 @@
 				else
 					flash.crit_fail = 0
 					flash.update_icon()
-
-
-
-//////////////////// GANG MODE
-
-	else if (href_list["gang"])
-		switch(href_list["gang"])
-			if("clear")
-				remove_gang()
-				message_admins("[key_name_admin(usr)] has de-gang'ed [current].")
-				log_admin("[key_name(usr)] has de-gang'ed [current].")
-
-			if("equip")
-				switch(SSticker.mode.equip_gang(current,gang_datum))
-					if(1)
-						to_chat(usr, "<span class='warning'>Unable to equip territory spraycan!</span>")
-					if(2)
-						to_chat(usr, "<span class='warning'>Unable to equip recruitment pen and spraycan!</span>")
-					if(3)
-						to_chat(usr, "<span class='warning'>Unable to equip gangtool, pen, and spraycan!</span>")
-
-			if("takeequip")
-				var/list/L = current.get_contents()
-				for(var/obj/item/pen/gang/pen in L)
-					qdel(pen)
-				for(var/obj/item/device/gangtool/gangtool in L)
-					qdel(gangtool)
-				for(var/obj/item/toy/crayon/spraycan/gang/SC in L)
-					qdel(SC)
-
-			if("new")
-				if(GLOB.gang_colors_pool.len)
-					var/list/names = list("Random") + GLOB.gang_name_pool
-					var/gangname = input("Pick a gang name.","Select Name") as null|anything in names
-					if(gangname && GLOB.gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
-						if(!(gangname in GLOB.gang_name_pool))
-							gangname = null
-						var/datum/gang/newgang = new(null,gangname)
-						SSticker.mode.gangs += newgang
-						message_admins("[key_name_admin(usr)] has created the [newgang.name] Gang.")
-						log_admin("[key_name(usr)] has created the [newgang.name] Gang.")
-
-	else if (href_list["gangboss"])
-		var/datum/gang/G = locate(href_list["gangboss"]) in SSticker.mode.gangs
-		if(!G || (src in G.bosses))
-			return
-		SSticker.mode.remove_gangster(src,0,2,1)
-		G.bosses[src] = GANGSTER_BOSS_STARTING_INFLUENCE
-		gang_datum = G
-		special_role = "[G.name] Gang Boss"
-		G.add_gang_hud(src)
-		to_chat(current, "<FONT size=3 color=red><B>You are a [G.name] Gang Boss!</B></FONT>")
-		message_admins("[key_name_admin(usr)] has added [current] to the [G.name] Gang leadership.")
-		log_admin("[key_name(usr)] has added [current] to the [G.name] Gang leadership.")
-		SSticker.mode.forge_gang_objectives(src)
-		SSticker.mode.greet_gang(src,0)
-
-	else if (href_list["gangster"])
-		var/datum/gang/G = locate(href_list["gangster"]) in SSticker.mode.gangs
-		if(!G || (src in G.gangsters))
-			return
-		SSticker.mode.remove_gangster(src,0,2,1)
-		SSticker.mode.add_gangster(src,G,0)
-		message_admins("[key_name_admin(usr)] has added [current] to the [G.name] Gang (A).")
-		log_admin("[key_name(usr)] has added [current] to the [G.name] Gang (A).")
-
-/////////////////////////////////
 
 
 
@@ -1574,15 +1455,6 @@
 	var/fail = 0
 	fail |= !SSticker.mode.equip_revolutionary(current)
 
-
-/datum/mind/proc/make_Gang(datum/gang/G)
-	special_role = "[G.name] Gang Boss"
-	G.bosses += src
-	gang_datum = G
-	G.add_gang_hud(src)
-	SSticker.mode.forge_gang_objectives(src)
-	SSticker.mode.greet_gang(src)
-	SSticker.mode.equip_gang(current,G)
 
 /datum/mind/proc/make_Abductor()
 	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
