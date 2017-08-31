@@ -929,7 +929,7 @@
 		S["roundssurvived"]		>> rounds_survived
 		S["longestsurvival"]	>> longest_survival
 		S["longestdeathstreak"] >> longest_deathstreak
-		fdel(S)
+		fdel("data/npc_saves/Poly.sav")
 	else
 		var/json_file = file("data/npc_saves/Poly.json")
 		if(!fexists(json_file))
