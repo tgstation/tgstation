@@ -309,8 +309,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	owner_AI.nuking = TRUE
 	owner_AI.doomsday_device = DOOM
 	owner_AI.doomsday_device.start()
-	for(var/pinpointer in GLOB.pinpointer_list)
-		var/obj/item/pinpointer/P = pinpointer
+	for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 	qdel(src)
 
