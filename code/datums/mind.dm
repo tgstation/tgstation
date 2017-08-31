@@ -604,43 +604,26 @@
 
 		sections["gang"] = text
 
-<<<<<<< HEAD
 		/** SHADOWLING **/
 		text = "shadowling"
 		if(SSticker.mode.config_tag == "shadowling")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if(src in SSticker.mode.shadows)
-			text += "<b>SHADOWLING</b>|thrall|<a href='?src=\ref[src];shadowling=clear'>human</a>"
+			text += "<b>SHADOWLING</b> | thrall | <a href='?src=\ref[src];shadowling=clear'>human</a>"
 		else if(src in SSticker.mode.thralls)
-			text += "shadowling|<b>THRALL</b>|<a href='?src=\ref[src];shadowling=clear'>human</a>"
+			text += "shadowling | <b>THRALL</b> | <a href='?src=\ref[src];shadowling=clear'>human</a>"
 		else
-			text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a>|<a href='?src=\ref[src];shadowling=thrall'>thrall</a>|<b>HUMAN</b>"
+			text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a> | <a href='?src=\ref[src];shadowling=thrall'>thrall</a> | <b>HUMAN</b>"
 
 		if(current && current.client && (ROLE_SHADOWLING in current.client.prefs.be_special))
-			text += "|Enabled in Prefs"
-=======
-		/** ABDUCTION **/
-		text = "abductor"
-		if(SSticker.mode.config_tag == "abductor")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if(src in SSticker.mode.abductors)
-			text += "<b>Abductor</b> | <a href='?src=\ref[src];abductor=clear'>human</a>"
-			text += " | <a href='?src=\ref[src];common=undress'>undress</a> | <a href='?src=\ref[src];abductor=equip'>equip</a>"
-		else
-			text += "<a href='?src=\ref[src];abductor=abductor'>abductor</a> | <b>human</b>"
-
-		if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_special))
 			text += " | Enabled in Prefs"
->>>>>>> 6ca67d35e4... Merge pull request #30292 from Xhuis/revert-30289-RevertAntag
 		else
 			text += " | Disabled in Prefs"
 
 		sections["shadowling"] = text
 
-<<<<<<< HEAD
-		/** Abductors **/
+		/** ABDUCTION **/
 		text = "abductor"
 		if(SSticker.mode.config_tag == "abductor")
 			text = uppertext(text)
@@ -717,66 +700,6 @@
 			text += "[!current.isloyal() ? "not mindshielded" : "<b>MINDSHIELDED</b>"] | <b>EMPLOYEE</b> | <i>cannot serve Nar-Sie</i>"
 
 		if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_special))
-=======
-
-		/** DEVIL ***/
-		text = "devil"
-		if(SSticker.mode.config_tag == "devil")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
-		if(devilinfo)
-			if(!devilinfo.ascendable)
-				text += "<b>DEVIL</b> | <a href='?src=\ref[src];devil=ascendable_devil'>ascendable devil</a> | sintouched | <a href='?src=\ref[src];devil=clear'>human</a>"
-			else
-				text += "<a href='?src=\ref[src];devil=devil'>DEVIL</a> | <b>ASCENDABLE DEVIL</b> | sintouched | <a href='?src=\ref[src];devil=clear'>human</a>"
-		else if(src in SSticker.mode.sintouched)
-			text += "devil | ascendable devil | <b>SINTOUCHED</b> | <a href='?src=\ref[src];devil=clear'>human</a>"
-		else
-			text += "<a href='?src=\ref[src];devil=devil'>devil</a> | <a href='?src=\ref[src];devil=ascendable_devil'>ascendable devil</a> | <a href='?src=\ref[src];devil=sintouched'>sintouched</a> | <b>HUMAN</b>"
-
-		if(current && current.client && (ROLE_DEVIL in current.client.prefs.be_special))
-			text += " | Enabled in Prefs"
-		else
-			text += " | Disabled in Prefs"
-		sections["devil"] = text
-
-
-		/** NINJA ***/
-		text = "ninja"
-		if(SSticker.mode.config_tag == "ninja")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		var/datum/antagonist/ninja/ninjainfo = has_antag_datum(ANTAG_DATUM_NINJA)
-		if(ninjainfo)
-			if(ninjainfo.helping_station)
-				text += "<a href='?src=\ref[src];ninja=clear'>employee</a>  |  syndicate  |  <b>NANOTRASEN</b>  |  <b><a href='?src=\ref[src];ninja=equip'>EQUIP</a></b>"
-			else
-				text += "<a href='?src=\ref[src];ninja=clear'>employee</a>  |  <b>SYNDICATE</b>  |  nanotrasen  |  <b><a href='?src=\ref[src];ninja=equip'>EQUIP</a></b>"
-		else
-			text += "<b>EMPLOYEE</b>  |  <a href='?src=\ref[src];ninja=syndicate'>syndicate</a>  |  <a href='?src=\ref[src];ninja=nanotrasen'>nanotrasen</a>  |  <a href='?src=\ref[src];ninja=random'>random allegiance</a>"
-		if(current && current.client && (ROLE_NINJA in current.client.prefs.be_special))
-			text += "  |  Enabled in Prefs"
-		else
-			text += "  |  Disabled in Prefs"
-		sections["ninja"] = text
-
-
-	if(!issilicon(current))
-		/** CULT ***/
-		text = "cult"
-		if (SSticker.mode.config_tag=="cult")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if(iscultist(current))
-			text += "not mindshielded | <a href='?src=\ref[src];cult=clear'>employee</a> | <b>CULTIST</b>"
-			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a> | <a href='?src=\ref[src];cult=amulet'>amulet</a>."
-		else if(is_convertable_to_cult(current))
-			text += "not mindshielded | <b>EMPLOYEE</b> | <a href='?src=\ref[src];cult=cultist'>cultist</a>"
-		else
-			text += "[!current.isloyal() ? "not mindshielded" : "<b>MINDSHIELDED</b>"] | <b>EMPLOYEE</b> | <i>cannot serve Nar-Sie</i>"
-
-		if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_special))
 			text += " | Enabled in Prefs"
 		else
 			text += " | Disabled in Prefs"
@@ -799,36 +722,10 @@
 			text += "[!current.isloyal() ? "not mindshielded" : "<b>MINDSHIELDED</b>"] | <b>EMPLOYEE</b> | <i>cannot serve Ratvar</i>"
 
 		if(current && current.client && (ROLE_SERVANT_OF_RATVAR in current.client.prefs.be_special))
->>>>>>> 6ca67d35e4... Merge pull request #30292 from Xhuis/revert-30289-RevertAntag
 			text += " | Enabled in Prefs"
 		else
 			text += " | Disabled in Prefs"
 
-<<<<<<< HEAD
-		sections["cult"] = text
-
-
-	if(ishuman(current) || issilicon(current))
-		/** CLOCKWORK CULT **/
-		text = "clockwork cult"
-		if(SSticker.mode.config_tag == "clockwork cult")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if(is_servant_of_ratvar(current))
-			text += "not mindshielded | <a href='?src=\ref[src];clockcult=clear'>employee</a> | <b>SERVANT</b>"
-			text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
-		else if(is_eligible_servant(current))
-			text += "not mindshielded | <b>EMPLOYEE</b> | <a href='?src=\ref[src];clockcult=servant'>servant</a>"
-		else
-			text += "[!current.isloyal() ? "not mindshielded" : "<b>MINDSHIELDED</b>"] | <b>EMPLOYEE</b> | <i>cannot serve Ratvar</i>"
-
-		if(current && current.client && (ROLE_SERVANT_OF_RATVAR in current.client.prefs.be_special))
-			text += " | Enabled in Prefs"
-		else
-			text += " | Disabled in Prefs"
-
-=======
->>>>>>> 6ca67d35e4... Merge pull request #30292 from Xhuis/revert-30289-RevertAntag
 	sections["clockcult"] = text
 
 
@@ -1377,7 +1274,6 @@
 					log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
 					traitordatum.forge_traitor_objectives()
 					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
-
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
 			if("clear")
@@ -1415,9 +1311,6 @@
 				SSticker.mode.add_thrall(src)
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
-
-
-
 	else if(href_list["devil"])
 		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
 		switch(href_list["devil"])
