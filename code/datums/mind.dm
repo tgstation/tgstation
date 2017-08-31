@@ -366,6 +366,9 @@
 	if(!SSticker.HasRoundStarted())
 		alert("Not before round-start!", "Alert")
 		return
+	if(QDELETED(src) || QDELETED(current))
+		alert("This mind doesn't have a mob, or is deleted! For some reason!", "Edit Memory")
+		return
 
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
@@ -600,27 +603,27 @@
 			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
 
 		sections["gang"] = text
-
+		
 		/** SHADOWLING **/
 		text = "shadowling"
 		if(SSticker.mode.config_tag == "shadowling")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if(src in SSticker.mode.shadows)
-			text += "<b>SHADOWLING</b>|thrall|<a href='?src=\ref[src];shadowling=clear'>human</a>"
+			text += "<b>SHADOWLING</b> | thrall | <a href='?src=\ref[src];shadowling=clear'>human</a>"
 		else if(src in SSticker.mode.thralls)
-			text += "shadowling|<b>THRALL</b>|<a href='?src=\ref[src];shadowling=clear'>human</a>"
+			text += "shadowling | <b>THRALL</b> | <a href='?src=\ref[src];shadowling=clear'>human</a>"
 		else
-			text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a>|<a href='?src=\ref[src];shadowling=thrall'>thrall</a>|<b>HUMAN</b>"
+			text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a> | <a href='?src=\ref[src];shadowling=thrall'>thrall</a> | <b>HUMAN</b>"
 
 		if(current && current.client && (ROLE_SHADOWLING in current.client.prefs.be_special))
-			text += "|Enabled in Prefs"
+			text += " | Enabled in Prefs"
 		else
-			text += "|Disabled in Prefs"
+			text += " | Disabled in Prefs"
 
 		sections["shadowling"] = text
 
-		/** Abductors **/
+		/** ABDUCTION **/
 		text = "abductor"
 		if(SSticker.mode.config_tag == "abductor")
 			text = uppertext(text)
@@ -1271,7 +1274,6 @@
 					log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
 					traitordatum.forge_traitor_objectives()
 					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
-
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
 			if("clear")
@@ -1309,9 +1311,7 @@
 				SSticker.mode.add_thrall(src)
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
-
-
-
+	else if(href_list["devil"])
 	else if(href_list["devil"])
 		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
 		switch(href_list["devil"])
