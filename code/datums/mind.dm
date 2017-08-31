@@ -366,7 +366,7 @@
 	if(!SSticker.HasRoundStarted())
 		alert("Not before round-start!", "Alert")
 		return
-	if(QDELETED(src) || !current)
+	if(QDELETED(src) || QDELETED(current))
 		alert("This mind doesn't have a mob, or is deleted! For some reason!", "Edit Memory")
 		return
 
