@@ -7,10 +7,8 @@
 	brute_resist = 0.25
 	explosion_block = 3
 	point_return = 4
-	atmosblock = 1
+	atmosblock = TRUE
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
-
-
 
 /obj/structure/blob/shield/scannerreport()
 	if(atmosblock)
@@ -26,10 +24,10 @@
 		icon_state = "blob_shield_damaged"
 		name = "weakened strong blob"
 		desc = "A wall of twitching tendrils."
-		atmosblock = 0
+		atmosblock = FALSE
 	else
 		icon_state = initial(icon_state)
 		name = initial(name)
 		desc = initial(desc)
-		atmosblock = 1
+		atmosblock = TRUE
 	air_update_turf(1)

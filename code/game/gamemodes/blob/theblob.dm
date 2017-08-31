@@ -8,6 +8,7 @@
 	opacity = 0
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
+	CanAtmosPass = ATMOS_PASS_PROC
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	max_integrity = 30
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 70)
@@ -16,7 +17,7 @@
 	var/heal_timestamp = 0 //we got healed when?
 	var/brute_resist = 0.5 //multiplies brute damage by this
 	var/fire_resist = 1 //multiplies burn damage by this
-	var/atmosblock = 0 //if the blob blocks atmos and heat spread
+	var/atmosblock = FALSE //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
 
 /obj/structure/blob/Initialize()
@@ -27,17 +28,16 @@
 	setDir(pick(GLOB.cardinals))
 	update_icon()
 	.= ..()
-	ConsumeTile()
 	if(atmosblock)
-		CanAtmosPass = ATMOS_PASS_NO
 		air_update_turf(1)
+	ConsumeTile()
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
 
 /obj/structure/blob/Destroy()
 	if(atmosblock)
-		atmosblock = 0
+		atmosblock = FALSE
 		air_update_turf(1)
 	GLOB.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
 	GLOB.blobs -= src //it's no longer in the all blobs list either
@@ -68,6 +68,9 @@
 	if(istype(mover) && mover.checkpass(PASSBLOB))
 		return 1
 	return 0
+
+/obj/structure/blob/CanAtmosPass(turf/T)
+	return !atmosblock
 
 /obj/structure/blob/CanAStarPass(ID, dir, caller)
 	. = 0
