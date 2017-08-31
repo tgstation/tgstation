@@ -701,7 +701,7 @@
 	item_color = "draculass"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = 0
+	can_adjust = FALSE
 
 /obj/item/clothing/under/drfreeze
 	name = "doctor freeze's jumpsuit"
@@ -709,7 +709,7 @@
 	icon_state = "drfreeze"
 	item_state = "drfreeze"
 	item_color = "drfreeze"
-	can_adjust = 0
+	can_adjust = FALSE
 
 /obj/item/clothing/under/lobster
 	name = "foam lobster suit"
@@ -718,7 +718,7 @@
 	item_state = "lobster"
 	item_color = "lobster"
 	fitted = NO_FEMALE_UNIFORM
-	can_adjust = 0
+	can_adjust = FALSE
 
 /obj/item/clothing/under/skeleton
 	name = "skeleton jumpsuit"
