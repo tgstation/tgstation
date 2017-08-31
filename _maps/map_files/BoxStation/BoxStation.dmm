@@ -24458,7 +24458,7 @@
 /area/crew_quarters/heads/captain)
 "bfE" = (
 /obj/structure/table/wood,
-/obj/item/pinpointer,
+/obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
 /obj/item/storage/secure/safe{
 	pixel_x = 35;

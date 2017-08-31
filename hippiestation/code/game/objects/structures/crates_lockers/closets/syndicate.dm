@@ -15,4 +15,4 @@
 	new /obj/item/grenade/plastic/c4(src)
 	new /obj/item/grenade/plastic/c4(src)
 	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/pinpointer/syndicate(src)
+	new /obj/item/pinpointer/nuke/syndicate(src)
