@@ -39,8 +39,8 @@
 	attack_verb = list("stapled")
 	var/ammo = 5
 	var/max_ammo = 10
-	var/obj/item/paper/paper
-	var/obj/item/organ/butt/butt
+	var/obj/item/paper/P
+	var/obj/item/organ/butt/B
 
 /obj/item/staplegun/Initialize()
 	..()
