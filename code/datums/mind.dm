@@ -603,7 +603,7 @@
 			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
 
 		sections["gang"] = text
-
+		
 		/** SHADOWLING **/
 		text = "shadowling"
 		if(SSticker.mode.config_tag == "shadowling")
@@ -1311,6 +1311,7 @@
 				SSticker.mode.add_thrall(src)
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
+	else if(href_list["devil"])
 	else if(href_list["devil"])
 		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
 		switch(href_list["devil"])
