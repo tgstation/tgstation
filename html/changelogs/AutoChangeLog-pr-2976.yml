@@ -1,6 +1,0 @@
-author: "Pyko"
-delete-after: True
-changes: 
-  - rscadd: "Added missing NE maintenance room lamps, and a Sooka Blyat - Missionk Akkomblished!!-buttonk in
-russian room"
-  - bugfix: "fixed wrong type of foam darts in maint"
