@@ -28,7 +28,7 @@
     var/config_max_users = 0
     var/config_min_users = 0
     var/voteweight = 1
-
+    var/allow_custom_shuttles = "yes"
 /datum/map_config/New(filename = "data/next_map.json", default_to_box, delete_after)
     if(default_to_box)
         return
@@ -67,6 +67,7 @@
     map_file = json["map_file"]
 
     minetype = json["minetype"]
+    allow_custom_shuttles = json["allow_custom_shuttles"]
 
     var/list/jtcl = json["transition_config"]
 
@@ -85,6 +86,7 @@
     CHECK_EXISTS("map_file")
     CHECK_EXISTS("minetype")
     CHECK_EXISTS("transition_config")
+    CHECK_EXISTS("allow_custom_shuttles")
 
     var/path = GetFullMapPath(json["map_path"], json["map_file"])
     if(!fexists(path))

@@ -16,10 +16,10 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return
+	return SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params)
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return I.attack_obj(src, user)
+	return ..() || I.attack_obj(src, user)
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -79,7 +79,7 @@
 				var/turf/location = get_turf(src)
 				add_splatter_floor(location)
 				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
-					user.forensics.add_mob_blood(src)
+					user.add_mob_blood(src)
 		return TRUE //successful attack
 
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)

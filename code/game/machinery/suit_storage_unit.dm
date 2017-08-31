@@ -234,8 +234,8 @@
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
 			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
-				I.forensics.clean_blood()
-				I.forensics.clean_prints()
+				I.clean_blood()
+				I.fingerprints = list()
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()

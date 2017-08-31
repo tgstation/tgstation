@@ -79,7 +79,7 @@
 	if(!B)
 		B = new(T)
 	if(data["blood_DNA"])
-		B.forensics.blood[data["blood_DNA"]] = data["blood_type"]
+		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 
 
 /datum/reagent/liquidgibs
@@ -941,12 +941,12 @@
 	else
 		if(O)
 			O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			O.forensics.clean_blood()
+			O.clean_blood()
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
 		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		T.forensics.clean_blood()
+		T.clean_blood()
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
@@ -964,7 +964,7 @@
 					H.lip_style = null
 					H.update_body()
 			for(var/obj/item/I in C.held_items)
-				I.forensics.clean_blood()
+				I.clean_blood()
 			if(C.wear_mask)
 				if(C.wear_mask.clean_blood())
 					C.update_inv_wear_mask()
@@ -983,7 +983,7 @@
 					if(H.shoes.clean_blood())
 						H.update_inv_shoes()
 				H.wash_cream()
-			M.forensics.clean_blood()
+			M.clean_blood()
 
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"
@@ -1572,6 +1572,18 @@
 		var/obj/item/organ/zombie_infection/ZI = new()
 		ZI.Insert(H)
 	..()
+
+/datum/reagent/magillitis
+	name = "Magillitis"
+	id = "magillitis"
+	description = "An experimental serum which causes rapid muscular growth in basic primates. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
+	reagent_state = LIQUID
+	color = "#00f041"
+
+/datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
+	..()
+	if(ismonkey(M) && current_cycle >= 10)
+		return M.gorillize()
 
 /datum/reagent/growthserum
 	name = "Growth Serum"

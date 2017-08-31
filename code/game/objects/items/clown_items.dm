@@ -83,7 +83,7 @@
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			target.forensics.clean_blood()
+			target.clean_blood()
 			target.wash_cream()
 	return
 

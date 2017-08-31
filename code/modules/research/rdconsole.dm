@@ -169,6 +169,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
 		var/temp_screen = text2num(href_list["menu"])
 		screen = temp_screen
+	
+	
+	var/datum/component/material_container/linked_materials
+	if(linked_lathe)
+		linked_materials = linked_lathe.GetComponent(/datum/component/material_container)
+	
+	var/datum/component/material_container/imprinter_materials
+	if(linked_imprinter)
+		imprinter_materials = linked_imprinter.GetComponent(/datum/component/material_container)
 
 	if(href_list["category"])
 		selected_category = href_list["category"]
@@ -315,7 +324,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 				if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 					for(var/material in linked_destroy.loaded_item.materials)
-						linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
+						linked_materials.insert_amount(min((linked_materials.max_amount - linked_materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
 					SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
 				linked_destroy.loaded_item = null
 				for(var/obj/I in linked_destroy.contents)
@@ -421,7 +430,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		for(var/MAT in being_built.materials)
 			efficient_mats[MAT] = being_built.materials[MAT]*coeff
 
-		if(!linked_lathe.materials.has_materials(efficient_mats, amount))
+		if(!linked_materials.has_materials(efficient_mats, amount))
 			linked_lathe.say("Not enough materials to complete prototype.")
 			enough_materials = 0
 			g2g = 0
@@ -433,7 +442,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					g2g = 0
 
 		if(enough_materials)
-			linked_lathe.materials.use_amount(efficient_mats, amount)
+			linked_materials.use_amount(efficient_mats, amount)
 			for(var/R in being_built.reagents_list)
 				linked_lathe.reagents.remove_reagent(R, being_built.reagents_list[R]*coeff)
 
@@ -497,7 +506,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		for(var/MAT in being_built.materials)
 			efficient_mats[MAT] = being_built.materials[MAT]/coeff
 
-		if(!linked_imprinter.materials.has_materials(efficient_mats))
+		if(!imprinter_materials.has_materials(efficient_mats))
 			linked_imprinter.say("Not enough materials to complete prototype.")
 			enough_materials = 0
 			g2g = 0
@@ -509,7 +518,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					g2g = 0
 
 		if(enough_materials)
-			linked_imprinter.materials.use_amount(efficient_mats)
+			imprinter_materials.use_amount(efficient_mats)
 			for(var/R in being_built.reagents_list)
 				linked_imprinter.reagents.remove_reagent(R, being_built.reagents_list[R]/coeff)
 
@@ -536,7 +545,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		linked_lathe.reagents.clear_reagents()
 
 	else if(href_list["ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
-		linked_lathe.materials.retrieve_sheets(text2num(href_list["eject_amt"]), href_list["ejectsheet"])
+		linked_materials.retrieve_sheets(text2num(href_list["eject_amt"]), href_list["ejectsheet"])
 
 	//Circuit Imprinter Materials
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
@@ -546,7 +555,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		linked_imprinter.reagents.clear_reagents()
 
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the imprinter to eject a sheet of material
-		linked_imprinter.materials.retrieve_sheets(text2num(href_list["eject_amt"]), href_list["imprinter_ejectsheet"])
+		imprinter_materials.retrieve_sheets(text2num(href_list["eject_amt"]), href_list["imprinter_ejectsheet"])
 
 
 	else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
@@ -634,6 +643,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(linked_imprinter == null)
 				screen = 4.0
 
+	
+	var/datum/component/material_container/linked_materials
+	if(linked_lathe)
+		linked_materials = linked_lathe.GetComponent(/datum/component/material_container)
+	
+	var/datum/component/material_container/imprinter_materials
+	if(linked_imprinter)
+		imprinter_materials = linked_imprinter.GetComponent(/datum/component/material_container)
 	switch(screen)
 
 		//////////////////////R&D CONSOLE SCREENS//////////////////
@@ -823,7 +840,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=3.2'>Material Storage</A>"
 			dat += "<A href='?src=\ref[src];menu=3.3'>Chemical Storage</A><div class='statusDisplay'>"
 			dat += "<h3>Protolathe Menu:</h3><BR>"
-			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
+			dat += "<B>Material Amount:</B> [linked_materials.total_amount] / [linked_materials.max_amount]<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<BR>"
 
 			dat += "<form name='search' action='?src=\ref[src]'>\
@@ -841,7 +858,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A>"
 			dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><BR>"
-			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
+			dat += "<B>Material Amount:</B> [linked_materials.total_amount] / [linked_materials.max_amount]<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
 
 			var/coeff = linked_lathe.efficiency_coeff
@@ -879,7 +896,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A>"
 			dat += "<div class='statusDisplay'><h3>Search results:</h3><BR>"
-			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
+			dat += "<B>Material Amount:</B> [linked_materials.total_amount] / [linked_materials.max_amount]<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
 
 			var/coeff = linked_lathe.efficiency_coeff
@@ -916,8 +933,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(!linked_lathe)
 				dat += "ERROR: Protolathe connection failed."
 			else
-				for(var/mat_id in linked_lathe.materials.materials)
-					var/datum/material/M = linked_lathe.materials.materials[mat_id]
+				for(var/mat_id in linked_materials.materials)
+					var/datum/material/M = linked_materials.materials[mat_id]
 					dat += "* [M.amount] of [M.name]: "
 					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=1'>Eject</A> "
 					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=5'>5x</A> "
@@ -944,7 +961,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=4.3'>Material Storage</A>"
 			dat += "<A href='?src=\ref[src];menu=4.2'>Chemical Storage</A><div class='statusDisplay'>"
 			dat += "<h3>Circuit Imprinter Menu:</h3><BR>"
-			dat += "Material Amount: [linked_imprinter.materials.total_amount]<BR>"
+			dat += "Material Amount: [imprinter_materials.total_amount]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
 			dat += "<form name='search' action='?src=\ref[src]'>\
@@ -961,7 +978,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A>"
 			dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><BR>"
-			dat += "Material Amount: [linked_imprinter.materials.total_amount]<BR>"
+			dat += "Material Amount: [imprinter_materials.total_amount]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
 			var/coeff = linked_imprinter.efficiency_coeff
@@ -991,7 +1008,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A>"
 			dat += "<div class='statusDisplay'><h3>Search results:</h3><BR>"
-			dat += "Material Amount: [linked_imprinter.materials.total_amount]<BR>"
+			dat += "Material Amount: [imprinter_materials.total_amount]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
 			var/coeff = linked_imprinter.efficiency_coeff
@@ -1028,8 +1045,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(!linked_imprinter)
 				dat += "ERROR: Protolathe connection failed."
 			else
-				for(var/mat_id in linked_imprinter.materials.materials)
-					var/datum/material/M = linked_imprinter.materials.materials[mat_id]
+				for(var/mat_id in imprinter_materials.materials)
+					var/datum/material/M = imprinter_materials.materials[mat_id]
 					dat += "* [M.amount] of [M.name]: "
 					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=1'>Eject</A> "
 					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=5'>5x</A> "

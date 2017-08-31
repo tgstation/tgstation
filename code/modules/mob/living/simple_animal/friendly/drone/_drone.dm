@@ -176,22 +176,21 @@
 	//Hands
 	for(var/obj/item/I in held_items)
 		if(!(I.flags_1 & ABSTRACT_1))
-			if(LAZYLEN(I.forensics.blood))
+			if(I.blood_DNA)
 				msg += "<span class='warning'>It has [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else
 				msg += "It has [icon2html(I, user)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Internal storage
-	var/flagcheck = internal_storage.flags_1&ABSTRACT_1
-	if(internal_storage && !flagcheck)
-		if(LAZYLEN(internal_storage.forensics.blood))
+	if(internal_storage && !(internal_storage.flags_1&ABSTRACT_1))
+		if(internal_storage.blood_DNA)
 			msg += "<span class='warning'>It is holding [icon2html(internal_storage, user)] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
 		else
 			msg += "It is holding [icon2html(internal_storage, user)] \a [internal_storage] in its internal storage.\n"
 
 	//Cosmetic hat - provides no function other than looks
 	if(head && !(head.flags_1&ABSTRACT_1))
-		if(LAZYLEN(head.forensics.blood))
+		if(head.blood_DNA)
 			msg += "<span class='warning'>It is wearing [icon2html(head, user)] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on its head!</span>\n"
 		else
 			msg += "It is wearing [icon2html(head, user)] \a [head] on its head.\n"

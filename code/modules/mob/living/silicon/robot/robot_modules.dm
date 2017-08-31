@@ -519,7 +519,7 @@
 		/obj/item/gun/ballistic/revolver/grenadelauncher/cyborg,
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
-		/obj/item/pinpointer/syndicate/cyborg)
+		/obj/item/pinpointer/syndicate_cyborg)
 
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/security,
@@ -545,7 +545,7 @@
 		/obj/item/roller/robo,
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
-		/obj/item/pinpointer/syndicate/cyborg,
+		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/gun/medbeam)
 	ratvar_modules = list(
