@@ -366,6 +366,9 @@
 	if(!SSticker.HasRoundStarted())
 		alert("Not before round-start!", "Alert")
 		return
+	if(QDELETED(src) || !current)
+		alert("This mind doesn't have a mob, or is deleted! For some reason!", "Edit Memory")
+		return
 
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
