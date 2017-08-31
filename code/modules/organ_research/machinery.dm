@@ -1,5 +1,5 @@
 /obj/machinery/ornd
-	icon_state = "icons/obj/machines/organResearch.dmi"
+	icon = 'icons/obj/machines/organResearch.dmi'
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -9,6 +9,7 @@
 	var/shocked = FALSE
 	//var/obj/machinery/computer/ornd/linked_console
 	var/obj/item/loaded_item = null
+	var/panel_open
 
 /obj/machinery/ornd/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
@@ -26,12 +27,56 @@
 		if(shock(user,50))
 			return
 	if(panel_open)
-		wires.interact(user)
-
+		return //todo
 
 /obj/machinery/ornd/bodyscanner
 	name = "\improper ORND body scanner"
 	desc = "Scans people to reveal information about all of their organs."
-	icon_state = "bodyscanner-0"
+	icon_state = "bodyscanner"
 	//todo: add circuit
+	var/isopen
+	var/mob/living/carbon/human/occupant
+
+/obj/machinery/ornd/bodyscanner/Initialize()
+	.=..()
+	update_icon()
+
+/obj/machinery/ornd/bodyscanner/relaymove(mob/user as mob)
+	open_machine()
+	return
+
+/obj/machinery/ornd/bodyscanner/proc/toggle_open(mob/user)
+	if(panel_open)
+		to_chat(user, "<span class='notice'>The maintenance panel must be closed before use.</span>")
+		return
+
+	if(isopen)
+		isopen = FALSE
+		close_machine()
+		return
+	isopen = TRUE
+	open_machine()
+
+/obj/machinery/ornd/bodyscanner/attack_hand(mob/user)
+	..()
+	toggle_open(user)
+
+/obj/machinery/ornd/bodyscanner/update_icon()
+	cut_overlays()
+	//no power or maintenance
+	if(stat & (NOPOWER|BROKEN))
+		icon_state = initial(icon_state)+ (state_open ? "-0" : "")
+		return
+
+	if((stat & MAINT) || panel_open)
+		add_overlay("[icon_state]-panel")
+		return
+
+	//running and someone in there
+	if(occupant)
+		icon_state = initial(icon_state)+ "-2"
+		return
+
+	//running
+	icon_state = initial(icon_state)+ (state_open ? "-1" : "")
 
