@@ -421,7 +421,7 @@
 		target = safepick(view(3,target))
 		if(!target)
 			return
-	if(!target.Adjacent(src))
+	if(!src.Adjacent(target))
 		if(selected && selected.is_ranged())
 			if(selected.action(target,params))
 				selected.start_cooldown()
