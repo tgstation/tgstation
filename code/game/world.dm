@@ -9,6 +9,7 @@
 
 	config = new
 
+	hippie_initialize()
 	CheckSchemaVersion()
 	SetRoundID()
 
@@ -65,7 +66,7 @@
 /world/proc/SetRoundID()
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
+			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[config.internet_address_to_use]' LIKE '', '0', '[config.internet_address_to_use]')), '[world.port]')")
 			query_round_start.Execute()
 			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 			query_round_last_id.Execute()
@@ -245,44 +246,26 @@
 	if (config && config.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
-	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
-
-	var/list/features = list()
-
-	if(GLOB.master_mode)
-		features += GLOB.master_mode
-
-	if (!GLOB.enter_allowed)
-		features += "closed"
-
-	features += GLOB.abandon_allowed ? "respawn" : "no respawn"
-
-	if (config && config.allow_vote_mode)
-		features += "vote"
-
-	if (config && config.allow_ai)
-		features += "AI allowed"
-
-	var/n = 0
-	for (var/mob/M in GLOB.player_list)
-		if (M.client)
-			n++
-
-	if (n > 1)
-		features += "~[n] players"
-	else if (n > 0)
-		features += "~[n] player"
+	s += "<big><b>[station_name()]</b></big>";
 
 	if (!host && config && config.hostedby)
-		features += "hosted by <b>[config.hostedby]</b>"
-
-	if (features)
-		s += ": [jointext(features, ", ")]"
+		s += "<br>Hosted by <b>[config.hostedby]</b>."
+	s += "<img src=\"http://i.imgur.com/xH6DuHE.jpg\">" //Banner image
+	s += "<br>("
+	s += "<a href=\"[config.forumurl]\">"
+	s += "Forums"
+	s += "</a>"
+	s += ")"
+	s += " ("
+	s += "<a href=\"[config.githuburl]\">"
+	s += "Github"
+	s += "</a>"
+	s += ") "
+	if(SSticker)
+		if(GLOB.master_mode)
+			s += GLOB.master_mode
+	else
+		s += "<b>STARTING</b>"
 
 	status = s
 

@@ -116,7 +116,11 @@
 		if(default_unfasten_wrench(user, I))
 				return
 
+<<<<<<< HEAD
 		if (istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1) )
+=======
+		if (istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1) )
+>>>>>>> d50b0c6e63f02be4b833ad3063363077c1d769c8
 				if (!beaker)
 						if(!user.transferItemToLoc(I, src))
 								return 1

@@ -70,7 +70,7 @@
 /obj/item/paper/fluff/stations/cere/journal/journal
 	name = "Journal Log"
 	info = "<b><center>2XXX - 2nd Trimester</center></b><br><br><center>I hide in here, away from the masses, not like it matters much considering how fucking huge this place is. "
-	
+
 /obj/item/paper/fluff/stations/cere/journal/journal_2
 	name = "Journal Log 2"
 	info = "<b><center>2XXX - 3rd Trimester</center></b><br><br><center>I hear strange whispers from the halls, longing for blood. Something isn't right here. Why did they transfer us here to work in the first place? "

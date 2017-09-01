@@ -131,6 +131,7 @@
 	..()
 
 	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
+		checkbuttuniform(user)
 		for(var/variable in user_vars_to_edit)
 			if(variable in user.vars)
 				user_vars_remembered[variable] = user.vars[variable]

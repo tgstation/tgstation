@@ -274,7 +274,7 @@
 	rev_mind.current.log_message("<font color='red'>Has been converted to the revolution!</font>", INDIVIDUAL_ATTACK_LOG)
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
-	if(jobban_isbanned(rev_mind.current, ROLE_REV))
+	if(jobban_isbanned(rev_mind.current, ROLE_REV) || jobban_isbanned(rev_mind.current, CATBAN) || jobban_isbanned(rev_mind.current, CLUWNEBAN))
 		INVOKE_ASYNC(src, .proc/replace_jobbaned_player, rev_mind.current, ROLE_REV, ROLE_REV)
 	return 1
 //////////////////////////////////////////////////////////////////////////////

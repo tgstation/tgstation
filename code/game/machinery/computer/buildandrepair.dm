@@ -142,4 +142,3 @@
 			new /obj/item/shard(loc)
 		if(state >= 3)
 			new /obj/item/stack/cable_coil(loc , 5)
-	..()

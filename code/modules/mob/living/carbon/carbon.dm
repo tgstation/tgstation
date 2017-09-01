@@ -164,7 +164,20 @@
 		dropItemToGround(I)
 
 	if(thrown_thing)
-		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
+		var/obj/item/B = get_inactive_held_item()
+		var/action = "thrown"
+		if(istype(thrown_thing, /obj/item) && B)
+			var/obj/item/E = thrown_thing
+			if(E.w_class <= B.specthrow_maxwclass)
+				LAZYINITLIST(B.specthrow_msg)
+				if(LAZYLEN(B.specthrow_msg))
+					action = pick(B.specthrow_msg)
+				if(B.specthrow_sound)
+					playsound(B.loc, B.specthrow_sound, 50, 1)
+				if(B.specthrow_forcemult != 1)
+					E.prev_throwforce = E.throwforce
+					E.throwforce = round(E.throwforce * B.specthrow_forcemult)
+		visible_message("<span class='danger'>[src] has [action] [thrown_thing].</span>")
 		add_logs(src, thrown_thing, "has thrown")
 		newtonian_move(get_dir(target, src))
 		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
@@ -685,11 +698,13 @@
 		if(health<= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
-		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
+		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_DEEPCRIT)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
 				update_canmove()
+		else if(health <= HEALTH_THRESHOLD_CRIT)
+			update_nearcrit_stat()
 		else
 			if(stat == UNCONSCIOUS)
 				stat = CONSCIOUS
