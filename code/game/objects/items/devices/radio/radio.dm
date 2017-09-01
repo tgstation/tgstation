@@ -426,7 +426,10 @@
 	signal.frequency = freqnum // Quick frequency set
 	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 		R.receive_signal(signal)
-
+		
+	// Allinone can act as receivers. (Unless of course whoever coded this last time forgot to put it in somewhere!)
+	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
+		R.receive_signal(signal)
 
 	spawn(20) // wait a little...
 

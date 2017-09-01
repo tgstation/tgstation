@@ -87,17 +87,28 @@
 /// SNPC voice handling
 
 /mob/living/carbon/human/interactive/proc/loadVoice()
-	var/savefile/S = new /savefile("data/npc_saves/snpc.sav")
-	S["knownStrings"] >> knownStrings
-
+	if(fexists("data/npc_saves/snpc.sav"))
+		var/savefile/S = new /savefile("data/npc_saves/snpc.sav")
+		S["knownStrings"] >> knownStrings
+		fdel(S)
+	else
+		var/json_file = file("data/npc_saves/snpc.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		knownStrings = json["knownStrings"]
 	if(isnull(knownStrings))
 		knownStrings = list()
 
 /mob/living/carbon/human/interactive/proc/saveVoice()
 	if(voice_saved)
 		return
-	var/savefile/S = new /savefile("data/npc_saves/snpc.sav")
-	WRITE_FILE(S["knownStrings"], knownStrings)
+	var/json_file = file("data/npc_saves/snpc.json")
+	var/list/file_data = list()
+	file_data["knownStrings"] = knownStrings
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
 
 //botPool funcs
 /mob/living/carbon/human/interactive/proc/takeDelegate(mob/living/carbon/human/interactive/from,doReset=TRUE)

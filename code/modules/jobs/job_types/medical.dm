@@ -33,6 +33,7 @@ Chief Medical Officer
 
 	id = /obj/item/card/id/silver
 	belt = /obj/item/device/pda/heads/cmo
+	l_pocket = /obj/item/pinpointer/crew
 	ears = /obj/item/device/radio/headset/heads/cmo
 	uniform = /obj/item/clothing/under/rank/chief_medical_officer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
