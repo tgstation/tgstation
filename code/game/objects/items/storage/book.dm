@@ -157,13 +157,16 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
 		if(istype(A, /obj/item/twohanded/required/cult_bastard))
-			var/obj/item/twohanded/required/cult_bastard/sword
+			var/obj/item/twohanded/required/cult_bastard/sword = A
 			to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
+			playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
 			if(do_after(user, 40, target = sword))
+				playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
 				for(var/obj/item/device/soulstone/SS in sword.shards)
 					for(var/mob/living/simple_animal/shade/EX in SS)
 						SSticker.mode.remove_cultist(EX.mind, 1, 0)
-						EX.color = "black"
+						EX.icon_state = "ghost1"
+						EX.name = "purified [EX.name]"
 						EX.status_flags &= ~GODMODE
 						EX.canmove = 1
 						EX.forceMove(get_turf(user))

@@ -93,6 +93,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	actions_types = list()
+	flags_2 = SLOWS_WHILE_IN_HAND_2
 	var/datum/action/innate/spin2win/linked_action
 	var/spinning = FALSE
 	var/dash_toggled = FALSE
@@ -121,14 +122,14 @@
 			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.Dizzy(80)
-			user.dropItemToGround(src)
+			user.Knockdown(30)
 			return
 		else
 			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
-			user.dropItemToGround(src)
+			user.Knockdown(50)
 			return
 	linked_action = new(user)
 	linked_action.Grant(user, src)
@@ -169,14 +170,14 @@
 		var/mob/living/carbon/human/H = target
 		if(H.stat != CONSCIOUS)
 			var/obj/item/device/soulstone/SS = new /obj/item/device/soulstone(src)
-			if(SS.attack(H, user))
-				shards += SS
-			else
-				qdel(SS)
+			SS.attack(H, user)
+			shards += SS
+		return
 	if(istype(target, /obj/structure/constructshell) && shards.len)
 		var/obj/item/device/soulstone/SS = shards[1]
 		if(SS.transfer_soul("CONSTRUCT",target,user))
 			shards -= SS
+			qdel(SS)
 
 /obj/item/twohanded/required/cult_bastard/proc/charge()
 	charges = Clamp(charges + 1, 0, 1)
@@ -228,13 +229,14 @@
 	holder.apply_status_effect(/datum/status_effect/sword_spin)
 	sword.spinning = TRUE
 	sword.block_chance = 100
+	sword.slowdown += 1.5
 	addtimer(CALLBACK(src, .proc/stop_spinning), 50)
 	holder.update_action_buttons_icon()
 
 /datum/action/innate/spin2win/proc/stop_spinning()
 	sword.spinning = FALSE
 	sword.block_chance = 50
-	sword.slowdown -= 1
+	sword.slowdown -= 1.5
 	sleep(200)
 	holder.update_action_buttons_icon()
 
