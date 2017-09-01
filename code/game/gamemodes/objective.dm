@@ -1,7 +1,8 @@
 /datum/objective
-	var/datum/mind/owner = null			//The primary owner the objective.
+	var/datum/mind/owner				//The primary owner the objective.
 	var/list/datum/mind/conspirators = list()			//Secondary owners of the objective.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
+	var/team_explanation_text			//For when there are multiple owners.
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = 0					//currently only used for custom objectives.
@@ -12,7 +13,7 @@
 		explanation_text = text
 
 /datum/objective/proc/get_owners()
-	. = conspirators ? conspirators : list()
+	. = conspirators ? conspirators.Copy() : list()
 	if(owner)
 		. += owner
 
@@ -73,12 +74,14 @@
 	update_explanation_text()
 
 /datum/objective/proc/update_explanation_text()
-	//Default does nothing, override where needed
+	if(team_explanation_text && LAZYLEN(get_owners()) > 1)
+		explanation_text = team_explanation_text
 
-/datum/objective/proc/give_special_equipment(special_equipment) // Ignores conspirators
-	if(owner && owner.current)
-		if(ishuman(owner.current))
-			var/mob/living/carbon/human/H = owner.current
+/datum/objective/proc/give_special_equipment(special_equipment)
+	var/datum/mind/receiver = owner ? owner : pick(conspirators)
+	if(receiver && receiver.current)
+		if(ishuman(receiver.current))
+			var/mob/living/carbon/human/H = receiver.current
 			var/list/slots = list ("backpack" = slot_in_backpack)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
@@ -99,10 +102,8 @@
 		var/mob/living/carbon/human/H
 		if(ishuman(target.current))
 			H = target.current
-		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey || (H && H.dna.species.id == "memezombies")) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
-			return 1
-		return 0
-	return 1
+		return target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey || (H && H.dna.species.id == "memezombies") //Borgs/brains/AIs count as dead for traitor objectives.
+	return TRUE
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
@@ -133,12 +134,12 @@
 /datum/objective/mutiny/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
-			return 1
+			return TRUE
 		var/turf/T = get_turf(target.current)
 		if(T && (T.z > ZLEVEL_STATION) || (target.current.client && target.current.client.is_afk()))			//If they leave the station or go afk they count as dead for this
-			return 2
-		return 0
-	return 1
+			return TRUE
+		return FALSE
+	return TRUE
 
 /datum/objective/mutiny/update_explanation_text()
 	..()
@@ -165,10 +166,10 @@
 		if(ishuman(target.current))
 			H = target.current
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey || (H && H.dna.species.id == "memezombies")) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
-			return 1
+			return TRUE
 		if(target.current.onCentCom() || target.current.onSyndieBase())
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/objective/maroon/update_explanation_text()
 	if(target && target.current)
@@ -189,10 +190,10 @@
 
 /datum/objective/debrain/check_completion()
 	if(!target)//If it's a free objective.
-		return 1
+		return TRUE
 
 	if(!target.current || !isbrain(target.current))
-		return 0
+		return FALSE
 
 	var/atom/A = target.current
 	var/list/datum/mind/owners = get_owners()
@@ -203,8 +204,8 @@
 			if(!owner.current || owner.current.stat == DEAD)
 				continue
 			if(A == M.current)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /datum/objective/debrain/update_explanation_text()
 	..()
@@ -227,12 +228,10 @@
 
 /datum/objective/protect/check_completion()
 	if(!target)			//If it's a free objective.
-		return 1
+		return TRUE
 	if(target.current)
-		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current))
-			return 0
-		return 1
-	return 0
+		return target.current.stat != DEAD && !issilicon(target.current) && !isbrain(target.current)
+	return FALSE
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -245,17 +244,17 @@
 
 /datum/objective/hijack
 	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
+	team_explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody. Leave no team member behind."
 	martyr_compatible = 0 //Technically you won't get both anyway.
 
-/datum/objective/hijack/check_completion()
+/datum/objective/hijack/check_completion() // Requires all owners to escape.
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return 0
+		return FALSE
 	var/list/datum/mind/owners = get_owners()
-	var/list/living_owners = list()
 	for(var/datum/mind/M in owners)
-		if(M.current && M.current.stat != DEAD && !issilicon(M.current) && SSshuttle.emergency.shuttle_areas[get_area(M.current)])
-			living_owners += M
-	return living_owners.len && SSshuttle.emergency.is_hijacked()
+		if(!M.current || M.current.stat == DEAD || issilicon(M.current) || !SSshuttle.emergency.shuttle_areas[get_area(M.current)])
+			return FALSE
+	return SSshuttle.emergency.is_hijacked()
 
 
 /datum/objective/block
@@ -264,17 +263,15 @@
 
 /datum/objective/block/check_completion()
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return 1
-
+		return TRUE
 	for(var/mob/living/player in GLOB.player_list)
 		if(issilicon(player))
 			continue
 		if(player.mind)
 			if(player.stat != DEAD)
 				if(get_area(player) in SSshuttle.emergency.shuttle_areas)
-					return 0
-
-	return 1
+					return FALSE
+	return TRUE
 
 
 /datum/objective/purge
@@ -283,15 +280,13 @@
 
 /datum/objective/purge/check_completion()
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return 1
-
+		return TRUE
 	for(var/mob/living/player in GLOB.player_list)
 		if(get_area(player) in SSshuttle.emergency.shuttle_areas && player.mind && player.stat != DEAD && ishuman(player))
 			var/mob/living/carbon/human/H = player
 			if(H.dna.species.id != "human")
-				return 0
-
-	return 1
+				return FALSE
+	return TRUE
 
 
 /datum/objective/robot_army
@@ -312,6 +307,7 @@
 
 /datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
+	team_explanation_text = "Have all members of your team escape on a shuttle or pod alive, without being in custody."
 
 /datum/objective/escape/proc/check_single_completion(datum/mind/M)
 	if(!M.current || M.current.stat == DEAD || issilicon(M.current) || isbrain(M.current))
@@ -332,8 +328,8 @@
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/M in owners)
 		if(!check_single_completion(M))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/objective/escape/escape_with_identity
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
@@ -361,7 +357,7 @@
 
 /datum/objective/escape/escape_with_identity/check_completion()
 	if(!target_real_name)
-		return 1
+		return TRUE
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/M in owners)
 		if(!ishuman(M.current) || !check_single_completion(M))
@@ -369,8 +365,8 @@
 		var/mob/living/carbon/human/H = M.current
 		if(H.dna.real_name == target_real_name)
 			if(H.get_id_name()== target_real_name || target_missing_id)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 
 /datum/objective/survive
@@ -380,8 +376,8 @@
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/M in owners)
 		if(M.current && M.current.stat != DEAD && !isbrain(M.current) && is_special_character(M.current))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /datum/objective/martyr
@@ -391,8 +387,8 @@
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/M in owners)
 		if(M.current && M.current.stat != DEAD)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 
 /datum/objective/nuclear
@@ -401,8 +397,8 @@
 
 /datum/objective/nuclear/check_completion()
 	if(SSticker && SSticker.mode && SSticker.mode.station_was_nuked)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal
@@ -465,7 +461,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal/check_completion()
 	var/list/datum/mind/owners = get_owners()
 	if(!steal_target)
-		return 1
+		return TRUE
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
@@ -475,14 +471,14 @@ GLOBAL_LIST_EMPTY(possible_items)
 		for(var/obj/I in all_items) //Check for items
 			if(istype(I, steal_target))
 				if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
-					return 1
+					return TRUE
 				else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
-					return 1
+					return TRUE
 
 			if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
 				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
-					return 1
-	return 0
+					return TRUE
+	return FALSE
 
 
 GLOBAL_LIST_EMPTY(possible_items_special)
@@ -536,31 +532,22 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Download [target_amount] research level\s."
 	return target_amount
 
-/datum/objective/download/check_completion()//NINJACODE
-	if(!ishuman(owner.current))
-		return 0
-
-	var/mob/living/carbon/human/H = owner.current
-	if(!H || H.stat == DEAD)
-		return 0
-
-	if(!istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
-		return 0
-
-	var/obj/item/clothing/suit/space/space_ninja/SN = H.wear_suit
-	if(!SN.s_initialized)
-		return 0
-
-	var/current_amount
-	if(!SN.stored_research.len)
-		return 0
-	else
+/datum/objective/download/check_completion()//NINJACODE.
+	var/current_amount = 0
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!ishuman(owner.current))
+			continue
+		var/mob/living/carbon/human/H = owner.current
+		if(!H || H.stat == DEAD || !istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+			continue
+		var/obj/item/clothing/suit/space/space_ninja/SN = H.wear_suit
+		if(!SN.s_initialized)
+			continue
 		for(var/datum/tech/current_data in SN.stored_research)
 			if(current_data.level)
 				current_amount += (current_data.level-1)
-	if(current_amount<target_amount)
-		return 0
-	return 1
+	return current_amount >= target_amount
 
 
 
@@ -597,10 +584,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			captured_amount+=1
 			continue
 		captured_amount+=2
-	if(captured_amount<target_amount)
-		return 0
-	return 1
-
+	return captured_amount >= target_amount
 
 
 /datum/objective/absorb
@@ -608,13 +592,14 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
 	var/n_p = 1 //autowin
+	var/list/datum/mind/owners = get_owners()
 	if (SSticker.current_state == GAME_STATE_SETTING_UP)
 		for(var/mob/dead/new_player/P in GLOB.player_list)
-			if(P.client && P.ready == PLAYER_READY_TO_PLAY && P.mind!=owner)
+			if(P.client && P.ready == PLAYER_READY_TO_PLAY && !(P.mind in owners))
 				n_p ++
 	else if (SSticker.IsRoundInProgress())
 		for(var/mob/living/carbon/human/P in GLOB.player_list)
-			if(P.client && !(P.mind in SSticker.mode.changelings) && P.mind!=owner)
+			if(P.client && !(P.mind in SSticker.mode.changelings) && !(P.mind in owners))
 				n_p ++
 	target_amount = min(target_amount, n_p)
 
@@ -622,10 +607,13 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	return target_amount
 
 /datum/objective/absorb/check_completion()
-	if(owner && owner.changeling && owner.changeling.stored_profiles && (owner.changeling.absorbedcount >= target_amount))
-		return 1
-	else
-		return 0
+	var/list/datum/mind/owners = get_owners()
+	var/absorbedcount = 0
+	for(var/datum/mind/M in owners)
+		if(!owner || !owner.changeling || !owner.changeling.stored_profiles)
+			continue
+		absorbedcount += M.changeling.absorbedcount 
+	return absorbedcount >= target_amount
 
 
 
@@ -641,10 +629,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/destroy/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
-			return 1
-		return 0
-	return 1
+		return target.current.stat == DEAD || target.current.z > 6 || !target.current.ckey //Borgs/brains/AIs count as dead for traitor objectives.
+	return TRUE
 
 /datum/objective/destroy/update_explanation_text()
 	..()
@@ -673,17 +659,15 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	wanted_items = list(/obj/item/spellbook, /obj/item/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/scrying, /obj/item/antag_spawner/contract, /obj/item/device/necromantic_stone)
 
 /datum/objective/steal_five_of_type/check_completion()
-	var/list/datum/mind/owners = conspirators + owner
+	var/list/datum/mind/owners = get_owners()
 	var/stolen_count = 0
-
-	for(var/datum/mind/O in owners)
-		if(!isliving(O.current))
+	for(var/datum/mind/M in owners)
+		if(!isliving(M.current))
 			continue
-		var/list/all_items = O.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 		for(var/obj/I in all_items) //Check for wanted items
 			if(is_type_in_typecache(I, wanted_items))
 				stolen_count++
-
 	return stolen_count >= 5
 
 

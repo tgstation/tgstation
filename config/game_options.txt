@@ -205,6 +205,7 @@ SHUTTLE_REFUEL_DELAY 12000
 ## Used as (Antagonists = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
 TRAITOR_SCALING_COEFF 6
+BROTHER_SCALING_COEFF 6
 CHANGELING_SCALING_COEFF 6
 
 ## Variables calculate how number of open security officer positions will scale to population.
@@ -215,6 +216,7 @@ SECURITY_SCALING_COEFF 8
 ## The number of objectives traitors get.
 ## Not including escaping/hijacking.
 TRAITOR_OBJECTIVES_AMOUNT 2
+BROTHER_OBJECTIVES_AMOUNT 2
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.

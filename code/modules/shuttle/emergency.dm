@@ -262,7 +262,7 @@
 				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
 					var/location = get_turf(player.mind.current)
-					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate" || player.mind.special_role == "brother") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate" || player.mind.special_role == "blood brother") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return FALSE
 
 	return has_people
@@ -300,15 +300,6 @@
 				if(SSdbcore.Connect())
 					var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shuttle_name = '[name]' WHERE id = [GLOB.round_id]")
 					query_round_shuttle_name.Execute()
-
-				// Gangs only have one attempt left if the shuttle has
-				// docked with the station to prevent suffering from
-				// endless dominator delays
-				for(var/datum/gang/G in SSticker.mode.gangs)
-					if(G.is_dominating)
-						G.dom_attempts = 0
-					else
-						G.dom_attempts = min(1,G.dom_attempts)
 
 
 		if(SHUTTLE_DOCKED)

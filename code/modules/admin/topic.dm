@@ -112,13 +112,6 @@
 				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				new/datum/round_event/ghost_role/blob(TRUE, strength)
-			if("gangs")
-				if(src.makeGangsters())
-					message_admins("[key_name(usr)] created gangs.")
-					log_admin("[key_name(usr)] created gangs.")
-				else
-					message_admins("[key_name(usr)] tried to create gangs. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed create gangs.")
 			if("centcom")
 				message_admins("[key_name(usr)] is creating a CentCom response team...")
 				if(src.makeEmergencyresponseteam())
@@ -821,14 +814,6 @@
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=revolutionary;jobban4=\ref[M]'><font color=red>Revolutionary</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=revolutionary;jobban4=\ref[M]'>Revolutionary</a></td>"
-
-		//Gangster
-		if(jobban_isbanned(M, "gangster") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=gangster;jobban4=\ref[M]'><font color=red>Gangster</font></a></td>"
-		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=gangster;jobban4=\ref[M]'>Gangster</a></td>"
-
-		dat += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		//Cultist
 		if(jobban_isbanned(M, "cultist") || isbanned_dept)
