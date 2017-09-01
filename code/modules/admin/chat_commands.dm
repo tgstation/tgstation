@@ -11,7 +11,6 @@
 	if(rtod - last_irc_status < IRC_STATUS_THROTTLE)
 		return
 	last_irc_status = rtod
-	var/rtod = REALTIMEOFDAY
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["total"]
 	var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
@@ -37,8 +36,10 @@
 	admin_only = TRUE
 
 /datum/server_tools_command/ahelp/Run(sender, params)
-	var/list/all_params = splittext
-	return IrcPm(params[SERVICE_CMD_PARAM_TARGET], params[SERVICE_CMD_PARAM_MESSAGE], sender)
+	var/list/all_params = splittext(params)
+	var/target = all_params[1]
+	all_params.Cut(1, 2)
+	return IrcPm(target, all_params.Join(" "), sender)
 
 /datum/server_tools_command/namecheck
 	name = "namecheck"
