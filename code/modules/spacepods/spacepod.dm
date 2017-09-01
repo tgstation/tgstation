@@ -1161,8 +1161,7 @@
 		name = new_name
 
 /obj/spacepod/verb/toggle_speaker()
-	set name = "Toggle Radio Speaker"
-	set desc = "Toggle the internal radio's speaker"
+	set name = "Configure Radio"
 	set category = "Spacepod"
 	set src = usr.loc
 	set popup_menu = 0
@@ -1171,26 +1170,10 @@
 		return
 
 	if(usr != pilot)
-		to_chat(usr, "<span class='danger'>You cannot reach the button!</span>")
+		to_chat(usr, "<span class='danger'>You cannot reach the buttons!</span>")
 	else
-		radio.listening = !radio.listening
-		to_chat(usr, "<span class='notice'>The radio's speaker is now [radio.listening ? "on" : "off"]</span>")
+		radio.ui_interact(usr)
 
-/obj/spacepod/verb/toggle_broadcast()
-	set name = "Toggle Radio Microphone"
-	set desc = "Toggle the internal radio's microphone"
-	set category = "Spacepod"
-	set src = usr.loc
-	set popup_menu = 0
-
-	if(usr.incapacitated())
-		return
-
-	if(usr != pilot)
-		to_chat(usr, "<span class='danger'>You cannot reach the button!</span>")
-	else
-		radio.broadcasting 	= !radio.broadcasting
-		to_chat(usr, "<span class='notice'>The radio's microphone is now [radio.listening ? "on" : "off"]</span>")
 
 /obj/spacepod/verb/gps()
 	set name = "View GPS"
