@@ -41,6 +41,11 @@
 		viruses += DD
 		DD.affected_mob = src
 		SSdisease.active_diseases += DD //Add it to the active diseases list, now that it's actually in a mob and being processed.
+		if(istype(DD, /datum/disease/advance)) //Log the infection
+			var/datum/disease/advance/A = DD
+			SSblackbox.add_details("infections", "[A.name] - Symptoms: [english_list(A.symptoms)]")
+		else
+			SSblackbox.add_details("infections", "[DD.name] - [DD.type]")
 
 		//Copy properties over. This is so edited diseases persist.
 		var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed","symptoms")
