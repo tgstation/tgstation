@@ -31,7 +31,7 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(reboot_mode, REBOOT_MODE_NORMAL)
 
 /world/proc/ServiceEndProcess()
 	SERVER_TOOLS_LOG("Sending shutdown request!");
-	sleep(1)	//flush the buffers
+	sleep(world.tick_lag)	//flush the buffers
 	ExportService(SERVICE_REQUEST_KILL_PROCESS)
 
 //called at the exact moment the world is supposed to reboot
@@ -50,7 +50,10 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(reboot_mode, REBOOT_MODE_NORMAL)
 	var/sCK = RunningService()
 	var/their_sCK = params[SERVICE_CMD_PARAM_KEY]
 
-	if(!their_sCK || their_sCK != sCK)
+	if(!their_sCK)
+		return FALSE	//continue world/Topic
+
+	if(their_sCK != sCK)
 		return "Invalid comms key!";
 
 	var/command = params[SERVICE_CMD_PARAM_COMMAND]
@@ -74,8 +77,10 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(reboot_mode, REBOOT_MODE_NORMAL)
 				return "No message set!"
 			SERVER_TOOLS_WORLD_ANNOUNCE(msg)
 			return "SUCCESS"
+		if(SERVICE_CMD_LIST_CUSTOM)
+			return json_encode(ListServiceCustomCommands(FALSE))
 		else
-			var/custom_command_result = HandleServiceCustomCommand(command, params[SERVICE_CMD_PARAM_CUSTOM])
+			var/custom_command_result = HandleServiceCustomCommand(lowertext(command), params[SERVICE_CMD_PARAM_CUSTOM])
 			if(custom_command_result)
 				return istext(custom_command_result) ? custom_command_result : "SUCCESS"
 			return "Unknown command: [command]"

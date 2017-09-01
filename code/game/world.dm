@@ -298,6 +298,3 @@
 		hub_password = "kMZy3U5jJHSiBQjr"
 	else
 		hub_password = "SORRYNOPASSWORD"
-
-/world/proc/Announce(msg)
-	to_chat(src, "<span class='boldannounce'>[html_encode(msg)]</span>")

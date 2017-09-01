@@ -5,7 +5,6 @@
 
 //override to implement command, params is the trimmed string following the command name
 /datum/server_tools_command/proc/Run(params)
-	ASSERT(type != /datum/server_tools_command)
 	CRASH("[type] has no implementation for Run()")
 
 /world/proc/ListServiceCustomCommands(warnings_only)
