@@ -39,16 +39,16 @@
 //BODYSCANNER//
 //////////////
 /obj/machinery/ornd/bodyscanner
-	name = "\improper ORND body scanner"
-	desc = "Scans people to reveal information about all of their organs."
+	name = "body scanner"
+	desc = "A machine that scans people to reveal information about all of their organs."
 	icon_state = "bodyscanner"
 	//todo: add circuit
-	density = FALSE //spawn in the open state
 	occupant_typecache = list(/mob/living/carbon/human)
-	var/scannedOrgans = list()
+	var/list/scannedOrgans = list()
 
 /obj/machinery/ornd/bodyscanner/Initialize()
 	. = ..()
+	open_machine()
 	update_icon()
 
 /obj/machinery/ornd/bodyscanner/relaymove(mob/user as mob)
@@ -87,12 +87,61 @@
 
 	//running and someone in there
 	if(occupant)
-		icon_state = initial(icon_state)+ "-2"
+		icon_state = initial(icon_state)+ "_closed_scanning"
 		return
 
-	icon_state = initial(icon_state)+ "[state_open ? "" : "-1"]"
+	icon_state = initial(icon_state)+ "[state_open ? "" : "_closed_empty"]"
 
 /obj/machinery/ornd/bodyscanner/power_change()
 	..()
 	update_icon()
 
+/////////////////////
+//ORGAN SYNTHESIZER//
+/////////////////////
+#define ORGANFILE 'icons/obj/surgery.dmi'
+/obj/machinery/ornd/orgsynth
+	name = "organ synthesizer"
+	desc = "A machine that uses synthflesh to create artificial organs."
+	icon_state = "orgsynth"
+	var/running
+	var/obj/item/organ/synth
+	//22
+
+/obj/machinery/ornd/orgsynth/Initialize()
+	.=..()
+	update_icon()
+
+/obj/machinery/ornd/orgsynth/update_icon()
+	cut_overlays()
+
+	if(stat & (NOPOWER|BROKEN))
+		icon_state = initial(icon_state)
+		return
+
+	if((stat & MAINT) || panel_open)
+		add_overlay("[icon_state]-panel")
+		return
+
+	if(!running)
+		add_overlay("orgsynth_glass_off")
+		icon_state = initial(icon_state)+ "_on"
+		return
+
+	debugoverlay()
+	var/image/organlay = image(ORGANFILE, synth.icon_state)
+	var/image/glass = image(icon, "orgsynth_glass_on")
+	glass.alpha = 128
+	organlay.pixel_x = 7
+	add_overlay(organlay)
+	add_overlay(glass)
+	icon_state = initial(icon_state)+ "_running"
+
+/obj/machinery/ornd/orgsynth/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/ornd/orgsynth/proc/debugoverlay()
+	synth = new /obj/item/organ/heart
+
+#undef ORGANFILE
