@@ -37,7 +37,7 @@
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
 	..()
 
-	if(!W || !user)
+	if(QDELETED(W) || QDELETED(user))
 		return FALSE
 
 	if(istype(W, /obj/item/storage/bag/ore))
