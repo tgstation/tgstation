@@ -10,6 +10,10 @@
 	var/disabled = 0
 	var/shocked = FALSE
 	var/obj/machinery/computer/orndconsole/linked_console
+	var/datum/ornd/refDatum
+
+/obj/machinery/ornd/Initialize()
+	refDatum = new /datum/ornd
 
 /obj/machinery/ornd/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
@@ -113,10 +117,14 @@
 	icon_state = "orgsynth"
 	var/running
 	var/obj/item/organ/synth
+	var/prodcoeff = 1
+	var/canBuild = TRUE
+
 	//22
 
 /obj/machinery/ornd/orgsynth/Initialize()
 	.=..()
+	create_reagents(0)
 	update_icon()
 
 /obj/machinery/ornd/orgsynth/update_icon()
@@ -135,7 +143,6 @@
 		icon_state = initial(icon_state)+ "_on"
 		return
 
-	debugoverlay()
 	var/image/organlay = image(ORGANFILE, synth.icon_state)
 	var/image/glass = image(icon, "orgsynth_glass_on")
 	glass.alpha = 128
@@ -152,6 +159,18 @@
 /obj/machinery/ornd/orgsynth/proc/debugoverlay()
 	synth = new /obj/item/organ/liver
 
+/obj/machinery/ornd/orgsynth/proc/build_organ(var/datum/ornd/target)
+	if(istype(target))
+		synth = target
+		//if(reagents.has_reagent("synthflesh")
+		running = TRUE
+
+	update_icon()
+
+/obj/machinery/ornd/orgsynth/process()
+	if(running && reagents.has_reagent("synthflesh"))
+		reagents.remove_reagent("synthflesh", 1*prodcoeff)
+
 #undef ORGANFILE
 
 ////////////////////
@@ -163,6 +182,9 @@
 	desc = "A machine used to research organs."
 	icon_state = "organres"
 	var/running
+	var/obj/item/organ/scanning
+	var/obj/item/organ/heldorgan
+	var/datum/ornd/scandatum
 
 /obj/machinery/ornd/organres/Initialize()
 	.=..()
@@ -188,3 +210,28 @@
 		return
 
 	icon_state = initial(icon_state)+ "_running"
+
+/obj/machinery/ornd/organres/proc/donescan()
+	running = FALSE
+	update_icon()
+	scanning.forceMove(get_turf(src))
+
+/obj/machinery/ornd/organres/proc/scan()
+	running = TRUE
+	for(var/obj/item/organ/O in contents)
+		for(var/DO in refDatum.datumOrgans)//is this organ referenced as a product of any datum organ?
+			if(istype(O, DO.product))
+				scanning = O
+				return scanning
+	update_icon()
+	addtimer(CALLBACK(src, .proc/donescan),32*prod_coeff)
+
+/obj/machinery/ornd/organres/attackby(obj/item/W, mob/user)
+	..()
+	var/obj/item/organ/O = W
+	if(istype(O) && !running)
+		O.forceMove(src)
+		O = heldorgan
+
+
+
