@@ -53,6 +53,7 @@
 	var/obj/item/device/spacepod_equipment/lock/lock_system // lock system
 	var/obj/item/device/spacepod_equipment/thruster/thruster_system
 
+
 /datum/spacepod/equipment/New(obj/spacepod/SP)
 	..()
 	if(istype(SP))
@@ -63,6 +64,7 @@
 	var/obj/spacepod/my_atom
 	var/occupant_mod = 0	// so any module can modify occupancy
 	var/list/storage_mod = list("slots" = 0, "w_class" = 0)		// so any module can modify storage slots
+	var/slot = "misc"
 
 /obj/item/device/spacepod_equipment/proc/removed(mob/user) // So that you can unload cargo when you remove the module
 	return
@@ -78,6 +80,7 @@
 	desc = "You shouldn't be seeing this"
 	icon = 'icons/vehicles/spacepod.dmi'
 	icon_state = "blank"
+	slot = "weapon"
 	var/obj/item/projectile/projectile_type
 	var/shot_cost = 0
 	var/shots_per = 1
@@ -195,6 +198,7 @@
 	desc = "You shouldn't be seeing this"
 	icon = 'icons/vehicles/spacepod.dmi'
 	icon_state = "cargo_blank"
+	slot = "cargo"
 	var/obj/storage = null
 
 /obj/item/device/spacepod_equipment/cargo/proc/passover(obj/item/I)
@@ -236,6 +240,7 @@
 	desc = "you shouldn't be seeing this"
 	icon = 'icons/vehicles/spacepod.dmi'
 	icon_state = "blank"
+	slot = "sec_cargo"
 
 // Passenger Seat
 /obj/item/device/spacepod_equipment/sec_cargo/chair
@@ -262,6 +267,7 @@
 	desc = "You shouldn't be seeing this"
 	icon = 'icons/vehicles/spacepod.dmi'
 	icon_state = "blank"
+	slot = "lock"
 	var/mode = 0
 	var/id = null
 
@@ -297,9 +303,15 @@
 	else
 		..()
 
+/*
+///////////////////////////////////////
+///////////Thruster System/////////////
+///////////////////////////////////////
+*/
 /obj/item/device/spacepod_equipment/thruster
 	name = "Pod Thruster"
 	desc = "You shouldn't have this."
+	slot = "thruster"
 	var/delay = 2
 	var/power_usage = 0
 

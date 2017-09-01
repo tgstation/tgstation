@@ -84,6 +84,7 @@
 	var/datum/action/innate/spacepod/checkseat/list/seat_action = list()
 	var/datum/action/innate/spacepod/airtank/list/tank_action = list()
 
+	var/obj/item/device/radio/mech/radio
 
 	hud_possible = list(DIAG_HUD, DIAG_BATT_HUD)
 
@@ -125,6 +126,7 @@
 	setDir(EAST)
 	cell = new cell_type(src)
 	add_cabin()
+	add_radio()
 	add_airtank()
 	ion_trail = new /datum/effect_system/trail_follow/ion/space_trail()
 	ion_trail.set_up(src)
@@ -251,8 +253,16 @@
 	return
 
 /obj/spacepod/proc/fixReg()
-	internal_temp_regulation = 1
+	internal_temp_regulation = TRUE
 	message_to_riders("<span class='notice'>The pod console displays 'Temperature regulation online. Have a safe day!'.</span>")
+
+/obj/spacepod/proc/add_radio()
+	radio = new(src)
+	radio.name = "[src] radio"
+	radio.icon = icon
+	radio.icon_state = icon_state
+	radio.subspace_transmission = TRUE
+	radio.broadcasting = FALSE
 
 /obj/spacepod/proc/armorDesc()
 	switch(pod_armor.name)
@@ -375,6 +385,19 @@
 		..()
 		take_damage(W.force)
 	else
+		if(istype(W, /obj/item/pod_paint_bucket))
+			apply_paint(user)
+			return
+		if(istype(W, /obj/item/device/spacepod_equipment))
+			var/obj/item/device/spacepod_equipment/SE = W
+			if(!hatch_open)
+				to_chat(user, "<span class='warning'>The maintenance hatch is closed!</span>")
+				return
+			if(!equipment_system)
+				to_chat(user, "<span class='warning'>The pod has no equipment datum, yell at the coders</span>")
+				return
+			add_equipment(user, W, "[SE.slot]_system")
+			update_icons()
 		if(istype(W, /obj/item/crowbar))
 			if(!equipment_system.lock_system || unlocked || hatch_open)
 				hatch_open = !hatch_open
@@ -395,33 +418,6 @@
 			cell = W
 			W.forceMove(src)
 			return
-		if(istype(W, /obj/item/device/spacepod_equipment))
-			if(!hatch_open)
-				to_chat(user, "<span class='warning'>The maintenance hatch is closed!</span>")
-				return
-			if(!equipment_system)
-				to_chat(user, "<span class='warning'>The pod has no equipment datum, yell at the coders</span>")
-				return
-			if(istype(W, /obj/item/device/spacepod_equipment/weaponry))
-				add_equipment(user, W, "weapon_system")
-				update_icons()
-				return
-			if(istype(W, /obj/item/device/spacepod_equipment/misc))
-				add_equipment(user, W, "misc_system")
-				return
-			if(istype(W, /obj/item/device/spacepod_equipment/cargo))
-				add_equipment(user, W, "cargo_system")
-				return
-			if(istype(W, /obj/item/device/spacepod_equipment/sec_cargo))
-				add_equipment(user, W, "sec_cargo_system")
-				return
-			if(istype(W, /obj/item/device/spacepod_equipment/lock))
-				add_equipment(user, W, "lock_system")
-				return
-			if(istype(W, /obj/item/device/spacepod_equipment/thruster/vtec))
-				add_equipment(user, W, "thruster_system")
-				return
-
 		if(istype(W, /obj/item/device/spacepod_key) && istype(equipment_system.lock_system, /obj/item/device/spacepod_equipment/lock/keyed))
 			var/obj/item/device/spacepod_key/key = W
 			if(key.id == equipment_system.lock_system.id)
@@ -435,7 +431,6 @@
 			else
 				to_chat(user, "<span class='warning'>This is the wrong key!</span>")
 				return
-
 		if(istype(W, /obj/item/weldingtool))
 			if(!hatch_open)
 				to_chat(user, "<span class='warning'>You must open the maintenance hatch before attempting repairs.</span>")
@@ -591,6 +586,15 @@
 
 
 /obj/spacepod/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	if(speaker == pilot || speaker in passengers)
+		if(radio.broadcasting)
+			radio.talk_into(speaker, text, , spans, message_language)
+		//flick speech bubble
+		var/list/speech_bubble_recipients = list()
+		for(var/mob/M in get_hearers_in_view(7,src))
+			if(M.client)
+				speech_bubble_recipients.Add(M.client)
+		INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",SPACEPOD_LAYER+1), speech_bubble_recipients, 30)
 	cargo_hold.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 	..()
 
@@ -612,12 +616,6 @@
 	icon_state = "pod_civ"
 	pod_armor = /datum/pod_armor/civ
 	desc = "A sleek civilian space pod."
-
-/obj/spacepod/civilian/attackby(obj/item/W as obj, mob/user as mob, params)
-	..()
-	if(istype(W, /obj/item/pod_paint_bucket))
-		apply_paint(user)
-		return
 
 /obj/spacepod/random
 	icon_state = "pod_civ"
@@ -1043,7 +1041,7 @@
 /obj/spacepod/shuttleRotate(rotation)
 	setDir(turn(dir, -rotation))
 
-/obj/spacepod/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/obj/spacepod/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock) //this is to avoid fuckery
 	if(rotation)
 		shuttleRotate(rotation)
 	loc = newT
@@ -1127,6 +1125,62 @@
 	else
 		name = new_name
 
+/obj/spacepod/verb/toggle_speaker()
+	set name = "Toggle Radio Speaker"
+	set desc = "Toggle the internal radio's speaker"
+	set category = "Spacepod"
+	set src = usr.loc
+	set popup_menu = 0
+
+	if(usr.incapacitated())
+		return
+
+	if(usr != pilot)
+		to_chat(usr, "<span class='danger'>You cannot reach the button!</span>")
+	else
+		radio.listening = !radio.listening
+		to_chat(usr, "<span class='notice'>The radio's speaker is now [radio.listening ? "on" : "off"]</span>")
+
+/obj/spacepod/verb/toggle_broadcast()
+	set name = "Toggle Radio Microphone"
+	set desc = "Toggle the internal radio's microphone"
+	set category = "Spacepod"
+	set src = usr.loc
+	set popup_menu = 0
+
+	if(usr.incapacitated())
+		return
+
+	if(usr != pilot)
+		to_chat(usr, "<span class='danger'>You cannot reach the button!</span>")
+	else
+		radio.broadcasting 	= !radio.broadcasting
+		to_chat(usr, "<span class='notice'>The radio's microphone is now [radio.listening ? "on" : "off"]</span>")
+
+/obj/spacepod/template
+	var/datum/pod_armor/armortype
+	var/obj/item/device/spacepod_equipment/weaponry/weapon
+
+/obj/spacepod/template/Initialize(mapload)
+	. = ..(mapload, armortype)
+	if(weapon)
+		var/obj/item/device/spacepod_equipment/weaponry/T = new weapon
+		T.loc = equipment_system
+		equipment_system.weapon_system = T
+		equipment_system.weapon_system.my_atom = src
+		equipment_system.installed_modules += T
+	update_icons()
+
+/obj/spacepod/template/syndicate
+	armortype = /datum/pod_armor/syndicate
+	weapon = /obj/item/device/spacepod_equipment/weaponry/laser
+
+/obj/spacepod/template/security
+	armortype = /datum/pod_armor/security
+	weapon = /obj/item/device/spacepod_equipment/weaponry/disabler
+
+/obj/spacepod/template/industrial
+	armortype = /datum/pod_armor/industrial
 
 #undef DAMAGE
 #undef FIRE
