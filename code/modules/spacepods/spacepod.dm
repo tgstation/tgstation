@@ -264,6 +264,31 @@
 	radio.subspace_transmission = TRUE
 	radio.broadcasting = FALSE
 
+/obj/spacepod/examine(mob/user)
+	..()
+	var/integrity = obj_integrity*100/max_integrity
+	switch(integrity)
+		if(85 to 100)
+			to_chat(user, "It's fully intact.")
+		if(65 to 85)
+			to_chat(user, "It's slightly damaged.")
+		if(45 to 65)
+			to_chat(user, "It's badly damaged.")
+		if(25 to 45)
+			to_chat(user, "It's heavily damaged.")
+		if(0 to 1)
+			to_chat(user, "<span class='danger'>It looks like it's experiencing a core failure! Take cover!</span>")
+		else
+			to_chat(user, "It's falling apart.")
+	if(LAZYLEN(equipment_system.installed_modules))
+		to_chat(user, "It's equipped with:")
+		for(var/obj/item/device/spacepod_equipment/ME in equipment_system.installed_modules)
+			to_chat(user, "[icon2html(ME, user)] [ME]")
+	if(pilot)
+		to_chat(user, "[pilot] appears to be in the pilot's seat.")
+	if(LAZYLEN(passengers) && isobserver(user))
+		for(var/mob/living/M in passengers)
+			to_chat(user, "[M] is a a passenger.")
 /obj/spacepod/proc/armorDesc()
 	switch(pod_armor.name)
 		if("civ")
@@ -294,7 +319,7 @@
 	visible_message("<span class='danger'>[src] violently explodes!</span>")
 	var/turf/T = get_turf(src)
 	log_game("The spacepod \[name: [name], pilot: [pilot]([pilot.ckey]) exploded at [COORD(T)]!")
-	message_admins("The spacepod \[name: [name], pilot: [pilot]\] exploded at [ADMIN_JMP(T)]!")
+	message_admins("The spacepod \[name: [name], pilot: [pilot]([pilot.ckey])\] exploded at [ADMIN_JMP(T)]!")
 	qdel(src)
 
 /obj/spacepod/attacked_by(obj/item/I, mob/living/user)
