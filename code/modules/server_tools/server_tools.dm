@@ -11,6 +11,8 @@ GLOBAL_PROTECT(reboot_mode)
 	ExportService("[SERVICE_REQUEST_IRC_BROADCAST] [msg]")
 
 /world/proc/ServiceEndProcess()
+	if(!RunningService())
+		return
 	log_world("Self terminating!");
 	sleep(world.tick_lag)	//flush the chat buffers
 	call("code/modules/server_tools/terminate/terminate.dll", "TerminateSelf")()
