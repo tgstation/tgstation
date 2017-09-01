@@ -177,6 +177,10 @@
 	var/rename_cyborg = 0
 	var/ooc_during_round = 0
 	var/emojis = 0
+<<<<<<< HEAD
+=======
+	var/no_credits_round_end = FALSE
+>>>>>>> 335ebb3ccf... TRUEFALSE and changed the logic
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -581,6 +585,11 @@
 					ooc_during_round			= 1
 				if("emojis")
 					emojis					= 1
+<<<<<<< HEAD
+=======
+				if("no_credits_round_end")
+					no_credits_round_end	= TRUE
+>>>>>>> 335ebb3ccf... TRUEFALSE and changed the logic
 				if("run_delay")
 					run_speed				= text2num(value)
 				if("walk_delay")
