@@ -1,3 +1,5 @@
+#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
+									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
 /world/New()
 	log_world("World loaded at [time_stamp()]")
 
@@ -14,7 +16,9 @@
 
 	SetupLogs()
 
-	if(!RunningService())	//tgs2 support
+	SERVER_TOOLS_ON_NEW
+
+	if(!SERVER_TOOLS_PRESENT)	//tgs2 support
 		GLOB.revdata.DownloadPRDetails()
 
 	load_motd()
@@ -29,7 +33,7 @@
 	Master.Initialize(10, FALSE)
 
 	if(config.irc_announce_new_game)
-		IRCBroadcast("New round starting on [SSmapping.config.map_name]!")
+		SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
@@ -103,8 +107,8 @@
 	if(!pinging && !playing && config && config.log_world_topic)
 		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
-	if(input[SERVICE_CMD_PARAM_KEY])
-		return ServiceCommand(input)
+	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
+
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
 
 	if(pinging)
@@ -224,7 +228,7 @@
 		C.AnnouncePR(final_composed)
 
 /world/Reboot(reason = 0, fast_track = FALSE)
-	ServiceReboot() //handles alternative actions if necessary
+	SERVER_TOOLS_ON_REBOOT
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
@@ -294,3 +298,6 @@
 		hub_password = "kMZy3U5jJHSiBQjr"
 	else
 		hub_password = "SORRYNOPASSWORD"
+
+/world/proc/Announce(msg)
+	to_chat(src, "<span class='boldannounce'>[html_encode(msg)]</span>")
