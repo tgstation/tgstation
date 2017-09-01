@@ -360,23 +360,22 @@ GLOBAL_LIST(external_rsc_urls)
 		holder.owner = null
 		GLOB.admins -= src
 		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
-			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
-				var/cheesy_message = pick(
-					"I have no admins online!",\
-					"I'm all alone :(",\
-					"I'm feeling lonely :(",\
-					"I'm so lonely :(",\
-					"Why does nobody love me? :(",\
-					"I want a man :(",\
-					"Where has everyone gone?",\
-					"I need a hug :(",\
-					"Someone come hold me :(",\
-					"I need someone on me :(",\
-					"What happened? Where has everyone gone?",\
-					"Forever alone :("\
-				)
+			var/cheesy_message = pick(
+				"I have no admins online!",\
+				"I'm all alone :(",\
+				"I'm feeling lonely :(",\
+				"I'm so lonely :(",\
+				"Why does nobody love me? :(",\
+				"I want a man :(",\
+				"Where has everyone gone?",\
+				"I need a hug :(",\
+				"Someone come hold me :(",\
+				"I need someone on me :(",\
+				"What happened? Where has everyone gone?",\
+				"Forever alone :("\
+			)
 
-				send2irc("Server", "[cheesy_message] (No admins online)")
+			send2irc("Server", "[cheesy_message] (No admins online)")
 
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
@@ -565,13 +564,13 @@ GLOBAL_LIST(external_rsc_urls)
 	var/const/adminckey = "CID-Error"
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
-	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW()")
+	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0")
 	if(!query_get_notes.Execute())
 		return
 	if(query_get_notes.NextRow())
 		return
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
-	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' ORDER BY timestamp DESC LIMIT 1")
+	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 ORDER BY timestamp DESC LIMIT 1")
 	if(!query_get_notes.Execute())
 		return
 	if(query_get_notes.NextRow())

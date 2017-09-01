@@ -234,7 +234,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 		to_chat(usr, "<span class='notice'>Sorry, that function is not enabled on this server.</span>")
 		return
 
-	browse_messages(null, usr.ckey, null, 1)
+	browse_messages(null, usr.ckey, null, TRUE)
 
 /datum/client_base/proc/ignore_key(client)
 	var/datum/client_base/C = client

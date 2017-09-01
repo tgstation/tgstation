@@ -29108,7 +29108,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/wood,
-/obj/item/pinpointer,
+/obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)

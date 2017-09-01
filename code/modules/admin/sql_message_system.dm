@@ -56,7 +56,7 @@
 		if(browse)
 			browse_messages("[type]")
 		else
-			browse_messages(target_ckey = target_ckey)
+			browse_messages(target_ckey = target_ckey, agegate = TRUE)
 
 /proc/delete_message(message_id, logged = 1, browse)
 	if(!SSdbcore.Connect())
@@ -68,14 +68,14 @@
 	var/type
 	var/target_ckey
 	var/text
-	var/datum/DBQuery/query_find_del_message = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, text FROM [format_table_name("messages")] WHERE id = [message_id]")
+	var/datum/DBQuery/query_find_del_message = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, text FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_del_message.warn_execute())
 		return
 	if(query_find_del_message.NextRow())
 		type = query_find_del_message.item[1]
 		target_ckey = query_find_del_message.item[2]
 		text = query_find_del_message.item[4]
-	var/datum/DBQuery/query_del_message = SSdbcore.NewQuery("DELETE FROM [format_table_name("messages")] WHERE id = [message_id]")
+	var/datum/DBQuery/query_del_message = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET deleted = 1 WHERE id = [message_id]")
 	if(!query_del_message.warn_execute())
 		return
 	if(logged)
@@ -84,7 +84,7 @@
 		if(browse)
 			browse_messages("[type]")
 		else
-			browse_messages(target_ckey = target_ckey)
+			browse_messages(target_ckey = target_ckey, agegate = TRUE)
 
 /proc/edit_message(message_id, browse)
 	if(!SSdbcore.Connect())
@@ -93,7 +93,7 @@
 	message_id = text2num(message_id)
 	if(!message_id)
 		return
-	var/datum/DBQuery/query_find_edit_message = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, text FROM [format_table_name("messages")] WHERE id = [message_id]")
+	var/datum/DBQuery/query_find_edit_message = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, text FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_edit_message.warn_execute())
 		return
 	if(query_find_edit_message.NextRow())
@@ -107,7 +107,7 @@
 			return
 		new_text = sanitizeSQL(new_text)
 		var/edit_text = sanitizeSQL("Edited by [editor_ckey] on [SQLtime()] from<br>[old_text]<br>to<br>[new_text]<hr>")
-		var/datum/DBQuery/query_edit_message = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET text = '[new_text]', lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id]")
+		var/datum/DBQuery/query_edit_message = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET text = '[new_text]', lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id] AND deleted = 0")
 		if(!query_edit_message.warn_execute())
 			return
 		log_admin_private("[key_name(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_text] to [new_text]")
@@ -115,7 +115,7 @@
 		if(browse)
 			browse_messages("[type]")
 		else
-			browse_messages(target_ckey = target_ckey)
+			browse_messages(target_ckey = target_ckey, agegate = TRUE)
 
 /proc/toggle_message_secrecy(message_id)
 	if(!SSdbcore.Connect())
@@ -124,7 +124,7 @@
 	message_id = text2num(message_id)
 	if(!message_id)
 		return
-	var/datum/DBQuery/query_find_message_secret = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, secret FROM [format_table_name("messages")] WHERE id = [message_id]")
+	var/datum/DBQuery/query_find_message_secret = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, secret FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_message_secret.warn_execute())
 		return
 	if(query_find_message_secret.NextRow())
@@ -139,9 +139,9 @@
 			return
 		log_admin_private("[key_name(usr)] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]")
 		message_admins("[key_name_admin(usr)] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]")
-		browse_messages(target_ckey = target_ckey)
+		browse_messages(target_ckey = target_ckey, agegate = TRUE)
 
-/proc/browse_messages(type, target_ckey, index, linkless = 0, filter)
+/proc/browse_messages(type, target_ckey, index, linkless = FALSE, filter, agegate = FALSE)
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
@@ -169,7 +169,7 @@
 			else
 				output += "|<a href='?_src_=holder;showwatchfilter=1'>\[Filter offline clients\]</a></center>"
 		output += ruler
-		var/datum/DBQuery/query_get_type_messages = SSdbcore.NewQuery("SELECT id, targetckey, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]'")
+		var/datum/DBQuery/query_get_type_messages = SSdbcore.NewQuery("SELECT id, targetckey, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]' AND deleted = 0")
 		if(!query_get_type_messages.warn_execute())
 			return
 		while(query_get_type_messages.NextRow())
@@ -193,12 +193,13 @@
 			output += "<br>[text]<hr style='background:#000000; border:0; height:1px'>"
 	if(target_ckey)
 		target_ckey = sanitizeSQL(target_ckey)
-		var/datum/DBQuery/query_get_messages = SSdbcore.NewQuery("SELECT type, secret, id, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' ORDER BY timestamp DESC")
+		var/datum/DBQuery/query_get_messages = SSdbcore.NewQuery("SELECT type, secret, id, adminckey, text, timestamp, server, lasteditor, DATEDIFF(NOW(), timestamp) AS `age` FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' AND deleted = 0 ORDER BY timestamp DESC")
 		if(!query_get_messages.warn_execute())
 			return
 		var/messagedata
 		var/watchdata
 		var/notedata
+		var/skipped = 0
 		while(query_get_messages.NextRow())
 			type = query_get_messages.item[1]
 			if(type == "memo")
@@ -212,8 +213,21 @@
 			var/timestamp = query_get_messages.item[6]
 			var/server = query_get_messages.item[7]
 			var/editor_ckey = query_get_messages.item[8]
+			var/age = text2num(query_get_messages.item[9])
+			var/alphatext = ""
+			if (agegate && type == "note" && isnum(config.note_stale_days) && isnum(config.note_fresh_days) && config.note_stale_days > config.note_fresh_days)
+				var/alpha = Clamp(100 - (age - config.note_fresh_days) * (85 / (config.note_stale_days - config.note_fresh_days)), 15, 100)
+				if (alpha < 100)
+					if (alpha <= 15)
+						if (skipped)
+							skipped++
+							continue
+						alpha = 10
+						skipped = TRUE
+					alphatext = "filter: alpha(opacity=[alpha]); opacity: [alpha/100];"
+
 			var/data
-			data += "<b>[timestamp] | [server] | [admin_ckey]</b>"
+			data += "<p style='margin:0px;[alphatext]'> <b>[timestamp] | [server] | [admin_ckey]</b>"
 			if(!linkless)
 				data += " <a href='?_src_=holder;deletemessage=[id]'>\[Delete\]</a>"
 				if(type == "note")
@@ -226,7 +240,7 @@
 					data += " <a href='?_src_=holder;editmessage=[id]'>\[Edit\]</a>"
 				if(editor_ckey)
 					data += " <font size='2'>Last edit by [editor_ckey] <a href='?_src_=holder;messageedits=[id]'>(Click here to see edit log)</a></font>"
-			data += "<br>[text]<hr style='background:#000000; border:0; height:1px'>"
+			data += "<br>[text]</p><hr style='background:#000000; border:0; height:1px; [alphatext]'>"
 			switch(type)
 				if("message")
 					messagedata += data
@@ -254,6 +268,15 @@
 		if(notedata)
 			output += "<h4>Notes</h4>"
 			output += notedata
+			if(!linkless)
+				if (agegate)
+					if (skipped) //the first skipped message is still shown so that we can put this link over it.
+						output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1' style='position: relative; top: -3em;'>\[Show [skipped] hidden messages\]</center>"
+					else
+						output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1'>\[Show All\]</center>"
+
+				else
+					output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey]'>\[Hide Old\]</center>"
 	if(index)
 		var/index_ckey
 		var/search
@@ -268,7 +291,7 @@
 				search = "^\[^\[:alpha:\]\]"
 			else
 				search = "^[index]"
-		var/datum/DBQuery/query_list_messages = SSdbcore.NewQuery("SELECT DISTINCT targetckey FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey REGEXP '[search]' ORDER BY targetckey")
+		var/datum/DBQuery/query_list_messages = SSdbcore.NewQuery("SELECT DISTINCT targetckey FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey REGEXP '[search]' AND deleted = 0 ORDER BY targetckey")
 		if(!query_list_messages.warn_execute())
 			return
 		while(query_list_messages.NextRow())
@@ -277,7 +300,7 @@
 	else if(!type && !target_ckey && !index)
 		output += "<center></a> <a href='?_src_=holder;addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;addnoteempty=1'>\[Add note\]</a></center>"
 		output += ruler
-	usr << browse(output, "window=browse_messages;size=900x500")
+	usr << browse({"<!DOCTYPE html><html><head><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /></head><body>[output]</body></html>"}, "window=browse_messages;size=900x500")
 
 proc/get_message_output(type, target_ckey)
 	if(!SSdbcore.Connect())
@@ -288,7 +311,7 @@ proc/get_message_output(type, target_ckey)
 	var/output
 	if(target_ckey)
 		target_ckey = sanitizeSQL(target_ckey)
-	var/query = "SELECT id, adminckey, text, timestamp, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]'"
+	var/query = "SELECT id, adminckey, text, timestamp, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]' AND deleted = 0"
 	if(type == "message" || type == "watchlist entry")
 		query += " AND targetckey = '[target_ckey]'"
 	var/datum/DBQuery/query_get_message_output = SSdbcore.NewQuery(query)

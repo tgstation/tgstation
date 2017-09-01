@@ -310,10 +310,6 @@ SUBSYSTEM_DEF(ticker)
 					flick("station_corrupted",cinematic)
 					SEND_SOUND(world, sound('sound/effects/ghost.ogg'))
 					actually_blew_up = FALSE
-				if("gang war") //Gang Domination (just show the override screen)
-					cinematic.icon_state = "intro_malf_still"
-					flick("intro_malf",cinematic)
-					actually_blew_up = FALSE
 					sleep(70)
 				if("fake") //The round isn't over, we're just freaking people out for fun
 					flick("intro_nuke",cinematic)
@@ -724,10 +720,6 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [station_name()] are, in fact, a hoax. Have a secure day!"
 		if(STATION_EVACUATED)
 			news_message = "The crew of [station_name()] has been evacuated amid unconfirmed reports of enemy activity."
-		if(GANG_LOSS)
-			news_message = "Organized crime aboard [station_name()] has been stamped out by members of our ever vigilant security team. Remember to thank your assigned officers today!"
-		if(GANG_TAKEOVER)
-			news_message = "Contact with [station_name()] has been lost after a sophisticated hacking attack by organized criminal elements. Stay vigilant!"
 		if(BLOB_WIN)
 			news_message = "[station_name()] was overcome by an unknown biological outbreak, killing all crew on board. Don't let it happen to you! Remember, a clean work station is a safe work station."
 		if(BLOB_NUKE)

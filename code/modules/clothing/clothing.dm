@@ -22,7 +22,6 @@
 	var/cooldown = 0
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
-	var/gang //Is this a gang outfit?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live

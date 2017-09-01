@@ -41,7 +41,6 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/space_ninja(H), slot_wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night(H), slot_glasses)
 	H.equip_to_slot_or_del(EK, slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/device/flashlight(H), slot_r_store)
 	H.equip_to_slot_or_del(new /obj/item/grenade/plastic/x4(H), slot_l_store)
 	H.equip_to_slot_or_del(new /obj/item/tank/internals/emergency_oxygen(H), slot_s_store)
 	H.equip_to_slot_or_del(new /obj/item/tank/jetpack/carbondioxide(H), slot_back)
