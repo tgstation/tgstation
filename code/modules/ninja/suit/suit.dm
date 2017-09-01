@@ -17,7 +17,7 @@ Contents:
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
-	slowdown = 0
+	slowdown = 1
 	resistance_flags = LAVA_PROOF | ACID_PROOF
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
 	strip_delay = 12
@@ -28,7 +28,6 @@ Contents:
 	var/mob/living/carbon/human/affecting = null
 	var/obj/item/stock_parts/cell/cell
 	var/datum/effect_system/spark_spread/spark_system
-	var/list/reagent_list = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
 	var/list/stored_research = list()//For stealing station research.
 	var/obj/item/disk/tech_disk/t_disk//To copy design onto disk.
 	var/obj/item/dash/energy_katana/energyKatana //For teleporting the katana back to the ninja (It's an ability)
@@ -44,11 +43,10 @@ Contents:
 	var/s_cost = 5//Base energy cost each ntick.
 	var/s_acost = 25//Additional cost for additional powers active.
 	var/s_delay = 40//How fast the suit does certain things, lower is faster. Can be overridden in specific procs. Also determines adverse probability.
-	var/a_transfer = 20//How much reagent is transferred when injecting.
-	var/r_maxamount = 80//How much reagent in total there is.
+	var/a_transfer = 20//How much radium is used per adrenaline boost.
+	var/a_maxamount = 7//Maximum number of adrenaline boosts.
 
 		//Support function variables.
-	var/spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.
 	var/s_active = 0//Stealth off.
 	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
@@ -73,27 +71,11 @@ Contents:
 	for(var/T in subtypesof(/datum/tech))//Store up on research.
 		stored_research += new T(src)
 
-	//Reagent Init
-	var/reagent_amount
-	for(var/reagent_id in reagent_list)
-		reagent_amount += reagent_id == "radium" ? r_maxamount+(a_boost*a_transfer) : r_maxamount
-	reagents = new(reagent_amount)
-	reagents.my_atom = src
-	for(var/reagent_id in reagent_list)
-		reagent_id == "radium" ? reagents.add_reagent(reagent_id, r_maxamount+(a_boost*a_transfer)) : reagents.add_reagent(reagent_id, r_maxamount)//It will take into account radium used for adrenaline boosting.
-
 	//Cell Init
 	cell = new/obj/item/stock_parts/cell/high
 	cell.charge = 9000
 	cell.name = "black power cell"
 	cell.icon_state = "bscell"
-
-
-/obj/item/clothing/suit/space/space_ninja/Destroy()
-	if(affecting)
-		affecting << browse(null, "window=hack spideros")
-	return ..()
-
 
 //Simply deletes all the attachments and self, killing all related procs.
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
@@ -117,7 +99,7 @@ Contents:
 	if(!istype(H))
 		return 0
 	if(!is_ninja(H))
-		to_chat(H, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...")
+		to_chat(H, "<span class='danger'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...</span>")
 		H.gib()
 		return FALSE
 	if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
@@ -131,7 +113,7 @@ Contents:
 		return FALSE
 	affecting = H
 	flags_1 |= NODROP_1 //colons make me go all |=
-	slowdown = FALSE
+	slowdown = 0
 	n_hood = H.head
 	n_hood.flags_1 |= NODROP_1
 	n_shoes = H.shoes

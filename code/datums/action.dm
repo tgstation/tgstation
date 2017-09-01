@@ -406,27 +406,24 @@
 /datum/action/item_action/initialize_ninja_suit
 	name = "Toggle ninja suit"
 
-/datum/action/item_action/ninjajaunt
-	name = "Phase Jaunt (10E)"
-	desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "ninja_phase"
-
 /datum/action/item_action/ninjasmoke
 	name = "Smoke Bomb"
 	desc = "Blind your enemies momentarily with a well-placed smoke bomb."
 	button_icon_state = "smoke"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 
 /datum/action/item_action/ninjaboost
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_CONSCIOUS
+	check_flags = NONE
 	name = "Adrenaline Boost"
 	desc = "Inject a secret chemical that will counteract all movement-impairing effect."
 	button_icon_state = "repulse"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 
 /datum/action/item_action/ninjapulse
 	name = "EM Burst (25E)"
 	desc = "Disable any nearby technology with a electro-magnetic pulse."
 	button_icon_state = "emp"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 
 /datum/action/item_action/ninjastar
 	name = "Create Throwing Stars (1E)"
@@ -449,8 +446,8 @@
 /datum/action/item_action/ninja_stealth
 	name = "Toggle Stealth"
 	desc = "Toggles stealth mode on and off."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "ninja_cloak"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 
 /datum/action/item_action/toggle_glove
 	name = "Toggle interaction"

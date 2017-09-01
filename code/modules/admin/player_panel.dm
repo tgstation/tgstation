@@ -440,25 +440,6 @@
 					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[N]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
 			dat += "</table>"
-
-		for(var/datum/gang/G in SSticker.mode.gangs)
-			dat += "<br><table cellspacing=5><tr><td><B>[G.name] Gang: [round((G.territory.len/GLOB.start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
-			for(var/datum/mind/N in G.bosses)
-				var/mob/M = N.current
-				if(!M)
-					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[N]'>[N.name]([N.key])</a><i>Gang Boss body destroyed!</i></td>"
-					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Boss)</b>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-			for(var/datum/mind/N in G.gangsters)
-				var/mob/M = N.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			dat += "</table>"
-
 		if(SSticker.mode.changelings.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Changelings</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/changeling in SSticker.mode.changelings)
