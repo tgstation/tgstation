@@ -85,6 +85,7 @@
 	var/datum/action/innate/spacepod/airtank/list/tank_action = list()
 
 	var/obj/item/device/radio/mech/radio
+	var/obj/item/device/gps/gps
 
 	hud_possible = list(DIAG_HUD, DIAG_BATT_HUD)
 
@@ -128,6 +129,7 @@
 	add_cabin()
 	add_radio()
 	add_airtank()
+	add_gps()
 	ion_trail = new /datum/effect_system/trail_follow/ion/space_trail()
 	ion_trail.set_up(src)
 	ion_trail.start()
@@ -263,6 +265,13 @@
 	radio.icon_state = icon_state
 	radio.subspace_transmission = TRUE
 	radio.broadcasting = FALSE
+
+/obj/spacepod/proc/add_gps()
+	gps = new(src)
+	gps.name = "[src] gps"
+	gps.icon = icon
+	gps.icon_state = icon_state
+	gps.gpstag = "SPOD"
 
 /obj/spacepod/examine(mob/user)
 	..()
@@ -1182,6 +1191,18 @@
 	else
 		radio.broadcasting 	= !radio.broadcasting
 		to_chat(usr, "<span class='notice'>The radio's microphone is now [radio.listening ? "on" : "off"]</span>")
+
+/obj/spacepod/verb/gps()
+	set name = "View GPS"
+	set category = "Spacepod"
+	set src = usr.loc
+	set popup_menu = 0
+
+	if(usr.incapacitated())
+		return
+
+	if(!isobserver(usr))
+		gps.ui_interact(usr)
 
 /obj/spacepod/template
 	var/datum/pod_armor/armortype
