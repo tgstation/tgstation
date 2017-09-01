@@ -1461,7 +1461,6 @@
 /area/security/execution/education)
 "acZ" = (
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Prisoner Education Chamber APC";
 	areastring = "/area/security/execution/education";
@@ -2555,7 +2554,7 @@
 /area/security/prison)
 "aeX" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Prison Wing APC";
 	areastring = "/area/security/prison";
@@ -3935,7 +3934,7 @@
 /area/ai_monitored/security/armory)
 "ahF" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Armory APC";
 	areastring = "/area/ai_monitored/security/armory";
@@ -6334,7 +6333,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 8;
 	name = "Brig Control APC";
 	areastring = "/area/security/warden";
@@ -6499,7 +6498,6 @@
 	req_access_txt = "1"
 	},
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 4;
 	name = "Shooting Range APC";
 	areastring = "/area/security/range";
@@ -7001,7 +6999,7 @@
 /area/security/main)
 "anC" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Security Office APC";
 	areastring = "/area/security/main";
@@ -12218,7 +12216,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 2;
 	name = "Brig APC";
 	areastring = "/area/security/brig";
@@ -17038,7 +17036,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Fore Primary Hallway APC";
 	areastring = "/area/hallway/primary/fore";
@@ -21224,7 +21222,7 @@
 /area/hydroponics/garden)
 "aOO" = (
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 8;
 	name = "Engine Room APC";
 	areastring = "/area/engine/engineering";
@@ -22134,7 +22132,7 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "aQA" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Upload APC";
 	areastring = "/area/ai_monitored/turret_protected/ai_upload";
@@ -24313,7 +24311,6 @@
 /area/security/courtroom)
 "aUG" = (
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 2;
 	name = "Courtroom APC";
 	areastring = "/area/security/courtroom";
@@ -30962,7 +30959,6 @@
 "bhf" = (
 /obj/effect/landmark/blobstart,
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 4;
 	name = "Central Maintenance APC";
 	areastring = "/area/maintenance/central";
@@ -32675,7 +32671,6 @@
 	},
 /obj/item/hand_labeler,
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 4;
 	name = "Delivery Office APC";
 	areastring = "/area/quartermaster/sorting";
@@ -34503,7 +34498,6 @@
 "bnE" = (
 /obj/machinery/power/apc{
 	aidisabled = 0;
-	cell_type = 2500;
 	dir = 4;
 	name = "MiniSat Antechamber APC";
 	areastring = "/area/ai_monitored/turret_protected/aisat_interior";
@@ -34915,7 +34909,7 @@
 /area/crew_quarters/heads/hop)
 "bop" = (
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 8;
 	name = "Bridge APC";
 	areastring = "/area/bridge";
@@ -36423,7 +36417,6 @@
 "brd" = (
 /obj/structure/table,
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 8;
 	name = "Art Storage APC";
 	areastring = "/area/storage/art";
@@ -37021,7 +37014,7 @@
 	},
 /obj/machinery/power/apc{
 	aidisabled = 0;
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "MiniSat Foyer APC";
 	areastring = "/area/ai_monitored/turret_protected/aisat/foyer";
@@ -39571,7 +39564,7 @@
 /area/crew_quarters/bar)
 "bwR" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Bar APC";
 	areastring = "/area/crew_quarters/bar";
@@ -40108,7 +40101,7 @@
 "bxS" = (
 /obj/item/cigbutt,
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Port Maintenance APC";
 	areastring = "/area/maintenance/port";
@@ -40671,7 +40664,7 @@
 /area/engine/atmos)
 "byX" = (
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Atmospherics APC";
 	areastring = "/area/engine/atmos";
@@ -40910,7 +40903,7 @@
 /area/tcommsat/computer)
 "bzt" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Telecomms Control Room APC";
 	areastring = "/area/tcommsat/computer";
@@ -42539,7 +42532,7 @@
 	dir = 9
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Auxiliary Restrooms APC";
 	areastring = "/area/crew_quarters/toilet/auxiliary";
@@ -42795,7 +42788,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Command Hallway APC";
 	areastring = "/area/hallway/secondary/command";
@@ -45461,7 +45454,7 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/flashlight,
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Gateway APC";
 	areastring = "/area/gateway";
@@ -47416,7 +47409,7 @@
 /area/tcommsat/server)
 "bMs" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Telecomms Server Room APC";
 	areastring = "/area/tcommsat/server";
@@ -48632,7 +48625,7 @@
 /area/bridge/showroom/corporate)
 "bOF" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Nanotrasen Corporate Showroom APC";
 	areastring = "/area/bridge/showroom/corporate";
@@ -50924,7 +50917,6 @@
 /area/maintenance/starboard)
 "bTc" = (
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Starboard Maintenance APC";
 	areastring = "/area/maintenance/starboard";
@@ -51375,7 +51367,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Central Primary Hallway APC";
 	areastring = "/area/hallway/primary/central";
@@ -59121,7 +59113,7 @@
 /area/science/research)
 "ciJ" = (
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Research Division APC";
 	areastring = "/area/science/research";
@@ -63764,7 +63756,7 @@
 /area/hallway/primary/aft)
 "crH" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Aft Hallway APC";
 	areastring = "/area/hallway/primary/aft";
@@ -64656,7 +64648,7 @@
 "cti" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Toxins Storage APC";
 	areastring = "/area/science/storage";
@@ -70047,7 +70039,7 @@
 	},
 /obj/item/storage/box/syringes,
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Virology APC";
 	areastring = "/area/medical/virology";
@@ -73955,7 +73947,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "cKy" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Departure Lounge APC";
 	areastring = "/area/hallway/secondary/exit/departure_lounge";
@@ -74945,7 +74937,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "cMk" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Aft Maintenance APC";
 	areastring = "/area/maintenance/aft";
@@ -82765,7 +82757,7 @@
 	},
 /obj/item/reagent_containers/dropper,
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Xenobiology APC";
 	areastring = "/area/science/xenobiology";
@@ -87024,7 +87016,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 4;
 	name = "Port Bow Maintenance APC";
 	areastring = "/area/maintenance/port/fore";
@@ -89549,7 +89540,7 @@
 /area/maintenance/starboard/aft)
 "dAd" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Starboard Quarter Maintenance APC";
 	areastring = "/area/maintenance/starboard/aft";

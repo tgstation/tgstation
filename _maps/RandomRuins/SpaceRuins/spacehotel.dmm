@@ -656,7 +656,7 @@
 	})
 "bN" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Guest Room APC";
 	pixel_y = -24
@@ -720,7 +720,7 @@
 	})
 "bT" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Guest Room APC";
 	pixel_y = -24
@@ -784,7 +784,7 @@
 	})
 "bZ" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Guest Room APC";
 	pixel_y = -24
@@ -848,7 +848,7 @@
 	})
 "cf" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Guest Room APC";
 	pixel_y = -24
@@ -1380,7 +1380,7 @@
 	})
 "dn" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Guest Room APC";
 	pixel_y = 25
@@ -1462,7 +1462,7 @@
 	})
 "dv" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Guest Room APC";
 	pixel_y = 25
@@ -1875,7 +1875,7 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "eA" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Laundry APC";
 	pixel_y = -24
@@ -2081,7 +2081,7 @@
 /area/ruin/space/has_grav/hotel)
 "fh" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Kitchen APC";
 	pixel_y = -24
@@ -2875,7 +2875,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "hA" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Staff Room APC";
 	pixel_y = -24
@@ -3262,7 +3262,7 @@
 /area/ruin/space/has_grav/hotel/power)
 "iw" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Power Storage APC";
 	pixel_y = 25
@@ -3428,7 +3428,7 @@
 /area/ruin/space/has_grav/hotel/power)
 "iU" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Security APC";
 	pixel_y = -24
@@ -3501,7 +3501,7 @@
 /area/ruin/space/has_grav/hotel/pool)
 "iZ" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Pool APC";
 	pixel_y = -24
@@ -3560,7 +3560,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Dock APC";
 	pixel_y = -24
@@ -4825,7 +4825,7 @@
 /area/ruin/space/has_grav/hotel/custodial)
 "mJ" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Custodial APC";
 	pixel_y = -24

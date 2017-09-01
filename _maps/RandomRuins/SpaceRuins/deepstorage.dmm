@@ -1097,7 +1097,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Hydroponics APC";
 	pixel_x = 24
@@ -1467,7 +1467,7 @@
 "cQ" = (
 /obj/structure/cable/yellow,
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Storage APC";
 	pixel_x = 24
@@ -2261,7 +2261,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Armory APC";
 	pixel_x = 24
@@ -3086,7 +3086,7 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/structure/cable/yellow,
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Dormory APC";
 	pixel_x = 24

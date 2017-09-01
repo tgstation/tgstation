@@ -2784,7 +2784,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Head of Personnel Quarter's APC";
 	areastring = "/area/crew_quarters/heads/hop";
@@ -2969,7 +2969,7 @@
 /area/security/detectives_office)
 "afh" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Detective's Office APC";
 	areastring = "/area/security/detectives_office";
@@ -15183,7 +15183,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Central Starboard Maintenance APC";
 	areastring = "/area/maintenance/starboard/central";
@@ -16894,7 +16894,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Theatre Backstage APC";
 	areastring = "/area/crew_quarters/theatre";
@@ -19561,7 +19561,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Central Port Maintenance APC";
 	areastring = "/area/maintenance/port/central";
@@ -21270,7 +21270,7 @@
 /area/engine/gravity_generator)
 "aJl" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Gravity Generator APC";
 	areastring = "/area/engine/gravity_generator";
@@ -21564,7 +21564,7 @@
 /obj/item/storage/bag/trash,
 /obj/item/key/janitor,
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Custodial Closet APC";
 	areastring = "/area/janitor";
@@ -26411,7 +26411,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Chemistry Lab APC";
 	areastring = "/area/medical/chemistry";
@@ -30346,7 +30346,7 @@
 	pixel_x = -23
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Mech Bay APC";
 	areastring = "/area/science/robotics/mechbay";
@@ -33801,7 +33801,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Chapel APC";
 	areastring = "/area/chapel/main";
@@ -34640,7 +34640,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Arrivals APC";
 	areastring = "/area/hallway/secondary/entry";

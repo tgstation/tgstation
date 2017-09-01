@@ -864,7 +864,7 @@
 "abM" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 2;
 	name = "Starboard Bow Solar APC";
 	areastring = "/area/maintenance/solars/starboard/fore";
@@ -15590,7 +15590,7 @@
 "aGh" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 2;
 	name = "Port Bow Solar APC";
 	areastring = "/area/maintenance/solars/port/fore";
@@ -24571,7 +24571,7 @@
 "aXv" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Prison Wing APC";
 	areastring = "/area/security/prison";
@@ -27407,7 +27407,7 @@
 /area/engine/atmos)
 "bdr" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Atmospherics APC";
 	areastring = "/area/engine/atmos";
@@ -37816,7 +37816,7 @@
 /area/engine/gravity_generator)
 "bwL" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Gravity Generator APC";
 	areastring = "/area/engine/gravity_generator";
@@ -38946,7 +38946,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Engineering Foyer APC";
 	areastring = "/area/engine/break_room";
@@ -43407,7 +43407,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Council Chambers APC";
 	areastring = "/area/bridge/meeting_room/council";
@@ -43983,7 +43983,7 @@
 /area/engine/transit_tube)
 "bHy" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Transit Tube Access APC";
 	areastring = "/area/engine/transit_tube";
@@ -44497,7 +44497,7 @@
 /area/tcommsat/computer)
 "bIq" = (
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Telecomms Monitoring APC";
 	areastring = "/area/tcommsat/computer";
@@ -44660,7 +44660,7 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Auxiliary Tool Storage APC";
 	areastring = "/area/storage/tools";
@@ -46595,7 +46595,7 @@
 /area/crew_quarters/heads/captain)
 "bMI" = (
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 2;
 	name = "Captain's Office APC";
 	areastring = "/area/crew_quarters/heads/captain";
@@ -54596,7 +54596,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Brig APC";
 	areastring = "/area/security/brig";
@@ -55182,7 +55182,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 2;
 	name = "Captain's Quarters APC";
 	areastring = "/area/crew_quarters/heads/captain/private";
@@ -58238,7 +58238,7 @@
 /obj/structure/table,
 /obj/item/hand_tele,
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Teleporter APC";
 	areastring = "/area/teleporter";
@@ -63429,7 +63429,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Gateway APC";
 	areastring = "/area/gateway";
@@ -84198,7 +84198,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Mech Bay APC";
 	areastring = "/area/science/robotics/mechbay";
@@ -84332,7 +84332,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Cloning Lab APC";
 	areastring = "/area/medical/genetics/cloning";
@@ -92089,7 +92089,7 @@
 "dxk" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 2;
 	name = "Starboard Quarter Solar APC";
 	areastring = "/area/maintenance/solars/starboard/aft";
@@ -104596,7 +104596,7 @@
 "dWj" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 2;
 	name = "Port Quarter Solar APC";
 	areastring = "/area/maintenance/solars/port/aft";
@@ -108845,7 +108845,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "egC" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Departure Lounge APC";
 	areastring = "/area/hallway/secondary/exit/departure_lounge";

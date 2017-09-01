@@ -3326,7 +3326,7 @@
 /area/security/prison)
 "ahJ" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Prison Wing APC";
 	pixel_x = 1;
@@ -3805,7 +3805,7 @@
 /obj/item/storage/box/firingpins,
 /obj/item/key/security,
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Armory APC";
 	pixel_x = 24
@@ -5370,7 +5370,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 4;
 	name = "Brig APC";
 	pixel_x = 24
@@ -10810,7 +10810,6 @@
 /area/crew_quarters/heads/captain)
 "axS" = (
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Captain's Office APC";
 	pixel_y = 24
@@ -11496,7 +11495,7 @@
 "azo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 4;
 	name = "Bridge APC";
 	areastring = "/area/bridge";
@@ -12402,7 +12401,7 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "aBx" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Upload APC";
 	areastring = "/area/ai_monitored/turret_protected/ai_upload";
@@ -12509,7 +12508,7 @@
 /area/crew_quarters/heads/hop)
 "aBH" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 8;
 	name = "Central Hall APC";
 	pixel_x = -25
@@ -17680,7 +17679,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "aMO" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Departure Lounge APC";
 	areastring = "/area/hallway/secondary/exit/departure_lounge";
@@ -17842,7 +17841,7 @@
 "aNe" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Auxiliary Restrooms APC";
 	pixel_y = -24
@@ -20209,7 +20208,6 @@
 /area/quartermaster/storage)
 "aSl" = (
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 4;
 	name = "Cargo Maintenance APC";
 	pixel_x = 24
@@ -33662,7 +33660,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Research Lobby APC";
 	pixel_y = 25
@@ -33770,7 +33768,7 @@
 /area/science/research)
 "bvL" = (
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Research Division APC";
 	pixel_y = 25
@@ -34021,7 +34019,7 @@
 	d2 = 4
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 8;
 	name = "Xenobiology APC";
 	pixel_x = -25
@@ -39332,7 +39330,7 @@
 /area/medical/virology)
 "bGU" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Virology APC";
 	pixel_y = 24
@@ -46640,7 +46638,7 @@
 	},
 /obj/item/stack/cable_coil,
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 8;
 	name = "Engine Room APC";
 	areastring = "/area/engine/engine_smes";
@@ -47191,7 +47189,7 @@
 /area/maintenance/department/engine)
 "bYG" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 8;
 	name = "Engineering Maintenance APC";
 	pixel_x = -25;
@@ -47589,7 +47587,7 @@
 /area/engine/engineering)
 "bZc" = (
 /obj/machinery/power/apc{
-	cell_type = 15000;
+	cell_type = /obj/item/stock_parts/cell/high/plus;
 	dir = 4;
 	name = "Engineering APC";
 	pixel_x = 28
@@ -53311,7 +53309,7 @@
 /area/tcommsat/server)
 "cmI" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	layer = 4;
 	name = "Telecomms Server APC";

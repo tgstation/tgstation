@@ -373,7 +373,7 @@
 	},
 /obj/machinery/power/apc{
 	auto_name = 1;
-	cell_type = 9000;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 4;
 	name = "Engineering APC";
 	pixel_x = 27;
@@ -661,7 +661,7 @@
 /area/awaymission/research/interior/gateway)
 "cb" = (
 /obj/machinery/power/apc{
-	cell_type = 12000;
+	cell_type = /obj/item/stock_parts/cell/high/plus;
 	dir = 4;
 	name = "Gateway APC";
 	pixel_x = 24
@@ -989,7 +989,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Genetics APC";
 	pixel_x = 24
@@ -1719,7 +1719,7 @@
 /area/awaymission/research/interior)
 "fa" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Cryostatis APC";
 	pixel_x = 24
@@ -1890,7 +1890,7 @@
 /area/awaymission/research/interior/secure)
 "fy" = (
 /obj/machinery/power/apc{
-	cell_type = 12000;
+	cell_type = /obj/item/stock_parts/cell/high/plus;
 	dir = 4;
 	name = "Vault APC";
 	pixel_x = 24
@@ -3058,7 +3058,7 @@
 /area/awaymission/research/interior/maint)
 "iw" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Genetics APC";
 	pixel_x = 24
@@ -3656,7 +3656,7 @@
 /area/awaymission/research/interior/medbay)
 "kp" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "Dorms APC";
 	pixel_x = 24

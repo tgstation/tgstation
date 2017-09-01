@@ -852,7 +852,7 @@
 /area/ai_monitored/security/armory)
 "acm" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	areastring = "/area/ai_monitored/security/armory";
 	name = "Armory APC";
@@ -20944,7 +20944,7 @@
 /area/bridge)
 "aWW" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Bridge APC";
 	areastring = "/area/bridge";
@@ -22745,7 +22745,6 @@
 /area/quartermaster/storage)
 "bbu" = (
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Captain's Office APC";
 	areastring = "/area/crew_quarters/heads/captain";
@@ -23803,7 +23802,7 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "bed" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "Upload APC";
 	areastring = "/area/ai_monitored/turret_protected/ai_upload";
@@ -42342,7 +42341,7 @@
 /area/medical/virology)
 "bSX" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Virology APC";
 	areastring = "/area/medical/virology";
@@ -43925,7 +43924,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 1;
 	name = "Telecomms Server APC";
 	areastring = "/area/tcommsat/server";
@@ -46082,7 +46081,7 @@
 	req_access_txt = "0"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 4;
 	name = "CE Office APC";
 	areastring = "/area/crew_quarters/heads/chief";
@@ -49119,7 +49118,7 @@
 /area/engine/engineering)
 "cib" = (
 /obj/machinery/power/apc{
-	cell_type = 15000;
+	cell_type = /obj/item/stock_parts/cell/high/plus;
 	dir = 1;
 	name = "Engineering APC";
 	areastring = "/area/engine/engineering";
@@ -49157,7 +49156,7 @@
 	},
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/power/apc{
-	cell_type = 15000;
+	cell_type = /obj/item/stock_parts/cell/high/plus;
 	dir = 1;
 	name = "Engineering APC";
 	areastring = "/area/engine/engineering";
@@ -55812,7 +55811,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
 	dir = 2;
 	name = "AI Chamber APC";
 	areastring = "/area/ai_monitored/turret_protected/ai";
@@ -62503,7 +62502,6 @@
 /area/quartermaster/sorting)
 "cNL" = (
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Central Maintenance APC";
 	areastring = "/area/maintenance/central";

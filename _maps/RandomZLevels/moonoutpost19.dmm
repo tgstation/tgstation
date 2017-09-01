@@ -1974,7 +1974,7 @@
 "cK" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	cell_type = 15000;
+	cell_type = /obj/item/stock_parts/cell/high/plus;
 	dir = 2;
 	locked = 1;
 	name = "Worn-out APC";
@@ -4918,7 +4918,7 @@
 "gG" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	cell_type = 15000;
+	cell_type = /obj/item/stock_parts/cell/high/plus;
 	dir = 4;
 	locked = 0;
 	name = "Worn-out APC";
@@ -6982,7 +6982,7 @@
 	d2 = 2
 	},
 /obj/machinery/power/apc{
-	cell_type = 15000;
+	cell_type = /obj/item/stock_parts/cell/high/plus;
 	dir = 1;
 	locked = 0;
 	name = "Worn-out APC";
