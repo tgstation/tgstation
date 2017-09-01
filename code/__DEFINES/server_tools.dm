@@ -65,6 +65,7 @@
 
 #define SERVICE_CMD_PARAM_KEY "serviceCommsKey"
 #define SERVICE_CMD_PARAM_COMMAND "command"
+#define SERVICE_CMD_PARAM_SENDER "sender"
 #define SERVICE_CMD_PARAM_CUSTOM "custom"
 
 #define SERVICE_REQUEST_KILL_PROCESS "killme"

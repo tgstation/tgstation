@@ -3,8 +3,10 @@
 	var/help_text = ""	//help text for this command
 	var/admin_only = FALSE	//set to TRUE if this command should only be usable by registered chat admins
 
-//override to implement command, params is the trimmed string following the command name
-/datum/server_tools_command/proc/Run(params)
+//override to implement command
+//sender is the display name of who sent the command
+//params is the trimmed string following the command name
+/datum/server_tools_command/proc/Run(sender, params)
 	CRASH("[type] has no implementation for Run()")
 
 /world/proc/ListServiceCustomCommands(warnings_only)
@@ -31,10 +33,10 @@
 		if(!warnings_only)
 			.[command_name] = list("help_text" = initial(stc.help_text), "admin_only" = initial(stc.admin_only))
 
-/world/proc/HandleServiceCustomCommand(command, params)
+/world/proc/HandleServiceCustomCommand(command, sender, params)
 	for(var/I in typesof(/datum/server_tools_command) - /datum/server_tools_command)
 		var/datum/server_tools_command/stc = I
 		if(lowertext(initial(stc.name)) == command)
 			stc = new stc
-			return stc.Run(params) || TRUE
+			return stc.Run(sender, params) || TRUE
 	return FALSE
