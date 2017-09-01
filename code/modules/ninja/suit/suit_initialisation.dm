@@ -11,9 +11,6 @@
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize(delay = s_delay, mob/living/carbon/human/U = loc)
 	if(!U.mind)
 		return //Not sure how this could happen.
-	if(!is_ninja(U))
-		to_chat(U, "You do not understand how this suit functions. Where the heck did it even come from?")
-		return
 	s_busy = TRUE
 	to_chat(U, "<span class='notice'>Now initializing...</span>")
 	addtimer(CALLBACK(src, .proc/ninitialize_two, delay, U), delay)
@@ -33,6 +30,7 @@
 	if(U.stat == DEAD|| U.health <= 0)
 		to_chat(U, "<span class='danger'><B>FÄAL ï¿½Rrï¿½R</B>: 344--93#ï¿½&&21 BRï¿½ï¿½N |/|/aVï¿½ PATT$RN <B>RED</B>\nA-A-aBï¿½rTï¿½NG...</span>")
 		unlock_suit()
+		s_busy = FALSE
 		return
 	lockIcons(U)//Check for icons.
 	U.regenerate_icons()
@@ -49,8 +47,7 @@
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize_seven(delay, mob/living/carbon/human/U)
 	to_chat(U, "<span class='notice'>All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name].</span>")
-	grant_ninja_verbs()
-	grant_equip_verbs()
+	s_initialized = TRUE
 	ntick()
 	s_busy = FALSE
 
@@ -66,7 +63,6 @@
 
 /obj/item/clothing/suit/space/space_ninja/proc/deinitialize_two(delay, mob/living/carbon/human/U)
 	to_chat(U, "<span class='notice'>Now de-initializing...</span>")
-	spideros = 0//Spideros resets.
 	addtimer(CALLBACK(src, .proc/deinitialize_three, delay, U), delay)
 
 /obj/item/clothing/suit/space/space_ninja/proc/deinitialize_three(delay, mob/living/carbon/human/U)
@@ -92,6 +88,7 @@
 
 /obj/item/clothing/suit/space/space_ninja/proc/deinitialize_eight(delay, mob/living/carbon/human/U)
 	to_chat(U, "<span class='notice'>Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>.</span>")
-	remove_equip_verbs()
+	unlock_suit()
 	U.regenerate_icons()
+	s_initialized = FALSE
 	s_busy = FALSE
