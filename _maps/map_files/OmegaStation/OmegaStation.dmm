@@ -2783,8 +2783,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Head of Personnel Quarter's APC";
 	areastring = "/area/crew_quarters/heads/hop";
@@ -2968,8 +2967,7 @@
 /turf/open/floor/wood,
 /area/security/detectives_office)
 "afh" = (
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Detective's Office APC";
 	areastring = "/area/security/detectives_office";
@@ -15182,8 +15180,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Central Starboard Maintenance APC";
 	areastring = "/area/maintenance/starboard/central";
@@ -16893,8 +16890,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Theatre Backstage APC";
 	areastring = "/area/crew_quarters/theatre";
@@ -19560,8 +19556,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Central Port Maintenance APC";
 	areastring = "/area/maintenance/port/central";
@@ -21269,8 +21264,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aJl" = (
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Gravity Generator APC";
 	areastring = "/area/engine/gravity_generator";
@@ -21563,8 +21557,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/bag/trash,
 /obj/item/key/janitor,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Custodial Closet APC";
 	areastring = "/area/janitor";
@@ -26410,8 +26403,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Chemistry Lab APC";
 	areastring = "/area/medical/chemistry";
@@ -30345,8 +30337,7 @@
 	locked = 0;
 	pixel_x = -23
 	},
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/high;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 1;
 	name = "Mech Bay APC";
 	areastring = "/area/science/robotics/mechbay";
@@ -33800,8 +33791,7 @@
 /obj/structure/chair/wood/normal{
 	dir = 8
 	},
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Chapel APC";
 	areastring = "/area/chapel/main";
@@ -34639,8 +34629,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Arrivals APC";
 	areastring = "/area/hallway/secondary/entry";

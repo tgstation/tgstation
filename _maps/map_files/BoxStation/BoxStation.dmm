@@ -851,8 +851,7 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "acm" = (
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	areastring = "/area/ai_monitored/security/armory";
 	name = "Armory APC";
@@ -20943,8 +20942,7 @@
 	},
 /area/bridge)
 "aWW" = (
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Bridge APC";
 	areastring = "/area/bridge";
@@ -23801,8 +23799,7 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai_upload)
 "bed" = (
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Upload APC";
 	areastring = "/area/ai_monitored/turret_protected/ai_upload";
@@ -42340,8 +42337,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bSX" = (
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Virology APC";
 	areastring = "/area/medical/virology";
@@ -43923,8 +43919,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Telecomms Server APC";
 	areastring = "/area/tcommsat/server";
@@ -46080,8 +46075,7 @@
 /obj/structure/closet/secure_closet/engineering_chief{
 	req_access_txt = "0"
 	},
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "CE Office APC";
 	areastring = "/area/crew_quarters/heads/chief";
@@ -49117,8 +49111,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cib" = (
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/high/plus;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 1;
 	name = "Engineering APC";
 	areastring = "/area/engine/engineering";
@@ -49155,8 +49148,7 @@
 	dir = 1
 	},
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/high/plus;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 1;
 	name = "Engineering APC";
 	areastring = "/area/engine/engineering";
@@ -55810,8 +55802,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "AI Chamber APC";
 	areastring = "/area/ai_monitored/turret_protected/ai";
