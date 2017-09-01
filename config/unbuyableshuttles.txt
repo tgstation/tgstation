@@ -13,7 +13,7 @@
 
 ##Others
 #_maps/shuttles/emergency_asteroid.dmm
-#_maps/shuttles/emergency_airless.dmm
+_maps/shuttles/emergency_airless.dmm
 #_maps/shuttles/emergency_arena.dmm
 #_maps/shuttles/emergency_bar.dmm
 #_maps/shuttles/emergency_clown.dmm
