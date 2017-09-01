@@ -61,6 +61,7 @@
 #define SERVICE_CMD_HARD_REBOOT "hard_reboot"
 #define SERVICE_CMD_GRACEFUL_SHUTDOWN "graceful_shutdown"
 #define SERVICE_CMD_WORLD_ANNOUNCE "world_announce"
+#define SERVICE_CMD_LIST_CUSTOM "list_custom_commands"
 
 #define SERVICE_CMD_PARAM_KEY "serviceCommsKey"
 #define SERVICE_CMD_PARAM_COMMAND "command"
