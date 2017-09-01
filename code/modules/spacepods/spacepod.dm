@@ -398,6 +398,7 @@
 				return
 			add_equipment(user, W, "[SE.slot]_system")
 			update_icons()
+			return
 		if(istype(W, /obj/item/crowbar))
 			if(!equipment_system.lock_system || unlocked || hatch_open)
 				hatch_open = !hatch_open
