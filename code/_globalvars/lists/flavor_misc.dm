@@ -105,9 +105,9 @@ GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 
 GLOBAL_LIST_INIT(guitar_notes, flist("sound/guitar/"))
 
-GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt"))
+GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt") + "")
 
-GLOBAL_LIST_INIT(station_names, world.file2list("strings/station_names.txt"))
+GLOBAL_LIST_INIT(station_names, world.file2list("strings/station_names.txt" + ""))
 
 GLOBAL_LIST_INIT(station_suffixes, world.file2list("strings/station_suffixes.txt"))
 
