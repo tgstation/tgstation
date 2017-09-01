@@ -414,7 +414,7 @@
 	if(gameStatus == ORION_STATUS_GAMEOVER)
 		dat = "<center><h1>Game Over</h1></center>"
 		dat += "Like many before you, your crew never made it to Orion, lost to space... <br><b>forever</b>."
-		if(settlers.len == 0)
+		if(!settlers || settlers.len == 0)
 			dat += "<br>Your entire crew died, and your ship joins the fleet of ghost-ships littering the galaxy."
 		else
 			if(food <= 0)
@@ -429,7 +429,8 @@
 					M.adjust_fire_stacks(5)
 					M.IgniteMob() //flew into a star, so you're on fire
 					to_chat(user, "<span class='userdanger'><font size=3>You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames.</span>")
-		dat += "<br><P ALIGN=Right><a href='byond://?src=\ref[src];menu=1'>OK...</a></P>"
+			if(!settlers) //Being sucked into a black hole sets your settlers to -1
+				dat += "<br>You attempt to keep speed near a black hole, and are inescapably snared by its gravity and pulled apart."
 
 		if(emagged)
 			to_chat(user, "<span class='userdanger'><font size=3>You're never going to make it to Orion...</span></font>")
@@ -609,17 +610,15 @@
 			if(prob(75))
 				event = ORION_TRAIL_BLACKHOLE
 				event()
-				if(emagged) //has to be here because otherwise it doesn't work
+				if(emagged)
 					playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
 					if(isliving(usr))
 						var/mob/living/L = usr
 						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
-					emagged = FALSE //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
-					sleep(50)
-					say("[S] winks out, just as suddenly as it appeared.")
-					qdel(S)
+					QDEL_IN(src, 50)
+					addtimer(CALLBACK(src, /atom/movable/proc/say, "[S] winks out, just as suddenly as it appeared."), 50)
 			else
 				event = null
 				turns += 1
@@ -871,13 +870,12 @@
 					var/chancetokill = 30*lings_aboard-(5*alive) //eg: 30*2-(10) = 50%, 2 lings, 2 crew is 50% chance
 					if(prob(chancetokill))
 						var/deadguy = remove_crewmember()
-						var/murder_text = pick("The changeling*LINGS?* bring down [deadguy] and disembowel*PLURAL?* them in a spray of gore!", \
+						var/murder_text = pick("The changeling[ling2 ? "s" : ""] bring[ling2 ? "" : "s"] down [deadguy] and disembowel[ling2 ? "" : "s"] them in a spray of gore!", \
 						"[ling2 ? pick(ling1, ling2) : ling1] corners [deadguy] and impales them through the stomach!", \
 						"[ling2 ? pick(ling1, ling2) : ling1] decapitates [deadguy] in a single cleaving arc!")
-						murder_text = replacetext(murder_text, "changeling*LINGS?*", ling2 ? "changelings" : "changeling")
-						murder_text = replacetext(murder_text, "*PLURAL?*", ling2 ? "" : "s")
+						eventdat += "<br>[murder_text]"
 					else
-						eventdat += "<br>You valiantly fight off the changeling[ling2 ? "s":""]!"
+						eventdat += "<br><br><b>You valiantly fight off the changeling[ling2 ? "s":""]!</b>"
 						if(ling2)
 							food += 30
 							lings_aboard = max(0,lings_aboard-2)
@@ -887,8 +885,8 @@
 						eventdat += "<br><i>Well, it's perfectly good food...</i>\
 						<br>You cut the changeling[ling2 ? "s" : ""] into meat, gaining <b>[ling2 ? "30" : "15"]</b> Food!"
 				else
-					eventdat += "<br>[pick("Sensing unfavorable odds", "After a failed attack", "Suddenly breaking nerve")], \
-					the changeling[ling2 ? "s":""] vanish into space through the airlocks!"
+					eventdat += "<br><br>[pick("Sensing unfavorable odds", "After a failed attack", "Suddenly breaking nerve")], \
+					the changeling[ling2 ? "s":""] vanish[ling2 ? "" : "es"] into space through the airlocks! You're safe... for now."
 					if(ling2)
 						lings_aboard = max(0,lings_aboard-2)
 					else
@@ -908,7 +906,7 @@
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];leave_spaceport=1'>Depart Spaceport</a></P>"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
 			else
-				eventdat += "Your jump into the sector yields a spaceport - a rare and lucky find!"
+				eventdat += "Your jump into the sector yields a spaceport - a lucky find!"
 				eventdat += "<br>This spaceport is home to travellers who failed to reach Orion, but managed to find a different home..."
 				eventdat += "<br>Trading terms: FU = Fuel, FO = Food"
 				if(last_spaceport_action)
@@ -1052,7 +1050,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/ranged/orion
 	name = "spaceport security"
-	desc = "Premiere corporate security forces for all spaceports found along the Orion Trail."
+	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
 	loot = list()
 	del_on_death = TRUE
