@@ -1262,6 +1262,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	surplus = 20
 	restricted_roles = list("Janitor")
 
+/datum/uplink_item/role_restricted/sprayer
+	name = "Mass Chemical Sprayer"
+	desc = "A chemical sprayer that allows a wide dispersal of selected chemicals. Does not come with chemicals pre loaded into the sprayer.\
+	Bonus Space Lube bottle included!"
+	item = /obj/item/storage/box/syndie_kit/lubepocolypse
+	cost = 16 //maybe get yourself some noslips and a syndiekey or some shit
+	surplus = 20
+	restricted_roles = list("Chemist", "Janitor", "Clown")
+
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
 	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
