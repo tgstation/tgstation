@@ -9,6 +9,7 @@
 	var/hacked = FALSE
 	var/disabled = 0
 	var/shocked = FALSE
+	var/obj/machinery/computer/orndconsole/linked_console
 
 /obj/machinery/ornd/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
@@ -20,6 +21,12 @@
 		return 1
 	else
 		return 0
+
+/obj/machinery/ornd/attackby(obj/item/W, mob/user)
+	var/obj/item/screwdriver/S = W
+	if(istype(S))
+		default_deconstruction_screwdriver()
+		update_icon()
 
 /obj/machinery/ornd/attack_hand(mob/user)
 	if(shocked)
@@ -40,7 +47,7 @@
 //////////////
 /obj/machinery/ornd/bodyscanner
 	name = "body scanner"
-	desc = "A machine that scans people to reveal information about all of their organs."
+	desc = "A machine that scans people to reveal all the organs in their body."
 	icon_state = "bodyscanner"
 	//todo: add circuit
 	occupant_typecache = list(/mob/living/carbon/human)
@@ -132,7 +139,8 @@
 	var/image/organlay = image(ORGANFILE, synth.icon_state)
 	var/image/glass = image(icon, "orgsynth_glass_on")
 	glass.alpha = 128
-	organlay.pixel_x = 7
+	organlay.pixel_x = 6
+	organlay.transform /= 2
 	add_overlay(organlay)
 	add_overlay(glass)
 	icon_state = initial(icon_state)+ "_running"
@@ -142,6 +150,41 @@
 	update_icon()
 
 /obj/machinery/ornd/orgsynth/proc/debugoverlay()
-	synth = new /obj/item/organ/heart
+	synth = new /obj/item/organ/liver
 
 #undef ORGANFILE
+
+////////////////////
+//ORGAN RESEARCHER//
+////////////////////
+
+/obj/machinery/ornd/organres
+	name = "organ researcher"
+	desc = "A machine used to research organs."
+	icon_state = "organres"
+	var/running
+
+/obj/machinery/ornd/organres/Initialize()
+	.=..()
+	update_icon()
+
+/obj/machinery/ornd/organres/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/ornd/organres/update_icon()
+	cut_overlays()
+
+	if(stat & (NOPOWER|BROKEN))
+		icon_state = initial(icon_state)
+		return
+
+	if((stat & MAINT) || panel_open)
+		add_overlay("organres-panel")
+		return
+
+	if(!running)
+		icon_state = initial(icon_state)+ "_on"
+		return
+
+	icon_state = initial(icon_state)+ "_running"
