@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/get_message_mode(message)
 	var/key = copytext(message, 1, 2)
-	if(InCritical() || key == "#")
+	if((InCritical() && !InFullCritical()) || key == "#")
 		return MODE_WHISPER
 	else if(key == ";")
 		return MODE_HEADSET
