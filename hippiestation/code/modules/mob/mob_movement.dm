@@ -31,15 +31,14 @@ proc/Can_ShadowWalk(var/mob/mob)
 				doPull = FALSE
 		if((mobloc.density || target.density) && !ALLOW_PULL_THROUGH_WALLS) //this will disallow the target to be pulled if the shadowwalker is on or going into a solid tile.
 			doPull = FALSE
+			mob.pulling.Knockdown(60)
+			to_chat(mob.pulling, "<span class='danger'>You fall down as you slam against the surface!"</span>")
 		if (doPull)
 			var/turf/pullloc = get_turf(mob.pulling)
 			if(Is_ShadowWalkable(mobloc) || Is_ShadowWalkable(target) || Is_ShadowWalkable(pullloc))
 				mob.pulling.dir = get_dir(mob.pulling, mob)
 				A = mob.pulling
 				mob.pulling.forceMove(mob.loc)
-			else
-				mob.pulling.Knockdown(60)
-				to_chat(mob.pulling, "<span class='danger'>You fall down as you slam against the surface!"</span>")
 
 	if(Is_ShadowWalkable(target))
 		mob.forceMove(target)
