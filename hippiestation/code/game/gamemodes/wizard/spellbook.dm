@@ -272,6 +272,11 @@ F
 	spell_type = /obj/effect/proc_holder/spell/self/soulsplit
 	category = "Mobility"
 
+/datum/spellbook_entry/summon_bees
+	name = "Conjure Bees"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/bees
+	category = "Assistance"
+
 /datum/spellbook_entry/item
 	name = "Buy Item"
 	refundable = 0
