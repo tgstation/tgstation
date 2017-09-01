@@ -740,9 +740,6 @@
 
 	if(statpanel("Status"))
 		if(SSticker && SSticker.mode)
-			for(var/datum/gang/G in SSticker.mode.gangs)
-				if(G.is_dominating)
-					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
@@ -960,7 +957,6 @@
 			stop_pulling()
 	else if(has_legs || ignore_legs)
 		lying = 0
-
 	if(buckled)
 		lying = 90*buckle_lying
 	else if(!lying)

@@ -1,5 +1,0 @@
-author: "RemieRichards"
-delete-after: True
-changes: 
-  - rscadd: "AltClick listing now updates instantly on AltClick"
-  - bugfix: "AltClick listing no longer reveals obscured items"

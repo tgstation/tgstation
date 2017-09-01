@@ -221,9 +221,6 @@ GLOBAL_PROTECT(exp_to_update)
 								to_chat(mob,"<span class='notice'>You got: [minutes] [role] EXP!</span>")
 				if(mob.mind.special_role && !mob.mind.var_edited)
 					var/trackedrole = mob.mind.special_role
-					var/gangrole = lookforgangrole(mob.mind.special_role)
-					if(gangrole)
-						trackedrole = gangrole
 					play_records[trackedrole] += minutes
 					if(announce_changes)
 						to_chat(src,"<span class='notice'>You got: [minutes] [trackedrole] EXP!</span>")
@@ -266,14 +263,3 @@ GLOBAL_PROTECT(exp_to_update)
 	else if(isnull(prefs.db_flags))
 		prefs.db_flags = 0	//This PROBABLY won't happen, but better safe than sorry.
 	return TRUE
-
-//Since each gang is tracked as a different antag type, records need to be generalized or you get up to 57 different possible records
-/proc/lookforgangrole(rolecheck)
-	if(findtext(rolecheck,"Gangster"))
-		return "Gangster"
-	else if(findtext(rolecheck,"Gang Boss"))
-		return "Gang Boss"
-	else if(findtext(rolecheck,"Gang Lieutenant"))
-		return "Gang Lieutenant"
-	else
-		return FALSE
