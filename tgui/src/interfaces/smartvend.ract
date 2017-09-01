@@ -10,14 +10,14 @@
 {{else}}
 <div class="display tabular">
 	<section class="candystripe">
-			<section class="cell">
+			<section class="cell bold">
 				Item
 			</section>
-			<section class="cell">
+			<section class="cell bold">
 				Quantity
 			</section>
-			<section class="cell" align='center'>
-				Take
+			<section class="cell bold" align='center'>
+				{{#if data.verb}}{{data.verb}}{{else}}Dispense{{/if}}
 			</section>
 		</section>
 	{{#each data.contents}}

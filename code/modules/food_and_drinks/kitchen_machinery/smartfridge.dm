@@ -151,24 +151,25 @@
 		ui.open()
 
 /obj/machinery/smartfridge/ui_data(mob/user)
-	var/list/data = list()
+	. = list()
 
 	var/listofitems = list()
-	for (var/atom/movable/O in contents)
+	for (var/I in src)
+		var/atom/movable/O = I
 		if (listofitems[O.name])
 			listofitems[O.name]["amount"]++
 		else
 			listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
 	sortList(listofitems)
 
-	data["contents"] = listofitems
-	data["name"] = name
-	data["isdryer"] = FALSE
+	.["contents"] = listofitems
+	.["name"] = name
+	.["isdryer"] = FALSE
 
-	return data
 
 /obj/machinery/smartfridge/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("Release")
@@ -179,15 +180,17 @@
 			else
 				desired = input("How many items?", "How many items would you like to take out?", 1) as null|num
 
-			for(var/obj/item/O in contents)
+			if (!src || !istype(src) || !usr || !istype(usr) || !Adjacent(usr) || istype(usr, /mob/dead)) // Sanity checkin' in case stupid stuff happens while we wait for input()
+				return FALSE
+
+			for(var/obj/item/O in src)
 				if(desired <= 0)
 					break
 				if(O.name == params["name"])
-					O.loc = src.loc
+					O.forceMove(drop_location())
 					desired--
-		else
 			return TRUE
-	return TRUE
+	return FALSE
 
 
 // ----------------------------
@@ -198,9 +201,7 @@
 	desc = "A wooden contraption, used to dry plant products, food and leather."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack_on"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 200
+	use_power = NO_POWER_USE
 	icon_on = "drying_rack_on"
 	icon_off = "drying_rack"
 	var/drying = FALSE
@@ -224,31 +225,34 @@
 	..()
 
 /obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
-	var/list/data = list()
+	. = list()
 
 	var/listofitems = list()
-	for (var/atom/movable/O in contents)
+	for (var/I in src)
+		var/atom/movable/O = I
+
 		if (listofitems[O.name])
 			listofitems[O.name]["amount"]++
 		else
 			listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
 	sortList(listofitems)
 
-	data["contents"] = listofitems
-	data["name"] = name
-	data["isdryer"] = TRUE
-	data["drying"] = drying
+	.["contents"] = listofitems
+	.["name"] = name
+	.["isdryer"] = TRUE
+	.["verb"] = "Take"
+	.["drying"] = drying
 
-	return data
 
 /obj/machinery/smartfridge/drying_rack/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
 	switch(action)
 		if("Dry")
 			toggle_drying(FALSE)
-		else
-			if(..())
-				return
-	return TRUE
+			return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/drying_rack/power_change()
 	if(powered() && anchored)
