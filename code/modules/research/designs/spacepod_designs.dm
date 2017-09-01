@@ -223,7 +223,7 @@
 	name = "Spacepod Tracking Module"
 	desc = "Allows for the construction of a Space Pod Tracking Module."
 	id = "podmisc_tracker"
-	req_tech = list("materials" = 2) //Materials 2: easy to get, no trackers with 0 science progress
+	req_tech = list("materials" = 1) //so you don't have a random untracked pod in space
 	build_type = PODFAB
 	materials = list(MAT_METAL=5000)
 	build_path = /obj/item/device/spacepod_equipment/misc/tracker
