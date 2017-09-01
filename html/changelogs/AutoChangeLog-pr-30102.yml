@@ -1,6 +1,0 @@
-author: "YPOQ"
-delete-after: True
-changes: 
-  - bugfix: "Pouring radium into a ninja suit restores adrenaline boosts."
-  - bugfix: "Adrenaline boost works while unconscious again."
-  - bugfix: "Energy nets can be used again!"
