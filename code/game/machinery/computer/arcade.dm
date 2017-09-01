@@ -871,11 +871,11 @@
 					var/chancetokill = 30*lings_aboard-(5*alive) //eg: 30*2-(10) = 50%, 2 lings, 2 crew is 50% chance
 					if(prob(chancetokill))
 						var/deadguy = remove_crewmember()
-						var/murder_text = pick("The changeling*LINGS?* overwhelm*PLURAL?* [deadguy] and disembowels them in a spray of gore!", \
+						var/murder_text = pick("The changeling*LINGS?* bring down [deadguy] and disembowel*PLURAL?* them in a spray of gore!", \
 						"[ling2 ? pick(ling1, ling2) : ling1] corners [deadguy] and impales them through the stomach!", \
 						"[ling2 ? pick(ling1, ling2) : ling1] decapitates [deadguy] in a single cleaving arc!")
 						murder_text = replacetext(murder_text, "changeling*LINGS?*", ling2 ? "changelings" : "changeling")
-						murder_text = replacetext(murder_text, "*PLURAL?*", ling2 ? "s" : "")
+						murder_text = replacetext(murder_text, "*PLURAL?*", ling2 ? "" : "s")
 					else
 						eventdat += "<br>You valiantly fight off the changeling[ling2 ? "s":""]!"
 						if(ling2)
