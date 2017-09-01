@@ -414,7 +414,7 @@
 	if(gameStatus == ORION_STATUS_GAMEOVER)
 		dat = "<center><h1>Game Over</h1></center>"
 		dat += "Like many before you, your crew never made it to Orion, lost to space... <br><b>forever</b>."
-		if(!settlers || settlers.len == 0)
+		if(!settlers.len)
 			dat += "<br>Your entire crew died, and your ship joins the fleet of ghost-ships littering the galaxy."
 		else
 			if(food <= 0)
@@ -429,8 +429,6 @@
 					M.adjust_fire_stacks(5)
 					M.IgniteMob() //flew into a star, so you're on fire
 					to_chat(user, "<span class='userdanger'><font size=3>You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames.</span>")
-			if(!settlers) //Being sucked into a black hole sets your settlers to -1
-				dat += "<br>You attempt to keep speed near a black hole, and are inescapably snared by its gravity and pulled apart."
 
 		if(emagged)
 			to_chat(user, "<span class='userdanger'><font size=3>You're never going to make it to Orion...</span></font>")
