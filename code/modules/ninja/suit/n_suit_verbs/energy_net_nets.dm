@@ -16,6 +16,7 @@ It is possible to destroy the net by the occupant or someone else.
 	layer = ABOVE_ALL_MOB_LAYER
 	max_integrity = 25 //How much health it has.
 	can_buckle = 1
+	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	var/mob/living/carbon/affecting//Who it is currently affecting, if anyone.
 	var/mob/living/carbon/master//Who shot web. Will let this person know if the net was successful or failed.
