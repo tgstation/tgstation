@@ -188,7 +188,6 @@
 	name = "upgraded power cell+"
 	desc = "A power cell with an even higher capacity than the base model!"
 	maxcharge = 5000
-	rating = 2
 
 /obj/item/stock_parts/cell/secborg
 	name = "security borg rechargeable D battery"
