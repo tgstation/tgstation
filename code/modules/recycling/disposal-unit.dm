@@ -119,6 +119,8 @@
 		return
 	if(target.buckled || target.has_buckled_mobs())
 		return
+	if(target == user && target.incapacitated())
+		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
 		to_chat(user, "<span class='warning'>[target] doesn't fit inside [src]!</span>")
 		return
