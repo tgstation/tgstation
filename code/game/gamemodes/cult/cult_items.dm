@@ -234,7 +234,6 @@
 /datum/action/innate/spin2win/proc/stop_spinning()
 	sword.spinning = FALSE
 	sword.block_chance = 50
-	sword.slowdown -= 1
 	sleep(200)
 	holder.update_action_buttons_icon()
 
