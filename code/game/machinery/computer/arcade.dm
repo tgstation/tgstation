@@ -888,7 +888,7 @@
 						<br>You cut the changeling[ling2 ? "s" : ""] into meat, gaining <b>[ling2 ? "30" : "15"]</b> Food!"
 				else
 					eventdat += "<br>[pick("Sensing unfavorable odds", "After a failed attack", "Suddenly breaking nerve")], \
-					the changeling[ling2 ? "s":""] vanish into space through the airlocks"!"
+					the changeling[ling2 ? "s":""] vanish into space through the airlocks!"
 					if(ling2)
 						lings_aboard = max(0,lings_aboard-2)
 					else
