@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - rscadd: "Player notes can now be configured to fade out over time to allow admins to quickly see how recent notes are. Server Operators, check the config for more info"
