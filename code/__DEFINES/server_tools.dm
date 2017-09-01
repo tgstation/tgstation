@@ -14,7 +14,7 @@
 //Required hooks:
 
 //Put this somewhere in /world/New() that is always run
-#define SERVER_TOOLS_ON_NEW world.ListServiceCustomCommands(TRUE)
+#define SERVER_TOOLS_ON_NEW ListServiceCustomCommands(TRUE)
 //Put this somewhere in /world/Topic(T, Addr, Master, Keys) that is always run before T is modified
 #define SERVER_TOOLS_ON_TOPIC if(ServiceCommand(params2list(T))) return
 //Put at the beginning of world/Reboot(reason)
