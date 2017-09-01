@@ -34,7 +34,7 @@
 /world/proc/HandleServiceCustomCommand(command, params)
 	for(var/I in typesof(/datum/server_tools_command) - /datum/server_tools_command)
 		var/datum/server_tools_command/stc = I
-		if(lowertext(initial(I.name)) == command)
+		if(lowertext(initial(stc.name)) == command)
 			stc = new stc
 			return stc.Run(params) || TRUE
 	return FALSE
