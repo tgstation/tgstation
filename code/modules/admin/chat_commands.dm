@@ -37,7 +37,7 @@
 	admin_only = TRUE
 
 /datum/server_tools_command/ahelp/Run(sender, params)
-	var/list/all_params = splittext(params)
+	var/list/all_params = splittext(params, " ")
 	var/target = all_params[1]
 	all_params.Cut(1, 2)
 	return IrcPm(target, all_params.Join(" "), sender)
