@@ -1,6 +1,7 @@
 /datum/server_tools_command
 	var/name = ""	//the string to trigger this command on a chat bot. e.g. TGS3_BOT: do_this_command
 	var/help_text = ""	//help text for this command
+	var/required_parameters = 0	//number of parameters required for this command
 	var/admin_only = FALSE	//set to TRUE if this command should only be usable by registered chat admins
 
 //override to implement command
@@ -31,7 +32,7 @@
 		command_name_types[stc] = command_name
 
 		if(!warnings_only)
-			.[command_name] = list("help_text" = initial(stc.help_text), "admin_only" = initial(stc.admin_only))
+			.[command_name] = list("help_text" = initial(stc.help_text), "admin_only" = initial(stc.admin_only), "required_parameters" = initial(stc.required_parameters))
 
 /world/proc/HandleServiceCustomCommand(command, sender, params)
 	for(var/I in typesof(/datum/server_tools_command) - /datum/server_tools_command)

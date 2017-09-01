@@ -33,6 +33,7 @@
 /datum/server_tools_command/ahelp
 	name = "ahelp"
 	help_text = "<ckey> <message|ticket <close|resolve|icissue|reject|reopen <ticket #>|list>>"
+	required_parameters = 2
 	admin_only = TRUE
 
 /datum/server_tools_command/ahelp/Run(sender, params)
@@ -44,6 +45,7 @@
 /datum/server_tools_command/namecheck
 	name = "namecheck"
 	help_text = "Returns info on the specified target"
+	required_parameters = 1
 	admin_only = TRUE
 
 /datum/server_tools_command/namecheck/Run(sender, params)
