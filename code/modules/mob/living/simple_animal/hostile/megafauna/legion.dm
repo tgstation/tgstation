@@ -50,6 +50,7 @@ Difficulty: Medium
 	idle_vision_range = 13
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
+	can_fall = FALSE //it floats i think
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
 	. = ..()

@@ -60,6 +60,7 @@ Difficulty: Medium
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
+	can_fall = FALSE //it flies
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	. = ..()

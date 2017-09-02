@@ -22,6 +22,8 @@
 
 	layer = SPACEPOD_LAYER
 
+	can_fall = FALSE
+
 	var/list/mob/living/pilot //There is only ever one pilot and he gets all the privledge
 	var/list/mob/living/passengers = list() //passengers can't do anything and are variable in number
 	var/max_passengers = 0
@@ -506,7 +508,7 @@
 
 /obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment/SPE, var/slot)
 	if(equipment_system.vars[slot])
-		to_chat(user, "<span class='notice'>The pod already has a [slot], remove it first.</span>")
+		to_chat(user, "<span class='notice'>The pod already has a [sys_name(slot)], remove it first.</span>")
 		return
 	else
 		to_chat(user, "<span class='notice'>You insert [SPE] into the pod.</span>")
@@ -976,7 +978,7 @@
 
 	to_chat(user, "<span class='notice'>You start rooting around under the seat for lost items</span>")
 	if(do_after(user, 40, target = src))
-		var/obj/badlist = list(internal_tank, cargo_hold, pilot, cell) + passengers + equipment_system.installed_modules
+		var/obj/badlist = list(internal_tank, cargo_hold, pilot, cell, radio, gps) + passengers + equipment_system.installed_modules
 		var/list/true_contents = contents - badlist
 		if(true_contents.len > 0)
 			var/obj/I = pick(true_contents)
@@ -1172,7 +1174,7 @@
 	if(usr != pilot)
 		to_chat(usr, "<span class='danger'>You cannot reach the buttons!</span>")
 	else
-		radio.ui_interact(usr)
+		radio.interact(usr)
 
 
 /obj/spacepod/verb/gps()
@@ -1186,6 +1188,21 @@
 
 	if(!isobserver(usr))
 		gps.ui_interact(usr)
+
+/obj/spacepod/proc/sys_name(sname)
+	switch(sname)
+		if("weapon_system")
+			return "Weapon System"
+		if("cargo_system")
+			return "Cargo System"
+		if("sec_cargo_system")
+			return "Secondary Cargo System"
+		if("lock_system")
+			return "Lock System"
+		if("thruster_system")
+			return "Thruster System"
+	return "Misc System"
+
 
 /obj/spacepod/template
 	var/datum/pod_armor/armortype

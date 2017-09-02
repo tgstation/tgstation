@@ -88,12 +88,7 @@
 		return FALSE
 	if(!isliving(AM) && !isobj(AM))
 		return FALSE
-	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile) || AM.throwing)
-		return FALSE
-	if(istype(AM, /obj/effect/portal))
-		//Portals aren't affected by gravity. Probably.
-		return FALSE
-	if(istype(AM, /obj/structure/stone_tile))
+	if(!AM.can_fall || AM.throwing)
 		return FALSE
 	//Flies right over the chasm
 	if(isliving(AM))

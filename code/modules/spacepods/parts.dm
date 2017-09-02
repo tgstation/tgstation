@@ -10,6 +10,7 @@
 
 /obj/item/pod_parts/pod_frame
 	name = "Space Pod Frame"
+	desc = "The frames to make a spacepod. Align, wrench, and add rods."
 	icon_state = ""
 	flags_2 = CONDUCT_1
 	density = FALSE
