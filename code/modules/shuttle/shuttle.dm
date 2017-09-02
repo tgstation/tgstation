@@ -498,7 +498,7 @@
 
 	if(new_dock.get_docked() == src)
 		remove_ripples()
-		return DOCKING_COMPLETE
+		return DOCKING_SUCCESS
 
 	if(!force)
 		if(!check_dock(new_dock))
