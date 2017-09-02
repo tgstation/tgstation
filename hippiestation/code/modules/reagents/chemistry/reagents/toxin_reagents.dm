@@ -190,7 +190,7 @@
 	..()
 
 /datum/reagent/toxin/sarin_b
-	name = "Extremely dilute sarin"
+	name = "diluted sarin"
 	id = "sarinb"
 	description = "A very impure form of sarin"
 	color = "#CCCCCC"
@@ -297,12 +297,12 @@
 	if(prob(2) && data > 40) //randomly creates small explosions or fireballs but has a delay so it doesn't just kill people while they're still mixing
 		var/location = get_turf(holder.my_atom)
 		holder.remove_reagent(src.id,5,safety = 1)
-		switch(pick("explosion", "fire"))
-			if("explosion")
+		switch(prob(50))
+			if(TRUE)
 				var/datum/effect_system/reagents_explosion/e = new()
 				e.set_up(rand(1, 3), location, 0, 0, message = 1)
 				e.start()
-			if("fire")
+			if(FALSE)
 				for(var/turf/F in range(1,location))
 					new /obj/effect/hotspot(F)
 	..()
