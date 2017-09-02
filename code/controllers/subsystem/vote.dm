@@ -137,6 +137,9 @@ SUBSYSTEM_DEF(vote)
 						restart = 1
 					else
 						GLOB.master_mode = .
+			if("map")
+				SSmapping.changemap(.)
+				
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in GLOB.admins)
@@ -185,6 +188,8 @@ SUBSYSTEM_DEF(vote)
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
+			if("map")
+				choices.Add(global.config.maplist)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
