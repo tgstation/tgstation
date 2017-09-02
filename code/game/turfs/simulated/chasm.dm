@@ -89,7 +89,7 @@
 		return FALSE
 	if(!isliving(AM) && !isobj(AM))
 		return FALSE
-	if(AM.type in forbidden_types || AM.throwing)
+	if((AM.type in forbidden_types) || AM.throwing)
 		return FALSE
 	//Flies right over the chasm
 	if(isliving(AM))
