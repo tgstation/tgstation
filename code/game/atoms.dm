@@ -30,8 +30,6 @@
 
 	var/datum/proximity_monitor/proximity_monitor
 
-	var/can_fall = TRUE //can it fall into a chasm?
-
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
