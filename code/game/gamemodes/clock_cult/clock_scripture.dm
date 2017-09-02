@@ -55,9 +55,6 @@ Applications: 8 servants, 3 caches, and 100 CV
 		if(slab.busy)
 			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>")
 			return FALSE
-		if(invoker.has_status_effect(STATUS_EFFECT_GEISTRACKER))
-			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"Sustaining Geis!\"</span>")
-			return FALSE
 		slab.busy = "Invocation ([name]) in progress"
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
