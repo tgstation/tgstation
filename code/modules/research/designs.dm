@@ -314,6 +314,35 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/storage/bag/ore/holding
 	category = list("Bluespace Designs")
 
+/datum/design/plantbag_holding
+	name = "Plant Bag of Holding"
+	desc = "A plant bag that can hold an infinite amount of plants."
+	id = "plantbag_holding"
+	req_tech = list("bluespace" = 4, "materials" = 3, "engineering" = 4, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 250, MAT_URANIUM = 500)
+	build_path = /obj/item/storage/bag/plants/holding
+	category = list("Bluespace Designs")
+
+/datum/design/chemistrybag_holding
+	name = "Chemistry Bag of Holding"
+	desc = "A chemistry bag that can hold an infinite amount of patches, pills, and bottles."
+	id = "chemistrybag_holding"
+	req_tech = list("bluespace" = 4, "materials" = 3, "engineering" = 4, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 250, MAT_URANIUM = 500)
+	build_path = /obj/item/storage/bag/chemistry/holding
+	category = list("Bluespace Designs")
+
+/datum/design/biobag_holding
+	name = "Bio Bag of Holding"
+	desc = "A bag that can safely transport infinite amounts of biowaste and biological material."
+	id = "biobag_holding"
+	req_tech = list("bluespace" = 4, "materials" = 3, "engineering" = 4, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 250, MAT_URANIUM = 500)
+	build_path = /obj/item/storage/bag/bio/holding
+	category = list("Bluespace Designs")
 
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
