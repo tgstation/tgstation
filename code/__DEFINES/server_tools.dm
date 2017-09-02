@@ -16,7 +16,7 @@
 //Put this somewhere in /world/New() that is always run
 #define SERVER_TOOLS_ON_NEW ListServiceCustomCommands(TRUE)
 //Put this somewhere in /world/Topic(T, Addr, Master, Keys) that is always run before T is modified
-#define SERVER_TOOLS_ON_TOPIC if(ServiceCommand(params2list(T))) return
+#define SERVER_TOOLS_ON_TOPIC var/service_topic_return = ServiceCommand(params2list(T)); if(service_topic_return) return service_topic_return
 //Put at the beginning of world/Reboot(reason)
 #define SERVER_TOOLS_ON_REBOOT ServiceReboot()
 

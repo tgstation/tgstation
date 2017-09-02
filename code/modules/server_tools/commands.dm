@@ -10,9 +10,6 @@
 /datum/server_tools_command/proc/Run(sender, params)
 	CRASH("[type] has no implementation for Run()")
 
-/proc/DebugCustomCommands()
-	to_chat(world, json_encode(world.ListServiceCustomCommands(FALSE)))
-
 /world/proc/ListServiceCustomCommands(warnings_only)
 	if(!warnings_only)
 		. = list()
