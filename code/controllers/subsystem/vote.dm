@@ -15,6 +15,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/voted = list()
 	var/list/voting = list()
 	var/list/generated_actions = list()
+	var/total_votes = 0
 	var/weighted = FALSE // Whether to use weighted voting.
 
 /datum/controller/subsystem/vote/fire()	//called by master_controller
@@ -44,12 +45,12 @@ SUBSYSTEM_DEF(vote)
 	choices.Cut()
 	voted.Cut()
 	voting.Cut()
+	total_votes = 0
 	remove_action_buttons()
 
 /datum/controller/subsystem/vote/proc/get_result()
 	//get the highest number of votes
 	var/greatest_votes = 0
-	var/total_votes = 0
 	for(var/option in choices)
 		var/votes = choices[option]
 		total_votes += votes
