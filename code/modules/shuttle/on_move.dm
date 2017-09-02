@@ -47,10 +47,6 @@ All ShuttleMove procs go here
 	if(newT == src) // In case of in place shuttle rotation shenanigans.
 		return
 
-	if(locs && locs.len > 1) // This is for multi tile objects
-		if(loc != oldT)
-			return
-
 	//Destination turf changes
 	var/destination_turf_type = newT.type
 	copyTurf(newT)
