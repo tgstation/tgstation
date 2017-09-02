@@ -590,9 +590,9 @@
 "bW" = (
 /obj/structure/closet/crate/secure/gear,
 /obj/item/ammo_box/c10mm,
-/obj/item/ammo_casing/shotgun/meteorshot,
-/obj/item/ammo_casing/shotgun/meteorshot,
-/obj/item/ammo_casing/shotgun/meteorshot,
+/obj/item/ammo_casing/shotgun/meteorslug,
+/obj/item/ammo_casing/shotgun/meteorslug,
+/obj/item/ammo_casing/shotgun/meteorslug,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "bX" = (
