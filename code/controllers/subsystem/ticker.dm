@@ -460,6 +460,8 @@ SUBSYSTEM_DEF(ticker)
 	var/num_shuttle_escapees = 0
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+	
+	vote.initiate_vote("map", "The Server", TRUE)
 
 	for(var/client/C in GLOB.clients)
 		if(!C.credits)
