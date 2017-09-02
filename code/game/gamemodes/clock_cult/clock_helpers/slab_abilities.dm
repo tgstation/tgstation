@@ -148,7 +148,7 @@
 	playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
 
 	if(has_holy_water)
-		target.reagents.remove_reagent("holywater", 1000)
+		target.reagents.del_reagent("holywater")
 	return TRUE
 
 //For the cyborg Linked Vanguard scripture, grants you and a nearby ally Vanguard

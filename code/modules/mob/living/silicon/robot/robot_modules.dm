@@ -502,7 +502,7 @@
 		/obj/item/gun/ballistic/revolver/grenadelauncher/cyborg,
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
-		/obj/item/pinpointer/syndicate/cyborg)
+		/obj/item/pinpointer/syndicate_cyborg)
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
@@ -524,7 +524,7 @@
 		/obj/item/roller/robo,
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
-		/obj/item/pinpointer/syndicate/cyborg,
+		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/gun/medbeam)
 	cyborg_base_icon = "synd_medical"
