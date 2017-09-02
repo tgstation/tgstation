@@ -173,6 +173,8 @@
 	var/revival_pod_plants = FALSE
 	var/revival_cloning = FALSE
 	var/revival_brain_life = -1
+	
+	var/vote_for_map = TRUE
 
 	var/rename_cyborg = 0
 	var/ooc_during_round = 0
@@ -234,7 +236,7 @@
 	var/datum/map_config/defaultmap = null
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
-	var/allow_map_voting = TRUE
+	var/allow_map_voting = FALSE
 
 	// Enables random events mid-round when set to 1
 	var/allow_random_events = 0
@@ -528,6 +530,8 @@
 					maprotation = 1
 				if("allow_map_voting")
 					allow_map_voting = text2num(value)
+				if("vote_for_map")
+					vote_for_map = text2num(value)
 				if("maprotationchancedelta")
 					maprotatechancedelta = text2num(value)
 				if("autoadmin")
