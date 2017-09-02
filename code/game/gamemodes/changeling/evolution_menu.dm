@@ -79,6 +79,7 @@
 		if(B)
 			B.vital = FALSE
 			B.decoy_override = TRUE
+	C.grant_language(/datum/language/xenocommon)
 	return 1
 
 /datum/changeling/proc/reset()
@@ -93,6 +94,7 @@
 
 /mob/proc/remove_changeling_powers(keep_free_powers=0)
 	if(ishuman(src) || ismonkey(src))
+		var/mob/living/carbon/C = src
 		if(mind && mind.changeling)
 			mind.changeling.changeling_speak = 0
 			mind.changeling.reset()
@@ -104,6 +106,7 @@
 		if(hud_used)
 			hud_used.lingstingdisplay.icon_state = null
 			hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+		C.remove_language(/datum/language/xenocommon)
 
 /datum/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
