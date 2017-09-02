@@ -145,11 +145,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/succumbed = FALSE
 
-	if(message_mode == MODE_WHISPER)
+	var/fullcrit = InFullCritical()
+	if((InCritical() && !fullcrit) || message_mode == MODE_WHISPER)
 		message_range = 1
-		spans |= SPAN_ITALICS
+		message_mode = MODE_WHISPER
 		log_talk(src,"[key_name(src)] : [message]",LOGWHISPER)
-		if(InFullCritical())
+		if(fullcrit)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
 			var/message_len = length(message)
@@ -296,7 +297,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/get_message_mode(message)
 	var/key = copytext(message, 1, 2)
-	if((InCritical() && !InFullCritical()) || key == "#")
+	if(key == "#")
 		return MODE_WHISPER
 	else if(key == ";")
 		return MODE_HEADSET
