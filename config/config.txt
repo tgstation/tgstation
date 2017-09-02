@@ -293,7 +293,12 @@ ANNOUNCE_ADMIN_LOGOUT
 ## Map voting
 ## Allows players to vote for their preffered map
 ## When it's set to zero, the map will be randomly picked each round
-ALLOW_MAP_VOTING 1
+ALLOW_MAP_VOTING 0
+
+## Map weighted vote
+## Allows players to vote for their preffered map at the end of each round. Weighted vote for a randomness aspect.
+## When it's set to zero, the map will either be randomly voted on based on preferencess or andom
+VOTE_FOR_MAP 1
 
 ## Map rotate chance delta
 ## This is the chance of map rotation factored to the round length.
