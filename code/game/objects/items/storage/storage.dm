@@ -380,8 +380,8 @@
 	W.forceMove(new_location)
 
 	for(var/mob/M in can_see_contents())
-		orient2hud(M)
-		show_to(M)
+		addtimer(CALLBACK(src, .proc/orient2hud, M),1)
+		addtimer(CALLBACK(src, .proc/show_to, M),1)
 
 	if(W.maptext)
 		W.maptext = ""
