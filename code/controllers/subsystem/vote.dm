@@ -15,6 +15,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/voted = list()
 	var/list/voting = list()
 	var/list/generated_actions = list()
+	var/weighted = FALSE // Whether to use weighted voting.
 
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
@@ -39,6 +40,7 @@ SUBSYSTEM_DEF(vote)
 	time_remaining = 0
 	mode = null
 	question = null
+	weighted = FALSE
 	choices.Cut()
 	voted.Cut()
 	voting.Cut()
@@ -73,10 +75,19 @@ SUBSYSTEM_DEF(vote)
 						greatest_votes = choices[GLOB.master_mode]
 	//get all options with that many votes and return them in a list
 	. = list()
-	if(greatest_votes)
-		for(var/option in choices)
-			if(choices[option] == greatest_votes)
-				. += option
+	if(weighted)
+		var/list/filteredchoices = choices.Copy()
+		for(var/a in filteredchoices)
+			if(!filteredchoices[a])
+				filteredchoices -= a //Remove choices with 0 votes, as pickweight gives them 1 vote
+		if(filteredchoices.len)
+			. += pickweight(filteredchoices.Copy())
+	else
+		if(greatest_votes)
+			for(var/option in choices)
+				if(choices[option] == greatest_votes)
+					. += option
+
 	return .
 
 /datum/controller/subsystem/vote/proc/announce_result()
@@ -98,7 +109,10 @@ SUBSYSTEM_DEF(vote)
 				for(var/option in winners)
 					text += "\n\t[option]"
 			. = pick(winners)
-			text += "\n<b>Vote Result: [.]</b>"
+			if(weighted)
+				text += "<b>[weighted ? "Random Weighted " : ""]Vote Result: [.] won with [choices[.]] vote\s[weighted? " and a [round(100*choices[.]/total_votes)]% chance of winning" : null].</b>"
+			else
+				text += "\n<b>Vote Result: [.]</b>"
 		else
 			text += "\n<b>Did not vote:</b> [GLOB.clients.len-voted.len]"
 	else
@@ -148,7 +162,7 @@ SUBSYSTEM_DEF(vote)
 				return vote
 	return 0
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, weighted_vote = FALSE)
 	if(!mode)
 		if(started_time)
 			var/next_allowed_time = (started_time + config.vote_delay)
@@ -184,6 +198,7 @@ SUBSYSTEM_DEF(vote)
 				return 0
 		mode = vote_type
 		initiator = initiator_key
+		weighted  = weighted_vote
 		started_time = world.time
 		var/text = "[capitalize(mode)] vote started by [initiator]."
 		if(mode == "custom")
