@@ -58,6 +58,8 @@
 	var/list/pod_paint_effect
 	var/list/colors = new/list(4)
 
+	var/syndicate = FALSE
+
 	max_integrity = 250
 
 	var/empcounter = 0 //Used for disabling movement when hit by an EMP
@@ -85,14 +87,21 @@
 	var/datum/action/innate/spacepod/checkseat/list/seat_action = list()
 	var/datum/action/innate/spacepod/airtank/list/tank_action = list()
 
+	var/datum/action/innate/spacepod/cloak/list/cloak_action = list()
+
 	var/obj/item/device/radio/mech/radio
 	var/obj/item/device/gps/gps
+
+	var/is_cloaking = FALSE
 
 	hud_possible = list(DIAG_HUD, DIAG_BATT_HUD)
 
 	var/armor_multiplier_applied = FALSE //used for determining if the construction process already applied the armorer multiplier
 
 	var/datum/pod_armor/pod_armor
+
+	var/speed_multiplier = 1
+
 
 
 /obj/spacepod/proc/apply_paint(mob/user as mob)
@@ -154,6 +163,7 @@
 	cargo_hold.storage_slots = 0	//You need to install cargo modules to use it.
 	cargo_hold.max_w_class = 5		//fit almost anything
 	cargo_hold.max_combined_w_class = 0 //you can optimize your stash with larger items
+	speed_multiplier = pod_armor.speed
 
 	armorDesc()
 
@@ -195,6 +205,13 @@
 /obj/spacepod/proc/update_icons()
 	cut_overlays()
 	icon_state = pod_armor.icon_state
+	if(is_cloaking && cell.charge > 2)
+		icon_state = "pod_cloaked"
+		alpha = 50
+		return
+	else
+		alpha = 255
+		icon_state = pod_armor.icon_state
 	if(!pod_overlays)
 		pod_overlays = new/list(2)
 		pod_overlays[DAMAGE] = mutable_appearance(icon, "pod_damage")
@@ -309,6 +326,7 @@
 			desc = "A dark grey space pod brandishing the Nanotrasen Military insignia"
 		if("pod_synd")
 			desc = "A menacing military space pod with Fuck NT stenciled onto the side"
+			syndicate = TRUE
 		if("gold")
 			desc = "A civilian space pod with a gold body, must have cost somebody a pretty penny"
 		if("industrial")
@@ -506,6 +524,9 @@
 			cargo_hold.attackby(W, user, params)
 
 /obj/spacepod/proc/add_equipment(mob/user, var/obj/item/device/spacepod_equipment/SPE, var/slot)
+	if(slot == "syndicate_system" && !syndicate)
+		to_chat(user, "<span class='danger'>[SPE] is incompatible with this pod!</span>")
+		return
 	if(equipment_system.vars[slot])
 		to_chat(user, "<span class='notice'>The pod already has a [sys_name(slot)], remove it first.</span>")
 		return
@@ -570,6 +591,11 @@
 		possible.Add("Lock System")
 	if(equipment_system.thruster_system)
 		possible.Add("Thruster System")
+	if(equipment_system.syndicate_system)
+		if(("syndicate" in user.faction))
+			possible.Add("Proprietary Syndicate System")
+		else
+			possible.Add("??? System")
 	switch(input(user, "Remove which equipment?", null, null) as null|anything in possible)
 		if("Energy Cell")
 			if(user.put_in_hands(cell))
@@ -594,6 +620,13 @@
 			remove_equipment(user, equipment_system.lock_system, "lock_system")
 		if("Thruster System")
 			remove_equipment(user, equipment_system.thruster_system, "thruster_system")
+			return
+		if("Proprietary Syndicate System")
+			remove_equipment(user, equipment_system.thruster_system, "syndicate_system")
+			return
+		if("??? System")
+			remove_equipment(user, equipment_system.thruster_system, "syndicate_system")
+			return
 
 /obj/spacepod/proc/remove_equipment(mob/user, var/obj/item/device/spacepod_equipment/SPE, var/slot)
 
@@ -1015,7 +1048,7 @@
 		return FALSE
 	var/moveship = 1
 	var/extra_cell = 0
-	move_delay = 2
+	move_delay = 2*speed_multiplier
 	if( istype(equipment_system.thruster_system, /obj/item/device/spacepod_equipment/thruster) )
 		move_delay = equipment_system.thruster_system.delay
 		extra_cell += equipment_system.thruster_system.power_usage
@@ -1090,6 +1123,11 @@
 		update_parallax_contents()
 
 /obj/spacepod/process()
+	if(is_cloaking && cell.charge > 10)
+		cell.use(10)
+	if(is_cloaking && cell.charge <= 10)
+		is_cloaking = FALSE
+		update_icons()
 	if(internal_temp_regulation)
 		if(cabin_air && cabin_air.return_volume() > 0)
 			var/delta = cabin_air.temperature - T20C
@@ -1227,6 +1265,16 @@
 	armortype = /datum/pod_armor/syndicate
 	weapon = /obj/item/device/spacepod_equipment/weaponry/laser
 	cell_type = /obj/item/stock_parts/cell/bluespace //stolen nanotrasen tech, like the pinpointers and stuff.
+	syndicate = TRUE
+
+/obj/spacepod/template/syndicate/Initialize()
+	. = ..()
+	var/obj/item/device/spacepod_equipment/syndicate/cloak/T = new /obj/item/device/spacepod_equipment/syndicate/cloak
+	T.loc = equipment_system
+	equipment_system.syndicate_system = T
+	equipment_system.syndicate_system.my_atom = src
+	equipment_system.installed_modules += T
+
 
 /obj/spacepod/template/security
 	armortype = /datum/pod_armor/security

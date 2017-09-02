@@ -17,6 +17,8 @@
 		door_action = Grant(user, door_action	, /datum/action/innate/spacepod/poddoor)
 		tank_action = Grant(user, tank_action, /datum/action/innate/spacepod/airtank)
 		lock_action = Grant(user, lock_action, /datum/action/innate/spacepod/lockpod)
+		if(istype(equipment_system.syndicate_system, /obj/item/device/spacepod_equipment/syndicate/cloak))
+			cloak_action = Grant(user, cloak_action, /datum/action/innate/spacepod/cloak)
 	exit_action = Grant(user, exit_action, /datum/action/innate/spacepod/exit)
 	light_action = Grant(user, light_action, /datum/action/innate/spacepod/lights)
 	seat_action = Grant(user, seat_action, /datum/action/innate/spacepod/checkseat)
@@ -31,6 +33,7 @@
 	exit_action = Delete(user, exit_action, /datum/action/innate/spacepod/exit)
 	light_action = Delete(user, light_action, /datum/action/innate/spacepod/lights)
 	seat_action = Delete(user, seat_action, /datum/action/innate/spacepod/checkseat)
+	cloak_action = Delete(user, cloak_action, /datum/action/innate/spacepod/cloak)
 
 /datum/action/innate/spacepod
 	var/obj/spacepod/S
@@ -128,3 +131,15 @@
 	S.toggle_internal_tank(owner)
 	button_icon_state = "air_[S.use_internal_tank ? "on" : "off"]"
 	UpdateButtonIcon()
+
+/datum/action/innate/spacepod/cloak
+	name = "Toggle Cloaking Device"
+	desc = "Toggle the cloaking system"
+	button_icon_state = "cloak"
+
+/datum/action/innate/spacepod/cloak/Activate()
+	if(!S)
+		return
+	if(istype(S.equipment_system.syndicate_system, /obj/item/device/spacepod_equipment/syndicate/cloak))
+		var/obj/item/device/spacepod_equipment/syndicate/cloak/CL = S.equipment_system.syndicate_system
+		CL.cloak()

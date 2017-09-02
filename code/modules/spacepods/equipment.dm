@@ -1,4 +1,7 @@
 /obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons(mob/user)
+	if(my_atom.is_cloaking)
+		to_chat(user, "<span class='warning'>You cannot fire weapons while cloaked!</span>")
+		return
 	if(my_atom.next_firetime > world.time)
 		to_chat(user, "<span class='warning'>Your weapons are recharging.</span>")
 		return
@@ -52,6 +55,7 @@
 	var/obj/item/device/spacepod_equipment/cargo/sec_cargo_system // secondary cargo system
 	var/obj/item/device/spacepod_equipment/lock/lock_system // lock system
 	var/obj/item/device/spacepod_equipment/thruster/thruster_system
+	var/obj/item/device/spacepod_equipment/syndicate/syndicate_system
 
 
 /datum/spacepod/equipment/New(obj/spacepod/SP)
@@ -67,6 +71,7 @@
 	var/slot = "misc"
 
 /obj/item/device/spacepod_equipment/proc/removed(mob/user) // So that you can unload cargo when you remove the module
+	my_atom.update_icons()
 	return
 
 /*
@@ -324,3 +329,26 @@
 	icon_state = "pod_vtec"
 	delay = 1.25
 	power_usage = 1.5
+
+
+/*
+///////////////////////////////////////
+///////Syndicate-only equipment////////
+///////////////////////////////////////
+*/
+/obj/item/device/spacepod_equipment/syndicate
+	name = "Syndicate Equipment"
+	desc = "You shouldn't have this."
+	slot = "syndicate"
+
+/obj/item/device/spacepod_equipment/syndicate/cloak
+	name = "Syndicate Spacepod Cloaker"
+	desc = "This clever piece of tech can cloak any spacepod, making it extremely hard to see."
+
+/obj/item/device/spacepod_equipment/syndicate/cloak/proc/cloak()
+	my_atom.is_cloaking = !my_atom.is_cloaking
+	my_atom.update_icons()
+
+/obj/item/device/spacepod_equipment/syndicate/cloak/removed(mob/user)
+	my_atom.is_cloaking = FALSE
+	my_atom.update_icons()
