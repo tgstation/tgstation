@@ -71,6 +71,7 @@
 	display_name = "Computer Consoles"
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
+	design_ids = list("cargo", "cargorequest", "stockexchange", "libraryconsole", "aifixer", "mining", "crewconsole", "comconsole", "idcardconsole", "operating", "seccamera")
 	research_cost = 5000
 	export_price = 5000
 
@@ -88,7 +89,7 @@
 	display_name = "Basic Bluespace Theory"
 	description = "Basic studies into the mysterious alternate dimension known as bluespace."
 	prereq_ids = list("base")
-	design_ids = list("beacon")
+	design_ids = list("beacon", "xenobioconsole")
 	research_cost = 5000
 	export_price = 5000
 
@@ -239,7 +240,7 @@
 	research_cost = 5000
 	export_price = 5000
 	design_ids = list("robocontrol", "sflash", "borg_suit", "borg_head", "borg_chest", "borg_r_arm", "borg_l_arm", "borg_r_leg", "borg_l_leg", "borgupload",
-	"cyborgrecharger")
+	"cyborgrecharger", "borg_upgrade_restart", "borg_upgrade_rename")
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
@@ -430,92 +431,73 @@
 
 /datum/techweb_node/basic_plasma
 	id = "basic_plasma"
+	display_name = "Basic Plasma Research"
+	description = "Research into the mysterious and dangerous substance, plasma."
+	prereq_ids = list("industrial_engineering")
+	design_ids = list("mech_generator")
+	research_cost = 5000
+	export_price = 5000
 
 /datum/techweb_node/adv_plasma
 	id = "adv_plasma"
+	display_name = "Advanced Plasma Research"
+	description = "Research on how to fully exploit the power of plasma."
+	prereq_ids = list("basic_plasma")
+	design_ids = list("mech_plasma_cutter")
+	research_cost = 5000
+	export_price = 5000
 
-/////////////////////////////////////////
-//////////Cybernetic Implants////////////
-/////////////////////////////////////////
-/datum/design/cyberimp_welding
-	name = "Welding Shield Eyes"
-	id = "ci-welding"
-	construction_time = 40
-/datum/design/cyberimp_gloweyes
-	name = "Luminescent Eyes"
-	id = "ci-gloweyes"
-	construction_time = 40
-/datum/design/cyberimp_breather
-	name = "Breathing Tube Implant"
-	id = "ci-breather"
-	construction_time = 35
-	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
-/datum/design/cyberimp_surgical
-    name = "Surgical Arm Implant"
-    desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
-    id = "ci-surgery"
-    materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
-    construction_time = 200
-/datum/design/cyberimp_toolset
-	name = "Toolset Arm Implant"
-	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
-	id = "ci-toolset"
-	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
-	construction_time = 200
-/datum/design/cyberimp_medical_hud
-	name = "Medical HUD Implant"
-	id = "ci-medhud"
-	construction_time = 50
-/datum/design/cyberimp_security_hud
-	name = "Security HUD Implant"
-	id = "ci-sechud"
-	construction_time = 50
-/datum/design/cyberimp_xray
-	name = "X-Ray Eyes"
-	id = "ci-xray"
-	construction_time = 60
-/datum/design/cyberimp_thermals
-	name = "Thermal Eyes"
-	id = "ci-thermals"
-	construction_time = 60
-/datum/design/cyberimp_antidrop
-	name = "Anti-Drop Implant"
-	id = "ci-antidrop"
-	construction_time = 60
-	build_path = /obj/item/organ/cyberimp/brain/anti_drop
-/datum/design/cyberimp_antistun
-	name = "CNS Rebooter Implant"
-	id = "ci-antistun"
-	construction_time = 60
-	build_path = /obj/item/organ/cyberimp/brain/anti_stun
-/datum/design/cyberimp_nutriment
-	name = "Nutriment Pump Implant"
-	id = "ci-nutriment"
-	construction_time = 40
-/datum/design/cyberimp_nutriment_plus
-	name = "Nutriment Pump Implant PLUS"
-	id = "ci-nutrimentplus"
-	construction_time = 50
-/datum/design/cyberimp_reviver
-	name = "Reviver Implant"
-	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
-	id = "ci-reviver"
-	construction_time = 60
-/datum/design/cyberimp_thrusters
-	name = "Thrusters Set Implant"
-	id = "ci-thrusters"
-	construction_time = 80
+/datum/techweb_node/adv_biotech
+	id = "adv_biotech"
+	display_name = "Advanced Biotechnology"
+	description = "Advanced biotechnology research"
+	prereq_ids = list("biotech")
+	research_cost = 5000
+	export_price = 5000
 
-//Cybernetic organs
-/datum/design/cybernetic_liver
-	name = "Cybernetic Liver"
-	id = "cybernetic_liver"
-/datum/design/cybernetic_heart
-	name = "Cybernetic Heart"
-	id = "cybernetic_heart"
-/datum/design/cybernetic_liver_u
-	name = "Upgraded Cybernetic Liver"
-	id = "cybernetic_liver_u"
+/datum/techweb_node/cyber_organs
+	id = "cyber_organs"
+	display_name = "Cybernetic Organs"
+	description = "We have the technology to rebuild him."
+	prereq_ids = list("adv_biotech", "cyborg")
+	design_ids = list("cybernetic_heart", "cybernetic_liver", "cybernetic_liver_u")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/adv_datatheory
+	id = "adv_datatheory"
+	display_name = "Advanced Data Theory"
+	description = "Better insight into programming and data."
+	prereq_ids = list("datatheory")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/cyber_implants
+	id = "cyber_implants"
+	display_name = "Cybernetic Implants"
+	description = "Electronic implants that improve humans."
+	prereq_ids = list("adv_biotech", "cyborg", "adv_datatheory")
+	design_ids = list("ci-nutriment", "ci-nutrimentplus", "ci-breather", "ci-gloweyes", "ci-welding", "ci-medhud", "ci-sechud")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/adv_cyber_implants
+	id = "adv_cyber_implants"
+	display_name = "Advanced Cybernetic Implants"
+	description = "Upgraded and more powerful cybernetic implants."
+	prereq_ids = list("neural_programming", "cyber_implants")
+	design_ids = list("ci-toolset", "ci-surgery", "ci-reviver")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/combat_cyber_implants
+	id = "combat_cyber_implants"
+	display_name = "Combat Cybernetic Implants"
+	description = "Military grade combat implants to improve performance."
+	prereq_ids = list("adv_cyber_implants")	//Needs way more reqs.
+	design_ids = list("ci-xray", "ci-thermals", "ci-antidrop", "ci-antistun", "ci-thrusters")
+	research_cost = 5000
+	export_price = 5000
 
 //Exosuit Equipment
 /datum/design/mech_hydraulic_clamp
@@ -543,22 +525,10 @@
 	id = "mech_cable_layer"
 	build_path = /obj/item/mecha_parts/mecha_equipment/cable_layer
 	construction_time = 100
-/datum/design/mech_generator
-	name = "Exosuit Equipment (Plasma Generator)"
-	id = "mech_generator"
-	build_path = /obj/item/mecha_parts/mecha_equipment/generator
-	construction_time = 100
+
 /////////////////////////////////////////
 //////////////Borg Upgrades//////////////
 /////////////////////////////////////////
-/datum/design/borg_upgrade_rename
-	name = "Cyborg Upgrade (Rename Board)"
-	id = "borg_upgrade_rename"
-	construction_time = 120
-/datum/design/borg_upgrade_restart
-	name = "Cyborg Upgrade (Emergency Reboot Board)"
-	id = "borg_upgrade_restart"
-	construction_time = 120
 /datum/design/borg_upgrade_vtec
 	name = "Cyborg Upgrade (VTEC Module)"
 	id = "borg_upgrade_vtec"
@@ -830,11 +800,7 @@
 	id = "mech_generator_nuclear"
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
 	construction_time = 100
-/datum/design/mech_plasma_cutter
-	name = "Exosuit Module Design (217-D Heavy Plasma Cutter)"
-	id = "mech_plasma_cutter"
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
-	construction_time = 100
+
 /datum/design/mech_taser
 	name = "Exosuit Weapon (PBT \"Pacifier\" Mounted Taser)"
 	id = "mech_taser"
@@ -866,52 +832,18 @@
 ///////////////////////////////////
 
 ///////////////////Computer Boards///////////////////////////////////
-/datum/design/board/seccamera
-	name = "Computer Design (Security Camera)"
-	id = "seccamera"
-/datum/design/board/xenobiocamera
-	name = "Computer Design (Xenobiology Console)"
-	id = "xenobioconsole"
-/datum/design/board/operating
-	name = "Computer Design (Operating Computer)"
-	id = "operating"
+
 /datum/design/board/pandemic
 	name = "Computer Design (PanD.E.M.I.C. 2200)"
 	id = "pandemic"
 
-/datum/design/board/comconsole
-	name = "Computer Design (Communications)"
-	id = "comconsole"
-/datum/design/board/idcardconsole
-	name = "Computer Design (ID Console)"
-	id = "idcardconsole"
-/datum/design/board/crewconsole
-	name = "Computer Design (Crew monitoring computer)"
-	id = "crewconsole"
 
 /datum/design/board/prisonmanage
 	name = "Computer Design (Prisoner Management Console)"
 	id = "prisonmanage"
 
 	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
-/datum/design/board/cargo
-	name = "Computer Design (Supply Console)"
-	id = "cargo"
-/datum/design/board/cargorequest
-	name = "Computer Design (Supply Request Console)"
-	id = "cargorequest"
-/datum/design/board/stockexchange
-	name = "Computer Design (Stock Exchange Console)"
-	id = "stockexchange"
-/datum/design/board/mining
-	name = "Computer Design (Outpost Status Display)"
-	id = "mining"
-/datum/design/board/aifixer
-	name = "Computer Design (AI Integrity Restorer)"
-	id = "aifixer"
-/datum/design/board/libraryconsole
-	name = "Computer Design (Library Console)"
-	id = "libraryconsole"
+
 /datum/design/board/apc_control
 	name = "Computer Design (APC Control)"
 	id = "apc_control"
