@@ -1081,7 +1081,7 @@
 	if(rotation)
 		shuttleRotate(rotation)
 	loc = newT
-	if(pilot || passengers.len > 0)
+	if(pilot || LAZYLEN(passengers))
 		update_parallax_contents()
 
 /obj/spacepod/process()
