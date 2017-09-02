@@ -280,7 +280,8 @@
 
 /obj/item/device/spacepod_equipment/lock/keyed/Initialize()
 	. = ..()
-	id = ++id_source
+	if(!id)
+		id = ++id_source
 
 // The key
 /obj/item/device/spacepod_key

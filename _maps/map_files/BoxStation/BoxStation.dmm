@@ -64676,6 +64676,60 @@
 /obj/structure/closet/toolcloset,
 /turf/open/floor/plasteel/yellow/side,
 /area/construction/mining/aux_base)
+"cVv" = (
+/turf/open/space/basic,
+/obj/machinery/porta_turret/syndicate{
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/syndicate)
+"cVw" = (
+/obj/structure/spacepoddoor,
+/turf/open/floor/plasteel/vault,
+/area/shuttle/syndicate)
+"cVx" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 10
+	},
+/turf/open/floor/plasteel/vault,
+/area/shuttle/syndicate)
+"cVy" = (
+/obj/structure/spacepoddoor,
+/obj/machinery/door/poddoor/multi_tile/two_tile_ver,
+/turf/open/floor/plasteel/vault,
+/area/shuttle/syndicate)
+"cVz" = (
+/obj/spacepod/template/syndicate,
+/turf/open/floor/plasteel/vault,
+/area/shuttle/syndicate)
+"cVA" = (
+/obj/structure/rack,
+/obj/item/device/spacepod_equipment/lock/keyed{
+	id = -192
+	},
+/obj/item/device/spacepod_key{
+	id = -192
+	},
+/obj/item/device/spacepod_key{
+	id = -192
+	},
+/obj/item/device/spacepod_equipment/sec_cargo/chair,
+/obj/item/device/spacepod_equipment/weaponry/disabler,
+/turf/open/floor/plasteel/vault,
+/area/shuttle/syndicate)
+"cVB" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/syndicate)
+"cVC" = (
+/obj/machinery/door/airlock/external,
+/turf/open/space/basic,
+/area/shuttle/syndicate)
 
 (1,1,1) = {"
 aaa
@@ -76785,10 +76839,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-amO
+cVv
+cVw
+cVy
+cVB
 aac
 aac
 aac
@@ -77042,9 +77096,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aac
+cIz
+cVz
 aac
 cIR
 cIY
@@ -77299,10 +77353,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
 aac
+cIz
+cIz
+cVC
 cIJ
 cIJ
 cIJ
@@ -77556,9 +77610,9 @@ amO
 aac
 aac
 aac
-clO
-aaa
-aaa
+aac
+cIz
+cIz
 aac
 cIJ
 cIJ
@@ -77814,8 +77868,8 @@ cIl
 cIs
 cIz
 aac
-czz
-aaa
+cVx
+cVA
 aac
 cIU
 cJb
