@@ -1078,6 +1078,11 @@
 	setDir(turn(dir, -rotation))
 
 /obj/spacepod/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock) //this is to avoid fuckery
+	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
+		return
+	if(locs && locs.len > 1) // This is for multi tile objects
+		if(loc != oldT)
+			return
 	if(rotation)
 		shuttleRotate(rotation)
 	loc = newT
@@ -1221,13 +1226,16 @@
 /obj/spacepod/template/syndicate
 	armortype = /datum/pod_armor/syndicate
 	weapon = /obj/item/device/spacepod_equipment/weaponry/laser
+	cell_type = /obj/item/stock_parts/cell/bluespace //stolen nanotrasen tech, like the pinpointers and stuff.
 
 /obj/spacepod/template/security
 	armortype = /datum/pod_armor/security
 	weapon = /obj/item/device/spacepod_equipment/weaponry/disabler
+	cell_type = /obj/item/stock_parts/cell/super
 
 /obj/spacepod/template/industrial
 	armortype = /datum/pod_armor/industrial
+	cell_type = /obj/item/stock_parts/cell/hyper
 
 #undef DAMAGE
 #undef FIRE
