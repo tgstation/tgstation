@@ -530,6 +530,8 @@
 					maprotation = 1
 				if("allow_map_voting")
 					allow_map_voting = text2num(value)
+				if("vote_for_map")
+					vote_for_map = text2num(value)
 				if("maprotationchancedelta")
 					maprotatechancedelta = text2num(value)
 				if("autoadmin")
