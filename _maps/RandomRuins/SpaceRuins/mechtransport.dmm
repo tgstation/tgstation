@@ -10,10 +10,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/mechtransport)
 "d" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 "e" = (
 /turf/closed/wall/mineral/titanium,
@@ -63,10 +60,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/powered/mechtransport)
 "o" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 "p" = (
 /obj/machinery/door/airlock/hatch{
@@ -76,10 +70,7 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 "q" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
@@ -200,26 +191,17 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "T" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 "U" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 "V" = (
 /obj/item/stack/rods,
 /turf/template_noop,
 /area/template_noop)
 "W" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 "X" = (
 /obj/structure/shuttle/engine/propulsion,
