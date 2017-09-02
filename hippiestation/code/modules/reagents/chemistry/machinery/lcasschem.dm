@@ -49,7 +49,7 @@
 	icon_state = "press"
 	var/pressure = 0
 
-/obj/machinery/chem/pressure/New()
+/obj/machinery/chem/pressure/Initialize()
 	..()
 	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/pressure(null)
 	B.apply_default_parts(src)
@@ -68,8 +68,7 @@
 	if(!on)
 		pressure = max(pressure -= 5, 0)
 
-/obj/machinery/chem/pressure/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/chem/pressure/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "chem_pressure", name, 400, 400, master_ui, state)
@@ -86,7 +85,8 @@
 
 	var beakerContents[0]
 	if(beaker)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+		for(var/I in beaker.reagents.reagent_list)
+			var/datum/reagent/R = I
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 	return data
@@ -110,7 +110,7 @@
 	var/material_amt = 0 //requires uranium in order to function
 	var/target_radioactivity = 0
 
-/obj/machinery/chem/radioactive/New()
+/obj/machinery/chem/radioactive/Initialize()
 	..()
 	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/radioactive(null)
 	B.apply_default_parts(src)
@@ -157,8 +157,7 @@
 		qdel(I)//it's a var now
 		return
 
-/obj/machinery/chem/radioactive/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/chem/radioactive/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "chem_radioactive", name, 275, 400, master_ui, state)
@@ -176,7 +175,8 @@
 
 	var beakerContents[0]
 	if(beaker)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+		for(var/I in beaker.reagents.reagent_list)
+			var/datum/reagent/R = I
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 	return data
@@ -215,7 +215,7 @@
 	var/crystal_amt = 0
 	var/intensity = 0
 
-/obj/machinery/chem/bluespace/New()
+/obj/machinery/chem/bluespace/Initialize()
 	..()
 	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/bluespace(null)
 	B.apply_default_parts(src)
@@ -261,8 +261,7 @@
 		qdel(I)//it's a var now
 		return
 
-/obj/machinery/chem/bluespace/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/chem/bluespace/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "chem_bluespace", name, 400, 400, master_ui, state)
@@ -280,7 +279,8 @@
 
 	var beakerContents[0]
 	if(beaker)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+		for(var/I in beaker.reagents.reagent_list)
+			var/datum/reagent/R = I
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 	return data
@@ -319,7 +319,7 @@
 	var/time_required = 30
 	var/time = 0
 
-/obj/machinery/chem/centrifuge/New()
+/obj/machinery/chem/centrifuge/Initialize()
 	..()
 	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/centrifuge(null)
 	B.apply_default_parts(src)
@@ -343,8 +343,7 @@
 	if(!on)
 		icon_state = "cent_off"
 
-/obj/machinery/chem/centrifuge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/chem/centrifuge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "chem_centrifuge", name, 275, 400, master_ui, state)
@@ -359,7 +358,8 @@
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	var beakerContents[0]
 	if(beaker)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+		for(var/I in beaker.reagents.reagent_list)
+			var/datum/reagent/R = I
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 	return data
