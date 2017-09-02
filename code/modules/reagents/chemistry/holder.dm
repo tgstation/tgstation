@@ -322,6 +322,8 @@
 		R.on_update (A)
 	update_total()
 /*
+this has been modified and moved over to the hippie folder to allow for custom reaction conditions
+
 /datum/reagents/proc/handle_reactions()
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list

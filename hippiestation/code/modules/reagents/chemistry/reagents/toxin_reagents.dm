@@ -195,7 +195,7 @@
 	description = "A very impure form of sarin"
 	color = "#CCCCCC"
 
-/datum/reagent/toxin/sarin_B/on_mob_life(mob/living/M)
+/datum/reagent/toxin/sarin_b/on_mob_life(mob/living/M)
 	M.eye_blurry = max(M.eye_blurry, 3)
 	if(prob(15))
 		if(iscarbon(M))
