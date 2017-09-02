@@ -81,7 +81,7 @@
 /datum/chemical_reaction/sarin_b
 	name = "Extremely dilute sarin"
 	id = "sarinb"
-	results = list("sarina" = 2)
+	results = list("sarinb" = 2)
 	required_temp = 700
 	pressure_required = 5
 	required_reagents = list("sarina" = 2)
