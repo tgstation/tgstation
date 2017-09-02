@@ -64,7 +64,7 @@
 			Currently available are hockey, wrestling, football, and bowling kits."
 	item = /obj/item/paper
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 
 /* Holo Parasites */
@@ -73,7 +73,7 @@
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an organic host as a home base and source of fuel."
 	item = /obj/item/storage/box/syndie_kit/guardian
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/badass/sports/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/possible_items = list(

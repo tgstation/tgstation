@@ -52,7 +52,7 @@
 	if(active)
 		for(var/obj/item/I in owner.held_items)
 			if(!(I.flags_1 & NODROP_1))
-				flags_1 += I
+				stored_items += I
 
 		var/list/L = owner.get_empty_held_indexes()
 		if(LAZYLEN(L) == owner.held_items.len)

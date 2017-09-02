@@ -67,8 +67,6 @@ var/B_shadowling = 8192
 						be_special += ROLE_NINJA
 					if(2048)
 						be_special += ROLE_MONKEY
-					if(4096)
-						be_special += ROLE_GANG
 					if(8192)
 						be_special += ROLE_SHADOWLING
 					if(16384)
