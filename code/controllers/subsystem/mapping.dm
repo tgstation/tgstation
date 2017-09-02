@@ -141,7 +141,9 @@ SUBSYSTEM_DEF(mapping)
 	var/players = GLOB.clients.len
 	var/list/mapvotes = list()
 	//count votes
-	if(global.config.allow_map_voting)
+	if(global.config.vote_for_map)
+		SSvote.initiate_vote("map", "The Server", TRUE)
+	else if(global.config.allow_map_voting)
 		for (var/client/c in GLOB.clients)
 			var/vote = c.prefs.preferred_map
 			if (!vote)
