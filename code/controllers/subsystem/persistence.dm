@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(persistence)
 		var/savefile/secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
 		var/sav_text
 		secret_satchels[SSmapping.config.map_name] >> sav_text
-		fdel(secret_satchels)
+		fdel("data/npc_saves/SecretSatchels.sav")
 		if(sav_text)
 			old_secret_satchels = splittext(sav_text,"#")
 			if(old_secret_satchels.len >= 20)
@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!saved_json)
 			return
 		saved_messages = json_decode(saved_json)
-		fdel(chisel_messages_sav)
+		fdel("data/npc_saves/ChiselMessages.sav")
 	else
 		var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
 		if(!fexists(json_file))
@@ -124,7 +124,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!saved_json)
 			return
 		saved_trophies = json_decode(saved_json)
-		fdel(S)
+		fdel("data/npc_saves/TrophyItems.sav")
 	else
 		var/json_file = file("data/npc_saves/TrophyItems.json")
 		if(!fexists(json_file))
