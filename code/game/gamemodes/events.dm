@@ -32,7 +32,7 @@
 		A.power_change()
 
 	for(var/obj/machinery/power/apc/C in GLOB.apcs_list)
-		if(C.cell && C.z in GLOB.station_z_levels)
+		if(C.cell && (C.z in GLOB.station_z_levels))
 			var/area/A = C.area
 
 			var/skip = 0
@@ -48,7 +48,7 @@
 
 	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", 'sound/ai/poweron.ogg')
 	for(var/obj/machinery/power/apc/C in GLOB.machines)
-		if(C.cell && C.z in GLOB.station_z_levels)
+		if(C.cell && (C.z in GLOB.station_z_levels))
 			C.cell.charge = C.cell.maxcharge
 			C.failure_timer = 0
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
