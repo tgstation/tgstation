@@ -58466,7 +58466,7 @@
 /area/shuttle/syndicate)
 "cCd" = (
 /obj/machinery/door/airlock/external,
-/turf/open/space/basic,
+/turf/open/floor/plasteel/vault,
 /area/shuttle/syndicate)
 
 (1,1,1) = {"

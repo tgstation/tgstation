@@ -1206,6 +1206,7 @@
 /obj/spacepod/template
 	var/datum/pod_armor/armortype
 	var/obj/item/device/spacepod_equipment/weaponry/weapon
+	icon_state = "pod_civ"
 
 /obj/spacepod/template/Initialize(mapload)
 	. = ..(mapload, armortype)
