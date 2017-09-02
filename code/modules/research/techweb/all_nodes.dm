@@ -17,7 +17,7 @@
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
-	design_ids = list("mass_spectrometer")
+	design_ids = list("mass_spectrometer", "chem_heater", "chem_master", "chem_dispenser", "sleeper", "pandemic")
 	research_cost = 5000
 	export_price = 5000
 
@@ -101,14 +101,14 @@
 	research_cost = 5000
 	export_price = 5000
 	design_ids = list("s-reciever", "s-bus", "s-broadcaster", "s-processor", "s-hub", "s-server", "s-relay", "comm_monitor", "comm_server",
-	"s-ansible", "s-filter", "s-amplifier", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter")
+	"s-ansible", "s-filter", "s-amplifier", "ntnet_relay", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter")
 
 /datum/techweb_node/comp_recordkeeping
 	id = "comp_recordkeeping"
 	display_name = "Computerized Recordkeeping"
 	description = "Organized record databases and how they're used."
 	prereq_ids = list("comptech")
-	design_ids = list("secdata", "meddata")
+	design_ids = list("secdata", "meddata", "prison_manage", "vendor", "automated_announcement")
 	research_cost = 5000
 	export_price = 5000
 
@@ -145,8 +145,8 @@
 	description = "Modern engineering techonlogy."
 	display_name = "Industrial Engineering"
 	prereq_ids = list("base")
-	design_ids = list("solarcontrol", "power_monitor", "rped", "pacman", "adv_capacitor" "adv_scanning", "emitter" "high_cell" "adv_matter_bin",
-	"atmosalerts", "atmos_control", "high_micro_laser", "nano_mani", "weldingmask", "mesons", "thermomachine")
+	design_ids = list("solarcontrol", "recharger" "power_monitor", "rped", "pacman", "adv_capacitor" "adv_scanning", "emitter" "high_cell" "adv_matter_bin",
+	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "weldingmask", "mesons", "thermomachine", "tesla_coil", "grounding_rod")
 	research_cost = 5000
 	export_price = 5000
 
@@ -173,7 +173,7 @@
 	display_name = "Electromagnetic Theory"
 	description = "Study into usage of frequencies in the electromagnetic spectrum."
 	prereq_ids = list("base")
-	design_ids = list("holosign", "inducer", "tray_goggles")
+	design_ids = list("holosign", "inducer", "tray_goggles", "holopad")
 	research_cost = 5000
 	export_price = 5000
 
@@ -241,6 +241,33 @@
 	export_price = 5000
 	design_ids = list("robocontrol", "sflash", "borg_suit", "borg_head", "borg_chest", "borg_r_arm", "borg_l_arm", "borg_r_leg", "borg_l_leg", "borgupload",
 	"cyborgrecharger", "borg_upgrade_restart", "borg_upgrade_rename")
+
+/datum/techweb_node/cyborg_upg_util
+	id = "cyborg_upg_util"
+	display_name = "Cyborg Upgrades: Utility"
+	description = "Utility upgrades for cybogs."
+	prereq_ids = list("industrial_engineering", "cyborg")
+	design_ids = list("borg_upgrade_holding", "borg_upgrade_lavaproof", "borg_upgrade_thrusters", "borg_upgrade_selfrepair")
+	research_cost = 5000
+	export_prie = 5000
+
+/datum/techweb_node/cyborg_upg_med
+	id = "cyborg_upg_med"
+	display_name = "Cyborg Upgrades: Medical"
+	description = "Medical upgrades for cyborgs"
+	prereq_ids = list("adv_biotech", "cyborg")
+	design_ids = list("borg_upgrade_defibrillator", "borg_upgrade_piercinghypospray", "borg_upgrade_highstrengthsynthesiser", "borg_upgrade_expandedsynthesiser")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/cyborg_upg_combat
+	id = "cyborg_upg_combat"
+	display_name = "Cyborg Upgrades: Combat"
+	description = "Military grade upgrades for cyborgs."
+	prereq_ids = list("cyborg_upg_med", "cyborg_upg_util", "adv_engi")
+	design_ids = list("borg_upgrade_vtec", "borg_upgrade_disablercooler", "borg_upgrade_diamonddrill")
+	research_cost = 5000
+	export_price = 5000
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
@@ -344,7 +371,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "adv_mass_spectrometer", "plasmarefiller")
+	design_ids = list("piercesyringe", "adv_mass_spectrometer", "plasmarefiller", "limbgrower")
 	research_cost = 5000
 	export_price = 5000
 
@@ -353,7 +380,7 @@
 	display_name = "Botanical Engineering"
 	description = "Botanical tools"
 	prereq_ids = list("biotech", "adv_engi")
-	design_ids = list("diskplantgene", "portaseeder", "plantgenes", "flora_gun", "hydro_tray", "biogenerator")
+	design_ids = list("diskplantgene", "portaseeder", "plantgenes", "flora_gun", "hydro_tray", "biogenerator", "seed_extractor")
 	research_cost = 5000
 	export_price = 5000
 
@@ -416,7 +443,7 @@
 	display_name = "Mining Technology"
 	description = "Better than Efficiency V."
 	prereq_ids = list("industrial_engineering")
-	design_ids = list("drill", "superresonator", "triggermod", "damagemod", "cooldownmod", "rangemod")
+	design_ids = list("drill", "superresonator", "triggermod", "damagemod", "cooldownmod", "rangemod", "ore_redemption", "mining_equipment_vendor")
 	research_cost = 5000
 	export_price = 5000
 
@@ -444,14 +471,6 @@
 	description = "Research on how to fully exploit the power of plasma."
 	prereq_ids = list("basic_plasma")
 	design_ids = list("mech_plasma_cutter")
-	research_cost = 5000
-	export_price = 5000
-
-/datum/techweb_node/adv_biotech
-	id = "adv_biotech"
-	display_name = "Advanced Biotechnology"
-	description = "Advanced biotechnology research"
-	prereq_ids = list("biotech")
 	research_cost = 5000
 	export_price = 5000
 
@@ -499,6 +518,15 @@
 	research_cost = 5000
 	export_price = 5000
 
+/datum/techweb_node/bio_process
+	id = "bio_process"
+	display_name = "Biological Processing"
+	description = "From slimes to kitchens."
+	prereq_ids = list("biotech")
+	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave")
+	research_cost = 5000
+	export_price = 5000
+
 //Exosuit Equipment
 /datum/design/mech_hydraulic_clamp
 	name = "Exosuit Engineering Equipment (Hydraulic Clamp)"
@@ -526,60 +554,10 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/cable_layer
 	construction_time = 100
 
-/////////////////////////////////////////
-//////////////Borg Upgrades//////////////
-/////////////////////////////////////////
-/datum/design/borg_upgrade_vtec
-	name = "Cyborg Upgrade (VTEC Module)"
-	id = "borg_upgrade_vtec"
-	construction_time = 120
-/datum/design/borg_upgrade_thrusters
-	name = "Cyborg Upgrade (Ion Thrusters)"
-	id = "borg_upgrade_thrusters"
-	construction_time = 120
-/datum/design/borg_upgrade_disablercooler
-	name = "Cyborg Upgrade (Rapid Disabler Cooling Module)"
-	id = "borg_upgrade_disablercooler"
-	construction_time = 120
-/datum/design/borg_upgrade_diamonddrill
-	name = "Cyborg Upgrade (Diamond Drill)"
-	id = "borg_upgrade_diamonddrill"
-	construction_time = 120
-/datum/design/borg_upgrade_holding
-	name = "Cyborg Upgrade (Ore Satchel of Holding)"
-	id = "borg_upgrade_holding"
-	construction_time = 120
-/datum/design/borg_upgrade_lavaproof
-	name = "Cyborg Upgrade (Lavaproof Tracks)"
-	id = "borg_upgrade_lavaproof"
-	construction_time = 120
 /datum/design/borg_syndicate_module
 	name = "Cyborg Upgrade (Illegal Modules)"
 	id = "borg_syndicate_module"
 	construction_time = 120
-/datum/design/borg_upgrade_selfrepair
-	name = "Cyborg Upgrade (Self-repair)"
-	id = "borg_upgrade_selfrepair"
-	construction_time = 120
-/datum/design/borg_upgrade_expandedsynthesiser
-	name = "Cyborg Upgrade (Hypospray Expanded Synthesiser)"
-	id = "borg_upgrade_expandedsynthesiser"
-	construction_time = 120
-/datum/design/borg_upgrade_highstrengthsynthesiser
-	name = "Cyborg Upgrade (Hypospray High-Strength Synthesiser)"
-	id = "borg_upgrade_highstrengthsynthesiser"
-	build_path = /obj/item/borg/upgrade/hypospray/high_strength
-	construction_time = 120
-/datum/design/borg_upgrade_piercinghypospray
-	name = "Cyborg Upgrade (Piercing Hypospray)"
-	id = "borg_upgrade_piercinghypospray"
-	build_path = /obj/item/borg/upgrade/piercing_hypospray
-	construction_time = 120
-/datum/design/borg_upgrade_defibrillator
-	name = "Cyborg Upgrade (Defibrillator)"
-	id = "borg_upgrade_defibrillator"
-	construction_time = 120
-
 
 /datum/design/flightsuit		//Multi step build process/redo WIP
 	name = "Flight Suit"
@@ -595,113 +573,7 @@
 	name = "Flight Shoes"
 	id = "flightshoes"
 	construction_time = 100
-////////////////////////////////////////
-//////////////MISC Boards///////////////
-////////////////////////////////////////
-
-/datum/design/board/announcement_system
-	name = "Machine Design (Automated Announcement System Board)"
-	id = "automated_announcement"
-	build_path = /obj/item/circuitboard/machine/announcement_system
-
-/datum/design/board/sleeper
-	name = "Machine Design (Sleeper Board)"
-	id = "sleeper"
-	category = list ("Medical Machinery")
-/datum/design/board/chem_dispenser
-	name = "Machine Design (Portable Chem Dispenser Board)"
-	id = "chem_dispenser"
-	build_path = /obj/item/circuitboard/machine/chem_dispenser
-	category = list ("Medical Machinery")
-/datum/design/board/chem_master
-	name = "Machine Design (Chem Master Board)"
-	id = "chem_master"
-	build_path = /obj/item/circuitboard/machine/chem_master
-	category = list ("Medical Machinery")
-/datum/design/board/chem_heater
-	name = "Machine Design (Chemical Heater Board)"
-	id = "chem_heater"
-	build_path = /obj/item/circuitboard/machine/chem_heater
-	category = list ("Medical Machinery")
-
-/datum/design/board/microwave
-	name = "Machine Design (Microwave Board)"
-	id = "microwave"
-	category = list ("Misc. Machinery")
-/datum/design/board/gibber
-	name = "Machine Design (Gibber Board)"
-	id = "gibber"
-	category = list ("Misc. Machinery")
-/datum/design/board/smartfridge
-	name = "Machine Design (Smartfridge Board)"
-	id = "smartfridge"
-	category = list ("Misc. Machinery")
-/datum/design/board/monkey_recycler
-	name = "Machine Design (Monkey Recycler Board)"
-	id = "monkey_recycler"
-	build_path = /obj/item/circuitboard/machine/monkey_recycler
-	category = list ("Misc. Machinery")
-/datum/design/board/seed_extractor
-	name = "Machine Design (Seed Extractor Board)"
-	id = "seed_extractor"
-	build_path = /obj/item/circuitboard/machine/seed_extractor
-	category = list ("Misc. Machinery")
-/datum/design/board/processor
-	name = "Machine Design (Processor Board)"
-	id = "processor"
-	category = list ("Misc. Machinery")
-/datum/design/board/recycler
-	name = "Machine Design (Recycler Board)"
-	id = "recycler"
-	category = list ("Misc. Machinery")
-/datum/design/board/holopad
-	name = "Machine Design (AI Holopad Board)"
-	id = "holopad"
-	category = list ("Misc. Machinery")
-/datum/design/board/autolathe
-	name = "Machine Design (Autolathe Board)"
-	id = "autolathe"
-	category = list ("Misc. Machinery")
-/datum/design/board/recharger
-	name = "Machine Design (Weapon Recharger Board)"
-	id = "recharger"
-/datum/design/board/vendor
-	name = "Machine Design (Vendor Board)"
-	id = "vendor"
-	category = list ("Misc. Machinery")
-/datum/design/board/ore_redemption
-	name = "Machine Design (Ore Redemption Board)"
-	id = "ore_redemption"
-	build_path = /obj/item/circuitboard/machine/ore_redemption
-	category = list ("Misc. Machinery")
-/datum/design/board/mining_equipment_vendor
-	name = "Machine Design (Mining Rewards Vender Board)"
-	id = "mining_equipment_vendor"
-	build_path = /obj/item/circuitboard/machine/mining_equipment_vendor
-	category = list ("Misc. Machinery")
-/datum/design/board/tesla_coil
-	name = "Machine Design (Tesla Coil Board)"
-	id = "tesla_coil"
-	build_path = /obj/item/circuitboard/machine/tesla_coil
-	category = list ("Misc. Machinery")
-/datum/design/board/grounding_rod
-	name = "Machine Design (Grounding Rod Board)"
-	id = "grounding_rod"
-	build_path = /obj/item/circuitboard/machine/grounding_rod
-	category = list ("Misc. Machinery")
-/datum/design/board/ntnet_relay
-	name = "Machine Design (NTNet Relay Board)"
-	id = "ntnet_relay"
-	build_path = /obj/item/circuitboard/machine/ntnet_relay
-/datum/design/board/limbgrower
-	name = "Machine Design (Limb Grower Board)"
-	id = "limbgrower"
-/datum/design/board/deepfryer
-	name = "Machine Design (Deep Fryer)"
-	id = "deepfryer"
-	build_path = /obj/item/circuitboard/machine/deep_fryer
-	category = list ("Misc. Machinery")
-////////////////////////////////////////
+/////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////
 /datum/design/mech_scattershot
@@ -827,22 +699,6 @@
 	id = "mech_medi_beam"
 	construction_time = 250
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam
-///////////////////////////////////
-/////Non-Board Computer Stuff//////
-///////////////////////////////////
-
-///////////////////Computer Boards///////////////////////////////////
-
-/datum/design/board/pandemic
-	name = "Computer Design (PanD.E.M.I.C. 2200)"
-	id = "pandemic"
-
-
-/datum/design/board/prisonmanage
-	name = "Computer Design (Prisoner Management Console)"
-	id = "prisonmanage"
-
-	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
 
 /datum/design/board/apc_control
 	name = "Computer Design (APC Control)"
