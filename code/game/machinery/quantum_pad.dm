@@ -25,6 +25,10 @@
 	. = ..()
 	if(map_pad_id)
 		mapped_quantum_pads[map_pad_id] = src
+		
+/obj/machinery/quantumpad/Destroy()
+	mapped_quantum_pads -= map_pad_id
+	return ..()
 
 /obj/machinery/quantumpad/RefreshParts()
 	var/E = 0
