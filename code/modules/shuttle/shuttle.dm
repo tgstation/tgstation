@@ -654,7 +654,7 @@
 				setTimer(20)
 				return
 		if(SHUTTLE_RECALL)
-			if(dock(previous) != DOCKING_SUCCES)
+			if(dock(previous) != DOCKING_SUCCESS)
 				setTimer(20)
 				return
 		if(SHUTTLE_IGNITING)
