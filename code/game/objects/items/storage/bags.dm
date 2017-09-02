@@ -118,6 +118,14 @@
 	can_hold = list(/obj/item/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/grown, /obj/item/reagent_containers/honeycomb)
 	resistance_flags = FLAMMABLE
 
+/obj/item/storage/bag/plants/holding
+	name = "plant bag of holding"
+	desc = "A revolution in convenience, this satchel allows for huge amounts of plant storage. It's been outfitted with anti-malfunction safety measures."
+	storage_slots = INFINITY
+	max_combined_w_class = INFINITY
+	origin_tech = "bluespace=4;materials=3;engineering=3;biotech=3"
+	icon_state = "plantbag_bspace"
+
 ////////
 
 /obj/item/storage/bag/plants/portaseeder
@@ -364,6 +372,14 @@
 	can_hold = list(/obj/item/reagent_containers/pill, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle)
 	resistance_flags = FLAMMABLE
 
+/obj/item/storage/bag/chemistry/holding
+	name = "chemistry bag of holding"
+	desc = "A revolution in convenience, this satchel allows for huge amounts of storage for pills, patches, and bottles. It's been outfitted with anti-malfunction safety measures."
+	storage_slots = INFINITY
+	max_combined_w_class = INFINITY
+	origin_tech = "bluespace=4;materials=3;engineering=3;biotech=4"
+	icon_state = "bag_bspace"
+
 /*
  *  Biowaste bag (mostly for xenobiologists)
  */
@@ -379,3 +395,11 @@
 	preposition = "in"
 	can_hold = list(/obj/item/slime_extract, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/blood, /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/food/snacks/deadmouse, /obj/item/reagent_containers/food/snacks/monkeycube)
 	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/bio/holding
+	name = "bio bag of holding"
+	desc = "A revolution in convenience, this satchel allows for huge amounts of biowaste and biological material storage. It's been outfitted with anti-malfunction safety measures."
+	storage_slots = INFINITY
+	max_combined_w_class = INFINITY
+	origin_tech = "bluespace=4;materials=3;engineering=3;biotech=4"
+	icon_state = "biobag_bspace"
