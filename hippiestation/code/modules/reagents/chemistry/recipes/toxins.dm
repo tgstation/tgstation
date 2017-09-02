@@ -79,7 +79,7 @@
 	required_reagents = list("isopropyl" = 3, "methphos" = 2)
 
 /datum/chemical_reaction/sarin_b
-	name = "Extremely dilute sarin"
+	name = "Dilute sarin"
 	id = "sarinb"
 	results = list("sarinb" = 2)
 	required_temp = 700
