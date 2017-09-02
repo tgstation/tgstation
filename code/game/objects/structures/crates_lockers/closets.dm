@@ -52,7 +52,7 @@
 
 
 /obj/structure/closet/return_temperature()
-	return FALSE
+	return
 
 /obj/structure/closet/update_icon()
 	cut_overlays()
