@@ -479,7 +479,7 @@
 	icon_state = "chainsaw_off"
 	flags = CONDUCT
 	force = 13
-	var/force_on = 24
+	var/force_on = 21
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 13
 	throw_speed = 2
