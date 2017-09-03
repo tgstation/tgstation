@@ -11119,9 +11119,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "axR" = (
-/obj/machinery/door/airlock/glass_atmos{
-	heat_proof = 1;
-	name = "Supermatter Chamber";
+/obj/machinery/door/airlock/glass_atmos/supermatter{
 	req_access_txt = "0";
 	req_one_access_txt = "24;10"
 	},

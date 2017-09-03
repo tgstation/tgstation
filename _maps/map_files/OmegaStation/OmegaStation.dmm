@@ -21378,8 +21378,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "aJv" = (
-/obj/machinery/door/airlock/glass_atmos{
-	name = "Supermatter Chamber";
+/obj/machinery/door/airlock/glass_atmos/supermatter{
 	req_access_txt = "24"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -22751,10 +22750,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "aLR" = (
-/obj/machinery/door/airlock/glass_atmos{
-	name = "Supermatter Chamber";
-	req_access_txt = "24"
-	},
+/obj/machinery/door/airlock/glass_atmos/supermatter,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aLS" = (

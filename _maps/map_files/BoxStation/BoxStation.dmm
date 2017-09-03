@@ -53094,11 +53094,9 @@
 /area/engine/supermatter)
 "cqE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/glass_engineering{
-	heat_proof = 1;
-	name = "Supermatter Chamber";
+/obj/machinery/door/airlock/glass_engineering/supermatter{
 	req_access_txt = "10"
-	},
+},
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cqF" = (
@@ -53410,11 +53408,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "crt" = (
-/obj/machinery/door/airlock/glass_engineering{
-	heat_proof = 1;
-	name = "Supermatter Chamber";
-	req_access_txt = "10"
-	},
+/obj/machinery/door/airlock/glass_engineering/supermatter,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cru" = (

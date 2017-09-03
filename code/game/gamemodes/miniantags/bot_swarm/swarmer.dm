@@ -395,6 +395,14 @@
 	to_chat(S, "<span class='warning'>This object does not contain enough materials to work with.</span>")
 	return FALSE
 
+/obj/machinery/door/airlock/glass_engineering/supermatter/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/door/airlock/glass_atmos/supermatter/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
+	return FALSE
+
 ////END CTRL CLICK FOR SWARMERS////
 
 /mob/living/simple_animal/hostile/swarmer/proc/Fabricate(atom/fabrication_object,fabrication_cost = 0)
