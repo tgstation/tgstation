@@ -106,7 +106,6 @@
  	build_path = /obj/item/circuitboard/computer/telesci_console
  	category = list("Teleportation Machinery")
 
-
 /datum/design/board/launchpad
 	name = "Machine Design (Bluespace Launchpad Board)"
 	desc = "The circuit board for a bluespace Launchpad."
