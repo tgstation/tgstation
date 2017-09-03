@@ -312,8 +312,8 @@ GLOBAL_PROTECT(config_dir)
 	GLOB.abandon_allowed = respawn
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
-	var/list/Lines = world.file2list(filename)
 	filename = "[GLOB.config_dir][filename]"
+	var/list/Lines = world.file2list(filename)
 	for(var/t in Lines)
 		if(!t)
 			continue
