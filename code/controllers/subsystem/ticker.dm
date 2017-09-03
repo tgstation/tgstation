@@ -461,14 +461,9 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
-<<<<<<< HEAD
-	for(var/client/C in GLOB.clients)
-		if(!C.credits)
-=======
 	var/nocredits = config.no_credits_round_end
 	for(var/client/C in GLOB.clients)
 		if(!C.credits && !nocredits)
->>>>>>> 335ebb3ccf... TRUEFALSE and changed the logic
 			C.RollCredits()
 		C.playtitlemusic(40)
 
