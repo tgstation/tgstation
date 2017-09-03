@@ -830,6 +830,7 @@ GLOBAL_PROTECT(config_dir)
 			WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 
 /datum/configuration/proc/loadmaplist(filename)
+	filename = "[GLOB.config_dir][filename]"
 	var/list/Lines = world.file2list(filename)
 
 	var/datum/map_config/currentmap = null
