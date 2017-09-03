@@ -316,6 +316,21 @@
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
 
+/obj/item/organ/lungs/cybernetic
+	name = "cybernetic lungs"
+	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
+	icon_state = "lungs-c"
+	origin_tech = "biotech=4"
+
+/obj/item/organ/lungs/cybernetic/upgraded
+	name = "upgraded cybernetic lungs"
+	desc = "A more advanced version of the stock cybernetic lungs. They are capable of filtering out lower levels of toxins and carbon-dioxide."
+	icon_state = "lungs-c-u"
+	origin_tech = "biotech=5"
+
+	safe_toxins_max = 20
+	safe_co2_max = 20
+
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS
 #undef HEAT_GAS_DAMAGE_LEVEL_1
