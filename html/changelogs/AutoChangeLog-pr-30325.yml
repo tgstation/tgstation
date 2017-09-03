@@ -1,0 +1,4 @@
+author: "Tortellini Tony"
+delete-after: True
+changes: 
+  - tweak: "Round-end credits can now be toggled on or off in the server game options."
