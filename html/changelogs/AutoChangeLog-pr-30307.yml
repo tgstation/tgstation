@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "The Disease Outbreak event now can generate random advanced viruses, with more symptoms and higher level as round time goes on."
