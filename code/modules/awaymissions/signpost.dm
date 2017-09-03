@@ -2,8 +2,8 @@
 /obj/structure/signpost
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "signpost"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/question = "Travel back?"
 	var/zlevels = list(ZLEVEL_STATION)
 
@@ -11,7 +11,7 @@
 	. = ..()
 	set_light(2)
 
-/obj/structure/signpost/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/signpost/attackby(obj/item/W, mob/user, params)
 	return attack_hand(user)
 
 /obj/structure/signpost/attack_hand(mob/user)

@@ -12,7 +12,7 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) commited suicide at [get_area(src)].")
+		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
@@ -170,8 +170,5 @@
 		return
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
-		return
-	if(has_brain_worms())
-		to_chat(src, "You can't bring yourself to commit suicide!")
 		return
 	return TRUE

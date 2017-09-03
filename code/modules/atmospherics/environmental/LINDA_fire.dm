@@ -44,8 +44,8 @@
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
-	anchored = 1
-	mouse_opacity = 0
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
@@ -61,9 +61,8 @@
 	..()
 	SSair.hotspots += src
 	perform_exposure()
-	setDir(pick(cardinal))
+	setDir(pick(GLOB.cardinals))
 	air_update_turf()
-
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc
@@ -79,14 +78,14 @@
 
 	if(bypassing)
 		if(!just_spawned)
-			volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
+			volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
 			temperature = location.air.temperature
 	else
 		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.volume)
 		affected.temperature = temperature
 		affected.react()
 		temperature = affected.temperature
-		volume = affected.fuel_burnt*FIRE_GROWTH_RATE
+		volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
 		location.assume_air(affected)
 
 	for(var/A in loc)

@@ -15,7 +15,7 @@
 	throw_speed	= 4
 	throw_range	= 20
 	origin_tech = "syndicate=1;engineering=3"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 
 	var/obj/machinery/camera/current = null
 
@@ -74,7 +74,7 @@
 /obj/item/device/camera_bug/proc/get_cameras()
 	if( world.time > (last_net_update + 100))
 		bugged_cameras = list()
-		for(var/obj/machinery/camera/camera in cameranet.cameras)
+		for(var/obj/machinery/camera/camera in GLOB.cameranet.cameras)
 			if(camera.stat || !camera.can_use())
 				continue
 			if(length(list("SS13","MINE")&camera.network))
@@ -218,7 +218,7 @@
 		var/list/cameras = flatten_list(bugged_cameras)
 		var/obj/machinery/camera/C = locate(href_list["emp"]) in cameras
 		if(C && istype(C) && C.bug == src)
-			C.emp_act(1)
+			C.emp_act(EMP_HEAVY)
 			C.bug = null
 			bugged_cameras -= C.c_tag
 		interact()

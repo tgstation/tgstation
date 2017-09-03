@@ -91,14 +91,21 @@
 
 	probability = 90
 
-/datum/weather/ash_storm/impact(mob/living/L)
-	if(istype(L.loc, /obj/mecha))
-		return
-	if(ishuman(L))
+/datum/weather/ash_storm/proc/is_ash_immune(mob/living/L)
+	if(istype(L.loc, /obj/mecha)) //Mechs are immune
+		return TRUE
+	if(ishuman(L)) //Are you immune?
 		var/mob/living/carbon/human/H = L
 		var/thermal_protection = H.get_thermal_protection()
 		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
-			return
+			return TRUE
+	if(istype(L.loc, /mob/living) && L.loc != L) //Matryoshka check
+		return is_ash_immune(L.loc)
+	return FALSE //RIP you
+
+/datum/weather/ash_storm/impact(mob/living/L)
+	if(is_ash_immune(L))
+		return
 	L.adjustFireLoss(4)
 
 /datum/weather/ash_storm/emberfall //Emberfall: An ash storm passes by, resulting in harmless embers falling like snow. 10% to happen in place of an ash storm.
@@ -134,7 +141,7 @@
 
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,
-	/area/ai_monitored/turret_protected/ai, /area/storage/emergency, /area/storage/emergency2, /area/shuttle)
+	/area/ai_monitored/turret_protected/ai, /area/storage/emergency/starboard, /area/storage/emergency/port, /area/shuttle)
 	target_z = ZLEVEL_STATION
 
 	immunity_type = "rad"
@@ -184,3 +191,33 @@
 		status_signal.data["picture_state"] = "radiation"
 
 	frequency.post_signal(src, status_signal)
+
+
+/datum/weather/acid_rain
+	name = "acid rain"
+	desc = "Some stay dry and others feel the pain"
+
+	telegraph_duration = 400
+	telegraph_message = "<span class='danger'>Stinging droplets start to fall upon you..</span>"
+	telegraph_sound = 'sound/ambience/acidrain_start.ogg'
+
+	weather_message = "<span class='userdanger'><i>Your skin melts underneath the rain!</i></span>"
+	weather_overlay = "acid_rain"
+	weather_duration_lower = 600
+	weather_duration_upper = 1500
+	weather_sound = 'sound/ambience/acidrain_mid.ogg'
+
+	end_duration = 100
+	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
+	end_sound = 'sound/ambience/acidrain_end.ogg'
+
+	area_type = /area/lavaland/surface/outdoors
+	target_z = ZLEVEL_LAVALAND
+
+	immunity_type = "acid" // temp
+
+
+/datum/weather/acid_rain/impact(mob/living/L)
+	var/resist = L.getarmor(null, "acid")
+	if(prob(max(0,100-resist)))
+		L.acid_act(20,20)

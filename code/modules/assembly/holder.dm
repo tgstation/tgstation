@@ -3,7 +3,9 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "holder"
 	item_state = "assembly"
-	flags = CONDUCT
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	flags_1 = CONDUCT_1
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 2
@@ -21,7 +23,7 @@
 	attach(A2,user)
 	name = "[A.name]-[A2.name] assembly"
 	update_icon()
-	feedback_add_details("assembly_made","[A.name]-[A2.name]")
+	SSblackbox.add_details("assembly_made","[initial(A.name)]-[initial(A2.name)]")
 
 /obj/item/device/assembly_holder/proc/attach(obj/item/device/assembly/A, mob/user)
 	if(!A.remove_item_from_storage(src))
@@ -44,14 +46,11 @@
 			add_overlay("[O]_l")
 
 	if(a_right)
-		var/list/images = list()
-		images += image(icon, icon_state = "[a_right.icon_state]_left")
+		var/mutable_appearance/right = mutable_appearance(icon, "[a_right.icon_state]_left")
+		right.transform = matrix(-1, 0, 0, 0, 1, 0)
 		for(var/O in a_right.attached_overlays)
-			images += image(icon, icon_state = "[O]_l")
-		var/matrix = matrix(-1, 0, 0, 0, 1, 0)
-		for(var/image/I in images)
-			I.transform = matrix
-			add_overlay(I)
+			right.add_overlay("[O]_l")
+		add_overlay(right)
 
 	if(master)
 		master.update_icon()
@@ -82,8 +81,8 @@
 	..()
 	return
 
-/obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/item/device/assembly_holder/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		var/turf/T = get_turf(src)
 		if(!T)
 			return 0

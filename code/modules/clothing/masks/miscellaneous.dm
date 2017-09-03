@@ -6,7 +6,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.90
-	put_on_delay = 20
+	equip_delay_other = 20
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(iscarbon(user))
@@ -201,3 +201,17 @@
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+
+/obj/item/clothing/mask/mummy
+	name = "mummy mask"
+	desc = "Ancient bandages."
+	icon_state = "mummy_mask"
+	item_state = "mummy_mask"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/mask/scarecrow
+	name = "sack mask"
+	desc = "A burlap sack with eyeholes."
+	icon_state = "scarecrow_sack"
+	item_state = "scarecrow_sack"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR

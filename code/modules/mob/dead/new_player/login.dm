@@ -1,4 +1,7 @@
 /mob/dead/new_player/Login()
+	if(config.use_exp_tracking)
+		client.set_exp_from_db()
+		client.set_db_player_flags()
 	if(!mind)
 		mind = new /datum/mind(key)
 		mind.active = 1
@@ -6,11 +9,11 @@
 
 	..()
 
-	if(join_motd)
-		to_chat(src, "<div class=\"motd\">[join_motd]</div>")
+	if(GLOB.join_motd)
+		to_chat(src, "<div class=\"motd\">[GLOB.join_motd]</div>")
 
-	if(admin_notice)
-		to_chat(src, "<span class='notice'><b>Admin Notice:</b>\n \t [admin_notice]</span>")
+	if(GLOB.admin_notice)
+		to_chat(src, "<span class='notice'><b>Admin Notice:</b>\n \t [GLOB.admin_notice]</span>")
 
 	if(config.soft_popcap && living_player_count() >= config.soft_popcap)
 		to_chat(src, "<span class='notice'><b>Server Notice:</b>\n \t [config.soft_popcap_message]</span>")
@@ -28,5 +31,11 @@
 */
 	new_player_panel()
 	client.playtitlemusic()
-	if(ticker.current_state < GAME_STATE_SETTING_UP)
-		to_chat(src, "Please set up your character and select \"Ready\". The game will start in about [round(ticker.GetTimeLeft(), 1)/10] seconds.")
+	if(SSticker.current_state < GAME_STATE_SETTING_UP)
+		var/tl = round(SSticker.GetTimeLeft(), 1)/10
+		var/postfix
+		if(tl >= 0)
+			postfix = "in about [tl] seconds"
+		else
+			postfix = "soon"
+		to_chat(src, "Please set up your character and select \"Ready\". The game will start [postfix].")

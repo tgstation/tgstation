@@ -63,13 +63,13 @@
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	update_areas()
-	for(var/V in player_list)
+	for(var/V in GLOB.player_list)
 		var/mob/M = V
 		if(M.z == target_z)
 			if(telegraph_message)
 				to_chat(M, telegraph_message)
 			if(telegraph_sound)
-				M << sound(telegraph_sound)
+				SEND_SOUND(M, sound(telegraph_sound))
 	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
 
 /datum/weather/proc/start()
@@ -77,13 +77,13 @@
 		return
 	stage = MAIN_STAGE
 	update_areas()
-	for(var/V in player_list)
+	for(var/V in GLOB.player_list)
 		var/mob/M = V
 		if(M.z == target_z)
 			if(weather_message)
 				to_chat(M, weather_message)
 			if(weather_sound)
-				M << sound(weather_sound)
+				SEND_SOUND(M, sound(weather_sound))
 	START_PROCESSING(SSweather, src)
 	addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
 
@@ -92,13 +92,13 @@
 		return
 	stage = WIND_DOWN_STAGE
 	update_areas()
-	for(var/V in player_list)
+	for(var/V in GLOB.player_list)
 		var/mob/M = V
 		if(M.z == target_z)
 			if(end_message)
 				to_chat(M, end_message)
 			if(end_sound)
-				M << sound(end_sound)
+				SEND_SOUND(M, sound(end_sound))
 	STOP_PROCESSING(SSweather, src)
 	addtimer(CALLBACK(src, .proc/end), end_duration)
 
@@ -126,7 +126,6 @@
 		var/area/N = V
 		N.layer = overlay_layer
 		N.icon = 'icons/effects/weather_effects.dmi'
-		N.invisibility = 0
 		N.color = weather_color
 		switch(stage)
 			if(STARTUP_STAGE)
@@ -137,8 +136,7 @@
 				N.icon_state = end_overlay
 			if(END_STAGE)
 				N.color = null
-				N.icon_state = initial(N.icon_state)
+				N.icon_state = ""
 				N.icon = 'icons/turf/areas.dmi'
 				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
-				N.invisibility = INVISIBILITY_MAXIMUM
 				N.set_opacity(FALSE)

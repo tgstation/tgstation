@@ -2,8 +2,8 @@
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "pod"
 	animate_movement = FORWARD_STEPS
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
@@ -12,7 +12,7 @@
 /obj/structure/transit_tube_pod/New(loc)
 	..()
 	air_contents.assert_gases("o2", "n2")
-	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD * 2
+	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD
 	air_contents.gases["n2"][MOLES] = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
@@ -28,7 +28,7 @@
 		icon_state = "pod"
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/crowbar))
 		if(!moving)
 			playsound(src.loc, I.usesound, 50, 1)
 			if(contents.len)
@@ -40,7 +40,7 @@
 		return ..()
 
 /obj/structure/transit_tube_pod/deconstruct(disassembled = TRUE, mob/user)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		var/atom/location = get_turf(src)
 		if(user)
 			location = user.loc
@@ -138,7 +138,7 @@
 			current_tube.pod_stopped(src, dir)
 			break
 
-	density = 1
+	density = TRUE
 	moving = 0
 
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc

@@ -47,10 +47,10 @@
         xinc='{{data.stored / 10}}' yinc='9'/>
   {{else}}
     <ui-section label='Available'>
-      <span>{{data.supply}} W</span>
+      <span>{{data.supply}}</span>
     </ui-section>
     <ui-section label='Load'>
-        <span>{{data.demand}} W</span>
+        <span>{{data.demand}}</span>
     </ui-section>
   {{/if}}
 </ui-display>
@@ -67,7 +67,7 @@
   {{#each data.areas}}
     <ui-section label='{{name}}' nowrap>
       <div class='content'>{{Math.round(adata.areas[@index].charge)}} %</div>
-      <div class='content'>{{Math.round(adata.areas[@index].load)}} W</div>
+      <div class='content'>{{adata.areas[@index].load}}</div>
       <div class='content'><span class='{{chargingState(charging)}}'>{{chargingMode(charging)}}</span></div>
       <div class='content'><span class='{{channelState(eqp)}}'>{{channelPower(eqp)}} [<span>{{channelMode(eqp)}}</span>]</span></div>
       <div class='content'><span class='{{channelState(lgt)}}'>{{channelPower(lgt)}} [<span>{{channelMode(lgt)}}</span>]</span></div>

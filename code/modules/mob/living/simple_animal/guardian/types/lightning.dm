@@ -20,18 +20,18 @@
 	var/successfulshocks = 0
 
 /mob/living/simple_animal/hostile/guardian/beam/AttackingTarget()
-	if(..())
-		if(isliving(target) && target != src && target != summoner)
-			cleardeletedchains()
-			for(var/chain in enemychains)
-				var/datum/beam/B = chain
-				if(B.target == target)
-					return //oh this guy already HAS a chain, let's not chain again
-			if(enemychains.len > 2)
-				var/datum/beam/C = pick(enemychains)
-				qdel(C)
-				enemychains -= C
-			enemychains += Beam(target, "lightning[rand(1,12)]", time=70, maxdistance=7, beam_type=/obj/effect/ebeam/chain)
+	. = ..()
+	if(. && isliving(target) && target != src && target != summoner)
+		cleardeletedchains()
+		for(var/chain in enemychains)
+			var/datum/beam/B = chain
+			if(B.target == target)
+				return //oh this guy already HAS a chain, let's not chain again
+		if(enemychains.len > 2)
+			var/datum/beam/C = pick(enemychains)
+			qdel(C)
+			enemychains -= C
+		enemychains += Beam(target, "lightning[rand(1,12)]", time=70, maxdistance=7, beam_type=/obj/effect/ebeam/chain)
 
 /mob/living/simple_animal/hostile/guardian/beam/Destroy()
 	removechains()

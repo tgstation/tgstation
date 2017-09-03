@@ -80,7 +80,7 @@ You have to use modules/client/asset_cache to ensure they get sent BEFORE the in
 
 */
 
-/var/list/html_interfaces = new/list()
+GLOBAL_LIST_EMPTY(html_interfaces)
 
 /datum/html_interface
 	// The atom we should report to.
@@ -112,7 +112,7 @@ You have to use modules/client/asset_cache to ensure they get sent BEFORE the in
 	var/static/list/asset_list
 
 /datum/html_interface/New(atom/ref, title, width = 700, height = 480, head = "")
-	html_interfaces.Add(src)
+	GLOB.html_interfaces.Add(src)
 
 	. = ..()
 
@@ -125,7 +125,7 @@ You have to use modules/client/asset_cache to ensure they get sent BEFORE the in
 /datum/html_interface/Destroy()
 	src.closeAll()
 
-	html_interfaces.Remove(src)
+	GLOB.html_interfaces.Remove(src)
 
 	return ..()
 

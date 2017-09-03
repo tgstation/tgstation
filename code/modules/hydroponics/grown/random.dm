@@ -6,7 +6,7 @@
 	icon_state = "seed-x"
 	species = "?????"
 	plantname = "strange plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/random
+	product = /obj/item/reagent_containers/food/snacks/grown/random
 	icon_grow = "xpod-grow"
 	icon_dead = "xpod-dead"
 	icon_harvest = "xpod-harvest"
@@ -21,7 +21,7 @@
 		add_random_traits()
 	add_random_plant_type(35)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/random
+/obj/item/reagent_containers/food/snacks/grown/random
 	seed = /obj/item/seeds/random
 	name = "strange plant"
 	desc = "What could this even be?"

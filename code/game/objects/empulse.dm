@@ -9,7 +9,7 @@
 		log_game("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
 
 	if(heavy_range > 1)
-		new /obj/effect/overlay/temp/emp/pulse(epicenter)
+		new /obj/effect/temp_visual/emp/pulse(epicenter)
 
 	if(heavy_range > light_range)
 		light_range = heavy_range
@@ -20,12 +20,12 @@
 		if(distance < 0)
 			distance = 0
 		if(distance < heavy_range)
-			T.emp_act(1)
+			T.emp_act(EMP_HEAVY)
 		else if(distance == heavy_range)
 			if(prob(50))
-				T.emp_act(1)
+				T.emp_act(EMP_HEAVY)
 			else
-				T.emp_act(2)
+				T.emp_act(EMP_LIGHT)
 		else if(distance <= light_range)
-			T.emp_act(2)
+			T.emp_act(EMP_LIGHT)
 	return 1

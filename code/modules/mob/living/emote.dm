@@ -7,7 +7,8 @@
 		param = copytext(act, custom_param + 1, length(act) + 1)
 		act = copytext(act, 1, custom_param)
 
-	var/datum/emote/E = emote_list[act]
+	var/datum/emote/E
+	E = E.emote_list[act]
 	if(!E)
 		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 		return
@@ -61,8 +62,9 @@
 
 /datum/emote/living/collapse/run_emote(mob/user, params)
 	. = ..()
-	if(.)
-		user.Paralyse(2)
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.Unconscious(40)
 
 /datum/emote/living/cough
 	key = "cough"
@@ -109,8 +111,9 @@
 
 /datum/emote/living/faint/run_emote(mob/user, params)
 	. = ..()
-	if(.)
-		user.SetSleeping(10)
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.SetSleeping(200)
 
 /datum/emote/living/flap
 	key = "flap"
@@ -323,13 +326,14 @@
 /datum/emote/living/surrender
 	key = "surrender"
 	key_third_person = "surrenders"
-	message = "puts their hands on their head and falls to the ground, they surrender%s!"
+	message = "puts their hands on their head and falls to the ground, they surrender!"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/surrender/run_emote(mob/user, params)
 	. = ..()
-	if(.)
-		user.Weaken(20)
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.Knockdown(200)
 
 /datum/emote/living/sway
 	key = "sway"
@@ -418,6 +422,9 @@
 	message = null
 	emote_type = EMOTE_VISIBLE
 
+/datum/emote/living/custom/replace_pronoun(mob/user, message)
+	return message
+
 /datum/emote/living/help
 	key = "help"
 
@@ -425,10 +432,12 @@
 	var/list/keys = list()
 	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
 
+	var/datum/emote/E
+	var/list/emote_list = E.emote_list
 	for(var/e in emote_list)
 		if(e in keys)
 			continue
-		var/datum/emote/E = emote_list[e]
+		E = emote_list[e]
 		if(E.can_run_emote(user, TRUE))
 			keys += E.key
 
@@ -456,11 +465,10 @@
 /datum/emote/living/spin
 	key = "spin"
 	key_third_person = "spins"
-	message = "spins around dizzily!"
 
 /datum/emote/living/spin/run_emote(mob/user)
 	user.spin(20, 1)
-	if(istype(user, /mob/living/silicon/robot))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.buckled_mobs)
 			for(var/mob/M in R.buckled_mobs)
@@ -469,3 +477,17 @@
 				else
 					R.unbuckle_all_mobs()
 	..()
+
+/datum/emote/living/circle
+	key = "circle"
+	key_third_person = "circles"
+	restraint_check = TRUE
+
+/datum/emote/living/circle/run_emote(mob/user, params)
+	. = ..()
+	var/obj/item/circlegame/N = new(user)
+	if(user.put_in_hands(N))
+		to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")
+	else
+		qdel(N)
+		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")

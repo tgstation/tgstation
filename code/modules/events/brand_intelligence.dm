@@ -26,8 +26,8 @@
 
 
 /datum/round_event/brand_intelligence/start()
-	for(var/obj/machinery/vending/V in machines)
-		if(V.z != 1)
+	for(var/obj/machinery/vending/V in GLOB.machines)
+		if(V.z != ZLEVEL_STATION)
 			continue
 		vendingMachines.Add(V)
 	if(!vendingMachines.len)

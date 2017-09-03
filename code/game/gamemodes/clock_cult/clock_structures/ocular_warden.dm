@@ -5,7 +5,6 @@
 	clockwork_desc = "A fragile turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	icon_state = "ocular_warden"
 	unanchored_icon = "ocular_warden_unwrenched"
-	obj_integrity = 25
 	max_integrity = 25
 	construction_value = 15
 	layer = WALL_OBJ_LAYER
@@ -17,8 +16,8 @@
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
 
-/obj/structure/destructible/clockwork/ocular_warden/New()
-	..()
+/obj/structure/destructible/clockwork/ocular_warden/Initialize()
+	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/destructible/clockwork/ocular_warden/Destroy()
@@ -33,26 +32,19 @@
 	return 25
 
 /obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user, silent)
-	if(anchored)
-		if(obj_integrity <= max_integrity * 0.25)
-			if(!silent)
-				to_chat(user, "<span class='warning'>[src] is too damaged to unsecure!</span>")
-			return FAILED_UNFASTEN
-	else
+	if(!anchored)
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(OCULAR_WARDEN_EXCLUSION_RANGE, src))
-			if(!silent)
-				to_chat(user, "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>")
-			return FAILED_UNFASTEN
+			if(W.anchored)
+				if(!silent)
+					to_chat(user, "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>")
+				return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
 /obj/structure/destructible/clockwork/ocular_warden/ratvar_act()
 	..()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		damage_per_tick = 10
 		sight_range = 6
-	else if(nezbere_invoked)
-		damage_per_tick = 5
-		sight_range = 5
 	else
 		damage_per_tick = initial(damage_per_tick)
 		sight_range = initial(sight_range)
@@ -80,14 +72,14 @@
 					else
 						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot2.ogg',50,1)
 					L.adjustFireLoss((!iscultist(L) ? damage_per_tick : damage_per_tick * 2) * get_efficiency_mod()) //Nar-Sian cultists take additional damage
-					if(ratvar_awakens && L)
+					if(GLOB.ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
-			else if(istype(target,/obj/mecha))
+			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
-			new /obj/effect/overlay/temp/ratvar/ocular_warden(get_turf(target))
+			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(target))
 
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
@@ -97,24 +89,24 @@
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
 			if(isliving(target))
 				var/mob/living/L = target
-				to_chat(L, "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
-			else if(istype(target,/obj/mecha))
+				to_chat(L, "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [GLOB.ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
+			else if(istype(target, /obj/mecha))
 				var/obj/mecha/M = target
 				to_chat(M.occupant, "<span class='heavy_brass'>\"I SEE YOU!\"</span>" )
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
 				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
 			else
-				setDir(pick(cardinal))//Random rotation
+				setDir(pick(GLOB.cardinals))//Random rotation
 
 /obj/structure/destructible/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		var/obj/item/weapon/storage/book/bible/B = L.bible_check()
+		var/obj/item/storage/book/bible/B = L.bible_check()
 		if(B)
 			if(!(B.resistance_flags & ON_FIRE))
 				to_chat(L, "<span class='warning'>Your [B.name] bursts into flames!</span>")
-			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
+			for(var/obj/item/storage/book/bible/BI in L.GetAllContents())
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
 			continue
@@ -131,7 +123,7 @@
 		else if(!L.mind)
 			continue
 		. += L
-	for(var/N in mechas_list)
+	for(var/N in GLOB.mechas_list)
 		var/obj/mecha/M = N
 		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
 			. += M

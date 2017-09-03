@@ -16,7 +16,7 @@
 	priority_announce("Unknown magical entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 
 /datum/round_event/wizard/magicarp/start()
-	for(var/obj/effect/landmark/C in landmarks_list)
+	for(var/obj/effect/landmark/C in GLOB.landmarks_list)
 		if(C.name == "carpspawn")
 			if(prob(5))
 				new /mob/living/simple_animal/hostile/carp/ranged/chaos(C.loc)

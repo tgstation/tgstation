@@ -16,7 +16,7 @@
 	spawncount = rand(5, 8)
 
 /datum/round_event/spider_infestation/announce()
-	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/AI/aliens.ogg')
+	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg')
 
 
 /datum/round_event/spider_infestation/start()

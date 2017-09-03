@@ -4,9 +4,11 @@
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
 	origin_tech = "programming=3;materials=3"
@@ -23,6 +25,7 @@
 	update_icon() //Whatever happened, update the card's state (icon, name) to match.
 
 /obj/item/device/aicard/update_icon()
+	cut_overlays()
 	if(AI)
 		name = "[initial(name)]- [AI.name]"
 		if(AI.stat == DEAD)
@@ -30,15 +33,14 @@
 		else
 			icon_state = "aicard-full"
 		if(!AI.control_disabled)
-			add_overlay(image('icons/obj/aicards.dmi', "aicard-on"))
+			add_overlay("aicard-on")
 		AI.cancel_camera()
 	else
 		name = initial(name)
 		icon_state = initial(icon_state)
-		cut_overlays()
 
-/obj/item/device/aicard/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
+/obj/item/device/aicard/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "intellicard", name, 500, 500, master_ui, state)

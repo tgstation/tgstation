@@ -48,8 +48,8 @@
 
 
 /mob/living/simple_animal/hostile/illusion/AttackingTarget()
-	..()
-	if(isliving(target) && prob(multiply_chance))
+	. = ..()
+	if(. && isliving(target) && prob(multiply_chance))
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			return
@@ -67,8 +67,8 @@
 	melee_damage_upper = 0
 	speed = -1
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 
 
 /mob/living/simple_animal/hostile/illusion/escape/AttackingTarget()
-	return
+	return FALSE

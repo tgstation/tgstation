@@ -4,9 +4,9 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
-	use_power = 0
-	anchored = 1
-	density = 1
+	use_power = NO_POWER_USE
+	anchored = TRUE
+	density = TRUE
 
 	var/charges = 1
 	var/insisting = 0
@@ -39,7 +39,7 @@
 		user.dna.add_mutation(COLDRES)
 		user.dna.add_mutation(TK)
 
-		ticker.mode.traitors += user.mind
+		SSticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"
 
 		var/datum/objective/hijack/hijack = new

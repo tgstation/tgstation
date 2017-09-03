@@ -6,7 +6,7 @@
 	clothes_req = 0
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = "shout"
-	sound = 'sound/magic/ForceWall.ogg'
+	sound = 'sound/magic/forcewall.ogg'
 	action_icon_state = "shield"
 	range = -1
 	include_user = 1
@@ -26,12 +26,12 @@
 /obj/effect/forcefield/wizard
 	var/mob/wizard
 
-/obj/effect/forcefield/wizard/New(atom/loc, mob/summoner)
-	..()
+/obj/effect/forcefield/wizard/Initialize(mapload, mob/summoner)
+	. = ..()
 	wizard = summoner
 	QDEL_IN(src, 300)
 
-/obj/effect/forcefield/wizard/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/effect/forcefield/wizard/CanPass(atom/movable/mover, turf/target)
 	if(mover == wizard)
 		return 1
 	return 0

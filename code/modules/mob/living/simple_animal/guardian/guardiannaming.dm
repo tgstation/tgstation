@@ -15,7 +15,7 @@
 	stainself = 1
 
 /datum/guardianname/carp/New()
-	prefixname = pick(carp_names)
+	prefixname = pick(GLOB.carp_names)
 
 /datum/guardianname/carp/sand
 	suffixcolour = "Sand"

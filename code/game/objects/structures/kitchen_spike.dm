@@ -6,9 +6,8 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "spikeframe"
 	desc = "The frame of a meat spike."
-	density = 1
-	anchored = 0
-	obj_integrity = 200
+	density = TRUE
+	anchored = FALSE
 	max_integrity = 200
 
 /obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user, params)
@@ -23,8 +22,8 @@
 			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
-	else if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = I
+	else if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = I
 		if(!WT.remove_fuel(0, user))
 			return
 		to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
@@ -47,11 +46,10 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "spike"
 	desc = "A spike for collecting meat from animals"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	buckle_lying = 0
 	can_buckle = 1
-	obj_integrity = 250
 	max_integrity = 250
 
 
@@ -60,7 +58,7 @@
 
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/crowbar))
 		if(!has_buckled_mobs())
 			playsound(loc, I.usesound, 100, 1)
 			if(do_after(user, 20*I.toolspeed, target = src))
@@ -139,7 +137,7 @@
 		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
 		unbuckle_mob(M,force=1)
 		M.emote("scream")
-		M.AdjustWeakened(10)
+		M.AdjustKnockdown(20)
 
 /obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
 	if(disassembled)

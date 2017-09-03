@@ -1,15 +1,13 @@
-/var/list/datum/lighting_corner/all_lighting_corners = list()
-/var/datum/lighting_corner/dummy/dummy_lighting_corner = new
 // Because we can control each corner of every lighting object.
 // And corners get shared between multiple turfs (unless you're on the corners of the map, then 1 corner doesn't).
 // For the record: these should never ever ever be deleted, even if the turf doesn't have dynamic lighting.
 
 // This list is what the code that assigns corners listens to, the order in this list is the order in which corners are added to the /turf/corners list.
-/var/list/LIGHTING_CORNER_DIAGONAL = list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
+GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST))
 
 /datum/lighting_corner
-	var/list/turf/masters                 = list()
-	var/list/datum/light_source/affecting = list() // Light sources affecting us.
+	var/list/turf/masters
+	var/list/datum/light_source/affecting // Light sources affecting us.
 	var/active                            = FALSE  // TRUE if one of our masters has dynamic lighting.
 
 	var/x     = 0
@@ -27,13 +25,9 @@
 	var/cache_b  = LIGHTING_SOFT_THRESHOLD
 	var/cache_mx = 0
 
-	var/update_gen = 0
-
 /datum/lighting_corner/New(var/turf/new_turf, var/diagonal)
 	. = ..()
-
-	all_lighting_corners += src
-
+	masters = list()
 	masters[new_turf] = turn(diagonal, 180)
 	z = new_turf.z
 
@@ -56,7 +50,7 @@
 			T.corners = list(null, null, null, null)
 
 		masters[T]   = diagonal
-		i            = LIGHTING_CORNER_DIAGONAL.Find(turn(diagonal, 180))
+		i            = GLOB.LIGHTING_CORNER_DIAGONAL.Find(turn(diagonal, 180))
 		T.corners[i] = src
 
 	// Now the horizontal one.
@@ -66,7 +60,7 @@
 			T.corners = list(null, null, null, null)
 
 		masters[T]   = ((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH) // Get the dir based on coordinates.
-		i            = LIGHTING_CORNER_DIAGONAL.Find(turn(masters[T], 180))
+		i            = GLOB.LIGHTING_CORNER_DIAGONAL.Find(turn(masters[T], 180))
 		T.corners[i] = src
 
 	// And finally the vertical one.
@@ -76,7 +70,7 @@
 			T.corners = list(null, null, null, null)
 
 		masters[T]   = ((T.x > x) ? EAST : WEST) | ((T.y > y) ? NORTH : SOUTH) // Get the dir based on coordinates.
-		i            = LIGHTING_CORNER_DIAGONAL.Find(turn(masters[T], 180))
+		i            = GLOB.LIGHTING_CORNER_DIAGONAL.Find(turn(masters[T], 180))
 		T.corners[i] = src
 
 	update_active()
@@ -98,10 +92,13 @@
 
 	if (!needs_update)
 		needs_update = TRUE
-		lighting_update_corners += src
+		GLOB.lighting_update_corners += src
 
 /datum/lighting_corner/proc/update_objects()
 	// Cache these values a head of time so 4 individual lighting objects don't all calculate them individually.
+	var/lum_r = src.lum_r
+	var/lum_g = src.lum_g
+	var/lum_b = src.lum_b
 	var/mx = max(lum_r, lum_g, lum_b) // Scale it so one of them is the strongest lum, if it is above 1.
 	. = 1 // factor
 	if (mx > 1)
@@ -111,22 +108,22 @@
 	else if (mx < LIGHTING_SOFT_THRESHOLD)
 		. = 0 // 0 means soft lighting.
 
-	cache_r  = lum_r * . || LIGHTING_SOFT_THRESHOLD
-	cache_g  = lum_g * . || LIGHTING_SOFT_THRESHOLD
-	cache_b  = lum_b * . || LIGHTING_SOFT_THRESHOLD
+	cache_r  = round(lum_r * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
+	cache_g  = round(lum_g * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
+	cache_b  = round(lum_b * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
 	#else
-	cache_r  = lum_r * .
-	cache_g  = lum_g * .
-	cache_b  = lum_b * .
+	cache_r  = round(lum_r * ., LIGHTING_ROUND_VALUE)
+	cache_g  = round(lum_g * ., LIGHTING_ROUND_VALUE)
+	cache_b  = round(lum_b * ., LIGHTING_ROUND_VALUE)
 	#endif
-	cache_mx = mx
+	cache_mx = round(mx, LIGHTING_ROUND_VALUE)
 
 	for (var/TT in masters)
 		var/turf/T = TT
 		if (T.lighting_object)
 			if (!T.lighting_object.needs_update)
 				T.lighting_object.needs_update = TRUE
-				lighting_update_objects += T.lighting_object
+				GLOB.lighting_update_objects += T.lighting_object
 
 
 /datum/lighting_corner/dummy/New()
@@ -138,5 +135,5 @@
 		return QDEL_HINT_LETMELIVE
 
 	stack_trace("Ok, Look, TG, I need you to find whatever fucker decided to call qdel on a fucking lighting corner, then tell him very nicely and politely that he is 100% retarded and needs his head checked. Thanks. Send them my regards by the way.")
-	// Yeah fuck you anyways.
-	return QDEL_HINT_LETMELIVE
+	
+	return ..()

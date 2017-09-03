@@ -73,7 +73,6 @@
 	permeability_mod = 1
 	cure_chance = 1
 	disease_flags = CAN_CARRY|CAN_RESIST
-	longevity = 30
 	desc = "Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
 	severity = BIOHAZARD
 	stage_prob = 4
@@ -90,7 +89,7 @@
 
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
 	if(!ismonkey(affected_mob))
-		ticker.mode.add_monkey(affected_mob.mind)
+		SSticker.mode.add_monkey(affected_mob.mind)
 		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/disease/transformation/jungle_fever/stage_act()
@@ -108,7 +107,7 @@
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."))
 
 /datum/disease/transformation/jungle_fever/cure()
-	ticker.mode.remove_monkey(affected_mob.mind)
+	SSticker.mode.remove_monkey(affected_mob.mind)
 	..()
 
 
@@ -138,7 +137,7 @@
 				affected_mob.say(pick("Beep, boop", "beep, beep!", "Boop...bop"))
 			if (prob(4))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
-				affected_mob.Paralyse(2)
+				affected_mob.Unconscious(40)
 		if(4)
 			if (prob(20))
 				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."))
@@ -167,7 +166,7 @@
 		if(3)
 			if (prob(4))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
-				affected_mob.Paralyse(2)
+				affected_mob.Unconscious(40)
 		if(4)
 			if (prob(20))
 				affected_mob.say(pick("You look delicious.", "Going to... devour you...", "Hsssshhhhh!"))

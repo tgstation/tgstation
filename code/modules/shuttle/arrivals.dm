@@ -19,42 +19,40 @@
 	var/list/queued_announces	//people coming in that we have to announce
 	var/obj/machinery/requests_console/console
 	var/force_depart = FALSE
+	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
-	if(mapload)
-		return TRUE	//late initialize to make sure the latejoin list is populated
-
-	preferred_direction = dir
-
 	if(SSshuttle.arrivals)
 		WARNING("More than one arrivals docking_port placed on map!")
-		qdel(src)
-		return
-
+		return INITIALIZE_HINT_QDEL
 	SSshuttle.arrivals = src
 
-	..()
+	. = ..()
 
+	preferred_direction = dir
+	return INITIALIZE_HINT_LATELOAD	//for latejoin list
+
+/obj/docking_port/mobile/arrivals/LateInitialize()
 	areas = list()
 
 	var/list/new_latejoin = list()
-	for(var/area/shuttle/arrival/A in sortedAreas)
+	for(var/area/shuttle/arrival/A in GLOB.sortedAreas)
 		for(var/obj/structure/chair/C in A)
 			new_latejoin += C
 		if(!console)
 			console = locate(/obj/machinery/requests_console) in A
 		areas += A
 
-	if(latejoin.len)
+	if(SSjob.latejoin_trackers.len)
 		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
 
 	if(!new_latejoin.len)
 		WARNING("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
-		if(!latejoin.len)
+		if(!SSjob.latejoin_trackers.len)
 			WARNING("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
 		return
 
-	latejoin = new_latejoin
+	SSjob.latejoin_trackers = new_latejoin
 
 /obj/docking_port/mobile/arrivals/dockRoundstart()
 	SSshuttle.generate_transit_dock(src)
@@ -66,11 +64,19 @@
 /obj/docking_port/mobile/arrivals/check()
 	. = ..()
 
+	if(perma_docked)
+		if(mode != SHUTTLE_CALL)
+			sound_played = FALSE
+			mode = SHUTTLE_IDLE
+		else
+			SendToStation()
+		return
+
 	if(damaged)
 		if(!CheckTurfsPressure())
 			damaged = FALSE
 			if(console)
-				console.say("Repairs complete, launching soon.") 
+				console.say("Repairs complete, launching soon.")
 		return
 
 //If this proc is high on the profiler add a cooldown to the stuff after this line
@@ -79,16 +85,16 @@
 		damaged = TRUE
 		if(console)
 			console.say("Alert, hull breach detected!")
-		var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 		announcer.announce("ARRIVALS_BROKEN", channels = list())
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE
-		else		
+		else
 			SendToStation()
 		return
 
-	var/found_awake = PersonCheck()
+	var/found_awake = PersonCheck() || NukeDiskCheck()
 	if(mode == SHUTTLE_CALL)
 		if(found_awake)
 			SendToStation()
@@ -103,7 +109,7 @@
 		Launch(FALSE)
 
 /obj/docking_port/mobile/arrivals/proc/CheckTurfsPressure()
-	for(var/I in latejoin)
+	for(var/I in SSjob.latejoin_trackers)
 		var/turf/open/T = get_turf(I)
 		var/pressure = T.air.return_pressure()
 		if(pressure < HAZARD_LOW_PRESSURE || pressure > HAZARD_HIGH_PRESSURE)	//simple safety check
@@ -111,9 +117,15 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/M in (living_mob_list & player_list))
+	for(var/M in (GLOB.living_mob_list & GLOB.player_list))
 		var/mob/living/L = M
 		if((get_area(M) in areas) && L.stat != DEAD)
+			return TRUE
+	return FALSE
+
+/obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()
+	for (var/obj/item/disk/nuclear/N in GLOB.poi_list)
+		if (get_area(N) in areas)
 			return TRUE
 	return FALSE
 
@@ -121,7 +133,7 @@
 	var/dockTime = config.arrivals_shuttle_dock_window
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
 		if(console)
-			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [SSmapping.config.map_name].")
+			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [station_name()].")
 		hyperspace_sound(HYPERSPACE_LAUNCH, areas)	//for the new guy
 		setTimer(dockTime)
 
@@ -129,15 +141,22 @@
 	var/docked = S1 == assigned_transit
 	sound_played = FALSE
 	if(docked)	//about to launch
-		if(!force_depart && PersonCheck())
-			mode = SHUTTLE_IDLE
-			if(console)
-				console.say("Launch cancelled, lifeform dectected on board.")
-			return
+		if(!force_depart)
+			var/cancel_reason
+			if(PersonCheck())
+				cancel_reason = "lifeform dectected on board"
+			else if(NukeDiskCheck())
+				cancel_reason = "critical station device detected on board"
+			if(cancel_reason)
+				mode = SHUTTLE_IDLE
+				if(console)
+					console.say("Launch cancelled, [cancel_reason].")
+				return
 		force_depart = FALSE
 	. = ..()
 	if(!. && !docked && !damaged)
-		console.say("Welcome to your new life, employees!")
+		if(console)
+			console.say("Welcome to your new life, employees!")
 		for(var/L in queued_announces)
 			var/datum/callback/C = L
 			C.Invoke()
@@ -165,12 +184,21 @@
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
 	if(mode == SHUTTLE_CALL || damaged)
 		return
-	
+
 	Launch(TRUE)
 
-	user << "<span class='notice'>Calling your shuttle. One moment...</span>"
+	to_chat(user, "<span class='notice'>Calling your shuttle. One moment...</span>")
 	while(mode != SHUTTLE_CALL && !damaged)
 		stoplag()
 
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
-	LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+	if(mode != SHUTTLE_CALL)
+		AnnounceArrival(mob, rank)
+	else
+		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+
+/obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("perma_docked")
+			SSblackbox.add_details("admin_secrets_fun_used","ShA[var_value ? "s" : "g"]")
+	return ..()

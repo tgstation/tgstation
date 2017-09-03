@@ -10,8 +10,8 @@
 	num_modifier = 4
 	objective_count = 2
 
-	var/list/target_list = list()
-	var/list/late_joining_list = list()
+	var/list/devil_target_list = list() //will update to be a child of internal affairs when bothered
+	var/list/devil_late_joining_list = list()
 	minimum_devils = 3
 
 	announce_text = "There are devil agents onboard the station, trying to outbid each other!\n\
@@ -24,7 +24,7 @@
 		i++
 		if(i + 1 > devils.len)
 			i = 0
-		target_list[devil] = devils[i + 1]
+		devil_target_list[devil] = devils[i + 1]
 	..()
 
 /datum/game_mode/devil/devil_agents/add_devil_objectives(datum/mind/devil_mind, quantity)
@@ -32,8 +32,8 @@
 
 /datum/game_mode/devil/devil_agents/proc/give_outsell_objective(datum/mind/devil)
 	//If you override this method, have it return the number of objectives added.
-	if(target_list.len && target_list[devil]) // Is a double agent
-		var/datum/mind/target_mind = target_list[devil]
+	if(devil_target_list.len && devil_target_list[devil]) // Is a double agent
+		var/datum/mind/target_mind = devil_target_list[devil]
 		var/datum/objective/devil/outsell/outsellobjective = new
 		outsellobjective.owner = devil
 		outsellobjective.target = target_mind

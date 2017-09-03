@@ -66,16 +66,27 @@
 
 /datum/export/organ/hivelord
 	cost = 1500
-	unit_name = "active hivelord core"
-	export_types = list(/obj/item/organ/hivelord_core)
+	unit_name = "active regenerative core"
+	export_types = list(/obj/item/organ/regenerative_core)
 
-/datum/export/organ/alien/plasmavessel/get_cost(obj/item/organ/hivelord_core/C)
+/datum/export/organ/alien/plasmavessel/get_cost(obj/item/organ/regenerative_core/C)
 	if(C.inert)
 		return ..() / 3
 	if(C.preserved)
 		return ..() * 2
 	return ..()
-
+	
+// Kitty Organs.
+	
+/datum/export/organ/cat/ears
+	cost = 1000
+	unit_name = "cat ears"
+	export_types = list(/obj/item/organ/ears/cat)
+	
+/datum/export/organ/cat/tail
+	cost = 1000
+	unit_name = "cat tail"
+	export_types = list(/obj/item/organ/tail/cat)
 
 // Human organs.
 

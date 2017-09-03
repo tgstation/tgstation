@@ -1,19 +1,14 @@
-var/datum/controller/subsystem/parallax/SSparallax
-
-/datum/controller/subsystem/parallax
+SUBSYSTEM_DEF(parallax)
 	name = "Parallax"
 	wait = 2
-	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND | SS_NO_INIT
+	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
 	priority = 65
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
-
-/datum/controller/subsystem/parallax/New()
-	NEW_SS_GLOBAL(SSparallax)
-	return ..()
 
 /datum/controller/subsystem/parallax/fire(resumed = 0)
 	if (!resumed)
-		src.currentrun = clients.Copy()
+		src.currentrun = GLOB.clients.Copy()
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun

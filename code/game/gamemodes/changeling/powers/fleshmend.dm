@@ -1,11 +1,7 @@
 /obj/effect/proc_holder/changeling/fleshmend
 	name = "Fleshmend"
-	desc = "Our flesh rapidly regenerates, healing our burns, bruises and \
-		shortness of breath. Effectiveness decreases with quick, \
-		repeated use."
-	helptext = "Heals a moderate amount of damage over a short period of \
-		time. Can be used while unconscious. Does not regrow limbs or \
-		restore lost blood."
+	desc = "Our flesh rapidly regenerates, healing our burns, bruises and shortness of breath. Effectiveness decreases with quick, repeated use."
+	helptext = "Heals a moderate amount of damage over a short period of time. Can be used while unconscious. Does not regrow limbs or restore lost blood."
 	chemical_cost = 20
 	dna_cost = 2
 	req_stat = UNCONSCIOUS
@@ -15,8 +11,8 @@
 	// divided by healing_ticks to get heal/tick
 	var/total_healing = 100
 
-/obj/effect/proc_holder/changeling/fleshmend/New()
-	..()
+/obj/effect/proc_holder/changeling/fleshmend/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/proc_holder/changeling/fleshmend/Destroy()
@@ -37,9 +33,7 @@
 
 	recent_uses++
 	INVOKE_ASYNC(src, .proc/fleshmend, user)
-
-	feedback_add_details("changeling_powers","RR")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/fleshmend/proc/fleshmend(mob/living/user)
 

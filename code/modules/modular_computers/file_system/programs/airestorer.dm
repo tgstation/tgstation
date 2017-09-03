@@ -1,20 +1,22 @@
-
-
 /datum/computer_file/program/aidiag
 	filename = "aidiag"
-	filedesc = "AI Maintenance Utility"
+	filedesc = "AI Integrity Restorer"
 	program_icon_state = "generic"
 	extended_desc = "This program is capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
 	requires_ntnet = 0
 	usage_flags = PROGRAM_CONSOLE
-	transfer_access = access_heads
+	transfer_access = ACCESS_HEADS
 	available_on_ntnet = 1
+	tgui_id = "ntos_ai_restorer"
+	ui_x = 600
+	ui_y = 400
+
 	var/restoring = FALSE
 
 /datum/computer_file/program/aidiag/proc/get_ai(cardcheck)
 
-	var/obj/item/weapon/computer_hardware/ai_slot/ai_slot
+	var/obj/item/computer_hardware/ai_slot/ai_slot
 
 	if(computer)
 		ai_slot = computer.all_components[MC_AI]
@@ -45,7 +47,7 @@
 			return TRUE
 		if("PRG_eject")
 			if(computer.all_components[MC_AI])
-				var/obj/item/weapon/computer_hardware/ai_slot/ai_slot = computer.all_components[MC_AI]
+				var/obj/item/computer_hardware/ai_slot/ai_slot = computer.all_components[MC_AI]
 				if(ai_slot && ai_slot.stored_card)
 					ai_slot.try_eject(0,usr)
 					return TRUE
@@ -56,7 +58,7 @@
 		return
 	var/obj/item/device/aicard/cardhold = get_ai(2)
 
-	var/obj/item/weapon/computer_hardware/ai_slot/ai_slot = get_ai(1)
+	var/obj/item/computer_hardware/ai_slot/ai_slot = get_ai(1)
 
 
 	var/mob/living/silicon/ai/A = get_ai()
@@ -113,12 +115,6 @@
 				data["ai_laws"] = AI.laws.get_law_list(include_zeroth = 1)
 
 	return data
-
-/datum/computer_file/program/aidiag/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "ai_restorer", "Integrity Restorer", 600, 400, master_ui, state)
-		ui.open()
 
 /datum/computer_file/program/aidiag/kill_program(forced)
 	restoring = FALSE

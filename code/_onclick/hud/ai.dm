@@ -53,7 +53,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
-	crewmonitor.show(AI)
+	GLOB.crewmonitor.show(AI)
 
 /obj/screen/ai/crew_manifest
 	name = "Crew Manifest"
@@ -166,6 +166,11 @@
 /datum/hud/ai/New(mob/owner, ui_style = 'icons/mob/screen_ai.dmi')
 	..()
 	var/obj/screen/using
+
+// Language menu
+	using = new /obj/screen/language_menu
+	using.screen_loc = ui_borg_language_menu
+	static_inventory += using
 
 //AI core
 	using = new /obj/screen/ai/aicore()

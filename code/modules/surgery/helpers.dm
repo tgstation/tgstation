@@ -6,7 +6,7 @@
 	var/obj/item/bodypart/affecting
 	var/selected_zone = user.zone_selected
 
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		C = M
 		affecting = C.get_bodypart(check_zone(selected_zone))
 
@@ -20,7 +20,7 @@
 			current_surgery = S
 
 	if(!current_surgery)
-		var/list/all_surgeries = surgeries_list.Copy()
+		var/list/all_surgeries = GLOB.surgeries_list.Copy()
 		var/list/available_surgeries = list()
 
 		for(var/datum/surgery/S in all_surgeries)
@@ -30,6 +30,8 @@
 				if(!S.requires_bodypart)
 					continue
 				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+					continue
+				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
 			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb
 				continue
@@ -76,7 +78,7 @@
 			user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
 				"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
 			qdel(current_surgery)
-		else if(istype(user.get_inactive_held_item(), /obj/item/weapon/cautery) && current_surgery.can_cancel)
+		else if(istype(user.get_inactive_held_item(), /obj/item/cautery) && current_surgery.can_cancel)
 			M.surgeries -= current_surgery
 			user.visible_message("[user] mends the incision and removes the drapes from [M]'s [parse_zone(selected_zone)].", \
 				"<span class='notice'>You mend the incision and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")

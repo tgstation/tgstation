@@ -3,8 +3,8 @@
 	desc = "Small things moving very fast."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "particle"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	var/movement_range = 10
 	var/energy = 10
 	var/speed = 1
@@ -28,7 +28,7 @@
 	addtimer(CALLBACK(src, .proc/move), 1)
 
 
-/obj/effect/accelerated_particle/Bump(atom/A)
+/obj/effect/accelerated_particle/Collide(atom/A)
 	if(A)
 		if(isliving(A))
 			toxmob(A)

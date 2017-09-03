@@ -20,7 +20,7 @@
 	earliest_start = 0
 
 /datum/round_event/wizard/possession/start()
-	for(var/mob/dead/observer/G in player_list)
+	for(var/mob/dead/observer/G in GLOB.player_list)
 		G.verbs += /mob/dead/observer/verb/boo
 		G.verbs += /mob/dead/observer/verb/possess
 		to_chat(G, "You suddenly feel a welling of new spooky powers...")

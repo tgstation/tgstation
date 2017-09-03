@@ -15,7 +15,7 @@
 						"Exospheri:%£ QCbyj^j</.3-BZZZZZZT", \
 						"!!hy%;f3l7e,<$^-BZZZZZZZT")
 
-	for(var/mob/living/silicon/ai/A in ai_list)
+	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
 	//AIs are always aware of processor overload
 		to_chat(A, "<br><span class='warning'><b>[alert]</b></span><br>")
 
@@ -27,7 +27,7 @@
 
 
 /datum/round_event/processor_overload/start()
-	for(var/obj/machinery/telecomms/T in telecomms_list)
+	for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
 		if(istype(T, /obj/machinery/telecomms/processor))
 			var/obj/machinery/telecomms/processor/P = T
 			if(prob(10))
@@ -35,6 +35,6 @@
 				explosion(get_turf(P), 0, 0, 2)
 				// Only a level 1 explosion actually damages the machine
 				// at all
-				P.ex_act(1)
+				P.ex_act(EXPLODE_DEVASTATE)
 			else
-				P.emp_act(1)
+				P.emp_act(EMP_HEAVY)

@@ -5,26 +5,25 @@
 	icon_state = "firing_pin"
 	item_state = "pen"
 	origin_tech = "materials=2;combat=4"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("poked")
-	var/emagged = 0
 	var/fail_message = "<span class='warning'>INVALID USER.</span>"
 	var/selfdestruct = 0 // Explode when user check is failed.
 	var/force_replace = 0 // Can forcefully replace other pins.
 	var/pin_removeable = 0 // Can be replaced by any pin.
-	var/obj/item/weapon/gun/gun
+	var/obj/item/gun/gun
 
 
 /obj/item/device/firing_pin/New(newloc)
 	..()
-	if(istype(newloc, /obj/item/weapon/gun))
+	if(istype(newloc, /obj/item/gun))
 		gun = newloc
 
 /obj/item/device/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(istype(target, /obj/item/weapon/gun))
-			var/obj/item/weapon/gun/G = target
+		if(istype(target, /obj/item/gun))
+			var/obj/item/gun/G = target
 			if(G.pin && (force_replace || G.pin.pin_removeable))
 				G.pin.loc = get_turf(G)
 				G.pin.gun_remove(user)
@@ -39,11 +38,12 @@
 				to_chat(user, "<span class ='notice'>This firearm already has a firing pin installed.</span>")
 
 /obj/item/device/firing_pin/emag_act(mob/user)
-	if(!emagged)
-		emagged = 1
-		to_chat(user, "<span class='notice'>You override the authentication mechanism.</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	to_chat(user, "<span class='notice'>You override the authentication mechanism.</span>")
 
-/obj/item/device/firing_pin/proc/gun_insert(mob/living/user, obj/item/weapon/gun/G)
+/obj/item/device/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/G)
 	gun = G
 	forceMove(gun)
 	gun.pin = src
@@ -92,12 +92,11 @@
 	name = "implant-keyed firing pin"
 	desc = "This is a security firing pin which only authorizes users who are implanted with a certain device."
 	fail_message = "<span class='warning'>IMPLANT CHECK FAILED.</span>"
-	var/obj/item/weapon/implant/req_implant = null
+	var/obj/item/implant/req_implant = null
 
 /obj/item/device/firing_pin/implant/pin_auth(mob/living/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		for(var/obj/item/weapon/implant/I in C.implants)
+	if(istype(user))
+		for(var/obj/item/implant/I in user.implants)
 			if(req_implant && I.type == req_implant)
 				return 1
 	return 0
@@ -106,12 +105,12 @@
 	name = "mindshield firing pin"
 	desc = "This Security firing pin authorizes the weapon for only mindshield-implanted users."
 	icon_state = "firing_pin_loyalty"
-	req_implant = /obj/item/weapon/implant/mindshield
+	req_implant = /obj/item/implant/mindshield
 
 /obj/item/device/firing_pin/implant/pindicate
 	name = "syndicate firing pin"
 	icon_state = "firing_pin_pindi"
-	req_implant = /obj/item/weapon/implant/weapons_auth
+	req_implant = /obj/item/implant/weapons_auth
 
 
 
@@ -136,7 +135,7 @@
 		return 0
 	return 1
 
-/obj/item/device/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/weapon/gun/G)
+/obj/item/device/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/gun/G)
 	..()
 	G.clumsy_check = 0
 

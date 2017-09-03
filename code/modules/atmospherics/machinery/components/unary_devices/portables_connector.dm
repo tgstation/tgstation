@@ -5,8 +5,9 @@
 	icon_state = "connector_map" //Only for mapping purposes, so mappers can see direction
 	can_unwrench = 1
 	var/obj/machinery/portable_atmospherics/connected_device
-	use_power = 0
+	use_power = NO_POWER_USE
 	level = 0
+	layer = GAS_FILTER_LAYER
 
 /obj/machinery/atmospherics/components/unary/portables_connector/New()
 	..()
@@ -30,7 +31,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/can_unwrench(mob/user)
 	if(..())
 		if(connected_device)
-			to_chat(user, "<span class='warning'>You cannot unwrench this [src], detach [connected_device] first!</span>")
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], detach [connected_device] first!</span>")
 		else
 			return 1
 

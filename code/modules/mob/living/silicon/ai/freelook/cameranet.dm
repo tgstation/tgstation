@@ -2,9 +2,9 @@
 //
 // The datum containing all the chunks.
 
-var/const/CHUNK_SIZE = 16 // Only chunk sizes that are to the power of 2. E.g: 2, 4, 8, 16, etc..
+#define CHUNK_SIZE 16 // Only chunk sizes that are to the power of 2. E.g: 2, 4, 8, 16, etc..
 
-var/datum/cameranet/cameranet = new()
+GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 /datum/cameranet
 	var/name = "Camera Net" // Name to show for VV and stat()
@@ -66,7 +66,7 @@ var/datum/cameranet/cameranet = new()
 
 /datum/cameranet/proc/updateVisibility(atom/A, opacity_check = 1)
 
-	if(!ticker || (opacity_check && !A.opacity))
+	if(!SSticker || (opacity_check && !A.opacity))
 		return
 	majorChunkChange(A, 2)
 
@@ -149,9 +149,9 @@ var/datum/cameranet/cameranet = new()
 
 /datum/cameranet/proc/stat_entry()
 	if(!statclick)
-		statclick = new/obj/effect/statclick/debug("Initializing...", src)
+		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
-	stat(name, statclick.update("Cameras: [cameranet.cameras.len] | Chunks: [cameranet.chunks.len]"))
+	stat(name, statclick.update("Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]"))
 
 // Debug verb for VVing the chunk that the turf is in.
 /*

@@ -15,7 +15,7 @@
 		else
 			Wall.thermite = Wall.thermite+(reac_volume*10)
 		Wall.overlays = list()
-		Wall.add_overlay(image('icons/effects/effects.dmi',"thermite"))
+		Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
 
 /datum/reagent/thermite/on_mob_life(mob/living/M)
 	M.adjustFireLoss(1, 0)
@@ -106,6 +106,11 @@
 	metabolization_rate = 0.05
 	taste_description = "salt"
 
+/datum/reagent/blackpowder/on_mob_life(mob/living/M)
+	..()
+	if(isplasmaman(M))
+		M.hallucination += 10
+
 /datum/reagent/blackpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/reagents_explosion/e = new()
@@ -146,6 +151,9 @@
 	taste_description = "burning"
 
 /datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	M.adjust_fire_stacks(1)
+	var/burndmg = max(0.3*M.fire_stacks, 0.3)
+	M.adjustFireLoss(burndmg, 0)
 	M.IgniteMob()
 	..()
 

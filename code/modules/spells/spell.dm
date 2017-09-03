@@ -9,7 +9,7 @@
 	var/mob/living/ranged_ability_user
 	var/ranged_clickcd_override = -1
 
-var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
+GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/Destroy()
 	if(ranged_ability_user)
@@ -71,9 +71,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	desc = "A wizard spell"
 	panel = "Spells"
 	var/sound = null //The sound the spell makes when it is cast
-	anchored = 1 // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
+	anchored = TRUE // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
-	density = 0
+	density = FALSE
 	opacity = 0
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
@@ -83,6 +83,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
 	var/still_recharging_msg = "<span class='notice'>The spell is still recharging.</span>"
+	var/recharging = TRUE
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
@@ -117,7 +118,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/critfailchance = 0
 	var/centcom_cancast = 1 //Whether or not the spell should be allowed on z2
 
-	var/action_icon = 'icons/mob/actions.dmi'
+	var/action_icon = 'icons/mob/actions/actions_spells.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/datum/action/spell_action/action
@@ -133,7 +134,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			return 0
 
 	var/turf/T = get_turf(user)
-	if(T.z == ZLEVEL_CENTCOM && (!centcom_cancast || ticker.mode.name == "ragin' mages")) //Certain spells are not allowed on the centcom zlevel
+	if(T.z == ZLEVEL_CENTCOM && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
 		to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
 		return 0
 
@@ -202,7 +203,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				charge_counter-- //returns the charge if the targets selecting fails
 			if("holdervar")
 				adjust_var(user, holder_var_type, holder_var_amount)
-
+	if(action)
+		action.UpdateButtonIcon()
 	return 1
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
@@ -223,14 +225,16 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/playMagSound()
 	playsound(get_turf(usr), sound,50,1)
 
-/obj/effect/proc_holder/spell/New()
-	..()
+/obj/effect/proc_holder/spell/Initialize()
+	. = ..()
 	action = new(src)
+	START_PROCESSING(SSfastprocess, src)
 
 	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
 	charge_counter = charge_max
 
 /obj/effect/proc_holder/spell/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
 	qdel(action)
 	return ..()
 
@@ -242,23 +246,27 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
-/obj/effect/proc_holder/spell/proc/start_recharge()
-	if(action)
-		action.UpdateButtonIcon()
-	while(charge_counter < charge_max && !QDELETED(src))
-		sleep(1)
-		charge_counter++
-	if(action)
-		action.UpdateButtonIcon()
+/obj/effect/proc_holder/spell/proc/can_target(mob/living/target)
+	return TRUE
 
-/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
+/obj/effect/proc_holder/spell/proc/start_recharge()
+	recharging = TRUE
+
+/obj/effect/proc_holder/spell/process()
+	if(recharging && charge_type == "recharge" && (charge_counter < charge_max))
+		charge_counter += 2	//processes 5 times per second instead of 10.
+		if(charge_counter >= charge_max)
+			action.UpdateButtonIcon()
+			charge_counter = charge_max
+			recharging = FALSE
+
+/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation(user)
 	if(user && user.ckey)
 		user.log_message("<span class='danger'>cast the spell [name].</span>", INDIVIDUAL_ATTACK_LOG)
-	spawn(0)
-		if(charge_type == "recharge" && recharge)
-			start_recharge()
+	if(recharge)
+		recharging = TRUE
 	if(sound)
 		playMagSound()
 	if(prob(critfailchance))
@@ -266,6 +274,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	else
 		cast(targets,user=user)
 	after_cast(targets)
+	if(action)
+		action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
 	if(overlay)
@@ -278,8 +288,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			var/obj/effect/overlay/spell = new /obj/effect/overlay(location)
 			spell.icon = overlay_icon
 			spell.icon_state = overlay_icon_state
-			spell.anchored = 1
-			spell.density = 0
+			spell.anchored = TRUE
+			spell.density = FALSE
 			QDEL_IN(spell, overlay_lifespan)
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
@@ -292,9 +302,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(isliving(target) && message)
 			to_chat(target, text("[message]"))
 		if(sparks_spread)
-			var/datum/effect_system/spark_spread/sparks = new
-			sparks.set_up(sparks_amt, 0, location) //no idea what the 0 is
-			sparks.start()
+			do_sparks(sparks_amt, FALSE, location)
 		if(smoke_spread)
 			if(smoke_spread == 1)
 				var/datum/effect_system/smoke_spread/smoke = new
@@ -324,8 +332,12 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			charge_counter++
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
+	if(action)
+		action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
+	if (!istype(target))
+		return
 	switch(type)
 		if("bruteloss")
 			target.adjustBruteLoss(amount)
@@ -335,12 +347,12 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			target.adjustToxLoss(amount)
 		if("oxyloss")
 			target.adjustOxyLoss(amount)
-		if("stunned")
-			target.AdjustStunned(amount)
-		if("weakened")
-			target.AdjustWeakened(amount)
-		if("paralysis")
-			target.AdjustParalysis(amount)
+		if("stun")
+			target.AdjustStun(amount)
+		if("knockdown")
+			target.AdjustKnockdown(amount)
+		if("unconscious")
+			target.AdjustUnconscious(amount)
 		else
 			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existant vars
 
@@ -361,6 +373,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	switch(max_targets)
 		if(0) //unlimited
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
+				if(!can_target(target))
+					continue
 				targets += target
 		if(1) //single target can be picked
 			if(range < 0)
@@ -370,6 +384,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
 					if(!include_user && user == M)
+						continue
+					if(!can_target(M))
 						continue
 					possible_targets += M
 
@@ -396,6 +412,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
+				if(!can_target(target))
+					continue
 				possible_targets += target
 			for(var/i=1,i<=max_targets,i++)
 				if(!possible_targets.len)
@@ -420,6 +438,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/list/targets = list()
 
 	for(var/turf/target in view_or_range(range,user,selection_type))
+		if(!can_target(target))
+			continue
 		if(!(target in view_or_range(inner_radius,user,selection_type)))
 			targets += target
 
@@ -428,6 +448,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		return
 
 	perform(targets,user=user)
+
+/obj/effect/proc_holder/spell/proc/updateButtonIcon()
+	action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))
@@ -487,7 +510,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	invocation = "Victus sano!"
 	invocation_type = "whisper"
 	school = "restoration"
-	sound = 'sound/magic/Staff_Healing.ogg'
+	sound = 'sound/magic/staff_healing.ogg'
 
 /obj/effect/proc_holder/spell/self/basic_heal/cast(mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
 	//Also, notice the lack of a "for()" statement that looks through the targets. This is, again, because the spell can only have a single target.

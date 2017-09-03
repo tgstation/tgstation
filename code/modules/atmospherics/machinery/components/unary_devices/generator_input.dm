@@ -1,10 +1,11 @@
 /obj/machinery/atmospherics/components/unary/generator_input
 
 	icon_state = "he_intact"
-	density = 1
+	density = TRUE
 
 	name = "generator input"
-	desc = "Placeholder"
+	desc = "An input for a generator."
+	layer = LOW_OBJ_LAYER
 
 	var/update_cycle
 

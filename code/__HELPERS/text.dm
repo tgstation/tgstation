@@ -15,11 +15,11 @@
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitizeSQL(t)
-	var/sqltext = dbcon.Quote("[t]");
+	var/sqltext = SSdbcore.Quote("[t]");
 	return copytext(sqltext, 2, lentext(sqltext));//Quote() adds quotes around input, we already do that
 
 /proc/format_table_name(table as text)
-	return sqlfdbktableprefix + table
+	return global.sqlfdbktableprefix + table
 
 /*
  * Text sanitization
@@ -44,6 +44,9 @@
 			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+1)
 			index = findtext(t, char, index+1)
 	return t
+
+/proc/sanitize_filename(t)
+	return sanitize_simple(t, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
 
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(t,list/repl_chars = null)
@@ -334,10 +337,10 @@
 		new_text += copytext(text, i, i+1)
 	return new_text
 
-var/list/zero_character_only = list("0")
-var/list/hex_characters = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
-var/list/alphabet = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-var/list/binary = list("0","1")
+GLOBAL_LIST_INIT(zero_character_only, list("0"))
+GLOBAL_LIST_INIT(hex_characters, list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"))
+GLOBAL_LIST_INIT(alphabet, list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"))
+GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/random_string(length, list/characters)
 	. = ""
 	for(var/i=1, i<=length, i++)
@@ -349,10 +352,10 @@ var/list/binary = list("0","1")
 		. += string
 
 /proc/random_short_color()
-	return random_string(3, hex_characters)
+	return random_string(3, GLOB.hex_characters)
 
 /proc/random_color()
-	return random_string(6, hex_characters)
+	return random_string(6, GLOB.hex_characters)
 
 /proc/add_zero2(t, u)
 	var/temp1
@@ -553,14 +556,14 @@ var/list/binary = list("0","1")
 
 	var/list/tosend = list()
 	tosend["data"] = finalized
-	log << json_encode(tosend)
+	WRITE_FILE(log, json_encode(tosend))
 
 //Used for applying byonds text macros to strings that are loaded at runtime
 /proc/apply_text_macros(string)
 	var/next_backslash = findtext(string, "\\")
 	if(!next_backslash)
 		return string
-	
+
 	var/leng = length(string)
 
 	var/next_space = findtext(string, " ", next_backslash + 1)
@@ -606,8 +609,7 @@ var/list/binary = list("0","1")
 			base = text("[]\herself", rest)
 		if("hers")
 			base = text("[]\hers", rest)
-	
-	testing("Substituted macro(\\[macro]) in string([string]). Result: \"[base + rest]\"")
+
 	. = base
 	if(rest)
 		. += .(rest)

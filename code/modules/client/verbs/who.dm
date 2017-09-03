@@ -11,7 +11,7 @@
 			var/mob/dead/observer/G = src.mob
 			if(!G.started_as_observer)//If you aghost to do this, KorPhaeron will deadmin you in your sleep.
 				log_admin("[key_name(usr)] checked advanced who in-round")
-			for(var/client/C in clients)
+			for(var/client/C in GLOB.clients)
 				var/entry = "\t[C.key]"
 				if(C.holder && C.holder.fakekey)
 					entry += " <i>(as [C.holder.fakekey])</i>"
@@ -33,18 +33,18 @@
 								entry += " - <font color='black'><b>DEAD</b></font>"
 					if(is_special_character(C.mob))
 						entry += " - <b><font color='red'>Antagonist</font></b>"
-				entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
+				entry += " [ADMIN_QUE(C.mob)]"
 				entry += " ([round(C.avgping, 1)]ms)"
 				Lines += entry
 		else//If they don't have +ADMIN, only show hidden admins
-			for(var/client/C in clients)
+			for(var/client/C in GLOB.clients)
 				var/entry = "\t[C.key]"
 				if(C.holder && C.holder.fakekey)
 					entry += " <i>(as [C.holder.fakekey])</i>"
 				entry += " ([round(C.avgping, 1)]ms)"
 				Lines += entry
 	else
-		for(var/client/C in clients)
+		for(var/client/C in GLOB.clients)
 			if(C.holder && C.holder.fakekey)
 				Lines += "[C.holder.fakekey] ([round(C.avgping, 1)]ms)"
 			else
@@ -62,7 +62,7 @@
 
 	var/msg = "<b>Current Admins:</b>\n"
 	if(holder)
-		for(var/client/C in admins)
+		for(var/client/C in GLOB.admins)
 			msg += "\t[C] is a [C.holder.rank]"
 
 			if(C.holder.fakekey)
@@ -79,7 +79,7 @@
 				msg += " (AFK)"
 			msg += "\n"
 	else
-		for(var/client/C in admins)
+		for(var/client/C in GLOB.admins)
 			if(C.is_afk())
 				continue //Don't show afk admins to adminwho
 			if(!C.holder.fakekey)

@@ -1,9 +1,0 @@
-author: "Tokiko1"
-delete-after: True
-changes: 
-  - rscadd: "Most gases now have unique effects when surrounding the supermatter crystal."
-  - tweak: "The supermatter crystal can now take damage from too much energy and too much gas."
-  - rscadd: "Added a dangerous overcharged state to the supermatter crystal."
-  - rscadd: "Readded explosion delaminations, a new tesla delamination and allowed the singulo delamination to absorb the supermatter."
-  - tweak: "The type of delamination now depends on the state of the supermatter crystal."
-  - tweak: "Various supermatter engine rebalancing and fixes."

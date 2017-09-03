@@ -8,10 +8,10 @@
 /* DATA HUD DATUMS */
 
 /atom/proc/add_to_all_human_data_huds()
-	for(var/datum/atom_hud/data/human/hud in huds) hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/human/hud in GLOB.huds) hud.add_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
-	for(var/datum/atom_hud/data/hud in huds) hud.remove_from_hud(src)
+	for(var/datum/atom_hud/data/hud in GLOB.huds) hud.remove_from_hud(src)
 
 /datum/atom_hud/data
 
@@ -24,7 +24,7 @@
 	if(!istype(H)) return 0
 	var/obj/item/clothing/under/U = H.w_uniform
 	if(!istype(U)) return 0
-	if(U.sensor_mode <= 2) return 0
+	if(U.sensor_mode <= SENSOR_VITALS) return 0
 	return 1
 
 /datum/atom_hud/data/human/medical/basic/add_to_single_hud(mob/M, mob/living/carbon/H)
@@ -62,7 +62,8 @@
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	var/threat = 0
-	for(var/datum/disease/D in viruses)
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			if (D.severity != NONTHREAT) //a buffing virus gets an icon
 				threat = 2
@@ -127,11 +128,11 @@
 
 //called when a human changes suit sensors
 /mob/living/carbon/proc/update_suit_sensors()
-	var/datum/atom_hud/data/human/medical/basic/B = huds[DATA_HUD_MEDICAL_BASIC]
+	var/datum/atom_hud/data/human/medical/basic/B = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
 	B.update_suit_sensors(src)
 
 	var/turf/T = get_turf(src)
-	if (T) crewmonitor.queueUpdate(T.z)
+	if (T) GLOB.crewmonitor.queueUpdate(T.z)
 
 //called when a living mob changes health
 /mob/living/proc/med_hud_set_health()
@@ -146,7 +147,7 @@
 
 	var/turf/T = get_turf(src)
 	if(T)
-		crewmonitor.queueUpdate(T.z)
+		GLOB.crewmonitor.queueUpdate(T.z)
 
 //called when a carbon changes stat, virus or XENO_HOST
 /mob/living/proc/med_hud_set_status()
@@ -162,14 +163,11 @@
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	var/virus_state = check_virus()
-	var/mob/living/simple_animal/borer/B = has_brain_worms()
 	holder.pixel_y = I.Height() - world.icon_size
 	if(status_flags & XENO_HOST)
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (status_flags & FAKEDEATH))
 		holder.icon_state = "huddead"
-	else if(has_brain_worms() && B != null && B.controlling)
-		holder.icon_state = "hudbrainworm"
 	else if(virus_state == 2)
 		holder.icon_state = "hudill"
 	else if(virus_state == 1)
@@ -194,25 +192,25 @@
 	sec_hud_set_security_status()
 
 	var/turf/T = get_turf(src)
-	if (T) crewmonitor.queueUpdate(T.z)
+	if (T) GLOB.crewmonitor.queueUpdate(T.z)
 
 /mob/living/carbon/human/proc/sec_hud_set_implants()
 	var/image/holder
 	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD))
 		holder = hud_list[i]
 		holder.icon_state = null
-	for(var/obj/item/weapon/implant/I in implants)
-		if(istype(I,/obj/item/weapon/implant/tracking))
+	for(var/obj/item/implant/I in implants)
+		if(istype(I, /obj/item/implant/tracking))
 			holder = hud_list[IMPTRACK_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_tracking"
-		else if(istype(I,/obj/item/weapon/implant/mindshield))
+		else if(istype(I, /obj/item/implant/mindshield))
 			holder = hud_list[IMPLOYAL_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_loyal"
-		else if(istype(I,/obj/item/weapon/implant/chem))
+		else if(istype(I, /obj/item/implant/chem))
 			holder = hud_list[IMPCHEM_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
@@ -223,8 +221,8 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	var/perpname = get_face_name(get_id_name(""))
-	if(perpname && data_core)
-		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+	if(perpname && GLOB.data_core)
+		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(R)
 			switch(R.fields["criminal"])
 				if("*Arrest*")
@@ -296,6 +294,28 @@
 		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
 	else
 		holder.icon_state = "hudnobatt"
+
+//borg-AI shell tracking
+/mob/living/silicon/robot/proc/diag_hud_set_aishell() //Shows tracking beacons on the mech
+	var/image/holder = hud_list[DIAG_TRACK_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(!shell) //Not an AI shell
+		holder.icon_state = null
+	else if(deployed) //AI shell in use by an AI
+		holder.icon_state = "hudtrackingai"
+	else	//Empty AI shell
+		holder.icon_state = "hudtracking"
+
+//AI side tracking of AI shell control
+/mob/living/silicon/ai/proc/diag_hud_set_deployed() //Shows tracking beacons on the mech
+	var/image/holder = hud_list[DIAG_TRACK_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(!deployed_shell)
+		holder.icon_state = null
+	else //AI is currently controlling a shell
+		holder.icon_state = "hudtrackingai"
 
 /*~~~~~~~~~~~~~~~~~~~~
 	BIG STOMPY MECHS

@@ -5,27 +5,24 @@
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1
-	var/on = 1
+	anchored = TRUE
+	var/on = TRUE
 	var/area/area = null
 	var/otherarea = null
 	//	luminosity = 1
 
-/obj/machinery/light_switch/New()
-	..()
-	spawn(5)
-		src.area = src.loc.loc
+/obj/machinery/light_switch/Initialize()
+	. = ..()
+	area = get_area(src)
 
-		if(otherarea)
-			src.area = locate(text2path("/area/[otherarea]"))
+	if(otherarea)
+		area = locate(text2path("/area/[otherarea]"))
 
-		if(!name)
-			name = "light switch ([area.name])"
+	if(!name)
+		name = "light switch ([area.name])"
 
-		src.on = src.area.lightswitch
-		updateicon()
-
-
+	on = area.lightswitch
+	updateicon()
 
 /obj/machinery/light_switch/proc/updateicon()
 	if(stat & NOPOWER)

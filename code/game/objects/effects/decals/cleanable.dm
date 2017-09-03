@@ -6,7 +6,7 @@
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 	var/mergeable_decal = 1 //when two of these are on a same tile or do we need to merge them into just one?
 
-/obj/effect/decal/cleanable/New()
+/obj/effect/decal/cleanable/Initialize(mapload)
 	if (random_icon_states && length(src.random_icon_states) > 0)
 		src.icon_state = pick(src.random_icon_states)
 	create_reagents(300)
@@ -22,8 +22,8 @@
 	if(mergeable_decal)
 		qdel(C)
 
-/obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/reagent_containers/glass) || istype(W, /obj/item/weapon/reagent_containers/food/drinks))
+/obj/effect/decal/cleanable/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 		if(src.reagents && W.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.
 			if(!src.reagents.total_volume)

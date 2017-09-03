@@ -1,4 +1,5 @@
-var/list/admin_datums = list()
+GLOBAL_LIST_EMPTY(admin_datums)
+GLOBAL_PROTECT(admin_datums)
 
 /datum/admins
 	var/datum/admin_rank/rank
@@ -27,19 +28,24 @@ var/list/admin_datums = list()
 		return
 	rank = R
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
-	admin_datums[ckey] = src
+	GLOB.admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin_private("[key_name(usr)][msg]")
+		return
 	if(istype(C))
 		owner = C
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
 		owner.verbs -= /client/proc/readmin
-		admins |= C
+		GLOB.admins |= C
 
 /datum/admins/proc/disassociate()
 	if(owner)
-		admins -= owner
+		GLOB.admins -= owner
 		owner.remove_admin_verbs()
 		owner.holder = null
 		owner = null

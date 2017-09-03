@@ -5,11 +5,10 @@
 	dna_cost = 0
 	req_dna = 1
 	req_human = 1
-	max_genetic_damage = 3
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -20,7 +19,7 @@
 
 /obj/item/clothing/under/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/under/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -31,7 +30,7 @@
 
 /obj/item/clothing/suit/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 	allowed = list(/obj/item/changeling)
 
 /obj/item/clothing/suit/changeling/attack_hand(mob/user)
@@ -43,7 +42,7 @@
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/head/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -54,7 +53,7 @@
 
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -65,7 +64,7 @@
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -76,7 +75,7 @@
 
 /obj/item/clothing/mask/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/mask/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -87,7 +86,7 @@
 
 /obj/item/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 	slot_flags = ALL
 	allowed = list(/obj/item/changeling)
 
@@ -107,9 +106,7 @@
 		return
 
 	changeling_transform(user, chosen_prof)
-
-	feedback_add_details("changeling_powers","TR")
-	return 1
+	return TRUE
 
 /datum/changeling/proc/select_dna(var/prompt, var/title, var/mob/living/carbon/user)
 	var/list/names = list("Drop Flesh Disguise")
@@ -121,8 +118,8 @@
 		return
 
 	if(chosen_name == "Drop Flesh Disguise")
-		for(var/slot in slots)
-			if(istype(user.vars[slot], slot2type[slot]))
+		for(var/slot in GLOB.slots)
+			if(istype(user.vars[slot], GLOB.slot2type[slot]))
 				qdel(user.vars[slot])
 
 	var/datum/changelingprofile/prof = get_dna(chosen_name)

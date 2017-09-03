@@ -57,8 +57,11 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		if(slab.busy)
 			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>")
 			return FALSE
+		if(invoker.has_status_effect(STATUS_EFFECT_GEISTRACKER))
+			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"Sustaining Geis!\"</span>")
+			return FALSE
 		slab.busy = "Invocation ([name]) in progress"
-		if(ratvar_awakens)
+		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
 		else if(!slab.no_cost)
 			for(var/i in consumed_components)
@@ -68,7 +71,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 							slab.stored_components[i]--
 							used_slab_components[i]++
 						else
-							clockwork_component_cache[i]--
+							GLOB.clockwork_component_cache[i]--
 							used_cache_components[i]++
 			update_slab_info()
 		channel_time *= slab.speed_multiplier
@@ -78,15 +81,15 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 					if(slab)
 						slab.stored_components[i] += consumed_components[i]
 					else //if we can't find a slab add to the global cache
-						clockwork_component_cache[i] += consumed_components[i]
+						GLOB.clockwork_component_cache[i] += consumed_components[i]
 			for(var/i in used_cache_components)
 				if(used_cache_components[i])
-					clockwork_component_cache[i] += consumed_components[i]
+					GLOB.clockwork_component_cache[i] += consumed_components[i]
 			update_slab_info()
 		else
 			successful = TRUE
-			if(slab && !slab.no_cost && !ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
-				feedback_add_details("clockcult_scripture_recited", name)
+			if(slab && !slab.no_cost && !GLOB.ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
+				SSblackbox.add_details("clockcult_scripture_recited", name)
 	if(slab)
 		slab.busy = null
 	qdel(src)
@@ -102,12 +105,12 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 /datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
 	var/checked_penalty = FALSE
-	if(!ratvar_awakens && !slab.no_cost)
+	if(!GLOB.ratvar_awakens && !slab.no_cost)
 		checked_penalty = check_offstation_penalty()
 		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
 		var/failed = FALSE
 		for(var/i in consumed_components)
-			var/cache_components = clockwork_caches ? clockwork_component_cache[i] : 0
+			var/cache_components = GLOB.clockwork_caches ? GLOB.clockwork_component_cache[i] : 0
 			var/total_components = slab.stored_components[i] + cache_components
 			if(consumed_components[i] && total_components < consumed_components[i])
 				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[consumed_components[i]]</b> \
@@ -117,10 +120,10 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			component_printout += "</span>"
 			to_chat(invoker, component_printout)
 			return FALSE
-	if(multiple_invokers_used && !multiple_invokers_optional && !ratvar_awakens && !slab.no_cost)
+	if(multiple_invokers_used && !multiple_invokers_optional && !GLOB.ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, get_turf(invoker)))
-			if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
+			if(can_recite_scripture(L))
 				nearby_servants++
 		if(nearby_servants < invokers_required)
 			to_chat(invoker, "<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_required])!</span>")
@@ -150,7 +153,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			if(prob(ratvarian_prob))
 				message = text2ratvar(message)
 			to_chat(invoker, "<span class='[get_component_span(primary_component)]_large'>\"[message]\"</span>")
-			invoker << 'sound/magic/clockwork/invoke_general.ogg'
+			SEND_SOUND(invoker, sound('sound/magic/clockwork/invoke_general.ogg'))
 	return TRUE
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()
@@ -170,7 +173,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	if(!channel_time && invocations.len)
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, invoker))
-				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
+				if(can_recite_scripture(L))
 					for(var/invocation in invocations)
 						clockwork_say(L, text2ratvar(invocation), whispered)
 		else
@@ -185,7 +188,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			return FALSE
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, get_turf(invoker)))
-				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
+				if(can_recite_scripture(L))
 					clockwork_say(L, text2ratvar(invocation), whispered)
 		else
 			clockwork_say(invoker, text2ratvar(invocation), whispered)
@@ -253,13 +256,13 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		to_chat(invoker, creator_message)
 	var/obj/O = new object_path (get_turf(invoker))
 	O.ratvar_act() //update the new object so it gets buffed if ratvar is alive
-	if(istype(O, /obj/item))
+	if(isitem(O))
 		invoker.put_in_hands(O)
 	return TRUE
 
 //Uses a ranged slab ability, returning only when the ability no longer exists(ie, when interrupted) or finishes.
 /datum/clockwork_scripture/ranged_ability
-	var/slab_icon = "dread_ipad"
+	var/slab_overlay
 	var/ranged_type = /obj/effect/proc_holder/slab
 	var/ranged_message = "This is a huge goddamn bug, how'd you cast this?"
 	var/timeout_time = 0
@@ -271,7 +274,12 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	return ..()
 
 /datum/clockwork_scripture/ranged_ability/scripture_effects()
-	slab.icon_state = slab_icon
+	if(slab_overlay)
+		slab.add_overlay(slab_overlay)
+		slab.item_state = "clockwork_slab"
+		slab.lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
+		slab.righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
+		slab.inhand_overlay = slab_overlay
 	slab.slab_ability = new ranged_type(slab)
 	slab.slab_ability.slab = slab
 	slab.slab_ability.add_ranged_ability(invoker, ranged_message)
@@ -294,7 +302,11 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			successful = slab.slab_ability.successful
 			if(!slab.slab_ability.finished)
 				slab.slab_ability.remove_ranged_ability()
-		slab.icon_state = "dread_ipad"
+		slab.cut_overlays()
+		slab.item_state = initial(slab.item_state)
+		slab.item_state = initial(slab.lefthand_file)
+		slab.item_state = initial(slab.righthand_file)
+		slab.inhand_overlay = null
 		if(invoker)
 			invoker.update_inv_hands()
 	return successful //slab doesn't look like a word now.

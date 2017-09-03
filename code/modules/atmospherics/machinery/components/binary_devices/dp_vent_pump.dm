@@ -20,7 +20,7 @@ Acts like a normal vent, but has an input AND output.
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-	var/on = 0
+	var/on = FALSE
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
 
 	var/external_pressure_bound = ONE_ATMOSPHERE
@@ -32,13 +32,20 @@ Acts like a normal vent, but has an input AND output.
 	//INPUT_MIN: Do not pass input_pressure_min
 	//OUTPUT_MAX: Do not pass output_pressure_max
 
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/on
+	on = TRUE
+	icon_state = "dpvent_map_on"
+
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on
+	on = TRUE
+	icon_state = "dpvent_map_on"
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
 	..()
@@ -126,7 +133,7 @@ Acts like a normal vent, but has an input AND output.
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
+		radio_connection = SSradio.add_object(src, frequency, filter = GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
@@ -147,7 +154,7 @@ Acts like a normal vent, but has an input AND output.
 		"external" = external_pressure_bound,
 		"sigtype" = "status"
 	)
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
 
 	return 1
 

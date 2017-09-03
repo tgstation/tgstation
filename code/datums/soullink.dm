@@ -108,6 +108,15 @@
 	if(soulowner)
 		soulowner.death(gibbed)
 
+/////////////////
+// Demon Bind  //
+/////////////////
+//When the soulowner dies, the soulsharer dies, but NOT vice versa
+//This is intended for two players(or AI) and two mobs
+
+/datum/soullink/oneway/ownerDies(gibbed, mob/living/owner)
+	if(soulsharer)
+		soulsharer.dust(FALSE)
 
 
 /////////////////

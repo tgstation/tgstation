@@ -3,8 +3,8 @@
 //////////////////////////////////////////////////////////////
 
 //global datum that will preload variables on atoms instanciation
-var/global/use_preloader = FALSE
-var/global/dmm_suite/preloader/_preloader = new
+GLOBAL_VAR_INIT(use_preloader, FALSE)
+GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 
 /dmm_suite
 		// /"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}/g
@@ -14,6 +14,10 @@ var/global/dmm_suite/preloader/_preloader = new
 		// /^[\s\n]+|[\s\n]+$/
 	var/static/regex/trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
 	var/static/list/modelCache = list()
+	var/static/space_key
+	#ifdef TESTING
+	var/static/turfsSkipped
+	#endif
 
 /**
  * Construct the model map and control the loading process
@@ -25,13 +29,21 @@ var/global/dmm_suite/preloader/_preloader = new
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num)
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num,  lower_crop_y as num, upper_crop_x as num, upper_crop_y as num)
 	//How I wish for RAII
 	Master.StartLoadingMap()
-	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
+	space_key = null
+	#ifdef TESTING
+	turfsSkipped = 0
+	#endif
+	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y)
+	#ifdef TESTING
+	if(turfsSkipped)
+		testing("Skipped loading [turfsSkipped] default turfs")
+	#endif
 	Master.StopLoadingMap()
 
-/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
+/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)
@@ -48,6 +60,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/key_len = 0
 
 	var/stored_index = 1
+
 	while(dmmRegex.Find(tfile, stored_index))
 		stored_index = dmmRegex.next
 
@@ -69,7 +82,12 @@ var/global/dmm_suite/preloader/_preloader = new
 			if(!key_len)
 				throw EXCEPTION("Coords before model definition in DMM")
 
-			var/xcrdStart = text2num(dmmRegex.group[3]) + x_offset - 1
+			var/curr_x = text2num(dmmRegex.group[3])
+
+			if(curr_x < x_lower || curr_x > x_upper)
+				continue
+
+			var/xcrdStart = curr_x + x_offset - 1
 			//position of the currently processed square
 			var/xcrd
 			var/ycrd = text2num(dmmRegex.group[4]) + y_offset - 1
@@ -81,8 +99,10 @@ var/global/dmm_suite/preloader/_preloader = new
 					continue
 				else
 					world.maxz = zcrd //create a new z_level if needed
+				if(!no_changeturf)
+					WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
-			bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrdStart)
+			bounds[MAP_MINX] = min(bounds[MAP_MINX], Clamp(xcrdStart, x_lower, x_upper))
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
 			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
 
@@ -99,15 +119,15 @@ var/global/dmm_suite/preloader/_preloader = new
 			if(gridLines.len && gridLines[gridLines.len] == "")
 				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
 
-			bounds[MAP_MINY] = min(bounds[MAP_MINY], ycrd)
+			bounds[MAP_MINY] = min(bounds[MAP_MINY], Clamp(ycrd, y_lower, y_upper))
 			ycrd += gridLines.len - 1 // Start at the top and work down
 
 			if(!cropMap && ycrd > world.maxy)
 				if(!measureOnly)
 					world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], ycrd)
+				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], Clamp(ycrd, y_lower, y_upper))
 			else
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], min(ycrd, world.maxy))
+				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], Clamp(min(ycrd, world.maxy), y_lower, y_upper))
 
 			var/maxx = xcrdStart
 			if(measureOnly)
@@ -115,9 +135,15 @@ var/global/dmm_suite/preloader/_preloader = new
 					maxx = max(maxx, xcrdStart + length(line) / key_len - 1)
 			else
 				for(var/line in gridLines)
+					if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+						--ycrd
+						continue
 					if(ycrd <= world.maxy && ycrd >= 1)
 						xcrd = xcrdStart
 						for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
+							if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
+								++xcrd
+								continue								//X cropping.
 							if(xcrd > world.maxx)
 								if(cropMap)
 									break
@@ -126,16 +152,21 @@ var/global/dmm_suite/preloader/_preloader = new
 
 							if(xcrd >= 1)
 								var/model_key = copytext(line, tpos, tpos + key_len)
-								if(!grid_models[model_key])
-									throw EXCEPTION("Undefined model key in DMM.")
-								parse_grid(grid_models[model_key], xcrd, ycrd, zcrd, no_changeturf || zexpansion)
+								var/no_afterchange = no_changeturf || zexpansion
+								if(!no_afterchange || (model_key != space_key))
+									if(!grid_models[model_key])
+										throw EXCEPTION("Undefined model key in DMM.")
+									parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion)
+								#ifdef TESTING
+								else
+									++turfsSkipped
+								#endif
 								CHECK_TICK
-
 							maxx = max(maxx, xcrd)
 							++xcrd
 					--ycrd
 
-			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx)
+			bounds[MAP_MAXX] = Clamp(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 
 		CHECK_TICK
 
@@ -152,7 +183,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 /**
  * Fill a given tile with its area/turf/objects/mobs
- * Variable model is one full map line (e.g /turf/unsimulated/wall{icon_state = "rock"},/area/mine/explored)
+ * Variable model is one full map line (e.g /turf/unsimulated/wall{icon_state = "rock"}, /area/mine/explored)
  *
  * WORKING :
  *
@@ -167,7 +198,7 @@ var/global/dmm_suite/preloader/_preloader = new
  * 4) Instanciates the atom with its variables
  *
  */
-/dmm_suite/proc/parse_grid(model as text,xcrd as num,ycrd as num,zcrd as num, no_changeturf as num)
+/dmm_suite/proc/parse_grid(model as text, model_key as text, xcrd as num,ycrd as num,zcrd as num, no_changeturf as num)
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -213,10 +244,13 @@ var/global/dmm_suite/preloader/_preloader = new
 			if(variables_start)//if there's any variable
 				full_def = copytext(full_def,variables_start+1,length(full_def))//removing the last '}'
 				fields = readlist(full_def, ";")
-				for(var/I in fields)
-					var/value = fields[I]
-					if(istext(value))
-						fields[I] = apply_text_macros(value)
+				if(fields.len)
+					if(!trim(fields[fields.len]))
+						--fields.len
+					for(var/I in fields)
+						var/value = fields[I]
+						if(istext(value))
+							fields[I] = apply_text_macros(value)
 
 			//then fill the members_attributes list with the corresponding variables
 			members_attributes.len++
@@ -224,6 +258,20 @@ var/global/dmm_suite/preloader/_preloader = new
 
 			CHECK_TICK
 		while(dpos != 0)
+
+		//check and see if we can just skip this turf
+		//So you don't have to understand this horrid statement, we can do this if
+		// 1. no_changeturf is set
+		// 2. the space_key isn't set yet
+		// 3. there are exactly 2 members
+		// 4. with no attributes
+		// 5. and the members are world.turf and world.area
+		// Basically, if we find an entry like this: "XXX" = (/turf/default, /area/default)
+		// We can skip calling this proc every time we see XXX
+		if(no_changeturf && !space_key && members.len == 2 && members_attributes.len == 2 && length(members_attributes[1]) == 0 && length(members_attributes[2]) == 0 && (world.area in members) && (world.turf in members))
+			space_key = model_key
+			return
+
 
 		modelCache[model] = list(members, members_attributes)
 
@@ -233,25 +281,30 @@ var/global/dmm_suite/preloader/_preloader = new
 	////////////////
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
+	var/turf/crds = locate(xcrd,ycrd,zcrd)
 
 	//first instance the /area and remove it from the members list
 	index = members.len
 	if(members[index] != /area/template_noop)
 		var/atom/instance
-		_preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
-
-		instance = locate(members[index])
-		var/turf/crds = locate(xcrd,ycrd,zcrd)
+		GLOB._preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
+		var/atype = members[index]
+		for(var/area/A in world)
+			if(A.type == atype)
+				instance = A
+				break
+		if(!instance)
+			instance = new atype(null)
 		if(crds)
 			instance.contents.Add(crds)
 
-		if(use_preloader && instance)
-			_preloader.load(instance)
+		if(GLOB.use_preloader && instance)
+			GLOB._preloader.load(instance)
 
 	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
 
 	var/first_turf_index = 1
-	while(!ispath(members[first_turf_index],/turf)) //find first /turf object in members
+	while(!ispath(members[first_turf_index], /turf)) //find first /turf object in members
 		first_turf_index++
 
 	//turn off base new Initialization until the whole thing is loaded
@@ -259,26 +312,20 @@ var/global/dmm_suite/preloader/_preloader = new
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
-		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd,no_changeturf)
+		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf)
 
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
 		index = first_turf_index + 1
 		while(index <= members.len - 1) // Last item is an /area
 			var/underlay = T.appearance
-			T = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd,no_changeturf)//instance new turf
+			T = instance_atom(members[index],members_attributes[index],crds,no_changeturf)//instance new turf
 			T.underlays += underlay
 			index++
 
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)
-		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd,no_changeturf)
-
-		//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
-		if(world.tick_usage > CURRENT_TICKLIMIT)
-			SSatoms.map_loader_stop()
-			stoplag()
-			SSatoms.map_loader_begin()
+		instance_atom(members[index],members_attributes[index],crds,no_changeturf)
 	//Restore initialization to the previous value
 	SSatoms.map_loader_stop()
 
@@ -287,22 +334,27 @@ var/global/dmm_suite/preloader/_preloader = new
 ////////////////
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
-/dmm_suite/proc/instance_atom(path,list/attributes, x, y, z, no_changeturf)
-	var/atom/instance
-	_preloader.setup(attributes, path)
+/dmm_suite/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf)
+	GLOB._preloader.setup(attributes, path)
 
-	var/turf/T = locate(x,y,z)
-	if(T)
+	if(crds)
 		if(!no_changeturf && ispath(path, /turf))
-			T.ChangeTurf(path, TRUE)
-			instance = T
+			. = crds.ChangeTurf(path, FALSE, TRUE)
 		else
-			instance = new path (T)//first preloader pass
+			. = create_atom(path, crds)//first preloader pass
 
-	if(use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
-		_preloader.load(instance)
+	if(GLOB.use_preloader && .)//second preloader pass, for those atoms that don't ..() in New()
+		GLOB._preloader.load(.)
 
-	return instance
+	//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
+	if(TICK_CHECK)
+		SSatoms.map_loader_stop()
+		stoplag()
+		SSatoms.map_loader_begin()
+
+/dmm_suite/proc/create_atom(path, crds)
+	set waitfor = FALSE
+	. = new path (crds)
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
@@ -315,7 +367,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
 //returns 0 if reached the last delimiter
-/dmm_suite/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape=quote,closing_escape=quote)
+/dmm_suite/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape="\"",closing_escape="\"")
 	var/position = initial_position
 	var/next_delimiter = findtext(text,delimiter,position,0)
 	var/next_opening = findtext(text,opening_escape,position,0)
@@ -351,8 +403,8 @@ var/global/dmm_suite/preloader/_preloader = new
 			var/trim_right = trim_text(copytext(text,equal_position+1,position))//the content of the variable
 
 			//Check for string
-			if(findtext(trim_right,quote,1,2))
-				trim_right = copytext(trim_right,2,findtext(trim_right,quote,3,0))
+			if(findtext(trim_right,"\"",1,2))
+				trim_right = copytext(trim_right,2,findtext(trim_right,"\"",3,0))
 
 			//Check for number
 			else if(isnum(text2num(trim_right)))
@@ -398,7 +450,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 /dmm_suite/preloader/proc/setup(list/the_attributes, path)
 	if(the_attributes.len)
-		use_preloader = TRUE
+		GLOB.use_preloader = TRUE
 		attributes = the_attributes
 		target_path = path
 
@@ -408,7 +460,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		if(islist(value))
 			value = deepCopyList(value)
 		what.vars[attribute] = value
-	use_preloader = FALSE
+	GLOB.use_preloader = FALSE
 
 /area/template_noop
 	name = "Area Passthrough"

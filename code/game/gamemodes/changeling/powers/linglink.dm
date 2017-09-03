@@ -4,7 +4,6 @@
 	chemical_cost = 0
 	dna_cost = 0
 	req_human = 1
-	max_genetic_damage = 100
 
 /obj/effect/proc_holder/changeling/linglink/can_sting(mob/living/carbon/user)
 	if(!..())
@@ -48,7 +47,7 @@
 			if(3)
 				to_chat(user, "<span class='notice'>We mold the [target]'s mind like clay, granting [target.p_them()] the ability to speak in the hivemind!</span>")
 				to_chat(target, "<span class='userdanger'>A migraine throbs behind your eyes, you hear yourself screaming - but your mouth has not opened!</span>")
-				for(var/mob/M in mob_list)
+				for(var/mob/M in GLOB.mob_list)
 					if(M.lingcheck() == 2)
 						to_chat(M, "<i><font color=#800080>We can sense a foreign presence in the hivemind...</font></i>")
 				target.mind.linglink = 1
@@ -56,7 +55,7 @@
 				to_chat(target, "<font color=#800040><span class='boldannounce'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>")
 				target.reagents.add_reagent("salbutamol", 40) // So they don't choke to death while you interrogate them
 				sleep(1800)
-		feedback_add_details("changeling_powers","A [i]")
+		SSblackbox.add_details("changeling_powers","Hivemind Link|[i]")
 		if(!do_mob(user, target, 20))
 			to_chat(user, "<span class='warning'>Our link with [target] has ended!</span>")
 			changeling.islinking = 0
