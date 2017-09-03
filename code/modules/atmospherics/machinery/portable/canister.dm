@@ -257,18 +257,21 @@
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/W, mob/user, params)
-	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(stat & BROKEN)
-			if(!WT.remove_fuel(0, user))
-				return
-			playsound(loc, WT.usesound, 40, 1)
-			to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
-			if(do_after(user, 30, target = src))
-				deconstruct(TRUE)
+	if(interacts_with_pipes)
+		if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weldingtool))
+			var/obj/item/weldingtool/WT = W
+			if(stat & BROKEN)
+				if(!WT.remove_fuel(0, user))
+					return
+				playsound(loc, WT.usesound, 40, 1)
+				to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
+				if(do_after(user, 30, target = src))
+					deconstruct(TRUE)
+			else
+				to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
+			return TRUE
 		else
-			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
-		return 1
+			return ..()
 	else
 		return ..()
 
@@ -446,3 +449,39 @@
 				holding = null
 				. = TRUE
 	update_icon()
+
+
+/obj/machinery/portable_atmospherics/canister/air/repressurizer/
+	name = "Bluespace atmosphere restorer"
+	desc = "A miniature bluespace portal used to siphon the atmosphere from a backwater planet so that you may refill a depresurized area on the station. This portal will dissipate one minute after creation."
+	interacts_with_pipes = FALSE
+	volume = 1000000000 //Enough to refil the station several times over.
+	can_max_release_pressure = ONE_ATMOSPHERE
+	release_pressure = ONE_ATMOSPHERE
+	flags_1 = NODECONSTRUCT_1
+	valve_open = TRUE //Starts off open by default.
+	icon_state = "air_portal"
+	density = FALSE
+	anchored = TRUE
+
+/obj/machinery/portable_atmospherics/canister/air/repressurizer/update_icon()
+	return
+
+/obj/machinery/portable_atmospherics/canister/air/repressurizer/Initialize()
+	. = ..()
+	QDEL_IN(src, 600)
+
+/obj/machinery/portable_atmospherics/canister/air/repressurizer/canister_break()
+	qdel(src)
+	
+/obj/machinery/portable_atmospherics/canister/air/repressurizer/connect()
+	return FALSE //Can't connect to network.
+
+/obj/machinery/portable_atmospherics/canister/air/repressurizer/ui_data()
+	return //Doesn't have a tgui
+
+/obj/machinery/portable_atmospherics/canister/air/repressurizer/ui_interact()
+	return //Doesn't have a tgui
+
+/obj/machinery/portable_atmospherics/canister/air/repressurizer/ui_act()
+	return //Doesn't have a tgui
