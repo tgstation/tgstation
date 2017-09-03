@@ -55,10 +55,9 @@
 
 //Docking error flags
 #define DOCKING_SUCCESS 0
-#define DOCKING_COMPLETE 1
-#define DOCKING_BLOCKED 2
-#define DOCKING_IMMOBILIZED 4
-#define DOCKING_AREA_EMPTY 8
+#define DOCKING_BLOCKED 1
+#define DOCKING_IMMOBILIZED 2
+#define DOCKING_AREA_EMPTY 4
 
 //Docking turf movements
 #define MOVE_TURF 1

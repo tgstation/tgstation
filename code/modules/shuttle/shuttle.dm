@@ -418,7 +418,7 @@
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/obj/docking_port/stationary/S1 = assigned_transit
 	if(S1)
-		if(dock(S1))
+		if(dock(S1) != DOCKING_SUCCESS)
 			WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
 		else
 			previous = S0
@@ -498,7 +498,7 @@
 
 	if(new_dock.get_docked() == src)
 		remove_ripples()
-		return DOCKING_COMPLETE
+		return DOCKING_SUCCESS
 
 	if(!force)
 		if(!check_dock(new_dock))
@@ -650,11 +650,11 @@
 	// then try again
 	switch(mode)
 		if(SHUTTLE_CALL)
-			if(dock(destination, preferred_direction))
+			if(dock(destination, preferred_direction) != DOCKING_SUCCESS)
 				setTimer(20)
 				return
 		if(SHUTTLE_RECALL)
-			if(dock(previous))
+			if(dock(previous) != DOCKING_SUCCESS)
 				setTimer(20)
 				return
 		if(SHUTTLE_IGNITING)
