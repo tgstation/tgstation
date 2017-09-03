@@ -51,6 +51,9 @@
 /obj/machinery/gibber/container_resist(mob/living/user)
 	go_out()
 
+/obj/machinery/gibber/relaymove(mob/living/user)
+	go_out()
+
 /obj/machinery/gibber/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -121,10 +124,10 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
-		visible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
+		audible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
+	audible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 	operating = TRUE
 	update_icon()

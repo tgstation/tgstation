@@ -367,8 +367,9 @@
 	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open.</span>")
-	visible_message("<span class='warning'>[src] begins to shake violently!</span>")
+	user.visible_message("<span class='warning'>[src] begins to shake violently!</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [breakout_time] minutes.)</span>", \
+		"<span class='italics'>You hear banging from [src].</span>")
 	if(do_after(user,(breakout_time * 60 * 10), target = src)) //minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return

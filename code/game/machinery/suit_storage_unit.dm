@@ -249,9 +249,31 @@
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
-	container_resist(user)
+	if(locked)
+		to_chat(user, "<span class='warning'>[src] is locked!</span>")
+		return
+	open_machine()
+	dump_contents()
 
 /obj/machinery/suit_storage_unit/container_resist(mob/living/user)
+	var/breakout_time = 300
+	if(!locked)
+		open_machine()
+		dump_contents()
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
+		"<span class='notice'>You start kicking against the doors... (this will take around 30 seconds.)</span>", \
+		"<span class='italics'>You hear a thump from [src].</span>")
+	if(do_after(user,(breakout_time), target = src))
+		if(!user || user.stat != CONSCIOUS || user.loc != src )
+			return
+		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+			"<span class='notice'>You successfully break out of [src]!</span>")
+		open_machine()
+		dump_contents()
+
+
 	add_fingerprint(user)
 	if(locked)
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")

@@ -41,6 +41,9 @@
 /obj/structure/bodycontainer/relaymove(mob/user)
 	if(user.stat || !isturf(loc))
 		return
+	if(locked)
+		to_chat(user, "<span class='warning'>[src] is locked!</span>")
+		return
 	open()
 
 /obj/structure/bodycontainer/attack_paw(mob/user)
@@ -84,11 +87,20 @@
 	qdel(src)
 
 /obj/structure/bodycontainer/container_resist(mob/living/user)
-	open()
-
-/obj/structure/bodycontainer/relay_container_resist(mob/living/user, obj/O)
-	to_chat(user, "<span class='notice'>You slam yourself into the side of [O].</span>")
-	container_resist(user)
+	var/breakout_time = 600
+	if(!locked)
+		open()
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.visible_message(null, \
+		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about a minute.)</span>", \
+		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+	if(do_after(user,(breakout_time), target = src))
+		if(!user || user.stat != CONSCIOUS || user.loc != src )
+			return
+		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+			"<span class='notice'>You successfully break out of [src]!</span>")
+		open()
 
 /obj/structure/bodycontainer/proc/open()
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
