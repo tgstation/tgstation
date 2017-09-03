@@ -9,6 +9,7 @@
 	faction = list("ashwalker")
 	health = 200
 	maxHealth = 200
+	anchored = TRUE
 	loot = list(/obj/effect/collapse)
 	var/meat_counter = 6
 
