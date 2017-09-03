@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
 	if(sanitize)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trim(copytext(sanitize(strip_html_simple(message)), 1, MAX_MESSAGE_LEN)) //не проебите санитайз HTML при мерже, пожалуйста
 	if(!message || message == "")
 		return
 

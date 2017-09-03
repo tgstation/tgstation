@@ -23,7 +23,7 @@
 			to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
 			return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = copytext(sanitize(strip_html_simple(msg)), 1, MAX_MESSAGE_LEN) //не проебите санитайз HTML при мерже, пожалуйста
 	if(check_rights_for(src, R_ADMIN))
 	else
 		msg = replacetext(msg, "<p>", "")
