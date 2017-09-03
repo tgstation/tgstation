@@ -67,7 +67,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ao" = (
 /obj/machinery/power/apc{
-	cell_type = 0;
+	start_charge = 0;
 	dir = 4;
 	name = "Cargo Bay APC";
 	pixel_x = 24
@@ -754,7 +754,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "ca" = (
 /obj/machinery/power/apc{
-	cell_type = 0;
+	start_charge = 0;
 	dir = 4;
 	name = "Power Storage APC";
 	pixel_x = 23;
@@ -850,7 +850,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "ck" = (
 /obj/machinery/power/apc{
-	cell_type = 0;
+	start_charge = 0;
 	dir = 2;
 	name = "Tradepost APC";
 	pixel_y = -24
@@ -2011,7 +2011,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "el" = (
 /obj/machinery/power/apc{
-	cell_type = 0;
+	start_charge = 0;
 	dir = 4;
 	name = "Cargo Storage APC";
 	pixel_x = 24

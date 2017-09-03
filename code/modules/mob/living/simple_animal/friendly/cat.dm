@@ -115,7 +115,7 @@
 	if(fexists("data/npc_saves/Runtime.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 		S["family"] >> family
-		fdel(S)
+		fdel("data/npc_saves/Runtime.sav")
 	else
 		var/json_file = file("data/npc_saves/Runtime.json")
 		if(!fexists(json_file))
