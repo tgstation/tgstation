@@ -14,6 +14,9 @@
 	ranged = 1
 	ranged_message = "stares"
 	ranged_cooldown_time = 30
+	ranged_telegraph = "gathers energy and stares at *TARGET*!"
+	ranged_telegraph_sound = 'sound/magic/magic_missile.ogg'
+	ranged_telegraph_time = 7
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
@@ -70,9 +73,11 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "impales"
+	ranged_telegraph = "fixates on *TARGET* as its eye shines blue!"
+	ranged_telegraph_sound = 'sound/magic/tail_swing.ogg'
+	ranged_telegraph_time = 5
 	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
-	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = UNCONSCIOUS
 	movement_type = FLYING
 	robust_searching = 1
