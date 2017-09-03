@@ -78,7 +78,7 @@
 	if(emagged)
 		return
 	emagged = TRUE
-	req_access = null
+	req_access = list()
 	say("DB error \[Code 0x00F1\]")
 	sleep(10)
 	say("Attempting auto-repair...")
