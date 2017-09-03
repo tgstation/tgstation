@@ -27,6 +27,10 @@ OOC_DURING_ROUND
 ## Comment this out if you want to disable emojis
 EMOJIS
 
+## CREDIT SEQUENCE ###
+## Uncomment this if you want to disable round-end credits
+#NO_CREDITS_ROUND_END
+
 ## MOB MOVEMENT ###
 
 ## We suggest editing these variables ingame to find a good speed for your server.
