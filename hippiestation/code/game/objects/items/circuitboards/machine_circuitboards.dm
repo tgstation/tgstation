@@ -29,7 +29,7 @@
 	build_path = /obj/machinery/chem/radioactive
 	origin_tech = "materials=6;engineering=6;programming=5;plasmatech=2;biotech=4"
 	req_components = list(
-							/obj/item/stock_parts/matter_bin/super = 1,
+							/obj/item/stock_parts/matter_bin = 1,
 							/obj/item/stock_parts/capacitor = 5,
 							/obj/item/stock_parts/manipulator = 3,
 							/obj/item/stock_parts/console_screen = 1,
