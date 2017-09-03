@@ -164,7 +164,7 @@
 	display_name = "Applied Bluespace Research"
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "industrial_engineering")
-	design_ids = list("bs_rped", "telesci_gps", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning")
+	design_ids = list("bs_rped","minerbag_holding", "telesci_gps", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning")
 	research_cost = 5000
 	export_price = 5000
 
@@ -399,7 +399,7 @@
 	description = "Deeper understanding of how the Bluespace dimension works")
 	prereq_ids = list("practical_bluespace", "high_efficiency")
 	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console",
-	"teleconsole")
+	"teleconsole", "bag_holding", "bluespace_crystal", "wormholeprojector")
 	research_cost = 5000
 	export_price = 5000
 
@@ -704,20 +704,7 @@
 	name = "Computer Design (APC Control)"
 	id = "apc_control"
 	build_path = /obj/item/circuitboard/computer/apc_control
-/////////////////////////////////////////
-//////////////Blue Space/////////////////
-/////////////////////////////////////////
-/datum/design/bag_holding
-	name = "Bag of Holding"
-	id = "bag_holding"
-/datum/design/bluespace_crystal
-	name = "Artificial Bluespace Crystal"
-	id = "bluespace_crystal"
-	build_path = /obj/item/ore/bluespace_crystal/artificial
-/datum/design/miningsatchel_holding
-	name = "Mining Satchel of Holding"
-	id = "minerbag_holding"
-	materials = list(MAT_GOLD = 250, MAT_URANIUM = 500) //quite cheap, for more convenience
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
@@ -773,11 +760,7 @@
 /datum/design/ioncarbine
 	name = "Ion Carbine"
 	id = "ioncarbine"
-/datum/design/wormhole_projector
-	name = "Bluespace Wormhole Projector"
-	id = "wormholeprojector"
-	build_path = /obj/item/gun/energy/wormhole_projector
-//WT550 Mags
+
 /datum/design/mag_oldsmg
 	name = "WT-550 Auto Gun Magazine (4.6x30mm)"
 	id = "mag_oldsmg"

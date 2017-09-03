@@ -32,6 +32,14 @@
 	SSresearch.techweb_designs = returned
 	verify_techweb_designs()
 
+/proc/count_unique_techweb_nodes()
+	var/list/L = typesof(/datum/techweb_node)
+	return L.len
+
+/proc/count_unique_techweb_designs()
+	var/list/L = typesof(/datum/design)
+	return L.len
+
 /proc/get_techweb_node_by_id(id)
 	if(SSresearch.techweb_nodes[id])
 		return SSresearch.techweb_nodes[id]
