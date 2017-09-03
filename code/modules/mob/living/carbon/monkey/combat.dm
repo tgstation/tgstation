@@ -289,7 +289,7 @@
 					return TRUE
 
 				else								// not next to perp
-					if(throw_stuff(target)) //monkeys throwing poo makes them less frustrated
+					if(throw_stuff(target)) //monkeys throwing residue makes them less frustrated
 						frustration = min(frustration - 1, 0)
 					else
 						var/turf/olddist = get_dist(src, target)
@@ -359,7 +359,7 @@
 
 /mob/living/carbon/monkey/proc/throw_stuff(atom/target)
 	if(get_dist(src, target) >= 2 && prob(18))
-		src.visible_message("<span class='danger'>[src] throws something at [target]!</span>", "You throw poo at [target]!")
+		src.visible_message("<span class='danger'>[src] throws something at [target]!</span>", "You throw residue at [target]!")
 		var/turf/proj_turf = loc
 		if(!isturf(proj_turf))
 			return FALSE
