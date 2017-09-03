@@ -915,6 +915,7 @@
 	name = "soil"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
+	circuit = null
 	density = FALSE
 	use_power = NO_POWER_USE
 	flags_1 = NODECONSTRUCT_1
