@@ -238,8 +238,10 @@
 				if(!ranged_telegraph_time || client)
 					OpenFire(target)
 				else
-					visible_message("<span class='danger'>[src] [replacetext(ranged_telegraph, "*TARGET*", "[target]")]</span>")
-					playsound(src, ranged_telegraph_sound, 75, FALSE)
+					if(ranged_telegraph)
+						visible_message("<span class='danger'>[src] [replacetext(ranged_telegraph, "*TARGET*", "[target]")]</span>")
+					if(ranged_telegraph_sound)
+						playsound(src, ranged_telegraph_sound, 75, FALSE)
 					addtimer(CALLBACK(src, .proc/OpenFire, target), ranged_telegraph_time)
 		if(!Process_Spacemove()) //Drifting
 			walk(src,0)
