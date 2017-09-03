@@ -7,6 +7,7 @@
 	var/height = 0							//the 'height' of the ladder. higher numbers are considered physically higher
 	var/obj/structure/ladder/down = null	//the ladder below this one
 	var/obj/structure/ladder/up = null		//the ladder above this one
+	var/auto_connect = FALSE
 
 /obj/structure/ladder/unbreakable //mostly useful for awaymissions to prevent halting progress in a mission
 	name = "sturdy ladder"
@@ -19,12 +20,18 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/Destroy()
+	if(up)
+		up.down = null
+		up.update_icon()
+	if(down)
+		down.up = null
+		down.update_icon()
 	GLOB.ladders -= src
 	. = ..()
 
 /obj/structure/ladder/LateInitialize()
 	for(var/obj/structure/ladder/L in GLOB.ladders)
-		if(L.id == id)
+		if(L.id == id || (auto_connect && L.auto_connect && L.x == x && L.y == y))
 			if(L.height == (height - 1))
 				down = L
 				continue
@@ -54,23 +61,30 @@
 	if(!is_ghost)
 		show_fluff_message(going_up,user)
 		ladder.add_fingerprint(user)
-	user.forceMove(get_turf(ladder))
+
+	var/atom/movable/AM
 	if(user.pulling)
+		AM = user.pulling
 		user.pulling.forceMove(get_turf(ladder))
+	user.forceMove(get_turf(ladder))
+	if(AM)
+		user.pulling = AM
+		AM.pulledby = user
+
 
 /obj/structure/ladder/proc/use(mob/user,is_ghost=0)
 	if(up && down)
 		switch( alert("Go up or down the ladder?", "Ladder", "Up", "Down", "Cancel") )
 			if("Up")
-				travel(1, user, is_ghost, up)
+				travel(TRUE, user, is_ghost, up)
 			if("Down")
-				travel(0, user, is_ghost, down)
+				travel(FALSE, user, is_ghost, down)
 			if("Cancel")
 				return
 	else if(up)
-		travel(1, user, is_ghost, up)
+		travel(TRUE, user, is_ghost, up)
 	else if(down)
-		travel(0, user,is_ghost, down)
+		travel(FALSE, user,is_ghost, down)
 	else
 		to_chat(user, "<span class='warning'>[src] doesn't seem to lead anywhere!</span>")
 
@@ -104,3 +118,6 @@
 		. = ..()
 	else
 		return QDEL_HINT_LETMELIVE
+
+/obj/structure/ladder/auto_connect //They will connect to ladders with the same X and Y without needing to share an ID
+	auto_connect = TRUE
