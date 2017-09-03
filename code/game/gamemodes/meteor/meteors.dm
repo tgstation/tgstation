@@ -319,7 +319,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/tunguska
 	name = "tunguska meteor"
 	icon_state = "flaming"
-	desc = "Your life briefly passes before your eyes the moment you lay them on this monstrosity."
+	desc = "OH GOD FUCK SHIT SHIT SHIT FUCK!!"
 	hits = 30
 	hitpwr = 1
 	heavy = 1
