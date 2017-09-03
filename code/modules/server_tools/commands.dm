@@ -32,7 +32,7 @@
 		command_name_types[stc] = command_name
 
 		if(!warnings_only)
-			.[command_name] = list("help_text" = initial(stc.help_text), "admin_only" = initial(stc.admin_only), "required_parameters" = initial(stc.required_parameters))
+			.[command_name] = list(SERVICE_JSON_PARAM_HELPTEXT = initial(stc.help_text), SERVICE_JSON_PARAM_ADMINONLY = initial(stc.admin_only), SERVICE_JSON_PARAM_REQUIREDPARAMETERS = initial(stc.required_parameters))
 
 /world/proc/HandleServiceCustomCommand(command, sender, params)
 	for(var/I in typesof(/datum/server_tools_command) - /datum/server_tools_command)
