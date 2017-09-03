@@ -32,8 +32,8 @@
 	icon = 'hippiestation/icons/obj/items_and_weapons.dmi'
 	icon_state = "stungun"
 	item_state = "stungun"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	force = 0
 	throwforce = 5
