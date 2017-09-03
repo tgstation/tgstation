@@ -8,10 +8,18 @@
 		if(M.a_intent == INTENT_HELP && target.a_intent != INTENT_HELP)
 			target.a_intent = INTENT_HELP
 			target.hud_used.action_intent.icon_state = "[target.a_intent]" //Else we get your intent being one thing and your hud another.
-			target.visible_message("<span class='notice'>[M] gives [target] a hug, they look happier!</span>", \
+			if(!emagged)
+				target.visible_message("<span class='notice'>[M] gives [target] a hug, they look happier!</span>", \
 									"<span class='warning'>[M] hugs you and you feel a bit nicer.</span>")
-			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+				playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			else
+				to_chat(M, "<span class='notice'>You hug [target] so gently they hardly feel it, they still look happier.</span>")
 			.= TRUE
 		else .= FALSE
 	else
 		.= FALSE
+
+/obj/item/clothing/gloves/color/white/soft/emag_act(mob/user)
+	if(!emagged)
+		to_chat(user,"<span class='warning'>The electrostatic charge in the card somehow makes the gloves even softer!</span>")
+		emagged = TRUE
