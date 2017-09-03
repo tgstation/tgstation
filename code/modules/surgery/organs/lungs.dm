@@ -331,6 +331,10 @@
 	safe_toxins_max = 20
 	safe_co2_max = 20
 
+	cold_level_1_threshold = 200
+	cold_level_2_threshold = 140
+	cold_level_3_threshold = 100
+
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS
 #undef HEAT_GAS_DAMAGE_LEVEL_1
