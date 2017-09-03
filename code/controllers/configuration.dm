@@ -105,6 +105,8 @@ GLOBAL_PROTECT(config_dir)
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
+	var/note_fresh_days
+	var/note_stale_days
 
 	var/use_exp_tracking = FALSE
 	var/use_exp_restrictions_heads = FALSE
@@ -178,6 +180,7 @@ GLOBAL_PROTECT(config_dir)
 	var/rename_cyborg = 0
 	var/ooc_during_round = 0
 	var/emojis = 0
+	var/no_credits_round_end = FALSE
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -298,6 +301,7 @@ GLOBAL_PROTECT(config_dir)
 
 /datum/configuration/proc/Reload()
 	load("config.txt")
+	load("comms.txt", "comms")
 	load("game_options.txt","game_options")
 	load("policies.txt", "policies")
 	loadsql("dbconfig.txt")
@@ -465,31 +469,20 @@ GLOBAL_PROTECT(config_dir)
 					fps = text2num(value)
 				if("automute_on")
 					automute_on = 1
-				if("comms_key")
-					global.comms_key = value
-					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
-						global.comms_allowed = 1
-				if("cross_server_address")
-					cross_address = value
-					if(value != "byond:\\address:port")
-						cross_allowed = 1
-				if("cross_comms_name")
-					cross_name = value
 				if("panic_server_name")
 					if (value != "\[Put the name here\]")
 						panic_server_name = value
 				if("panic_server_address")
 					if(value != "byond://address:port")
 						panic_address = value
-
-				if("medal_hub_address")
-					global.medal_hub = value
-				if("medal_hub_password")
-					global.medal_pass = value
 				if("show_irc_name")
 					showircname = 1
 				if("see_own_notes")
 					see_own_notes = 1
+				if("note_fresh_days")
+					note_fresh_days = text2num(value)
+				if("note_stale_days")
+					note_stale_days = text2num(value)
 				if("soft_popcap")
 					soft_popcap = text2num(value)
 				if("hard_popcap")
@@ -570,8 +563,12 @@ GLOBAL_PROTECT(config_dir)
 				if("irc_announce_new_game")
 					irc_announce_new_game = TRUE
 				else
-					WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
-
+#if DM_VERSION > 511
+#error Replace the line below with WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
+#endif
+					HandleCommsConfig(name, value)	//TODO: Deprecate this eventually
+		else if(type == "comms")
+			HandleCommsConfig(name, value)
 		else if(type == "game_options")
 			switch(name)
 				if("damage_multiplier")
@@ -588,6 +585,8 @@ GLOBAL_PROTECT(config_dir)
 					ooc_during_round			= 1
 				if("emojis")
 					emojis					= 1
+				if("no_credits_round_end")
+					no_credits_round_end	= TRUE
 				if("run_delay")
 					run_speed				= text2num(value)
 				if("walk_delay")
@@ -811,6 +810,24 @@ GLOBAL_PROTECT(config_dir)
 	if(fps <= 0)
 		fps = initial(fps)
 
+/datum/configuration/proc/HandleCommsConfig(name, value)
+	switch(name)
+		if("comms_key")
+			global.comms_key = value
+			if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
+				global.comms_allowed = TRUE
+		if("cross_server_address")
+			cross_address = value
+			if(value != "byond:\\address:port")
+				cross_allowed = TRUE
+		if("cross_comms_name")
+			cross_name = value
+		if("medal_hub_address")
+			global.medal_hub = value
+		if("medal_hub_password")
+			global.medal_pass = value
+		else
+			WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 
 /datum/configuration/proc/loadmaplist(filename)
 	var/list/Lines = world.file2list(filename)

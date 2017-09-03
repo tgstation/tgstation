@@ -301,10 +301,6 @@
 	to_chat(S, "<span class='warning'>This device is attempting to corrupt our entire network; attempting to interact with it is too risky. Aborting.</span>")
 	return FALSE
 
-/obj/effect/decal/cleanable/crayon/gang/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
-	return FALSE
-
 /obj/effect/rune/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
 	return FALSE

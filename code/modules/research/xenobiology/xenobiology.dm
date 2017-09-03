@@ -563,8 +563,7 @@
 
 /obj/effect/timestop/Initialize()
 	. = ..()
-	for(var/M in GLOB.player_list)
-		var/mob/living/L = M
+	for(var/mob/living/L in GLOB.player_list)
 		if(locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
 			immune += L
 	timestop()
