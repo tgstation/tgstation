@@ -283,19 +283,20 @@
 						pickupTarget = W
 						a_intent = INTENT_DISARM
 						monkey_attack(target)
-
 					else
 						a_intent = INTENT_HARM
 						monkey_attack(target)
-
 					return TRUE
 
 				else								// not next to perp
-					var/turf/olddist = get_dist(src, target)
-					if((get_dist(src, target)) >= (olddist))
-						frustration++
+					if(throw_stuff(target)) //monkeys throwing residue makes them less frustrated
+						frustration = min(frustration - 1, 0)
 					else
-						frustration = 0
+						var/turf/olddist = get_dist(src, target)
+						if((get_dist(src, target)) >= (olddist))
+							frustration++
+						else
+							frustration = 0
 			else
 				back_to_idle()
 
@@ -355,6 +356,20 @@
 
 
 	return IsStandingStill()
+
+/mob/living/carbon/monkey/proc/throw_stuff(atom/target)
+	if(get_dist(src, target) >= 2 && prob(18))
+		src.visible_message("<span class='danger'>[src] throws something at [target]!</span>", "You throw residue at [target]!")
+		var/turf/proj_turf = loc
+		if(!isturf(proj_turf))
+			return FALSE
+		var/obj/item/projectile/monkey/F = new /obj/item/projectile/monkey(proj_turf)
+		F.preparePixelProjectile(target, get_turf(target), src)
+		F.firer = src
+		F.fire()
+		playsound(src, 'sound/voice/monkey.ogg', 100, 1)
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/monkey/proc/pickpocket(var/mob/M)
 	if(do_mob(src, M, MONKEY_ITEM_SNATCH_DELAY) && pickupTarget)
