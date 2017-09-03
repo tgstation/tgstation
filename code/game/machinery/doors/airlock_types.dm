@@ -76,6 +76,10 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng/glass
 	glass = TRUE
 
+/obj/machinery/door/airlock/glass_engineering/supermatter
+	name = "Supermatter Chamber"
+	heat_proof = TRUE
+
 /obj/machinery/door/airlock/glass_security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	opacity = 0
@@ -106,6 +110,10 @@
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_atmo/glass
 	glass = TRUE
+
+/obj/machinery/door/airlock/glass_atmos/supermatter
+	name = "Supermatter Chamber"
+	heat_proof = TRUE
 
 /obj/machinery/door/airlock/glass_science
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
