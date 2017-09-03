@@ -4,9 +4,9 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(reboot_mode, REBOOT_MODE_NORMAL)
 	if(world.RunningService())
 		var/file_name
 		if(ServiceVersion())	//will return null for versions < 3.0.91.0
-			file_name = SERVICE_PR_TEST_JSON_OLD
-		else
 			file_name = SERVICE_PR_TEST_JSON
+		else
+			file_name = SERVICE_PR_TEST_JSON_OLD
 		if(fexists(file_name))
 			. = json_decode(file2text(file_name))
 			if(.)
