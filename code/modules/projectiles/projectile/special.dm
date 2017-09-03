@@ -21,6 +21,11 @@
 	empulse(target, 0, 0)
 	return 1
 
+/obj/item/projectile/monkey
+	name = "monkey residue"
+	icon_state = "monkey"
+	damage = 5
+	damage_type = TOX
 
 /obj/item/projectile/bullet/gyro
 	name ="explosive bolt"
@@ -616,3 +621,4 @@
 
 /obj/item/projectile/hallucination/death/hal_apply_effect()
 	new /datum/hallucination/death(hal_target, TRUE)
+
