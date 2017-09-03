@@ -83,7 +83,7 @@
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/gun/energy/e_gun/hos(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/pinpointer(src)
+	new /obj/item/pinpointer/nuke(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -108,6 +108,7 @@
 	new /obj/item/clothing/gloves/krav_maga/sec(src)
 	new /obj/item/door_remote/head_of_security(src)
 	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src)
+	new /obj/item/pinpointer/crew(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
@@ -183,6 +184,7 @@
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/storage/belt/holster/full(src)
+	new /obj/item/pinpointer/crew(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"

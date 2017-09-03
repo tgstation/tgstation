@@ -174,7 +174,6 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Worn-out APC";
 	pixel_x = 1;

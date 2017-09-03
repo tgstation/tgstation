@@ -759,7 +759,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		people += H
 	if(person) //Basic talk
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
-		var/message = target.compose_message(person,understood_language,pick(speak_messages),null,person.get_spans())
+		var/message = target.compose_message(person,understood_language,pick(speak_messages),null,person.get_spans(),face_name = TRUE)
 		feedback_details += "Type: Talk, Source: [person.real_name], Message: [message]"
 		to_chat(target, message)
 		if(target.client)
@@ -771,7 +771,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 			humans += H
 		person = pick(humans)
-		var/message = target.compose_message(person,understood_language,pick(radio_messages),"1459",person.get_spans())
+		var/message = target.compose_message(person,understood_language,pick(radio_messages),"1459",person.get_spans(),face_name = TRUE)
 		feedback_details += "Type: Radio, Source: [person.real_name], Message: [message]"
 		to_chat(target, message)
 	qdel(src)

@@ -9,7 +9,7 @@
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/list/blood_DNA
-	var/container_type = 0
+	var/container_type = NONE
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 	var/datum/reagents/reagents = null
 
@@ -290,6 +290,7 @@
 				to_chat(user, "[total_volume] units of various reagents")
 		else
 			to_chat(user, "Nothing.")
+	SendSignal(COMSIG_PARENT_EXAMINE, user)
 
 /atom/proc/relaymove()
 	return
