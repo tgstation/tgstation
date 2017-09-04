@@ -217,7 +217,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	msg += "*--------*"
 	to_chat(user, msg.Join("<br>"))
 
-/obj/item/proc/speechModification(message)		//For speech modification by mask slot items.
+/obj/item/proc/speechModification(message)			//for message modding by mask slot.
 	return message
 
 /obj/item/attack_self(mob/user)
