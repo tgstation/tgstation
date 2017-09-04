@@ -180,7 +180,7 @@
 			else
 				desired = input("How many items?", "How many items would you like to take out?", 1) as null|num
 
-			if (!src || !istype(src) || !usr || !istype(usr) || !Adjacent(usr) || istype(usr, /mob/dead)) // Sanity checkin' in case stupid stuff happens while we wait for input()
+			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
 
 			for(var/obj/item/O in src)
