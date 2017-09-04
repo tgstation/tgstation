@@ -99,4 +99,3 @@ Head of Personnel
 	backpack_contents = list(/obj/item/storage/box/ids=1,\
 		/obj/item/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced = 1)
 	implants = list(/obj/item/implant/mindshield)
-	
