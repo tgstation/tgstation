@@ -1,5 +1,6 @@
 <!-- Most valid html will work in here, excluding images. -->
 
-<h1>Welcome to Space Station 13!</h1>
+<h1>Welcome to Hivestation</h1>
 
+<b> This is an example MOTD that will be edited </b>
 <i>This server is running a /tg/station 13 Git build.</i>
