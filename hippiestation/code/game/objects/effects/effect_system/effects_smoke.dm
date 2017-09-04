@@ -22,6 +22,7 @@
 			reagents.reaction(AM, TOUCH, fraction)
 
 		reagents.reaction(T, TOUCH, fraction)
+		CHECK_TICK
 		return 1
 
 /obj/effect/particle_effect/smoke/ex_act()
