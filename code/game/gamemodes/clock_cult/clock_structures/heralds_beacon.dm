@@ -89,7 +89,7 @@
 
 /obj/structure/destructible/clockwork/heralds_beacon/proc/herald_the_justiciar()
 	priority_announce("A powerful group of fanatical zealots following the cause of Ratvar have brazenly sacrificed stealth for power, and dare anyone \
-	to try and stop them.", title = "The Justiciar Comes", sound = 'sound/magic/clockwork/herald_the_justiciar.ogg')
+	to try and stop them.", title = "The Justiciar Comes", sound = 'sound/ambience/antag/new_clock.ogg')
 	GLOB.ratvar_approaches = TRUE
 	available = FALSE
 	STOP_PROCESSING(SSprocessing, src)

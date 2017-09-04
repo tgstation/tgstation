@@ -32,28 +32,6 @@
 	construct_limit = human_servants / 4 //1 per 4 human servants, and a maximum of 3 marauders
 	construct_limit = Clamp(construct_limit, 1, 3)
 
-
-//Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
-/datum/clockwork_scripture/create_object/prolonging_prism
-	descname = "Powered Structure, Delay Emergency Shuttles"
-	name = "Prolonging Prism"
-	desc = "Creates a mechanized prism which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
-	invocations = list("May this prism...", "...grant us time to enact his will!")
-	channel_time = 80
-	consumed_components = list(VANGUARD_COGWHEEL = 5, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 2)
-	object_path = /obj/structure/destructible/clockwork/powered/prolonging_prism
-	creator_message = "<span class='brass'>You form a prolonging prism, which will delay the arrival of an emergency shuttle at a massive power cost.</span>"
-	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "The power cost to delay a shuttle increases based on the number of times activated."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 2
-	quickbind = TRUE
-	quickbind_desc = "Creates a Prolonging Prism, which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
-
 /datum/clockwork_scripture/create_object/prolonging_prism/check_special_requirements()
 	if(SSshuttle.emergency.mode == SHUTTLE_DOCKED || SSshuttle.emergency.mode == SHUTTLE_IGNITING || SSshuttle.emergency.mode == SHUTTLE_STRANDED || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
 		to_chat(invoker, "<span class='inathneq'>\"It is too late to construct one of these, champion.\"</span>")
@@ -82,7 +60,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 3
+	sort_priority = 2
 	quickbind = TRUE
 	quickbind_desc = "Creates a Mania Motor, which causes minor damage and negative mental effects in non-Servants."
 
@@ -104,7 +82,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
-	sort_priority = 4
+	sort_priority = 3
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
 
@@ -124,7 +102,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 5
+	sort_priority = 4
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
@@ -146,6 +124,6 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 6
+	sort_priority = 5
 	quickbind = TRUE
 	quickbind_desc = "Creates a Clockwork Obelisk, which can send messages or open Spatial Gateways with power."
