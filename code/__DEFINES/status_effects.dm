@@ -28,6 +28,8 @@
 
 #define STATUS_EFFECT_BLOODDRUNK /datum/status_effect/blooddrunk //Stun immunity and greatly reduced damage taken
 
+#define STATUS_EFFECT_ADRENALINE /datum/status_effect/adrenaline //Immunity to damage-induced slowdowns.
+
 /////////////
 // DEBUFFS //
 /////////////

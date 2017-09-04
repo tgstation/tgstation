@@ -68,6 +68,18 @@
 				grant_achievement(medal_type,score_type)
 		..()
 
+/mob/living/simple_animal/hostile/megafauna/Life()
+	..()
+	if(vision_range == aggro_vision_range) //This is the only way we can check aggro due to >mobcode
+		var/list/PT = ListTargets()
+		for(var/mob/living/L in PT)
+			if(L.client)
+				var/datum/status_effect/adrenaline/A = L.has_status_effect(STATUS_EFFECT_ADRENALINE)
+				if(A)
+					A.duration = world.time + 30
+				else
+					L.apply_status_effect(STATUS_EFFECT_ADRENALINE)
+
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
 	loot = crusher_loot
 
