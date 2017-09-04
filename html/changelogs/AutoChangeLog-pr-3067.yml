@@ -1,5 +1,0 @@
-author: "Guyonbroadway"
-delete-after: True
-changes: 
-  - rscadd: "Clowns and mimes now start the game with soft gloves, when you click someone with help intent using these gloves it will set their intent to help."
-  - rscadd: "You can also get an extra pair from the autodrobe with a coin."
