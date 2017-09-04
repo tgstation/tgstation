@@ -11,7 +11,7 @@
 
 /obj/effect/decal/cleanable/chempile/Initialize()
 	. = ..()
-	if(reagents)
+	if(reagents && reagents.total_volume)
 		if(reagents.total_volume < 5)
 			reagents.set_reacting(FALSE)
 
@@ -25,6 +25,6 @@
 			reagents.trans_to(M, rand(1,5)* M.get_permeability_protection())
 
 /obj/effect/decal/cleanable/chempile/fire_act(exposed_temperature, exposed_volume)
-	if(reagents)
+	if(reagents && reagents.chem_temp)
 		reagents.chem_temp += 30
 		reagents.handle_reactions()
