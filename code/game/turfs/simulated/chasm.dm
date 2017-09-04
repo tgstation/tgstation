@@ -209,4 +209,3 @@
 	icon = 'icons/turf/floors/junglechasm.dmi'
 	planetary_atmos = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-t
