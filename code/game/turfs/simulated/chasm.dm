@@ -155,6 +155,9 @@
 		L.notransform = TRUE
 		L.Stun(200)
 		L.resting = TRUE
+		for(var/para in L.hasparasites())
+			var/mob/living/simple_animal/hostile/guardian/G = para
+			G.death
 	var/oldtransform = AM.transform
 	var/oldcolor = AM.color
 	var/oldalpha = AM.alpha
