@@ -242,3 +242,24 @@
 				C.Knockdown(50)
 			else
 				C.Stun(50)
+
+/datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)//added much needed sanity check
+	var/turf/T = get_turf(holder.my_atom)
+	if(isnull(T))
+		return FALSE
+	var/area/A = get_area(T)
+	var/inside_msg
+	if(ismob(holder.my_atom))
+		var/mob/M = holder.my_atom
+		inside_msg = " inside [key_name_admin(M)]"
+	var/lastkey = holder.my_atom.fingerprintslast
+	var/touch_msg = "N/A"
+	if(lastkey)
+		var/mob/toucher = get_mob_by_key(lastkey)
+		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
+	message_admins("Reagent explosion reaction occurred at [A] [ADMIN_COORDJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
+	log_game("Reagent explosion reaction occurred at [A] [COORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+	var/datum/effect_system/reagents_explosion/e = new()
+	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
+	e.start()
+	holder.clear_reagents()

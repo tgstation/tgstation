@@ -119,17 +119,18 @@
 	..()
 	if(stat & NOPOWER)
 		return
-	if(on)
+	if(on && beaker)
 		icon_state = "radio_on"
 		if(material_amt < 50)
 			audible_message("<span class='notice'>The [src] pings in fury: showing the empty reactor indicator!.</span>")
 			playsound(src, 'sound/machines/buzz-two.ogg', 60, 0)
 			on = FALSE
+
 		if(beaker.reagents.chem_radioactivity == target_radioactivity && target_radioactivity != 0)
 			visible_message("<span class='notice'> A green light shows on the [src].</span>")
 			playsound(src, 'sound/machines/ping.ogg', 50, 0)
 			on = FALSE
-		if(beaker && material_amt >= 50)
+		if(material_amt >= 50)
 			if(beaker.reagents.chem_radioactivity > target_radioactivity)
 				beaker.reagents.chem_radioactivity += 1
 			if(beaker.reagents.chem_radioactivity < target_radioactivity)
@@ -224,7 +225,7 @@
 	..()
 	if(stat & NOPOWER)
 		return
-	if(on)
+	if(on && beaker)
 		icon_state = "blue_on"
 		if(crystal_amt < (intensity * 0.005))
 			audible_message("<span class='notice'>The [src] pings in fury: showing a lack of bluespace activity!.</span>")
@@ -328,7 +329,7 @@
 	..()
 	if(stat & NOPOWER)
 		return
-	if(on)
+	if(on && beaker)
 		icon_state = "cent_on"
 		if(time >= time_required)
 			visible_message("<span class='notice'> A green light shows on the [src].</span>")
