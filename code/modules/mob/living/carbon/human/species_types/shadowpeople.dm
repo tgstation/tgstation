@@ -77,7 +77,7 @@
 		if(I.light_power)
 			disintegrate(I)
 
-/obj/item/light_eater/proc/disintegrate(obj/item/O, on_mob = FALSE))
+/obj/item/light_eater/proc/disintegrate(obj/item/O)
 	src.loc.visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
 	playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
 	O.burn()
