@@ -172,7 +172,7 @@
 
 	if(iscyborg(AM))
 		var/mob/living/silicon/robot/S = AM
-		S.mmi.Destroy
+		S.mmi.Destroy()
 
 	falling_atoms -= AM
 
