@@ -384,3 +384,25 @@
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
+
+
+//Adrenaline: Applied when being targeted by megafauna. Prevents slowdowns from damage.
+/datum/status_effect/adrenaline
+	id = "adrenaline"
+	duration = 30
+	alert_type = /obj/screen/alert/status_effect/adrenaline
+
+/datum/status_effect/adrenaline/on_apply()
+	. = TRUE
+	to_chat(owner, "<span class='boldannounce'>Your heart roars as your survival instincts kick in! You are immune to slowdowns!</span>")
+	owner.playsound_local(owner, 'sound/machines/clockcult/ocularwarden-target.ogg', 50, FALSE, pressure_affected = FALSE)
+	owner.status_flags += IGNORESLOWDOWN
+
+/datum/status_effect/adrenaline/on_remove()
+	to_chat(owner, "<span class='notice'>Your pulse slows... the rush abates.[owner.health < owner.maxHealth ? " You feel the pain of your wounds set in..." : ""]</span>")
+	owner.status_flags -= IGNORESLOWDOWN
+
+/obj/screen/alert/status_effect/adrenaline
+	name = "Adrenaline"
+	desc = "You are immune to damage-induced slowdowns."
+	icon_state = "adrenaline"
