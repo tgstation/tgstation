@@ -129,13 +129,14 @@
 
 	dog_fashion = /datum/dog_fashion/head/kitty
 
-/obj/item/clothing/head/kitty/equipped(mob/user, slot)
-	if(user && slot == slot_head)
+/obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
+	if(ishuman(user) && slot == slot_head)
 		update_icon(user)
+		user.update_inv_head() //Color might have been changed by update_icon.
 	..()
 
 /obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
-	if(istype(user))
+	if(ishuman(user))
 		add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
 
 /obj/item/clothing/head/kitty/genuine
