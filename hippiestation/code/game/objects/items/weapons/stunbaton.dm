@@ -99,7 +99,7 @@
 		cell.give(100)
 		if(cell && cell.charge < 300)
 			playsound(src, 'hippiestation/sound/misc/charge.ogg', 35, FALSE, pressure_affected = FALSE)
-		update_icon()
+			update_icon()
 
 /obj/item/melee/baton/stungun/baton_stun()
 	..()
