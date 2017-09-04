@@ -70,3 +70,36 @@
 	unit_name = "pair"
 	message = "of handcuffs"
 	export_types = list(/obj/item/restraints/handcuffs)
+	
+// relics of lavaland
+
+/datum/export/weapon/hierophant
+	cost = 50000
+	unit_name = "Hierophant Club"
+	export_types = list(/obj/item/hierophant_club)
+	
+/datum/export/weapon/lava
+	cost = 45000
+	unit_name = "Lava Staff"
+	export_types = list(/obj/item/lava_staff)
+	
+/datum/export/weapon/cleaving_saw
+	cost = 40000
+	unit_name = "Cleaving Saw"
+	export_types = list(/obj/item/melee/transforming/cleaving_saw)
+	
+/datum/export/weapon/immortality_talisman
+	cost = 25000
+	unit_name = "Immortality Talisman"
+	export_types = list(/obj/item/device/immortality_talisman)
+	
+/datum/export/weapon/mayhem
+	cost = -5000
+	unit_name = "Mayhem in a bottle"
+	export_types = list(/obj/item/mayhem)
+	
+/datum/export/weapon/blood_contract
+	cost = 30000
+	unit_name = "Blood Contract"
+	export_types = list(/obj/item/blood_contract)
+	
