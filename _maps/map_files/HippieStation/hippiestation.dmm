@@ -21699,7 +21699,7 @@
 /area/bridge)
 "aWV" = (
 /obj/machinery/turretid{
-	control_area = "AI Upload Chamber";
+	control_area = "/area/ai_monitored/turret_protected/ai_upload";
 	name = "AI Upload turret control";
 	pixel_y = -25
 	},
@@ -56673,7 +56673,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "cud" = (
 /obj/machinery/turretid{
-	control_area = "AI Satellite Antechamber";
+	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
 	enabled = 1;
 	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
@@ -56974,7 +56974,7 @@
 	start_active = 1
 	},
 /obj/machinery/turretid{
-	control_area = "AI Satellite Atmos";
+	control_area = "/area/ai_monitored/turret_protected/aisat/atmos";
 	enabled = 1;
 	icon_state = "control_standby";
 	name = "Atmospherics Turret Control";
@@ -57000,7 +57000,7 @@
 	dir = 4
 	},
 /obj/machinery/turretid{
-	control_area = "AI Satellite Service";
+	control_area = "/area/ai_monitored/turret_protected/aisat/service";
 	enabled = 1;
 	icon_state = "control_standby";
 	name = "Service Bay Turret Control";
@@ -57346,7 +57346,7 @@
 	scrub_Toxins = 0
 	},
 /obj/machinery/turretid{
-	control_area = "AI Satellite Hallway";
+	control_area = "/area/ai_monitored/turret_protected/aisat/hallway";
 	enabled = 1;
 	icon_state = "control_standby";
 	name = "Chamber Hallway Turret Control";
@@ -58035,7 +58035,7 @@
 	dir = 8
 	},
 /obj/machinery/turretid{
-	control_area = "AI Chamber";
+	control_area = "/area/ai_monitored/turret_protected/ai";
 	name = "AI Chamber turret control";
 	pixel_x = 5;
 	pixel_y = -24
