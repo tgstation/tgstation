@@ -104,6 +104,7 @@
 /obj/item/melee/baton/stungun/baton_stun()
 	..()
 	playsound(loc, 'hippiestation/sound/weapons/stungun.ogg', 75, 1, -1)
+	update_icon()
 
 /obj/item/melee/baton/cattleprod/hippie_cattleprod
 	w_class = WEIGHT_CLASS_NORMAL
