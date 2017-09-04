@@ -14600,7 +14600,6 @@
 	network = list("MiniSat")
 	},
 /obj/machinery/light,
-/obj/effect/landmark/gremlinspwn,
 /turf/open/floor/plasteel/vault{
 	dir = 10
 	},
@@ -41225,7 +41224,6 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/landmark/gremlinspwn,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bMA" = (
@@ -50035,7 +50033,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
-/obj/effect/landmark/gremlinspwn,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cfK" = (
@@ -52544,7 +52541,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 2
 	},
-/obj/effect/landmark/gremlinspwn,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "clf" = (
@@ -69288,49 +69284,6 @@
 	},
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
-"dcz" = (
-/obj/structure/chair/office/dark{
-	dir = 8
-	},
-/obj/effect/landmark/gremlinspwn,
-/turf/open/floor/wood,
-/area/library)
-"dcA" = (
-/obj/effect/landmark/gremlinspwn,
-/turf/open/floor/wood,
-/area/library)
-"dcB" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/landmark/gremlinspwn,
-/turf/open/floor/plasteel,
-/area/crew_quarters/locker)
-"dcC" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/gremlinspwn,
-/turf/open/floor/plasteel,
-/area/crew_quarters/locker)
-"dcD" = (
-/obj/effect/landmark/gremlinspwn,
-/turf/open/floor/plasteel/white,
-/area/medical/sleeper)
-"dcE" = (
-/obj/effect/landmark/gremlinspwn,
-/turf/open/floor/plating,
-/area/storage/tech)
-"dcF" = (
-/obj/effect/landmark/gremlinspwn,
-/turf/open/floor/plasteel,
-/area/engine/atmos)
-"dcG" = (
-/obj/effect/landmark/gremlinspwn,
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 
 (1,1,1) = {"
 aaa
@@ -88731,7 +88684,7 @@ aQN
 aUv
 aWp
 aXA
-dcB
+aYX
 aYX
 aYX
 bbs
@@ -88990,7 +88943,7 @@ aUZ
 aXx
 aYU
 aYU
-dcC
+aYU
 bbr
 bcu
 bfe
@@ -96469,7 +96422,7 @@ bFa
 bFa
 bHH
 bFa
-dcE
+bFa
 bFa
 bCs
 bNL
@@ -101873,7 +101826,7 @@ bIF
 bOZ
 bQp
 bRA
-dcF
+bOd
 bTO
 bUL
 bVU
@@ -102914,7 +102867,7 @@ cbD
 bTO
 cdx
 bOd
-dcG
+bOd
 cfP
 cgZ
 bMQ
@@ -106232,7 +106185,7 @@ bvj
 bCM
 bDZ
 bDR
-dcD
+bDR
 bIl
 bJC
 bKH
@@ -112365,7 +112318,7 @@ aGG
 aIu
 aJQ
 bCI
-dcA
+aIt
 aIt
 aPb
 aIt
@@ -113134,7 +113087,7 @@ aDZ
 aFu
 aHb
 aIv
-dcz
+aJR
 aJR
 aIt
 aIt
@@ -115495,15 +115448,15 @@ bJO
 bWr
 bWr
 dbS
-dbN
-dbN
-dbN
-dbN
+bTo
+bTo
+bTo
+bTo
 bYj
 bZc
 bPN
-dbN
-dbN
+bTo
+bTo
 bQZ
 bNB
 ceM
@@ -115753,13 +115706,13 @@ bQX
 dbO
 bPN
 dbT
-dbN
+bTo
 bWp
-dbN
+bTo
 bYi
 dcg
 dck
-dbN
+bTo
 cbV
 bQZ
 blQ
@@ -116017,7 +115970,7 @@ caZ
 cba
 dcl
 cbc
-dbN
+bTo
 bQZ
 cdR
 ceO
@@ -116521,11 +116474,11 @@ bMu
 bMu
 bEC
 dbM
-dbM
+dbP
 bTl
 bQU
 dbW
-dbN
+bTo
 bOw
 dce
 dci
@@ -116781,10 +116734,10 @@ bQT
 bSg
 bTk
 bSh
-dbW
+dbX
 dcb
 bOv
-dce
+bYk
 dcj
 bPN
 cjW
@@ -117039,9 +116992,9 @@ bSi
 bTm
 bUn
 dbY
-dbN
+bTo
 bOw
-dce
+bYk
 bYm
 bZZ
 ckN
@@ -117295,7 +117248,7 @@ bQT
 bSh
 coT
 bTl
-dbY
+dbZ
 bNZ
 bOy
 bZd
@@ -117561,7 +117514,7 @@ cab
 cbd
 cbX
 ccT
-dcl
+bSc
 dcx
 cfu
 cgu
@@ -118063,11 +118016,11 @@ bNy
 bOH
 bEs
 bQY
-dbN
-dbN
-dbN
-dbN
-dbN
+dbQ
+bTo
+bTo
+bTo
+bTo
 bXs
 bPL
 bQI
@@ -118321,16 +118274,16 @@ bOG
 bEs
 dbN
 bSk
-dbN
-dbN
-dbN
-dbN
+bTo
+bTo
+bTo
+bTo
 bXr
 bPF
-dbN
-dbN
-dbN
-dcj
+bTo
+bTo
+bTo
+cbY
 bQZ
 cOe
 cNW
@@ -118577,11 +118530,11 @@ bNz
 bOI
 bEs
 bRa
-dbN
-dbN
-dbN
+dbR
+bTo
+bTo
 bVs
-dbN
+bTo
 bXt
 bPM
 bZh
