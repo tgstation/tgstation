@@ -182,6 +182,8 @@
 	var/cy = ty
 	boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
 	for(var/obj/O in contents)
+		if(QDELETED(O))
+			continue
 		O.screen_loc = "[cx],[cy]"
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE
@@ -211,6 +213,8 @@
 				cy--
 	else
 		for(var/obj/O in contents)
+			if(QDELETED(O))
+				continue
 			O.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
@@ -244,6 +248,8 @@
 		numbered_contents = list()
 		adjusted_contents = 0
 		for(var/obj/item/I in contents)
+			if(QDELETED(I))
+				continue
 			var/found = 0
 			for(var/datum/numbered_display/ND in numbered_contents)
 				if(ND.sample_object.type == I.type)
