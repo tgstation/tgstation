@@ -23,10 +23,8 @@
 		var/mob/living/M = mover
 		if(reagents)
 			reagents.trans_to(M, rand(1,5)* M.get_permeability_protection())
-			to_chat(M, "[M.get_permeability_protection()]")
 
 /obj/effect/decal/cleanable/chempile/fire_act(exposed_temperature, exposed_volume)
 	if(reagents)
 		reagents.chem_temp += 30
 		reagents.handle_reactions()
-		..()
