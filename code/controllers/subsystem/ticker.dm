@@ -515,7 +515,7 @@ SUBSYSTEM_DEF(ticker)
 
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in GLOB.mob_list)
-		if (aiPlayer.stat != 2 && aiPlayer.mind)
+		if (aiPlayer.stat != DEAD && aiPlayer.mind)
 			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
 			aiPlayer.show_laws(1)
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
@@ -535,7 +535,7 @@ SUBSYSTEM_DEF(ticker)
 
 	for (var/mob/living/silicon/robot/robo in GLOB.mob_list)
 		if (!robo.connected_ai && robo.mind)
-			if (robo.stat != 2)
+			if (robo.stat != DEAD)
 				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
 			else
 				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>")
