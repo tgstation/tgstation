@@ -61,7 +61,7 @@ var/list/bad_gremlin_items = list()
 /mob/living/simple_animal/hostile/gremlin/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
 	. = ..()
 	if(message)
-		hear_memory.Insert(1, message)
+		hear_memory.Insert(1, raw_message)
 		if(hear_memory.len > max_hear_memory)
 			hear_memory.Cut(hear_memory.len)
 
