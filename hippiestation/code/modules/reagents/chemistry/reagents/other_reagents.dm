@@ -41,3 +41,23 @@
 		M.adjustToxLoss(-2, 0)
 		. = 1
 	return ..() || .
+
+
+/datum/reagent/poo
+	name = "poo"
+	id = "poo"
+	description = "it's poo."
+	color = "#443a07" //Brown (RGB 68, 58, 7)
+	metabolization_rate = 0.75 //lel
+
+/datum/reagent/poo/on_mob_life(mob/living/M)
+	if(prob(10))
+		M.adjustToxLoss(-1)
+
+/datum/reagent/poo/reaction_turf(turf/open/T, reac_volume)
+	if (!istype(T))
+		return
+	if(reac_volume >= 1)
+		for(var/obj/effect/decal/cleanable/poo/P in T.contents) //don't stack poo
+			return
+		new /obj/effect/decal/cleanable/poo(T)
