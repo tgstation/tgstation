@@ -291,12 +291,11 @@
 					return TRUE
 
 				else								// not next to perp
-					if(!throw_stuff(target))
-						var/turf/olddist = get_dist(src, target)
-						if((get_dist(src, target)) >= (olddist))
-							frustration++
-						else
-							frustration = 0
+					var/turf/olddist = get_dist(src, target)
+					if((get_dist(src, target)) >= (olddist))
+						frustration++
+					else
+						frustration = 0
 			else
 				back_to_idle()
 
