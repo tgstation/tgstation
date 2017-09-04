@@ -2230,7 +2230,6 @@
 #include "hippiestation\code\game\mecha\mech_fabricator.dm"
 #include "hippiestation\code\game\objects\inflatables.dm"
 #include "hippiestation\code\game\objects\noose.dm"
-#include "hippiestation\code\game\objects\effects\decals\Cleanable\poo.dm"
 #include "hippiestation\code\game\objects\effects\effect_system\effects_cloud.dm"
 #include "hippiestation\code\game\objects\effects\effect_system\effects_foam.dm"
 #include "hippiestation\code\game\objects\effects\effect_system\effects_smoke.dm"
@@ -2419,4 +2418,5 @@
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
+#include "hippiestation\code\game\objects\effects\decals\Cleanable\poo.dm"
 // END_INCLUDE
