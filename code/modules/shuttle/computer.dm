@@ -78,7 +78,7 @@
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(emagged)
 		return
-	req_access = null
+	req_access = list()
 	emagged = TRUE
 	to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 
