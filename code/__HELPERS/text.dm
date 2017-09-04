@@ -208,6 +208,37 @@
 	ASSERT(strip_html_properly("G<F<E<D<C<B<A") == "G<F<E<D<C<B<A")
 	world.log << "test finished"
 */
+/var/html_whitelist = list("b","i","u","em","strong","/b","/i","/u","/em","/strong") //basic font change. And yes I'm too lazy to write '/' handling
+//replaces < and > in non-whitelisted tags with &lt; and &gt;
+/proc/strip_html_smart(var/input,var/max_length=MAX_MESSAGE_LEN) 
+	if(!input)
+		return
+	var/opentag = 1
+	var/closetag = 1
+	var/buffer
+	while(1)
+		opentag = findtext(input, "<", opentag) //These store the position of < and > respectively.
+		if(opentag)
+			closetag = findtext(input, ">", opentag)
+			if(closetag)
+				buffer = copytext(input, opentag+1, closetag)
+				buffer = trim(buffer)
+				var/is_whitelisted = 0
+				for(var/word in html_whitelist)
+					if(cmptext(buffer,word))
+						is_whitelisted = 1
+						break
+				if(is_whitelisted)
+					opentag=closetag+1 //entire tag is whitelisted, so we should skip it
+				else //is some non-whitelisted tag or isn't tag at all, sanitize
+					input = copytext(input, 1, opentag) + "&lt;" + copytext(input, opentag+1, closetag) + "&gt;" + copytext(input, closetag + 1)
+			else
+				break
+		else
+			break
+	if(max_length)
+		input = copytext(input,1,max_length)
+	return input
 /*
  * Text searches
  */
