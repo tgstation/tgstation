@@ -74,7 +74,7 @@
 	"white",
 	"yellow"
 	)
-	
+
 	var/list/my_possible_colors = possible_colors.Copy()
 
 	for(var/wire in shuffle(wires))
