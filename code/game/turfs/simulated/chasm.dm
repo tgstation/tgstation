@@ -176,9 +176,14 @@
 	if(iscyborg(AM))
 		var/mob/living/silicon/robot/S = AM
 		qdel(S.mmi)
-
+	
 	falling_atoms -= AM
-
+	if(isliving(AM))
+		var/mob/living/L = AM
+			for(var/para in L.hasparasites())
+				var/mob/living/simple_animal/hostile/guardian/G = para
+				to_chat(G, "<span class='danger'>You're suddenly drawn towards the [src]!</span>")
+				G.death
 	qdel(AM)
 
 	if(AM && !QDELETED(AM))	//It's indestructible
