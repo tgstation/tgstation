@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
 	med_hud_set_health()
 	med_hud_set_status()
-	if(summoner)
+	if(!QDELETED(summoner))
 		if(summoner.stat == DEAD)
 			forceMove(summoner.loc)
 			to_chat(src, "<span class='danger'>Your summoner has died!</span>")
@@ -139,11 +139,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 				if(!summoner.dropItemToGround(W))
 					qdel(W)
 			summoner.dust()
-			death(TRUE)
-			qdel(src)
-		if(QDELETED(summoner))
-			to_chat(src, "<span class='danger'>Your summoner has ceased to exist and so do you!</span>")
-			visible_message("<span class='danger'><B>\The [src] dies along with its user!</B></span>")
 			death(TRUE)
 			qdel(src)
 	else
