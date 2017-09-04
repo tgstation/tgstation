@@ -172,11 +172,11 @@
 
 	if(iscyborg(AM))
 		var/mob/living/silicon/robot/S = AM
-		S.mmi.Destroy()
+		qdel(S.mmi)
 
 	falling_atoms -= AM
 
-	AM.Destroy()
+	qdel(AM)
 
 	if(AM && !QDELETED(AM))	//It's indestructible
 		visible_message("<span class='boldwarning'>[src] spits out the [AM]!</span>")
