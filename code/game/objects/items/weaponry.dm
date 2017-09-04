@@ -408,7 +408,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	flags_1 = NODROP_1 | ABSTRACT_1 | DROPDEL_1
 	w_class = WEIGHT_CLASS_HUGE
-	force = 21
+	force = 24
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
