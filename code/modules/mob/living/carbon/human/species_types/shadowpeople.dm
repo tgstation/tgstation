@@ -27,6 +27,7 @@
 /datum/species/shadow/nightmare
 	name = "Nightmare"
 	id = "nightmare"
+	limbs_id = "shadow"
 	burnmod = 1.5
 	blacklisted = TRUE
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR)
@@ -34,7 +35,8 @@
 
 /datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.AddSpell(/obj/effect/proc_holder/spell/targeted/shadowwalk)
+	var/obj/effect/proc_holder/spell/targeted/shadowwalk/SW = new
+	C.AddSpell(SW)
 	var/obj/item/light_eater/blade = new
 	C.put_in_hands(blade)
 
@@ -75,7 +77,7 @@
 		if(I.light_power)
 			disintegrate(I)
 
-/obj/item/light_eater/proc/disintegrate(obj/item/O)
-	if(prob((200 / O.light_range)))
-		src.loc.visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
-		O.burn()
+/obj/item/light_eater/proc/disintegrate(obj/item/O, on_mob = FALSE))
+	src.loc.visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
+	playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+	O.burn()
