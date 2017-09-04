@@ -185,3 +185,21 @@
 			close_machine()
 		else
 			open_machine()
+
+/obj/machinery/power/smes/npc_tamper_act(mob/living/L)
+	if(prob(50)) //mess with input
+		input_level = rand(0, input_level_max)
+	else //mess with output
+		output_level = rand(0, output_level_max)
+
+/obj/machinery/syndicatebomb/npc_tamper_act(mob/living/L) //suicide bomber gremlins
+	if(!open_panel)
+		open_panel = !open_panel
+	if(wires)
+		wires.npc_tamper(L)
+
+/obj/machinery/computer/bank_machine/npc_tamper_act(mob/living/L)
+	siphoning = !siphoning
+
+/obj/machinery/computer/slot_machine/npc_tamper_act(mob/living/L)
+	spin(L)
