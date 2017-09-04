@@ -615,8 +615,8 @@
 						var/mob/living/L = usr
 						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
-					QDEL_IN(src, 50)
 					addtimer(CALLBACK(src, /atom/movable/proc/say, "[S] winks out, just as suddenly as it appeared."), 50)
+					QDEL_IN(src, 50)
 			else
 				event = null
 				turns += 1
