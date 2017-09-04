@@ -19,6 +19,8 @@
 	var/auto_replenish = TRUE
 	var/special = FALSE
 	var/special_name = "special function"
+	var/message_cooldown
+	var/breakout_time = 1
 
 /obj/machinery/implantchair/Initialize()
 	. = ..()
@@ -112,15 +114,12 @@
 	update_icon()
 
 /obj/machinery/implantchair/container_resist(mob/living/user)
-	var/breakout_time = 600
-	if(state_open)
-		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
-		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
 		"<span class='italics'>You hear a metallic creaking from [src].</span>")
-	if(do_after(user,(breakout_time), target = src))
+	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
@@ -128,9 +127,9 @@
 		open_machine()
 
 /obj/machinery/implantchair/relaymove(mob/user)
-	if(!state_open)
-		to_chat(user, "<span class='warning'>[src] is locked!</span>")
-		return
+	if(message_cooldown <= world.time)
+		message_cooldown = world.time + 50
+		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
 /obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())

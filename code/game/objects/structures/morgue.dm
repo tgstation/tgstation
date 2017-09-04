@@ -23,6 +23,8 @@
 	var/obj/structure/tray/connected = null
 	var/locked = FALSE
 	var/opendir = SOUTH
+	var/message_cooldown
+	var/breakout_time = 1
 
 /obj/structure/bodycontainer/Destroy()
 	open()
@@ -42,7 +44,9 @@
 	if(user.stat || !isturf(loc))
 		return
 	if(locked)
-		to_chat(user, "<span class='warning'>[src] is locked!</span>")
+		if(message_cooldown <= world.time)
+			message_cooldown = world.time + 50
+			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
 	open()
 
@@ -87,15 +91,15 @@
 	qdel(src)
 
 /obj/structure/bodycontainer/container_resist(mob/living/user)
-	var/breakout_time = 600
 	if(!locked)
 		open()
+		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(null, \
-		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about a minute.)</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
 		"<span class='italics'>You hear a metallic creaking from [src].</span>")
-	if(do_after(user,(breakout_time), target = src))
+	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
