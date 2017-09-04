@@ -141,6 +141,11 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			summoner.dust()
 			death(TRUE)
 			qdel(src)
+		if(QDELETED(summoner))
+			to_chat(src, "<span class='danger'>Your summoner has ceased to exist and so do you!</span>")
+			visible_message("<span class='danger'><B>\The [src] dies along with its user!</B></span>")
+			death(TRUE)
+			qdel(src)
 	else
 		to_chat(src, "<span class='danger'>Your summoner has died!</span>")
 		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
