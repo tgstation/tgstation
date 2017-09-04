@@ -178,7 +178,7 @@
 			if (params["amount"])
 				desired = text2num(params["amount"])
 			else
-				desired = input("How many items?", "How many items would you like to take out?", 1) as null|num
+				desired = input("How many items?", "How many items would you like to take out?", 1) as null|num  // Sanity check below
 
 			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
