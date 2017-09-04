@@ -2367,7 +2367,6 @@
 #include "hippiestation\code\modules\projectiles\guns\magic\staffofrevenant.dm"
 #include "hippiestation\code\modules\projectiles\projectile\bullets.dm"
 #include "hippiestation\code\modules\projectiles\projectile\energy.dm"
-#include "hippiestation\code\modules\reagents\reagent_containers.dm"
 #include "hippiestation\code\modules\reagents\reagent_dispenser.dm"
 #include "hippiestation\code\modules\reagents\chemistry\holder.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents.dm"
