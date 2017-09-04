@@ -131,7 +131,7 @@
 
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0)||irc)//no sending html to the poor bots
-		msg = strip_html_simple(sanitize(copytext(msg,1,MAX_MESSAGE_LEN))) //Не проебите санитайз HTML при мерже, пожалуйста
+		msg = strip_html_smart(sanitize(copytext(msg,1,MAX_MESSAGE_LEN))) //Не проебите санитайз HTML при мерже, пожалуйста
 		if(!msg)
 			return
 
