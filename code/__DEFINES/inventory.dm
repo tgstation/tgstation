@@ -161,3 +161,8 @@
 
 #define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
+
+//Collection mode for storage objs
+#define COLLECTION_MODE_ONE 0	//pick one at a time
+#define COLLECTION_MODE_ALL 1	//pick all on tile
+#define COLLECTION_MODE_TYPE 2	//pick all of a type
