@@ -38,7 +38,7 @@
 	to_chat(user, "This capsule has the [template.name] stored.")
 	to_chat(user, template.description)
 
-/obj/item/weapon/survivalcapsule/emag_act(mob/user)
+/obj/item/survivalcapsule/emag_act(mob/user)
 	can_use_on_station = TRUE
 	playsound(src.loc, "sparks", 100, 1)
 
