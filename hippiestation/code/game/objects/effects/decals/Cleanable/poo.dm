@@ -13,5 +13,9 @@
 		var/mutable_appearance/poohands = mutable_appearance('hippiestation/icons/effects/poo.dmi', "poohands")
 		H.add_overlay(poohands)
 
+/obj/effect/decal/cleanable/poo/Initialize()
+	..()
+	reagents.add_reagent("poo", 5)
+
 /obj/effect/decal/cleanable/poo/can_bloodcrawl_in()
 	return FALSE
