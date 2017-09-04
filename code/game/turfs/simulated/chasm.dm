@@ -172,11 +172,11 @@
 
 	if(iscyborg(AM))
 		var/mob/living/silicon/robot/S = AM
-		qdel(S.mmi)
+		Destroy(S.mmi)
 
 	falling_atoms -= AM
 
-	qdel(AM)
+	Destroy(AM)
 
 	if(AM && !QDELETED(AM))	//It's indestructible
 		visible_message("<span class='boldwarning'>[src] spits out the [AM]!</span>")
@@ -209,3 +209,4 @@
 	icon = 'icons/turf/floors/junglechasm.dmi'
 	planetary_atmos = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+t
