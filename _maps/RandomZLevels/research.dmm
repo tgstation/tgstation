@@ -371,9 +371,8 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/highcap/ten_k{
 	auto_name = 1;
-	cell_type = 9000;
 	dir = 4;
 	name = "Engineering APC";
 	pixel_x = 27;
@@ -660,8 +659,7 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "cb" = (
-/obj/machinery/power/apc{
-	cell_type = 12000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 4;
 	name = "Gateway APC";
 	pixel_x = 24
@@ -988,8 +986,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Genetics APC";
 	pixel_x = 24
@@ -1718,8 +1715,7 @@
 /turf/open/floor/plasteel/whitepurple,
 /area/awaymission/research/interior)
 "fa" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Cryostatis APC";
 	pixel_x = 24
@@ -1889,8 +1885,7 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "fy" = (
-/obj/machinery/power/apc{
-	cell_type = 12000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 4;
 	name = "Vault APC";
 	pixel_x = 24
@@ -3057,8 +3052,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "iw" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Genetics APC";
 	pixel_x = 24
@@ -3655,8 +3649,7 @@
 	},
 /area/awaymission/research/interior/medbay)
 "kp" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Dorms APC";
 	pixel_x = 24

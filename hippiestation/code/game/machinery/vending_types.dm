@@ -382,7 +382,8 @@ AUTODROBE
 		/obj/item/clothing/under/roman = 1,
 		/obj/item/clothing/shoes/roman = 1,
 		/obj/item/shield/riot/roman = 1,
-		/obj/item/skub = 3
+		/obj/item/skub = 3,
+		/obj/item/clothing/gloves/color/white/soft = 2
 		)
 
 /*

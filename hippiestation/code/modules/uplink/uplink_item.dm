@@ -38,6 +38,13 @@
 	restricted_roles = list("Botanist")
 	cost = 14
 	item = /obj/vehicle/lawnmower/emagged
+	
+/datum/uplink_item/role_restricted/echainsaw
+	name = "Energy Chainsaw"
+	desc = "An incredibly deadly modified chainsaw with plasma-based energy blades instead of metal and a slick black-and-red finish. While it rips apart matter with extreme efficiency, it is heavy, large, and monstrously loud."
+	restricted_roles = list("Botanist", "Chef", "Bartender")
+	item = /obj/item/twohanded/required/chainsaw/energy
+	cost = 16
 
 /* Glock */
 /datum/uplink_item/dangerous/g17
