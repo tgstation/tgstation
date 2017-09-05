@@ -28,12 +28,14 @@
 		return 0
 
 /obj/machinery/ornd/attackby(obj/item/W, mob/user)
+	..()
 	var/obj/item/screwdriver/S = W
 	if(istype(S))
 		default_deconstruction_screwdriver()
 		update_icon()
 
 /obj/machinery/ornd/attack_hand(mob/user)
+	..()
 	if(shocked)
 		if(shock(user,50))
 			return

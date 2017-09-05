@@ -38,10 +38,8 @@
 				D.linked_console = src
 	first_use = 0
 
-/obj/machinery/computer/orndconsole/attack_hand(mob/user)
+/obj/machinery/computer/orndconsole/interact(mob/user)
 	SyncDevices()
-	if(..())
-		return
 	var/dat = ""
 	switch(screen)
 		if(0)
