@@ -189,8 +189,8 @@
 	.=..()
 	drag = loc
 	if(!istype(drag))
-    	. = INITIALIZE_HINT_QDEL
-    	CRASH("Energy net created outside of dragnet")
+		. = INITIALIZE_HINT_QDEL
+		CRASH("Energy net created outside of dragnet")
 
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap
