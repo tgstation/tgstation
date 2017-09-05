@@ -608,6 +608,6 @@
 /obj/item/projectile/bullet/neurotoxin/on_hit(atom/target, blocked = FALSE)
 	if(isalien(target))
 		knockdown = 0
-		nodamage = 1
-	. = ..() // Execute the rest of the code.
+		nodamage = TRUE
+	return ..()
 

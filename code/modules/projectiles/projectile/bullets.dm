@@ -3,7 +3,7 @@
 	icon_state = "bullet"
 	damage = 60
 	damage_type = BRUTE
-	nodamage = 0
+	nodamage = FALSE
 	flag = "bullet"
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
@@ -26,7 +26,7 @@
 		M.IgniteMob()
 
 /obj/item/projectile/bullet/incendiary/Move()
-	..()
+	. = ..()
 	var/turf/location = get_turf(src)
 	if(location)
 		new /obj/effect/hotspot(location)
@@ -150,7 +150,7 @@
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
-	return 1	
+	return TRUE
 
 // .50 (Sniper)
 
@@ -163,7 +163,7 @@
 	armour_penetration = 50
 	var/breakthings = TRUE
 
-/obj/item/projectile/bullet/p50/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
 	if((blocked != 100) && (!ismob(target) && breakthings))
 		target.ex_act(rand(1,2))
 	return ..()
@@ -171,7 +171,7 @@
 /obj/item/projectile/bullet/p50/soporific
 	name =".50 soporific bullet"
 	armour_penetration = 0
-	nodamage = 1
+	nodamage = TRUE
 	dismemberment = 0
 	knockdown = 0
 	breakthings = FALSE
@@ -187,7 +187,7 @@
 	icon_state = "gauss"
 	name = "penetrator round"
 	damage = 60
-	forcedodge = 1
+	forcedodge = TRUE
 	dismemberment = 0 //It goes through you cleanly.
 	knockdown = 0
 	breakthings = FALSE
@@ -270,7 +270,7 @@
 /obj/item/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 1)
-	return 1
+	return TRUE
 
 /obj/item/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
@@ -325,8 +325,8 @@
 /obj/item/projectile/bullet/honker
 	damage = 0
 	knockdown = 60
-	forcedodge = 1
-	nodamage = 1
+	forcedodge = TRUE
+	nodamage = TRUE
 	hitsound = 'sound/items/bikehorn.ogg'
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana"
@@ -377,7 +377,7 @@
 	..(target, blocked)
 	reagents.set_reacting(TRUE)
 	reagents.handle_reactions()
-	return 1
+	return TRUE
 
 /obj/item/projectile/bullet/dart/metalfoam/New()
 	..()
