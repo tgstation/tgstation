@@ -17,14 +17,11 @@
 
 //CONFIG START (all defaults are random examples, do change them)
 //Use single quotes for config options that are strings.
- 
-//Github lets you have it sign the message with a secret that you can validate. This prevents people from faking events.
-//This var should match the secret you configured for this webhook on github.
-//This is required as otherwise somebody could trick the script into leaking the api key.
-$hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
-//Api key for pushing changelogs.
-$apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
+require_once 'secret.php';
+
+$enable_live_tracking = true;	//auto update this file from the repository
+$path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
 
 //anti-spam measures. Don't announce PRs in game to people unless they've gotten a pr merged before
 //options are:
@@ -36,20 +33,6 @@ $validation = "org";
 
 //how many merged prs must they have under the rules above to have their pr announced to the game servers.
 $validation_count = 1;
-
-//servers to announce PRs to.
-$servers = array();
-/*
-$servers[0] = array();
-$servers[0]['address'] = 'game.tgstation13.org';
-$servers[0]['port'] = '1337';
-$servers[0]['comskey'] = '89aj90cq2fm0amc90832mn9rm90';
-$servers[1] = array();
-$servers[1]['address'] = 'game.tgstation13.org';
-$servers[1]['port'] = '2337';
-$servers[1]['comskey'] = '89aj90cq2fm0amc90832mn9rm90';
-*/
-
 
 //CONFIG END
 set_error_handler(function($severity, $message, $file, $line) {
@@ -249,6 +232,7 @@ function handle_pr($payload) {
 			}
 			else {
 				$action = 'merged';
+				auto_update($payload);
 				checkchangelog($payload, true, true);
 				$validated = TRUE; //pr merged events always get announced.
 			}
@@ -269,6 +253,27 @@ function handle_pr($payload) {
 	$msg = '['.$payload['pull_request']['base']['repo']['full_name'].'] Pull Request '.$action.' by '.htmlSpecialChars($payload['sender']['login']).': <a href="'.$payload['pull_request']['html_url'].'">'.htmlSpecialChars('#'.$payload['pull_request']['number'].' '.$payload['pull_request']['user']['login'].' - '.$payload['pull_request']['title']).'</a>';
 	sendtoallservers('?announce='.urlencode($msg), $payload);
 
+}
+
+function create_comment($payload, $comment){
+	apisend($payload['pull_request']['comments_url'], 'POST', json_encode(array('body' => $comment)));
+}
+
+function auto_update($payload){
+	global $enable_live_tracking;
+	global $path_to_script;
+	global $hookSecret;
+	global $apiKey;
+	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script))
+		return;
+	
+	$content = file_get_contents('https://raw.githubusercontent.com/' . $payload['pull_request']['base']['repo']['full_name'] . '/master/'. $path_to_script);
+
+	create_comment($payload, "Edit detected. Self updating... Here is my new code:\n``" . "`php\n" . $content . "\n``" . '`');
+
+	$code_file = fopen(basename($path_to_script), 'w');
+	fwrite($code_file, $content);
+	fclose($code_file);
 }
 
 function has_tree_been_edited($payload, $tree){
