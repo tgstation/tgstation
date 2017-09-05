@@ -35,7 +35,7 @@
 [._]s[a-w][a-z]
 # session
 Session.vim
-# temporary
+# temporaryasdf
 .netrwhist
 *~
 # auto-generated tag files
