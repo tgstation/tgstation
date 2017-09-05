@@ -1030,7 +1030,7 @@
 	to_chat(user, "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>")
 
 /obj/item/hierophant_club/suicide_act(mob/living/user)
-	user.say("Xverwpsgexmrk...")
+	say("Xverwpsgexmrk...")
 	user.visible_message("<span class='suicide'>[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
 	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
