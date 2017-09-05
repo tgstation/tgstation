@@ -3,9 +3,10 @@
 */
 
 //mob/var/stat things
-#define CONSCIOUS   0
-#define UNCONSCIOUS	1
-#define DEAD	    2
+#define CONSCIOUS	0
+#define SOFT_CRIT	1	
+#define UNCONSCIOUS	2
+#define DEAD		3
 
 //mob disabilities stat
 
