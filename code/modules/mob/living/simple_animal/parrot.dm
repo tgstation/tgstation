@@ -295,7 +295,7 @@
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(!stat && M.a_intent == INTENT_HELP)
+	if(stat != DEAD && M.a_intent == INTENT_HELP)
 		handle_automated_speech(1) //assured speak/emote
 	return
 
@@ -929,7 +929,7 @@
 		S["roundssurvived"]		>> rounds_survived
 		S["longestsurvival"]	>> longest_survival
 		S["longestdeathstreak"] >> longest_deathstreak
-		fdel(S)
+		fdel("data/npc_saves/Poly.sav")
 	else
 		var/json_file = file("data/npc_saves/Poly.json")
 		if(!fexists(json_file))
@@ -944,7 +944,7 @@
 		speech_buffer = list()
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
-	var/json_file = file("data/npc_saves/Punpun.json")
+	var/json_file = file("data/npc_saves/Poly.json")
 	var/list/file_data = list()
 	if(islist(speech_buffer))
 		file_data["phrases"] = speech_buffer

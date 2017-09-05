@@ -332,7 +332,7 @@
 		S["age"] 		>> age
 		S["record_age"]	>> record_age
 		S["saved_head"] >> saved_head
-		fdel(S)
+		fdel("data/npc_saves/Ian.sav")
 	else
 		var/json_file = file("data/npc_saves/Ian.json")
 		if(!fexists(json_file))

@@ -42,13 +42,13 @@
 	..()
 
 /mob/living/carbon/monkey/punpun/proc/Read_Memory()
-	if(fexists("data/npc_saves/Punpun.sav"))
+	if(fexists("data/npc_saves/Punpun.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
 		S["ancestor_name"]	>> ancestor_name
 		S["ancestor_chain"] >> ancestor_chain
 		S["relic_hat"]		>> relic_hat
 		S["relic_mask"]		>> relic_mask
-		fdel(S)
+		fdel("data/npc_saves/Punpun.sav")
 	else
 		var/json_file = file("data/npc_saves/Punpun.json")
 		if(!fexists(json_file))

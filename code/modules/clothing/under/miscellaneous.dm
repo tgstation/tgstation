@@ -693,6 +693,33 @@
 	can_adjust = FALSE
 	resistance_flags = NONE
 
+/obj/item/clothing/under/draculass
+	name = "draculass coat"
+	desc = "A dress inspired by the ancient era known as the victorian era"
+	icon_state = "draculass"
+	item_state = "draculass"
+	item_color = "draculass"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/drfreeze
+	name = "doctor freeze's jumpsuit"
+	desc = "A modified scientist jumpsuit to look extra cool."
+	icon_state = "drfreeze"
+	item_state = "drfreeze"
+	item_color = "drfreeze"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/lobster
+	name = "foam lobster suit"
+	desc = "Who beheaded the college mascot?"
+	icon_state = "lobster"
+	item_state = "lobster"
+	item_color = "lobster"
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+
 /obj/item/clothing/under/skeleton
 	name = "skeleton jumpsuit"
 	desc = "A black jumpsuit with a white bone pattern printed on it. Spooky!"

@@ -3159,8 +3159,7 @@
 	dir = 1;
 	network = list("UO45")
 	},
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 0;
 	name = "Hydroponics APC";
@@ -6240,8 +6239,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 1;
 	locked = 0;
 	name = "UO45 Bar APC";
@@ -7619,8 +7617,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 0;
 	name = "UO45 Research Division APC";
@@ -8313,8 +8310,7 @@
 	})
 "mE" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 0;
 	name = "UO45 Gateway APC";
@@ -11932,8 +11928,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 8;
 	locked = 1;
 	name = "UO45 Engineering APC";
@@ -12695,8 +12690,7 @@
 	})
 "sj" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 0;
 	name = "UO45 Mining APC";

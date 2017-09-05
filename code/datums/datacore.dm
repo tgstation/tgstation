@@ -273,7 +273,7 @@
 		L.fields["species"]		= H.dna.species.type
 		L.fields["features"]	= H.dna.features
 		L.fields["image"]		= image
-		L.fields["reference"]	= H
+		L.fields["mindref"]		= H.mind
 		locked += L
 	return
 
