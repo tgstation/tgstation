@@ -28,14 +28,15 @@
 		return 0
 
 /obj/machinery/ornd/attackby(obj/item/W, mob/user)
-	..()
 	var/obj/item/screwdriver/S = W
 	if(istype(S))
 		default_deconstruction_screwdriver()
 		update_icon()
 
+	if(user.a_intent == INTENT_HARM) //so we can hit the machine
+		return ..()
+
 /obj/machinery/ornd/attack_hand(mob/user)
-	..()
 	if(shocked)
 		if(shock(user,50))
 			return
@@ -85,7 +86,6 @@
 	open_machine()
 
 /obj/machinery/ornd/bodyscanner/attack_hand(mob/user)
-	..()
 	toggle_open(user)
 
 /obj/machinery/ornd/bodyscanner/update_icon()
@@ -232,11 +232,13 @@
 	addtimer(CALLBACK(src, .proc/donescan),32*scan_coeff)
 
 /obj/machinery/ornd/organres/attackby(obj/item/W, mob/user)
-	..()
 	var/obj/item/organ/O = W
 	if(istype(O) && !running)
 		O.forceMove(src)
 		O = heldorgan
+
+	if(user.a_intent == INTENT_HARM) //so we can hit the machine
+		return ..()
 
 
 
