@@ -135,7 +135,7 @@ SUBSYSTEM_DEF(timer)
 	. = "Timer: [TE]"
 	. += "Prev: [TE.prev ? TE.prev : "NULL"], Next: [TE.next ? TE.next : "NULL"]"
 	if(TE.spent)
-		. += ", SPENT(TE.spent)"
+		. += ", SPENT([TE.spent])"
 	if(QDELETED(TE))
 		. += ", QDELETED"
 	if(!timer.callBack)
