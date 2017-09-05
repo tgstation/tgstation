@@ -53,6 +53,7 @@
 	*	Stations
 	*/
 
+<<<<<<< HEAD
 //////////	Cere fluff
 
 /obj/item/paper/fluff/stations/cere/abandoned_dock
@@ -90,6 +91,8 @@
 /obj/item/paper/crumpled/stations/cere/rocks3
 	info = "...EMPTY HALLS...USELESS SPACE..."
 
+=======
+>>>>>>> 52310bb831... CERESTATION DOES NOT EXIST, COMRADE. (#30407)
 
 ///////////	CentCom
 
