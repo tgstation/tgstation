@@ -229,8 +229,8 @@
 /mob/living/verb/succumb(whispered as null)
 	set hidden = 1
 	if (InCritical())
-		src.log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
-		src.adjustOxyLoss(src.health - HEALTH_THRESHOLD_DEAD)
+		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
+		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 		if(!whispered)
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
@@ -241,7 +241,10 @@
 		return 1
 
 /mob/living/proc/InCritical()
-	return (health < HEALTH_THRESHOLD_CRIT && health > HEALTH_THRESHOLD_DEAD && stat == UNCONSCIOUS)
+	return (health <= HEALTH_THRESHOLD_CRIT && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
+
+/mob/living/proc/InFullCritical()
+	return (health <= HEALTH_THRESHOLD_FULLCRIT && stat == UNCONSCIOUS)
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
@@ -471,31 +474,31 @@
 			if(MOVE_INTENT_WALK)
 				. += config.walk_speed
 
-/mob/living/proc/makeTrail(turf/T)
+/mob/living/proc/makeTrail(turf/target_turf)
 	if(!has_gravity())
 		return
-	var/blood_exists = 0
+	var/blood_exists = FALSE
 
-	for(var/obj/effect/decal/cleanable/trail_holder/C in src.loc) //checks for blood splatter already on the floor
-		blood_exists = 1
-	if (isturf(src.loc))
+	for(var/obj/effect/decal/cleanable/trail_holder/C in loc) //checks for blood splatter already on the floor
+		blood_exists = TRUE
+	if(isturf(loc))
 		var/trail_type = getTrail()
 		if(trail_type)
-			var/brute_ratio = round(getBruteLoss()/maxHealth, 0.1)
+			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
 				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
-				var/newdir = get_dir(T, src.loc)
-				if(newdir != src.dir)
-					newdir = newdir | src.dir
+				var/newdir = get_dir(target_turf, loc)
+				if(newdir != dir)
+					newdir = newdir | dir
 					if(newdir == 3) //N + S
 						newdir = NORTH
 					else if(newdir == 12) //E + W
 						newdir = EAST
 				if((newdir in GLOB.cardinals) && (prob(50)))
-					newdir = turn(get_dir(T, src.loc), 180)
+					newdir = turn(get_dir(target_turf, loc), 180)
 				if(!blood_exists)
-					new /obj/effect/decal/cleanable/trail_holder(src.loc)
-				for(var/obj/effect/decal/cleanable/trail_holder/TH in src.loc)
+					new /obj/effect/decal/cleanable/trail_holder(loc)
+				for(var/obj/effect/decal/cleanable/trail_holder/TH in loc)
 					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 						TH.existing_dirs += newdir
 						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
@@ -940,13 +943,14 @@
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/living/proc/update_canmove()
-	var/ko = IsKnockdown() || IsUnconscious() || stat || (status_flags & FAKEDEATH)
+	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (status_flags & FAKEDEATH)
+	var/move_and_fall = stat == SOFT_CRIT && !pulledby
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
 	var/ignore_legs = get_leg_ignore()
-	if(ko || resting || has_status_effect(STATUS_EFFECT_STUN) || chokehold)
+	if(ko || resting || move_and_fall || IsStun() || chokehold)
 		drop_all_held_items()
 		unset_machine()
 		if(pulling)
@@ -958,7 +962,7 @@
 	else if(!lying)
 		if(resting)
 			fall()
-		else if(ko || (!has_legs && !ignore_legs) || chokehold)
+		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
 	canmove = !(ko || resting || has_status_effect(STATUS_EFFECT_STUN) || has_status_effect(/datum/status_effect/freon) || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying

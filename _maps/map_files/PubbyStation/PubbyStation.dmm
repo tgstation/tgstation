@@ -43442,7 +43442,7 @@
 	dir = 2;
 	network = list("SS13")
 	},
-/obj/item/circuitboard/computer/shuttle/monastery_shuttle,
+/obj/item/circuitboard/computer/monastery_shuttle,
 /turf/open/floor/plasteel/darkgreen,
 /area/storage/tech)
 "bQx" = (
