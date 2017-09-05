@@ -1035,6 +1035,8 @@
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
 	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
 	sleep(3)
+	if(QDELETED(user))
+		return
 	user.visible_message("<span class='hierophant_warning'>[user] fades out, leaving their belongings behind!</span>")
 	for(var/obj/item/I in user)
 		if(I != src)
@@ -1044,7 +1046,6 @@
 		B.damage = 0
 	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
 	qdel(user)
-	return
 
 /obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	..()
