@@ -1831,7 +1831,6 @@
 #include "code\modules\ninja\suit\suit_attackby.dm"
 #include "code\modules\ninja\suit\suit_initialisation.dm"
 #include "code\modules\ninja\suit\suit_process.dm"
-#include "code\modules\ninja\suit\suit_verbs_handlers.dm"
 #include "code\modules\ninja\suit\n_suit_verbs\energy_net_nets.dm"
 #include "code\modules\ninja\suit\n_suit_verbs\ninja_adrenaline.dm"
 #include "code\modules\ninja\suit\n_suit_verbs\ninja_cost_check.dm"

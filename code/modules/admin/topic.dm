@@ -1086,7 +1086,10 @@
 
 	else if(href_list["showmessageckey"])
 		var/target = href_list["showmessageckey"]
-		browse_messages(target_ckey = target)
+		var/agegate = TRUE
+		if (href_list["showall"])
+			agegate = FALSE
+		browse_messages(target_ckey = target, agegate = agegate)
 
 	else if(href_list["showmessageckeylinkless"])
 		var/target = href_list["showmessageckeylinkless"]

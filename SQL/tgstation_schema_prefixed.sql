@@ -31,7 +31,7 @@ CREATE TABLE `SS13_admin` (
 -- Table structure for table `SS13_admin_log`
 --
 
-DROP TABLE IF EXISTS `SS13_dmin_log`;
+DROP TABLE IF EXISTS `SS13_admin_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SS13_admin_log` (
@@ -254,10 +254,11 @@ CREATE TABLE `SS13_messages` (
   `secret` tinyint(1) unsigned NOT NULL,
   `lasteditor` varchar(32) DEFAULT NULL,
   `edits` text,
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `idx_msg_ckey_time` (`targetckey`,`timestamp`),
-  KEY `idx_msg_type_ckeys_time` (`type`,`targetckey`,`adminckey`,`timestamp`),
-  KEY `idx_msg_type_ckey_time_odr` (`type`,`targetckey`,`timestamp`)
+  KEY `idx_msg_ckey_time` (`targetckey`,`timestamp`, `deleted`),
+  KEY `idx_msg_type_ckeys_time` (`type`,`targetckey`,`adminckey`,`timestamp`, `deleted`),
+  KEY `idx_msg_type_ckey_time_odr` (`type`,`targetckey`,`timestamp`, `deleted`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
