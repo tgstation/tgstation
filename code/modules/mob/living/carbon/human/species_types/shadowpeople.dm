@@ -71,13 +71,11 @@
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
 			borg.update_headlamp(TRUE, 100)
-			return
 		else
 			for(var/obj/item/O in AM)
 				if(O.light_range && O.light_power)
 					disintegrate(O)
-			return
-	if(isitem(AM))
+	else if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.light_range && I.light_power)
 			disintegrate(I)
