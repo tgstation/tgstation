@@ -4,7 +4,7 @@
 
 /obj/item/clothing/gloves/color/white/soft/Touch(mob/living/carbon/human/target,proximity)
 	var/mob/M = loc
-	if(ishuman(target))
+	if(ishuman(target) && Adjacent(target))
 		if(M.a_intent == INTENT_HELP && target.a_intent != INTENT_HELP)
 			target.a_intent = INTENT_HELP
 			target.hud_used.action_intent.icon_state = "[target.a_intent]" //Else we get your intent being one thing and your hud another.
