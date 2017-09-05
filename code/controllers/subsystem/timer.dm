@@ -138,7 +138,7 @@ SUBSYSTEM_DEF(timer)
 		. += ", SPENT([TE.spent])"
 	if(QDELETED(TE))
 		. += ", QDELETED"
-	if(!timer.callBack)
+	if(!TE.callBack)
 		. += ", NO CALLBACK"
 
 /datum/controller/subsystem/timer/proc/shift_buckets()
