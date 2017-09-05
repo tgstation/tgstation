@@ -183,6 +183,8 @@
 	H.adjustBruteLoss(1000)
 	L.stored_mob = H
 	H.forceMove(L)
+	if(H.dna.check_mutation(DWARFISM))
+		L.make_shiny() //dwarf legions aren't just fluff!
 	qdel(src)
 
 //Advanced Legion is slightly tougher to kill and can raise corpses (revive other legions)
