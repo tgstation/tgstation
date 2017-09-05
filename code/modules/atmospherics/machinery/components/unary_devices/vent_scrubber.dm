@@ -58,7 +58,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
-	if(!on || welded || (stat & (NOPOWER|BROKEN)) || !powered(power_channel))
+	if(!on || welded || !is_operational() || !powered(power_channel))
 		return FALSE
 
 	var/amount = idle_power_usage
@@ -93,7 +93,7 @@
 		icon_state = "scrub_welded"
 		return
 
-	if(!NODE1 || !on || (stat & (NOPOWER|BROKEN)))
+	if(!NODE1 || !on || !is_operational())
 		icon_state = "scrub_off"
 		return
 
@@ -152,7 +152,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
 	..()
-	if(stat & (NOPOWER|BROKEN))
+	if(!is_operational())
 		return FALSE
 	if(!NODE1)
 		on = FALSE
@@ -270,7 +270,7 @@
 
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
-	if(stat & (NOPOWER|BROKEN))
+	if(!is_operational())
 		return
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
@@ -361,7 +361,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
 	. = ..()
-	if(. && !(stat & (NOPOWER|BROKEN)) && on)
+	if(. && is_operational() && on)
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
 

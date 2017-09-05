@@ -43,7 +43,7 @@
 	..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
-	if(!(stat & (NOPOWER|BROKEN)) && on && NODE1 && NODE2 && NODE3)
+	if(is_operational() && on && NODE1 && NODE2 && NODE3)
 		icon_state = "filter_on[flipped?"_f":""]"
 		return
 	icon_state = "filter_off[flipped?"_f":""]"
@@ -54,7 +54,7 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/process_atmos()
 	..()
-	if((stat & (NOPOWER|BROKEN)) || !on || !(NODE1 && NODE2 && NODE3))
+	if(!is_operational() || !on || !(NODE1 && NODE2 && NODE3))
 		return
 
 	var/datum/gas_mixture/air1 = AIR1
@@ -160,7 +160,7 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/can_unwrench(mob/user)
 	. = ..()
-	if(. && !(stat & (NOPOWER|BROKEN)) && on)
+	if(. && is_operational() && on)
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
 

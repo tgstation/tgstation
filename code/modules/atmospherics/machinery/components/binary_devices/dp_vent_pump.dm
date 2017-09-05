@@ -59,7 +59,7 @@ Acts like a normal vent, but has an input AND output.
 	if(showpipe)
 		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "dpvent_cap"))
 
-	if(!on || (stat & (NOPOWER|BROKEN)))
+	if(!on || !is_operational())
 		icon_state = "vent_off"
 		return
 

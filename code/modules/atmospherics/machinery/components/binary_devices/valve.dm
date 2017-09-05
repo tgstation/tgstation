@@ -65,7 +65,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	return src.attack_hand(user)
 
 /obj/machinery/atmospherics/components/binary/valve/digital/update_icon_nopipes(animation)
-	if(stat & (NOPOWER|BROKEN))
+	if(!is_operational())
 		normalize_dir()
 		icon_state = "dvalve_nopower"
 		return

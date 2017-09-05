@@ -30,7 +30,7 @@
 	if(showpipe)
 		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions))
 
-	if(!NODE1 || !on || (stat & (NOPOWER|BROKEN)))
+	if(!NODE1 || !on || !is_operational())
 		icon_state = "inje_off"
 		return
 
@@ -47,7 +47,7 @@
 	..()
 	injecting = 0
 
-	if(!on || (stat & (NOPOWER|BROKEN)))
+	if(!on || !is_operational())
 		return
 
 	var/datum/gas_mixture/air_contents = AIR1
@@ -63,7 +63,7 @@
 		update_parents()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
-	if(on || injecting || (stat & (NOPOWER|BROKEN)))
+	if(on || injecting || !is_operational())
 		return
 
 	var/datum/gas_mixture/air_contents = AIR1
@@ -183,7 +183,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
 	. = ..()
-	if(. && !(stat & (NOPOWER|BROKEN)) && on)
+	if(. && is_operational() && on)
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
 
