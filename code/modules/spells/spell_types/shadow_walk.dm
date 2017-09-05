@@ -22,7 +22,7 @@
 	else
 		var/turf/T = get_turf(user)
 		var/light_amount = T.get_lumcount()
-		if(light_amount < 0.2)
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
 			visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
 			var/obj/effect/dummy/shadow/S2 = new(get_turf(user.loc))

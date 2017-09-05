@@ -13,14 +13,13 @@
 
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
-	var/light_amount = 0
-	if(isturf(H.loc))
-		var/turf/T = H.loc
-		light_amount = T.get_lumcount()
+	var/turf/T = H.loc
+	if(istype(T))
+		var/light_amount = T.get_lumcount()
 
-		if(light_amount > 0.2) //if there's enough light, start dying
+		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
 			H.take_overall_damage(1,1)
-		else if (light_amount < 0.2) //heal in the dark
+		else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
 			H.heal_overall_damage(1,1)
 
 
@@ -42,13 +41,12 @@
 
 
 /datum/species/shadow/nightmare/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
-	var/light_amount = 0
-	if(isturf(H.loc))
-		var/turf/T = H.loc
-		light_amount = T.get_lumcount()
-		if (light_amount < 0.2)
+	var/turf/T = H.loc
+	if(istype(T))
+		var/light_amount = T.get_lumcount()
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			H.visible_message("<span class='danger'>[H] dances in the shadows, evading [P]!</span>")
-			playsound(T, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+			playsound(T, get_sfx("bullet_miss"), 75, 1)
 			return -1
 	return 0
 
@@ -57,9 +55,10 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	force = 25
+	armour_penetration = 35
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	flags_1 = ABSTRACT_1 | NODROP_1
+	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
 
@@ -70,14 +69,14 @@
 		return
 	if(isliving(AM))
 		for(var/obj/item/O in AM)
-			if(O.light_power)
+			if(O.light_range)
 				disintegrate(O)
 	if(isitem(AM))
 		var/obj/item/I = AM
-		if(I.light_power)
+		if(I.light_range)
 			disintegrate(I)
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O)
-	src.loc.visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
-	playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+	O.visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
+	playsound(src, 'sound/items/welder.ogg', 50, 1)
 	O.burn()
