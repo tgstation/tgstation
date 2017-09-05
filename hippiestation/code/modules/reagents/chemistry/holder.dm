@@ -47,9 +47,8 @@
 				var/pressure_required = C.pressure_required
 				var/radioactivity_required = C.radioactivity_required
 				var/bluespace_recipe = C.bluespace_recipe
-				var/list/cached_results = C.results
 
-				var/list/cachetype = typecacheof(list(/obj/item/slime_extract, C.required_container))
+				var/list/cached_results = C.results
 
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
@@ -65,15 +64,14 @@
 						matching_container = 1
 
 					else
-						if(is_type_in_typecache(cached_my_atom, cachetype))
+						if(cached_my_atom.type == C.required_container)
 							matching_container = 1
-					if (isliving(cached_my_atom)) //Makes it so certain chemical reactions don't occur in mobs
-						if (C.mob_react)
-							return
+					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+						return
 					if(!C.required_other)
 						matching_other = 1
 
-					else if(is_type_in_typecache(cached_my_atom, cachetype))
+					else if(istype(cached_my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/M = cached_my_atom
 
 						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
@@ -111,10 +109,11 @@
 						if(!ismob(cached_my_atom)) // No bubbling mobs
 							if(C.mix_sound)
 								playsound(get_turf(cached_my_atom), C.mix_sound, 80, 1)
+
 							for(var/mob/M in seen)
 								to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
 
-						if(is_type_in_typecache(cached_my_atom, cachetype))
+						if(istype(cached_my_atom, /obj/item/slime_extract))
 							var/obj/item/slime_extract/ME2 = my_atom
 							ME2.Uses--
 							if(ME2.Uses <= 0) // give the notification that the slime core is dead
