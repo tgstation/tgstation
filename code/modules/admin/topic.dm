@@ -22,6 +22,24 @@
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
 
+	else if(href_list["getplaytimewindow"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/mob/M = locate(href_list["getplaytimewindow"]) in GLOB.mob_list
+		if(!M)
+			to_chat(usr, "<span class='danger'>ERROR: Mob not found.</span>")
+			return
+		cmd_show_exp_panel(M.client)
+
+	else if(href_list["toggleexempt"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/client/C = locate(href_list["toggleexempt"]) in GLOB.clients
+		if(!C)
+			to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+			return
+		toggle_exempt_status(C)
+
 	else if(href_list["makeAntag"])
 		if (!SSticker.mode)
 			to_chat(usr, "<span class='danger'>Not until the round starts!</span>")
@@ -94,13 +112,6 @@
 				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				new/datum/round_event/ghost_role/blob(TRUE, strength)
-			if("gangs")
-				if(src.makeGangsters())
-					message_admins("[key_name(usr)] created gangs.")
-					log_admin("[key_name(usr)] created gangs.")
-				else
-					message_admins("[key_name(usr)] tried to create gangs. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed create gangs.")
 			if("centcom")
 				message_admins("[key_name(usr)] is creating a CentCom response team...")
 				if(src.makeEmergencyresponseteam())
@@ -804,14 +815,6 @@
 		else
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=revolutionary;jobban4=\ref[M]'>Revolutionary</a></td>"
 
-		//Gangster
-		if(jobban_isbanned(M, "gangster") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=gangster;jobban4=\ref[M]'><font color=red>Gangster</font></a></td>"
-		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=gangster;jobban4=\ref[M]'>Gangster</a></td>"
-
-		dat += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
-
 		//Cultist
 		if(jobban_isbanned(M, "cultist") || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=cultist;jobban4=\ref[M]'><font color=red>Cultist</font></a></td>"
@@ -1083,7 +1086,10 @@
 
 	else if(href_list["showmessageckey"])
 		var/target = href_list["showmessageckey"]
-		browse_messages(target_ckey = target)
+		var/agegate = TRUE
+		if (href_list["showall"])
+			agegate = FALSE
+		browse_messages(target_ckey = target, agegate = agegate)
 
 	else if(href_list["showmessageckeylinkless"])
 		var/target = href_list["showmessageckeylinkless"]
@@ -1591,11 +1597,13 @@
 			var/mob/living/L = M
 			var/status
 			switch (M.stat)
-				if (0)
+				if(CONSCIOUS)
 					status = "Alive"
-				if (1)
-					status = "<font color='orange'><b>Unconscious</b></font>"
-				if (2)
+				if(SOFT_CRIT)
+					status = "<font color='orange'><b>Dying</b></font>"
+				if(UNCONSCIOUS)
+					status = "<font color='orange'><b>[L.InCritical() ? "Unconscious and Dying" : "Unconscious"]</b></font>"
+				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status = [status]"
 			health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()] - Stamina: [L.getStaminaLoss()]"

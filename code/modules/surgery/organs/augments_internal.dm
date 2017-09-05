@@ -52,7 +52,7 @@
 	if(active)
 		for(var/obj/item/I in owner.held_items)
 			if(!(I.flags_1 & NODROP_1))
-				flags_1 += I
+				stored_items += I
 
 		var/list/L = owner.get_empty_held_indexes()
 		if(LAZYLEN(L) == owner.held_items.len)
@@ -87,6 +87,7 @@
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/I in stored_items)
 		I.flags_1 &= ~NODROP_1
+	stored_items = list()
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)

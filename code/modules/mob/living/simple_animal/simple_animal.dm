@@ -386,14 +386,14 @@
 	else
 		..()
 
-/mob/living/simple_animal/update_canmove()
+/mob/living/simple_animal/update_canmove(value_otherwise = TRUE)
 	if(IsUnconscious() || IsStun() || IsKnockdown() || stat || resting)
 		drop_all_held_items()
-		canmove = 0
+		canmove = FALSE
 	else if(buckled)
-		canmove = 0
+		canmove = FALSE
 	else
-		canmove = 1
+		canmove = value_otherwise
 	update_transform()
 	update_action_buttons_icon()
 	return canmove

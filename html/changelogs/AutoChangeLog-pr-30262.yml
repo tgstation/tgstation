@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "While below 0 health but above -30 health, you will be able to crawl slowly if not pulled, whisper, hear speech, and see with worsening vision."
+  - wip: "The previous softcrit got reverted, for changelog context."

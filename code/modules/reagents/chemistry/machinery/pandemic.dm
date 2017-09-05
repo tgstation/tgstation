@@ -192,11 +192,11 @@
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
 			. = TRUE
 		if("create_vaccine_bottle")
-			var/index = text2num(params["index"])
-			var/datum/disease/D = SSdisease.archive_diseases[get_virus_id_by_index(index)]
+			var/id = params["index"]
+			var/datum/disease/D = SSdisease.archive_diseases[id]
 			var/obj/item/reagent_containers/glass/bottle/B = new(get_turf(src))
 			B.name = "[D.name] vaccine bottle"
-			B.reagents.add_reagent("vaccine", 15, list(index))
+			B.reagents.add_reagent("vaccine", 15, list(id))
 			wait = TRUE
 			update_icon()
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 200)
@@ -221,14 +221,13 @@
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if(beaker)
-			to_chat(user, "<span class='warning'>A beaker is already loaded into the machine!</span>")
+			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
 
 		beaker = I
-		beaker.forceMove(src)
-		to_chat(user, "<span class='notice'>You add the beaker to the machine.</span>")
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		update_icon()
 	else
 		return ..()

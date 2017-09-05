@@ -18,7 +18,7 @@
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 
-	if(M.stat == 2)
+	if(M.stat == DEAD)
 		var/t_him = "it"
 		if(M.gender == MALE)
 			t_him = "him"

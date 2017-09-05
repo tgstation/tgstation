@@ -272,7 +272,7 @@
 
 	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
-	t += "Generated power : [round(lastgen)] W<BR><BR>"
+	t += "Generated power : [DisplayPower(lastgen)]<BR><BR>"
 
 	t += "Turbine: [round(compressor.rpm)] RPM<BR>"
 
@@ -337,7 +337,7 @@
 			dat += {"Turbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
 			\n<BR>
 			\nTurbine speed: [src.compressor.rpm]rpm<BR>
-			\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
+			\nPower currently being generated: [DisplayPower(src.compressor.turbine.lastgen)]<BR>
 			\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
 			\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
 			\n<BR>

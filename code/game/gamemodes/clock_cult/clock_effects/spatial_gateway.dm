@@ -130,13 +130,19 @@
 	playsound(src, 'sound/effects/empulse.ogg', 50, 1)
 	playsound(linked_gateway, 'sound/effects/empulse.ogg', 50, 1)
 	transform = matrix() * 1.5
-	animate(src, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
 	linked_gateway.transform = matrix() * 1.5
-	animate(linked_gateway, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
 	A.forceMove(get_turf(linked_gateway))
 	if(!no_cost)
 		uses = max(0, uses - 1)
 		linked_gateway.uses = max(0, linked_gateway.uses - 1)
+	if(!uses)
+		animate(src, transform = matrix() * 0.1, time = 10, flags = ANIMATION_END_NOW)
+		animate(linked_gateway, transform = matrix() * 0.1, time = 10, flags = ANIMATION_END_NOW)
+		density = FALSE
+		linked_gateway.density = FALSE
+	else
+		animate(src, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
+		animate(linked_gateway, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
 	addtimer(CALLBACK(src, .proc/check_uses), 10)
 	return TRUE
 

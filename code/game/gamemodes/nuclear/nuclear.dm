@@ -325,7 +325,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack
 	ears = /obj/item/device/radio/headset/syndicate/alt
-	l_pocket = /obj/item/pinpointer/syndicate
+	l_pocket = /obj/item/pinpointer/nuke/syndicate
 	id = /obj/item/card/id/syndicate
 	belt = /obj/item/gun/ballistic/automatic/pistol
 	backpack_contents = list(/obj/item/storage/box/syndie=1)

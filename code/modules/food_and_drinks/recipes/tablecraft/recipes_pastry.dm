@@ -50,7 +50,7 @@
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly
 	subcategory = CAT_PASTRY
 
-////////////////////////////////////////////////WAFFLES////////////////////////////////////////////////
+////////////////////////////////////////////////WAFFLES AND PANCAKES////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/waffles
 	time = 15
@@ -89,6 +89,33 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/rofflewaffles
 	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/pancakes
+	name = "Pancake"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/pancakes
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/bbpancakes
+	name = "Blueberry pancake"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/reagent_containers/food/snacks/grown/berries = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/pancakes/blueberry
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/ccpancakes
+	name = "Chocolate chip pancake"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/pancakes/chocolatechip
+	subcategory = CAT_PASTRY
+
 
 ////////////////////////////////////////////////DONKPOCCKETS////////////////////////////////////////////////
 
