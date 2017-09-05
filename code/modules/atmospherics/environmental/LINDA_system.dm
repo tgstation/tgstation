@@ -93,7 +93,7 @@
 /atom/proc/air_update_turf(command = 0)
 	if(!isturf(loc) && command)
 		return
-	var/turf/T = get_turf(loc)
+	var/turf/T = get_turf(src)
 	T.air_update_turf(command)
 
 /turf/air_update_turf(command = 0)
