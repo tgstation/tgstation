@@ -258,7 +258,7 @@
 // Randomly generate a symptom, has a chance to lose or gain a symptom.
 /datum/disease/advance/proc/Evolve(min_level, max_level)
 	var/datum/symptom/s = safepick(GenerateSymptoms(min_level, max_level, 1))
-	SSblackbox.add_details("rolled_symptoms", "Levels [min_level]-[max_level]: [initial(s.name)]")
+	SSblackbox.add_details("rolled_symptoms", "[min_level]-[max_level]: [initial(s.name)]")
 	if(s)
 		AddSymptom(s)
 		Refresh(TRUE)
@@ -285,8 +285,9 @@
 // Name the disease.
 /datum/disease/advance/proc/AssignName(name = "Unknown")
 	src.name = name
-	log_game("New Disease Named. Name: [name]; Symptoms: [english_list(symptoms)]")
-	SSblackbox.add_details("named_diseases", "[name] - Symptoms: [english_list(symptoms)]")
+	var/list/L = sortList(symptoms)
+	log_game("New Disease Named. Name: [name]; Symptoms: [english_list(L)]")
+	SSblackbox.add_details("named_diseases", "[name] - [english_list(L)]")
 	return
 
 // Return a unique ID of the disease.
