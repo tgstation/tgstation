@@ -51,7 +51,7 @@
 			dat += "<A href='?src=\ref[src];screen=1'>Chemical Storage</A><br>"
 			dat += "Known organs:<br>"
 			for(var/D in savedOrgans)
-				var/datum/ornd/O = savedOrgans[D]
+				var/datum/organ/O = savedOrgans[D]
 				if(!linked_synth.canBuild)
 					dat += "<span class='linkOff'>[O.name]</span>"
 				else
