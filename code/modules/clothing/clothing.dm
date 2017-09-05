@@ -520,8 +520,8 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = HAS_SENSORS // For the crew computer
-	var/random_sensor = 1
-	var/sensor_mode = NO_SENSORS
+	var/random_sensor = 0
+	var/sensor_mode = SENSOR_COORDS
 	var/can_adjust = 1
 	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
