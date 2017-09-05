@@ -227,6 +227,66 @@ function tag_pr($payload, $opened) {
 
 
 	echo apisend($url, 'PUT', $final);
+
+	return $final;
+}
+
+function remove_ready_for_review($payload, $labels, $r4rlabel){
+	$index = array_search($r4rlabel, $labels);
+	if($index !== FALSE)
+		unset($labels[$index]);
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	apisend($url, 'PUT', $labels);
+}
+
+function check_ready_for_review($payload, $labels){
+	$r4rlabel =  'Ready for Review';
+	$has_label_already = false;
+	//if the label is already there we may need to remove it
+	foreach($labels as $L)
+		if($L == $r4rlabel){
+			$has_label_already = true;
+			break;
+		}
+
+	//find all reviews to see if changes were requested at some point
+	$reviews = json_decode(apisend($payload['pull_request']['url'] . '/reviews'), true);
+
+	$reviews_ids_with_changes_requested = array();
+
+	foreach($reviews as $R){
+		if($R['state'] == 'CHANGES_REQUESTED' && isset($R['author_association']) && ($R['author_association'] == 'MEMBER' || $R['author_association'] == 'CONTRIBUTOR' || $R['author_association'] == 'OWNER'))
+			$reviews_ids_with_changes_requested[] = $R['id'];
+	}
+
+	if(count($reviews_ids_with_changes_requested) == 0){
+		if($has_label_already)
+			remove_ready_for_review($payload, $labels, $r4rlabel);
+		return;	//no need to be here
+	}
+
+	echo count($reviews_ids_with_changes_requested) . ' offending reviews';
+
+	//now get the review comments for the offending reviews
+
+	$review_comments = json_decode(apisend($payload['pull_request']['review_comments_url']), true);
+
+	foreach($review_comments as $C){
+		//make sure they are part of an offending review
+		if(!in_array($C['pull_request_review_id'], $reviews_ids_with_changes_requested))
+			continue;
+		
+		//review comments which are outdated have a null position
+		if($C['position'] !== null){
+			if($has_label_already)
+				remove_ready_for_review($payload, $labels, $r4rlabel);
+			return;	//no need to tag
+		}
+	}
+
+	$labels[] = $r4rlabel;
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	apisend($url, 'PUT', $labels);
 }
 
 function handle_pr($payload) {
@@ -238,7 +298,8 @@ function handle_pr($payload) {
 			break;
 		case 'edited':
 		case 'synchronize':
-			tag_pr($payload, false);
+			$labels = tag_pr($payload, false);
+			check_ready_for_review($payload, $labels);
 			return;
 		case 'reopened':
 			$action = $payload['action'];
