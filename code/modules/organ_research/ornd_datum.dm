@@ -1,6 +1,5 @@
-//this datum stores the basic organ types with their vars that can be modified.
-//the ornd console is used to create instances of these datums with modified vars.
-//how much each var can be modified is based on research.
+//this datum contains a list of all datum organs
+//organs were originally a subtype of this ornd datum, but the new() proc created infinite loops so I split them
 
 /datum/ornd
 	var/name = "ORND datum"
@@ -9,6 +8,11 @@
 /datum/ornd/New()
 	for(var/S in subtypesof(/datum/organ))
 		datumOrgans += new S
+
+
+//this datum stores the basic organ types with their vars that can be modified.
+//the ornd console is used to create instances of these datums with modified vars.
+//how much each var can be modified is based on research.
 
 /datum/organ
 	var/name = "organ datum"
