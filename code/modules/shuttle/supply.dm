@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/machinery/teleport/hub,
 		/obj/machinery/quantumpad,
 		/obj/machinery/telepad,
-		/obj/machinery/telepad_cargo,
+		/obj/machinery/telepad_cargo, //Crate telepad on the shuttle, RCS to telepad.
 		/obj/machinery/telepad_beacon,
 		/obj/machinery/computer/telescience
 		/obj/machinery/clonepod,
