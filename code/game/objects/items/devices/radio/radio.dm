@@ -426,7 +426,7 @@
 	signal.frequency = freqnum // Quick frequency set
 	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 		R.receive_signal(signal)
-		
+
 	// Allinone can act as receivers. (Unless of course whoever coded this last time forgot to put it in somewhere!)
 	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
 		R.receive_signal(signal)
@@ -449,6 +449,8 @@
 		return
 	if(broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
+			if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)
+				raw_message = stars(raw_message)
 			talk_into(speaker, raw_message, , spans, language=message_language)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)

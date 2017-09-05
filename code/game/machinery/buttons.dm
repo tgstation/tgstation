@@ -105,8 +105,8 @@
 /obj/machinery/button/emag_act(mob/user)
 	if(emagged)
 		return
-	req_access = null
-	req_one_access = null
+	req_access = list()
+	req_one_access = list()
 	playsound(src, "sparks", 100, 1)
 	emagged = TRUE
 

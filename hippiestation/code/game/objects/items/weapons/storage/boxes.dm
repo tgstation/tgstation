@@ -1,5 +1,5 @@
 /obj/item/storage/box
-	icon = 'hippiestation/icons/obj/storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 
 /obj/item/storage/box/monkeycubes
 	icon = 'icons/obj/storage.dmi'

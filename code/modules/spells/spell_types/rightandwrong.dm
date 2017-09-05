@@ -10,7 +10,7 @@
 		message_admins("[key_name_admin(user, 1)] summoned [summon_type ? "magic" : "guns"]!")
 		log_game("[key_name(user)] summoned [summon_type ? "magic" : "guns"]!")
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(H.stat == 2 || !(H.client)) continue
+		if(H.stat == DEAD || !(H.client)) continue
 		if(H.mind)
 			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice" || H.mind.special_role == "survivalist") continue
 		if(prob(survivor_probability) && !(H.mind in SSticker.mode.traitors))

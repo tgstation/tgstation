@@ -437,7 +437,7 @@
 
 	if (!( GLOB.abandon_allowed ))
 		return
-	if ((stat != 2 || !( SSticker )))
+	if ((stat != DEAD || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
