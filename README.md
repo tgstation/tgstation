@@ -82,12 +82,7 @@ recompile the game.  Once you start the server up again, you should be running
 the new version.
 
 ## MAPS
-
-<<<<<<< HEAD
 Hippie Station currently comes equipped with six maps.
-=======
-/tg/station currently comes equipped with five maps.
->>>>>>> 52310bb831... CERESTATION DOES NOT EXIST, COMRADE. (#30407)
 
 * [Hippie BoxStation (default)](http://tgstation13.org/wiki/Boxstation)
 * [BoxStation](http://tgstation13.org/wiki/Boxstation)
