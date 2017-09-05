@@ -220,10 +220,11 @@
 /obj/machinery/ornd/organres/proc/scan()
 	running = TRUE
 	for(var/obj/item/organ/O in contents)
-		for(var/obj/item/organ/DO in refDatum.datumOrgans)//is this organ referenced as a product of any datum organ?
-			if(istype(O, DO.product))
-				scanning = O
-				return scanning
+		for(var/datum/ornd/DO in refDatum.datumOrgans)//is this organ referenced as a product of any datum organ?
+			if(istype(DO))
+				if(istype(O, DO.product))
+					scanning = O
+					return scanning
 	update_icon()
 	addtimer(CALLBACK(src, .proc/donescan),32*scan_coeff)
 
