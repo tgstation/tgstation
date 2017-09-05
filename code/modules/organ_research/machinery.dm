@@ -13,6 +13,7 @@
 	var/datum/ornd/refDatum
 
 /obj/machinery/ornd/Initialize()
+	.=..()
 	refDatum = new /datum/ornd
 
 /obj/machinery/ornd/proc/shock(mob/user, prb)
