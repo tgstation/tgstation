@@ -27,14 +27,14 @@
 	. = list()
 	for(var/V in GLOB.data_core.locked)
 		var/datum/data/record/R = V
-		var/mob/M = R.fields["reference"]
-		if(M && M.mind)
-			. += M.mind
+		var/datum/mind/M = R.fields["mindref"]
+		if(M)
+			. += M
 
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in get_crewmember_minds())
-		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
+		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target))
 			possible_targets += possible_target
 	if(possible_targets.len > 0)
 		target = pick(possible_targets)

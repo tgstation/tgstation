@@ -1036,6 +1036,8 @@
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
+	if(H.stat == SOFT_CRIT)
+		. = max(SOFTCRIT_MIN_SLOWDOWN, . + SOFTCRIT_ADD_SLOWDOWN) //regardless of how fast you are, you move at a maximum of SOFTCRIT_MIN_SLOWDOWN while in softcrit
 	return .
 
 //////////////////

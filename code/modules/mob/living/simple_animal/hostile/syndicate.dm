@@ -23,7 +23,7 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	stat_attack = 1
+	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	maxHealth = 100
 	health = 100

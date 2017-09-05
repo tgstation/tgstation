@@ -55,7 +55,7 @@
 	var/areastring = null
 	var/obj/item/stock_parts/cell/cell
 	var/start_charge = 90				// initial cell charge %
-	var/cell_type = 2500				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
+	var/cell_type = /obj/item/stock_parts/cell/upgraded		//Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	var/opened = 0 //0=closed, 1=opened, 2=cover removed
 	var/shorted = 0
 	var/lighting = 3
@@ -91,6 +91,15 @@
 	var/update_state = -1
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
+
+/obj/machinery/power/apc/highcap/five_k
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus
+
+/obj/machinery/power/apc/highcap/ten_k
+	cell_type = /obj/item/stock_parts/cell/high
+
+/obj/machinery/power/apc/highcap/fifteen_k
+	cell_type = /obj/item/stock_parts/cell/high/plus
 
 /obj/machinery/power/apc/get_cell()
 	return cell
@@ -177,8 +186,7 @@
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
-		src.cell = new/obj/item/stock_parts/cell(src)
-		cell.maxcharge = cell_type	// cell_type is maximum charge (old default was 1000 or 2500 (values one and two respectively)
+		cell = new cell_type
 		cell.charge = start_charge * cell.maxcharge / 100 		// (convert percentage to actual value)
 
 	var/area/A = src.loc.loc

@@ -2,7 +2,7 @@
 	name = "A Perfectly Generic Boss Placeholder"
 	desc = ""
 	robust_searching = 1
-	stat_attack = 1
+	stat_attack = UNCONSCIOUS
 	status_flags = 0
 	a_intent = INTENT_HARM
 	gender = NEUTER
