@@ -33,8 +33,13 @@
 		default_deconstruction_screwdriver()
 		update_icon()
 
-	if(user.a_intent == INTENT_HARM) //so we can hit the machine
+	if(Insert_Item(W, user))
+		return 1
+	else
 		return ..()
+
+/obj/machinery/ornd/proc/Insert_Item(obj/item/I, mob/user)
+	return
 
 /obj/machinery/ornd/attack_hand(mob/user)
 	if(shocked)
@@ -231,14 +236,19 @@
 	update_icon()
 	addtimer(CALLBACK(src, .proc/donescan),32*scan_coeff)
 
-/obj/machinery/ornd/organres/attackby(obj/item/W, mob/user)
+/obj/machinery/ornd/organres/Insert_Item(obj/item/W, mob/user)
+	if(user.a_intent != INTENT_HARM)
+		. = 1
+
+	if(!user.drop_item())
+		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the [src.name]!</span>")
+		return
+
 	var/obj/item/organ/O = W
-	if(istype(O) && !running)
-		O.forceMove(src)
-		O = heldorgan
+	if(!istype(O))
+		return
+	if(running)
+		return
 
-	if(user.a_intent == INTENT_HARM) //so we can hit the machine
-		return ..()
-
-
-
+	O = heldorgan
+	O.forceMove(src)
