@@ -19,7 +19,8 @@ var/list/bad_gremlin_items = list()
 
 	//Tampering is handled by the 'npc_tamper()' obj proc
 	wanted_objects = list(
-		/obj/machinery
+		/obj/machinery,
+		/obj/item/reagent_containers/food
 	)
 
 	dextrous = TRUE
@@ -27,6 +28,7 @@ var/list/bad_gremlin_items = list()
 	faction = list("meme", "gremlin")
 	speed = 0.5
 	gold_core_spawnable = 2
+	unique_name = TRUE
 
 	//Ensure gremlins don't attack other mobs
 	melee_damage_upper = 0
@@ -45,16 +47,24 @@ var/list/bad_gremlin_items = list()
 	//If you're going to make gremlins slower, increase this value - otherwise gremlins will abandon their targets too early
 	var/max_time_chasing_target = 2
 
+	var/next_eat = 0
+
 	//Last 20 heard messages are remembered by gremlins, and will be used to generate messages for comms console tampering, etc...
 	var/list/hear_memory = list()
 	var/const/max_hear_memory = 20
 
 /mob/living/simple_animal/hostile/gremlin/AttackingTarget()
+	var/is_hungry = world.time >= next_eat || prob(25)
+	if(istype(target, /obj/item/reagent_containers/food) && is_hungry) //eat food if we're hungry or bored
+		visible_message("<span class='danger'>[src] hungrily devours [target]!</span>")
+		playsound(src, "sound/items/eatfood.ogg", 50, 1)
+		qdel(target)
+		LoseTarget()
+		next_eat = world.time + rand(700, 3000) //anywhere from 70 seconds to 5 minutes until the gremlin is hungry again
+		return
 	if(istype(target, /obj))
 		var/obj/M = target
-
 		tamper(M)
-
 		if(prob(50)) //50% chance to move to the next machine
 			LoseTarget()
 
@@ -142,6 +152,12 @@ var/list/bad_gremlin_items = list()
 /mob/living/simple_animal/hostile/gremlin/UnarmedAttack(var/atom/A)
 	if(istype(A, /obj/machinery) || istype(A, /obj/structure))
 		tamper(A)
+	if(istype(target, /obj/item/reagent_containers/food)) //eat food
+		visible_message("<span class='danger'>[src] hungrily devours [target]!</span>", "<span class='danger'>You hungrily devour [target]!</span>")
+		playsound(src, "sound/items/eatfood.ogg", 50, 1)
+		qdel(target)
+		LoseTarget()
+		next_eat = world.time + rand(700, 3000) //anywhere from 70 seconds to 5 minutes until the gremlin is hungry again
 
 	return ..()
 
