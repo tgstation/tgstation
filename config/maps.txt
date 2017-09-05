@@ -34,6 +34,10 @@ map deltastation
 	minplayers 50
 endmap
 
+map alinastation
+	maxplayers 30
+endmap
+
 map runtimestation
 	disabled
 endmap

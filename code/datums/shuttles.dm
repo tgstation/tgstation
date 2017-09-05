@@ -212,6 +212,12 @@
 	admin_notes = "If the crew can solve the puzzle, they will wake the wabbajack statue. It will likely not end well. There's a reason it's boarded up. Maybe they should have just left it alone."
 	credit_cost = 15000
 
+/datum/map_template/shuttle/emergency/alina
+	suffix = "alina"
+	name = "Alina Station Emergency Shuttle"
+	description = "A slim, minimalist and efficient alternative to the box-standard, any ride in the Alina Station Emergency Shuttle \
+	is a peaceful and relaxed experience."
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
