@@ -66,5 +66,3 @@
 			icon_state = "circ[side]-slow"
 	else
 		icon_state = "circ[side]-off"
-
-	return 1
