@@ -500,10 +500,6 @@
 	name = "Sidecut"
 	icon_state = "hair_sidecut"
 
-/datum/sprite_accessory/hair/largebun
-	name = "Large Bun"
-	icon_state = "hair_largebun"
-
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
