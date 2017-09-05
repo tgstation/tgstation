@@ -6,7 +6,7 @@
 	var/mob/M = loc
 	if(ishuman(target) && Adjacent(target))
 		if(M.a_intent == INTENT_HELP && target.a_intent != INTENT_HELP)
-			a_intent_change(INTENT_HELP
+			a_intent_change(INTENT_HELP)
 			if(!emagged)
 				target.visible_message("<span class='notice'>[M] gives [target] a hug, they look happier!</span>", \
 									"<span class='warning'>[M] hugs you and you feel a bit nicer.</span>")
