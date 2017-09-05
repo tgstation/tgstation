@@ -6,7 +6,7 @@
 	width = 7
 	height = 15
 	dir = WEST
-	port_angle = 180
+	port_direction = SOUTH
 
 	callTime = INFINITY
 	ignitionTime = 50
