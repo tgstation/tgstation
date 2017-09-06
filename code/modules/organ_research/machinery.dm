@@ -256,5 +256,5 @@
 /obj/machinery/ornd/organres/attack_hand(mob/user)
 	if(heldorgan && running == FALSE)
 		heldorgan.forceMove(get_turf(src))
-		heldorgan = NULL
-		scanning = NULL
+		heldorgan = null
+		scanning = null
