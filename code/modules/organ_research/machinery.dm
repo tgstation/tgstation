@@ -190,7 +190,6 @@
 	desc = "A machine used to research organs."
 	icon_state = "organres"
 	var/running
-	var/obj/item/organ/scanning
 	var/obj/item/organ/heldorgan
 	var/scan_coeff = 1
 
@@ -233,8 +232,7 @@
 		for(var/datum/organ/DO in GLOB.refDatum.datumOrgans)//is this organ referenced as a product of any datum organ?
 			if(istype(DO))
 				if(istype(O, DO.product))
-					scanning = O
-					return scanning
+					return O
 
 /obj/machinery/ornd/organres/Insert_Item(obj/item/W, mob/user)
 	if(user.a_intent != INTENT_HARM)
@@ -257,4 +255,3 @@
 	if(heldorgan && running == FALSE)
 		heldorgan.forceMove(get_turf(src))
 		heldorgan = null
-		scanning = null
