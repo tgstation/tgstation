@@ -29,7 +29,8 @@
 	limbs_id = "shadow"
 	burnmod = 1.5
 	blacklisted = TRUE
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR)
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR,NOHUNGER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
 
 /datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -81,6 +82,14 @@
 			disintegrate(I)
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O)
-	O.visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
+	if(istype(O, /obj/item/device/pda))
+		var/obj/item/device/pda/PDA = O
+		PDA.set_light(0)
+		PDA.fon = 0
+		PDA.f_lum = 0
+		PDA.update_icon()
+		visible_message("<span class='danger'>The light in [PDA] shorts out!</span>")
+	else
+		visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
+		O.burn()
 	playsound(src, 'sound/items/welder.ogg', 50, 1)
-	O.burn()
