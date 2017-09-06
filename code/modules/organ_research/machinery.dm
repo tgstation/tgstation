@@ -226,13 +226,13 @@
 	running = TRUE
 
 	update_icon()
-	addtimer(CALLBACK(src, .proc/donescan),32*scan_coeff)
+	addtimer(CALLBACK(src, .proc/donescan),30*scan_coeff)
 
 	for(var/obj/item/organ/O in contents)
 		for(var/datum/organ/DO in GLOB.refDatum.datumOrgans)//is this organ referenced as a product of any datum organ?
 			if(istype(DO))
 				if(istype(O, DO.product))
-					return O
+					return DO
 
 /obj/machinery/ornd/organres/Insert_Item(obj/item/W, mob/user)
 	if(user.a_intent != INTENT_HARM)
