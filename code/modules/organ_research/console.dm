@@ -63,7 +63,7 @@
 	popup.open()
 	return
 
-/obj/machinery/computer/console/orndconsole/Topic(href, href_list)
+/obj/machinery/computer/orndconsole/Topic(href, href_list)
 	if(..())
 		return
 
