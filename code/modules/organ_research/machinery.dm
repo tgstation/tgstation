@@ -250,5 +250,10 @@
 	if(running)
 		return
 
-	O = heldorgan
+	heldorgan = O
 	O.forceMove(src)
+
+/obj/machinery/ornd/organres/attack_hand(mob/user)
+	if(heldorgan)
+		heldorgan.forceMove(get_turf(loc))
+		running = FALSE

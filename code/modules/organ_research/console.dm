@@ -63,4 +63,11 @@
 	popup.open()
 	return
 
+/obj/machinery/computer/console/Topic(href, href_list)
+	if(..())
+		return
+
+	if(href_list["scan"])
+		linked_res.scan()
+
 
