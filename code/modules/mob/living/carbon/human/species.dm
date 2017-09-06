@@ -66,9 +66,6 @@
 	var/obj/item/organ/lungs/mutantlungs = null
 	var/breathid = "o2"
 
-	//Flight and floating
-	var/override_float = 0
-
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 	var/obj/item/mutanthands

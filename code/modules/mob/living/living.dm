@@ -105,6 +105,7 @@
 	if(now_pushing)
 		return 1
 
+	//TODO FOR LATER PRS: Make passing tables an automatic thing for flying and passable objects be determined better to prevent huge amounts of flags being set when mobs fly.
 	if(((movement_type & FLYING) && !(M.movement_type & FLYING)) || (!(movement_type & FLYING) && (M.movement_type & FLYING)))	//Fly past each other.
 		now_pushing = TRUE
 		var/old = pass_flags & PASSMOB
@@ -628,6 +629,7 @@
 	if(!override)
 		float(!has_gravity)
 
+//TODO: Better floating
 /mob/living/float(on)
 	if(throwing)
 		return

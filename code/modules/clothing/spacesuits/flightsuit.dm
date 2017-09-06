@@ -78,8 +78,8 @@
 
 	//This is probably too much code just for EMP damage.
 	var/emp_damage = 0	//One hit should make it hard to control, continuous hits will cripple it and then simply shut it off/make it crash. Direct hits count more.
-	var/emp_strong_damage = 1.5
-	var/emp_weak_damage = 1
+	var/emp_strong_damage = 3
+	var/emp_weak_damage = 1.5
 	var/emp_heal_amount = 0.06		//How much emp damage to heal per process.
 	var/emp_disable_threshold = 3	//3 weak ion, 2 strong ion hits.
 	var/emp_disabled = FALSE
@@ -462,22 +462,6 @@
 	var/density = FALSE
 	var/anchored = TRUE	//Just in case...
 	var/damage = FALSE
-	if(ismob(unmovablevictim))
-		var/mob/living/L = unmovablevictim
-		if(L.throwing || (L.pulledby == wearer))
-			crashing = FALSE
-			return FALSE
-		if(L.buckled)
-			wearer.visible_message("<span class='warning'>[wearer] reflexively flies over [L]!</span>")
-			wearer.forceMove(get_turf(L))
-			crashing = FALSE
-			return FALSE
-		wearer.forceMove(get_turf(unmovablevictim))
-		crashing = FALSE
-		mobknockback(L, crashpower, crashdir)
-		damage = FALSE
-		density = TRUE
-		anchored = FALSE
 	else if(istype(unmovablevictim, /obj/structure/grille))
 		if(crashpower > 1)
 			var/obj/structure/grille/S = unmovablevictim
@@ -558,13 +542,6 @@
 		wearer.forceMove(target)
 	return pass
 
-
-/obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
-	if(!ismob(victim))
-		return FALSE
-	var/turf/T = get_turf(victim)
-	wearer.forceMove(T)
-	wearer.visible_message("<span class='notice'>[wearer] flies over [victim]!</span>")
 
 /obj/item/device/flightpack/proc/victimknockback(atom/movable/victim, power, direction)
 	if(!victim)

@@ -507,6 +507,7 @@
 	acted_explosions += ex_id
 	return TRUE
 
+//TODO: Better floating
 /atom/movable/proc/float(on)
 	if(throwing)
 		return
