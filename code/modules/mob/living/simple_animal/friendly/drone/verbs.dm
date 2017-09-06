@@ -15,15 +15,17 @@
 /mob/living/simple_animal/drone/verb/toggle_light()
 	set category = "Drone"
 	set name = "Toggle drone light"
-	if(stat != DEAD)
-		if(light_on)
-			set_light(0)
-		else
-			set_light(8)
+	if(stat == DEAD)
+		to_chat(src, "<span class='warning'>There's no light in your life... by that I mean you're dead.</span>")
+		return
+	if(light_on)
+		set_light(0)
+	else
+		set_light(8)
 
-		light_on = !light_on
+	light_on = !light_on
 
-		to_chat(src, "<span class='notice'>Your light is now [light_on ? "on" : "off"].</span>")
+	to_chat(src, "<span class='notice'>Your light is now [light_on ? "on" : "off"].</span>")
 
 /mob/living/simple_animal/drone/verb/drone_ping()
 	set category = "Drone"
