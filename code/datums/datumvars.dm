@@ -128,7 +128,7 @@
 			"Remove Nulls" = "?_src_=vars;listnulls=[refid]",
 			"Remove Dupes" = "?_src_=vars;listdupes=[refid]",
 			"Set len" = "?_src_=vars;listlen=[refid]",
-			"Shuffle" = "?_src_=vars;listshuffle=[refid]"
+			"Shuffle" = "?_src_=vars;listshuffle=[refid]",
 			"Show To Player" = "?_src_=vars;expose=[refid]"
 			)
 	else
