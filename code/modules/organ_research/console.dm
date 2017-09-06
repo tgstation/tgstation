@@ -67,6 +67,6 @@
 
 	if(href_list["scan"])
 		if(linked_res)
-			savedOrgan += linked_res.scan()
+			savedOrgans += linked_res.scan()
 
 
