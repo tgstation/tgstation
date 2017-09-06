@@ -28,7 +28,7 @@
 	.["Call Proc"] = "?_src_=vars;proc_call=\ref[src]"
 	.["Mark Object"] = "?_src_=vars;mark_object=\ref[src]"
 	.["Delete"] = "?_src_=vars;delete=\ref[src]"
-	.["Show To Player"] = "?_src_=vars;expose=\ref[src]"
+	.["Show VV To Player"] = "?_src_=vars;expose=\ref[src]"
 
 
 /datum/proc/on_reagent_change()
@@ -129,7 +129,7 @@
 			"Remove Dupes" = "?_src_=vars;listdupes=[refid]",
 			"Set len" = "?_src_=vars;listlen=[refid]",
 			"Shuffle" = "?_src_=vars;listshuffle=[refid]",
-			"Show To Player" = "?_src_=vars;expose=[refid]"
+			"Show VV To Player" = "?_src_=vars;expose=[refid]"
 			)
 	else
 		dropdownoptions = D.vv_get_dropdown()
