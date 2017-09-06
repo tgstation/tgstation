@@ -67,10 +67,10 @@
 
 	if(href_list["scan"])
 		if(linked_res)
-			var/scanned = linked_res.scan()
+			var/datum/organ/scanned = linked_res.scan()
 			for(var/datum/organ/O in savedOrgans)
 				if(O.type == scanned.type)
 					savedOrgans -= O
-			savedOrgans += linked_res.scan()
+			savedOrgans += scanned
 
 
