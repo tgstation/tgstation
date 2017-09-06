@@ -17,4 +17,4 @@ GLOBAL_LIST_EMPTY(powernets)
 
 GLOBAL_VAR_INIT(bsa_unlock, FALSE)	//BSA unlocked by head ID swipes
 
-GLOBAL_LIST_EMPTY(refDatum)
+GLOBAL_DATUM_INIT(refDatum, /datum/ornd, new)
