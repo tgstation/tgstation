@@ -272,11 +272,11 @@
 		return TRUE
 	return FALSE
 
-/mob/living/forceMove(atom/destination, forceop = FALSE, try_retain_linked_movement = TRUE)
-	if(pulling || buckled || has_buckled_mobs())
-		var/adjacentTurfMove = try_retain_linked_movement? (isturf(loc)? (isturf(destination)? (destination.density? (destination.Enter(src, loc)? TRUE : FALSE) : FALSE): FALSE) : FALSE) : FALSE
-		if(!adjacentTurfMove)
+/mob/living/forceMove(atom/destination, forceop = FALSE)
+	if(!((loc == destination) && isturf(loc) && isturf(destination))||forceop)
+		if(pulling)
 			stop_pulling()
+		if(has_buckled_mobs())
 			unbuckle_all_mobs(force=TRUE)
 		if(buckled)
 			buckled.unbuckle_mob(src,force=TRUE)
