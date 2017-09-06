@@ -68,6 +68,7 @@
 		return
 
 	if(href_list["scan"])
-		linked_res.scan()
+		if(linked_res)
+			linked_res.scan()
 
 
