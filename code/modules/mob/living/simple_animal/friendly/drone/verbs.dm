@@ -15,14 +15,15 @@
 /mob/living/simple_animal/drone/verb/toggle_light()
 	set category = "Drone"
 	set name = "Toggle drone light"
-	if(light_on)
-		set_light(0)
-	else
-		set_light(8)
+	if(stat != DEAD)
+		if(light_on)
+			set_light(0)
+		else
+			set_light(8)
 
-	light_on = !light_on
+		light_on = !light_on
 
-	to_chat(src, "<span class='notice'>Your light is now [light_on ? "on" : "off"].</span>")
+		to_chat(src, "<span class='notice'>Your light is now [light_on ? "on" : "off"].</span>")
 
 /mob/living/simple_animal/drone/verb/drone_ping()
 	set category = "Drone"
@@ -35,7 +36,6 @@
 	if(alert_s && A && stat != DEAD)
 		var/msg = "<span class='boldnotice'>DRONE PING: [name]: [alert_s] priority alert in [A.name]!</span>"
 		alert_drones(msg)
-
 
 /mob/living/simple_animal/drone/verb/toggle_statics()
 	set name = "Change Vision Filter"
