@@ -14,7 +14,8 @@ All ShuttleMove procs go here
 // Called from the new turf before anything has been moved
 // Only gets called if fromShuttleMove returns true first
 // returns the new move_mode (based on the old)
-/turf/proc/toShuttleMove(turf/oldT, shuttle_dir, move_mode)
+/turf/proc/toShuttleMove(turf/oldT, move_mode, obj/docking_port_mobile/shuttle)
+	var/shuttle_dir = shuttle.dir
 	for(var/i in contents)
 		var/atom/movable/thing = i
 		if(ismob(thing))
@@ -25,7 +26,7 @@ All ShuttleMove procs go here
 				if(M.pulledby)
 					M.pulledby.stop_pulling()
 				M.stop_pulling()
-				M.visible_message("<span class='warning'>[src] slams into [M]!</span>")
+				M.visible_message("<span class='warning'>[shuttle] slams into [M]!</span>")
 				if(M.key || M.get_ghost(TRUE))
 					SSblackbox.add_details("shuttle_gib", "[type]")
 				else
