@@ -18,6 +18,7 @@ Bonus
 /datum/symptom/fire
 
 	name = "Spontaneous Combustion"
+	desc = "The virus turns fat into an extremely flammable compound, and raises the body's temperature, making the host burst into flames spontaneously."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
@@ -28,6 +29,10 @@ Bonus
 	symptom_delay_min = 20
 	symptom_delay_max = 75
 	var/infective = FALSE
+	threshold_desc = "<b>Stage Speed 4:</b> Increases the intensity of the flames.<br>\
+					  <b>Stage Speed 8:</b> Further increases flame intensity.<br>\
+					  <b>Transmission 8:</b> Host will spread the virus through skin flakes when bursting into flame.<br>\
+					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/fire/Start(datum/disease/advance/A)
 	..()
@@ -94,6 +99,7 @@ Bonus
 /datum/symptom/alkali
 
 	name = "Alkali perspiration"
+	desc = "The virus attaches to sudoriparous glands, synthesizing a chemical that bursts into flames when reacting with water, leading to self-immolation."
 	stealth = 2
 	resistance = -2
 	stage_speed = -2
@@ -105,6 +111,9 @@ Bonus
 	symptom_delay_max = 90
 	var/chems = FALSE
 	var/explosion_power = 1
+	threshold_desc = "<b>Resistance 9:</b> Doubles the intensity of the effect, but reduces its frequency.<br>\
+					  <b>Stage Speed 8:</b> Increases explosion radius when the host is wet.<br>\
+					  <b>Transmission 8:</b> Additionally synthesizes chlorine trifluoride and napalm inside the host."
 
 /datum/symptom/alkali/Start(datum/disease/advance/A)
 	..()

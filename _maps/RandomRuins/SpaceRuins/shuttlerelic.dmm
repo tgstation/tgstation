@@ -5,7 +5,6 @@
 "b" = (
 /turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
 	dir = 8
 	},
 /area/ruin/powered)
@@ -14,38 +13,24 @@
 /area/ruin/powered)
 "d" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "e" = (
 /turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "f" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
 	dir = 1
 	},
 /area/ruin/powered)
 "g" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "h" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
 	dir = 4
 	},
 /area/ruin/powered)
@@ -54,10 +39,7 @@
 	icon_state = "oldcloset";
 	name = "strange closet"
 	},
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "j" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -67,10 +49,7 @@
 /area/ruin/powered)
 "k" = (
 /mob/living/simple_animal/hostile/retaliate/spaceman,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "l" = (
 /turf/closed/indestructible/oldshuttle{
@@ -82,10 +61,7 @@
 	icon_state = "chairold";
 	dir = 1
 	},
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "n" = (
 /obj/structure/chair/old{
@@ -97,10 +73,7 @@
 	force = 20;
 	name = "heavy crowbar"
 	},
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "o" = (
 /obj/structure/chair/old{
@@ -108,55 +81,37 @@
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/retaliate/spaceman,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "p" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
 	dir = 8
 	},
 /area/ruin/powered)
 "q" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "r" = (
 /turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
 	dir = 1
 	},
 /area/ruin/powered)
 "s" = (
 /turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
 	dir = 4
 	},
 /area/ruin/powered)
 "t" = (
 /obj/machinery/power/generator,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "u" = (
 /obj/machinery/power/smes,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "v" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,

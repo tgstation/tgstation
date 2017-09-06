@@ -2904,7 +2904,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/ruin/space/has_grav/ancientstation/engi)
@@ -2947,7 +2946,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/ruin/space/has_grav/ancientstation)
@@ -3301,7 +3299,6 @@
 "if" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/ruin/space/has_grav/ancientstation/engi)

@@ -421,7 +421,7 @@
 		target = safepick(view(3,target))
 		if(!target)
 			return
-	if(!target.Adjacent(src))
+	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
 			if(selected.action(target,params))
 				selected.start_cooldown()
@@ -1045,9 +1045,6 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 	if(!isnull(get_charge()))
 		cell.give(amount)
 		return 1
-	return 0
-
-/obj/mecha/allow_drop()
 	return 0
 
 /obj/mecha/update_remote_sight(mob/living/user)

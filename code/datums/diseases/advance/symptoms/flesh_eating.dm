@@ -18,6 +18,7 @@ Bonus
 /datum/symptom/flesh_eating
 
 	name = "Necrotizing Fasciitis"
+	desc = "The virus aggressively attacks body cells, necrotizing tissues and organs."
 	stealth = -3
 	resistance = -4
 	stage_speed = 0
@@ -29,6 +30,8 @@ Bonus
 	symptom_delay_max = 60
 	var/bleed = FALSE
 	var/pain = FALSE
+	threshold_desc = "<b>Resistance 7:</b> Host will bleed profusely during necrosis.<br>\
+					  <b>Transmission 8:</b> Causes extreme pain to the host, weakening it."
 
 /datum/symptom/flesh_eating/Start(datum/disease/advance/A)
 	..()
@@ -80,6 +83,7 @@ Bonus
 /datum/symptom/flesh_death
 
 	name = "Autophagocytosis Necrosis"
+	desc = "The virus rapidly consumes infected cells, leading to heavy and widespread damage."
 	stealth = -2
 	resistance = -2
 	stage_speed = 1
@@ -91,6 +95,8 @@ Bonus
 	symptom_delay_max = 6
 	var/chems = FALSE
 	var/zombie = FALSE
+	threshold_desc = "<b>Stage Speed 7:</b> Synthesizes Heparin and Lipolicide inside the host, causing increased bleeding and hunger.<br>\
+					  <b>Stealth 5:</b> The symptom remains hidden until active."
 
 /datum/symptom/flesh_death/Start(datum/disease/advance/A)
 	..()

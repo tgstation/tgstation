@@ -162,6 +162,12 @@
 	icon_state = "bottle16"
 	list_reagents = list("polonium" = 30)
 
+/obj/item/reagent_containers/glass/bottle/magillitis
+	name = "magillitis bottle"
+	desc = "A small bottle. Contains a serum known only as 'magillitis'."
+	icon_state = "bottle16"
+	list_reagents = list("magillitis" = 5)
+
 /obj/item/reagent_containers/glass/bottle/venom
 	name = "venom bottle"
 	desc = "A small bottle. Contains Venom."
@@ -270,11 +276,11 @@
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/advance/heal
 
-/obj/item/reagent_containers/glass/bottle/hullucigen_virion
-	name = "Hullucigen virion culture bottle"
-	desc = "A small bottle. Contains hullucigen virion culture in synthblood medium."
+/obj/item/reagent_containers/glass/bottle/hallucigen_virion
+	name = "Hallucigen virion culture bottle"
+	desc = "A small bottle. Contains hallucigen virion culture in synthblood medium."
 	icon_state = "bottle3"
-	spawned_disease = /datum/disease/advance/hullucigen
+	spawned_disease = /datum/disease/advance/hallucigen
 
 /obj/item/reagent_containers/glass/bottle/pierrot_throat
 	name = "Pierrot's Throat culture bottle"

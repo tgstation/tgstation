@@ -85,27 +85,25 @@
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
 			return
 		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded in the machine!</span>")
+			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
 
 		beaker = I
-		beaker.loc = src
-		to_chat(user, "<span class='notice'>You add the beaker to the machine.</span>")
+		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
-			to_chat(user, "<span class='warning'>A pill bottle is already loaded into the machine!</span>")
+			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
 
 		bottle = I
-		bottle.loc = src
-		to_chat(user, "<span class='notice'>You add the pill bottle into the dispenser slot.</span>")
+		to_chat(user, "<span class='notice'>You add [I] into the dispenser slot.</span>")
 		src.updateUsrDialog()
 	else
 		return ..()

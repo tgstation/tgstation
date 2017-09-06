@@ -341,7 +341,7 @@
 	name = "soda can"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	container_type = 0
+	container_type = NONE
 	spillable = FALSE
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)

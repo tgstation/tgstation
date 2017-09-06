@@ -140,8 +140,8 @@
 		return 0
 	return 1
 
-/mob/living/carbon/monkey/can_use_guns(var/obj/item/G)
-	return 1
+/mob/living/carbon/monkey/can_use_guns(obj/item/G)
+	return TRUE
 
 /mob/living/carbon/monkey/angry
 	aggressive = TRUE

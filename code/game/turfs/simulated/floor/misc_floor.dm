@@ -46,11 +46,18 @@
 /turf/open/floor/circuit/airless
 	initial_gas_mix = "TEMP=2.7"
 
+/turf/open/floor/circuit/killroom
+	name = "Killroom Floor"
+	initial_gas_mix = "n2=500;TEMP=80"
+
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 
 /turf/open/floor/circuit/telecomms/mainframe
 	name = "Mainframe Base"
+
+/turf/open/floor/circuit/telecomms/server
+	name = "Server Base"
 
 /turf/open/floor/circuit/green
 	icon_state = "gcircuit"
@@ -266,7 +273,7 @@
 		if(prob(50))
 			ChangeTurf(src.baseturf)
 
-/turf/open/floor/vines/ChangeTurf(turf/open/floor/T)
+/turf/open/floor/vines/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
 	. = ..()
 	//Do this *after* the turf has changed as qdel in spacevines will call changeturf again if it hasn't
 	for(var/obj/structure/spacevine/SV in src)

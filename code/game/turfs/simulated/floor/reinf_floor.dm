@@ -116,7 +116,7 @@
 	be_removed()
 	return ..()
 
-/turf/open/floor/engine/cult/ChangeTurf(path, defer_change = FALSE)
+/turf/open/floor/engine/cult/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
 	if(path != type)
 		be_removed()
 	return ..()

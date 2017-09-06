@@ -465,7 +465,6 @@
 /datum/emote/living/spin
 	key = "spin"
 	key_third_person = "spins"
-	message = "spins around dizzily!"
 
 /datum/emote/living/spin/run_emote(mob/user)
 	user.spin(20, 1)

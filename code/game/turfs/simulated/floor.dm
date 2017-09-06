@@ -24,7 +24,7 @@
 	..()
 	//This is so damaged or burnt tiles or platings don't get remembered as the default tile
 	var/static/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
-					"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
+					"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2", "foam_plating",
 					"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
 					"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
 					"light_on_broken","light_off","wall_thermite","grass", "sand",
@@ -117,10 +117,10 @@
 /turf/open/floor/proc/make_plating()
 	return ChangeTurf(/turf/open/floor/plating)
 
-/turf/open/floor/ChangeTurf(new_path)
+/turf/open/floor/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
 	if(!isfloorturf(src))
 		return ..() //fucking turfs switch the fucking src of the fucking running procs
-	if(!ispath(new_path, /turf/open/floor))
+	if(!ispath(path, /turf/open/floor))
 		return ..()
 	var/old_icon = icon_regular_floor
 	var/old_dir = dir

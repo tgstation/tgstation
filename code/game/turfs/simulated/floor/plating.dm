@@ -4,6 +4,7 @@
  * Airless
  * Airless plating
  * Engine floor
+ * Foam plating
  */
 // note that plating and engine floor do not call their parent attackby, unlike other flooring
 // this is done in order to avoid inheriting the crowbar attackby
@@ -69,3 +70,35 @@
 				icon_state = icon_plating
 				burnt = 0
 				broken = 0
+
+/turf/open/floor/plating/foam
+	name = "metal foam plating"
+	desc = "Thin, fragile flooring created with metal foam."
+	icon_state = "foam_plating"
+	broken_states = list("foam_plating")
+	burnt_states = list("foam_plating")
+
+/turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/tile/plasteel))
+		var/obj/item/stack/tile/plasteel/P = I
+		if(P.use(1))
+			var/obj/L = locate(/obj/structure/lattice) in src
+			if(L)
+				qdel(L)
+			to_chat(user, "<span class='notice'>You reinforce the foamed plating with tiling.</span>")
+			playsound(src, 'sound/weapons/Genhit.ogg', 50, TRUE)
+			ChangeTurf(/turf/open/floor/plating)
+	else
+		playsound(src, 'sound/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
+		if(prob(I.force * 20 - 25))
+			user.visible_message("<span class='danger'>[user] smashes through [src]!</span>", \
+							"<span class='danger'>You smash through [src] with [I]!</span>")
+			ChangeTurf(baseturf)
+		else
+			to_chat(user, "<span class='danger'>You hit [src], to no effect!</span>")
+
+/turf/open/floor/plating/foam/ex_act()
+	..()
+	ChangeTurf(baseturf)

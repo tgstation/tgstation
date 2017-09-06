@@ -3,6 +3,8 @@
 /datum/symptom
 	// Buffs/Debuffs the symptom has to the overall engineered disease.
 	var/name = ""
+	var/desc = "If you see this something went very wrong." //Basic symptom description
+	var/threshold_desc = "" //Description of threshold effects
 	var/stealth = 0
 	var/resistance = 0
 	var/stage_speed = 0
@@ -25,6 +27,7 @@
 	var/power = 1
 	//A neutered symptom has no effect, and only affects statistics.
 	var/neutered = FALSE
+	var/list/thresholds
 
 /datum/symptom/New()
 	var/list/S = SSdisease.list_symptoms
@@ -37,7 +40,6 @@
 // Called when processing of the advance disease, which holds this symptom, starts.
 /datum/symptom/proc/Start(datum/disease/advance/A)
 	next_activation = world.time + rand(symptom_delay_min * 10, symptom_delay_max * 10) //so it doesn't instantly activate on infection
-	return
 
 // Called when the advance disease is going to be deleted or when the advance disease stops processing.
 /datum/symptom/proc/End(datum/disease/advance/A)
@@ -58,3 +60,6 @@
 	new_symp.id = id
 	new_symp.neutered = neutered
 	return new_symp
+
+/datum/symptom/proc/generate_threshold_desc()
+	return

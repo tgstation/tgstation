@@ -180,19 +180,25 @@
 			anchored = FALSE
 
 	else if(W.GetID())
-		if(allowed(user))
+		if(allowed(user) && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
+		else if(emagged)
+			to_chat(user, "<span class='danger'>Error, access controller damaged!</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 
 	else
 		return ..()
 
-/obj/machinery/shieldgen/emag_act()
-	if(!(stat & BROKEN))
-		stat |= BROKEN
-		update_icon()
+/obj/machinery/shieldgen/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "<span class='warning'>The access controller is damaged!</span>")
+		return
+	emagged = TRUE
+	locked = FALSE
+	playsound(src, "sparks", 100, 1)
+	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/shieldgen/update_icon()
 	if(active)
@@ -337,9 +343,11 @@
 		default_unfasten_wrench(user, W, 0)
 
 	else if(W.GetID())
-		if(allowed(user))
+		if(allowed(user) && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
+		else if(emagged)
+			to_chat(user, "<span class='danger'>Error, access controller damaged!</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 
@@ -372,6 +380,14 @@
 		update_activity()
 	add_fingerprint(user)
 
+/obj/machinery/shieldwallgen/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "<span class='warning'>The access controller is damaged!</span>")
+		return
+	emagged = TRUE
+	locked = FALSE
+	playsound(src, "sparks", 100, 1)
+	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 //////////////Containment Field START
 /obj/machinery/shieldwall

@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = 15
-	wait = 5
+	wait = 20
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
@@ -147,7 +147,7 @@ SUBSYSTEM_DEF(garbage)
 //this is purely to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/A)
 	var/time = world.timeofday
-	var/tick = world.tick_usage
+	var/tick = TICK_USAGE
 	var/ticktime = world.time
 	
 	var/type = A.type
@@ -155,7 +155,7 @@ SUBSYSTEM_DEF(garbage)
 	
 	del(A)
 	
-	tick = (world.tick_usage-tick+((world.time-ticktime)/world.tick_lag*100))
+	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))
 	if (tick > highest_del_tickusage)
 		highest_del_tickusage = tick
 	time = world.timeofday - time

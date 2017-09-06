@@ -13,6 +13,8 @@ Captain
 	selection_color = "#ccccff"
 	req_admin_notify = 1
 	minimal_player_age = 14
+	exp_requirements = 180
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/captain
 
@@ -64,6 +66,9 @@ Head of Personnel
 	selection_color = "#ddddff"
 	req_admin_notify = 1
 	minimal_player_age = 10
+	exp_requirements = 180
+	exp_type = EXP_TYPE_CREW
+	exp_type_department = EXP_TYPE_SUPPLY
 
 	outfit = /datum/outfit/job/hop
 

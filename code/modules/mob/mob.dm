@@ -437,7 +437,7 @@
 
 	if (!( GLOB.abandon_allowed ))
 		return
-	if ((stat != 2 || !( SSticker )))
+	if ((stat != DEAD || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
@@ -614,6 +614,8 @@
 				if(A.invisibility > see_invisible)
 					continue
 				if(overrides.len && (A in overrides))
+					continue
+				if(A.IsObscured())
 					continue
 				statpanel(listed_turf.name, null, A)
 
