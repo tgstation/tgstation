@@ -88,16 +88,13 @@
 		return
 	if(ismob(A))
 		var/mob/M = A
-		if(MobCollide(M))
-			return
+		return MobCollide(M)
 	if(isobj(A))
 		var/obj/O = A
-		if(ObjCollide(O))
-			return
+		return ObjCollide(O)
 	if(ismovableatom(A))
 		var/atom/movable/AM = A
-		if(PushAM(AM))
-			return
+		return PushAM(AM)
 
 /mob/living/CollidedWith(atom/movable/AM)
 	..()
@@ -105,11 +102,22 @@
 
 //Called when we bump onto a mob
 /mob/living/proc/MobCollide(mob/M)
+	if(now_pushing)
+		return 1
+
+	if(((movement_type & FLYING) && !(M.movement_type & FLYING)) || (!(movement_type & FLYING) && (M.movement_type & FLYING)))	//Fly past each other.
+		now_pushing = TRUE
+		var/old = pass_flags & PASSMOB
+		pass_flags |= PASSMOB
+		Move(get_turf(M))
+		if(!old)
+			pass_flags &= ~PASSMOB
+		now_pushing = FALSE
+		return TRUE
+
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
-	if(now_pushing)
-		return 1
 
 	//Should stop you pushing a restrained person out of the way
 	if(isliving(M))
