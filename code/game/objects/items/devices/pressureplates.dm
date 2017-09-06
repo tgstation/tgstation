@@ -5,8 +5,11 @@
 	item_state = "flash"
 	icon_state = "pressureplate"
 	level = 1
-	var/trigger_mob = TRUE
-	var/trigger_item = FALSE
+	var/trigger_mob = TRUE 
+	var/trigger_structure = TRUE //closets, crates, etc... wall girders O_o
+	var/trigger_item = TRUE
+	var/trigger_mob_min_size = MOB_SIZE_HUMAN //only trigger for those and bigger
+	var/trigger_item_min_w_class = WEIGHT_CLASS_HUGE //same but for items
 	var/trigger_silent = FALSE
 	var/sound/trigger_sound = 'sound/effects/pressureplate.ogg'
 	var/obj/item/device/assembly/signaler/sigdev = null
@@ -18,11 +21,11 @@
 	var/active = FALSE
 	var/image/tile_overlay = null
 	var/crossed = FALSE
-	var/trigger_delay = 10
+	var/pre_trigger_delay = 3 //will not activate if triggered before within pre_trigger
+	var/post_trigger_delay = 3 //delay between pre_trigger and actual trigger
 
 /obj/item/device/pressure_plate/Initialize()
 	..()
-	tile_overlay = image(icon = 'icons/turf/floors.dmi', icon_state = "pp_overlay")
 	if(roundstart_signaller)
 		sigdev = new
 		sigdev.code = roundstart_signaller_code
@@ -35,11 +38,24 @@
 		return
 	if(isliving(AM) && trigger_mob)
 		var/mob/living/L = AM
+		if(L.mob_size < trigger_mob_min_size)
+			return ..()
 		step_living(L)
-		crossed = TRUE
-	else if(trigger_item)
-		step_item(AM)
-		crossed = TRUE
+	else if(isitem(AM) && trigger_item)
+		var/obj/item/I = AM
+		if(I.w_class<trigger_item_min_w_class)
+			return ..()
+		step_item(I)
+	else if(istype(AM, /obj/structure) && trigger_structure)
+		var/obj/structure/S = AM
+		step_struct(S)
+	else
+		return ..()
+	if(tile_overlay)
+		loc.overlays -= tile_overlay
+		tile_overlay.pixel_y = -1
+		loc.overlays += tile_overlay
+	crossed = TRUE
 	if(!trigger_silent)
 		if(isturf(loc))
 			loc.visible_message("<span class='danger'>Click!</span>")
@@ -47,13 +63,37 @@
 	. = ..()
 
 /obj/item/device/pressure_plate/Uncrossed(atom/movable/AM)
+	if(!active)
+		return
 	if(crossed)
-		playsound(loc, trigger_sound, 50, 1)
-		if(isliving(AM))
+		if(isliving(AM) && trigger_mob)
 			var/mob/living/L = AM
-			to_chat(L, "<span class='warning'>You feel something click back into place as you step off [loc]!</span>")
-		addtimer(CALLBACK(src, .proc/trigger), trigger_delay)
+			if(L.mob_size < trigger_mob_min_size)
+				return ..()
+			unstep_living(L)
+		else if(isitem(AM) && trigger_item)
+			var/obj/item/I = AM
+			if(I.w_class<trigger_item_min_w_class)
+				return ..()
+			unstep_item(I)
+		else if(istype(AM, /obj/structure) && trigger_structure)
+			var/obj/structure/S = AM
+			unstep_struct(S)
+		else
+			return ..()
+		playsound(loc, trigger_sound, 50, 1)
+		addtimer(CALLBACK(src, .proc/pre_trigger), pre_trigger_delay)
+		if(tile_overlay)
+			loc.overlays -= tile_overlay
+			tile_overlay.pixel_y = 1
+			loc.overlays += tile_overlay
+		crossed = FALSE
 	. = ..()
+
+/obj/item/device/pressure_plate/proc/pre_trigger()
+	if(crossed)
+		return
+	addtimer(CALLBACK(src, .proc/trigger), post_trigger_delay)
 
 /obj/item/device/pressure_plate/proc/trigger()
 	if(istype(sigdev))
@@ -61,8 +101,15 @@
 
 /obj/item/device/pressure_plate/proc/step_living(mob/living/L)
 	to_chat(L, "<span class='warning'>You feel a click under your feet!</span>")
-
-/obj/item/device/pressure_plate/proc/step_item(atom/movable/AM)
+/obj/item/device/pressure_plate/proc/unstep_living(mob/living/L)
+	to_chat(L, "<span class='warning'>You feel something click back into place as you step off [loc]!</span>")
+/obj/item/device/pressure_plate/proc/step_item(obj/item/I)
+	return
+/obj/item/device/pressure_plate/proc/unstep_item(obj/item/I)
+	return
+/obj/item/device/pressure_plate/proc/step_struct(obj/structure/S)
+	return
+/obj/item/device/pressure_plate/proc/unstep_struct(obj/structure/S)
 	return
 
 /obj/item/device/pressure_plate/attackby(obj/item/I, mob/living/L)
@@ -85,11 +132,17 @@
 		anchored = TRUE
 		icon_state = null
 		active = TRUE
+		var/turf/T = get_turf(src)
 		if(tile_overlay)
-			loc.overlays += tile_overlay
+			qdel(tile_overlay)
+		spawn(0)
+			tile_overlay = image(icon = T.icon, icon_state = T.icon_state)
+			tile_overlay.pixel_y = 1
+			if(tile_overlay)
+				loc.overlays += tile_overlay
 	else
-		if(crossed)
-			trigger()	//no cheesing.
+		if(crossed && prob(84)) 
+			trigger()	//16% chanche to safely disarm
 		invisibility = initial(invisibility)
 		anchored = FALSE
 		icon_state = initial(icon_state)
