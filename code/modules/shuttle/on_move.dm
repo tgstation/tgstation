@@ -14,7 +14,12 @@ All ShuttleMove procs go here
 // Called from the new turf before anything has been moved
 // Only gets called if fromShuttleMove returns true first
 // returns the new move_mode (based on the old)
+<<<<<<< HEAD
 /turf/proc/toShuttleMove(turf/oldT, shuttle_dir, move_mode)
+=======
+/turf/proc/toShuttleMove(turf/oldT, move_mode, obj/docking_port/mobile/shuttle)
+	var/shuttle_dir = shuttle.dir
+>>>>>>> 9ac60a82bf... Typo
 	for(var/i in contents)
 		var/atom/movable/thing = i
 		if(ismob(thing))
