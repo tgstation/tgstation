@@ -246,9 +246,9 @@
 
 	if(self_sustaining)
 		if(istype(src, /obj/machinery/hydroponics/soil))
-			add_atom_colour(rgb(255,223,0), FIXED_COLOUR_PRIORITY)
+			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 		else
-			add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing"))
+			overlays += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing")
 		set_light(3)
 
 	update_icon_hoses()
@@ -732,8 +732,6 @@
 			reagent_source.reagents.trans_to(S,split)
 			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
-			else
-				reagent_source.reagents.trans_to(S,split)
 
 			H.applyChemicals(S, user)
 
