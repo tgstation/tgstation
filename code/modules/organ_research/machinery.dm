@@ -18,14 +18,14 @@
 
 /obj/machinery/ornd/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	do_sparks(5, TRUE, src)
 	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/ornd/attackby(obj/item/W, mob/user)
 	var/obj/item/screwdriver/S = W
@@ -34,7 +34,7 @@
 		update_icon()
 
 	if(Insert_Item(W, user))
-		return 1
+		return TRUE
 	else
 		return ..()
 

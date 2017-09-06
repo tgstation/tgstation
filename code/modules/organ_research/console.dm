@@ -4,7 +4,7 @@
 	//todo: add circuit
 	icon_screen = "organscan"
 	icon_keyboard = "generic_key"
-	var/first_use = 1	//If first_use = 1, it will try to auto-connect with nearby devices
+	var/first_use = TRUE	//If first_use = 1, it will try to auto-connect with nearby devices
 	var/obj/machinery/ornd/bodyscanner/linked_scanner = null
 	var/obj/machinery/ornd/orgsynth/linked_synth = null
 	var/obj/machinery/ornd/organres/linked_res = null
@@ -36,7 +36,7 @@
 			if(linked_synth == null)
 				linked_synth = D
 				D.linked_console = src
-	first_use = 0
+	first_use = FALSE
 
 /obj/machinery/computer/orndconsole/interact(mob/user)
 	SyncDevices()
