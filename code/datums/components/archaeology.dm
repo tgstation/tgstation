@@ -7,13 +7,9 @@
 /datum/component/archaeology/Initialize(_prob2drop, list/_archdrops = list())
 	prob2drop = Clamp(_prob2drop, 0, 100)
 	archdrops = _archdrops
-	if(isopenturf(parent))
-		RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
-		RegisterSignal(COMSIG_ATOM_EX_ACT, .proc/BombDig)
-		RegisterSignal(COMSIG_ATOM_SING_PULL, .proc/SingDig)
-
-/datum/component/archaeology/Destroy()
-	return ..()
+	RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
+	RegisterSignal(COMSIG_ATOM_EX_ACT, .proc/BombDig)
+	RegisterSignal(COMSIG_ATOM_SING_PULL, .proc/SingDig)
 
 /datum/component/archaeology/InheritComponent(datum/component/archaeology/A, i_am_original)
 	var/list/other_archdrops = A.archdrops
@@ -50,14 +46,14 @@
 	if(dug)
 		return
 	else
-		if(isopenturf(parent))
-			var/turf/open/OT = parent
-			for(var/thing in archdrops)
-				var/maxtodrop = archdrops[thing]
-				for(var/i in 1 to maxtodrop)
-					if(prob(prob2drop)) // can't win them all!
-						new thing(OT)
+		var/turf/open/OT = get_turf(parent)
+		for(var/thing in archdrops)
+			var/maxtodrop = archdrops[thing]
+			for(var/i in 1 to maxtodrop)
+				if(prob(prob2drop)) // can't win them all!
+					new thing(OT)
 
+		if(isopenturf(OT))
 			if(OT.postdig_icon_change)
 				if(istype(OT, /turf/open/floor/plating/asteroid/) && !OT.postdig_icon)
 					var/turf/open/floor/plating/asteroid/AOT = parent

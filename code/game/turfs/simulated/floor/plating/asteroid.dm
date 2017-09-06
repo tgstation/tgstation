@@ -35,10 +35,6 @@
 	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
-	..()
-
-	if(!W || !user)
-		return FALSE
 
 	if(istype(W, /obj/item/storage/bag/ore))
 		var/obj/item/storage/bag/ore/S = W
@@ -57,6 +53,9 @@
 			var/turf/open/floor/light/F = T
 			F.state = L.state
 		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
+		return
+
+	return ..()
 
 
 /turf/open/floor/plating/asteroid/singularity_act()
