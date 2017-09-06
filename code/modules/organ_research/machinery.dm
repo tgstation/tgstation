@@ -10,11 +10,11 @@
 	var/disabled = 0
 	var/shocked = FALSE
 	var/obj/machinery/computer/orndconsole/linked_console
-	var/datum/ornd/refDatum
 
 /obj/machinery/ornd/Initialize()
-	.=..()
-	refDatum = new /datum/ornd
+	. = ..()
+	if(!GLOB.refDatum)
+		GLOB.refDatum = new /datum/ornd
 
 /obj/machinery/ornd/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
@@ -131,7 +131,7 @@
 	//22
 
 /obj/machinery/ornd/orgsynth/Initialize()
-	.=..()
+	. = ..()
 	create_reagents(0)
 	update_icon()
 
@@ -196,7 +196,7 @@
 	var/scan_coeff = 1
 
 /obj/machinery/ornd/organres/Initialize()
-	.=..()
+	. = ..()
 	update_icon()
 
 /obj/machinery/ornd/organres/power_change()
@@ -228,7 +228,7 @@
 /obj/machinery/ornd/organres/proc/scan()
 	running = TRUE
 	for(var/obj/item/organ/O in contents)
-		for(var/datum/organ/DO in refDatum.datumOrgans)//is this organ referenced as a product of any datum organ?
+		for(var/datum/organ/DO in GLOB.refDatum.datumOrgans)//is this organ referenced as a product of any datum organ?
 			if(istype(DO))
 				if(istype(O, DO.product))
 					scanning = O

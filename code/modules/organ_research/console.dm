@@ -9,16 +9,16 @@
 	var/obj/machinery/ornd/orgsynth/linked_synth = null
 	var/obj/machinery/ornd/organres/linked_res = null
 	var/list/savedOrgans = list()
-	var/datum/ornd/orndDatum
 	var/screen = 0
 	var/scan
 	//0 is main menu
 	//1 is chemical menu
 
 /obj/machinery/computer/orndconsole/Initialize()
-	.=..()
+	. = ..()
 	SyncDevices()
-	orndDatum = new /datum/ornd
+	if(!GLOB.refDatum)
+		GLOB.refDatum = new /datum/ornd
 
 /obj/machinery/computer/orndconsole/proc/SyncDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/ornd/D in oview(3,src))
