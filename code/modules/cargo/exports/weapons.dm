@@ -89,12 +89,12 @@
 	export_types = list(/obj/item/melee/transforming/cleaving_saw)
 	
 /datum/export/weapon/immortality_talisman
-	cost = 25000
+	cost = 6000
 	unit_name = "Immortality Talisman"
 	export_types = list(/obj/item/device/immortality_talisman)
 	
 /datum/export/weapon/mayhem
-	cost = -5000
+	cost = 30000
 	unit_name = "Mayhem in a bottle"
 	export_types = list(/obj/item/mayhem)
 	
