@@ -8,7 +8,7 @@
 /datum/getrev/New()
 	testmerge = SERVER_TOOLS_PR_LIST
 #ifdef SERVERTOOLS
-	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
+	if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
 		var/list/tmp = world.file2list("..\\prtestjob.lk")
 		for(var/I in tmp)
 			if(I)
