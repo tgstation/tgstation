@@ -214,7 +214,6 @@
 	var/old_lighting_object = lighting_object
 	var/old_corners = corners
 
-
 	var/old_exl = explosion_level
 	var/old_exi = explosion_id
 	var/old_bp = blueprint_data
