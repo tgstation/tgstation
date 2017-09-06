@@ -12,9 +12,8 @@
 
 #define GC_QUEUE_PREQUEUE 1
 #define GC_QUEUE_CHECK 2
-#define GC_QUEUE_ENDODONTICS 3
-#define GC_QUEUE_DAMNATIOMEMORIAE 4
-#define GC_QUEUE_HARDDELETE 5
+#define GC_QUEUE_HARDDELETE 3
+#define GC_QUEUE_COUNT 3 //increase this when adding more steps.
 
 #define GC_QUEUED_FOR_QUEUING -1
 #define GC_QUEUED_FOR_HARD_DEL -2

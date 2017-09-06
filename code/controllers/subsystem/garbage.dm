@@ -1,11 +1,11 @@
 SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = 15
-	wait = 20
+	wait = 2 SECONDS
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
-	var/list/collection_timeout = list(0, 600, 0, 1200, 2400)	// deciseconds to wait before moving something up in the queue to the next level
+	var/list/collection_timeout = list(0, 10 SECONDS, 2 MINUTES)	// deciseconds to wait before moving something up in the queue to the next level
 
 	//Stat tracking
 	var/delslasttick = 0			// number of del()'s we've done this tick
@@ -16,12 +16,12 @@ SUBSYSTEM_DEF(garbage)
 	var/highest_del_time = 0
 	var/highest_del_tickusage = 0
 
-	var/list/pass_counts = list(0, 0, 0, 0, 0)
-	var/list/fail_counts = list(0, 0, 0, 0, 0)
+	var/list/pass_counts
+	var/list/fail_counts
 
 
 	//Queues
-	var/list/queues = list(list(), list(), list(), list(), list())
+	var/list/queues
 
 
 	//Bad boy tracking
@@ -38,6 +38,14 @@ SUBSYSTEM_DEF(garbage)
 
 	var/list/qdel_list = list()	// list of all types that have been qdel()eted (and the number)
 
+/datum/controller/subsystem/garbage/PreInit()
+	queues = new(GC_QUEUE_COUNT)
+	pass_counts = new(GC_QUEUE_COUNT)
+	fail_counts = new(GC_QUEUE_COUNT)
+	for(var/i in 1 to GC_QUEUE_COUNT)
+		queues[i] = list()
+		pass_counts[i] = list()
+		fail_counts[i] = list()
 
 /datum/controller/subsystem/garbage/stat_entry(msg)
 	var/list/counts = list()
@@ -88,12 +96,6 @@ SUBSYSTEM_DEF(garbage)
 			if (GC_QUEUE_CHECK)
 				HandleQueue(GC_QUEUE_CHECK)
 				queue = GC_QUEUE_CHECK+1
-			if (GC_QUEUE_ENDODONTICS)
-				HandleQueue(GC_QUEUE_ENDODONTICS)
-				queue = GC_QUEUE_ENDODONTICS+1
-			if (GC_QUEUE_DAMNATIOMEMORIAE)
-				HandleQueue(GC_QUEUE_DAMNATIOMEMORIAE)
-				queue = GC_QUEUE_DAMNATIOMEMORIAE+1
 			if (GC_QUEUE_HARDDELETE)
 				HandleQueue(GC_QUEUE_HARDDELETE)
 				break
@@ -172,10 +174,6 @@ SUBSYSTEM_DEF(garbage)
 				didntgc["[type]"]++
 				++delslasttick
 				++totaldels
-			if (GC_QUEUE_ENDODONTICS)
-				EndodonticTherapy(D)
-			if (GC_QUEUE_DAMNATIOMEMORIAE)
-				DamnatioMemoriae(D)
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
 				if (MC_TICK_CHECK)
@@ -190,104 +188,6 @@ SUBSYSTEM_DEF(garbage)
 		queue.Cut(1,count+1)
 		count = 0
 
-
-//a root canal is called a "final restoration" because you basically gut everything out and hope that keeps it from being a pain.
-//	ie: its the final attempt to fix the issue before just removing it.
-/datum/controller/subsystem/garbage/proc/EndodonticTherapy(datum/D)
-	var/static/list/exclude = list("icon", "icon_state", "locs", "color", "transform", "parent_type", "vars", "verbs", "type", "gc_destroyed")
-	for (var/V in D.vars - exclude)
-		var/value = D.vars[V]
-		if (isnull(value))
-			continue
-		if (value == D)
-			log_qdel("[D]([D.type]) had a reference to itself in var [V]")
-			D.vars[V] = null
-			continue
-		switch(V)
-			if ("ckey", "tag")
-				log_qdel("[D]([D.type]) had a non-null [V] preventing soft deletion")
-				D.vars[V] = null
-				continue
-			if ("contents")
-				var/list/L = value
-				if (LAZYLEN(L))
-					log_qdel("[D]([D.type]) had a non-empty [V] preventing soft deletion")
-					L.Cut()
-				continue
-			if ("loc") //this is where we assume that a turf would never enter the qdel queue. one day this assumption will be wrong.
-				if (isturf(D))
-					log_qdel("[D]([D.type]) is a turf and should not be in the fucking qdel queue")
-					stack_trace("qdel: TURF IN THE QUEUE!") //this error message to be read in the voice of Professor Quirrel saying "TROLL IN THE DUNGEON"
-					continue
-				log_qdel("[D]([D.type]) had a non-null [V] preventing soft deletion")
-				D.vars[V] = null
-				continue
-
-
-
-		if (islist(value))
-			var/list/L = value
-			var/i = 0
-			while ((i = L.Find(D)))
-				value[i] = null
-				log_qdel("[D]([D.type]) had a reference to itself in list [V] at index [i]")
-			if (IS_NORMAL_LIST(L))
-				D.vars[V] = null
-
-		else if (isdatum(value))
-			var/datum/DD = value
-			for (var/VV in DD.vars - exclude)
-				value = DD.vars[VV]
-				if (islist(value))
-					var/list/L = value
-					var/i = 0
-					while ((i = L.Find(D)))
-						value[i] = null
-						log_qdel("[D]([D.type]) had a reference to a datum ([V] = [DD]([DD.type])) that had a reference back to it in list [VV] at index [i]")
-				else
-					if (value == D)
-						value = null
-						log_qdel("[D]([D.type]) had a reference to a datum ([V] = [DD]([DD.type])) that had a reference back to it in var [VV]")
-			D.vars[V] = null
-
-
-//It is not known exactly how many people the Romans decided to erase from existance after their death
-//	... because they had been erased from existance
-/datum/controller/subsystem/garbage/proc/DamnatioMemoriae(datum/D)
-	for (var/V in GLOB.vars)
-		var/value = GLOB.vars[V]
-		if (isnull(value))
-			continue
-		if (value == D)
-			log_qdel("[D]([D.type]): A reference to it was found in var GLOB.[V]")
-			D.vars[V] = null
-			continue
-		if (islist(value))
-			var/list/L = value
-			var/i = 0
-			while ((i = L.Find(D)))
-				value[i] = null
-				log_qdel("[D]([D.type]): A reference to it was found in list GLOB.[V] at index [i]")
-			if (IS_NORMAL_LIST(L))
-				D.vars[V] = null
-
-		else if (isdatum(value))
-			var/static/list/exclude = list("icon", "icon_state", "locs", "color", "transform", "parent_type", "vars", "verbs", "type", "gc_destroyed")
-			var/datum/DD = value
-			for (var/VV in DD.vars - exclude)
-				value = DD.vars[VV]
-				if (islist(value))
-					var/list/L = value
-					var/i = 0
-					while ((i = L.Find(D)))
-						value[i] = null
-						log_qdel("[D]([D.type]): A reference to it was found in list GLOB.[V].[VV] at index [i]")
-				else
-					if (value == D)
-						value = null
-						log_qdel("[D]([D.type]) A reference to it was found in var GLOB.[V].[VV]")
-			D.vars[V] = null
-
 /datum/controller/subsystem/garbage/proc/PreQueue(datum/D)
 	if (D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		queues[GC_QUEUE_PREQUEUE] += D
@@ -297,8 +197,8 @@ SUBSYSTEM_DEF(garbage)
 	if (isnull(D))
 		return
 	if (D.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
-		level = GC_QUEUE_ENDODONTICS
-	if (level > GC_QUEUE_HARDDELETE)
+		level = GC_QUEUE_HARDDELETE
+	if (level > GC_QUEUE_COUNT)
 		HardDelete(D)
 		return
 	var/gctime = world.time
