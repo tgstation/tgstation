@@ -157,7 +157,7 @@
 		to_chat(user, "<span class='warning'>To use this talisman, attack the target directly.</span>")
 	else
 		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
-	return 0
+	return FALSE
 
 /obj/item/paper/talisman/stun/attack(mob/living/target, mob/living/user, successfuluse = 1)
 	if(iscultist(user))
@@ -304,7 +304,7 @@
 		to_chat(user, "<span class='warning'>To use this talisman, attack the target directly.</span>")
 	else
 		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
-	return 0
+	return FALSE
 
 /obj/item/paper/talisman/shackle/attack(mob/living/carbon/target, mob/living/user)
 	if(iscultist(user) && istype(target))

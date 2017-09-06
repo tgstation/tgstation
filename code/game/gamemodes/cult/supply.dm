@@ -26,7 +26,7 @@
 	var/datum/browser/popup = new(user, "talisman", "", 400, 400)
 	popup.set_content(dat.Join(""))
 	popup.open()
-	return 0
+	return FALSE
 
 /obj/item/paper/talisman/supply/Topic(href, href_list)
 	if(QDELETED(src) || usr.incapacitated() || !in_range(src, usr))

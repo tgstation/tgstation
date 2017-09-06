@@ -178,13 +178,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/obj/item/nullrod/N = locate() in src
 	if(N && !GLOB.ratvar_awakens) //If Nar-Sie or Ratvar are alive, null rods won't protect you
 		return N
-	return 0
+	return FALSE
 
 /mob/proc/bible_check() //The bible, if held, might protect against certain things
 	var/obj/item/storage/book/bible/B = locate() in src
 	if(is_holding(B))
 		return B
-	return 0
+	return FALSE
 
 //Rite of Binding: A paper on top of the rune to a talisman.
 /obj/effect/rune/imbue
@@ -373,12 +373,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>You need more invokers to convert [convertee]!</span>")
 		log_game("Offer rune failed - tried conversion with one invoker")
-		return 0
+		return FALSE
 	if(convertee.null_rod_check())
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
 		log_game("Offer rune failed - convertee had null rod")
-		return 0
+		return FALSE
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
 	if(brutedamage || burndamage)
@@ -394,7 +394,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	and something evil takes root.</b></span>")
 	to_chat(convertee, "<span class='cultitalic'><b>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
 	</b></span>")
-	return 1
+	return TRUE
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
 	var/big_sac = FALSE

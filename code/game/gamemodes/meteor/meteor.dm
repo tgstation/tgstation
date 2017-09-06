@@ -52,4 +52,4 @@
 
 	SSticker.mode_result = "end - evacuation"
 	..()
-	return 1
+	return TRUE

@@ -59,20 +59,20 @@
 			playerC++
 	if(!GLOB.Debug2)
 		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
-			return 0
+			return FALSE
 	antag_candidates = get_players_for_role(antag_flag)
 	if(!GLOB.Debug2)
 		if(antag_candidates.len < required_enemies)
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 	else
 		message_admins("<span class='notice'>DEBUG: GAME STARTING WITHOUT PLAYER NUMBER CHECKS, THIS WILL PROBABLY BREAK SHIT.</span>")
-		return 1
+		return TRUE
 
 
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
-	return 1
+	return TRUE
 
 
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
@@ -95,7 +95,7 @@
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
-	return 1
+	return TRUE
 
 
 ///Handles late-join antag assignments
@@ -133,10 +133,10 @@
 
 	switch(SSshuttle.emergency.mode) //Rounds on the verge of ending don't get new antags, they just run out
 		if(SHUTTLE_STRANDED, SHUTTLE_ESCAPE)
-			return 1
+			return TRUE
 		if(SHUTTLE_CALL)
 			if(SSshuttle.emergency.timeLeft(1) < initial(SSshuttle.emergencyCallTime)*0.5)
-				return 1
+				return TRUE
 
 	if(world.time >= (config.midround_antag_time_check * 600))
 		message_admins("Convert_roundtype failed due to round length. Limit is [config.midround_antag_time_check] minutes.")
@@ -170,7 +170,7 @@
 	 //somewhere between 1 and 3 minutes from now
 	if(!config.midround_antag[SSticker.mode.config_tag])
 		round_converted = 0
-		return 1
+		return TRUE
 	for(var/mob/living/carbon/human/H in antag_candidates)
 		replacementmode.make_antag_chance(H)
 	round_converted = 2
@@ -179,7 +179,7 @@
 
 ///Called by the gameSSticker
 /datum/game_mode/process()
-	return 0
+	return FALSE
 
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
@@ -195,37 +195,37 @@
 				if(Player.mind)
 					if(Player.mind.special_role)
 						continuous_sanity_checked = 1
-						return 0
+						return FALSE
 			if(!continuous_sanity_checked)
 				message_admins("The roundtype ([config_tag]) has no antagonists, continuous round has been defaulted to on and midround_antag has been defaulted to off.")
 				config.continuous[config_tag] = 1
 				config.midround_antag[config_tag] = 0
 				SSshuttle.clearHostileEnvironment(src)
-				return 0
+				return FALSE
 
 
 		if(living_antag_player && living_antag_player.mind && isliving(living_antag_player) && living_antag_player.stat != DEAD && !isnewplayer(living_antag_player) &&!isbrain(living_antag_player))
-			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
+			return FALSE //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
 		for(var/mob/Player in GLOB.living_mob_list)
 			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client)
 				if(Player.mind.special_role) //Someone's still antaging!
 					living_antag_player = Player
-					return 0
+					return FALSE
 
 		if(!config.continuous[config_tag] || force_ending)
-			return 1
+			return TRUE
 
 		else
 			round_converted = convert_roundtype()
 			if(!round_converted)
 				if(round_ends_with_antag_death)
-					return 1
+					return TRUE
 				else
 					config.midround_antag[config_tag] = 0
-					return 0
+					return FALSE
 
-	return 0
+	return FALSE
 
 
 /datum/game_mode/proc/declare_completion()
@@ -269,11 +269,11 @@
 	if(cult.len && !istype(SSticker.mode, /datum/game_mode/cult))
 		datum_cult_completion()
 
-	return 0
+	return FALSE
 
 
 /datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
-	return 0
+	return FALSE
 
 
 /datum/game_mode/proc/send_intercept()
@@ -510,19 +510,19 @@
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/game_mode/proc/age_check(client/C)
 	if(get_remaining_days(C) == 0)
-		return 1	//Available in 0 days = available right now = player is old enough to play.
-	return 0
+		return TRUE	//Available in 0 days = available right now = player is old enough to play.
+	return FALSE
 
 
 /datum/game_mode/proc/get_remaining_days(client/C)
 	if(!C)
-		return 0
+		return FALSE
 	if(!config.use_age_restriction_for_jobs)
-		return 0
+		return FALSE
 	if(!isnum(C.player_age))
-		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
+		return FALSE //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
 	if(!isnum(enemy_minimum_age))
-		return 0
+		return FALSE
 
 	return max(0, enemy_minimum_age - C.player_age)
 

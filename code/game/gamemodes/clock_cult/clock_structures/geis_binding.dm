@@ -65,7 +65,7 @@
 		if(do_after(user, 30, target = src))
 			user.visible_message("<span class='warning'>[user] dispels [src]!</span>", "<span class='danger'>You dispel [src]!</span>")
 			take_damage(obj_integrity)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/structure/destructible/clockwork/geis_binding/emp_act(severity)

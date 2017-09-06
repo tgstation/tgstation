@@ -6,13 +6,13 @@
 
 /datum/surgery/organ_extraction/can_start(mob/user, mob/living/carbon/target)
 	if(!ishuman(user))
-		return 0
+		return FALSE
 	var/mob/living/carbon/human/H = user
 	if(H.dna.species.id == "abductor")
-		return 1
+		return TRUE
 	for(var/obj/item/implant/abductor/A in H.implants)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/surgery_step/extract_organ
@@ -34,10 +34,10 @@
 		user.visible_message("[user] pulls [IC] out of [target]'s [target_zone]!", "<span class='notice'>You pull [IC] out of [target]'s [target_zone].</span>")
 		user.put_in_hands(IC)
 		IC.Remove(target)
-		return 1
+		return TRUE
 	else
 		to_chat(user, "<span class='warning'>You don't find anything in [target]'s [target_zone]!</span>")
-		return 1
+		return TRUE
 
 /datum/surgery_step/gland_insert
 	name = "insert gland"
@@ -52,4 +52,4 @@
 	user.drop_item()
 	var/obj/item/organ/heart/gland/gland = tool
 	gland.Insert(target, 2)
-	return 1
+	return TRUE

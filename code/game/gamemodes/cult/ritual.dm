@@ -169,7 +169,7 @@ This file contains the arcane tome files.
 	var/datum/browser/popup = new(user, "tome", "", 800, 600)
 	popup.set_content(text)
 	popup.open()
-	return 1
+	return TRUE
 
 /obj/item/tome/proc/scribe_rune(mob/living/user)
 	var/turf/Turf = get_turf(user)

@@ -80,7 +80,7 @@
 	var/datum/browser/popup = new(usr, "mind", "", 800, 600)
 	popup.set_content(text)
 	popup.open()
-	return 1
+	return TRUE
 
 /datum/action/innate/cult/mastervote
 	name = "Assert Leadership"
@@ -149,7 +149,7 @@
 
 /datum/action/innate/cult/master/IsAvailable()
 	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER) || GLOB.cult_narsie)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/innate/cult/master/finalreck
