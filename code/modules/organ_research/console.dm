@@ -8,11 +8,11 @@
 	var/obj/machinery/ornd/orgsynth/linked_synth
 	var/obj/machinery/ornd/organres/linked_res
 	var/list/savedOrgans = list()
-	var/obj/item/organ/scannedOrgan
 	var/screen = 0
 	var/scan
 	//0 is main menu
 	//1 is chemical menu
+	//2 is synth menu
 
 /obj/machinery/computer/orndconsole/Initialize()
 	. = ..()
@@ -68,6 +68,6 @@
 
 	if(href_list["scan"])
 		if(linked_res)
-			scannedOrgan = linked_res.scan()
+			savedOrgan += linked_res.scan()
 
 
