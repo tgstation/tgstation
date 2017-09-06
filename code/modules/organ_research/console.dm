@@ -4,10 +4,11 @@
 	//todo: add circuit
 	icon_screen = "organscan"
 	icon_keyboard = "generic_key"
-	var/obj/machinery/ornd/bodyscanner/linked_scanner = null
-	var/obj/machinery/ornd/orgsynth/linked_synth = null
-	var/obj/machinery/ornd/organres/linked_res = null
+	var/obj/machinery/ornd/bodyscanner/linked_scanner
+	var/obj/machinery/ornd/orgsynth/linked_synth
+	var/obj/machinery/ornd/organres/linked_res
 	var/list/savedOrgans = list()
+	var/obj/item/organ/scannedOrgan
 	var/screen = 0
 	var/scan
 	//0 is main menu
@@ -67,6 +68,6 @@
 
 	if(href_list["scan"])
 		if(linked_res)
-			linked_res.scan()
+			scannedOrgan = linked_res.scan()
 
 

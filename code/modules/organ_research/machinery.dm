@@ -192,7 +192,6 @@
 	var/running
 	var/obj/item/organ/scanning
 	var/obj/item/organ/heldorgan
-	var/datum/ornd/scandatum
 	var/scan_coeff = 1
 
 /obj/machinery/ornd/organres/Initialize()
@@ -223,18 +222,19 @@
 /obj/machinery/ornd/organres/proc/donescan()
 	running = FALSE
 	update_icon()
-	scanning.forceMove(get_turf(src))
 
 /obj/machinery/ornd/organres/proc/scan()
 	running = TRUE
+
+	update_icon()
+	addtimer(CALLBACK(src, .proc/donescan),32*scan_coeff)
+
 	for(var/obj/item/organ/O in contents)
 		for(var/datum/organ/DO in GLOB.refDatum.datumOrgans)//is this organ referenced as a product of any datum organ?
 			if(istype(DO))
 				if(istype(O, DO.product))
 					scanning = O
 					return scanning
-	update_icon()
-	addtimer(CALLBACK(src, .proc/donescan),32*scan_coeff)
 
 /obj/machinery/ornd/organres/Insert_Item(obj/item/W, mob/user)
 	if(user.a_intent != INTENT_HARM)
@@ -254,6 +254,7 @@
 	O.forceMove(src)
 
 /obj/machinery/ornd/organres/attack_hand(mob/user)
-	if(heldorgan)
-		heldorgan.forceMove(get_turf(loc))
-		running = FALSE
+	if(heldorgan && running = FALSE)
+		heldorgan.forceMove(get_turf(src))
+		heldorgan = NULL
+		scanning = NULL
