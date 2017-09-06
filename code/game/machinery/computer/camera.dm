@@ -103,7 +103,7 @@
 
 		if(camera_fail)
 			user.unset_machine()
-			return 0
+			return FALSE
 
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		if(isAI(user))

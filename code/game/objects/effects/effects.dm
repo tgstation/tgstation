@@ -18,13 +18,13 @@
 	return
 
 /obj/effect/mech_melee_attack(obj/mecha/M)
-	return 0
+	return FALSE
 
 /obj/effect/blob_act()
 	return
 
 /obj/effect/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	return 0
+	return FALSE
 
 /obj/effect/experience_pressure_difference()
 	return
@@ -45,7 +45,7 @@
 
 /obj/effect/singularity_act()
 	qdel(src)
-	return 0
+	return FALSE
 
 /obj/effect/ConveyorMove()
 	return

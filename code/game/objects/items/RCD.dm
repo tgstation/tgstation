@@ -73,9 +73,9 @@ obj/item/construction
 		matter += value*amount_to_use
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into the [src]. </span>")
-		return 1
+		return TRUE
 	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the [src]!")
-	return 0
+	return FALSE
 
 /obj/item/construction/proc/activate()
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -89,11 +89,11 @@ obj/item/construction
 	if(matter < amount)
 		if(user)
 			to_chat(user, no_ammo_message)
-		return 0
+		return FALSE
 	matter -= amount
 	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	. = matter >= amount
@@ -369,12 +369,12 @@ obj/item/construction
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
-		return 0
+		return FALSE
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
 			to_chat(user, no_ammo_message)
-		return 0
+		return FALSE
 	. = borgy.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
 	if(!. && user)
 		to_chat(user, no_ammo_message)
@@ -382,12 +382,12 @@ obj/item/construction
 
 /obj/item/construction/rcd/borg/checkResource(amount, mob/user)
 	if(!iscyborg(user))
-		return 0
+		return FALSE
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
 			to_chat(user, no_ammo_message)
-		return 0
+		return FALSE
 	. = borgy.cell.charge >= (amount * 72)
 	if(!. && user)
 		to_chat(user, no_ammo_message)
@@ -521,7 +521,7 @@ obj/item/construction
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
-							return 0
+							return FALSE
 						activate()
 						qdel(A)
 						return TRUE
@@ -582,9 +582,9 @@ obj/item/construction
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(F))
-							return 0
+							return FALSE
 						if(!useResource(floorcost, user))
-							return 0
+							return FALSE
 						activate()
 						var/destination = get_turf(A)
 						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)

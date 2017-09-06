@@ -14,9 +14,9 @@
 /obj/effect/particle_effect/water/Move(turf/newloc)
 	if (--src.life < 1)
 		qdel(src)
-		return 0
+		return FALSE
 	if(newloc.density)
-		return 0
+		return FALSE
 	.=..()
 
 /obj/effect/particle_effect/water/Collide(atom/A)

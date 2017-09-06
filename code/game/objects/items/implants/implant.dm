@@ -36,12 +36,12 @@
 
 
 //What does the implant do upon injection?
-//return 1 if the implant injects
-//return 0 if there is no room for implant / it fails
+//return TRUE if the implant injects
+//return FALSE if there is no room for implant / it fails
 /obj/item/implant/proc/implant(mob/living/target, mob/user, silent = 0)
 	LAZYINITLIST(target.implants)
 	if(!target.can_be_implanted() || !can_be_implanted_in(target))
-		return 0
+		return FALSE
 	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/implant/imp_e = X
@@ -52,9 +52,9 @@
 					else
 						imp_e.uses = min(imp_e.uses + uses, initial(imp_e.uses)*2)
 					qdel(src)
-					return 1
+					return TRUE
 				else
-					return 0
+					return FALSE
 
 	src.loc = target
 	imp_in = target
@@ -70,7 +70,7 @@
 	if(user)
 		add_logs(user, target, "implanted", object="[name]")
 
-	return 1
+	return TRUE
 
 /obj/item/implant/proc/removed(mob/living/source, silent = 0, special = 0)
 	src.loc = null
@@ -83,7 +83,7 @@
 		var/mob/living/carbon/human/H = source
 		H.sec_hud_set_implants()
 
-	return 1
+	return TRUE
 
 /obj/item/implant/Destroy()
 	if(imp_in)

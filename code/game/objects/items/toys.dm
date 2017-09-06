@@ -156,10 +156,10 @@
 	if(istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
 			to_chat(user, "<span class='warning'>It's already fully loaded!</span>")
-			return 1
+			return TRUE
 		if (A.amount_left <= 0)
 			to_chat(user, "<span class='warning'>There are no more caps!</span>")
-			return 1
+			return TRUE
 		if (A.amount_left < (7 - src.bullets))
 			src.bullets += A.amount_left
 			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", A.amount_left))
@@ -169,7 +169,7 @@
 			A.amount_left -= 7 - src.bullets
 			src.bullets = 7
 		A.update_icon()
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -326,10 +326,10 @@
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return 0
+	return FALSE
 
 /obj/item/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
-	return 0
+	return FALSE
 
 /obj/item/toy/katana
 	name = "replica katana"

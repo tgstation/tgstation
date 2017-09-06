@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 
 /obj/item/pipe_dispenser/proc/show_menu(mob/user)
 	if(!user || !src)
-		return 0
+		return FALSE
 	var/dat = {"<h2>Type</h2>
 <b>Utilities:</b>
 <ul>"}

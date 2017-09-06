@@ -11,7 +11,7 @@
 
 /obj/machinery/pipedispenser/attack_hand(mob/user)
 	if(..())
-		return 1
+		return TRUE
 	var/dat = {"
 <b>Regular pipes:</b><BR>
 <A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=1'>Pipe</A><BR>
@@ -46,10 +46,10 @@
 
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 	if(!anchored|| !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
-		return 1
+		return TRUE
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
@@ -137,7 +137,7 @@ Nah
 
 /obj/machinery/pipedispenser/disposal/attack_hand(mob/user)
 	if(..())
-		return 1
+		return TRUE
 
 	var/dat = {"<b>Disposal Pipes</b><br><br>
 <A href='?src=\ref[src];dmake=[DISP_PIPE_STRAIGHT]'>Pipe</A><BR>
@@ -157,7 +157,7 @@ Nah
 
 /obj/machinery/pipedispenser/disposal/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
@@ -186,7 +186,7 @@ Nah
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
 	if(..())
-		return 1
+		return TRUE
 
 	var/dat = {"<B>Transit Tubes:</B><BR>
 <A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>
@@ -207,7 +207,7 @@ Nah
 
 /obj/machinery/pipedispenser/disposal/transit_tube/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(wait < world.time)

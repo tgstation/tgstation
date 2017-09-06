@@ -24,10 +24,10 @@
 
 	if(log)
 		log_game("Radiation pulse with size ([heavy_range], [light_range]) and severity [severity] in area [epicenter.loc.name] ")
-	return 1
+	return TRUE
 
 /atom/proc/rad_act(var/severity)
-	return 1
+	return TRUE
 
 /mob/living/rad_act(amount, silent = 0)
 	if(amount)

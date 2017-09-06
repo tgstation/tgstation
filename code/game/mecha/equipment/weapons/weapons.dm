@@ -13,22 +13,22 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/proc/get_shot_amount()
 	return projectiles_per_shot
 
 /obj/item/mecha_parts/mecha_equipment/weapon/action(atom/target, params)
 	if(!action_checks(target))
-		return 0
+		return FALSE
 
 	var/turf/curloc = get_turf(chassis)
 	var/turf/targloc = get_turf(target)
 	if (!targloc || !istype(targloc) || !curloc)
-		return 0
+		return FALSE
 	if (targloc == curloc)
-		return 0
+		return FALSE
 
 	set_ready_state(0)
 	for(var/i=1 to get_shot_amount())
@@ -54,7 +54,7 @@
 		sleep(max(0, projectile_delay))
 
 	chassis.log_message("Fired from [src.name], targeting [target].")
-	return 1
+	return TRUE
 
 
 //Base energy weapon type
@@ -136,10 +136,10 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/working/M)
 	if(..()) //combat mech
-		return 1
+		return TRUE
 	else if(M.equipment.len < M.max_equip && istype(M))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
@@ -163,8 +163,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target, params)
 	if(!action_checks(target))
@@ -191,7 +191,7 @@
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Mecha Honker in [ADMIN_COORDJMP(T)]",0,1)
 	log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Mecha Honker in [COORD(T)]")
-	return 1
+	return TRUE
 
 
 //Base ballistic weapon type
@@ -206,10 +206,10 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action_checks(target)
 	if(!..())
-		return 0
+		return FALSE
 	if(projectiles <= 0)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_equip_info()
 	return "[..()] \[[src.projectiles]\][(src.projectiles < initial(src.projectiles))?" - <a href='?src=\ref[src];rearm=1'>Rearm</a>":null]"
@@ -224,7 +224,7 @@
 			chassis.use_power(projectile_energy_cost)
 	send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 	log_message("Rearmed [src.name].")
-	return 1
+	return TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/needs_rearm()
@@ -242,7 +242,7 @@
 	if(..())
 		projectiles -= get_shot_amount()
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
-		return 1
+		return TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
@@ -317,7 +317,7 @@
 	projectiles--
 	proj_init(O)
 	O.throw_at(target, missile_range, missile_speed, spin = 0, diagonals_first = diags_first)
-	return 1
+	return TRUE
 
 //used for projectile initilisation (priming flashbang) and additional logging
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/proc/proj_init(var/obj/O)
@@ -366,8 +366,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/can_attach(obj/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -383,8 +383,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/can_attach(obj/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/device/assembly/mousetrap/armed/M)
 	M.secured = 1
@@ -408,8 +408,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(target)
 	. = ..()

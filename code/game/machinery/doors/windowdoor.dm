@@ -91,7 +91,7 @@
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return !density
 	if(istype(mover, /obj/structure/window))
@@ -105,13 +105,13 @@
 	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
 		return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/window/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
 /obj/machinery/door/window/CanAStarPass(obj/item/card/id/ID, to_dir)
@@ -119,21 +119,21 @@
 
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) == dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
-		return 0
+		return FALSE
 	if(!forced)
 		if(!hasPower())
-			return 0
+			return FALSE
 	if(forced < 2)
 		if(emagged)
-			return 0
+			return FALSE
 	if(!src.operating) //in case of emag
 		operating = TRUE
 	do_animate("opening")
@@ -148,17 +148,17 @@
 
 	if(operating == 1) //emag again
 		operating = FALSE
-	return 1
+	return TRUE
 
 /obj/machinery/door/window/close(forced=0)
 	if (src.operating)
-		return 0
+		return FALSE
 	if(!forced)
 		if(!hasPower())
-			return 0
+			return FALSE
 	if(forced < 2)
 		if(emagged)
-			return 0
+			return FALSE
 	operating = TRUE
 	do_animate("closing")
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
@@ -170,7 +170,7 @@
 	sleep(10)
 
 	operating = FALSE
-	return 1
+	return TRUE
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -366,8 +366,8 @@
 
 /obj/machinery/door/window/clockwork/allowed(mob/M)
 	if(is_servant_of_ratvar(M))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/window/northleft
 	dir = NORTH

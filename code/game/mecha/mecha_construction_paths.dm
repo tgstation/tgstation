@@ -8,7 +8,7 @@
 		if (W.remove_fuel(0, user))
 			playsound(holder, 'sound/items/welder2.ogg', 50, 1)
 		else
-			return 0
+			return FALSE
 	else if(istype(used_atom, /obj/item/wrench))
 		var/obj/item/W = used_atom
 		playsound(holder, W.usesound, 50, 1)
@@ -27,15 +27,15 @@
 			playsound(holder, 'sound/items/deconstruct.ogg', 50, 1)
 		else
 			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
-			return 0
+			return FALSE
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
 			to_chat(user, ("<span class='warning'>There's not enough material in this stack!</span>"))
-			return 0
+			return FALSE
 		else
 			S.use(5)
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user)
 	if(istype(used_atom, /obj/item/weldingtool))
@@ -43,7 +43,7 @@
 		if (W.remove_fuel(0, user))
 			playsound(holder, 'sound/items/welder2.ogg', 50, 1)
 		else
-			return 0
+			return FALSE
 	else if(istype(used_atom, /obj/item/wrench))
 		var/obj/item/W = used_atom
 		playsound(holder, W.usesound, 50, 1)
@@ -62,15 +62,15 @@
 			playsound(holder, 'sound/items/deconstruct.ogg', 50, 1)
 		else
 			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
-			return 0
+			return FALSE
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
 			to_chat(user, ("<span class='warning'>There's not enough material in this stack!</span>"))
-			return 0
+			return FALSE
 		else
 			S.use(5)
-	return 1
+	return TRUE
 
 
 /datum/construction/mecha/ripley_chassis
@@ -85,7 +85,7 @@
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
-	return 1
+	return TRUE
 
 /datum/construction/mecha/ripley_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
@@ -166,7 +166,7 @@
 
 /datum/construction/reversible/mecha/ripley/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -273,7 +273,7 @@
 			else
 				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
 				holder.icon_state = "ripley12"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/ripley/spawn_result()
 	..()
@@ -295,7 +295,7 @@
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
-	return 1
+	return TRUE
 
 /datum/construction/mecha/gygax_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
@@ -399,7 +399,7 @@
 
 /datum/construction/reversible/mecha/gygax/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -558,7 +558,7 @@
 			else
 				user.visible_message("[user] unfastens Gygax Armor Plates.", "<span class='notice'>You unfasten Gygax Armor Plates.</span>")
 				holder.icon_state = "gygax18"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/gygax/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
@@ -580,7 +580,7 @@
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
-	return 1
+	return TRUE
 
 /datum/construction/mecha/firefighter_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
@@ -665,7 +665,7 @@
 
 /datum/construction/reversible/mecha/firefighter/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -782,7 +782,7 @@
 			else
 				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
 				holder.icon_state = "fireripley13"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/firefighter/spawn_result()
 	..()
@@ -807,7 +807,7 @@
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
-	return 1
+	return TRUE
 
 /datum/construction/mecha/honker_chassis/spawn_result()
 	var/obj/item/mecha_parts/chassis/const_holder = holder
@@ -837,7 +837,7 @@
 
 /datum/construction/mecha/honker/custom_action(step, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	if(istype(used_atom, /obj/item/bikehorn))
 		playsound(holder, 'sound/items/bikehorn.ogg', 50, 1)
@@ -860,7 +860,7 @@
 		if(2)
 			user.visible_message("[user] puts clown boots on the [holder].", "<span class='notice'>You put clown boots on the [holder].</span>")
 			qdel(used_atom)
-	return 1
+	return TRUE
 
 /datum/construction/mecha/honker/spawn_result()
 	..()
@@ -880,7 +880,7 @@
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "You connect [used_atom] to the [holder]")
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
-	return 1
+	return TRUE
 
 /datum/construction/mecha/durand_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
@@ -984,7 +984,7 @@
 
 /datum/construction/reversible/mecha/durand/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -1143,7 +1143,7 @@
 			else
 				user.visible_message("[user] unfastens Durand Armor Plates.", "<span class='notice'>You unfasten Durand Armor Plates.</span>")
 				holder.icon_state = "durand18"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/durand/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
@@ -1168,7 +1168,7 @@
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
-	return 1
+	return TRUE
 
 /datum/construction/mecha/phazon_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
@@ -1289,7 +1289,7 @@
 
 /datum/construction/reversible/mecha/phazon/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -1475,7 +1475,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] carefully inserts the anomaly core into \the [holder] and secures it.", "<span class='notice'>You slowly place the anomaly core into its socket and close its chamber.</span>")
 				qdel(used_atom)
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/phazon/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
@@ -1499,7 +1499,7 @@
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
-	return 1
+	return TRUE
 
 /datum/construction/mecha/odysseus_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
@@ -1579,7 +1579,7 @@
 
 /datum/construction/reversible/mecha/odysseus/custom_action(index, diff, atom/used_atom, mob/user)
 	if(!..())
-		return 0
+		return FALSE
 
 	//TODO: better messages.
 	switch(index)
@@ -1688,7 +1688,7 @@
 			else
 				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
 				holder.icon_state = "odysseus12"
-	return 1
+	return TRUE
 
 /datum/construction/reversible/mecha/odysseus/spawn_result()
 	..()

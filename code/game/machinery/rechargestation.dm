@@ -33,7 +33,7 @@
 
 	if(occupant)
 		process_occupant()
-	return 1
+	return TRUE
 
 /obj/machinery/recharge_station/relaymove(mob/user)
 	if(user.stat)

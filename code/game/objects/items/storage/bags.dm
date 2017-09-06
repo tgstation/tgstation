@@ -158,21 +158,21 @@
 	if(!istype(W, /obj/item/stack/sheet) || istype(W, /obj/item/stack/sheet/mineral/sandstone) || istype(W, /obj/item/stack/sheet/mineral/wood))
 		if(!stop_messages)
 			to_chat(usr, "The snatcher does not accept [W].")
-		return 0 //I don't care, but the existing code rejects them for not being "sheets" *shrug* -Sayu
+		return FALSE //I don't care, but the existing code rejects them for not being "sheets" *shrug* -Sayu
 	var/current = 0
 	for(var/obj/item/stack/sheet/S in contents)
 		current += S.amount
 	if(capacity == current)//If it's full, you're done
 		if(!stop_messages)
 			to_chat(usr, "<span class='danger'>The snatcher is full.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 // Modified handle_item_insertion.  Would prefer not to, but...
 /obj/item/storage/bag/sheetsnatcher/handle_item_insertion(obj/item/W, prevent_warning = 0)
 	var/obj/item/stack/sheet/S = W
-	if(!istype(S)) return 0
+	if(!istype(S)) return FALSE
 
 	var/amount
 	var/inserted = 0
@@ -207,7 +207,7 @@
 	if(usr.s_active)
 		usr.s_active.show_to(usr)
 	update_icon()
-	return 1
+	return TRUE
 
 
 // Sets up numbered display to show the stack size of each stored mineral
@@ -253,7 +253,7 @@
 // Instead of removing
 /obj/item/storage/bag/sheetsnatcher/remove_from_storage(obj/item/W, atom/new_location)
 	var/obj/item/stack/sheet/S = W
-	if(!istype(S)) return 0
+	if(!istype(S)) return FALSE
 
 	//I would prefer to drop a new stack, but the item/attack_hand code
 	// that calls this can't recieve a different object than you clicked on.

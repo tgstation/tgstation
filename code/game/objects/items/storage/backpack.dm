@@ -64,10 +64,10 @@
 				else
 					playsound(src, pshoom, 40, 1)
 				user.Beam(dumping_location,icon_state="rped_upgrade",time=5)
-				return 1
+				return TRUE
 		to_chat(user, "The [src.name] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
-	return 0
+	return FALSE
 
 /obj/item/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))

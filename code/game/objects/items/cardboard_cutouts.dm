@@ -176,7 +176,7 @@
 			name = "Private Security Officer"
 			desc = "A cardboard cutout of a private security officer."
 			icon_state = "cutout_ntsec"
-	return 1
+	return TRUE
 
 /obj/item/cardboard_cutout/setDir(newdir)
 	dir = SOUTH

@@ -29,7 +29,7 @@
 
 	if(!iscarbon(M) && !isanimal(M))
 		to_chat(user, "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>")
-		return 1
+		return TRUE
 
 	var/obj/item/bodypart/affecting
 	if(iscarbon(M))

@@ -31,7 +31,7 @@
 /obj/item/device/instrument/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 1
+		return TRUE
 	interact(user)
 
 /obj/item/device/instrument/interact(mob/user)

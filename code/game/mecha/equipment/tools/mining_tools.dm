@@ -71,8 +71,8 @@
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M as obj)
 	if(..())
 		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/user, var/drill_damage=80)
 	target.visible_message("<span class='danger'>[chassis] drills [target] with [src].</span>", \

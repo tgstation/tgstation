@@ -46,7 +46,7 @@
 	if (locked)
 		src.add_fingerprint(usr)
 		to_chat(usr, "<span class='warning'>It's locked!</span>")
-		return 0
+		return FALSE
 	..()
 
 /obj/item/storage/lockbox/emag_act(mob/user)
@@ -76,7 +76,7 @@
 
 /obj/item/storage/lockbox/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(locked)
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/storage/lockbox/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)

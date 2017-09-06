@@ -114,10 +114,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if((job.total_positions <= GLOB.player_list.len * (max_relative_positions / 100)))
 				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
-					return 1
+					return TRUE
 				return -2
 			return -1
-	return 0
+	return FALSE
 
 //Logic check for Topic() if you can close the job
 /obj/machinery/computer/card/proc/can_close_job(datum/job/job)
@@ -126,10 +126,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if(job.total_positions > job.current_positions)
 				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
-					return 1
+					return TRUE
 				return -2
 			return -1
-	return 0
+	return FALSE
 
 /obj/machinery/computer/card/attack_hand(mob/user)
 	if(..())
@@ -495,9 +495,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
-					return 0
+					return FALSE
 				if(can_open_job(j) != 1)
-					return 0
+					return FALSE
 				if(opened_positions[edit_job_target] >= 0)
 					GLOB.time_last_changed_position = world.time / 10
 				j.total_positions++
@@ -510,9 +510,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
-					return 0
+					return FALSE
 				if(can_close_job(j) != 1)
-					return 0
+					return FALSE
 				//Allow instant closing without cooldown if a position has been opened before
 				if(opened_positions[edit_job_target] <= 0)
 					GLOB.time_last_changed_position = world.time / 10
@@ -526,7 +526,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/priority_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(priority_target)
 				if(!j)
-					return 0
+					return FALSE
 				var/priority = TRUE
 				if(j in SSjob.prioritized_jobs)
 					SSjob.prioritized_jobs -= j

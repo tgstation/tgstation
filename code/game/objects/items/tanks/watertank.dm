@@ -27,7 +27,7 @@
 
 /obj/item/watertank/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBackSlot())
-		return 1
+		return TRUE
 
 /obj/item/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
@@ -89,7 +89,7 @@
 /obj/item/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
 		remove_noz()
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -135,9 +135,9 @@
 /proc/check_tank_exists(parent_tank, mob/living/carbon/human/M, obj/O)
 	if (!parent_tank || !istype(parent_tank, /obj/item/watertank))	//To avoid weird issues from admin spawns
 		qdel(O)
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/item/reagent_containers/spray/mister/Move()
 	..()
@@ -357,7 +357,7 @@
 
 /obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
 	if(slot == slot_back)
-		return 1
+		return TRUE
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr

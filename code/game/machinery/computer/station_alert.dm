@@ -39,7 +39,7 @@
 			var/list/sources = alarm[3]
 			if (!(source in sources))
 				sources += source
-			return 1
+			return TRUE
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
 	if(O && islist(O))
@@ -49,7 +49,7 @@
 	else if(O && istype(O, /obj/machinery/camera))
 		C = O
 	L[A.name] = list(A, (C ? C : O), list(source))
-	return 1
+	return TRUE
 
 
 /obj/machinery/computer/station_alert/proc/cancelAlarm(class, area/A, obj/origin)

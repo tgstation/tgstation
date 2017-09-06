@@ -93,7 +93,7 @@
 
 /obj/machinery/dna_scannernew/close_machine()
 	if(!state_open)
-		return 0
+		return FALSE
 
 	..()
 
@@ -114,11 +114,11 @@
 
 /obj/machinery/dna_scannernew/open_machine()
 	if(state_open)
-		return 0
+		return FALSE
 
 	..()
 
-	return 1
+	return TRUE
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
 	if(user.stat || locked)

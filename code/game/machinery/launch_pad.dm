@@ -35,7 +35,7 @@
 				var/obj/item/device/multitool/M = I
 				M.buffer = src
 				to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
-				return 1
+				return TRUE
 
 		if(exchange_parts(user, I))
 			return

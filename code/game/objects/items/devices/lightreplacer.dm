@@ -165,7 +165,7 @@
 /obj/item/device/lightreplacer/proc/Use(mob/user)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	AddUses(-1)
-	return 1
+	return TRUE
 
 // Negative numbers will subtract
 /obj/item/device/lightreplacer/proc/AddUses(amount = 1)
@@ -233,9 +233,9 @@
 /obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
 	src.add_fingerprint(user)
 	if(uses > 0)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/item/device/lightreplacer/afterattack(atom/T, mob/U, proximity)
 	if(!proximity)

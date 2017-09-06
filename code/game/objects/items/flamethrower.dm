@@ -237,7 +237,7 @@
 		var/target_turf = get_turf(owner)
 		igniter.ignite_turf(src,target_turf, release_amount = 100)
 		qdel(ptank)
-		return 1 //It hit the flamethrower, not them
+		return TRUE //It hit the flamethrower, not them
 
 
 /obj/item/device/assembly/igniter/proc/flamethrower_process(turf/open/location)

@@ -19,12 +19,12 @@
 			var/obj/item/implant/imp_e = X
 			imp_e.hidden_uplink.telecrystals += hidden_uplink.telecrystals
 			qdel(src)
-			return 1
+			return TRUE
 
 	if(..())
 		hidden_uplink.owner = "[user.key]"
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/implant/uplink/activate()
 	if(hidden_uplink)

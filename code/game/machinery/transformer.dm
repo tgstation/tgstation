@@ -67,7 +67,7 @@
 		var/dir = get_dir(src, mover)
 		if(dir == EAST)
 			return ..()
-	return 0
+	return FALSE
 
 /obj/machinery/transformer/process()
 	if(cooldown && (cooldown_timer <= world.time))

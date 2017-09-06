@@ -245,9 +245,9 @@
 						P.forceMove(src)
 						components += P
 						req_components[I]--
-						return 1
+						return TRUE
 				to_chat(user, "<span class='warning'>You cannot add that to the machine!</span>")
-				return 0
+				return FALSE
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 

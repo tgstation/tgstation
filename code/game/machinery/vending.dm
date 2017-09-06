@@ -227,15 +227,15 @@
 	if(!allowed(user) && !emagged && scan_id)
 		to_chat(user, "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>")
 		req_access_txt = "0"
-		return 0
+		return FALSE
 	req_access_txt = "0"
-	return 1
+	return TRUE
 
 /obj/machinery/vending/snack/proc/iscompartmentfull(mob/user)
 	if(contents.len >= 30) // no more than 30 dishes can fit inside
 		to_chat(user, "<span class='warning'>[src]'s chef compartment is full.</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/vending/snack/proc/food_load(obj/item/reagent_containers/food/snacks/S)
 	if(dish_quants[S.name])
@@ -579,7 +579,7 @@
 	var/obj/throw_item = null
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
-		return 0
+		return FALSE
 
 	for(var/datum/data/vending_product/R in shuffle(product_records))
 		if(R.amount <= 0) //Try to use a record that actually has something to dump.
@@ -592,13 +592,13 @@
 		throw_item = new dump_path(loc)
 		break
 	if(!throw_item)
-		return 0
+		return FALSE
 
 	pre_throw(throw_item)
 
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item] at [target]!</span>")
-	return 1
+	return TRUE
 
 /obj/machinery/vending/proc/pre_throw(obj/item/I)
 	return

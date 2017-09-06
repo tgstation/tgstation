@@ -198,7 +198,7 @@
 	memory["processing"] = state != target_state
 	//sensor_pressure = null //not sure if we can comment this out. Uncomment in case of problems -rastaf0
 
-	return 1
+	return TRUE
 
 
 /obj/machinery/embedded_controller/radio/airlock_controller

@@ -208,12 +208,12 @@ Class Procs:
 
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
-		return 0
+		return FALSE
 	if(use_power == 1)
 		use_power(idle_power_usage,power_channel)
 	else if(use_power >= 2)
 		use_power(active_power_usage,power_channel)
-	return 1
+	return TRUE
 
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
@@ -247,11 +247,11 @@ Class Procs:
 /obj/machinery/Topic(href, href_list)
 	..()
 	if(!is_interactable())
-		return 1
+		return TRUE
 	if(!usr.canUseTopic(src))
-		return 1
+		return TRUE
 	add_fingerprint(usr)
-	return 0
+	return FALSE
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -280,19 +280,19 @@ Class Procs:
 //set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user, check_power = 1, set_machine = 1)
 	if(..())// unbuckling etc
-		return 1
+		return TRUE
 	if((user.lying || user.stat) && !IsAdminGhost(user))
-		return 1
+		return TRUE
 	if(!user.IsAdvancedToolUser() && !IsAdminGhost(user))
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 1
+		return TRUE
 	if(!is_interactable())
-		return 1
+		return TRUE
 	if(set_machine)
 		user.set_machine(src)
 	interact(user)
 	add_fingerprint(user)
-	return 0
+	return FALSE
 
 /obj/machinery/CheckParts(list/parts_list)
 	..()
@@ -311,7 +311,7 @@ Class Procs:
 		playsound(loc, C.usesound, 50, 1)
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
-		return 1
+		return TRUE
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags_1 & NODECONSTRUCT_1)
@@ -363,16 +363,16 @@ Class Procs:
 			panel_open = FALSE
 			icon_state = icon_state_closed
 			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/wrench/W)
 	if(panel_open && istype(W))
 		playsound(loc, W.usesound, 50, 1)
 		setDir(turn(dir,-90))
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/proc/can_be_unfasten_wrench(mob/user, silent) //if we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 	if(!isfloorturf(loc) && !anchored)
@@ -438,8 +438,8 @@ Class Procs:
 			display_parts(user)
 		if(shouldplaysound)
 			W.play_rped_sound()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/proc/display_parts(mob/user)
 	to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")

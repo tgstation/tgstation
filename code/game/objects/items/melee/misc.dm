@@ -289,7 +289,7 @@
 	T.CalculateAdjacentTurfs()
 
 /obj/item/melee/supermatter_sword/add_blood(list/blood_dna)
-	return 0
+	return FALSE
 
 /obj/item/melee/curator_whip
 	name = "curator's whip"

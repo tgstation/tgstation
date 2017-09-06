@@ -18,11 +18,11 @@
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
 		to_chat(usr, "<span class='notice'>[src] will not function on a deceased cyborg.</span>")
-		return 1
+		return TRUE
 	if(module_type && !istype(R.module, module_type))
 		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
 		to_chat(usr, "There's no mounting point for the module!")
-		return 1
+		return TRUE
 
 /obj/item/borg/upgrade/rename
 	name = "cyborg reclassification board"
@@ -45,7 +45,7 @@
 	if(oldname == R.real_name)
 		R.notify_ai(RENAME, oldname, R.real_name)
 
-	return 1
+	return TRUE
 
 
 /obj/item/borg/upgrade/restart
@@ -57,7 +57,7 @@
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)
 	if(R.health < 0)
 		to_chat(usr, "<span class='warning'>You have to repair the cyborg before using this module!</span>")
-		return 0
+		return FALSE
 
 	if(R.mind)
 		R.mind.grab_ghost()
@@ -65,7 +65,7 @@
 
 	R.revive()
 
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/vtec
 	name = "cyborg VTEC module"
@@ -84,7 +84,7 @@
 
 	R.speed = -2 // Gotta go fast.
 
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"
@@ -109,7 +109,7 @@
 
 	T.charge_delay = max(2 , T.charge_delay - 4)
 
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/thrusters
 	name = "ion thruster upgrade"
@@ -126,7 +126,7 @@
 		return
 
 	R.ionpulse = TRUE
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/ddrill
 	name = "mining cyborg diamond drill"
@@ -148,7 +148,7 @@
 	var/obj/item/pickaxe/drill/cyborg/diamond/DD = new /obj/item/pickaxe/drill/cyborg/diamond(R.module)
 	R.module.basic_modules += DD
 	R.module.add_module(DD, FALSE, TRUE)
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/soh
 	name = "mining cyborg satchel of holding"
@@ -168,7 +168,7 @@
 	var/obj/item/storage/bag/ore/holding/H = new /obj/item/storage/bag/ore/holding(R.module)
 	R.module.basic_modules += H
 	R.module.add_module(H, FALSE, TRUE)
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
@@ -186,7 +186,7 @@
 
 	R.SetEmagged(1)
 
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/lavaproof
 	name = "mining cyborg lavaproof tracks"
@@ -201,7 +201,7 @@
 	if(..())
 		return
 	R.weather_immunities += "lava"
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
@@ -223,13 +223,13 @@
 	var/obj/item/borg/upgrade/selfrepair/U = locate() in R
 	if(U)
 		to_chat(usr, "<span class='warning'>This unit is already equipped with a self-repair module.</span>")
-		return 0
+		return FALSE
 
 	cyborg = R
 	icon_state = "selfrepair_off"
 	toggle_action = new /datum/action/item_action/toggle(src)
 	toggle_action.Grant(R)
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/selfrepair/dropped()
 	addtimer(CALLBACK(src, .proc/check_dropped), 1)
@@ -325,7 +325,7 @@
 			for(var/re in additional_reagents)
 				H.add_reagent(re)
 
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/hypospray/expanded
 	name = "medical cyborg expanded hypospray"
@@ -362,7 +362,7 @@
 	if(!found_hypo)
 		return
 
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
@@ -381,7 +381,7 @@
 	R.module.basic_modules += S
 	R.module.add_module(S, FALSE, TRUE)
 
-	return 1
+	return TRUE
 
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"

@@ -86,7 +86,7 @@
 // linked door is open/closed (by density) then opens it/closes it.
 /obj/machinery/door_timer/proc/timer_start()
 	if(stat & (NOPOWER|BROKEN))
-		return 0
+		return FALSE
 
 	activation_time = world.time
 	timing = TRUE
@@ -103,13 +103,13 @@
 			continue
 		C.locked = TRUE
 		C.update_icon()
-	return 1
+	return TRUE
 
 
 /obj/machinery/door_timer/proc/timer_end(forced = FALSE)
 
 	if(stat & (NOPOWER|BROKEN))
-		return 0
+		return FALSE
 
 	if(!forced)
 		Radio.set_frequency(GLOB.SEC_FREQ)
@@ -133,7 +133,7 @@
 		C.locked = FALSE
 		C.update_icon()
 
-	return 1
+	return TRUE
 
 
 /obj/machinery/door_timer/proc/time_left(seconds = FALSE)
@@ -143,7 +143,7 @@
 
 /obj/machinery/door_timer/proc/set_timer(value)
 	var/new_time = Clamp(value,0,MAX_TIMER)
-	. = new_time == timer_duration //return 1 on no change
+	. = new_time == timer_duration //return TRUE on no change
 	timer_duration = new_time
 
 /obj/machinery/door_timer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \

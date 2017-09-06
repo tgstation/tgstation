@@ -49,23 +49,23 @@
 	lifetime--
 	if(lifetime < 1)
 		kill_smoke()
-		return 0
+		return FALSE
 	for(var/mob/living/L in range(0,src))
 		smoke_mob(L)
-	return 1
+	return TRUE
 
 /obj/effect/particle_effect/smoke/proc/smoke_mob(mob/living/carbon/C)
 	if(!istype(C))
-		return 0
+		return FALSE
 	if(lifetime<1)
-		return 0
+		return FALSE
 	if(C.internal != null || C.has_smoke_protection())
-		return 0
+		return FALSE
 	if(C.smoke_delay)
-		return 0
+		return FALSE
 	C.smoke_delay++
 	addtimer(CALLBACK(src, .proc/remove_smoke_delay, C), 10)
-	return 1
+	return TRUE
 
 /obj/effect/particle_effect/smoke/proc/remove_smoke_delay(mob/living/carbon/C)
 	if(C)
@@ -131,13 +131,13 @@
 		M.drop_item()
 		M.adjustOxyLoss(1)
 		M.emote("cough")
-		return 1
+		return TRUE
 
 /obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
 		B.damage = (B.damage/2)
-	return 1
+	return TRUE
 
 
 
@@ -208,7 +208,7 @@
 		M.drop_item()
 		M.Sleeping(200)
 		M.emote("cough")
-		return 1
+		return TRUE
 
 /datum/effect_system/smoke_spread/sleeping
 	effect_type = /obj/effect/particle_effect/smoke/sleeping
@@ -233,20 +233,20 @@
 			reagents.reaction(AM, TOUCH, fraction)
 
 		reagents.reaction(T, TOUCH, fraction)
-		return 1
+		return TRUE
 
 /obj/effect/particle_effect/smoke/chem/smoke_mob(mob/living/carbon/M)
 	if(lifetime<1)
-		return 0
+		return FALSE
 	if(!istype(M))
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = M
 	if(C.internal != null || C.has_smoke_protection())
-		return 0
+		return FALSE
 	var/fraction = 1/initial(lifetime)
 	reagents.copy_to(C, fraction*reagents.total_volume)
 	reagents.reaction(M, INGEST, fraction)
-	return 1
+	return TRUE
 
 
 
