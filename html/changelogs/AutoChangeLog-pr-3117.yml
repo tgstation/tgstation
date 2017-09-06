@@ -1,0 +1,4 @@
+author: "GuyonBroadway"
+delete-after: True
+changes: 
+  - bugfix: "fixed the bug where hydroponics trays were taking more reagents than they should."
