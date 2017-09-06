@@ -12,7 +12,6 @@
 	var/scan
 	//0 is main menu
 	//1 is chemical menu
-	//2 is synth menu
 
 /obj/machinery/computer/orndconsole/Initialize()
 	. = ..()
