@@ -553,7 +553,7 @@
 		var/value = vv_get_value(VV_CLIENT)
 		if (value["class"] != VV_CLIENT)
 			return
-		var/cient/C = value["value"]
+		var/client/C = value["value"]
 		if (!C)
 			return
 		var/prompt = alert("Do you want to grant [C] access to view this VV window? (they will not be able to edit or change anything nor open nested vv windows unless they themselves are an admin)", "Confirm", "Yes", "No")
