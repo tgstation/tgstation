@@ -232,6 +232,10 @@
 		for(var/datum/organ/DO in GLOB.refDatum.datumOrgans)//is this organ referenced as a product of any datum organ?
 			if(istype(DO))
 				if(istype(O, DO.product))
+					for(var/V in O)
+						if("[V]" in DO.modVars)
+							DO.modVars["[V]"] = V
+
 					return DO
 
 /obj/machinery/ornd/organres/Insert_Item(obj/item/W, mob/user)

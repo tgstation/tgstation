@@ -49,11 +49,13 @@
 			dat += "<A href='?src=\ref[src];screen=1'>Chemical Storage</A><br>"
 			dat += "Known organs:<br>"
 			for(var/D in savedOrgans)
-				var/datum/organ/O = savedOrgans[D]
-				if(!linked_synth.canBuild)
-					dat += "<span class='linkOff'>[O.name]</span>"
+				var/datum/organ/O = new savedOrgans[D]
+				if(istype(O))
+					var/dO = O.datumToOrgan
+				if(!linked_synth || !linked_synth.canBuild)
+					dat += "<span class='linkOff'>[dO.name]</span>"
 				else
-					dat += "<a href='?src=\ref[src];make=[O];multiplier=1'>[O.name]</a>"
+					dat += "<a href='?src=\ref[src];make=[dO];multiplier=1'>[dO.name]</a>"
 
 	var/datum/browser/popup = new(user, "orndconsole", "Organ Research Console", 450, 440)
 	popup.set_content(dat)
