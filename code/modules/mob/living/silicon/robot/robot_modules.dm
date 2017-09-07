@@ -84,7 +84,7 @@
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/S = I
 
-		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
+		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/metal)))
 			if(S.materials[MAT_METAL])
 				S.cost = S.materials[MAT_METAL] * 0.25
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
@@ -241,7 +241,7 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/stack/sheet/metal/cyborg,
 		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/stack/tile/metal/cyborg,
 		/obj/item/extinguisher,
 		/obj/item/pickaxe,
 		/obj/item/device/t_scanner/adv_mining_scanner,
@@ -311,7 +311,7 @@
 		/obj/item/stack/sheet/glass/cyborg,
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/stack/tile/metal/cyborg,
 		/obj/item/stack/cable_coil/cyborg)
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
@@ -388,7 +388,7 @@
 		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/stack/tile/metal/cyborg,
 		/obj/item/soap/nanotrasen,
 		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/extinguisher/mini,

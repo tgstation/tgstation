@@ -163,7 +163,7 @@
 	name = "Floorbot"
 	result = /mob/living/simple_animal/bot/floorbot
 	reqs = list(/obj/item/storage/toolbox/mechanical = 1,
-				/obj/item/stack/tile/plasteel = 1,
+				/obj/item/stack/tile/metal = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
 	time = 40
@@ -556,7 +556,7 @@
 	result = /obj/item/device/pressure_plate
 	time = 5
 	reqs = list(/obj/item/stack/sheet/metal = 1,
-				  /obj/item/stack/tile/plasteel = 1,
+				  /obj/item/stack/tile/metal = 1,
 				  /obj/item/stack/cable_coil = 2,
 				  /obj/item/device/assembly/igniter = 1)
 	category = CAT_MISC

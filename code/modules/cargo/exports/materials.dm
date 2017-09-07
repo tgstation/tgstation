@@ -83,7 +83,7 @@
 	message = "cm3 of metal"
 	material_id = MAT_METAL
 	export_types = list(
-		/obj/item/stack/sheet/metal, /obj/item/stack/tile/plasteel,
+		/obj/item/stack/sheet/metal, /obj/item/stack/tile/metal,
 		/obj/item/stack/rods, /obj/item/ore, /obj/item/coin)
 
 // Glass. Common building material.

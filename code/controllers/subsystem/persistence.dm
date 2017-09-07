@@ -168,7 +168,7 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	var/list/satchels = list()
-	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))
+	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/metal, /obj/item/crowbar))
 	for(var/A in new_secret_satchels)
 		var/obj/item/storage/backpack/satchel/flat/F = A
 		if(QDELETED(F) || F.z != ZLEVEL_STATION || F.invisibility != INVISIBILITY_MAXIMUM)

@@ -46,7 +46,7 @@
 	l_hand = /obj/item/reagent_containers/glass/bucket
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
-	backpack_contents = list(/obj/item/stack/tile/plasteel=6)
+	backpack_contents = list(/obj/item/stack/tile/metal=6)
 
 /datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

@@ -203,7 +203,7 @@
 	turf_type = /turf/open/floor/pod/dark
 
 //Plasteel (normal)
-/obj/item/stack/tile/plasteel
+/obj/item/stack/tile/metal
 	name = "floor tile"
 	singular_name = "floor tile"
 	desc = "Those could work as a pretty decent throwing weapon."
@@ -212,12 +212,12 @@
 	materials = list(MAT_METAL=500)
 	throwforce = 10
 	flags_1 = CONDUCT_1
-	turf_type = /turf/open/floor/plasteel
+	turf_type = /turf/open/floor/metal
 	mineralType = "metal"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/stack/tile/plasteel/cyborg
+/obj/item/stack/tile/metal/cyborg
 	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR
 	materials = list() // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1

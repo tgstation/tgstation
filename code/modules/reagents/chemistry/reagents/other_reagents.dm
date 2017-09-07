@@ -1330,7 +1330,7 @@
 	taste_description = "carpet" // Your tounge feels furry.
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
-	if(istype(T, /turf/open/floor/plating) || istype(T, /turf/open/floor/plasteel))
+	if(istype(T, /turf/open/floor/plating) || istype(T, /turf/open/floor/metal))
 		var/turf/open/floor/F = T
 		F.ChangeTurf(/turf/open/floor/carpet)
 	..()

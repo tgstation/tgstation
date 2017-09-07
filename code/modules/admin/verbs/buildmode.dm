@@ -251,7 +251,7 @@
 			if(isturf(object) && left_click && !alt_click && !ctrl_click)
 				var/turf/T = object
 				if(isspaceturf(object))
-					T.ChangeTurf(/turf/open/floor/plasteel)
+					T.ChangeTurf(/turf/open/floor/metal)
 				else if(isfloorturf(object))
 					T.ChangeTurf(/turf/closed/wall)
 				else if(iswallturf(object))
@@ -262,7 +262,7 @@
 				log_admin("Build Mode: [key_name(user)] deleted [object] at ([object.x],[object.y],[object.z])")
 				if(iswallturf(object))
 					var/turf/T = object
-					T.ChangeTurf(/turf/open/floor/plasteel)
+					T.ChangeTurf(/turf/open/floor/metal)
 				else if(isfloorturf(object))
 					var/turf/T = object
 					T.ChangeTurf(/turf/open/space)

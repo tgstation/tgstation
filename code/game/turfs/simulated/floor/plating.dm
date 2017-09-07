@@ -79,8 +79,8 @@
 	burnt_states = list("foam_plating")
 
 /turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/tile/plasteel))
-		var/obj/item/stack/tile/plasteel/P = I
+	if(istype(I, /obj/item/stack/tile/metal))
+		var/obj/item/stack/tile/metal/P = I
 		if(P.use(1))
 			var/obj/L = locate(/obj/structure/lattice) in src
 			if(L)

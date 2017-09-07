@@ -216,8 +216,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/created_name = "Floorbot"
 
-/obj/item/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)
-	if(!istype(T, /obj/item/stack/tile/plasteel))
+/obj/item/storage/toolbox/mechanical/attackby(obj/item/stack/tile/metal/T, mob/user, params)
+	if(!istype(T, /obj/item/stack/tile/metal))
 		..()
 		return
 	if(contents.len >= 1)

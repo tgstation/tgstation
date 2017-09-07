@@ -34,7 +34,7 @@
 	return list("operation_time" = 50, "new_obj_type" = /turf/open/floor/clockwork, "power_cost" = -POWER_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
 /turf/open/floor/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
-	if(floor_tile == /obj/item/stack/tile/plasteel)
+	if(floor_tile == /obj/item/stack/tile/metal)
 		new floor_tile(src)
 		make_plating()
 		playsound(src, 'sound/items/crowbar.ogg', 10, 1) //clink
@@ -82,7 +82,7 @@
 	return FALSE
 
 //Metal conversion
-/obj/item/stack/tile/plasteel/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
+/obj/item/stack/tile/metal/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	if(source)
 		return FALSE
 	var/amount_temp = get_amount()

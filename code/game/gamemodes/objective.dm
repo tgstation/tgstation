@@ -267,7 +267,7 @@
 					if(isbrain(player)) //also technically dead
 						continue
 					var/location = get_turf(player.mind.current)
-					if(istype(location, /turf/open/floor/plasteel/shuttle/red))
+					if(istype(location, /turf/open/floor/metal/shuttle/red))
 						continue
 					if(istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						continue
@@ -354,7 +354,7 @@
 	if(!location)
 		return 0
 
-	if(istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails traitors if they are in the shuttle brig -- Polymorph
+	if(istype(location, /turf/open/floor/metal/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
 	if(location.onCentCom() || location.onSyndieBase())

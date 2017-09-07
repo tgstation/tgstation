@@ -293,7 +293,7 @@
 	SSpersistence.new_secret_satchels += src
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
-	new /obj/item/stack/tile/plasteel(src)
+	new /obj/item/stack/tile/metal(src)
 	new /obj/item/crowbar(src)
 
 /obj/item/storage/backpack/satchel/flat/Destroy()
