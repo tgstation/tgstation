@@ -77,4 +77,3 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 
 	to_chat(src, "<span class='boldannounce'>Your [H1.name] cries out for blood. Claim the lives of others, and your own will be restored!\n\
 	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
-

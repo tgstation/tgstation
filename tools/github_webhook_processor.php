@@ -180,7 +180,7 @@ function tag_pr($payload, $opened) {
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
 		
-		if(strpos(strtolower($title), 'revert') !== FALSE || strpos($lowertitle, 'removes') !== FALSE)
+		if(strpos(strtolower($title), 'revert') !== FALSE || strpos(strtolower($title), 'removes') !== FALSE)
 			$tags[] = 'Revert/Removal';
 	}
 
@@ -193,7 +193,7 @@ function tag_pr($payload, $opened) {
 		$tags[] = 'Merge Conflict';
 
 	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL');
-	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound');
+	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound', 'config' => 'Config Update');
 	foreach($treetags as $tree => $tag)
 		if(has_tree_been_edited($payload, $tree))
 			$tags[] = $tag;

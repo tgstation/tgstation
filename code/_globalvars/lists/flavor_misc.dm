@@ -105,53 +105,17 @@ GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 
 GLOBAL_LIST_INIT(guitar_notes, flist("sound/guitar/"))
 
-GLOBAL_LIST_INIT(station_prefixes, list("", "Imperium", "Heretical", "Cuban",
-	"Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique",
-	"Houseruled", "Religious", "Atheist", "Traditional", "Houseruled",
-	"Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death",
-	"Zybourne", "Central", "Main", "Government", "Uoi", "Fat",
-	"Automated", "Experimental", "Augmented"))
+GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt") + "")
 
-GLOBAL_LIST_INIT(station_names, list("", "Stanford", "Dorf", "Alium",
-	"Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World",
-	"Mime", "Honk", "Rogue", "MacRagge", "Ultrameens", "Safety", "Paranoia",
-	"Explosive", "Neckbear", "Donk", "Muppet", "North", "West", "East",
-	"South", "Slant-ways", "Widdershins", "Rimward", "Expensive",
-	"Procreatory", "Imperial", "Unidentified", "Immoral", "Carp", "Ork",
-	"Pete", "Control", "Nettle", "Aspie", "Class", "Crab", "Fist",
-	"Corrogated","Skeleton","Race", "Fatguy", "Gentleman", "Capitalist",
-	"Communist", "Bear", "Beard", "Derp", "Space", "Spess", "Star", "Moon",
-	"System", "Mining", "Neckbeard", "Research", "Supply", "Military",
-	"Orbital", "Battle", "Science", "Asteroid", "Home", "Production",
-	"Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional",
-	"Robot", "Hats", "Pizza"))
+GLOBAL_LIST_INIT(station_names, world.file2list("strings/station_names.txt" + ""))
 
-GLOBAL_LIST_INIT(station_suffixes, list("Station", "Frontier",
-	"Suffix", "Death-trap", "Space-hulk", "Lab", "Hazard","Spess Junk",
-	"Fishery", "No-Moon", "Tomb", "Crypt", "Hut", "Monkey", "Bomb",
-	"Trade Post", "Fortress", "Village", "Town", "City", "Edition", "Hive",
-	"Complex", "Base", "Facility", "Depot", "Outpost", "Installation",
-	"Drydock", "Observatory", "Array", "Relay", "Monitor", "Platform",
-	"Construct", "Hangar", "Prison", "Center", "Port", "Waystation",
-	"Factory", "Waypoint", "Stopover", "Hub", "HQ", "Office", "Object",
-	"Fortification", "Colony", "Planet-Cracker", "Roost", "Fat Camp",
-	"Airstrip"))
+GLOBAL_LIST_INIT(station_suffixes, world.file2list("strings/station_suffixes.txt"))
 
-GLOBAL_LIST_INIT(greek_letters, list("Alpha", "Beta", "Gamma", "Delta",
-	"Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu",
-	"Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi",
-	"Chi", "Psi", "Omega"))
+GLOBAL_LIST_INIT(greek_letters, world.file2list("strings/greek_letters.txt"))
 
-GLOBAL_LIST_INIT(phonetic_alphabet, list("Alpha", "Bravo", "Charlie",
-	"Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet",
-	"Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec",
-	"Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray",
-	"Yankee", "Zulu"))
+GLOBAL_LIST_INIT(phonetic_alphabet, world.file2list("strings/phonetic_alphabet.txt"))
 
-GLOBAL_LIST_INIT(numbers_as_words, list("One", "Two", "Three", "Four",
-	"Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
-	"Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
-	"Eighteen", "Nineteen"))
+GLOBAL_LIST_INIT(numbers_as_words, world.file2list("strings/numbers_as_words.txt"))
 
 /proc/generate_number_strings()
 	var/list/L[198]

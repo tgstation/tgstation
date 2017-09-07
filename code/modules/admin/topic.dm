@@ -1597,11 +1597,13 @@
 			var/mob/living/L = M
 			var/status
 			switch (M.stat)
-				if (0)
+				if(CONSCIOUS)
 					status = "Alive"
-				if (1)
-					status = "<font color='orange'><b>Unconscious</b></font>"
-				if (2)
+				if(SOFT_CRIT)
+					status = "<font color='orange'><b>Dying</b></font>"
+				if(UNCONSCIOUS)
+					status = "<font color='orange'><b>[L.InCritical() ? "Unconscious and Dying" : "Unconscious"]</b></font>"
+				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status = [status]"
 			health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()] - Stamina: [L.getStaminaLoss()]"

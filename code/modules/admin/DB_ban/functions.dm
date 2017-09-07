@@ -1,4 +1,5 @@
 #define MAX_ADMIN_BANS_PER_ADMIN 1
+#define MAX_ADMIN_BANS_PER_HEADMIN 3
 
 //Either pass the mob you wish to ban in the 'banned_mob' attribute, or the banckey, banip and bancid variables. If both are passed, the mob takes priority! If a mob is not passed, banckey is the minimum that needs to be passed! banip and bancid are optional.
 /datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = "", banckey = null, banip = null, bancid = null)
@@ -115,8 +116,11 @@
 			return
 		if(query_check_adminban_amt.NextRow())
 			var/adm_bans = text2num(query_check_adminban_amt.item[1])
-			if(adm_bans >= MAX_ADMIN_BANS_PER_ADMIN)
-				to_chat(usr, "<span class='danger'>You already logged [MAX_ADMIN_BANS_PER_ADMIN] admin ban(s) or more. Do not abuse this function!</span>")
+			var/max_bans = MAX_ADMIN_BANS_PER_ADMIN
+			if (check_rights(R_PERMISSIONS, FALSE))
+				max_bans = MAX_ADMIN_BANS_PER_HEADMIN
+			if(adm_bans >= max_bans)
+				to_chat(usr, "<span class='danger'>You already logged [max_bans] admin ban(s) or more. Do not abuse this function!</span>")
 				return
 	if(!computerid)
 		computerid = "0"
