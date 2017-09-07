@@ -1165,6 +1165,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						/obj/item/toy/cards/deck/syndicate = 10) //Gambling and it hurts, making it a +18 item
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/vending_refill/donksoft
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
