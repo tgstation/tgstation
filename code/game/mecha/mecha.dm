@@ -132,7 +132,7 @@
 	add_cell()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
-	log_message("[src.name] created.")
+	log_message("[src] created.")
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
@@ -669,7 +669,7 @@
 			AI.remote_control = null
 			icon_state = initial(icon_state)+"-open"
 			to_chat(AI, "You have been downloaded to a mobile storage device. Wireless connection offline.")
-			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
+			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
 
 		if(AI_MECH_HACK) //Called by AIs on the mech
 			AI.linked_core = new /obj/structure/AIcore/deactivated(AI.loc)
@@ -688,14 +688,14 @@
 			if(AI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				AI.disconnect_shell()
 			if(AI.stat || !AI.client)
-				to_chat(user, "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>")
+				to_chat(user, "<span class='warning'>[AI] is currently unresponsive, and cannot be uploaded.</span>")
 				return
 			if(occupant || dna_lock) //Normal AIs cannot steal mechs!
 				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].</span>")
 				return
 			AI.control_disabled = 0
 			AI.radio_enabled = 1
-			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 			card.AI = null
 			ai_enter_mech(AI, interaction)
 

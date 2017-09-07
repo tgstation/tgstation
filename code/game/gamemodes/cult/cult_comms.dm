@@ -39,7 +39,7 @@
 			title = "Lord"
 	else if(!ishuman(user))
 		title = "Construct"
-	my_message = "<span class='[span]'><b>[title] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
+	my_message = "<span class='[span]'><b>[title] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user])"]:</b> [message]</span>"
 	for(var/mob/M in GLOB.mob_list)
 		if(iscultist(M))
 			to_chat(M, my_message)
@@ -279,7 +279,7 @@
 		GLOB.blood_target_image.pixel_y = -target.pixel_y
 		for(var/datum/mind/B in SSticker.mode.cult)
 			if(B.current && B.current.stat != DEAD && B.current.client)
-				to_chat(B.current, "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [GLOB.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
+				to_chat(B.current, "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [GLOB.blood_target] in the [A] as the cult's top priority, get there immediately!</b></span>")
 				SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 				B.current.client.images += GLOB.blood_target_image
 		attached_action.owner.update_action_buttons_icon()

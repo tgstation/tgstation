@@ -539,9 +539,9 @@
 		to_chat(user, "<span class='warning'>Something is wired up to the airlock's electronics!</span>")
 	if(note)
 		if(!in_range(user, src))
-			to_chat(user, "There's a [note.name] pinned to the front. You can't read it from here.")
+			to_chat(user, "There's a [note] pinned to the front. You can't read it from here.")
 		else
-			to_chat(user, "There's a [note.name] pinned to the front...")
+			to_chat(user, "There's a [note] pinned to the front...")
 			note.examine(user)
 
 	if(panel_open)
@@ -1180,7 +1180,7 @@
 				if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 					welded = !welded
-					user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
+					user.visible_message("[user] has [welded? "welded shut":"unwelded"] [src].", \
 										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
 					update_icon()
 		else
@@ -1194,7 +1194,7 @@
 						playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 						obj_integrity = max_integrity
 						stat &= ~BROKEN
-						user.visible_message("[user.name] has repaired [src].", \
+						user.visible_message("[user] has repaired [src].", \
 											"<span class='notice'>You finish repairing the airlock.</span>")
 						update_icon()
 			else

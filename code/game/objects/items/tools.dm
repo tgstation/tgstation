@@ -115,7 +115,7 @@
 
 	var/obj/item/wrench/medical/W = new /obj/item/wrench/medical(loc)
 	W.add_fingerprint(user)
-	W.desc += " For some reason, it reminds you of [user.name]."
+	W.desc += " For some reason, it reminds you of [user]."
 
 	if(!user)
 		return
@@ -466,7 +466,7 @@
 		if(src.remove_fuel(1))
 			playsound(loc, usesound, 50, 1)
 			if(user == H)
-				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
+				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting].</span>")
 				if(!do_mob(user, H, 50))
 					return
 			item_heal_robotic(H, user, 15, 0)

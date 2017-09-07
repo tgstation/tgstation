@@ -48,7 +48,7 @@
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
 	if(!target)
 		return
-	to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
+	to_chat(user, "<span class='notice'>We stealthily sting [target].</span>")
 	if(target.mind && target.mind.changeling)
 		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
 	return 1
@@ -89,7 +89,7 @@
 	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna.dna
 	if(ismonkey(target))
-		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
+		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target]!</span>")
 
 	var/mob/living/carbon/C = target
 	. = TRUE
@@ -132,11 +132,11 @@
 		return
 
 	if(ismonkey(target))
-		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
+		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target]!</span>")
 
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
-	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+	target.visible_message("<span class='warning'>A grotesque blade forms around [target]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
 	addtimer(CALLBACK(src, .proc/remove_fake, target, blade), 600)
@@ -145,7 +145,7 @@
 /obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
-	[target] reforms their [blade.name] into an arm!</span>",
+	[target] reforms their [blade] into an arm!</span>",
 	"<span class='warning'>[blade] reforms back to normal.</span>",
 	"<span class='italics>You hear organic matter ripping and tearing!</span>")
 

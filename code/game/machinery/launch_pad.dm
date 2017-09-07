@@ -34,7 +34,7 @@
 			if(istype(I, /obj/item/device/multitool))
 				var/obj/item/device/multitool/M = I
 				M.buffer = src
-				to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
+				to_chat(user, "<span class='notice'>You save the data in the [I]'s buffer.</span>")
 				return 1
 
 		if(exchange_parts(user, I))
