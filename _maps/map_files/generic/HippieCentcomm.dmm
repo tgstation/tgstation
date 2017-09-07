@@ -1148,7 +1148,7 @@
 "wd" = (/obj/machinery/vending/tool,/turf/open/floor/plasteel/black,/area/syndicate_mothership/control)
 "we" = (/obj/structure/closet/cardboard/metal,/turf/open/floor/plating/airless,/area/syndicate_mothership/control)
 "wf" = (/obj/effect/turf_decal/stripes/line{dir = 5},/turf/open/floor/plating/airless,/area/syndicate_mothership/control)
-"wg" = (/obj/machinery/door/airlock/centcom{aiControlDisabled = 1; name = "Assault Pod"; opacity = 1; req_access_txt = "150"},/obj/docking_port/mobile/assault_pod{dwidth = 3; name = "steel rain"; port_angle = 90; preferred_direction = 4},/turf/open/floor/plating,/area/shuttle/assault_pod)
+"wg" = (/obj/machinery/door/airlock/centcom{aiControlDisabled = 1; name = "Assault Pod"; opacity = 1; req_access_txt = "150"},/obj/docking_port/mobile/assault_pod{dwidth = 3; name = "steel rain"; port_direction = 4; preferred_direction = 4},/turf/open/floor/plating,/area/shuttle/assault_pod)
 "wh" = (/obj/effect/turf_decal/stripes/line{dir = 9},/turf/open/floor/plating/airless,/area/syndicate_mothership/control)
 "wi" = (/obj/effect/turf_decal/delivery,/obj/machinery/light,/turf/open/floor/plasteel,/area/centcom/ferry)
 "wj" = (/obj/effect/turf_decal/stripes/line{dir = 5},/turf/open/floor/plasteel,/area/centcom/ferry)
