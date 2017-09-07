@@ -77,12 +77,14 @@ SUBSYSTEM_DEF(garbage)
 	var/list/tobequeued = src.tobequeued
 	var/starttime = world.time
 	var/starttimeofday = world.timeofday
+	var/amount_queued = 0
 	while(tobequeued.len && starttime == world.time && starttimeofday == world.timeofday)
-		if (MC_TICK_CHECK)
-			break
 		var/ref = tobequeued[1]
 		Queue(ref)
-		tobequeued.Cut(1, 2)
+		++amount_queued
+		if (MC_TICK_CHECK)
+			break
+	tobequeued.Cut(amount_queued, amount_queued + 1)
 
 /datum/controller/subsystem/garbage/proc/HandleQueue()
 	delslasttick = 0
