@@ -876,7 +876,7 @@
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
-		src.set_light(3)
+		set_light(3, l_color = LIGHT_COLOR_FIRE)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		return TRUE
