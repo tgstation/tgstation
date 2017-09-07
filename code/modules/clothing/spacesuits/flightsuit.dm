@@ -105,6 +105,8 @@
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
 
+	var/atom/movable/cached_pull		//recipe for disaster again.
+
 /obj/item/device/flightpack/proc/changeWearer(mob/changeto)
 	if(wearer)
 		LAZYREMOVE(wearer.user_movement_hooks, src)
@@ -290,6 +292,12 @@
 		if(momentum_speed_y >= i)
 			step(wearer, drift_dir_y)
 		sleep(1)
+
+/obj/item/device/flightpack/on_mob_move(dir, mob/mob, oldLoc)
+	if(cached_pull)
+		cached_pull.forceMove(oldLoc)
+		mob.start_pulling(cached_pull)
+	cached_pull = null
 
 //Make the wearer lose some momentum.
 /obj/item/device/flightpack/proc/momentum_decay()
@@ -511,7 +519,11 @@
 	spawn()
 		door.Open()
 	var/turf/T = get_turf(door)
+	var/turf/old = get_turf(wearer)
 	wearer.forceMove(T)
+	if(cached_pull)
+		cached_pull.forceMove(old)
+	wearer.start_pulling(cached_pull, TRUE)
 	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
 
 /obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
@@ -539,7 +551,12 @@
 		var/turf/target = get_turf(A)
 		if(istype(A, /obj/machinery/door/window) && (get_turf(wearer) == get_turf(A)))
 			target = get_step(A, A.dir)
+		cached_pull = wearer.pulling
+		var/turf/old = get_turf(wearer)
 		wearer.forceMove(target)
+		if(cached_pull)
+			cached_pull.forceMove(old)
+		wearer.start_pulling(cached_pull, TRUE)
 	return pass
 
 
