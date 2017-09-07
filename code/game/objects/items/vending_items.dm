@@ -79,3 +79,9 @@
 	icon_state = "refill_medical"
 	charges = list(26, 5, 3)// of 76 standard, 13 contraband, 8 premium
 	init_charges = list(26, 5, 3)
+
+/obj/item/vending_refill/donksoft
+	machine_name = "Donksoft Toy Vendor"
+	icon_state = "refill_donksoft"
+	charges = list(32,28,0)// of 90 standard, 75 contraband, 0 premium
+	init_charges = list(32,28,0)
