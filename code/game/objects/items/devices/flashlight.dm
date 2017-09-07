@@ -428,7 +428,7 @@
 
 /obj/item/device/flashlight/glowstick/update_icon()
 	item_state = "glowstick"
-	overlays.Cut()
+	cut_overlays()
 	if(!fuel)
 		icon_state = "glowstick-empty"
 		cut_overlays()

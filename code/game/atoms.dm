@@ -29,6 +29,7 @@
 	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
 
 	var/datum/proximity_monitor/proximity_monitor
+	var/buckle_message_cooldown = 0
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
@@ -292,7 +293,10 @@
 			to_chat(user, "Nothing.")
 	SendSignal(COMSIG_PARENT_EXAMINE, user)
 
-/atom/proc/relaymove()
+/atom/proc/relaymove(mob/user)
+	if(buckle_message_cooldown <= world.time)
+		buckle_message_cooldown = world.time + 50
+		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
 	return
 
 /atom/proc/contents_explosion(severity, target)

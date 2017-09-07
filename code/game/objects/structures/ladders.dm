@@ -7,6 +7,7 @@
 	var/height = 0							//the 'height' of the ladder. higher numbers are considered physically higher
 	var/obj/structure/ladder/down = null	//the ladder below this one
 	var/obj/structure/ladder/up = null		//the ladder above this one
+	var/auto_connect = FALSE
 
 /obj/structure/ladder/unbreakable //mostly useful for awaymissions to prevent halting progress in a mission
 	name = "sturdy ladder"
@@ -19,12 +20,18 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/Destroy()
+	if(up && up.down == src)
+		up.down = null
+		up.update_icon()
+	if(down && down.up == src)
+		down.up = null
+		down.update_icon()
 	GLOB.ladders -= src
 	. = ..()
 
 /obj/structure/ladder/LateInitialize()
 	for(var/obj/structure/ladder/L in GLOB.ladders)
-		if(L.id == id)
+		if(L.id == id || (auto_connect && L.auto_connect && L.x == x && L.y == y))
 			if(L.height == (height - 1))
 				down = L
 				continue
@@ -50,31 +57,33 @@
 	else	//wtf make your ladders properly assholes
 		icon_state = "ladder00"
 
-/obj/structure/ladder/proc/go_up(mob/user,is_ghost)
+/obj/structure/ladder/proc/travel(going_up, mob/user, is_ghost, obj/structure/ladder/ladder)
 	if(!is_ghost)
-		show_fluff_message(1,user)
-		up.add_fingerprint(user)
-	user.loc = get_turf(up)
+		show_fluff_message(going_up,user)
+		ladder.add_fingerprint(user)
 
-/obj/structure/ladder/proc/go_down(mob/user,is_ghost)
-	if(!is_ghost)
-		show_fluff_message(0,user)
-		down.add_fingerprint(user)
-	user.loc = get_turf(down)
+	var/atom/movable/AM
+	if(user.pulling)
+		AM = user.pulling
+		user.pulling.forceMove(get_turf(ladder))
+	user.forceMove(get_turf(ladder))
+	if(AM)
+		user.start_pulling(AM)
+
 
 /obj/structure/ladder/proc/use(mob/user,is_ghost=0)
 	if(up && down)
 		switch( alert("Go up or down the ladder?", "Ladder", "Up", "Down", "Cancel") )
 			if("Up")
-				go_up(user,is_ghost)
+				travel(TRUE, user, is_ghost, up)
 			if("Down")
-				go_down(user,is_ghost)
+				travel(FALSE, user, is_ghost, down)
 			if("Cancel")
 				return
 	else if(up)
-		go_up(user,is_ghost)
+		travel(TRUE, user, is_ghost, up)
 	else if(down)
-		go_down(user,is_ghost)
+		travel(FALSE, user,is_ghost, down)
 	else
 		to_chat(user, "<span class='warning'>[src] doesn't seem to lead anywhere!</span>")
 
@@ -108,3 +117,6 @@
 		. = ..()
 	else
 		return QDEL_HINT_LETMELIVE
+
+/obj/structure/ladder/auto_connect //They will connect to ladders with the same X and Y without needing to share an ID
+	auto_connect = TRUE
