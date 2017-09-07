@@ -555,7 +555,10 @@
 	name = "Pressure Plate"
 	result = /obj/item/device/pressure_plate
 	time = 5
-	reqs = list(/obj/item/stack/sheet/plasteel = 1, /obj/item/stack/tile/plasteel = 1, /obj/item/stack/cable_coil = 2)
+	reqs = list(/obj/item/stack/sheet/metal = 1,
+				  /obj/item/stack/tile/plasteel = 1,
+				  /obj/item/stack/cable_coil = 2,
+				  /obj/item/device/assembly/igniter = 1)
 	category = CAT_MISC
 
 
