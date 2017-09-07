@@ -290,9 +290,8 @@
 	//HALLUCINATE
 	else if((findtext(message, hallucinate_words)))
 		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			new /obj/effect/hallucination/delusion(get_turf(L),L,null,150 * power_multiplier,0)
+		for(var/mob/living/carbon/C in listeners)
+			new /datum/hallucination/delusion(C, TRUE, null,150 * power_multiplier,0)
 
 	//WAKE UP
 	else if((findtext(message, wakeup_words)))
@@ -570,6 +569,7 @@
 
 	message_admins("[key_name_admin(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	log_game("[key_name(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	SSblackbox.add_details("voice_of_god", log_message)
 
 	return cooldown
 

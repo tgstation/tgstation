@@ -22,7 +22,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		switch(dir)
 			if(SOUTH,SOUTHEAST,SOUTHWEST)
 				density = FALSE
-	..()
+	return ..()
 
 /obj/machinery/gateway/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
@@ -75,10 +75,13 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/proc/toggleon(mob/user)
 	return FALSE
 
-/obj/machinery/gateway/centerstation/New()
-	..()
+/obj/machinery/gateway/centerstation/Initialize()
+	. = ..()
 	if(!GLOB.the_gateway)
 		GLOB.the_gateway = src
+	update_icon()
+	wait = world.time + config.gateway_delay	//+ thirty minutes default
+	awaygate = locate(/obj/machinery/gateway/centeraway)
 
 /obj/machinery/gateway/centerstation/Destroy()
 	if(GLOB.the_gateway == src)
@@ -95,12 +98,6 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	var/wait = 0				//this just grabs world.time at world start
 	var/obj/machinery/gateway/centeraway/awaygate = null
 	can_link = TRUE
-
-/obj/machinery/gateway/centerstation/Initialize()
-	..()
-	update_icon()
-	wait = world.time + config.gateway_delay	//+ thirty minutes default
-	awaygate = locate(/obj/machinery/gateway/centeraway)
 
 /obj/machinery/gateway/centerstation/update_icon()
 	if(active)
@@ -182,7 +179,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 
 
 /obj/machinery/gateway/centeraway/Initialize()
-	..()
+	. = ..()
 	update_icon()
 	stationgate = locate(/obj/machinery/gateway/centerstation)
 
@@ -207,7 +204,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	update_icon()
 
 /obj/machinery/gateway/centeraway/proc/check_exile_implant(mob/living/carbon/C)
-	for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant
+	for(var/obj/item/implant/exile/E in C.implants)//Checking that there is an exile implant
 		to_chat(C, "\black The station gate has detected your exile implant and is blocking your entry.")
 		return TRUE
 	return FALSE
@@ -240,6 +237,6 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 			M.client.move_delay = max(world.time + 5, M.client.move_delay)
 
 
-/obj/item/weapon/paper/fluff/gateway
+/obj/item/paper/fluff/gateway
 	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Blue Space Research"
 	name = "Confidential Correspondence, Pg 1"

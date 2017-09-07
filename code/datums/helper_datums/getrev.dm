@@ -6,8 +6,14 @@
 	var/date
 
 /datum/getrev/New()
-	if(world.RunningService() && fexists(SERVICE_PR_TEST_JSON))
-		testmerge = json_decode(file2text(SERVICE_PR_TEST_JSON))
+	if(world.RunningService())
+		var/file_name
+		if(ServiceVersion())	//will return null for versions < 3.0.91.0
+			file_name = SERVICE_PR_TEST_JSON_OLD
+		else
+			file_name = SERVICE_PR_TEST_JSON
+		if(fexists(file_name))
+			testmerge = json_decode(file2text(file_name))
 #ifdef SERVERTOOLS
 	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
 		var/list/tmp = world.file2list("..\\prtestjob.lk")
@@ -73,12 +79,14 @@
 		return ""
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
-		var/details 
+		var/details
 		if(world.RunningService())
 			var/cm = testmerge[line]["commit"]
 			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["author"]) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 7)))
 		else if(has_pr_details)	//tgs2 support
 			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
+		if(details && findtext(details, "\[s\]") && (!usr || !usr.client.holder))
+			continue
 		. += "<a href=\"[config.githuburl]/pull/[line]\">#[line][details]</a><br>"
 
 /client/verb/showrevinfo()
@@ -96,7 +104,7 @@
 		to_chat(src, "[prefix]<a href=\"[config.githuburl]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
 		to_chat(src, "Revision unknown")
-	to_chat(src, "<b>Current Infomational Settings:</b>")
+	to_chat(src, "<b>Current Informational Settings:</b>")
 	to_chat(src, "Protect Authority Roles From Traitor: [config.protect_roles_from_antagonist]")
 	to_chat(src, "Protect Assistant Role From Traitor: [config.protect_assistant_from_antagonist]")
 	to_chat(src, "Enforce Human Authority: [config.enforce_human_authority]")

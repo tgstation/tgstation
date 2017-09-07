@@ -18,5 +18,4 @@
 	access += ACCESS_CREMATORIUM
 	minimal_access += ACCESS_CREMATORIUM
 
-MAP_REMOVE_JOB(curator)
 MAP_REMOVE_JOB(lawyer)

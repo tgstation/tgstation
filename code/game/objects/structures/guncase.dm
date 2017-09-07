@@ -8,7 +8,7 @@
 	density = TRUE
 	opacity = 0
 	var/case_type = ""
-	var/gun_category = /obj/item/weapon/gun
+	var/gun_category = /obj/item/gun
 	var/open = TRUE
 	var/capacity = 4
 
@@ -101,11 +101,11 @@
 	name = "shotgun locker"
 	desc = "A locker that holds shotguns."
 	case_type = "shotgun"
-	gun_category = /obj/item/weapon/gun/ballistic/shotgun
+	gun_category = /obj/item/gun/ballistic/shotgun
 
 /obj/structure/guncase/ecase
 	name = "energy gun locker"
 	desc = "A locker that holds energy guns."
 	icon_state = "ecase"
 	case_type = "egun"
-	gun_category = /obj/item/weapon/gun/energy/e_gun
+	gun_category = /obj/item/gun/energy/e_gun

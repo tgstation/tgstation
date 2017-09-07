@@ -11,7 +11,7 @@
 /datum/outfit/job/New()
 	..()
 	MAP_JOB_CHECK
-	box = /obj/item/weapon/storage/box/survival/radio
+	box = /obj/item/storage/box/survival/radio
 
 /datum/job/assistant // Here so assistant appears on the top of the select job list.
 
@@ -44,7 +44,7 @@
 /datum/outfit/job/officer/New()
 	..()
 	MAP_JOB_CHECK
-	box = /obj/item/weapon/storage/box/security/radio
+	box = /obj/item/storage/box/security/radio
 
 /datum/job/detective/New()
 	..()
@@ -55,7 +55,7 @@
 /datum/outfit/job/detective/New()
 	..()
 	MAP_JOB_CHECK
-	box = /obj/item/weapon/storage/box/security/radio
+	box = /obj/item/storage/box/security/radio
 
 //Medbay
 
@@ -81,7 +81,7 @@
 /datum/outfit/job/engineer/New()
 	..()
 	MAP_JOB_CHECK
-	box = /obj/item/weapon/storage/box/engineer/radio
+	box = /obj/item/storage/box/engineer/radio
 
 /datum/job/atmos/New()
 	..()
@@ -119,7 +119,7 @@
 
 /datum/outfit/job/mining/New()
 	..()
-	box = /obj/item/weapon/storage/box/engineer/radio
+	box = /obj/item/storage/box/engineer/radio
 
 //Service
 

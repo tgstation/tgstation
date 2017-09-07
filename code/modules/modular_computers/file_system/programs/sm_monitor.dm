@@ -5,7 +5,7 @@
 	program_icon_state = "smmon_0"
 	extended_desc = "This program connects to specially calibrated supermatter sensors to provide information on the status of supermatter-based engines."
 	requires_ntnet = TRUE
-	transfer_access = ACCESS_ENGINE
+	transfer_access = ACCESS_CONSTRUCTION
 	network_destination = "supermatter monitoring system"
 	size = 5
 	tgui_id = "ntos_supermatter_monitor"
@@ -22,16 +22,12 @@
 	if(last_status != new_status)
 		last_status = new_status
 		ui_header = "smmon_[last_status].gif"
-		if(istype(computer) && !(computer.hardware_flag == PROGRAM_LAPTOP))
-			program_icon_state = "smmon_[last_status]"
-			if(istype(computer))
-				computer.update_icon()
+		program_icon_state = "smmon_[last_status]"
+		if(istype(computer))
+			computer.update_icon()
 
 /datum/computer_file/program/supermatter_monitor/run_program(mob/living/user)
 	. = ..(user)
-	if(istype(computer) && (computer.hardware_flag == PROGRAM_LAPTOP))
-		program_icon_state = "engine"
-		computer.update_icon()
 	refresh()
 
 /datum/computer_file/program/supermatter_monitor/kill_program(forced = FALSE)

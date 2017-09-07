@@ -32,7 +32,7 @@
 		CRASH("Debug Error Handling encountered an error! This is highly ironic! File: '[fileName]' has exceeded the filesize limit of: [src.logFileLimit] bytes")
 
 	message = "\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: \[[C && C.key ? C.key : "Unknown Client"]\] triggered: [message]"
-	logFile << message
+	WRITE_FILE(logFile, message)
 	return 1
 
 /datum/debugFileOutput/proc/clear(fileName)

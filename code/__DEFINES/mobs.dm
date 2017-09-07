@@ -65,6 +65,12 @@
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
 
+//Disgust levels for humans
+#define DISGUST_LEVEL_MAXEDOUT 150
+#define DISGUST_LEVEL_DISGUSTED 75
+#define DISGUST_LEVEL_VERYGROSS 50
+#define DISGUST_LEVEL_GROSS 25
+
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
 
@@ -91,13 +97,11 @@
 #define AI_IDLE		2
 #define AI_OFF		3
 
+//determines if a mob can smash through it
 #define ENVIRONMENT_SMASH_NONE 0
-
-#define ENVIRONMENT_SMASH_STRUCTURES 1
-
-#define ENVIRONMENT_SMASH_WALLS 2
-
-#define ENVIRONMENT_SMASH_RWALLS 3
+#define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
+#define ENVIRONMENT_SMASH_WALLS 2   //walls
+#define ENVIRONMENT_SMASH_RWALLS 4  //rwalls
 
 
 //SNPCs

@@ -45,7 +45,7 @@
 	Radio.listening = 0
 
 /obj/machinery/door_timer/Initialize()
-	..()
+	. = ..()
 	if(id != null)
 		for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
 			if (M.id == id)

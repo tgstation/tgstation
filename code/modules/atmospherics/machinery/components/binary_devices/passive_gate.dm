@@ -22,8 +22,7 @@ Passive gate is similar to the regular pump except:
 	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/binary/passive_gate/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_icon_nopipes()

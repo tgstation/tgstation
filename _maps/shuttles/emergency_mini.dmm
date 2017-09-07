@@ -19,11 +19,11 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "e" = (
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -78,8 +78,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "n" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "o" = (
@@ -182,13 +181,13 @@
 /area/shuttle/escape)
 "D" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
-/obj/item/weapon/extinguisher,
+/obj/item/crowbar,
+/obj/item/extinguisher,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "E" = (
@@ -196,18 +195,15 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "F" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
-/obj/item/weapon/extinguisher,
+/obj/item/crowbar,
+/obj/item/extinguisher,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "G" = (
@@ -263,8 +259,8 @@
 /area/shuttle/escape)
 "Q" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/extinguisher,
+/obj/item/storage/firstaid/fire,
+/obj/item/extinguisher,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "R" = (
@@ -277,11 +273,11 @@
 /area/shuttle/escape)
 "T" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 

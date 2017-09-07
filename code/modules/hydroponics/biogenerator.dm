@@ -7,8 +7,9 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
+	circuit = /obj/item/circuitboard/machine/biogenerator
 	var/processing = FALSE
-	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	var/obj/item/reagent_containers/glass/beaker = null
 	var/points = 0
 	var/menustat = "menu"
 	var/efficiency = 0
@@ -18,17 +19,13 @@
 	var/list/show_categories = list("Food", "Botany Chemicals", "Leather and Cloth")
 	var/list/timesFiveCategories = list("Food", "Botany Chemicals")
 
-/obj/machinery/biogenerator/New()
-	..()
+/obj/machinery/biogenerator/Initialize()
+	. = ..()
 	files = new /datum/research/biogenerator(src)
 	create_reagents(1000)
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/biogenerator(null)
-	B.apply_default_parts(src)
 
 /obj/machinery/biogenerator/Destroy()
-	if(beaker)
-		qdel(beaker)
-		beaker = null
+	QDEL_NULL(beaker)
 	return ..()
 
 /obj/machinery/biogenerator/contents_explosion(severity, target)
@@ -43,24 +40,14 @@
 		update_icon()
 		updateUsrDialog()
 
-/obj/item/weapon/circuitboard/machine/biogenerator
-	name = "Biogenerator (Machine Board)"
-	build_path = /obj/machinery/biogenerator
-	origin_tech = "programming=2;biotech=3;materials=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
-
 /obj/machinery/biogenerator/RefreshParts()
 	var/E = 0
 	var/P = 0
 	var/max_storage = 40
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		P += B.rating
 		max_storage = 40 * B.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	efficiency = E
 	productivity = P
@@ -90,7 +77,7 @@
 
 	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
 		if(beaker)
-			var/obj/item/weapon/reagent_containers/glass/B = beaker
+			var/obj/item/reagent_containers/glass/B = beaker
 			B.loc = loc
 			beaker = null
 		update_icon()
@@ -102,7 +89,7 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
-	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+	if(istype(O, /obj/item/reagent_containers/glass))
 		. = 1 //no afterattack
 		if(!panel_open)
 			if(beaker)
@@ -119,15 +106,15 @@
 			to_chat(user, "<span class='warning'>Close the maintenance panel first.</span>")
 		return
 
-	else if(istype(O, /obj/item/weapon/storage/bag/plants))
-		var/obj/item/weapon/storage/bag/plants/PB = O
+	else if(istype(O, /obj/item/storage/bag/plants))
+		var/obj/item/storage/bag/plants/PB = O
 		var/i = 0
-		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
+		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= max_items)
 			to_chat(user, "<span class='warning'>The biogenerator is already full! Activate it.</span>")
 		else
-			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in PB.contents)
+			for(var/obj/item/reagent_containers/food/snacks/grown/G in PB.contents)
 				if(i >= max_items)
 					break
 				PB.remove_from_storage(G, src)
@@ -140,9 +127,9 @@
 				to_chat(user, "<span class='info'>You fill the biogenerator to its capacity.</span>")
 		return 1 //no afterattack
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
+	else if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
 		var/i = 0
-		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
+		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= max_items)
 			to_chat(user, "<span class='warning'>The biogenerator is full! Activate it.</span>")
@@ -150,12 +137,12 @@
 			if(user.transferItemToLoc(O, src))
 				to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
 		return 1 //no afterattack
-	else if (istype(O, /obj/item/weapon/disk/design_disk))
+	else if (istype(O, /obj/item/disk/design_disk))
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",
 			"You begin to load a design from \the [O]...",
 			"You hear the chatter of a floppy drive.")
 		processing = TRUE
-		var/obj/item/weapon/disk/design_disk/D = O
+		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 10, target = src))
 			for(var/B in D.blueprints)
 				if(B)
@@ -230,7 +217,7 @@
 		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
 		return
 	var/S = 0
-	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/I in contents)
+	for(var/obj/item/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
 		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
 			points += 1*productivity

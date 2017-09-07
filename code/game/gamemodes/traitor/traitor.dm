@@ -71,9 +71,9 @@
 
 /datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
 	var/traitorcap = min(round(GLOB.joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(GLOB.joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
-	if(SSticker.mode.traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
+	if((SSticker.mode.traitors.len + pre_traitors.len) >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
-	if(SSticker.mode.traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
+	if((SSticker.mode.traitors.len + pre_traitors.len) <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
 		if(ROLE_TRAITOR in character.client.prefs.be_special)
 			if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))
@@ -124,7 +124,7 @@
 				text += " (used [TC_uses] TC) [purchases]"
 				if(TC_uses==0 && traitorwin)
 					var/static/icon/badass = icon('icons/badass.dmi', "badass")
-					text += "<BIG>[bicon(badass)]</BIG>"
+					text += "<BIG>[icon2html(badass, world)]</BIG>"
 
 			text += objectives
 

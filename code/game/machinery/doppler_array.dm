@@ -11,8 +11,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	var/max_dist = 100
 	verb_say = "states coldly"
 
-/obj/machinery/doppler_array/New()
-	..()
+/obj/machinery/doppler_array/Initialize()
+	. = ..()
 	GLOB.doppler_arrays += src
 
 /obj/machinery/doppler_array/Destroy()
@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	return PROCESS_KILL
 
 /obj/machinery/doppler_array/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/wrench))
+	if(istype(O, /obj/item/wrench))
 		if(!anchored && !isinspace())
 			anchored = TRUE
 			power_change()

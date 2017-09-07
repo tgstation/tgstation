@@ -62,7 +62,7 @@
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
-	var/obj/item/default_storage = /obj/item/weapon/storage/backpack/duffelbag/drone //If this exists, it will spawn in internal storage
+	var/obj/item/default_storage = /obj/item/storage/backpack/duffelbag/drone //If this exists, it will spawn in internal storage
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
@@ -81,7 +81,7 @@
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
 
-	access_card = new /obj/item/weapon/card/id(src)
+	access_card = new /obj/item/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
 
@@ -92,7 +92,7 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)
 
-	access_card.flags |= NODROP
+	access_card.flags_1 |= NODROP_1
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -171,29 +171,29 @@
 
 
 /mob/living/simple_animal/drone/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <b>[src]</b>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n"
 
 	//Hands
 	for(var/obj/item/I in held_items)
-		if(!(I.flags & ABSTRACT))
+		if(!(I.flags_1 & ABSTRACT_1))
 			if(I.blood_DNA)
-				msg += "<span class='warning'>It has [bicon(I)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+				msg += "<span class='warning'>It has [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else
-				msg += "It has [bicon(I)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+				msg += "It has [icon2html(I, user)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Internal storage
-	if(internal_storage && !(internal_storage.flags&ABSTRACT))
+	if(internal_storage && !(internal_storage.flags_1&ABSTRACT_1))
 		if(internal_storage.blood_DNA)
-			msg += "<span class='warning'>It is holding [bicon(internal_storage)] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
+			msg += "<span class='warning'>It is holding [icon2html(internal_storage, user)] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
 		else
-			msg += "It is holding [bicon(internal_storage)] \a [internal_storage] in its internal storage.\n"
+			msg += "It is holding [icon2html(internal_storage, user)] \a [internal_storage] in its internal storage.\n"
 
 	//Cosmetic hat - provides no function other than looks
-	if(head && !(head.flags&ABSTRACT))
+	if(head && !(head.flags_1&ABSTRACT_1))
 		if(head.blood_DNA)
-			msg += "<span class='warning'>It is wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on its head!</span>\n"
+			msg += "<span class='warning'>It is wearing [icon2html(head, user)] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on its head!</span>\n"
 		else
-			msg += "It is wearing [bicon(head)] \a [head] on its head.\n"
+			msg += "It is wearing [icon2html(head, user)] \a [head] on its head.\n"
 
 	//Braindead
 	if(!client && stat != DEAD)

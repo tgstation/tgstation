@@ -13,7 +13,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/robot/R = usr
-	if(R.module.type != /obj/item/weapon/robot_module)
+	if(R.module.type != /obj/item/robot_module)
 		R.hud_used.toggle_show_robot_modules()
 		return 1
 	R.pick_module()

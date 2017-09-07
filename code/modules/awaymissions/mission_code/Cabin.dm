@@ -58,7 +58,7 @@
 	emagged = 2 //Always gibs people
 	item_recycle_sound = 'sound/weapons/chainsawhit.ogg'
 
-/obj/machinery/recycler/lumbermill/recycle_item(obj/item/weapon/grown/log/L)
+/obj/machinery/recycler/lumbermill/recycle_item(obj/item/grown/log/L)
 	if(!istype(L))
 		return
 	else

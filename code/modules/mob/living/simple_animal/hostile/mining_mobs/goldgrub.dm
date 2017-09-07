@@ -26,8 +26,8 @@
 	deathmessage = "spits up the contents of its stomach before dying!"
 	status_flags = CANPUSH
 	search_objects = 1
-	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
-						  /obj/item/weapon/ore/uranium)
+	wanted_objects = list(/obj/item/ore/diamond, /obj/item/ore/gold, /obj/item/ore/silver,
+						  /obj/item/ore/uranium)
 
 	var/chase_time = 100
 	var/will_burrow = TRUE
@@ -36,13 +36,13 @@
 	..()
 	var/i = rand(1,3)
 	while(i)
-		loot += pick(/obj/item/weapon/ore/silver, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)
+		loot += pick(/obj/item/ore/silver, /obj/item/ore/gold, /obj/item/ore/uranium, /obj/item/ore/diamond)
 		i--
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
-		if(istype(target, /obj/item/weapon/ore) && loot.len < 10)
+		if(istype(target, /obj/item/ore) && loot.len < 10)
 			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
 		else if(isliving(target))
 			Aggro()
@@ -53,13 +53,13 @@
 				addtimer(CALLBACK(src, .proc/Burrow), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
-	if(istype(target, /obj/item/weapon/ore))
+	if(istype(target, /obj/item/ore))
 		EatOre(target)
 		return
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
-	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
+	for(var/obj/item/ore/O in targeted_ore.loc)
 		if(loot.len < 10)
 			loot += O.type
 			qdel(O)

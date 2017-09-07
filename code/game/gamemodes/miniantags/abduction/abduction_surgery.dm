@@ -10,7 +10,7 @@
 	var/mob/living/carbon/human/H = user
 	if(H.dna.species.id == "abductor")
 		return 1
-	for(var/obj/item/weapon/implant/abductor/A in H.implants)
+	for(var/obj/item/implant/abductor/A in H.implants)
 		return 1
 	return 0
 

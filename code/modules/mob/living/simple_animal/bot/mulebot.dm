@@ -43,7 +43,7 @@
 	var/auto_pickup = 1 	// true if auto-pickup at beacon
 	var/report_delivery = 1 // true if bot will announce an arrival to a location.
 
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell
 	var/bloodiness = 0
 
 /mob/living/simple_animal/bot/mulebot/Initialize()
@@ -79,19 +79,19 @@
 	reached_target = 0
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		..()
 		if(open)
 			on = FALSE
-	else if(istype(I, /obj/item/weapon/stock_parts/cell) && open && !cell)
+	else if(istype(I, /obj/item/stock_parts/cell) && open && !cell)
 		if(!user.drop_item())
 			return
-		var/obj/item/weapon/stock_parts/cell/C = I
+		var/obj/item/stock_parts/cell/C = I
 		C.loc = src
 		cell = C
 		visible_message("[user] inserts a cell into [src].",
 						"<span class='notice'>You insert the new cell into [src].</span>")
-	else if(istype(I, /obj/item/weapon/crowbar) && open && cell)
+	else if(istype(I, /obj/item/crowbar) && open && cell)
 		cell.add_fingerprint(usr)
 		cell.loc = loc
 		cell = null
@@ -596,7 +596,7 @@
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
-				to_chat(calling_ai, "<span class='notice'>[bicon(src)] [src] wirelessly plays a chiming sound!</span>")
+				to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [src] wirelessly plays a chiming sound!</span>")
 				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
 				calling_ai = null
 				radio_channel = "AI Private" //Report on AI Private instead if the AI is controlling us.

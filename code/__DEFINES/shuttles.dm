@@ -22,7 +22,7 @@
 #define SHUTTLE_ALREADY_DOCKED "we_are_already_docked"
 #define SHUTTLE_SOMEONE_ELSE_DOCKED "someone_else_docked"
 
-//Launching Shuttles to Centcomm
+//Launching Shuttles to CentCom
 #define NOLAUNCH -1
 #define UNLAUNCHED 0
 #define ENDGAME_LAUNCHED 1
@@ -55,7 +55,11 @@
 
 //Docking error flags
 #define DOCKING_SUCCESS 0
-#define DOCKING_COMPLETE 1
-#define DOCKING_BLOCKED 2
-#define DOCKING_IMMOBILIZED 4
-#define DOCKING_AREA_EMPTY 8
+#define DOCKING_BLOCKED 1
+#define DOCKING_IMMOBILIZED 2
+#define DOCKING_AREA_EMPTY 4
+
+//Docking turf movements
+#define MOVE_TURF 1
+#define MOVE_AREA 2
+#define MOVE_CONTENTS 4

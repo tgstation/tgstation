@@ -1,8 +1,8 @@
-/obj/item/weapon/paper/pamphlet
+/obj/item/paper/pamphlet
 	name = "pamphlet"
 	icon_state = "pamphlet"
 
-/obj/item/weapon/paper/pamphlet/gateway
+/obj/item/paper/pamphlet/gateway
 	info = "<b>Welcome to the Nanotrasen Gateway project...</b><br>\
 			Congratulations! If you're reading this, you and your superiors have decided that you're \
 			ready to commit to a life spent colonising the rolling hills of far away worlds. You \
@@ -35,5 +35,5 @@
 			environs."
 
 //we don't want the silly text overlay!
-/obj/item/weapon/paper/pamphlet/update_icon()
+/obj/item/paper/pamphlet/update_icon()
 	return

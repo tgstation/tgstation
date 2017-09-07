@@ -5,7 +5,6 @@
 // This was created for firing ranges, but I suppose this could have other applications - Doohl
 
 /obj/machinery/magnetic_module
-
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "floor_magnet-f"
 	name = "electromagnetic generator"
@@ -29,24 +28,21 @@
 	var/center_y = 0
 	var/max_dist = 20 // absolute value of center_x,y cannot exceed this integer
 
-/obj/machinery/magnetic_module/New()
+/obj/machinery/magnetic_module/Initialize()
 	..()
 	var/turf/T = loc
 	hide(T.intact)
 	center = T
+	SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(10)	// must wait for map loading to finish
-		if(SSradio)
-			SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
-
-	spawn()
-		magnetic_process()
+/obj/machinery/magnetic_module/LateInitialize()
+	magnetic_process()
 
 /obj/machinery/magnetic_module/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, freq)
-	. = ..()
+	SSradio.remove_object(src, freq)
 	center = null
+	return ..()
 
 // update the invisibility and icon
 /obj/machinery/magnetic_module/hide(intact)
@@ -177,7 +173,7 @@
 		center = locate(x+center_x, y+center_y, z)
 		if(center)
 			for(var/obj/M in orange(magnetic_field, center))
-				if(!M.anchored && (M.flags & CONDUCT))
+				if(!M.anchored && (M.flags_1 & CONDUCT_1))
 					step_towards(M, center)
 
 			for(var/mob/living/silicon/S in orange(magnetic_field, center))
@@ -218,29 +214,22 @@
 	var/datum/radio_frequency/radio_connection
 
 
-/obj/machinery/magnetic_controller/New()
+/obj/machinery/magnetic_controller/Initialize()
 	..()
-
 	if(autolink)
 		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
-
-	spawn(45)	// must wait for map loading to finish
-		if(SSradio)
-			radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
-
-
 	if(path) // check for default path
 		filter_path() // renders rpath
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
 
 /obj/machinery/magnetic_controller/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	magnets = null
 	rpath = null
-	. = ..()
+	return ..()
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)

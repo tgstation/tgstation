@@ -74,7 +74,7 @@
 	})
 "l" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/darkblue,
 /area/ruin/powered{
 	name = "Shuttle"
@@ -125,8 +125,7 @@
 	name = "Shuttle"
 	})
 "u" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/ruin/powered{
 	name = "Shuttle"

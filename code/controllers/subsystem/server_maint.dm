@@ -33,16 +33,22 @@ SUBSYSTEM_DEF(server_maint)
 					qdel(C)
 
 		if (!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
-			winset(C, null, "command=.update_ping+[world.time+world.tick_lag*world.tick_usage/100]")
+			winset(C, null, "command=.update_ping+[world.time+world.tick_lag*TICK_USAGE_REAL/100]")
 
 		if (MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
 			return
 
 /datum/controller/subsystem/server_maint/Shutdown()
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", TRUE) //second parameter ensures only afk clients are kicked
+	var/server = config.server
 	for(var/thing in GLOB.clients)
+		if(!thing)
+			continue
 		var/client/C = thing
-		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
-			C << link("byond://[config.server]")
+		var/datum/chatOutput/co = C.chatOutput
+		if(co)
+			co.ehjax_send(data = "roundrestart")
+		if(server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+			C << link("byond://[server]")
 
 #undef PING_BUFFER_TIME

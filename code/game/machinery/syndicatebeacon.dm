@@ -53,8 +53,8 @@
 		return
 
 
-/obj/machinery/power/singularity_beacon/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/machinery/power/singularity_beacon/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		if(active)
 			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
 			return
@@ -105,6 +105,8 @@
 	name = "suspicious beacon"
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	desc = "A label on it reads: <i>Warning: Activating this device will send a special beacon to your location</i>."
 	origin_tech = "bluespace=6;syndicate=5"
 	w_class = WEIGHT_CLASS_SMALL

@@ -16,12 +16,10 @@
 		queue_smooth(src)
 		queue_smooth_neighbors(src)
 		icon_state = ""
-	if(SSticker)
-		GLOB.cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/Destroy()
-	if(SSticker)
-		GLOB.cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 	if(smooth)
 		queue_smooth_neighbors(src)
 	return ..()
@@ -51,7 +49,7 @@
 		if(user.canmove)
 			climb_structure(user)
 			return
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_held_item() != O))
+	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
 		return
 	if(iscyborg(user))
 		return

@@ -102,7 +102,7 @@
 
 	// --- This space left blank for Syndicate data ---
 
-	// --- Centcom radio, yo. ---
+	// --- CentCom radio, yo. ---
 
 	else if(data == 5)
 

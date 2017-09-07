@@ -22,7 +22,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered)
 "g" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered)
 

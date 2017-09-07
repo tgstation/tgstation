@@ -10,6 +10,7 @@
 	max_integrity = 300
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 30)
 	layer = OBJ_LAYER
+	circuit = /obj/item/circuitboard/machine/thermomachine
 
 	var/on = FALSE
 	var/min_temperature = 0
@@ -18,56 +19,16 @@
 	var/heat_capacity = 0
 	var/interactive = TRUE // So mapmakers can disable interaction.
 
-/obj/machinery/atmospherics/components/unary/thermomachine/New()
-	..()
-	initialize_directions = dir
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/thermomachine
-	name = "Thermomachine (Machine Board)"
-	desc = "You can use a screwdriver to switch between heater and freezer."
-	origin_tech = "programming=3;plasmatech=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/micro_laser = 2,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
-
-/obj/item/weapon/circuitboard/machine/thermomachine/Initialize()
+/obj/machinery/atmospherics/components/unary/thermomachine/Initialize()
 	. = ..()
-	if(prob(50))
-		name = "Freezer (Machine Board)"
-		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
-	else
-		name = "Heater (Machine Board)"
-		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
-
-/obj/item/weapon/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
-	var/obj/item/weapon/circuitboard/machine/freezer = /obj/item/weapon/circuitboard/machine/thermomachine/freezer
-	var/obj/item/weapon/circuitboard/machine/heater = /obj/item/weapon/circuitboard/machine/thermomachine/heater
-	var/obj/item/weapon/circuitboard/machine/newtype
-
-	if(istype(I, /obj/item/weapon/screwdriver))
-		var/new_setting = "Heater"
-		playsound(src.loc, I.usesound, 50, 1)
-		if(build_path == initial(heater.build_path))
-			newtype = freezer
-			new_setting = "Freezer"
-		else
-			newtype = heater
-		name = initial(newtype.name)
-		build_path = initial(newtype.build_path)
-		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
-	else
-		return ..()
+	initialize_directions = dir
 
 /obj/machinery/atmospherics/components/unary/thermomachine/on_construction()
 	..(dir,dir)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	var/B
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		B += M.rating
 	heat_capacity = 5000 * ((B - 1) ** 2)
 
@@ -123,7 +84,7 @@
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
+/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/wrench/W)
 	if(!..())
 		return 0
 	SetInitDirections()
@@ -202,20 +163,12 @@
 	icon_state_open = "freezer-o"
 	max_temperature = T20C
 	min_temperature = 170
-
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine/freezer(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/thermomachine/freezer
-	name = "Freezer (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+	circuit = /obj/item/circuitboard/machine/thermomachine/freezer
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
 	var/L
-	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
 	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB)
 
@@ -227,19 +180,11 @@
 	icon_state_open = "heater-o"
 	max_temperature = 140
 	min_temperature = T20C
-
-/obj/machinery/atmospherics/components/unary/thermomachine/heater/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine/heater(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/thermomachine/heater
-	name = "Heater (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
+	circuit = /obj/item/circuitboard/machine/thermomachine/heater
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()
 	var/L
-	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
 	max_temperature = T20C + (initial(max_temperature) * L)

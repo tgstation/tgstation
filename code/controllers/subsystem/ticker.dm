@@ -220,7 +220,7 @@ SUBSYSTEM_DEF(ticker)
 	round_start_time = world.time
 
 	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
-	world << sound('sound/ai/welcome.ogg')
+	SEND_SOUND(world, sound('sound/ai/welcome.ogg'))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(ticker)
 		SSshuttle.lockdown = TRUE
 
 	//initialise our cinematic screen object
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
+	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
 
 	for(var/mob/M in GLOB.mob_list)
 		M.notransform = TRUE //stop everything moving
@@ -295,7 +295,7 @@ SUBSYSTEM_DEF(ticker)
 				if("nuclear emergency") //Nuke wasn't on station when it blew up
 					flick("intro_nuke",cinematic)
 					sleep(35)
-					world << sound('sound/effects/explosionfar.ogg')
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
@@ -303,34 +303,30 @@ SUBSYSTEM_DEF(ticker)
 					cinematic.icon_state = null
 					flick("intro_cult",cinematic)
 					sleep(25)
-					world << sound('sound/magic/enter_blood.ogg')
+					SEND_SOUND(world, sound('sound/magic/enter_blood.ogg'))
 					sleep(28)
-					world << sound('sound/machines/terminal_off.ogg')
+					SEND_SOUND(world, sound('sound/machines/terminal_off.ogg'))
 					sleep(20)
 					flick("station_corrupted",cinematic)
-					world << sound('sound/effects/ghost.ogg')
-					actually_blew_up = FALSE
-				if("gang war") //Gang Domination (just show the override screen)
-					cinematic.icon_state = "intro_malf_still"
-					flick("intro_malf",cinematic)
+					SEND_SOUND(world, sound('sound/effects/ghost.ogg'))
 					actually_blew_up = FALSE
 					sleep(70)
 				if("fake") //The round isn't over, we're just freaking people out for fun
 					flick("intro_nuke",cinematic)
 					sleep(35)
-					world << sound('sound/items/bikehorn.ogg')
+					SEND_SOUND(world, sound('sound/items/bikehorn.ogg'))
 					flick("summary_selfdes",cinematic)
 					actually_blew_up = FALSE
 				else
 					flick("intro_nuke",cinematic)
 					sleep(35)
-					world << sound('sound/effects/explosionfar.ogg')
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)
 
 
 		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
 			sleep(50)
-			world << sound('sound/effects/explosionfar.ogg')
+			SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 			station_explosion_detonation(bomb)
 			actually_blew_up = station_missed == NUKE_SYNDICATE_BASE	//don't kill everyone on station if it detonated off station
 		else	//station was destroyed
@@ -341,42 +337,42 @@ SUBSYSTEM_DEF(ticker)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
-					world << sound('sound/effects/explosionfar.ogg')
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)
 					cinematic.icon_state = "summary_nukewin"
 				if("AI malfunction") //Malf (screen,explosion,summary)
 					flick("intro_malf",cinematic)
 					sleep(76)
 					flick("station_explode_fade_red",cinematic)
-					world << sound('sound/effects/explosionfar.ogg')
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)	//TODO: If we ever decide to actually detonate the vault bomb
 					cinematic.icon_state = "summary_malf"
 				if("blob") //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
-					world << sound('sound/effects/explosionfar.ogg')
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_selfdes"
 				if("cult") //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red",cinematic)
-					world << sound('sound/effects/explosionfar.ogg')
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_cult"
 				if("no_core") //Nuke failed to detonate as it had no core
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_intact",cinematic)
-					world << sound('sound/ambience/signal.ogg')
+					SEND_SOUND(world, sound('sound/ambience/signal.ogg'))
 					addtimer(CALLBACK(src, .proc/finish_cinematic, null, FALSE), 100)
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					flick("station_explode_fade_red", cinematic)
-					world << sound('sound/effects/explosionfar.ogg')
+					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
 					station_explosion_detonation(bomb)
 					cinematic.icon_state = "summary_selfdes"
 	//If its actually the end of the round, wait for it to end.
@@ -465,6 +461,12 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
+	var/nocredits = config.no_credits_round_end
+	for(var/client/C in GLOB.clients)
+		if(!C.credits && !nocredits)
+			C.RollCredits()
+		C.playtitlemusic(40)
+
 	//Player status report
 	for(var/mob/Player in GLOB.mob_list)
 		if(Player.mind && !isnewplayer(Player))
@@ -474,7 +476,7 @@ SUBSYSTEM_DEF(ticker)
 					var/list/area/shuttle_areas
 					if(SSshuttle && SSshuttle.emergency)
 						shuttle_areas = SSshuttle.emergency.shuttle_areas
-					if(!Player.onCentcom() && !Player.onSyndieBase())
+					if(!Player.onCentCom() && !Player.onSyndieBase())
 						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
 					else
 						num_escapees++
@@ -513,7 +515,7 @@ SUBSYSTEM_DEF(ticker)
 
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in GLOB.mob_list)
-		if (aiPlayer.stat != 2 && aiPlayer.mind)
+		if (aiPlayer.stat != DEAD && aiPlayer.mind)
 			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
 			aiPlayer.show_laws(1)
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
@@ -533,7 +535,7 @@ SUBSYSTEM_DEF(ticker)
 
 	for (var/mob/living/silicon/robot/robo in GLOB.mob_list)
 		if (!robo.connected_ai && robo.mind)
-			if (robo.stat != 2)
+			if (robo.stat != DEAD)
 				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
 			else
 				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>")
@@ -631,7 +633,7 @@ SUBSYSTEM_DEF(ticker)
 			if(living_player_count() < config.hard_popcap)
 				if(next_in_line && next_in_line.client)
 					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>")
-					next_in_line << sound('sound/misc/notice1.ogg')
+					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg'))
 					next_in_line.LateChoices()
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
@@ -719,10 +721,6 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [station_name()] are, in fact, a hoax. Have a secure day!"
 		if(STATION_EVACUATED)
 			news_message = "The crew of [station_name()] has been evacuated amid unconfirmed reports of enemy activity."
-		if(GANG_LOSS)
-			news_message = "Organized crime aboard [station_name()] has been stamped out by members of our ever vigilant security team. Remember to thank your assigned officers today!"
-		if(GANG_TAKEOVER)
-			news_message = "Contact with [station_name()] has been lost after a sophisticated hacking attack by organized criminal elements. Stay vigilant!"
 		if(BLOB_WIN)
 			news_message = "[station_name()] was overcome by an unknown biological outbreak, killing all crew on board. Don't let it happen to you! Remember, a clean work station is a safe work station."
 		if(BLOB_NUKE)
@@ -790,7 +788,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
-	F << the_mode
+	WRITE_FILE(F, the_mode)
 
 /datum/controller/subsystem/ticker/proc/SetRoundEndSound(the_sound)
 	set waitfor = FALSE
@@ -844,4 +842,4 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/disappointed.ogg'\
 		)
 
-	world << sound(round_end_sound)
+	SEND_SOUND(world, sound(round_end_sound))

@@ -210,8 +210,8 @@
 		if(!C)
 			C = H.client
 		var/image = get_id_photo(H, C)
-		var/obj/item/weapon/photo/photo_front = new()
-		var/obj/item/weapon/photo/photo_side = new()
+		var/obj/item/photo/photo_front = new()
+		var/obj/item/photo/photo_side = new()
 		photo_front.photocreate(null, icon(image, dir = SOUTH))
 		photo_side.photocreate(null, icon(image, dir = WEST))
 
@@ -273,7 +273,7 @@
 		L.fields["species"]		= H.dna.species.type
 		L.fields["features"]	= H.dna.features
 		L.fields["image"]		= image
-		L.fields["reference"]	= H
+		L.fields["mindref"]		= H.mind
 		locked += L
 	return
 

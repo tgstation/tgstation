@@ -18,6 +18,7 @@ Bonus
 /datum/symptom/choking
 
 	name = "Choking"
+	desc = "The virus causes inflammation of the host's air conduits, leading to intermittent choking."
 	stealth = -3
 	resistance = -2
 	stage_speed = -2
@@ -27,6 +28,8 @@ Bonus
 	base_message_chance = 15
 	symptom_delay_min = 10
 	symptom_delay_max = 30
+	threshold_desc = "<b>Stage Speed 8:</b> Causes choking more frequently.<br>\
+					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/choking/Start(datum/disease/advance/A)
 	..()
@@ -84,6 +87,7 @@ Bonus
 /datum/symptom/asphyxiation
 
 	name = "Acute respiratory distress syndrome"
+	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to heart attacks."
 	stealth = -2
 	resistance = -0
 	stage_speed = -1

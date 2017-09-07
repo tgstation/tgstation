@@ -1,6 +1,0 @@
-author: "Fox McCloud"
-delete-after: True
-changes: 
-  - tweak: "breathing plasma now causes direct tox damage"
-  - tweak: "breathing hot/cold air now warns you when you're doing so, again"
-  - tweak: "species heat/cold mod now impacts damage from breathing hot/cold gases"

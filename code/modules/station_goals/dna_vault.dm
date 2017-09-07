@@ -64,8 +64,10 @@
 	desc = "Can be used to take chemical and genetic samples of pretty much anything."
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "hypo"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/list/animals = list()
 	var/list/plants = list()
 	var/list/dna = list()
@@ -85,7 +87,7 @@
 		if(!H.myseed)
 			return
 		if(!H.harvest)// So it's bit harder.
-			to_chat(user, "<span clas='warning'>Plant needs to be ready to harvest to perform full data scan.</span>") //Because space dna is actually magic
+			to_chat(user, "<span class='warning'>Plant needs to be ready to harvest to perform full data scan.</span>") //Because space dna is actually magic
 			return
 		if(plants[H.myseed.type])
 			to_chat(user, "<span class='notice'>Plant data already present in local storage.<span>")
@@ -115,16 +117,6 @@
 			return
 		dna[H.dna.uni_identity] = 1
 		to_chat(user, "<span class='notice'>Humanoid data added to local storage.<span>")
-
-
-/obj/item/weapon/circuitboard/machine/dna_vault
-	name = "DNA Vault (Machine Board)"
-	build_path = /obj/machinery/dna_vault
-	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
-	req_components = list(
-							/obj/item/weapon/stock_parts/capacitor/super = 5,
-							/obj/item/weapon/stock_parts/manipulator/pico = 5,
-							/obj/item/stack/cable_coil = 2)
 
 /obj/machinery/dna_vault
 	name = "DNA Vault"

@@ -8,7 +8,7 @@
 //You can use these defines to get the typepath of the currently running proc/verb (yes procs + verbs are objects)
 /* eg:
 /mob/living/carbon/human/death()
-	world << THIS_PROC_TYPE_STR //You can only output the string versions
+	to_chat(world, THIS_PROC_TYPE_STR) //You can only output the string versions
 Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a string with () (eg: the _WITH_ARGS defines) to make it look nicer)
 */
 #define THIS_PROC_TYPE .....
@@ -162,10 +162,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define GAME_STATE_SETTING_UP	2
 #define GAME_STATE_PLAYING		3
 #define GAME_STATE_FINISHED		4
-//SOUND:
-#define SOUND_MINIMUM_PRESSURE 10
-#define FALLOFF_SOUNDS	1
-#define SURROUND_CAP	7
 
 //FONTS:
 // Used by Paper and PhotoCopier (and PaperBin once a year).
@@ -314,9 +310,16 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
 #define APPEARANCE_LONG_GLIDE				LONG_GLIDE
 
+#ifndef PIXEL_SCALE
+#define PIXEL_SCALE 0
+#if DM_VERSION >= 512
+#error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
+#endif
+#endif
+
 // Consider these images/atoms as part of the UI/HUD
-#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
-#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE
+#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
@@ -349,6 +352,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //debug printing macros
 #define debug_world(msg) if (GLOB.Debug2) to_chat(world, "DEBUG: [msg]")
+#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, "DEBUG: [msg]")
 #define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, "DEBUG: [msg]")
 #define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
 
@@ -390,8 +394,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define NUKE_SYNDICATE_BASE 3
 #define STATION_DESTROYED_NUKE 4
 #define STATION_EVACUATED 5
-#define GANG_LOSS 6
-#define GANG_TAKEOVER 7
 #define BLOB_WIN 8
 #define BLOB_NUKE 9
 #define BLOB_DESTROYED 10
@@ -427,11 +429,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define GIBTONITE_STABLE 2
 #define GIBTONITE_DETONATE 3
 
-//Gangster starting influences
-
-#define GANGSTER_SOLDIER_STARTING_INFLUENCE 5
-#define GANGSTER_BOSS_STARTING_INFLUENCE 20
-
 //for obj explosion block calculation
 #define EXPLOSION_BLOCK_PROC -1
 
@@ -440,4 +437,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define BEAT_SLOW 2
 #define BEAT_NONE 0
 
-
+//http://www.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
+#define MOUSE_OPACITY_TRANSPARENT 0
+#define MOUSE_OPACITY_ICON 1
+#define MOUSE_OPACITY_OPAQUE 2

@@ -211,7 +211,7 @@
 		if(internal.loc != src)
 			internal = null
 			update_internals_hud_icon(0)
-		else if ((!wear_mask || !(wear_mask.flags & MASKINTERNALS)) && !getorganslot("breathing_tube"))
+		else if ((!wear_mask || !(wear_mask.flags_1 & MASKINTERNALS_1)) && !getorganslot("breathing_tube"))
 			internal = null
 			update_internals_hud_icon(0)
 		else
@@ -380,8 +380,7 @@
 		adjust_drugginess(-1)
 
 	if(hallucination)
-		spawn handle_hallucinations()
-		hallucination = max(hallucination-2,0)
+		handle_hallucinations()
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
@@ -434,4 +433,3 @@
 	adjustToxLoss(8)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
-

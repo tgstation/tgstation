@@ -7,6 +7,8 @@
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	disliked_food = GROSS | RAW
+	liked_food = JUNKFOOD | FRIED
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)

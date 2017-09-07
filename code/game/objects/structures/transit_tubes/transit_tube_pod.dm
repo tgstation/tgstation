@@ -12,7 +12,7 @@
 /obj/structure/transit_tube_pod/New(loc)
 	..()
 	air_contents.assert_gases("o2", "n2")
-	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD * 2
+	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD
 	air_contents.gases["n2"][MOLES] = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
@@ -28,7 +28,7 @@
 		icon_state = "pod"
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/crowbar))
 		if(!moving)
 			playsound(src.loc, I.usesound, 50, 1)
 			if(contents.len)
@@ -40,7 +40,7 @@
 		return ..()
 
 /obj/structure/transit_tube_pod/deconstruct(disassembled = TRUE, mob/user)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		var/atom/location = get_turf(src)
 		if(user)
 			location = user.loc

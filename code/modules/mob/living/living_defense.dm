@@ -67,17 +67,15 @@
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
-		if(istype(I, /obj/item/weapon)) //If the item is a weapon...
-			var/obj/item/weapon/W = I
-			dtype = W.damtype
+		dtype = I.damtype
 
-			if (W.throwforce > 0) //If the weapon's throwforce is greater than zero...
-				if (W.throwhitsound) //...and throwhitsound is defined...
-					playsound(loc, W.throwhitsound, volume, 1, -1) //...play the weapon's throwhitsound.
-				else if(W.hitsound) //Otherwise, if the weapon's hitsound is defined...
-					playsound(loc, W.hitsound, volume, 1, -1) //...play the weapon's hitsound.
-				else if(!W.throwhitsound) //Otherwise, if throwhitsound isn't defined...
-					playsound(loc, 'sound/weapons/genhit.ogg',volume, 1, -1) //...play genhit.ogg.
+		if (I.throwforce > 0) //If the weapon's throwforce is greater than zero...
+			if (I.throwhitsound) //...and throwhitsound is defined...
+				playsound(loc, I.throwhitsound, volume, 1, -1) //...play the weapon's throwhitsound.
+			else if(I.hitsound) //Otherwise, if the weapon's hitsound is defined...
+				playsound(loc, I.hitsound, volume, 1, -1) //...play the weapon's hitsound.
+			else if(!I.throwhitsound) //Otherwise, if throwhitsound isn't defined...
+				playsound(loc, 'sound/weapons/genhit.ogg',volume, 1, -1) //...play genhit.ogg.
 
 		else if(!I.throwhitsound && I.throwforce > 0) //Otherwise, if the item doesn't have a throwhitsound and has a throwforce greater than zero...
 			playsound(loc, 'sound/weapons/genhit.ogg', volume, 1, -1)//...play genhit.ogg
@@ -89,7 +87,7 @@
 			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
 			apply_damage(I.throwforce, dtype, zone, armor)
 			if(I.thrownby)
-				add_logs(I.thrownby, src, "hit", I)
+				add_logs(I.thrownby, src, "threw and hit", I)
 		else
 			return 1
 	else
@@ -150,6 +148,7 @@
 			var/grab_upgrade_time = 30
 			visible_message("<span class='danger'>[user] starts to tighten [user.p_their()] grip on [src]!</span>", \
 				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
+			add_logs(user, src, "attempted to strangle", addition="grab")
 			if(!do_mob(user, src, grab_upgrade_time))
 				return 0
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != INTENT_GRAB)
@@ -157,18 +156,20 @@
 		user.grab_state++
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
-				add_logs(user, src, "grabbed", addition="aggressively")
+				add_logs(user, src, "grabbed", addition="aggressive grab")
 				visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
 								"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
 				drop_all_held_items()
 				stop_pulling()
 			if(GRAB_NECK)
+				add_logs(user, src, "grabbed", addition="neck grab")
 				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
 								"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
 				update_canmove() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
 			if(GRAB_KILL)
+				add_logs(user, src, "strangled", addition="grab")
 				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
 								"<span class='userdanger'>[user] is strangling you!</span>")
 				update_canmove() //we fall down
@@ -277,7 +278,7 @@
 	return 1
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
+	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
 		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)
@@ -316,7 +317,7 @@
 		GLOB.cult_narsie.souls += 1
 		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))
 			GLOB.cult_narsie.resolved = TRUE
-			world << sound('sound/machines/alarm.ogg')
+			sound_to_playing_players('sound/machines/alarm.ogg')
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 1), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 270)
 	if(client)
@@ -339,7 +340,7 @@
 		return
 
 	if(stat != DEAD && !is_servant_of_ratvar(src))
-		for(var/obj/item/weapon/implant/mindshield/M in implants)
+		for(var/obj/item/implant/mindshield/M in implants)
 			qdel(M)
 		if(!add_servant_of_ratvar(src))
 			to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")

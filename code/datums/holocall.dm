@@ -38,7 +38,7 @@
 		calling_pad.say("Connection failure.")
 		qdel(src)
 		return
-	
+
 	testing("Holocall started")
 
 //cleans up ALL references :)
@@ -49,16 +49,16 @@
 	if(user_good)
 		user.reset_perspective()
 		user.remote_control = null
-	
+
 	if(!QDELETED(eye))
 		if(user_good && user.client)
 			for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
 				chunk.remove(eye)
 		qdel(eye)
 	eye = null
-	
+
 	user = null
-	
+
 	if(hologram)
 		hologram.HC = null
 		hologram = null
@@ -75,7 +75,7 @@
 	if(connected_holopad)
 		connected_holopad.SetLightsAndPower()
 		connected_holopad = null
-	
+
 	testing("Holocall destroyed")
 
 	return ..()
@@ -123,7 +123,7 @@
 		if(I == H)
 			continue
 		Disconnect(I)
-	
+
 	for(var/I in H.holo_calls)
 		var/datum/holocall/HC = I
 		if(HC != src)
@@ -155,7 +155,7 @@
 		var/obj/machinery/holopad/H = I
 		if(!H.is_operational())
 			ConnectionFailure(H)
-	
+
 	if(QDELETED(src))
 		return FALSE
 
@@ -174,6 +174,7 @@
 
 /datum/action/innate/end_holocall
 	name = "End Holocall"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_off"
 	var/datum/holocall/hcall
 

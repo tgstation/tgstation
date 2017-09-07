@@ -13,7 +13,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	density = FALSE
 	canmove = 0
 	anchored = TRUE	//  don't get pushed around
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
@@ -52,11 +51,14 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	// Used for displaying in ghost chat, without changing the actual name
 	// of the mob
 	var/deadchat_name
+	var/datum/spawners_menu/spawners_menu
 
 /mob/dead/observer/Initialize()
 	set_invisibility(GLOB.observer_default_invisibility)
 
-	verbs += /mob/dead/observer/proc/dead_tele
+	verbs += list(
+		/mob/dead/observer/proc/dead_tele,
+		/mob/dead/observer/proc/open_spawners_menu)
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -149,6 +151,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	QDEL_NULL(ghostimage_simple)
 
 	updateallghostimages()
+
+	QDEL_NULL(spawners_menu)
 	return ..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target)
@@ -304,9 +308,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		if(SSticker.HasRoundStarted())
-			for(var/datum/gang/G in SSticker.mode.gangs)
-				if(G.is_dominating)
-					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
@@ -351,7 +352,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				source.plane = old_plane
 	to_chat(src, "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>")
 	if(sound)
-		src << sound(sound)
+		SEND_SOUND(src, sound(sound))
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
@@ -680,7 +681,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Data HUDs enabled.</span>")
 		data_huds_on = 1
 
-/mob/dead/observer/verb/restore_ghost_apperance()
+/mob/dead/observer/verb/restore_ghost_appearance()
 	set name = "Restore Ghost Character"
 	set desc = "Sets your deadchat name and ghost appearance to your \
 		roundstart character."
@@ -765,8 +766,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//Istype so we filter out points of interest that are not mobs
 	if(client && mob_eye && istype(mob_eye))
 		client.eye = mob_eye
-		client.screen = list()
 		if(mob_eye.hud_used)
+			client.screen = list()
 			LAZYINITLIST(mob_eye.observers)
 			mob_eye.observers |= src
 			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
@@ -781,8 +782,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/register_pai()
 	if(isobserver(src))
-		if(SSpai)
-			SSpai.recruitWindow(src)
+		SSpai.recruitWindow(src)
 	else
 		to_chat(usr, "Can't become a pAI candidate while not dead!")
 
@@ -817,3 +817,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(message)
 			to_chat(G, message)
 	GLOB.observer_default_invisibility = amount
+
+/mob/dead/observer/proc/open_spawners_menu()
+	set name = "Spawners Menu"
+	set desc = "See all currently available spawners"
+	set category = "Ghost"
+	if(!spawners_menu)
+		spawners_menu = new(src)
+
+	spawners_menu.ui_interact(src)

@@ -1,4 +1,4 @@
-This is a remake of 2013 midi2piano tool. Previous version should be considered obsolete.
+This is a remake of 2013 midi2piano tool.
 
 Requirements:
   Python 3
@@ -7,6 +7,9 @@ Simply run midi2piano.py and choose midi file you want to convert.
 The "sheet music" will be copied to the clipboard.
 
 There are some constants defined at the top of midi2piano.py.
+
+TICK_LAG - CHANGE THIS VALUE TO TICK LAG OF YOUR SERVER!
+
 Change their value if needed.
 
 LINE_LENGTH_LIM - max length of line allowed in the sheet music
@@ -25,7 +28,6 @@ Additional notes:
 4. MIDI event set_tempo is NOT supported. If your MIDI file uses set_tempo to change BPM significantly, consider using some other midi file.
 
 This tool is considered final.
-
 
 Made by EditorRUS/Delta Epsilon from Animus Station, ss13.ru
 Contact me in Discord if you find any major issues: DeltaEpsilon#7787

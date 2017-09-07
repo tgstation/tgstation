@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	//I would make this not ex_act the thing that triggered the explosion,
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
-	stoplag() //tldr, let the calling proc call qdel(src) before we explode
+	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
 
 	EX_PREPROCESS_EXIT_CHECK
 
@@ -96,7 +96,9 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	if(!silent)
 		var/frequency = get_rand_frequency()
-		var/ex_sound = get_sfx("explosion")
+		var/sound/explosion_sound = sound(get_sfx("explosion"))
+		var/sound/far_explosion_sound = sound('sound/effects/explosionfar.ogg')
+
 		for(var/mob/M in GLOB.player_list)
 			// Double check for client
 			var/turf/M_turf = get_turf(M)
@@ -104,12 +106,12 @@ GLOBAL_LIST_EMPTY(explosions)
 				var/dist = get_dist(M_turf, epicenter)
 				// If inside the blast radius + world.view - 2
 				if(dist <= round(max_range + world.view - 2, 1))
-					M.playsound_local(epicenter, ex_sound, 100, 1, frequency, falloff = 5)
+					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
 					var/far_volume = Clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
 					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
-					M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
+					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
 			EX_PREPROCESS_CHECK_TICK
 
 	//postpone processing for a bit
@@ -273,7 +275,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	. = list()
 	var/processed = 0
-	while(!stopped && running)
+	while(running)
 		var/I
 		for(I in (processed + 1) to affected_turfs.len) // we cache the explosion block rating of every turf in the explosion area
 			var/turf/T = affected_turfs[I]

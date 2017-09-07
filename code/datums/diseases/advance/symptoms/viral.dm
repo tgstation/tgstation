@@ -15,6 +15,7 @@ BONUS
 */
 /datum/symptom/viraladaptation
 	name = "Viral self-adaptation"
+	desc = "The virus mimics the function of normal body cells, becoming harder to spot and to eradicate, but reducing its speed."
 	stealth = 3
 	resistance = 5
 	stage_speed = -3
@@ -38,6 +39,8 @@ BONUS
 */
 /datum/symptom/viralevolution
 	name = "Viral evolutionary acceleration"
+	desc = "The virus quickly adapts to spread as fast as possible both outside and inside a host. \
+	This, however, makes the virus easier to spot, and less able to fight off a cure."
 	stealth = -2
 	resistance = -3
 	stage_speed = 5
@@ -65,6 +68,8 @@ Bonus
 /datum/symptom/viralreverse
 
 	name = "Viral aggressive metabolism"
+	desc = "The virus sacrifices its long term survivability to gain a near-instant spread when inside a host. \
+	The virus will start at the lastest stage, but will eventually decay and die off by itself."
 	stealth = -2
 	resistance = 1
 	stage_speed = 3
@@ -73,6 +78,8 @@ Bonus
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/time_to_cure
+	threshold_desc = "<b>Resistance/Stage Speed:</b> Highest between these determines the amount of time before self-curing.<br>\
+					  <b>Stealth 4:</b> Doubles the time before the virus self-cures."
 
 /datum/symptom/viralreverse/Activate(datum/disease/advance/A)
 	if(!..())

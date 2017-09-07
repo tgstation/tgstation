@@ -45,7 +45,7 @@
 
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/cracker/ = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/cracker/ = 1)
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 
@@ -100,7 +100,7 @@
 
 
 /mob/living/simple_animal/parrot/Initialize()
-	..()
+	. = ..()
 	if(!ears)
 		var/headset = pick(/obj/item/device/radio/headset/headset_sec, \
 						/obj/item/device/radio/headset/headset_eng, \
@@ -295,7 +295,7 @@
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(!stat && M.a_intent == INTENT_HELP)
+	if(stat != DEAD && M.a_intent == INTENT_HELP)
 		handle_automated_speech(1) //assured speak/emote
 	return
 
@@ -322,7 +322,7 @@
 
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/living/user, params)
-	if(!stat && !client && !istype(O, /obj/item/stack/medical) && !istype(O, /obj/item/weapon/reagent_containers/food/snacks/cracker))
+	if(!stat && !client && !istype(O, /obj/item/stack/medical) && !istype(O, /obj/item/reagent_containers/food/snacks/cracker))
 		if(O.force)
 			if(parrot_state == PARROT_PERCH)
 				parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -335,7 +335,7 @@
 				parrot_state |= PARROT_FLEE
 			icon_state = "parrot_fly"
 			drop_held_item(0)
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
+	else if(istype(O, /obj/item/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
 		qdel(O)
 		user.drop_item()
 		if(health < maxHealth)
@@ -763,7 +763,7 @@
 
 
 //parrots will eat crackers instead of dropping them
-	if(istype(held_item, /obj/item/weapon/reagent_containers/food/snacks/cracker) && (drop_gently))
+	if(istype(held_item, /obj/item/reagent_containers/food/snacks/cracker) && (drop_gently))
 		qdel(held_item)
 		held_item = null
 		if(health < maxHealth)
@@ -773,8 +773,8 @@
 
 
 	if(!drop_gently)
-		if(istype(held_item, /obj/item/weapon/grenade))
-			var/obj/item/weapon/grenade/G = held_item
+		if(istype(held_item, /obj/item/grenade))
+			var/obj/item/grenade/G = held_item
 			G.loc = src.loc
 			G.prime()
 			to_chat(src, "You let go of [held_item]!")
@@ -923,22 +923,36 @@
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
-	S["phrases"] 			>> speech_buffer
-	S["roundssurvived"]		>> rounds_survived
-	S["longestsurvival"]	>> longest_survival
-	S["longestdeathstreak"] >> longest_deathstreak
-
+	if(fexists("data/npc_saves/Poly.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+		S["phrases"] 			>> speech_buffer
+		S["roundssurvived"]		>> rounds_survived
+		S["longestsurvival"]	>> longest_survival
+		S["longestdeathstreak"] >> longest_deathstreak
+		fdel("data/npc_saves/Poly.sav")
+	else
+		var/json_file = file("data/npc_saves/Poly.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		speech_buffer = json["phrases"]
+		rounds_survived = json["roundssurvived"]
+		longest_survival = json["longestsurvival"]
+		longest_deathstreak = json["longestdeathstreak"]
 	if(!islist(speech_buffer))
 		speech_buffer = list()
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+	var/json_file = file("data/npc_saves/Poly.json")
+	var/list/file_data = list()
 	if(islist(speech_buffer))
-		S["phrases"] 			<< speech_buffer
-	S["roundssurvived"]		<< rounds_survived
-	S["longestsurvival"]	<< longest_survival
-	S["longestdeathstreak"] << longest_deathstreak
+		file_data["phrases"] = speech_buffer
+	file_data["roundssurvived"] = rounds_survived
+	file_data["longestsurvival"] = longest_survival
+	file_data["longestdeathstreak"] = longest_deathstreak
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
 	memory_saved = 1
 
 /mob/living/simple_animal/parrot/Poly/ghost
@@ -948,7 +962,7 @@
 	speak_chance = 20
 	status_flags = GODMODE
 	incorporeal_move = INCORPOREAL_MOVE_BASIC
-	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
+	butcher_results = list(/obj/item/ectoplasm = 1)
 
 /mob/living/simple_animal/parrot/Poly/ghost/Initialize()
 	memory_saved = 1 //At this point nothing is saved

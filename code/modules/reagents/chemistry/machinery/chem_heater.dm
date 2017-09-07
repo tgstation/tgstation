@@ -7,27 +7,15 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/obj/item/weapon/reagent_containers/beaker = null
+	circuit = /obj/item/circuitboard/machine/chem_heater
+	var/obj/item/reagent_containers/beaker = null
 	var/target_temperature = 300
 	var/heater_coefficient = 0.10
 	var/on = FALSE
 
-/obj/machinery/chem_heater/Initialize()
-	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_heater(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/chem_heater
-	name = "Chemical Heater (Machine Board)"
-	build_path = /obj/machinery/chem_heater
-	origin_tech = "programming=2;engineering=2;biotech=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
-
 /obj/machinery/chem_heater/RefreshParts()
 	heater_coefficient = 0.10
-	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		heater_coefficient *= M.rating
 
 /obj/machinery/chem_heater/process()
@@ -54,17 +42,16 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
+	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
 		. = 1 //no afterattack
 		if(beaker)
-			to_chat(user, "<span class='warning'>A beaker is already loaded into the machine!</span>")
+			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
 			return
 
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
 		beaker = I
-		I.loc = src
-		to_chat(user, "<span class='notice'>You add the beaker to the machine.</span>")
+		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 		icon_state = "mixer1b"
 		return
 	return ..()

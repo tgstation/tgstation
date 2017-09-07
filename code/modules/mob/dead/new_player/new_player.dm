@@ -4,7 +4,7 @@
 	var/ready = 0
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
 
-	flags = NONE
+	flags_1 = NONE
 
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -32,7 +32,7 @@
 /mob/dead/new_player/proc/new_player_panel()
 	var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</a></p>"
 
-	if(SSticker && SSticker.current_state <= GAME_STATE_PREGAME)
+	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		switch(ready)
 			if(PLAYER_NOT_READY)
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | <b>Not Ready</b> | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
@@ -107,18 +107,17 @@
 		return 1
 
 	if(href_list["ready"])
-		if(SSticker)
-			var/tready = text2num(href_list["ready"])
-			//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
-			//This is likely not an actual issue but I don't have time to prove that this 
-			//no longer is required
-			if(SSticker.current_state <= GAME_STATE_PREGAME)
-				ready = tready
-			//if it's post initialisation and they're trying to observe we do the needful
-			if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
-				ready = tready
-				make_me_an_observer()
-				return
+		var/tready = text2num(href_list["ready"])
+		//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
+		//This is likely not an actual issue but I don't have time to prove that this
+		//no longer is required
+		if(SSticker.current_state <= GAME_STATE_PREGAME)
+			ready = tready
+		//if it's post initialisation and they're trying to observe we do the needful
+		if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
+			ready = tready
+			make_me_an_observer()
+			return
 
 	if(href_list["refresh"])
 		src << browse(null, "window=playersetup") //closes the player setup window
@@ -307,6 +306,8 @@
 	if(jobban_isbanned(src,rank))
 		return 0
 	if(!job.player_old_enough(src.client))
+		return 0
+	if(job.required_playtime_remaining(client))
 		return 0
 	if(config.enforce_human_authority && !client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
 		return 0

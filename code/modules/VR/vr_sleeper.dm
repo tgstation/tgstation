@@ -52,8 +52,7 @@
 /obj/machinery/vr_sleeper/Destroy()
 	open_machine()
 	cleanup_vr_human()
-	qdel(sparks)
-	sparks = null
+	QDEL_NULL(sparks)
 	return ..()
 
 

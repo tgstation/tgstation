@@ -110,7 +110,7 @@
 			if(!channel)
 				return
 			var/mob/living/user = usr
-			var/logname = input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
+			var/logname = stripped_input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
 			if(!logname || !channel)
 				return 1
 			var/datum/computer_file/data/logfile = new/datum/computer_file/data/logfile()
@@ -121,7 +121,7 @@
 				logfile.stored_data += "[logstring]\[BR\]"
 			logfile.stored_data += "\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
-			var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+			var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 			if(!computer || !hard_drive || !hard_drive.store_file(logfile))
 				if(!computer)
 					// This program shouldn't even be runnable without computer.

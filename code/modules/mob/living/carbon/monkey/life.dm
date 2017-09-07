@@ -23,23 +23,22 @@
 				walk_to(src,0)
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
-
-	if (radiation)
-		if (radiation > 100)
+	if(radiation)
+		if(radiation > 100)
 			if(!IsKnockdown())
 				emote("collapse")
 			Knockdown(200)
 			to_chat(src, "<span class='danger'>You feel weak.</span>")
-
+		if(radiation > 30 && prob((radiation - 30) * (radiation - 30) * 0.00002))
+			gorillize()
+			return
 		switch(radiation)
-
 			if(50 to 75)
 				if(prob(5))
 					if(!IsKnockdown())
 						emote("collapse")
 					Knockdown(60)
 					to_chat(src, "<span class='danger'>You feel weak.</span>")
-
 			if(75 to 100)
 				if(prob(1))
 					to_chat(src, "<span class='danger'>You mutate!</span>")
@@ -138,7 +137,7 @@
 
 /mob/living/carbon/monkey/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
+		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			return 1
 
 /mob/living/carbon/monkey/handle_fire()

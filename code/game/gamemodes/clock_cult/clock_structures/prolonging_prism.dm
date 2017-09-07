@@ -15,8 +15,8 @@
 	/obj/item/clockwork/alloy_shards/large = 1, \
 	/obj/item/clockwork/component/vanguard_cogwheel/onyx_prism = 1)
 	var/static/list/component_refund = list(VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
-	var/static/delay_cost = 2500
-	var/static/delay_cost_increase = 750
+	var/static/delay_cost = 3000
+	var/static/delay_cost_increase = 1250
 	var/static/delay_remaining = 0
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/examine(mob/user)
@@ -26,8 +26,8 @@
 			to_chat(user, "<span class='inathneq'>An emergency shuttle has arrived and this prism is no longer useful; attempt to activate it to gain a partial refund of components used.</span>")
 		else
 			var/efficiency = get_efficiency_mod(TRUE)
-			to_chat(user, "<span class='inathneq_small'>It requires at least <b>[get_delay_cost()]W</b> of power to attempt to delay the arrival of an emergency shuttle by <b>[2 * efficiency]</b> minutes.</span>")
-			to_chat(user, "<span class='inathneq_small'>This cost increases by <b>[delay_cost_increase * 0.1]W</b> for every <b>10 CV</b> and <b>[delay_cost_increase]W</b> for every previous activation.</span>")
+			to_chat(user, "<span class='inathneq_small'>It requires at least <b>[DisplayPower(get_delay_cost())]</b> of power to attempt to delay the arrival of an emergency shuttle by <b>[2 * efficiency]</b> minutes.</span>")
+			to_chat(user, "<span class='inathneq_small'>This cost increases by <b>[DisplayPower(delay_cost_increase)]</b> for every previous activation.</span>")
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/forced_disable(bad_effects)
 	if(active)
@@ -116,7 +116,7 @@
 		CHECK_TICK //we may be going over a hell of a lot of turfs
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/proc/get_delay_cost()
-	return Floor((GLOB.clockwork_construction_value * delay_cost_increase * 0.01) + delay_cost, MIN_CLOCKCULT_POWER)
+	return Floor(delay_cost, MIN_CLOCKCULT_POWER)
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/proc/seven_random_hexes(turf/T, efficiency)
 	var/static/list/hex_states = list("prismhex1", "prismhex2", "prismhex3", "prismhex4", "prismhex5", "prismhex6", "prismhex7")
@@ -126,10 +126,10 @@
 			if(!hex_combo)
 				hex_combo = mutable_appearance('icons/effects/64x64.dmi', n, RIPPLE_LAYER)
 			else
-				hex_combo.overlays += mutable_appearance('icons/effects/64x64.dmi', n, RIPPLE_LAYER)
+				hex_combo.add_overlay(mutable_appearance('icons/effects/64x64.dmi', n, RIPPLE_LAYER))
 	if(hex_combo) //YOU BUILT A HEXAGON
 		hex_combo.pixel_x = -16
 		hex_combo.pixel_y = -16
-		hex_combo.mouse_opacity = 0
+		hex_combo.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		hex_combo.plane = GAME_PLANE
 		new /obj/effect/temp_visual/ratvar/prolonging_prism(T, hex_combo)

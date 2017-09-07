@@ -45,7 +45,7 @@
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
 	anchored = TRUE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
@@ -63,9 +63,6 @@
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
 	air_update_turf()
-
-/obj/effect/hotspot/make_frozen_visual()
-	return	//you take my fun i take yours
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc

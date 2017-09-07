@@ -34,7 +34,8 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/startSinglo,
 	/client/proc/set_server_fps,	//allows you to set the ticklag.
 	/client/proc/cmd_admin_grantfullaccess,
-	/client/proc/cmd_admin_areatest,
+	/client/proc/cmd_admin_areatest_all,
+	/client/proc/cmd_admin_areatest_station,
 	/client/proc/cmd_admin_rejuvenate,
 	/datum/admins/proc/show_traitor_panel,
 	/client/proc/disable_communication,

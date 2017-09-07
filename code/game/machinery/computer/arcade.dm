@@ -6,15 +6,15 @@
 	icon_screen = "invaders"
 	clockwork = TRUE //it'd look weird
 	var/list/prizes = list(
-		/obj/item/weapon/storage/box/snappops					= 2,
+		/obj/item/storage/box/snappops					= 2,
 		/obj/item/toy/talking/AI								= 2,
 		/obj/item/toy/talking/codex_gigas						= 2,
 		/obj/item/clothing/under/syndicate/tacticool			= 2,
 		/obj/item/toy/sword										= 2,
 		/obj/item/toy/gun										= 2,
-		/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow	= 2,
-		/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
-		/obj/item/weapon/storage/crayons						= 2,
+		/obj/item/gun/ballistic/shotgun/toy/crossbow	= 2,
+		/obj/item/storage/box/fakesyndiesuit				= 2,
+		/obj/item/storage/crayons						= 2,
 		/obj/item/toy/spinningtoy								= 2,
 		/obj/item/toy/prize/ripley								= 1,
 		/obj/item/toy/prize/fireripley							= 1,
@@ -34,15 +34,15 @@
 		/obj/item/toy/redbutton									= 2,
 		/obj/item/toy/talking/owl								= 2,
 		/obj/item/toy/talking/griffin							= 2,
-		/obj/item/weapon/coin/antagtoken						= 2,
+		/obj/item/coin/antagtoken						= 2,
 		/obj/item/stack/tile/fakespace/loaded					= 2,
 		/obj/item/stack/tile/fakepit/loaded						= 2,
 		/obj/item/toy/toy_xeno									= 2,
-		/obj/item/weapon/storage/box/actionfigure				= 1,
-		/obj/item/weapon/restraints/handcuffs/fake              = 2,
-		/obj/item/weapon/grenade/chem_grenade/glitter/pink		= 1,
-		/obj/item/weapon/grenade/chem_grenade/glitter/blue		= 1,
-		/obj/item/weapon/grenade/chem_grenade/glitter/white		= 1,
+		/obj/item/storage/box/actionfigure				= 1,
+		/obj/item/restraints/handcuffs/fake              = 2,
+		/obj/item/grenade/chem_grenade/glitter/pink		= 1,
+		/obj/item/grenade/chem_grenade/glitter/blue		= 1,
+		/obj/item/grenade/chem_grenade/glitter/white		= 1,
 		/obj/item/toy/eightball									= 2,
 		/obj/item/toy/windupToolbox								= 2)
 
@@ -51,26 +51,22 @@
 /obj/machinery/computer/arcade/proc/Reset()
 	return
 
-/obj/machinery/computer/arcade/New()
-	..()
+/obj/machinery/computer/arcade/Initialize()
+	. = ..()
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-		var/choice = pick(subtypesof(/obj/item/weapon/circuitboard/computer/arcade))
-		var/obj/item/weapon/circuitboard/CB = new choice()
+		var/choice = pick(subtypesof(/obj/item/circuitboard/computer/arcade))
+		var/obj/item/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
-		qdel(src)
-
-/obj/machinery/computer/arcade/Initialize()
-	. = ..()
+		return INITIALIZE_HINT_QDEL
 	Reset()
-
 
 #define PULSE_MEDAL "Jackpot"
 
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(prob(0.0001)) //1 in a million
-		new /obj/item/weapon/gun/energy/pulse/prize(src)
+		new /obj/item/gun/energy/pulse/prize(src)
 		UnlockMedal(PULSE_MEDAL,usr.client)
 
 	if(!contents.len)
@@ -78,11 +74,9 @@
 		new prizeselect(src)
 
 	var/atom/movable/prize = pick(contents)
-	visible_message(
-		"<span class='notice'>[src] dispenses a [prize]!</span>",
-		"<span class='notice'>You hear a chime and a clunk.</span>")
+	visible_message("<span class='notice'>[src] dispenses a [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
-	prize.loc = loc
+	prize.forceMove(get_turf(src))
 #undef PULSE_MEDAL
 
 /obj/machinery/computer/arcade/emp_act(severity)
@@ -111,7 +105,7 @@
 	name = "arcade machine"
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/computer/arcade/battle
+	circuit = /obj/item/circuitboard/computer/arcade/battle
 	var/enemy_name = "Space Villian"
 	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
@@ -157,7 +151,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/arcade/battle/Topic(href, href_list)
 	if(..())
@@ -342,7 +335,7 @@
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 	icon_state = "arcade"
-	circuit = /obj/item/weapon/circuitboard/computer/arcade/orion_trail
+	circuit = /obj/item/circuitboard/computer/arcade/orion_trail
 	var/busy = FALSE //prevent clickspam that allowed people to ~speedrun~ the game.
 	var/engine = 0
 	var/hull = 0
@@ -420,9 +413,9 @@
 	var/dat = ""
 	if(gameStatus == ORION_STATUS_GAMEOVER)
 		dat = "<center><h1>Game Over</h1></center>"
-		dat += "Like many before you, your crew never made it to Orion, lost to space... <br><b>Forever</b>."
-		if(settlers.len == 0)
-			dat += "<br>Your entire crew died, your ship joins the fleet of ghost-ships littering the galaxy."
+		dat += "Like many before you, your crew never made it to Orion, lost to space... <br><b>forever</b>."
+		if(!settlers.len)
+			dat += "<br>Your entire crew died, and your ship joins the fleet of ghost-ships littering the galaxy."
 		else
 			if(food <= 0)
 				dat += "<br>You ran out of food and starved."
@@ -436,7 +429,6 @@
 					M.adjust_fire_stacks(5)
 					M.IgniteMob() //flew into a star, so you're on fire
 					to_chat(user, "<span class='userdanger'><font size=3>You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames.</span>")
-		dat += "<br><P ALIGN=Right><a href='byond://?src=\ref[src];menu=1'>OK...</a></P>"
 
 		if(emagged)
 			to_chat(user, "<span class='userdanger'><font size=3>You're never going to make it to Orion...</span></font>")
@@ -461,7 +453,7 @@
 			dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];pastblack=1'>Go Around</a> <a href='byond://?src=\ref[src];blackhole=1'>Continue</a></P>"
 		else
 			dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];continue=1'>Continue</a></P>"
-		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];killcrew=1'>Kill a crewmember</a></P>"
+		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];killcrew=1'>Kill a Crewmember</a></P>"
 		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
 	else
 		dat = "<center><h2>The Orion Trail</h2></center>"
@@ -616,17 +608,15 @@
 			if(prob(75))
 				event = ORION_TRAIL_BLACKHOLE
 				event()
-				if(emagged) //has to be here because otherwise it doesn't work
+				if(emagged)
 					playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
 					if(isliving(usr))
 						var/mob/living/L = usr
 						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
-					emagged = FALSE //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
-					sleep(50)
-					say("[S] winks out, just as suddenly as it appeared.")
-					qdel(S)
+					addtimer(CALLBACK(src, /atom/movable/proc/say, "[S] winks out, just as suddenly as it appeared."), 50)
+					QDEL_IN(src, 50)
 			else
 				event = null
 				turns += 1
@@ -698,19 +688,20 @@
 				if(prob(success))
 					FU = rand(5,15)
 					FO = rand(5,15)
-					last_spaceport_action = "You successfully raided the spaceport! you gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
+					last_spaceport_action = "You successfully raided the spaceport! You gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
 				else
 					FU = rand(-5,-15)
 					FO = rand(-5,-15)
-					last_spaceport_action = "You failed to raid the spaceport! you lost [FU*-1] Fuel and [FO*-1] Food in your scramble to escape! ([FU]FU,[FO]FO)"
+					last_spaceport_action = "You failed to raid the spaceport! You lost [FU*-1] Fuel and [FO*-1] Food in your scramble to escape! ([FU]FU,[FO]FO)"
 
 					//your chance of lose a crewmember is 1/2 your chance of success
 					//this makes higher % failures hurt more, don't get cocky space cowboy!
 					if(prob(success*5))
 						var/lost_crew = remove_crewmember()
-						last_spaceport_action = "You failed to raid the spaceport! you lost [FU*-1] Fuel and [FO*-1] Food, AND [lost_crew] in your scramble to escape! ([FU]FI,[FO]FO,-Crew)"
+						last_spaceport_action = "You failed to raid the spaceport! You lost [FU*-1] Fuel and [FO*-1] Food, AND [lost_crew] in your scramble to escape! ([FU]FI,[FO]FO,-Crew)"
 						if(emagged)
-							say("WEEWOO WEEWOO, Spaceport Security en route!")
+							say("WEEWOO! WEEWOO! Spaceport security en route!")
+							playsound(src, 'sound/items/weeoo1.ogg', 100, FALSE)
 							for(var/i, i<=3, i++)
 								var/mob/living/simple_animal/hostile/syndicate/ranged/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/orion(get_turf(src))
 								O.target = usr
@@ -773,9 +764,9 @@
 				eventdat += "<br>They have stolen [sfood] <b>Food</b> and [sfuel] <b>Fuel</b>."
 			else if(prob(10))
 				var/deadname = remove_crewmember()
-				eventdat += "<br>[deadname] tried to fight back but was killed."
+				eventdat += "<br>[deadname] tried to fight back, but was killed."
 			else
-				eventdat += "<br>Fortunately you fended them off without any trouble."
+				eventdat += "<br>Fortunately, you fended them off without any trouble."
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];eventclose=1'>Continue</a></P>"
 			eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
 			canContinueEvent = 1
@@ -851,7 +842,7 @@
 				else if(prob(70))
 					lings_aboard = min(++lings_aboard,2)
 
-				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];killcrew=1'>Kill a crewmember</a></P>"
+				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];killcrew=1'>Kill a Crewmember</a></P>"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];eventclose=1'>Risk it</a></P>"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
 			canContinueEvent = 1
@@ -866,7 +857,7 @@
 				if(lings_aboard >= 2)
 					ling2 = remove_crewmember()
 
-				eventdat += "Oh no, some of your crew are Changelings!"
+				eventdat += "Changelings among your crew suddenly burst from hiding and attack!"
 				if(ling2)
 					eventdat += "<br>[ling1] and [ling2]'s arms twist and contort into grotesque blades!"
 				else
@@ -877,18 +868,23 @@
 					var/chancetokill = 30*lings_aboard-(5*alive) //eg: 30*2-(10) = 50%, 2 lings, 2 crew is 50% chance
 					if(prob(chancetokill))
 						var/deadguy = remove_crewmember()
-						eventdat += "<br>The Changeling[ling2 ? "s":""] run[ling2 ? "":"s"] up to [deadguy] and capitulates them!"
+						var/murder_text = pick("The changeling[ling2 ? "s" : ""] bring[ling2 ? "" : "s"] down [deadguy] and disembowel[ling2 ? "" : "s"] them in a spray of gore!", \
+						"[ling2 ? pick(ling1, ling2) : ling1] corners [deadguy] and impales them through the stomach!", \
+						"[ling2 ? pick(ling1, ling2) : ling1] decapitates [deadguy] in a single cleaving arc!")
+						eventdat += "<br>[murder_text]"
 					else
-						eventdat += "<br>You valiantly fight off the Changeling[ling2 ? "s":""]!"
-						eventdat += "<br>You cut the Changeling[ling2 ? "s":""] up into meat... Eww"
+						eventdat += "<br><br><b>You valiantly fight off the changeling[ling2 ? "s":""]!</b>"
 						if(ling2)
 							food += 30
 							lings_aboard = max(0,lings_aboard-2)
 						else
 							food += 15
 							lings_aboard = max(0,--lings_aboard)
+						eventdat += "<br><i>Well, it's perfectly good food...</i>\
+						<br>You cut the changeling[ling2 ? "s" : ""] into meat, gaining <b>[ling2 ? "30" : "15"]</b> Food!"
 				else
-					eventdat += "<br>The Changeling[ling2 ? "s":""] run[ling2 ? "":"s"] away, What wimps!"
+					eventdat += "<br><br>[pick("Sensing unfavorable odds", "After a failed attack", "Suddenly breaking nerve")], \
+					the changeling[ling2 ? "s":""] vanish[ling2 ? "" : "es"] into space through the airlocks! You're safe... for now."
 					if(ling2)
 						lings_aboard = max(0,lings_aboard-2)
 					else
@@ -902,17 +898,17 @@
 		if(ORION_TRAIL_SPACEPORT)
 			gameStatus = ORION_STATUS_MARKET
 			if(spaceport_raided)
-				eventdat += "The Spaceport is on high alert! They won't let you dock since you tried to attack them!"
+				eventdat += "The spaceport is on high alert! You've been barred from docking by the local authorities after your failed raid."
 				if(last_spaceport_action)
-					eventdat += "<br>Last Spaceport Action: [last_spaceport_action]"
+					eventdat += "<br><b>Last Spaceport Action:</b> [last_spaceport_action]"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];leave_spaceport=1'>Depart Spaceport</a></P>"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
 			else
-				eventdat += "You pull the ship up to dock at a nearby Spaceport, lucky find!"
-				eventdat += "<br>This Spaceport is home to travellers who failed to reach Orion, but managed to find a different home..."
+				eventdat += "Your jump into the sector yields a spaceport - a lucky find!"
+				eventdat += "<br>This spaceport is home to travellers who failed to reach Orion, but managed to find a different home..."
 				eventdat += "<br>Trading terms: FU = Fuel, FO = Food"
 				if(last_spaceport_action)
-					eventdat += "<br>Last Spaceport Action: [last_spaceport_action]"
+					eventdat += "<br><b>Last action:</b> [last_spaceport_action]"
 				eventdat += "<h3><b>Crew:</b></h3>"
 				eventdat += english_list(settlers)
 				eventdat += "<br><b>Food: </b>[food] | <b>Fuel: </b>[fuel]"
@@ -933,7 +929,7 @@
 						add_crewmember()
 						freecrew++
 
-					eventdat += "<br>The traders of the spaceport take pitty on you, and give you some food and fuel (+[FU]FU,+[FO]FO)"
+					eventdat += "<br>The traders of the spaceport take pity on you, and generously give you some free supplies! (+[FU]FU, +[FO]FO)"
 					if(freecrew)
 						eventdat += "<br>You also gain a new crewmember!"
 
@@ -945,15 +941,15 @@
 
 				//Buy crew
 				if(food >= 10 && fuel >= 10)
-					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];buycrew=1'>Hire a new Crewmember (-10FU,-10FO)</a></P>"
+					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];buycrew=1'>Hire a New Crewmember (-10FU, -10FO)</a></P>"
 				else
-					eventdat += "<P ALIGN=Right>Cant afford a new Crewmember</P>"
+					eventdat += "<P ALIGN=Right>You cannot afford a new crewmember.</P>"
 
 				//Sell crew
 				if(settlers.len > 1)
-					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];sellcrew=1'>Sell crew for Fuel and Food (+7FU,+7FO)</a></P>"
+					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];sellcrew=1'>Sell Crew for Fuel and Food (+7FU, +7FO)</a></P>"
 				else
-					eventdat += "<P ALIGN=Right>Cant afford to sell a Crewmember</P>"
+					eventdat += "<P ALIGN=Right>You have no other crew to sell.</P>"
 
 				//BUY/SELL STUFF
 				eventdat += "<P ALIGN=Right>Spare Parts:</P>"
@@ -962,30 +958,30 @@
 				if(fuel > 5)
 					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];buyparts=1'>Buy Engine Parts (-5FU)</a></P>"
 				else
-					eventdat += "<P ALIGN=Right>Cant afford to buy Engine Parts</a>"
+					eventdat += "<P ALIGN=Right>You cannot afford engine parts.</a>"
 
 				//Hull plates
 				if(fuel > 5)
 					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];buyparts=2'>Buy Hull Plates (-5FU)</a></P>"
 				else
-					eventdat += "<P ALIGN=Right>Cant afford to buy Hull Plates</a>"
+					eventdat += "<P ALIGN=Right>You cannot afford hull plates.</a>"
 
 				//Electronics
 				if(fuel > 5)
 					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];buyparts=3'>Buy Spare Electronics (-5FU)</a></P>"
 				else
-					eventdat += "<P ALIGN=Right>Cant afford to buy Spare Electronics</a>"
+					eventdat += "<P ALIGN=Right>You cannot afford spare electronics.</a>"
 
 				//Trade
 				if(fuel > 5)
 					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];trade=1'>Trade Fuel for Food (-5FU,+5FO)</a></P>"
 				else
-					eventdat += "<P ALIGN=Right>Cant afford to Trade Fuel for Food</P"
+					eventdat += "<P ALIGN=Right>You don't have 5FU to trade.</P"
 
 				if(food > 5)
 					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];trade=2'>Trade Food for Fuel (+5FU,-5FO)</a></P>"
 				else
-					eventdat += "<P ALIGN=Right>Cant afford to Trade Food for Fuel</P"
+					eventdat += "<P ALIGN=Right>You don't have 5FO to trade.</P"
 
 				//Raid the spaceport
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];raid_spaceport=1'>!! Raid Spaceport !!</a></P>"
@@ -1032,7 +1028,7 @@
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(emagged)
-		new /obj/item/weapon/orion_ship(loc)
+		new /obj/item/orion_ship(loc)
 		message_admins("[key_name_admin(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 	else
@@ -1051,13 +1047,13 @@
 	emagged = TRUE
 
 /mob/living/simple_animal/hostile/syndicate/ranged/orion
-	name = "Spaceport Security"
-	desc = "The Premier security forces for all spaceports found along the Orion Trail."
+	name = "spaceport security"
+	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
 	loot = list()
 	del_on_death = TRUE
 
-/obj/item/weapon/orion_ship
+/obj/item/orion_ship
 	name = "model settler ship"
 	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion! It even has a miniature FX-293 reactor, which was renowned for its instability and tendency to explode..."
 	icon = 'icons/obj/toy.dmi'
@@ -1065,7 +1061,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/active = 0 //if the ship is on
 
-/obj/item/weapon/orion_ship/examine(mob/user)
+/obj/item/orion_ship/examine(mob/user)
 	..()
 	if(!(in_range(user, src)))
 		return
@@ -1074,7 +1070,7 @@
 	else
 		to_chat(user, "<span class='notice'>There's a little switch on the bottom. It's flipped up.</span>")
 
-/obj/item/weapon/orion_ship/attack_self(mob/user) //Minibomb-level explosion. Should probably be more because of how hard it is to survive the machine! Also, just over a 5-second fuse
+/obj/item/orion_ship/attack_self(mob/user) //Minibomb-level explosion. Should probably be more because of how hard it is to survive the machine! Also, just over a 5-second fuse
 	if(active)
 		return
 

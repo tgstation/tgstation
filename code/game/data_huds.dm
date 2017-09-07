@@ -199,18 +199,18 @@
 	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD))
 		holder = hud_list[i]
 		holder.icon_state = null
-	for(var/obj/item/weapon/implant/I in implants)
-		if(istype(I, /obj/item/weapon/implant/tracking))
+	for(var/obj/item/implant/I in implants)
+		if(istype(I, /obj/item/implant/tracking))
 			holder = hud_list[IMPTRACK_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_tracking"
-		else if(istype(I, /obj/item/weapon/implant/mindshield))
+		else if(istype(I, /obj/item/implant/mindshield))
 			holder = hud_list[IMPLOYAL_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_loyal"
-		else if(istype(I, /obj/item/weapon/implant/chem))
+		else if(istype(I, /obj/item/implant/chem))
 			holder = hud_list[IMPCHEM_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size

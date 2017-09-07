@@ -49,8 +49,8 @@ field_generator power level display
 		add_overlay("+p[power_level]")
 
 
-/obj/machinery/field/generator/New()
-	..()
+/obj/machinery/field/generator/Initialize()
+	. = ..()
 	fields = list()
 	connected_gens = list()
 
@@ -83,7 +83,7 @@ field_generator power level display
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
@@ -95,11 +95,11 @@ field_generator power level display
 	if(active)
 		to_chat(user, "<span class='warning'>[src] needs to be off!</span>")
 		return
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		default_unfasten_wrench(user, W, 0)
 
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		switch(state)
 			if(FG_UNSECURED)
 				to_chat(user, "<span class='warning'>The [name] needs to be wrenched to the floor!</span>")
@@ -128,7 +128,7 @@ field_generator power level display
 		return ..()
 
 /obj/machinery/field/generator/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash >= 3 && active == FG_OFFLINE && state != FG_UNSECURED)
+	if(M.environment_smash & ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
 		state = FG_UNSECURED
 		anchored = FALSE
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")

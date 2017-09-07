@@ -63,13 +63,6 @@
  /**
   * global
   *
-  * Used to track the current screen.
- **/
-/datum/var/ui_screen = "home"
-
- /**
-  * global
-  *
   * Used to track UIs for a mob.
  **/
 /mob/var/list/open_uis = list()

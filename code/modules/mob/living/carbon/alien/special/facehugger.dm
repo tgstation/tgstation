@@ -15,7 +15,7 @@
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	w_class = WEIGHT_CLASS_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
-	flags = MASKINTERNALS
+	flags_1 = MASKINTERNALS_1
 	throw_range = 5
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH

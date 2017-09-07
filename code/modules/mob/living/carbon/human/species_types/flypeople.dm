@@ -5,7 +5,9 @@
 	mutanttongue = /obj/item/organ/tongue/fly
 	mutantliver = /obj/item/organ/liver/fly
 	mutantstomach = /obj/item/organ/stomach/fly
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly
+	disliked_food = null
+	liked_food = GROSS
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
@@ -26,6 +28,6 @@
 	..()
 
 /datum/species/fly/check_weakness(obj/item/weapon, mob/living/attacker)
-	if(istype(weapon, /obj/item/weapon/melee/flyswatter))
+	if(istype(weapon, /obj/item/melee/flyswatter))
 		return 29 //Flyswatters deal 30x damage to flypeople.
 	return 0

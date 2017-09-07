@@ -1,5 +1,7 @@
 /obj/item/stack/sheet
 	name = "sheet"
+	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	full_w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	throwforce = 5

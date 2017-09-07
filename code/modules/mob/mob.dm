@@ -326,6 +326,7 @@
 	if(AM.pulledby)
 		if(!supress_message)
 			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+		add_logs(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
 	pulling = AM
@@ -336,6 +337,7 @@
 
 	if(ismob(AM))
 		var/mob/M = AM
+		add_logs(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 		if(!iscarbon(src))
@@ -435,7 +437,7 @@
 
 	if (!( GLOB.abandon_allowed ))
 		return
-	if ((stat != 2 || !( SSticker )))
+	if ((stat != DEAD || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
@@ -504,7 +506,7 @@
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				if(!(what.flags & ABSTRACT))
+				if(!(what.flags_1 & ABSTRACT_1))
 					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
@@ -612,6 +614,8 @@
 				if(A.invisibility > see_invisible)
 					continue
 				if(overrides.len && (A in overrides))
+					continue
+				if(A.IsObscured())
 					continue
 				statpanel(listed_turf.name, null, A)
 
@@ -860,8 +864,8 @@
 	var/search_pda = 1
 
 	for(var/A in searching)
-		if( search_id && istype(A, /obj/item/weapon/card/id) )
-			var/obj/item/weapon/card/id/ID = A
+		if( search_id && istype(A, /obj/item/card/id) )
+			var/obj/item/card/id/ID = A
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname
 				ID.update_label()

@@ -22,6 +22,7 @@
 	return
 
 /turf/open/chasm/Entered(atom/movable/AM)
+	..()
 	START_PROCESSING(SSobj, src)
 	drop_stuff(AM)
 
@@ -132,6 +133,9 @@
 	drop_y = y
 	if(z+1 <= world.maxz)
 		drop_z = z+1
+	var/turf/T = locate(drop_x, drop_y, drop_z)
+	T.visible_message("<span class='boldwarning'>The ceiling gives way!</span>")
+	playsound(T, 'sound/effects/break_stone.ogg', 50, 1)
 
 
 /turf/open/chasm/straight_down/lava_land_surface

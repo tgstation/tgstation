@@ -9,8 +9,8 @@
 	var/radio_channel = "Common"
 	var/minimum_time_between_warnings = 400
 
-/obj/machinery/computer/bank_machine/Initialize(mapload)
-	..()
+/obj/machinery/computer/bank_machine/Initialize()
+	. = ..()
 	radio = new(src)
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0

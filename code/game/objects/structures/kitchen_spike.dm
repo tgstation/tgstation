@@ -22,8 +22,8 @@
 			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
-	else if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = I
+	else if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = I
 		if(!WT.remove_fuel(0, user))
 			return
 		to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
@@ -58,7 +58,7 @@
 
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/crowbar))
 		if(!has_buckled_mobs())
 			playsound(loc, I.usesound, 100, 1)
 			if(do_after(user, 20*I.toolspeed, target = src))

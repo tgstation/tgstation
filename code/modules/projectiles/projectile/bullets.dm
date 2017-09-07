@@ -239,7 +239,7 @@
 /obj/item/projectile/bullet/dnainjector
 	name = "\improper DNA injector"
 	icon_state = "syringeproj"
-	var/obj/item/weapon/dnainjector/injector
+	var/obj/item/dnainjector/injector
 	damage = 5
 	hitsound_wall = "shatter"
 
@@ -356,7 +356,7 @@
 
 /obj/item/projectile/bullet/saw/hollow
 	damage = 60
-	armour_penetration = -10
+	armour_penetration = -60
 
 /obj/item/projectile/bullet/saw/ap
 	damage = 40

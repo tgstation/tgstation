@@ -42,7 +42,7 @@
 
 /datum/chemical_reaction/slime/slimemonkey/on_reaction(datum/reagents/holder)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(get_turf(holder.my_atom))
+		new /obj/item/reagent_containers/food/snacks/monkeycube(get_turf(holder.my_atom))
 	..()
 
 //Green
@@ -157,26 +157,26 @@
 	..()
 
 /datum/chemical_reaction/slime/slimebork/proc/getborks()
-	var/list/blocked = list(/obj/item/weapon/reagent_containers/food/snacks,
-		/obj/item/weapon/reagent_containers/food/snacks/store/bread,
-		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
-		/obj/item/weapon/reagent_containers/food/snacks/store/cake,
-		/obj/item/weapon/reagent_containers/food/snacks/cakeslice,
-		/obj/item/weapon/reagent_containers/food/snacks/store,
-		/obj/item/weapon/reagent_containers/food/snacks/pie,
-		/obj/item/weapon/reagent_containers/food/snacks/kebab,
-		/obj/item/weapon/reagent_containers/food/snacks/pizza,
-		/obj/item/weapon/reagent_containers/food/snacks/pizzaslice,
-		/obj/item/weapon/reagent_containers/food/snacks/salad,
-		/obj/item/weapon/reagent_containers/food/snacks/meat,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/slab,
-		/obj/item/weapon/reagent_containers/food/snacks/soup,
-		/obj/item/weapon/reagent_containers/food/snacks/grown,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom,
+	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,
+		/obj/item/reagent_containers/food/snacks/store/bread,
+		/obj/item/reagent_containers/food/snacks/breadslice,
+		/obj/item/reagent_containers/food/snacks/store/cake,
+		/obj/item/reagent_containers/food/snacks/cakeslice,
+		/obj/item/reagent_containers/food/snacks/store,
+		/obj/item/reagent_containers/food/snacks/pie,
+		/obj/item/reagent_containers/food/snacks/kebab,
+		/obj/item/reagent_containers/food/snacks/pizza,
+		/obj/item/reagent_containers/food/snacks/pizzaslice,
+		/obj/item/reagent_containers/food/snacks/salad,
+		/obj/item/reagent_containers/food/snacks/meat,
+		/obj/item/reagent_containers/food/snacks/meat/slab,
+		/obj/item/reagent_containers/food/snacks/soup,
+		/obj/item/reagent_containers/food/snacks/grown,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom,
 		)
-	blocked |= typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable)
+	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
-	return typesof(/obj/item/weapon/reagent_containers/food/snacks) - blocked
+	return typesof(/obj/item/reagent_containers/food/snacks) - blocked
 
 /datum/chemical_reaction/slime/slimebork/drinks
 	name = "Slime Bork 2"
@@ -184,7 +184,7 @@
 	required_reagents = list("water" = 1)
 
 /datum/chemical_reaction/slime/slimebork/drinks/getborks()
-	return subtypesof(/obj/item/weapon/reagent_containers/food/drinks)
+	return subtypesof(/obj/item/reagent_containers/food/drinks)
 
 //Blue
 /datum/chemical_reaction/slime/slimefrost
@@ -310,7 +310,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimecell/on_reaction(datum/reagents/holder, created_volume)
-	new /obj/item/weapon/stock_parts/cell/high/slime(get_turf(holder.my_atom))
+	new /obj/item/stock_parts/cell/high/slime(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/slimeglow
@@ -510,7 +510,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimecrystal/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/weapon/ore/bluespace_crystal/BC = new (get_turf(holder.my_atom))
+	var/obj/item/ore/bluespace_crystal/BC = new (get_turf(holder.my_atom))
 	BC.visible_message("<span class='notice'>The [BC.name] appears out of thin air!</span>")
 	..()
 
@@ -584,7 +584,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimepaint/on_reaction(datum/reagents/holder)
-	var/chosen = pick(subtypesof(/obj/item/weapon/paint))
+	var/chosen = pick(subtypesof(/obj/item/paint))
 	new chosen(get_turf(holder.my_atom))
 	..()
 
@@ -632,6 +632,6 @@
 	required_container = /obj/item/slime_extract/rainbow
 
 /datum/chemical_reaction/slime/flight_potion/on_reaction(datum/reagents/holder)
-	new /obj/item/weapon/reagent_containers/glass/bottle/potion/flight(get_turf(holder.my_atom))
+	new /obj/item/reagent_containers/glass/bottle/potion/flight(get_turf(holder.my_atom))
 	..()
 

@@ -109,14 +109,14 @@ GLOBAL_PROTECT(Banlist)
 	else
 		GLOB.Banlist.dir.Add("[ckey][computerid]")
 		GLOB.Banlist.cd = "/base/[ckey][computerid]"
-		GLOB.Banlist["key"] << ckey
-		GLOB.Banlist["id"] << computerid
-		GLOB.Banlist["ip"] << address
-		GLOB.Banlist["reason"] << reason
-		GLOB.Banlist["bannedby"] << bannedby
-		GLOB.Banlist["temp"] << temp
+		WRITE_FILE(GLOB.Banlist["key"], ckey)
+		WRITE_FILE(GLOB.Banlist["id"], computerid)
+		WRITE_FILE(GLOB.Banlist["ip"], address)
+		WRITE_FILE(GLOB.Banlist["reason"], reason)
+		WRITE_FILE(GLOB.Banlist["bannedby"], bannedby)
+		WRITE_FILE(GLOB.Banlist["temp"], temp)
 		if (temp)
-			GLOB.Banlist["minutes"] << bantimestamp
+			WRITE_FILE(GLOB.Banlist["minutes"], bantimestamp)
 		if(!temp)
 			create_message("note", ckey, bannedby, "Permanently banned - [reason]", null, null, 0, 0)
 		else
@@ -211,17 +211,17 @@ GLOBAL_PROTECT(Banlist)
 			GLOB.Banlist.cd = "/base"
 			GLOB.Banlist.dir.Add("trash[i]trashid[i]")
 			GLOB.Banlist.cd = "/base/trash[i]trashid[i]"
-			GLOB.Banlist["key"] << "trash[i]"
+			WRITE_FILE(GLOB.Banlist["key"], "trash[i]")
 		else
 			GLOB.Banlist.cd = "/base"
 			GLOB.Banlist.dir.Add("[last]trashid[i]")
 			GLOB.Banlist.cd = "/base/[last]trashid[i]"
-			GLOB.Banlist["key"] << last
-		GLOB.Banlist["id"] << "trashid[i]"
-		GLOB.Banlist["reason"] << "Trashban[i]."
-		GLOB.Banlist["temp"] << a
-		GLOB.Banlist["minutes"] << GLOB.CMinutes + rand(1,2000)
-		GLOB.Banlist["bannedby"] << "trashmin"
+			WRITE_FILE(GLOB.Banlist["key"], last)
+		WRITE_FILE(GLOB.Banlist["id"], "trashid[i]")
+		WRITE_FILE(GLOB.Banlist["reason"], "Trashban[i].")
+		WRITE_FILE(GLOB.Banlist["temp"], a)
+		WRITE_FILE(GLOB.Banlist["minutes"], GLOB.CMinutes + rand(1,2000))
+		WRITE_FILE(GLOB.Banlist["bannedby"], "trashmin")
 		last = "trash[i]"
 
 	GLOB.Banlist.cd = "/base"

@@ -33,14 +33,10 @@
 	add_overlay(hologram_projection)
 	add_overlay(hologram_ship)
 
-/obj/machinery/shuttle_manipulator/ui_interact(mob/user, ui_key = "main", \
-	datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, \
-	datum/ui_state/state = GLOB.admin_state)
-
+/obj/machinery/shuttle_manipulator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.admin_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "shuttle_manipulator", name, 800, 600, \
-			master_ui, state)
+		ui = new(user, src, ui_key, "shuttle_manipulator", name, 800, 600, master_ui, state)
 		ui.open()
 
 /proc/shuttlemode2str(mode)
@@ -62,7 +58,7 @@
 		if(SHUTTLE_ENDGAME)
 			. = "endgame"
 	if(!.)
-		throw EXCEPTION("shuttlemode2str(): invalid mode [mode]")
+		CRASH("shuttlemode2str(): invalid mode [mode]")
 
 
 /obj/machinery/shuttle_manipulator/ui_data(mob/user)

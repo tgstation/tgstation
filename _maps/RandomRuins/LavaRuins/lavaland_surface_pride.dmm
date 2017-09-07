@@ -65,7 +65,7 @@
 /turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "u" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "G" = (

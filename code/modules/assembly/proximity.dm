@@ -56,7 +56,7 @@
 	if(!secured || next_activate > world.time)
 		return 0
 	pulse(0)
-	audible_message("[bicon(src)] *beep* *beep*", null, 3)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 3)
 	next_activate = world.time + 30
 
 

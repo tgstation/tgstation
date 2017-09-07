@@ -3,6 +3,8 @@
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
 	icon_state = "flash"
 	item_state = "flashtool"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
@@ -178,7 +180,7 @@
 	..()
 	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
-/obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
 	return
 
 /obj/item/device/assembly/flash/memorizer
@@ -222,9 +224,11 @@
 /obj/item/device/assembly/flash/shield
 	name = "strobe shield"
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "flashshield"
 	item_state = "flashshield"
+	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	slot_flags = SLOT_BACK
 	force = 10
 	throwforce = 5
@@ -243,7 +247,7 @@
 		return 0
 	return 1
 
-/obj/item/device/assembly/flash/shield/attackby(obj/item/weapon/W, mob/user)
+/obj/item/device/assembly/flash/shield/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/assembly/flash/handheld))
 		var/obj/item/device/assembly/flash/handheld/flash = W
 		if(flash.crit_fail)

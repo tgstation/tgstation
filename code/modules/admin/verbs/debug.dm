@@ -316,10 +316,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has alienized [M.key].")
-		spawn(0)
-			M:Alienize()
-			SSblackbox.add_details("admin_verb","Make Alien") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/Alienize)
+		SSblackbox.add_details("admin_verb","Make Alien") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into an alien.</span>")
 	else
@@ -333,10 +331,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has slimeized [M.key].")
-		spawn(0)
-			M:slimeize()
-			SSblackbox.add_details("admin_verb","Make Slime") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/slimeize)
+		SSblackbox.add_details("admin_verb","Make Slime") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into a slime.</span>")
 	else
@@ -352,11 +348,10 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			/obj/effect/decal/cleanable = "CLEANABLE",
 			/obj/item/device/radio/headset = "HEADSET",
 			/obj/item/clothing/head/helmet/space = "SPESSHELMET",
-			/obj/item/weapon/book/manual = "MANUAL",
-			/obj/item/weapon/reagent_containers/food/drinks = "DRINK", //longest paths comes first
-			/obj/item/weapon/reagent_containers/food = "FOOD",
-			/obj/item/weapon/reagent_containers = "REAGENT_CONTAINERS",
-			/obj/item/weapon = "WEAPON",
+			/obj/item/book/manual = "MANUAL",
+			/obj/item/reagent_containers/food/drinks = "DRINK", //longest paths comes first
+			/obj/item/reagent_containers/food = "FOOD",
+			/obj/item/reagent_containers = "REAGENT_CONTAINERS",
 			/obj/machinery/atmospherics = "ATMOS_MECH",
 			/obj/machinery/portable_atmospherics = "PORT_ATMOS",
 			/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack = "MECHA_MISSILE_RACK",
@@ -446,14 +441,14 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/worn = H.wear_id
-		var/obj/item/weapon/card/id/id = null
+		var/obj/item/card/id/id = null
 		if(worn)
 			id = worn.GetID()
 		if(id)
 			id.icon_state = "gold"
 			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 		else
-			id = new /obj/item/weapon/card/id/gold(H.loc)
+			id = new /obj/item/card/id/gold(H.loc)
 			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 			id.registered_name = H.real_name
 			id.assignment = "Captain"
@@ -461,12 +456,14 @@ GLOBAL_PROTECT(AdminProcCallCount)
 
 			if(worn)
 				if(istype(worn, /obj/item/device/pda))
-					worn:id = id
-					id.loc = worn
-				else if(istype(worn, /obj/item/weapon/storage/wallet))
-					worn:front_id = id
-					id.loc = worn
-					worn.update_icon()
+					var/obj/item/device/pda/PDA = worn
+					PDA.id = id
+					id.forceMove(PDA)
+				else if(istype(worn, /obj/item/storage/wallet))
+					var/obj/item/storage/wallet/W = worn
+					W.front_id = id
+					id.forceMove(W)
+					W.update_icon()
 			else
 				H.equip_to_slot(id,slot_wear_id)
 
@@ -495,9 +492,9 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		qdel(adminmob)
 	SSblackbox.add_details("admin_verb","Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_areatest()
+/client/proc/cmd_admin_areatest(on_station)
 	set category = "Mapping"
-	set name = "Test areas"
+	set name = "Test Areas"
 
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
@@ -507,13 +504,19 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	var/list/areas_with_LS = list()
 	var/list/areas_with_intercom = list()
 	var/list/areas_with_camera = list()
+	var/list/station_areas_blacklist = typecacheof(list(/area/holodeck/rec_center, /area/shuttle, /area/engine/supermatter, /area/science/test_area, /area/space, /area/solar, /area/mine, /area/ruin))
 
 	for(var/area/A in world)
-		if(!(A.type in areas_all))
+		if(on_station)
+			var/turf/picked = safepick(get_area_turfs(A.type))
+			if(picked && (picked.z == ZLEVEL_STATION))
+				if(!(A.type in areas_all) && !is_type_in_typecache(A, station_areas_blacklist))
+					areas_all.Add(A.type)
+		else if(!(A.type in areas_all))
 			areas_all.Add(A.type)
 
 	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
-		var/area/A = get_area(APC)
+		var/area/A = APC.area
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 
@@ -582,6 +585,16 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
 	for(var/areatype in areas_without_camera)
 		to_chat(world, "* [areatype]")
+
+/client/proc/cmd_admin_areatest_station()
+	set category = "Mapping"
+	set name = "Test Areas (STATION Z)"
+	cmd_admin_areatest(TRUE)
+
+/client/proc/cmd_admin_areatest_all()
+	set category = "Mapping"
+	set name = "Test Areas (ALL)"
+	cmd_admin_areatest(FALSE)
 
 /client/proc/cmd_admin_dress(mob/living/carbon/human/M in GLOB.mob_list)
 	set category = "Fun"
@@ -692,7 +705,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	for(var/obj/machinery/power/rad_collector/Rad in GLOB.machines)
 		if(Rad.anchored)
 			if(!Rad.loaded_tank)
-				var/obj/item/weapon/tank/internals/plasma/Plasma = new/obj/item/weapon/tank/internals/plasma(Rad)
+				var/obj/item/tank/internals/plasma/Plasma = new/obj/item/tank/internals/plasma(Rad)
 				Plasma.air_contents.assert_gas("plasma")
 				Plasma.air_contents.gases["plasma"][MOLES] = 70
 				Rad.drainratio = 0

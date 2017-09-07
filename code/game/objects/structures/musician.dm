@@ -71,9 +71,11 @@
 				continue
 			LAZYADD(hearing_mobs, M)
 		last_hearcheck = world.time
+
+	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		M.playsound_local(source, soundfile, 100, falloff = 5)
+		M.playsound_local(source, null, 100, falloff = 5, S = music_played)
 
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
@@ -172,7 +174,7 @@
 		if(help)
 			dat += "<B><A href='?src=\ref[src];help=1'>Hide Help</A></B><BR>"
 			dat += {"
-					Lines are a series of chords, separated by commas (,), each with notes seperated by hyphens (-).<br>
+					Lines are a series of chords, separated by commas (,), each with notes separated by hyphens (-).<br>
 					Every note in a chord will play together, with chord timed by the tempo.<br>
 					<br>
 					Notes are played by the names of the note, and optionally, the accidental, and/or the octave number.<br>
@@ -371,7 +373,7 @@
 	song.interact(user)
 
 /obj/structure/piano/attackby(obj/item/O, mob/user, params)
-	if (istype(O, /obj/item/weapon/wrench))
+	if (istype(O, /obj/item/wrench))
 		if (!anchored && !isinspace())
 			playsound(src, O.usesound, 50, 1)
 			to_chat(user, "<span class='notice'> You begin to tighten \the [src] to the floor...</span>")

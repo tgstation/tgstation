@@ -57,6 +57,9 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		if(slab.busy)
 			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>")
 			return FALSE
+		if(invoker.has_status_effect(STATUS_EFFECT_GEISTRACKER))
+			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"Sustaining Geis!\"</span>")
+			return FALSE
 		slab.busy = "Invocation ([name]) in progress"
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
@@ -150,7 +153,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			if(prob(ratvarian_prob))
 				message = text2ratvar(message)
 			to_chat(invoker, "<span class='[get_component_span(primary_component)]_large'>\"[message]\"</span>")
-			invoker << 'sound/magic/clockwork/invoke_general.ogg'
+			SEND_SOUND(invoker, sound('sound/magic/clockwork/invoke_general.ogg'))
 	return TRUE
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()
@@ -274,6 +277,8 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	if(slab_overlay)
 		slab.add_overlay(slab_overlay)
 		slab.item_state = "clockwork_slab"
+		slab.lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
+		slab.righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 		slab.inhand_overlay = slab_overlay
 	slab.slab_ability = new ranged_type(slab)
 	slab.slab_ability.slab = slab
@@ -299,6 +304,8 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 				slab.slab_ability.remove_ranged_ability()
 		slab.cut_overlays()
 		slab.item_state = initial(slab.item_state)
+		slab.item_state = initial(slab.lefthand_file)
+		slab.item_state = initial(slab.righthand_file)
 		slab.inhand_overlay = null
 		if(invoker)
 			invoker.update_inv_hands()

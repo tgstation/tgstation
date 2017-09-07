@@ -219,13 +219,13 @@ research holder datum.
 
 /datum/tech/plasmatech
 	name = "Plasma Research"
-	desc = "Research into the mysterious substance colloqually known as \"plasma\"."
+	desc = "Research into the mysterious substance colloquially known as \"plasma\"."
 	id = "plasmatech"
 	rare = 3
 
 /datum/tech/powerstorage
 	name = "Power Manipulation Technology"
-	desc = "The various technologies behind the storage and generation of electicity."
+	desc = "The various technologies behind the storage and generation of electricity."
 	id = "powerstorage"
 
 /datum/tech/bluespace
@@ -256,7 +256,7 @@ research holder datum.
 
 /datum/tech/syndicate
 	name = "Illegal Technologies Research"
-	desc = "The study of technologies that violate Nanotrassen regulations."
+	desc = "The study of technologies that violate Nanotrasen regulations."
 	id = "syndicate"
 	rare = 4
 
@@ -320,7 +320,7 @@ research holder datum.
 	T.level = level
 	return T
 
-/obj/item/weapon/disk/tech_disk
+/obj/item/disk/tech_disk
 	name = "technology disk"
 	desc = "A disk for storing technology data for further research."
 	icon_state = "datadisk0"
@@ -328,7 +328,7 @@ research holder datum.
 	var/list/tech_stored = list()
 	var/max_tech_stored = 1
 
-/obj/item/weapon/disk/tech_disk/Initialize()
+/obj/item/disk/tech_disk/Initialize()
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
@@ -336,25 +336,25 @@ research holder datum.
 		tech_stored += null
 
 
-/obj/item/weapon/disk/tech_disk/adv
+/obj/item/disk/tech_disk/adv
 	name = "advanced technology disk"
 	desc = "A disk for storing technology data for further research. This one has extra storage space."
 	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=50)
 	max_tech_stored = 5
 
-/obj/item/weapon/disk/tech_disk/super_adv
+/obj/item/disk/tech_disk/super_adv
 	name = "quantum technology disk"
 	desc = "A disk for storing technology data for further research. This one has extremely large storage space."
 	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=100, MAT_GOLD=100)
 	max_tech_stored = 10
 
-/obj/item/weapon/disk/tech_disk/debug
-	name = "centcomm technology disk"
+/obj/item/disk/tech_disk/debug
+	name = "centcom technology disk"
 	desc = "A debug item for research"
 	materials = list()
 	max_tech_stored = 0
 
-/obj/item/weapon/disk/tech_disk/debug/Initialize()
+/obj/item/disk/tech_disk/debug/Initialize()
 	. = ..()
 	var/list/techs = subtypesof(/datum/tech)
 	max_tech_stored = techs.len

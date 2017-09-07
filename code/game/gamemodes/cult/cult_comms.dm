@@ -2,6 +2,7 @@
 #define MARK_COOLDOWN
 
 /datum/action/innate/cult
+	icon_icon = 'icons/mob/actions/actions_cult.dmi'
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
@@ -102,13 +103,13 @@
 		if(B.current)
 			B.current.update_action_buttons_icon()
 			if(!B.current.incapacitated())
-				B.current << 'sound/hallucinations/im_here1.ogg'
+				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
 				to_chat(B.current, "<span class='cultlarge'>Acolyte [Nominee] has asserted that they are worthy of leading the cult. A vote will be called shortly.</span>")
 	sleep(100)
 	var/list/asked_cultists = list()
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(B.current && B.current != Nominee && !B.current.incapacitated())
-			B.current << 'sound/magic/exit_blood.ogg'
+			SEND_SOUND(B.current, 'sound/magic/exit_blood.ogg')
 			asked_cultists += B.current
 	var/list/yes_voters = pollCandidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 300, group = asked_cultists)
 	if(QDELETED(Nominee) || Nominee.incapacitated())
@@ -279,7 +280,7 @@
 		for(var/datum/mind/B in SSticker.mode.cult)
 			if(B.current && B.current.stat != DEAD && B.current.client)
 				to_chat(B.current, "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [GLOB.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
-				B.current << pick(sound('sound/hallucinations/over_here2.ogg',0,1,75), sound('sound/hallucinations/over_here3.ogg',0,1,75))
+				SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 				B.current.client.images += GLOB.blood_target_image
 		attached_action.owner.update_action_buttons_icon()
 		remove_ranged_ability("<span class='cult'>The marking rite is complete! It will last for 90 seconds.</span>")
@@ -305,6 +306,7 @@
 /datum/action/innate/cult/master/pulse
 	name = "Eldritch Pulse"
 	desc = "Seize upon a fellow cultist or cult structure and teleport it to a nearby location."
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "arcane_barrage"
 	var/obj/effect/proc_holder/pulse/PM
 	var/cooldown = 0
@@ -322,7 +324,7 @@
 		return FALSE
 	if(cooldown > world.time)
 		if(!PM.active)
-			owner << "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can pulse again!</b></span>"
+			to_chat(owner, "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can pulse again!</b></span>")
 		return FALSE
 	return ..()
 
@@ -365,7 +367,7 @@
 		if(!attached_action.throwing)
 			attached_action.throwing = TRUE
 			attached_action.throwee = target
-			ranged_ability_user << 'sound/weapons/thudswoosh.ogg'
+			SEND_SOUND(ranged_ability_user, sound('sound/weapons/thudswoosh.ogg'))
 			to_chat(ranged_ability_user,"<span class='cult'><b>You reach through the veil with your mind's eye and seize [target]!</b></span>")
 			return
 		else

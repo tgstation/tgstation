@@ -2,7 +2,7 @@
 	name = "Holodeck"
 	icon_state = "Holodeck"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	flags = 0
+	flags_1 = 0
 	hidden = TRUE
 
 	var/obj/machinery/computer/holodeck/linked
@@ -84,8 +84,8 @@
 /area/holodeck/rec_center/firingrange
 	name = "Holodeck - Firing Range"
 
-/area/holodeck/rec_center/rollercoaster
-	name = "Holodeck - Roller Coaster"
+/area/holodeck/rec_center/school
+	name = "Holodeck - Anime School"
 
 /area/holodeck/rec_center/chapelcourt
 	name = "Holodeck - Chapel Courtroom"

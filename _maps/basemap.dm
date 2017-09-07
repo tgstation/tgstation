@@ -1,4 +1,4 @@
-#include "map_files\generic\Centcomm.dmm"
+#include "map_files\generic\CentCom.dmm"
 #include "map_files\generic\SpaceStation.dmm"
 #include "map_files\generic\Space.dmm"
 #include "map_files\generic\SpaceDock.dmm"
@@ -11,7 +11,6 @@
 #include "map_files\OmegaStation\OmegaStation.dmm"
 #include "map_files\PubbyStation\PubbyStation.dmm"
 #include "map_files\BoxStation\BoxStation.dmm"
-#include "map_files\Cerestation\cerestation.dmm"
 
 #ifdef TRAVISBUILDING
 #include "templates.dm"

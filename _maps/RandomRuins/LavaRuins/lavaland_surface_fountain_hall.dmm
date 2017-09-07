@@ -29,7 +29,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/unpowered)
 "i" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/engine/cult,
 /area/ruin/unpowered)
 

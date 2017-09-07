@@ -42,7 +42,7 @@
 	icon_state = "gelmound"
 
 /obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
 	qdel(src)
 
@@ -297,7 +297,7 @@
 						break
 
 /obj/structure/alien/egg/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(status != BURST)
 			Burst(kill=TRUE)
 

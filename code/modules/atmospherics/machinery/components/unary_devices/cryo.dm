@@ -9,9 +9,10 @@
 	max_integrity = 350
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
 	layer = ABOVE_WINDOW_LAYER
+	state_open = FALSE
+	circuit = /obj/item/circuitboard/machine/cryo_tube
 
 	var/on = FALSE
-	state_open = FALSE
 	var/autoeject = FALSE
 	var/volume = 100
 
@@ -21,7 +22,7 @@
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.30
 
-	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	var/obj/item/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0
 
 	var/obj/item/device/radio/radio
@@ -35,8 +36,6 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
 	initialize_directions = dir
-	var/obj/item/weapon/circuitboard/machine/cryo_tube/B = new
-	B.apply_default_parts(src)
 
 	radio = new(src)
 	radio.keyslot = new radio_key
@@ -44,22 +43,12 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
-/obj/item/weapon/circuitboard/machine/cryo_tube
-	name = "Cryotube (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
-	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/stack/sheet/glass = 2)
-
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
 	var/C
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		C += M.rating
 
 	efficiency = initial(efficiency) * C
@@ -69,11 +58,8 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
-	qdel(radio)
-	radio = null
-	if(beaker)
-		qdel(beaker)
-		beaker = null
+	QDEL_NULL(radio)
+	QDEL_NULL(beaker)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/contents_explosion(severity, target)
@@ -280,7 +266,7 @@
 	close_machine(target)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+	if(istype(I, /obj/item/reagent_containers/glass))
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")
@@ -317,30 +303,46 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
 	var/list/data = list()
 	data["isOperating"] = on
-	data["hasOccupant"] = occupant ? 1 : 0
+	data["hasOccupant"] = occupant ? TRUE : FALSE
 	data["isOpen"] = state_open
 	data["autoEject"] = autoeject
 
-	var/list/occupantData = list()
+	data["occupant"] = list()
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
-		occupantData["name"] = mob_occupant.name
-		occupantData["stat"] = mob_occupant.stat
-		occupantData["health"] = mob_occupant.health
-		occupantData["maxHealth"] = mob_occupant.maxHealth
-		occupantData["minHealth"] = HEALTH_THRESHOLD_DEAD
-		occupantData["bruteLoss"] = mob_occupant.getBruteLoss()
-		occupantData["oxyLoss"] = mob_occupant.getOxyLoss()
-		occupantData["toxLoss"] = mob_occupant.getToxLoss()
-		occupantData["fireLoss"] = mob_occupant.getFireLoss()
-		occupantData["bodyTemperature"] = mob_occupant.bodytemperature
-	data["occupant"] = occupantData
-
+		data["occupant"]["name"] = mob_occupant.name
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "good"
+			if(SOFT_CRIT)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "average"
+			if(UNCONSCIOUS)
+				data["occupant"]["stat"] = "Unconscious"
+				data["occupant"]["statstate"] = "average"
+			if(DEAD)
+				data["occupant"]["stat"] = "Dead"
+				data["occupant"]["statstate"] = "bad"
+		data["occupant"]["health"] = round(mob_occupant.health, 1)
+		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
+		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+		data["occupant"]["bruteLoss"] = round(mob_occupant.getBruteLoss(), 1)
+		data["occupant"]["oxyLoss"] = round(mob_occupant.getOxyLoss(), 1)
+		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
+		data["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss(), 1)
+		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
+		if(mob_occupant.bodytemperature < 225)
+			data["occupant"]["temperaturestatus"] = "good"
+		else if(mob_occupant.bodytemperature < 273.15)
+			data["occupant"]["temperaturestatus"] = "average"
+		else
+			data["occupant"]["temperaturestatus"] = "bad"
 
 	var/datum/gas_mixture/air1 = AIR1
-	data["cellTemperature"] = round(air1.temperature)
+	data["cellTemperature"] = round(air1.temperature, 1)
 
-	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
 	var beakerContents = list()
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)

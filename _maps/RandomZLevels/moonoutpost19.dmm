@@ -236,7 +236,7 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/clothing/mask/facehugger/impregnated,
-/obj/item/weapon/gun/ballistic/automatic/pistol,
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -435,7 +435,7 @@
 /obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/under/rank/security,
 /obj/item/clothing/suit/armor/vest,
-/obj/item/weapon/melee/baton/loaded,
+/obj/item/melee/baton/loaded,
 /obj/item/clothing/head/helmet,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -632,7 +632,7 @@
 	name = "Syndicate Outpost"
 	})
 "aS" = (
-/obj/item/weapon/ore/iron{
+/obj/item/ore/iron{
 	pixel_x = 7;
 	pixel_y = -6
 	},
@@ -906,7 +906,7 @@
 	name = "Syndicate Outpost"
 	})
 "bn" = (
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -969,12 +969,12 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/weapon/pen,
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/log/personal,
+/obj/item/pen,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/log/personal,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -1011,7 +1011,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -1091,7 +1091,7 @@
 	pixel_x = 32
 	},
 /obj/item/trash/plate,
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -1203,7 +1203,7 @@
 	})
 "bJ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -1261,8 +1261,7 @@
 	name = "Syndicate Outpost"
 	})
 "bP" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1296,7 +1295,7 @@
 	icon_state = "2-4"
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -1581,8 +1580,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/weapon/stock_parts/cell/high,
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/engineering,
+/obj/item/stock_parts/cell/high,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/engineering,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -1652,8 +1651,7 @@
 	name = "Syndicate Outpost"
 	})
 "cn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1703,7 +1701,7 @@
 	name = "Dormitories"
 	},
 /obj/item/stack/rods,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plasteel{
@@ -1931,7 +1929,7 @@
 	},
 /obj/item/stack/rods,
 /obj/item/stack/rods,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -1975,8 +1973,7 @@
 	})
 "cK" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 1;
 	name = "Worn-out APC";
@@ -2006,7 +2003,7 @@
 	name = "Syndicate Outpost"
 	})
 "cM" = (
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -2219,7 +2216,7 @@
 	specialfunctions = 4
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/syndie,
+/obj/item/bedsheet/syndie,
 /turf/open/floor/wood{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -2438,11 +2435,11 @@
 	})
 "dp" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/storage/bag/ore,
+/obj/item/storage/bag/ore,
 /obj/structure/alien/weeds,
 /obj/item/device/mining_scanner,
-/obj/item/weapon/shovel,
-/obj/item/weapon/pickaxe,
+/obj/item/shovel,
+/obj/item/pickaxe,
 /turf/open/floor/plating{
 	broken = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -2456,8 +2453,8 @@
 	})
 "dq" = (
 /obj/structure/table/wood,
-/obj/item/weapon/pen,
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/log/personal_2,
+/obj/item/pen,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/log/personal_2,
 /obj/structure/sign/poster/contraband/c20r{
 	pixel_y = -32
 	},
@@ -2483,7 +2480,7 @@
 /obj/item/ammo_box/magazine/m10mm{
 	icon_state = "9x19p-8"
 	},
-/obj/item/weapon/suppressor,
+/obj/item/suppressor,
 /turf/open/floor/wood{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -2494,7 +2491,7 @@
 	})
 "ds" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/syndie,
+/obj/item/bedsheet/syndie,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	heat_capacity = 1e+006
@@ -2537,8 +2534,8 @@
 	name = "Syndicate Outpost"
 	})
 "dv" = (
-/obj/item/weapon/ore/iron,
-/obj/item/weapon/ore/iron{
+/obj/item/ore/iron,
+/obj/item/ore/iron{
 	pixel_x = -7;
 	pixel_y = -4
 	},
@@ -2592,7 +2589,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate/orange,
 /obj/item/clothing/mask/gas,
-/obj/item/weapon/pickaxe/drill,
+/obj/item/pickaxe/drill,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -2607,7 +2604,7 @@
 	name = "Syndicate Outpost"
 	})
 "dz" = (
-/obj/item/weapon/ore/iron{
+/obj/item/ore/iron{
 	pixel_x = -3;
 	pixel_y = 9
 	},
@@ -2785,7 +2782,7 @@
 	name = "Syndicate Outpost"
 	})
 "dJ" = (
-/obj/item/weapon/storage/bag/ore,
+/obj/item/storage/bag/ore,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -2801,7 +2798,7 @@
 	poweralm = 0
 	})
 "dK" = (
-/obj/item/weapon/pickaxe/drill,
+/obj/item/pickaxe/drill,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -2850,7 +2847,7 @@
 	poweralm = 0
 	})
 "dN" = (
-/obj/item/weapon/ore/iron{
+/obj/item/ore/iron{
 	pixel_x = -7;
 	pixel_y = -4
 	},
@@ -2872,7 +2869,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/suit/space/syndicate/orange,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
@@ -3064,7 +3061,6 @@
 	name = "MO19 Research"
 	})
 "eb" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaybiohazard";
@@ -3076,7 +3072,7 @@
 	layer = 2.9;
 	name = "Acid-Proof biohazard containment door"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3371,8 +3367,7 @@
 	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3677,7 +3672,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/newspaper,
+/obj/item/newspaper,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3831,11 +3826,11 @@
 	pixel_y = 24
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/box/beakers{
+/obj/item/storage/box/beakers{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/weapon/storage/box/syringes,
+/obj/item/storage/box/syringes,
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -3913,8 +3908,7 @@
 	id = "Awaylab";
 	name = "Acid-Proof containment chamber blast door"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4158,7 +4152,7 @@
 /obj/item/stack/cable_coil{
 	amount = 5
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4186,7 +4180,7 @@
 /obj/item/stack/cable_coil{
 	amount = 5
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/structure/cable{
@@ -4292,7 +4286,7 @@
 	name = "MO19 Research"
 	})
 "fM" = (
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4373,7 +4367,7 @@
 	})
 "fS" = (
 /obj/structure/filingcabinet,
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/log/kenneth,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/log/kenneth,
 /turf/open/floor/plasteel/red/side{
 	dir = 9;
 	heat_capacity = 1e+006
@@ -4390,10 +4384,10 @@
 	req_access_txt = "201"
 	},
 /obj/item/clothing/suit/armor/vest,
-/obj/item/weapon/reagent_containers/spray/pepper,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/storage/belt/security,
-/obj/item/weapon/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/spray/pepper,
+/obj/item/grenade/flashbang,
+/obj/item/storage/belt/security,
+/obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = -3;
 	pixel_y = -2
 	},
@@ -4413,7 +4407,7 @@
 	})
 "fU" = (
 /obj/item/device/radio/off,
-/obj/item/weapon/screwdriver{
+/obj/item/screwdriver{
 	pixel_y = 10
 	},
 /obj/structure/sign/poster/official/safety_report{
@@ -4428,8 +4422,7 @@
 	name = "MO19 Research"
 	})
 "fV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4532,7 +4525,7 @@
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
 /obj/item/stack/rods,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/engine,
@@ -4658,11 +4651,11 @@
 	})
 "gn" = (
 /obj/structure/table,
-/obj/item/weapon/scalpel{
+/obj/item/scalpel{
 	pixel_y = 12
 	},
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/razor{
+/obj/item/circular_saw,
+/obj/item/razor{
 	pixel_y = 5
 	},
 /obj/structure/alien/weeds,
@@ -4760,8 +4753,7 @@
 	name = "Acid-Proof containment chamber blast door"
 	},
 /obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4799,7 +4791,7 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /obj/item/device/radio/off,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -4810,7 +4802,7 @@
 	})
 "gx" = (
 /obj/structure/table,
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/log/ivan,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/log/ivan,
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -4876,7 +4868,7 @@
 	})
 "gD" = (
 /obj/item/stack/rods,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /obj/effect/decal/cleanable/blood/tracks{
@@ -4900,7 +4892,7 @@
 	},
 /obj/item/stack/rods,
 /obj/item/stack/rods,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4924,8 +4916,7 @@
 	})
 "gG" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 4;
 	locked = 0;
 	name = "Worn-out APC";
@@ -4943,8 +4934,8 @@
 	})
 "gH" = (
 /obj/structure/table,
-/obj/item/weapon/retractor,
-/obj/item/weapon/hemostat,
+/obj/item/retractor,
+/obj/item/hemostat,
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel/white,
 /area/awaycontent/a2{
@@ -4953,7 +4944,7 @@
 	})
 "gI" = (
 /obj/structure/table,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /obj/machinery/light/small{
 	active_power_usage = 0;
 	dir = 4;
@@ -4974,11 +4965,11 @@
 	icon_state = "bulb-broken";
 	status = 2
 	},
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/research/larva_social,
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/research/xeno_queen,
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/research/xeno_adult,
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/research/larva_psych,
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/research/facehugger,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/larva_social,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/xeno_queen,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/xeno_adult,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/larva_psych,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/facehugger,
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel/white,
 /area/awaycontent/a2{
@@ -4988,11 +4979,11 @@
 "gK" = (
 /obj/structure/table/reinforced,
 /obj/structure/alien/weeds,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /obj/item/device/radio/off,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -5015,8 +5006,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -5164,22 +5154,10 @@
 	})
 "gW" = (
 /obj/structure/filingcabinet/filingcabinet,
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/research/xeno_hivemind{
-	info = "Researcher: <u>Dr. Mark Douglas    </u><br>Date: <u>17/06/2554</u><br><br>Report:<br>Earlier today we have observed a new phenomenon with our subjects. While feeding them our last monkey subject and throwing out the box, the aliens merely looked at us instead of infecting the monkey right away. They looked to be collectively distressed as they would no longer be given hosts, where instead we would move to the next phase of the experiment. When I glanced at the gas tanks and piping leading to their cell, I looked back to see all of them were up against the glass, even the queen! It was as if they all understood what was going to happen, even though we knew only the queen had the cognitive capability to do so.<br><br>The only explanation for this is a form of communication between the aliens, but we have seen no such action take place anywhere in the cell until now. We also know that regular drone and hunter xenomorphs have no personality or instinct to survive by themselves. Perhaps the queen has a direct link to them? A form of a commander or overseer that controls their every move? A hivemind?";
-	name = "The Hivemind Hypothesis"
-	},
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/research/xeno_behavior{
-	info = "Researcher: <u>Dr. Sakuma Sano    </u><br>Date: <u>08/06/2554</u><br><br>Report:<br>The xenomorphs we have come to study here are a remarkable species. They are almost universally aggressive across all castes, showing no remorse or guilt or pause before or after acts of violence. They appear to be a species entirely designed to kill. Oddly enough, even their method of reproduction is a brutal two-for-one method of birthing a new xenomorph and killing its host.<br><br>The lone xenomorph we studied only five days ago showed little sign of intelligence. Only a simple drone that flung itself at the safety glass and shields repeatedly and thankfully without success. Once the drone molted into a queen, it became much more calm and calculating, merely looking at us and waiting while building its nest. As the hive grew in size and in numbers, so too did the intelligence of the common hunter and drone. We are still researching how they can communicate with one another and the relationship between the different castes and the queen. We will continue to update our research as we learn more about the species.";
-	name = "A Preliminary Study of Alien Behavior"
-	},
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/research/xeno_castes{
-	info = "Researcher: <u>Dr. Mark Douglas    </u><br>Date: <u>06/06/2554</u><br><br>Report:<br>While observing the growing number of aliens in the containment cell, we began to notice subtle differences that were consistently repeating. Like ants, these creatures clearly have different specialized variations that determine their roles in the hive. We have dubbed the three currently observed castes as Hunters, Drones, and Sentinels.<br><br>Hunters have been observed to be by far the most aggressive and agile of the three, constantly running on every surface and frequently swiping at the windows. They are also remarkably good at camouflaging themselves in darkness and on their resin structures, appearing almost invisible to the unwary observer. They are always the first to reach the monkeys we send in leading us to believe that this caste is primarily used for finding and retrieving hosts.<br><br>Drones on the other hand are much more docile and seem more shy by comparison, though not any less aggressive than the other castes. They have been observed to have a much wider head and lack dorsal tubes. They have shown to be less agile and visibly more fragile than any other caste. The drone however has never been observed to interact with the monkeys directly and instead preferring maintenance of the hive by building walls of resin and moving eggs around the nest. As far as we know, we have only ever observed a drone become a queen, and we have no way of knowing if the other castes have that capability.<br><br>Lastly, we have the Sentinels, which appear at first glance to be the guards of the hive.  They have so far been only observed to remain near the queen and the eggs, frequently curled up against the walls. We have only observed one instance where they have interacted with a monkey who strayed too closely to the queen, and was pounced and held down immediately until it was applied with a facehugger. Their lack of movement makes it difficult to determine their exact purpose as guards, sentries, or other role.";
-	name = "The Xenomorph 'Castes'"
-	},
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/research/larva_autopsy{
-	info = "Researcher: <u>Dr. Mark Douglas    </u><br>Date: <u>04/06/2554</u><br><br>Report:<br>After an extremely dangerous, time consuming and costly dissection, we have managed to record and identify several of the organs inside of the first stage of the xenomorph cycle: the larva. This procedure took an extensive amount of time because these creatures have incredibly, almost-comically acidic blood that can melt through almost anything in a few moments. We had to use over a dozen scalpels and retractors to complete the autopsy.<br><br>The larva seems to possess far fewer and quite different organs than that of a human. There is a stomach, with no digestive tract, a heart, which seems to lack any blood-oxygen circulation purpose, and an elongated brain, even though its as dumb as any large cat. It also lacks any liver, kidneys, or other basic organs.<br><br>We can't determine the exact nature of how these creatures grow, nor if they gain organs as they become adults. The larger breeds of xenomorph are too dangerous to kill and capture to give us an accurate answer to these questions. All that we can conclude is that being able to function with so little and yet be so deadly means that these creatures are highly evolved and likely to be extremely durable to various hazards that would otherwise be lethal to humans.";
-	name = "Larva Xenomorph Autopsy Report"
-	},
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/xeno_hivemind,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/xeno_behavior,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/xeno_castes,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/larva_autopsy,
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel/white,
 /area/awaycontent/a2{
@@ -5312,7 +5290,7 @@
 	})
 "hg" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32
 	},
@@ -5326,7 +5304,7 @@
 	})
 "hh" = (
 /obj/structure/table,
-/obj/item/weapon/folder/red,
+/obj/item/folder/red,
 /turf/open/floor/plasteel/red/side{
 	heat_capacity = 1e+006
 	},
@@ -5336,11 +5314,11 @@
 	})
 "hi" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/plasteel/red/side{
 	dir = 6;
 	heat_capacity = 1e+006
@@ -5422,7 +5400,7 @@
 	})
 "ho" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/gloves,
+/obj/item/storage/box/gloves,
 /turf/open/floor/plasteel/white/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -5454,7 +5432,7 @@
 	name = "research director's locker";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/storage/backpack/satchel/tox,
+/obj/item/storage/backpack/satchel/tox,
 /obj/item/clothing/gloves/color/latex,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -5465,8 +5443,8 @@
 	})
 "hr" = (
 /obj/structure/table,
-/obj/item/weapon/cartridge/signal/toxins,
-/obj/item/weapon/cartridge/signal/toxins{
+/obj/item/cartridge/signal/toxins,
+/obj/item/cartridge/signal/toxins{
 	pixel_x = -4;
 	pixel_y = 2
 	},
@@ -5495,7 +5473,7 @@
 	pixel_y = 23;
 	req_access = null
 	},
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/log/gerald,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/log/gerald,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -5513,13 +5491,12 @@
 	name = "MO19 Research"
 	})
 "hu" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor{
 	id = "AwayRD";
 	layer = 2.9;
 	name = "privacy shutter"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -5553,7 +5530,7 @@
 	},
 /obj/item/stack/rods,
 /obj/item/stack/rods,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating{
@@ -5565,7 +5542,7 @@
 	})
 "hy" = (
 /obj/item/stack/rods,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plasteel/white{
@@ -5578,7 +5555,7 @@
 "hz" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/decal/cleanable/oil,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
@@ -5600,7 +5577,7 @@
 	})
 "hA" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 28
@@ -5660,7 +5637,7 @@
 	icon_state = "bulb-broken";
 	status = 2
 	},
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/research/evacuation,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/research/evacuation,
 /obj/machinery/camera{
 	c_tag = "Research Division";
 	dir = 1;
@@ -5697,7 +5674,7 @@
 	})
 "hH" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 8;
@@ -5728,8 +5705,8 @@
 	})
 "hK" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/poster/random_contraband,
+/obj/item/storage/box/lights/mixed,
+/obj/item/poster/random_contraband,
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -5895,8 +5872,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/folder/white,
-/obj/item/weapon/stamp/rd{
+/obj/item/folder/white,
+/obj/item/stamp/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -5909,7 +5886,7 @@
 	})
 "hY" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
@@ -5954,7 +5931,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/circuitboard/computer/teleporter,
+/obj/item/circuitboard/computer/teleporter,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -6097,7 +6074,7 @@
 	name = "MO19 Arrivals"
 	})
 "il" = (
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/soap/nanotrasen,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -6128,8 +6105,7 @@
 	name = "MO19 Arrivals"
 	})
 "io" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6198,12 +6174,12 @@
 	name = "MO19 Research"
 	})
 "it" = (
-/obj/item/weapon/storage/secure/safe{
+/obj/item/storage/secure/safe{
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/item/weapon/pen,
-/obj/item/weapon/paper/crumpled/awaymissions/moonoutpost19/hastey_note,
+/obj/item/pen,
+/obj/item/paper/crumpled/awaymissions/moonoutpost19/hastey_note,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -6294,7 +6270,7 @@
 /obj/machinery/shower{
 	dir = 8
 	},
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/bikehorn/rubberducky,
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
 	},
@@ -6314,7 +6290,7 @@
 	})
 "iC" = (
 /obj/structure/table,
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -6443,7 +6419,7 @@
 	})
 "iM" = (
 /obj/structure/table,
-/obj/item/weapon/storage/secure/briefcase,
+/obj/item/storage/secure/briefcase,
 /obj/item/device/taperecorder{
 	pixel_x = -3
 	},
@@ -6616,7 +6592,7 @@
 	})
 "ja" = (
 /obj/item/stack/rods,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -6645,7 +6621,7 @@
 	})
 "jc" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/detective,
+/obj/item/book/manual/detective,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -6745,10 +6721,10 @@
 "jm" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = 3
 	},
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -3
 	},
 /obj/machinery/door/poddoor/shutters{
@@ -6800,7 +6776,7 @@
 	name = "MO19 Research"
 	})
 "jq" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
 	layer = 4.1;
 	pixel_y = 3
@@ -6837,7 +6813,7 @@
 	})
 "jt" = (
 /obj/structure/table,
-/obj/item/weapon/newspaper,
+/obj/item/newspaper,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -6917,8 +6893,7 @@
 	name = "MO19 Arrivals"
 	})
 "jA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	broken = 1;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -6941,8 +6916,7 @@
 	name = "MO19 Arrivals"
 	})
 "jC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -6993,8 +6967,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 1;
 	locked = 0;
 	name = "Worn-out APC";
@@ -7051,7 +7024,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/food_specials,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/food_specials,
 /turf/open/floor/plasteel{
 	burnt = 1;
 	dir = 8;
@@ -7063,8 +7036,7 @@
 	name = "MO19 Arrivals"
 	})
 "jM" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -7073,7 +7045,7 @@
 	name = "MO19 Arrivals"
 	})
 "jN" = (
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
 	},
@@ -7097,10 +7069,10 @@
 	})
 "jP" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/barman_recipes{
+/obj/item/book/manual/barman_recipes{
 	pixel_y = 5
 	},
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -7110,7 +7082,7 @@
 	})
 "jQ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -7209,7 +7181,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -7477,7 +7449,7 @@
 "kn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/reagent_containers/glass/rag{
+/obj/item/reagent_containers/glass/rag{
 	pixel_y = 5
 	},
 /obj/machinery/door/poddoor/shutters{
@@ -7502,8 +7474,8 @@
 	})
 "kp" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/rollingpin,
-/obj/item/weapon/kitchen/knife,
+/obj/item/kitchen/rollingpin,
+/obj/item/kitchen/knife,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -7513,7 +7485,7 @@
 	})
 "kq" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/chef_recipes{
+/obj/item/book/manual/chef_recipes{
 	pixel_x = 2;
 	pixel_y = 6
 	},
@@ -7783,7 +7755,7 @@
 "kM" = (
 /obj/structure/closet/crate/bin,
 /obj/item/trash/plate,
-/obj/item/weapon/reagent_containers/food/snacks/badrecipe,
+/obj/item/reagent_containers/food/snacks/badrecipe,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -7821,7 +7793,7 @@
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating{
@@ -7934,7 +7906,7 @@
 	})
 "kX" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -7950,7 +7922,7 @@
 "kY" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
 	},
@@ -8019,11 +7991,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
 	},
-/turf/closed/wall/shuttle{
-	dir = 3;
-	icon_state = "swall_f10";
-	layer = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8039,7 +8007,7 @@
 	name = "MO19 Arrivals"
 	})
 "lg" = (
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -8064,7 +8032,7 @@
 	})
 "li" = (
 /obj/item/stack/rods,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plating/asteroid{
@@ -8173,7 +8141,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/box,
+/obj/item/storage/box,
 /obj/machinery/airalarm{
 	dir = 4;
 	frequency = 1439;
@@ -8272,7 +8240,7 @@
 	desc = "It's a storage unit for kitchen clothes and equipment.";
 	name = "Kitchen Crate"
 	},
-/obj/item/weapon/storage/box/mousetraps,
+/obj/item/storage/box/mousetraps,
 /obj/item/clothing/under/waiter,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
@@ -8283,45 +8251,32 @@
 	name = "MO19 Arrivals"
 	})
 "ly" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "lz" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "lA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "lB" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "lC" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8377,7 +8332,7 @@
 	})
 "lH" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
+/obj/item/storage/fancy/cigarettes/dromedaryco,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -8412,7 +8367,7 @@
 	})
 "lK" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -8422,7 +8377,7 @@
 	})
 "lL" = (
 /obj/structure/table/wood,
-/obj/item/weapon/lighter,
+/obj/item/lighter,
 /obj/machinery/newscaster{
 	pixel_x = 30
 	},
@@ -8509,7 +8464,7 @@
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains. The skeleton is sitting upright with its legs tucked in and hands still holding onto its arms."
 	},
-/obj/item/weapon/gun/ballistic/shotgun/sc_pump,
+/obj/item/gun/ballistic/shotgun/sc_pump,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
 	temperature = 273.15
@@ -8527,7 +8482,7 @@
 	})
 "lW" = (
 /obj/structure/table,
-/obj/item/weapon/storage/lockbox,
+/obj/item/storage/lockbox,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8542,10 +8497,7 @@
 	name = "MO19 Arrivals"
 	})
 "lY" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8673,7 +8625,7 @@
 	})
 "ml" = (
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/satchel/leather/withwallet,
+/obj/item/storage/backpack/satchel/leather/withwallet,
 /turf/open/floor/plasteel/black,
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8686,9 +8638,9 @@
 	name = "kitchen Cabinet";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/reagent_containers/food/condiment/flour,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
-/obj/item/weapon/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/sugar,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
@@ -8705,10 +8657,10 @@
 	name = "meat fridge";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
 	temperature = 273.15
@@ -8724,10 +8676,10 @@
 	name = "refrigerator";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/reagent_containers/food/condiment/milk,
-/obj/item/weapon/reagent_containers/food/condiment/milk,
-/obj/item/weapon/reagent_containers/food/condiment/milk,
-/obj/item/weapon/storage/fancy/egg_box,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/storage/fancy/egg_box,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
 	temperature = 273.15
@@ -8738,7 +8690,7 @@
 	})
 "mp" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8792,12 +8744,11 @@
 	name = "MO19 Arrivals"
 	})
 "mv" = (
-/obj/structure/grille,
 /obj/structure/sign/vacuum{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -8899,15 +8850,15 @@
 	})
 "mE" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 3
 	},
 /turf/open/floor/plasteel/black,
@@ -8995,7 +8946,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/welcome,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/welcome,
 /obj/machinery/camera{
 	c_tag = "Arrivals South";
 	dir = 8;
@@ -9119,8 +9070,8 @@
 	})
 "mV" = (
 /obj/structure/table,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/pen,
+/obj/item/clipboard,
+/obj/item/pen,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9137,10 +9088,7 @@
 	name = "MO19 Arrivals"
 	})
 "mX" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall2";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9172,7 +9120,7 @@
 	})
 "na" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -9209,24 +9157,13 @@
 	name = "MO19 Arrivals"
 	})
 "nd" = (
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "ne" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9299,7 +9236,7 @@
 	name = "MO19 Arrivals"
 	})
 "nl" = (
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -9321,10 +9258,7 @@
 	name = "MO19 Arrivals"
 	})
 "nn" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9424,14 +9358,7 @@
 	name = "MO19 Arrivals"
 	})
 "nv" = (
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	heat_capacity = 1e+006
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9520,7 +9447,7 @@
 	})
 "nC" = (
 /obj/item/stack/rods,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /obj/effect/decal/cleanable/blood/tracks{
@@ -9549,7 +9476,7 @@
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
 	dir = 8;
@@ -9617,7 +9544,7 @@
 	})
 "nH" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "awaydorm3";
 	name = "Door Bolt Control";
@@ -9639,7 +9566,7 @@
 	})
 "nI" = (
 /obj/structure/dresser,
-/obj/item/weapon/paper/fluff/awaymissions/moonoutpost19/goodbye_note,
+/obj/item/paper/fluff/awaymissions/moonoutpost19/goodbye_note,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -9721,8 +9648,8 @@
 	name = "MO19 Arrivals"
 	})
 "nP" = (
-/obj/item/weapon/pen,
-/obj/item/weapon/storage/pill_bottle{
+/obj/item/pen,
+/obj/item/storage/pill_bottle{
 	pixel_y = 6
 	},
 /turf/open/floor/carpet{
@@ -9744,7 +9671,7 @@
 	})
 "nR" = (
 /obj/structure/closet,
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -9795,9 +9722,8 @@
 	name = "MO19 Arrivals"
 	})
 "nV" = (
-/obj/structure/grille,
 /obj/structure/disposalpipe/segment,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -9881,7 +9807,7 @@
 	name = "MO19 Arrivals"
 	})
 "ob" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
 	layer = 4.1;
 	pixel_y = 3
@@ -9918,7 +9844,7 @@
 	poweralm = 0
 	})
 "od" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plating/asteroid{
@@ -9952,7 +9878,7 @@
 	poweralm = 0
 	})
 "of" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -9965,7 +9891,7 @@
 	poweralm = 0
 	})
 "og" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/mineral/titanium,
@@ -9980,7 +9906,7 @@
 	poweralm = 0
 	})
 "oh" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/mineral/titanium,
@@ -10624,7 +10550,7 @@
 	req_access_txt = "201"
 	},
 /obj/item/clothing/suit/toggle/labcoat,
-/obj/item/weapon/tank/internals/air,
+/obj/item/tank/internals/air,
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -10634,6 +10560,10 @@
 	has_gravity = 1;
 	name = "MO19 Research"
 	})
+"oV" = (
+/obj/effect/mapping_helpers/planet_z,
+/turf/open/space,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -10890,7 +10820,7 @@ aa
 aa
 aa
 aa
-aa
+oV
 "}
 (2,1,1) = {"
 aa
@@ -30002,10 +29932,10 @@ ac
 ac
 ac
 ac
-af
-ae
 ad
-ae
+ad
+ad
+ad
 ac
 ac
 ac
@@ -30259,10 +30189,10 @@ ac
 ac
 ad
 ad
-af
-hl
-ah
-af
+ad
+hk
+ag
+ad
 ad
 ad
 ac
@@ -30514,14 +30444,14 @@ ac
 ac
 ac
 ac
-ae
+ad
 ai
-ah
-al
+ag
+ag
 ai
 hk
 ai
-af
+ad
 ad
 ac
 ac
@@ -30770,16 +30700,16 @@ ac
 ac
 ac
 ac
-ae
-af
+ad
+ad
 hk
-aq
+ai
 ai
 hk
-bb
-ar
-ah
-af
+aM
+ai
+ag
+ad
 ac
 ac
 ac
@@ -31027,13 +30957,13 @@ ac
 ac
 ac
 ac
-af
+ad
 ai
-aq
+ai
 aD
-an
-aq
-ar
+aj
+ai
+ai
 aD
 ai
 ad
@@ -31286,14 +31216,14 @@ ac
 ac
 ad
 ai
-ar
-an
-ar
+ai
+aj
+ai
 aT
 av
 bj
 bc
-ae
+ad
 ac
 ac
 ac
@@ -31541,16 +31471,16 @@ ac
 ac
 ac
 ac
-ae
-ah
+ad
+ag
 au
 ai
-aq
-ar
+ai
+ai
 bc
 av
-ar
-af
+ai
+ad
 ac
 ac
 ac
@@ -31798,16 +31728,16 @@ ac
 ac
 ac
 ac
-af
-ao
+ad
+aj
 av
-aq
+ai
 ai
 am
-ar
-bk
-al
-ae
+ai
+au
+ag
+ad
 ac
 ac
 ac
@@ -32058,13 +31988,13 @@ ac
 ad
 ap
 aw
-ar
-aq
-aq
-ar
-al
-aq
-af
+ai
+ai
+ai
+ai
+ag
+ai
+ad
 ac
 ac
 ac
@@ -32312,11 +32242,11 @@ ac
 ac
 ac
 ac
-ae
-aq
-ax
-af
-aq
+ad
+ai
+av
+ad
+ai
 ai
 ai
 aD
@@ -32570,31 +32500,31 @@ ac
 ac
 ac
 ad
-af
-ar
-ai
-ar
-ai
-ar
-ar
-aq
-af
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-af
-ae
 ad
-ae
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
 ac
 ac
 ac
@@ -32827,15 +32757,15 @@ ac
 ac
 ac
 ac
-ae
+ad
 ag
-aq
 ai
-aq
 ai
-ar
-aq
-ae
+ai
+ai
+ai
+ai
+ad
 ac
 ac
 ac
@@ -32847,12 +32777,12 @@ ac
 ac
 ac
 ac
-ae
+ad
 ad
 dO
 aj
-af
-ae
+ad
+ad
 ac
 ac
 ac
@@ -33084,15 +33014,15 @@ ac
 ac
 ac
 ac
-af
-ae
-ar
-aq
-am
-ar
+ad
+ad
 ai
-af
-af
+ai
+am
+ai
+ai
+ad
+ad
 ac
 ac
 ac
@@ -33104,12 +33034,12 @@ ac
 ac
 ac
 ad
-ae
+ad
 ag
-aL
+av
 dS
-ar
-af
+ai
+ad
 ac
 ac
 ac
@@ -33342,12 +33272,12 @@ ac
 ac
 ac
 ac
-af
-ae
+ad
+ad
 ai
-ar
-aq
-ae
+ai
+ai
+ad
 ad
 ac
 ac
@@ -33360,12 +33290,12 @@ ac
 ac
 ac
 ac
-af
+ad
 aj
-ar
+ai
 am
 ai
-ah
+ag
 ad
 ac
 ac
@@ -33600,11 +33530,11 @@ ac
 ac
 ac
 ac
-af
-af
 ad
-af
-af
+ad
+ad
+ad
+ad
 ac
 ac
 ac
@@ -33616,13 +33546,13 @@ ac
 ac
 ac
 ad
-ae
-af
-aq
+ad
+ad
 ai
-ar
+ai
+ai
 aj
-ae
+ad
 ad
 ac
 ac
@@ -33857,10 +33787,10 @@ ac
 ac
 ac
 ac
-ae
+ad
 am
 am
-ae
+ad
 ac
 ac
 ac
@@ -33871,14 +33801,14 @@ ac
 ac
 ac
 ac
-ae
-ae
-ar
+ad
+ad
+ai
 ak
 ai
-ah
-ae
-af
+ag
+ad
+ad
 ad
 ac
 ac
@@ -34114,27 +34044,27 @@ ac
 ac
 ac
 ac
-af
-ai
-aq
 ad
-ae
+ai
+ai
+ad
+ad
 ac
 ad
-ae
-af
-ae
-af
 ad
-ae
-ae
-af
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ai
-aq
-ae
-af
+ai
 ad
-ae
+ad
+ad
+ad
 ac
 ac
 ac
@@ -34372,23 +34302,23 @@ ac
 ac
 ac
 ad
-ar
-ar
-ai
-af
-af
-ae
-ar
-ai
-ar
-aq
 ai
 ai
-af
+ai
+ad
+ad
 ad
 ai
-af
-ae
+ai
+ai
+ai
+ai
+ai
+ad
+ad
+ai
+ad
+ad
 ac
 ac
 ac
@@ -34628,22 +34558,22 @@ ac
 ac
 ac
 ac
-ae
-ae
+ad
+ad
 ai
 ai
-aq
-af
 ai
-ar
-aq
+ad
 ai
-ar
-aq
+ai
+ai
+ai
+ai
+ai
 am
-ar
 ai
-aq
+ai
+ai
 ad
 ac
 ac
@@ -34880,27 +34810,27 @@ ab
 ab
 ac
 ad
-af
-ae
+ad
+ad
 ad
 ac
 ac
 ac
 ad
-af
-aq
-am
-aq
-ar
+ad
 ai
-af
-ae
-af
-ae
-ar
-aq
-ar
-ae
+am
+ai
+ai
+ai
+ad
+ad
+ad
+ad
+ai
+ai
+ai
+ad
 ad
 ac
 ac
@@ -35136,28 +35066,28 @@ ab
 ab
 ab
 ad
-af
-ah
+ad
+ag
 aj
-ae
-af
-ae
 ad
-ae
-af
-ar
-aq
+ad
+ad
+ad
+ad
+ad
 ai
-aq
-ae
+ai
+ai
+ai
+ad
 ad
 bl
 bl
 ad
-af
+ad
 ai
-aq
-af
+ai
+ad
 ac
 ac
 ac
@@ -35392,29 +35322,29 @@ ab
 ab
 ab
 ab
-ae
+ad
 ag
 ai
 ak
 ai
 ad
-af
-ar
+ad
 ai
-aq
 ai
-ar
-ar
-af
+ai
+ai
+ai
+ai
+ad
 ad
 bl
 bl
 bl
-ae
-ar
-ar
+ad
 ai
-ae
+ai
+ai
+ad
 ac
 ac
 ac
@@ -35650,27 +35580,27 @@ ab
 ab
 ab
 ad
-ah
+ag
 ai
-al
+ag
 am
-ar
 ai
-aq
-af
-ae
-aq
-af
-ae
-af
-bl
-bl
-bl
-bl
-af
 ai
-aq
-af
+ai
+ad
+ad
+ai
+ad
+ad
+ad
+bl
+bl
+bl
+bl
+ad
+ai
+ai
+ad
 ad
 ac
 ac
@@ -35906,14 +35836,14 @@ ab
 ab
 ab
 ab
-ae
-af
-af
+ad
+ad
+ad
 aj
-an
+aj
 ad
-af
-ae
+ad
+ad
 ad
 ad
 ai
@@ -35924,10 +35854,10 @@ bl
 bl
 bl
 bl
-af
-aq
+ad
 ai
-af
+ai
+ad
 ac
 ac
 ac
@@ -36165,17 +36095,17 @@ ab
 ab
 ac
 ac
-ae
-af
-af
-ae
+ad
+ad
+ad
+ad
 ac
 ac
 ac
-af
+ad
 aM
-af
-ae
+ad
+ad
 bl
 bl
 bl
@@ -36185,7 +36115,7 @@ ad
 ai
 dd
 ad
-af
+ad
 ad
 ac
 ac
@@ -36193,8 +36123,8 @@ ac
 dA
 dA
 dA
-dR
-dU
+dP
+dT
 ba
 ba
 ba
@@ -36429,27 +36359,27 @@ ac
 ac
 ac
 ac
-af
-aq
+ad
 ai
-ae
-bl
-bl
-bl
-bl
-bl
-ae
-ar
-aq
-ar
 ai
-af
-ae
-af
+ad
+bl
+bl
+bl
+bl
+bl
+ad
+ai
+ai
+ai
+ai
+ad
+ad
+ad
 ac
 dA
 dA
-dW
+dP
 dP
 dT
 ba
@@ -36685,30 +36615,30 @@ ac
 ac
 ac
 ad
-af
-ae
-ar
-ar
-af
+ad
+ad
+ai
+ai
+ad
 ad
 bl
 bl
 bl
 bl
-af
-af
-ai
-aq
-aq
-ai
-ar
 ad
-af
+ad
+ai
+ai
+ai
+ai
+ai
+ad
+ad
 dP
-dR
+dP
 dV
 dT
-dU
+dT
 ba
 ba
 ba
@@ -36941,31 +36871,31 @@ ac
 ac
 ac
 ad
-ae
+ad
 aJ
 ai
-ar
+ai
 am
 ag
-ae
+ad
 bl
 bl
 bl
 ad
-af
+ad
 ai
-ar
-ae
-af
 ai
-aq
-ar
+ad
+ad
+ai
+ai
+ai
 ad
 dQ
 dT
-dX
-dU
-dX
+dT
+dT
+dT
 ba
 ba
 ba
@@ -37197,32 +37127,32 @@ ac
 ac
 ac
 ac
-af
+ad
 aE
 aK
 ak
 ai
 ag
-an
-af
-bl
-bl
-bl
-ae
-ai
-aq
-af
-ae
+aj
 ad
-af
+bl
+bl
+bl
+ad
+ai
+ai
+ad
+ad
+ad
+ad
 ai
 am
 ad
 dQ
-dU
-dX
 dT
-dU
+dT
+dT
+dT
 ba
 ba
 ba
@@ -37454,32 +37384,32 @@ ac
 ac
 ac
 ac
-af
+ad
 aj
-aL
-aq
-ao
-an
-af
+av
+ai
+aj
+aj
+ad
 ad
 bl
 bl
 bl
-af
-ar
-ae
-af
-ac
-ac
-ae
-af
 ad
-af
-dR
+ai
+ad
+ad
+ac
+ac
+ad
+ad
+ad
+ad
+dP
 dV
-dU
-dX
-dU
+dT
+dT
+dT
 ba
 ba
 ba
@@ -37711,20 +37641,20 @@ ac
 ac
 ac
 ac
-ae
 ad
-af
+ad
+ad
 ai
-af
-af
-ae
+ad
+ad
+ad
 bl
 bl
 bl
 bl
 ad
-aq
-af
+ai
+ad
 ad
 ac
 ac
@@ -37733,9 +37663,9 @@ ac
 ac
 dA
 dA
-dR
+dP
 dT
-dU
+dT
 ba
 ba
 ba
@@ -37970,19 +37900,19 @@ ac
 ac
 ac
 ac
-ae
-aq
-ae
+ad
+ai
+ad
 bl
 bl
 bl
 bl
 bl
 bl
-ae
+ad
 ai
 ai
-ae
+ad
 ac
 ac
 ac
@@ -37991,7 +37921,7 @@ ac
 dA
 dA
 dP
-dX
+dT
 dT
 ba
 ba
@@ -38228,27 +38158,27 @@ ac
 ac
 ac
 ad
-aq
-af
+ai
+ad
 bl
 bl
 bl
 bl
 bl
 bl
-ae
-af
+ad
+ad
 am
-af
+ad
 ac
 ac
 ac
 ac
 dA
 dA
-dR
-dR
-dU
+dP
+dP
+dT
 ba
 ba
 ba
@@ -38484,7 +38414,7 @@ ac
 ac
 ac
 ac
-ae
+ad
 am
 ad
 bl
@@ -38495,15 +38425,15 @@ bl
 bl
 bl
 ad
-aq
-ae
+ai
+ad
 ac
 ac
 ac
 ac
 dA
 dA
-dR
+dP
 ba
 ba
 ba
@@ -38741,9 +38671,9 @@ ac
 ac
 ac
 ac
-af
-aq
-ae
+ad
+ai
+ad
 bl
 bl
 bl
@@ -38751,9 +38681,9 @@ bl
 bl
 bl
 bl
-af
-ar
-af
+ad
+ai
+ad
 ac
 ac
 ac
@@ -38998,19 +38928,19 @@ ac
 ac
 ac
 ac
-ae
+ad
 ai
-af
+ad
 bl
 bl
 bl
 bl
 bl
 bl
-af
-ae
+ad
+ad
 ai
-ae
+ad
 ac
 ac
 ac
@@ -39255,18 +39185,18 @@ ac
 ac
 ac
 ac
-af
-ar
-ae
+ad
+ai
+ad
 bl
 bl
 bl
 bl
 bl
 ad
-ae
+ad
 ai
-aq
+ai
 ad
 ac
 ac
@@ -39512,19 +39442,19 @@ ac
 ac
 ac
 ad
-af
-aq
-af
 ad
-ae
-af
-af
+ai
 ad
-af
-aq
-ar
-ae
-af
+ad
+ad
+ad
+ad
+ad
+ad
+ai
+ai
+ad
+ad
 ac
 ac
 ac
@@ -39768,18 +39698,18 @@ ac
 ac
 ac
 ad
-af
-ar
+ad
 ai
-al
-ae
-af
 ai
-ar
+ag
+ad
+ad
+ai
+ai
 bW
 ai
-ar
-af
+ai
+ad
 ad
 ac
 ac
@@ -40024,19 +39954,19 @@ ac
 ac
 ac
 ac
-ae
-an
-aM
-aq
-ai
-ar
-aq
-aq
 ad
-af
-ae
-af
-ae
+aj
+aM
+ai
+ai
+ai
+ai
+ai
+ad
+ad
+ad
+ad
+ad
 ac
 ac
 ac
@@ -40280,16 +40210,16 @@ ac
 ac
 ac
 ac
-af
-af
-ah
-ar
+ad
+ad
+ag
+ai
 am
 ai
 ag
-af
-ae
-af
+ad
+ad
+ad
 ac
 ac
 ac
@@ -40537,13 +40467,13 @@ ac
 ac
 ac
 ac
-ae
+ad
 ag
-ar
 ai
-ao
-an
-af
+ai
+aj
+aj
+ad
 ad
 ac
 ac
@@ -40795,12 +40725,12 @@ ac
 ac
 ac
 as
-af
-ae
-af
 ad
-ae
-af
+ad
+ad
+ad
+ad
+ad
 ac
 ac
 ac
@@ -41859,7 +41789,7 @@ ba
 ba
 ea
 eg
-ew
+eg
 eI
 fj
 fA
@@ -43146,7 +43076,7 @@ ea
 ea
 eA
 eq
-eD
+eq
 fF
 gc
 gu
@@ -43402,10 +43332,10 @@ ba
 ea
 el
 er
-eE
+eq
 en
 fG
-eG
+em
 gv
 gM
 ha
@@ -43659,13 +43589,13 @@ ba
 ea
 em
 eB
-eG
-eR
+em
+en
 fH
-gd
-eC
+el
+en
 eB
-eE
+eq
 ea
 ba
 ba
@@ -43915,13 +43845,13 @@ ba
 ba
 ea
 en
-eC
-eP
-eE
-fI
-eE
-eD
-eC
+en
+eH
+eq
+fH
+eq
+eq
+en
 eq
 ea
 ba
@@ -44172,11 +44102,11 @@ ba
 ba
 ec
 eo
-eD
+eq
 eq
 eq
 fJ
-eE
+eq
 eq
 en
 hb
@@ -44429,11 +44359,11 @@ ba
 ba
 ea
 ep
-eE
-eP
-eD
-eD
-eE
+eq
+eH
+eq
+eq
+eq
 eq
 eQ
 hc
@@ -44688,9 +44618,9 @@ ea
 eq
 eF
 eQ
-fo
-eC
-ge
+eH
+en
+fp
 eq
 en
 eq
@@ -44943,12 +44873,12 @@ ba
 ba
 ea
 er
-eG
-eR
+em
+en
 en
 eQ
-eC
-eR
+en
+en
 eB
 eq
 ea
@@ -45199,14 +45129,14 @@ ba
 ba
 ba
 ea
-es
+el
 eH
 eB
 fp
 fK
 eH
-fo
-eD
+eH
+eq
 eq
 ea
 ba

@@ -52,8 +52,7 @@
 
 /obj/machinery/air_sensor/Destroy()
 	SSair.atmos_machinery -= src
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
 /////////////////////////////////////////////////////////////
@@ -65,7 +64,7 @@
 	desc = "Used to monitor the station's atmospherics sensors."
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
-	circuit = /obj/item/weapon/circuitboard/computer/atmos_control
+	circuit = /obj/item/circuitboard/computer/atmos_control
 
 	var/frequency = 1441
 	var/list/sensors = list(
@@ -89,8 +88,7 @@
 	set_frequency(frequency)
 
 /obj/machinery/computer/atmos_control/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -141,7 +139,7 @@
 	var/input_tag
 	var/output_tag
 	frequency = 1441
-	circuit = /obj/item/weapon/circuitboard/computer/atmos_control/tank
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank
 
 	var/list/input_info
 	var/list/output_info

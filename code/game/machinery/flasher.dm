@@ -5,15 +5,15 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
-	var/obj/item/device/assembly/flash/handheld/bulb = null
+	max_integrity = 250
+	integrity_failure = 100
+	anchored = TRUE
+	var/obj/item/device/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 100 //How knocked down targets are when flashed.
 	var/base_state = "mflash"
-	max_integrity = 250
-	integrity_failure = 100
-	anchored = TRUE
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
@@ -24,19 +24,17 @@
 	base_state = "pflash"
 	density = TRUE
 
-/obj/machinery/flasher/New(loc, ndir = 0, built = 0)
-	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
+/obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
+	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(built)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
 		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
 	else
-		bulb = new /obj/item/device/assembly/flash/handheld(src)
+		bulb = new(src)
 
 /obj/machinery/flasher/Destroy()
-	if(bulb)
-		qdel(bulb)
-		bulb = null
+	QDEL_NULL(bulb)
 	return ..()
 
 /obj/machinery/flasher/power_change()
@@ -51,9 +49,9 @@
 		icon_state = "[base_state]1-p"
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/flasher/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if (istype(W, /obj/item/weapon/wirecutters))
+	if (istype(W, /obj/item/wirecutters))
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			playsound(src.loc, W.usesound, 100, 1)
@@ -74,7 +72,7 @@
 		else
 			to_chat(user, "<span class='warning'>A flashbulb is already installed in [src]!</span>")
 
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (istype(W, /obj/item/wrench))
 		if(!bulb)
 			to_chat(user, "<span class='notice'>You start unsecuring the flasher frame...</span>")
 			playsound(loc, W.usesound, 50, 1)
@@ -132,7 +130,7 @@
 	..()
 
 /obj/machinery/flasher/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			stat |= BROKEN
 			if(bulb)
@@ -140,7 +138,7 @@
 				power_change()
 
 /obj/machinery/flasher/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(bulb)
 			bulb.forceMove(loc)
 			bulb = null
@@ -166,8 +164,8 @@
 		if (M.m_intent != MOVE_INTENT_WALK && anchored)
 			flash()
 
-/obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
+/obj/machinery/flasher/portable/attackby(obj/item/W, mob/user, params)
+	if (istype(W, /obj/item/wrench))
 		playsound(src.loc, W.usesound, 100, 1)
 
 		if (!anchored && !isinspace())

@@ -93,7 +93,7 @@
 
 
 /obj/structure/transit_tube/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/crowbar))
+	if(istype(W, /obj/item/crowbar))
 		for(var/obj/structure/transit_tube_pod/P in loc)
 			P.deconstruct(FALSE, user)
 	else
@@ -147,7 +147,8 @@
 		sleep(OPEN_DURATION + 2)
 		pod_moving = 0
 		if(!QDELETED(pod))
-			pod.air_contents.share(loc.return_air()) //mix the pod's gas mixture with the tile it's on
+			pod.air_contents.archive()
+			pod.air_contents.share(loc.return_air(), 1) //mix the pod's gas mixture with the tile it's on
 
 /obj/structure/transit_tube/station/init_tube_dirs()
 	switch(dir)

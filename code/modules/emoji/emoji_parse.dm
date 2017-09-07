@@ -16,7 +16,7 @@
 			if(search)
 				emoji = lowertext(copytext(text, pos+1, search))
 				if(emoji in emojis)
-					parsed += bicon(icon('icons/emoji.dmi', emoji))
+					parsed += icon2html('icons/emoji.dmi', world, emoji)
 					pos = search + 1
 				else
 					parsed += copytext(text, pos, search)

@@ -8,7 +8,7 @@
 	icon_aggro = "Fugu"
 	icon_dead = "Fugu_dead"
 	icon_gib = "syndicate_gib"
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 5
 	friendly = "floats near"
 	speak_emote = list("puffs")
@@ -104,7 +104,7 @@
 	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fugu_gland"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	origin_tech = "biotech=6"
@@ -122,6 +122,6 @@
 		A.melee_damage_lower = max((A.melee_damage_lower * 2), 10)
 		A.melee_damage_upper = max((A.melee_damage_upper * 2), 10)
 		A.transform *= 2
-		A.environment_smash += 2
+		A.environment_smash |= ENVIRONMENT_SMASH_STRUCTURES | ENVIRONMENT_SMASH_RWALLS
 		to_chat(user, "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>")
 		qdel(src)

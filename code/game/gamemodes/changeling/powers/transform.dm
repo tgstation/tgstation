@@ -8,7 +8,7 @@
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -19,7 +19,7 @@
 
 /obj/item/clothing/under/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/under/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -30,7 +30,7 @@
 
 /obj/item/clothing/suit/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 	allowed = list(/obj/item/changeling)
 
 /obj/item/clothing/suit/changeling/attack_hand(mob/user)
@@ -42,7 +42,7 @@
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/head/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -53,7 +53,7 @@
 
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -64,7 +64,7 @@
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -75,7 +75,7 @@
 
 /obj/item/clothing/mask/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/mask/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -86,7 +86,7 @@
 
 /obj/item/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 	slot_flags = ALL
 	allowed = list(/obj/item/changeling)
 

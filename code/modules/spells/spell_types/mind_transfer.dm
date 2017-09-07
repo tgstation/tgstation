@@ -75,5 +75,5 @@ Also, you never added distance checking after target is selected. I've went ahea
 	//Here we knock both mobs out for a time.
 	caster.Unconscious(unconscious_amount_caster)
 	victim.Unconscious(unconscious_amount_victim)
-	caster << sound('sound/magic/mandswap.ogg')
-	victim << sound('sound/magic/mandswap.ogg')// only the caster and victim hear the sounds, that way no one knows for sure if the swap happened
+	SEND_SOUND(caster, sound('sound/magic/mandswap.ogg'))
+	SEND_SOUND(victim, sound('sound/magic/mandswap.ogg'))// only the caster and victim hear the sounds, that way no one knows for sure if the swap happened

@@ -78,7 +78,7 @@
 			user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
 				"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
 			qdel(current_surgery)
-		else if(istype(user.get_inactive_held_item(), /obj/item/weapon/cautery) && current_surgery.can_cancel)
+		else if(istype(user.get_inactive_held_item(), /obj/item/cautery) && current_surgery.can_cancel)
 			M.surgeries -= current_surgery
 			user.visible_message("[user] mends the incision and removes the drapes from [M]'s [parse_zone(selected_zone)].", \
 				"<span class='notice'>You mend the incision and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")

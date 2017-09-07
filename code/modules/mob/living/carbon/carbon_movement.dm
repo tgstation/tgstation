@@ -1,10 +1,8 @@
 /mob/living/carbon/movement_delay()
-	var/FP
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		var/obj/item/device/flightpack/F = C.get_flightpack()
-		if(istype(F) && F.flight)
-			FP = 1
+	var/FP = FALSE
+	var/obj/item/device/flightpack/F = get_flightpack()
+	if(istype(F) && F.flight)
+		FP = TRUE
 	. = ..(FP)
 	if(!FP)
 		. += grab_state * 1	//Flightpacks are too powerful to be slowed too much by the weight of a corpse.
@@ -42,7 +40,7 @@
 	if(istype(T) && movement_dir && T.allow_thrust(0.01))
 		return 1
 
-	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
+	var/obj/item/tank/jetpack/J = get_jetpack()
 	if(istype(J) && (movement_dir || J.stabilizers) && J.allow_thrust(0.01, src))
 		return 1
 

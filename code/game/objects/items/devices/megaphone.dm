@@ -3,10 +3,11 @@
 	desc = "A device used to project your voice. Loudly."
 	icon_state = "megaphone"
 	item_state = "radio"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	siemens_coefficient = 1
 	var/spamcheck = 0
-	var/emagged = FALSE
 	var/list/voicespan = list(SPAN_COMMAND)
 
 /obj/item/device/megaphone/get_held_item_speechspans(mob/living/carbon/user)

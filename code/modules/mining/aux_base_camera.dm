@@ -20,18 +20,18 @@
 	dir = direct //This camera eye is visible as a drone, and needs to keep the dir updated
 	..()
 
-/obj/item/weapon/construction/rcd/internal //Base console's internal RCD. Roundstart consoles are filled, rebuilt cosoles start empty.
+/obj/item/construction/rcd/internal //Base console's internal RCD. Roundstart consoles are filled, rebuilt cosoles start empty.
 	name = "internal RCD"
 	max_matter = 600 //Bigger container and faster speeds due to being specialized and stationary.
 	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
 	delay_mod = 0.5
 
 /obj/machinery/computer/camera_advanced/base_construction
-	name = "base contruction console"
+	name = "base construction console"
 	desc = "An industrial computer integrated with a camera-assisted rapid construction drone."
 	networks = list("SS13")
-	var/obj/item/weapon/construction/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
-	circuit = /obj/item/weapon/circuitboard/computer/base_construction
+	var/obj/item/construction/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
+	circuit = /obj/item/circuitboard/computer/base_construction
 	off_action = new/datum/action/innate/camera_off/base_construction
 	jump_action = null
 	var/datum/action/innate/aux_base/switch_mode/switch_mode_action = new //Action for switching the RCD's build modes
@@ -49,9 +49,9 @@
 
 	light_color = LIGHT_COLOR_PINK
 
-/obj/machinery/computer/camera_advanced/base_construction/New()
-	..()
-	RCD = new /obj/item/weapon/construction/rcd/internal(src)
+/obj/machinery/computer/camera_advanced/base_construction/Initialize()
+	. = ..()
+	RCD = new(src)
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	..()
@@ -79,7 +79,7 @@
 
 
 /obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/rcd_ammo) || istype(W, /obj/item/stack/sheet))
+	if(istype(W, /obj/item/rcd_ammo) || istype(W, /obj/item/stack/sheet))
 		RCD.attackby(W, user, params) //If trying to feed the console more materials, pass it along to the RCD.
 	else
 		return ..()
@@ -128,6 +128,7 @@
 	eyeobj.invisibility = INVISIBILITY_MAXIMUM //Hide the eye when not in use.
 
 /datum/action/innate/aux_base //Parent aux base action
+	icon_icon = 'icons/mob/actions/actions_construction.dmi'
 	var/mob/living/C //Mob using the action
 	var/mob/camera/aiEye/remote/base_construction/remote_eye //Console's eye mob
 	var/obj/machinery/computer/camera_advanced/base_construction/B //Console itself
@@ -139,7 +140,7 @@
 	remote_eye = C.remote_control
 	B = target
 	if(!B.RCD) //The console must always have an RCD.
-		B.RCD = new /obj/item/weapon/construction/rcd/internal(src) //If the RCD is lost somehow, make a new (empty) one!
+		B.RCD = new /obj/item/construction/rcd/internal(src) //If the RCD is lost somehow, make a new (empty) one!
 
 /datum/action/innate/aux_base/proc/check_spot()
 //Check a loction to see if it is inside the aux base at the station. Camera visbility checks omitted so as to not hinder construction.
@@ -267,7 +268,7 @@ datum/action/innate/aux_base/install_turret/Activate()
 	var/turf/turret_turf = get_turf(remote_eye)
 
 	if(is_blocked_turf(turret_turf))
-		to_chat(owner, "<span class='warning'>Location is obtructed by something. Please clear the location and try again.</span>")
+		to_chat(owner, "<span class='warning'>Location is obstructed by something. Please clear the location and try again.</span>")
 		return
 
 	var/obj/machinery/porta_turret/aux_base/T = new /obj/machinery/porta_turret/aux_base(turret_turf)

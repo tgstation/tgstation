@@ -6,7 +6,7 @@
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
 	if(href_list["ahelp"])
-		if(!check_rights(R_ADMIN))
+		if(!check_rights(R_ADMIN, TRUE))
 			return
 
 		var/ahelp_ref = href_list["ahelp"]
@@ -21,6 +21,24 @@
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
+
+	else if(href_list["getplaytimewindow"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/mob/M = locate(href_list["getplaytimewindow"]) in GLOB.mob_list
+		if(!M)
+			to_chat(usr, "<span class='danger'>ERROR: Mob not found.</span>")
+			return
+		cmd_show_exp_panel(M.client)
+
+	else if(href_list["toggleexempt"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/client/C = locate(href_list["toggleexempt"]) in GLOB.clients
+		if(!C)
+			to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+			return
+		toggle_exempt_status(C)
 
 	else if(href_list["makeAntag"])
 		if (!SSticker.mode)
@@ -94,21 +112,14 @@
 				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				new/datum/round_event/ghost_role/blob(TRUE, strength)
-			if("gangs")
-				if(src.makeGangsters())
-					message_admins("[key_name(usr)] created gangs.")
-					log_admin("[key_name(usr)] created gangs.")
-				else
-					message_admins("[key_name(usr)] tried to create gangs. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed create gangs.")
 			if("centcom")
-				message_admins("[key_name(usr)] is creating a Centcom response team...")
+				message_admins("[key_name(usr)] is creating a CentCom response team...")
 				if(src.makeEmergencyresponseteam())
-					message_admins("[key_name(usr)] created a Centcom response team.")
-					log_admin("[key_name(usr)] created a Centcom response team.")
+					message_admins("[key_name(usr)] created a CentCom response team.")
+					log_admin("[key_name(usr)] created a CentCom response team.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create a Centcom response team. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a Centcom response team.")
+					message_admins("[key_name_admin(usr)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed to create a CentCom response team.")
 			if("abductors")
 				message_admins("[key_name(usr)] is creating an abductor team...")
 				if(src.makeAbductorTeam())
@@ -506,10 +517,10 @@
 		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]</span>")
 		GLOB.Banlist.cd = "/base/[banfolder]"
-		GLOB.Banlist["reason"] << reason
-		GLOB.Banlist["temp"] << temp
-		GLOB.Banlist["minutes"] << minutes
-		GLOB.Banlist["bannedby"] << usr.ckey
+		WRITE_FILE(GLOB.Banlist["reason"], reason)
+		WRITE_FILE(GLOB.Banlist["temp"], temp)
+		WRITE_FILE(GLOB.Banlist["minutes"], minutes)
+		WRITE_FILE(GLOB.Banlist["bannedby"], usr.ckey)
 		GLOB.Banlist.cd = "/base"
 		SSblackbox.inc("ban_edit",1)
 		unbanpanel()
@@ -804,14 +815,6 @@
 		else
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=revolutionary;jobban4=\ref[M]'>Revolutionary</a></td>"
 
-		//Gangster
-		if(jobban_isbanned(M, "gangster") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=gangster;jobban4=\ref[M]'><font color=red>Gangster</font></a></td>"
-		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=gangster;jobban4=\ref[M]'>Gangster</a></td>"
-
-		dat += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
-
 		//Cultist
 		if(jobban_isbanned(M, "cultist") || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=cultist;jobban4=\ref[M]'><font color=red>Cultist</font></a></td>"
@@ -1083,7 +1086,10 @@
 
 	else if(href_list["showmessageckey"])
 		var/target = href_list["showmessageckey"]
-		browse_messages(target_ckey = target)
+		var/agegate = TRUE
+		if (href_list["showall"])
+			agegate = FALSE
+		browse_messages(target_ckey = target, agegate = agegate)
 
 	else if(href_list["showmessageckeylinkless"])
 		var/target = href_list["showmessageckeylinkless"]
@@ -1591,11 +1597,13 @@
 			var/mob/living/L = M
 			var/status
 			switch (M.stat)
-				if (0)
+				if(CONSCIOUS)
 					status = "Alive"
-				if (1)
-					status = "<font color='orange'><b>Unconscious</b></font>"
-				if (2)
+				if(SOFT_CRIT)
+					status = "<font color='orange'><b>Dying</b></font>"
+				if(UNCONSCIOUS)
+					status = "<font color='orange'><b>[L.InCritical() ? "Unconscious and Dying" : "Unconscious"]</b></font>"
+				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status = [status]"
 			health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()] - Stamina: [L.getStaminaLoss()]"
@@ -1678,7 +1686,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.")
 			return
 
-		var/obj/item/weapon/reagent_containers/food/snacks/cookie/cookie = new(H)
+		var/obj/item/reagent_containers/food/snacks/cookie/cookie = new(H)
 		if(H.put_in_hands(cookie))
 			H.update_inv_hands()
 		else
@@ -1691,7 +1699,7 @@
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
 		SSblackbox.inc("admin_cookies_spawned",1)
 		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
-		H << 'sound/effects/pray_chaplain.ogg'
+		SEND_SOUND(H, sound('sound/effects/pray_chaplain.ogg'))
 
 	else if(href_list["adminsmite"])
 		if(!check_rights(R_ADMIN|R_FUN))
@@ -1704,8 +1712,8 @@
 
 		usr.client.smite(H)
 
-	else if(href_list["CentcommReply"])
-		var/mob/living/carbon/human/H = locate(href_list["CentcommReply"]) in GLOB.mob_list
+	else if(href_list["CentComReply"])
+		var/mob/living/carbon/human/H = locate(href_list["CentComReply"]) in GLOB.mob_list
 		if(!istype(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
 			return
@@ -1713,15 +1721,15 @@
 			to_chat(usr, "The person you are trying to contact is not wearing a headset.")
 			return
 
-		message_admins("[src.owner] has started answering [key_name(H)]'s Centcomm request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
+		message_admins("[src.owner] has started answering [key_name(H)]'s CentCom request.")
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from CentCom", "")
 		if(!input)
-			message_admins("[src.owner] decided not to answer [key_name(H)]'s Centcomm request.")
+			message_admins("[src.owner] decided not to answer [key_name(H)]'s CentCom request.")
 			return
 
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Centcom message with the message [input].")
-		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
+		log_admin("[src.owner] replied to [key_name(H)]'s CentCom message with the message [input].")
+		message_admins("[src.owner] replied to [key_name(H)]'s CentCom message with: \"[input]\"")
 		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\"")
 
 	else if(href_list["SyndicateReply"])
@@ -1747,7 +1755,7 @@
 	else if(href_list["reject_custom_name"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/obj/item/weapon/station_charter/charter = locate(href_list["reject_custom_name"])
+		var/obj/item/station_charter/charter = locate(href_list["reject_custom_name"])
 		if(istype(charter))
 			charter.reject_proposed(usr)
 	else if(href_list["jumpto"])
