@@ -75,7 +75,7 @@
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 	var/core_power = reported_core_efficiency//Effectively how much fuel we can safely deal with
 	if(core_power <= 0)
-		return 0//Something is wrong
+		return FALSE//Something is wrong
 	var/core_damage = 0
 	var/fuel = fueljar.usefuel(fuel_injection)
 
@@ -108,7 +108,7 @@
 				toggle_power()
 			stability -= rand(10,20)
 	..()
-	return 0
+	return FALSE
 
 
 /obj/machinery/power/am_control_unit/blob_act()
@@ -213,24 +213,24 @@
 
 /obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS))
-		return 0
+		return FALSE
 	if(!anchored)
-		return 0
+		return FALSE
 	if(!AMS_linking && !AMS.link_control(src))
-		return 0
+		return FALSE
 	linked_shielding.Add(AMS)
 	update_shield_icons = 1
-	return 1
+	return TRUE
 
 
 /obj/machinery/power/am_control_unit/proc/remove_shielding(obj/machinery/am_shielding/AMS)
 	if(!istype(AMS))
-		return 0
+		return FALSE
 	linked_shielding.Remove(AMS)
 	update_shield_icons = 2
 	if(active)
 		toggle_power()
-	return 1
+	return TRUE
 
 
 /obj/machinery/power/am_control_unit/proc/check_stability()//TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced

@@ -132,7 +132,7 @@ global procs
 
 	handle_inherent_channels(message, message_mode)
 		If message_mode is MODE_BINARY, MODE_ALIEN or MODE_CHANGELING (or, for AIs, MODE_HOLOPAD), this will
-		handle speaking in those modes. Return 1 to exit say().
+		handle speaking in those modes. return TRUE to exit say().
 
 	treat_message(message)
 		What it says on the tin. Treats the message according to masks, mutantraces, mutations, etc.
@@ -147,7 +147,7 @@ global procs
 		ITALICS = add italics to the message
 		REDUCE_RANGE = reduce the message range to one tile.
 
-		Return 0 if no radio was spoken into.
+		return FALSE if no radio was spoken into.
 		IMPORTANT: remember to call ..() and check for ..()'s return value properly!
 
 ============================RADIOS=============================

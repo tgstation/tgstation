@@ -312,7 +312,7 @@ All ShuttleMove procs go here
 
 /mob/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
 	if(!move_on_shuttle)
-		return 0
+		return FALSE
 	. = ..()
 	if(!.)
 		return
@@ -379,7 +379,7 @@ All ShuttleMove procs go here
 
 /obj/docking_port/stationary/public_mining_dock/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
 	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.
-	return 0
+	return FALSE
 
 /obj/effect/abstract/proximity_checker/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
 	//timer so it only happens once

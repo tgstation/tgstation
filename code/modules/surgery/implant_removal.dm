@@ -43,4 +43,4 @@
 
 	else
 		to_chat(user, "<span class='warning'>You can't find anything in [target]'s [target_zone]!</span>")
-	return 1
+	return TRUE

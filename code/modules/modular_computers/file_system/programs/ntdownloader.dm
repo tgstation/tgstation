@@ -21,21 +21,21 @@
 
 /datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename)
 	if(downloaded_file)
-		return 0
+		return FALSE
 
 	var/datum/computer_file/program/PRG = GLOB.ntnet_global.find_ntnet_file_by_name(filename)
 
 	if(!PRG || !istype(PRG))
-		return 0
+		return FALSE
 
 	// Attempting to download antag only program, but without having emagged computer. No.
 	if(PRG.available_on_syndinet && !computer.emagged)
-		return 0
+		return FALSE
 
 	var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 
 	if(!computer || !hard_drive || !hard_drive.can_store_file(PRG))
-		return 0
+		return FALSE
 
 	ui_header = "downloader_running.gif"
 
@@ -90,20 +90,20 @@
 
 /datum/computer_file/program/ntnetdownload/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 	switch(action)
 		if("PRG_downloadfile")
 			if(!downloaded_file)
 				begin_file_download(params["filename"])
-			return 1
+			return TRUE
 		if("PRG_reseterror")
 			if(downloaderror)
 				download_completion = 0
 				download_netspeed = 0
 				downloaded_file = null
 				downloaderror = ""
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
 	my_computer = computer

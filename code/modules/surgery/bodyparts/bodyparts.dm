@@ -107,7 +107,7 @@
 //Cannot apply negative damage
 /obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1)
 	if(owner && (owner.status_flags & GODMODE))
-		return 0	//godmode
+		return FALSE	//godmode
 	brute	= max(brute * config.damage_multiplier,0)
 	burn	= max(burn * config.damage_multiplier,0)
 
@@ -122,7 +122,7 @@
 
 	var/can_inflict = max_damage - (brute_dam + burn_dam)
 	if(!can_inflict)
-		return 0
+		return FALSE
 
 	if((brute + burn) < can_inflict)
 		brute_dam	+= brute
@@ -140,7 +140,7 @@
 			if(burn > 0)
 				burn_dam	+= can_inflict
 			else
-				return 0
+				return FALSE
 	if(owner && updating_health)
 		owner.updatehealth()
 	return update_bodypart_damage_state()
@@ -177,8 +177,8 @@
 	if((tbrute != brutestate) || (tburn != burnstate))
 		brutestate = tbrute
 		burnstate = tburn
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 

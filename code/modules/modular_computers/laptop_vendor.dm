@@ -161,7 +161,7 @@
 			if(fabricate)
 				fabricated_tablet.install_component(new/obj/item/computer_hardware/card_slot)
 		return total_price
-	return 0
+	return FALSE
 
 
 
@@ -169,58 +169,58 @@
 
 /obj/machinery/lapvend/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 
 	switch(action)
 		if("pick_device")
 			if(state) // We've already picked a device type
-				return 0
+				return FALSE
 			devtype = text2num(params["pick"])
 			state = 1
 			fabricate_and_recalc_price(0)
-			return 1
+			return TRUE
 		if("clean_order")
 			reset_order()
-			return 1
+			return TRUE
 		if("purchase")
 			try_purchase()
-			return 1
+			return TRUE
 	if((state != 1) && devtype) // Following IFs should only be usable when in the Select Loadout mode
-		return 0
+		return FALSE
 	switch(action)
 		if("confirm_order")
 			state = 2 // Wait for ID swipe for payment processing
 			fabricate_and_recalc_price(0)
-			return 1
+			return TRUE
 		if("hw_cpu")
 			dev_cpu = text2num(params["cpu"])
 			fabricate_and_recalc_price(0)
-			return 1
+			return TRUE
 		if("hw_battery")
 			dev_battery = text2num(params["battery"])
 			fabricate_and_recalc_price(0)
-			return 1
+			return TRUE
 		if("hw_disk")
 			dev_disk = text2num(params["disk"])
 			fabricate_and_recalc_price(0)
-			return 1
+			return TRUE
 		if("hw_netcard")
 			dev_netcard = text2num(params["netcard"])
 			fabricate_and_recalc_price(0)
-			return 1
+			return TRUE
 		if("hw_tesla")
 			dev_apc_recharger = text2num(params["tesla"])
 			fabricate_and_recalc_price(0)
-			return 1
+			return TRUE
 		if("hw_nanoprint")
 			dev_printer = text2num(params["print"])
 			fabricate_and_recalc_price(0)
-			return 1
+			return TRUE
 		if("hw_card")
 			dev_card = text2num(params["card"])
 			fabricate_and_recalc_price(0)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/machinery/lapvend/attack_hand(mob/user)
 	ui_interact(user)
@@ -229,7 +229,7 @@
 	if(stat & (BROKEN | NOPOWER | MAINT))
 		if(ui)
 			ui.close()
-		return 0
+		return FALSE
 
 
 
@@ -258,9 +258,9 @@
 /obj/machinery/lapvend/proc/process_payment()
 	if(total_price > credits)
 		say("Insufficient credits.")
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/lapvend/ui_data(mob/user)
 
@@ -296,5 +296,5 @@
 			credits -= total_price
 			say("Enjoy your new product!")
 			state = 3
-			return 1
-		return 0
+			return TRUE
+		return FALSE

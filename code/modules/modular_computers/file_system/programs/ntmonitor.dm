@@ -11,36 +11,36 @@
 
 /datum/computer_file/program/ntnetmonitor/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 	switch(action)
 		if("resetIDS")
 			. = 1
 			if(GLOB.ntnet_global)
 				GLOB.ntnet_global.resetIDS()
-			return 1
+			return TRUE
 		if("toggleIDS")
 			. = 1
 			if(GLOB.ntnet_global)
 				GLOB.ntnet_global.toggleIDS()
-			return 1
+			return TRUE
 		if("toggleWireless")
 			. = 1
 			if(!GLOB.ntnet_global)
-				return 1
+				return TRUE
 
 			// NTNet is disabled. Enabling can be done without user prompt
 			if(GLOB.ntnet_global.setting_disabled)
 				GLOB.ntnet_global.setting_disabled = 0
-				return 1
+				return TRUE
 
 			// NTNet is enabled and user is about to shut it down. Let's ask them if they really want to do it, as wirelessly connected computers won't connect without NTNet being enabled (which may prevent people from turning it back on)
 			var/mob/user = usr
 			if(!user)
-				return 1
+				return TRUE
 			var/response = alert(user, "Really disable NTNet wireless? If your computer is connected wirelessly you won't be able to turn it back on! This will affect all connected wireless devices.", "NTNet shutdown", "Yes", "No")
 			if(response == "Yes")
 				GLOB.ntnet_global.setting_disabled = 1
-			return 1
+			return TRUE
 		if("purgelogs")
 			. = 1
 			if(GLOB.ntnet_global)
@@ -54,7 +54,7 @@
 		if("toggle_function")
 			. = 1
 			if(!GLOB.ntnet_global)
-				return 1
+				return TRUE
 			GLOB.ntnet_global.toggle_function(text2num(params["id"]))
 
 /datum/computer_file/program/ntnetmonitor/ui_data(mob/user)

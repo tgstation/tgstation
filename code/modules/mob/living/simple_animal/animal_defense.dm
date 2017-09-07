@@ -20,7 +20,7 @@
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked")
 			updatehealth()
-			return 1
+			return TRUE
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
@@ -29,14 +29,14 @@
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
 			"<span class='userdanger'>[user] has punched [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		adjustBruteLoss(15)
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
 			attack_threshold_check(damage)
-			return 1
+			return TRUE
 	if (M.a_intent == INTENT_HELP)
 		if (health > 0)
 			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
@@ -57,7 +57,7 @@
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			attack_threshold_check(damage)
 			add_logs(M, src, "attacked")
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
 	. = ..()
@@ -104,7 +104,7 @@
 		return
 	apply_damage(Proj.damage, Proj.damage_type)
 	Proj.on_hit(src)
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))

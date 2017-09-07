@@ -123,4 +123,4 @@
 	. = ..()
 	if(.)
 		if(the_target in grasping)
-			return 0
+			return FALSE

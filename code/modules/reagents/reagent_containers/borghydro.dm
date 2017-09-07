@@ -53,7 +53,7 @@ Borg Hypospray
 		charge_tick = 0
 
 	//update_icon()
-	return 1
+	return TRUE
 
 // Purely for testing purposes I swear~ //don't lie to me
 /*

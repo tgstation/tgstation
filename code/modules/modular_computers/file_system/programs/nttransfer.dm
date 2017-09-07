@@ -85,7 +85,7 @@
 
 /datum/computer_file/program/nttransfer/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 	switch(action)
 		if("PRG_downloadfile")
 			for(var/datum/computer_file/program/nttransfer/P in GLOB.ntnet_global.fileservers)
@@ -101,7 +101,7 @@
 					return
 			downloaded_file = remote.provided_file.clone()
 			remote.connected_clients.Add(src)
-			return 1
+			return TRUE
 		if("PRG_reset")
 			error = ""
 			upload_menu = 0
@@ -111,7 +111,7 @@
 			for(var/datum/computer_file/program/nttransfer/T in connected_clients)
 				T.crash_download("Remote server has forcibly closed the connection")
 			provided_file = null
-			return 1
+			return TRUE
 		if("PRG_setpassword")
 			var/pass = reject_bad_text(input(usr, "Enter new server password. Leave blank to cancel, input 'none' to disable password.", "Server security", "none"))
 			if(!pass)
@@ -120,7 +120,7 @@
 				server_password = ""
 				return
 			server_password = pass
-			return 1
+			return TRUE
 		if("PRG_uploadfile")
 			var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 			for(var/datum/computer_file/F in hard_drive.stored_files)
@@ -136,7 +136,7 @@
 					GLOB.ntnet_global.fileservers.Add(src)
 					return
 			error = "I/O Error: Unable to locate file on hard drive."
-			return 1
+			return TRUE
 		if("PRG_uploadmenu")
 			upload_menu = 1
 

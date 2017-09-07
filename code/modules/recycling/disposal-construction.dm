@@ -272,13 +272,13 @@
 //helper proc that makes sure you can place the construct (i.e no dense objects stacking)
 /obj/structure/disposalconstruct/proc/can_place()
 	if(is_pipe())
-		return 1
+		return TRUE
 
 	for(var/obj/structure/disposalconstruct/DC in get_turf(src))
 		if(DC == src)
 			continue
 
 		if(!DC.is_pipe()) //there's already a chute/outlet/bin there
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE

@@ -30,7 +30,7 @@
 	return FALSE
 
 /mob/living/carbon/alien/larva/has_left_hand()
-	return 1
+	return TRUE
 
 
 /mob/proc/has_right_hand()
@@ -43,7 +43,7 @@
 	return FALSE
 
 /mob/living/carbon/alien/larva/has_right_hand()
-	return 1
+	return TRUE
 
 
 
@@ -63,10 +63,10 @@
 
 //sometimes we want to ignore that we don't have the required amount of arms.
 /mob/proc/get_arm_ignore()
-	return 0
+	return FALSE
 
 /mob/living/carbon/alien/larva/get_arm_ignore()
-	return 1 //so we can still handcuff larvas.
+	return TRUE //so we can still handcuff larvas.
 
 
 /mob/proc/get_num_legs()
@@ -130,7 +130,7 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/L = X
 		for(var/obj/item/I in L.embedded_objects)
-			return 1
+			return TRUE
 
 
 //Helper for quickly creating a new limb - used by augment code in species.dm spec_attacked_by

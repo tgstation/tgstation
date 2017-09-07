@@ -218,10 +218,10 @@
 
 /obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
 	if(mover in approved_passengers)
-		return 1
+		return TRUE
 
 	if(!isliving(mover)) //No stowaways
-		return 0
+		return FALSE
 
 	var/total_cash = 0
 	var/list/counted_money = list()
@@ -243,10 +243,10 @@
 
 		to_chat(mover, "Thank you for your payment! Please enjoy your flight.")
 		approved_passengers += mover
-		return 1
+		return TRUE
 	else
 		to_chat(mover, "You don't have enough money to enter the main shuttle. You'll have to fly coach.")
-		return 0
+		return FALSE
 
 /mob/living/simple_animal/hostile/bear/fightpit
 	name = "fight pit bear"

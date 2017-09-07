@@ -326,7 +326,7 @@
 			num = round(num)
 		return num
 	else
-		return 0
+		return FALSE
 
 
 /obj/machinery/chem_master/condimaster

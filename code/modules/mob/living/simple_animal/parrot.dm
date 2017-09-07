@@ -175,7 +175,7 @@
 			ears.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return FALSE
 
 /*
  * Inventory
@@ -614,12 +614,12 @@
 				parrot_state = PARROT_WANDER
 				parrot_stuck = 0
 				parrot_lastmove = null
-				return 1
+				return TRUE
 		else
 			parrot_lastmove = null
 	else
 		parrot_lastmove = src.loc
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	var/item
@@ -689,7 +689,7 @@
 
 	if(held_item)
 		to_chat(src, "<span class='warning'>You are already holding [held_item]!</span>")
-		return 1
+		return TRUE
 
 	for(var/obj/item/I in view(1,src))
 		//Make sure we're not already holding it and it's small enough
@@ -705,7 +705,7 @@
 			return held_item
 
 	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/parrot/proc/steal_from_mob()
 	set name = "Steal from mob"
@@ -717,7 +717,7 @@
 
 	if(held_item)
 		to_chat(src, "<span class='warning'>You are already holding [held_item]!</span>")
-		return 1
+		return TRUE
 
 	var/obj/item/stolen_item = null
 
@@ -734,7 +734,7 @@
 			return held_item
 
 	to_chat(src, "<span class='warning'>There is nothing of interest to take!</spawn>")
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/parrot/verb/drop_held_item_player()
 	set name = "Drop held item"
@@ -759,7 +759,7 @@
 	if(!held_item)
 		if(src == usr) //So that other mobs wont make this message appear when they're bludgeoning you.
 			to_chat(src, "<span class='danger'>You have nothing to drop!</span>")
-		return 0
+		return FALSE
 
 
 //parrots will eat crackers instead of dropping them
@@ -769,7 +769,7 @@
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
 		emote("me", 1, "[src] eagerly downs the cracker.")
-		return 1
+		return TRUE
 
 
 	if(!drop_gently)
@@ -779,13 +779,13 @@
 			G.prime()
 			to_chat(src, "You let go of [held_item]!")
 			held_item = null
-			return 1
+			return TRUE
 
 	to_chat(src, "You drop [held_item].")
 
 	held_item.loc = src.loc
 	held_item = null
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/parrot/proc/perch_player()
 	set name = "Sit"

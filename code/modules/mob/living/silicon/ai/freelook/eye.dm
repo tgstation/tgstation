@@ -33,7 +33,7 @@
 			H.move_hologram(ai, T)
 
 /mob/camera/aiEye/Move()
-	return 0
+	return FALSE
 
 /mob/camera/aiEye/proc/GetViewerClient()
 	if(ai)

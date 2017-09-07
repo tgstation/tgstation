@@ -30,10 +30,10 @@
 //set the control of the tracker to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/tracker/proc/set_control(obj/machinery/power/solar_control/SC)
 	if(!SC || (get_dist(src, SC) > SOLAR_MAX_DIST))
-		return 0
+		return FALSE
 	control = SC
 	SC.connected_tracker = src
-	return 1
+	return TRUE
 
 //set the control of the tracker to null and removes it from the previous control computer if needed
 /obj/machinery/power/tracker/proc/unset_control()

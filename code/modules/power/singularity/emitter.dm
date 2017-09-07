@@ -84,9 +84,9 @@
 		return
 	if (src.anchored)
 		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
-		return 0
+		return FALSE
 	src.setDir(turn(src.dir, 270))
-	return 1
+	return TRUE
 
 /obj/machinery/power/emitter/AltClick(mob/user)
 	..()
@@ -119,7 +119,7 @@
 	if(state == 2)
 		if(!powernet)
 			to_chat(user, "<span class='warning'>The emitter isn't connected to a wire!</span>")
-			return 1
+			return TRUE
 		if(!src.locked)
 			if(src.active==1)
 				src.active = 0
@@ -138,7 +138,7 @@
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 	else
 		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>")
-		return 1
+		return TRUE
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
 	if(ismegafauna(M) && anchored)
@@ -157,7 +157,7 @@
 		if(src.active)
 			src.active = 0
 			src.use_power = IDLE_POWER_USE	*/
-	return 1
+	return TRUE
 
 
 /obj/machinery/power/emitter/process()

@@ -25,7 +25,7 @@
 	var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 	if(U)
 		return U.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Unconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Can't go below remaining duration
 	if((status_flags & CANUNCONSCIOUS) || ignore_canunconscious)
@@ -66,7 +66,7 @@
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
 		return S.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Sleeping(amount, updating = TRUE) //Can't go below remaining duration
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()

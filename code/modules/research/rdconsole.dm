@@ -395,7 +395,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/amount = text2num(href_list["amount"])
 
 		if(being_built.make_reagents.len)
-			return 0
+			return FALSE
 
 		if(!linked_lathe || !being_built || !amount)
 			updateUsrDialog()

@@ -285,7 +285,7 @@
 
 /obj/structure/disposalpipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 10)
-		return 0
+		return FALSE
 	. = ..()
 
 //attack by item
@@ -613,7 +613,7 @@
 	if(fromdir == DOWN)
 		return dir
 	else
-		return 0
+		return FALSE
 
 // a broken pipe
 /obj/structure/disposalpipe/broken

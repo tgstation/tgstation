@@ -27,7 +27,7 @@
 			program_icon_state = "alert-green"
 			ui_header = "alarm_green.gif"
 			update_computer_icon()
-	return 1
+	return TRUE
 
 /datum/computer_file/program/alarm_monitor/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -51,7 +51,7 @@
 			var/list/sources = alarm[3]
 			if (!(source in sources))
 				sources += source
-			return 1
+			return TRUE
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
 	if(O && istype(O, /list))
@@ -64,7 +64,7 @@
 
 	update_alarm_display()
 
-	return 1
+	return TRUE
 
 
 /datum/computer_file/program/alarm_monitor/proc/cancelAlarm(class, area/A, obj/origin)

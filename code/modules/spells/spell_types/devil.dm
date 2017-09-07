@@ -162,7 +162,7 @@
 /mob/living/proc/infernalphasein()
 	if(src.notransform)
 		to_chat(src, "<span class='warning'>You're too busy to jaunt in.</span>")
-		return 0
+		return FALSE
 	fakefire()
 	src.loc = get_turf(src)
 	src.client.eye = src

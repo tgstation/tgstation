@@ -24,4 +24,4 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.sec_hud_set_ID()
-	return 1
+	return TRUE

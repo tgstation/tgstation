@@ -98,13 +98,13 @@
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/gun/proc/process_chamber()
-	return 0
+	return FALSE
 
 
 //check if there's enough ammo/energy/whatever to shoot one time
 //i.e if clicking would make it shoot
 /obj/item/gun/proc/can_shoot()
-	return 1
+	return TRUE
 
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
@@ -196,13 +196,13 @@
 /obj/item/gun/proc/handle_pins(mob/living/user)
 	if(pin)
 		if(pin.pin_auth(user) || pin.emagged)
-			return 1
+			return TRUE
 		else
 			pin.auth_fail(user)
-			return 0
+			return FALSE
 	else
 		to_chat(user, "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>")
-	return 0
+	return FALSE
 
 /obj/item/gun/proc/recharge_newshot()
 	return
@@ -272,7 +272,7 @@
 	if(user)
 		user.update_inv_hands()
 	SSblackbox.add_details("gun_fired","[src.type]")
-	return 1
+	return TRUE
 
 /obj/item/gun/update_icon()
 	..()

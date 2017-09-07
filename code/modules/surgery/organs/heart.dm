@@ -37,12 +37,12 @@
 /obj/item/organ/heart/proc/Stop()
 	beating = 0
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/organ/heart/proc/Restart()
 	beating = 1
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/organ/heart/prepare_eat()
 	var/obj/S = ..()

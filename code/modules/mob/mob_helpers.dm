@@ -2,11 +2,11 @@
 // see _DEFINES/is_helpers.dm for mob type checks
 
 /mob/proc/isloyal() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	return 0
+	return FALSE
 
 /mob/living/carbon/isloyal()
 	for(var/obj/item/implant/mindshield/L in implants)
-		return 1
+		return TRUE
 
 
 /proc/check_zone(zone)
@@ -57,9 +57,9 @@
 /proc/above_neck(zone)
 	var/list/zones = list("head", "mouth", "eyes")
 	if(zones.Find(zone))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /proc/stars(n, pr)
 	n = html_encode(n)
@@ -272,7 +272,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	for(var/mob/M in GLOB.mob_list)
 		if(M.real_name == msg)
 			return M
-	return 0
+	return FALSE
 
 /mob/proc/first_name()
 	var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
@@ -282,8 +282,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/abiotic(full_body = 0)
 	for(var/obj/item/I in held_items)
 		if(!(I.flags_1 & NODROP_1))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
@@ -323,16 +323,16 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(ismob(A))
 		var/mob/B = A
 		return	B.eye_blind
-	return 0
+	return FALSE
 
 /mob/proc/hallucinating()
 	return FALSE
 
 /proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
 	if(!SSticker.HasRoundStarted())
-		return 0
+		return FALSE
 	if(!istype(M))
-		return 0
+		return FALSE
 	if(issilicon(M))
 		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
@@ -340,14 +340,14 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				if(R.laws && R.laws.zeroth && R.syndicate)
 					if(R.connected_ai)
 						if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
-							return 0 //AI is the real traitor here, so the borg itself is not a traitor
-						return 1 //Slaved but also a traitor
-					return 1 //Unslaved, traitor
+							return FALSE //AI is the real traitor here, so the borg itself is not a traitor
+						return TRUE //Slaved but also a traitor
+					return TRUE //Unslaved, traitor
 		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
-				return 1
-		return 0
+				return TRUE
+		return FALSE
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
 		switch(SSticker.mode.config_tag)
 			if("revolution")
@@ -374,11 +374,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if("abductor")
 				if(M.mind in SSticker.mode.abductors)
 					return 2
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
-	return 1
+	return TRUE
 
 /proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
 	if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
@@ -417,7 +417,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				H.update_damage_overlays()
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].", \
 			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>")
-			return 1 //successful heal
+			return TRUE //successful heal
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
 
@@ -462,9 +462,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/is_flying(mob/M = src)
 	if(M.movement_type & FLYING)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /mob/proc/click_random_mob()
 	var/list/nearby_mobs = list()

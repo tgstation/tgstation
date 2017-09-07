@@ -60,7 +60,7 @@
 					if(!istype(D, /datum/disease/advance))
 						preserve += D
 				data["viruses"] = preserve
-	return 1
+	return TRUE
 
 /datum/reagent/blood/proc/get_diseases()
 	. = list()
@@ -614,7 +614,7 @@
 
 /datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
-		return 0
+		return FALSE
 	O.atmos_spawn_air("o2=[reac_volume/2];TEMP=[T20C]")
 
 /datum/reagent/oxygen/reaction_turf(turf/open/T, reac_volume)
@@ -640,7 +640,7 @@
 
 /datum/reagent/nitrogen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
-		return 0
+		return FALSE
 	O.atmos_spawn_air("n2=[reac_volume/2];TEMP=[T20C]")
 
 /datum/reagent/nitrogen/reaction_turf(turf/open/T, reac_volume)
@@ -1119,7 +1119,7 @@
 
 /datum/reagent/carbondioxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
-		return 0
+		return FALSE
 	O.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
 
 /datum/reagent/carbondioxide/reaction_turf(turf/open/T, reac_volume)
@@ -1138,7 +1138,7 @@
 
 /datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
-		return 0
+		return FALSE
 	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
 
 /datum/reagent/nitrous_oxide/reaction_turf(turf/open/T, reac_volume)

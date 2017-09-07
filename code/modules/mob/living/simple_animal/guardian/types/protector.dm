@@ -29,7 +29,7 @@
 
 /mob/living/simple_animal/hostile/guardian/protector/ToggleMode()
 	if(cooldown > world.time)
-		return 0
+		return FALSE
 	cooldown = world.time + 10
 	if(toggle)
 		cut_overlays()

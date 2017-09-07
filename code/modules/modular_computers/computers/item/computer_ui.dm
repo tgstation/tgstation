@@ -3,17 +3,17 @@
 	if(!enabled)
 		if(ui)
 			ui.close()
-		return 0
+		return FALSE
 	if(!use_power())
 		if(ui)
 			ui.close()
-		return 0
+		return FALSE
 
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
 	if(!screen_on && !issilicon(user))
 		if(ui)
 			ui.close()
-		return 0
+		return FALSE
 
 	// If we have an active program switch to it now.
 	if(active_program)
@@ -64,10 +64,10 @@
 	switch(action)
 		if("PC_exit")
 			kill_program()
-			return 1
+			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
-			return 1
+			return TRUE
 		if("PC_minimize")
 			var/mob/user = usr
 			if(!active_program || !all_components[MC_CPU])
@@ -130,7 +130,7 @@
 			if(P.run_program(user))
 				active_program = P
 				update_icon()
-			return 1
+			return TRUE
 
 		if("PC_toggle_light")
 			light_on = !light_on

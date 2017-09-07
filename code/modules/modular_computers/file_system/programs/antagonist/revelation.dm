@@ -44,7 +44,7 @@
 
 /datum/computer_file/program/revelation/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 	switch(action)
 		if("PRG_arm")
 			armed = !armed

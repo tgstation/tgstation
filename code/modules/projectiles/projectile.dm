@@ -88,7 +88,7 @@
 	if(!isliving(target))
 		if(impact_effect_type)
 			new impact_effect_type(target_loca, target, src)
-		return 0
+		return FALSE
 	var/mob/living/L = target
 	if(L.buckled && ismob(L.buckled))
 		L = L.buckled
@@ -193,7 +193,7 @@
 	return FALSE
 
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
-	return 1 //Bullets don't drift in space
+	return TRUE //Bullets don't drift in space
 
 /obj/item/projectile/proc/fire(setAngle, atom/direct_target)
 	if(!log_override && firer && original)

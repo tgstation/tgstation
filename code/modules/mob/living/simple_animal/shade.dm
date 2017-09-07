@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/shade/canSuicide()
 	if(istype(loc, /obj/item/device/soulstone)) //do not suicide inside the soulstone
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/simple_animal/shade/Process_Spacemove(movement_dir = 0)

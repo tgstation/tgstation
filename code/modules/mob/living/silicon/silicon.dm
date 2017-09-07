@@ -148,17 +148,17 @@
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
 		to_chat(user, "<span class='alert'>Their outer shell is too tough.</span>")
-	return 0
+	return FALSE
 
 /mob/living/silicon/IsAdvancedToolUser()
-	return 1
+	return TRUE
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
-		return 0
+		return FALSE
 	if (bot.connected_ai == ai)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/Topic(href, href_list)
 	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
@@ -316,12 +316,12 @@
 	to_chat(src, "<span class='notice'>Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]</span>")
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
-	return 0
+	return FALSE
 
 // The src mob is trying to place an item on someone
 // But the src mob is a silicon!!  Disable.
 /mob/living/silicon/stripPanelEquip(obj/item/what, mob/who, slot)
-	return 0
+	return FALSE
 
 
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
@@ -383,4 +383,4 @@
 	return ..()
 
 /mob/living/silicon/is_literate()
-	return 1
+	return TRUE

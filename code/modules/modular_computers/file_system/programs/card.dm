@@ -65,10 +65,10 @@
 			if((job.total_positions <= GLOB.player_list.len * (max_relative_positions / 100)))
 				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
-					return 1
+					return TRUE
 				return -2
-			return 0
-	return 0
+			return FALSE
+	return FALSE
 
 //Logic check for if you can close the job
 /datum/computer_file/program/card_mod/proc/can_close_job(datum/job/job)
@@ -77,10 +77,10 @@
 			if(job.total_positions > job.current_positions)
 				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
-					return 1
+					return TRUE
 				return -2
-			return 0
-	return 0
+			return FALSE
+	return FALSE
 
 /datum/computer_file/program/card_mod/proc/format_jobs(list/jobs)
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
@@ -96,7 +96,7 @@
 
 /datum/computer_file/program/card_mod/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 
 	var/obj/item/computer_hardware/card_slot/card_slot
 	var/obj/item/computer_hardware/printer/printer
@@ -252,9 +252,9 @@
 			var/edit_job_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(edit_job_target)
 			if(!j)
-				return 0
+				return FALSE
 			if(can_open_job(j) != 1)
-				return 0
+				return FALSE
 			if(opened_positions[edit_job_target] >= 0)
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions++
@@ -263,9 +263,9 @@
 			var/edit_job_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(edit_job_target)
 			if(!j)
-				return 0
+				return FALSE
 			if(can_close_job(j) != 1)
-				return 0
+				return FALSE
 			//Allow instant closing without cooldown if a position has been opened before
 			if(opened_positions[edit_job_target] <= 0)
 				GLOB.time_last_changed_position = world.time / 10
@@ -283,7 +283,7 @@
 	if(id_card)
 		id_card.name = text("[id_card.registered_name]'s ID Card ([id_card.assignment])")
 
-	return 1
+	return TRUE
 
 /datum/computer_file/program/card_mod/proc/remove_nt_access(obj/item/card/id/id_card)
 	id_card.access -= get_all_accesses()
@@ -451,7 +451,7 @@
 				if(ACCESS_CHANGE_IDS in auth_card.GetAccess())
 					minor = 0
 					authenticated = 1
-					return 1
+					return TRUE
 				else
 					if((ACCESS_HOP in auth_card.access) && ((target_dept==1) || !target_dept))
 						region_access |= 1
@@ -472,7 +472,7 @@
 					if(region_access.len)
 						minor = 1
 						authenticated = 1
-						return 1
+						return TRUE
 	else
 		return authenticated
 

@@ -128,34 +128,34 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(player_lock)
 		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
 			to_chat(user, "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>")
-			return 0
+			return FALSE
 	else
 		if(!(src in user.mob_spell_list))
-			return 0
+			return FALSE
 
 	var/turf/T = get_turf(user)
 	if(T.z == ZLEVEL_CENTCOM && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
 		to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
-		return 0
+		return FALSE
 
 	if(!skipcharge)
 		switch(charge_type)
 			if("recharge")
 				if(charge_counter < charge_max)
 					to_chat(user, still_recharging_msg)
-					return 0
+					return FALSE
 			if("charges")
 				if(!charge_counter)
 					to_chat(user, "<span class='notice'>[name] has no charges left.</span>")
-					return 0
+					return FALSE
 
 	if(user.stat && !stat_allowed)
 		to_chat(user, "<span class='notice'>Not when you're incapacitated.</span>")
-		return 0
+		return FALSE
 
 	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))
 		to_chat(user, "<span class='notice'>[name] cannot be cast unless you are completely manifested in the material plane.</span>")
-		return 0
+		return FALSE
 
 	if(ishuman(user))
 
@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 		if((invocation_type == "whisper" || invocation_type == "shout") && H.is_muzzled())
 			to_chat(user, "<span class='notice'>You can't get the words out!</span>")
-			return 0
+			return FALSE
 
 		var/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
 		/obj/item/clothing/suit/space/hardsuit/wizard,
@@ -175,24 +175,24 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if(clothes_req) //clothes check
 			if(!is_type_in_typecache(H.wear_suit, casting_clothes))
 				to_chat(H, "<span class='notice'>I don't feel strong enough without my robe.</span>")
-				return 0
+				return FALSE
 			if(!is_type_in_typecache(H.head, casting_clothes))
 				to_chat(H, "<span class='notice'>I don't feel strong enough without my hat.</span>")
-				return 0
+				return FALSE
 		if(cult_req) //CULT_REQ CLOTHES CHECK
 			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusred) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/cult))
 				to_chat(H, "<span class='notice'>I don't feel strong enough without my armor.</span>")
-				return 0
+				return FALSE
 			if(!istype(H.head, /obj/item/clothing/head/magus) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/cult))
 				to_chat(H, "<span class='notice'>I don't feel strong enough without my helmet.</span>")
-				return 0
+				return FALSE
 	else
 		if(clothes_req || human_req)
 			to_chat(user, "<span class='notice'>This spell can only be cast by humans!</span>")
-			return 0
+			return FALSE
 		if(nonabstract_req && (isbrain(user) || ispAI(user)))
 			to_chat(user, "<span class='notice'>This spell can only be cast by physical beings!</span>")
-			return 0
+			return FALSE
 
 
 	if(!skipcharge)
@@ -205,7 +205,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				adjust_var(user, holder_var_type, holder_var_amount)
 	if(action)
 		action.UpdateButtonIcon()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 	switch(invocation_type)
@@ -241,7 +241,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/Click()
 	if(cast_check())
 		choose_targets()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
@@ -454,8 +454,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/proc/los_check(mob/A,mob/B)
 	//Checks for obstacles from A to B
@@ -465,31 +465,31 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		for(var/atom/movable/AM in turf)
 			if(!AM.CanPass(dummy,turf,1))
 				qdel(dummy)
-				return 0
+				return FALSE
 	qdel(dummy)
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
-		return 0
+		return FALSE
 
 	switch(charge_type)
 		if("recharge")
 			if(charge_counter < charge_max)
-				return 0
+				return FALSE
 		if("charges")
 			if(!charge_counter)
-				return 0
+				return FALSE
 
 	if(user.stat && !stat_allowed)
-		return 0
+		return FALSE
 
 	if(!ishuman(user))
 		if(clothes_req || human_req)
-			return 0
+			return FALSE
 		if(nonabstract_req && (isbrain(user) || ispAI(user)))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/self //Targets only the caster. Good for buffs and heals, but probably not wise for fireballs (although they usually fireball themselves anyway, honke)
 	range = -1 //Duh

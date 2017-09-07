@@ -38,19 +38,19 @@
 	if(istype(tool, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = tool
 		if(!WT.isOn())
-			return 0
+			return FALSE
 
 	else if(istype(tool, /obj/item/lighter))
 		var/obj/item/lighter/L = tool
 		if(!L.lit)
-			return 0
+			return FALSE
 
 	else if(istype(tool, /obj/item/match))
 		var/obj/item/match/M = tool
 		if(!M.lit)
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE
 
 
 /datum/surgery_step/manipulate_organs/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -110,7 +110,7 @@
 			"<span class='notice'>You mend the incision in [target]'s [parse_zone(target_zone)].</span>")
 		if(locate(/datum/surgery_step/saw) in surgery.steps)
 			target.heal_bodypart_damage(45,0)
-		return 1
+		return TRUE
 	else if(current_type == "insert")
 		if(istype(tool, /obj/item/organ_storage))
 			I = tool.contents[1]
@@ -135,4 +135,4 @@
 		else
 			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")
-	return 0
+	return FALSE

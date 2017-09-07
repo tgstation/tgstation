@@ -181,7 +181,7 @@
 
 /mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()
 	if(GLOB.ratvar_awakens)
-		return 1
+		return TRUE
 	return ..()
 
 /mob/living/simple_animal/drone/cogscarab/triggerAlarm(class, area/A, O, obj/alarmsource)

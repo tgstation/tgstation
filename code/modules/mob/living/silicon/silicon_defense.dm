@@ -60,8 +60,8 @@
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
 				"<span class='userdanger'>[user] has punched [src]!</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
 	switch(M.a_intent)
@@ -75,7 +75,7 @@
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
 			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
 				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
-	return 0
+	return FALSE
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.a_intent == INTENT_HARM)
@@ -87,7 +87,7 @@
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)
 			M.electrocute_act(shock_damage/100, source, siemens_coeff, safety, tesla_shock, illusion, stun)	//Hard metal shell conducts!
-	return 0 //So borgs they don't die trying to fix wiring
+	return FALSE //So borgs they don't die trying to fix wiring
 
 /mob/living/silicon/emp_act(severity)
 	switch(severity)

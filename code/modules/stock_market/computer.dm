@@ -17,7 +17,7 @@
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
-		return 0
+		return FALSE
 	return SSshuttle.points
 
 /obj/machinery/computer/stockexchange/attack_ai(mob/user)
@@ -251,7 +251,7 @@ a.updated {
 
 /obj/machinery/computer/stockexchange/Topic(href, href_list)
 	if (..())
-		return 1
+		return TRUE
 
 	if (!usr || (!(usr in range(1, src)) && iscarbon(usr)))
 		usr.machine = src

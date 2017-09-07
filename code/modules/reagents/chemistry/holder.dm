@@ -424,7 +424,7 @@
 
 	while(reaction_occurred)
 	update_total()
-	return 0
+	return FALSE
 
 /datum/reagents/proc/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list
@@ -450,26 +450,26 @@
 				check_ignoreslow(my_atom)
 				check_gofast(my_atom)
 				check_goreallyfast(my_atom)
-	return 1
+	return TRUE
 
 /datum/reagents/proc/check_ignoreslow(mob/M)
 	if(ismob(M))
 		if(M.reagents.has_reagent("morphine"))
-			return 1
+			return TRUE
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
 
 /datum/reagents/proc/check_gofast(mob/M)
 	if(ismob(M))
 		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants")||M.reagents.has_reagent("ephedrine"))
-			return 1
+			return TRUE
 		else
 			M.status_flags &= ~GOTTAGOFAST
 
 /datum/reagents/proc/check_goreallyfast(mob/M)
 	if(ismob(M))
 		if(M.reagents.has_reagent("methamphetamine"))
-			return 1
+			return TRUE
 		else
 			M.status_flags &= ~GOTTAGOREALLYFAST
 
@@ -483,14 +483,14 @@
 		else
 			total_volume += R.volume
 
-	return 0
+	return FALSE
 
 /datum/reagents/proc/clear_reagents()
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		del_reagent(R.id)
-	return 0
+	return FALSE
 
 /datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
 	var/react_type
@@ -619,9 +619,9 @@
 				if(R.volume >= amount)
 					return R
 				else
-					return 0
+					return FALSE
 
-	return 0
+	return FALSE
 
 /datum/reagents/proc/get_reagent_amount(reagent)
 	var/list/cached_reagents = reagent_list
@@ -630,7 +630,7 @@
 		if (R.id == reagent)
 			return R.volume
 
-	return 0
+	return FALSE
 
 /datum/reagents/proc/get_reagents()
 	var/list/names = list()
@@ -642,7 +642,7 @@
 	return jointext(names, ",")
 
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
-	if(!isnum(amount)) return 1
+	if(!isnum(amount)) return TRUE
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
 

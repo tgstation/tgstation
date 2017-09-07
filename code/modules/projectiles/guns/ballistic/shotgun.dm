@@ -32,7 +32,7 @@
 
 /obj/item/gun/ballistic/shotgun/can_shoot()
 	if(!chambered)
-		return 0
+		return FALSE
 	return (chambered.BB ? 1 : 0)
 
 /obj/item/gun/ballistic/shotgun/attack_self(mob/living/user)
@@ -53,7 +53,7 @@
 	pump_unload(M)
 	pump_reload(M)
 	update_icon()	//I.E. fix the desc
-	return 1
+	return TRUE
 
 /obj/item/gun/ballistic/shotgun/proc/pump_unload(mob/M)
 	if(chambered)//We have a shell in the chamber
@@ -63,7 +63,7 @@
 
 /obj/item/gun/ballistic/shotgun/proc/pump_reload(mob/M)
 	if(!magazine.ammo_count())
-		return 0
+		return FALSE
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 	chambered = AC
 
@@ -115,7 +115,7 @@
 		pump_unload(M)
 	bolt_open = !bolt_open
 	update_icon()	//I.E. fix the desc
-	return 1
+	return TRUE
 
 /obj/item/gun/ballistic/shotgun/boltaction/attackby(obj/item/A, mob/user, params)
 	if(!bolt_open)

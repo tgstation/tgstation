@@ -144,8 +144,8 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		if(chunk.changed)
 			chunk.hasChanged(1) // Update now, no matter if it's visible or not.
 		if(chunk.visibleTurfs[position])
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/cameranet/proc/stat_entry()
 	if(!statclick)

@@ -64,7 +64,7 @@ field_generator power level display
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(active >= FG_CHARGING)
 				to_chat(user, "<span class='warning'>You are unable to turn off the [name] once it is online!</span>")
-				return 1
+				return TRUE
 			else
 				user.visible_message("[user.name] turns on the [name].", \
 					"<span class='notice'>You turn on the [name].</span>", \
@@ -138,12 +138,12 @@ field_generator power level display
 		step(src, get_dir(M, src))
 
 /obj/machinery/field/generator/emp_act()
-	return 0
+	return FALSE
 
 
 /obj/machinery/field/generator/blob_act(obj/structure/blob/B)
 	if(active)
-		return 0
+		return FALSE
 	else
 		..()
 
@@ -192,25 +192,25 @@ field_generator power level display
 
 	if(draw_power(round(power_draw/2,1)))
 		check_power_level()
-		return 1
+		return TRUE
 	else
 		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='italics'>You hear something shutting down.</span>")
 		turn_off()
 		investigate_log("ran out of power and <font color='red'>deactivated</font>", INVESTIGATE_SINGULO)
 		power = 0
 		check_power_level()
-		return 0
+		return FALSE
 
 //This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
 /obj/machinery/field/generator/proc/draw_power(draw = 0, failsafe = FALSE, obj/machinery/field/generator/G = null, obj/machinery/field/generator/last = null)
 	if((G && (G == src)) || (failsafe >= 8))//Loopin, set fail
-		return 0
+		return FALSE
 	else
 		failsafe++
 
 	if(power >= draw)//We have enough power
 		power -= draw
-		return 1
+		return TRUE
 
 	else//Need more power
 		draw -= power
@@ -221,14 +221,14 @@ field_generator power level display
 				continue
 			if(G)//Another gen is askin for power and we dont have it
 				if(FG.draw_power(draw,failsafe,G,src))//Can you take the load
-					return 1
+					return TRUE
 				else
-					return 0
+					return FALSE
 			else//We are askin another for power
 				if(FG.draw_power(draw,failsafe,src,src))
-					return 1
+					return TRUE
 				else
-					return 0
+					return FALSE
 
 
 /obj/machinery/field/generator/proc/start_fields()
@@ -250,22 +250,22 @@ field_generator power level display
 /obj/machinery/field/generator/proc/setup_field(NSEW)
 	var/turf/T = loc
 	if(!istype(T))
-		return 0
+		return FALSE
 
 	var/obj/machinery/field/generator/G = null
 	var/steps = 0
 	if(!NSEW)//Make sure its ran right
-		return 0
+		return FALSE
 	for(var/dist in 0 to 7) // checks out to 8 tiles away for another generator
 		T = get_step(T, NSEW)
 		if(T.density)//We cant shoot a field though this
-			return 0
+			return FALSE
 
 		G = locate(/obj/machinery/field/generator) in T
 		if(G)
 			steps -= 1
 			if(!G.active)
-				return 0
+				return FALSE
 			break
 
 		for(var/TC in T.contents)
@@ -273,12 +273,12 @@ field_generator power level display
 			if(ismob(A))
 				continue
 			if(A.density)
-				return 0
+				return FALSE
 
 		steps++
 
 	if(!G)
-		return 0
+		return FALSE
 
 	T = loc
 	for(var/dist in 0 to steps) // creates each field tile

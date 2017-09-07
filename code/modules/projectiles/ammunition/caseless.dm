@@ -8,9 +8,9 @@
 /obj/item/ammo_casing/caseless/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread)
 	if (..()) //successfully firing
 		loc = null
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/item/ammo_casing/caseless/update_icon()
 	..()

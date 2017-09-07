@@ -40,20 +40,20 @@
 
 /obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
 	if(!candrain || draining)
-		return 0
+		return FALSE
 	if(!ishuman(loc))
-		return 0 //Only works while worn
+		return FALSE //Only works while worn
 
 	var/mob/living/carbon/human/H = loc
 
 	var/obj/item/clothing/suit/space/space_ninja/suit = H.wear_suit
 	if(!istype(suit))
-		return 0
+		return FALSE
 	if(isturf(A))
-		return 0
+		return FALSE
 
 	if(!proximity)
-		return 0
+		return FALSE
 
 	A.add_fingerprint(H)
 

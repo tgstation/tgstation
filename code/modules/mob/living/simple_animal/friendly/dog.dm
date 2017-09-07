@@ -227,7 +227,7 @@
 
 	if(user && !user.drop_item())
 		to_chat(user, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>")
-		return 0
+		return FALSE
 
 	var/valid = FALSE
 	if(ispath(item_to_add.dog_fashion, /datum/dog_fashion/head))
@@ -509,7 +509,7 @@
 	maxbodytemp = T0C + 40
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
-	return 1	//Void puppies can navigate space.
+	return TRUE	//Void puppies can navigate space.
 
 
 //LISA! SQUEEEEEEEEE~

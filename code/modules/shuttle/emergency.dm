@@ -421,7 +421,7 @@
 			return ..()
 	else
 		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
-		return 1
+		return TRUE
 
 /obj/docking_port/mobile/pod/Initialize()
 	. = ..()

@@ -189,7 +189,7 @@
 	popup.set_content(get_menu())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return 1
+	return TRUE
 
 
 /obj/machinery/power/generator/Topic(href, href_list)
@@ -198,8 +198,8 @@
 	if( href_list["close"] )
 		usr << browse(null, "window=teg")
 		usr.unset_machine()
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /obj/machinery/power/generator/power_change()

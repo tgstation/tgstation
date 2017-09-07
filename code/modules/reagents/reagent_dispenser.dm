@@ -19,7 +19,7 @@
 
 /obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/reagent_containers))
-		return 0 //so we can refill them via their afterattack.
+		return FALSE //so we can refill them via their afterattack.
 	else
 		return ..()
 

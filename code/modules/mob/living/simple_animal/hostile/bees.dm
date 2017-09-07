@@ -52,7 +52,7 @@
 
 
 /mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE
 
 
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
@@ -105,7 +105,7 @@
 /mob/living/simple_animal/hostile/poison/bees/CanAttack(atom/the_target)
 	. = ..()
 	if(!.)
-		return 0
+		return FALSE
 	if(isliving(the_target))
 		var/mob/living/H = the_target
 		return !H.bee_friendly()
@@ -116,11 +116,11 @@
 		var/obj/machinery/hydroponics/Hydro = A
 		if(Hydro.myseed && !Hydro.dead && !Hydro.recent_bee_visit)
 			wanted_objects |= typecacheof(/obj/machinery/hydroponics) //so we only hunt them while they're alive/seeded/not visisted
-			return 1
+			return TRUE
 	if(isliving(A))
 		var/mob/living/H = A
 		return !H.bee_friendly()
-	return 0
+	return FALSE
 
 
 /mob/living/simple_animal/hostile/poison/bees/AttackingTarget()
@@ -214,7 +214,7 @@
 
  //the Queen doesn't leave the box on her own, and she CERTAINLY doesn't pollinate by herself
 /mob/living/simple_animal/hostile/poison/bees/queen/Found(atom/A)
-	return 0
+	return FALSE
 
 
 //leave pollination for the peasent bees
@@ -233,10 +233,10 @@
 
 /mob/living/simple_animal/hostile/poison/bees/proc/reagent_incompatible(mob/living/simple_animal/hostile/poison/bees/B)
 	if(!B)
-		return 0
+		return FALSE
 	if(B.beegent && beegent && B.beegent.id != beegent.id || B.beegent && !beegent || !B.beegent && beegent)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /obj/item/queen_bee

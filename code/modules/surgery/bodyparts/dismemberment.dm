@@ -6,16 +6,16 @@
 //Dismember a limb
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE)
 	if(!owner)
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
-		return 0
+		return FALSE
 	if(C.status_flags & GODMODE)
-		return 0
+		return FALSE
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
-			return 0
+			return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
 	affecting.receive_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
@@ -25,7 +25,7 @@
 
 	if(dam_type == BURN)
 		burn()
-		return 1
+		return TRUE
 	add_mob_blood(C)
 	var/turf/location = C.loc
 	if(istype(location))
@@ -41,19 +41,19 @@
 		if(new_turf.density)
 			break
 	throw_at(target_turf, throw_range, throw_speed)
-	return 1
+	return TRUE
 
 
 /obj/item/bodypart/chest/dismember()
 	if(!owner)
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
-		return 0
+		return FALSE
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
-			return 0
+			return FALSE
 
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
@@ -74,7 +74,7 @@
 
 	if(organ_spilled)
 		C.visible_message("<span class='danger'><B>[C]'s internal organs spill out onto the floor!</B></span>")
-	return 1
+	return TRUE
 
 
 
@@ -327,7 +327,7 @@
 
 //Regenerates all limbs. Returns amount of limbs regenerated
 /mob/living/proc/regenerate_limbs(noheal, excluded_limbs)
-	return 0
+	return FALSE
 
 /mob/living/carbon/regenerate_limbs(noheal, list/excluded_limbs)
 	var/list/limb_list = list("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg")
@@ -342,7 +342,7 @@
 /mob/living/carbon/regenerate_limb(limb_zone, noheal)
 	var/obj/item/bodypart/L
 	if(get_bodypart(limb_zone))
-		return 0
+		return FALSE
 	L = newBodyPart(limb_zone, 0, 0)
 	if(L)
 		if(!noheal)
@@ -352,4 +352,4 @@
 			L.burnstate = 0
 
 		L.attach_limb(src, 1)
-		return 1
+		return TRUE

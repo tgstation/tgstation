@@ -65,9 +65,9 @@
 		return
 	if (anchored)
 		to_chat(usr, "It is fastened to the floor!")
-		return 0
+		return FALSE
 	setDir(turn(dir, -90))
-	return 1
+	return TRUE
 
 /obj/structure/particle_accelerator/AltClick(mob/user)
 	..()
@@ -88,9 +88,9 @@
 		return
 	if (anchored)
 		to_chat(usr, "It is fastened to the floor!")
-		return 0
+		return FALSE
 	setDir(turn(dir, 90))
-	return 1
+	return TRUE
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
 	var/did_something = FALSE
@@ -177,8 +177,8 @@
 /obj/structure/particle_accelerator/proc/connect_master(obj/O)
 	if(O.dir == dir)
 		master = O
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 ///////////
 // PARTS //

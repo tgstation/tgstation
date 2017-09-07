@@ -162,43 +162,43 @@
 
 	var/obj/structure/particle_accelerator/fuel_chamber/F = locate() in orange(1,src)
 	if(!F)
-		return 0
+		return FALSE
 
 	setDir(F.dir)
 	connected_parts.Cut()
 
 	T = get_step(T,rdir)
 	if(!check_part(T, /obj/structure/particle_accelerator/fuel_chamber))
-		return 0
+		return FALSE
 	T = get_step(T,odir)
 	if(!check_part(T, /obj/structure/particle_accelerator/end_cap))
-		return 0
+		return FALSE
 	T = get_step(T,dir)
 	T = get_step(T,dir)
 	if(!check_part(T, /obj/structure/particle_accelerator/power_box))
-		return 0
+		return FALSE
 	T = get_step(T,dir)
 	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/center))
-		return 0
+		return FALSE
 	T = get_step(T,ldir)
 	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/left))
-		return 0
+		return FALSE
 	T = get_step(T,rdir)
 	T = get_step(T,rdir)
 	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/right))
-		return 0
+		return FALSE
 
 	assembled = 1
 	critical_machine = TRUE	//Only counts if the PA is actually assembled.
-	return 1
+	return TRUE
 
 /obj/machinery/particle_accelerator/control_box/proc/check_part(turf/T, type)
 	var/obj/structure/particle_accelerator/PA = locate(/obj/structure/particle_accelerator) in T
 	if(istype(PA, type) && (PA.construction_state == PA_CONSTRUCTION_COMPLETE))
 		if(PA.connect_master(src))
 			connected_parts.Add(PA)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/machinery/particle_accelerator/control_box/proc/toggle_power()
@@ -220,7 +220,7 @@
 			part.strength = null
 			part.powered = 0
 			part.update_icon()
-	return 1
+	return TRUE
 
 
 /obj/machinery/particle_accelerator/control_box/interact(mob/user)

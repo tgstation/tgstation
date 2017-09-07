@@ -354,7 +354,7 @@
 
 	var/results = 0
 	if(last_update_state == update_state && last_update_overlay == update_overlay)
-		return 0
+		return FALSE
 	if(last_update_state != update_state)
 		results += 1
 	if(last_update_overlay != update_overlay)
@@ -603,7 +603,7 @@
 
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 15 && (!(stat & BROKEN) || malfai))
-		return 0
+		return FALSE
 	. = ..()
 
 
@@ -724,9 +724,9 @@
 			else
 				return 2 // 2 = APC hacked by user, and user is in its core.
 		else
-			return 1 // 1 = APC not hacked.
+			return TRUE // 1 = APC not hacked.
 	else
-		return 0 // 0 = User is not a Malf AI
+		return FALSE // 0 = User is not a Malf AI
 
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
@@ -816,7 +816,7 @@
 			failure_timer = 0
 			update_icon()
 			update()
-	return 1
+	return TRUE
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	operating = !operating
@@ -944,7 +944,7 @@
 	if(terminal)
 		return terminal.surplus()
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/apc/add_load(amount)
 	if(terminal && terminal.powernet)
@@ -954,7 +954,7 @@
 	if(terminal)
 		return terminal.avail()
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/apc/process()
 	if(icon_update_needed)
@@ -1118,15 +1118,15 @@
 /obj/machinery/power/apc/proc/autoset(val, on)
 	if(on==0)
 		if(val==2)			// if on, return off
-			return 0
+			return FALSE
 		else if(val==3)		// if auto-on, return auto-off
-			return 1
+			return TRUE
 	else if(on==1)
 		if(val==1)			// if auto-off, return auto-on
 			return 3
 	else if(on==2)
 		if(val==3)			// if auto-on, return auto-off
-			return 1
+			return TRUE
 	return val
 
 /obj/machinery/power/apc/proc/reset(wire)
@@ -1196,22 +1196,22 @@
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))
-		return 0
+		return FALSE
 	do_sparks(5, TRUE, src)
 	if(isalien(user))
-		return 0
+		return FALSE
 	if(electrocute_mob(user, src, src, 1, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/apc/proc/setsubsystem(val)
 	if(cell && cell.charge > 0)
 		return (val==1) ? 0 : val
 	else if(val == 3)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 
 /obj/machinery/power/apc/proc/energy_fail(duration)
