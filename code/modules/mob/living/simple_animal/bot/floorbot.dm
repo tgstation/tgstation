@@ -100,7 +100,7 @@
 	return dat
 
 /mob/living/simple_animal/bot/floorbot/attackby(obj/item/W , mob/user, params)
-	if(istype(W, /obj/item/stack/tile/plasteel))
+	if(istype(W, /obj/item/stack/tile/metal))
 		to_chat(user, "<span class='notice'>The floorbot can produce normal tiles itself.</span>")
 		return
 	if(specialtiles && istype(W, /obj/item/stack/tile))
@@ -322,7 +322,7 @@
 		sleep(50)
 		if(mode == BOT_REPAIRING && src.loc == target_turf)
 			if(autotile) //Build the floor and include a tile.
-				target_turf.ChangeTurf(/turf/open/floor/plasteel)
+				target_turf.ChangeTurf(/turf/open/floor/metal)
 			else //Build a hull plating without a floor tile.
 				target_turf.ChangeTurf(/turf/open/floor/plating)
 
@@ -338,7 +338,7 @@
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
 				F.burnt = 0
-				F.ChangeTurf(/turf/open/floor/plasteel)
+				F.ChangeTurf(/turf/open/floor/metal)
 
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !istype(F, /turf/open/floor/plating))
 			anchored = TRUE
@@ -378,7 +378,7 @@
 	if(prob(50))
 		new /obj/item/bodypart/l_arm/robot(Tsec)
 
-	var/obj/item/stack/tile/plasteel/T = new (Tsec)
+	var/obj/item/stack/tile/metal/T = new (Tsec)
 	T.amount = 1
 
 	do_sparks(3, TRUE, src)
