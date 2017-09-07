@@ -668,3 +668,6 @@ GLOBAL_LIST(external_rsc_urls)
 
 /datum/client_base/proc/IsByondMember()
 	return ..()
+
+/datum/client_base/proc/Export(file, ...)
+	return ..()

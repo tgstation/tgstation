@@ -233,11 +233,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/datum/client_base/proc/resetSNPC,
 	))
 
-/client/add_admin_verbs()
-	if(holder)
-		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
-	return ..()
-
 /datum/client_base/proc/add_admin_verbs()
 	if(holder)
 		var/rights = holder.rank.rights

@@ -28,6 +28,7 @@
 	var/mob/mob
 
 	//writable
+	var/control_freak
 	var/color
 	var/view
 	var/dir
