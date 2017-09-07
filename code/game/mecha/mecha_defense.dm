@@ -6,7 +6,7 @@
 			return facing_modifiers[SIDE_ARMOUR]
 		if(225, 180, 135)
 			return facing_modifiers[FRONT_ARMOUR]
-	return 1 //always return non-0
+	return TRUE //always return non-0
 
 /obj/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -47,7 +47,7 @@
 	if(prob(deflect_chance * booster_deflection_modifier))
 		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
 		log_append_to_last("Armor saved.")
-		return 0
+		return FALSE
 	if(.)
 		. *= booster_damage_modifier
 
@@ -73,7 +73,7 @@
 	log_message("Attack by simple animal. Attacker - [user].",1)
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly] [src].")
-		return 0
+		return FALSE
 	else
 		var/play_soundeffect = 1
 		if(user.environment_smash)
@@ -85,11 +85,11 @@
 		animal_damage = min(animal_damage, 20*user.environment_smash)
 		attack_generic(user, animal_damage, user.melee_damage_type, "melee", play_soundeffect)
 		add_logs(user, src, "attacked")
-		return 1
+		return TRUE
 
 
 /obj/mecha/hulk_damage()
-	return 15
+	return TRUE5
 
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
@@ -250,10 +250,10 @@
 					obj_integrity += min(10, max_integrity-obj_integrity)
 			else
 				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
-				return 1
+				return TRUE
 		else
 			to_chat(user, "<span class='warning'>The [name] is at full integrity!</span>")
-		return 1
+		return TRUE
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
 		if(!user.transferItemToLoc(W, src))
@@ -281,7 +281,7 @@
 
 /obj/mecha/mech_melee_attack(obj/mecha/M)
 	if(!has_charge(melee_energy_drain))
-		return 0
+		return FALSE
 	use_power(melee_energy_drain)
 	if(M.damtype == BRUTE || M.damtype == BURN)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")

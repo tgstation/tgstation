@@ -197,7 +197,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		succumb(1)
 		to_chat(src, compose_message(src, language, message, , spans, message_mode))
 
-	return 1
+	return TRUE
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(!client)
@@ -262,38 +262,38 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 
 /mob/proc/binarycheck()
-	return 0
+	return FALSE
 
 /mob/living/can_speak(message) //For use outside of Say()
 	if(can_speak_basic(message) && can_speak_vocal(message))
-		return 1
+		return TRUE
 
 /mob/living/proc/can_speak_basic(message) //Check BEFORE handling of xeno and ling channels
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
-			return 0
+			return FALSE
 		if(client.handle_spam_prevention(message,MUTE_IC))
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
 	if(disabilities & MUTE)
-		return 0
+		return FALSE
 
 	if(is_muzzled())
-		return 0
+		return FALSE
 
 	if(!IsVocal())
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /mob/living/proc/check_emote(message)
 	if(copytext(message, 1, 2) == "*")
 		emote(copytext(message, 2))
-		return 1
+		return TRUE
 
 /mob/living/proc/get_message_mode(message)
 	var/key = copytext(message, 1, 2)
@@ -414,10 +414,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(mind && mind.changeling)
 		if(mind.changeling.changeling_speak)
 			return 2
-		return 1
+		return TRUE
 	if(mind && mind.linglink)
 		return 3
-	return 0
+	return FALSE
 
 /mob/living/say_mod(input, message_mode)
 	if(message_mode == MODE_WHISPER)

@@ -349,7 +349,7 @@
 	var/list/covered_parts = list()
 
 	if(!bpc)
-		return 0
+		return FALSE
 
 	if(bpc & FULL_BODY)
 		covered_parts |= list("l_arm","r_arm","head","chest","l_leg","r_leg")
@@ -513,7 +513,7 @@
 //assumes format #RRGGBB #rrggbb
 /proc/color_hex2num(A)
 	if(!A)
-		return 0
+		return FALSE
 	var/R = hex2num(copytext(A,2,4))
 	var/G = hex2num(copytext(A,4,6))
 	var/B = hex2num(copytext(A,6,0))

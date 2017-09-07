@@ -139,9 +139,9 @@
 
 /mob/living/simple_animal/hostile/swarmer/CanPass(atom/movable/O)
 	if(istype(O, /obj/item/projectile/beam/disabler))//Allows for swarmers to fight as a group without wasting their shots hitting each other
-		return 1
+		return TRUE
 	if(isswarmer(O))
-		return 1
+		return TRUE
 	..()
 
 ////CTRL CLICK FOR SWARMERS AND SWARMER_ACT()'S////
@@ -184,11 +184,11 @@
 	return S.Integrate(src)
 
 /atom/movable/proc/IntegrateAmount()
-	return 0
+	return FALSE
 
 /obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
 	if(materials[MAT_METAL] || materials[MAT_GLASS])
-		return 1
+		return TRUE
 	return ..()
 
 /obj/item/gun/swarmer_act()//Stops you from eating the entire armory
@@ -210,7 +210,7 @@
 	return 2
 
 /obj/item/clockwork/alloy_shards/small/IntegrateAmount()
-	return 1
+	return TRUE
 
 /turf/open/floor/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
 	return FALSE
@@ -404,7 +404,7 @@
 		resources -= fabrication_cost
 	else
 		to_chat(src, "<span class='warning'>You do not have the necessary resources to fabricate this object.</span>")
-		return 0
+		return FALSE
 	return new fabrication_object(loc)
 
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(atom/movable/target)
@@ -598,9 +598,9 @@
 
 /obj/structure/swarmer/blockade/CanPass(atom/movable/O)
 	if(isswarmer(O))
-		return 1
+		return TRUE
 	if(istype(O, /obj/item/projectile/beam/disabler))
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateSwarmer()
 	set name = "Replicate"

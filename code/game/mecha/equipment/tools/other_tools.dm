@@ -18,7 +18,7 @@
 	var/turf/T = get_turf(target)
 	if(T)
 		do_teleport(chassis, T, 4)
-		return 1
+		return TRUE
 
 
 
@@ -63,7 +63,7 @@
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [COORD(T)]")
 	src = null
 	QDEL_LIST_IN(created, rand(150,300))
-	return 1
+	return TRUE
 
 
 /////////////////////////////////////// GRAVITATIONAL CATAPULT ///////////////////////////////////////////
@@ -97,7 +97,7 @@
 					locked.throw_at(target, 14, 1.5)
 					locked = null
 					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
-					return 1
+					return TRUE
 				else
 					locked = null
 					occupant_message("Lock on [locked] disengaged.")
@@ -117,7 +117,7 @@
 						sleep(2)
 			var/turf/T = get_turf(target)
 			log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Gravitational Catapult in ([T.x],[T.y],[T.z])")
-			return 1
+			return TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_equip_info()
@@ -151,7 +151,7 @@
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/attack_react()
 	if(action_checks(src))
 		start_cooldown()
-		return 1
+		return TRUE
 
 
 
@@ -170,7 +170,7 @@
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/projectile_react()
 	if(action_checks(src))
 		start_cooldown()
-		return 1
+		return TRUE
 
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
@@ -409,7 +409,7 @@
 			return units
 		else
 			occupant_message("Unit is full.")
-			return 0
+			return FALSE
 	else
 		occupant_message("<span class='warning'>[fuel] traces in target minimal! [P] cannot be used as fuel.</span>")
 		return
@@ -459,7 +459,7 @@
 		chassis.give_power(power_per_cycle)
 	fuel.amount -= min(use_fuel/fuel.perunit,fuel.amount)
 	update_equip_info()
-	return 1
+	return TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear

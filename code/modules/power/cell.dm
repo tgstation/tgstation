@@ -69,19 +69,19 @@
 /obj/item/stock_parts/cell/proc/use(amount)
 	if(rigged && amount > 0)
 		explode()
-		return 0
+		return FALSE
 	if(charge < amount)
-		return 0
+		return FALSE
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.add_details("cell_used","[src.type]")
-	return 1
+	return TRUE
 
 // recharge the cell
 /obj/item/stock_parts/cell/proc/give(amount)
 	if(rigged && amount > 0)
 		explode()
-		return 0
+		return FALSE
 	if(maxcharge < amount)
 		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
@@ -162,7 +162,7 @@
 	if(charge >= 1000)
 		return Clamp(round(charge/10000), 10, 90) + rand(-5,5)
 	else
-		return 0
+		return FALSE
 
 /* Cell variants*/
 /obj/item/stock_parts/cell/crap
@@ -284,7 +284,7 @@
 	chargerate = 30000
 
 /obj/item/stock_parts/cell/infinite/use()
-	return 1
+	return TRUE
 
 /obj/item/stock_parts/cell/infinite/abductor
 	name = "void core"
