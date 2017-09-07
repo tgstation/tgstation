@@ -20,10 +20,10 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/Destroy()
-	if(up)
+	if(up && up.down == src)
 		up.down = null
 		up.update_icon()
-	if(down)
+	if(down && down.up == src)
 		down.up = null
 		down.update_icon()
 	GLOB.ladders -= src
@@ -68,8 +68,7 @@
 		user.pulling.forceMove(get_turf(ladder))
 	user.forceMove(get_turf(ladder))
 	if(AM)
-		user.pulling = AM
-		AM.pulledby = user
+		user.start_pulling(AM)
 
 
 /obj/structure/ladder/proc/use(mob/user,is_ghost=0)
