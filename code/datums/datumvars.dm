@@ -547,7 +547,7 @@
 			return
 		M.regenerate_icons()
 	else if(href_list["expose"])
-		if(!check_rights(R_ADMIN, 0))
+		if(!check_rights(R_ADMIN, FALSE))
 			return
 		var/thing = locate(href_list["expose"])
 		if (!thing)
