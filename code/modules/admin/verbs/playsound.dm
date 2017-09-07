@@ -74,7 +74,7 @@
 
 			web_sound_input = trim(web_sound_input)
 			var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
-			var/list/output = world.shelleo("[config.invoke_youtubedl] --format \"bestaudio\[ext=m4a]/bestaudio\[ext=aac]/bestaudio\[ext=mp3]\" --get-url \"[shell_scrubbed_input]\"")
+			var/list/output = world.shelleo("[config.invoke_youtubedl] --format \"bestaudio\[ext=aac]/bestaudio\[ext=mp3]/bestaudio\[ext=m4a]\" --get-url \"[shell_scrubbed_input]\"")
 			var/errorlevel = output[1]
 			var/stdout = output[2]
 			var/stderr = output[3]
