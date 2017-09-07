@@ -8,6 +8,7 @@
 	attack_verb = list("forcefully inspired", "violently encouraged", "relentlessly galvanized")
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
+	var/inspiration_available = TRUE //If this banner can be used to inspire crew
 	var/morale_time = 0
 	var/morale_cooldown = 600 //How many deciseconds between uses
 	var/list/job_loyalties //Mobs with any of these assigned roles will be inspired
@@ -15,23 +16,27 @@
 	var/warcry
 
 /obj/item/banner/attack_self(mob/living/carbon/human/user)
+	if(!inspiration_available)
+		return
 	if(morale_time > world.time)
-		to_chat(user, "<span class='warning'>You aren't feeling inspired enough to flourish [src] again yet.")
+		to_chat(user, "<span class='warning'>You aren't feeling inspired enough to flourish [src] again yet.</span>")
 		return
 	user.visible_message("<span class='big notice'>[user] flourishes [src]!</span>", \
 	"<span class='notice'>You raise [src] skywards, inspiring your allies!</span>")
-	playsound(user, "rustle", 100, FALSE)
+	playsound(src, "rustle", 100, FALSE)
 	if(warcry)
-		user.say("[warcry]!!")
+		user.say("[warcry]")
+	var/old_transform = user.transform
 	user.transform *= 1.2
-	animate(user, transform = initial(user.transform), time = 10)
+	animate(user, transform = old_transform, time = 10)
 	morale_time = world.time + morale_cooldown
 
 	var/list/inspired = list()
 	var/has_job_loyalties = LAZYLEN(job_loyalties)
 	var/has_role_loyalties = LAZYLEN(role_loyalties)
+	inspired += user //The user is always inspired, regardless of loyalties
 	for(var/mob/living/carbon/human/H in range(4, get_turf(src)))
-		if(H.stat == DEAD)
+		if(H.stat == DEAD || H == user)
 			continue
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
 			if(has_job_loyalties && H.mind.assigned_role in job_loyalties)
@@ -40,7 +45,6 @@
 				inspired += H
 		else if(check_inspiration(H))
 			inspired += H
-	inspired |= user //The user is always inspired regardless of loyalty
 
 	for(var/V in inspired)
 		var/mob/living/carbon/human/H = V
@@ -68,14 +72,20 @@
 	desc = "The banner of Securistan, ruling the station with an iron fist."
 	icon_state = "banner_security"
 	job_loyalties = list("Security Officer", "Warden", "Detective", "Head of Security")
-	warcry = "EVERYONE DOWN ON THE GROUND"
+	warcry = "EVERYONE DOWN ON THE GROUND!!"
+
+/obj/item/banner/security/mundane
+	inspiration_available = FALSE
 
 /obj/item/banner/medical
 	name = "meditopia banner"
 	desc = "The banner of Meditopia, generous benefactors that cure wounds and shelter the weak."
 	icon_state = "banner_medical"
 	job_loyalties = list("Medical Doctor", "Chemist", "Geneticist", "Virologist", "Chief Medical Officer")
-	warcry = "No wounds cannot be healed"
+	warcry = "No wounds cannot be healed!"
+
+/obj/item/banner/medical/mundane
+	inspiration_available = FALSE
 
 /obj/item/banner/medical/check_inspiration(mob/living/carbon/human/H)
 	return H.stat //Meditopia is moved to help those in need
@@ -90,7 +100,10 @@
 	desc = "The banner of Sciencia, bold and daring thaumaturges and researchers that take the path less traveled."
 	icon_state = "banner_science"
 	job_loyalties = list("Scientist", "Roboticist", "Research Director")
-	warcry = "For Cuban Pete"
+	warcry = "For Cuban Pete!"
+
+/obj/item/banner/science/mundane
+	inspiration_available = FALSE
 
 /obj/item/banner/science/check_inspiration(mob/living/carbon/human/H)
 	return H.on_fire //Sciencia is pleased by dedication to the art of Toxins
@@ -100,14 +113,20 @@
 	desc = "The banner of the eternal Cargonia, with the mystical power of conjuring any object into existence."
 	icon_state = "banner_cargo"
 	job_loyalties = list("Cargo Technician", "Shaft Miner", "Quartermaster")
-	warcry = "Hail Cargonia"
+	warcry = "Hail Cargonia!"
+
+/obj/item/banner/cargo/mundane
+	inspiration_available = FALSE
 
 /obj/item/banner/engineering
 	name = "engitopia banner"
 	desc = "The banner of Engitopia, wielders of limitless power."
 	icon_state = "banner_engineering"
 	job_loyalties = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")
-	warcry = "All hail lord Singuloth"
+	warcry = "All hail lord Singuloth!!"
+
+/obj/item/banner/engineering/mundane
+	inspiration_available = FALSE
 
 /obj/item/banner/engineering/special_inspiration(mob/living/carbon/human/H)
 	H.radiation = 0
@@ -117,7 +136,10 @@
 	desc = "The banner of Command, a staunch and ancient line of bueraucratic kings and queens."
 	//No icon state here since the default one is the NT banner
 	job_loyalties = list("Captain", "Head of Personnel", "Chief Engineer", "Head of Security", "Research Director", "Chief Medical Officer", "Quartermaster")
-	warcry = "Hail Nanotrasen"
+	warcry = "Hail Nanotrasen!"
+
+/obj/item/banner/command/mundane
+	inspiration_available = FALSE
 
 /obj/item/banner/command/check_inspiration(mob/living/carbon/human/H)
 	return H.isloyal() //Command is stalwart but rewards their allies.
