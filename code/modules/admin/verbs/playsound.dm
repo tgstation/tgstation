@@ -66,37 +66,42 @@
 		to_chat(src, "<span class='boldwarning'>Youtube-dl was not configured, action unavailable</span>") //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
 
-	var/web_sound_input = input("Enter content URL (supported sites only)", "Play Internet Sound via youtube-dl") as text|null
-	if(web_sound_input)
-		web_sound_input = trim(web_sound_input)
-		if(web_sound_input)
+	var/web_sound_input = input("Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via youtube-dl") as text|null
+	if(istext(web_sound_input))
+		var/web_sound_url = ""
+		var/pitch
+		if(length(web_sound_input))
 
+			web_sound_input = trim(web_sound_input)
 			var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
 			var/list/output = world.shelleo("[config.invoke_youtubedl] --format \"bestaudio\[ext=m4a]/bestaudio\[ext=aac]/bestaudio\[ext=mp3]\" --get-url \"[shell_scrubbed_input]\"")
 			var/errorlevel = output[1]
 			var/stdout = output[2]
 			var/stderr = output[3]
 			if(!errorlevel)
-
-				var/web_sound_url = ""
 				var/static/regex/html_url_regex = regex("https?://\\S+")
 				if(html_url_regex.Find(stdout))
 					web_sound_url = html_url_regex.match
 
-					var/pitch
 					if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 						pitch = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
 						to_chat(src, "You feel the Honkmother messing with your song...")
 
 					log_admin("[key_name(src)] played web sound: [web_sound_input]")
 					message_admins("[key_name(src)] played web sound: [web_sound_input]")
-
-					for(var/mob/M in GLOB.player_list)
-						var/client/C = M.client
-						if(C.prefs.toggles & SOUND_MIDI && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-							C.chatOutput.sendMusic(web_sound_url, pitch)
 			else
 				to_chat(src, "<span class='boldwarning'>Youtube-dl URL retrieval FAILED:\n<span class='warning'>[stderr]</span></span>")
+
+		else //pressed ok with blank
+			log_admin("[key_name(src)] stopped web sound")
+			message_admins("[key_name(src)] stopped web sound")
+			web_sound_url = " "
+
+		if(web_sound_url)
+			for(var/mob/M in GLOB.player_list)
+				var/client/C = M.client
+				if(C.prefs.toggles & SOUND_MIDI && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
+					C.chatOutput.sendMusic(web_sound_url, pitch)
 
 	SSblackbox.add_details("admin_verb","Play Internet Sound")
 
