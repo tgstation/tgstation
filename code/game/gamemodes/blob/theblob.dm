@@ -223,7 +223,7 @@
 		overmind.blob_reagent_datum.extinguish_reaction(src)
 
 /obj/structure/blob/hulk_damage()
-	return TRUE5
+	return 5
 
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
