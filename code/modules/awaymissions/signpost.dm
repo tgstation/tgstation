@@ -5,11 +5,12 @@
 	anchored = TRUE
 	density = TRUE
 	var/question = "Travel back?"
-	var/list/zlevels = GLOB.station_z_levels
+	var/list/zlevels = list()
 
 /obj/structure/signpost/New()
 	. = ..()
 	set_light(2)
+	zlevels = GLOB.station_z_levels
 
 /obj/structure/signpost/attackby(obj/item/W, mob/user, params)
 	return attack_hand(user)
