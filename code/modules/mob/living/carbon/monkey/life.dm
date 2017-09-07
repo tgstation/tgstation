@@ -14,7 +14,7 @@
 
 		if(!client)
 			if(stat == CONSCIOUS)
-				if(!handle_combat())
+				if(!handle_combat() && !handle_friendly()) //does the monkey have anything to do
 					if(prob(33) && canmove && isturf(loc) && !pulledby)
 						step(src, pick(GLOB.cardinals))
 					if(prob(1))

@@ -1,3 +1,5 @@
+
+
 /mob/living/carbon/monkey
 	name = "monkey"
 	voice_name = "monkey"
@@ -15,6 +17,11 @@
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
 
+	var/liked_food = JUNKFOOD | FRIED | MEAT | VEGETABLES | FRUIT | GRAIN //monkeys are omnivores
+	var/disliked_food = GROSS | TOXIC
+
+	var/list/relations = list()
+	var/on_shoulder = FALSE
 
 
 /mob/living/carbon/monkey/Initialize()
