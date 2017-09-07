@@ -1,5 +1,5 @@
 author: "Kerbin_Fiber" 
 
-+delete-after: True 
-+changes:  
-+  - rscadd: "Adds Donksoft Toy Vendor to the Circuit Imprinter."
+delete-after: True 
+changes:  
+  - rscadd: "Adds Donksoft Toy Vendor to the Circuit Imprinter."
