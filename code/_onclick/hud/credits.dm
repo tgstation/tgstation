@@ -5,6 +5,8 @@
 
 /client/proc/RollCredits()
 	set waitfor = FALSE
+	if(!prefs.show_credits)
+		return
 	LAZYINITLIST(credits)
 	var/list/_credits = credits
 	verbs += /client/proc/ClearCredits
