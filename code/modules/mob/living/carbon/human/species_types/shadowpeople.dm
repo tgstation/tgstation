@@ -32,14 +32,20 @@
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR,NOHUNGER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
+	var/obj/effect/proc_holder/spell/targeted/shadowwalk/shadowwalk
 
 /datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	var/obj/effect/proc_holder/spell/targeted/shadowwalk/SW = new
 	C.AddSpell(SW)
+	shadowwalk = SW
 	var/obj/item/light_eater/blade = new
 	C.put_in_hands(blade)
 
+/datum/species/shadow/nightmare/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	if(shadowwalk)
+		C.RemoveSpell(shadowwalk)
 
 /datum/species/shadow/nightmare/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	var/turf/T = H.loc
