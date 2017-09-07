@@ -570,8 +570,8 @@
 /obj/machinery/porta_turret/syndicate/pod
 	integrity_failure = 20
 	max_integrity = 40
-	stun_projectile = /obj/item/projectile/bullet/weakbullet3
-	lethal_projectile = /obj/item/projectile/bullet/weakbullet3
+	stun_projectile = /obj/item/projectile/bullet/syndicate_turret
+	lethal_projectile = /obj/item/projectile/bullet/syndicate_turret
 
 /obj/machinery/porta_turret/ai
 	faction = "silicon"
