@@ -251,7 +251,9 @@ SUBSYSTEM_DEF(air)
 			T.excited_group.garbage_collect()
 
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
-	if(istype(T) && T.air)
+	if(!istype(T))
+		return
+	if(T.air)
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		T.add_atom_colour("#00ff00", TEMPORARY_COLOUR_PRIORITY)
 		#endif
