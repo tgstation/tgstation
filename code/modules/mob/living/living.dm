@@ -109,10 +109,17 @@
 	if(((movement_type & FLYING) && !(M.movement_type & FLYING)) || (!(movement_type & FLYING) && (M.movement_type & FLYING)))	//Fly past each other.
 		now_pushing = TRUE
 		var/old = pass_flags & PASSMOB
+		var/old_p = pulling? (pulling.pass_flags & PASSMOB) : NONE
+		var/atom/movable/cached = pulling
 		pass_flags |= PASSMOB
+		if(cached)
+			cached.pass_flags |= PASSMOB
 		Move(get_turf(M))
 		if(!old)
 			pass_flags &= ~PASSMOB
+		if(cached && !old_p)
+			cached.pass_flags &= ~PASSMOB
+		cached = null
 		now_pushing = FALSE
 		return TRUE
 

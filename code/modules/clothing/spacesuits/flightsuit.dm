@@ -462,7 +462,7 @@
 	var/density = FALSE
 	var/anchored = TRUE	//Just in case...
 	var/damage = FALSE
-	else if(istype(unmovablevictim, /obj/structure/grille))
+	if(istype(unmovablevictim, /obj/structure/grille))
 		if(crashpower > 1)
 			var/obj/structure/grille/S = unmovablevictim
 			crash_grille(S)
@@ -556,9 +556,6 @@
 	if(victim.anchored)
 		knockback = 0
 	damage = power*14	//I mean, if you REALLY want to break your skull to break an airlock...
-	if(ismob(victim))	//Why the hell didn't it proc the mob one instead?
-		mobknockback(victim, power, direction)
-		return FALSE
 	if(anchored)
 		knockback = 0
 	victim.visible_message("<span class='warning'>[victim.name] is sent flying by the impact!</span>")

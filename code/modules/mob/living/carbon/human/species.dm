@@ -73,6 +73,7 @@
 
 	var/obj/item/organ/liver/mutantliver
 	var/obj/item/organ/stomach/mutantstomach
+	var/override_float = FALSE
 
 ///////////
 // PROCS //
