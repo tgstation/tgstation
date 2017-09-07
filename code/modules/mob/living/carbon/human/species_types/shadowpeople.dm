@@ -75,6 +75,7 @@
 	if(isopenturf(AM)) //So you can actually melee with it
 		return
 	if(isliving(AM))
+		var/mob/living/L = AM
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
 			borg.update_headlamp(TRUE, 100)
@@ -82,6 +83,8 @@
 			for(var/obj/item/O in AM)
 				if(O.light_range && O.light_power)
 					disintegrate(O)
+		if(L.pulling && L.pulling.light_range && isitem(L.pulling))
+			disintegrate(L.pulling)
 	else if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.light_range && I.light_power)
