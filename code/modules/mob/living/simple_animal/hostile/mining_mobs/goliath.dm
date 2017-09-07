@@ -104,20 +104,20 @@
 	icon_living = "Goliath"
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
-	maxHealth = 500
-	health = 500
+	maxHealth = 400
+	health = 400
 	speed = 4
 	pre_attack_icon = "Goliath_preattack"
 	throw_message = "does nothing to the rocky hide of the"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide) //A throwback to the asteroid days
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
-	crusher_drop_mod = 100
+	crusher_drop_mod = 75
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life()
 	. = ..()
 	if(isturf(loc))
-		for(var/turf/T in orange(2, loc))
-			if(prob(50/get_dist(src, T)))
+		for(var/turf/open/T in orange(4, loc))
+			if(prob(10)
 				new /obj/effect/temp_visual/goliath_tentacle(T, src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
@@ -125,7 +125,7 @@
 
 //tentacles
 /obj/effect/temp_visual/goliath_tentacle
-	name = "Goliath tentacle"
+	name = "goliath tentacle"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath_tentacle_spawn"
 	layer = BELOW_MOB_LAYER
@@ -133,6 +133,8 @@
 
 /obj/effect/temp_visual/goliath_tentacle/Initialize(mapload, mob/living/new_spawner)
 	. = ..()
+	if(locate(/obj/effect/temp_visual/goliath_tentacle) in loc)
+		return INITIALIZE_HINT_QDEL
 	if(!QDELETED(new_spawner))
 		spawner = new_spawner
 	if(ismineralturf(loc))

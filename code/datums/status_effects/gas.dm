@@ -32,5 +32,5 @@
 	owner.update_canmove()
 
 /datum/status_effect/freon/watcher
-	duration = 6
+	duration = 8
 	can_melt = FALSE

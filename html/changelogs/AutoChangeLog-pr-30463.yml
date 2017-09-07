@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - rscadd: "Admins may now show the variables interface to players to help contributors debug their new additions"
