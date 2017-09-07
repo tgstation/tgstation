@@ -671,7 +671,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/obj/machinery/transformer/conveyor = new(T)
 	conveyor.masterAI = owner
 	playsound(T, 'sound/effects/phasein.ogg', 100, 1)
-	owner_AI.can_shunt = TRUE
+	owner_AI.can_shunt = FALSE
 	to_chat(owner, "<span class='warning'>You are no longer able to shunt your core to APCs.</span>")
 	adjust_uses(-1)
 
