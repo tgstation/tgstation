@@ -14,7 +14,7 @@
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
 /mob/living/carbon/alien/humanoid/royal/can_inject()
-	return 0
+	return FALSE
 
 /mob/living/carbon/alien/humanoid/royal/queen
 	name = "alien queen"
@@ -85,10 +85,10 @@
 /obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/egg) in get_turf(user))
 		to_chat(user, "There's already an egg here.")
-		return 0
+		return FALSE
 	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
 	new /obj/structure/alien/egg(user.loc)
-	return 1
+	return TRUE
 
 //Button to let queen choose her praetorian.
 /obj/effect/proc_holder/alien/royal/queen/promote
@@ -104,20 +104,20 @@
 	var/obj/item/queenpromote/prom
 	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
 		to_chat(user, "<span class='noticealien'>You already have a Praetorian!</span>")
-		return 0
+		return FALSE
 	else
 		for(prom in user)
 			to_chat(user, "<span class='noticealien'>You discard [prom].</span>")
 			qdel(prom)
-			return 0
+			return FALSE
 
 		prom = new (user.loc)
 		if(!user.put_in_active_hand(prom, 1))
 			to_chat(user, "<span class='warning'>You must empty your hands before preparing the parasite.</span>")
-			return 0
+			return FALSE
 		else //Just in case telling the player only once is not enough!
 			to_chat(user, "<span class='noticealien'>Use the royal parasite on one of your children to promote her to Praetorian!</span>")
-	return 0
+	return FALSE
 
 /obj/item/queenpromote
 	name = "\improper royal parasite"

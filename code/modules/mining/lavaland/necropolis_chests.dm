@@ -361,7 +361,7 @@
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()
-	return 0
+	return FALSE
 
 /obj/effect/immortality_talisman/Destroy(force)
 	if(!can_destroy && !force)

@@ -47,15 +47,15 @@
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
-		return 1
+		return TRUE
 
 	if(usr.incapacitated())
-		return 1
+		return TRUE
 
 	if(ismob(usr))
 		var/mob/M = usr
 		M.swap_hand()
-	return 1
+	return TRUE
 
 /obj/screen/craft
 	name = "crafting menu"
@@ -77,11 +77,11 @@
 
 /obj/screen/area_creator/Click()
 	if(usr.incapacitated())
-		return 1
+		return TRUE
 	var/area/A = get_area(usr)
 	if(!A.outdoors)
 		to_chat(usr, "<span class='warning'>There is already a defined structure here.</span>")
-		return 1
+		return TRUE
 	create_area(usr)
 
 /obj/screen/language_menu
@@ -106,12 +106,12 @@
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
-		return 1
+		return TRUE
 
 	if(usr.incapacitated())
-		return 1
+		return TRUE
 	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
-		return 1
+		return TRUE
 
 	if(hud && hud.mymob && slot_id)
 		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
@@ -120,7 +120,7 @@
 
 	if(usr.attack_ui(slot_id))
 		usr.update_inv_hands()
-	return 1
+	return TRUE
 
 /obj/screen/inventory/update_icon()
 	if(!icon_empty)
@@ -164,11 +164,11 @@
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
-		return 1
+		return TRUE
 	if(usr.incapacitated() || isobserver(usr))
-		return 1
+		return TRUE
 	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
-		return 1
+		return TRUE
 
 	if(hud.mymob.active_hand_index == held_index)
 		var/obj/item/I = hud.mymob.get_active_held_item()
@@ -176,7 +176,7 @@
 			I.Click(location, control, params)
 	else
 		hud.mymob.swap_hand(held_index)
-	return 1
+	return TRUE
 
 /obj/screen/close
 	name = "close"
@@ -185,7 +185,7 @@
 	if(istype(master, /obj/item/storage))
 		var/obj/item/storage/S = master
 		S.close(usr)
-	return 1
+	return TRUE
 
 
 /obj/screen/drop
@@ -253,7 +253,7 @@
 		if(!C.getorganslot("breathing_tube"))
 			if(!istype(C.wear_mask, /obj/item/clothing/mask))
 				to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")
-				return 1
+				return TRUE
 			else
 				var/obj/item/clothing/mask/M = C.wear_mask
 				if(M.mask_adjusted) // if mask on face but pushed down
@@ -347,16 +347,16 @@
 
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
-		return 1
+		return TRUE
 	if(usr.stat || usr.IsUnconscious() || usr.IsKnockdown() || usr.IsStun())
-		return 1
+		return TRUE
 	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
-		return 1
+		return TRUE
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()
 		if(I)
 			master.attackby(I, usr, params)
-	return 1
+	return TRUE
 
 /obj/screen/throw_catch
 	name = "throw/catch"
@@ -391,7 +391,7 @@
 				if(17 to 22)
 					choice = "l_leg"
 				else
-					return 1
+					return TRUE
 		if(10 to 13) //Hands and groin
 			switch(icon_x)
 				if(8 to 11)
@@ -401,7 +401,7 @@
 				if(21 to 24)
 					choice = "l_arm"
 				else
-					return 1
+					return TRUE
 		if(14 to 22) //Chest and arms to shoulders
 			switch(icon_x)
 				if(8 to 11)
@@ -411,7 +411,7 @@
 				if(21 to 24)
 					choice = "l_arm"
 				else
-					return 1
+					return TRUE
 		if(23 to 30) //Head, but we need to check for eye or mouth
 			if(icon_x in 12 to 20)
 				choice = "head"
@@ -435,7 +435,7 @@
 	if(choice != selecting)
 		selecting = choice
 		update_icon(usr)
-	return 1
+	return TRUE
 
 /obj/screen/zone_sel/update_icon(mob/user)
 	cut_overlays()

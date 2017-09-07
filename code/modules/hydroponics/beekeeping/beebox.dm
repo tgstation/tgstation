@@ -8,19 +8,19 @@
 
 
 /mob/proc/bee_friendly()
-	return 0
+	return FALSE
 
 
 /mob/living/simple_animal/hostile/poison/bees/bee_friendly()
-	return 1
+	return TRUE
 
 
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == "pod") //bees pollinate plants, duh.
-		return 1
+		return TRUE
 	if((wear_suit && (wear_suit.flags_1 & THICKMATERIAL_1)) && (head && (head.flags_1 & THICKMATERIAL_1)))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /obj/structure/beebox

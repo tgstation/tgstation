@@ -58,10 +58,10 @@
 			H.mind.make_Traitor()
 			candidates.Remove(H)
 
-		return 1
+		return TRUE
 
 
-	return 0
+	return FALSE
 
 
 /datum/admins/proc/makeChanglings()
@@ -93,9 +93,9 @@
 			H.mind.make_Changling()
 			candidates.Remove(H)
 
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /datum/admins/proc/makeRevs()
 
@@ -125,9 +125,9 @@
 			H = pick(candidates)
 			H.mind.make_Rev()
 			candidates.Remove(H)
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /datum/admins/proc/makeWizard()
 
@@ -168,9 +168,9 @@
 			H.mind.make_Cultist()
 			candidates.Remove(H)
 
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 
 /datum/admins/proc/makeClockCult()
@@ -206,9 +206,9 @@
 			SSticker.mode.equip_servant(H)
 			candidates.Remove(H)
 
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 
 
@@ -237,7 +237,7 @@
 				break
 		//Making sure we have atleast 3 Nuke agents, because less than that is kinda bad
 		if(agentcount < 3)
-			return 0
+			return FALSE
 
 		var/nuke_code = random_nukecode()
 
@@ -265,9 +265,9 @@
 			else
 				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code)
 			spawnpos++
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 
 
@@ -283,7 +283,7 @@
 
 /datum/admins/proc/makeSpaceNinja()
 	new /datum/round_event/ghost_role/ninja()
-	return 1
+	return TRUE
 
 // DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
@@ -351,9 +351,9 @@
 			squadSpawned++
 
 		if (squadSpawned)
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 	return
 
@@ -393,9 +393,9 @@
 		message_admins("CentCom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
 		log_game("[key_name(newmob)] has been selected as a CentCom Official")
 
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 // CENTCOM RESPONSE TEAM
 /datum/admins/proc/makeEmergencyresponseteam()
@@ -508,17 +508,17 @@
 			teamSpawned++
 
 		if (teamSpawned)
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 	return
 
 //Abductors
 /datum/admins/proc/makeAbductorTeam()
 	new /datum/round_event/ghost_role/abductor
-	return 1
+	return TRUE
 
 /datum/admins/proc/makeRevenant()
 	new /datum/round_event/ghost_role/revenant(TRUE, TRUE)
-	return 1
+	return TRUE

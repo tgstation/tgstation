@@ -67,7 +67,7 @@
 /datum/controller/subsystem/tgui/proc/update_uis(datum/src_object)
 	var/src_object_key = "\ref[src_object]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
-		return 0 // Couldn't find any UIs for this object.
+		return FALSE // Couldn't find any UIs for this object.
 
 	var/update_count = 0
 	for(var/ui_key in open_uis[src_object_key])
@@ -89,7 +89,7 @@
 /datum/controller/subsystem/tgui/proc/close_uis(datum/src_object)
 	var/src_object_key = "\ref[src_object]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
-		return 0 // Couldn't find any UIs for this object.
+		return FALSE // Couldn't find any UIs for this object.
 
 	var/close_count = 0
 	for(var/ui_key in open_uis[src_object_key])
@@ -129,7 +129,7 @@
  **/
 /datum/controller/subsystem/tgui/proc/update_user_uis(mob/user, datum/src_object = null, ui_key = null)
 	if(isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == 0)
-		return 0 // Couldn't find any UIs for this user.
+		return FALSE // Couldn't find any UIs for this user.
 
 	var/update_count = 0
 	for(var/datum/tgui/ui in user.open_uis)
@@ -151,7 +151,7 @@
  **/
 /datum/controller/subsystem/tgui/proc/close_user_uis(mob/user, datum/src_object = null, ui_key = null)
 	if(isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == 0)
-		return 0 // Couldn't find any UIs for this user.
+		return FALSE // Couldn't find any UIs for this user.
 
 	var/close_count = 0
 	for(var/datum/tgui/ui in user.open_uis)
@@ -192,9 +192,9 @@
 /datum/controller/subsystem/tgui/proc/on_close(datum/tgui/ui)
 	var/src_object_key = "\ref[ui.src_object]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
-		return 0 // It wasn't open.
+		return FALSE // It wasn't open.
 	else if(isnull(open_uis[src_object_key][ui.ui_key]) || !istype(open_uis[src_object_key][ui.ui_key], /list))
-		return 0 // It wasn't open.
+		return FALSE // It wasn't open.
 
 	processing_uis.Remove(ui) // Remove it from the list of processing UIs.
 	if(ui.user)	// If the user exists, remove it from them too.
@@ -208,7 +208,7 @@
 		if(!uiobj.len)
 			open_uis.Remove(src_object_key)
 
-	return 1 // Let the caller know we did it.
+	return TRUE // Let the caller know we did it.
 
  /**
   * private
@@ -234,7 +234,7 @@
  **/
 /datum/controller/subsystem/tgui/proc/on_transfer(mob/source, mob/target)
 	if(!source || isnull(source.open_uis) || !istype(source.open_uis, /list) || open_uis.len == 0)
-		return 0 // The old mob had no open UIs.
+		return FALSE // The old mob had no open UIs.
 
 	if(isnull(target.open_uis) || !istype(target.open_uis, /list))
 		target.open_uis = list() // Create a list for the new mob if needed.
@@ -244,4 +244,4 @@
 		target.open_uis.Add(ui) // Transfer all the UIs.
 
 	source.open_uis.Cut() // Clear the old list.
-	return 1 // Let the caller know we did it.
+	return TRUE // Let the caller know we did it.

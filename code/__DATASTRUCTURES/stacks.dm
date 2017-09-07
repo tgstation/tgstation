@@ -31,7 +31,7 @@
 //Rotate entire stack left with the leftmost looping around to the right
 /datum/stack/proc/RotateLeft()
 	if(is_empty())
-		return 0
+		return FALSE
 	. = stack[1]
 	stack.Cut(1,2)
 	Push(.)
@@ -39,7 +39,7 @@
 //Rotate entire stack to the right with the rightmost looping around to the left
 /datum/stack/proc/RotateRight()
 	if(is_empty())
-		return 0
+		return FALSE
 	. = stack[stack.len]
 	stack.Cut(stack.len,0)
 	stack.Insert(1,.)

@@ -157,12 +157,12 @@
 		if (!istype(X, P.input))
 			continue
 		return P
-	return 0
+	return FALSE
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user, params)
 	if(src.processing)
 		to_chat(user, "<span class='warning'>The processor is in the process of processing!</span>")
-		return 1
+		return TRUE
 	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
 		return
 
@@ -197,11 +197,11 @@
 			"You put [O] into [src].")
 		user.drop_item()
 		O.loc = src
-		return 1
+		return TRUE
 	else
 		if(user.a_intent != INTENT_HARM)
 			to_chat(user, "<span class='warning'>That probably won't blend!</span>")
-			return 1
+			return TRUE
 		else
 			return ..()
 
@@ -210,7 +210,7 @@
 		return
 	if(src.processing)
 		to_chat(user, "<span class='warning'>The processor is in the process of processing!</span>")
-		return 1
+		return TRUE
 	if(user.a_intent == INTENT_GRAB && user.pulling && (isslime(user.pulling) || ismonkey(user.pulling)))
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
@@ -222,7 +222,7 @@
 		return
 	if(src.contents.len == 0)
 		to_chat(user, "<span class='warning'>The processor is empty!</span>")
-		return 1
+		return TRUE
 	processing = TRUE
 	user.visible_message("[user] turns on [src].", \
 		"<span class='notice'>You turn on [src].</span>", \

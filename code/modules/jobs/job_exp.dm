@@ -5,22 +5,22 @@ GLOBAL_PROTECT(exp_to_update)
 // Procs
 /datum/job/proc/required_playtime_remaining(client/C)
 	if(!C)
-		return 0
+		return FALSE
 	if(!config.use_exp_tracking)
-		return 0
+		return FALSE
 	if(!exp_requirements || !exp_type)
-		return 0
+		return FALSE
 	if(!job_is_xp_locked(src.title))
-		return 0
+		return FALSE
 	if(config.use_exp_restrictions_admin_bypass && check_rights(R_ADMIN, FALSE, C.mob))
-		return 0
+		return FALSE
 	var/isexempt = C.prefs.db_flags & DB_FLAG_EXEMPT
 	if(isexempt)
-		return 0
+		return FALSE
 	var/my_exp = C.calc_exp_type(get_exp_req_type())
 	var/job_requirement = get_exp_req_amount()
 	if(my_exp >= job_requirement)
-		return 0
+		return FALSE
 	else
 		return (job_requirement - my_exp)
 

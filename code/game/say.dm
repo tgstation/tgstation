@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return
 
 /atom/movable/proc/can_speak()
-	return 1
+	return TRUE
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, message_mode)
 	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return "[src]"	//Returns the atom's name, prepended with 'The' if it's not a proper noun
 
 /atom/movable/proc/IsVocal()
-	return 1
+	return TRUE
 
 /atom/movable/proc/get_alt_name()
 

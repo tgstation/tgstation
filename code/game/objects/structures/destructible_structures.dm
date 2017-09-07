@@ -16,4 +16,4 @@
 		if(break_sound)
 			playsound(src, break_sound, 50, 1)
 	qdel(src)
-	return 1
+	return TRUE

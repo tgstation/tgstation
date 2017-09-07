@@ -29,7 +29,7 @@
 
 /obj/structure/flora/ash/proc/harvest(user, no_drop)
 	if(harvested)
-		return 0
+		return FALSE
 	if(!no_drop)
 		var/rand_harvested = rand(harvest_amount_low, harvest_amount_high)
 		if(rand_harvested)
@@ -47,7 +47,7 @@
 	desc = harvested_desc
 	harvested = TRUE
 	addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
-	return 1
+	return TRUE
 
 /obj/structure/flora/ash/proc/regrow()
 	icon_state = base_icon

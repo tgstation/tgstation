@@ -94,12 +94,12 @@
 /obj/item/clothing/mask/facehugger/on_found(mob/finder)
 	if(stat == CONSCIOUS)
 		return HasProximity(finder)
-	return 0
+	return FALSE
 
 /obj/item/clothing/mask/facehugger/HasProximity(atom/movable/AM as mob|obj)
 	if(CanHug(AM) && Adjacent(AM))
 		return Leap(AM)
-	return 0
+	return FALSE
 
 /obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(!..())
@@ -257,22 +257,22 @@
 
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
-		return 0
+		return FALSE
 	if(M.stat == DEAD)
-		return 0
+		return FALSE
 	if(M.getorgan(/obj/item/organ/alien/hivenode))
-		return 0
+		return FALSE
 
 	if(iscorgi(M) || ismonkey(M))
-		return 1
+		return TRUE
 
 	var/mob/living/carbon/C = M
 	if(ishuman(C) && !(slot_wear_mask in C.dna.species.no_equip))
 		var/mob/living/carbon/human/H = C
 		if(H.is_mouth_covered(head_only = 1))
-			return 0
-		return 1
-	return 0
+			return FALSE
+		return TRUE
+	return FALSE
 
 #undef MIN_ACTIVE_TIME
 #undef MAX_ACTIVE_TIME

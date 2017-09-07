@@ -334,5 +334,5 @@
 
 /obj/structure/ladder/can_use(mob/user)
 	if(user.mind in SSticker.mode.wizards)
-		return 0
-	return 1
+		return FALSE
+	return TRUE

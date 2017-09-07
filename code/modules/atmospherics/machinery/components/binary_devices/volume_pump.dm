@@ -45,7 +45,7 @@ Thus, the two variables affect pump operation are set in New():
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(!on)
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
@@ -56,7 +56,7 @@ Thus, the two variables affect pump operation are set in New():
 	var/output_starting_pressure = air2.return_pressure()
 
 	if((input_starting_pressure < 0.01) || (output_starting_pressure > 9000))
-		return 1
+		return TRUE
 
 	var/transfer_ratio = min(1, transfer_rate/air1.volume)
 
@@ -66,7 +66,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	update_parents()
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -76,7 +76,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -91,7 +91,7 @@ Thus, the two variables affect pump operation are set in New():
 	)
 	radio_connection.post_signal(src, signal)
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -139,7 +139,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return FALSE
 
 	var/old_on = on //for logging
 
@@ -173,5 +173,5 @@ Thus, the two variables affect pump operation are set in New():
 		if(!(stat & NOPOWER) && on)
 			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
-			return 1
+			return TRUE
 

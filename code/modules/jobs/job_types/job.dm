@@ -62,7 +62,7 @@
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE)
 	if(!H)
-		return 0
+		return FALSE
 
 	//Equip the rest of the gear
 	H.dna.species.before_equip_job(src, H, visualsOnly)
@@ -102,24 +102,24 @@
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
 	if(available_in_days(C) == 0)
-		return 1	//Available in 0 days = available right now = player is old enough to play.
-	return 0
+		return TRUE	//Available in 0 days = available right now = player is old enough to play.
+	return FALSE
 
 
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
-		return 0
+		return FALSE
 	if(!config.use_age_restriction_for_jobs)
-		return 0
+		return FALSE
 	if(!isnum(C.player_age))
-		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
+		return FALSE //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
 	if(!isnum(minimal_player_age))
-		return 0
+		return FALSE
 
 	return max(0, minimal_player_age - C.player_age)
 
 /datum/job/proc/config_check()
-	return 1
+	return TRUE
 
 /datum/job/proc/map_check()
 	return TRUE

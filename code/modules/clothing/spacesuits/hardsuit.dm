@@ -34,7 +34,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot)
 	if(slot == slot_head)
-		return 1
+		return TRUE
 
 /obj/item/clothing/head/helmet/space/hardsuit/equipped(mob/user, slot)
 	..()
@@ -126,7 +126,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot)
 	if(slot == slot_wear_suit) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
-		return 1
+		return TRUE
 
 	//Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/engine
@@ -605,8 +605,8 @@
 			owner.visible_message("[owner]'s shield overloads!")
 			shield_state = "broken"
 			owner.update_inv_wear_suit()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /obj/item/clothing/suit/space/hardsuit/shielded/Destroy()

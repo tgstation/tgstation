@@ -103,7 +103,7 @@
 
 
 /mob/living/carbon/human/IsAdvancedToolUser()
-	return 1//Humans can use guns and such
+	return TRUE//Humans can use guns and such
 
 /mob/living/carbon/human/reagent_check(datum/reagent/R)
 	return dna.species.handle_chemicals(R,src)
@@ -112,11 +112,11 @@
 
 /mob/living/carbon/human/can_track(mob/living/user)
 	if(wear_id && istype(wear_id.GetID(), /obj/item/card/id/syndicate))
-		return 0
+		return FALSE
 	if(istype(head, /obj/item/clothing/head))
 		var/obj/item/clothing/head/hat = head
 		if(hat.blockTracking)
-			return 0
+			return FALSE
 
 	return ..()
 

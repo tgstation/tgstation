@@ -9,9 +9,9 @@
 /datum/export/seed/get_cost(obj/O)
 	var/obj/item/seeds/S = O
 	if(!needs_discovery && (S.type in discoveredPlants))
-		return 0
+		return FALSE
 	if(needs_discovery && !(S.type in discoveredPlants))
-		return 0
+		return FALSE
 	return ..() * S.rarity // That's right, no bonus for potency. Send a crappy sample first to "show improvement" later.
 
 /datum/export/seed/sell_object(obj/O)
@@ -30,7 +30,7 @@
 	var/obj/item/seeds/S = O
 	var/cost = ..()
 	if(!cost)
-		return 0
+		return FALSE
 
 	var/potDiff = (S.potency - discoveredPlants[S.type])
 		

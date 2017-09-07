@@ -16,10 +16,10 @@
 	if(min2 != -1 && val <= min2)
 		return 2
 	if(max1 != -1 && val >= max1)
-		return 1
+		return TRUE
 	if(min1 != -1 && val <= min1)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/electronics/airalarm
 	name = "air alarm electronics"
@@ -373,16 +373,16 @@
 
 /obj/machinery/airalarm/proc/shock(mob/user, prb)
 	if((stat & (NOPOWER)))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
+		return FALSE //you lucked out, no shock for you
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src, 1, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/airalarm/proc/refresh_all()
 	var/area/A = get_area(src)
@@ -404,7 +404,7 @@
 
 /obj/machinery/airalarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -417,7 +417,7 @@
 	radio_connection.post_signal(src, signal, GLOB.RADIO_FROM_AIRALARM)
 //			to_chat(world, text("Signal [] Broadcasted to []", command, target))
 
-	return 1
+	return TRUE
 
 /obj/machinery/airalarm/proc/apply_mode()
 	var/area/A = get_area(src)

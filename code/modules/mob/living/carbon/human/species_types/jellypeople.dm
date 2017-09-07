@@ -66,10 +66,10 @@
 		var/mob/living/carbon/human/H = owner
 		var/list/limbs_to_heal = H.get_missing_limbs()
 		if(limbs_to_heal.len < 1)
-			return 0
+			return FALSE
 		if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 /datum/action/innate/regenerate_limbs/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -159,8 +159,8 @@
 	if(..())
 		var/mob/living/carbon/human/H = owner
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 /datum/action/innate/split_body/Activate()
 	var/mob/living/carbon/human/H = owner

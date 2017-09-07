@@ -67,4 +67,4 @@
 	else
 		icon_state = "circ[side]-off"
 
-	return 1
+	return TRUE

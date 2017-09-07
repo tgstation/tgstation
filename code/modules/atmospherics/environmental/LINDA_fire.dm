@@ -10,7 +10,7 @@
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	var/datum/gas_mixture/air_contents = return_air()
 	if(!air_contents)
-		return 0
+		return FALSE
 
 	var/oxy = air_contents.gases["o2"] ? air_contents.gases["o2"][MOLES] : 0
 	var/tox = air_contents.gases["plasma"] ? air_contents.gases["plasma"][MOLES] : 0
@@ -22,7 +22,7 @@
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
-		return 1
+		return TRUE
 
 	var/igniting = 0
 
@@ -31,7 +31,7 @@
 
 	if(igniting)
 		if(oxy < 0.5 || tox < 0.5)
-			return 0
+			return FALSE
 
 		active_hotspot = new /obj/effect/hotspot(src)
 		active_hotspot.temperature = exposed_temperature
@@ -67,7 +67,7 @@
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc
 	if(!istype(location) || !(location.air))
-		return 0
+		return FALSE
 
 	location.active_hotspot = src
 
@@ -92,13 +92,13 @@
 		var/atom/AT = A
 		if(AT && AT != src) // It's possible that the item is deleted in temperature_expose
 			AT.fire_act(temperature, volume)
-	return 0
+	return FALSE
 
 
 /obj/effect/hotspot/process()
 	if(just_spawned)
 		just_spawned = 0
-		return 0
+		return FALSE
 
 	var/turf/open/location = loc
 	if(!istype(location))
@@ -143,8 +143,8 @@
 		location.to_be_destroyed = 1
 		/*if(prob(25))
 			location.ReplaceWithSpace()
-			return 0*/
-	return 1
+			return FALSE*/
+	return TRUE
 
 /obj/effect/hotspot/Destroy()
 	set_light(0)

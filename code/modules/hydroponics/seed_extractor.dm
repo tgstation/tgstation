@@ -20,7 +20,7 @@
 				t_prod.loc = seedloc
 				t_amount++
 			qdel(O)
-			return 1
+			return TRUE
 
 	else if(istype(O, /obj/item/grown))
 		var/obj/item/grown/F = O
@@ -32,9 +32,9 @@
 				t_prod.loc = seedloc
 				t_amount++
 			qdel(O)
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 
 /obj/machinery/seed_extractor
@@ -125,7 +125,7 @@
 
 /obj/machinery/seed_extractor/interact(mob/user)
 	if (stat)
-		return 0
+		return FALSE
 
 	var/dat = "<b>Stored seeds:</b><br>"
 
@@ -177,12 +177,12 @@
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
 		to_chat(usr, "<span class='notice'>\The [src] is full.</span>")
-		return 0
+		return FALSE
 
 	if(ismob(O.loc))
 		var/mob/M = O.loc
 		if(!M.drop_item())
-			return 0
+			return FALSE
 	else if(istype(O.loc, /obj/item/storage))
 		var/obj/item/storage/S = O.loc
 		S.remove_from_storage(O,src)

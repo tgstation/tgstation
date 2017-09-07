@@ -108,7 +108,7 @@
 	if (!NODE1)
 		on = FALSE
 	if(!on || welded)
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/air_contents = AIR1
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -150,7 +150,7 @@
 				air_update_turf()
 	update_parents()
 
-	return 1
+	return TRUE
 
 //Radio remote control
 
@@ -162,7 +162,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -189,7 +189,7 @@
 
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
-	return 1
+	return TRUE
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
@@ -206,7 +206,7 @@
 		return
 	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return 0
+		return FALSE
 
 	if("purge" in signal.data)
 		pressure_checks &= ~EXT_BOUND
@@ -277,7 +277,7 @@
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 				pipe_vision_img.plane = ABOVE_HUD_PLANE
-			return 0
+			return FALSE
 	else
 		return ..()
 
@@ -286,7 +286,7 @@
 		if(!(stat & NOPOWER) && on)
 			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
-			return 1
+			return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	..()

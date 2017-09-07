@@ -535,11 +535,11 @@
 		message_admins("<font color='blue'>\
 			[usr.key] has started the game.[msg]</font>")
 		SSblackbox.add_details("admin_verb","Start Now") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		return 1
+		return TRUE
 	else
 		to_chat(usr, "<font color='red'>Error: Start Now: Game has already started.</font>")
 
-	return 0
+	return FALSE
 
 /datum/admins/proc/toggleenter()
 	set category = "Server"
@@ -801,10 +801,10 @@
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
 	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
-		return 0
+		return FALSE
 
 	if (!frommob.ckey)
-		return 0
+		return FALSE
 
 	var/question = ""
 	if (tomob.ckey)
@@ -813,10 +813,10 @@
 
 	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
 	if (ask != "Yes")
-		return 1
+		return TRUE
 
 	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
-		return 1
+		return TRUE
 
 	tomob.ghostize(0)
 
@@ -827,7 +827,7 @@
 	tomob.ckey = frommob.ckey
 	qdel(frommob)
 
-	return 1
+	return TRUE
 
 /client/proc/adminGreet(logout)
 	if(SSticker.HasRoundStarted())

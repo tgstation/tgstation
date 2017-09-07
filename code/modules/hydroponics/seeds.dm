@@ -164,7 +164,7 @@
 				continue
 
 			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id],1))
-		return 1
+		return TRUE
 
 
 /// Setters procs ///

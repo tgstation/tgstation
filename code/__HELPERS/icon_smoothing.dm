@@ -56,7 +56,7 @@
 
 /proc/calculate_adjacencies(atom/A)
 	if(!A.loc)
-		return 0
+		return FALSE
 
 	var/adjacencies = 0
 
@@ -64,7 +64,7 @@
 	if(ismovableatom(A))
 		AM = A
 		if(AM.can_be_unanchored && !AM.anchored)
-			return 0
+			return FALSE
 
 	for(var/direction in GLOB.cardinals)
 		AM = find_type_in_direction(A, direction)
@@ -363,7 +363,7 @@
 		if(N_SOUTH|N_EAST|N_SOUTHEAST)
 			return SOUTHEAST
 		else
-			return 0
+			return FALSE
 
 //SSicon_smooth
 /proc/queue_smooth_neighbors(atom/A)

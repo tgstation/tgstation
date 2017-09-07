@@ -26,7 +26,7 @@
 
 /obj/structure/spirit_board/proc/spirit_board_pick_letter(mob/M)
 	if(!spirit_board_checks(M))
-		return 0
+		return FALSE
 
 	if(virgin)
 		virgin = 0
@@ -49,7 +49,7 @@
 		bonus = 10 //Give some other people a chance, hog.
 
 	if(next_use - bonus > world.time )
-		return 0 //No feedback here, hiding the cooldown a little makes it harder to tell who's really picking letters.
+		return FALSE //No feedback here, hiding the cooldown a little makes it harder to tell who's really picking letters.
 
 	//lighting check
 	var/light_amount = 0
@@ -59,7 +59,7 @@
 
 	if(light_amount > 0.2)
 		to_chat(M, "<span class='warning'>It's too bright here to use [src.name]!</span>")
-		return 0
+		return FALSE
 
 	//mobs in range check
 	var/users_in_range = 0
@@ -72,6 +72,6 @@
 
 	if(users_in_range < 2)
 		to_chat(M, "<span class='warning'>There aren't enough people to use the [src.name]!</span>")
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE

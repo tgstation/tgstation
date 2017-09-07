@@ -45,7 +45,7 @@
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
 	//note that this proc does not call ..()
 	if(!W || !user)
-		return 0
+		return FALSE
 	var/digging_speed = 0
 	if (istype(W, /obj/item/shovel))
 		var/obj/item/shovel/S = W

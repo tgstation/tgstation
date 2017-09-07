@@ -109,7 +109,7 @@
 	spreadFire(M)
 
 	if(now_pushing)
-		return 1
+		return TRUE
 
 	//Should stop you pushing a restrained person out of the way
 	if(isliving(M))
@@ -117,7 +117,7 @@
 		if(L.pulledby && L.pulledby != src && L.restrained())
 			if(!(world.time % 5))
 				to_chat(src, "<span class='warning'>[L] is restrained, you cannot push past.</span>")
-			return 1
+			return TRUE
 
 		if(L.pulling)
 			if(ismob(L.pulling))
@@ -125,10 +125,10 @@
 				if(P.restrained())
 					if(!(world.time % 5))
 						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
-					return 1
+					return TRUE
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
-		return 1
+		return TRUE
 
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap
@@ -141,7 +141,7 @@
 		if(mob_swap)
 			//switch our position with M
 			if(loc && !loc.Adjacent(M.loc))
-				return 1
+				return TRUE
 			now_pushing = 1
 			var/oldloc = loc
 			var/oldMloc = M.loc
@@ -161,17 +161,17 @@
 				M.pass_flags &= ~PASSMOB
 
 			now_pushing = 0
-			return 1
+			return TRUE
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
 	if(!(M.status_flags & CANPUSH))
-		return 1
+		return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
 			if(prob(I.block_chance*2))
-				return 1
+				return TRUE
 
 //Called when we bump onto an obj
 /mob/living/proc/ObjCollide(obj/O)
@@ -180,9 +180,9 @@
 //Called when we want to push an atom/movable
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
-		return 1
+		return TRUE
 	if(moving_diagonally)// no pushing during diagonal moves.
-		return 1
+		return TRUE
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
 	if(!AM.anchored)
@@ -218,13 +218,13 @@
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
 	if(incapacitated())
-		return 0
+		return FALSE
 	if(src.status_flags & FAKEDEATH)
-		return 0
+		return FALSE
 	if(!..())
-		return 0
+		return FALSE
 	visible_message("<b>[src]</b> points to [A]")
-	return 1
+	return TRUE
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = 1
@@ -238,7 +238,7 @@
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
 	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_restraints && restrained(ignore_grab)))
-		return 1
+		return TRUE
 
 /mob/living/proc/InCritical()
 	return (health <= HEALTH_THRESHOLD_CRIT && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
@@ -324,11 +324,11 @@
 
 	for(var/obj/B in L)
 		if(B.type == A)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/proc/can_inject()
-	return 1
+	return TRUE
 
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
@@ -402,7 +402,7 @@
 /mob/living/proc/can_be_revived()
 	. = 1
 	if(health <= HEALTH_THRESHOLD_DEAD)
-		return 0
+		return FALSE
 
 /mob/living/proc/update_damage_overlays()
 	return
@@ -427,7 +427,7 @@
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
-			return 0
+			return FALSE
 
 	var/atom/movable/pullee = pulling
 	if(pullee && get_dist(src, pullee) > 1)
@@ -582,7 +582,7 @@
 
 
 /mob/proc/resist_grab(moving_resist)
-	return 1 //returning 0 means we successfully broke free
+	return TRUE //returning 0 means we successfully broke free
 
 /mob/living/resist_grab(moving_resist)
 	. = 1
@@ -591,12 +591,12 @@
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			add_logs(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
-			return 0
+			return FALSE
 		if(moving_resist && client) //we resisted by trying to move
 			client.move_delay = world.time + 20
 	else
 		pulledby.stop_pulling()
-		return 0
+		return FALSE
 
 /mob/living/proc/resist_buckle()
 	buckled.user_unbuckle_mob(src,src)
@@ -753,27 +753,27 @@
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
 	var/turf/T = get_turf(src)
 	if(!T)
-		return 0
+		return FALSE
 	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcom
-		return 0
+		return FALSE
 	if(T.z >= ZLEVEL_SPACEMAX)
-		return 0
+		return FALSE
 	if(user != null && src == user)
-		return 0
+		return FALSE
 	if(invisibility || alpha == 0)//cloaked
-		return 0
+		return FALSE
 	if(digitalcamo || digitalinvis)
-		return 0
+		return FALSE
 
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
 	if(!near_camera(src))
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection()
-	return 0
+	return FALSE
 
 /mob/living/proc/harvest(mob/living/user)
 	if(QDELETED(src))
@@ -791,7 +791,7 @@
 		return
 	if(no_dextery)
 		if(be_close && in_range(M, src))
-			return 1
+			return TRUE
 	else
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 	return
@@ -833,13 +833,13 @@
 /mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
 	if(mind && mind.has_antag_datum(ANTAG_DATUM_DEVIL))
 		return check_devil_bane_multiplier(weapon, attacker)
-	return 1
+	return TRUE
 
 /mob/living/proc/check_acedia()
 	if(src.mind && src.mind.objectives)
 		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	stop_pulling()

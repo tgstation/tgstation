@@ -10,12 +10,12 @@
 
 /datum/export/material/get_amount(obj/O)
 	if(!material_id)
-		return 0
+		return FALSE
 	if(!isitem(O))
-		return 0
+		return FALSE
 	var/obj/item/I = O
 	if(!(material_id in I.materials))
-		return 0
+		return FALSE
 
 	var/amount = I.materials[material_id]
 

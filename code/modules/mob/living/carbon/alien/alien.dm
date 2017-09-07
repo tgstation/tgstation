@@ -87,7 +87,7 @@
 		clear_alert("alien_fire")
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
-	return 0
+	return FALSE
 
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
@@ -130,7 +130,7 @@ Des: Removes all infected images from the alien.
 	return
 
 /mob/living/carbon/alien/canBeHandcuffed()
-	return 1
+	return TRUE
 
 /mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)

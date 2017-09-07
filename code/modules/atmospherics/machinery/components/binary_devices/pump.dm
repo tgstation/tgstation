@@ -45,9 +45,9 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/pump/process_atmos()
 //	..()
 	if(stat & (NOPOWER|BROKEN))
-		return 0
+		return FALSE
 	if(!on)
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
@@ -56,7 +56,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	if((target_pressure - output_starting_pressure) < 0.01)
 		//No need to pump gas if target is already reached!
-		return 1
+		return TRUE
 
 	//Calculate necessary moles to transfer using PV=nRT
 	if((air1.total_moles() > 0) && (air1.temperature>0))
@@ -69,7 +69,7 @@ Thus, the two variables affect pump operation are set in New():
 
 		update_parents()
 
-	return 1
+	return TRUE
 
 //Radio remote control
 /obj/machinery/atmospherics/components/binary/pump/proc/set_frequency(new_frequency)
@@ -80,7 +80,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -96,7 +96,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -144,7 +144,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return FALSE
 
 	var/old_on = on //for logging
 
@@ -177,5 +177,5 @@ Thus, the two variables affect pump operation are set in New():
 		if(!(stat & NOPOWER) && on)
 			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
-			return 1
+			return TRUE
 

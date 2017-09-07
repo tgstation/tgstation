@@ -105,7 +105,7 @@
 		return ..()
 
 /obj/structure/reflector/proc/get_reflection(srcdir,pdir)
-	return 0
+	return FALSE
 
 
 /obj/structure/reflector/verb/rotate()
@@ -117,9 +117,9 @@
 		return
 	if (src.anchored)
 		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
-		return 0
+		return FALSE
 	src.setDir(turn(src.dir, 270))
-	return 1
+	return TRUE
 
 
 /obj/structure/reflector/AltClick(mob/user)

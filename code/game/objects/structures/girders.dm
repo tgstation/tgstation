@@ -272,7 +272,7 @@
 		if(istype(mover, /obj/item/projectile))
 			return prob(girderpasschance)
 		else
-			return 0
+			return FALSE
 
 /obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
@@ -368,7 +368,7 @@
 		var/obj/item/stack/sheet/runed_metal/R = W
 		if(R.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need at least one sheet of runed metal to construct a runed wall!</span>")
-			return 0
+			return FALSE
 		user.visible_message("<span class='notice'>[user] begins laying runed metal on [src]...</span>", "<span class='notice'>You begin constructing a runed wall...</span>")
 		if(do_after(user, 50, target = src))
 			if(R.get_amount() < 1 || !R)

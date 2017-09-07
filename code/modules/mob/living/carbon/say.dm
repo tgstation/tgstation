@@ -16,7 +16,7 @@
 
 /mob/living/carbon/can_speak_vocal(message)
 	if(silent)
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/carbon/get_spans()

@@ -66,7 +66,7 @@
 		update_parents()
 	else
 		active_power_usage = idle_power_usage
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/power_change()
 	..()
@@ -86,7 +86,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/wrench/W)
 	if(!..())
-		return 0
+		return FALSE
 	SetInitDirections()
 	var/obj/machinery/atmospherics/node = NODE1
 	if(node)
@@ -100,7 +100,7 @@
 		node.atmosinit()
 		node.addMember(src)
 	build_network()
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user)
 	if(interactive)

@@ -66,7 +66,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	return ..()
 
 /obj/effect/immovablerod/ex_act(severity, target)
-	return 0
+	return FALSE
 
 /obj/effect/immovablerod/Collide(atom/clong)
 	if(prob(10))

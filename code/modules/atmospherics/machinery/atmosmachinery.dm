@@ -91,7 +91,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
 	if(target.initialize_directions & get_dir(target,src))
-		return 1
+		return TRUE
 
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return nodes
@@ -135,7 +135,7 @@ Pipelines + Other Objects -> Pipe network
 			var/turf/T = get_turf(src)
 			if (level==1 && isturf(T) && T.intact)
 				to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
-				return 1
+				return TRUE
 			var/datum/gas_mixture/int_air = return_air()
 			var/datum/gas_mixture/env_air = loc.return_air()
 			add_fingerprint(user)
@@ -274,7 +274,7 @@ Pipelines + Other Objects -> Pipe network
 
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/proc/returnPipenets()
 	return list()
@@ -284,4 +284,4 @@ Pipelines + Other Objects -> Pipe network
 
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
-	return 1
+	return TRUE

@@ -156,7 +156,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	return ..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target)
-	return 1
+	return TRUE
 
 /*
  * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
@@ -231,7 +231,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		g_val = hex2num(copytext(input_color, 3, 5))
 		b_val = hex2num(copytext(input_color, 5, 0))
 	else
-		return 0 //If the color format is not 3 or 6, you're using an unexpected way to represent a color.
+		return FALSE //If the color format is not 3 or 6, you're using an unexpected way to represent a color.
 
 	r_val += (255 - r_val) * 0.4
 	if(r_val > 255)
@@ -302,7 +302,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	Moved(oldloc, direct)
 
 /mob/dead/observer/is_active()
-	return 0
+	return FALSE
 
 /mob/dead/observer/Stat()
 	..()
@@ -330,7 +330,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	client.change_view(world.view)
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
-	return 1
+	return TRUE
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
 	if(flashwindow)
@@ -579,22 +579,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null) as null|anything in possessible
 
 	if(!target)
-		return 0
+		return FALSE
 
 	if(ismegafauna(target))
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
-		return 0
+		return FALSE
 
 	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
-			return 0
+			return FALSE
 	if(target.key)
 		to_chat(src, "<span class='warning'>Someone has taken this body while you were choosing!</span>")
-		return 0
+		return FALSE
 
 	target.key = key
 	target.faction = list("neutral")
-	return 1
+	return TRUE
 
 /proc/show_server_hop_transfer_screen(expected_key)
 	//only show it to incoming ghosts
@@ -609,9 +609,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 //overriden here and in /mob/living for different point span classes and sanity checks
 /mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
 	if(!..())
-		return 0
+		return FALSE
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A].</span>")
-	return 1
+	return TRUE
 
 /mob/dead/observer/verb/view_manifest()
 	set name = "View Crew Manifest"
@@ -711,11 +711,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/canUseTopic(atom/movable/AM,be_close = FALSE)
 	if(check_rights(R_ADMIN, 0))
-		return 1
+		return TRUE
 	return
 
 /mob/dead/observer/is_literate()
-	return 1
+	return TRUE
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -804,7 +804,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // Ghosts have no momentum, being massless ectoplasm
 /mob/dead/observer/Process_Spacemove(movement_dir)
-	return 1
+	return TRUE
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()

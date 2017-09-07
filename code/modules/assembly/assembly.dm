@@ -40,8 +40,8 @@
 /obj/item/device/assembly/proc/is_secured(mob/user)
 	if(!secured)
 		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 //Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
@@ -52,19 +52,19 @@
 	if(radio && (wire_type & WIRE_RADIO_RECEIVE))
 		spawn(0)
 			activate()
-	return 1
+	return TRUE
 
 
 //Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
 /obj/item/device/assembly/proc/pulse(radio = 0)
 	if(connected && wire_type)
 		connected.pulse_assembly(src)
-		return 1
+		return TRUE
 	if(holder && (wire_type & WIRE_PULSE))
 		holder.process_activation(src, 1, 0)
 	if(holder && (wire_type & WIRE_PULSE_SPECIAL))
 		holder.process_activation(src, 0, 1)
-	return 1
+	return TRUE
 
 
 // What the device does when turned on
@@ -110,10 +110,10 @@
 
 /obj/item/device/assembly/attack_self(mob/user)
 	if(!user)
-		return 0
+		return FALSE
 	user.set_machine(src)
 	interact(user)
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/interact(mob/user)
 	return //HTML MENU FOR WIRES GOES HERE

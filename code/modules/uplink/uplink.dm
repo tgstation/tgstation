@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 			SStgui.close_uis(src)
 		if("select")
 			selected_cat = params["category"]
-	return 1
+	return TRUE
 
 
 /obj/item/device/uplink/ui_host()

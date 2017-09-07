@@ -80,14 +80,14 @@
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)
 		if(A.level == 3)
-			return 1
+			return TRUE
 
 /turf/open/floor/blob_act(obj/structure/blob/B)
 	return
 
 /turf/open/floor/proc/update_icon()
 	update_visuals()
-	return 1
+	return TRUE
 
 /turf/open/floor/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -132,14 +132,14 @@
 
 /turf/open/floor/attackby(obj/item/C, mob/user, params)
 	if(!C || !user)
-		return 1
+		return TRUE
 	if(..())
-		return 1
+		return TRUE
 	if(intact && istype(C, /obj/item/crowbar))
 		return pry_tile(C, user)
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
-	return 0
+	return FALSE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)

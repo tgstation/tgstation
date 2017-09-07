@@ -17,7 +17,7 @@
 	return
 
 /turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
-	return 0
+	return FALSE
 
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"

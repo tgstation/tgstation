@@ -107,8 +107,8 @@ GLOBAL_PROTECT(admin_ranks)
 		var/path = admin_keyword_to_path(word)
 		for(var/i in owner.verbs) //this needs to be a foreach loop for some reason. in operator and verbs.Find() don't work
 			if(i == path)
-				return 1
-		return 0
+				return TRUE
+		return FALSE
 
 //load our rank - > rights associations
 /proc/load_admin_ranks()

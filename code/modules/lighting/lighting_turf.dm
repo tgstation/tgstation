@@ -59,7 +59,7 @@
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(var/minlum = 0, var/maxlum = 1)
 	if (!lighting_object)
-		return 1
+		return TRUE
 
 	var/totallums = 0
 	var/thing

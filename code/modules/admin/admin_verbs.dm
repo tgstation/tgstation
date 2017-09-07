@@ -474,7 +474,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 
 	switch(choice)
 		if(null)
-			return 0
+			return FALSE
 		if("Small Bomb (1, 2, 3, 3)")
 			explosion(epicenter, 1, 2, 3, 3, TRUE, TRUE)
 		if("Medium Bomb (2, 3, 4, 4)")

@@ -194,7 +194,7 @@
 
 
 /turf/open/chasm/CanPass(atom/movable/mover, turf/target)
-	return 1
+	return TRUE
 
 //Jungle
 

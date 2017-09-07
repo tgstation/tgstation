@@ -35,7 +35,7 @@
 /obj/machinery/atmospherics/components/unary/oxygen_generator/process_atmos()
 	..()
 	if(!on)
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/air_contents = AIR1
 
@@ -52,4 +52,4 @@
 
 		update_parents()
 
-	return 1
+	return TRUE

@@ -21,7 +21,7 @@
 	)
 
 /datum/debugFileOutput/proc/error(fileName, message, client/C)
-	if (!fileName || !message) return 0
+	if (!fileName || !message) return FALSE
 
 	if (!(fileName in src.validFiles))
 		throw EXCEPTION("Debug log file '[fileName].[src.ext]' is not a valid path.")
@@ -33,10 +33,10 @@
 
 	message = "\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: \[[C && C.key ? C.key : "Unknown Client"]\] triggered: [message]"
 	WRITE_FILE(logFile, message)
-	return 1
+	return TRUE
 
 /datum/debugFileOutput/proc/clear(fileName)
-	if (!fileName) return 0
+	if (!fileName) return FALSE
 
 	if (!fexists("[src.directory]/[fileName].[src.ext]"))
 		throw EXCEPTION("Debug log file '[fileName].[src.ext]' does not exist.")
@@ -45,7 +45,7 @@
 		throw EXCEPTION("Debug log file '[fileName].[src.ext]' is not a valid path.")
 
 	fdel("[src.directory]/[fileName].[src.ext]")
-	return 1
+	return TRUE
 
 /datum/debugFileOutput/proc/clearAll()
 	var/list/deleted = new()

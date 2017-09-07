@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	return x!=0?x/abs(x):0
 
 /proc/Atan2(x, y)
-	if(!x && !y) return 0
+	if(!x && !y) return FALSE
 	var/a = arccos(x / sqrt(x*x + y*y))
 	return y >= 0 ? a : -a
 
@@ -27,11 +27,11 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 
 // cotangent
 /proc/Cot(x)
-	return 1 / Tan(x)
+	return TRUE / Tan(x)
 
 // cosecant
 /proc/Csc(x)
-	return 1 / sin(x)
+	return TRUE / sin(x)
 
 /proc/Default(a, b)
 	return a ? a : b
@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	return b ? Gcd(b, a % b) : a
 
 /proc/Inverse(x)
-	return 1 / x
+	return TRUE / x
 
 /proc/IsAboutEqual(a, b, deviation = 0.1)
 	return abs(a - b) <= deviation
@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 
 // secant
 /proc/Sec(x)
-	return 1 / cos(x)
+	return TRUE / cos(x)
 
 // The quadratic formula. Returns a list with the solutions, or an empty list
 // if they are imaginary.

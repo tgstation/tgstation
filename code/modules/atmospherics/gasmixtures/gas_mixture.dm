@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		TOTAL_MOLES(cached_gases, .)
 		. *= R_IDEAL_GAS_EQUATION * temperature / volume
 		return
-	return 0
+	return FALSE
 
 /datum/gas_mixture/proc/return_temperature() //kelvins
 	return temperature
@@ -180,11 +180,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in cached_gases)
 		cached_gases[id][ARCHIVE] = cached_gases[id][MOLES]
 
-	return 1
+	return TRUE
 
 /datum/gas_mixture/merge(datum/gas_mixture/giver)
 	if(!giver)
-		return 0
+		return FALSE
 
 	//heat transfer
 	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		assert_gas(giver_id)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
-	return 1
+	return TRUE
 
 /datum/gas_mixture/remove(amount)
 	var/sum
@@ -265,7 +265,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//remove all gases not in the sample
 	cached_gases &= sample_gases
 
-	return 1
+	return TRUE
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	parse_gas_string(model.initial_gas_mix)
@@ -275,7 +275,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(model.temperature != initial(model.temperature) || model.temperature != initial(model_parent.temperature))
 		temperature = model.temperature
 
-	return 1
+	return TRUE
 
 /datum/gas_mixture/parse_gas_string(gas_string)
 	var/list/gases = src.gases
@@ -287,11 +287,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in gas)
 		add_gas(id)
 		gases[id][MOLES] = text2num(gas[id])
-	return 1
+	return TRUE
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	if(!sharer)
-		return 0
+		return FALSE
 
 	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases

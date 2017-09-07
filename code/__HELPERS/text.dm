@@ -220,15 +220,15 @@
 /proc/text_in_list(haystack, list/needle_list, start=1, end=0)
 	for(var/needle in needle_list)
 		if(findtext(haystack, needle, start, end))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //Like above, but case sensitive
 /proc/text_in_list_case(haystack, list/needle_list, start=1, end=0)
 	for(var/needle in needle_list)
 		if(findtextEx(haystack, needle, start, end))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
@@ -304,7 +304,7 @@
 //This is used for fingerprints
 	var/newtext = text
 	if(lentext(text) != lentext(compare))
-		return 0
+		return FALSE
 	for(var/i = 1, i < lentext(text), i++)
 		var/a = copytext(text,i,i+1)
 		var/b = copytext(compare,i,i+1)
@@ -316,14 +316,14 @@
 			else if(b == replace) //if B is the replacement char
 				newtext = copytext(newtext,1,i) + a + copytext(newtext, i+1)
 			else //The lists disagree, Uh-oh!
-				return 0
+				return FALSE
 	return newtext
 
 /proc/stringpercent(text,character = "*")
 //This proc returns the number of chars of the string that is the character
 //This is used for detective work to determine fingerprint completion.
 	if(!text || !character)
-		return 0
+		return FALSE
 	var/count = 0
 	for(var/i = 1, i <= lentext(text), i++)
 		var/a = copytext(text,i,i+1)

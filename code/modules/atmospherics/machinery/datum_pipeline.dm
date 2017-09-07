@@ -181,7 +181,7 @@
 				self_temperature_delta = -heat/total_heat_capacity
 				sharer_temperature_delta = heat/sharer_heat_capacity
 			else
-				return 1
+				return TRUE
 
 			air.temperature += self_temperature_delta
 			modeled_location.TakeTemperature(sharer_temperature_delta)

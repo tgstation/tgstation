@@ -40,7 +40,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		to_chat(src, "<span class='notice'>Server Hop has been disabled.</span>")
 		return
 	if (alert(src, "Jump to server running at [config.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
-		return 0
+		return FALSE
 	if (client && config.cross_allowed)
 		to_chat(src, "<span class='notice'>Sending you to [config.cross_address].</span>")
 		new /obj/screen/splash(client)

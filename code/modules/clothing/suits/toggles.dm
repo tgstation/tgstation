@@ -26,7 +26,7 @@
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
 	if(slot == slot_wear_suit)
-		return 1
+		return TRUE
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
 	if(slot != slot_wear_suit)
@@ -107,7 +107,7 @@
 	set src in usr
 
 	if(!can_use(usr))
-		return 0
+		return FALSE
 
 	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
 	if(src.suittoggled)

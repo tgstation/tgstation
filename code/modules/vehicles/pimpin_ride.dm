@@ -76,7 +76,7 @@
 
 /obj/vehicle/janicart/attack_hand(mob/user)
 	if(..())
-		return 1
+		return TRUE
 	else if(mybag)
 		mybag.loc = get_turf(user)
 		user.put_in_hands(mybag)

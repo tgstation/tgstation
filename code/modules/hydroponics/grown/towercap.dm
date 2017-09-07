@@ -183,8 +183,8 @@
 		if(O.air)
 			var/G = O.air.gases
 			if(G["o2"][MOLES] > 13)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/structure/bonfire/proc/StartBurning()
 	if(!burning && CheckOxygen())

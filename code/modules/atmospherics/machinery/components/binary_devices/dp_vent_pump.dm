@@ -137,7 +137,7 @@ Acts like a normal vent, but has an input AND output.
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -156,7 +156,7 @@ Acts like a normal vent, but has an input AND output.
 	)
 	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/atmosinit()
 	..()
@@ -167,7 +167,7 @@ Acts like a normal vent, but has an input AND output.
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/receive_signal(datum/signal/signal)
 
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return FALSE
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
 

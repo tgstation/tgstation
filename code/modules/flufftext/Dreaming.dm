@@ -9,7 +9,7 @@
 		dreaming++
 	for(var/i in 1 to dream_images.len)
 		addtimer(CALLBACK(src, .proc/experience_dream, dream_images[i]), ((i - 1) * rand(30,60)))
-	return 1
+	return TRUE
 
 /mob/living/carbon/proc/handle_dreams()
 	if(prob(5) && !dreaming)

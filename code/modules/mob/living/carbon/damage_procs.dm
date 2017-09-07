@@ -3,7 +3,7 @@
 /mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || hit_percent <= 0)
-		return 0
+		return FALSE
 
 	var/obj/item/bodypart/BP = null
 	if(isbodypart(def_zone)) //we specified a bodypart object
@@ -38,7 +38,7 @@
 			adjustStaminaLoss(damage * hit_percent)
 		if(BRAIN)
 			adjustBrainLoss(damage * hit_percent)
-	return 1
+	return TRUE
 
 
 //These procs fetch a cumulative total damage from all bodyparts
@@ -181,7 +181,7 @@
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
-		return 0
+		return FALSE
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 	if(updating_stamina)
 		update_stamina()
@@ -189,7 +189,7 @@
 
 /mob/living/carbon/setStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
-		return 0
+		return FALSE
 	staminaloss = amount
 	if(updating_stamina)
 		update_stamina()

@@ -24,7 +24,7 @@
 //(i.e the max or the min dependant on the comparison function)
 /Heap/proc/Pop()
 	if(!L.len)
-		return 0
+		return FALSE
 	. = L[1]
 
 	L[1] = L[L.len]
@@ -54,7 +54,7 @@
 //or 0 if there's no child
 /Heap/proc/GetGreaterChild(var/index)
 	if(index * 2 > L.len)
-		return 0
+		return FALSE
 
 	if(index * 2 + 1 > L.len)
 		return index * 2

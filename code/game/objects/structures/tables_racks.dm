@@ -71,11 +71,11 @@
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return 1
+		return TRUE
 	if(mover.throwing)
-		return 1
+		return TRUE
 	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
+		return TRUE
 	else
 		return !density
 
@@ -133,7 +133,7 @@
 			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
 			I.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
 			I.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			return 1
+			return TRUE
 	else
 		return ..()
 
@@ -385,10 +385,10 @@
 	if(M)
 		if(M.resting)
 			patient = M
-			return 1
+			return TRUE
 	else
 		patient = null
-		return 0
+		return FALSE
 
 
 
@@ -407,11 +407,11 @@
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target)
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
-		return 1
+		return TRUE
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/structure/rack/CanAStarPass(ID, dir, caller)
 	. = !density
@@ -437,7 +437,7 @@
 		return ..()
 	if(user.drop_item())
 		W.Move(loc)
-		return 1
+		return TRUE
 
 /obj/structure/rack/attack_paw(mob/living/user)
 	attack_hand(user)

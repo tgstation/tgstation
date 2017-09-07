@@ -30,8 +30,8 @@ AI
 
 /datum/job/ai/config_check()
 	if(config && config.allow_ai)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /*
 Cyborg

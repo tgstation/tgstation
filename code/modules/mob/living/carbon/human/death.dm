@@ -44,11 +44,11 @@
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED
 	set_species(/datum/species/skeleton)
-	return 1
+	return TRUE
 
 
 /mob/living/carbon/proc/Drain()
 	become_husk()
 	disabilities |= NOCLONE
 	blood_volume = 0
-	return 1
+	return TRUE

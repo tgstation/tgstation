@@ -90,10 +90,10 @@
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
-		return 0
+		return FALSE
 
 	if(!client)
-		return 0
+		return FALSE
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
@@ -104,7 +104,7 @@
 
 	if(href_list["show_preferences"])
 		client.prefs.ShowChoices(src)
-		return 1
+		return TRUE
 
 	if(href_list["ready"])
 		var/tready = text2num(href_list["ready"])
@@ -293,31 +293,31 @@
 /mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
-		return 0
+		return FALSE
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 		if(job.title == "Assistant")
 			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
-				return 1
+				return TRUE
 			for(var/datum/job/J in SSjob.occupations)
 				if(J && J.current_positions < J.total_positions && J.title != job.title)
-					return 0
+					return FALSE
 		else
-			return 0
+			return FALSE
 	if(jobban_isbanned(src,rank))
-		return 0
+		return FALSE
 	if(!job.player_old_enough(src.client))
-		return 0
+		return FALSE
 	if(job.required_playtime_remaining(client))
-		return 0
+		return FALSE
 	if(config.enforce_human_authority && !client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if(!IsJobAvailable(rank))
 		alert(src, "[rank] is not available. Please try another.")
-		return 0
+		return FALSE
 
 	if(SSticker.late_join_disabled)
 		alert(src, "An administrator has disabled late join spawning.")
@@ -486,7 +486,7 @@
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
 /mob/dead/new_player/Move()
-	return 0
+	return FALSE
 
 
 /mob/dead/new_player/proc/close_spawn_windows()

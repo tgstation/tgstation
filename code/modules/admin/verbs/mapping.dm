@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	icon_state = "yellow"
 
 /obj/effect/debugging/marker/Move()
-	return 0
+	return FALSE
 
 /client/proc/camera_view()
 	set category = "Mapping"
@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	if(!Master)
 		alert(usr,"Master_controller not found.","Sec Camera Report")
-		return 0
+		return FALSE
 
 	var/list/obj/machinery/camera/CL = list()
 

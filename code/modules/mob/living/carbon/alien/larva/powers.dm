@@ -17,7 +17,7 @@
 		user.layer = MOB_LAYER
 		user.visible_message("[user.] slowly peeks up from the ground...", \
 					"<span class='noticealien'>You stop hiding.</span>")
-	return 1
+	return TRUE
 
 
 /obj/effect/proc_holder/alien/larva_evolve
@@ -56,7 +56,7 @@
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(L.loc)
 
 		L.alien_evolve(new_xeno)
-		return 0
+		return FALSE
 	else
 		to_chat(user, "<span class='danger'>You are not fully grown.</span>")
-		return 0
+		return FALSE

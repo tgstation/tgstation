@@ -6,13 +6,13 @@
 
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
 	if(isobj(shoes) && (shoes.flags_1&NOSLIP_1) && !(lube&GALOSHES_DONT_HELP))
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/carbon/human/experience_pressure_difference()
 	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
 	if(shoes && shoes.flags_1&NOSLIP_1)
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/carbon/human/mob_has_gravity()
@@ -63,5 +63,5 @@
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(..())
-		return 1
+		return TRUE
 	return dna.species.space_move(src)

@@ -7,7 +7,7 @@
 
 /obj/screen/robot/Click()
 	if(isobserver(usr))
-		return 1
+		return TRUE
 
 /obj/screen/robot/module/Click()
 	if(..())
@@ -15,7 +15,7 @@
 	var/mob/living/silicon/robot/R = usr
 	if(R.module.type != /obj/item/robot_module)
 		R.hud_used.toggle_show_robot_modules()
-		return 1
+		return TRUE
 	R.pick_module()
 
 /obj/screen/robot/module1

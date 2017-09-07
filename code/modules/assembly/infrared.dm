@@ -25,10 +25,10 @@
 
 /obj/item/device/assembly/infra/activate()
 	if(!..())
-		return 0//Cooldown check
+		return FALSE//Cooldown check
 	on = !on
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/infra/toggle_secure()
 	secured = !secured
@@ -91,9 +91,9 @@
 
 /obj/item/device/assembly/infra/holder_movement()
 	if(!holder)
-		return 0
+		return FALSE
 	qdel(first)
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/infra/proc/trigger_beam()
 	if(!secured || !on || next_activate > world.time)

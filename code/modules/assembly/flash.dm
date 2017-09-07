@@ -33,12 +33,12 @@
 /obj/item/device/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		flash_carbon(user, user, 15, 0)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/device/assembly/flash/activate()
 	if(!try_use_flash())
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='disarm'>[src] emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in viewers(3, T))
@@ -60,7 +60,7 @@
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
 	if(prob(times_used * 3)) //The more often it's used in a short span of time the more likely it will burn out
 		burn_out()
-		return 0
+		return FALSE
 
 	var/deciseconds_passed = world.time - last_used
 	for(var/seconds = deciseconds_passed/10, seconds>=interval, seconds-=interval) //get 1 charge every interval
@@ -68,22 +68,22 @@
 
 	last_used = world.time
 	times_used = max(0, times_used) //sanity
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/flash/proc/try_use_flash(mob/user = null)
 	flash_recharge(10)
 
 	if(crit_fail)
-		return 0
+		return FALSE
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	update_icon(1)
 	times_used++
 
 	if(user && !clown_check(user))
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 
 /obj/item/device/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user = null, power = 15, targeted = 1)
@@ -106,11 +106,11 @@
 
 /obj/item/device/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
-		return 0
+		return FALSE
 
 	if(iscarbon(M))
 		flash_carbon(M, user, 5, 1)
-		return 1
+		return TRUE
 
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
@@ -120,16 +120,16 @@
 		R.confused += 5
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
-		return 1
+		return TRUE
 
 	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
 
 
 /obj/item/device/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)
-		return 0
+		return FALSE
 	if(!try_use_flash(user))
-		return 0
+		return FALSE
 	user.visible_message("<span class='disarm'>[user]'s flash emits a blinding light!</span>", "<span class='danger'>Your flash emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		flash_carbon(M, user, 1, 0)
@@ -137,7 +137,7 @@
 
 /obj/item/device/assembly/flash/emp_act(severity)
 	if(!try_use_flash())
-		return 0
+		return FALSE
 	if(iscarbon(loc))
 		flash_carbon(loc, null, 10, 0)
 	burn_out()
@@ -244,8 +244,8 @@
 /obj/item/device/assembly/flash/shield/flash_recharge(interval=10)
 	if(times_used >= 4)
 		burn_out()
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/device/assembly/flash/shield/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/assembly/flash/handheld))

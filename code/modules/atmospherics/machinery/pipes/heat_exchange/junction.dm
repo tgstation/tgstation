@@ -40,7 +40,7 @@
 		if(2)
 			var/obj/machinery/atmospherics/pipe/heat_exchanging/H = target
 			if(!istype(H))
-				return 0
+				return FALSE
 			init_dir = H.initialize_directions_he
 	if(init_dir & get_dir(target,src))
-		return 1
+		return TRUE

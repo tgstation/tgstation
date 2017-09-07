@@ -17,9 +17,9 @@
 
 /obj/item/device/assembly/health/activate()
 	if(!..())
-		return 0//Cooldown check
+		return FALSE//Cooldown check
 	toggle_scan()
-	return 0
+	return FALSE
 
 /obj/item/device/assembly/health/toggle_secure()
 	secured = !secured
@@ -66,7 +66,7 @@
 
 /obj/item/device/assembly/health/proc/toggle_scan()
 	if(!secured)
-		return 0
+		return FALSE
 	scanning = !scanning
 	if(scanning)
 		START_PROCESSING(SSobj, src)
@@ -77,7 +77,7 @@
 /obj/item/device/assembly/health/interact(mob/user as mob)//TODO: Change this to the wires thingy
 	if(!secured)
 		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
-		return 0
+		return FALSE
 	var/dat = "<TT><B>Health Sensor</B> <A href='?src=\ref[src];scanning=1'>[scanning?"On":"Off"]</A>"
 	if(scanning && health_scan)
 		dat += "<BR>Health: [health_scan]"

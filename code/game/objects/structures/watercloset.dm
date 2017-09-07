@@ -507,7 +507,7 @@
 		busy = TRUE
 		if(!do_after(user, 40, target = src))
 			busy = FALSE
-			return 1
+			return TRUE
 		busy = FALSE
 		O.clean_blood()
 		O.acid_level = 0
@@ -516,7 +516,7 @@
 		reagents.reaction(O, TOUCH)
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
-		return 1
+		return TRUE
 	else
 		return ..()
 
