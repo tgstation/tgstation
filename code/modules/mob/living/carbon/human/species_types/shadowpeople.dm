@@ -47,7 +47,7 @@
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			H.visible_message("<span class='danger'>[H] dances in the shadows, evading [P]!</span>")
-			playsound(T, get_sfx("bullet_miss"), 75, 1)
+			playsound(T, "bullet_miss", 75, 1)
 			return -1
 	return 0
 
