@@ -556,7 +556,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	if(judgement_criteria & JUDGE_EMAGGED)
-		return TRUE0 //Everyone is a criminal!
+		return 10 //Everyone is a criminal!
 
 	var/threatcount = 0
 
