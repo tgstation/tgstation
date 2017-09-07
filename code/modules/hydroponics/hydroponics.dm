@@ -915,9 +915,11 @@
 	name = "soil"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
+	circuit = null
 	density = FALSE
 	use_power = NO_POWER_USE
-	unwrenchable = 0
+	flags_1 = NODECONSTRUCT_1
+	unwrenchable = FALSE
 
 /obj/machinery/hydroponics/soil/update_icon_hoses()
 	return // Has no hoses

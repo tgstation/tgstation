@@ -171,9 +171,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/wwvault)
 "aL" = (
-/obj/item/paper/fluff/awaymissions/wildwest/grinder{
-	info = "meat grinder requires sacri"
-	},
+/obj/item/paper/fluff/awaymissions/wildwest/grinder,
 /turf/open/floor/plasteel/cult{
 	name = "engraved floor"
 	},
