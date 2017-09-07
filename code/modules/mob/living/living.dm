@@ -447,7 +447,7 @@
 			if(isliving(pulling))
 				var/mob/living/M = pulling
 				if(M.lying && !M.buckled && (prob(M.getBruteLoss()*200/M.maxHealth)))
-					M.makeTrail(T)
+					M.makeTrail(T, M.loc)
 			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
 			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
 				stop_pulling()
@@ -474,17 +474,10 @@
 			if(MOVE_INTENT_WALK)
 				. += config.walk_speed
 
-/mob/living/proc/makeTrail(turf/target_turf, soft_crit_override_dir = null)
+/mob/living/proc/makeTrail(turf/target_turf, turf/start)
 	if(!has_gravity())
 		return
 	var/blood_exists = FALSE
-
-	var/turf/start
-	if(soft_crit_override_dir)
-		var/old_dir = turn(soft_crit_override_dir, 180)
-		start = get_step(target_turf, old_dir)
-	else
-		start = loc
 
 	for(var/obj/effect/decal/cleanable/trail_holder/C in start) //checks for blood splatter already on the floor
 		blood_exists = TRUE
