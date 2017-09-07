@@ -86,13 +86,28 @@
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
 	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
 	loot = list()
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 
+/mob/living/simple_animal/hostile/asteroid/goliath/make_shiny()
+	name = "precursor goliath"
+	real_name = name
+	desc = "Due to their stone hide, goliaths are biologically immortal, although future generations evolved to look much different. This goliath is likely a very early ancestor to many others here, and at least several centuries old."
+	icon_state = "Goliath"
+	icon_living = "Goliath"
+	icon_aggro = "Goliath_alert"
+	icon_dead = "Goliath_dead"
+	pre_attack_icon = "Goliath_preattack"
+	throw_message = "does nothing to the rocky hide of the"
+	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide) //A throwback to the asteroid days
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
+
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
 	fromtendril = TRUE
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril/make_shiny()
+	return //Precursor goliaths don't come from tendrils!
 
 //tentacles
 /obj/effect/goliath_tentacle

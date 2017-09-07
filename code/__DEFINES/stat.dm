@@ -22,9 +22,8 @@
 // bitflags for machine stat variable
 #define BROKEN		1
 #define NOPOWER		2
-#define POWEROFF	4		// tbd
-#define MAINT		8			// under maintaince
-#define EMPED		16		// temporary broken by EMP pulse
+#define MAINT		4			// under maintaince
+#define EMPED		8		// temporary broken by EMP pulse
 
 //ai power requirement defines
 #define POWER_REQ_NONE 0

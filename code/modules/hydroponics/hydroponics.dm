@@ -248,7 +248,7 @@
 		if(istype(src, /obj/machinery/hydroponics/soil))
 			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 		else
-			overlays += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing")
+			add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing"))
 		set_light(3)
 
 	update_icon_hoses()

@@ -2407,7 +2407,7 @@
 	dir = 4;
 	id = "pod3";
 	name = "escape pod 3";
-	port_angle = 180;
+	port_direction = 2;
 	preferred_direction = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -6368,7 +6368,7 @@
 	height = 5;
 	id = "laborcamp";
 	name = "labor camp shuttle";
-	port_angle = 90;
+	port_direction = 4;
 	width = 9
 	},
 /obj/docking_port/stationary{
@@ -16484,7 +16484,7 @@
 	height = 7;
 	id = "arrival";
 	name = "arrival shuttle";
-	port_angle = -90;
+	port_direction = 8;
 	preferred_direction = 8;
 	width = 15
 	},
@@ -32542,7 +32542,7 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
-	port_angle = 0;
+	port_direction = 1;
 	roundstart_move = "syndicate_away";
 	width = 18
 	},
@@ -37963,7 +37963,7 @@
 	height = 5;
 	id = "mining";
 	name = "mining shuttle";
-	port_angle = 90;
+	port_direction = 4;
 	width = 7
 	},
 /obj/docking_port/stationary{
@@ -52679,7 +52679,7 @@
 	dir = 4;
 	id = "pod4";
 	name = "escape pod 4";
-	port_angle = 180;
+	port_direction = 2;
 	preferred_direction = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -52986,7 +52986,7 @@
 	dir = 8;
 	id = "pod2";
 	name = "escape pod 2";
-	port_angle = 180
+	port_direction = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_2)
@@ -56179,7 +56179,7 @@
 	height = 13;
 	id = "ferry";
 	name = "ferry shuttle";
-	port_angle = 0;
+	port_direction = 1;
 	preferred_direction = 4;
 	roundstart_move = "ferry_away";
 	width = 5
@@ -56203,7 +56203,7 @@
 	dir = 8;
 	id = "pod1";
 	name = "escape pod 1";
-	port_angle = 180
+	port_direction = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
@@ -56372,7 +56372,7 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "NT Medical Ship";
-	port_angle = -90;
+	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
 	timid = null;
@@ -60906,7 +60906,7 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
-	port_angle = 0;
+	port_direction = 1;
 	roundstart_move = "syndicate_away";
 	width = 18
 	},
