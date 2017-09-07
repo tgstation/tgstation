@@ -1034,9 +1034,6 @@
 	user.visible_message("<span class='suicide'>[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
 	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
-	sleep(3)
-	if(QDELETED(user))
-		return
 	user.visible_message("<span class='hierophant_warning'>[user] fades out, leaving their belongings behind!</span>")
 	for(var/obj/item/I in user)
 		if(I != src)
