@@ -184,7 +184,7 @@
 	survive_objective.owner = owner
 	add_objective(survive_objective)
 /datum/antagonist/traitor/proc/forge_single_objective()
-	return 0
+	return FALSE
 /datum/antagonist/traitor/human/forge_single_objective() //Returns how many objectives are added
 	.=1
 	if(prob(50))

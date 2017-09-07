@@ -66,8 +66,8 @@
 
 /obj/structure/blob/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSBLOB))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock
@@ -129,8 +129,8 @@
 			heal_timestamp = world.time + 20
 		update_icon()
 		pulse_timestamp = world.time + 10
-		return 1 //we did it, we were pulsed!
-	return 0 //oh no we failed
+		return TRUE //we did it, we were pulsed!
+	return FALSE //oh no we failed
 
 /obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
@@ -163,7 +163,7 @@
 			else
 				T = null
 	if(!T)
-		return 0
+		return FALSE
 	var/make_blob = TRUE //can we make a blob?
 
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
@@ -223,7 +223,7 @@
 		overmind.blob_reagent_datum.extinguish_reaction(src)
 
 /obj/structure/blob/hulk_damage()
-	return 15
+	return TRUE5
 
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
@@ -271,7 +271,7 @@
 			damage_amount *= fire_resist
 		if(CLONE)
 		else
-			return 0
+			return FALSE
 	var/armor_protection = 0
 	if(damage_flag)
 		armor_protection = armor[damage_flag]

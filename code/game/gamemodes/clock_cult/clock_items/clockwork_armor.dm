@@ -48,7 +48,7 @@
 
 /obj/item/clothing/head/helmet/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/clothing/suit/armor/clockwork
@@ -87,7 +87,7 @@
 
 /obj/item/clothing/suit/armor/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/clothing/suit/armor/clockwork/equipped(mob/living/user, slot)
@@ -148,7 +148,7 @@
 
 /obj/item/clothing/gloves/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/clothing/gloves/clockwork/equipped(mob/living/user, slot)
@@ -198,7 +198,7 @@
 
 /obj/item/clothing/shoes/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/clothing/shoes/clockwork/equipped(mob/living/user, slot)

@@ -43,7 +43,7 @@
 	if(target.mind && target.mind.changeling)
 		sting_feedback(user, target)
 		user.mind.changeling.chem_charges -= chemical_cost
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
 	if(!target)
@@ -51,7 +51,7 @@
 	to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
 	if(target.mind && target.mind.changeling)
 		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
-	return 1
+	return TRUE
 
 
 /obj/effect/proc_holder/changeling/sting/transformation
@@ -82,8 +82,8 @@
 		return
 	if((target.disabilities & HUSK) || !target.has_dna())
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
@@ -121,8 +121,8 @@
 		return
 	if((target.disabilities & HUSK) || !target.has_dna())
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", object="falso armblade sting")

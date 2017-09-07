@@ -15,10 +15,10 @@
 
 /obj/item/organ/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))
-		return 1
+		return TRUE
 	if(!human_only && iscarbon(owner))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/organ/heart/gland/proc/Start()
 	active = 1

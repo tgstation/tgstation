@@ -48,7 +48,7 @@
 			if (aval_r_amnt>reagents_list[r_r])
 				. = -1
 			else
-				return 0
+				return FALSE
 	if ((reagents_list?(reagents_list.len):(0)) < avail_reagents.reagent_list.len)
 		return -1
 	return .
@@ -58,7 +58,7 @@
 		if (locate(/obj/) in container)
 			return -1
 		else
-			return 1
+			return TRUE
 	. = 1
 	var/list/checklist = items.Copy()
 	for (var/obj/O in container)
@@ -71,7 +71,7 @@
 		if (!found)
 			. = -1
 	if (checklist.len)
-		return 0
+		return FALSE
 	return .
 
 //general version

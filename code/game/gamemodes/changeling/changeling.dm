@@ -72,9 +72,9 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 			changelings += changeling
 			changeling.special_role = "Changeling"
 			changeling.restricted_roles = restricted_jobs
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/game_mode/changeling/post_setup()
 
@@ -251,7 +251,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 		to_chat(world, text)
 
 
-	return 1
+	return TRUE
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
 	var/list/stored_profiles = list() //list of datum/changelingprofile
@@ -322,8 +322,8 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 /datum/changeling/proc/has_dna(datum/dna/tDNA)
 	for(var/datum/changelingprofile/prof in stored_profiles)
 		if(tDNA.is_same_as(prof.dna))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/changeling/proc/can_absorb_dna(mob/living/carbon/user, mob/living/carbon/human/target, var/verbose=1)
 	if(stored_profiles.len)
@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	return 1
+	return TRUE
 
 /datum/changeling/proc/create_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
 	var/datum/changelingprofile/prof = new
@@ -413,8 +413,8 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	var/datum/changelingprofile/removeprofile = get_profile_to_remove()
 	if(removeprofile)
 		stored_profiles -= removeprofile
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /proc/changeling_transform(mob/living/carbon/human/user, datum/changelingprofile/chosen_prof)
 	var/datum/dna/chosen_dna = chosen_prof.dna

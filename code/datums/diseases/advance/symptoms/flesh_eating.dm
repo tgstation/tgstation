@@ -61,7 +61,7 @@ Bonus
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.bleed_rate += 5 * power
-	return 1
+	return TRUE
 
 /*
 //////////////////////////////////////
@@ -125,4 +125,4 @@ Bonus
 		M.reagents.add_reagent_list(list("heparin" = 2, "lipolicide" = 2))
 	if(zombie)
 		M.reagents.add_reagent("romerol", 1)
-	return 1
+	return TRUE

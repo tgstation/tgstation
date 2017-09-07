@@ -74,27 +74,27 @@
 		if("neck_chop")
 			streak = ""
 			neck_chop(A,D)
-			return 1
+			return TRUE
 		if("leg_sweep")
 			streak = ""
 			leg_sweep(A,D)
-			return 1
+			return TRUE
 		if("quick_choke")//is actually lung punch
 			streak = ""
 			quick_choke(A,D)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/martial_art/krav_maga/proc/leg_sweep(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(D.stat || D.IsKnockdown())
-		return 0
+		return FALSE
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
 	D.Knockdown(40)
 	add_logs(A, D, "leg sweeped")
-	return 1
+	return TRUE
 
 /datum/martial_art/krav_maga/proc/quick_choke(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)//is actually lung punch
 	D.visible_message("<span class='warning'>[A] pounds [D] on the chest!</span>", \
@@ -104,7 +104,7 @@
 		D.losebreath = Clamp(D.losebreath + 5, 0, 10)
 	D.adjustOxyLoss(10)
 	add_logs(A, D, "quickchoked")
-	return 1
+	return TRUE
 
 /datum/martial_art/krav_maga/proc/neck_chop(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	D.visible_message("<span class='warning'>[A] karate chops [D]'s neck!</span>", \
@@ -114,17 +114,17 @@
 	if(D.silent <= 10)
 		D.silent = Clamp(D.silent + 10, 0, 10)
 	add_logs(A, D, "neck chopped")
-	return 1
+	return TRUE
 
 /datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
-		return 1
+		return TRUE
 	add_logs(A, D, "grabbed with krav maga")
 	..()
 
 /datum/martial_art/krav_maga/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
-		return 1
+		return TRUE
 	add_logs(A, D, "punched")
 	var/picked_hit_type = pick("punches", "kicks")
 	var/bonus_damage = 10
@@ -141,11 +141,11 @@
 	D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
 					  "<span class='userdanger'>[A] [picked_hit_type] you!</span>")
 	add_logs(A, D, "[picked_hit_type] with Krav Maga")
-	return 1
+	return TRUE
 
 /datum/martial_art/krav_maga/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
-		return 1
+		return TRUE
 	var/obj/item/I = null
 	if(prob(60))
 		I = D.get_active_held_item()
@@ -160,7 +160,7 @@
 							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	add_logs(A, D, "disarmed with krav maga", "[I ? " removing \the [I]" : ""]")
-	return 1
+	return TRUE
 
 //Krav Maga Gloves
 

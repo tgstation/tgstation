@@ -140,13 +140,13 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/submit_vote(vote)
 	if(mode)
 		if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
-			return 0
+			return FALSE
 		if(!(usr.ckey in voted))
 			if(vote && 1<=vote && vote<=choices.len)
 				voted += usr.ckey
 				choices[choices[vote]]++	//check this
 				return vote
-	return 0
+	return FALSE
 
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
 	if(!mode)
@@ -154,7 +154,7 @@ SUBSYSTEM_DEF(vote)
 			var/next_allowed_time = (started_time + config.vote_delay)
 			if(mode)
 				to_chat(usr, "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>")
-				return 0
+				return FALSE
 
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
@@ -163,7 +163,7 @@ SUBSYSTEM_DEF(vote)
 
 			if(next_allowed_time > world.time && !admin)
 				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>")
-				return 0
+				return FALSE
 
 		reset()
 		switch(vote_type)
@@ -174,14 +174,14 @@ SUBSYSTEM_DEF(vote)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
-					return 0
+					return FALSE
 				for(var/i=1,i<=10,i++)
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)
 						break
 					choices.Add(option)
 			else
-				return 0
+				return FALSE
 		mode = vote_type
 		initiator = initiator_key
 		started_time = world.time
@@ -198,8 +198,8 @@ SUBSYSTEM_DEF(vote)
 				V.name = "Vote: [question]"
 			V.Grant(C.mob)
 			generated_actions += V
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/controller/subsystem/vote/proc/interface(client/C)
 	if(!C)
@@ -309,4 +309,4 @@ SUBSYSTEM_DEF(vote)
 		Remove(owner)
 
 /datum/action/vote/IsAvailable()
-	return 1
+	return TRUE

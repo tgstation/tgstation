@@ -515,7 +515,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 		user.visible_message("<span class='warning'>[user] captures [src]!</span>", "<span class='userdanger'>You've got the disk! Defend it with your life!</span>")
 		loc = H
 		H.nuke_disk = src
-		return 1
+		return TRUE
 	return ..()
 
 /obj/item/disk/nuclear/Destroy(force=FALSE)

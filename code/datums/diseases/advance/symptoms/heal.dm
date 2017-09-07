@@ -34,7 +34,7 @@
 	return
 
 /datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
-	return 1
+	return TRUE
 
 /*
 //////////////////////////////////////
@@ -67,7 +67,7 @@ Bonus
 	if(M.toxloss > 0 && prob(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#66FF99")
 	M.adjustToxLoss(-heal_amt)
-	return 1
+	return TRUE
 
 /*
 //////////////////////////////////////
@@ -99,7 +99,7 @@ Bonus
 	if(M.toxloss > 0 && prob(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#00FF00")
 	M.adjustToxLoss(-heal_amt)
-	return 1
+	return TRUE
 
 /*
 //////////////////////////////////////
@@ -143,7 +143,7 @@ Bonus
 	if(prob(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#FF3333")
 
-	return 1
+	return TRUE
 
 
 /*
@@ -193,7 +193,7 @@ Bonus
 	if(prob(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#CC1100")
 
-	return 1
+	return TRUE
 
 /*
 //////////////////////////////////////
@@ -236,7 +236,7 @@ Bonus
 
 	if(prob(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#FF9933")
-	return 1
+	return TRUE
 
 
 /*
@@ -284,7 +284,7 @@ Bonus
 
 	if(prob(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#CC6600")
-	return 1
+	return TRUE
 
 
 /*
@@ -325,4 +325,4 @@ Bonus
 	var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations) - GLOB.mutations_list[RACEMUT]
 	M.dna.remove_mutation_group(unclean_mutations)
 	M.radiation = max(M.radiation - (2 * amt_healed), 0)
-	return 1
+	return TRUE

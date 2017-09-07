@@ -32,7 +32,7 @@
 
 /obj/item/clockwork/replica_fabricator/scarab/fabricate(atom/target, mob/living/user)
 	if(!debug && !isdrone(user))
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/clockwork/replica_fabricator/scarab/debug

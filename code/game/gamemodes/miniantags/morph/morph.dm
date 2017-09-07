@@ -78,8 +78,8 @@
 	if(A && A.loc != src)
 		visible_message("<span class='warning'>[src] swallows [A] whole!</span>")
 		A.loc = src
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/hostile/morph/ShiftClickOn(atom/movable/A)
 	if(morph_time <= world.time && !stat)
@@ -180,7 +180,7 @@
 
 /mob/living/simple_animal/hostile/morph/can_track(mob/living/user)
 	if(morphed)
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/simple_animal/hostile/morph/AttackingTarget()

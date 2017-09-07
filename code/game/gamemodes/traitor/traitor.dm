@@ -55,8 +55,8 @@
 
 
 	if(pre_traitors.len < required_enemies)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /datum/game_mode/traitor/post_setup()
@@ -67,7 +67,7 @@
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
 	var/traitorcap = min(round(GLOB.joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(GLOB.joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
@@ -148,7 +148,7 @@
 		<b>The code responses were:</b> <font color='red'>[GLOB.syndicate_code_response]</font><br>"
 		to_chat(world, text)
 
-	return 1
+	return TRUE
 
 
 

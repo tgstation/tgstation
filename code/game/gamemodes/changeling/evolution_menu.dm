@@ -46,10 +46,10 @@
 		user.remove_changeling_powers(1)
 		canrespec = 0
 		user.make_changeling(TRUE)
-		return 1
+		return TRUE
 	else
 		to_chat(user, "<span class='danger'>You lack the power to readapt your evolutions!</span>")
-		return 0
+		return FALSE
 
 /mob/proc/make_changeling(is_respec)
 	if(!mind)
@@ -79,7 +79,7 @@
 		if(B)
 			B.vital = FALSE
 			B.decoy_override = TRUE
-	return 1
+	return TRUE
 
 /datum/changeling/proc/reset()
 	chosen_sting = null
@@ -108,5 +108,5 @@
 /datum/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
 		if(initial(power.name) == P.name)
-			return 1
-	return 0
+			return TRUE
+	return FALSE

@@ -27,11 +27,11 @@
 	wizard.special_role = "Wizard"
 	if(GLOB.wizardstart.len == 0)
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
-		return 0
+		return FALSE
 	for(var/datum/mind/wiz in wizards)
 		wiz.current.loc = pick(GLOB.wizardstart)
 
-	return 1
+	return TRUE
 
 
 /datum/game_mode/wizard/post_setup()
@@ -128,7 +128,7 @@
 
 /datum/game_mode/proc/learn_basic_spells(mob/living/carbon/human/wizard_mob)
 	if(!istype(wizard_mob) || !wizard_mob.mind)
-		return 0
+		return FALSE
 	wizard_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null)) //Wizards get Magic Missile and Ethereal Jaunt by default
 	wizard_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
@@ -163,7 +163,7 @@
 	to_chat(wizard_mob, "The spellbook is bound to you, and others cannot use it.")
 	to_chat(wizard_mob, "In your pockets you will find a teleport scroll. Use it as needed.")
 	wizard_mob.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
-	return 1
+	return TRUE
 
 
 /datum/game_mode/wizard/check_finished()
@@ -186,7 +186,7 @@
 		SSticker.news_report = WIZARD_KILLED
 
 	..()
-	return 1
+	return TRUE
 
 
 /datum/game_mode/proc/auto_declare_completion_wizard()
@@ -236,7 +236,7 @@
 			text += "<br>"
 
 		to_chat(world, text)
-	return 1
+	return TRUE
 
 //OTHER PROCS
 

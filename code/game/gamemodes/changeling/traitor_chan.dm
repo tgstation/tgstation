@@ -17,11 +17,11 @@
 
 /datum/game_mode/traitor/changeling/can_start()
 	if(!..())
-		return 0
+		return FALSE
 	possible_changelings = get_players_for_role(ROLE_CHANGELING)
 	if(possible_changelings.len < required_enemies)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/game_mode/traitor/changeling/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -50,7 +50,7 @@
 			changeling.restricted_roles = restricted_jobs
 		return ..()
 	else
-		return 0
+		return FALSE
 
 /datum/game_mode/traitor/changeling/post_setup()
 	modePlayer += changelings

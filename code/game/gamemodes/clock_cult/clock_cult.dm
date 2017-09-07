@@ -126,7 +126,7 @@ Credit where due:
 		servant.special_role = "Servant of Ratvar"
 		servant.restricted_roles = restricted_jobs
 		starter_servants--
-	return 1
+	return TRUE
 
 /datum/game_mode/clockwork_cult/post_setup()
 	for(var/S in servants_to_serve)
@@ -137,17 +137,17 @@ Credit where due:
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
 	if(!M)
-		return 0
+		return FALSE
 	var/greeting_text = "<br><b><span class='large_brass'>You are a servant of Ratvar, the Clockwork Justiciar.</span>\n\
 	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
 	ability to assist in completion of His agenda. You may not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
 	to_chat(M, greeting_text)
 	M.playsound_local(get_turf(M), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
 	if(!L || !istype(L))
@@ -183,7 +183,7 @@ Credit where due:
 
 /datum/game_mode/clockwork_cult/declare_completion()
 	..()
-	return 0 //Doesn't end until the round does
+	return FALSE //Doesn't end until the round does
 
 /datum/game_mode/proc/auto_declare_completion_clockwork_cult()
 	var/text = ""

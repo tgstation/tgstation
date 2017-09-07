@@ -40,7 +40,7 @@
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
 
-	return 1
+	return TRUE
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -158,30 +158,30 @@
 		synd_mob.equipOutfit(/datum/outfit/syndicate)
 	else
 		synd_mob.equipOutfit(/datum/outfit/syndicate/no_crystals)
-	return 1
+	return TRUE
 
 
 /datum/game_mode/nuclear/check_win()
 	if (nukes_left == 0)
-		return 1
+		return TRUE
 	return ..()
 
 /datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)
 		if(ishuman(operative_mind.current) && (operative_mind.current.stat!=2))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/game_mode/nuclear/check_finished() //to be called by SSticker
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
 	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
-		return 1
+		return TRUE
 	if(are_operatives_dead())
 		var/obj/machinery/nuclearbomb/N
 		pass(N)	//suppress unused warning
 		if(N.bomb_set) //snaaaaaaaaaake! It's not over yet!
-			return 0	//its a static var btw
+			return FALSE	//its a static var btw
 	..()
 
 /datum/game_mode/nuclear/declare_completion()
@@ -290,7 +290,7 @@
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
 			text += "<BIG>[icon2html('icons/badass.dmi', world, "badass")]</BIG>"
 		to_chat(world, text)
-	return 1
+	return TRUE
 
 
 /proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.

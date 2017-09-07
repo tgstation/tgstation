@@ -24,11 +24,11 @@
 						for(var/r in 1 to component_refund[i])
 							generate_cache_component(i, src)
 					qdel(src)
-			return 1
+			return TRUE
 	else if(I.force)
 		user.visible_message("<span class='warning'>[user] scatters [src] with [I]!</span>", "<span class='danger'>You scatter [src] with [I]!</span>")
 		qdel(src)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/effect/clockwork/sigil/attack_tk(mob/user)
@@ -38,7 +38,7 @@
 	if(iscarbon(user) && !user.stat && !is_servant_of_ratvar(user))
 		user.visible_message("<span class='warning'>[user] stamps out [src]!</span>", "<span class='danger'>You stomp on [src], scattering it into thousands of particles.</span>")
 		qdel(src)
-		return 1
+		return TRUE
 	..()
 
 /obj/effect/clockwork/sigil/ex_act(severity)

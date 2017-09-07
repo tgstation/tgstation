@@ -55,4 +55,4 @@ Bonus
 		M.bodytemperature = min(M.bodytemperature - (get_cold * A.stage), BODYTEMP_COLD_DAMAGE_LIMIT + 1)
 	else
 		M.bodytemperature -= (get_cold * A.stage)
-	return 1
+	return TRUE

@@ -111,7 +111,7 @@
 		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/bloodcrawl)
 
 /obj/item/organ/heart/demon/Stop()
-	return 0 // Always beating.
+	return FALSE // Always beating.
 
 /mob/living/simple_animal/slaughter/laughter
 	// The laughter demon! It's everyone's best friend! It just wants to hug

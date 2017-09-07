@@ -56,4 +56,4 @@ Bonus
 		M.bodytemperature = min(M.bodytemperature + (get_heat * A.stage), BODYTEMP_HEAT_DAMAGE_LIMIT - 1)
 	else
 		M.bodytemperature += (get_heat * A.stage)
-	return 1
+	return TRUE

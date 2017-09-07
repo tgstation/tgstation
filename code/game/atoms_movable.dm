@@ -61,7 +61,7 @@
 	return ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
+	if(!loc || !newloc) return FALSE
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
@@ -136,7 +136,7 @@
 	if(proximity_monitor)
 		proximity_monitor.HandleMove()
 
-	return 1
+	return TRUE
 
 /atom/movable/proc/clean_on_move()
 	var/turf/tile = loc
@@ -249,8 +249,8 @@
 				AM.Crossed(src, oldloc)
 
 		Moved(oldloc, 0)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()
@@ -271,36 +271,36 @@
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
-//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-//Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
+//return FALSE to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
+//Mobs should return TRUE if they should be able to move of their own volition, see client/Move() in mob_movement.dm
 //movement_dir == 0 when stopping or any dir when trying to move
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
 	if(has_gravity(src))
-		return 1
+		return TRUE
 
 	if(pulledby)
-		return 1
+		return TRUE
 
 	if(throwing)
-		return 1
+		return TRUE
 
 	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 
 /atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
 	if(!loc || Process_Spacemove(0))
 		inertia_dir = 0
-		return 0
+		return FALSE
 
 	inertia_dir = direction
 	if(!direction)
-		return 1
+		return TRUE
 	inertia_last_loc = loc
 	SSspacedrift.processing[src] = src
-	return 1
+	return TRUE
 
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
@@ -399,12 +399,12 @@
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move
 			buckled_mob.inertia_dir = last_move
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /atom/movable/CanPass(atom/movable/mover, turf/target)
 	if(mover in buckled_mobs)
-		return 1
+		return TRUE
 	return ..()
 
 

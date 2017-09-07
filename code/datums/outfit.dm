@@ -105,7 +105,7 @@
 				I.implant(H, null, silent=TRUE)
 
 	H.update_body()
-	return 1
+	return TRUE
 
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -146,4 +146,4 @@
 		H.r_store.add_fingerprint(H,1)
 	for(var/obj/item/I in H.held_items)
 		I.add_fingerprint(H,1)
-	return 1
+	return TRUE

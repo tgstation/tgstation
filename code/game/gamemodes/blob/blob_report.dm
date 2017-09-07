@@ -101,7 +101,7 @@
 
 /datum/station_state/proc/score(datum/station_state/result)
 	if(!result)
-		return 0
+		return FALSE
 	var/output = 0
 	output += (result.floor / max(floor,1))
 	output += (result.r_wall/ max(r_wall,1))

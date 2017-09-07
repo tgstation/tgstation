@@ -48,7 +48,7 @@
 
 	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
 	E.implant(H)
-	return 1
+	return TRUE
 
 /datum/antagonist/ninja/proc/addMemories()
 	owner.store_memory("I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
