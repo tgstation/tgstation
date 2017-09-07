@@ -481,7 +481,7 @@
 	icon_state = "oar"
 	item_state = "oar"
 	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'	
+	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'
 	desc = "Not to be confused with the kind Research hassles you for."
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
@@ -802,7 +802,7 @@
 			to_chat(user, "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>")
 			H.set_species(/datum/species/skeleton)
 		if(3)
-			to_chat(user, "<span class='danger'>Power courses through you! You can now shift your form at will.")
+			to_chat(user, "<span class='danger'>Power courses through you! You can now shift your form at will.</span>")
 			if(user.mind)
 				var/obj/effect/proc_holder/spell/targeted/shapeshift/dragon/D = new
 				user.mind.AddSpell(D)

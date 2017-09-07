@@ -534,7 +534,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			if(fancy)
 				user.visible_message("You hear a quiet click, as [user] shuts off [src] without even looking at what [user.p_theyre()] doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>")
 			else
-				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
+				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].</span>")
 	else
 		. = ..()
 
@@ -632,7 +632,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/super = 0 //for the fattest vapes dude.
 
 /obj/item/clothing/mask/vape/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!")//it doesn't give you cancer, it is cancer
+	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!</span>")//it doesn't give you cancer, it is cancer
 	return (TOXLOSS|OXYLOSS)
 
 

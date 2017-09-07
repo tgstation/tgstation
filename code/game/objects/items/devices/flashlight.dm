@@ -152,7 +152,7 @@
 					else
 						to_chat(user, "<span class='notice'>[M] doesn't have any organs in [their] mouth.</span>")
 					if(pill_count)
-						to_chat(user, "<span class='notice'>[M] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [their] teeth.")
+						to_chat(user, "<span class='notice'>[M] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [their] teeth.</span>")
 
 	else
 		return ..()

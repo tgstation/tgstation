@@ -202,7 +202,7 @@
 				activated = 1
 			else
 				to_chat(user, "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helm")
-				to_chat(user, "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b>")
+				to_chat(user, "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b></span>")
 			teleport_now.Grant(user)
 		cooldown = world.time + cooldowntime
 		activating = 0
