@@ -260,7 +260,7 @@
 		check_times -= AM
 		return
 	else
-		to_chat(AM, "You don't have enough money to enter the main shuttle. You'll have to fly coach.")
+		to_chat(AM, "<span class='warning'>You don't have enough money to enter the main shuttle. You'll have to fly coach.</span>")
 		return ..()
 
 /mob/living/simple_animal/hostile/bear/fightpit
