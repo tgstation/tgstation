@@ -69,7 +69,7 @@
 	take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180))
 
 /obj/proc/hulk_damage()
-	return TRUE50 //the damage hulks do on punches to this object, is affected by melee armor
+	return 150 //the damage hulks do on punches to this object, is affected by melee armor
 
 /obj/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
