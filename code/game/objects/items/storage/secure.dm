@@ -65,7 +65,8 @@
 /obj/item/storage/secure/emag_act(mob/user)
 	user.show_message("<span class='danger'>Now attempting to scramble internal memory.</span>", 1)
 	src.l_hacking = TRUE
-	if (do_after(usr, 50, target = user))
+	if (do_after(usr, 50, target = user) && !emagged)
+		emagged = TRUE
 		src.code = null
 		src.l_set = 0
 		src.l_setshort = TRUE
