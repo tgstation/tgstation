@@ -15,6 +15,7 @@
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_opened = "secure0"
+	var/icon_fried = "securef"
 	var/locked = TRUE
 	var/code = ""
 	var/l_code = null
@@ -60,6 +61,19 @@
 
 	// -> storage/attackby() what with handle insertion, etc
 	return ..()
+
+/obj/item/storage/secure/emag_act(mob/user)
+	user.show_message("<span class='danger'>Now attempting to scramble internal memory.</span>", 1)
+	src.l_hacking = TRUE
+	if (do_after(usr, 50, target = user))
+		src.code = null
+		src.l_set = 0
+		src.l_setshort = TRUE
+		src.l_hacking = FALSE
+		src.locked = FALSE
+		user.show_message("<span class='danger'>Internal memory is now fried. The locks have reset to their initial configuration.</span>", 1)
+		cut_overlays()
+		add_overlay(icon_fried)
 
 /obj/item/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
@@ -179,6 +193,7 @@
 	icon_opened = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
+	icon_fried = "safef"
 	force = 8
 	w_class = WEIGHT_CLASS_GIGANTIC
 	max_w_class = 8
