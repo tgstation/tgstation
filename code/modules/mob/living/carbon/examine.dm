@@ -79,6 +79,8 @@
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
+		else if(InCritical())
+			msg += "[t_His] breathing is shallow and labored.\n"
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner.\n"

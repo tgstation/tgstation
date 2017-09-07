@@ -3717,11 +3717,7 @@
 /obj/item/reagent_containers/glass/beaker{
 	list_reagents = list("sacid" = 50)
 	},
-/obj/item/paper/crumpled/bloody{
-	desc = "Looks like someone started shakily writing a will in space common, but were interrupted by something bloody...";
-	info = "I, Victor Belyakov, do hereby leave my _- ";
-	name = "unfinished paper scrap"
-	},
+/obj/item/paper/crumpled/bloody/ruins/thederelict/unfinished,
 /obj/item/pen,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)

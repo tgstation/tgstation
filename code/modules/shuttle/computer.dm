@@ -4,21 +4,10 @@
 	icon_keyboard = "tech_key"
 	light_color = LIGHT_COLOR_CYAN
 	req_access = list( )
-	circuit = /obj/item/circuitboard/computer/shuttle
 	var/shuttleId
 	var/possible_destinations = ""
 	var/admin_controlled
 	var/no_destination_swap = 0
-
-/obj/machinery/computer/shuttle/Initialize()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/computer/shuttle/LateInitialize()
-	if(istype(circuit, /obj/item/circuitboard/computer/shuttle))
-		var/obj/item/circuitboard/computer/shuttle/C = circuit
-		possible_destinations = C.possible_destinations
-		shuttleId = C.shuttleId
 
 /obj/machinery/computer/shuttle/attack_hand(mob/user)
 	if(..(user))
@@ -78,7 +67,7 @@
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(emagged)
 		return
-	req_access = null
+	req_access = list()
 	emagged = TRUE
 	to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 
