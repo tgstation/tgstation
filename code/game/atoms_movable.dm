@@ -214,7 +214,7 @@
 //to differentiate it, naturally everyone forgot about this immediately and so some things
 //would bump twice, so now it's called Collide
 /atom/movable/proc/Collide(atom/A)
-	if((A))
+	if(A)
 		if(throwing)
 			throwing.hit_atom(A)
 			. = 1
