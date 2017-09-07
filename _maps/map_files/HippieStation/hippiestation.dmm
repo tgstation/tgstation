@@ -17044,7 +17044,7 @@
 	height = 7;
 	id = "arrival";
 	name = "arrival shuttle";
-	port_angle = -90;
+	port_direction = 8;
 	preferred_direction = 8;
 	width = 15
 	},
@@ -33817,7 +33817,7 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
-	port_angle = 0;
+	port_direction = 1;
 	roundstart_move = "syndicate_away";
 	width = 18
 	},
@@ -55094,7 +55094,7 @@
 	dir = 8;
 	id = "pod2";
 	name = "escape pod 2";
-	port_angle = 180
+	port_direction = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_2)
@@ -58458,7 +58458,7 @@
 	dir = 8;
 	id = "pod1";
 	name = "escape pod 1";
-	port_angle = 180
+	port_direction = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
