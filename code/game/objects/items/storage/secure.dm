@@ -39,13 +39,13 @@
 				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
 			return
 		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
-			to_chat(user, text("<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
+			to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
 			l_hacking = TRUE
 			if (do_after(user, 100*W.toolspeed, target = user))
 				if (prob(33))
 					l_setshort = TRUE
 					l_set = 0
-					to_chat(user, text("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>")
+					to_chat(user, "<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>")
 					sleep(80)
 					l_setshort = FALSE
 					l_hacking = FALSE
@@ -63,7 +63,7 @@
 	return ..()
 
 /obj/item/storage/secure/emag_act(mob/user)
-	to_chat(user, text("<span class='danger'>Now attempting to scramble internal memory.</span>")
+	to_chat(user, "<span class='danger'>Now attempting to scramble internal memory.</span>")
 	l_hacking = TRUE
 	if (do_after(user, 50, target = user) && !emagged)
 		emagged = TRUE
@@ -72,7 +72,7 @@
 		l_setshort = TRUE
 		l_hacking = FALSE
 		locked = FALSE
-		to_chat(user, text("<span class='danger'>Internal memory is now fried. The locks have reset to their initial configuration.</span>")
+		to_chat(user, "<span class='danger'>Internal memory is now fried. The locks have reset to their initial configuration.</span>")
 		cut_overlays()
 		add_overlay(icon_fried)
 
