@@ -117,7 +117,7 @@
 	. = ..()
 	if(isturf(loc))
 		for(var/turf/open/T in orange(4, loc))
-			if(prob(10)
+			if(prob(10))
 				new /obj/effect/temp_visual/goliath_tentacle(T, src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
