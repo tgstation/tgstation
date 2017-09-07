@@ -231,6 +231,26 @@
 			else
 				H.ranged_cooldown_time = bonus_value + world.time
 
+//magmawing watcher
+/obj/item/crusher_trophy/watcher_wing/magma_wing
+	name = "magmawing watcher wing"
+	desc = "A still-searing wing from a magmawing watcher. Suitable as a trophy for a kinetic crusher."
+	icon_state = "magma_wing"
+	bonus_value = 5
+
+/obj/item/crusher_trophy/watcher_wing/magma_wing/effect_desc()
+	return "melee hits to do <b>[bonus_value]</b> more damage"
+
+/obj/item/crusher_trophy/watcher_wing/magma_wing/on_melee_hit(mob/living/target, mob/living/user)
+	target.adjustFireLoss(bonus_value, forced = TRUE)
+
+//icewing watcher
+/obj/item/crusher_trophy/watcher_wing/ice_wing
+	name = "icewing watcher wing"
+	desc = "A carefully preserved frozen wing from an icewing watcher. Suitable as a trophy for a kinetic crusher."
+	icon_state = "ice_wing"
+	bonus_value = 10
+
 //legion
 /obj/item/crusher_trophy/legion_skull
 	name = "legion skull"
@@ -281,7 +301,7 @@
 		playsound(L, 'sound/magic/fireball.ogg', 20, 1)
 		new /obj/effect/temp_visual/fire(L.loc)
 		addtimer(CALLBACK(src, .proc/pushback, L, user), 1) //no free backstabs, we push AFTER module stuff is done
-		L.adjustBruteLoss(bonus_value)
+		L.adjustFireLoss(bonus_value, forced = TRUE)
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/living/user)
 	if(!QDELETED(target) && !QDELETED(user) && (!target.anchored || ismegafauna(target))) //megafauna will always be pushed
