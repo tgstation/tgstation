@@ -30,7 +30,7 @@
 		HM.on_move(src, NewLoc)
 
 	if(lying && prob(getBruteLoss()*200/maxHealth))
-		makeTrail(get_turf(src))
+		makeTrail(get_turf(src), direct)
 
 	if(shoes)
 		if(!lying && !buckled)
