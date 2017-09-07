@@ -28,6 +28,7 @@
 	.["Call Proc"] = "?_src_=vars;proc_call=\ref[src]"
 	.["Mark Object"] = "?_src_=vars;mark_object=\ref[src]"
 	.["Delete"] = "?_src_=vars;delete=\ref[src]"
+	.["Show VV To Player"] = "?_src_=vars;expose=\ref[src]"
 
 
 /datum/proc/on_reagent_change()
@@ -40,7 +41,7 @@
 	//set src in world
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
-	if(!usr.client || !usr.client.holder)
+	if(!usr.client || !usr.client.holder) //The usr vs src abuse in this proc is intentional and must not be changed
 		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>")
 		return
 
@@ -68,7 +69,7 @@
 			sprite = new /icon(AT.icon, AT.icon_state)
 			hash = md5(AT.icon)
 			hash = md5(hash + AT.icon_state)
-			usr << browse_rsc(sprite, "vv[hash].png")
+			src << browse_rsc(sprite, "vv[hash].png")
 
 	title = "[D] (\ref[D]) = [type]"
 
@@ -113,7 +114,7 @@
 			formatted_type = "Type too long" //No suitable splitpoint (/) found.
 
 	var/marked
-	if(holder.marked_datum && holder.marked_datum == D)
+	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
 	var/varedited_line = ""
 	if(!islist && D.var_edited)
@@ -127,7 +128,8 @@
 			"Remove Nulls" = "?_src_=vars;listnulls=[refid]",
 			"Remove Dupes" = "?_src_=vars;listdupes=[refid]",
 			"Set len" = "?_src_=vars;listlen=[refid]",
-			"Shuffle" = "?_src_=vars;listshuffle=[refid]"
+			"Shuffle" = "?_src_=vars;listshuffle=[refid]",
+			"Show VV To Player" = "?_src_=vars;expose=[refid]"
 			)
 	else
 		dropdownoptions = D.vv_get_dropdown()
@@ -379,8 +381,7 @@
 	</body>
 </html>
 "}
-
-	usr << browse(html, "window=variables[refid];size=475x650")
+	src << browse(html, "window=variables[refid];size=475x650")
 
 
 #define VV_HTML_ENCODE(thing) ( sanitize ? html_encode(thing) : thing )
@@ -545,6 +546,26 @@
 			to_chat(usr, "This can only be done to instances of type /mob")
 			return
 		M.regenerate_icons()
+	else if(href_list["expose"])
+		if(!check_rights(R_ADMIN, FALSE))
+			return
+		var/thing = locate(href_list["expose"])
+		if (!thing)
+			return
+		var/value = vv_get_value(VV_CLIENT)
+		if (value["class"] != VV_CLIENT)
+			return
+		var/client/C = value["value"]
+		if (!C)
+			return
+		var/prompt = alert("Do you want to grant [C] access to view this VV window? (they will not be able to edit or change anything nor open nested vv windows unless they themselves are an admin)", "Confirm", "Yes", "No")
+		if (prompt != "Yes" || !usr.client)
+			return
+		message_admins("[key_name_admin(usr)] Showed [key_name_admin(C)] a <a href='?_src_=vars;datumrefresh=\ref[thing]'>VV window</a>")
+		log_admin("Admin [key_name(usr)] Showed [key_name(C)] a VV window of a [thing]")
+		to_chat(C, "[usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"] has granted you access to view a View Variables window")
+		C.debug_variables(thing)
+
 
 //Needs +VAREDIT past this point
 
