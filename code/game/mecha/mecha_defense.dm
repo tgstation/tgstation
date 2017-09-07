@@ -89,7 +89,7 @@
 
 
 /obj/mecha/hulk_damage()
-	return TRUE5
+	return 5
 
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
