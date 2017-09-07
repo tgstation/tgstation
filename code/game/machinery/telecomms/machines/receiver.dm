@@ -46,9 +46,9 @@
 				if(R.can_receive(signal))
 					connected_levels |= R.listening_level
 			if(signal.data["level"] in connected_levels)
-				return 1
-		return 0
-	return 1
+				return TRUE
+		return FALSE
+	return TRUE
 
 //Preset Receivers
 

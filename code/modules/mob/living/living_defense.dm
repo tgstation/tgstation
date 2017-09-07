@@ -23,15 +23,15 @@
 
 
 /mob/living/proc/getarmor(def_zone, type)
-	return 0
+	return FALSE
 
 //this returns the mob's protection against eye damage (number between -1 and 2) from bright lights
 /mob/living/proc/get_eye_protection()
-	return 0
+	return FALSE
 
 //this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
 /mob/living/proc/get_ear_protection()
-	return 0
+	return FALSE
 
 /mob/living/proc/is_mouth_covered(head_only = 0, mask_only = 0)
 	return FALSE
@@ -51,7 +51,7 @@
 	return P.on_hit(src, armor)
 
 /mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
-	return 0
+	return FALSE
 
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
 		if(throwforce && w_class)
@@ -59,7 +59,7 @@
 		else if(w_class)
 				return Clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
 		else
-				return 0
+				return FALSE
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
 	if(istype(AM, /obj/item))
@@ -89,7 +89,7 @@
 			if(I.thrownby)
 				add_logs(I.thrownby, src, "threw and hit", I)
 		else
-			return 1
+			return TRUE
 	else
 		playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	..()
@@ -127,14 +127,14 @@
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
 	if(user == src || anchored || !isturf(user.loc))
-		return 0
+		return FALSE
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message)
 		return
 
 	if(!(status_flags & CANPUSH))
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
-		return 0
+		return FALSE
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
@@ -150,9 +150,9 @@
 				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
 			add_logs(user, src, "attempted to strangle", addition="grab")
 			if(!do_mob(user, src, grab_upgrade_time))
-				return 0
+				return FALSE
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != INTENT_GRAB)
-				return 0
+				return FALSE
 		user.grab_state++
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
@@ -175,7 +175,7 @@
 				update_canmove() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
-		return 1
+		return TRUE
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
@@ -193,13 +193,13 @@
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-		return 1
+		return TRUE
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
 	if(M.melee_damage_upper == 0)
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
-		return 0
+		return FALSE
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
@@ -207,35 +207,35 @@
 		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
 						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		add_logs(M, src, "attacked")
-		return 1
+		return TRUE
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(M, "No attacking people at spawn, you jackass.")
-		return 0
+		return FALSE
 
 	if (M.a_intent == INTENT_HARM)
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
-			return 0
+			return FALSE
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		if (prob(75))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 					"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-			return 1
+			return TRUE
 		else
 			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
 				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return 0
+	return FALSE
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
 	switch(L.a_intent)
 		if("help")
 			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
-			return 0
+			return FALSE
 
 		else
 			L.do_attack_animation(src)
@@ -244,27 +244,27 @@
 				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
 					"<span class='userdanger'>[L.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				return 1
+				return TRUE
 			else
 				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
 					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return 0
+	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
 	switch(M.a_intent)
 		if ("help")
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-			return 0
+			return FALSE
 
 		if ("grab")
 			grabbedby(M)
-			return 0
+			return FALSE
 		if("harm")
 			M.do_attack_animation(src)
-			return 1
+			return TRUE
 		if("disarm")
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			return 1
+			return TRUE
 
 /mob/living/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
@@ -275,7 +275,7 @@
 
 /mob/living/acid_act(acidpwr, acid_volume)
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
-	return 1
+	return TRUE
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
@@ -357,11 +357,11 @@
 	if(get_eye_protection() < intensity && (override_blindness_check || !(disabilities & BLIND)))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
-		return 1
+		return TRUE
 
 //called when the mob receives a loud bang
 /mob/living/proc/soundbang_act()
-	return 0
+	return FALSE
 
 //to damage the clothes worn by a mob
 /mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)

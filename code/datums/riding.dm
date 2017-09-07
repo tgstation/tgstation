@@ -104,12 +104,12 @@
 
 /datum/riding/proc/Process_Spacemove(direction)
 	if(ridden.has_gravity())
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /datum/riding/space/Process_Spacemove(direction)
-	return 1
+	return TRUE
 
 
 //atv
@@ -265,7 +265,7 @@
 		..()
 	else
 		to_chat(user, "Boats don't go on land!")
-		return 0
+		return FALSE
 
 /datum/riding/boat/dragon
 	keytype = null

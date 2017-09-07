@@ -124,7 +124,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			to_chat(H, "[A] materializes into your hands!")
 		else
 			to_chat(H, "\The [A] materializes onto the floor.")
-	return 1
+	return TRUE
 
 /datum/uplink_item/Destroy()
 	if(src in GLOB.uplink_items)

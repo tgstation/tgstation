@@ -40,39 +40,39 @@
 		c.chem_charges -= chemical_cost
 
 /obj/effect/proc_holder/changeling/proc/sting_action(mob/user, mob/target)
-	return 0
+	return FALSE
 
 /obj/effect/proc_holder/changeling/proc/sting_feedback(mob/user, mob/target)
-	return 0
+	return FALSE
 
-//Fairly important to remember to return 1 on success >.<
+//Fairly important to remember to return TRUE on success >.<
 /obj/effect/proc_holder/changeling/proc/can_sting(mob/user, mob/target)
 	if(!ishuman(user) && !ismonkey(user)) //typecast everything from mob to carbon from this point onwards
-		return 0
+		return FALSE
 	if(req_human && !ishuman(user))
 		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
-		return 0
+		return FALSE
 	var/datum/changeling/c = user.mind.changeling
 	if(c.chem_charges < chemical_cost)
 		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
-		return 0
+		return FALSE
 	if(c.absorbedcount < req_dna)
 		to_chat(user, "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>")
-		return 0
+		return FALSE
 	if(req_stat < user.stat)
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
-		return 0
+		return FALSE
 	if((user.status_flags & FAKEDEATH) && (!ignores_fakedeath))
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 //used in /mob/Stat()
 /obj/effect/proc_holder/changeling/proc/can_be_used_by(mob/user)
 	if(!user || QDELETED(user))
-		return 0
+		return FALSE
 	if(!ishuman(user) && !ismonkey(user))
-		return 0
+		return FALSE
 	if(req_human && !ishuman(user))
-		return 0
-	return 1
+		return FALSE
+	return TRUE

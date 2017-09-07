@@ -73,12 +73,12 @@ Actual Adjacent procs :
 	//sanitation
 	var/start = get_turf(caller)
 	if(!start)
-		return 0
+		return FALSE
 
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything
 		if(call(start, dist)(end) > maxnodes)
-			return 0
+			return FALSE
 		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
 
 	var/Heap/open = new /Heap(/proc/HeapPathWeightCompare) //the open list
@@ -174,12 +174,12 @@ Actual Adjacent procs :
 
 	for(var/obj/structure/window/W in src)
 		if(!W.CanAStarPass(ID, adir))
-			return 1
+			return TRUE
 	for(var/obj/machinery/door/window/W in src)
 		if(!W.CanAStarPass(ID, adir))
-			return 1
+			return TRUE
 	for(var/obj/O in T)
 		if(!O.CanAStarPass(ID, rdir, caller))
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE

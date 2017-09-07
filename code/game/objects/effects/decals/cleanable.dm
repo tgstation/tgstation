@@ -88,4 +88,4 @@
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return bloodiness
 	else
-		return 0
+		return FALSE

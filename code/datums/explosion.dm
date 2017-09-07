@@ -316,7 +316,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/choice = input("Bomb Size?") in choices
 	switch(choice)
 		if(null)
-			return 0
+			return FALSE
 		if("Small Bomb")
 			dev = 1
 			heavy = 2

@@ -156,7 +156,7 @@ SUBSYSTEM_DEF(ticker)
 		if(!mode)
 			if(!runnable_modes.len)
 				to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
-				return 0
+				return FALSE
 			mode = pickweight(runnable_modes)
 
 	else
@@ -166,7 +166,7 @@ SUBSYSTEM_DEF(ticker)
 			qdel(mode)
 			mode = null
 			SSjob.ResetOccupations()
-			return 0
+			return FALSE
 
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
@@ -182,7 +182,7 @@ SUBSYSTEM_DEF(ticker)
 			mode = null
 			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
-			return 0
+			return FALSE
 	else
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
@@ -233,7 +233,7 @@ SUBSYSTEM_DEF(ticker)
 
 	PostSetup()
 
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = 0

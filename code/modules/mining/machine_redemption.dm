@@ -70,7 +70,7 @@
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
 	if(D.make_reagents.len)
-		return 0
+		return FALSE
 
 	var/build_amount = 0
 
@@ -80,12 +80,12 @@
 		var/datum/material/redemption_mat = materials.materials[mat_id]
 
 		if(!M || !redemption_mat)
-			return 0
+			return FALSE
 
 		var/smeltable_sheets = Floor(redemption_mat.amount / M)
 
 		if(!smeltable_sheets)
-			return 0
+			return FALSE
 
 		if(!build_amount)
 			build_amount = smeltable_sheets

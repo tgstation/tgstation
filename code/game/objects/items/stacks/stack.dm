@@ -190,38 +190,38 @@
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 		else
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
-		return 0
+		return FALSE
 	if(R.window_checks && !valid_window_location(usr.loc, usr.dir))
 		to_chat(usr, "<span class='warning'>The [R.title] won't fit here!</span>")
-		return 0
+		return FALSE
 	if(R.one_per_turf && (locate(R.result_type) in usr.loc))
 		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
-		return 0
+		return FALSE
 	if(R.on_floor && !isfloorturf(usr.loc))
 		to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
-/obj/item/stack/proc/use(used, transfer = FALSE) // return 0 = borked; return 1 = had enough
+/obj/item/stack/proc/use(used, transfer = FALSE) // return FALSE = borked; return TRUE = had enough
 	if(zero_amount())
-		return 0
+		return FALSE
 	if (is_cyborg)
 		return source.use_charge(used * cost)
 	if (amount < used)
-		return 0
+		return FALSE
 	amount -= used
 	zero_amount()
 	update_icon()
 	update_weight()
-	return 1
+	return TRUE
 
 /obj/item/stack/proc/zero_amount()
 	if(is_cyborg)
 		return source.energy < cost
 	if(amount < 1)
 		qdel(src)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/stack/proc/add(amount)
 	if (is_cyborg)

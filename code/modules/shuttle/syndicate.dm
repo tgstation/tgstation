@@ -21,7 +21,7 @@
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = circuit
 		if(board.challenge && world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(usr, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least [round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] more minutes to allow them to prepare.</span>")
-			return 0
+			return FALSE
 		board.moved = TRUE
 	..()
 
@@ -39,7 +39,7 @@
 	if(href_list["move"])
 		if(z != ZLEVEL_CENTCOM)
 			to_chat(usr, "<span class='warning'>Pods are one way!</span>")
-			return 0
+			return FALSE
 	..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate

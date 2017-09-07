@@ -241,7 +241,7 @@
 				FD.CalculateAffectingAreas()
 
 	to_chat(creator, "<span class='notice'>You have created a new area, named [str]. It is now weather proof, and constructing an APC will allow it to be powered.</span>")
-	return 1
+	return TRUE
 
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area()
@@ -261,7 +261,7 @@
 				FD.CalculateAffectingAreas()
 	to_chat(usr, "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>")
 	interact()
-	return 1
+	return TRUE
 
 
 /obj/item/areaeditor/proc/set_area_machinery_title(area/A,title,oldtitle)

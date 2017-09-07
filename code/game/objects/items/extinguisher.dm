@@ -78,7 +78,7 @@
 		if(reagents.total_volume == reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>\The [src] is already full!</span>")
 			safety = safety_save
-			return 1
+			return TRUE
 		var/obj/structure/reagent_dispensers/watertank/W = target
 		var/transferred = W.reagents.trans_to(src, max_water)
 		if(transferred > 0)
@@ -89,9 +89,9 @@
 		else
 			to_chat(user, "<span class='warning'>\The [W] is empty!</span>")
 		safety = safety_save
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
 	// Make it so the extinguisher doesn't spray yourself when you click your inventory items

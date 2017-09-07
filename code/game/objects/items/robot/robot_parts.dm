@@ -59,8 +59,8 @@
 		if(src.l_leg && src.r_leg)
 			if(src.chest && src.head)
 				SSblackbox.inc("cyborg_frames_built",1)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
 

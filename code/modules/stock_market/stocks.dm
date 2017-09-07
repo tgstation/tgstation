@@ -246,22 +246,22 @@
 /datum/stock/proc/modifyAccount(whose, by, force=0)
 	if (SSshuttle.points)
 		if (by < 0 && SSshuttle.points + by < 0 && !force)
-			return 0
+			return FALSE
 		SSshuttle.points += by
 		GLOB.stockExchange.balanceLog(whose, by)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/stock/proc/borrow(var/datum/borrow/B, var/who)
 	if (B.lease_expires)
-		return 0
+		return FALSE
 	B.lease_expires = world.time + B.lease_time
 	var/old_d = B.deposit
 	var/d_amt = B.deposit * current_value * B.share_amount
 	if (!modifyAccount(who, -d_amt))
 		B.lease_expires = 0
 		B.deposit = old_d
-		return 0
+		return FALSE
 	B.deposit = d_amt
 	if (!(who in shareholders))
 		shareholders[who] = B.share_amount
@@ -275,7 +275,7 @@
 		GLOB.FrozenAccounts[who] = list(B)
 	else
 		GLOB.FrozenAccounts[who] += B
-	return 1
+	return TRUE
 
 /datum/stock/proc/buyShares(var/who, var/howmany)
 	if (howmany <= 0)
@@ -283,15 +283,15 @@
 	howmany = round(howmany)
 	var/loss = howmany * current_value
 	if (available_shares < howmany)
-		return 0
+		return FALSE
 	if (modifyAccount(who, -loss))
 		supplyDrop(howmany)
 		if (!(who in shareholders))
 			shareholders[who] = howmany
 		else
 			shareholders[who] += howmany
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/stock/proc/sellShares(var/whose, var/howmany)
 	if (howmany < 0)
@@ -299,14 +299,14 @@
 	howmany = round(howmany)
 	var/gain = howmany * current_value
 	if (shareholders[whose] < howmany)
-		return 0
+		return FALSE
 	if (modifyAccount(whose, gain))
 		supplyGrowth(howmany)
 		shareholders[whose] -= howmany
 		if (shareholders[whose] <= 0)
 			shareholders -= whose
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/stock/proc/displayValues(var/mob/user)
 	user << browse(plotBarGraph(values, "[name] share value per share"), "window=stock_[name];size=450x450")

@@ -191,8 +191,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				p.cancelAlarm("Atmosphere", src, source)
 
 		src.atmosalm = danger_level
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /area/proc/ModifyFiredoors(opening)
 	if(firedoors)
@@ -359,9 +359,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/powered(chan)		// return true if the area has power to given channel
 
 	if(!requires_power)
-		return 1
+		return TRUE
 	if(always_unpowered)
-		return 0
+		return FALSE
 	switch(chan)
 		if(EQUIP)
 			return power_equip
@@ -370,10 +370,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(ENVIRON)
 			return power_environ
 
-	return 0
+	return FALSE
 
 /area/space/powered(chan) //Nope.avi
-	return 0
+	return FALSE
 
 // called when power status changes
 
@@ -459,14 +459,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		T = get_turf(src)
 	var/area/A = get_area(T)
 	if(isspaceturf(T)) // Turf never has gravity
-		return 0
+		return FALSE
 	else if(A && A.has_gravity) // Areas which always has gravity
-		return 1
+		return TRUE
 	else
 		// There's a gravity generator on our z level
 		if(T && GLOB.gravity_generators["[T.z]"] && length(GLOB.gravity_generators["[T.z]"]))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /area/proc/setup(a_name)
 	name = a_name

@@ -48,8 +48,8 @@
 
 /obj/item/gun/ballistic/can_shoot()
 	if(!magazine || !magazine.ammo_count(0))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
 	..()
@@ -62,7 +62,7 @@
 				chamber_round()
 				A.update_icon()
 				update_icon()
-				return 1
+				return TRUE
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 				return
@@ -88,7 +88,7 @@
 		else
 			to_chat(user, "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>")
 			return
-	return 0
+	return FALSE
 
 /obj/item/gun/ballistic/attack_hand(mob/user)
 	if(loc == user)
@@ -179,7 +179,7 @@
 		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		sawn_state = SAWN_OFF
 		update_icon()
-		return 1
+		return TRUE
 
 // Sawing guns related proc
 /obj/item/gun/ballistic/proc/blow_up(mob/user)

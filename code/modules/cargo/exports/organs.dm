@@ -115,5 +115,5 @@
 
 /datum/export/organ/human/appendix/get_cost(obj/item/organ/appendix/O)
 	if(O.inflamed)
-		return 0
+		return FALSE
 	return ..()

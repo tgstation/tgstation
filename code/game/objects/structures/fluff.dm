@@ -15,7 +15,7 @@
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(user, I.usesound, 50, 1)
 		if(!do_after(user, 50, target = src))
-			return 0
+			return FALSE
 		user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
 		playsound(user, 'sound/items/deconstruct.ogg', 50, 1)
 		new/obj/item/stack/sheet/metal(get_turf(src))

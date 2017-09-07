@@ -22,7 +22,7 @@
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 
-	return 1
+	return TRUE
 
 /obj/machinery/portable_atmospherics/Destroy()
 	SSair.atmos_machinery -= src
@@ -45,11 +45,11 @@
 /obj/machinery/portable_atmospherics/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
-		return 0
+		return FALSE
 
 	//Make sure are close enough for a valid connection
 	if(new_port.loc != loc)
-		return 0
+		return FALSE
 
 	//Perform the connection
 	connected_port = new_port
@@ -58,7 +58,7 @@
 	connected_port_parent.reconcile_air()
 
 	anchored = TRUE //Prevent movement
-	return 1
+	return TRUE
 
 /obj/machinery/portable_atmospherics/Move()
 	. = ..()
@@ -67,11 +67,11 @@
 
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
-		return 0
+		return FALSE
 	anchored = FALSE
 	connected_port.connected_device = null
 	connected_port = null
-	return 1
+	return TRUE
 
 /obj/machinery/portable_atmospherics/portableConnectorReturnAir()
 	return air_contents

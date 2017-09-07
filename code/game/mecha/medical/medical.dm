@@ -6,7 +6,7 @@
 /obj/mecha/medical/mechturn(direction)
 	setDir(direction)
 	playsound(src,'sound/mecha/mechmove01.ogg',40,1)
-	return 1
+	return TRUE
 
 /obj/mecha/medical/mechstep(direction)
 	var/result = step(src,direction)

@@ -11,7 +11,7 @@
 /obj/item/projectile/ion/on_hit(atom/target, blocked = FALSE)
 	..()
 	empulse(target, 1, 1)
-	return 1
+	return TRUE
 
 
 /obj/item/projectile/ion/weak
@@ -19,7 +19,7 @@
 /obj/item/projectile/ion/weak/on_hit(atom/target, blocked = FALSE)
 	..()
 	empulse(target, 0, 0)
-	return 1
+	return TRUE
 
 
 /obj/item/projectile/bullet/gyro
@@ -30,7 +30,7 @@
 /obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 2)
-	return 1
+	return TRUE
 
 /obj/item/projectile/bullet/a40mm
 	name ="40mm grenade"
@@ -41,7 +41,7 @@
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
-	return 1
+	return TRUE
 
 /obj/item/projectile/bullet/a84mm
 	name ="anti-armour rocket"
@@ -62,7 +62,7 @@
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
-	return 1
+	return TRUE
 
 /obj/item/projectile/bullet/srmrocket
 	name ="SRM-8 Rocket"
@@ -77,7 +77,7 @@
 		explosion(target, 0, 1, 2, 4)
 	else
 		explosion(target, 0, 0, 2, 4)
-	return 1
+	return TRUE
 
 /obj/item/projectile/temp
 	name = "freeze beam"
@@ -94,7 +94,7 @@
 	if(isliving(target))
 		var/mob/M = target
 		M.bodytemperature = temperature
-	return 1
+	return TRUE
 
 /obj/item/projectile/temp/hot
 	name = "heat beam"
@@ -192,7 +192,7 @@
 /obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 1)
-	return 1
+	return TRUE
 
 /obj/item/projectile/plasma
 	name = "plasma blast"

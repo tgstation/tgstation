@@ -50,7 +50,7 @@
 			armed = 0
 			update_icon()
 			pulse(0)
-			return 0
+			return FALSE
 		switch(type)
 			if("feet")
 				if(!H.shoes)
@@ -127,8 +127,8 @@
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
 		triggered(finder, (finder.active_hand_index % 2 == 0) ? "r_hand" : "l_hand")
-		return 1	//end the search!
-	return 0
+		return TRUE	//end the search!
+	return FALSE
 
 
 /obj/item/device/assembly/mousetrap/hitby(A as mob|obj)

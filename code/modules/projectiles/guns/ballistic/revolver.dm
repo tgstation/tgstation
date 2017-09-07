@@ -107,7 +107,7 @@
 			to_chat(user, "<span class='userdanger'>[src] blows up in your face!</span>")
 			user.take_bodypart_damage(0,20)
 			user.dropItemToGround(src)
-			return 0
+			return FALSE
 	..()
 
 /obj/item/gun/ballistic/revolver/detective/attackby(obj/item/A, mob/user, params)

@@ -947,7 +947,7 @@
 					to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
 					to_chat(M, "<span class='danger'>This jobban will be lifted in [mins] minutes.</span>")
 					href_list["jobban2"] = 1 // lets it fall through and refresh
-					return 1
+					return TRUE
 				if("No")
 					var/reason = input(usr,"Please State Reason","Reason") as message|null
 					if(reason)
@@ -972,7 +972,7 @@
 						to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
 						to_chat(M, "<span class='danger'>Jobban can be lifted only upon request.</span>")
 						href_list["jobban2"] = 1 // lets it fall through and refresh
-						return 1
+						return TRUE
 				if("Cancel")
 					return
 
@@ -1003,8 +1003,8 @@
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] unbanned [key_name_admin(M)] from [msg].</span>")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been un-jobbanned by [usr.client.ckey] from [msg].</BIG></span>")
 				href_list["jobban2"] = 1 // lets it fall through and refresh
-			return 1
-		return 0 //we didn't do anything!
+			return TRUE
+		return FALSE //we didn't do anything!
 
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])

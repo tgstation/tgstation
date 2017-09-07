@@ -25,7 +25,7 @@
 
 /turf/open/floor/mineral/update_icon()
 	if(!..())
-		return 0
+		return FALSE
 	if(!broken && !burnt)
 		if( !(icon_state in icons) )
 			icon_state = initial(icon_state)

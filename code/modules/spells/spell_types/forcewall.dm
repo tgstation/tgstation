@@ -33,5 +33,5 @@
 
 /obj/effect/forcefield/wizard/CanPass(atom/movable/mover, turf/target)
 	if(mover == wizard)
-		return 1
-	return 0
+		return TRUE
+	return FALSE

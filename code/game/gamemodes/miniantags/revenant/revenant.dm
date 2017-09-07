@@ -154,10 +154,10 @@
 
 //Immunities
 /mob/living/simple_animal/revenant/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
-	return 1 //Immune to the effects of explosions.
+	return TRUE //Immune to the effects of explosions.
 
 /mob/living/simple_animal/revenant/blob_act(obj/structure/blob/B)
 	return //blah blah blobs aren't in tune with the spirit world, or something.
@@ -204,7 +204,7 @@
 
 /mob/living/simple_animal/revenant/death()
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
-		return 0
+		return FALSE
 	stasis = TRUE
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	notransform = TRUE
@@ -305,7 +305,7 @@
 			to_chat(src, "<span class='revennotice'>Gained [essence_amt]E[source ? " from [source]":""].</span>")
 		else
 			to_chat(src, "<span class='revenminor'>Lost [essence_amt]E[source ? " from [source]":""].</span>")
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/revenant/proc/death_reset()
 	revealed = FALSE

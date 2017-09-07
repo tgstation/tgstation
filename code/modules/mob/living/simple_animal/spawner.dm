@@ -36,9 +36,9 @@
 
 /mob/living/simple_animal/hostile/spawner/proc/spawn_mob()
 	if(spawned_mobs.len >= max_mobs)
-		return 0
+		return FALSE
 	if(spawn_delay > world.time)
-		return 0
+		return FALSE
 	spawn_delay = world.time + spawn_time
 	var/mob/living/simple_animal/L = new mob_type(src.loc)
 	L.admin_spawned = admin_spawned	//If we were admin spawned, lets have our children count as that as well.

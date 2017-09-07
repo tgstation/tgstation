@@ -33,21 +33,21 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 				client = M.client
 
 			else
-				return 0
+				return FALSE
 
 		else
-			return 0
+			return FALSE
 
 	if(client.cache.Find(asset_name) || client.sending.Find(asset_name))
-		return 0
+		return FALSE
 
 	client << browse_rsc(SSassets.cache[asset_name], asset_name)
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
 		if (client)
 			client.cache += asset_name
-		return 1
+		return TRUE
 	if (!client)
-		return 0
+		return FALSE
 
 	client.sending |= asset_name
 	var/job = ++client.last_asset_job
@@ -69,7 +69,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		client.cache |= asset_name
 		client.completed_asset_jobs -= job
 
-	return 1
+	return TRUE
 
 //This proc blocks(sleeps) unless verify is set to false
 /proc/send_asset_list(var/client/client, var/list/asset_list, var/verify = TRUE)
@@ -80,14 +80,14 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 				client = M.client
 
 			else
-				return 0
+				return FALSE
 
 		else
-			return 0
+			return FALSE
 
 	var/list/unreceived = asset_list - (client.cache + client.sending)
 	if(!unreceived || !unreceived.len)
-		return 0
+		return FALSE
 	if (unreceived.len >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
 		to_chat(client, "Sending Resources...")
 	for(var/asset in unreceived)
@@ -97,9 +97,9 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
 		if (client)
 			client.cache += unreceived
-		return 1
+		return TRUE
 	if (!client)
-		return 0
+		return FALSE
 	client.sending |= unreceived
 	var/job = ++client.last_asset_job
 
@@ -120,7 +120,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		client.cache |= unreceived
 		client.completed_asset_jobs -= job
 
-	return 1
+	return TRUE
 
 //This proc will download the files without clogging up the browse() queue, used for passively sending files on connection start.
 //The proc calls procs that sleep for long times.

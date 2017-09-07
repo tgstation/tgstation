@@ -18,7 +18,7 @@
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has [hitverb] [src]!</span>", \
 		"<span class='userdanger'>[user] has [hitverb] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-		return 1
+		return TRUE
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
 	if(..())

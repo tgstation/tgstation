@@ -159,18 +159,18 @@
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent != INTENT_HARM && (istype(I, /obj/item/crowbar) || istype(I, /obj/item/twohanded/fireaxe)))
 		try_to_crowbar(I, user)
-		return 1
+		return TRUE
 	else if(istype(I, /obj/item/weldingtool))
 		try_to_weld(I, user)
-		return 1
+		return TRUE
 	else if(!(I.flags_1 & NOBLUDGEON_1) && user.a_intent != INTENT_HARM)
 		try_to_activate_door(user)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/machinery/door/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < damage_deflection)
-		return 0
+		return FALSE
 	. = ..()
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -229,7 +229,7 @@
 
 /obj/machinery/door/proc/open()
 	if(!density)
-		return 1
+		return TRUE
 	if(operating)
 		return
 	operating = TRUE
@@ -247,11 +247,11 @@
 	if(autoclose)
 		spawn(autoclose)
 			close()
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/close()
 	if(density)
-		return 1
+		return TRUE
 	if(operating)
 		return
 	if(safe)
@@ -277,7 +277,7 @@
 		CheckForMobs()
 	else
 		crush()
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))
@@ -310,7 +310,7 @@
 		close()
 
 /obj/machinery/door/proc/requiresID()
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/hasPower()
 	return !(stat & NOPOWER)
@@ -321,8 +321,8 @@
 
 /obj/machinery/door/BlockSuperconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'

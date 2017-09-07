@@ -277,7 +277,7 @@
 	if(chem.id == "plantbgone")
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
+		return TRUE
 
 //Radioactive
 /datum/species/golem/uranium
@@ -328,7 +328,7 @@
 			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
 			return 2
-	return 0
+	return FALSE
 
 //Reflects lasers and resistant to burn damage, but very vulnerable to brute damage. Shatters on death.
 /datum/species/golem/glass
@@ -371,7 +371,7 @@
 				P.xo = new_x - curloc.x
 				P.Angle = null
 			return -1
-	return 0
+	return FALSE
 
 //Teleports when hit or when it wants to
 /datum/species/golem/bluespace
@@ -402,7 +402,7 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		if(I.thrownby == H) //No throwing stuff at yourself to trigger the teleport
-			return 0
+			return FALSE
 		else
 			reactive_teleport(H)
 
@@ -442,8 +442,8 @@
 /datum/action/innate/unstable_teleport/IsAvailable()
 	if(..())
 		if(world.time > last_teleport + cooldown)
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 /datum/action/innate/unstable_teleport/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -514,7 +514,7 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		if(I.thrownby == H) //No throwing stuff at yourself to make bananas
-			return 0
+			return FALSE
 		else
 			new/obj/item/grown/bananapeel/specialpeel(get_turf(H))
 			last_banana = world.time

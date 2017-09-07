@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(job)
 	var/list/all_jobs = subtypesof(/datum/job)
 	if(!all_jobs.len)
 		to_chat(world, "<span class='boldannounce'>Error setting up jobs, no job datums found</span>")
-		return 0
+		return FALSE
 
 	for(var/J in all_jobs)
 		var/datum/job/job = new J()
@@ -43,14 +43,14 @@ SUBSYSTEM_DEF(job)
 		name_occupations[job.title] = job
 		type_occupations[J] = job
 
-	return 1
+	return TRUE
 
 
 /datum/controller/subsystem/job/proc/Debug(text)
 	if(!GLOB.Debug2)
-		return 0
+		return FALSE
 	job_debug.Add(text)
-	return 1
+	return TRUE
 
 
 /datum/controller/subsystem/job/proc/GetJob(rank)
@@ -68,13 +68,13 @@ SUBSYSTEM_DEF(job)
 	if(player && player.mind && rank)
 		var/datum/job/job = GetJob(rank)
 		if(!job)
-			return 0
+			return FALSE
 		if(jobban_isbanned(player, rank))
-			return 0
+			return FALSE
 		if(!job.player_old_enough(player.client))
-			return 0
+			return FALSE
 		if(job.required_playtime_remaining(player.client))
-			return 0
+			return FALSE
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
@@ -82,9 +82,9 @@ SUBSYSTEM_DEF(job)
 		player.mind.assigned_role = rank
 		unassigned -= player
 		job.current_positions++
-		return 1
+		return TRUE
 	Debug("AR has failed, Player: [player], Rank: [rank]")
-	return 0
+	return FALSE
 
 
 /datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level, flag)
@@ -179,8 +179,8 @@ SUBSYSTEM_DEF(job)
 				continue
 			var/mob/dead/new_player/candidate = pick(candidates)
 			if(AssignRole(candidate, command_position))
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 
 //This proc is called at the start of the level loop of DivideOccupations() and will cause head jobs to be checked before any other jobs of the same level
@@ -202,7 +202,7 @@ SUBSYSTEM_DEF(job)
 	var/ai_selected = 0
 	var/datum/job/job = GetJob("AI")
 	if(!job)
-		return 0
+		return FALSE
 	for(var/i = job.total_positions, i > 0, i--)
 		for(var/level = 1 to 3)
 			var/list/candidates = list()
@@ -213,8 +213,8 @@ SUBSYSTEM_DEF(job)
 					ai_selected++
 					break
 	if(ai_selected)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /** Proc DivideOccupations
@@ -239,7 +239,7 @@ SUBSYSTEM_DEF(job)
 
 	Debug("DO, Len: [unassigned.len]")
 	if(unassigned.len == 0)
-		return 0
+		return FALSE
 
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
@@ -364,7 +364,7 @@ SUBSYSTEM_DEF(job)
 		if(!GiveRandomJob(player))
 			AssignRole(player, "Assistant") //If everything is already filled, make them an assistant
 
-	return 1
+	return TRUE
 
 //Gives the player the stuff he should have with his rank
 /datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late=0)
@@ -494,8 +494,8 @@ SUBSYSTEM_DEF(job)
 	if(config.hard_popcap || config.extreme_popcap)
 		var/relevent_cap = max(config.hard_popcap, config.extreme_popcap)
 		if((initial_players_to_assign - unassigned.len) >= relevent_cap)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/controller/subsystem/job/proc/RejectPlayer(mob/dead/new_player/player)
 	if(player.mind && player.mind.special_role)

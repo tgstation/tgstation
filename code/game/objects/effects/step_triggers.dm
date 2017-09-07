@@ -8,7 +8,7 @@
 	anchored = TRUE
 
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
-	return 0
+	return FALSE
 
 /obj/effect/step_trigger/Crossed(H as mob|obj)
 	..()

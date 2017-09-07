@@ -138,15 +138,15 @@
 /atom/proc/onSyndieBase()
 	var/turf/T = get_turf(src)
 	if(!T)
-		return 0
+		return FALSE
 
 	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
-		return 0
+		return FALSE
 
 	if(istype(T.loc, /area/shuttle/syndicate) || istype(T.loc, /area/syndicate_mothership))
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(does_attack_animation)
@@ -215,7 +215,7 @@
 	return FALSE
 
 /atom/proc/CheckExit()
-	return 1
+	return TRUE
 
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
@@ -230,9 +230,9 @@
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
 		if(istype(src.loc, container))
-			return 1
+			return TRUE
 	else if(src in container)
-		return 1
+		return TRUE
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
@@ -345,14 +345,14 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	// Returns 0 if we have that blood already
 	var/new_blood_dna = L.get_blood_dna_list()
 	if(!new_blood_dna)
-		return 0
+		return FALSE
 	if(!blood_DNA)	//if our list of DNA doesn't exist yet, initialise it.
 		blood_DNA = list()
 	var/old_length = blood_DNA.len
 	blood_DNA |= new_blood_dna
 	if(blood_DNA.len == old_length)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 //to add blood dna info to the object's blood_DNA list
 /atom/proc/transfer_blood_dna(list/blood_dna)
@@ -361,19 +361,19 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	var/old_length = blood_DNA.len
 	blood_DNA |= blood_dna
 	if(blood_DNA.len > old_length)
-		return 1//some new blood DNA was added
+		return TRUE//some new blood DNA was added
 
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
 	var/list/blood_dna = M.get_blood_dna_list()
 	if(!blood_dna)
-		return 0
+		return FALSE
 	return add_blood(blood_dna)
 
 //to add blood onto something, with blood dna info to include.
 /atom/proc/add_blood(list/blood_dna)
-	return 0
+	return FALSE
 
 /obj/add_blood(list/blood_dna)
 	return transfer_blood_dna(blood_dna)
@@ -381,10 +381,10 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /obj/item/add_blood(list/blood_dna)
 	var/blood_count = !blood_DNA ? 0 : blood_DNA.len
 	if(!..())
-		return 0
+		return FALSE
 	if(!blood_count)//apply the blood-splatter overlay if it isn't already in there
 		add_blood_overlay()
-	return 1 //we applied blood to the item
+	return TRUE //we applied blood to the item
 
 /obj/item/proc/add_blood_overlay()
 	if(initial(icon) && initial(icon_state))
@@ -408,7 +408,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(src)
 	B.transfer_blood_dna(blood_dna) //give blood info to the blood decal.
-	return 1 //we bloodied the floor
+	return TRUE //we bloodied the floor
 
 /mob/living/carbon/human/add_blood(list/blood_dna)
 	if(wear_suit)
@@ -424,15 +424,15 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 		transfer_blood_dna(blood_dna)
 		bloody_hands = rand(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
-	return 1
+	return TRUE
 
 /atom/proc/clean_blood()
 	if(islist(blood_DNA))
 		blood_DNA = null
-		return 1
+		return TRUE
 
 /atom/proc/wash_cream()
-	return 1
+	return TRUE
 
 /atom/proc/get_global_map_pos()
 	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map)) return
@@ -448,13 +448,13 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	if(cur_x && cur_y)
 		return list("x"=cur_x,"y"=cur_y)
 	else
-		return 0
+		return FALSE
 
 /atom/proc/isinspace()
 	if(isspaceturf(get_turf(src)))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /atom/proc/handle_fall()
 	return
@@ -487,7 +487,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	return 0
+	return FALSE
 
 /atom/proc/get_dumping_location(obj/item/storage/source,mob/user)
 	return null

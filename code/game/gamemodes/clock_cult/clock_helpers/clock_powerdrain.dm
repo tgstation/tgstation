@@ -3,13 +3,13 @@
 	var/obj/item/stock_parts/cell/cell = get_cell()
 	if(cell)
 		return cell.power_drain(clockcult_user)
-	return 0
+	return FALSE
 
 /obj/item/melee/baton/power_drain(clockcult_user)	//balance memes
-	return 0
+	return FALSE
 
 /obj/item/gun/power_drain(clockcult_user)	//balance memes
-	return 0
+	return FALSE
 
 /obj/machinery/power/apc/power_drain(clockcult_user)
 	if(cell && cell.charge)

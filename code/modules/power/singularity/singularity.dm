@@ -56,12 +56,12 @@
 		return ..()
 	else
 		last_failed_movement = direct
-		return 0
+		return FALSE
 
 
 /obj/singularity/attack_hand(mob/user)
 	consume(user)
-	return 1
+	return TRUE
 
 /obj/singularity/attack_paw(mob/user)
 	consume(user)
@@ -74,10 +74,10 @@
 
 /obj/singularity/attackby(obj/item/W, mob/user, params)
 	consume(user)
-	return 1
+	return TRUE
 
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
-	return 0
+	return FALSE
 
 /obj/singularity/blob_act(obj/structure/blob/B)
 	return
@@ -99,7 +99,7 @@
 
 
 /obj/singularity/bullet_act(obj/item/projectile/P)
-	return 0 //Will there be an impact? Who knows.  Will we see it? No.
+	return FALSE //Will there be an impact? Who knows.  Will we see it? No.
 
 
 /obj/singularity/Collide(atom/A)
@@ -219,18 +219,18 @@
 			dissipate = 0
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>", INVESTIGATE_SINGULO)
-		return 1
+		return TRUE
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)
 	else
-		return 0
+		return FALSE
 
 
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)
 		investigate_log("collapsed.", INVESTIGATE_SINGULO)
 		qdel(src)
-		return 0
+		return FALSE
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
 			allowed_size = STAGE_ONE
@@ -247,7 +247,7 @@
 				allowed_size = STAGE_FIVE
 	if(current_size != allowed_size)
 		expand()
-	return 1
+	return TRUE
 
 
 /obj/singularity/proc/eat()
@@ -284,7 +284,7 @@
 
 /obj/singularity/proc/move(force_move = 0)
 	if(!move_self)
-		return 0
+		return FALSE
 
 	var/movement_dir = pick(GLOB.alldirs - last_failed_movement)
 
@@ -299,7 +299,7 @@
 
 /obj/singularity/proc/check_turfs_in(direction = 0, step = 0)
 	if(!direction)
-		return 0
+		return FALSE
 	var/steps = 0
 	if(!step)
 		switch(current_size)
@@ -320,7 +320,7 @@
 	for(var/i = 1 to steps)
 		T = get_step(T,direction)
 	if(!isturf(T))
-		return 0
+		return FALSE
 	turfs.Add(T)
 	var/dir2 = 0
 	var/dir3 = 0
@@ -335,35 +335,35 @@
 	for(var/j = 1 to steps-1)
 		T2 = get_step(T2,dir2)
 		if(!isturf(T2))
-			return 0
+			return FALSE
 		turfs.Add(T2)
 	for(var/k = 1 to steps-1)
 		T = get_step(T,dir3)
 		if(!isturf(T))
-			return 0
+			return FALSE
 		turfs.Add(T)
 	for(var/turf/T3 in turfs)
 		if(isnull(T3))
 			continue
 		if(!can_move(T3))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 
 /obj/singularity/proc/can_move(turf/T)
 	if(!T)
-		return 0
+		return FALSE
 	if((locate(/obj/machinery/field/containment) in T)||(locate(/obj/machinery/shieldwall) in T))
-		return 0
+		return FALSE
 	else if(locate(/obj/machinery/field/generator) in T)
 		var/obj/machinery/field/generator/G = locate(/obj/machinery/field/generator) in T
 		if(G && G.active)
-			return 0
+			return FALSE
 	else if(locate(/obj/machinery/shieldwallgen) in T)
 		var/obj/machinery/shieldwallgen/S = locate(/obj/machinery/shieldwallgen) in T
 		if(S && S.active)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 
 /obj/singularity/proc/event()
@@ -377,11 +377,11 @@
 			mezzer()
 		if(5,6) //Sets all nearby mobs on fire
 			if(current_size < STAGE_SIX)
-				return 0
+				return FALSE
 			combust_mobs()
 		else
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 
 /obj/singularity/proc/toxmob()

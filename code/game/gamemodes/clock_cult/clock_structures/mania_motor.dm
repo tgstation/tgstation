@@ -34,7 +34,7 @@
 	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY) && is_servant_of_ratvar(user))
 		if(!total_accessable_power() >= mania_cost)
 			to_chat(user, "<span class='warning'>[src] needs more power to function!</span>")
-			return 0
+			return FALSE
 		toggle(0, user)
 
 /obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)

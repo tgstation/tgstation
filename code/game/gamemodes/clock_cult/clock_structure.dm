@@ -102,7 +102,7 @@
 	if(is_servant_of_ratvar(user) && istype(I, /obj/item/wrench) && unanchored_icon)
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
 			update_anchored(user)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/structure/destructible/clockwork/attacked_by(obj/item/I, mob/living/user)
@@ -246,7 +246,7 @@
 
 /obj/structure/destructible/clockwork/powered/proc/try_use_power(amount) //try to use an amount of power
 	if(!needs_power || GLOB.ratvar_awakens)
-		return 1
+		return TRUE
 	if(amount <= 0)
 		return FALSE
 	var/power = total_accessable_power()

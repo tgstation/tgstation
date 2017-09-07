@@ -19,9 +19,9 @@
 			var/datum/atom_hud/data/human/medical/advanced/A = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 			A.add_hud_to(H)
 			builtin_hud_user = 1
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/mecha/medical/odysseus/go_out()
 	if(ishuman(occupant) && builtin_hud_user)

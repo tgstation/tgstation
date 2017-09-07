@@ -624,7 +624,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/SetJobPreferenceLevel(datum/job/job, level)
 	if (!job)
-		return 0
+		return FALSE
 
 	if (level == 1) // to high
 		// remove any other job(s) set to high
@@ -648,7 +648,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (3)
 				job_civilian_low |= job.flag
 
-		return 1
+		return TRUE
 	else if (job.department_flag == ENGSEC)
 		job_engsec_low &= ~job.flag
 		job_engsec_med &= ~job.flag
@@ -662,7 +662,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (3)
 				job_engsec_low |= job.flag
 
-		return 1
+		return TRUE
 	else if (job.department_flag == MEDSCI)
 		job_medsci_low &= ~job.flag
 		job_medsci_med &= ~job.flag
@@ -676,9 +676,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (3)
 				job_medsci_low |= job.flag
 
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /datum/preferences/proc/UpdateJobPreference(mob/user, role, desiredLvl)
 	if(!SSjob || SSjob.occupations.len <= 0)
@@ -701,12 +701,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		else
 			job_civilian_low |= job.flag
 		SetChoices(user)
-		return 1
+		return TRUE
 
 	SetJobPreferenceLevel(job, desiredLvl)
 	SetChoices(user)
 
-	return 1
+	return TRUE
 
 
 /datum/preferences/proc/ResetJobs()
@@ -726,7 +726,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/GetJobDepartment(datum/job/job, level)
 	if(!job || !level)
-		return 0
+		return FALSE
 	switch(job.department_flag)
 		if(CIVILIAN)
 			switch(level)
@@ -752,7 +752,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					return job_engsec_med
 				if(3)
 					return job_engsec_low
-	return 0
+	return FALSE
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(href_list["jobbancheck"])
@@ -799,7 +799,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
 			else
 				SetChoices(user)
-		return 1
+		return TRUE
 
 	switch(href_list["task"])
 		if("random")
@@ -1249,7 +1249,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						current_tab = text2num(href_list["tab"])
 
 	ShowChoices(user)
-	return 1
+	return TRUE
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
 	if(be_random_name)

@@ -25,7 +25,7 @@
 	handle_changeling()
 
 	if(stat != DEAD)
-		return 1
+		return TRUE
 
 ///////////////
 // BREATHING //
@@ -92,7 +92,7 @@
 		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
-	return 0
+	return FALSE
 
 
 //Third link in a breath chain, calls handle_breath_temperature()
@@ -111,7 +111,7 @@
 		adjustOxyLoss(1)
 		failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
-		return 0
+		return FALSE
 
 	var/safe_oxy_min = 16
 	var/safe_co2_max = 10
@@ -200,7 +200,7 @@
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
 
-	return 1
+	return TRUE
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)

@@ -20,13 +20,13 @@
 	if(chassis)
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		send_byjax(chassis.occupant,"exosuit.browser","equipment_menu",chassis.get_equipment_menu(),"dropdowns")
-		return 1
+		return TRUE
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_equip_info()
 	if(chassis)
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
-		return 1
+		return TRUE
 	return
 
 /obj/item/mecha_parts/mecha_equipment/Destroy()
@@ -66,19 +66,19 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/action_checks(atom/target)
 	if(!target)
-		return 0
+		return FALSE
 	if(!chassis)
-		return 0
+		return FALSE
 	if(!equip_ready)
-		return 0
+		return FALSE
 	if(crit_fail)
-		return 0
+		return FALSE
 	if(energy_drain && !chassis.has_charge(energy_drain))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/proc/action(atom/target)
-	return 0
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/proc/start_cooldown()
 	set_ready_state(0)
@@ -94,12 +94,12 @@
 	. = do_after(chassis.occupant, equip_cooldown, target=target)
 	set_ready_state(1)
 	if(!chassis || 	chassis.loc != C || src != chassis.selected)
-		return 0
+		return FALSE
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
 	if(M.equipment.len<M.max_equip)
-		return 1
+		return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src
@@ -147,8 +147,8 @@
 
 //Used for reloading weapons/tools etc. that use some form of resource
 /obj/item/mecha_parts/mecha_equipment/proc/rearm()
-	return 0
+	return FALSE
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
-	return 0
+	return FALSE

@@ -790,8 +790,8 @@ What a mess.*/
 		if(authenticated)
 			if(user.canUseTopic(src))
 				if(!trim(message1))
-					return 0
+					return FALSE
 				if(!record1 || record1 == active1)
 					if(!record2 || record2 == active2)
-						return 1
-	return 0
+						return TRUE
+	return FALSE

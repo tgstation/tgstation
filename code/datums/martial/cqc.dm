@@ -16,23 +16,23 @@
 	if(findtext(streak,SLAM_COMBO))
 		streak = ""
 		Slam(A,D)
-		return 1
+		return TRUE
 	if(findtext(streak,KICK_COMBO))
 		streak = ""
 		Kick(A,D)
-		return 1
+		return TRUE
 	if(findtext(streak,RESTRAIN_COMBO))
 		streak = ""
 		Restrain(A,D)
-		return 1
+		return TRUE
 	if(findtext(streak,PRESSURE_COMBO))
 		streak = ""
 		Pressure(A,D)
-		return 1
+		return TRUE
 	if(findtext(streak,CONSECUTIVE_COMBO))
 		streak = ""
 		Consecutive(A,D)
-	return 0
+	return FALSE
 
 /datum/martial_art/cqc/proc/Slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat || !D.IsKnockdown())
@@ -42,7 +42,7 @@
 		D.apply_damage(10, BRUTE)
 		D.Knockdown(120)
 		add_logs(A, D, "cqc slammed")
-	return 1
+	return TRUE
 
 /datum/martial_art/cqc/proc/Kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat || !D.IsKnockdown())
@@ -59,13 +59,13 @@
 		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, 1, -1)
 		D.SetSleeping(300)
 		D.adjustBrainLoss(25)
-	return 1
+	return TRUE
 
 /datum/martial_art/cqc/proc/Pressure(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.visible_message("<span class='warning'>[A] forces their arm on [D]'s neck!</span>")
 	D.adjustStaminaLoss(60)
 	playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
-	return 1
+	return TRUE
 
 /datum/martial_art/cqc/proc/Restrain(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(restraining)
@@ -77,7 +77,7 @@
 		D.Stun(100)
 		restraining = 1
 		addtimer(CALLBACK(src, .proc/drop_restraining), 50, TIMER_UNIQUE)
-	return 1
+	return TRUE
 
 /datum/martial_art/cqc/proc/Consecutive(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat)
@@ -89,12 +89,12 @@
 			A.put_in_hands(I)
 		D.adjustStaminaLoss(50)
 		D.apply_damage(25, BRUTE)
-	return 1
+	return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
 	if(check_streak(A,D))
-		return 1
+		return TRUE
 	if(A.grab_state >= GRAB_AGGRESSIVE)
 		D.grabbedby(A, 1)
 	else
@@ -104,12 +104,12 @@
 			add_logs(A, D, "grabbed", addition="aggressively")
 			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
 
-	return 1
+	return TRUE
 
 /datum/martial_art/cqc/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
 	if(check_streak(A,D))
-		return 1
+		return TRUE
 	add_logs(A, D, "CQC'd")
 	A.do_attack_animation(D)
 	var/picked_hit_type = pick("CQC'd", "Big Bossed")
@@ -132,13 +132,13 @@
 		D.apply_damage(10, BRUTE)
 		D.Knockdown(60)
 		add_logs(A, D, "cqc sweeped")
-	return 1
+	return TRUE
 
 /datum/martial_art/cqc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D",D)
 	var/obj/item/I = null
 	if(check_streak(A,D))
-		return 1
+		return TRUE
 	if(prob(65))
 		if(!D.stat || !D.IsKnockdown() || !restraining)
 			I = D.get_active_held_item()
@@ -163,8 +163,8 @@
 			A.grab_state = GRAB_NECK
 	else
 		restraining = 0
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/human/proc/CQC_help()
 	set name = "Remember The Basics"

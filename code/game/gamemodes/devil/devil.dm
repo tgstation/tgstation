@@ -35,4 +35,4 @@
 				Knockdown(40)
 				qdel(weapon)
 				return 2
-	return 1
+	return TRUE

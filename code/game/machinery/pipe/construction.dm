@@ -209,7 +209,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	if (!istype(W, /obj/item/wrench))
 		return ..()
 	if (!isturf(src.loc))
-		return 1
+		return TRUE
 
 	fixdir()
 	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		if(M.GetInitDirections() & A.GetInitDirections())	// matches at least one direction on either type of pipe
 			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
 			qdel(A)
-			return 1
+			return TRUE
 	// no conflicts found
 
 	if(pipename)
@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe!</span>")
-		return 1
+		return TRUE
 	new/obj/machinery/meter( src.loc )
 	playsound(src.loc, W.usesound, 50, 1)
 	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")

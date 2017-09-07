@@ -237,11 +237,11 @@
 
 /obj/mecha/proc/can_use(mob/user)
 	if(user != occupant)
-		return 0
+		return FALSE
 	if(user && ismob(user))
 		if(!user.incapacitated())
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -455,9 +455,9 @@
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
 	. = ..()
 	if(.)
-		return 1
+		return TRUE
 	if(thrusters_active && movement_dir && use_power(step_energy_drain))
-		return 1
+		return TRUE
 
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)
@@ -465,7 +465,7 @@
 			if(backup.newtonian_move(turn(movement_dir, 180)))
 				if(occupant)
 					to_chat(occupant, "<span class='info'>You push off of [backup] to propel yourself.</span>")
-		return 1
+		return TRUE
 
 /obj/mecha/relaymove(mob/user,direction)
 	if(!direction)
@@ -473,12 +473,12 @@
 	if(user != occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
 		to_chat(user, "<span class='notice'>You climb out from [src].</span>")
-		return 0
+		return FALSE
 	if(connected_port)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
-		return 0
+		return FALSE
 	if(state)
 		occupant_message("<span class='danger'>Maintenance protocols in effect.</span>")
 		return
@@ -486,21 +486,21 @@
 
 /obj/mecha/proc/domove(direction)
 	if(!can_move)
-		return 0
+		return FALSE
 	if(!Process_Spacemove(direction))
-		return 0
+		return FALSE
 	if(!has_charge(step_energy_drain))
-		return 0
+		return FALSE
 	if(defence_mode)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='danger'>Unable to move while in defence mode</span>")
 			last_message = world.time
-		return 0
+		return FALSE
 	if(zoom_mode)
 		if(world.time - last_message > 20)
 			occupant_message("Unable to move while in zoom mode.")
 			last_message = world.time
-		return 0
+		return FALSE
 
 	var/move_result = 0
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
@@ -514,15 +514,15 @@
 		can_move = 0
 		spawn(step_in)
 			can_move = 1
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /obj/mecha/proc/mechturn(direction)
 	setDir(direction)
 	if(turnsound)
 		playsound(src,turnsound,40,1)
-	return 1
+	return TRUE
 
 /obj/mecha/proc/mechstep(direction)
 	var/current_dir = dir
@@ -773,11 +773,11 @@
 /obj/mecha/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
-		return 0
+		return FALSE
 
 	//Make sure are close enough for a valid connection
 	if(new_port.loc != loc)
-		return 0
+		return FALSE
 
 	//Perform the connection
 	connected_port = new_port
@@ -786,16 +786,16 @@
 	connected_port_parent.reconcile_air()
 
 	log_message("Connected to gas port.")
-	return 1
+	return TRUE
 
 /obj/mecha/proc/disconnect()
 	if(!connected_port)
-		return 0
+		return FALSE
 
 	connected_port.connected_device = null
 	connected_port = null
 	log_message("Disconnected from gas port.")
-	return 1
+	return TRUE
 
 /obj/mecha/portableConnectorReturnAir()
 	return internal_tank.return_air()
@@ -861,9 +861,9 @@
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!internal_damage)
 			SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc, mob/user)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
@@ -1038,14 +1038,14 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 /obj/mecha/proc/use_power(amount)
 	if(get_charge())
 		cell.use(amount)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/proc/give_power(amount)
 	if(!isnull(get_charge()))
 		cell.give(amount)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/update_remote_sight(mob/living/user)
 	if(occupant_sight_flags)

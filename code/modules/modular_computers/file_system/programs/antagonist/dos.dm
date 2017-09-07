@@ -43,20 +43,20 @@
 
 /datum/computer_file/program/ntnet_dos/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 	switch(action)
 		if("PRG_target_relay")
 			for(var/obj/machinery/ntnet_relay/R in GLOB.ntnet_global.relays)
 				if("[R.uid]" == params["targid"])
 					target = R
-			return 1
+			return TRUE
 		if("PRG_reset")
 			if(target)
 				target.dos_sources.Remove(src)
 				target = null
 			executed = 0
 			error = ""
-			return 1
+			return TRUE
 		if("PRG_execute")
 			if(target)
 				executed = 1
@@ -65,7 +65,7 @@
 					var/obj/item/computer_hardware/network_card/network_card = computer.all_components[MC_NET]
 					GLOB.ntnet_global.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [network_card.get_network_tag()]")
 					GLOB.ntnet_global.intrusion_detection_alarm = 1
-			return 1
+			return TRUE
 
 /datum/computer_file/program/ntnet_dos/ui_data(mob/user)
 	if(!GLOB.ntnet_global)

@@ -73,7 +73,7 @@
 
 
 /obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target)
-	return 0
+	return FALSE
 
 
 /obj/machinery/am_shielding/process()
@@ -85,7 +85,7 @@
 
 
 /obj/machinery/am_shielding/emp_act()//Immune due to not really much in the way of electronics.
-	return 0
+	return FALSE
 
 /obj/machinery/am_shielding/ex_act(severity, target)
 	stability -= (80 - (severity * 20))
@@ -159,12 +159,12 @@
 //Call this to link a detected shilding unit to the controller
 /obj/machinery/am_shielding/proc/link_control(obj/machinery/power/am_control_unit/AMC)
 	if(!istype(AMC))
-		return 0
+		return FALSE
 	if(control_unit && control_unit != AMC)
-		return 0//Already have one
+		return FALSE//Already have one
 	control_unit = AMC
 	control_unit.add_shielding(src,1)
-	return 1
+	return TRUE
 
 
 //Scans cards for shields or the control unit and if all there it
@@ -179,8 +179,8 @@
 				found_am_device = 1
 				break
 		if(!found_am_device)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 
 /obj/machinery/am_shielding/proc/setup_core()

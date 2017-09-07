@@ -217,7 +217,7 @@ Proc for attack log creation, because really why not
 
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
 	if(!user || !target)
-		return 0
+		return FALSE
 	var/user_loc = user.loc
 
 	var/drifting = 0
@@ -271,7 +271,7 @@ Proc for attack log creation, because really why not
 
 /proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
-		return 0
+		return FALSE
 	var/atom/Tloc = null
 	if(target)
 		Tloc = target.loc
@@ -328,7 +328,7 @@ Proc for attack log creation, because really why not
 
 /proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks)
 	if(!user || !targets)
-		return 0
+		return FALSE
 	if(!islist(targets))
 		targets = list(targets)
 	var/user_loc = user.loc

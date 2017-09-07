@@ -125,7 +125,7 @@
 				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>")
 			else
 				to_chat(user, "<span class='info'>You fill the biogenerator to its capacity.</span>")
-		return 1 //no afterattack
+		return TRUE //no afterattack
 
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
 		var/i = 0
@@ -136,7 +136,7 @@
 		else
 			if(user.transferItemToLoc(O, src))
 				to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
-		return 1 //no afterattack
+		return TRUE //no afterattack
 	else if (istype(O, /obj/item/disk/design_disk))
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",
 			"You begin to load a design from \the [O]...",
@@ -148,7 +148,7 @@
 				if(B)
 					files.AddDesign2Known(B)
 		processing = FALSE
-		return 1
+		return TRUE
 	else
 		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
 
@@ -238,16 +238,16 @@
 
 /obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = 1)
 	if(materials.len != 1 || materials[1] != MAT_BIOMASS)
-		return 0
+		return FALSE
 	if (materials[MAT_BIOMASS]*multiplier/efficiency > points)
 		menustat = "nopoints"
-		return 0
+		return FALSE
 	else
 		if(remove_points)
 			points -= materials[MAT_BIOMASS]*multiplier/efficiency
 		update_icon()
 		updateUsrDialog()
-		return 1
+		return TRUE
 
 /obj/machinery/biogenerator/proc/check_container_volume(list/reagents, multiplier = 1)
 	var/sum_reagents = 0
@@ -257,19 +257,19 @@
 
 	if(beaker.reagents.total_volume + sum_reagents > beaker.reagents.maximum_volume)
 		menustat = "nobeakerspace"
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /obj/machinery/biogenerator/proc/create_product(datum/design/D, amount)
 	if(!beaker || !loc)
-		return 0
+		return FALSE
 
 	if(ispath(D.build_path, /obj/item/stack))
 		if(!check_container_volume(D.make_reagents, amount))
-			return 0
+			return FALSE
 		if(!check_cost(D.materials, amount))
-			return 0
+			return FALSE
 
 		var/obj/item/stack/product = new D.build_path(loc)
 		product.amount = amount

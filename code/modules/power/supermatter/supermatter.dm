@@ -266,7 +266,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
 			damage += max((power-1600)/10, 0)
-		return 1
+		return TRUE
 
 	damage_archived = damage
 	if(takes_damage)
@@ -437,7 +437,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	power -= ((power/500)**3) * powerloss_inhibitor
 
-	return 1
+	return TRUE
 
 /obj/machinery/power/supermatter_shard/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc

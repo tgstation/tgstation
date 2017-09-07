@@ -133,7 +133,7 @@ Auto Patrol[]"},
 		else if((lasercolor == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
 			return
 	if(..())
-		return 1
+		return TRUE
 
 	switch(href_list["operation"])
 		if("idcheck")
@@ -365,8 +365,8 @@ Auto Patrol[]"},
 
 /mob/living/simple_animal/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item)
 	if(slot_item && slot_item.needs_permit)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/bot/ed209/explode()
 	walk_to(src,0)
@@ -504,7 +504,7 @@ Auto Patrol[]"},
 			spawn(100)
 				disabled = 0
 				icon_state = "[lasercolor]ed2091"
-			return 1
+			return TRUE
 		else
 			..(Proj)
 	else

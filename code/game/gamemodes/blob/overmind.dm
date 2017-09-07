@@ -169,10 +169,10 @@
 		if(B)
 			loc = NewLoc
 		else
-			return 0
+			return FALSE
 	else
 		var/area/A = get_area(NewLoc)
 		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
-			return 0
+			return FALSE
 		loc = NewLoc
-		return 1
+		return TRUE

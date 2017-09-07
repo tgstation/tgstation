@@ -99,7 +99,7 @@
 			return
 		place_item_in_disposal(I, user)
 		update_icon()
-		return 1 //no afterattack
+		return TRUE //no afterattack
 	else
 		return ..()
 
@@ -257,7 +257,7 @@
 			if(I.on_found(user))
 				return
 		src_object.remove_from_storage(I, src)
-	return 1
+	return TRUE
 
 // Disposal bin
 // Holds items for disposal into pipe system
@@ -346,7 +346,7 @@
 			update_icon()
 		else
 			visible_message("<span class='notice'>[I] bounces off of [src]'s rim!</span>")
-		return 0
+		return FALSE
 	else
 		return ..(mover, target)
 
@@ -486,7 +486,7 @@
 	flush()
 
 /atom/movable/proc/disposalEnterTry()
-	return 1
+	return TRUE
 
 /obj/item/projectile/disposalEnterTry()
 	return

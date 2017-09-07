@@ -210,7 +210,7 @@
 	..(target, blocked)
 	reagents.set_reacting(TRUE)
 	reagents.handle_reactions()
-	return 1
+	return TRUE
 
 /obj/item/projectile/bullet/dart/metalfoam/New()
 	..()
@@ -296,7 +296,7 @@
 			L.Sleeping(400)
 		else
 			L.adjustStaminaLoss(55)
-	return 1
+	return TRUE
 
 /obj/item/projectile/bullet/sniper/soporific
 	armour_penetration = 0

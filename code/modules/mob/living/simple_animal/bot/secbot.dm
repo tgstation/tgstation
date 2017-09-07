@@ -128,7 +128,7 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 
 	switch(href_list["operation"])
 		if("idcheck")
@@ -392,8 +392,8 @@ Auto Patrol: []"},
 			continue
 /mob/living/simple_animal/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
 	if(slot_item && slot_item.needs_permit)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/bot/secbot/explode()
 

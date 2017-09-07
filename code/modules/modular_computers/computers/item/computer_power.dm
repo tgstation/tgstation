@@ -24,7 +24,7 @@
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
 	if(battery_module && battery_module.battery)
 		return battery_module.battery.give(amount)
-	return 0
+	return FALSE
 
 /obj/item/device/modular_computer/get_cell()
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]

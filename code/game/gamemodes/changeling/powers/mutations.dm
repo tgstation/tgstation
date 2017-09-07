@@ -34,7 +34,7 @@
 			playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 			user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		user.update_inv_hands()
-		return 1
+		return TRUE
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/living/user)
 	if(!user.drop_item())
@@ -84,7 +84,7 @@
 /obj/effect/proc_holder/changeling/suit/proc/check_suit(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	if(!ishuman(user) || !changeling)
-		return 1
+		return TRUE
 	var/mob/living/carbon/human/H = user
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
 		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple].</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>")
@@ -99,7 +99,7 @@
 			playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
 
 		changeling.chem_recharge_slowdown -= recharge_slowdown
-		return 1
+		return TRUE
 
 /obj/effect/proc_holder/changeling/suit/on_refund(mob/user)
 	if(!ishuman(user))
@@ -315,7 +315,7 @@
 	var/mob/living/carbon/human/H = firer
 	H.dropItemToGround(source.gun, TRUE) //Unequip thus delete the tentacle on hit
 	if(blocked >= 100)
-		return 0
+		return FALSE
 	if(isitem(target))
 		var/obj/item/I = target
 		if(!I.anchored)
@@ -333,7 +333,7 @@
 					if(INTENT_HELP)
 						C.visible_message("<span class='danger'>[L] is pulled by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
 						C.throw_at(get_step_towards(H,C), 8, 2)
-						return 1
+						return TRUE
 
 					if(INTENT_DISARM)
 						var/obj/item/I = C.get_active_held_item()
@@ -341,23 +341,23 @@
 							if(C.drop_item())
 								C.visible_message("<span class='danger'>[I] is yanked off [C]'s hand by [src]!</span>","<span class='userdanger'>A tentacle pulls [I] away from you!</span>")
 								on_hit(I) //grab the item as if you had hit it directly with the tentacle
-								return 1
+								return TRUE
 							else
 								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off [C]'s hands!<span>")
-								return 0
+								return FALSE
 						else
 							to_chat(firer, "<span class='danger'>[C] has nothing in hand to disarm!<span>")
-							return 0
+							return FALSE
 
 					if(INTENT_GRAB)
 						C.visible_message("<span class='danger'>[L] is grabbed by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
 						C.throw_at(get_step_towards(H,C), 8, 2, callback=CALLBACK(src, .proc/tentacle_grab, H, C))
-						return 1
+						return TRUE
 
 					if(INTENT_HARM)
 						C.visible_message("<span class='danger'>[L] is thrown towards [H] by a tentacle!</span>","<span class='userdanger'>A tentacle grabs you and throws you towards [H]!</span>")
 						C.throw_at(get_step_towards(H,C), 8, 2, callback=CALLBACK(src, .proc/tentacle_stab, H, C))
-						return 1
+						return TRUE
 			else
 				L.visible_message("<span class='danger'>[L] is pulled by [H]'s tentacle!</span>","<span class='userdanger'>A tentacle grabs you and pulls you towards [H]!</span>")
 				L.throw_at(get_step_towards(H,L), 8, 2)
@@ -415,7 +415,7 @@
 			var/mob/living/carbon/human/H = loc
 			H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		qdel(src)
-		return 0
+		return FALSE
 	else
 		remaining_uses--
 		return ..()

@@ -56,9 +56,9 @@ GLOBAL_LIST_EMPTY(blobs_legit) //used for win-score calculations, contains only 
 		antag_candidates -= blob
 
 	if(!blob_overminds.len)
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /datum/game_mode/blob/proc/get_blob_candidates()
 	var/list/candidates = list()

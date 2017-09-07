@@ -37,7 +37,7 @@
 /obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(active)
 		return ..()
-	return 0
+	return FALSE
 
 /obj/item/holo/esword/attack(target as mob, mob/user as mob)
 	..()
@@ -130,7 +130,7 @@
 			visible_message("<span class='warning'>Swish! [I] lands in [src].</span>")
 		else
 			visible_message("<span class='danger'>[I] bounces off of [src]'s rim!</span>")
-		return 0
+		return FALSE
 	else
 		return ..()
 

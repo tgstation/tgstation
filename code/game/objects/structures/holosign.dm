@@ -50,13 +50,13 @@
 
 /obj/structure/holosign/barrier/CanPass(atom/movable/mover, turf/target)
 	if(!density)
-		return 1
+		return TRUE
 	if(mover.pass_flags & (PASSGLASS|PASSTABLE|PASSGRILLE))
-		return 1
+		return TRUE
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
 		if(allow_walk && C.m_intent == MOVE_INTENT_WALK)
-			return 1
+			return TRUE
 
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"

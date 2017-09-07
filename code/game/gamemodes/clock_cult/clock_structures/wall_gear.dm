@@ -26,7 +26,7 @@
 /obj/structure/destructible/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))
 		default_unfasten_wrench(user, I, 10)
-		return 1
+		return TRUE
 	else if(istype(I, /obj/item/screwdriver))
 		if(anchored)
 			to_chat(user, "<span class='warning'>[src] needs to be unsecured to disassemble it!</span>")
@@ -36,7 +36,7 @@
 			if(do_after(user, 30*I.toolspeed, target = src) && !anchored)
 				to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 				deconstruct(TRUE)
-		return 1
+		return TRUE
 	else if(istype(I, /obj/item/stack/tile/brass))
 		var/obj/item/stack/tile/brass/W = I
 		if(W.get_amount() < 1)
@@ -66,7 +66,7 @@
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You need more brass to make a [anchored ? "false ":""]wall!</span>")
-		return 1
+		return TRUE
 	return ..()
 
 /obj/structure/destructible/clockwork/wall_gear/deconstruct(disassembled = TRUE)

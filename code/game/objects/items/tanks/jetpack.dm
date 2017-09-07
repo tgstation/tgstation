@@ -75,7 +75,7 @@
 	var/turf/T = get_turf(user)
 	T.assume_air(removed)
 
-	return 1
+	return TRUE
 
 /obj/item/tank/jetpack/suicide_act(mob/user)
 	if (istype(user, /mob/living/carbon/human/))

@@ -11,9 +11,9 @@
 
 /datum/round_event/spawn_swarmer/start()
 	if(find_swarmer())
-		return 0
+		return FALSE
 	if(!GLOB.the_gateway)
-		return 0
+		return FALSE
 	new /obj/effect/mob_spawn/swarmer(get_turf(GLOB.the_gateway))
 	if(prob(25)) //25% chance to announce it to the crew
 		var/swarmer_report = "<font size=3><b>[command_name()] High-Priority Update</b></span>"
@@ -23,5 +23,5 @@
 /datum/round_event/spawn_swarmer/proc/find_swarmer()
 	for(var/mob/living/M in GLOB.mob_list)
 		if(istype(M, /mob/living/simple_animal/hostile/swarmer) && M.client) //If there is a swarmer with an active client, we've found our swarmer
-			return 1
-	return 0
+			return TRUE
+	return FALSE

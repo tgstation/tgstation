@@ -156,7 +156,7 @@
 		return newDir
 
 	floor = 1
-	return 1
+	return TRUE
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)

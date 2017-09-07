@@ -46,7 +46,7 @@
 // This thing is not meant to be used on it's own, get topic data from our machinery owner.
 //obj/item/device/modular_computer/processor/canUseTopic(user, state)
 //	if(!machinery_computer)
-//		return 0
+//		return FALSE
 
 //	return machinery_computer.canUseTopic(user, state)
 

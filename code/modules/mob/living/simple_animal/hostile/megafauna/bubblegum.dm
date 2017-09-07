@@ -399,7 +399,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 #undef MEDAL_PREFIX

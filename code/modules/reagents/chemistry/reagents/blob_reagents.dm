@@ -23,7 +23,7 @@
 
 /datum/reagent/blob/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
-		return 0 //the dead, and blob mobs, don't cause reactions
+		return FALSE //the dead, and blob mobs, don't cause reactions
 	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
 
 /datum/reagent/blob/proc/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag) //when the blob takes damage, do this
@@ -36,7 +36,7 @@
 	return
 
 /datum/reagent/blob/proc/tesla_reaction(obj/structure/blob/B, power) //when the blob is hit by a tesla bolt, do this
-	return 1 //return 0 to ignore damage
+	return TRUE //return FALSE to ignore damage
 
 /datum/reagent/blob/proc/extinguish_reaction(obj/structure/blob/B) //when the blob is hit with water, do this
 	return
@@ -173,7 +173,7 @@
 			if(!(C && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) && prob(80))
 				new /obj/effect/hotspot(T)
 	if(damage_flag == "fire")
-		return 0
+		return FALSE
 	return ..()
 
 //does toxin damage, hallucination, targets think they're not hurt at all
@@ -275,7 +275,7 @@
 	return ..()
 
 /datum/reagent/blob/energized_jelly/tesla_reaction(obj/structure/blob/B, power)
-	return 0
+	return FALSE
 
 /datum/reagent/blob/energized_jelly/emp_reaction(obj/structure/blob/B, severity)
 	var/damage = rand(30, 50) - severity * rand(10, 15)
@@ -312,7 +312,7 @@
 
 /datum/reagent/blob/explosive_lattice/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_flag == "bomb")
-		return 0
+		return FALSE
 	else if(damage_flag != "melee" && damage_flag != "bullet" && damage_flag != "laser")
 		return damage * 1.5
 	return ..()
@@ -430,7 +430,7 @@
 
 /datum/reagent/blob/reactive_spines/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
-		return 0 //the dead, and blob mobs, don't cause reactions
+		return FALSE //the dead, and blob mobs, don't cause reactions
 	M.adjustBruteLoss(0.8*reac_volume)
 
 /datum/reagent/blob/reactive_spines/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)

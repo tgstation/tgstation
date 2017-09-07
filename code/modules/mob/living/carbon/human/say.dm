@@ -49,10 +49,10 @@
 
 	// how do species that don't breathe talk? magic, that's what.
 	if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
-		return 0
+		return FALSE
 	if(mind)
 		return !mind.miming
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/proc/SetSpecialVoice(new_voice)
 	if(new_voice)
@@ -69,8 +69,8 @@
 /mob/living/carbon/human/binarycheck()
 	if(ears)
 		var/obj/item/device/radio/headset/dongle = ears
-		if(!istype(dongle)) return 0
-		if(dongle.translate_binary) return 1
+		if(!istype(dongle)) return FALSE
+		if(dongle.translate_binary) return TRUE
 
 /mob/living/carbon/human/radio(message, message_mode, list/spans, language)
 	. = ..()
@@ -93,7 +93,7 @@
 			ears.talk_into(src, message, message_mode, spans, language)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return FALSE
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())

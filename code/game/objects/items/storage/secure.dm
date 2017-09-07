@@ -65,7 +65,7 @@
 	if (locked)
 		src.add_fingerprint(usr)
 		to_chat(usr, "<span class='warning'>It's locked!</span>")
-		return 0
+		return FALSE
 	..()
 
 /obj/item/storage/secure/attack_self(mob/user)
@@ -123,7 +123,7 @@
 
 /obj/item/storage/secure/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(locked)
-		return 0
+		return FALSE
 	return ..()
 
 

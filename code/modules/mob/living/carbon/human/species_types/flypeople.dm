@@ -13,7 +13,7 @@
 	if(chem.id == "pestkiller")
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
+		return TRUE
 
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
@@ -30,4 +30,4 @@
 /datum/species/fly/check_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
 		return 29 //Flyswatters deal 30x damage to flypeople.
-	return 0
+	return FALSE

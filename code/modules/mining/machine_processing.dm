@@ -195,7 +195,7 @@
 
 /obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/D)
 	if(D.make_reagents.len)
-		return 0
+		return FALSE
 
 	var/build_amount = SMELT_AMOUNT
 
@@ -206,7 +206,7 @@
 		var/datum/material/smelter_mat  = materials.materials[mat_id]
 
 		if(!M || !smelter_mat)
-			return 0
+			return FALSE
 
 		build_amount = min(build_amount, round(smelter_mat.amount / M))
 

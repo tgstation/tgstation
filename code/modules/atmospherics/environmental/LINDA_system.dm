@@ -25,7 +25,7 @@
 				atmos_supeconductivity |= D
 				D = get_dir(T, src)
 				T.atmos_supeconductivity |= D
-				return 0						//no need to keep going, we got all we asked
+				return FALSE						//no need to keep going, we got all we asked
 
 	atmos_supeconductivity &= ~get_dir(src, T)
 	T.atmos_supeconductivity &= ~get_dir(T, src)
@@ -35,7 +35,7 @@
 
 
 /atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act. Only firelocks atm.
-	return 0
+	return FALSE
 
 /turf/proc/CalculateAdjacentTurfs()
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs

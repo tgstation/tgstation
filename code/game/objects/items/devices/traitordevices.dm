@@ -142,7 +142,7 @@ effective or pretty fucking useless.
 
 /obj/item/device/healthanalyzer/rad_laser/Topic(href, href_list)
 	if(!usr.canUseTopic(src))
-		return 1
+		return TRUE
 
 	usr.set_machine(src)
 	if(href_list["rad"])
@@ -196,7 +196,7 @@ effective or pretty fucking useless.
 
 /obj/item/device/shadowcloak/item_action_slot_check(slot, mob/user)
 	if(slot == slot_belt)
-		return 1
+		return TRUE
 
 /obj/item/device/shadowcloak/proc/Activate(mob/living/carbon/human/user)
 	if(!user)

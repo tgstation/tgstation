@@ -259,7 +259,7 @@ SUBSYSTEM_DEF(blackbox)
 
 /datum/feedback_variable/proc/get_value()
 	if (!isnum(value))
-		return 0
+		return FALSE
 	return value
 
 /datum/feedback_variable/proc/get_variable()

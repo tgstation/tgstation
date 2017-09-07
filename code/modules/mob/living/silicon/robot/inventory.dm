@@ -10,7 +10,7 @@
 /*-------TODOOOOOOOOOO--------*/ //fuck yooooooooooooou
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
-		return 0
+		return FALSE
 	O.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(istype(O, /obj/item/borg/sight))
 		var/obj/item/borg/sight/S = O
@@ -41,7 +41,7 @@
 		inv3.icon_state = "inv3"
 		held_items[3] = null
 	hud_used.update_robot_modules_display()
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/proc/activate_module(obj/item/O)
 	. = FALSE
@@ -126,7 +126,7 @@
 	if(module_active)
 		return held_items.Find(module_active)
 
-	return 0
+	return FALSE
 
 //select_module(module) - Selects the module slot specified by "module"
 /mob/living/silicon/robot/proc/select_module(module) //Module is 1-3

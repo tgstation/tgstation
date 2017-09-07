@@ -37,9 +37,9 @@
 
 	for(var/i=1,i<=abductor_teams,i++)
 		if(!make_abductor_team(i))
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE
 
 /datum/game_mode/abduction/proc/make_abductor_team(team_number,preset_agent=null,preset_scientist=null)
 	//Team Name
@@ -52,7 +52,7 @@
 
 	if(!preset_agent || !preset_scientist)
 		if(antag_candidates.len <=2)
-			return 0
+			return FALSE
 
 	var/datum/mind/scientist
 	var/datum/mind/agent
@@ -82,7 +82,7 @@
 	abductors |= scientist
 	scientists[team_number] = scientist
 	agents[team_number] = agent
-	return 1
+	return TRUE
 
 /datum/game_mode/abduction/post_setup()
 	for(var/team_number=1,team_number<=abductor_teams,team_number++)
@@ -181,7 +181,7 @@
 		else
 			to_chat(world, "<span class='boldannounce'>[team_name] team failed its mission.</span>")
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
 	var/text = ""
@@ -220,19 +220,19 @@
 	var/ab_team = team
 	if(owner)
 		if(!owner.current || !ishuman(owner.current))
-			return 0
+			return FALSE
 		var/mob/living/carbon/human/H = owner.current
 		if(H.dna.species.id != "abductor")
-			return 0
+			return FALSE
 		var/datum/species/abductor/S = H.dna.species
 		ab_team = S.team
 	for(var/obj/machinery/abductor/experiment/E in GLOB.machines)
 		if(E.team == ab_team)
 			if(E.points >= target_amount)
-				return 1
+				return TRUE
 			else
-				return 0
-	return 0
+				return FALSE
+	return FALSE
 
 /datum/game_mode/proc/update_abductor_icons_added(datum/mind/alien_mind)
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_ABDUCTOR]

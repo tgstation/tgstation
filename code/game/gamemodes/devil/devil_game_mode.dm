@@ -43,8 +43,8 @@
 		antag_candidates.Remove(devil)
 
 	if(devils.len < required_enemies)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /datum/game_mode/devil/post_setup()
@@ -52,7 +52,7 @@
 		post_setup_finalize(devil)
 	modePlayer += devils
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/devil/proc/post_setup_finalize(datum/mind/devil)
 	add_devil(devil.current, ascendable = TRUE) //Devil gamemode devils are ascendable.

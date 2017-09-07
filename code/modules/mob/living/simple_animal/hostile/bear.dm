@@ -66,7 +66,7 @@
 	armored = TRUE
 
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
-	return 1	//No drifting in space for space bears!
+	return TRUE	//No drifting in space for space bears!
 
 /mob/living/simple_animal/hostile/bear/update_icons()
 	..()

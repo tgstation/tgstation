@@ -28,7 +28,7 @@
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end)
-		return 0
+		return FALSE
 	var/dy
 	var/dx
 	dy=(32*end.y+end.pixel_y)-(32*start.y+start.pixel_y)
@@ -175,15 +175,15 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
 	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
-		return 0
+		return FALSE
 
 	var/i, ch, len = length(key)
 
 	for (i = 7, i <= len, ++i)
 		ch = text2ascii(key, i)
 		if (ch < 48 || ch > 57)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
 /mob/proc/rename_self(role, client/C)
@@ -452,7 +452,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 /proc/get_edge_target_turf(atom/A, direction)
 	var/turf/target = locate(A.x, A.y, A.z)
 	if(!A || !target)
-		return 0
+		return FALSE
 		//since NORTHEAST == NORTH|EAST, etc, doing it this way allows for diagonal mass drivers in the future
 		//and isn't really any more complicated
 
@@ -534,35 +534,35 @@ Turf and target are separate in case you want to teleport some distance from a t
 		current = get_step_towards(current, target_turf)
 		while(current != target_turf)
 			if(steps > length)
-				return 0
+				return FALSE
 			if(current.opacity)
-				return 0
+				return FALSE
 			for(var/thing in current)
 				var/atom/A = thing
 				if(A.opacity)
-					return 0
+					return FALSE
 			current = get_step_towards(current, target_turf)
 			steps++
 
-	return 1
+	return TRUE
 
 /proc/is_blocked_turf(turf/T, exclude_mobs)
 	if(T.density)
-		return 1
+		return TRUE
 	for(var/i in T)
 		var/atom/A = i
 		if(A.density && (!exclude_mobs || !ismob(A)))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /proc/is_anchored_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
 	if(T.density)
-		return 1
+		return TRUE
 	for(var/i in T)
 		var/atom/movable/A = i
 		if(A.density && A.anchored)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /proc/get_step_towards2(atom/ref , atom/trg)
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
@@ -599,9 +599,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Returns: 1 if found, 0 if not.
 /proc/hasvar(datum/A, varname)
 	if(A.vars.Find(lowertext(varname)))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 //Repopulates sortedAreas list
 /proc/repopulate_sorted_areas()
@@ -782,7 +782,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 //of course mathematically this is just adding world.icon_size on again
 /proc/getPixelDistance(atom/A, atom/B, centered = 1)
 	if(!istype(A)||!istype(B))
-		return 0
+		return FALSE
 	. = bounds_dist(A, B) + sqrt((((A.pixel_x+B.pixel_x)**2) + ((A.pixel_y+B.pixel_y)**2)))
 	if(centered)
 		. += world.icon_size
@@ -803,12 +803,12 @@ GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 
 /proc/can_embed(obj/item/W)
 	if(W.is_sharp())
-		return 1
+		return TRUE
 	if(is_pointed(W))
-		return 1
+		return TRUE
 
 	if(is_type_in_typecache(W, GLOB.can_embed_types))
-		return 1
+		return TRUE
 
 
 /*
@@ -840,28 +840,28 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 			//Direction works sometimes
 			if(is_type_in_typecache(O, GLOB.WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
-					return 1
+					return TRUE
 			else if(O.dir == dir)
-				return 1
+				return TRUE
 
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
 			//That's exactly what get_turf_pixel() does
 			if(get_turf_pixel(O) == locdir)
-				return 1
+				return TRUE
 
 		if(is_type_in_typecache(O, GLOB.WALLITEMS_EXTERNAL) && check_external)
 			if(is_type_in_typecache(O, GLOB.WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
-					return 1
+					return TRUE
 			else if(O.dir == dir)
-				return 1
+				return TRUE
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
 		if(is_type_in_typecache(O, GLOB.WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
@@ -957,25 +957,25 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /proc/IsValidSrc(datum/D)
 	if(istype(D))
 		return !QDELETED(D)
-	return 0
+	return FALSE
 
 //Compare A's dir, the clockwise dir of A and the anticlockwise dir of A
 //To the opposite dir of the dir returned by get_dir(B,A)
 //If one of them is a match, then A is facing B
 /proc/is_A_facing_B(atom/A,atom/B)
 	if(!istype(A) || !istype(B))
-		return 0
+		return FALSE
 	if(isliving(A))
 		var/mob/living/LA = A
 		if(LA.lying)
-			return 0
+			return FALSE
 	var/goal_dir = angle2dir(dir2angle(get_dir(B,A)+180))
 	var/clockwise_A_dir = turn(A.dir, -45)
 	var/anticlockwise_A_dir = turn(B.dir, 45)
 
 	if(A.dir == goal_dir || clockwise_A_dir == goal_dir || anticlockwise_A_dir == goal_dir)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /*
@@ -1168,10 +1168,10 @@ B --><-- A
 
 /atom/proc/contains(var/atom/A)
 	if(!A)
-		return 0
+		return FALSE
 	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
-			return 1
+			return TRUE
 
 /proc/flick_overlay_static(O, atom/A, duration)
 	set waitfor = 0
@@ -1246,7 +1246,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 /proc/stoplag()
 	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
 		sleep(world.tick_lag)
-		return 1
+		return TRUE
 	. = 0
 	var/i = 1
 	do

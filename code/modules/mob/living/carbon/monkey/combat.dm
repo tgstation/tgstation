@@ -26,7 +26,7 @@
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/walk2derpless(target)
 	if(!target || IsStandingStill())
-		return 0
+		return FALSE
 
 	if(myPath.len <= 0)
 		myPath = get_path_to(src, get_turf(target), /turf/proc/Distance, MAX_RANGE_FIND + 1, 250,1)
@@ -38,28 +38,28 @@
 					if(myPath.len >= 1)
 						walk_to(src,myPath[1],0,5)
 						myPath -= myPath[1]
-			return 1
+			return TRUE
 
 	// failed to path correctly so just try to head straight for a bit
 	walk_to(src,get_turf(target),0,5)
 	sleep(1)
 	walk_to(src,0)
 
-	return 0
+	return FALSE
 
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/IsDeadOrIncap(checkDead = TRUE)
 	if(!canmove)
-		return 1
+		return TRUE
 	if(health <= 0 && checkDead)
-		return 1
+		return TRUE
 	if(IsUnconscious())
-		return 1
+		return TRUE
 	if(IsStun())
-		return 1
+		return TRUE
 	if(stat)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/monkey/proc/battle_screech()
 	if(next_battle_screech < world.time)
@@ -120,16 +120,16 @@
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
 
 	if(L == src)
-		return 0
+		return FALSE
 
 	if(enemies[L])
-		return 1
+		return TRUE
 
 	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
 	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /mob/living/carbon/monkey/proc/handle_combat()
 	// Don't do any AI if inside another mob (devoured)

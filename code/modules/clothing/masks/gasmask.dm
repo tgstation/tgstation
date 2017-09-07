@@ -79,7 +79,7 @@
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
 		to_chat(user, "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>")
-		return 1
+		return TRUE
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
@@ -120,7 +120,7 @@
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
 		to_chat(user, "<span class='notice'>Your Mime Mask has now morphed into [choice]!</span>")
-		return 1
+		return TRUE
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
@@ -193,4 +193,4 @@ obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
 		to_chat(M, "The Tiki Mask has now changed into the [choice] Mask!")
-		return 1
+		return TRUE

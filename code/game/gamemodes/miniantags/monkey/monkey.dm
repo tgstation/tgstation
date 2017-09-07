@@ -35,8 +35,8 @@
 		antag_candidates -= carrier
 
 	if(!carriers.len)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /datum/game_mode/monkey/announce()
@@ -66,34 +66,34 @@
 
 /datum/game_mode/monkey/check_finished()
 	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
-		return 1
+		return TRUE
 
 	if(!round_converted)
 		for(var/datum/mind/monkey_mind in ape_infectees)
 			continuous_sanity_checked = 1
 			if(monkey_mind.current && monkey_mind.current.stat != DEAD)
-				return 0
+				return FALSE
 
 		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() //ugly but unfortunately needed
 		for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 			if(H.mind && H.stat != DEAD)
 				if(H.HasDisease(D))
-					return 0
+					return FALSE
 
 	..()
 
 /datum/game_mode/monkey/proc/check_monkey_victory()
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return 0
+		return FALSE
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/monkey/M in GLOB.living_mob_list)
 		if (M.HasDisease(D))
 			if(M.onCentCom() || M.onSyndieBase())
 				escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/game_mode/proc/add_monkey(datum/mind/monkey_mind)
 	ape_infectees |= monkey_mind

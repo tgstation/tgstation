@@ -128,7 +128,7 @@ GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 // Variety of overrides so the overlays don't get affected by weird things.
 
 /atom/movable/lighting_object/ex_act(severity)
-	return 0
+	return FALSE
 
 /atom/movable/lighting_object/singularity_act()
 	return

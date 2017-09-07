@@ -268,7 +268,7 @@
 				deconstruct(TRUE)
 		else
 			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
-		return 1
+		return TRUE
 	else
 		return ..()
 

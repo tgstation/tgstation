@@ -53,7 +53,7 @@
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
 	if(slot == slot_wear_suit) //we only give the mob the ability to activate the vest if he's actually wearing it.
-		return 1
+		return TRUE
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
@@ -85,11 +85,11 @@
 
 /obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	DeactivateStealth()
-	return 0
+	return FALSE
 
 /obj/item/clothing/suit/armor/abductor/vest/IsReflect()
 	DeactivateStealth()
-	return 0
+	return FALSE
 
 /obj/item/clothing/suit/armor/abductor/vest/ui_action_click()
 	switch(mode)
@@ -401,7 +401,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
-			return 0
+			return FALSE
 
 	switch (mode)
 		if(BATON_STUN)

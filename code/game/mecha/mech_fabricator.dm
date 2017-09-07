@@ -68,11 +68,11 @@
 		var/obj/item/device/pda/pda = I
 		I = pda.id
 	if(!istype(I) || !I.access) //not ID or no access
-		return 0
+		return FALSE
 	for(var/req in req_access)
 		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/emag_act()
 	if(emagged)
@@ -135,11 +135,11 @@
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
 	if(D.reagents_list.len) // No reagents storage - no reagent designs.
-		return 0
+		return FALSE
 	GET_COMPONENT(materials, /datum/component/material_container)
 	if(materials.has_materials(get_resources_w_coeff(D)))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D)
 	being_built = D
@@ -163,7 +163,7 @@
 	being_built = null
 
 	updateUsrDialog()
-	return 1
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/update_queue_on_page()
 	send_byjax(usr,"mecha_fabricator.browser","queue",list_queue())
@@ -186,9 +186,9 @@
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
 	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
-		return 0
+		return FALSE
 	queue.Cut(index,++index)
-	return 1
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/process_queue()
 	var/datum/design/D = queue[1]
@@ -201,12 +201,12 @@
 	temp = null
 	while(D)
 		if(stat&(NOPOWER|BROKEN))
-			return 0
+			return FALSE
 		if(!check_resources(D))
 			say("Not enough resources. Queue processing stopped.")
 			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
 						<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
-			return 0
+			return FALSE
 		remove_from_queue(1)
 		build_part(D)
 		D = listgetindex(queue, 1)
@@ -369,7 +369,7 @@
 	if(href_list["process_queue"])
 		spawn(0)
 			if(processing_queue || being_built)
-				return 0
+				return FALSE
 			processing_queue = 1
 			process_queue()
 			processing_queue = 0
@@ -433,13 +433,13 @@
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
-		return 1
+		return TRUE
 
 	if(exchange_parts(user, W))
-		return 1
+		return TRUE
 
 	if(default_deconstruction_crowbar(W))
-		return 1
+		return TRUE
 
 	return ..()
 

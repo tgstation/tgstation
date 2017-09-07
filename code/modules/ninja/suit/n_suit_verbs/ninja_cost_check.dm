@@ -6,7 +6,7 @@
 	var/actualCost = cost*10
 	if(cost && cell.charge < actualCost)
 		to_chat(H, "<span class='danger'>Not enough energy.</span>")
-		return 1
+		return TRUE
 	else
 		//This shit used to be handled individually on every proc.. why even bother with a universal check proc then?
 		cell.charge-=(actualCost)
@@ -17,9 +17,9 @@
 		if(N_SMOKE_BOMB)
 			if(!s_bombs)
 				to_chat(H, "<span class='danger'>There are no more smoke bombs remaining.</span>")
-				return 1
+				return TRUE
 		if(N_ADRENALINE)
 			if(!a_boost)
 				to_chat(H, "<span class='danger'>You do not have any more adrenaline boosters.</span>")
-				return 1
+				return TRUE
 	return (s_coold)//Returns the value of the variable which counts down to zero.

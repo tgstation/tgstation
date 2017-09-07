@@ -119,24 +119,24 @@
 		if (istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1) )
 				if (!beaker)
 						if(!user.transferItemToLoc(I, src))
-								return 1
+								return TRUE
 						beaker =  I
 						update_icon()
 						src.updateUsrDialog()
 				else
 						to_chat(user, "<span class='warning'>There's already a container inside [src].</span>")
-				return 1 //no afterattack
+				return TRUE //no afterattack
 
 		if(is_type_in_list(I, dried_items))
 				if(istype(I, /obj/item/reagent_containers/food/snacks/grown))
 						var/obj/item/reagent_containers/food/snacks/grown/G = I
 						if(!G.dry)
 								to_chat(user, "<span class='warning'>You must dry [G] first!</span>")
-								return 1
+								return TRUE
 
 		if(holdingitems && holdingitems.len >= limit)
 				to_chat(usr, "The machine cannot hold anymore items.")
-				return 1
+				return TRUE
 
 		//Fill machine with a bag!
 		if(istype(I, /obj/item/storage/bag))
@@ -152,25 +152,25 @@
 						to_chat(user, "<span class='notice'>You empty [I] into [src].</span>")
 
 				src.updateUsrDialog()
-				return 1
+				return TRUE
 
 		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
 				if(user.a_intent == INTENT_HARM)
 						return ..()
 				else
 						to_chat(user, "<span class='warning'>Cannot refine into a reagent!</span>")
-						return 1
+						return TRUE
 
 		if(user.transferItemToLoc(I, src))
 				holdingitems += I
 				src.updateUsrDialog()
-				return 0
+				return FALSE
 
 /obj/machinery/reagentgrinder/attack_paw(mob/user)
 		return src.attack_hand(user)
 
 /obj/machinery/reagentgrinder/attack_ai(mob/user)
-		return 0
+		return FALSE
 
 /obj/machinery/reagentgrinder/attack_hand(mob/user)
 		user.set_machine(src)
@@ -273,8 +273,8 @@
 /obj/machinery/reagentgrinder/proc/is_allowed(obj/item/reagent_containers/O)
 		for (var/i in blend_items)
 				if(istype(O, i))
-						return 1
-		return 0
+						return TRUE
+		return FALSE
 
 /obj/machinery/reagentgrinder/proc/get_allowed_by_id(obj/item/O)
 		for (var/i in blend_items)

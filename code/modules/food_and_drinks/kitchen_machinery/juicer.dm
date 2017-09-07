@@ -44,30 +44,30 @@
 	if (istype(O, /obj/item/reagent_containers/glass) || \
 		istype(O, /obj/item/reagent_containers/food/drinks/drinkingglass))
 		if (beaker)
-			return 1
+			return TRUE
 		else
 			if(!user.transferItemToLoc(O, src))
 				to_chat(user, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
-				return 0
+				return FALSE
 			beaker = O
 			src.verbs += /obj/machinery/juicer/verb/detach
 			update_icon()
 			src.updateUsrDialog()
-			return 0
+			return FALSE
 	if (!is_type_in_list(O, allowed_items))
 		to_chat(user, "This object contains no fluid or extractable reagents.")
-		return 1
+		return TRUE
 	if(!user.transferItemToLoc(O, src))
 		to_chat(user, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
-		return 0
+		return FALSE
 	src.updateUsrDialog()
-	return 0
+	return FALSE
 
 /obj/machinery/juicer/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/juicer/attack_ai(mob/user)
-	return 0
+	return FALSE
 
 /obj/machinery/juicer/attack_hand(mob/user)
 	user.set_machine(src)

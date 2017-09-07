@@ -94,7 +94,7 @@
 
 /turf/open/floor/holofloor/carpet/update_icon()
 	if(!..())
-		return 0
+		return FALSE
 	if(intact)
 		queue_smooth(src)
 

@@ -27,13 +27,13 @@
 		if(target_zone == surgery.location)
 			if(get_location_accessible(target, target_zone) || surgery.ignore_clothes)
 				initiate(user, target, target_zone, tool, surgery)
-				return 1
+				return TRUE
 			else
 				to_chat(user, "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>")
-				return 1	//returns 1 so we don't stab the guy in the dick or wherever.
+				return TRUE	//returns 1 so we don't stab the guy in the dick or wherever.
 	if(iscyborg(user) && user.a_intent != INTENT_HARM) //to save asimov borgs a LOT of heartache
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/surgery_step/proc/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -77,11 +77,11 @@
 
 /datum/surgery_step/proc/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] succeeds!", "<span class='notice'>You succeed.</span>")
-	return 1
+	return TRUE
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='warning'>[user] screws up!</span>", "<span class='warning'>You screw up!</span>")
-	return 0
+	return FALSE
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
-	return 1
+	return TRUE

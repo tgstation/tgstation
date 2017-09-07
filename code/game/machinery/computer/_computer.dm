@@ -26,8 +26,8 @@
 
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/ratvar_act()
 	if(!clockwork)

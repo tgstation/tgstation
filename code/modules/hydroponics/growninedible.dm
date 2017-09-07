@@ -44,8 +44,8 @@
 
 /obj/item/grown/proc/add_juice()
 	if(reagents)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /obj/item/grown/Crossed(atom/movable/AM)

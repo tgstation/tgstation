@@ -58,24 +58,24 @@
 
 /datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
 	if(istype(tool, /obj/item/cautery))
-		return 1
+		return TRUE
 
 	if(istype(tool, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = tool
 		if(WT.isOn())
-			return 1
+			return TRUE
 
 	else if(istype(tool, /obj/item/lighter))
 		var/obj/item/lighter/L = tool
 		if(L.lit)
-			return 1
+			return TRUE
 
 	else if(istype(tool, /obj/item/match))
 		var/obj/item/match/M = tool
 		if(M.lit)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
@@ -100,7 +100,7 @@
 	target.apply_damage(50, BRUTE, "[target_zone]")
 
 	user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
-	return 1
+	return TRUE
 
 //drill bone
 /datum/surgery_step/drill
@@ -115,4 +115,4 @@
 /datum/surgery_step/drill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] drills into [target]'s [parse_zone(target_zone)]!",
 		"<span class='notice'>You drill into [target]'s [parse_zone(target_zone)].</span>")
-	return 1
+	return TRUE

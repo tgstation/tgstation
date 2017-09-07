@@ -19,12 +19,12 @@
 
 /obj/item/device/assembly/igniter/activate()
 	if(!..())
-		return 0//Cooldown check
+		return FALSE//Cooldown check
 	var/turf/location = get_turf(loc)
 	if(location)
 		location.hotspot_expose(1000,1000)
 	sparks.start()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/igniter/attack_self(mob/user)
 	activate()

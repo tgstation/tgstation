@@ -198,11 +198,11 @@
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
 		playsound(src, I.usesound, 20, 1)
 		if(!do_after(user, 70*I.toolspeed, target = src))
-			return 0
+			return FALSE
 		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src]!</span>")
 		playsound(src, I.usesound, 80, 1)
 		make_plating()
-		return 1
+		return TRUE
 	return ..()
 
 /turf/open/floor/clockwork/make_plating()

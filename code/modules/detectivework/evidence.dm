@@ -15,7 +15,7 @@
 
 /obj/item/evidencebag/attackby(obj/item/I, mob/user, params)
 	if(evidencebagEquip(I, user))
-		return 1
+		return TRUE
 
 /obj/item/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
 	if(!istype(I) || I.anchored == 1)
@@ -23,7 +23,7 @@
 
 	if(istype(I, /obj/item/evidencebag))
 		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
-		return 1 //now this is podracing
+		return TRUE //now this is podracing
 
 	if(I.w_class > WEIGHT_CLASS_NORMAL)
 		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
@@ -58,7 +58,7 @@
 	desc = "An evidence bag containing [I]. [I.desc]"
 	I.loc = src
 	w_class = I.w_class
-	return 1
+	return TRUE
 
 /obj/item/evidencebag/attack_self(mob/user)
 	if(contents.len)

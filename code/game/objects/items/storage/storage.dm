@@ -80,8 +80,8 @@
 	if(Adjacent(user) && dump_destination && user.Adjacent(dump_destination))
 		if(dump_destination.storage_contents_dump_act(src, user))
 			playsound(loc, "rustle", 50, 1, -5)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //Object behaviour on storage dump
 /obj/item/storage/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
@@ -95,7 +95,7 @@
 	if(user.s_active) //refresh the HUD to show the transfered contents
 		user.s_active.close(user)
 		user.s_active.show_to(user)
-	return 1
+	return TRUE
 
 /obj/item/storage/proc/handle_mass_item_insertion(list/things, obj/item/storage/src_object, mob/user, datum/progressbar/progress)
 	for(var/obj/item/I in things)
@@ -268,34 +268,34 @@
 	standard_orient_objs(row_num, col_count, numbered_contents)
 
 
-//This proc return 1 if the item can be picked up and 0 if it can't.
+//This proc return TRUE if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /obj/item/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
 	if(!istype(W) || (W.flags_1 & ABSTRACT_1))
 		return //Not an item
 
 	if(loc == W)
-		return 0 //Means the item is already in the storage item
+		return FALSE //Means the item is already in the storage item
 	if(contents.len >= storage_slots)
 		if(!stop_messages)
 			to_chat(usr, "<span class='warning'>[src] is full, make some space!</span>")
-		return 0 //Storage item is full
+		return FALSE //Storage item is full
 
 	if(can_hold.len)
 		if(!is_type_in_typecache(W, can_hold))
 			if(!stop_messages)
 				to_chat(usr, "<span class='warning'>[src] cannot hold [W]!</span>")
-			return 0
+			return FALSE
 
 	if(is_type_in_typecache(W, cant_hold)) //Check for specific items which this container can't hold.
 		if(!stop_messages)
 			to_chat(usr, "<span class='warning'>[src] cannot hold [W]!</span>")
-		return 0
+		return FALSE
 
 	if(W.w_class > max_w_class)
 		if(!stop_messages)
 			to_chat(usr, "<span class='warning'>[W] is too big for [src]!</span>")
-		return 0
+		return FALSE
 
 	var/sum_w_class = W.w_class
 	for(var/obj/item/I in contents)
@@ -304,19 +304,19 @@
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
 			to_chat(usr, "<span class='warning'>[W] won't fit in [src], make some space!</span>")
-		return 0
+		return FALSE
 
 	if(W.w_class >= w_class && (istype(W, /obj/item/storage)))
 		if(!istype(src, /obj/item/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
 				to_chat(usr, "<span class='warning'>[src] cannot hold [W] as it's a storage item of the same size!</span>")
-			return 0 //To prevent the stacking of same sized storage items.
+			return FALSE //To prevent the stacking of same sized storage items.
 
 	if(W.flags_1 & NODROP_1) //SHOULD be handled in unEquip, but better safe than sorry.
 		to_chat(usr, "<span class='warning'>\the [W] is stuck to your hand, you can't put it in \the [src]!</span>")
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 
 //This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
@@ -324,10 +324,10 @@
 //such as when picking up all the items on a tile with one click.
 /obj/item/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if(!istype(W))
-		return 0
+		return FALSE
 	if(usr)
 		if(!usr.transferItemToLoc(W, src))
-			return 0
+			return FALSE
 	else
 		W.forceMove(src)
 	if(silent)
@@ -362,13 +362,13 @@
 			show_to(M)
 	W.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	update_icon()
-	return 1
+	return TRUE
 
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
 /obj/item/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
 	if(!istype(W))
-		return 0
+		return FALSE
 
 	if(istype(src, /obj/item/storage/fancy))
 		var/obj/item/storage/fancy/F = src
@@ -394,7 +394,7 @@
 	W.on_exit_storage(src)
 	update_icon()
 	W.mouse_opacity = initial(W.mouse_opacity)
-	return 1
+	return TRUE
 
 /obj/item/storage/deconstruct(disassembled = TRUE)
 	var/drop_loc = loc
@@ -410,15 +410,15 @@
 	if(istype(W, /obj/item/hand_labeler))
 		var/obj/item/hand_labeler/labeler = W
 		if(labeler.mode)
-			return 0
+			return FALSE
 	. = 1 //no afterattack
 	if(iscyborg(user))
 		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
 		if(contents.len >= storage_slots) //don't use items on the backpack if they don't fit
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 	handle_item_insertion(W, 0 , user)
 

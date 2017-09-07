@@ -64,15 +64,15 @@
 		if(I == internal_storage)
 			internal_storage = null
 			update_inv_internal_storage()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/hostile/guardian/dextrous/can_equip(obj/item/I, slot)
 	switch(slot)
 		if(slot_generic_dextrous_storage)
 			if(internal_storage)
-				return 0
-			return 1
+				return FALSE
+			return TRUE
 	..()
 
 /mob/living/simple_animal/hostile/guardian/dextrous/equip_to_slot(obj/item/I, slot)

@@ -52,9 +52,9 @@
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
 	if(!on)
-		return 0
+		return FALSE
 	if(!(NODE1 && NODE2 && NODE3))
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
@@ -64,7 +64,7 @@
 
 	if(output_starting_pressure >= target_pressure)
 		//No need to mix if target is already full!
-		return 1
+		return TRUE
 
 	//Calculate necessary moles to transfer using PV=nRT
 

@@ -28,10 +28,10 @@
 
 /obj/item/device/assembly/prox_sensor/activate()
 	if(!..())
-		return 0//Cooldown check
+		return FALSE//Cooldown check
 	timing = !timing
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/prox_sensor/toggle_secure()
 	secured = !secured
@@ -54,7 +54,7 @@
 
 /obj/item/device/assembly/prox_sensor/sense()
 	if(!secured || next_activate > world.time)
-		return 0
+		return FALSE
 	pulse(0)
 	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 3)
 	next_activate = world.time + 30
@@ -70,7 +70,7 @@
 
 /obj/item/device/assembly/prox_sensor/toggle_scan(scan)
 	if(!secured)
-		return 0
+		return FALSE
 	scanning = scan
 	proximity_monitor.SetRange(scanning ? sensitivity : 0)
 	update_icon()

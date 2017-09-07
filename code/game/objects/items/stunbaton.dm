@@ -145,14 +145,14 @@
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
 			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
-			return 0
+			return FALSE
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		if(!R || !R.cell || !R.cell.use(hitcost))
-			return 0
+			return FALSE
 	else
 		if(!deductcharge(hitcost))
-			return 0
+			return FALSE
 
 	L.Knockdown(stunforce)
 	L.apply_effect(STUTTER, stunforce)
@@ -170,7 +170,7 @@
 		H.forcesay(GLOB.hit_appends)
 
 
-	return 1
+	return TRUE
 
 /obj/item/melee/baton/emp_act(severity)
 	deductcharge(1000 / severity)

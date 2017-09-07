@@ -55,7 +55,7 @@
 	return
 
 /obj/item/device/firing_pin/proc/pin_auth(mob/living/user)
-	return 1
+	return TRUE
 
 /obj/item/device/firing_pin/proc/auth_fail(mob/living/user)
 	user.show_message(fail_message, 1)
@@ -83,8 +83,8 @@
 
 /obj/item/device/firing_pin/test_range/pin_auth(mob/living/user)
 	for(var/obj/machinery/magnetic_controller/M in range(user, 3))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 // Implant pin, checks for implant
@@ -98,8 +98,8 @@
 	if(istype(user))
 		for(var/obj/item/implant/I in user.implants)
 			if(req_implant && I.type == req_implant)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/item/device/firing_pin/implant/mindshield
 	name = "mindshield firing pin"
@@ -125,15 +125,15 @@
 
 /obj/item/device/firing_pin/clown/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-	return 0
+	return FALSE
 
 // Ultra-honk pin, clown's deadly joke item.
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
 /obj/item/device/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 	if(!(user.disabilities & CLUMSY) && !(user.mind && user.mind.assigned_role == "Clown"))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/device/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/gun/G)
 	..()
@@ -169,9 +169,9 @@
 /obj/item/device/firing_pin/dna/pin_auth(mob/living/carbon/user)
 	if(istype(user) && user.dna && user.dna.unique_enzymes)
 		if(user.dna.unique_enzymes == unique_enzymes)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /obj/item/device/firing_pin/dna/auth_fail(mob/living/carbon/user)
 	if(!unique_enzymes)
@@ -198,9 +198,9 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/M = user
 		if(istype(M.wear_suit, suit_requirement))
-			return 1
+			return TRUE
 	to_chat(user, "<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>")
-	return 0
+	return FALSE
 
 /obj/item/device/firing_pin/tag/red
 	name = "red laser tag firing pin"

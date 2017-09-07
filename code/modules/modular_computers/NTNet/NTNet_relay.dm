@@ -24,12 +24,12 @@
 // TODO: Implement more logic here. For now it's only a placeholder.
 /obj/machinery/ntnet_relay/is_operational()
 	if(stat & (BROKEN | NOPOWER | EMPED))
-		return 0
+		return FALSE
 	if(dos_failure)
-		return 0
+		return FALSE
 	if(!enabled)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/ntnet_relay/update_icon()
 	if(is_operational())

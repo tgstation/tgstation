@@ -143,7 +143,7 @@
 			AH.Resolve()	//with prejudice
 		if(banned_mob && banned_mob.client && banned_mob.client.ckey == banckey)
 			qdel(banned_mob.client)
-	return 1
+	return TRUE
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 

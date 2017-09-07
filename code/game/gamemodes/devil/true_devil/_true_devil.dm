@@ -86,7 +86,7 @@
 	to_chat(user, msg)
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
-	return 1
+	return TRUE
 
 /mob/living/carbon/true_devil/resist_buckle()
 	if(buckled)
@@ -96,10 +96,10 @@
 
 /mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated())
-		return 0
+		return FALSE
 	if(be_close && !in_range(M, src))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/true_devil/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	return 666
@@ -110,7 +110,7 @@
 		return ..() //flashes don't stop devils UNLESS it's their bane.
 
 /mob/living/carbon/true_devil/soundbang_act()
-	return 0
+	return FALSE
 
 /mob/living/carbon/true_devil/get_ear_protection()
 	return 2
@@ -136,11 +136,11 @@
 	return TRUE
 
 /mob/living/carbon/true_devil/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE
 
 /mob/living/carbon/true_devil/singularity_act()
 	if(ascended)
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/carbon/true_devil/attack_ghost(mob/dead/observer/user as mob)
@@ -158,7 +158,7 @@
 		return ..()
 
 /mob/living/carbon/true_devil/can_be_revived()
-	return 1
+	return TRUE
 
 /mob/living/carbon/true_devil/resist_fire()
 	//They're immune to fire.
@@ -196,7 +196,7 @@
 	// devils do not need to breathe
 
 /mob/living/carbon/true_devil/is_literate()
-	return 1
+	return TRUE
 
 /mob/living/carbon/true_devil/ex_act(severity, ex_target)
 	if(!ascended)

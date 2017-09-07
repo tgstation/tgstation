@@ -104,7 +104,7 @@
 
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
-		return 1
+		return TRUE
 	stage = END_STAGE
 	update_areas()
 
@@ -116,7 +116,7 @@
 		return
 	if(!(get_area(L) in impacted_areas))
 		return
-	return 1
+	return TRUE
 
 /datum/weather/proc/impact(mob/living/L) //What effect does this weather have on the hapless mob?
 	return

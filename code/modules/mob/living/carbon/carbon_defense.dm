@@ -63,7 +63,7 @@
 						if(get_active_held_item() == I) //if our attack_hand() picks up the item...
 							visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
 							throw_mode_off()
-							return 1
+							return TRUE
 	..()
 
 
@@ -124,8 +124,8 @@
 		if(user.a_intent == INTENT_HELP)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
-					return 1
-	return 0
+					return TRUE
+	return FALSE
 
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
@@ -141,13 +141,13 @@
 
 	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)
-		return 0
+		return FALSE
 
 	if(..()) //successful monkey bite.
 		for(var/thing in M.viruses)
 			var/datum/disease/D = thing
 			ForceContractDisease(D)
-		return 1
+		return TRUE
 
 
 /mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
@@ -170,7 +170,7 @@
 				if (prob(stunprob) && M.powerlevel >= 8)
 					adjustFireLoss(M.powerlevel * rand(6,10))
 					updatehealth()
-		return 1
+		return TRUE
 
 /mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
 	if(!attacker.limb_destroyer)
@@ -215,7 +215,7 @@
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
 	if(shock_damage<1 && !override)
-		return 0
+		return FALSE
 	if(reagents.has_reagent("teslium"))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	if(illusion)
@@ -304,7 +304,7 @@
 				to_chat(src, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
 		if(has_bane(BANE_LIGHT))
 			mind.disrupt_spells(-500)
-		return 1
+		return TRUE
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			to_chat(src, "<span class='notice'>Something bright flashes in the corner of your vision!</span>")

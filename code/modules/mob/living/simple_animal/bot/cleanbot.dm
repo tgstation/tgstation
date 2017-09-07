@@ -285,7 +285,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 
 /mob/living/simple_animal/bot/cleanbot/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 	if(href_list["operation"])
 		switch(href_list["operation"])
 			if("blood")

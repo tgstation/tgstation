@@ -27,7 +27,7 @@
 			storage.close_all()
 			for(var/obj/item/I in storage)
 				storage.remove_from_storage(I, get_turf(source))
-		return 1
+		return TRUE
 
 /obj/item/implant/storage/implant(mob/living/target, mob/user, silent = 0)
 	for(var/X in target.implants)
@@ -41,7 +41,7 @@
 			storage.show_to(target)
 
 			qdel(src)
-			return 1
+			return TRUE
 
 	return ..()
 

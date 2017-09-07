@@ -80,10 +80,10 @@
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
 				src.container_type = OPENCONTAINER_1
-				return 0 //to use some fuel
+				return FALSE //to use some fuel
 		else
 			to_chat(user, "<span class='warning'>It's broken!</span>")
-			return 1
+			return TRUE
 	else if(istype(O, /obj/item/reagent_containers/spray/))
 		var/obj/item/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
@@ -98,10 +98,10 @@
 			src.icon_state = "mw"
 			src.container_type = OPENCONTAINER_1
 			src.updateUsrDialog()
-			return 1 // Disables the after-attack so we don't spray the floor/user.
+			return TRUE // Disables the after-attack so we don't spray the floor/user.
 		else
 			to_chat(user, "<span class='warning'>You need more space cleaner!<span>")
-			return 1
+			return TRUE
 
 	else if(istype(O, /obj/item/soap/)) // If they're trying to clean it then let them
 		var/obj/item/soap/P = O
@@ -121,7 +121,7 @@
 
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		to_chat(user, "<span class='warning'>It's dirty!</span>")
-		return 1
+		return TRUE
 
 	else if(istype(O, /obj/item/storage/bag/tray))
 		var/obj/item/storage/T = O
@@ -129,7 +129,7 @@
 		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
 			if (contents.len>=max_n_of_items)
 				to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
-				return 1
+				return TRUE
 			T.remove_from_storage(S, src)
 			loaded++
 
@@ -140,11 +140,11 @@
 	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && user.a_intent == INTENT_HELP)
 		if (contents.len>=max_n_of_items)
 			to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
-			return 1
+			return TRUE
 		else
 			if(!user.drop_item())
 				to_chat(user, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
-				return 0
+				return FALSE
 
 			O.loc = src
 			user.visible_message( \
@@ -159,7 +159,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/microwave/attack_ai(mob/user)
-	return 0
+	return FALSE
 
 /obj/machinery/microwave/attack_hand(mob/user)
 	if(..())
@@ -251,10 +251,10 @@
 /obj/machinery/microwave/proc/microwaving(seconds as num)
 	for (var/i=1 to seconds)
 		if (stat & (NOPOWER|BROKEN))
-			return 0
+			return FALSE
 		use_power(500)
 		sleep(max(12-2*efficiency,2)) // standard microwave means sleep(10). The better the efficiency, the faster the cooking
-	return 1
+	return TRUE
 
 /obj/machinery/microwave/proc/has_extra_item()
 	for (var/obj/O in contents)
@@ -262,8 +262,8 @@
 				!istype(O, /obj/item/reagent_containers/food) && \
 				!istype(O, /obj/item/grown) \
 			)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/machinery/microwave/proc/start()
 	visible_message("The microwave turns on.", "<span class='italics'>You hear a microwave humming.</span>")

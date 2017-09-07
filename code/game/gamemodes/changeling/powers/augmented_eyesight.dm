@@ -28,7 +28,7 @@
 
 
 
-	return 1
+	return TRUE
 
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user)

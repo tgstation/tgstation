@@ -84,13 +84,13 @@
 
 
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
-	return 0
+	return FALSE
 
 /mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
-	return 0
+	return FALSE
 
 /mob/living/carbon/monkey/canBeHandcuffed()
-	return 1
+	return TRUE
 
 /mob/living/carbon/monkey/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	if(judgement_criteria & JUDGE_EMAGGED)
@@ -137,8 +137,8 @@
 
 /mob/living/carbon/monkey/IsVocal()
 	if(!getorganslot("lungs"))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/monkey/can_use_guns(obj/item/G)
 	return TRUE

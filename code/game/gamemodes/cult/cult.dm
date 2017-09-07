@@ -142,22 +142,22 @@
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	if(!where)
 		to_chat(mob, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
-		return 0
+		return FALSE
 	else
 		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].")
 		if(where == "backpack")
 			var/obj/item/storage/B = mob.back
 			B.orient2hud(mob)
 			B.show_to(mob)
-		return 1
+		return TRUE
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun) //BASE
 	if (!istype(cult_mind))
-		return 0
+		return FALSE
 	if(cult_mind.add_antag_datum(ANTAG_DATUM_CULT))
 		if(stun)
 			cult_mind.current.Unconscious(100)
-		return 1
+		return TRUE
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, stun)
 	if(cult_mind.current)
@@ -206,9 +206,9 @@
 			if(cult_mind.current.onCentCom() || cult_mind.current.onSyndieBase())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 
 /datum/game_mode/cult/declare_completion()
@@ -256,7 +256,7 @@
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 	to_chat(world, text)
 	..()
-	return 1
+	return TRUE
 
 
 /datum/game_mode/proc/datum_cult_completion()

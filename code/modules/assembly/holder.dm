@@ -15,7 +15,7 @@
 	var/obj/item/device/assembly/a_right = null
 
 /obj/item/device/assembly_holder/IsAssemblyHolder()
-	return 1
+	return TRUE
 
 
 /obj/item/device/assembly_holder/proc/assemble(obj/item/device/assembly/A, obj/item/device/assembly/A2, mob/user)
@@ -85,7 +85,7 @@
 	if(istype(W, /obj/item/screwdriver))
 		var/turf/T = get_turf(src)
 		if(!T)
-			return 0
+			return FALSE
 		if(a_left)
 			a_left.holder = null
 			a_left.loc = T
@@ -115,7 +115,7 @@
 
 /obj/item/device/assembly_holder/proc/process_activation(obj/D, normal = 1, special = 1)
 	if(!D)
-		return 0
+		return FALSE
 	if((normal) && (a_right) && (a_left))
 		if(a_right != D)
 			a_right.pulsed(0)
@@ -123,4 +123,4 @@
 			a_left.pulsed(0)
 	if(master)
 		master.receive_signal()
-	return 1
+	return TRUE

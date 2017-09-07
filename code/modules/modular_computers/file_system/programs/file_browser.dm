@@ -14,7 +14,7 @@
 
 /datum/computer_file/program/filemanager/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 
 	var/obj/item/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
 	var/obj/item/computer_hardware/hard_drive/RHDD = computer.all_components[MC_SDD]
@@ -28,9 +28,9 @@
 			. = 1
 			var/newname = stripped_input(usr, "Enter file name or leave blank to cancel:", "File rename", max_length=50)
 			if(!newname)
-				return 1
+				return TRUE
 			if(!HDD)
-				return 1
+				return TRUE
 			var/datum/computer_file/data/F = new/datum/computer_file/data()
 			F.filename = newname
 			F.filetype = "TXT"
@@ -38,18 +38,18 @@
 		if("PRG_deletefile")
 			. = 1
 			if(!HDD)
-				return 1
+				return TRUE
 			var/datum/computer_file/file = HDD.find_file_by_name(params["name"])
 			if(!file || file.undeletable)
-				return 1
+				return TRUE
 			HDD.remove_file(file)
 		if("PRG_usbdeletefile")
 			. = 1
 			if(!RHDD)
-				return 1
+				return TRUE
 			var/datum/computer_file/file = RHDD.find_file_by_name(params["name"])
 			if(!file || file.undeletable)
-				return 1
+				return TRUE
 			RHDD.remove_file(file)
 		if("PRG_closefile")
 			. = 1
@@ -58,33 +58,33 @@
 		if("PRG_clone")
 			. = 1
 			if(!HDD)
-				return 1
+				return TRUE
 			var/datum/computer_file/F = HDD.find_file_by_name(params["name"])
 			if(!F || !istype(F))
-				return 1
+				return TRUE
 			var/datum/computer_file/C = F.clone(1)
 			HDD.store_file(C)
 		if("PRG_rename")
 			. = 1
 			if(!HDD)
-				return 1
+				return TRUE
 			var/datum/computer_file/file = HDD.find_file_by_name(params["name"])
 			if(!file || !istype(file))
-				return 1
+				return TRUE
 			var/newname = stripped_input(usr, "Enter new file name:", "File rename", file.filename, max_length=50)
 			if(file && newname)
 				file.filename = newname
 		if("PRG_edit")
 			. = 1
 			if(!open_file)
-				return 1
+				return TRUE
 			if(!HDD)
-				return 1
+				return TRUE
 			var/datum/computer_file/data/F = HDD.find_file_by_name(open_file)
 			if(!F || !istype(F))
-				return 1
+				return TRUE
 			if(F.do_not_edit && (alert("WARNING: This file is not compatible with editor. Editing it may result in permanently corrupted formatting or damaged data consistency. Edit anyway?", "Incompatible File", "No", "Yes") == "No"))
-				return 1
+				return TRUE
 			// 16384 is the limit for file length in characters. Currently, papers have value of 2048 so this is 8 times as long, since we can't edit parts of the file independently.
 			var/newtext = stripped_multiline_input(usr, "Editing file [open_file]. You may use most tags used in paper formatting:", "Text Editor", html_decode(F.stored_data), 16384, TRUE)
 			if(!newtext)
@@ -103,34 +103,34 @@
 		if("PRG_printfile")
 			. = 1
 			if(!open_file)
-				return 1
+				return TRUE
 			if(!HDD)
-				return 1
+				return TRUE
 			var/datum/computer_file/data/F = HDD.find_file_by_name(open_file)
 			if(!F || !istype(F))
-				return 1
+				return TRUE
 			if(!printer)
 				error = "Missing Hardware: Your computer does not have required hardware to complete this operation."
-				return 1
+				return TRUE
 			if(!printer.print_text("<font face=\"[computer.emagged ? CRAYON_FONT : PRINTER_FONT]\">" + prepare_printjob(F.stored_data) + "</font>", open_file))
 				error = "Hardware error: Printer was unable to print the file. It may be out of paper."
-				return 1
+				return TRUE
 		if("PRG_copytousb")
 			. = 1
 			if(!HDD || !RHDD)
-				return 1
+				return TRUE
 			var/datum/computer_file/F = HDD.find_file_by_name(params["name"])
 			if(!F || !istype(F))
-				return 1
+				return TRUE
 			var/datum/computer_file/C = F.clone(0)
 			RHDD.store_file(C)
 		if("PRG_copyfromusb")
 			. = 1
 			if(!HDD || !RHDD)
-				return 1
+				return TRUE
 			var/datum/computer_file/F = RHDD.find_file_by_name(params["name"])
 			if(!F || !istype(F))
-				return 1
+				return TRUE
 			var/datum/computer_file/C = F.clone(0)
 			HDD.store_file(C)
 

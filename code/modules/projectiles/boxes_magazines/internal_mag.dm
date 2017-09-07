@@ -45,7 +45,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/give_round(obj/item/ammo_casing/R, replace_spent = 0)
 	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
-		return 0
+		return FALSE
 
 	for(var/i in 1 to stored_ammo.len)
 		var/obj/item/ammo_casing/bullet = stored_ammo[i]
@@ -55,9 +55,9 @@
 
 			if(bullet)
 				bullet.loc = get_turf(src.loc)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	name = "detective revolver cylinder"

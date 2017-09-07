@@ -86,13 +86,13 @@
 		return ..()
 
 /mob/living/simple_animal/hostile/construct/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -236,17 +236,17 @@
 	if(isconstruct(A)) //is it a construct?
 		var/mob/living/simple_animal/hostile/construct/C = A
 		if(C.health < C.maxHealth) //is it hurt? let's go heal it if it is
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 	else
-		return 0
+		return FALSE
 
 /mob/living/simple_animal/hostile/construct/builder/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return 0
+		return FALSE
 	if(Found(the_target) || ..()) //If we Found it or Can_Attack it normally, we Can_Attack it as long as it wasn't invisible
-		return 1 //as a note this shouldn't be added to base hostile mobs because it'll mess up retaliate hostile mobs
+		return TRUE //as a note this shouldn't be added to base hostile mobs because it'll mess up retaliate hostile mobs
 
 /mob/living/simple_animal/hostile/construct/builder/MoveToTarget(var/list/possible_targets)
 	..()
@@ -254,7 +254,7 @@
 		var/mob/living/L = target
 		if(isconstruct(L) && L.health >= L.maxHealth) //is this target an unhurt construct? stop trying to heal it
 			LoseTarget()
-			return 0
+			return FALSE
 		if(L.health <= melee_damage_lower+melee_damage_upper) //ey bucko you're hurt as fuck let's go hit you
 			retreat_distance = null
 			minimum_distance = 1

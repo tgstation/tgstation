@@ -29,7 +29,7 @@
 			//entry when holding them
 			// literally only an option for carbons though
 			to_chat(C, "<span class='warning'>You may not hold items while blood crawling!</span>")
-			return 0
+			return FALSE
 		var/obj/item/bloodcrawl/B1 = new(C)
 		var/obj/item/bloodcrawl/B2 = new(C)
 		B1.icon_state = "bloodhand_left"
@@ -41,7 +41,7 @@
 	spawn(0)
 		bloodpool_sink(B)
 		src.notransform = FALSE
-	return 1
+	return TRUE
 
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
 	var/turf/mobloc = get_turf(src.loc)
@@ -85,7 +85,7 @@
 		var/success = bloodcrawl_consume(victim)
 		if(!success)
 			to_chat(src, "<span class='danger'>You happily devour... nothing? Your meal vanished at some point!</span>")
-	return 1
+	return TRUE
 
 /mob/living/proc/bloodcrawl_consume(mob/living/victim)
 	to_chat(src, "<span class='danger'>You begin to feast on [victim]. You can not move while you are doing this.</span>")
@@ -154,7 +154,7 @@
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.notransform)
 		to_chat(src, "<span class='warning'>Finish eating first!</span>")
-		return 0
+		return FALSE
 	B.visible_message("<span class='warning'>[B] starts to bubble...</span>")
 	if(!do_after(src, 20, target = B))
 		return
@@ -171,4 +171,4 @@
 			qdel(BC)
 	qdel(src.holder)
 	src.holder = null
-	return 1
+	return TRUE

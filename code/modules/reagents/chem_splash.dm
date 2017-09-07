@@ -73,6 +73,6 @@
 			splash_holder.reaction(A, TOUCH, fraction)
 
 	qdel(splash_holder)
-	return 1
+	return TRUE
 
 

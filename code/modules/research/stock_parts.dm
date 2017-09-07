@@ -51,10 +51,10 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 			if(dumping_location.storage_contents_dump_act(src, user))
 				play_rped_sound()
 				user.Beam(dumping_location,icon_state="rped_upgrade",time=5)
-				return 1
+				return TRUE
 		to_chat(user, "The [src.name] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
-	return 0
+	return FALSE
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.

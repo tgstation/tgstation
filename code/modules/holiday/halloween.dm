@@ -172,7 +172,7 @@
 	. = 0
 
 /mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
-	return 1
+	return TRUE
 
 
 ///////////////////////////

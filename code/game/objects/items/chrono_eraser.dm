@@ -39,7 +39,7 @@
 
 /obj/item/chrono_eraser/item_action_slot_check(slot, mob/user)
 	if(slot == slot_back)
-		return 1
+		return TRUE
 
 /obj/item/gun/energy/chrono_gun
 	name = "T.E.D. Projection Apparatus"
@@ -110,9 +110,9 @@
 			var/turf/currentpos = get_turf(src)
 			var/mob/living/user = src.loc
 			if((currentpos == startpos) && (field in view(CHRONO_BEAM_RANGE, currentpos)) && !user.lying && (user.stat == CONSCIOUS))
-				return 1
+				return TRUE
 		field_disconnect(F)
-		return 0
+		return FALSE
 
 /obj/item/gun/energy/chrono_gun/proc/pass_mind(datum/mind/M)
 	if(TED)
@@ -131,7 +131,7 @@
 	if(istype(gun))
 		return ..()
 	else
-		return 0
+		return FALSE
 
 /obj/item/projectile/energy/chrono_beam/on_hit(atom/target)
 	if(target && gun && isliving(target))
@@ -233,10 +233,10 @@
 		if(Pgun && istype(Pgun))
 			Pgun.field_connect(src)
 	else
-		return 0
+		return FALSE
 
 /obj/effect/chrono_field/assume_air()
-	return 0
+	return FALSE
 
 /obj/effect/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new

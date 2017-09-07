@@ -39,5 +39,5 @@
 		outsellobjective.target = target_mind
 		outsellobjective.update_explanation_text()
 		devil.objectives += outsellobjective
-		return 1
-	return 0
+		return TRUE
+	return FALSE

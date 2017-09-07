@@ -43,9 +43,9 @@
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
-	//Return 1 if parent should continue checking other pipes
+	//return TRUE if parent should continue checking other pipes
 	//Return null if parent should stop checking other pipes. Recall: del(src) will by default return null
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
 	if(air_temporary)
@@ -101,5 +101,5 @@
 
 /obj/machinery/atmospherics/pipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 12)
-		return 0
+		return FALSE
 	. = ..()

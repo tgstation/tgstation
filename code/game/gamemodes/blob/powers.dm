@@ -1,45 +1,45 @@
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [cost] resources!</span>")
-		return 0
+		return FALSE
 	add_points(-cost)
-	return 1
+	return TRUE
 
 // Power verbs
 
 /mob/camera/blob/proc/place_blob_core(point_rate, placement_override)
 	if(placed && placement_override != -1)
-		return 1
+		return TRUE
 	if(!placement_override)
 		for(var/mob/living/M in range(7, src))
 			if("blob" in M.faction)
 				continue
 			if(M.client)
 				to_chat(src, "<span class='warning'>There is someone too close to place your blob core!</span>")
-				return 0
+				return FALSE
 		for(var/mob/living/M in view(13, src))
 			if("blob" in M.faction)
 				continue
 			if(M.client)
 				to_chat(src, "<span class='warning'>Someone could see your blob core from here!</span>")
-				return 0
+				return FALSE
 		var/turf/T = get_turf(src)
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
-			return 0
+			return FALSE
 		for(var/obj/O in T)
 			if(istype(O, /obj/structure/blob))
 				if(istype(O, /obj/structure/blob/normal))
 					qdel(O)
 				else
 					to_chat(src, "<span class='warning'>There is already a blob here!</span>")
-					return 0
+					return FALSE
 			else if(O.density)
 				to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
-				return 0
+				return FALSE
 		if(world.time <= manualplace_min_time && world.time <= autoplace_max_time)
 			to_chat(src, "<span class='warning'>It is too early to place your blob core!</span>")
-			return 0
+			return FALSE
 	else if(placement_override == 1)
 		var/turf/T = pick(GLOB.blobstart)
 		loc = T //got overrided? you're somewhere random, motherfucker
@@ -52,7 +52,7 @@
 		core.update_icon()
 	update_health_hud()
 	placed = 1
-	return 1
+	return TRUE
 
 /mob/camera/blob/verb/transport_core()
 	set category = "Blob"

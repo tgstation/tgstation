@@ -16,16 +16,16 @@
 		var/mob/living/simple_animal/slime/S = owner
 		if(needs_growth == GROWTH_NEEDED)
 			if(S.amount_grown >= SLIME_EVOLUTION_THRESHOLD)
-				return 1
-			return 0
-		return 1
+				return TRUE
+			return FALSE
+		return TRUE
 
 /mob/living/simple_animal/slime/verb/Feed()
 	set category = "Slime"
 	set desc = "This will let you feed on any valid creature in the surrounding area. This should also be used to halt the feeding process."
 
 	if(stat)
-		return 0
+		return FALSE
 
 	var/list/choices = list()
 	for(var/mob/living/C in view(1,src))
@@ -34,10 +34,10 @@
 
 	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|choices
 	if(!M)
-		return 0
+		return FALSE
 	if(CanFeedon(M))
 		Feedon(M)
-		return 1
+		return TRUE
 
 /datum/action/innate/slime/feed
 	name = "Feed"
@@ -50,32 +50,32 @@
 
 /mob/living/simple_animal/slime/proc/CanFeedon(mob/living/M)
 	if(!Adjacent(M))
-		return 0
+		return FALSE
 
 	if(buckled)
 		Feedstop()
-		return 0
+		return FALSE
 
 	if(isslime(M))
 		to_chat(src, "<span class='warning'><i>I can't latch onto another slime...</i></span>")
-		return 0
+		return FALSE
 
 	if(docile)
 		to_chat(src, "<span class='notice'><i>I'm not hungry anymore...</i></span>")
-		return 0
+		return FALSE
 
 	if(stat)
 		to_chat(src, "<span class='warning'><i>I must be conscious to do this...</i></span>")
-		return 0
+		return FALSE
 
 	if(M.stat == DEAD)
 		to_chat(src, "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>")
-		return 0
+		return FALSE
 
 	if(locate(/mob/living/simple_animal/slime) in M.buckled_mobs)
 		to_chat(src, "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/simple_animal/slime/proc/Feedon(mob/living/M)
 	M.unbuckle_all_mobs(force=1) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())

@@ -23,7 +23,7 @@ GLOBAL_PROTECT(config_dir)
 /datum/configuration
 	var/name = "Configuration"			// datum name
 
-	var/autoadmin = 0
+	var/autoadmin = FALSE
 	var/autoadmin_rank = "Game Admin"
 
 	var/server_name = null				// server name (the name of the game window)
@@ -31,51 +31,51 @@ GLOBAL_PROTECT(config_dir)
 	var/station_name = null				// station name (the name of the station in-game)
 	var/lobby_countdown = 120			// In between round countdown.
 	var/round_end_countdown = 25		// Post round murder death kill countdown
-	var/hub = 0
+	var/hub = FALSE
 
-	var/log_ooc = 0						// log OOC channel
-	var/log_access = 0					// log login/logout
-	var/log_say = 0						// log client say
-	var/log_admin = 0					// log admin actions
-	var/log_game = 0					// log game events
-	var/log_vote = 0					// log voting
-	var/log_whisper = 0					// log client whisper
-	var/log_prayer = 0					// log prayers
-	var/log_law = 0						// log lawchanges
-	var/log_emote = 0					// log emotes
-	var/log_attack = 0					// log attack messages
-	var/log_adminchat = 0				// log admin chat messages
-	var/log_pda = 0						// log pda messages
-	var/log_twitter = 0					// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
-	var/log_world_topic = 0				// log all world.Topic() calls
-	var/sql_enabled = 0					// for sql switching
-	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
-	var/allow_vote_restart = 0 			// allow votes to restart
-	var/allow_vote_mode = 0				// allow votes to change mode
+	var/log_ooc = FALSE						// log OOC channel
+	var/log_access = FALSE					// log login/logout
+	var/log_say = FALSE						// log client say
+	var/log_admin = FALSE					// log admin actions
+	var/log_game = FALSE					// log game events
+	var/log_vote = FALSE					// log voting
+	var/log_whisper = FALSE					// log client whisper
+	var/log_prayer = FALSE					// log prayers
+	var/log_law = FALSE						// log lawchanges
+	var/log_emote = FALSE					// log emotes
+	var/log_attack = FALSE					// log attack messages
+	var/log_adminchat = FALSE				// log admin chat messages
+	var/log_pda = FALSE						// log pda messages
+	var/log_twitter = FALSE					// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
+	var/log_world_topic = FALSE				// log all world.Topic() calls
+	var/sql_enabled = FALSE					// for sql switching
+	var/allow_admin_ooccolor = FALSE		// Allows admins with relevant permissions to have their own ooc colour
+	var/allow_vote_restart = FALSE 			// allow votes to restart
+	var/allow_vote_mode = FALSE				// allow votes to change mode
 	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
-	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
-	var/vote_no_dead = 0				// dead people can't vote (tbi)
-	var/del_new_on_log = 1				// del's new players if they log before they spawn in
-	var/allow_Metadata = 0				// Metadata is supported.
-	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
+	var/vote_no_default = FALSE				// vote does not default to nochange/norestart (tbi)
+	var/vote_no_dead = FALSE				// dead people can't vote (tbi)
+	var/del_new_on_log = TRUE				// del's new players if they log before they spawn in
+	var/allow_Metadata = FALSE				// Metadata is supported.
+	var/popup_admin_pm = FALSE				//adminPMs to non-admins show in a pop-up 'reply' window when set to TRUE.
 	var/fps = 20
-	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
+	var/allow_holidays = FALSE				//toggles whether holiday-specific content should be used
 	var/tick_limit_mc_init = TICK_LIMIT_MC_INIT_DEFAULT	//SSinitialization throttling
 
 	var/hostedby = null
-	var/respawn = 1
-	var/guest_jobban = 1
-	var/usewhitelist = 0
+	var/respawn = TRUE
+	var/guest_jobban = TRUE
+	var/usewhitelist = FALSE
 	var/inactivity_period = 3000		//time in ds until a player is considered inactive
 	var/afk_period = 6000				//time in ds until a player is considered afk and kickable
 	var/kick_inactive = FALSE			//force disconnect for inactive players
-	var/load_jobs_from_txt = 0
-	var/automute_on = 0					//enables automuting/spam prevention
-	var/minimal_access_threshold = 0	//If the number of players is larger than this threshold, minimal access will be turned on.
-	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
-	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above.
-	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
+	var/load_jobs_from_txt = FALSE
+	var/automute_on = FALSE					//enables automuting/spam prevention
+	var/minimal_access_threshold = FALSE	//If the number of players is larger than this threshold, minimal access will be turned on.
+	var/jobs_have_minimal_access = FALSE	//determines whether jobs use minimal access or expanded access.
+	var/jobs_have_maint_access = FALSE 		//Who gets maint access?  See defines above.
+	var/sec_start_brig = FALSE				//makes sec start in brig or dept sec posts
 
 	var/server
 	var/banappeals
@@ -85,46 +85,46 @@ GLOBAL_PROTECT(config_dir)
 	var/githuburl = "https://www.github.com/tgstation/-tg-station" //default github
 	var/githubrepoid
 
-	var/forbid_singulo_possession = 0
-	var/useircbot = 0
+	var/forbid_singulo_possession = FALSE
+	var/useircbot = FALSE
 
-	var/check_randomizer = 0
+	var/check_randomizer = FALSE
 
 	var/panic_server_name
 	var/panic_address //Reconnect a player this linked server if this server isn't accepting new players
 
 	//IP Intel vars
 	var/ipintel_email
-	var/ipintel_rating_bad = 1
+	var/ipintel_rating_bad = TRUE
 	var/ipintel_save_good = 12
-	var/ipintel_save_bad = 1
+	var/ipintel_save_bad = TRUE
 	var/ipintel_domain = "check.getipintel.net"
 
-	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
-	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
-	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
-	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
-	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
+	var/admin_legacy_system = FALSE	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
+	var/ban_legacy_system = FALSE	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
+	var/use_age_restriction_for_jobs = FALSE //Do jobs use account age restrictions? --requires database
+	var/use_account_age_for_jobs = FALSE	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
+	var/see_own_notes = FALSE //Can players see their own admin notes (read-only)? Config option in config.txt
 	var/note_fresh_days
 	var/note_stale_days
 
 	var/use_exp_tracking = FALSE
 	var/use_exp_restrictions_heads = FALSE
-	var/use_exp_restrictions_heads_hours = 0
+	var/use_exp_restrictions_heads_hours = FALSE
 	var/use_exp_restrictions_heads_department = FALSE
 	var/use_exp_restrictions_other = FALSE
 	var/use_exp_restrictions_admin_bypass = FALSE
 
 	//Population cap vars
-	var/soft_popcap				= 0
-	var/hard_popcap				= 0
-	var/extreme_popcap			= 0
+	var/soft_popcap				= FALSE
+	var/hard_popcap				= FALSE
+	var/extreme_popcap			= FALSE
 	var/soft_popcap_message		= "Be warned that the server is currently serving a high number of users, consider using alternative game servers."
 	var/hard_popcap_message		= "The server is currently serving a high number of users, You cannot currently join. You may wait for the number of living crew to decline, observe, or find alternative servers."
 	var/extreme_popcap_message	= "The server is currently serving a high number of users, find alternative servers."
 
 	//game_options.txt configs
-	var/force_random_names = 0
+	var/force_random_names = FALSE
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
@@ -132,14 +132,14 @@ GLOBAL_PROTECT(config_dir)
 	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
 	var/list/max_pop = list()
 
-	var/humans_need_surnames = 0
-	var/allow_ai = 0					// allow ai job
-	var/forbid_secborg = 0				// disallow secborg module to be chosen.
-	var/forbid_peaceborg = 0
-	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
-	var/notify_new_player_age = 0		// how long do we notify admins of a new player
-	var/notify_new_player_account_age = 0		// how long do we notify admins of a new byond account
-	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
+	var/humans_need_surnames = FALSE
+	var/allow_ai = FALSE					// allow ai job
+	var/forbid_secborg = FALSE				// disallow secborg module to be chosen.
+	var/forbid_peaceborg = FALSE
+	var/panic_bunker = FALSE				// prevents new people it hasn't seen before from connecting
+	var/notify_new_player_age = FALSE		// how long do we notify admins of a new player
+	var/notify_new_player_account_age = FALSE		// how long do we notify admins of a new byond account
+	var/irc_first_connection_alert = FALSE	// do we notify the irc channel when somebody is connecting for the first time?
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
 	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
@@ -147,25 +147,25 @@ GLOBAL_PROTECT(config_dir)
 	var/abductor_scaling_coeff = 15 	//how many players per abductor team
 
 	var/traitor_objectives_amount = 2
-	var/protect_roles_from_antagonist = 0 //If security and such can be traitor/cult/other
-	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
-	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
-	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
+	var/protect_roles_from_antagonist = FALSE //If security and such can be traitor/cult/other
+	var/protect_assistant_from_antagonist = FALSE //If assistants can be traitor/cult/other
+	var/enforce_human_authority = FALSE		//If non-human species are barred from joining as a head of staff
+	var/allow_latejoin_antagonists = FALSE 	// If late-joining players can be traitor/changeling
 	var/list/continuous = list()		// which roundtypes continue if all antagonists die
 	var/list/midround_antag = list() 	// which roundtypes use the midround antagonist system
 	var/midround_antag_time_check = 60  // How late (in minutes) you want the midround antag system to stay on, setting this to 0 will disable the system
 	var/midround_antag_life_check = 0.7 // A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
 	var/shuttle_refuel_delay = 12000
-	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
-	var/mutant_races = 0				//players can choose their mutant race before joining the game
+	var/show_game_type_odds = FALSE			//if set this allows players to see the odds of each roundtype on the get revision screen
+	var/mutant_races = FALSE				//players can choose their mutant race before joining the game
 	var/list/roundstart_races = list()	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
-	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
+	var/mutant_humans = FALSE				//players can pick mutant bodyparts for humans before joining the game
 
 	var/no_summon_guns		//No
 	var/no_summon_magic		//Fun
 	var/no_summon_events	//Allowed
 
-	var/intercept = 1					//Whether or not to send a communications intercept report roundstart. This may be overriden by gamemodes.
+	var/intercept = TRUE					//Whether or not to send a communications intercept report roundstart. This may be overriden by gamemodes.
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
 	var/alert_desc_blue_downto = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
@@ -177,38 +177,38 @@ GLOBAL_PROTECT(config_dir)
 	var/revival_cloning = FALSE
 	var/revival_brain_life = -1
 
-	var/rename_cyborg = 0
-	var/ooc_during_round = 0
-	var/emojis = 0
+	var/rename_cyborg = FALSE
+	var/ooc_during_round = FALSE
+	var/emojis = FALSE
 	var/no_credits_round_end = FALSE
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
-	var/run_speed = 0
-	var/walk_speed = 0
+	var/run_speed = FALSE
+	var/walk_speed = FALSE
 
 	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
-	var/human_delay = 0
-	var/robot_delay = 0
-	var/monkey_delay = 0
-	var/alien_delay = 0
-	var/slime_delay = 0
-	var/animal_delay = 0
+	var/human_delay = FALSE
+	var/robot_delay = FALSE
+	var/monkey_delay = FALSE
+	var/alien_delay = FALSE
+	var/slime_delay = FALSE
+	var/animal_delay = FALSE
 
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
-	var/ghost_interaction = 0
+	var/ghost_interaction = FALSE
 
-	var/silent_ai = 0
-	var/silent_borg = 0
+	var/silent_ai = FALSE
+	var/silent_borg = FALSE
 
-	var/damage_multiplier = 1 //Modifier for damage to all mobs. Impacts healing as well.
+	var/damage_multiplier = TRUE //Modifier for damage to all mobs. Impacts healing as well.
 
-	var/allowwebclient = 0
-	var/webclientmembersonly = 0
+	var/allowwebclient = FALSE
+	var/webclientmembersonly = FALSE
 
 	var/sandbox_autoclose = FALSE // close the sandbox panel after spawning an item, potentially reducing griff
 
-	var/default_laws = 0 //Controls what laws the AI spawns with.
+	var/default_laws = FALSE //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
 	var/list/lawids = list()
 
@@ -216,49 +216,49 @@ GLOBAL_PROTECT(config_dir)
 
 	var/assistant_cap = -1
 
-	var/starlight = 0
-	var/generate_minimaps = 0
-	var/grey_assistants = 0
+	var/starlight = FALSE
+	var/generate_minimaps = FALSE
+	var/grey_assistants = FALSE
 
 	var/id_console_jobslot_delay = 30
 
 	var/lavaland_budget = 60
 	var/space_budget = 16
 
-	var/aggressive_changelog = 0
+	var/aggressive_changelog = FALSE
 
-	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
+	var/reactionary_explosions = FALSE //If we use reactionary explosions, explosions that react to walls and doors
 
-	var/autoconvert_notes = 0 //if all connecting player's notes should attempt to be converted to the database
+	var/autoconvert_notes = FALSE //if all connecting player's notes should attempt to be converted to the database
 
-	var/announce_admin_logout = 0
-	var/announce_admin_login = 0
+	var/announce_admin_logout = FALSE
+	var/announce_admin_login = FALSE
 
 	var/list/datum/map_config/maplist = list()
 	var/datum/map_config/defaultmap = null
-	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
+	var/maprotation = TRUE
 	var/allow_map_voting = TRUE
 
-	// Enables random events mid-round when set to 1
-	var/allow_random_events = 0
+	// Enables random events mid-round when set to TRUE
+	var/allow_random_events = FALSE
 
 	// Multipliers for random events minimal starting time and minimal players amounts
-	var/events_min_time_mul = 1
-	var/events_min_players_mul = 1
+	var/events_min_time_mul = TRUE
+	var/events_min_players_mul = TRUE
 
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
-	var/client_warn_version = 0
+	var/client_warn_version = FALSE
 	var/client_warn_message = "Your version of byond may have issues or be blocked from accessing this server in the future."
-	var/client_error_version = 0
+	var/client_error_version = FALSE
 	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
 
 	var/cross_name = "Other server"
 	var/cross_address = "byond://"
 	var/cross_allowed = FALSE
-	var/showircname = 0
+	var/showircname = FALSE
 
 	var/list/gamemode_cache = null
 
@@ -340,15 +340,15 @@ GLOBAL_PROTECT(config_dir)
 		if(type == "config")
 			switch(name)
 				if("hub")
-					hub = 1
+					hub = TRUE
 				if("admin_legacy_system")
-					admin_legacy_system = 1
+					admin_legacy_system = TRUE
 				if("ban_legacy_system")
-					ban_legacy_system = 1
+					ban_legacy_system = TRUE
 				if("use_age_restriction_for_jobs")
-					use_age_restriction_for_jobs = 1
+					use_age_restriction_for_jobs = TRUE
 				if("use_account_age_for_jobs")
-					use_account_age_for_jobs = 1
+					use_account_age_for_jobs = TRUE
 				if("use_exp_tracking")
 					use_exp_tracking = TRUE
 				if("use_exp_restrictions_heads")
@@ -366,51 +366,51 @@ GLOBAL_PROTECT(config_dir)
 				if("round_end_countdown")
 					round_end_countdown = text2num(value)
 				if("log_ooc")
-					log_ooc = 1
+					log_ooc = TRUE
 				if("log_access")
-					log_access = 1
+					log_access = TRUE
 				if("log_say")
-					log_say = 1
+					log_say = TRUE
 				if("log_admin")
-					log_admin = 1
+					log_admin = TRUE
 				if("log_prayer")
-					log_prayer = 1
+					log_prayer = TRUE
 				if("log_law")
-					log_law = 1
+					log_law = TRUE
 				if("log_game")
-					log_game = 1
+					log_game = TRUE
 				if("log_vote")
-					log_vote = 1
+					log_vote = TRUE
 				if("log_whisper")
-					log_whisper = 1
+					log_whisper = TRUE
 				if("log_attack")
-					log_attack = 1
+					log_attack = TRUE
 				if("log_emote")
-					log_emote = 1
+					log_emote = TRUE
 				if("log_adminchat")
-					log_adminchat = 1
+					log_adminchat = TRUE
 				if("log_pda")
-					log_pda = 1
+					log_pda = TRUE
 				if("log_twitter")
-					log_twitter = 1
+					log_twitter = TRUE
 				if("log_world_topic")
-					log_world_topic = 1
+					log_world_topic = TRUE
 				if("allow_admin_ooccolor")
-					allow_admin_ooccolor = 1
+					allow_admin_ooccolor = TRUE
 				if("allow_vote_restart")
-					allow_vote_restart = 1
+					allow_vote_restart = TRUE
 				if("allow_vote_mode")
-					allow_vote_mode = 1
+					allow_vote_mode = TRUE
 				if("no_dead_vote")
-					vote_no_dead = 1
+					vote_no_dead = TRUE
 				if("default_no_vote")
-					vote_no_default = 1
+					vote_no_default = TRUE
 				if("vote_delay")
 					vote_delay = text2num(value)
 				if("vote_period")
 					vote_period = text2num(value)
 				if("norespawn")
-					respawn = 0
+					respawn = FALSE
 				if("servername")
 					server_name = value
 				if("serversqlname")
@@ -434,13 +434,13 @@ GLOBAL_PROTECT(config_dir)
 				if("githubrepoid")
 					githubrepoid = value
 				if("guest_jobban")
-					guest_jobban = 1
+					guest_jobban = TRUE
 				if("guest_ban")
-					GLOB.guests_allowed = 0
+					GLOB.guests_allowed = FALSE
 				if("usewhitelist")
 					usewhitelist = TRUE
 				if("allow_metadata")
-					allow_Metadata = 1
+					allow_Metadata = TRUE
 				if("id_console_jobslot_delay")
 					id_console_jobslot_delay = text2num(value)
 				if("inactivity_period")
@@ -450,25 +450,25 @@ GLOBAL_PROTECT(config_dir)
 				if("kick_inactive")
 					kick_inactive = TRUE
 				if("load_jobs_from_txt")
-					load_jobs_from_txt = 1
+					load_jobs_from_txt = TRUE
 				if("forbid_singulo_possession")
-					forbid_singulo_possession = 1
+					forbid_singulo_possession = TRUE
 				if("popup_admin_pm")
-					popup_admin_pm = 1
+					popup_admin_pm = TRUE
 				if("allow_holidays")
-					allow_holidays = 1
+					allow_holidays = TRUE
 				if("useircbot")	//tgs2 support
-					useircbot = 1
+					useircbot = TRUE
 				if("ticklag")
 					var/ticklag = text2num(value)
-					if(ticklag > 0)
+					if(ticklag > FALSE)
 						fps = 10 / ticklag
 				if("tick_limit_mc_init")
 					tick_limit_mc_init = text2num(value)
 				if("fps")
 					fps = text2num(value)
 				if("automute_on")
-					automute_on = 1
+					automute_on = TRUE
 				if("panic_server_name")
 					if (value != "\[Put the name here\]")
 						panic_server_name = value
@@ -476,9 +476,9 @@ GLOBAL_PROTECT(config_dir)
 					if(value != "byond://address:port")
 						panic_address = value
 				if("show_irc_name")
-					showircname = 1
+					showircname = TRUE
 				if("see_own_notes")
-					see_own_notes = 1
+					see_own_notes = TRUE
 				if("note_fresh_days")
 					note_fresh_days = text2num(value)
 				if("note_stale_days")
@@ -496,15 +496,15 @@ GLOBAL_PROTECT(config_dir)
 				if("extreme_popcap_message")
 					extreme_popcap_message = value
 				if("panic_bunker")
-					panic_bunker = 1
+					panic_bunker = TRUE
 				if("notify_new_player_age")
 					notify_new_player_age = text2num(value)
 				if("notify_new_player_account_age")
 					notify_new_player_account_age = text2num(value)
 				if("irc_first_connection_alert")
-					irc_first_connection_alert = 1
+					irc_first_connection_alert = TRUE
 				if("check_randomizer")
-					check_randomizer = 1
+					check_randomizer = TRUE
 				if("ipintel_email")
 					if (value != "ch@nge.me")
 						ipintel_email = value
@@ -517,29 +517,29 @@ GLOBAL_PROTECT(config_dir)
 				if("ipintel_save_bad")
 					ipintel_save_bad = text2num(value)
 				if("aggressive_changelog")
-					aggressive_changelog = 1
+					aggressive_changelog = TRUE
 				if("autoconvert_notes")
-					autoconvert_notes = 1
+					autoconvert_notes = TRUE
 				if("allow_webclient")
-					allowwebclient = 1
+					allowwebclient = TRUE
 				if("webclient_only_byond_members")
-					webclientmembersonly = 1
+					webclientmembersonly = TRUE
 				if("announce_admin_logout")
-					announce_admin_logout = 1
+					announce_admin_logout = TRUE
 				if("announce_admin_login")
-					announce_admin_login = 1
+					announce_admin_login = TRUE
 				if("maprotation")
-					maprotation = 1
+					maprotation = TRUE
 				if("allow_map_voting")
 					allow_map_voting = text2num(value)
 				if("maprotationchancedelta")
 					maprotatechancedelta = text2num(value)
 				if("autoadmin")
-					autoadmin = 1
+					autoadmin = TRUE
 					if(value)
 						autoadmin_rank = ckeyEx(value)
 				if("generate_minimaps")
-					generate_minimaps = 1
+					generate_minimaps = TRUE
 				if("client_warn_version")
 					client_warn_version = text2num(value)
 				if("client_warn_message")
@@ -580,11 +580,11 @@ GLOBAL_PROTECT(config_dir)
 				if("revival_brain_life")
 					revival_brain_life		= text2num(value)
 				if("rename_cyborg")
-					rename_cyborg			= 1
+					rename_cyborg			= TRUE
 				if("ooc_during_round")
-					ooc_during_round			= 1
+					ooc_during_round			= TRUE
 				if("emojis")
-					emojis					= 1
+					emojis					= TRUE
 				if("no_credits_round_end")
 					no_credits_round_end	= TRUE
 				if("run_delay")
@@ -616,7 +616,7 @@ GLOBAL_PROTECT(config_dir)
 				if("alert_delta")
 					alert_desc_delta			= value
 				if("no_intercept_report")
-					intercept				= 0
+					intercept				= FALSE
 				if("assistants_have_maint_access")
 					jobs_have_maint_access	|= ASSISTANTS_HAVE_MAINT_ACCESS
 				if("security_has_maint_access")
@@ -624,19 +624,19 @@ GLOBAL_PROTECT(config_dir)
 				if("everyone_has_maint_access")
 					jobs_have_maint_access	|= EVERYONE_HAS_MAINT_ACCESS
 				if("sec_start_brig")
-					sec_start_brig			= 1
+					sec_start_brig			= TRUE
 				if("gateway_delay")
 					gateway_delay			= text2num(value)
 				if("continuous")
 					var/mode_name = lowertext(value)
 					if(mode_name in modes)
-						continuous[mode_name] = 1
+						continuous[mode_name] = TRUE
 					else
 						WRITE_FILE(GLOB.config_error_log, "Unknown continuous configuration definition: [mode_name].")
 				if("midround_antag")
 					var/mode_name = lowertext(value)
 					if(mode_name in modes)
-						midround_antag[mode_name] = 1
+						midround_antag[mode_name] = TRUE
 					else
 						WRITE_FILE(GLOB.config_error_log, "Unknown midround antagonist configuration definition: [mode_name].")
 				if("midround_antag_time_check")
@@ -674,9 +674,9 @@ GLOBAL_PROTECT(config_dir)
 				if("shuttle_refuel_delay")
 					shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
-					show_game_type_odds		= 1
+					show_game_type_odds		= TRUE
 				if("ghost_interaction")
-					ghost_interaction		= 1
+					ghost_interaction		= TRUE
 				if("traitor_scaling_coeff")
 					traitor_scaling_coeff	= text2num(value)
 				if("changeling_scaling_coeff")
@@ -703,15 +703,15 @@ GLOBAL_PROTECT(config_dir)
 						WRITE_FILE(GLOB.config_error_log, "Incorrect probability configuration definition: [prob_name]  [prob_value].")
 
 				if("protect_roles_from_antagonist")
-					protect_roles_from_antagonist	= 1
+					protect_roles_from_antagonist	= TRUE
 				if("protect_assistant_from_antagonist")
-					protect_assistant_from_antagonist	= 1
+					protect_assistant_from_antagonist	= TRUE
 				if("enforce_human_authority")
-					enforce_human_authority	= 1
+					enforce_human_authority	= TRUE
 				if("allow_latejoin_antagonists")
-					allow_latejoin_antagonists	= 1
+					allow_latejoin_antagonists	= TRUE
 				if("allow_random_events")
-					allow_random_events		= 1
+					allow_random_events		= TRUE
 
 				if("events_min_time_mul")
 					events_min_time_mul		= text2num(value)
@@ -721,23 +721,23 @@ GLOBAL_PROTECT(config_dir)
 				if("minimal_access_threshold")
 					minimal_access_threshold	= text2num(value)
 				if("jobs_have_minimal_access")
-					jobs_have_minimal_access	= 1
+					jobs_have_minimal_access	= TRUE
 				if("humans_need_surnames")
-					humans_need_surnames			= 1
+					humans_need_surnames			= TRUE
 				if("force_random_names")
-					force_random_names		= 1
+					force_random_names		= TRUE
 				if("allow_ai")
-					allow_ai					= 1
+					allow_ai					= TRUE
 				if("disable_secborg")
-					forbid_secborg			= 1
+					forbid_secborg			= TRUE
 				if("disable_peaceborg")
-					forbid_peaceborg			= 1
+					forbid_peaceborg			= TRUE
 				if("silent_ai")
-					silent_ai 				= 1
+					silent_ai 				= TRUE
 				if("silent_borg")
-					silent_borg				= 1
+					silent_borg				= TRUE
 				if("sandbox_autoclose")
-					sandbox_autoclose		= 1
+					sandbox_autoclose		= TRUE
 				if("default_laws")
 					default_laws				= text2num(value)
 				if("random_laws")
@@ -756,7 +756,7 @@ GLOBAL_PROTECT(config_dir)
 				if("silicon_max_law_amount")
 					silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
-					mutant_races				= 1
+					mutant_races				= TRUE
 				if("roundstart_races")
 					var/race_id = lowertext(value)
 					for(var/species_id in GLOB.species_list)
@@ -764,25 +764,25 @@ GLOBAL_PROTECT(config_dir)
 							roundstart_races += GLOB.species_list[species_id]
 							GLOB.roundstart_species[species_id] = GLOB.species_list[species_id]
 				if("join_with_mutant_humans")
-					mutant_humans			= 1
+					mutant_humans			= TRUE
 				if("assistant_cap")
 					assistant_cap			= text2num(value)
 				if("starlight")
-					starlight			= 1
+					starlight			= TRUE
 				if("grey_assistants")
-					grey_assistants			= 1
+					grey_assistants			= TRUE
 				if("lavaland_budget")
 					lavaland_budget			= text2num(value)
 				if("space_budget")
 					space_budget			= text2num(value)
 				if("no_summon_guns")
-					no_summon_guns			= 1
+					no_summon_guns			= TRUE
 				if("no_summon_magic")
-					no_summon_magic			= 1
+					no_summon_magic			= TRUE
 				if("no_summon_events")
-					no_summon_events			= 1
+					no_summon_events			= TRUE
 				if("reactionary_explosions")
-					reactionary_explosions	= 1
+					reactionary_explosions	= TRUE
 				if("bombcap")
 					var/BombCap = text2num(value)
 					if (!BombCap)
@@ -910,7 +910,7 @@ GLOBAL_PROTECT(config_dir)
 
 		switch(name)
 			if("sql_enabled")
-				sql_enabled = 1
+				sql_enabled = TRUE
 			if("address")
 				global.sqladdress = value
 			if("port")

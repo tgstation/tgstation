@@ -139,10 +139,10 @@
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0,mob/viewmob)
 	if(!ismob(mymob))
-		return 0
+		return FALSE
 	var/mob/screenmob = viewmob || mymob
 	if(!screenmob.client)
-		return 0
+		return FALSE
 
 	screenmob.client.screen = list()
 	screenmob.client.apply_clickcatcher()

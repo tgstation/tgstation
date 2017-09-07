@@ -96,7 +96,7 @@
 				if(!affecting)
 					affecting = get_bodypart("chest")
 				if(!dismembering_strike(M, affecting.body_zone)) //Dismemberment successful
-					return 1
+					return TRUE
 				apply_damage(damage, BRUTE, affecting)
 
 			else
@@ -142,7 +142,7 @@
 			damage = rand(20, 40)
 		var/dam_zone = dismembering_strike(M, pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
-			return 1
+			return TRUE
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart("chest")

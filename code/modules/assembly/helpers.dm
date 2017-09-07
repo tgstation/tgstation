@@ -6,11 +6,11 @@ Desc:	If true is an object that can be attached to an assembly holder but is a s
 */
 
 /obj/proc/IsSpecialAssembly()
-	return 0
+	return FALSE
 
 /*
 Name:	IsAssemblyHolder
 Desc:	If true is an object that can hold an assemblyholder object
 */
 /obj/proc/IsAssemblyHolder()
-	return 0
+	return FALSE

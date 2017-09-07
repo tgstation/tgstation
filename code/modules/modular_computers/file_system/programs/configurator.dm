@@ -26,7 +26,7 @@
 
 	// No computer connection, we can't get data from that.
 	if(!movable)
-		return 0
+		return FALSE
 
 	var/list/data = get_header_data()
 

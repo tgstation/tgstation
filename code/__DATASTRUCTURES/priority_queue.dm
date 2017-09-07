@@ -47,7 +47,7 @@
 //removes and returns the first element in the queue
 /PriorityQueue/proc/Dequeue()
 	if(!L.len)
-		return 0
+		return FALSE
 	. = L[1]
 
 	Remove(.)
@@ -67,7 +67,7 @@
 //return the element at the i_th position
 /PriorityQueue/proc/Get(i)
 	if(i > L.len || i < 1)
-		return 0
+		return FALSE
 	return L[i]
 
 //replace the passed element at it's right position using the cmp proc

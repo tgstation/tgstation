@@ -19,7 +19,7 @@
 
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube)
 	if(movement_type & FLYING)
-		return 0
+		return FALSE
 	if(!(lube&SLIDE_ICE))
 		add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
 	return loc.handle_slip(src, knockdown_amount, O, lube)
@@ -27,22 +27,22 @@
 
 /mob/living/carbon/Process_Spacemove(movement_dir = 0)
 	if(..())
-		return 1
+		return TRUE
 	if(!isturf(loc))
-		return 0
+		return FALSE
 
 	var/obj/item/device/flightpack/F = get_flightpack()
 	if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
-		return 1
+		return TRUE
 
 	// Do we have a jetpack implant (and is it on)?
 	var/obj/item/organ/cyberimp/chest/thrusters/T = getorganslot("thrusters")
 	if(istype(T) && movement_dir && T.allow_thrust(0.01))
-		return 1
+		return TRUE
 
 	var/obj/item/tank/jetpack/J = get_jetpack()
 	if(istype(J) && (movement_dir || J.stabilizers) && J.allow_thrust(0.01, src))
-		return 1
+		return TRUE
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()

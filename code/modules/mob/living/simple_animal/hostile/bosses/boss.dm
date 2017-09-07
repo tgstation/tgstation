@@ -55,19 +55,19 @@
 	. = ..()
 	if(.)
 		if(!istype(boss, boss_type))
-			return 0
+			return FALSE
 		if(!boss.atb)
-			return 0
+			return FALSE
 		if(boss.atb.points < boss_cost)
-			return 0
+			return FALSE
 		if(!boss.client)
 			if(needs_target && !boss.target)
-				return 0
+				return FALSE
 		if(boss)
 			if(say_when_triggered)
 				boss.say(say_when_triggered)
 			if(!boss.atb.spend(boss_cost))
-				return 0
+				return FALSE
 
 //Example:
 /*
@@ -95,7 +95,7 @@
 
 /datum/boss_active_timed_battle/proc/assign_abilities(list/L)
 	if(!L)
-		return 0
+		return FALSE
 	abilities = L
 	for(var/ab in abilities)
 		var/datum/action/boss/AB = ab
@@ -106,8 +106,8 @@
 /datum/boss_active_timed_battle/proc/spend(cost)
 	if(cost <= points)
 		points = max(0,points-cost)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/boss_active_timed_battle/proc/refund(cost)

@@ -63,7 +63,7 @@
 		return ..()
 	else
 		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
-		return 0
+		return FALSE
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
@@ -76,7 +76,7 @@
 	speed = 1
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper
 	icon_state = "syndicatemeleestormtrooper"
@@ -109,7 +109,7 @@
 	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper
 	icon_state = "syndicaterangedstormtrooper"

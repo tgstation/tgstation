@@ -63,28 +63,28 @@
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/action/proc/Process()
 	return
 
 /datum/action/proc/IsAvailable()
 	if(!owner)
-		return 0
+		return FALSE
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_STUN)
 		if(owner.IsKnockdown() || owner.IsStun())
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying)
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE)
 	if(button)
@@ -109,7 +109,7 @@
 			button.color = rgb(128,0,0,128)
 		else
 			button.color = rgb(255,255,255,255)
-			return 1
+			return TRUE
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
 	if(icon_icon && button_icon_state && current_button.button_icon_state != button_icon_state)
@@ -139,11 +139,11 @@
 
 /datum/action/item_action/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	if(target)
 		var/obj/item/I = target
 		I.ui_action_click(owner, src)
-	return 1
+	return TRUE
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
 	if(button_icon && button_icon_state)
@@ -268,7 +268,7 @@
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
-			return 0
+			return FALSE
 	return ..()
 
 /datum/action/item_action/clock
@@ -278,7 +278,7 @@
 
 /datum/action/item_action/clock/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/item_action/clock/toggle_visor
@@ -287,11 +287,11 @@
 
 /datum/action/item_action/clock/toggle_visor/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
-		return 0
+		return FALSE
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
 		var/obj/item/clothing/glasses/judicial_visor/V = target
 		if(V.recharging)
-			return 0
+			return FALSE
 	return ..()
 
 /datum/action/item_action/clock/hierophant
@@ -354,7 +354,7 @@
 /datum/action/item_action/jetpack_stabilization/IsAvailable()
 	var/obj/item/tank/jetpack/J = target
 	if(!istype(J) || !J.on)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/item_action/hands_free
@@ -384,7 +384,7 @@
 		else
 			owner.research_scanner--
 		to_chat(owner, "<span class='notice'>[target] research scanner has been [active ? "activated" : "deactivated"].</span>")
-		return 1
+		return TRUE
 
 /datum/action/item_action/toggle_research_scanner/Remove(mob/M)
 	if(owner && active)
@@ -462,7 +462,7 @@
 /datum/action/item_action/organ_action/IsAvailable()
 	var/obj/item/organ/I = target
 	if(!I.owner)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/item_action/organ_action/toggle/New(Target)
@@ -501,30 +501,30 @@
 
 /datum/action/spell_action/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	if(target)
 		var/obj/effect/proc_holder/spell = target
 		spell.Click()
-		return 1
+		return TRUE
 
 /datum/action/spell_action/IsAvailable()
 	if(!target)
-		return 0
+		return FALSE
 	var/obj/effect/proc_holder/spell/spell = target
 	if(owner)
 		return spell.can_cast(owner)
-	return 0
+	return FALSE
 
 
 /datum/action/spell_action/alien
 
 /datum/action/spell_action/alien/IsAvailable()
 	if(!target)
-		return 0
+		return FALSE
 	var/obj/effect/proc_holder/alien/ab = target
 	if(owner)
 		return ab.cost_check(ab.check_turf,owner,1)
-	return 0
+	return FALSE
 
 
 
@@ -535,12 +535,12 @@
 
 /datum/action/innate/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	if(!active)
 		Activate()
 	else
 		Deactivate()
-	return 1
+	return TRUE
 
 /datum/action/innate/proc/Activate()
 	return
@@ -555,10 +555,10 @@
 
 /datum/action/generic/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	if(target && procname)
 		call(target, procname)(usr)
-	return 1
+	return TRUE
 
 //Stickmemes
 /datum/action/item_action/stickmen

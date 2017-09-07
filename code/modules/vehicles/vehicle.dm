@@ -73,12 +73,12 @@
 
 /obj/vehicle/Process_Spacemove(direction)
 	if(has_gravity())
-		return 1
+		return TRUE
 
 	if(pulledby && (pulledby.loc != loc))
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /obj/vehicle/space
 	pressure_resistance = INFINITY
@@ -86,7 +86,7 @@
 
 /obj/vehicle/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 20)
-		return 0
+		return FALSE
 	. = ..()
 
 /obj/vehicle/deconstruct(disassembled = TRUE)

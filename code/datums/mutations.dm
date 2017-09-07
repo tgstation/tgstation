@@ -44,9 +44,9 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/proc/check_block_string(se_string)
 	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
-		return 0
+		return FALSE
 	if(hex2num(getblock(se_string, dna_block)) >= lowest_value)
-		return 1
+		return TRUE
 
 /datum/mutation/human/proc/check_block(mob/living/carbon/human/owner, force_powers=0)
 	if(check_block_string(owner.dna.struc_enzymes))
@@ -57,13 +57,13 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
 	if(!owner || !istype(owner) || owner.stat == DEAD || (src in owner.dna.mutations))
-		return 1
+		return TRUE
 	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
-		return 1
+		return TRUE
 	if(health_req && owner.health < health_req)
-		return 1
+		return TRUE
 	if(limb_req && !owner.get_bodypart(limb_req))
-		return 1
+		return TRUE
 	owner.dna.mutations.Add(src)
 	if(text_gain_indication)
 		to_chat(owner, text_gain_indication)
@@ -103,8 +103,8 @@ GLOBAL_LIST_EMPTY(mutations_list)
 			mut_overlay.Remove(get_visual_indicator(owner))
 			owner.overlays_standing[layer_used] = mut_overlay
 			owner.apply_overlay(layer_used)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/mutation/human/proc/say_mod(message)
 	if(message)

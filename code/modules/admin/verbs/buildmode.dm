@@ -30,7 +30,7 @@
 	else if(pa.Find("right"))
 		bd.change_settings(usr)
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/screen/buildmode/mode/update_icon()
 	icon_state = "buildmode[bd.mode]"
@@ -43,7 +43,7 @@
 
 /obj/screen/buildmode/help/Click()
 	bd.show_help(usr)
-	return 1
+	return TRUE
 
 /obj/screen/buildmode/bdir
 	icon_state = "build"
@@ -62,12 +62,12 @@
 
 /obj/screen/buildmode/quit/Click()
 	bd.quit()
-	return 1
+	return TRUE
 
 /obj/screen/buildmode/bdir/Click()
 	bd.change_dir()
 	update_icon()
-	return 1
+	return TRUE
 
 /datum/buildmode
 	var/mode = BASIC_BUILDMODE
@@ -162,7 +162,7 @@
 /datum/buildmode/proc/change_settings(mob/user)
 	switch(mode)
 		if(BASIC_BUILDMODE)
-			return 1
+			return TRUE
 		if(ADV_BUILDMODE)
 			var/target_path = input(user,"Enter typepath:" ,"Typepath","/obj/structure/closet")
 			objholder = text2path(target_path)
@@ -179,9 +179,9 @@
 
 			varholder = input(user,"Enter variable name:" ,"Name", "name")
 			if(varholder in locked && !check_rights(R_DEBUG,0))
-				return 1
+				return TRUE
 			var/thetype = input(user,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
-			if(!thetype) return 1
+			if(!thetype) return TRUE
 			switch(thetype)
 				if("text")
 					valueholder = input(user,"Enter variable value:" ,"Value", "value") as text
@@ -218,7 +218,7 @@
 			build_dir = NORTHWEST
 		if(NORTHWEST)
 			build_dir = NORTH
-	return 1
+	return TRUE
 
 /datum/buildmode/proc/Reset()//Reset temporary variables
 	cornerA = null

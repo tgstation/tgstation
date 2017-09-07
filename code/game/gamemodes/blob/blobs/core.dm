@@ -103,5 +103,5 @@
 		update_icon()
 		if(B.mind && !B.mind.special_role)
 			B.mind.special_role = "Blob Overmind"
-		return 1
-	return 0
+		return TRUE
+	return FALSE

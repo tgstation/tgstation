@@ -37,10 +37,10 @@
 /obj/machinery/atmospherics/components/unary/heat_exchanger/process_atmos()
 	..()
 	if(!partner)
-		return 0
+		return FALSE
 
 	if(SSair.times_fired <= update_cycle)
-		return 0
+		return FALSE
 
 	update_cycle = SSair.times_fired
 	partner.update_cycle = SSair.times_fired
@@ -68,4 +68,4 @@
 	if(abs(other_old_temperature-partner_air_contents.temperature) > 1)
 		partner.update_parents()
 
-	return 1
+	return TRUE

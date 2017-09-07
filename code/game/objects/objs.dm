@@ -185,7 +185,7 @@
 	. = !density
 
 /obj/proc/check_uplink_validity()
-	return 1
+	return TRUE
 
 /obj/proc/on_mob_move(dir, mob, oldLoc)
 	return
@@ -227,4 +227,4 @@
 		to_chat(M, "[src] is now skinned as '[choice].'")
 
 /obj/proc/gang_contraband_value()
-	return 0
+	return FALSE

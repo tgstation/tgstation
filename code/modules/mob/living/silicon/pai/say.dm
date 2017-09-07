@@ -5,4 +5,4 @@
 		..(msg)
 
 /mob/living/silicon/pai/binarycheck()
-	return 0
+	return FALSE

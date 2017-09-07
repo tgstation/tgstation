@@ -52,13 +52,13 @@
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
-			return 1
+			return TRUE
 	else if(istype(I, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = I
 		if(istype(M.buffer, /obj/machinery/quantumpad))
 			linked_pad = M.buffer
 			to_chat(user, "<span class='notice'>You link the [src] to the one in the [I.name]'s buffer.</span>")
-			return 1
+			return TRUE
 
 	if(exchange_parts(user, I))
 		return

@@ -30,7 +30,7 @@
 	return ..()
 
 /obj/structure/transit_tube/station/should_stop_pod(pod, from_dir)
-	return 1
+	return TRUE
 
 /obj/structure/transit_tube/station/CollidedWith(atom/movable/AM)
 	if(!pod_moving && open_status == STATION_TUBE_OPEN && ismob(AM) && AM.dir == boarding_dir)
@@ -130,8 +130,8 @@
 			if(open_status == STATION_TUBE_CLOSED && pod && pod.loc == loc)
 				pod.follow_tube()
 			pod_moving = 0
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/structure/transit_tube/station/process()
 	if(!pod_moving)

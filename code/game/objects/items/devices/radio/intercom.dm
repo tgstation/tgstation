@@ -117,7 +117,7 @@
 			icon_state = "intercom"
 
 /obj/item/device/radio/intercom/add_blood(list/blood_dna)
-	return 0
+	return FALSE
 
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom

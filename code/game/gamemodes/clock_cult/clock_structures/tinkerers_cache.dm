@@ -65,7 +65,7 @@
 			to_chat(user, "<span class='notice'>You add [C] to [src].</span>")
 			user.drop_item()
 			qdel(C)
-		return 1
+		return TRUE
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
 		if(!anchored)
@@ -76,7 +76,7 @@
 				S.stored_components[i] = 0
 			update_slab_info()
 			user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
-		return 1
+		return TRUE
 	else
 		return ..()
 

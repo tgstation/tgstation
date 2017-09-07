@@ -139,7 +139,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sortInstance, new())
 
 		var/runHi = lo + 1
 		if(runHi >= hi)
-			return 1
+			return TRUE
 
 		var/last = fetchElement(L,lo)
 		var/current = fetchElement(L,runHi++)

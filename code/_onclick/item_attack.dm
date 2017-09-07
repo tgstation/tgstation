@@ -1,7 +1,7 @@
 
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
 	if(pre_attackby(target, user, params))
-		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
+		// return TRUE in attackby() to prevent afterattack() effects (when safely moving items for example)
 		var/resolved = target.attackby(src, user, params)
 		if(!resolved && target && !QDELETED(src))
 			afterattack(target, user, 1, params) // 1: clicking something Adjacent
@@ -30,7 +30,7 @@
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 			if(do_mob(user, src, 80/sharpness) && Adjacent(I))
 				harvest(user)
-			return 1
+			return TRUE
 	return I.attack(src, user)
 
 
@@ -115,5 +115,5 @@
 		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
 	visible_message("<span class='danger'>[attack_message]</span>", \
 		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
-	return 1
+	return TRUE
 

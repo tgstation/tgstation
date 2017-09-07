@@ -20,7 +20,7 @@
 		if(BRUTE)
 		if(BURN)
 		else
-			return 0
+			return FALSE
 	var/armor_protection = 0
 	if(damage_flag)
 		armor_protection = armor[damage_flag]
@@ -81,8 +81,8 @@
 		else
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		take_damage(hulk_damage(), BRUTE, "melee", 0, get_dir(src, user))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/blob_act(obj/structure/blob/B)
 	if(isturf(loc))
@@ -103,7 +103,7 @@
 /obj/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper && !M.obj_damage)
 		M.emote("custom", message = "[M.friendly] [src].")
-		return 0
+		return FALSE
 	else
 		var/play_soundeffect = 1
 		if(M.environment_smash)
@@ -135,9 +135,9 @@
 				playsound(src, 'sound/items/welder.ogg', 50, 1)
 			if(TOX)
 				playsound(src, 'sound/effects/spray2.ogg', 50, 1)
-				return 0
+				return FALSE
 			else
-				return 0
+				return FALSE
 	visible_message("<span class='danger'>[M.name] has hit [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	return take_damage(M.force*3, mech_damtype, "melee", play_soundeffect, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
@@ -162,7 +162,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
 		if(acid_level < acid_cap)
 			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
-		return 1
+		return TRUE
 
 //the proc called by the acid subsystem to process the acid that's on the obj
 /obj/proc/acid_processing()
@@ -177,7 +177,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
 	if(!acid_level)
-		return 0
+		return FALSE
 
 //called when the obj is destroyed by acid.
 /obj/proc/acid_melt()
@@ -197,7 +197,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
 		add_overlay(GLOB.fire_overlay, TRUE)
-		return 1
+		return TRUE
 
 //called when the obj is destroyed by fire
 /obj/proc/burn()

@@ -30,7 +30,7 @@
 
 /obj/structure/closet/cardboard/open()
 	if(opened || !can_open())
-		return 0
+		return FALSE
 	var/list/alerted = null
 	if(egged < world.time)
 		var/mob/living/Snake = null

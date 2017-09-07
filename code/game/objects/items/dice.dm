@@ -178,7 +178,7 @@
 /obj/item/dice/d4/Crossed(mob/living/carbon/human/H)
 	if(istype(H) && !H.shoes)
 		if(PIERCEIMMUNE in H.dna.species.species_traits)
-			return 0
+			return FALSE
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
 		H.Knockdown(60)

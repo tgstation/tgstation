@@ -29,18 +29,18 @@
 /obj/machinery/meter/process_atmos()
 	if(!target)
 		icon_state = "meterX"
-		return 0
+		return FALSE
 
 	if(stat & (BROKEN|NOPOWER))
 		icon_state = "meter0"
-		return 0
+		return FALSE
 
 	use_power(5)
 
 	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
 		icon_state = "meterX"
-		return 0
+		return FALSE
 
 	var/env_pressure = environment.return_pressure()
 	if(env_pressure <= 0.15*ONE_ATMOSPHERE)
@@ -114,10 +114,10 @@
 /obj/machinery/meter/attack_hand(mob/user)
 
 	if(stat & (NOPOWER|BROKEN))
-		return 1
+		return TRUE
 	else
 		to_chat(usr, status())
-		return 1
+		return TRUE
 
 /obj/machinery/meter/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

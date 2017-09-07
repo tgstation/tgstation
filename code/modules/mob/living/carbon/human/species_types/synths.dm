@@ -30,7 +30,7 @@
 	if(chem.id == "synthflesh")
 		chem.reaction_mob(H, TOUCH, 2 ,0) //heal a little
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
+		return TRUE
 	else
 		return ..()
 

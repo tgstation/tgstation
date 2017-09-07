@@ -246,7 +246,7 @@
 		s.set_up(5, 1, src)
 		s.start()
 		if(electrocute_mob(user, src, src, 1, TRUE))
-			return 1
+			return TRUE
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
 	container_resist(user)

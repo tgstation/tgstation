@@ -101,7 +101,7 @@
 		user.visible_message("[user] climbs down \the [src].","<span class='notice'>You climb down \the [src].</span>")
 
 /obj/structure/ladder/proc/can_use(mob/user)
-	return 1
+	return TRUE
 
 /obj/structure/ladder/unbreakable/Destroy(force)
 	if(force)

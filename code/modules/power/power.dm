@@ -37,13 +37,13 @@
 	if(powernet)
 		return powernet.avail - powernet.load
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/proc/avail()
 	if(powernet)
 		return powernet.avail
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
 	return
@@ -52,13 +52,13 @@
 // defaults to power_channel
 /obj/machinery/proc/powered(var/chan = -1) // defaults to power_channel
 	if(!loc)
-		return 0
+		return FALSE
 	if(!use_power)
-		return 1
+		return TRUE
 
 	var/area/A = get_area(src)		// make sure it's in an area
 	if(!A)
-		return 0					// if not, then not powered
+		return FALSE					// if not, then not powered
 	if(chan == -1)
 		chan = power_channel
 	return A.powered(chan)	// return power status of the area
@@ -95,21 +95,21 @@
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
 	if(!T || !istype(T))
-		return 0
+		return FALSE
 
 	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
-		return 0
+		return FALSE
 
 	C.powernet.add_machine(src)
-	return 1
+	return TRUE
 
 // remove and disconnect the machine from its current powernet
 /obj/machinery/power/proc/disconnect_from_network()
 	if(!powernet)
-		return 0
+		return FALSE
 	powernet.remove_machine(src)
-	return 1
+	return TRUE
 
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
@@ -279,16 +279,16 @@
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
 	if(istype(M.loc, /obj/mecha))
-		return 0	//feckin mechs are dumb
+		return FALSE	//feckin mechs are dumb
 	if(dist_check)
 		if(!in_range(source,M))
-			return 0
+			return FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.siemens_coefficient == 0)
-				return 0		//to avoid spamming with insulated glvoes on
+				return FALSE		//to avoid spamming with insulated glvoes on
 
 	var/area/source_area
 	if(istype(power_source, /area))
@@ -311,12 +311,12 @@
 		if (apc.terminal)
 			PN = apc.terminal.powernet
 	else if (!power_source)
-		return 0
+		return FALSE
 	else
 		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): wrong power_source")
-		return 0
+		return FALSE
 	if (!cell && !PN)
-		return 0
+		return FALSE
 	var/PN_damage = 0
 	var/cell_damage = 0
 	if (PN)

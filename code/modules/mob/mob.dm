@@ -47,7 +47,7 @@
 	set category = "Admin"
 	set hidden = 1
 
-	if(!loc) return 0
+	if(!loc) return FALSE
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -162,7 +162,7 @@
 		M.show_message( message, 2, deaf_message, 1)
 
 /mob/proc/movement_delay()
-	return 0
+	return FALSE
 
 /mob/proc/Life()
 	set waitfor = 0
@@ -183,7 +183,7 @@
 
 	if(istype(W))
 		if(equip_to_slot_if_possible(W, slot,0,0,0))
-			return 1
+			return TRUE
 
 	if(!W)
 		// Activate the item
@@ -191,23 +191,23 @@
 		if(istype(I))
 			I.attack_hand(src)
 
-	return 0
+	return FALSE
 
 //This is a SAFE proc. Use this instead of equip_to_slot()!
 //set qdel_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
-	if(!istype(W)) return 0
+	if(!istype(W)) return FALSE
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
 		if(qdel_on_fail)
 			qdel(W)
 		else
 			if(!disable_warning)
 				to_chat(src, "<span class='warning'>You are unable to equip that!</span>" )
-		return 0
+		return FALSE
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
-	return 1
+	return TRUE
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
 //In most cases you will want to use equip_to_slot_if_possible()
@@ -222,7 +222,7 @@
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W)) return 0
+	if(!istype(W)) return FALSE
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
@@ -239,9 +239,9 @@
 
 	for(var/slot in slot_priority)
 		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /mob/proc/reset_perspective(atom/A)
 	if(client)
@@ -255,7 +255,7 @@
 			else
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
-		return 1
+		return TRUE
 
 /mob/living/reset_perspective(atom/A)
 	if(..())
@@ -291,17 +291,17 @@
 	set category = "Object"
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
-		return 0
+		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
-		return 0
+		return FALSE
 
 	var/tile = get_turf(A)
 	if (!tile)
-		return 0
+		return FALSE
 
 	new /obj/effect/temp_visual/point(A,invisibility)
 
-	return 1
+	return TRUE
 
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(atom/movable/AM, supress_message = 0)
@@ -543,13 +543,13 @@
 	return (0 >= usr.stat)
 
 /mob/proc/is_muzzled()
-	return 0
+	return FALSE
 
 /mob/proc/see(message)
 	if(!is_active())
-		return 0
+		return FALSE
 	to_chat(src, message)
-	return 1
+	return TRUE
 
 /mob/proc/show_viewers(message)
 	for(var/mob/M in viewers())
@@ -645,20 +645,20 @@
 // facing verbs
 /mob/proc/canface()
 	if(!canmove)
-		return 0
+		return FALSE
 	if(client.moving)
-		return 0
+		return FALSE
 	if(world.time < client.move_delay)
-		return 0
+		return FALSE
 	if(stat==2)
-		return 0
+		return FALSE
 	if(anchored)
-		return 0
+		return FALSE
 	if(notransform)
-		return 0
+		return FALSE
 	if(restrained())
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/proc/fall(forced)
 	drop_all_held_items()
@@ -666,40 +666,40 @@
 /mob/verb/eastface()
 	set hidden = 1
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(EAST)
 	client.move_delay += movement_delay()
-	return 1
+	return TRUE
 
 
 /mob/verb/westface()
 	set hidden = 1
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(WEST)
 	client.move_delay += movement_delay()
-	return 1
+	return TRUE
 
 
 /mob/verb/northface()
 	set hidden = 1
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(NORTH)
 	client.move_delay += movement_delay()
-	return 1
+	return TRUE
 
 
 /mob/verb/southface()
 	set hidden = 1
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(SOUTH)
 	client.move_delay += movement_delay()
-	return 1
+	return TRUE
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
-	return 0
+	return FALSE
 
 /mob/proc/swap_hand()
 	return
@@ -708,7 +708,7 @@
 	return
 
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
-	return 0
+	return FALSE
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
@@ -744,7 +744,7 @@
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
@@ -752,7 +752,7 @@
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
-			return 0
+			return FALSE
 	return ..()
 
 //Default buckling shift visual for mobs
@@ -771,36 +771,36 @@
 	if(isliving(seat))
 		var/mob/living/L = seat
 		if(L.mob_size <= MOB_SIZE_SMALL) //being on top of a small mob doesn't put you very high.
-			return 0
+			return FALSE
 	return 9
 
 //can the mob be buckled to something by default?
 /mob/proc/can_buckle()
-	return 1
+	return TRUE
 
 //can the mob be unbuckled from something by default?
 /mob/proc/can_unbuckle()
-	return 1
+	return TRUE
 
 //Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
 	if(stat == DEAD) //Ghosts and such can always see reagents
-		return 1
+		return TRUE
 	if(has_unlimited_silicon_privilege) //Silicons can automatically view reagents
-		return 1
+		return TRUE
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.head && istype(H.head, /obj/item/clothing))
 			var/obj/item/clothing/CL = H.head
 			if(CL.scan_reagents)
-				return 1
+				return TRUE
 		if(H.wear_mask && H.wear_mask.scan_reagents)
-			return 1
+			return TRUE
 		if(H.glasses && istype(H.glasses, /obj/item/clothing))
 			var/obj/item/clothing/CL = H.glasses
 			if(CL.scan_reagents)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 //Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic()
@@ -834,7 +834,7 @@
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)
 	if(!newname)
-		return 0
+		return FALSE
 	real_name = newname
 	name = newname
 	if(mind)
@@ -852,7 +852,7 @@
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
-	return 1
+	return TRUE
 
 //Updates GLOB.data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
@@ -931,7 +931,7 @@
 
 
 /mob/proc/is_literate()
-	return 0
+	return FALSE
 
 /mob/proc/can_hold_items()
 	return FALSE

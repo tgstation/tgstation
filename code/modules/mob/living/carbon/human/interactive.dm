@@ -456,20 +456,20 @@
 
 /mob/living/carbon/human/interactive/proc/IsDeadOrIncap(checkDead = TRUE)
 	if(!canmove)
-		return 1
+		return TRUE
 	if(health <= 0 && checkDead)
-		return 1
+		return TRUE
 	if(restrained())
-		return 1
+		return TRUE
 	if(IsUnconscious())
-		return 1
+		return TRUE
 	if(IsStun())
-		return 1
+		return TRUE
 	if(stat)
-		return 1
+		return TRUE
 	if(inactivity_period > 0)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/interactive/proc/enforce_hands()
 	if(main_hand)
@@ -782,7 +782,7 @@
 /mob/living/carbon/human/interactive/proc/walk2derpless(target)
 	set background = 1
 	if(!target)
-		return 0
+		return FALSE
 
 	if(walkdebug)
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
@@ -802,8 +802,8 @@
 					if(myPath.len >= 1)
 						walk_to(src,myPath[1],0,5)
 						myPath -= myPath[1]
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/interactive/proc/job2area(target)
 	var/datum/job/T = target
@@ -838,10 +838,10 @@
 
 /mob/living/carbon/human/interactive/proc/shouldModulePass() // returns 1 if the npc is in anything "primary"
 	if(doing & FIGHTING)
-		return 1
+		return TRUE
 	if(retal)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 ///BUILT IN MODULES
 /mob/living/carbon/human/interactive/proc/chatter(obj)
@@ -922,12 +922,12 @@
 		if(tcheck)
 			if(!(get_turf(tcheck) in validHome))
 				TARGET = null
-				return 1
+				return TRUE
 
 	if(!(get_turf(src) in validHome))
 		tryWalk(pick(get_area_turfs(job2area(myjob))))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/interactive/proc/npcDrop(var/obj/item/A,var/blacklist = 0)
 	if(blacklist)

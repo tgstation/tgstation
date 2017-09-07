@@ -110,8 +110,8 @@
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
 /datum/species/proc/qualifies_for_rank(rank, list/features)
 	if(rank in GLOB.command_positions)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	// Drop the items the new species can't wear
@@ -639,7 +639,7 @@
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
-			return 0
+			return FALSE
 
 	var/num_arms = H.get_num_arms()
 	var/num_legs = H.get_num_legs()
@@ -651,181 +651,181 @@
 			return FALSE
 		if(slot_wear_mask)
 			if(H.wear_mask)
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_MASK) )
-				return 0
+				return FALSE
 			if(!H.get_bodypart("head"))
-				return 0
+				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_neck)
 			if(H.wear_neck)
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_NECK) )
-				return 0
-			return 1
+				return FALSE
+			return TRUE
 		if(slot_back)
 			if(H.back)
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_BACK) )
-				return 0
+				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_wear_suit)
 			if(H.wear_suit)
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_OCLOTHING) )
-				return 0
+				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_gloves)
 			if(H.gloves)
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_GLOVES) )
-				return 0
+				return FALSE
 			if(num_arms < 2)
-				return 0
+				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_shoes)
 			if(H.shoes)
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_FEET) )
-				return 0
+				return FALSE
 			if(num_legs < 2)
-				return 0
+				return FALSE
 			if(DIGITIGRADE in species_traits)
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>The footwear around here isn't compatible with your feet!</span>")
-				return 0
+				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_belt)
 			if(H.belt)
-				return 0
+				return FALSE
 
 			var/obj/item/bodypart/O = H.get_bodypart("chest")
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_BELT) )
 				return
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_glasses)
 			if(H.glasses)
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_EYES) )
-				return 0
+				return FALSE
 			if(!H.get_bodypart("head"))
-				return 0
+				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_head)
 			if(H.head)
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_HEAD) )
-				return 0
+				return FALSE
 			if(!H.get_bodypart("head"))
-				return 0
+				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_ears)
 			if(H.ears)
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_EARS) )
-				return 0
+				return FALSE
 			if(!H.get_bodypart("head"))
-				return 0
+				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_w_uniform)
 			if(H.w_uniform)
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_ICLOTHING) )
-				return 0
+				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_wear_id)
 			if(H.wear_id)
-				return 0
+				return FALSE
 
 			var/obj/item/bodypart/O = H.get_bodypart("chest")
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return 0
+				return FALSE
 			if( !(I.slot_flags & SLOT_ID) )
-				return 0
+				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_l_store)
 			if(I.flags_1 & NODROP_1) //Pockets aren't visible, so you can't move NODROP_1 items into them.
-				return 0
+				return FALSE
 			if(H.l_store)
-				return 0
+				return FALSE
 
 			var/obj/item/bodypart/O = H.get_bodypart("l_leg")
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return 0
+				return FALSE
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return
 			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_POCKET) )
-				return 1
+				return TRUE
 		if(slot_r_store)
 			if(I.flags_1 & NODROP_1)
-				return 0
+				return FALSE
 			if(H.r_store)
-				return 0
+				return FALSE
 
 			var/obj/item/bodypart/O = H.get_bodypart("r_leg")
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return 0
+				return FALSE
 			if(I.slot_flags & SLOT_DENYPOCKET)
-				return 0
+				return FALSE
 			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_POCKET) )
-				return 1
-			return 0
+				return TRUE
+			return FALSE
 		if(slot_s_store)
 			if(I.flags_1 & NODROP_1)
-				return 0
+				return FALSE
 			if(H.s_store)
-				return 0
+				return FALSE
 			if(!H.wear_suit)
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a suit before you can attach this [I.name]!</span>")
-				return 0
+				return FALSE
 			if(!H.wear_suit.allowed)
 				if(!disable_warning)
 					to_chat(H, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
-				return 0
+				return FALSE
 			if(I.w_class > WEIGHT_CLASS_BULKY)
 				if(!disable_warning)
 					to_chat(H, "The [I.name] is too big to attach.") //should be src?
-				return 0
+				return FALSE
 			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
-				return 1
-			return 0
+				return TRUE
+			return FALSE
 		if(slot_handcuffed)
 			if(H.handcuffed)
-				return 0
+				return FALSE
 			if(!istype(I, /obj/item/restraints/handcuffs))
-				return 0
+				return FALSE
 			if(num_arms < 2)
-				return 0
-			return 1
+				return FALSE
+			return TRUE
 		if(slot_legcuffed)
 			if(H.legcuffed)
-				return 0
+				return FALSE
 			if(!istype(I, /obj/item/restraints/legcuffs))
-				return 0
+				return FALSE
 			if(num_legs < 2)
-				return 0
-			return 1
+				return FALSE
+			return TRUE
 		if(slot_in_backpack)
 			if(H.back && istype(H.back, /obj/item/storage))
 				var/obj/item/storage/B = H.back
 				if(B.can_be_inserted(I, 1, H))
-					return 1
-			return 0
-	return 0 //Unsupported slot
+					return TRUE
+			return FALSE
+	return FALSE //Unsupported slot
 
 /datum/species/proc/equip_delay_self_check(obj/item/I, mob/living/carbon/human/H, bypass_equip_delay_self)
 	if(!I.equip_delay_self || bypass_equip_delay_self)
@@ -843,8 +843,8 @@
 	if(chem.id == exotic_blood)
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		H.reagents.del_reagent(chem.id)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
 	return message
@@ -854,7 +854,7 @@
 	return list()
 
 /datum/species/proc/check_weakness(obj/item, mob/living/attacker)
-	return 0
+	return FALSE
 
 ////////
 	//LIFE//
@@ -925,7 +925,7 @@
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
-	return 0
+	return FALSE
 
 /datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/H)
 
@@ -955,9 +955,9 @@
 						H.randmutb()
 						H.emote("gasp")
 						H.domutcheck()
-		return 0
+		return FALSE
 	H.radiation = 0
-	return 1
+	return TRUE
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
 	if(QDELETED(H))	//may be called from a timer
@@ -1053,7 +1053,7 @@
 		target.help_shake_act(user)
 		if(target != user)
 			add_logs(user, target, "shaked")
-		return 1
+		return TRUE
 	else
 		var/we_breathe = (!(NOBREATH in user.dna.species.species_traits))
 		var/we_lung = user.getorganslot("lungs")
@@ -1068,12 +1068,12 @@
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s grab attempt!</span>")
-		return 0
+		return FALSE
 	if(attacker_style && attacker_style.grab_act(user,target))
-		return 1
+		return TRUE
 	else
 		target.grabbedby(user)
-		return 1
+		return TRUE
 
 
 
@@ -1082,9 +1082,9 @@
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>")
-		return 0
+		return FALSE
 	if(attacker_style && attacker_style.harm_act(user,target))
-		return 1
+		return TRUE
 	else
 
 		var/atk_verb = user.dna.species.attack_verb
@@ -1109,7 +1109,7 @@
 			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
 			target.visible_message("<span class='danger'>[user] has attempted to [atk_verb] [target]!</span>",\
 			"<span class='userdanger'>[user] has attempted to [atk_verb] [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-			return 0
+			return FALSE
 
 
 		var/armor_block = target.run_armor_check(affecting, "melee")
@@ -1136,9 +1136,9 @@
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
-		return 0
+		return FALSE
 	if(attacker_style && attacker_style.disarm_act(user,target))
-		return 1
+		return TRUE
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
@@ -1194,7 +1194,7 @@
 	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
 		add_logs(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
-		return 0
+		return FALSE
 	switch(M.a_intent)
 		if("help")
 			help(M, H, attacker_style)
@@ -1212,10 +1212,10 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
-			return 0
+			return FALSE
 	if(H.check_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
-		return 0
+		return FALSE
 
 	var/hit_area
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
@@ -1234,7 +1234,7 @@
 	H.send_item_attack_message(I, user, hit_area)
 
 	if(!I.force)
-		return 0 //item force is zero
+		return FALSE //item force is zero
 
 	//dismemberment
 	var/probability = I.get_dismemberment_chance(affecting)
@@ -1300,7 +1300,7 @@
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	var/hit_percent = (100-(blocked+armor))/100
 	if(!damage || hit_percent <= 0)
-		return 0
+		return FALSE
 
 	var/obj/item/bodypart/BP = null
 	if(isbodypart(def_zone))
@@ -1337,7 +1337,7 @@
 			H.adjustStaminaLoss(damage * hit_percent)
 		if(BRAIN)
 			H.adjustBrainLoss(damage * hit_percent)
-	return 1
+	return TRUE
 
 /datum/species/proc/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
 	// called when hit by a projectile
@@ -1349,7 +1349,7 @@
 
 /datum/species/proc/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	// called before a projectile hit
-	return 0
+	return FALSE
 
 /////////////
 //BREATHING//
@@ -1537,10 +1537,10 @@
 //////////////
 
 /datum/species/proc/space_move(mob/living/carbon/human/H)
-	return 0
+	return FALSE
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
-	return 0
+	return FALSE
 
 
 #undef HEAT_DAMAGE_LEVEL_1

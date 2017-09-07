@@ -3,7 +3,7 @@
 
 /obj/screen/ai/Click()
 	if(isobserver(usr))
-		return 1
+		return TRUE
 
 /obj/screen/ai/aicore
 	name = "AI core"

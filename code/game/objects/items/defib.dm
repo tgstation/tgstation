@@ -189,7 +189,7 @@
 
 /obj/item/defibrillator/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBackSlot())
-		return 1
+		return TRUE
 
 /obj/item/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
 	if(ismob(paddles.loc))
@@ -211,10 +211,10 @@
 			update_icon()
 		if(cell.use(chrgdeductamt))
 			update_icon()
-			return 1
+			return TRUE
 		else
 			update_icon()
-			return 0
+			return FALSE
 
 /obj/item/defibrillator/proc/cooldowncheck(mob/user)
 	spawn(50)
@@ -240,7 +240,7 @@
 
 /obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBeltSlot())
-		return 1
+		return TRUE
 
 /obj/item/defibrillator/compact/loaded/Initialize()
 	. = ..()
@@ -335,12 +335,12 @@
 
 /obj/item/twohanded/shockpaddles/proc/check_defib_exists(mainunit, mob/living/carbon/human/M, obj/O)
 	if(!req_defib)
-		return 1 //If it doesn't need a defib, just say it exists
+		return TRUE //If it doesn't need a defib, just say it exists
 	if (!mainunit || !istype(mainunit, /obj/item/defibrillator))	//To avoid weird issues from admin spawns
 		qdel(O)
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/item/twohanded/shockpaddles/attack(mob/M, mob/user)
 

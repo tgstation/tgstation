@@ -12,8 +12,8 @@
 /datum/surgery/tail_removal/can_start(mob/user, mob/living/carbon/target)
 	var/mob/living/carbon/human/L = target
 	if(("tail_lizard" in L.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in L.dna.species.mutant_bodyparts))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/surgery_step/sever_tail
 	name = "sever tail"
@@ -46,7 +46,7 @@
 	S.add_atom_colour("#[L.dna.features["mcolor"]]", FIXED_COLOUR_PRIORITY)
 	S.markings = "[L.dna.features["tail_lizard"]]"
 	L.update_body()
-	return 1
+	return TRUE
 
 // TAIL ATTACHMENT
 
@@ -59,8 +59,8 @@
 /datum/surgery/tail_attachment/can_start(mob/user, mob/living/carbon/target)
 	var/mob/living/carbon/human/L = target
 	if(!("tail_lizard" in L.dna.species.mutant_bodyparts) && !("waggingtail_lizard" in L.dna.species.mutant_bodyparts))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/surgery_step/attach_tail
 	name = "attach tail"
@@ -80,4 +80,4 @@
 	L.dna.species.mutant_bodyparts += "tail_lizard"
 	qdel(tool)
 	L.update_mutant_bodyparts()
-	return 1
+	return TRUE

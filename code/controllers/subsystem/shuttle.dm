@@ -252,7 +252,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.")
-		return 1
+		return TRUE
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
 	if(!emergency || emergency.mode != SHUTTLE_CALL)
@@ -270,7 +270,7 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
 				return
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/shuttle/proc/autoEvac()
 	var/callShuttle = 1
@@ -330,7 +330,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	if(!M)
-		return 1
+		return TRUE
 	var/obj/docking_port/stationary/dockedAt = M.get_docked()
 	var/destination = dockHome
 	if(dockedAt && dockedAt.id == dockHome)
@@ -341,7 +341,7 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		if(M.dock(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
-	return 0	//dock successful
+	return FALSE	//dock successful
 
 
 /datum/controller/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
@@ -349,14 +349,14 @@ SUBSYSTEM_DEF(shuttle)
 	var/obj/docking_port/stationary/D = getDock(dockId)
 
 	if(!M)
-		return 1
+		return TRUE
 	if(timed)
 		if(M.request(D))
 			return 2
 	else
 		if(M.dock(D) != DOCKING_SUCCESS)
 			return 2
-	return 0	//dock successful
+	return FALSE	//dock successful
 
 /datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))

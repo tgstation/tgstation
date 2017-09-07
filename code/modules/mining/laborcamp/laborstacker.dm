@@ -110,7 +110,7 @@
 
 /obj/machinery/mineral/labor_claim_console/proc/check_auth()
 	if(emagged)
-		return 1 //Shuttle is emagged, let any ol' person through
+		return TRUE //Shuttle is emagged, let any ol' person through
 	return (istype(inserted_id) && inserted_id.points >= inserted_id.goal) //Otherwise, only let them out if the prisoner's reached his quota.
 
 /obj/machinery/mineral/labor_claim_console/proc/locate_stacking_machine()

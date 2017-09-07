@@ -41,7 +41,7 @@
 
 
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
-	return 1
+	return TRUE
 
 
 /obj/effect/decal/cleanable/blood/gibs
@@ -110,7 +110,7 @@
 
 
 /obj/effect/decal/cleanable/blood/drip/can_bloodcrawl_in()
-	return 1
+	return TRUE
 
 
 //BLOODY FOOTPRINTS
@@ -180,6 +180,6 @@
 
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 

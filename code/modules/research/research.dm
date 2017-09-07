@@ -305,7 +305,7 @@ research holder datum.
 		current_level = initial(level)
 
 	if(current_level >= level)
-		return 0
+		return FALSE
 
 	var/cost = 0
 	for(var/i=current_level+1, i<=level, i++)

@@ -66,7 +66,7 @@
 	if(user.a_intent == INTENT_HARM)
 		if(!shock(user, 70))
 			..(user, 1)
-		return 1
+		return TRUE
 
 /obj/structure/grille/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -85,7 +85,7 @@
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
-		return 1
+		return TRUE
 	else
 		if(istype(mover, /obj/item/projectile) && density)
 			return prob(30)
@@ -192,11 +192,11 @@
 
 /obj/structure/grille/proc/shock(mob/user, prb)
 	if(!anchored || broken)		// anchored/broken grilles are never connected
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(C)
@@ -204,10 +204,10 @@
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-			return 1
+			return TRUE
 		else
-			return 0
-	return 0
+			return FALSE
+	return FALSE
 
 /obj/structure/grille/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!broken)

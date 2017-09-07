@@ -116,7 +116,7 @@
 			qdel(C)
 		else
 			to_chat(user, "<span class='notice'>[src] has enough [get_component_name(C.component_id)][C.component_id != REPLICANT_ALLOY ? "s":""].</span>")
-		return 1
+		return TRUE
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
 		var/used_components = FALSE
@@ -134,7 +134,7 @@
 			update_slab_info(S)
 			user.visible_message("<span class='notice'>[user][used_all ? "":" partially"] empties [S] into [src].</span>", \
 			"<span class='notice'>You offload [used_all ? "all":"some"] of your slab's components into [src].</span>")
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -185,7 +185,7 @@
 			if(M && !isnewplayer(M))
 				to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
 	if(!obj_integrity)
-		return 0
+		return FALSE
 	var/convert_dist = 1 + (round(Floor(progress_in_seconds, 15) * 0.067))
 	for(var/t in RANGE_TURFS(convert_dist, loc))
 		var/turf/T = t

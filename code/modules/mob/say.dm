@@ -76,7 +76,7 @@
 	return
 
 /mob/proc/hivecheck()
-	return 0
+	return FALSE
 
 /mob/proc/lingcheck()
-	return 0
+	return FALSE

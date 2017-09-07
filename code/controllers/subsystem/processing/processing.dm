@@ -31,4 +31,4 @@ SUBSYSTEM_DEF(processing)
 /datum/proc/process()
 	set waitfor = 0
 	STOP_PROCESSING(SSobj, src)
-	return 0
+	return FALSE

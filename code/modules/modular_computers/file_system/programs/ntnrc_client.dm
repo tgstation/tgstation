@@ -22,13 +22,13 @@
 
 /datum/computer_file/program/chatclient/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 
 	switch(action)
 		if("PRG_speak")
 			. = 1
 			if(!channel)
-				return 1
+				return TRUE
 			var/mob/living/user = usr
 			var/message = reject_bad_text(input(user, "Enter message or leave blank to cancel: "))
 			if(!message || !channel)
@@ -45,11 +45,11 @@
 					break
 
 			if(!C)
-				return 1
+				return TRUE
 
 			if(netadmin_mode)
 				channel = C		// Bypasses normal leave/join and passwords. Technically makes the user invisible to others.
-				return 1
+				return TRUE
 
 			if(C.password)
 				var/mob/living/user = usr
@@ -57,7 +57,7 @@
 				if(C && (password == C.password))
 					C.add_client(src)
 					channel = C
-				return 1
+				return TRUE
 			C.add_client(src)
 			channel = C
 		if("PRG_leavechannel")
@@ -83,7 +83,7 @@
 				if(channel)
 					channel.remove_client(src) // We shouldn't be in channel's user list, but just in case...
 					channel = null
-				return 1
+				return TRUE
 			var/mob/living/user = usr
 			if(can_run(usr, 1, ACCESS_NETWORK))
 				if(channel)
@@ -100,7 +100,7 @@
 			var/mob/living/user = usr
 			var/newname = sanitize(input(user,"Enter new nickname or leave blank to cancel:"))
 			if(!newname)
-				return 1
+				return TRUE
 			if(channel)
 				channel.add_status_message("[username] is now known as [newname].")
 			username = newname
@@ -112,7 +112,7 @@
 			var/mob/living/user = usr
 			var/logname = stripped_input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
 			if(!logname || !channel)
-				return 1
+				return TRUE
 			var/datum/computer_file/data/logfile = new/datum/computer_file/data/logfile()
 			// Now we will generate HTML-compliant file that can actually be viewed/printed.
 			logfile.filename = logname
@@ -126,7 +126,7 @@
 				if(!computer)
 					// This program shouldn't even be runnable without computer.
 					CRASH("Var computer is null!")
-					return 1
+					return TRUE
 				if(!hard_drive)
 					computer.visible_message("\The [computer] shows an \"I/O Error - Hard drive connection error\" warning.")
 				else	// In 99.9% cases this will mean our HDD is full
@@ -134,7 +134,7 @@
 		if("PRG_renamechannel")
 			. = 1
 			if(!operator_mode || !channel)
-				return 1
+				return TRUE
 			var/mob/living/user = usr
 			var/newname = reject_bad_text(input(user, "Enter new channel name or leave blank to cancel:"))
 			if(!newname || !channel)
@@ -149,12 +149,12 @@
 		if("PRG_setpassword")
 			. = 1
 			if(!channel || ((channel.operator != src) && !netadmin_mode))
-				return 1
+				return TRUE
 
 			var/mob/living/user = usr
 			var/newpassword = sanitize(input(user, "Enter new password for this channel. Leave blank to cancel, enter 'nopassword' to remove password completely:"))
 			if(!channel || !newpassword || ((channel.operator != src) && !netadmin_mode))
-				return 1
+				return TRUE
 
 			if(newpassword == "nopassword")
 				channel.password = ""
@@ -170,7 +170,7 @@
 			last_message = channel.messages.len ? channel.messages[channel.messages.len - 1] : null
 		else
 			last_message = null
-		return 1
+		return TRUE
 	if(channel && channel.messages && channel.messages.len)
 		ui_header = last_message == channel.messages[channel.messages.len - 1] ? "ntnrc_idle.gif" : "ntnrc_new.gif"
 	else

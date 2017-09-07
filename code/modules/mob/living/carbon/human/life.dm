@@ -46,7 +46,7 @@
 	dna.species.spec_life(src) // for mutantraces
 
 	if(stat != DEAD)
-		return 1
+		return TRUE
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
@@ -106,7 +106,7 @@
 			else if(S.breathid == "n2")
 				throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
 
-		return 0
+		return FALSE
 	else
 		if(istype(L, /obj/item/organ/lungs))
 			var/obj/item/organ/lungs/lun = L
@@ -233,10 +233,10 @@
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
 
 	if(dna.check_mutation(COLDRES))
-		return 1 //Fully protected from the cold.
+		return TRUE //Fully protected from the cold.
 
 	if(dna && (RESISTCOLD in dna.species.species_traits))
-		return 1
+		return TRUE
 
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)

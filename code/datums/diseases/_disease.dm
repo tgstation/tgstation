@@ -86,14 +86,14 @@
 
 /datum/disease/proc/has_cure()
 	if(!(disease_flags & CURABLE))
-		return 0
+		return FALSE
 
 	. = cures.len
 	for(var/C_id in cures)
 		if(!affected_mob.reagents.has_reagent(C_id))
 			.--
 	if(!. || (needs_all_cures && . < cures.len))
-		return 0
+		return FALSE
 
 
 /datum/disease/proc/spread(force_spread = 0)
@@ -139,8 +139,8 @@
 
 /datum/disease/proc/IsSame(datum/disease/D)
 	if(istype(src, D.type))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/disease/proc/Copy()
@@ -155,8 +155,8 @@
 
 /datum/disease/proc/IsSpreadByTouch()
 	if(spread_flags & CONTACT_FEET || spread_flags & CONTACT_HANDS || spread_flags & CONTACT_GENERAL)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //don't use this proc directly. this should only ever be called by cure()
 /datum/disease/proc/remove_virus()

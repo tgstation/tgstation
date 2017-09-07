@@ -149,4 +149,4 @@
 		to_chat(C, "<span class='warning'>You're already resurrecting!</span>")
 		return
 	C.apply_status_effect(STATUS_EFFECT_WISH_GRANTERS_GIFT)
-	return 1
+	return TRUE

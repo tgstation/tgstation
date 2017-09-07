@@ -135,7 +135,7 @@
 	to_chat(user, "<span class='danger'>[src] thrums and points to the [dir2text(get_dir(user, closest_victim))].</span>")
 
 /obj/item/claymore/highlander/IsReflect()
-	return 1 //YOU THINK YOUR PUNY LASERS CAN STOP ME?
+	return TRUE //YOU THINK YOUR PUNY LASERS CAN STOP ME?
 
 /obj/item/claymore/highlander/proc/add_notch(mob/living/user) //DYNAMIC CLAYMORE PROGRESSION SYSTEM - THIS IS THE FUTURE
 	notches++
@@ -538,7 +538,7 @@
 		playsound(turf, 'sound/weapons/effects/batreflect1.ogg', 50, 1)
 	if(picksound == 2)
 		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, 1)
-	return 1
+	return TRUE
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"

@@ -80,10 +80,10 @@
 	value -= old_state[i][j]
 
 	if(value in b_rule)
-		return 1
+		return TRUE
 	if(value in s_rule)
 		return old_state[i][j]
-	return 0
+	return FALSE
 
 /datum/mapGenerator/ca/caves
 	b_rule = list(5,6,7,8)

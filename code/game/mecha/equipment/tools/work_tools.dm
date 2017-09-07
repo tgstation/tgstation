@@ -14,8 +14,8 @@
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M as obj)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/mecha/M as obj)
 	..()
@@ -67,7 +67,7 @@
 			step_away(M,chassis)
 			occupant_message("You push [target] out of the way.")
 			chassis.visible_message("[chassis] pushes [target] out of the way.")
-		return 1
+		return TRUE
 
 
 
@@ -113,7 +113,7 @@
 		else
 			step_away(M,chassis)
 			target.visible_message("[chassis] tosses [target] like a piece of paper.")
-		return 1
+		return TRUE
 
 
 
@@ -172,7 +172,7 @@
 						if(W.loc == my_target)
 							break
 						sleep(2)
-		return 1
+		return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
 	return "[..()] \[[src.reagents.total_volume]\]"
@@ -183,8 +183,8 @@
 /obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/mecha/working/M as obj)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 
@@ -308,8 +308,8 @@
 /obj/item/mecha_parts/mecha_equipment/cable_layer/can_attach(obj/mecha/working/M)
 	if(..())
 		if(istype(M))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/attach()
 	..()
@@ -382,7 +382,7 @@
 		return
 	cable.use(amount)
 	update_equip_info()
-	return 1
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/reset()
 	last_piece = null
@@ -427,4 +427,4 @@
 
 	//NC.mergeConnectedNetworksOnTurf()
 	last_piece = NC
-	return 1
+	return TRUE

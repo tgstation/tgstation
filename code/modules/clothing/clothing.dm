@@ -82,7 +82,7 @@
 		update_clothes_damaged_state(FALSE)
 		obj_integrity = max_integrity
 		to_chat(user, "<span class='notice'>You fix the damage on [src] with [C].</span>")
-		return 1
+		return TRUE
 	if(pockets)
 		var/i = pockets.attackby(W, user, params)
 		if(i)
@@ -98,9 +98,9 @@
 
 		if(!user.put_in_hands(I))
 			to_chat(user, "<span class='notice'>You fumble for [I] and it falls on the floor.</span>")
-			return 1
+			return TRUE
 		user.visible_message("<span class='warning'>[user] draws [I] from [src]!</span>", "<span class='notice'>You draw [I] from [src].</span>")
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -239,7 +239,7 @@ BLIND     // can't see anything
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
-	return 0 // return 1 to cancel attack_hand()
+	return FALSE // return TRUE to cancel attack_hand()
 
 //Head
 /obj/item/clothing/head
@@ -426,7 +426,7 @@ BLIND     // can't see anything
 		M.update_inv_shoes()
 
 /obj/item/proc/negates_gravity()
-	return 0
+	return FALSE
 
 //Suit
 /obj/item/clothing/suit
@@ -545,7 +545,7 @@ BLIND     // can't see anything
 		C.use(1)
 		has_sensor = HAS_SENSORS
 		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
-		return 1
+		return TRUE
 	if(!attach_accessory(I, user))
 		return ..()
 
@@ -685,13 +685,13 @@ BLIND     // can't see anything
 		return
 	if(src.has_sensor == LOCKED_SENSORS)
 		to_chat(usr, "The controls are locked.")
-		return 0
+		return FALSE
 	if(src.has_sensor == BROKEN_SENSORS)
 		to_chat(usr, "The sensors have shorted out!")
-		return 0
+		return FALSE
 	if(src.has_sensor <= NO_SENSORS)
 		to_chat(usr, "This suit does not have any sensors.")
-		return 0
+		return FALSE
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
@@ -720,7 +720,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/AltClick(mob/user)
 	if(..())
-		return 1
+		return TRUE
 
 	if(!user.canUseTopic(src, be_close=TRUE))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
@@ -798,8 +798,8 @@ BLIND     // can't see anything
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
 		if(!user.incapacitated())
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/item/clothing/obj_destruction(damage_flag)

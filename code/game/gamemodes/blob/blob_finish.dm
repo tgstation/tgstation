@@ -1,18 +1,18 @@
 /datum/game_mode/blob/check_finished()
 	if(blobwincount <= GLOB.blobs_legit.len)//Blob took over
-		return 1
+		return TRUE
 	for(var/datum/mind/blob in blob_overminds)
 		if(isovermind(blob.current))
 			var/mob/camera/blob/B = blob.current
 			if(B.blob_core || !B.placed)
-				return 0
+				return FALSE
 	if(!GLOB.blob_cores.len) //blob is dead
 		if(config.continuous["blob"])
 			message_sent = FALSE //disable the win count at this point
 			continuous_sanity_checked = 1 //Nonstandard definition of "alive" gets past the check otherwise
 			SSshuttle.clearHostileEnvironment(src)
 			return ..()
-		return 1
+		return TRUE
 	return ..()
 
 
@@ -44,7 +44,7 @@
 		SSticker.news_report = BLOB_DESTROYED
 
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/blob/printplayer(datum/mind/ply, fleecheck)
 	if((ply in blob_overminds))
@@ -69,4 +69,4 @@
 			for(var/datum/mind/blob in blob_mode.blob_overminds)
 				text += printplayer(blob)
 			to_chat(world, text)
-		return 1
+		return TRUE

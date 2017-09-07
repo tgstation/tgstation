@@ -134,7 +134,7 @@
 		removing.linked_list = null
 
 		return removing
-	return 0
+	return FALSE
 
 
 //Removes and deletes a node or value
@@ -142,8 +142,8 @@
 	var/datum/linked_node/dead = Remove(node)
 	if(dead)
 		qdel(dead)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 //Empty the linked_list, deleting all nodes

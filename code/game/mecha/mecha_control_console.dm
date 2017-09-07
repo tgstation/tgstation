@@ -72,7 +72,7 @@
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())
-		return 0
+		return FALSE
 	var/obj/mecha/M = src.loc
 	var/cell_charge = M.get_charge()
 	var/answer = {"<b>Name:</b> [M.name]
@@ -101,7 +101,7 @@
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
 	if(istype(src.loc, /obj/mecha))
 		return src.loc
-	return 0
+	return FALSE
 
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
 	var/obj/mecha/M = in_mecha()
@@ -111,7 +111,7 @@
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
 	if(!istype(loc, /obj/mecha))
-		return 0
+		return FALSE
 	var/obj/mecha/M = src.loc
 	return M.get_log_html()
 

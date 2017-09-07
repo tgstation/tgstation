@@ -48,7 +48,7 @@
 	injecting = 0
 
 	if(!on || stat & (NOPOWER|BROKEN))
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/air_contents = AIR1
 
@@ -62,11 +62,11 @@
 
 		update_parents()
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
 	if(on || injecting || stat & (NOPOWER|BROKEN))
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/air_contents = AIR1
 
@@ -91,7 +91,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -108,7 +108,7 @@
 
 	radio_connection.post_signal(src, signal)
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()
 	set_frequency(frequency)
@@ -117,7 +117,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return FALSE
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
@@ -192,5 +192,5 @@
 		if (!(stat & NOPOWER|BROKEN) && on)
 			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
-			return 1
+			return TRUE
 

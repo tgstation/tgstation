@@ -20,7 +20,7 @@
 /mob/living/silicon/ai/radio(message, message_mode, list/spans, language)
 	if(!radio_enabled || aiRestorePowerRoutine || stat) //AI cannot speak if radio is disabled (via intellicard) or depowered.
 		to_chat(src, "<span class='danger'>Your radio transmitter is offline!</span>")
-		return 0
+		return FALSE
 	..()
 
 /mob/living/silicon/ai/get_message_mode(message)
@@ -36,7 +36,7 @@
 
 	if(message_mode == MODE_HOLOPAD)
 		holopad_talk(message, language)
-		return 1
+		return TRUE
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
@@ -166,8 +166,8 @@
 						SEND_SOUND(M, voice)
 		else
 			SEND_SOUND(only_listener, voice)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 #endif
 

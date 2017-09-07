@@ -66,7 +66,7 @@
 
 /obj/item/gun/blastcannon/proc/calculate_bomb()
 	if(!istype(bomb)||!istype(bomb.tank_one)||!istype(bomb.tank_two))
-		return 0
+		return FALSE
 	air1 = bomb.tank_one.air_contents
 	air2 = bomb.tank_two.air_contents
 	var/datum/gas_mixture/temp
@@ -78,7 +78,7 @@
 	var/pressure = temp.return_pressure()
 	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
-		return 0
+		return FALSE
 	return (pressure/TANK_FRAGMENT_SCALE)
 
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)

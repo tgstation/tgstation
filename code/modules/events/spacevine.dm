@@ -118,7 +118,7 @@
 	quality = MINOR_NEGATIVE
 
 /datum/spacevine_mutation/fire_proof/process_temperature(obj/structure/spacevine/holder, temp, volume)
-	return 1
+	return TRUE
 
 /datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
 	if(I && I.damtype == "fire")

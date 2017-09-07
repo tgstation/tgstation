@@ -133,15 +133,15 @@ Code:
 				spawn(0)
 					if(S)
 						S.pulse(0)
-		return 0*/
+		return FALSE*/
 
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
 	if(!signal)
-		return 0
+		return FALSE
 	if(signal.encryption != code)
-		return 0
+		return FALSE
 	if(!(src.wires & WIRE_RADIO_RECEIVE))
-		return 0
+		return FALSE
 	pulse(1)
 	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
 	return
@@ -168,7 +168,7 @@ Code:
 
 /obj/item/device/assembly/signaler/reciever/activate()
 	toggle_safety()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/signaler/reciever/describe()
 	return "The radio receiver is [on?"on":"off"]."
@@ -189,9 +189,9 @@ Code:
 
 /obj/item/device/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
-		return 0
+		return FALSE
 	if(signal.encryption != code)
-		return 0
+		return FALSE
 	for(var/obj/effect/anomaly/A in get_turf(src))
 		A.anomalyNeutralize()
 

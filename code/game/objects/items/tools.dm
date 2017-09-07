@@ -507,7 +507,7 @@
 //Removes fuel from the welding tool. If a mob is passed, it will try to flash the mob's eyes. This should probably be renamed to use()
 /obj/item/weldingtool/proc/remove_fuel(amount = 1, mob/living/M = null)
 	if(!welding || !check_fuel())
-		return 0
+		return FALSE
 	if(amount)
 		burned_fuel_for = 0
 	if(get_fuel() >= amount)
@@ -532,8 +532,8 @@
 			var/mob/M = loc
 			M.update_inv_hands(0)
 
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 //Switches the welder on
 /obj/item/weldingtool/proc/switched_on(mob/user)

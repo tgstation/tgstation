@@ -116,16 +116,16 @@
 
 /datum/round_event/portal_storm/proc/spawn_hostile()
 	if(!hostile_types || !hostile_types.len)
-		return 0
+		return FALSE
 	return IsMultiple(activeFor, 2)
 
 /datum/round_event/portal_storm/proc/spawn_boss()
 	if(!boss_types || !boss_types.len)
-		return 0
+		return FALSE
 
 	if(activeFor == next_boss_spawn)
 		next_boss_spawn += Ceiling(number_of_hostiles / number_of_bosses)
-		return 1
+		return TRUE
 
 /datum/round_event/portal_storm/proc/time_to_end()
 	if(!hostile_types.len && !boss_types.len)

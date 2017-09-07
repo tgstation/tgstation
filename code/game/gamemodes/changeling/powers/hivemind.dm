@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	if(first_prof.name == user.real_name)//If our current DNA is the stalest, we gotta ditch it.
 		to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
 		return
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/hivemind_download/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling

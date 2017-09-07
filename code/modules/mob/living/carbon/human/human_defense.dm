@@ -19,7 +19,7 @@
 
 /mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
 	if(!d_type)
-		return 0
+		return FALSE
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/bp in body_parts)
@@ -46,7 +46,7 @@
 				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
 					visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-					return 0
+					return FALSE
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(P.is_reflectable)
@@ -79,11 +79,11 @@
 /mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(wear_suit)
 		if(wear_suit.IsReflect(def_zone) == 1)
-			return 1
+			return TRUE
 	for(var/obj/item/I in held_items)
 		if(I.IsReflect(def_zone) == 1)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/check_shields(atom/AM, var/damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	var/block_chance_modifier = round(damage / -3)
@@ -92,16 +92,16 @@
 		if(!istype(I, /obj/item/clothing))
 			var/final_block_chance = I.block_chance - (Clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-				return 1
+				return TRUE
 	if(wear_suit)
 		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return 1
+			return TRUE
 	if(w_uniform)
 		var/final_block_chance = w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/check_block()
 	if(mind)
@@ -154,7 +154,7 @@
 
 /mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user)
 	if(!I || !user)
-		return 0
+		return FALSE
 
 	var/obj/item/bodypart/affecting
 	if(user == src)
@@ -181,7 +181,7 @@
 		visible_message("<span class='danger'>[message]</span>", \
 								"<span class='userdanger'>[message]</span>")
 		adjustBruteLoss(15)
-		return 1
+		return TRUE
 
 /mob/living/carbon/human/attack_hand(mob/user)
 	if(..())	//to allow surgery to return properly.
@@ -201,7 +201,7 @@
 		affecting = get_bodypart("chest")
 	if(M.a_intent == INTENT_HELP)
 		..() //shaking
-		return 0
+		return FALSE
 
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 		if(get_active_held_item() && drop_item())
@@ -222,15 +222,15 @@
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(1, 3)
 			if(check_shields(M, damage, "the [M.name]"))
-				return 0
+				return FALSE
 			if(stat != DEAD)
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
-		return 1
+		return TRUE
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(check_shields(M, 0, "the M.name"))
 		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
-		return 0
+		return FALSE
 
 	if(..())
 		if(M.a_intent == INTENT_HARM)
@@ -241,7 +241,7 @@
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
 					"<span class='userdanger'>[M] has lunged at [src]!</span>")
-				return 0
+				return FALSE
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 			if(!affecting)
 				affecting = get_bodypart("chest")
@@ -252,7 +252,7 @@
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 			add_logs(M, src, "attacked")
 			if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
-				return 1
+				return TRUE
 			apply_damage(damage, BRUTE, affecting, armor_block)
 
 		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
@@ -273,7 +273,7 @@
 	if(..()) //successful larva bite.
 		var/damage = rand(1, 3)
 		if(check_shields(L, damage, "the [L.name]"))
-			return 0
+			return FALSE
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
@@ -306,11 +306,11 @@
 			damage = rand(10, 35)
 
 		if(check_shields(M, damage, "the [M.name]"))
-			return 0
+			return FALSE
 
 		var/dam_zone = dismembering_strike(M, pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
-			return 1
+			return TRUE
 
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
@@ -608,7 +608,7 @@
 
 	for(var/obj/item/I in inventory_items_to_kill)
 		I.acid_act(acidpwr, acid_volume)
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/singularity_act()
 	var/gain = 20

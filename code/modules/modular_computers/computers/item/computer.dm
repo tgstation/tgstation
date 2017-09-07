@@ -177,11 +177,11 @@
 /obj/item/device/modular_computer/emag_act(mob/user)
 	if(emagged)
 		to_chat(user, "<span class='warning'>\The [src] was already emagged.</span>")
-		return 0
+		return FALSE
 	else
 		emagged = TRUE
 		to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>")
-		return 1
+		return TRUE
 
 /obj/item/device/modular_computer/examine(mob/user)
 	..()
@@ -245,11 +245,11 @@
 /obj/item/device/modular_computer/process()
 	if(!enabled) // The computer is turned off
 		last_power_usage = 0
-		return 0
+		return FALSE
 
 	if(obj_integrity <= integrity_failure)
 		shutdown_computer()
-		return 0
+		return FALSE
 
 	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
 		active_program.event_networkfailure(0) // Active program requires NTNet to run but we've just lost connection. Crash.
@@ -351,7 +351,7 @@
 	if(network_card)
 		return network_card.get_signal(specific_action)
 	else
-		return 0
+		return FALSE
 
 /obj/item/device/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())

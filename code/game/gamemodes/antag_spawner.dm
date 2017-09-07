@@ -48,7 +48,7 @@
 	if(H.stat || H.restrained())
 		return
 	if(!ishuman(H))
-		return 1
+		return TRUE
 
 	if(loc == H || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)

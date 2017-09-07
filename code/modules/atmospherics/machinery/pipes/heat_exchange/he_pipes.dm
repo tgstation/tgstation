@@ -15,9 +15,9 @@
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/can_be_node(obj/machinery/atmospherics/pipe/heat_exchanging/target)
 	if(!istype(target))
-		return 0
+		return FALSE
 	if(target.initialize_directions_he & get_dir(target,src))
-		return 1
+		return TRUE
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/hide()
 	return

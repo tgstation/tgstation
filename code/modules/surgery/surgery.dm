@@ -36,18 +36,18 @@
 /datum/surgery/proc/can_start(mob/user, mob/living/carbon/target)
 	// if 0 surgery wont show up in list
 	// put special restrictions here
-	return 1
+	return TRUE
 
 
 /datum/surgery/proc/next_step(mob/user)
 	if(step_in_progress)
-		return 1
+		return TRUE
 
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
 		if(S.try_op(user, target, user.zone_selected, user.get_active_held_item(), src))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/surgery/proc/get_surgery_step()
 	var/step_type = steps[status]

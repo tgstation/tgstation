@@ -60,8 +60,8 @@
 	for(var/direction in list(SOUTH,EAST,WEST,NORTH))
 		if (get_step(T,direction) in mother.map)
 			continue
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/mapGenerator/repressurize
 	modules = list(/datum/mapGeneratorModule/bottomLayer/repressurize)

@@ -24,7 +24,7 @@
 
 /mob/living/silicon/ai/proc/ai_camera_list(camera)
 	if (!camera)
-		return 0
+		return FALSE
 
 	var/obj/machinery/camera/C = track.cameras[camera]
 	src.eyeobj.setLoc(C)
@@ -135,14 +135,14 @@
 
 /proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))
-		return 0
+		return FALSE
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
 		if((!QDELETED(S.builtInCamera) || !S.builtInCamera.can_use()) && !GLOB.cameranet.checkCameraVis(M))
-			return 0
+			return FALSE
 	else if(!GLOB.cameranet.checkCameraVis(M))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))

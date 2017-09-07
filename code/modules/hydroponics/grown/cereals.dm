@@ -91,4 +91,4 @@
 	user.drop_item()
 	qdel(src)
 	user.put_in_hands(M)
-	return 1
+	return TRUE

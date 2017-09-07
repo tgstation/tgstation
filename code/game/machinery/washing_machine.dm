@@ -197,19 +197,19 @@
 
 		if (!state_open)
 			to_chat(user, "<span class='warning'>Open the door first!</span>")
-			return 1
+			return TRUE
 
 		if(bloody_mess)
 			to_chat(user, "<span class='warning'>[src] must be cleaned up first.</span>")
-			return 1
+			return TRUE
 
 		if(contents.len >= max_wash_capacity)
 			to_chat(user, "<span class='warning'>The washing machine is full!</span>")
-			return 1
+			return TRUE
 
 		if(!user.transferItemToLoc(W, src))
 			to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
-			return 1
+			return TRUE
 
 		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/stamp))
 			color_source = W

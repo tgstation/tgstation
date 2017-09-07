@@ -65,4 +65,4 @@
 			/obj/item/gun/energy/laser)
 
 /mob/living/simple_animal/hostile/pirate/space/Process_Spacemove(movement_dir = 0)
-	return 1
+	return TRUE

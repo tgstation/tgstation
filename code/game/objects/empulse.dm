@@ -28,4 +28,4 @@
 				T.emp_act(EMP_LIGHT)
 		else if(distance <= light_range)
 			T.emp_act(EMP_LIGHT)
-	return 1
+	return TRUE

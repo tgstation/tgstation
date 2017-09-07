@@ -24,10 +24,10 @@
 
 /obj/item/device/assembly/timer/activate()
 	if(!..())
-		return 0//Cooldown check
+		return FALSE//Cooldown check
 	timing = !timing
 	update_icon()
-	return 1
+	return TRUE
 
 
 /obj/item/device/assembly/timer/toggle_secure()

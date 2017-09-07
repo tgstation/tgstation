@@ -12,7 +12,7 @@
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
 	if(S)
 		return S.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if((status_flags & CANSTUN) || ignore_canstun)
@@ -60,7 +60,7 @@
 	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 	if(K)
 		return K.duration - world.time
-	return 0
+	return FALSE
 
 /mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Can't go below remaining duration
 	if((status_flags & CANKNOCKDOWN) || ignore_canknockdown)

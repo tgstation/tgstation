@@ -50,23 +50,23 @@
 /datum/computer_file/program/proc/generate_network_log(text)
 	if(computer)
 		return computer.add_log(text)
-	return 0
+	return FALSE
 
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
 			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Hardware Error - Incompatible software\" warning.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/computer_file/program/proc/get_signal(specific_action = 0)
 	if(computer)
 		return computer.get_ntnet_status(specific_action)
-	return 0
+	return FALSE
 
 // Called by Process() on device that runs us, once every tick.
 /datum/computer_file/program/proc/process_tick()
-	return 1
+	return TRUE
 
 // Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
 // User has to wear their ID for ID Scan to work.
@@ -79,16 +79,16 @@
 		else
 			access_to_check = required_access
 	if(!access_to_check) // No required_access, allow it.
-		return 1
+		return TRUE
 
 	if(!transfer && computer && computer.emagged)	//emags can bypass the execution locks but not the download ones.
-		return 1
+		return TRUE
 
 	if(IsAdminGhost(user))
-		return 1
+		return TRUE
 
 	if(issilicon(user))
-		return 1
+		return TRUE
 
 	if(ishuman(user))
 		var/obj/item/card/id/D
@@ -107,20 +107,20 @@
 		if(!I && !C && !D)
 			if(loud)
 				to_chat(user, "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>")
-			return 0
+			return FALSE
 
 		if(I)
 			if(access_to_check in I.GetAccess())
-				return 1
+				return TRUE
 		else if(C)
 			if(access_to_check in C.GetAccess())
-				return 1
+				return TRUE
 		else if(D)
 			if(access_to_check in D.GetAccess())
-				return 1
+				return TRUE
 		if(loud)
 			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
-	return 0
+	return FALSE
 
 // This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
 // always include the device here in this proc. This proc basically relays the request to whatever is running the program.
@@ -129,22 +129,22 @@
 		return computer.get_header_data()
 	return list()
 
-// This is performed on program startup. May be overriden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
+// This is performed on program startup. May be overriden to add extra logic. Remember to include ..() call. return TRUE on success, 0 on failure.
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))
 		if(requires_ntnet && network_destination)
 			generate_network_log("Connection opened to [network_destination].")
 		program_state = PROGRAM_STATE_ACTIVE
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	program_state = PROGRAM_STATE_KILLED
 	if(network_destination)
 		generate_network_log("Connection to [network_destination] closed.")
-	return 1
+	return TRUE
 
 
 /datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -167,17 +167,17 @@
 // ALWAYS INCLUDE PARENT CALL ..() OR DIE IN FIRE.
 /datum/computer_file/program/ui_act(action,params,datum/tgui/ui)
 	if(..())
-		return 1
+		return TRUE
 	if(computer)
 		switch(action)
 			if("PC_exit")
 				computer.kill_program()
 				ui.close()
-				return 1
+				return TRUE
 			if("PC_shutdown")
 				computer.shutdown_computer()
 				ui.close()
-				return 1
+				return TRUE
 			if("PC_minimize")
 				var/mob/user = usr
 				if(!computer.active_program || !computer.all_components[MC_CPU])

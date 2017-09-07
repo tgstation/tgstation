@@ -656,17 +656,17 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return
 	if(is_mouth_covered())
 		to_chat(src, "<span class='warning'>Remove your mask first!</span>")
-		return 0
+		return FALSE
 	if(C.is_mouth_covered())
 		to_chat(src, "<span class='warning'>Remove [p_their()] mask first!</span>")
-		return 0
+		return FALSE
 
 	if(C.cpr_time < world.time + 30)
 		visible_message("<span class='notice'>[src] is trying to perform CPR on [C.name]!</span>", \
 						"<span class='notice'>You try to perform CPR on [C.name]... Hold still!</span>")
 		if(!do_mob(src, C))
 			to_chat(src, "<span class='warning'>You fail to perform CPR on [C]!</span>")
-			return 0
+			return FALSE
 
 		var/they_breathe = (!(NOBREATH in C.dna.species.species_traits))
 		var/they_lung = C.getorganslot("lungs")
@@ -759,9 +759,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(!Adjacent(M) && (M.loc != src))
 		if((be_close == 0) && (dna.check_mutation(TK)))
 			if(tkMaxRangeCheck(src, M))
-				return 1
+				return TRUE
 		return
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/resist_restraints()
 	if(wear_suit && wear_suit.breakouttime)
@@ -872,7 +872,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		. += dna.species.check_weakness(weapon, attacker)
 
 /mob/living/carbon/human/is_literate()
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/can_hold_items()
 	return TRUE
@@ -888,7 +888,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
 			Knockdown(200)
-		return 1
+		return TRUE
 	..()
 
 /mob/living/carbon/human/Collide(atom/A)

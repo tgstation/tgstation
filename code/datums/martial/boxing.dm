@@ -3,11 +3,11 @@
 
 /datum/martial_art/boxing/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	to_chat(A, "<span class='warning'>Can't disarm while boxing!</span>")
-	return 1
+	return TRUE
 
 /datum/martial_art/boxing/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	to_chat(A, "<span class='warning'>Can't grab while boxing!</span>")
-	return 1
+	return TRUE
 
 /datum/martial_art/boxing/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 
@@ -21,7 +21,7 @@
 		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
 			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 		add_logs(A, D, "attempted to hit", atk_verb)
-		return 0
+		return FALSE
 
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
@@ -45,7 +45,7 @@
 			add_logs(A, D, "knocked out (boxing) ")
 		else if(D.lying)
 			D.forcesay(GLOB.hit_appends)
-	return 1
+	return TRUE
 
 /obj/item/clothing/gloves/boxing
 	var/datum/martial_art/boxing/style = new
