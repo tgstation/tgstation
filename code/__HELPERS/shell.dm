@@ -3,7 +3,7 @@
 #define SHELLEO_NAME "data/shelleo."
 #define SHELLEO_ERR ".err"
 #define SHELLEO_OUT ".out"
-/proc/shelleo(command)
+/world/proc/shelleo(command)
 	var/static/list/shelleo_ids = list()
 	var/stdout = ""
 	var/stderr = ""
@@ -25,7 +25,7 @@
 			shelleo_ids[shelleo_id] = TRUE
 		out_file = "[SHELLEO_NAME][shelleo_id][SHELLEO_OUT]"
 		err_file = "[SHELLEO_NAME][shelleo_id][SHELLEO_ERR]"
-		errorcode = shell("[interpreter] [command] > [out_file] 2> [err_file]")
+		errorcode = shell("[interpreter] \"[command]\" > [out_file] 2> [err_file]")
 		if(fexists(out_file))
 			stdout = file2text(out_file)
 			fdel(out_file)
