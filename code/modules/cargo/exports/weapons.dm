@@ -110,7 +110,7 @@
 	unit_name = "Book of Babel"
 	export_types = list(/obj/item/book_of_babel)
 	
-/datum/export/weapon/lifesteal //Only the disk if somoene removes it from rnd they cant get it back anymore
+/datum/export/weapon/lifesteal
 	cost = 10000
 	unit_name = "Lifesteal mod disk"
 	export_types = list(/obj/item/borg/upgrade/modkit/lifesteal)
@@ -124,16 +124,6 @@
 	cost = 10000
 	unit_name = "Meat hook"
 	export_types = list(/obj/item/gun/magic/hook)
-	
-/datum/export/weapon/red_cube // first half
-	cost = 5000
-	unit_name = "Red cube"
-	export_types = list(/obj/item/device/warp_cube/red)
-	
-/datum/export/weapon/blue_cube // second half
-	cost = 5000
-	unit_name = "Blue cube"
-	export_types = list(/obj/item/device/warp_cube)
 	
 /datum/export/weapon/shipbottle
 	cost = 10000
@@ -154,5 +144,3 @@
 	cost = 10000
 	unit_name = "Inquisitor hardsuit"
 	export_types = list(/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor)
-	
-	
