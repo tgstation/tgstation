@@ -14,7 +14,8 @@ var/list/bad_gremlin_items = list()
 	icon_dead = "gremlin_dead"
 	
 	ventcrawler = VENTCRAWLER_ALWAYS
-
+	var/in_vent = FALSE
+	
 	health = 25
 	maxHealth = 25
 	search_objects = 3 //Completely ignore mobs
@@ -24,6 +25,9 @@ var/list/bad_gremlin_items = list()
 		/obj/machinery,
 		/obj/item/reagent_containers/food
 	)
+	
+	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
+	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent
 
 	dextrous = TRUE
 	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
@@ -134,13 +138,34 @@ var/list/bad_gremlin_items = list()
 
 /mob/living/simple_animal/hostile/gremlin/Life()
 	//Don't try to path to one target for too long. If it takes longer than a certain amount of time, assume it can't be reached and find a new one
+	if(in_vent)
+		target = null
+	if(entry_vent && get_dist(src, entry_vent) <= 1)
+		var/list/vents = list()
+		var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
+			vents += temp_vent
+		if(!vents.len)
+			entry_vent = null
+			in_vent = FALSE
+			return
+		exit_vent = pick(vents)
+		addtimer(CALLBACK(src, .proc/exit_vents), rand(20,60))
+
+		
+	if(!entry_vent && && !in_vent && prob(1)) //small chance to go into a vent
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
+			if(!v.welded)
+				entry_vent = v
+				in_vent = TRUE
+				walk_to(src, entry_vent, 1)
+				break
 	if(!target)
 		time_chasing_target = 0
 	else
 		if(++time_chasing_target > max_time_chasing_target)
 			LoseTarget()
 			time_chasing_target = 0
-
 	. = ..()
 
 /mob/living/simple_animal/hostile/gremlin/EscapeConfinement()
@@ -149,6 +174,18 @@ var/list/bad_gremlin_items = list()
 		tamper(M)
 
 	return ..()
+
+/mob/living/simple_animal/hostile/gremlin/proc/exit_vents()
+	if(!exit_vent || exit_vent.welded)
+		loc = entry_vent
+		entry_vent = null
+		return
+	loc = exit_vent.loc
+	entry_vent = null
+	in_vent = FALSE
+	var/area/new_area = get_area(loc)
+	if(new_area)
+		new_area.Entered(src)
 
 //This allows player-controlled gremlins to tamper with machinery
 /mob/living/simple_animal/hostile/gremlin/UnarmedAttack(var/atom/A)
