@@ -67,8 +67,6 @@
 					update_icon()
 					quiet  = !quiet
 					if(!quiet)
-						return
-					else
 						playsound(src, 'sound/machines/engine_alert2.ogg', 100, 0)
 
 /obj/machinery/construction_nuke/interact(mob/user)
@@ -153,10 +151,7 @@
 	if (QDELETED(src) && Adjacent(usr))
 		return
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
-	if(timer_set < 90)
-		timer_set = 90
-	if(timer_set > 300)
-		timer_set = 300
+	timer_set = Clamp(timer_set, 90, 300)
 
 /obj/machinery/construction_nuke/proc/set_anchor()
 	if(timing || !safety)
