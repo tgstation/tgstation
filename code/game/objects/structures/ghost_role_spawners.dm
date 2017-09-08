@@ -190,7 +190,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(!mapload && A)
-		notify_ghosts("\A meat golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("A meat golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
 
 /obj/effect/mob_spawn/human/meatgolem/special(mob/living/new_spawn, name)
 	var/mob/living/carbon/human/H = new_spawn

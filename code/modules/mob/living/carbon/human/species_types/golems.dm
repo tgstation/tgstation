@@ -714,13 +714,13 @@
 	var/max_flesh = 300
 	var/datum/action/innate/flesh/shifting_flesh/shifting_flesh
 	var/datum/action/innate/flesh/blade/armblade
-	disliked_food = 0 //eats everything
+	disliked_food = NONE //eats everything
 	liked_food = MEAT | RAW //but especially FRESH MEAT
 
 /datum/species/golem/flesh/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(C.hud_used)
-		C.hud_used.fleshdisplay.invisibility = 0
+		C.hud_used.fleshdisplay.invisibility = NONE
 	if(ishuman(C))
 		shifting_flesh = new(src)
 		shifting_flesh.Grant(C)
@@ -757,7 +757,7 @@
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		flesh = max(flesh-5, 0)
 	if(H.hud_used) //because the body does not have a HUD until inhabited
-		H.hud_used.fleshdisplay.invisibility = 0
+		H.hud_used.fleshdisplay.invisibility = NONE
 
 /datum/action/innate/flesh
 	name = "Flesh Skill"
@@ -801,18 +801,17 @@
 	var/ongoing = FALSE //Only one activation at a time
 
 /datum/action/innate/flesh/shifting_flesh/IsAvailable()
-	if(ongoing)
-		return FALSE
-	return ..()
+	return !ongoing && ..()
 
 /datum/action/innate/flesh/shifting_flesh/Activate()
 	..()
 	var/mob/living/carbon/human/H = owner
 	H.visible_message("<span class='warning'>[H]'s flesh twists and shifts along [H.p_their()] body!</span>", "<span class='notice'>You shift your flesh, using it to patch up your wounds.</span>")
 	playsound(H, 'sound/effects/blobattack.ogg', 30, 1)
-	INVOKE_ASYNC(src, .proc/fleshmend)
+	fleshmend()
 
 /datum/action/innate/flesh/shifting_flesh/proc/fleshmend()
+	set waitfor = FALSE
 	var/mob/living/carbon/human/H = owner
 	ongoing = TRUE
 	for(var/i in 1 to healing_ticks)
@@ -841,13 +840,13 @@
 	if(istype(I, /obj/item/melee/arm_blade))
 		drop_blade(I)
 	else
-		if(!H.drop_item())
+		if(!H.dropItemToGround(I))
 			to_chat(H, "<span class='warning'>The [H.get_active_held_item()] is stuck to your hand, you cannot grow an armblade over it!</span>")
 			return
 		if(owner_species.flesh < flesh_cost)
 			to_chat(H, "<span class='warning'>You don't have enough flesh to do this!</span>")
 			return
-		var/obj/item/melee/arm_blade/W = new(H, silent = TRUE)
+		var/obj/item/melee/arm_blade/W = new(H, TRUE)
 		owner_species.flesh = max(owner_species.flesh - flesh_cost, 0)
 		H.visible_message("<span class='warning'>[H]'s arm rapidly grows into a sharp blade!</span>", "<span class='warning'>Your flesh gathers around your arm and hardens into a sharp blade!</span>")
 		playsound(H, 'sound/effects/blobattack.ogg', 30, 1)
@@ -858,7 +857,7 @@
 	if(QDELETED(blade))
 		return
 	var/mob/living/carbon/human/H = owner
-	H.temporarilyRemoveItemFromInventory(blade, TRUE) //DROPDEL will delete the item
+	qdel(blade)
 	playsound(H, 'sound/effects/blobattack.ogg', 30, 1)
 	H.visible_message("<span class='warning'>[H]'s [blade] quickly rots and drops off in a mass of flesh!</span>", "<span class='notice'>Your [blade] melts and falls off, freeing your arm.</span>")
 	new /obj/effect/decal/cleanable/blood/gibs(H.drop_location())
