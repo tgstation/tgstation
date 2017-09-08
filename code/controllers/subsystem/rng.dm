@@ -13,7 +13,8 @@ SUBSYSTEM_DEF(rng)
 	var/seed = -1 //if this is -1, we haven't initialized yet. Range is 24 bit precision, 0 to 2**24-1
 
 /datum/controller/subsystem/rng/PreInit()
-	set_seed()
+	if(seed == -1)
+		set_seed()
 
 /datum/controller/subsystem/rng/proc/set_seed(_seed)
 	if(!isnum(_seed) || !(_seed in 0 to 16777215))
