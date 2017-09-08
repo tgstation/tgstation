@@ -943,7 +943,6 @@
 			if(SSpersistence.saved_modes.Find(textmode))
 				adjusted_weight *= (sqrt(SSpersistence.saved_modes.Find(textmode)) * 0.5)
 			runnable_modes[M] = adjusted_weight
-			//to_chat(world, "DEBUG: runnable_mode\[[M]\] = [adjusted_weight], adjusted from [probabilities[M.config_tag]]")
 	return runnable_modes
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)
