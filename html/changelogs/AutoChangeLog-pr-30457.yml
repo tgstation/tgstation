@@ -1,0 +1,4 @@
+author: "JJRcop"
+delete-after: True
+changes: 
+  - rscadd: "Admins can now play media content from the web to players."
