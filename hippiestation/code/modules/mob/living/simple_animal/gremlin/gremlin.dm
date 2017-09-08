@@ -12,9 +12,11 @@ var/list/bad_gremlin_items = list()
 	icon_state = "gremlin"
 	icon_living = "gremlin"
 	icon_dead = "gremlin_dead"
+	
+	ventcrawler = VENTCRAWLER_ALWAYS
 
-	health = 18
-	maxHealth = 18
+	health = 25
+	maxHealth = 25
 	search_objects = 3 //Completely ignore mobs
 
 	//Tampering is handled by the 'npc_tamper()' obj proc
