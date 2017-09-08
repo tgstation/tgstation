@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - balance: "Watchers now have a half-second telegraph between charging and firing their freezing blasts."
