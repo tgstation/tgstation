@@ -232,24 +232,29 @@
 				H.ranged_cooldown_time = bonus_value + world.time
 
 //magmawing watcher
-/obj/item/crusher_trophy/watcher_wing/magma_wing
+/obj/item/crusher_trophy/blaster_tubes/magma_wing
 	name = "magmawing watcher wing"
 	desc = "A still-searing wing from a magmawing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "magma_wing"
+	gender = NEUTER
 	bonus_value = 5
 
-/obj/item/crusher_trophy/watcher_wing/magma_wing/effect_desc()
-	return "melee hits to do <b>[bonus_value]</b> more damage"
+/obj/item/crusher_trophy/blaster_tubes/magma_wing/effect_desc()
+	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage"
 
-/obj/item/crusher_trophy/watcher_wing/magma_wing/on_melee_hit(mob/living/target, mob/living/user)
-	target.adjustFireLoss(bonus_value, forced = TRUE)
+/obj/item/crusher_trophy/blaster_tubes/magma_wing/on_projectile_fire(obj/item/projectile/destabilizer/marker, mob/living/user)
+	if(deadly_shot)
+		marker.name = "heated [marker.name]"
+		marker.icon_state = "lava"
+		marker.damage = bonus_value
+		marker.nodamage = FALSE
+		deadly_shot = FALSE
 
 //icewing watcher
 /obj/item/crusher_trophy/watcher_wing/ice_wing
 	name = "icewing watcher wing"
 	desc = "A carefully preserved frozen wing from an icewing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "ice_wing"
-	bonus_value = 10
 
 //legion
 /obj/item/crusher_trophy/legion_skull
