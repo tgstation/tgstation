@@ -93,7 +93,7 @@
 
 /obj/item/holotool/emag_act(mob/user)
 	if(!(/obj/item/holoknife in GetAllContents(src)))
-		to_chat(user, "<span class='danger'>Holoknife acquired!</span>")
+		to_chat(user, "<span class='danger'>ZZT- ILLEGAL BLUEPRINT UNLOCKED- CONTACT !#$@^%$# NANOTRASEN SUPPORT-@*%$^%!</span>")
 		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread()
 		sparks.set_up(5, 0, loc)
 		sparks.start()
@@ -113,7 +113,7 @@
 				to_chat(user, "<span class='notice'>Upgraded toolspeed to 150%!</span>")
 		if("syndicate")
 			if(level >= 4 && !(/obj/item/holoknife in contents))
-				to_chat(user, "<span class='notice'>ZZT- ILLEGAL BLUEPRINT UNLOCKED- CO$#@!@## NANOTRASEN SUPPORT-!</span>")
+				to_chat(user, "<span class='notice'>Holoknife acquired!</span>")
 				AddTool(/obj/item/holoknife, "holo-knife")
 
 
@@ -130,7 +130,7 @@
 
 /obj/item/holoknife
 	name = "holo-knife"
-	force = 8
+	force = 5
 	flags_1 = NODROP_1
 	armour_penetration = 10
 	sharpness = IS_SHARP
