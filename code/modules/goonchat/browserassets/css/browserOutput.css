@@ -101,7 +101,7 @@ a.popt {text-decoration: none;}
 	top: 0;
 	right: 0;
 }
-#options a {
+#options .optionsCell {
 	background: #ddd;
     height: 30px;
 	padding: 5px 0;
@@ -111,7 +111,7 @@ a.popt {text-decoration: none;}
     line-height: 28px;
     border-top: 1px solid #b4b4b4;
 }
-#options a:hover {background: #ccc;}
+#options .optionsCell:hover {background: #ccc;}
 #options .toggle {
 	width: 40px;
     background: #ccc;
@@ -121,7 +121,7 @@ a.popt {text-decoration: none;}
 }
 #options .sub {clear: both; display: none; width: 160px;}
 #options .sub.scroll {overflow-y: scroll;}
-#options .sub a {padding: 3px 0 3px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
+#options .sub.optionsCell {padding: 3px 0 3px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
 #options .sub span {
 	display: block;
 	line-height: 30px;
@@ -135,6 +135,13 @@ a.popt {text-decoration: none;}
 	text-align: center;
 	line-height: 30px;
 	float: right;
+}
+#options .sub input {
+	position: absolute;
+	padding: 7px 5px;
+	width: 121px;
+	line-height: 30px;
+	float: left;
 }
 #options .decreaseFont {border-top: 0;}
 
