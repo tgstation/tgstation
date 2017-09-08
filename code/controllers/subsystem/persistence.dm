@@ -138,23 +138,14 @@ SUBSYSTEM_DEF(persistence)
 	SetUpTrophies(saved_trophies.Copy())
 
 /datum/controller/subsystem/persistence/proc/LoadRecentModes()
-	if(fexists("data/RecentModes.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/RecentModes.sav")
-		var/saved_json
-		S >> saved_json
-		if(!saved_json)
-			return
-		saved_modes = json_decode(saved_json)
-		fdel(S)
-	else
-		var/json_file = file("data/RecentModes.json")
-		if(!fexists(json_file))
-			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
-		if(!json)
-			return
-		saved_modes = json["data"]
+	var/json_file = file("data/RecentModes.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = list()
+	json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_modes = json["data"]
 
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
