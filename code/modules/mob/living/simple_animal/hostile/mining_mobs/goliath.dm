@@ -112,13 +112,25 @@
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide) //A throwback to the asteroid days
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
 	crusher_drop_mod = 75
+	var/list/cached_tentacle_turfs
+	var/turf/last_location
+	var/tentacle_recheck_cooldown = 100
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life()
 	. = ..()
 	if(isturf(loc))
-		for(var/turf/open/T in orange(4, loc))
-			if(prob(10))
-				new /obj/effect/temp_visual/goliath_tentacle(T, src)
+		if(!LAZYLEN(cached_tentacle_turfs) || loc != last_location || tentacle_recheck_cooldown <= world.time)
+			LAZYCLEARLIST(cached_tentacle_turfs)
+			last_location = loc
+			tentacle_recheck_cooldown = world.time + initial(tentacle_recheck_cooldown)
+			for(var/turf/open/T in orange(4, loc))
+				LAZYADD(cached_tentacle_turfs, T)
+		for(var/t in cached_tentacle_turfs)
+			if(isopenturf(t))
+				if(prob(10))
+					new /obj/effect/temp_visual/goliath_tentacle(t, src)
+			else
+				cached_tentacle_turfs -= t
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
 	fromtendril = TRUE

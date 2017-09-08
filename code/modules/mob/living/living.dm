@@ -687,6 +687,7 @@
 						who.equip_to_slot(what, where, TRUE)
 
 /mob/living/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_SIX)
 		throw_at(S,14,3, spin=1)
 	else
