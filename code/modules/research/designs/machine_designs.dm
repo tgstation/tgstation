@@ -423,6 +423,6 @@
 	name = "Machine Design (Donksoft Toy Vendor Board)"
 	desc = "The circuit board for a Donksoft Toy Vendor."
 	id = "toyliberationstation"
-	req_tech = list("programming" = 1, "syndicate" = 4)
+	req_tech = list("programming" = 1, "syndicate" = 2)
 	build_path = /obj/item/circuitboard/machine/vending/toyliberationstation
 	category = list ("Misc. Machinery")
