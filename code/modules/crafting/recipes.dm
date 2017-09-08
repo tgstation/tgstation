@@ -297,8 +297,8 @@
 	name = "Chainsaw"
 	result = /obj/item/twohanded/required/chainsaw
 	reqs = list(/obj/item/circular_saw = 1,
-				/obj/item/stack/cable_coil = 1,
-				/obj/item/stack/sheet/plasteel = 1)
+				/obj/item/stack/cable_coil = 3,
+				/obj/item/stack/sheet/plasteel = 5)
 	tools = list(/obj/item/weldingtool)
 	time = 50
 	category = CAT_WEAPONRY
