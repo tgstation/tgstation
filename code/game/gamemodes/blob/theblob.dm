@@ -22,7 +22,7 @@
 
 /obj/structure/blob/Initialize()
 	var/area/Ablob = get_area(loc)
-	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
+	if(Ablob.blob_allowed && z == ZLEVEL_STATION) //Is this area allowed for winning as blob?
 		GLOB.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
