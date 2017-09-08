@@ -34,6 +34,9 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
 	var/obj/effect/proc_holder/spell/targeted/shadowwalk/shadowwalk
 
+	var/info_text = "You are a <span class='danger'>Nightmare</span>. The ability <span class='warning'>shadow walk</span> allows unlimited, unrestricted movement in the dark using. \
+					Your <span class='warning'>light eater</span> will destroy any light producing objects you attack, as well as destroy any lights a living creature may be holding. You will automatically dodge gunfire and melee attacks when on a dark tile."
+
 /datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	var/obj/effect/proc_holder/spell/targeted/shadowwalk/SW = new
@@ -41,6 +44,14 @@
 	shadowwalk = SW
 	var/obj/item/light_eater/blade = new
 	C.put_in_hands(blade)
+
+	to_chat(C, "[info_text]")
+
+	C.real_name = "Nightmare"
+	C.name = "Nightmare"
+	if(C.mind)
+		C.mind.name = "Nightmare"
+	C.dna.real_name = "Nightmare"
 
 /datum/species/shadow/nightmare/on_species_loss(mob/living/carbon/C)
 	. = ..()
