@@ -49,6 +49,10 @@
 	open_machine()
 
 
+/obj/machinery/vr_sleeper/container_resist(mob/living/user)
+	open_machine()
+
+
 /obj/machinery/vr_sleeper/Destroy()
 	open_machine()
 	cleanup_vr_human()
