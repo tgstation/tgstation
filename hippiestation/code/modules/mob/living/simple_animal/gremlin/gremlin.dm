@@ -163,3 +163,9 @@ var/list/bad_gremlin_items = list()
 
 /mob/living/simple_animal/hostile/gremlin/IsAdvancedToolUser()
 	return 1
+
+/mob/living/simple_animal/hostile/gremlin/traitor
+	health = 85
+	maxHealth = 85
+	gold_core_spawnable = 0
+
