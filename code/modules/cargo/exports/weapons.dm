@@ -74,12 +74,12 @@
 // relics of lavaland
 
 /datum/export/weapon/hierophant
-	cost = 50000
+	cost = 40000
 	unit_name = "Hierophant Club"
 	export_types = list(/obj/item/hierophant_club)
 	
 /datum/export/weapon/lava
-	cost = 45000
+	cost = 40000
 	unit_name = "Lava Staff"
 	export_types = list(/obj/item/lava_staff)
 	
@@ -88,18 +88,71 @@
 	unit_name = "Cleaving Saw"
 	export_types = list(/obj/item/melee/transforming/cleaving_saw)
 	
-/datum/export/weapon/immortality_talisman
-	cost = 6000
-	unit_name = "Immortality Talisman"
-	export_types = list(/obj/item/device/immortality_talisman)
-	
 /datum/export/weapon/mayhem
-	cost = 30000
+	cost = 40000
 	unit_name = "Mayhem in a bottle"
 	export_types = list(/obj/item/mayhem)
 	
 /datum/export/weapon/blood_contract
-	cost = 30000
+	cost = 40000
 	unit_name = "Blood Contract"
 	export_types = list(/obj/item/blood_contract)
+	
+//Artifacts of lavaland
+
+/datum/export/weapon/immortality_talisman
+	cost = 10000
+	unit_name = "Immortality Talisman"
+	export_types = list(/obj/item/device/immortality_talisman)
+	
+/datum/export/weapon/babel
+	cost = 10000
+	unit_name = "Book of Babel"
+	export_types = list(/obj/item/book_of_babel)
+	
+/datum/export/weapon/lifesteal //Only the disk if somoene removes it from rnd they cant get it back anymore
+	cost = 10000
+	unit_name = "Lifesteal mod disk"
+	export_types = list(/obj/item/borg/upgrade/modkit/lifesteal)
+	
+/datum/export/weapon/Inferno
+	cost = 10000
+	unit_name = "Inferno"
+	export_types = list(/obj/item/grenade/clusterbuster/inferno)
+	
+/datum/export/weapon/hook
+	cost = 10000
+	unit_name = "Meat hook"
+	export_types = list(/obj/item/gun/magic/hook)
+	
+/datum/export/weapon/red_cube // first half
+	cost = 5000
+	unit_name = "Red cube"
+	export_types = list(/obj/item/device/warp_cube/red)
+	
+/datum/export/weapon/blue_cube // second half
+	cost = 5000
+	unit_name = "Blue cube"
+	export_types = list(/obj/item/device/warp_cube)
+	
+/datum/export/weapon/shipbottle
+	cost = 10000
+	unit_name = "Ship in a bottle"
+	export_types = list(/obj/item/ship_in_a_bottle)
+	
+/datum/export/weapon/beserker
+	cost = 10000
+	unit_name = "Beserker suit"
+	export_types = list(/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker)
+	
+/datum/export/weapon/tarotcards
+	cost = 20000
+	unit_name = "Tarot cards"
+	export_types = list(/obj/item/guardiancreator)
+	
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
+	cost = 10000
+	unit_name = "Inquisitor hardsuit"
+	export_types = list(/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor)
+	
 	
