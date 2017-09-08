@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(persistence)
 
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
-
+	var/list/saved_modes = list(1,2,3)
 	var/list/saved_trophies = list()
 
 /datum/controller/subsystem/persistence/Initialize()
@@ -16,6 +16,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadPoly()
 	LoadChiselMessages()
 	LoadTrophies()
+	LoadRecentModes()
 	..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
@@ -136,6 +137,26 @@ SUBSYSTEM_DEF(persistence)
 		saved_trophies = json["data"]
 	SetUpTrophies(saved_trophies.Copy())
 
+/datum/controller/subsystem/persistence/proc/LoadRecentModes()
+	if(fexists("data/RecentModes.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("data/RecentModes.sav")
+		var/saved_json
+		S >> saved_json
+		if(!saved_json)
+			return
+		saved_modes = json_decode(saved_json)
+		fdel(S)
+	else
+		var/json_file = file("data/RecentModes.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		if(!json)
+			return
+		saved_modes = json["data"]
+
+
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
 		var/obj/structure/displaycase/trophy/T = A
@@ -165,6 +186,7 @@ SUBSYSTEM_DEF(persistence)
 	CollectChiselMessages()
 	CollectSecretSatchels()
 	CollectTrophies()
+	CollectRoundtype()
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	var/list/satchels = list()
@@ -224,3 +246,13 @@ SUBSYSTEM_DEF(persistence)
 		data["message"] = T.trophy_message
 		data["placer_key"] = T.placer_key
 		saved_trophies += list(data)
+
+/datum/controller/subsystem/persistence/proc/CollectRoundtype()
+	saved_modes[3] = saved_modes[2]
+	saved_modes[2] = saved_modes[1]
+	saved_modes[1] = SSticker.mode
+	var/json_file = file("data/RecentModes.json")
+	var/list/file_data = list()
+	file_data["data"] = saved_modes
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
