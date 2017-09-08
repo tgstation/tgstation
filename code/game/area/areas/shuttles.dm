@@ -8,6 +8,7 @@
 	has_gravity = TRUE
 	always_unpowered = FALSE
 	valid_territory = FALSE
+	blob_allowed = FALSE
 	icon_state = "shuttle"
 
 /area/shuttle/transit
