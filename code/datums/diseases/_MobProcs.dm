@@ -43,7 +43,7 @@
 		SSdisease.active_diseases += DD //Add it to the active diseases list, now that it's actually in a mob and being processed.
 		if(istype(DD, /datum/disease/advance)) //Log the infection
 			var/datum/disease/advance/A = DD
-			var/list/L = sortList(A.symptoms)
+			var/list/L = sortList(A.symptoms, /proc/cmp_name_asc)
 			SSblackbox.add_details("infections", "[A.name] - [english_list(L)]")
 		else
 			SSblackbox.add_details("infections", "[DD.name] - [DD.type]")

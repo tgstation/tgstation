@@ -285,7 +285,7 @@
 // Name the disease.
 /datum/disease/advance/proc/AssignName(name = "Unknown")
 	src.name = name
-	var/list/L = sortList(symptoms)
+	var/list/L = sortList(symptoms, /proc/cmp_name_asc)
 	log_game("New Disease Named. Name: [name]; Symptoms: [english_list(L)]")
 	SSblackbox.add_details("named_diseases", "[name] - [english_list(L)]")
 	return
