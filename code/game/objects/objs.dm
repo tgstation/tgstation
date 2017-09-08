@@ -169,6 +169,7 @@
 	return
 
 /obj/singularity_pull(S, current_size)
+	..()
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
 
