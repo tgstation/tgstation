@@ -46,3 +46,75 @@
 /obj/item/clothing/mask/gas/explorer/folded/New()
 	..()
 	adjustmask()
+
+/obj/item/clothing/suit/space/hostile_environiment
+	name = "hostile environiment suit"
+	desc = "A suit with an experimental protective layer of plasma gel to protect against the hazards of Lavaland."
+	icon_state = "hostile_env"
+	item_state = "hostile_env"
+	flags_1 = THICKMATERIAL_1 //not spaceproof
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF
+	slowdown = 0
+	armor = list(melee = 50, bullet = 25, laser = 35, energy = 30, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
+
+/obj/item/clothing/suit/space/hostile_environiment/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/toy/crayon/spraycan))
+		var/obj/item/toy/crayon/spraycan/spraycan = O
+		if(spraycan.is_capped)
+			to_chat(user, "<span class='warning'>Take the cap off first!</span>")
+			return
+		if(spraycan.check_empty(user))
+			return
+		spraycan.use_charges(2)
+		add_atom_colour(spraycan.paint_color, FIXED_COLOUR_PRIORITY)
+		playsound(get_turf(user), 'sound/effects/spray.ogg', 5, 1, 5)
+		to_chat(user, "<span class='notice'>You sprays [spraycan] on [src], painting it.</span>")
+	else
+		return ..()
+
+/obj/item/clothing/head/helmet/space/hostile_environiment
+	name = "hostile environiment helmet"
+	desc = "A helmet with an experimental protective layer of plasma gel to protect against the hazards of Lavaland."
+	icon_state = "hostile_env"
+	item_state = "hostile_env"
+	w_class = WEIGHT_CLASS_NORMAL
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	flags_1 = THICKMATERIAL_1 // no space protection
+	armor = list(melee = 50, bullet = 25, laser = 35,energy = 30, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/head/helmet/space/hostile_environiment/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/head/helmet/space/hostile_environiment/update_icon()
+	..()
+	cut_overlays()
+	var/mutable_appearance/glass_overlay = mutable_appearance(icon, "hostile_env_glass")
+	glass_overlay.appearance_flags = RESET_COLOR
+	add_overlay(glass_overlay)
+
+/obj/item/clothing/head/helmet/space/hostile_environiment/worn_overlays(isinhands)
+	. = ..()
+	if(!isinhands)
+		var/mutable_appearance/M = mutable_appearance('icons/mob/head.dmi', "hostile_env_glass")
+		M.appearance_flags = RESET_COLOR
+		. += M
+
+/obj/item/clothing/head/helmet/space/hostile_environiment/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/toy/crayon/spraycan))
+		var/obj/item/toy/crayon/spraycan/spraycan = O
+		if(spraycan.is_capped)
+			to_chat(user, "<span class='warning'>Take the cap off first!</span>")
+			return
+		if(spraycan.check_empty(user))
+			return
+		spraycan.use_charges(2)
+		add_atom_colour(spraycan.paint_color, FIXED_COLOUR_PRIORITY)
+		playsound(get_turf(user), 'sound/effects/spray.ogg', 5, 1, 5)
+		to_chat(user, "<span class='notice'>You sprays [spraycan] on [src], painting it.</span>")
+	else
+		return ..()
+
