@@ -16,6 +16,13 @@ SUBSYSTEM_DEF(rng)
 	if(seed == -1)
 		set_seed()
 
+/datum/controller/subsystem/rng/Recover()
+	total_offset = SSrng.total_offset
+	seed = SSrng.seed
+
+/datum/controller/subsystem/rng/stat_entry()
+	..("S:[seed]|TO:[total_offset]")
+
 /datum/controller/subsystem/rng/proc/set_seed(_seed)
 	if(!isnum(_seed) || !(_seed in 0 to 16777215))
 		_seed = rand(0, 16777215)
