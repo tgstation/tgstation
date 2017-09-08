@@ -75,9 +75,9 @@
 			web_sound_input = trim(web_sound_input)
 			var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
 			var/list/output = world.shelleo("[config.invoke_youtubedl] --format \"bestaudio\[ext=aac]/bestaudio\[ext=mp3]/bestaudio\[ext=m4a]\" --get-url \"[shell_scrubbed_input]\"")
-			var/errorlevel = output[1]
-			var/stdout = output[2]
-			var/stderr = output[3]
+			var/errorlevel = output[SHELLEO_ERRORLEVEL]
+			var/stdout = output[SHELLEO_STDOUT]
+			var/stderr = output[SHELLEO_STDERR]
 			if(!errorlevel)
 				var/static/regex/html_url_regex = regex("https?://\\S+")
 				if(html_url_regex.Find(stdout))
@@ -99,9 +99,10 @@
 			web_sound_url = " "
 
 		if(web_sound_url)
-			for(var/mob/M in GLOB.player_list)
+			for(var/m in GLOB.player_list)
+				var/mob/M = m
 				var/client/C = M.client
-				if(C.prefs.toggles & SOUND_MIDI && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
+				if((C.prefs.toggles & SOUND_MIDI) && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
 					C.chatOutput.sendMusic(web_sound_url, pitch)
 
 	SSblackbox.add_details("admin_verb","Play Internet Sound")
