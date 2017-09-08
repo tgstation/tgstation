@@ -118,18 +118,20 @@
 
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
 
-	if(L == src)
-		return TRUE
+	var/R =  (L)
 
-	if(!relations[L])
-		relations[L] = MONKEY_RELATION_OK
+	if(L == src) //dont kill ourselves
 		return FALSE
 
-	if(relations && (relations[L] < MONKEY_RELATION_IFFY) || (relations[L] < MONKEY_RELATION_OK && prob(25))))
+	if(isnull(R))
+		relationships[L] = MONKEY_RELATION_OK
+		return FALSE
+
+	if(!isnull(R) && (R < MONKEY_RELATION_IFFY) || (R < MONKEY_RELATION_OK && prob(25)))
 		return TRUE
 
 	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
-	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
+	if(aggressive && (!istype(L, /mob/living/carbon/monkey) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
 		return TRUE
 
 	return FALSE
@@ -392,7 +394,7 @@
 // attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
 /mob/living/carbon/monkey/proc/monkey_attack(mob/living/L)
 	var/obj/item/Weapon = locate(/obj/item) in held_items
-
+	var/R = get_relation(L)
 	// attack with weapon if we have one
 	if(Weapon)
 		L.attackby(Weapon, src)
@@ -404,7 +406,7 @@
 		return
 
 	// if we arn't enemies, we were likely recruited to attack this target, jobs done if we calm down so go back to idle
-	if(!relations[L] || !should_attack(target))
+	if(isnull(R) || !should_target(target))
 		if( target == L && prob(MONKEY_HATRED_REDUCTION_PROB) )
 			back_to_idle()
 		return // already de-aggroed

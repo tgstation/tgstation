@@ -6,8 +6,9 @@
 #define MONKEY_FLEE 			2	// free from enemies
 #define MONKEY_DISPOSE 			3	// dump body in disposals
 
-#define MONKEY_CLIMB 			4 //monkey climbing onto shoulder
-#define MONKEY_CLIMB_DOWN		5
+#define MONKEY_CLIMB 			4 // monkey climbing onto shoulder
+#define MONKEY_WORRY			5 // a friend is injured
+#define MONKEY_ON_SHOULDER		6 // monkey is on someone's shoulder
 
 #define MONKEY_FLEE_HEALTH 					50	// below this health value the monkey starts to flee from enemies
 #define MONKEY_ENEMY_VISION 				9	// how close an enemy must be to trigger aggression
@@ -41,8 +42,9 @@
 #define MONKEY_AGGRESSIVE_MVM_PROB			0	// If you mass edit monkies to be aggressive. there is a small chance of in-fighting
 
 
-#define MONKEY_RELATION_BAD 1
-#define MONKEY_RELATION_IFFY 2
-#define MONKEY_RELATION_OK
-#define MONKEY_RELATION_LIKE 1.5
-#define MONKEY_RELATION_LOVE 2.25
+#define MONKEY_RELATION_BAD 				0
+#define MONKEY_RELATION_IFFY 				0.5
+#define MONKEY_RELATION_BITE				0.8
+#define MONKEY_RELATION_OK					1
+#define MONKEY_RELATION_LIKE 				1.5
+#define MONKEY_RELATION_LOVE 				2.25

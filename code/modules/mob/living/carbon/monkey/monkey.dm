@@ -20,13 +20,12 @@
 	var/liked_food = JUNKFOOD | FRIED | MEAT | VEGETABLES | FRUIT | GRAIN //monkeys are omnivores
 	var/disliked_food = GROSS | TOXIC
 
-	var/list/relations = list()
-	var/on_shoulder = FALSE
 
 
 /mob/living/carbon/monkey/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+	verbs += /mob/living/carbon/monkey/proc/sit_on_shoulder
 
 	if(unique_name) //used to exclude pun pun
 		gender = pick(MALE, FEMALE)
