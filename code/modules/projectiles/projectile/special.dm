@@ -32,17 +32,6 @@
 	explosion(target, -1, 0, 2)
 	return 1
 
-/obj/item/projectile/bullet/a40mm
-	name ="40mm grenade"
-	desc = "USE A WEEL GUN"
-	icon_state= "bolter"
-	damage = 60
-
-/obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = FALSE)
-	..()
-	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
-	return 1
-
 /obj/item/projectile/bullet/a84mm
 	name ="anti-armour rocket"
 	desc = "USE A WEEL GUN"
@@ -183,16 +172,6 @@
 	if(!gun)
 		qdel(src)
 	gun.create_portal(src, get_turf(src))
-
-/obj/item/projectile/bullet/frag12
-	name ="explosive slug"
-	damage = 25
-	knockdown = 50
-
-/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = FALSE)
-	..()
-	explosion(target, -1, 0, 1)
-	return 1
 
 /obj/item/projectile/plasma
 	name = "plasma blast"
@@ -616,3 +595,19 @@
 
 /obj/item/projectile/hallucination/death/hal_apply_effect()
 	new /datum/hallucination/death(hal_target, TRUE)
+
+// Neurotoxin
+
+/obj/item/projectile/bullet/neurotoxin
+	name = "neurotoxin spit"
+	icon_state = "neurotoxin"
+	damage = 5
+	damage_type = TOX
+	knockdown = 100
+
+/obj/item/projectile/bullet/neurotoxin/on_hit(atom/target, blocked = FALSE)
+	if(isalien(target))
+		knockdown = 0
+		nodamage = TRUE
+	return ..()
+

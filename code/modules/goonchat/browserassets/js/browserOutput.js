@@ -61,7 +61,16 @@ var opts = {
 	'clientDataLimit': 5,
 	'clientData': [],
 
+	//Admin music volume update
+	'volumeUpdateDelay': 5000, //Time from when the volume updates to data being sent to the server
+	'volumeUpdating': false, //True if volume update function set to fire
+	'updatedVolume': 0, //The volume level that is sent to the server
+
 };
+
+function clamp(val, min, max) {
+	return Math.max(min, Math.min(val, max))
+}
 
 function outerHTML(el) {
     var wrap = document.createElement('div');
@@ -93,6 +102,15 @@ function linkify(text) {
 			return $1 ? $0: '<a href="http://'+$0+'">'+$0+'</a>';
 		}
 	});
+}
+
+function byondDecode(message) {
+	// Basically we url_encode twice server side so we can manually read the encoded version and actually do UTF-8.
+	// The replace for + is because FOR SOME REASON, BYOND replaces spaces with a + instead of %20, and a plus with %2b.
+	// Marvelous.
+	message = message.replace(/\+/g, "%20");
+	message = decoder(message);
+	return message;
 }
 
 //Actually turns the highlight term match into appropriate html
@@ -176,11 +194,7 @@ function output(message, flag) {
 	if (flag !== 'internal')
 		opts.lastPang = Date.now();
 
-	// Basically we url_encode twice server side so we can manually read the encoded version and actually do UTF-8.
-	// The replace for + is because FOR SOME REASON, BYOND replaces spaces with a + instead of %20, and a plus with %2b.
-	// Marvelous.
-	message = message.replace(/\+/g, "%20")
-	message = decoder(message)
+	message = byondDecode(message)
 
 	//The behemoth of filter-code (for Admin message filters)
 	//Note: This is proooobably hella inefficient
@@ -423,7 +437,22 @@ function ehjaxCallback(data) {
 			var firebugEl = document.createElement('script');
 			firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
 			document.body.appendChild(firebugEl);
-		} 
+		} else if (data.adminMusic) {
+			if (typeof data.adminMusic === 'string') {
+				var adminMusic = byondDecode(data.adminMusic);
+				adminMusic = adminMusic.match(/https?:\/\/\S+/) || '';
+				if (data.musicRate) {
+					var newRate = Number(data.musicRate);
+					if(newRate) {
+						$('#adminMusic').prop('defaultPlaybackRate', newRate);
+					}
+				} else {
+					$('#adminMusic').prop('defaultPlaybackRate', 1.0);
+				}
+				$('#adminMusic').prop('src', adminMusic);
+				$('#adminMusic').trigger("play");
+			}
+		}
 	}
 }
 
@@ -444,6 +473,13 @@ function createPopup(contents, width) {
 
 function toggleWasd(state) {
 	opts.wasd = (state == 'on' ? true : false);
+}
+
+function sendVolumeUpdate() {
+	opts.volumeUpdating = false;
+	if(opts.updatedVolume) {
+		runByond('?_src_=chat&proc=setMusicVolume&param[volume]='+opts.updatedVolume);
+	}
 }
 
 /*****************************************
@@ -486,6 +522,7 @@ $(function() {
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
+		'smusicVolume': getCookie('musicVolume'),
 	};
 
 	if (savedConfig.sfontSize) {
@@ -516,6 +553,14 @@ $(function() {
 	if (savedConfig.shighlightColor) {
 		opts.highlightColor = savedConfig.shighlightColor;
 		internalOutput('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>', 'internal');
+	}
+	if (savedConfig.smusicVolume) {
+		var newVolume = clamp(savedConfig.smusicVolume, 0, 100);
+		$('#adminMusic').prop('volume', newVolume / 100);
+		$('#musicVolume').val(newVolume);
+		opts.updatedVolume = newVolume;
+		sendVolumeUpdate();
+		internalOutput('<span class="internal boldnshit">Loaded music volume of: '+savedConfig.smusicVolume+'</span>', 'internal');
 	}
 
 	(function() {
@@ -835,6 +880,26 @@ $(function() {
 		opts.messageCount = 0;
 	});
 	
+	$('#musicVolumeSpan').hover(function() {
+		$('#musicVolumeText').addClass('hidden');
+		$('#musicVolume').removeClass('hidden');
+	}, function() {
+		$('#musicVolume').addClass('hidden');
+		$('#musicVolumeText').removeClass('hidden');
+	});
+
+	$('#musicVolume').change(function() {
+		var newVolume = $('#musicVolume').val();
+		newVolume = clamp(newVolume, 0, 100);
+		$('#adminMusic').prop('volume', newVolume / 100);
+		setCookie('musicVolume', newVolume, 365);
+		opts.updatedVolume = newVolume;
+		if(!opts.volumeUpdating) {
+			setTimeout(sendVolumeUpdate, opts.volumeUpdateDelay);
+			opts.volumeUpdating = true;
+		}
+	});
+
 	$('img.icon').error(iconError);
 	
 	

@@ -51,6 +51,9 @@
 /obj/machinery/gibber/container_resist(mob/living/user)
 	go_out()
 
+/obj/machinery/gibber/relaymove(mob/living/user)
+	go_out()
+
 /obj/machinery/gibber/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return

@@ -142,69 +142,55 @@
 	user.set_machine(src)
 	interact(user)
 
-/*******************
-*   SmartFridge Menu
-********************/
 
-/obj/machinery/smartfridge/interact(mob/user)
-	if(stat)
-		return FALSE
 
-	var/dat = "<TT><b>Select an item:</b><br>"
+/obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "smartvend", name, 440, 550, master_ui, state)
+		ui.open()
 
-	if (contents.len == 0)
-		dat += "<font color = 'red'>No product loaded!</font>"
-	else
-		var/listofitems = list()
-		for (var/atom/movable/O in contents)
-			if (listofitems[O.name])
-				listofitems[O.name]++
-			else
-				listofitems[O.name] = 1
-		sortList(listofitems)
+/obj/machinery/smartfridge/ui_data(mob/user)
+	. = list()
 
-		for (var/O in listofitems)
-			if(listofitems[O] <= 0)
-				continue
-			var/N = listofitems[O]
-			var/itemName = url_encode(O)
-			dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
-			dat += " [N] </font>"
-			dat += "<a href='byond://?src=\ref[src];vend=[itemName];amount=1'>Vend</A> "
-			if(N > 5)
-				dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=5'>x5</A>)"
-				if(N > 10)
-					dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=10'>x10</A>)"
-					if(N > 25)
-						dat += "(<a href='byond://?src=\ref[src];vend=[itemName];amount=25'>x25</A>)"
-			if(N > 1)
-				dat += "(<a href='?src=\ref[src];vend=[itemName];amount=[N]'>All</A>)"
+	var/listofitems = list()
+	for (var/I in src)
+		var/atom/movable/O = I
+		if (listofitems[O.name])
+			listofitems[O.name]["amount"]++
+		else
+			listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
+	sortList(listofitems)
 
-			dat += "<br>"
+	.["contents"] = listofitems
+	.["name"] = name
+	.["isdryer"] = FALSE
 
-		dat += "</TT>"
-	user << browse("<HEAD><TITLE>[src] supplies</TITLE></HEAD><TT>[dat]</TT>", "window=smartfridge")
-	onclose(user, "smartfridge")
-	return dat
 
-/obj/machinery/smartfridge/Topic(var/href, var/list/href_list)
-	if(..())
+/obj/machinery/smartfridge/ui_act(action, params)
+	. = ..()
+	if(.)
 		return
-	usr.set_machine(src)
+	switch(action)
+		if("Release")
+			var/desired = 0
 
-	var/N = href_list["vend"]
-	var/amount = text2num(href_list["amount"])
+			if (params["amount"])
+				desired = text2num(params["amount"])
+			else
+				desired = input("How many items?", "How many items would you like to take out?", 1) as null|num
 
-	var/i = amount
-	for(var/obj/O in contents)
-		if(i <= 0)
-			break
-		if(O.name == N)
-			O.loc = src.loc
-			i--
+			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
+				return FALSE
 
-
-	updateUsrDialog()
+			for(var/obj/item/O in src)
+				if(desired <= 0)
+					break
+				if(O.name == params["name"])
+					O.forceMove(drop_location())
+					desired--
+			return TRUE
+	return FALSE
 
 
 // ----------------------------
@@ -240,20 +226,35 @@
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/crowbar/C, ignore_panel = 1)
 	..()
 
-/obj/machinery/smartfridge/drying_rack/interact(mob/user)
-	var/dat = ..()
-	if(dat)
-		dat += "<br>"
-		dat += "<a href='byond://?src=\ref[src];dry=1'>Toggle Drying</A> "
-		user << browse("<HEAD><TITLE>[src] supplies</TITLE></HEAD><TT>[dat]</TT>", "window=smartfridge")
-	onclose(user, "smartfridge")
+/obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
+	. = list()
 
-/obj/machinery/smartfridge/drying_rack/Topic(href, list/href_list)
-	..()
-	if(href_list["dry"])
-		toggle_drying(FALSE)
-	updateUsrDialog()
-	update_icon()
+	var/listofitems = list()
+	for (var/I in src)
+		var/atom/movable/O = I
+
+		if (listofitems[O.name])
+			listofitems[O.name]["amount"]++
+		else
+			listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
+	sortList(listofitems)
+
+	.["contents"] = listofitems
+	.["name"] = name
+	.["isdryer"] = TRUE
+	.["verb"] = "Take"
+	.["drying"] = drying
+
+
+/obj/machinery/smartfridge/drying_rack/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("Dry")
+			toggle_drying(FALSE)
+			return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/drying_rack/power_change()
 	if(powered() && anchored)

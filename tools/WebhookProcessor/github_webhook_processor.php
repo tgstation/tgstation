@@ -23,6 +23,13 @@ require_once 'secret.php';
 $enable_live_tracking = true;	//auto update this file from the repository
 $path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
 
+$trackPRBalance = true;	//set this to false to disable PR balance tracking
+$prBalanceJson = '';	//Set this to the path you'd like the writable pr balance file to be stored, not setting it writes it to the working directory
+$startingPRBalance = 3;	//Starting balance for never before seen users
+//team 133041: tgstation/commit-access
+$maintainer_team_id = 133041;	//org team id that is exempt from PR balance system, setting this to null will use anyone with write access to the repo. Get from https://api.github.com/orgs/:org/teams
+
+
 //anti-spam measures. Don't announce PRs in game to people unless they've gotten a pr merged before
 //options are:
 //	"repo" - user has to have a pr merged in the repo before.
@@ -193,7 +200,7 @@ function tag_pr($payload, $opened) {
 	if(strpos(strtolower($title), '[wip]') !== FALSE)
 		$tags[] = 'Work In Progress';
 
-	$url = $payload['pull_request']['base']['repo']['url'] . '/issues/' . $payload['pull_request']['number'] . '/labels';
+	$url = $payload['pull_request']['issue_url'] . '/labels';
 
 	$existing_labels = json_decode(apisend($url), true);
 
@@ -210,6 +217,66 @@ function tag_pr($payload, $opened) {
 
 
 	echo apisend($url, 'PUT', $final);
+
+	return $final;
+}
+
+function remove_ready_for_review($payload, $labels, $r4rlabel){
+	$index = array_search($r4rlabel, $labels);
+	if($index !== FALSE)
+		unset($labels[$index]);
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	apisend($url, 'PUT', $labels);
+}
+
+function check_ready_for_review($payload, $labels){
+	$r4rlabel =  'Ready for Review';
+	$has_label_already = false;
+	//if the label is already there we may need to remove it
+	foreach($labels as $L)
+		if($L == $r4rlabel){
+			$has_label_already = true;
+			break;
+		}
+
+	//find all reviews to see if changes were requested at some point
+	$reviews = json_decode(apisend($payload['pull_request']['url'] . '/reviews'), true);
+
+	$reviews_ids_with_changes_requested = array();
+
+	foreach($reviews as $R){
+		if($R['state'] == 'CHANGES_REQUESTED' && isset($R['author_association']) && ($R['author_association'] == 'MEMBER' || $R['author_association'] == 'CONTRIBUTOR' || $R['author_association'] == 'OWNER'))
+			$reviews_ids_with_changes_requested[] = $R['id'];
+	}
+
+	if(count($reviews_ids_with_changes_requested) == 0){
+		if($has_label_already)
+			remove_ready_for_review($payload, $labels, $r4rlabel);
+		return;	//no need to be here
+	}
+
+	echo count($reviews_ids_with_changes_requested) . ' offending reviews';
+
+	//now get the review comments for the offending reviews
+
+	$review_comments = json_decode(apisend($payload['pull_request']['review_comments_url']), true);
+
+	foreach($review_comments as $C){
+		//make sure they are part of an offending review
+		if(!in_array($C['pull_request_review_id'], $reviews_ids_with_changes_requested))
+			continue;
+		
+		//review comments which are outdated have a null position
+		if($C['position'] !== null){
+			if($has_label_already)
+				remove_ready_for_review($payload, $labels, $r4rlabel);
+			return;	//no need to tag
+		}
+	}
+
+	$labels[] = $r4rlabel;
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	apisend($url, 'PUT', $labels);
 }
 
 function handle_pr($payload) {
@@ -218,10 +285,17 @@ function handle_pr($payload) {
 	switch ($payload["action"]) {
 		case 'opened':
 			tag_pr($payload, true);
+			if(get_pr_code_friendliness($payload) < 0){
+				$balances = pr_balances();
+				$author = $payload['pull_request']['user']['login'];
+				if(isset($balances[$author]) && $balances[$author] < 0)
+					create_comment($payload, 'You currently have a negative Fix/Feature pull request delta of ' . $balances[$author] . '. Maintainers may close this PR at will. Fixing issues or improving the codebase will improve this score.');
+			}
 			break;
 		case 'edited':
 		case 'synchronize':
-			tag_pr($payload, false);
+			$labels = tag_pr($payload, false);
+			check_ready_for_review($payload, $labels);
 			return;
 		case 'reopened':
 			$action = $payload['action'];
@@ -234,6 +308,7 @@ function handle_pr($payload) {
 				$action = 'merged';
 				auto_update($payload);
 				checkchangelog($payload, true, true);
+				update_pr_balance($payload);
 				$validated = TRUE; //pr merged events always get announced.
 			}
 			break;
@@ -252,11 +327,116 @@ function handle_pr($payload) {
 		
 	$msg = '['.$payload['pull_request']['base']['repo']['full_name'].'] Pull Request '.$action.' by '.htmlSpecialChars($payload['sender']['login']).': <a href="'.$payload['pull_request']['html_url'].'">'.htmlSpecialChars('#'.$payload['pull_request']['number'].' '.$payload['pull_request']['user']['login'].' - '.$payload['pull_request']['title']).'</a>';
 	sendtoallservers('?announce='.urlencode($msg), $payload);
-
 }
 
+//creates a comment on the payload issue
 function create_comment($payload, $comment){
 	apisend($payload['pull_request']['comments_url'], 'POST', json_encode(array('body' => $comment)));
+}
+
+//returns the payload issue's labels as a flat array
+function get_pr_labels_array($payload){
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	$issue = json_decode(apisend($url), true);
+	$result = array();
+	foreach($issue as $l)
+		$result[] = $l['name'];
+	return $result;
+}
+
+//helper for getting the path the the balance json file
+function pr_balance_json_path(){
+	global $prBalanceJson;
+	return $prBalanceJson != '' ? $prBalanceJson : 'pr_balances.json';
+}
+
+//return the assoc array of login -> balance for prs
+function pr_balances(){
+	$path = pr_balance_json_path();
+	if(file_exists($path))
+		return json_decode(file_get_contents($path), true);
+	else
+		return array();
+}
+
+//returns the difference in PR balance a pull request would cause
+function get_pr_code_friendliness($payload, $oldbalance = null){
+	global $startingPRBalance;
+	if($oldbalance == null)
+		$oldbalance = $startingPRBalance;
+	$labels = get_pr_labels_array($payload);
+	//anything not in this list defaults to 0
+	$label_values = array(
+		'Fix' => 2,
+		'Refactor' => 2,
+		'Code Improvement' => 1,
+		'Priority: High' => 4,
+		'Priority: CRITICAL' => 5,
+		'Atmospherics' => 4,
+		'Logging' => 1,
+		'Feedback' => 1,
+		'Performance' => 3,
+		'Feature' => -1,
+		'Balance/Rebalance' => -1,
+		'Tweak' => -1,
+		'PRB: Reset' => $startingPRBalance - $oldbalance,
+	);
+
+	$affecting = 0;
+	$is_neutral = FALSE;
+	$found_something_positive = false;
+	foreach($labels as $l){
+		if($l == 'PRB: No Update') {	//no effect on balance
+			$affecting = 0;
+			break;
+		}
+		else if(isset($label_values[$l])) {
+			$friendliness = $label_values[$l];
+			if($friendliness > 0)
+				$found_something_positive = true;
+			$affecting = $found_something_positive ? max($affecting, $friendliness) : $friendliness;
+		}
+	}
+	return $affecting;
+}
+
+function is_maintainer($payload, $author){
+	global $maintainer_team_id;
+	$repo_is_org = $payload['pull_request']['base']['repo']['owner']['type'] == 'Organization';
+	if($maintainer_team_id == null || !$repo_is_org) {
+		$collaburl = $payload['pull_request']['base']['repo']['collaborators_url'] . '/' . $author . '/permissions';
+		$perms = json_decode(apisend($collaburl), true);
+		$permlevel = $perms['permission'];
+		return $permlevel == 'admin' || $permlevel == 'write';
+	}
+	else {
+		$check_url = 'https://api.github.com/teams/' . $maintainer_team_id . '/memberships/' . $author;
+		$result = json_decode(apisend($check_url), true);
+		return isset($result['state']);	//this field won't be here if they aren't a member
+	}
+}
+
+//payload is a merged pull request, updates the pr balances file with the correct positive or negative balance based on comments
+function update_pr_balance($payload) {
+	global $startingPRBalance;
+	global $trackPRBalance;
+	if(!$trackPRBalance)
+		return;
+	$author = $payload['pull_request']['user']['login'];
+	if(is_maintainer($payload, $author))	//immune
+		return;
+	$balances = pr_balances();
+	if(!isset($balances[$author]))
+		$balances[$author] = $startingPRBalance;
+	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
+	$balances[$author] += $friendliness;
+	if($balances[$author] < 0 && $friendliness < 0)
+		create_comment($payload, 'Your Fix/Feature pull request delta is currently below zero (' . $balances[$author] . '). Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
+	else if($balances[$author] >= 0 && ($balances[$author] - $friendliness) < 0)
+		create_comment($payload, 'Your Fix/Feature pull request delta is now above zero (' . $balances[$author] . '). Feel free to make Feature/Tweak/Balance PRs.');
+	$balances_file = fopen(pr_balance_json_path(), 'w');
+	fwrite($balances_file, json_encode($balances));
+	fclose($balances_file);
 }
 
 function auto_update($payload){

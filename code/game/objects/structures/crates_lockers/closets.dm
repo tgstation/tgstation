@@ -16,7 +16,7 @@
 	integrity_failure = 50
 	armor = list(melee = 20, bullet = 10, laser = 10, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 60)
 	var/breakout_time = 2
-	var/lastbang
+	var/message_cooldown
 	var/can_weld_shut = TRUE
 	var/horizontal = FALSE
 	var/allow_objects = FALSE
@@ -300,14 +300,12 @@
 /obj/structure/closet/relaymove(mob/user)
 	if(user.stat || !isturf(loc) || !isliving(user))
 		return
-	var/mob/living/L = user
-	if(!open())
-		if(L.last_special <= world.time)
-			container_resist(L)
-		if(world.time > lastbang+5)
-			lastbang = world.time
-			for(var/mob/M in get_hearers_in_view(src, null))
-				M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>BANG, bang!</FONT>", 2)
+	if(locked)
+		if(message_cooldown <= world.time)
+			message_cooldown = world.time + 50
+			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
+		return
+	container_resist()
 
 /obj/structure/closet/attack_hand(mob/user)
 	..()
@@ -367,9 +365,10 @@
 	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open.</span>")
-	visible_message("<span class='warning'>[src] begins to shake violently!</span>")
-	if(do_after(user,(breakout_time * 60 * 10), target = src)) //minutes * 60seconds * 10deciseconds
+	user.visible_message("<span class='warning'>[src] begins to shake violently!</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
+		"<span class='italics'>You hear banging from [src].</span>")
+	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
@@ -388,7 +387,7 @@
 
 /obj/structure/closet/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, be_close=TRUE))
+	if(!user.canUseTopic(src, be_close=TRUE) || isturf(loc))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(opened || !secure)
