@@ -28,6 +28,9 @@
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
+	var/ranged_telegraph = "prepares to fire at *TARGET*!" //A message shown when the mob prepares to fire; use *TARGET* if you want to show the target's name
+	var/ranged_telegraph_sound //A sound played when the mob prepares to fire
+	var/ranged_telegraph_time = 0 //In deciseconds, how long between the telegraph and ranged shot
 	var/ranged_ignores_vision = FALSE //if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
 	var/check_friendly_fire = 0 // Should the ranged mob check for friendlies when shooting
 	var/retreat_distance = null //If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
@@ -232,7 +235,14 @@
 		var/target_distance = get_dist(targets_from,target)
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
-				OpenFire(target)
+				if(!ranged_telegraph_time || client)
+					OpenFire(target)
+				else
+					if(ranged_telegraph)
+						visible_message("<span class='danger'>[src] [replacetext(ranged_telegraph, "*TARGET*", "[target]")]</span>")
+					if(ranged_telegraph_sound)
+						playsound(src, ranged_telegraph_sound, 75, FALSE)
+					addtimer(CALLBACK(src, .proc/OpenFire, target), ranged_telegraph_time)
 		if(!Process_Spacemove()) //Drifting
 			walk(src,0)
 			return 1
