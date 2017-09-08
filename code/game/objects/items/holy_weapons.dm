@@ -330,6 +330,15 @@
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
 
+/obj/item/nullrod/tentacle
+	name = "unholy blessing"
+	desc = "Particularly twisted dieties grant gifts of dubious value."
+	icon_state = "tentacle"
+	item_state = "tentacle"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
+	sharpness = IS_SHARP
+
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
