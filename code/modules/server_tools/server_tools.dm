@@ -1,4 +1,4 @@
-GLOBAL_VAR_INIT(reboot_mode, REBOOT_MODE_NORMAL)	//if the world should request the service to kill it at reboot
+GLOBAL_VAR_INIT(reboot_mode, REBOOT_MODE_NORMAL)	//if the world should kill itself at reboot
 GLOBAL_PROTECT(reboot_mode)
 
 /world/proc/RunningService()
@@ -21,9 +21,14 @@ GLOBAL_PROTECT(reboot_mode)
 	ExportService("[SERVICE_REQUEST_IRC_BROADCAST] [msg]")
 
 /world/proc/ServiceEndProcess()
-	log_world("Sending shutdown request!");
-	sleep(1)	//flush the buffers
-	ExportService(SERVICE_REQUEST_KILL_PROCESS)
+	if(!RunningService())
+		return
+	log_world("Self terminating!");
+	sleep(world.tick_lag)	//flush the chat buffers
+	call("code/modules/server_tools/terminate/terminate.dll", "TerminateSelf")()
+	//if we get here...
+	log_world("Failed to self terminate!")
+	SEND_SOUND(world, sound('sound/voice/binsult.ogg'))
 
 //called at the exact moment the world is supposed to reboot
 /world/proc/ServiceReboot()
