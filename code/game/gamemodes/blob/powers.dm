@@ -16,24 +16,27 @@
 				continue
 			if(M.client)
 				to_chat(src, "<span class='warning'>There is someone too close to place your blob core!</span>")
-				return 0
+				return FALSE
 		for(var/mob/living/M in view(13, src))
 			if("blob" in M.faction)
 				continue
 			if(M.client)
 				to_chat(src, "<span class='warning'>Someone could see your blob core from here!</span>")
-				return 0
+				return FALSE
 		var/turf/T = get_turf(src)
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
-			return 0
+			return FALSE
+		if(T.z != ZLEVEL_STATION)
+			to_chat(src, "<span class='warning'>You cannot place your core here!</span>")
+			return FALSE
 		for(var/obj/O in T)
 			if(istype(O, /obj/structure/blob))
 				if(istype(O, /obj/structure/blob/normal))
 					qdel(O)
 				else
 					to_chat(src, "<span class='warning'>There is already a blob here!</span>")
-					return 0
+					return FALSE
 			else if(O.density)
 				to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
 				return 0
