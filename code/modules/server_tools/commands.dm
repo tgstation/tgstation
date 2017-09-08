@@ -35,9 +35,15 @@
 			.[command_name] = list(SERVICE_JSON_PARAM_HELPTEXT = initial(stc.help_text), SERVICE_JSON_PARAM_ADMINONLY = initial(stc.admin_only), SERVICE_JSON_PARAM_REQUIREDPARAMETERS = initial(stc.required_parameters))
 
 /world/proc/HandleServiceCustomCommand(command, sender, params)
-	for(var/I in typesof(/datum/server_tools_command) - /datum/server_tools_command)
-		var/datum/server_tools_command/stc = I
-		if(lowertext(initial(stc.name)) == command)
-			stc = new stc
-			return stc.Run(sender, params) || TRUE
-	return FALSE
+	var/static/list/cached_custom_server_tools_commands
+	if(!cached_custom_server_tools_commands)
+		cached_custom_server_tools_commands = list()
+		for(var/I in typesof(/datum/server_tools_command) - /datum/server_tools_command)
+			var/datum/server_tools_command/stc = I
+			cached_custom_server_tools_commands[lowertext(initial(stc.name))] = stc
+
+	var/command_type = cached_custom_server_tools_commands[command]
+	if(!command_type)
+		return FALSE
+	var/datum/server_tools_command/stc = new command_type
+	return stc.Run(sender, params) || TRUE
