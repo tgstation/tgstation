@@ -17,9 +17,10 @@
 	var/obj/machinery/quantumpad/linked_pad
 	
 	//mapping
-	var/static/list/mapped_quantum_pads = list()
+
 	var/map_pad_id = "" as text //what's my name
 	var/map_pad_link_id = "" as text //who's my friend
+	var/static/list/mapped_quantum_pads = list() //At end of list.
 	
 /obj/machinery/quantumpad/Initialize()
 	. = ..()
