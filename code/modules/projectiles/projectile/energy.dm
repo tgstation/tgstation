@@ -58,7 +58,7 @@
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
-			var/obj/effect/nettingportal/NP = new /obj/effect/nettingportal(Tloc)
+			var/obj/effect/nettingportal/NP = new (Tloc)
 			NP.teletarget = projtarget
 	..()
 
