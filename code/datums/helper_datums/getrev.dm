@@ -27,33 +27,6 @@
 		log_world("Based off origin/master commit [originmastercommit]")
 	else
 		log_world(originmastercommit)
-/datum/getrev/proc/DownloadPRDetails()
-	if(!config.githubrepoid)
-		if(testmerge.len)
-			log_world("PR details download failed: No github repo config set")
-		return
-	if(!isnum(text2num(config.githubrepoid)))
-		log_world("PR details download failed: Invalid github repo id: [config.githubrepoid]")
-		return
-	for(var/line in testmerge)
-		if(!isnum(text2num(line)))
-			log_world("PR details download failed: Invalid PR number: [line]")
-			return
-
-		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
-		GLOB.valid_HTTPSGet = TRUE
-		var/json = HTTPSGet(url)
-		if(!json)
-			return
-
-		testmerge[line] = json_decode(json)
-
-		if(!testmerge[line])
-			log_world("PR details download failed: null details returned")
-			return
-		CHECK_TICK
-	log_world("PR details successfully downloaded")
-	has_pr_details = TRUE
 
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
