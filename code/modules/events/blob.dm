@@ -29,8 +29,8 @@
 	var/list/candidates = get_candidates("blob", null, ROLE_BLOB)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
-	var/mob/dead/observer/new_blob = pick(candidates)
-	var/obj/structure/blob/core/BC = new/obj/structure/blob/core(pick(GLOB.blobstart), new_blob.client, new_rate)
+	var/mob/dead/observer/new_blob = SSrng.pick_from_list(candidates)
+	var/obj/structure/blob/core/BC = new/obj/structure/blob/core(SSrng.pick_from_list(GLOB.blobstart), new_blob.client, new_rate)
 	BC.overmind.blob_points = min(20 + GLOB.player_list.len, BC.overmind.max_blob_points)
 	spawned_mobs += BC.overmind
 	message_admins("[key_name_admin(BC.overmind)] has been made into a blob overmind by an event.")

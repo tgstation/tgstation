@@ -228,11 +228,11 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 				return
 
 			if(resources > 5)
-				if(prob(5)) //lower odds, as to prioritise reproduction
+				if(SSrng.probability(5)) //lower odds, as to prioritise reproduction
 					StartAction(10) //not a typo
 					CreateBarricade()
 					return
-				if(prob(5))
+				if(SSrng.probability(5))
 					CreateTrap()
 					return
 
@@ -281,7 +281,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 /mob/living/simple_animal/hostile/swarmer/ai/melee_combat/AttackingTarget()
 	if(isliving(target))
-		if(prob(35))
+		if(SSrng.probability(35))
 			StartAction(30)
 			DisperseTarget(target)
 		else

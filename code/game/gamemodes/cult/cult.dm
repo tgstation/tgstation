@@ -67,7 +67,7 @@
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
 			break
-		var/datum/mind/cultist = pick(antag_candidates)
+		var/datum/mind/cultist = SSrng.pick_from_list(antag_candidates)
 		antag_candidates -= cultist
 		cultists_to_cult += cultist
 		cultist.special_role = "Cultist"
@@ -87,7 +87,7 @@
 				if(player.mind && !(player.mind in cultists_to_cult))
 					possible_targets += player.mind
 		if(possible_targets.len > 0)
-			GLOB.sac_mind = pick(possible_targets)
+			GLOB.sac_mind = SSrng.pick_from_list(possible_targets)
 			if(!GLOB.sac_mind)
 				message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
 			else
@@ -103,7 +103,7 @@
 			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 	if(!GLOB.summon_spots.len)
 		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
-			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
+			var/area/summon = SSrng.pick_from_list(GLOB.sortedAreas - GLOB.summon_spots)
 			if((summon.z == ZLEVEL_STATION) && summon.valid_territory)
 				GLOB.summon_spots += summon
 	cult_objectives += "eldergod"

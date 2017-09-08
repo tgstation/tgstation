@@ -1,4 +1,4 @@
-#define pick_list(FILE, KEY) (pick(strings(FILE, KEY)))
+#define pick_list(FILE, KEY) (SSrng.pick_from_list(strings(FILE, KEY)))
 #define pick_list_replacements(FILE, KEY) (strings_replacement(FILE, KEY))
 #define json_load(FILE) (json_decode(file2text(FILE)))
 
@@ -10,7 +10,7 @@ GLOBAL_VAR(string_filename_current_key)
 	load_strings_file(filename)
 
 	if((filename in GLOB.string_cache) && (key in GLOB.string_cache[filename]))
-		var/response = pick(GLOB.string_cache[filename][key])
+		var/response = SSrng.pick_from_list(GLOB.string_cache[filename][key])
 		var/regex/r = regex("@pick\\((\\D+?)\\)", "g")
 		response = r.Replace(response, /proc/strings_subkey_lookup)
 		return response

@@ -5,7 +5,7 @@
 		ready_proj(target, user, quiet, zone_override)
 		if(distro) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
 			if(randomspread)
-				spread = round((rand() - 0.5) * distro)
+				spread = round((SSrng.random() - 0.5) * distro)
 			else //Smart spread
 				spread = round((i / pellets - 0.5) * distro)
 		if(!throw_proj(target, targloc, user, params, spread))

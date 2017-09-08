@@ -75,7 +75,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
-		if(prob(75))
+		if(SSrng.probability(75))
 			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
 			A.GiveTarget(target)
 			A.friends = friends
@@ -135,7 +135,7 @@ Difficulty: Medium
 		if(last_legion)
 			loot = list(/obj/item/staff/storm)
 			elimination = 0
-		else if(prob(5))
+		else if(SSrng.probability(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
 

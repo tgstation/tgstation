@@ -63,13 +63,13 @@
 			[src] with [I]!</span>", "<span class='danger'>You hit [src] \
 			with [I]!</span>")
 
-		if(prob(I.force))
+		if(SSrng.probability(I.force))
 			push_over()
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
 	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
-	if(prob(P.damage))
+	if(SSrng.probability(P.damage))
 		push_over()
 
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
@@ -97,23 +97,23 @@
 		add_atom_colour("#FFD7A7", FIXED_COLOUR_PRIORITY)
 	switch(new_appearance)
 		if("Assistant")
-			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+			name = "[SSrng.pick_from_list(GLOB.first_names_male)] [SSrng.pick_from_list(GLOB.last_names)]"
 			desc = "A cardboat cutout of an assistant."
 			icon_state = "cutout_greytide"
 		if("Clown")
-			name = pick(GLOB.clown_names)
+			name = SSrng.pick_from_list(GLOB.clown_names)
 			desc = "A cardboard cutout of a clown. You get the feeling that it should be in a corner."
 			icon_state = "cutout_clown"
 		if("Mime")
-			name = pick(GLOB.mime_names)
+			name = SSrng.pick_from_list(GLOB.mime_names)
 			desc = "...(A cardboard cutout of a mime.)"
 			icon_state = "cutout_mime"
 		if("Traitor")
-			name = "[pick("Unknown", "Captain")]"
+			name = "[SSrng.pick_from_list("Unknown", "Captain")]"
 			desc = "A cardboard cutout of a traitor."
 			icon_state = "cutout_traitor"
 		if("Nuke Op")
-			name = "[pick("Unknown", "COMMS", "Telecomms", "AI", "stealthy op", "STEALTH", "sneakybeaky", "MEDIC", "Medic")]"
+			name = "[SSrng.pick_from_list("Unknown", "COMMS", "Telecomms", "AI", "stealthy op", "STEALTH", "sneakybeaky", "MEDIC", "Medic")]"
 			desc = "A cardboard cutout of a nuclear operative."
 			icon_state = "cutout_fluke"
 		if("Cultist")
@@ -121,7 +121,7 @@
 			desc = "A cardboard cutout of a cultist."
 			icon_state = "cutout_cultist"
 		if("Clockwork Cultist")
-			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+			name = "[SSrng.pick_from_list(GLOB.first_names_male)] [SSrng.pick_from_list(GLOB.last_names)]"
 			desc = "A cardboard cutout of a servant of Ratvar."
 			icon_state = "cutout_servant"
 		if("Revolutionary")
@@ -129,7 +129,7 @@
 			desc = "A cardboard cutout of a revolutionary."
 			icon_state = "cutout_viva"
 		if("Wizard")
-			name = "[pick(GLOB.wizard_first)], [pick(GLOB.wizard_second)]"
+			name = "[SSrng.pick_from_list(GLOB.wizard_first)], [SSrng.pick_from_list(GLOB.wizard_second)]"
 			desc = "A cardboard cutout of a wizard."
 			icon_state = "cutout_wizard"
 		if("Shadowling")
@@ -137,25 +137,25 @@
 			desc = "A cardboard cutout of a shadowling."
 			icon_state = "cutout_shadowling"
 		if("Xenomorph")
-			name = "alien hunter ([rand(1, 999)])"
+			name = "alien hunter ([SSrng.random(1, 999)])"
 			desc = "A cardboard cutout of a xenomorph."
 			icon_state = "cutout_fukken_xeno"
-			if(prob(25))
+			if(SSrng.probability(25))
 				alpha = 75 //Spooky sneaking!
 		if("Xenomorph Maid")
-			name = "lusty xenomorph maid ([rand(1, 999)])"
+			name = "lusty xenomorph maid ([SSrng.random(1, 999)])"
 			desc = "A cardboard cutout of a xenomorph maid."
 			icon_state = "cutout_lusty"
 		if("Swarmer")
-			name = "Swarmer ([rand(1, 999)])"
+			name = "Swarmer ([SSrng.random(1, 999)])"
 			desc = "A cardboard cutout of a swarmer."
 			icon_state = "cutout_swarmer"
 		if("Ash Walker")
-			name = lizard_name(pick(MALE, FEMALE))
+			name = lizard_name(SSrng.pick_from_list(MALE, FEMALE))
 			desc = "A cardboard cutout of an ash walker."
 			icon_state = "cutout_free_antag"
 		if("Deathsquad Officer")
-			name = pick(GLOB.commando_names)
+			name = SSrng.pick_from_list(GLOB.commando_names)
 			desc = "A cardboard cutout of a death commando."
 			icon_state = "cutout_deathsquad"
 		if("Ian")

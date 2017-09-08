@@ -32,9 +32,9 @@
 /obj/machinery/computer/ratvar_act()
 	if(!clockwork)
 		clockwork = TRUE
-		icon_screen = "ratvar[rand(1, 4)]"
-		icon_keyboard = "ratvar_key[rand(1, 6)]"
-		icon_state = "ratvarcomputer[rand(1, 4)]"
+		icon_screen = "ratvar[SSrng.random(1, 4)]"
+		icon_keyboard = "ratvar_key[SSrng.random(1, 6)]"
+		icon_state = "ratvarcomputer[SSrng.random(1, 4)]"
 		update_icon()
 
 /obj/machinery/computer/narsie_act()
@@ -94,10 +94,10 @@
 /obj/machinery/computer/emp_act(severity)
 	switch(severity)
 		if(1)
-			if(prob(50))
+			if(SSrng.probability(50))
 				obj_break("energy")
 		if(2)
-			if(prob(10))
+			if(SSrng.probability(10))
 				obj_break("energy")
 	..()
 

@@ -34,7 +34,7 @@
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
-			var/damage = rand(1, 3)
+			var/damage = SSrng.random(1, 3)
 			attack_threshold_check(damage)
 			return 1
 	if (M.a_intent == INTENT_HELP)
@@ -51,7 +51,7 @@
 					"<span class='userdanger'>[M] [response_disarm] [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			add_logs(M, src, "disarmed")
 		else
-			var/damage = rand(15, 30)
+			var/damage = SSrng.random(15, 30)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 					"<span class='userdanger'>[M] has slashed at [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
@@ -62,7 +62,7 @@
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
 	. = ..()
 	if(. && stat != DEAD) //successful larva bite
-		var/damage = rand(5, 10)
+		var/damage = SSrng.random(5, 10)
 		. = attack_threshold_check(damage)
 		if(.)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
@@ -70,14 +70,14 @@
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/damage = SSrng.random(M.melee_damage_lower, M.melee_damage_upper)
 		return attack_threshold_check(damage, M.melee_damage_type)
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
-		var/damage = rand(15, 25)
+		var/damage = SSrng.random(15, 25)
 		if(M.is_adult)
-			damage = rand(20, 35)
+			damage = SSrng.random(20, 35)
 		return attack_threshold_check(damage)
 
 /mob/living/simple_animal/attack_drone(mob/living/simple_animal/drone/M)
@@ -113,20 +113,20 @@
 	var/bomb_armor = getarmor(null, "bomb")
 	switch (severity)
 		if (1)
-			if(prob(bomb_armor))
+			if(SSrng.probability(bomb_armor))
 				adjustBruteLoss(500)
 			else
 				gib()
 				return
 		if (2)
 			var/bloss = 60
-			if(prob(bomb_armor))
+			if(SSrng.probability(bomb_armor))
 				bloss = bloss / 1.5
 			adjustBruteLoss(bloss)
 
 		if(3)
 			var/bloss = 30
-			if(prob(bomb_armor))
+			if(SSrng.probability(bomb_armor))
 				bloss = bloss / 1.5
 			adjustBruteLoss(bloss)
 

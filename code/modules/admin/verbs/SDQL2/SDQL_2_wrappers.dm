@@ -101,13 +101,13 @@
 	return params2list(Params)
 
 /proc/_pick(...)
-	return pick(arglist(args))
+	return SSrng.pick_from_list(arglist(args))
 
 /proc/_prob(P)
-	return prob(P)
+	return SSrng.probability(P)
 
 /proc/_rand(L = 0, H = 1)
-	return rand(L, H)
+	return SSrng.random(L, H)
 
 /proc/_range(Dist, Center = usr)
 	return range(Dist, Center)

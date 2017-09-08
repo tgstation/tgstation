@@ -54,15 +54,15 @@
 		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen
 			if (reaction_name == "Friendly Gold Slime")
-				chosen = pick(chemical_mob_spawn_nicecritters)
+				chosen = SSrng.pick_from_list(chemical_mob_spawn_nicecritters)
 			else
-				chosen = pick(chemical_mob_spawn_meancritters)
+				chosen = SSrng.pick_from_list(chemical_mob_spawn_meancritters)
 			var/spawnloc = get_turf(holder.my_atom)
 			var/mob/living/simple_animal/C = new chosen(spawnloc)
 			C.faction |= mob_faction
-			if(prob(50))
-				for(var/j = 1, j <= rand(1, 3), j++)
-					step(C, pick(NORTH,SOUTH,EAST,WEST))
+			if(SSrng.probability(50))
+				for(var/j = 1, j <= SSrng.random(1, 3), j++)
+					step(C, SSrng.pick_from_list(NORTH,SOUTH,EAST,WEST))
 
 /datum/chemical_reaction/proc/goonchem_vortex(turf/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))

@@ -37,10 +37,10 @@
 			if(1)
 				qdel(src)
 			if(2)
-				if(prob(60))
+				if(SSrng.probability(60))
 					qdel(src)
 			if(3)
-				if(prob(25))
+				if(SSrng.probability(25))
 					qdel(src)
 
 /obj/effect/singularity_act()

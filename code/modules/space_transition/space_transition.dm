@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 		used_points |= P
 		possible_points.Remove(used_points)
 		D.set_neigbours(used_points)
-		P = pick(possible_points)
+		P = SSrng.pick_from_list(possible_points)
 		grid["[D.z_value]"] = D
 
 	for(var/A in GLOB.z_levels_list)

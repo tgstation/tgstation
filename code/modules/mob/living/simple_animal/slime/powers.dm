@@ -89,7 +89,7 @@
 /mob/living/simple_animal/slime/proc/Feedstop(silent=0, living=1)
 	if(buckled)
 		if(!living)
-			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
+			to_chat(src, "<span class='warning'>[SSrng.pick_from_list("This subject is incompatible", \
 			"This subject does not have life energy", "This subject is empty", \
 			"I am not satisified", "I can not feed from this subject", \
 			"I do not feel nourished", "This subject is not food")]!</span>")
@@ -153,8 +153,8 @@
 				var/child_colour
 				if(mutation_chance >= 100)
 					child_colour = "rainbow"
-				else if(prob(mutation_chance))
-					child_colour = slime_mutation[rand(1,4)]
+				else if(SSrng.probability(mutation_chance))
+					child_colour = slime_mutation[SSrng.random(1,4)]
 				else
 					child_colour = colour
 				var/mob/living/simple_animal/slime/M
@@ -166,10 +166,10 @@
 					step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
-				M.mutation_chance = Clamp(mutation_chance+(rand(5,-5)),0,100)
+				M.mutation_chance = Clamp(mutation_chance+(SSrng.random(5,-5)),0,100)
 				SSblackbox.add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 
-			var/mob/living/simple_animal/slime/new_slime = pick(babies)
+			var/mob/living/simple_animal/slime/new_slime = SSrng.pick_from_list(babies)
 			new_slime.a_intent = INTENT_HARM
 			if(src.mind)
 				src.mind.transfer_to(new_slime)

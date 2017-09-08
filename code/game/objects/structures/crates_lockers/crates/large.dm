@@ -24,7 +24,7 @@
 							 "<span class='italics'>You hear splitting wood.</span>")
 		playsound(src.loc, 'sound/weapons/slashmiss.ogg', 75, 1)
 
-		for(var/i in 1 to rand(2, 5))
+		for(var/i in 1 to SSrng.random(2, 5))
 			new material_drop(src)
 		for(var/atom/movable/AM in contents)
 			AM.forceMove(T)

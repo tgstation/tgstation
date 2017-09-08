@@ -27,7 +27,7 @@ GLOBAL_PROTECT(admin_datums)
 		throw EXCEPTION("Admin datum created without a rank")
 		return
 	rank = R
-	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
+	admin_signature = "Nanotrasen Officer #[SSrng.random(0,9)][SSrng.random(0,9)][SSrng.random(0,9)]"
 	GLOB.admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)

@@ -74,7 +74,7 @@
 	"white",
 	"yellow"
 	)
-	
+
 	var/list/my_possible_colors = possible_colors.Copy()
 
 	for(var/wire in shuffle(wires))
@@ -121,7 +121,7 @@
 	cut(get_wire(color))
 
 /datum/wires/proc/cut_random()
-	cut(wires[rand(1, wires.len)])
+	cut(wires[SSrng.random(1, wires.len)])
 
 /datum/wires/proc/cut_all()
 	for(var/wire in wires)
@@ -161,7 +161,7 @@
 	var/remaining_pulses = MAXIMUM_EMP_WIRES
 
 	for(var/wire in possible_wires)
-		if(prob(33))
+		if(SSrng.probability(33))
 			pulse(wire)
 		remaining_pulses--
 		if(remaining_pulses >= 0)

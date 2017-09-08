@@ -54,7 +54,7 @@
 		speed += U.getBrainLoss() * 3
 	if(do_after(user, speed, 0, user))
 		var/usedName = devilName
-		if(!prob(correctness))
+		if(!SSrng.probability(correctness))
 			usedName += "x"
 		var/datum/antagonist/devil/devil = devilInfo(usedName)
 		display_devil(devil, user, usedName)

@@ -28,7 +28,7 @@
 /mob/living/simple_animal/mouse/Initialize()
 	..()
 	if(!body_color)
-		body_color = pick( list("brown","gray","white") )
+		body_color = SSrng.pick_from_list( list("brown","gray","white") )
 	icon_state = "mouse_[body_color]"
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
@@ -61,11 +61,11 @@
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
-	if(prob(chew_probability))
+	if(SSrng.probability(chew_probability))
 		var/turf/open/floor/F = get_turf(src)
 		if(istype(F) && !F.intact)
 			var/obj/structure/cable/C = locate() in F
-			if(C && prob(15))
+			if(C && SSrng.probability(15))
 				if(C.avail())
 					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
 					playsound(src, 'sound/effects/sparks2.ogg', 100, 1)

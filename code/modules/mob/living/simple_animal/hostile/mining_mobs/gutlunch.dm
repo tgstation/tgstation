@@ -77,7 +77,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/Initialize()
 	..()
-	add_atom_colour(pick("#E39FBB", "#D97D64", "#CF8C4A"), FIXED_COLOUR_PRIORITY)
+	add_atom_colour(SSrng.pick_from_list("#E39FBB", "#D97D64", "#CF8C4A"), FIXED_COLOUR_PRIORITY)
 	resize = 0.85
 	update_transform()
 
@@ -106,8 +106,8 @@
 	reagents.my_atom = src
 
 /obj/item/udder/gutlunch/generateMilk()
-	if(prob(60))
-		reagents.add_reagent("cream", rand(2, 5))
-	if(prob(45))
-		reagents.add_reagent("salglu_solution", rand(2,5))
+	if(SSrng.probability(60))
+		reagents.add_reagent("cream", SSrng.random(2, 5))
+	if(SSrng.probability(45))
+		reagents.add_reagent("salglu_solution", SSrng.random(2,5))
 

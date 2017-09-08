@@ -59,7 +59,7 @@
 	//Suffocate
 	if(losebreath > 0)
 		losebreath--
-		if(prob(10))
+		if(SSrng.probability(10))
 			emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/loc_as_obj = loc
@@ -131,7 +131,7 @@
 
 	//OXYGEN
 	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
-		if(prob(20))
+		if(SSrng.probability(20))
 			emote("gasp")
 		if(O2_partialpressure > 0)
 			var/ratio = 1 - O2_partialpressure/safe_oxy_min
@@ -162,7 +162,7 @@
 			adjustOxyLoss(3)
 			if(world.time - co2overloadtime > 300)
 				adjustOxyLoss(8)
-		if(prob(20))
+		if(SSrng.probability(20))
 			emote("cough")
 
 	else
@@ -184,8 +184,8 @@
 			if(SA_partialpressure > SA_sleep_min)
 				Sleeping(max(AmountSleeping() + 40, 200))
 		else if(SA_partialpressure > 0.01)
-			if(prob(20))
-				emote(pick("giggle","laugh"))
+			if(SSrng.probability(20))
+				emote(SSrng.pick_from_list("giggle","laugh"))
 
 	//BZ (Facepunch port of their Agent B)
 	if(breath_gases["bz"])
@@ -229,7 +229,7 @@
 /mob/living/carbon/handle_diseases()
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(prob(D.infectivity))
+		if(SSrng.probability(D.infectivity))
 			D.spread()
 
 		if(stat != DEAD)
@@ -279,13 +279,13 @@
 		switch(radiation)
 			if(0 to 50)
 				radiation = max(radiation-1,0)
-				if(prob(25))
+				if(SSrng.probability(25))
 					adjustToxLoss(1)
 
 			if(50 to 75)
 				radiation = max(radiation-2,0)
 				adjustToxLoss(1)
-				if(prob(5))
+				if(SSrng.probability(5))
 					radiation = max(radiation-5,0)
 
 			if(75 to 100)
@@ -355,7 +355,7 @@
 	if(drowsyness)
 		drowsyness = max(drowsyness - restingpwr, 0)
 		blur_eyes(2)
-		if(prob(5))
+		if(SSrng.probability(5))
 			AdjustSleeping(20)
 			Unconscious(100)
 
@@ -431,5 +431,5 @@
 		reagents.remove_reagent("corazone", 0.4) //corazone slowly deletes itself.
 		return
 	adjustToxLoss(8)
-	if(prob(30))
+	if(SSrng.probability(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure

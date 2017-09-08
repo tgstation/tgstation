@@ -30,9 +30,9 @@
 			for(var/turf/T in orange(target,outer_tele_radius))
 				if(!(T in orange(target,inner_tele_radius)))
 					turfs_to_pick_from += T
-			turfs += pick(/turf in turfs_to_pick_from)
+			turfs += SSrng.pick_from_list(/turf in turfs_to_pick_from)
 
-		var/turf/picked = pick(turfs)
+		var/turf/picked = SSrng.pick_from_list(turfs)
 
 		if(!picked || !isturf(picked))
 			return

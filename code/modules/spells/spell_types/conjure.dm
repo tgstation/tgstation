@@ -24,8 +24,8 @@
 	for(var/i=0,i<summon_amt,i++)
 		if(!targets.len)
 			break
-		var/summoned_object_type = pick(summon_type)
-		var/spawn_place = pick(targets)
+		var/summoned_object_type = SSrng.pick_from_list(summon_type)
+		var/spawn_place = SSrng.pick_from_list(targets)
 		if(summon_ignore_prev_spawn_points)
 			targets -= spawn_place
 		if(ispath(summoned_object_type, /turf))

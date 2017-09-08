@@ -25,7 +25,7 @@
 	if(!randomise_selection)
 		A = input("Area to teleport to", "Teleport", A) as null|anything in GLOB.teleportlocs
 	else
-		A = pick(GLOB.teleportlocs)
+		A = SSrng.pick_from_list(GLOB.teleportlocs)
 	if(!A)
 		return
 	var/area/thearea = GLOB.teleportlocs[A]
@@ -57,7 +57,7 @@
 		var/attempt = null
 		var/success = 0
 		while(tempL.len)
-			attempt = pick(tempL)
+			attempt = SSrng.pick_from_list(tempL)
 			target.Move(attempt)
 			if(get_turf(target) == attempt)
 				success = 1
@@ -66,7 +66,7 @@
 				tempL.Remove(attempt)
 
 		if(!success)
-			target.loc = pick(L)
+			target.loc = SSrng.pick_from_list(L)
 			playsound(get_turf(user), sound2, 50,1)
 
 	return
@@ -79,9 +79,9 @@
 			if("shout")
 				user.say("[invocation] [uppertext(chosenarea.name)]")
 				if(user.gender==MALE)
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+					playsound(user.loc, SSrng.pick_from_list('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 				else
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+					playsound(user.loc, SSrng.pick_from_list('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 			if("whisper")
 				user.whisper("[invocation] [uppertext(chosenarea.name)]")
 

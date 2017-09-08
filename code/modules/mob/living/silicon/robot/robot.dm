@@ -112,7 +112,7 @@
 	robot_modules_background.layer = HUD_LAYER	//Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 
-	ident = rand(1, 999)
+	ident = SSrng.random(1, 999)
 
 	if(!cell)
 		cell = new /obj/item/stock_parts/cell(src)
@@ -988,7 +988,7 @@
 		upgrades |= new /obj/item/borg/upgrade/ai(src)
 	shell = TRUE
 	braintype = "AI Shell"
-	name = "[designation] AI Shell [rand(100,999)]"
+	name = "[designation] AI Shell [SSrng.random(100,999)]"
 	real_name = name
 	GLOB.available_ai_shells |= src
 	if(!QDELETED(builtInCamera))
@@ -1005,14 +1005,14 @@
 		qdel(boris)
 	shell = FALSE
 	GLOB.available_ai_shells -= src
-	name = "Unformatted Cyborg [rand(100,999)]"
+	name = "Unformatted Cyborg [SSrng.random(100,999)]"
 	real_name = name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
 	diag_hud_set_aishell()
 
 /mob/living/silicon/robot/proc/deploy_init(var/mob/living/silicon/ai/AI)
-	real_name = "[AI.real_name] shell [rand(100, 999)] - [designation]"	//Randomizing the name so it shows up separately in the shells list
+	real_name = "[AI.real_name] shell [SSrng.random(100, 999)] - [designation]"	//Randomizing the name so it shows up separately in the shells list
 	name = real_name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name	//update the camera name too

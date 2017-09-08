@@ -102,7 +102,7 @@
 /mob/living/simple_animal/parrot/Initialize()
 	. = ..()
 	if(!ears)
-		var/headset = pick(/obj/item/device/radio/headset/headset_sec, \
+		var/headset = SSrng.pick_from_list(/obj/item/device/radio/headset/headset_sec, \
 						/obj/item/device/radio/headset/headset_eng, \
 						/obj/item/device/radio/headset/headset_med, \
 						/obj/item/device/radio/headset/headset_sci, \
@@ -122,7 +122,7 @@
 /mob/living/simple_animal/parrot/examine(mob/user)
 	..()
 	if(stat)
-		to_chat(user, pick("This parrot is no more", "This is a late parrot", "This is an ex-parrot"))
+		to_chat(user, SSrng.pick_from_list("This parrot is no more", "This is a late parrot", "This is an ex-parrot"))
 
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
@@ -145,10 +145,10 @@
 		stat("Mode",a_intent)
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
-	if(speaker != src && prob(50)) //Dont imitate ourselves
-		if(!radio_freq || prob(10))
+	if(speaker != src && SSrng.probability(50)) //Dont imitate ourselves
+		if(!radio_freq || SSrng.probability(10))
 			if(speech_buffer.len >= 500)
-				speech_buffer -= pick(speech_buffer)
+				speech_buffer -= SSrng.pick_from_list(speech_buffer)
 			speech_buffer |= html_decode(raw_message)
 	if(speaker == src && !client) //If a parrot squawks in the woods and no one is around to hear it, does it make a sound? This code says yes!
 		return message
@@ -209,7 +209,7 @@
 					if(ears)
 						if(!stat)
 							if(available_channels.len)
-								src.say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+								src.say("[SSrng.pick_from_list(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
 							else
 								src.say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
 						ears.loc = src.loc
@@ -381,11 +381,11 @@
 	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list. */
 /mob/living/simple_animal/parrot/handle_automated_speech()
 	..()
-	if(speech_buffer.len && prob(speech_shuffle_rate)) //shuffle out a phrase and add in a new one
+	if(speech_buffer.len && SSrng.probability(speech_shuffle_rate)) //shuffle out a phrase and add in a new one
 		if(speak.len)
-			speak.Remove(pick(speak))
+			speak.Remove(SSrng.pick_from_list(speak))
 
-		speak.Add(pick(speech_buffer))
+		speak.Add(SSrng.pick_from_list(speech_buffer))
 
 
 /mob/living/simple_animal/parrot/handle_automated_movement()
@@ -421,13 +421,13 @@
 
 						//50/50 chance to not use the radio at all
 						var/useradio = 0
-						if(prob(50))
+						if(SSrng.probability(50))
 							useradio = 1
 
 						if((copytext(possible_phrase,1,2) in GLOB.department_radio_prefixes) && (copytext(possible_phrase,2,3) in GLOB.department_radio_keys))
-							possible_phrase = "[useradio?pick(available_channels):""][copytext(possible_phrase,3)]" //crop out the channel prefix
+							possible_phrase = "[useradio?SSrng.pick_from_list(available_channels):""][copytext(possible_phrase,3)]" //crop out the channel prefix
 						else
-							possible_phrase = "[useradio?pick(available_channels):""][possible_phrase]"
+							possible_phrase = "[useradio?SSrng.pick_from_list(available_channels):""][possible_phrase]"
 
 						newspeak.Add(possible_phrase)
 
@@ -454,8 +454,8 @@
 
 		//Wander around aimlessly. This will help keep the loops from searches down
 		//and possibly move the mob into a new are in view of something they can use
-		if(prob(90))
-			step(src, pick(GLOB.cardinals))
+		if(SSrng.probability(90))
+			step(src, SSrng.pick_from_list(GLOB.cardinals))
 			return
 
 		if(!held_item && !parrot_perch) //If we've got nothing to do.. look for something to do.
@@ -579,7 +579,7 @@
 					parrot_state = PARROT_WANDER
 				return
 
-			attacktext = pick("claws at", "chomps")
+			attacktext = SSrng.pick_from_list("claws at", "chomps")
 			L.attack_animal(src)//Time for the hurt to begin!
 		//Otherwise, fly towards the mob!
 		else
@@ -839,7 +839,7 @@
 	loc = get_turf(H)
 	H.buckle_mob(src, force=1)
 	pixel_y = 9
-	pixel_x = pick(-8,8) //pick left or right shoulder
+	pixel_x = SSrng.pick_from_list(-8,8) //pick left or right shoulder
 	icon_state = "parrot_sit"
 	parrot_state = PARROT_PERCH
 	to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
@@ -881,19 +881,19 @@
 	available_channels = list(":e")
 	Read_Memory()
 	if(rounds_survived == longest_survival)
-		speak += pick("...[longest_survival].", "The things I've seen!", "I have lived many lives!", "What are you before me?")
+		speak += SSrng.pick_from_list("...[longest_survival].", "The things I've seen!", "I have lived many lives!", "What are you before me?")
 		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
 		add_atom_colour("#EEEE22", FIXED_COLOUR_PRIORITY)
 	else if(rounds_survived == longest_deathstreak)
-		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
+		speak += SSrng.pick_from_list("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
 		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
 		add_atom_colour("#BB7777", FIXED_COLOUR_PRIORITY)
 	else if(rounds_survived > 0)
-		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
+		speak += SSrng.pick_from_list("...again?", "No, It was over!", "Let me out!", "It never ends!")
 		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
 	else
-		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
+		speak += SSrng.pick_from_list("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
 
 	..()
 
@@ -908,7 +908,7 @@
 /mob/living/simple_animal/parrot/Poly/death(gibbed)
 	if(!memory_saved)
 		var/go_ghost = 0
-		if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak || prob(0.666))
+		if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak || SSrng.probability(0.666))
 			go_ghost = 1
 		rounds_survived = min(--rounds_survived,0)
 		if(rounds_survived < longest_deathstreak)

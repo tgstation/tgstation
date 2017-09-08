@@ -53,8 +53,8 @@ Bonus
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(1, 2, 3, 4)
-			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You feel nauseous.", "You feel like you're going to throw up!")]</span>")
+			if(SSrng.probability(base_message_chance) && !suppress_warning)
+				to_chat(M, "<span class='warning'>[SSrng.pick_from_list("You feel nauseous.", "You feel like you're going to throw up!")]</span>")
 		else
 			vomit(M)
 

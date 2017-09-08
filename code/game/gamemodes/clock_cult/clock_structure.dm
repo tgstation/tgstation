@@ -33,7 +33,7 @@
 		obj_integrity = max_integrity
 
 /obj/structure/destructible/clockwork/narsie_act()
-	if(take_damage(rand(25, 50), BRUTE) && src) //if we still exist
+	if(take_damage(SSrng.random(25, 50), BRUTE) && src) //if we still exist
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)

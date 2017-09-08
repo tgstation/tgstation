@@ -45,7 +45,7 @@
 			if(isnull(shenanigans))
 				shenanigans = list("Except the poly file is missing...")
 		if(11 to 14, 16 to 50, 52 to 99, 103 to 107, 109 to 203, 205 to 249, 252 to 665, 667 to 999, 1001 to 5642)
-			SpeakPeace(list(pick(shenanigans),pick(shenanigans),pick(shenanigans)))
+			SpeakPeace(list(SSrng.pick_from_list(shenanigans),SSrng.pick_from_list(shenanigans),SSrng.pick_from_list(shenanigans)))
 			if(times_spoken_to * 0.1 == round(times_spoken_to * 0.1))
 				SpeakPeace(list("That's [times_spoken_to] times you've spoken to me by the way."))
 		if(15)
@@ -100,7 +100,7 @@
 	materials = list(MAT_GLASS = 500)
 
 /obj/item/rupee/New()
-	var/newcolor = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
+	var/newcolor = color2hex(pickweight(list("green" = 10, "blue" = 5, "red" = 3, "purple" = 1)))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	..()
 

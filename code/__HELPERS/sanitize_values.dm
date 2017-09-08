@@ -17,7 +17,7 @@
 	if(default)
 		return default
 	if(List && List.len)
-		return pick(List)
+		return SSrng.pick_from_list(List)
 
 
 

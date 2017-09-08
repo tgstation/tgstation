@@ -1,8 +1,8 @@
 /proc/consonant()
-	return pick("B","C","D","F","G","H","J","K","L","M","N","P","Q","R","S","T","V","W","X","Y","Z")
+	return SSrng.pick_from_list("B","C","D","F","G","H","J","K","L","M","N","P","Q","R","S","T","V","W","X","Y","Z")
 
 /proc/vowel()
-	return pick("A", "E", "I", "O", "U")
+	return SSrng.pick_from_list("A", "E", "I", "O", "U")
 
 /proc/ucfirst(var/S)
 	return "[uppertext(ascii2text(text2ascii(S, 1)))][copytext(S, 2)]"
@@ -62,21 +62,21 @@ GLOBAL_LIST_EMPTY(FrozenAccounts)
 
 /datum/article/New()
 	..()
-	if ((outlets.len && !prob(100 / (outlets.len + 1))) || !outlets.len)
+	if ((outlets.len && !SSrng.probability(100 / (outlets.len + 1))) || !outlets.len)
 		var/ON = generateOutletName()
 		if (!(ON in outlets))
 			outlets[ON] = list()
 		outlet = ON
 	else
-		outlet = pick(outlets)
+		outlet = SSrng.pick_from_list(outlets)
 
 	var/list/authors = outlets[outlet]
-	if ((authors.len && !prob(100 / (authors.len + 1))) || !authors.len)
+	if ((authors.len && !SSrng.probability(100 / (authors.len + 1))) || !authors.len)
 		var/AN = generateAuthorName()
 		outlets[outlet] += AN
 		author = AN
 	else
-		author = pick(authors)
+		author = SSrng.pick_from_list(authors)
 
 	ticks = world.time
 
@@ -85,20 +85,20 @@ GLOBAL_LIST_EMPTY(FrozenAccounts)
 	var/list/nouns = list("Post", "Herald", "Sun", "Tribune", "Mail", "Times", "Journal", "Report")
 	var/list/timely = list("Daily", "Hourly", "Weekly", "Biweekly", "Monthly", "Yearly")
 
-	switch(rand(1,2))
+	switch(SSrng.random(1,2))
 		if (1)
-			return "The [pick(locations)] [pick(nouns)]"
+			return "The [SSrng.pick_from_list(locations)] [SSrng.pick_from_list(nouns)]"
 		if (2)
-			return "The [pick(timely)] [pick(nouns)]"
+			return "The [SSrng.pick_from_list(timely)] [SSrng.pick_from_list(nouns)]"
 
 /datum/article/proc/generateAuthorName()
-	switch(rand(1,3))
+	switch(SSrng.random(1,3))
 		if (1)
-			return "[consonant()]. [pick(GLOB.last_names)]"
+			return "[consonant()]. [SSrng.pick_from_list(GLOB.last_names)]"
 		if (2)
-			return "[prob(50) ? pick(GLOB.first_names_male) : pick(GLOB.first_names_female)] [consonant()].[prob(50) ? "[consonant()]. " : null] [pick(GLOB.last_names)]"
+			return "[SSrng.probability(50) ? SSrng.pick_from_list(GLOB.first_names_male) : SSrng.pick_from_list(GLOB.first_names_female)] [consonant()].[SSrng.probability(50) ? "[consonant()]. " : null] [SSrng.pick_from_list(GLOB.last_names)]"
 		if (3)
-			return "[prob(50) ? pick(GLOB.first_names_male) : pick(GLOB.first_names_female)] \"[prob(50) ? pick(GLOB.first_names_male) : pick(GLOB.first_names_female)]\" [pick(GLOB.last_names)]"
+			return "[SSrng.probability(50) ? SSrng.pick_from_list(GLOB.first_names_male) : SSrng.pick_from_list(GLOB.first_names_female)] \"[SSrng.probability(50) ? SSrng.pick_from_list(GLOB.first_names_male) : SSrng.pick_from_list(GLOB.first_names_female)]\" [SSrng.pick_from_list(GLOB.last_names)]"
 
 /datum/article/proc/formatSpacetime()
 	var/ticksc = round(ticks/100)
@@ -121,5 +121,5 @@ GLOBAL_LIST_EMPTY(FrozenAccounts)
 	for (var/I in product_tokens)
 		T_list[I] = list(product_tokens[I])
 	for (var/I in T_list)
-		token_string = replacetext(token_string, "%[I]%", pick(T_list[I]))
+		token_string = replacetext(token_string, "%[I]%", SSrng.pick_from_list(T_list[I]))
 	return ucfirst(token_string)

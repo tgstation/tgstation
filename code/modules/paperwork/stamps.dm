@@ -91,7 +91,7 @@
 	stamp_names = sortList(stamp_names)
 
 /obj/item/stamp/chameleon/emp_act(severity)
-	change_to(pick(stamp_types))
+	change_to(SSrng.pick_from_list(stamp_types))
 
 /obj/item/stamp/chameleon/proc/change_to(obj/item/stamp/stamp_type)
 	name = initial(stamp_type.name)

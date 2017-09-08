@@ -20,7 +20,7 @@
 
 /obj/item/clothing/gloves/color/fyellow/New()
 	..()
-	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
+	siemens_coefficient = SSrng.pick_from_list(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/color/fyellow/old
 	desc = "Old and worn out insulated gloves, hopefully they still work."
@@ -28,7 +28,7 @@
 
 /obj/item/clothing/gloves/color/fyellow/old/Initialize()
 	. = ..()
-	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
+	siemens_coefficient = SSrng.pick_from_list(0,0,0,0.5,0.5,0.5,0.75)
 
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
@@ -53,7 +53,7 @@
 	if(istype(W, /obj/item/wirecutters))
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
 			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
-			playsound(user.loc, W.usesound, rand(10,50), 1)
+			playsound(user.loc, W.usesound, SSrng.random(10,50), 1)
 			new /obj/item/clothing/gloves/fingerless(user.loc)
 			qdel(src)
 	..()
@@ -204,7 +204,7 @@
 		/obj/item/clothing/gloves/color/light_brown = 1,
 		/obj/item/clothing/gloves/color/brown = 1)
 
-	var/obj/item/clothing/gloves/color/selected = pick(gloves)
+	var/obj/item/clothing/gloves/color/selected = SSrng.pick_from_list(gloves)
 
 	name = initial(selected.name)
 	desc = initial(selected.desc)

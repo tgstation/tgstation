@@ -10,7 +10,7 @@
 	new /obj/item/storage/box/handcuffs(src)
 	new /obj/item/device/aicard(src)
 	new /obj/item/device/assembly/flash/handheld(src)
-	if(prob(50))
+	if(SSrng.probability(50))
 		new /obj/item/ammo_box/magazine/m50(src)
 		new /obj/item/ammo_box/magazine/m50(src)
 		new /obj/item/gun/ballistic/automatic/pistol/deagle(src)

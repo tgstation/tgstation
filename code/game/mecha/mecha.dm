@@ -155,11 +155,11 @@
 		else
 			M.forceMove(loc)
 	if(wreckage)
-		if(prob(30))
+		if(SSrng.probability(30))
 			explosion(get_turf(src), 0, 0, 1, 3)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-			if(E.salvageable && prob(30))
+			if(E.salvageable && SSrng.probability(30))
 				WR.crowbar_salvage += E
 				E.detach(WR) //detaches from src into WR
 				E.equip_ready = 1
@@ -169,7 +169,7 @@
 		if(cell)
 			WR.crowbar_salvage += cell
 			cell.forceMove(WR)
-			cell.charge = rand(0, cell.charge)
+			cell.charge = SSrng.random(0, cell.charge)
 		if(internal_tank)
 			WR.crowbar_salvage += internal_tank
 			internal_tank.forceMove(WR)
@@ -270,16 +270,16 @@
 
 	if(internal_damage)
 		if(internal_damage & MECHA_INT_FIRE)
-			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && prob(5))
+			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && SSrng.probability(5))
 				clearInternalDamage(MECHA_INT_FIRE)
 			if(internal_tank)
 				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 				if(int_tank_air.return_pressure() > internal_tank.maximum_pressure && !(internal_damage & MECHA_INT_TANK_BREACH))
 					setInternalDamage(MECHA_INT_TANK_BREACH)
 				if(int_tank_air && int_tank_air.return_volume() > 0) //heat the air_contents
-					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
+					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+SSrng.random(10,15))
 			if(cabin_air && cabin_air.return_volume()>0)
-				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(10,15))
+				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+SSrng.random(10,15))
 				if(cabin_air.return_temperature() > max_temperature/2)
 					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
 
@@ -578,7 +578,7 @@
 
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
-	if(prob(20))
+	if(SSrng.probability(20))
 		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
@@ -586,7 +586,7 @@
 			var/int_dam_flag = safepick(possible_int_damage)
 			if(int_dam_flag)
 				setInternalDamage(int_dam_flag)
-	if(prob(5))
+	if(SSrng.probability(5))
 		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/ME = safepick(equipment)
 			if(ME)
@@ -669,7 +669,7 @@
 			AI.remote_control = null
 			icon_state = initial(icon_state)+"-open"
 			to_chat(AI, "You have been downloaded to a mobile storage device. Wireless connection offline.")
-			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
+			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([SSrng.random(1000,9999)].exe) removed from [name] and stored within local memory.")
 
 		if(AI_MECH_HACK) //Called by AIs on the mech
 			AI.linked_core = new /obj/structure/AIcore/deactivated(AI.loc)
@@ -695,7 +695,7 @@
 				return
 			AI.control_disabled = 0
 			AI.radio_enabled = 1
-			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([SSrng.random(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 			card.AI = null
 			ai_enter_mech(AI, interaction)
 

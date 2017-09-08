@@ -21,10 +21,10 @@
 			explosion(src.loc,0,2,1,flame_range = 4)
 			qdel(src)
 		if(2)
-			if(prob(50))
+			if(SSrng.probability(50))
 				ex_act(EXPLODE_DEVASTATE)
 		if(3)
-			if(prob(25))
+			if(SSrng.probability(25))
 				ex_act(EXPLODE_DEVASTATE)
 
 /obj/item/device/doorCharge/Destroy()

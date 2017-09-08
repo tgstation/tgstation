@@ -49,7 +49,7 @@ Chaplain
 
 	switch(lowertext(new_religion))
 		if("christianity")
-			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
+			B.name = SSrng.pick_from_list("The Holy Bible","The Dead Sea Scrolls")
 		if("satanism")
 			B.name = "The Unholy Bible"
 		if("cthulu")
@@ -57,7 +57,7 @@ Chaplain
 		if("islam")
 			B.name = "Quran"
 		if("scientology")
-			B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
+			B.name = SSrng.pick_from_list("The Biography of L. Ron Hubbard","Dianetics")
 		if("chaos")
 			B.name = "The Book of Lorgar"
 		if("imperium")
@@ -67,10 +67,10 @@ Chaplain
 		if("homosexuality")
 			B.name = "Guys Gone Wild"
 		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "meme", "memes")
-			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
+			B.name = SSrng.pick_from_list("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
 			H.setBrainLoss(100) // starts off retarded as fuck
 		if("science")
-			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+			B.name = SSrng.pick_from_list("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 		else
 			B.name = "The Holy Book of [new_religion]"
 

@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
 	while(!isspaceturf(pickedstart))
-		var/startSide = pick(GLOB.cardinals)
+		var/startSide = SSrng.pick_from_list(GLOB.cardinals)
 		pickedstart = spaceDebrisStartLoc(startSide, ZLEVEL_STATION)
 		pickedgoal = spaceDebrisFinishLoc(startSide, ZLEVEL_STATION)
 		max_i--
@@ -49,15 +49,15 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	switch(startSide)
 		if(NORTH)
 			starty = world.maxy-(TRANSITIONEDGE+1)
-			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			startx = SSrng.random((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
 		if(EAST)
-			starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+			starty = SSrng.random((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
 			startx = world.maxx-(TRANSITIONEDGE+1)
 		if(SOUTH)
 			starty = (TRANSITIONEDGE+1)
-			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			startx = SSrng.random((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
 		if(WEST)
-			starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
+			starty = SSrng.random((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
 			startx = (TRANSITIONEDGE+1)
 	. = locate(startx, starty, Z)
 
@@ -67,15 +67,15 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	switch(startSide)
 		if(NORTH)
 			endy = (TRANSITIONEDGE+1)
-			endx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			endx = SSrng.random((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
 		if(EAST)
-			endy = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
+			endy = SSrng.random((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
 			endx = (TRANSITIONEDGE+1)
 		if(SOUTH)
 			endy = world.maxy-(TRANSITIONEDGE+1)
-			endx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+			endx = SSrng.random((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
 		if(WEST)
-			endy = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+			endy = SSrng.random((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
 			endx = world.maxx-(TRANSITIONEDGE+1)
 	. = locate(endx, endy, Z)
 
@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
 
-		if(prob(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
+		if(SSrng.probability(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
 			get_hit()
 
 /obj/effect/meteor/Destroy()
@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/proc/make_debris()
 	for(var/throws = dropamt, throws > 0, throws--)
-		var/thing_to_spawn = pick(meteordrop)
+		var/thing_to_spawn = SSrng.pick_from_list(meteordrop)
 		new thing_to_spawn(get_turf(src))
 
 /obj/effect/meteor/proc/meteor_effect()
@@ -280,12 +280,12 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	for(var/path in meteordrop)
 		if(path == /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant)
 			meteordrop -= path
-			meteordrop += pick(subtypesof(path))
+			meteordrop += SSrng.pick_from_list(subtypesof(path))
 
 	for(var/path in meteordrop)
 		if(path == /obj/item/organ/tongue)
 			meteordrop -= path
-			meteordrop += pick(typesof(path))
+			meteordrop += SSrng.pick_from_list(typesof(path))
 	..()
 
 /obj/effect/meteor/meaty/make_debris()
@@ -338,7 +338,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/tunguska/Collide()
 	..()
-	if(prob(20))
+	if(SSrng.probability(20))
 		explosion(src.loc,2,4,6,8)
 
 //////////////////////////
@@ -360,6 +360,6 @@ GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 
 /obj/effect/meteor/pumpkin/New()
 	..()
-	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
+	meteorsound = SSrng.pick_from_list('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
 //////////////////////////
 #undef DEFAULT_METEOR_LIFETIME

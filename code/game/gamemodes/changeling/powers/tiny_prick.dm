@@ -209,7 +209,7 @@
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
-	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(300,600))
+	addtimer(CALLBACK(src, .proc/hallucination_time, target), SSrng.random(300,600))
 	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/LSD/proc/hallucination_time(mob/living/carbon/target)

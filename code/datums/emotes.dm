@@ -72,7 +72,7 @@
 /datum/emote/proc/select_message_type(mob/user)
 	. = message
 	if(!muzzle_ignore && user.is_muzzled() && emote_type == EMOTE_AUDIBLE)
-		return "makes a [pick("strong ", "weak ", "")]noise."
+		return "makes a [SSrng.pick_from_list("strong ", "weak ", "")]noise."
 	if(user.mind && user.mind.miming && message_mime)
 		. = message_mime
 	if(isalienadult(user) && message_alien)

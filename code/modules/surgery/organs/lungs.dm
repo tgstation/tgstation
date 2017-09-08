@@ -171,7 +171,7 @@
 				if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					H.apply_damage_type(8, co2_damage_type)
 				H.throw_alert("too_much_co2", /obj/screen/alert/too_much_co2)
-			if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
+			if(SSrng.probability(20)) // Lets give them some chance to know somethings not right though I guess.
 				H.emote("cough")
 
 		else
@@ -236,15 +236,15 @@
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 				H.Sleeping(max(H.AmountSleeping() + 40, 200))
 		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-			if(prob(20))
-				H.emote(pick("giggle", "laugh"))
+			if(SSrng.probability(20))
+				H.emote(SSrng.pick_from_list("giggle", "laugh"))
 
 	// BZ
 
 		var/bz_pp = breath.get_breath_partial_pressure(breath_gases["bz"][MOLES])
 		if(bz_pp > BZ_trip_balls_min)
 			H.hallucination += 20
-			if(prob(33))
+			if(SSrng.probability(33))
 				H.adjustBrainLoss(3)
 		else if(bz_pp > 0.01)
 			H.hallucination += 5//Removed at 2 per tick so this will slowly build up
@@ -259,7 +259,7 @@
 	if(!H || !safe_breath_min) //the other args are either: Ok being 0 or Specifically handled.
 		return FALSE
 
-	if(prob(20))
+	if(SSrng.probability(20))
 		H.emote("gasp")
 	if(breath_pp > 0)
 		var/ratio = safe_breath_min/breath_pp
@@ -287,7 +287,7 @@
 		if(breath_temperature > cold_level_2_threshold && breath_temperature < cold_level_1_threshold)
 			H.apply_damage_type(cold_level_1_damage*cold_modifier, cold_damage_type)
 		if(breath_temperature < cold_level_1_threshold)
-			if(prob(20))
+			if(SSrng.probability(20))
 				to_chat(H, "<span class='warning'>You feel [cold_message] in your [name]!</span>")
 
 	if(!(RESISTHOT in species_traits)) // HEAT DAMAGE
@@ -299,7 +299,7 @@
 		if(breath_temperature > heat_level_3_threshold)
 			H.apply_damage_type(heat_level_3_damage*heat_modifier, heat_damage_type)
 		if(breath_temperature > heat_level_1_threshold)
-			if(prob(20))
+			if(SSrng.probability(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
 
 /obj/item/organ/lungs/prepare_eat()

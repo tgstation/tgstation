@@ -15,10 +15,10 @@
 		if(!client)
 			if(stat == CONSCIOUS)
 				if(!handle_combat())
-					if(prob(33) && canmove && isturf(loc) && !pulledby)
-						step(src, pick(GLOB.cardinals))
-					if(prob(1))
-						emote(pick("scratch","jump","roll","tail"))
+					if(SSrng.probability(33) && canmove && isturf(loc) && !pulledby)
+						step(src, SSrng.pick_from_list(GLOB.cardinals))
+					if(SSrng.probability(1))
+						emote(SSrng.pick_from_list("scratch","jump","roll","tail"))
 			else
 				walk_to(src,0)
 
@@ -34,13 +34,13 @@
 			return
 		switch(radiation)
 			if(50 to 75)
-				if(prob(5))
+				if(SSrng.probability(5))
 					if(!IsKnockdown())
 						emote("collapse")
 					Knockdown(60)
 					to_chat(src, "<span class='danger'>You feel weak.</span>")
 			if(75 to 100)
-				if(prob(1))
+				if(SSrng.probability(1))
 					to_chat(src, "<span class='danger'>You mutate!</span>")
 					randmutb()
 					emote("gasp")
@@ -132,7 +132,7 @@
 	return
 
 /mob/living/carbon/monkey/handle_random_events()
-	if (prob(1) && prob(2))
+	if (SSrng.probability(1) && SSrng.probability(2))
 		emote("scratch")
 
 /mob/living/carbon/monkey/has_smoke_protection()

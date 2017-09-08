@@ -599,7 +599,7 @@
 	required_temp = 374
 
 /datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
-	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life") // Lol.
+	chemical_mob_spawn(holder, SSrng.random(1, round(created_volume, 1)), "Life") // Lol.
 
 /datum/chemical_reaction/corgium
 	name = "corgium"
@@ -609,7 +609,7 @@
 
 /datum/chemical_reaction/corgium/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = rand(1, created_volume), i <= created_volume, i++) // More lulz.
+	for(var/i = SSrng.random(1, created_volume), i <= created_volume, i++) // More lulz.
 		new /mob/living/simple_animal/pet/dog/corgi(location)
 	..()
 

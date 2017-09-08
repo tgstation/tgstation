@@ -111,7 +111,7 @@
 
 
 /obj/item/reagent_containers/food/snacks/pie/plump_pie/New()
-	var/fey = prob(10)
+	var/fey = SSrng.probability(10)
 	if(fey)
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"

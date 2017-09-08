@@ -274,7 +274,7 @@
 
 
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
+	if(attack_type == UNARMED_ATTACK && SSrng.probability(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
 		return 1
 	return 0
@@ -283,7 +283,7 @@
 	..()
 	if(!proximity)
 		return
-	if(prob(break_chance))
+	if(SSrng.probability(break_chance))
 		user.visible_message("<span class='danger'>[user] smashes \the [src] to pieces against \the [target]</span>")
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target

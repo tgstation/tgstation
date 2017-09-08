@@ -168,11 +168,11 @@
 
 	if(mob.confused)
 		if(mob.confused > 40)
-			step(mob, pick(GLOB.cardinals))
-		else if(prob(mob.confused * 1.5))
-			step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
-		else if(prob(mob.confused * 3))
-			step(mob, angle2dir(dir2angle(direct) + pick(45, -45)))
+			step(mob, SSrng.pick_from_list(GLOB.cardinals))
+		else if(SSrng.probability(mob.confused * 1.5))
+			step(mob, angle2dir(dir2angle(direct) + SSrng.pick_from_list(90, -90)))
+		else if(SSrng.probability(mob.confused * 3))
+			step(mob, angle2dir(dir2angle(direct) + SSrng.pick_from_list(45, -45)))
 		else
 			step(mob, direct)
 	else
@@ -228,7 +228,7 @@
 			L.loc = get_step(L, direct)
 			L.setDir(direct)
 		if(INCORPOREAL_MOVE_SHADOW)
-			if(prob(50))
+			if(SSrng.probability(50))
 				var/locx
 				var/locy
 				switch(direct)

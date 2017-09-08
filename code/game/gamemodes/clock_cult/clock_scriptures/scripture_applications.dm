@@ -120,7 +120,7 @@
 		"<span class='warning'>The tendril was unsuccessful! Perhaps you should try again another time.</span>")
 		return FALSE
 	clockwork_say(invoker, text2ratvar("...sword and shield!"))
-	var/mob/dead/observer/theghost = pick(marauder_candidates)
+	var/mob/dead/observer/theghost = SSrng.pick_from_list(marauder_candidates)
 	var/mob/living/simple_animal/hostile/clockwork/marauder/M = new(invoker)
 	M.key = theghost.key
 	M.bind_to_host(invoker)

@@ -80,7 +80,7 @@
 				signal.data["server"] = src
 
 				// Give the log a name
-				var/identifier = num2text( rand(-1000,1000) + world.time )
+				var/identifier = num2text( SSrng.random(-1000,1000) + world.time )
 				log.name = "data packet ([md5(identifier)])"
 
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub")
@@ -99,7 +99,7 @@
 
 /obj/machinery/telecomms/server/proc/add_entry(content, input)
 	var/datum/comm_log_entry/log = new
-	var/identifier = num2text( rand(-1000,1000) + world.time )
+	var/identifier = num2text( SSrng.random(-1000,1000) + world.time )
 	log.name = "[input] ([md5(identifier)])"
 	log.input_type = input
 	log.parameters["message"] = content

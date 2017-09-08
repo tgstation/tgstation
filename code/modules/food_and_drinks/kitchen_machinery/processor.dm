@@ -236,7 +236,7 @@
 			log_admin("DEBUG: [O] in processor hasnt got a suitable recipe. How did it get in there? Please report it immediatly!!!")
 			continue
 		total_time += P.time
-	var/offset = prob(50) ? -2 : 2
+	var/offset = SSrng.probability(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
 	sleep(total_time / rating_speed)
 	for(var/O in src.contents)

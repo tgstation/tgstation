@@ -167,8 +167,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/malformed/Initialize(mapload, set_keyword)
 	. = ..()
-	icon_state = "[rand(1,7)]"
-	color = rgb(rand(0,255), rand(0,255), rand(0,255))
+	icon_state = "[SSrng.random(1,7)]"
+	color = rgb(SSrng.random(0,255), SSrng.random(0,255), SSrng.random(0,255))
 
 /obj/effect/rune/malformed/invoke(var/list/invokers)
 	..()
@@ -347,7 +347,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
 	var/oldcolor = color
 	color = RUNE_COLOR_DARKRED
-	var/mob/living/L = pick(myriad_targets)
+	var/mob/living/L = SSrng.pick_from_list(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
 	var/is_convertable = is_convertable_to_cult(L)
 	if(L.stat != DEAD && (is_clock || is_convertable))
@@ -674,7 +674,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			affecting.Knockdown(60)
 			break
 		if(affecting.stat == UNCONSCIOUS)
-			if(prob(1))
+			if(SSrng.probability(1))
 				var/mob/dead/observer/G = affecting.get_ghost()
 				to_chat(G, "<span class='cultitalic'>You feel the link between you and your body weakening... you must hurry!</span>")
 		else if(affecting.stat == DEAD)
@@ -729,7 +729,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 						 "<span class='cultitalic'>You channel [carbon_user ? "your life ":""]energy into [src], [density ? "temporarily preventing" : "allowing"] passage above it.</span>")
 	if(carbon_user)
 		var/mob/living/carbon/C = user
-		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))
+		C.apply_damage(2, BRUTE, SSrng.pick_from_list("l_arm", "r_arm"))
 
 /obj/effect/rune/wall/proc/spread_density()
 	for(var/R in GLOB.wall_runes)

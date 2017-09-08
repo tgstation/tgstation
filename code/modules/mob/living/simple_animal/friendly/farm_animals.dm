@@ -42,10 +42,10 @@
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && prob(1))
+		if(!enemies.len && SSrng.probability(1))
 			Retaliate()
 
-		if(enemies.len && prob(10))
+		if(enemies.len && SSrng.probability(10))
 			enemies = list()
 			LoseTarget()
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
@@ -80,7 +80,7 @@
 		qdel(GS)
 		eaten = TRUE
 
-	if(eaten && prob(10))
+	if(eaten && SSrng.probability(10))
 		say("Nom")
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user, params)
@@ -146,14 +146,14 @@
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
 		Knockdown(60)
 		icon_state = icon_dead
-		spawn(rand(20,50))
+		spawn(SSrng.random(20,50))
 			if(!stat && M)
 				icon_state = icon_living
 				var/external
 				var/internal
-				switch(pick(1,2,3,4))
+				switch(SSrng.pick_from_list(1,2,3,4))
 					if(1,2,3)
-						var/text = pick("imploringly.", "pleadingly.",
+						var/text = SSrng.pick_from_list("imploringly.", "pleadingly.",
 							"with a resigned expression.")
 						external = "[src] looks at [M] [text]"
 						internal = "You look at [M] [text]"
@@ -195,15 +195,15 @@
 
 /mob/living/simple_animal/chick/Initialize()
 	. = ..()
-	pixel_x = rand(-6, 6)
-	pixel_y = rand(0, 10)
+	pixel_x = SSrng.random(-6, 6)
+	pixel_y = SSrng.random(0, 10)
 
 /mob/living/simple_animal/chick/Life()
 	. =..()
 	if(!.)
 		return
 	if(!stat && !ckey)
-		amount_grown += rand(1,2)
+		amount_grown += SSrng.random(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
@@ -251,12 +251,12 @@
 /mob/living/simple_animal/chicken/Initialize()
 	. = ..()
 	if(!body_color)
-		body_color = pick(validColors)
+		body_color = SSrng.pick_from_list(validColors)
 	icon_state = "[icon_prefix]_[body_color]"
 	icon_living = "[icon_prefix]_[body_color]"
 	icon_dead = "[icon_prefix]_[body_color]_dead"
-	pixel_x = rand(-6, 6)
-	pixel_y = rand(0, 10)
+	pixel_x = SSrng.random(-6, 6)
+	pixel_y = SSrng.random(0, 10)
 	++chicken_count
 
 /mob/living/simple_animal/chicken/Destroy()
@@ -266,11 +266,11 @@
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
 	if(istype(O, food_type)) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
-			var/feedmsg = "[user] feeds [O] to [name]! [pick(feedMessages)]"
+			var/feedmsg = "[user] feeds [O] to [name]! [SSrng.pick_from_list(feedMessages)]"
 			user.visible_message(feedmsg)
 			user.drop_item()
 			qdel(O)
-			eggsleft += rand(1, 4)
+			eggsleft += SSrng.random(1, 4)
 			//to_chat(world, eggsleft)
 		else
 			to_chat(user, "<span class='warning'>[name] doesn't seem hungry!</span>")
@@ -281,20 +281,20 @@
 	. =..()
 	if(!.)
 		return
-	if((!stat && prob(3) && eggsleft > 0) && egg_type)
-		visible_message("[src] [pick(layMessage)]")
+	if((!stat && SSrng.probability(3) && eggsleft > 0) && egg_type)
+		visible_message("[src] [SSrng.pick_from_list(layMessage)]")
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))
-		E.pixel_x = rand(-6,6)
-		E.pixel_y = rand(-6,6)
+		E.pixel_x = SSrng.random(-6,6)
+		E.pixel_y = SSrng.random(-6,6)
 		if(eggsFertile)
-			if(chicken_count < MAX_CHICKENS && prob(25))
+			if(chicken_count < MAX_CHICKENS && SSrng.probability(25))
 				START_PROCESSING(SSobj, E)
 
 /obj/item/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/reagent_containers/food/snacks/egg/process()
 	if(isturf(loc))
-		amount_grown += rand(1,2)
+		amount_grown += SSrng.random(1,2)
 		if(amount_grown >= 100)
 			visible_message("[src] hatches with a quiet cracking sound.")
 			new /mob/living/simple_animal/chick(get_turf(src))
@@ -313,15 +313,15 @@
 	. = ..()
 
 /obj/item/udder/proc/generateMilk()
-	if(prob(5))
-		reagents.add_reagent("milk", rand(5, 10))
+	if(SSrng.probability(5))
+		reagents.add_reagent("milk", SSrng.random(5, 10))
 
 /obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/reagent_containers/glass/G = O
 	if(G.reagents.total_volume >= G.volume)
 		to_chat(user, "<span class='danger'>[O] is full.</span>")
 		return
-	var/transfered = reagents.trans_to(O, rand(5,10))
+	var/transfered = reagents.trans_to(O, SSrng.random(5,10))
 	if(transfered)
 		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else

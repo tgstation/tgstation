@@ -30,7 +30,7 @@
 	detonatable = FALSE
 
 /obj/item/device/pda/ai/attack_self(mob/user)
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
+	if ((honkamt > 0) && (SSrng.probability(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 	return

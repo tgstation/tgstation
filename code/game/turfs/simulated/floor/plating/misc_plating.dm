@@ -9,7 +9,7 @@
 
 /turf/open/floor/plating/abductor/Initialize()
 	. = ..()
-	icon_state = "alienpod[rand(1,9)]"
+	icon_state = "alienpod[SSrng.random(1,9)]"
 
 
 /turf/open/floor/plating/abductor2
@@ -73,7 +73,7 @@
 	slowdown = 2
 
 /turf/open/floor/plating/ashplanet/wateryrock/Initialize()
-	icon_state = "[icon_state][rand(1, 9)]"
+	icon_state = "[icon_state][SSrng.random(1, 9)]"
 	. = ..()
 
 
@@ -115,7 +115,7 @@
 
 /turf/open/floor/plating/ironsand/Initialize()
 	. = ..()
-	icon_state = "ironsand[rand(1,15)]"
+	icon_state = "ironsand[SSrng.random(1,15)]"
 
 /turf/open/floor/plating/ironsand/burn_tile()
 	return

@@ -199,23 +199,23 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	sharpness = IS_SHARP
 
 /obj/item/shard/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [SSrng.pick_from_list("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide.</span>")
 	return (BRUTELOSS)
 
 
 /obj/item/shard/Initialize()
 	. = ..()
-	icon_state = pick("large", "medium", "small")
+	icon_state = SSrng.pick_from_list("large", "medium", "small")
 	switch(icon_state)
 		if("small")
-			pixel_x = rand(-12, 12)
-			pixel_y = rand(-12, 12)
+			pixel_x = SSrng.random(-12, 12)
+			pixel_y = SSrng.random(-12, 12)
 		if("medium")
-			pixel_x = rand(-8, 8)
-			pixel_y = rand(-8, 8)
+			pixel_x = SSrng.random(-8, 8)
+			pixel_y = SSrng.random(-8, 8)
 		if("large")
-			pixel_x = rand(-5, 5)
-			pixel_y = rand(-5, 5)
+			pixel_x = SSrng.random(-5, 5)
+			pixel_y = SSrng.random(-5, 5)
 
 /obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity || !(src in user))
@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 			var/mob/living/carbon/human/H = AM
 			if(PIERCEIMMUNE in H.dna.species.species_traits)
 				return
-			var/picked_def_zone = pick("l_leg", "r_leg")
+			var/picked_def_zone = SSrng.pick_from_list("l_leg", "r_leg")
 			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
 			if(!istype(O))
 				return

@@ -51,7 +51,7 @@
 			open_turfs |= OT
 	if(open_turfs.len)
 		for(var/mob/living/L in T)
-			L.forceMove(pick(open_turfs))
+			L.forceMove(SSrng.pick_from_list(open_turfs))
 	resistance_flags &= ~INDESTRUCTIBLE
 	density = TRUE
 	invisibility = 0
@@ -180,7 +180,7 @@
 				to_chat(user, "<span class='boldwarning'>Something is coming through!</span>")
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
-	if(!first_sound_played || prob(7))
+	if(!first_sound_played || SSrng.probability(7))
 		for(var/M in GLOB.player_list)
 			if(M && !isnewplayer(M))
 				to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")

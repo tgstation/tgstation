@@ -59,7 +59,7 @@
 		var/atom/dumping_location = dest_object.get_dumping_location()
 		if(get_dist(user, dumping_location) < 8)
 			if(dumping_location.storage_contents_dump_act(src, user))
-				if(alt_sound && prob(1))
+				if(alt_sound && SSrng.probability(1))
 					playsound(src, alt_sound, 40, 1)
 				else
 					playsound(src, pshoom, 40, 1)
@@ -315,7 +315,7 @@
 	..()
 	if(!intact && !revealed)
 		if(reward_one_of_these.len > 0)
-			var/reward = pick(reward_one_of_these)
+			var/reward = SSrng.pick_from_list(reward_one_of_these)
 			new reward(src)
 		for(var/R in reward_all_of_these)
 			new R(src)

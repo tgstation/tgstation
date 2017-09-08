@@ -16,11 +16,11 @@
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	code = ""
 	for(var/i = 0, i < codelen, i++)
-		var/dig = pick(digits)
+		var/dig = SSrng.pick_from_list(digits)
 		code += dig
 		digits -= dig  //there are never matching digits in the answer
 
-	var/loot = rand(1,100) //100 different crates with varying chances of spawning
+	var/loot = SSrng.random(1,100) //100 different crates with varying chances of spawning
 	switch(loot)
 		if(1 to 5) //5% chance
 			new /obj/item/reagent_containers/food/drinks/bottle/rum(src)
@@ -62,7 +62,7 @@
 		if(53 to 54)
 			new /obj/item/toy/balloon(src)
 		if(55 to 56)
-			var/newitem = pick(subtypesof(/obj/item/toy/prize))
+			var/newitem = SSrng.pick_from_list(subtypesof(/obj/item/toy/prize))
 			new newitem(src)
 		if(57 to 58)
 			new /obj/item/toy/syndicateballoon(src)
@@ -75,15 +75,15 @@
 				new /obj/item/clothing/head/kitty(src)
 				new /obj/item/clothing/neck/petcollar(src)
 		if(63 to 64)
-			for(var/i in 1 to rand(4, 7))
-				var/newcoin = pick(/obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
+			for(var/i in 1 to SSrng.random(4, 7))
+				var/newcoin = SSrng.pick_from_list(/obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
 				new newcoin(src)
 		if(65 to 66)
 			new /obj/item/clothing/suit/ianshirt(src)
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
-			for(var/i in 1 to rand(4, 7))
-				var /newitem = pick(subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace)
+			for(var/i in 1 to SSrng.random(4, 7))
+				var /newitem = SSrng.pick_from_list(subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace)
 				new newitem(src)
 		if(69 to 70)
 			for(var/i in 1 to 5)

@@ -607,7 +607,7 @@
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
 	while(src.hackprogress < 100)
 		if(src.cable && src.cable.machine && istype(src.cable.machine, /obj/machinery/door) && src.cable.machine == src.hackdoor && get_dist(src, src.hackdoor) <= 1)
-			hackprogress += rand(1, 10)
+			hackprogress += SSrng.random(1, 10)
 		else
 			src.temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
 			hackprogress = 0

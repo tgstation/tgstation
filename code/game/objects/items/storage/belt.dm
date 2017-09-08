@@ -54,7 +54,7 @@
 	new /obj/item/crowbar/power(src)
 	new /obj/item/weldingtool/experimental(src)//This can be changed if this is too much
 	new /obj/item/device/multitool(src)
-	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil(src,30,SSrng.pick_from_list("red","yellow","orange"))
 	new /obj/item/extinguisher/mini(src)
 	new /obj/item/device/analyzer(src)
 	//much roomier now that we've managed to remove two tools
@@ -67,7 +67,7 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/device/multitool(src)
-	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil(src,30,SSrng.pick_from_list("red","yellow","orange"))
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -76,7 +76,7 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/device/multitool(src)
-	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil(src,30,SSrng.pick_from_list("red","yellow","orange"))
 
 
 /obj/item/storage/belt/utility/atmostech/PopulateContents()

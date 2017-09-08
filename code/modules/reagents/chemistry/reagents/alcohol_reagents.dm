@@ -183,7 +183,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
 
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/M)
-	if(M.getBruteLoss() && prob(10))
+	if(M.getBruteLoss() && SSrng.probability(10))
 		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	return ..() || .
@@ -306,7 +306,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassgreen"
 
 /datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/M)
-	if(prob(10))
+	if(SSrng.probability(10))
 		M.hallucination += 4 //Reference to the urban myth
 	..()
 
@@ -941,7 +941,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A syndicate bomb."
 
 /datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/M)
-	if(prob(5))
+	if(SSrng.probability(5))
 		playsound(get_turf(M), 'sound/effects/explosionfar.ogg', 100, 1)
 	return ..()
 
@@ -1141,7 +1141,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				M.slurring = 1
 			M.slurring += 3
 		if(45 to 55)
-			if(prob(50))
+			if(SSrng.probability(50))
 				M.confused = max(M.confused+3,0)
 		if(55 to 200)
 			M.set_drugginess(55)
@@ -1170,7 +1170,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				M.slurring = 1
 			M.slurring += 3
 		if(45 to 55)
-			if(prob(50))
+			if(SSrng.probability(50))
 				M.confused = max(M.confused+3,0)
 		if(55 to 200)
 			M.set_drugginess(55)
@@ -1199,27 +1199,27 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(1 to 5)
 			M.Dizzy(10)
 			M.set_drugginess(30)
-			if(prob(10))
-				M.emote(pick("twitch","giggle"))
+			if(SSrng.probability(10))
+				M.emote(SSrng.pick_from_list("twitch","giggle"))
 		if(5 to 10)
 			M.Jitter(20)
 			M.Dizzy(20)
 			M.set_drugginess(45)
-			if(prob(20))
-				M.emote(pick("twitch","giggle"))
+			if(SSrng.probability(20))
+				M.emote(SSrng.pick_from_list("twitch","giggle"))
 		if (10 to 200)
 			M.Jitter(40)
 			M.Dizzy(40)
 			M.set_drugginess(60)
-			if(prob(30))
-				M.emote(pick("twitch","giggle"))
+			if(SSrng.probability(30))
+				M.emote(SSrng.pick_from_list("twitch","giggle"))
 		if(200 to INFINITY)
 			M.Jitter(60)
 			M.Dizzy(60)
 			M.set_drugginess(75)
-			if(prob(40))
-				M.emote(pick("twitch","giggle"))
-			if(prob(30))
+			if(SSrng.probability(40))
+				M.emote(SSrng.pick_from_list("twitch","giggle"))
+			if(SSrng.probability(30))
 				M.adjustToxLoss(2, 0)
 				. = 1
 	..()

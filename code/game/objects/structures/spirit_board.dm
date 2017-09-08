@@ -36,7 +36,7 @@
 	if(!planchette || !Adjacent(M) || next_use > world.time)
 		return
 	add_logs(M, src, "picked a letter on", " which was \"[planchette]\".")
-	next_use = world.time + rand(30,50)
+	next_use = world.time + SSrng.random(30,50)
 	lastuser = M.ckey
 	//blind message is the same because not everyone brings night vision to seances
 	var/msg = "<span class='notice'>The planchette slowly moves... and stops at the letter \"[planchette]\".</span>"

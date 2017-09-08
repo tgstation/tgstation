@@ -28,7 +28,7 @@
 	materials = list(MAT_METAL=1000)
 
 /obj/item/pickaxe/proc/playDigSound()
-	playsound(src, pick(digsound),50,1)
+	playsound(src, SSrng.pick_from_list(digsound),50,1)
 
 /obj/item/pickaxe/silver
 	name = "silver-plated pickaxe"

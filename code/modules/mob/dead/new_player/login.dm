@@ -27,7 +27,7 @@
 			watch_locations += landmark.loc
 
 	if(watch_locations.len>0)
-		loc = pick(watch_locations)
+		loc = SSrng.pick_from_list(watch_locations)
 */
 	new_player_panel()
 	client.playtitlemusic()

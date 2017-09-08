@@ -89,10 +89,10 @@
 
 /obj/structure/filingcabinet/attack_self_tk(mob/user)
 	if(contents.len)
-		if(prob(40 + contents.len * 5))
-			var/obj/item/I = pick(contents)
+		if(SSrng.probability(40 + contents.len * 5))
+			var/obj/item/I = SSrng.pick_from_list(contents)
 			I.loc = loc
-			if(prob(25))
+			if(SSrng.probability(25))
 				step_rand(I)
 			to_chat(user, "<span class='notice'>You pull \a [I] out of [src] at random.</span>")
 			return

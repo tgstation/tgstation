@@ -42,7 +42,7 @@
 	..()
 	//natural reduction of movement delay due to stun.
 	if(move_delay_add > 0)
-		move_delay_add = max(0, move_delay_add - rand(1, 2))
+		move_delay_add = max(0, move_delay_add - SSrng.random(1, 2))
 
 /mob/living/carbon/alien/handle_changeling()
 	return

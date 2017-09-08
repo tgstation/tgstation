@@ -78,8 +78,8 @@ Buildable meters
 		is_bent = 1
 
 	update()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = SSrng.random(-5, 5)
+	src.pixel_y = SSrng.random(-5, 5)
 
 //update the name and icon of the pipe item depending on the type
 GLOBAL_LIST_INIT(pipeID2State, list(
@@ -251,7 +251,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 			var/mob/living/carbon/C = user
 			for(var/i=1 to 20)
 				C.vomit(0, TRUE, FALSE, 4, FALSE)
-				if(prob(20))
+				if(SSrng.probability(20))
 					C.spew_organ()
 				sleep(5)
 			C.blood_volume = 0

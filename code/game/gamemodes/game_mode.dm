@@ -93,7 +93,7 @@
 			var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET [sql] WHERE id = [GLOB.round_id]")
 			query_round_game_mode.Execute()
 	if(report)
-		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
+		addtimer(CALLBACK(src, .proc/send_intercept, 0), SSrng.random(waittime_l, waittime_h))
 	generate_station_goals()
 	return 1
 
@@ -162,7 +162,7 @@
 	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
 	. = 1
-	sleep(rand(600,1800))
+	sleep(SSrng.random(600,1800))
 	if(!SSticker.IsRoundInProgress())
 		message_admins("Roundtype conversion cancelled, the game appears to have finished!")
 		round_converted = 0
@@ -285,7 +285,7 @@
 	possible_modes -= name //remove the current gamemode to prevent it from being randomly deleted, it will be readded later
 
 	for(var/i in 1 to 6) //Remove a few modes to leave four
-		possible_modes -= pick(possible_modes)
+		possible_modes -= SSrng.pick_from_list(possible_modes)
 
 	possible_modes |= name //Re-add the actual gamemode - the intercept will thus always have the correct mode in its list
 	possible_modes = shuffle(possible_modes) //Meta prevention
@@ -351,7 +351,7 @@
 
 	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
 		if(drafted.len > 0)
-			applicant = pick(drafted)
+			applicant = SSrng.pick_from_list(drafted)
 			if(applicant)
 				candidates += applicant
 				drafted.Remove(applicant)
@@ -369,7 +369,7 @@
 
 	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
 		if(drafted.len > 0)
-			applicant = pick(drafted)
+			applicant = SSrng.pick_from_list(drafted)
 			if(applicant)
 				candidates += applicant
 				drafted.Remove(applicant)
@@ -530,7 +530,7 @@
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [role_type]?", "[role_type]", null, pref, 50, M)
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
-		theghost = pick(candidates)
+		theghost = SSrng.pick_from_list(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)]) to replace a jobbaned player.")
 		M.ghostize(0)

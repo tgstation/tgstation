@@ -14,8 +14,8 @@
 
 /obj/item/paperplane/Initialize(mapload, obj/item/paper/newPaper)
 	. = ..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
+	pixel_y = SSrng.random(-8, 8)
+	pixel_x = SSrng.random(-9, 9)
 	if(newPaper)
 		internalPaper = newPaper
 		flags_1 = newPaper.flags_1
@@ -35,7 +35,7 @@
 	user.Stun(200)
 	user.visible_message("<span class='suicide'>[user] jams the [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.adjust_blurriness(6)
-	user.adjust_eye_damage(rand(6,8))
+	user.adjust_eye_damage(SSrng.random(6,8))
 	sleep(10)
 	return (BRUTELOSS)
 
@@ -65,7 +65,7 @@
 		update_icon()
 
 	else if(P.is_hot())
-		if(user.disabilities & CLUMSY && prob(10))
+		if(user.disabilities & CLUMSY && SSrng.probability(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
 				"<span class='userdanger'>You miss the [src] and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)
@@ -89,12 +89,12 @@
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
 		return
 	var/mob/living/carbon/human/H = hit_atom
-	if(prob(2))
+	if(SSrng.probability(2))
 		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			return
 		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
 		H.adjust_blurriness(6)
-		H.adjust_eye_damage(rand(6,8))
+		H.adjust_eye_damage(SSrng.random(6,8))
 		H.Knockdown(40)
 		H.emote("scream")
 

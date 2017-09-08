@@ -112,7 +112,7 @@
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn)
 	if(!parts.len)
 		return
-	var/obj/item/bodypart/picked = pick(parts)
+	var/obj/item/bodypart/picked = SSrng.pick_from_list(parts)
 	if(picked.heal_damage(brute, burn, only_robotic, only_organic))
 		update_damage_overlays()
 
@@ -123,7 +123,7 @@
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
 	if(!parts.len)
 		return
-	var/obj/item/bodypart/picked = pick(parts)
+	var/obj/item/bodypart/picked = SSrng.pick_from_list(parts)
 	if(picked.receive_damage(brute,burn))
 		update_damage_overlays()
 
@@ -134,7 +134,7 @@
 
 	var/update = 0
 	while(parts.len && (brute>0 || burn>0) )
-		var/obj/item/bodypart/picked = pick(parts)
+		var/obj/item/bodypart/picked = SSrng.pick_from_list(parts)
 
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
@@ -158,7 +158,7 @@
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
 	var/update = 0
 	while(parts.len && (brute>0 || burn>0) )
-		var/obj/item/bodypart/picked = pick(parts)
+		var/obj/item/bodypart/picked = SSrng.pick_from_list(parts)
 		var/brute_per_part = round(brute/parts.len, 0.01)
 		var/burn_per_part = round(burn/parts.len, 0.01)
 

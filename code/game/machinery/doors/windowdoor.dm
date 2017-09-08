@@ -346,7 +346,7 @@
 	return ..()
 
 /obj/machinery/door/window/clockwork/emp_act(severity)
-	if(prob(80/severity))
+	if(SSrng.probability(80/severity))
 		open()
 
 /obj/machinery/door/window/clockwork/ratvar_act()
@@ -357,7 +357,7 @@
 	return TRUE //yup that's power all right
 
 /obj/machinery/door/window/clockwork/narsie_act()
-	take_damage(rand(30, 60), BRUTE)
+	take_damage(SSrng.random(30, 60), BRUTE)
 	if(src)
 		var/previouscolor = color
 		color = "#960000"

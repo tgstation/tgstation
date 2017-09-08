@@ -17,7 +17,7 @@
 /obj/item/paper/fluff/awaymissions/academy/grade/aplus
 	name = "Summoning Midterm Exam"
 	info = "Grade: A+ Educator's Notes: Excellent form."
-	
+
 /obj/item/paper/fluff/awaymissions/academy/grade/bminus
 	name = "Summoning Midterm Exam"
 	info = "Grade: B- Educator's Notes: Keep applying yourself, you're showing improvement."
@@ -25,7 +25,7 @@
 /obj/item/paper/fluff/awaymissions/academy/grade/dminus
 	name = "Summoning Midterm Exam"
 	info = "Grade: D- Educator's Notes: SEE ME AFTER CLASS."
-	
+
 /obj/item/paper/fluff/awaymissions/academy/grade/failure
 	name = "Pyromancy Evaluation"
 	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutilage."
@@ -41,7 +41,7 @@
 
 /obj/singularity/academy/process()
 	eat()
-	if(prob(1))
+	if(SSrng.probability(1))
 		mezzer()
 
 
@@ -101,7 +101,7 @@
 	var/mob/dead/observer/chosen = null
 
 	if(candidates.len)
-		chosen = pick(candidates)
+		chosen = SSrng.pick_from_list(candidates)
 		message_admins("[key_name_admin(chosen)] was spawned as Wizard Academy Defender")
 		current_wizard.ghostize() // on the off chance braindead defender gets back in
 		current_wizard.key = chosen.key
@@ -210,7 +210,7 @@
 			//Throw
 			user.Stun(60)
 			user.adjustBruteLoss(50)
-			var/throw_dir = pick(GLOB.cardinals)
+			var/throw_dir = SSrng.pick_from_list(GLOB.cardinals)
 			var/atom/throw_target = get_edge_target_turf(user, throw_dir)
 			user.throw_at(throw_target, 200, 4)
 		if(8)
@@ -235,11 +235,11 @@
 			var/turf/Start = get_turf(src)
 			for(var/direction in GLOB.alldirs)
 				var/turf/T = get_step(Start,direction)
-				if(rand(0,1))
+				if(SSrng.random(0,1))
 					new /obj/item/stack/spacecash/c1000(T)
 				else
 					var/obj/item/storage/bag/money/M = new(T)
-					for(var/i in 1 to rand(5,50))
+					for(var/i in 1 to SSrng.random(5,50))
 						new /obj/item/coin/gold(M)
 		if(14)
 			//Free Gun
@@ -260,7 +260,7 @@
 			var/mob/dead/observer/chosen = null
 
 			if(candidates.len)
-				chosen = pick(candidates)
+				chosen = SSrng.pick_from_list(candidates)
 				message_admins("[key_name_admin(chosen)] was spawned as Dice Servant")
 				H.key = chosen.key
 

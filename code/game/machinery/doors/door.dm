@@ -176,7 +176,7 @@
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(. && obj_integrity > 0)
-		if(damage_amount >= 10 && prob(30))
+		if(damage_amount >= 10 && SSrng.probability(30))
 			spark_system.start()
 
 /obj/machinery/door/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -192,9 +192,9 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/machinery/door/emp_act(severity)
-	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
+	if(SSrng.probability(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
-	if(prob(40/severity))
+	if(SSrng.probability(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
 			shockedby += "\[[time_stamp()]\]EM Pulse"

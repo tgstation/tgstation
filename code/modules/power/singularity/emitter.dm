@@ -153,7 +153,7 @@
 
 /obj/machinery/power/emitter/emp_act(severity)//Emitters are hardened but still might have issues
 //	add_load(1000)
-/*	if((severity == 1)&&prob(1)&&prob(1))
+/*	if((severity == 1)&&SSrng.probability(1)&&SSrng.probability(1))
 		if(src.active)
 			src.active = 0
 			src.use_power = IDLE_POWER_USE	*/
@@ -207,7 +207,7 @@
 		return
 	var/obj/item/projectile/P = new projectile_type(targets_from)
 	playsound(src.loc, projectile_sound, 50, 1)
-	if(prob(35))
+	if(SSrng.probability(35))
 		sparks.start()
 	switch(dir)
 		if(NORTH)
@@ -247,7 +247,7 @@
 			fire_delay = 20
 			shot_number ++
 		else
-			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+			fire_delay = SSrng.random(minimum_fire_delay,maximum_fire_delay)
 			shot_number = 0
 		if(!target)
 			P.setDir(src.dir)

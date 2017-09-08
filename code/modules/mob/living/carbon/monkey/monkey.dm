@@ -22,7 +22,7 @@
 	verbs += /mob/living/proc/lay_down
 
 	if(unique_name) //used to exclude pun pun
-		gender = pick(MALE, FEMALE)
+		gender = SSrng.pick_from_list(MALE, FEMALE)
 	real_name = name
 
 	//initialize limbs
@@ -148,7 +148,7 @@
 
 /mob/living/carbon/monkey/angry/Initialize()
 	..()
-	if(prob(10))
+	if(SSrng.probability(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
 		equip_to_slot_or_del(helmet,slot_head)
 		helmet.attack_self(src) // todo encapsulate toggle

@@ -28,7 +28,7 @@
 
 /obj/item/lipstick/random/New()
 	..()
-	colour = pick("red","purple","lime","black","green","blue","white")
+	colour = SSrng.pick_from_list("red","purple","lime","black","green","blue","white")
 	name = "[colour] lipstick"
 
 

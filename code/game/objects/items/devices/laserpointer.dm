@@ -32,7 +32,7 @@
 	..()
 	diode = new(src)
 	if(!pointer_icon_state)
-		pointer_icon_state = pick("red_laser","green_laser","blue_laser","purple_laser")
+		pointer_icon_state = SSrng.pick_from_list("red_laser","green_laser","blue_laser","purple_laser")
 
 /obj/item/device/laser_pointer/upgraded/New()
 	..()
@@ -91,13 +91,13 @@
 			add_logs(user, C, "shone in the eyes", src)
 
 			var/severity = 1
-			if(prob(33))
+			if(SSrng.probability(33))
 				severity = 2
-			else if(prob(50))
+			else if(SSrng.probability(50))
 				severity = 0
 
 			//20% chance to actually hit the eyes
-			if(prob(effectchance * diode.rating) && C.flash_act(severity))
+			if(SSrng.probability(effectchance * diode.rating) && C.flash_act(severity))
 				outmsg = "<span class='notice'>You blind [C] by shining [src] in their eyes.</span>"
 			else
 				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at their eyes!</span>"
@@ -106,9 +106,9 @@
 	else if(iscyborg(target))
 		var/mob/living/silicon/S = target
 		//20% chance to actually hit the sensors
-		if(prob(effectchance * diode.rating))
+		if(SSrng.probability(effectchance * diode.rating))
 			S.flash_act(affect_silicon = 1)
-			S.Knockdown(rand(100,200))
+			S.Knockdown(SSrng.random(100,200))
 			to_chat(S, "<span class='danger'>Your sensors were overloaded by a laser!</span>")
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
 			add_logs(user, S, "shone in the sensors", src)
@@ -118,7 +118,7 @@
 	//cameras
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/C = target
-		if(prob(effectchance * diode.rating))
+		if(SSrng.probability(effectchance * diode.rating))
 			C.emp_act(EMP_HEAVY)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
 			add_logs(user, C, "EMPed", src)
@@ -135,8 +135,8 @@
 		if(click_params["icon-y"])
 			I.pixel_y = (text2num(click_params["icon-y"]) - 16)
 	else
-		I.pixel_x = target.pixel_x + rand(-5,5)
-		I.pixel_y = target.pixel_y + rand(-5,5)
+		I.pixel_x = target.pixel_x + SSrng.random(-5,5)
+		I.pixel_y = target.pixel_y + SSrng.random(-5,5)
 
 	if(outmsg)
 		to_chat(user, outmsg)
@@ -156,7 +156,7 @@
 	icon_state = "pointer"
 
 /obj/item/device/laser_pointer/process()
-	if(prob(20 - recharge_locked*5))
+	if(SSrng.probability(20 - recharge_locked*5))
 		energy += 1
 		if(energy >= max_energy)
 			energy = max_energy

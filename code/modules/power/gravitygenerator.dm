@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		set_broken()
 
 /obj/machinery/gravity_generator/blob_act(obj/structure/blob/B)
-	if(prob(20))
+	if(SSrng.probability(20))
 		set_broken()
 
 /obj/machinery/gravity_generator/tesla_act(power, explosive)
@@ -338,11 +338,11 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 			else if(charging_state == POWER_DOWN)
 				charge_count -= 2
 
-			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
+			if(charge_count % 4 == 0 && SSrng.probability(75)) // Let them know it is charging/discharging.
 				playsound(src.loc, 'sound/effects/empulse.ogg', 100, 1)
 
 			updateDialog()
-			if(prob(25)) // To help stop "Your clothes feel warm." spam.
+			if(SSrng.probability(25)) // To help stop "Your clothes feel warm." spam.
 				pulse_radiation()
 
 			var/overlay_state = null

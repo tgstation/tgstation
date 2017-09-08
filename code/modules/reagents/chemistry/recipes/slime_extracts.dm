@@ -148,12 +148,12 @@
 	for(var/mob/living/carbon/C in viewers(T, null))
 		C.flash_act()
 
-	for(var/i in 1 to 4 + rand(1,2))
-		var/chosen = pick(borks)
+	for(var/i in 1 to 4 + SSrng.random(1,2))
+		var/chosen = SSrng.pick_from_list(borks)
 		var/obj/B = new chosen(T)
-		if(prob(50))
-			for(var/j in 1 to rand(1, 3))
-				step(B, pick(NORTH,SOUTH,EAST,WEST))
+		if(SSrng.probability(50))
+			for(var/j in 1 to SSrng.random(1, 3))
+				step(B, SSrng.pick_from_list(NORTH,SOUTH,EAST,WEST))
 	..()
 
 /datum/chemical_reaction/slime/slimebork/proc/getborks()
@@ -584,7 +584,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimepaint/on_reaction(datum/reagents/holder)
-	var/chosen = pick(subtypesof(/obj/item/paint))
+	var/chosen = SSrng.pick_from_list(subtypesof(/obj/item/paint))
 	new chosen(get_turf(holder.my_atom))
 	..()
 
@@ -596,7 +596,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimecrayon/on_reaction(datum/reagents/holder)
-	var/chosen = pick(difflist(subtypesof(/obj/item/toy/crayon),typesof(/obj/item/toy/crayon/spraycan)))
+	var/chosen = SSrng.pick_from_list(difflist(subtypesof(/obj/item/toy/crayon),typesof(/obj/item/toy/crayon/spraycan)))
 	new chosen(get_turf(holder.my_atom))
 	..()
 

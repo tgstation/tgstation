@@ -136,9 +136,9 @@
 			/turf/open/lava))
 
 
-	last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
+	last_expand = world.time + SSrng.random(growth_cooldown_low, growth_cooldown_high)
 	if(icon == initial(icon))
-		switch(rand(1,3))
+		switch(SSrng.random(1,3))
 			if(1)
 				icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
 			if(2)
@@ -193,7 +193,7 @@
 	for(var/obj/structure/alien/weeds/W in range(node_range, src))
 		if(W.last_expand <= world.time)
 			if(W.expand())
-				W.last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
+				W.last_expand = world.time + SSrng.random(growth_cooldown_low, growth_cooldown_high)
 
 #undef NODERANGE
 
@@ -228,7 +228,7 @@
 	if(status == GROWING || status == GROWN)
 		child = new(src)
 	if(status == GROWING)
-		addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
+		addtimer(CALLBACK(src, .proc/Grow), SSrng.random(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 	proximity_monitor = new(src, status == GROWN ? 1 : 0)
 	if(status == BURST)
 		obj_integrity = integrity_failure

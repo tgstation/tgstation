@@ -94,13 +94,13 @@
 	if(clashing)
 		return
 	eat()
-	if(!target || prob(5))
+	if(!target || SSrng.probability(5))
 		pickcultist()
 	if(istype(target, /obj/structure/destructible/clockwork/massive/ratvar))
 		move(get_dir(src, target)) //Oh, it's you again.
 	else
 		move()
-	if(prob(25))
+	if(SSrng.probability(25))
 		mezzer()
 
 
@@ -152,11 +152,11 @@
 			noncultists += food
 
 		if(cultists.len) //cultists get higher priority
-			acquire(pick(cultists))
+			acquire(SSrng.pick_from_list(cultists))
 			return
 
 		if(noncultists.len)
-			acquire(pick(noncultists))
+			acquire(SSrng.pick_from_list(noncultists))
 			return
 
 	//no living humans, follow a ghost instead.
@@ -168,7 +168,7 @@
 			continue
 		cultists += ghost
 	if(cultists.len)
-		acquire(pick(cultists))
+		acquire(SSrng.pick_from_list(cultists))
 		return
 
 

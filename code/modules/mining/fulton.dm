@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			var/list/flooring_near_beacon = list()
 			for(var/turf/open/floor in orange(1, beacon))
 				flooring_near_beacon += floor
-			holder_obj.loc = pick(flooring_near_beacon)
+			holder_obj.loc = SSrng.pick_from_list(flooring_near_beacon)
 			animate(holder_obj, pixel_z = 10, time = 50)
 			sleep(50)
 			animate(holder_obj, pixel_z = 15, time = 10)
@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/structure/extraction_point/Initialize()
 	. = ..()
 	var/area/area_name = get_area(src)
-	name += " ([rand(100,999)]) ([area_name.name])"
+	name += " ([SSrng.random(100,999)]) ([area_name.name])"
 	GLOB.total_extraction_beacons += src
 
 /obj/structure/extraction_point/Destroy()

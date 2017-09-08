@@ -46,7 +46,7 @@
 				death(0)
 				return
 
-		var/suicide_message = pick("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \
+		var/suicide_message = SSrng.pick_from_list("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \
 							"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
 							"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
 							"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.")

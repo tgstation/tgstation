@@ -153,15 +153,15 @@
 
 /datum/weather/rad_storm/impact(mob/living/L)
 	var/resist = L.getarmor(null, "rad")
-	if(prob(40))
+	if(SSrng.probability(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if(H.dna && H.dna.species)
 				if(!(RADIMMUNE in H.dna.species.species_traits))
-					if(prob(max(0,100-resist)))
+					if(SSrng.probability(max(0,100-resist)))
 						H.randmuti()
-						if(prob(50))
-							if(prob(90))
+						if(SSrng.probability(50))
+							if(SSrng.probability(90))
 								H.randmutb()
 							else
 								H.randmutg()
@@ -219,5 +219,5 @@
 
 /datum/weather/acid_rain/impact(mob/living/L)
 	var/resist = L.getarmor(null, "acid")
-	if(prob(max(0,100-resist)))
+	if(SSrng.probability(max(0,100-resist)))
 		L.acid_act(20,20)

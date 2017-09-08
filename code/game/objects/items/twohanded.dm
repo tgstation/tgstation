@@ -271,7 +271,7 @@
 /obj/item/twohanded/dualsaber/Initialize()
 	. = ..()
 	if(LAZYLEN(possible_colors))
-		item_color = pick(possible_colors)
+		item_color = SSrng.pick_from_list(possible_colors)
 		switch(item_color)
 			if("red")
 				light_color = LIGHT_COLOR_RED
@@ -300,10 +300,10 @@
 			unwield()
 			return
 	..()
-	if(user.disabilities & CLUMSY && (wielded) && prob(40))
+	if(user.disabilities & CLUMSY && (wielded) && SSrng.probability(40))
 		impale(user)
 		return
-	if((wielded) && prob(50))
+	if((wielded) && SSrng.probability(50))
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
@@ -354,7 +354,7 @@
 /obj/item/twohanded/dualsaber/process()
 	if(wielded)
 		if(hacked)
-			light_color = pick(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
+			light_color = SSrng.pick_from_list(LIGHT_COLOR_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER)
 		open_flame()
 	else
 		STOP_PROCESSING(SSobj, src)
@@ -531,7 +531,7 @@
 /obj/item/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+		playsound(src, SSrng.pick_from_list('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 		return 1
 	return 0
 
@@ -555,7 +555,7 @@
 		var/mob/living/L = AM
 		if(istype (L, /mob/living/simple_animal/hostile/illusion))
 			return
-		if(!L.stat && prob(50))
+		if(!L.stat && SSrng.probability(50))
 			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
 			M.faction = user.faction.Copy()
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
@@ -617,14 +617,14 @@
 			"<span class='warning'>\"As you pick up [src] your arms ignite, reminding you of all your past sins.\"</span>")
 		if(ishuman(U))
 			var/mob/living/carbon/human/H = U
-			H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+			H.apply_damage(SSrng.random(force/2, force), BURN, SSrng.pick_from_list("l_arm", "r_arm"))
 		else
-			U.adjustFireLoss(rand(force/2,force))
+			U.adjustFireLoss(SSrng.random(force/2,force))
 
 /obj/item/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
 	if(user.mind && user.owns_soul() && !is_devil(user))
 		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
-		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+		user.apply_damage(SSrng.random(force/2, force), BURN, SSrng.pick_from_list("l_arm", "r_arm"))
 	..()
 
 /obj/item/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
@@ -662,10 +662,10 @@
 	if(wielded)
 		final_block_chance *= 2
 	if(wielded || attack_type != PROJECTILE_ATTACK)
-		if(prob(final_block_chance))
+		if(SSrng.probability(final_block_chance))
 			if(attack_type == PROJECTILE_ATTACK)
 				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
-				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+				playsound(src, SSrng.pick_from_list('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 				return 1
 			else
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")

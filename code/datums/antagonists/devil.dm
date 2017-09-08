@@ -130,30 +130,30 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /proc/randomDevilName()
 	var/name = ""
-	if(prob(65))
-		if(prob(35))
-			name = pick(GLOB.devil_pre_title)
-		name += pick(GLOB.devil_title)
+	if(SSrng.probability(65))
+		if(SSrng.probability(35))
+			name = SSrng.pick_from_list(GLOB.devil_pre_title)
+		name += SSrng.pick_from_list(GLOB.devil_title)
 	var/probability = 100
-	name += pick(GLOB.devil_syllable)
-	while(prob(probability))
-		name += pick(GLOB.devil_syllable)
+	name += SSrng.pick_from_list(GLOB.devil_syllable)
+	while(SSrng.probability(probability))
+		name += SSrng.pick_from_list(GLOB.devil_syllable)
 		probability -= 20
-	if(prob(40))
-		name += pick(GLOB.devil_suffix)
+	if(SSrng.probability(40))
+		name += SSrng.pick_from_list(GLOB.devil_suffix)
 	return name
 
 /proc/randomdevilobligation()
-	return pick(OBLIGATION_FOOD, OBLIGATION_FIDDLE, OBLIGATION_DANCEOFF, OBLIGATION_GREET, OBLIGATION_PRESENCEKNOWN, OBLIGATION_SAYNAME, OBLIGATION_ANNOUNCEKILL, OBLIGATION_ANSWERTONAME)
+	return SSrng.pick_from_list(OBLIGATION_FOOD, OBLIGATION_FIDDLE, OBLIGATION_DANCEOFF, OBLIGATION_GREET, OBLIGATION_PRESENCEKNOWN, OBLIGATION_SAYNAME, OBLIGATION_ANNOUNCEKILL, OBLIGATION_ANSWERTONAME)
 
 /proc/randomdevilban()
-	return pick(BAN_HURTWOMAN, BAN_CHAPEL, BAN_HURTPRIEST, BAN_AVOIDWATER, BAN_STRIKEUNCONCIOUS, BAN_HURTLIZARD, BAN_HURTANIMAL)
+	return SSrng.pick_from_list(BAN_HURTWOMAN, BAN_CHAPEL, BAN_HURTPRIEST, BAN_AVOIDWATER, BAN_STRIKEUNCONCIOUS, BAN_HURTLIZARD, BAN_HURTANIMAL)
 
 /proc/randomdevilbane()
-	return pick(BANE_SALT, BANE_LIGHT, BANE_IRON, BANE_WHITECLOTHES, BANE_SILVER, BANE_HARVEST, BANE_TOOLBOX)
+	return SSrng.pick_from_list(BANE_SALT, BANE_LIGHT, BANE_IRON, BANE_WHITECLOTHES, BANE_SILVER, BANE_HARVEST, BANE_TOOLBOX)
 
 /proc/randomdevilbanish()
-	return pick(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
+	return SSrng.pick_from_list(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
 
 /datum/antagonist/devil/proc/add_soul(datum/mind/soul)
 	if(soulsOwned.Find(soul))
@@ -423,7 +423,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/proc/create_new_body()
 	if(GLOB.blobstart.len > 0)
-		var/turf/targetturf = get_turf(pick(GLOB.blobstart))
+		var/turf/targetturf = get_turf(SSrng.pick_from_list(GLOB.blobstart))
 		var/mob/currentMob = owner.current
 		if(!currentMob)
 			currentMob = owner.get_ghost()
@@ -522,4 +522,4 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	obligation = randomdevilobligation()
 	ban = randomdevilban()
 	banish = randomdevilbanish()
-	ascendable = prob(25)
+	ascendable = SSrng.probability(25)

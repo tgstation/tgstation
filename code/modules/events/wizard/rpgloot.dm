@@ -13,7 +13,7 @@
 
 		if(istype(I, /obj/item/storage))
 			var/obj/item/storage/S = I
-			if(prob(upgrade_scroll_chance) && S.contents.len < S.storage_slots && !S.invisibility)
+			if(SSrng.probability(upgrade_scroll_chance) && S.contents.len < S.storage_slots && !S.invisibility)
 				var/obj/item/upgradescroll/scroll = new
 				S.handle_item_insertion(scroll,1)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
@@ -42,7 +42,7 @@
 
 	var/quality = rpg_loot_datum.quality
 
-	if(can_backfire && (quality > 9 && prob((quality - 9)*10)))
+	if(can_backfire && (quality > 9 && SSrng.probability((quality - 9)*10)))
 		to_chat(user, "<span class='danger'>[target] violently glows blue for a while, then evaporates.</span>")
 		target.burn()
 	else
@@ -80,13 +80,14 @@
 	var/static/list/prefixesnegative = list("lesser", "minor", "blighted", "inferior", "enfeebled", "rusted", "unsteady", "tragic", "gimped")
 	var/static/list/suffixes = list("orc slaying", "elf slaying", "corgi slaying", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "the forest", "the hills", "the plains", "the sea", "the sun", "the moon", "the void", "the world", "the fool", "many secrets", "many tales", "many colors", "rending", "sundering", "the night", "the day")
 
-	var/new_quality = pick(1;15, 2;14, 2;13, 2;12, 3;11, 3;10, 3;9, 4;8, 4;7, 4;6, 5;5, 5;4, 5;3, 6;2, 6;1, 6;0)
+	var/new_quality = text2num(pickweight(list("15" = 1, "14" = 2, "13" = 2, "12" = 2, "11" = 3, "10" = 3, "9" = 3, "8" = 4, "7" = 4, "6" = 4,
+	"5" = 5, "4" = 5, "3" = 5, "2" = 6, "1" = 6, "0" = 6)))
 
-	suffix = pick(suffixes)
-	positive_prefix = pick(prefixespositive)
-	negative_prefix = pick(prefixesnegative)
+	suffix = SSrng.pick_from_list(suffixes)
+	positive_prefix = SSrng.pick_from_list(prefixespositive)
+	negative_prefix = SSrng.pick_from_list(prefixesnegative)
 
-	if(prob(50))
+	if(SSrng.probability(50))
 		new_quality = -new_quality
 
 	modify(new_quality)

@@ -85,7 +85,7 @@
 		damaged = TRUE
 		if(console)
 			console.say("Alert, hull breach detected!")
-		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
+		var/obj/machinery/announcement_system/announcer = SSrng.pick_from_list(GLOB.announcement_systems)
 		announcer.announce("ARRIVALS_BROKEN", channels = list())
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE

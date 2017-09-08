@@ -47,7 +47,7 @@
 	checkLiked(fraction, M)
 	reagents.reaction(M, INGEST, fraction)
 	reagents.trans_to(M, gulp_size)
-	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+	playsound(M.loc,'sound/items/drink.ogg', SSrng.random(10,50), 1)
 	return 1
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
@@ -347,7 +347,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")
 		user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
-		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
+		playsound(user.loc,'sound/weapons/pierce.ogg', SSrng.random(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
 		crushed_can.icon_state = icon_state
 		qdel(src)

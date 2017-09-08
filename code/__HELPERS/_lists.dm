@@ -40,10 +40,10 @@
 			return L[index]
 	return
 
-//Return either pick(list) or null if list is not of type /list or is empty
+//Return either SSrng.pick_from_list(list) or null if list is not of type /list or is empty
 /proc/safepick(list/L)
 	if(istype(L) && L.len)
-		return pick(L)
+		return SSrng.pick_from_list(L)
 
 //Checks if the list is empty
 /proc/isemptylist(list/L)
@@ -197,7 +197,7 @@
 			L[item] = 1
 		total += L[item]
 
-	total = rand(1, total)
+	total = SSrng.random(1, total)
 	for (item in L)
 		total -=L [item]
 		if (total <= 0)
@@ -208,7 +208,7 @@
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
 	if(L.len)
-		var/picked = rand(1,L.len)
+		var/picked = SSrng.random(1,L.len)
 		. = L[picked]
 		L.Cut(picked,picked+1)			//Cut is far more efficient that Remove()
 
@@ -256,7 +256,7 @@
 	L = L.Copy()
 
 	for(var/i=1, i<L.len, ++i)
-		L.Swap(i,rand(i,L.len))
+		L.Swap(i,SSrng.random(i,L.len))
 
 	return L
 
@@ -266,7 +266,7 @@
 		return
 
 	for(var/i=1, i<L.len, ++i)
-		L.Swap(i,rand(i,L.len))
+		L.Swap(i,SSrng.random(i,L.len))
 
 //Return a list with no duplicate entries
 /proc/uniqueList(list/L)
@@ -468,7 +468,7 @@
 		. |= key_list[key]
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
-#define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
+#define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? SSrng.pick_from_list(L) : default)
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }

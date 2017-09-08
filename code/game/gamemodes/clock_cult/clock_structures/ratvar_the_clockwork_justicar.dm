@@ -64,7 +64,7 @@
 	for(var/I in circleviewturfs(src, round(convert_range * 0.5)))
 		var/turf/T = I
 		T.ratvar_act(TRUE)
-	var/dir_to_step_in = pick(GLOB.cardinals)
+	var/dir_to_step_in = SSrng.pick_from_list(GLOB.cardinals)
 	var/list/meals = list()
 	for(var/mob/living/L in GLOB.living_mob_list) //we want to know who's alive so we don't lose and retarget a single person
 		if(L.z == z && !is_servant_of_ratvar(L) && L.mind)
@@ -78,12 +78,12 @@
 	if(!prey)
 		if(!prey && LAZYLEN(meals))
 			var/mob/living/L = prey
-			prey = pick(meals)
+			prey = SSrng.pick_from_list(meals)
 			to_chat(prey, "<span class='heavy_brass'><font size=5>\"You will do, heretic.\"</font></span>\n\
 			<span class='userdanger'>You feel something massive turn its crushing focus to you...</span>")
 			L.playsound_local(prey, 'sound/effects/ratvar_reveal.ogg', 100, FALSE, pressure_affected = FALSE)
 	else
-		if((!istype(prey, /obj/singularity/narsie) && prob(10) && LAZYLEN(meals) > 1) || prey.z != z || !(prey in meals))
+		if((!istype(prey, /obj/singularity/narsie) && SSrng.probability(10) && LAZYLEN(meals) > 1) || prey.z != z || !(prey in meals))
 			if(is_servant_of_ratvar(prey))
 				to_chat(prey, "<span class='heavy_brass'><font size=5>\"Serve me well.\"</font></span>\n\
 				<span class='big_brass'>You feel great joy as your god turns His eye to another heretic...</span>")
@@ -100,7 +100,7 @@
 		return
 	clashing = TRUE
 	GLOB.cult_narsie.clashing = TRUE
-	to_chat(world, "<span class='heavy_brass'><font size=5>\"[pick("BLOOD GOD!!!", "NAR-SIE!!!", "AT LAST, YOUR TIME HAS COME!")]\"</font></span>")
+	to_chat(world, "<span class='heavy_brass'><font size=5>\"[SSrng.pick_from_list("BLOOD GOD!!!", "NAR-SIE!!!", "AT LAST, YOUR TIME HAS COME!")]\"</font></span>")
 	to_chat(world, "<span class='cult'><font size=5>\"<b>Ratvar?! How?!</b>\"</font></span>")
 	clash_of_the_titans(GLOB.cult_narsie) //IT'S TIME FOR THE BATTLE OF THE AGES
 	return TRUE
@@ -118,12 +118,12 @@
 				shake_camera(M, 4, 3)
 		var/ratvar_chance = min(LAZYLEN(SSticker.mode.servants_of_ratvar), 50)
 		var/narsie_chance = min(LAZYLEN(SSticker.mode.cult), 50)
-		ratvar_chance = rand(base_victory_chance, ratvar_chance)
-		narsie_chance = rand(base_victory_chance, narsie_chance)
+		ratvar_chance = SSrng.random(base_victory_chance, ratvar_chance)
+		narsie_chance = SSrng.random(base_victory_chance, narsie_chance)
 		if(ratvar_chance > narsie_chance)
 			winner = "Ratvar"
 			break
-		sleep(rand(2,5))
+		sleep(SSrng.random(2,5))
 		sound_to_playing_players('sound/magic/clockwork/narsie_attack.ogg')
 		sleep(7.4)
 		for(var/mob/M in GLOB.mob_list)
@@ -136,14 +136,14 @@
 		base_victory_chance *= 2 //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
-			send_to_playing_players("<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>\n\
-			<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>") //nar-sie get out
+			send_to_playing_players("<span class='heavy_brass'><font size=5>\"[SSrng.pick_from_list("DIE! DIE! DIE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>\n\
+			<span class='cult'><font size=5>\"<b>[SSrng.pick_from_list("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>") //nar-sie get out
 			sound_to_playing_players('sound/magic/clockwork/anima_fragment_attack.ogg')
 			sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
 			clashing = FALSE
 			qdel(narsie)
 		if("Nar-Sie")
-			send_to_playing_players("<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>") //Broken English
+			send_to_playing_players("<span class='cult'><font size=5>\"<b>[SSrng.pick_from_list("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>") //Broken English
 			sound_to_playing_players('sound/magic/demon_attack1.ogg')
 			sound_to_playing_players('sound/magic/clockwork/anima_fragment_death.ogg', 50)
 			narsie.clashing = FALSE

@@ -45,8 +45,8 @@
 			//metabolize reagents
 			C.reagents.metabolize(C, can_overdose=TRUE)
 
-			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-				to_chat(C, "<span class='notice'>You feel [pick("nauseous", "dull pain in your lower body", "confused")].</span>")
+			if(damage > 10 && SSrng.probability(damage/3))//the higher the damage the higher the probability
+				to_chat(C, "<span class='notice'>You feel [SSrng.pick_from_list("nauseous", "dull pain in your lower body", "confused")].</span>")
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()

@@ -318,7 +318,7 @@
 	..()
 
 /obj/machinery/particle_accelerator/control_box/blob_act(obj/structure/blob/B)
-	if(prob(50))
+	if(SSrng.probability(50))
 		qdel(src)
 
 #undef PA_CONSTRUCTION_UNSECURED

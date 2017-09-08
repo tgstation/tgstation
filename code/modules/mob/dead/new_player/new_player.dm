@@ -21,7 +21,7 @@
 		S.Fade(TRUE)
 
 	if(length(GLOB.newplayer_start))
-		loc = pick(GLOB.newplayer_start)
+		loc = SSrng.pick_from_list(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
 	. = ..()

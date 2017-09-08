@@ -330,8 +330,8 @@ research holder datum.
 
 /obj/item/disk/tech_disk/Initialize()
 	. = ..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = SSrng.random(-5, 5)
+	pixel_y = SSrng.random(-5, 5)
 	for(var/i in 1 to max_tech_stored)
 		tech_stored += null
 

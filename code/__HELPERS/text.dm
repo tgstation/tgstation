@@ -344,7 +344,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/random_string(length, list/characters)
 	. = ""
 	for(var/i=1, i<=length, i++)
-		. += pick(characters)
+		. += SSrng.pick_from_list(characters)
 
 /proc/repeat_string(times, string="")
 	. = ""

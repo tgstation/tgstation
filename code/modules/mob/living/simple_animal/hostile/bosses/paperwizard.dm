@@ -70,7 +70,7 @@
 		else //random mob
 			var/list/threats = boss.PossibleThreats()
 			if(threats.len)
-				target = pick(threats)
+				target = SSrng.pick_from_list(threats)
 		if(target)
 			var/mob/living/simple_animal/hostile/boss/paper_wizard/wiz = boss
 			var/directions = GLOB.cardinals.Copy()

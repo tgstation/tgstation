@@ -123,7 +123,7 @@
 
 /obj/machinery/flasher/emp_act(severity)
 	if(!(stat & (BROKEN|NOPOWER)))
-		if(bulb && prob(75/severity))
+		if(bulb && SSrng.probability(75/severity))
 			flash()
 			bulb.burn_out()
 			power_change()

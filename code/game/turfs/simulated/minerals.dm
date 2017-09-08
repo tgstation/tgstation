@@ -33,7 +33,7 @@
 	..()
 	if (mineralType && mineralAmt && spread && spreadChance)
 		for(var/dir in GLOB.cardinals)
-			if(prob(spreadChance))
+			if(SSrng.probability(spreadChance))
 				var/turf/T = get_step(src, dir)
 				if(istype(T, /turf/closed/mineral/random))
 					Spread(T)
@@ -127,10 +127,10 @@
 	..()
 	switch(severity)
 		if(3)
-			if (prob(75))
+			if (SSrng.probability(75))
 				src.gets_drilled(null, 1)
 		if(2)
-			if (prob(90))
+			if (SSrng.probability(90))
 				src.gets_drilled(null, 1)
 		if(1)
 			src.gets_drilled(null, 1)
@@ -154,13 +154,13 @@
 	if (display_icon_state)
 		icon_state = display_icon_state
 	..()
-	if (prob(mineralChance))
+	if (SSrng.probability(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
 		var/turf/T = ChangeTurf(path,FALSE,FALSE,TRUE)
 
 		if(T && ismineralturf(T))
 			var/turf/closed/mineral/M = T
-			M.mineralAmt = rand(1, 5)
+			M.mineralAmt = SSrng.random(1, 5)
 			M.environment_type = src.environment_type
 			M.turf_type = src.turf_type
 			M.baseturf = src.baseturf
@@ -392,7 +392,7 @@
 	var/mutable_appearance/activated_overlay
 
 /turf/closed/mineral/gibtonite/Initialize()
-	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
+	det_time = SSrng.random(8,10) //So you don't know exactly when the hot potato will explode
 	..()
 
 /turf/closed/mineral/gibtonite/attackby(obj/item/I, mob/user, params)

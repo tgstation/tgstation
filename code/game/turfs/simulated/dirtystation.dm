@@ -8,7 +8,7 @@
 //Making the station dirty, one tile at a time. Called by master controller's setup_objects
 
 /turf/open/floor/proc/MakeDirty()
-	if(prob(66))	//fastest possible exit 2/3 of the time
+	if(SSrng.probability(66))	//fastest possible exit 2/3 of the time
 		return
 
 	if(!(flags_1 & CAN_BE_DIRTY_1))
@@ -51,8 +51,8 @@
 		if(prob(3))
 			new /obj/effect/decal/cleanable/blood/old(src)
 		else
-			if(prob(35))
-				if(prob(4))
+			if(SSrng.probability(35))
+				if(SSrng.probability(4))
 					new /obj/effect/decal/cleanable/robot_debris/old(src)
 				else
 					new /obj/effect/decal/cleanable/oil(src)
@@ -115,7 +115,7 @@
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
-		else if(prob(30))
+		else if(SSrng.probability(30))
 			if(istype(A, /area/medical/morgue))
 				new /obj/item/ectoplasm(src)
 			else

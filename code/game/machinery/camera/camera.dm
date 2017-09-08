@@ -47,7 +47,7 @@
 	GLOB.cameranet.addCamera(src)
 	proximity_monitor = new(src, 1)
 
-	if(mapload && z == ZLEVEL_STATION && prob(3) && !start_active)
+	if(mapload && z == ZLEVEL_STATION && SSrng.probability(3) && !start_active)
 		toggle_cam()
 
 /obj/machinery/camera/Destroy()
@@ -69,7 +69,7 @@
 	if(!status)
 		return
 	if(!isEmpProof())
-		if(prob(150/severity))
+		if(SSrng.probability(150/severity))
 			update_icon()
 			var/list/previous_network = network
 			network = list()

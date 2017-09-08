@@ -12,8 +12,8 @@
 
 
 /datum/round_event/spider_infestation/setup()
-	announceWhen = rand(announceWhen, announceWhen + 50)
-	spawncount = rand(5, 8)
+	announceWhen = SSrng.random(announceWhen, announceWhen + 50)
+	spawncount = SSrng.random(5, 8)
 
 /datum/round_event/spider_infestation/announce()
 	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg')
@@ -28,9 +28,9 @@
 				vents += temp_vent
 
 	while((spawncount >= 1) && vents.len)
-		var/obj/vent = pick(vents)
+		var/obj/vent = SSrng.pick_from_list(vents)
 		var/spawn_type = /obj/structure/spider/spiderling
-		if(prob(66))
+		if(SSrng.probability(66))
 			spawn_type = /obj/structure/spider/spiderling/nurse
 		spawn_atom_to_turf(spawn_type, vent, 1, FALSE)
 		vents -= vent
