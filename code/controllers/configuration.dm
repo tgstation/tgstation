@@ -457,8 +457,6 @@ GLOBAL_PROTECT(config_dir)
 					popup_admin_pm = 1
 				if("allow_holidays")
 					allow_holidays = 1
-				if("useircbot")	//tgs2 support
-					useircbot = 1
 				if("ticklag")
 					var/ticklag = text2num(value)
 					if(ticklag > 0)
