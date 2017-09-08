@@ -539,9 +539,9 @@
 		to_chat(user, "<span class='warning'>Something is wired up to the airlock's electronics!</span>")
 	if(note)
 		if(!in_range(user, src))
-			to_chat(user, "There's a [note] pinned to the front. You can't read it from here.")
+			to_chat(user, "There's a [note.name] pinned to the front. You can't read it from here.")
 		else
-			to_chat(user, "There's a [note] pinned to the front...")
+			to_chat(user, "There's a [note.name] pinned to the front...")
 			note.examine(user)
 
 	if(panel_open)
