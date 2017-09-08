@@ -245,6 +245,7 @@
 		QDEL_IN(O, 50)
 
 /turf/closed/wall/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		if(prob(50))
 			dismantle_wall()
