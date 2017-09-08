@@ -470,6 +470,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Bloody Mary"
 	glass_desc = "Tomato juice, mixed with Vodka and a lil' bit of lime. Tastes like liquid murder."
 
+/datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+			C.blood_volume = min(BLOOD_VOLUME_NORMAL, C.blood_volume + 3) //Bloody Mary quickly restores blood loss.
+	..()
+
 /datum/reagent/consumable/ethanol/brave_bull
 	name = "Brave Bull"
 	id = "bravebull"
@@ -480,15 +487,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "bravebullglass"
 	glass_name = "Brave Bull"
 	glass_desc = "Tequila and Coffee liqueur, brought together in a mouthwatering mixture. Drink up."
+	var/tough_text
 
-/datum/reagent/consumable/ethanol/brave_bull/on_mob_life(mob/living/M)
-	if(M.maxHealth == initial(M.maxHealth)) //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
-		M.maxHealth += 5
-		M.health += 5
-	return ..()
+/datum/reagent/consumable/ethanol/brave_bull/on_mob_add(mob/living/M)
+	tough_text = pick("brawny", "tenacious", "tough", "hardy", "sturdy") //Tuff stuff
+	to_chat(M, "<span class='notice'>You feel [tough_text]!</span>")
+	M.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
+	M.health += 10
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_delete(mob/living/M)
 	if(M.maxHealth != initial(M.maxHealth))
+		to_chat(M, "<span class='notice'>You no longer feel [tough_text].</span>")
 		M.maxHealth = initial(M.maxHealth)
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
@@ -501,6 +510,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "tequilasunriseglass"
 	glass_name = "tequila Sunrise"
 	glass_desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
+
+/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_add(mob/living/M)
+	to_chat(M, "<span class='notice'>You feel gentle warmth spread through your body!</span>")
+	M.set_light(3, 0.7, "#FFCC00") //Tequila Sunrise makes you radiate dim light, like a sunrise!
+
+/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_delete(mob/living/M)
+	to_chat(M, "<span class='notice'>The warmth in your body fades.</span>")
+	M.set_light(initial(M.light_range), initial(M.light_power), initial(M.light_color))
 
 /datum/reagent/consumable/ethanol/toxins_special
 	name = "Toxins Special"
@@ -556,6 +573,21 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "manlydorfglass"
 	glass_name = "The Manly Dorf"
 	glass_desc = "A manly concoction made from Ale and Beer. Intended for true men only."
+	var/dorf_mode
+
+/datum/reagent/consumable/ethanol/manly_dorf/on_mob_add(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.dna.check_mutation(DWARFISM))
+			to_chat(H, "<span class='notice'>Now THAT is MANLY!</span>")
+			boozepwr = 5 //We've had worse in the mines
+			dorf_mode = TRUE
+
+/datum/reagent/consumable/ethanol/manly_dorf/on_mob_life(mob/living/M)
+	if(dorf_mode)
+		M.adjustBruteLoss(-2)
+		M.adjustFireLoss(-2)
+	return ..()
 
 /datum/reagent/consumable/ethanol/longislandicedtea
 	name = "Long Island Iced Tea"
