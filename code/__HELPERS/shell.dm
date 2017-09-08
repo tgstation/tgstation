@@ -46,11 +46,12 @@
 	var/bad_match = ""
 	var/last_good = 1
 	var/bad_chars = 1
-	while(bad_chars)
+	do
 		bad_chars = bad_chars_regex.Find(url)
 		scrubbed_url += copytext(url, last_good, bad_chars)
 		if(bad_chars)
 			bad_match = url_encode(bad_chars_regex.match)
 			scrubbed_url += bad_match
 			last_good = bad_chars + length(bad_match)
+	while(bad_chars)
 	. = scrubbed_url

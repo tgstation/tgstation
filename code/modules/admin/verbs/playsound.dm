@@ -73,15 +73,20 @@
 		if(length(web_sound_input))
 
 			web_sound_input = trim(web_sound_input)
+			var/static/regex/html_protocol_regex = regex("https?://")
+			if(findtext(web_sound_input, ":") && !findtext(web_sound_input, html_protocol_regex))
+				to_chat(src, "<span class='boldwarning'>Non-http(s) URIs are not allowed.</span>")
+				to_chat(src, "<span class='warning'>For youtube-dl shortcuts like ytsearch: please use the appropriate full url from the website.</span>")
+				return
 			var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
 			var/list/output = world.shelleo("[config.invoke_youtubedl] --format \"bestaudio\[ext=aac]/bestaudio\[ext=mp3]/bestaudio\[ext=m4a]\" --get-url \"[shell_scrubbed_input]\"")
 			var/errorlevel = output[SHELLEO_ERRORLEVEL]
 			var/stdout = output[SHELLEO_STDOUT]
 			var/stderr = output[SHELLEO_STDERR]
 			if(!errorlevel)
-				var/static/regex/html_url_regex = regex("https?://\\S+")
-				if(html_url_regex.Find(stdout))
-					web_sound_url = html_url_regex.match
+				var/static/regex/content_url_regex = regex("https?://\\S+")
+				if(content_url_regex.Find(stdout))
+					web_sound_url = content_url_regex.match
 
 					if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 						pitch = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
