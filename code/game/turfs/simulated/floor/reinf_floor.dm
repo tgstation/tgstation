@@ -58,6 +58,7 @@
 				make_plating(1)
 
 /turf/open/floor/engine/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		if(floor_tile)
 			if(prob(30))

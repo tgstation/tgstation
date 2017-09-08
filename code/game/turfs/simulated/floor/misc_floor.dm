@@ -269,6 +269,7 @@
 		narsie_act(force, ignore_mobs, probability)
 
 /turf/open/floor/vines/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		if(prob(50))
 			ChangeTurf(src.baseturf)
