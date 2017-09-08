@@ -21,7 +21,9 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "weed spray"
 	icon_state = "weedspray"
-	item_state = "spray"
+	item_state = "spraycan"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
 	container_type = OPENCONTAINER_1
 	slot_flags = SLOT_BELT

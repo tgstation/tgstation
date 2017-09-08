@@ -480,6 +480,8 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "oar"
 	item_state = "oar"
+	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'
 	desc = "Not to be confused with the kind Research hassles you for."
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
@@ -835,6 +837,8 @@
 	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
 	icon_state = "staffofstorms"
 	item_state = "staffofstorms"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
@@ -1008,6 +1012,7 @@
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15
+	attack_verb = list("clubbed", "beat", "pummeled")
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/item_action/toggle_unfriendly_fire)
 	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
@@ -1023,6 +1028,21 @@
 /obj/item/hierophant_club/examine(mob/user)
 	..()
 	to_chat(user, "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>")
+
+/obj/item/hierophant_club/suicide_act(mob/living/user)
+	say("Xverwpsgexmrk...")
+	user.visible_message("<span class='suicide'>[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
+	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
+	user.visible_message("<span class='hierophant_warning'>[user] fades out, leaving their belongings behind!</span>")
+	for(var/obj/item/I in user)
+		if(I != src)
+			user.dropItemToGround(I)
+	for(var/turf/T in RANGE_TURFS(1, user))
+		var/obj/effect/temp_visual/hierophant/blast/B = new(T, user, TRUE)
+		B.damage = 0
+	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
+	qdel(user)
 
 /obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	..()

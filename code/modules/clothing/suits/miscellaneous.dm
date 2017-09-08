@@ -280,6 +280,7 @@
 	body_parts_covered = HEAD
 	flags_1 = THICKMATERIAL_1
 	flags_inv = HIDEHAIR|HIDEEARS
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
 	name = "bloated human suit"
@@ -412,6 +413,24 @@
 	desc = "A blue letterman jacket with a proud Nanotrasen N on the back. The tag says that it was made in Space China."
 	icon_state = "letterman_n"
 	item_state = "letterman_n"
+
+/obj/item/clothing/suit/dracula
+	name = "dracula coat"
+	desc = "Looks like this belongs in a very old movie set"
+	icon_state = "draculacoat"
+	item_state = "draculacoat"
+
+/obj/item/clothing/suit/drfreeze_coat
+	name = "doctor freeze's labcoat"
+	desc = "A labcoat imbued with the power of features and freezes."
+	icon_state = "drfreeze_coat"
+	item_state = "drfreeze_coat"
+
+/obj/item/clothing/suit/gothcoat
+	name = "gothic coat"
+	desc = "Perfect for those who want stalk in a corner of a bar."
+	icon_state = "gothcoat"
+	item_state = "gothcoat"
 
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"

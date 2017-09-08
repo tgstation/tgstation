@@ -633,6 +633,7 @@ so as to remain in compliance with the most up-to-date laws."
 /obj/screen/alert/restrained/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something. Click the alert to unbuckle unless you're handcuffed."
+	icon_state = "buckled"
 
 /obj/screen/alert/restrained/handcuffed
 	name = "Handcuffed"
@@ -698,4 +699,3 @@ so as to remain in compliance with the most up-to-date laws."
 	severity = 0
 	master = null
 	screen_loc = ""
-

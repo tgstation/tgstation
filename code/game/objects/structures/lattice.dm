@@ -45,6 +45,7 @@
 	qdel(src)
 
 /obj/structure/lattice/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
 

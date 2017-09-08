@@ -162,6 +162,12 @@
 	icon_state = "bottle16"
 	list_reagents = list("polonium" = 30)
 
+/obj/item/reagent_containers/glass/bottle/magillitis
+	name = "magillitis bottle"
+	desc = "A small bottle. Contains a serum known only as 'magillitis'."
+	icon_state = "bottle16"
+	list_reagents = list("magillitis" = 5)
+
 /obj/item/reagent_containers/glass/bottle/venom
 	name = "venom bottle"
 	desc = "A small bottle. Contains Venom."

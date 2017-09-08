@@ -127,6 +127,8 @@
 	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demolishing solid obstacles."
 	icon_state = "mecha_plasmacutter"
 	item_state = "plasmacutter"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	energy_drain = 30
 	origin_tech = "materials=3;plasmatech=4;engineering=3"
 	projectile = /obj/item/projectile/plasma/adv/mech
@@ -249,7 +251,7 @@
 	icon_state = "mecha_carbine"
 	origin_tech = "materials=4;combat=4"
 	equip_cooldown = 10
-	projectile = /obj/item/projectile/bullet/incendiary/shell
+	projectile = /obj/item/projectile/bullet/incendiary/fnx99
 	projectiles = 24
 	projectile_energy_cost = 15
 
@@ -269,7 +271,7 @@
 	icon_state = "mecha_scatter"
 	origin_tech = "combat=4"
 	equip_cooldown = 20
-	projectile = /obj/item/projectile/bullet/midbullet
+	projectile = /obj/item/projectile/bullet/scattershot
 	projectiles = 40
 	projectile_energy_cost = 25
 	projectiles_per_shot = 4
@@ -281,7 +283,7 @@
 	icon_state = "mecha_uac2"
 	origin_tech = "combat=4"
 	equip_cooldown = 10
-	projectile = /obj/item/projectile/bullet/weakbullet3
+	projectile = /obj/item/projectile/bullet/lmg
 	projectiles = 300
 	projectile_energy_cost = 20
 	projectiles_per_shot = 3
