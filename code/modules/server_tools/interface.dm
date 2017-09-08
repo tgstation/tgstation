@@ -64,7 +64,7 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(reboot_mode, REBOOT_MODE_NORMAL)
 				SERVER_TOOLS_NOTIFY_ADMINS("The world will hard reboot at the end of the game. Requested by service.")
 		if(SERVICE_CMD_GRACEFUL_SHUTDOWN)
 			if(SERVER_TOOLS_READ_GLOBAL(reboot_mode) != REBOOT_MODE_SHUTDOWN)
-				GLOB.reboot_mode = REBOOT_MODE_SHUTDOWN
+				SERVER_TOOLS_WRITE_GLOBAL(reboot_mode, REBOOT_MODE_SHUTDOWN)
 				SERVER_TOOLS_LOG("Shutdown requested by service")
 				message_admins("The world will shutdown at the end of the game. Requested by service.")
 		if(SERVICE_CMD_WORLD_ANNOUNCE)
