@@ -47,8 +47,8 @@
 	..()
 	adjustmask()
 
-/obj/item/clothing/suit/space/hostile_environiment
-	name = "hostile environiment suit"
+/obj/item/clothing/suit/space/hostile_environment
+	name = "hostile environment suit"
 	desc = "A suit with an experimental protective layer of plasma gel to protect against the hazards of Lavaland."
 	icon_state = "hostile_env"
 	item_state = "hostile_env"
@@ -59,7 +59,7 @@
 	armor = list(melee = 50, bullet = 25, laser = 35, energy = 30, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 
-/obj/item/clothing/suit/space/hostile_environiment/attackby(obj/item/O, mob/user, params)
+/obj/item/clothing/suit/space/hostile_environment/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/toy/crayon/spraycan))
 		var/obj/item/toy/crayon/spraycan/spraycan = O
 		if(spraycan.is_capped)
@@ -74,8 +74,8 @@
 	else
 		return ..()
 
-/obj/item/clothing/head/helmet/space/hostile_environiment
-	name = "hostile environiment helmet"
+/obj/item/clothing/head/helmet/space/hostile_environment
+	name = "hostile environment helmet"
 	desc = "A helmet with an experimental protective layer of plasma gel to protect against the hazards of Lavaland."
 	icon_state = "hostile_env"
 	item_state = "hostile_env"
@@ -85,25 +85,25 @@
 	armor = list(melee = 50, bullet = 25, laser = 35,energy = 30, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/head/helmet/space/hostile_environiment/Initialize()
+/obj/item/clothing/head/helmet/space/hostile_environment/Initialize()
 	. = ..()
 	update_icon()
 
-/obj/item/clothing/head/helmet/space/hostile_environiment/update_icon()
+/obj/item/clothing/head/helmet/space/hostile_environment/update_icon()
 	..()
 	cut_overlays()
 	var/mutable_appearance/glass_overlay = mutable_appearance(icon, "hostile_env_glass")
 	glass_overlay.appearance_flags = RESET_COLOR
 	add_overlay(glass_overlay)
 
-/obj/item/clothing/head/helmet/space/hostile_environiment/worn_overlays(isinhands)
+/obj/item/clothing/head/helmet/space/hostile_environment/worn_overlays(isinhands)
 	. = ..()
 	if(!isinhands)
 		var/mutable_appearance/M = mutable_appearance('icons/mob/head.dmi', "hostile_env_glass")
 		M.appearance_flags = RESET_COLOR
 		. += M
 
-/obj/item/clothing/head/helmet/space/hostile_environiment/attackby(obj/item/O, mob/user, params)
+/obj/item/clothing/head/helmet/space/hostile_environment/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/toy/crayon/spraycan))
 		var/obj/item/toy/crayon/spraycan/spraycan = O
 		if(spraycan.is_capped)
