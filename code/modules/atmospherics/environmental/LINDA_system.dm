@@ -1,12 +1,13 @@
 /atom/var/CanAtmosPass = ATMOS_PASS_YES
 /atom/proc/CanAtmosPass(turf/T)
-	switch (CanAtmosPass)
+	var/_cap = CanAtmosPass
+	switch (_cap)
 		if (ATMOS_PASS_PROC)
 			return ATMOS_PASS_YES
 		if (ATMOS_PASS_DENSITY)
 			return !density
 		else
-			return CanAtmosPass
+			return _cap
 
 /turf/closed/CanAtmosPass = ATMOS_PASS_NO
 
