@@ -281,7 +281,7 @@ SUBSYSTEM_DEF(garbage)
 	SSgarbage.can_fire = 1
 	SSgarbage.next_fire = world.time + world.tick_lag
 
-/client/verb/purge_all_destroyed_objects()
+/datum/client_base/verb/purge_all_destroyed_objects()
 	set category = "Debug"
 	while(SSgarbage.queue.len)
 		var/datum/o = locate(SSgarbage.queue[1])
@@ -300,7 +300,7 @@ SUBSYSTEM_DEF(garbage)
 	if(!running_find_references)
 		find_references(TRUE)
 
-/client/verb/show_qdeleted()
+/datum/client_base/verb/show_qdeleted()
 	set category = "Debug"
 	set name = "Show qdel() Log"
 	set desc = "Render the qdel() log and display it"

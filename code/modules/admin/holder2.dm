@@ -4,7 +4,7 @@ GLOBAL_PROTECT(admin_datums)
 /datum/admins
 	var/datum/admin_rank/rank
 
-	var/client/owner	= null
+	var/datum/client_base/owner	= null
 	var/fakekey			= null
 
 	var/datum/marked_datum
@@ -30,7 +30,7 @@ GLOBAL_PROTECT(admin_datums)
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	GLOB.admin_datums[ckey] = src
 
-/datum/admins/proc/associate(client/C)
+/datum/admins/proc/associate(datum/client_base/C)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
 		message_admins("[key_name_admin(usr)][msg]")
@@ -40,7 +40,7 @@ GLOBAL_PROTECT(admin_datums)
 		owner = C
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
-		owner.verbs -= /client/proc/readmin
+		owner.verbs -= /datum/client_base/proc/readmin
 		GLOB.admins |= C
 
 /datum/admins/proc/disassociate()
@@ -88,7 +88,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 	return 0
 
 //probably a bit iffy - will hopefully figure out a better solution
-/proc/check_if_greater_rights_than(client/other)
+/proc/check_if_greater_rights_than(datum/client_base/other)
 	if(usr && usr.client)
 		if(usr.client.holder)
 			if(!other || !other.holder)
@@ -97,7 +97,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 	return 0
 
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
-/proc/check_rights_for(client/subject, rights_required)
+/proc/check_rights_for(datum/client_base/subject, rights_required)
 	if(subject && subject.holder && subject.holder.rank)
 		if(rights_required && !(rights_required & subject.holder.rank.rights))
 			return 0

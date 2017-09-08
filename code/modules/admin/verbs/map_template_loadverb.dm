@@ -1,4 +1,4 @@
-/client/proc/map_template_load()
+/datum/client_base/proc/map_template_load()
 	set category = "Debug"
 	set name = "Map template - Place"
 
@@ -24,7 +24,7 @@
 			to_chat(usr, "Failed to place map")
 	usr.client.images -= preview
 
-/client/proc/map_template_upload()
+/datum/client_base/proc/map_template_upload()
 	set category = "Debug"
 	set name = "Map Template - Upload"
 

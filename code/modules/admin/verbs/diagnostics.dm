@@ -1,4 +1,4 @@
-/client/proc/air_status(turf/target)
+/datum/client_base/proc/air_status(turf/target)
 	set category = "Debug"
 	set name = "Display Air Status"
 
@@ -18,7 +18,7 @@
 		to_chat(usr, "[GM_gases[id][GAS_META][META_GAS_NAME]]: [GM_gases[id][MOLES]]")
 	SSblackbox.add_details("admin_verb","Show Air Status") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/fix_next_move()
+/datum/client_base/proc/fix_next_move()
 	set category = "Debug"
 	set name = "Unfreeze Everyone"
 	var/largest_move_time = 0
@@ -49,7 +49,7 @@
 	SSblackbox.add_details("admin_verb","Unfreeze Everyone") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/client/proc/radio_report()
+/datum/client_base/proc/radio_report()
 	set category = "Debug"
 	set name = "Radio report"
 
@@ -87,7 +87,7 @@
 	usr << browse(output,"window=radioreport")
 	SSblackbox.add_details("admin_verb","Show Radio Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/reload_admins()
+/datum/client_base/proc/reload_admins()
 	set name = "Reload Admins"
 	set category = "Admin"
 

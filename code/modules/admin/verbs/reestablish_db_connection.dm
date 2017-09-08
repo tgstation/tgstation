@@ -1,4 +1,4 @@
-/client/proc/reestablish_db_connection()
+/datum/client_base/proc/reestablish_db_connection()
 	set category = "Special Verbs"
 	set name = "Reestablish DB Connection"
 	if (!config.sql_enabled)

@@ -1,12 +1,7 @@
-/client
-	var/list/atom/selected_target[2]
-	var/obj/item/active_mousedown_item = null
-	var/mouseParams = ""
-	var/mouseLocation = null
-	var/mouseObject = null
-	var/mouseControlObject = null
+/datum/client_base/proc/Click(object, location, control, params)
+	return ..()
 
-/client/MouseDown(object, location, control, params)
+/datum/client_base/proc/MouseDown(object, location, control, params)
 	var/delay = mob.CanMobAutoclick(object, location, params)
 	if(delay)
 		selected_target[1] = object
@@ -18,7 +13,7 @@
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDown(object, location, params, mob)
 
-/client/MouseUp(object, location, control, params)
+/datum/client_base/proc/MouseUp(object, location, control, params)
 	selected_target[1] = null
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseUp(object, location, params, mob)
@@ -71,7 +66,7 @@
 	. = 1
 
 //Please don't roast me too hard
-/client/MouseMove(object,location,control,params)
+/datum/client_base/proc/MouseMove(object,location,control,params)
 	mouseParams = params
 	mouseLocation = location
 	mouseObject = object
@@ -83,7 +78,7 @@
 /obj/item/proc/onMouseMove(object, location, control, params)
 	return
 
-/client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+/datum/client_base/proc/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	mouseParams = params
 	mouseLocation = over_location
 	mouseObject = over_object

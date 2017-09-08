@@ -71,7 +71,7 @@
 
 /datum/buildmode
 	var/mode = BASIC_BUILDMODE
-	var/client/holder = null
+	var/datum/client_base/holder = null
 	var/list/obj/screen/buttons = list()
 	var/build_dir = SOUTH
 	var/atom/movable/throw_atom = null
@@ -83,7 +83,7 @@
 	var/objholder = /obj/structure/closet
 	var/atom/movable/stored = null
 
-/datum/buildmode/New(client/c)
+/datum/buildmode/New(datum/client_base/c)
 	create_buttons()
 	holder = c
 	holder.click_intercept = src

@@ -1,4 +1,4 @@
-/client/proc/bluespace_artillery(mob/M in GLOB.mob_list)
+/datum/client_base/proc/bluespace_artillery(mob/M in GLOB.mob_list)
 	if(!holder || !check_rights(R_FUN))
 		return
 

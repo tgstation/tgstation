@@ -785,7 +785,7 @@
 //returns a list of ckeys of the kicked clients
 /proc/kick_clients_in_lobby(message, kick_only_afk = 0)
 	var/list/kicked_client_names = list()
-	for(var/client/C in GLOB.clients)
+	for(var/datum/client_base/C in GLOB.clients)
 		if(isnewplayer(C.mob))
 			if(kick_only_afk && !C.is_afk()) //Ignore clients who are not afk
 				continue
@@ -829,7 +829,7 @@
 
 	return 1
 
-/client/proc/adminGreet(logout)
+/datum/client_base/proc/adminGreet(logout)
 	if(SSticker.HasRoundStarted())
 		var/string
 		if(logout && config && config.announce_admin_logout)

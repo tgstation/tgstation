@@ -137,7 +137,7 @@
 //end pool funcs
 
 /mob/living/carbon/human/interactive/proc/random()
-	//this is here because this has no client/prefs/brain whatever.
+	//this is here because this has no datum/client_base/prefs/brain whatever.
 	age = rand(AGE_MIN,AGE_MAX)
 	//job handling
 	myjob = new/datum/job/assistant()
@@ -156,7 +156,7 @@
 		retal_target = potentialAssault
 	..()
 
-/client/proc/resetSNPC(var/mob/A in SSnpcpool.processing)
+/datum/client_base/proc/resetSNPC(var/mob/A in SSnpcpool.processing)
 	set name = "Reset SNPC"
 	set desc = "Reset the SNPC"
 	set category = "Debug"
@@ -173,7 +173,7 @@
 			T.retal = 0
 			T.doing = 0
 
-/client/proc/customiseSNPC(var/mob/A in SSnpcpool.processing)
+/datum/client_base/proc/customiseSNPC(var/mob/A in SSnpcpool.processing)
 	set name = "Customize SNPC"
 	set desc = "Customise the SNPC"
 	set category = "Debug"

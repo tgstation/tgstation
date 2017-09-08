@@ -37,7 +37,7 @@
 	. = "s"
 
 //like clients, which do have gender.
-/client/p_they(capitalized, temp_gender)
+/datum/client_base/p_they(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "they"
@@ -49,7 +49,7 @@
 	if(capitalized)
 		. = capitalize(.)
 
-/client/p_their(capitalized, temp_gender)
+/datum/client_base/p_their(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "their"
@@ -61,7 +61,7 @@
 	if(capitalized)
 		. = capitalize(.)
 
-/client/p_them(capitalized, temp_gender)
+/datum/client_base/p_them(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "them"
@@ -73,35 +73,35 @@
 	if(capitalized)
 		. = capitalize(.)
 
-/client/p_have(temp_gender)
+/datum/client_base/p_have(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "has"
 	if(temp_gender == PLURAL || temp_gender == NEUTER)
 		. = "have"
 
-/client/p_are(temp_gender)
+/datum/client_base/p_are(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "is"
 	if(temp_gender == PLURAL || temp_gender == NEUTER)
 		. = "are"
 
-/client/p_were(temp_gender)
+/datum/client_base/p_were(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "was"
 	if(temp_gender == PLURAL || temp_gender == NEUTER)
 		. = "were"
 
-/client/p_do(temp_gender)
+/datum/client_base/p_do(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "does"
 	if(temp_gender == PLURAL || temp_gender == NEUTER)
 		. = "do"
 
-/client/p_s(temp_gender)
+/datum/client_base/p_s(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender != PLURAL && temp_gender != NEUTER)

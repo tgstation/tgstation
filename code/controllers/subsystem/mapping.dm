@@ -142,7 +142,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/mapvotes = list()
 	//count votes
 	if(global.config.allow_map_voting)
-		for (var/client/c in GLOB.clients)
+		for (var/datum/client_base/c in GLOB.clients)
 			var/vote = c.prefs.preferred_map
 			if (!vote)
 				if (global.config.defaultmap)

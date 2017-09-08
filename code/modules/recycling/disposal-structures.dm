@@ -349,7 +349,7 @@
 
 
 // *** TEST verb
-//client/verb/dispstop()
+//datum/client_base/verb/dispstop()
 //	for(var/obj/structure/disposalholder/H in world)
 //		H.active = 0
 

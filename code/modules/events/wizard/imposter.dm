@@ -14,7 +14,7 @@
 		var/list/candidates = get_candidates(ROLE_WIZARD)
 		if(!candidates)
 			return //Sad Trombone
-		var/client/C = pick(candidates)
+		var/datum/client_base/C = pick(candidates)
 
 		new /obj/effect/particle_effect/smoke(W.loc)
 

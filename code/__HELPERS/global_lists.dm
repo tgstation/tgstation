@@ -60,7 +60,7 @@
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
 
 /* // Uncomment to debug chemical reaction list.
-/client/verb/debug_chemical_list()
+/datum/client_base/verb/debug_chemical_list()
 
 	for (var/reaction in chemical_reactions_list)
 		. += "chemical_reactions_list\[\"[reaction]\"\] = \"[chemical_reactions_list[reaction]]\"\n"

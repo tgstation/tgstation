@@ -12,6 +12,6 @@ SUBSYSTEM_DEF(assets)
 
 	preload = cache.Copy() //don't preload assets generated during the round
 
-	for(var/client/C in GLOB.clients)
+	for(var/datum/client_base/C in GLOB.clients)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/getFilesSlow, C, preload, FALSE), 10)
 	..()

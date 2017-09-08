@@ -57,9 +57,9 @@ SUBSYSTEM_DEF(minimap)
 	else
 		return "data/minimaps/[SSmapping.config.map_name]_[z].png"
 
-/datum/controller/subsystem/minimap/proc/send(client/client)
+/datum/controller/subsystem/minimap/proc/send(datum/client_base/C)
 	for(var/z in z_levels)
-		send_asset(client, "minimap_[z].png")
+		send_asset(C, "minimap_[z].png")
 
 /datum/controller/subsystem/minimap/proc/generate(z = 1, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
 	// Load the background.

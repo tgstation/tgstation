@@ -7,14 +7,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 //On client, created on login
 /datum/chatOutput
-	var/client/owner	 //client ref
+	var/datum/client_base/owner	 //client ref
 	var/loaded       = FALSE // Has the client loaded the browser output area?
 	var/list/messageQueue //If they haven't loaded chat, this is where messages will go until they do
 	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
 	var/broken       = FALSE
 	var/list/connectionHistory //Contains the connection history passed from chat cookie
 
-/datum/chatOutput/New(client/C)
+/datum/chatOutput/New(datum/client_base/C)
 	owner = C
 	messageQueue = list()
 	connectionHistory = list()
@@ -115,7 +115,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		ehjax_send(data = owner.is_afk(29) ? "softPang" : "pang") // SoftPang isn't handled anywhere but it'll always reset the opts.lastPang.
 		sleep(30)
 
-/datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
+/datum/chatOutput/proc/ehjax_send(datum/client_base/C = owner, window = "browseroutput", data)
 	if(islist(data))
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
@@ -197,7 +197,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	for(var/I in targets)
 		//Grab us a client if possible
-		var/client/C = grab_client(I)
+		var/datum/client_base/C = grab_client(I)
 
 		if (!C)
 			continue

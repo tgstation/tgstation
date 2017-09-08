@@ -320,7 +320,7 @@
 
 	//Dizziness
 	if(dizziness)
-		var/client/C = client
+		var/datum/client_base/C = client
 		var/pixel_x_diff = 0
 		var/pixel_y_diff = 0
 		var/temp

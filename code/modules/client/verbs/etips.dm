@@ -1,4 +1,4 @@
-/client/verb/toggle_tips()
+/datum/client_base/verb/toggle_tips()
 	set name = "Toggle examine tooltips"
 	set desc = "Toggles examine hover-over tooltips"
 	set category = "Preferences"
@@ -7,7 +7,7 @@
 	prefs.save_preferences()
 	to_chat(usr, "<span class='danger'>Examine tooltips [prefs.enable_tips ? "en" : "dis"]abled.</span>")
 
-/client/verb/change_tip_delay()
+/datum/client_base/verb/change_tip_delay()
 	set name = "Set examine tooltip delay"
 	set desc = "Sets the delay in milliseconds before examine tooltips appear"
 	set category = "Preferences"

@@ -60,7 +60,7 @@
 				if(L.stat)
 					continue
 				if(L.client)
-					var/client/C = L.client
+					var/datum/client_base/C = L.client
 					var/suffixm = ALL_KILL_MEDAL
 					var/prefix = MEDAL_PREFIX
 					UnlockMedal("[prefix] [suffixm]",C)

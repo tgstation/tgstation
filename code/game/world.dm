@@ -109,7 +109,7 @@
 
 	if(pinging)
 		var/x = 1
-		for (var/client/C in GLOB.clients)
+		for (var/datum/client_base/C in GLOB.clients)
 			x++
 		return x
 
@@ -220,7 +220,7 @@
 			return
 
 	var/final_composed = "<span class='announce'>PR: [announcement]</span>"
-	for(var/client/C in GLOB.clients)
+	for(var/datum/client_base/C in GLOB.clients)
 		C.AnnouncePR(final_composed)
 
 /world/Reboot(reason = 0, fast_track = FALSE)

@@ -338,11 +338,11 @@
 	return O
 
 /proc/remove_images_from_clients(image/I, list/show_to)
-	for(var/client/C in show_to)
+	for(var/datum/client_base/C in show_to)
 		C.images -= I
 
 /proc/flick_overlay(image/I, list/show_to, duration)
-	for(var/client/C in show_to)
+	for(var/datum/client_base/C in show_to)
 		C.images += I
 	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration)
 
@@ -518,7 +518,7 @@
 		if(M && !isnewplayer(M))
 			to_chat(M, thing)
 
-/proc/window_flash(client/C, ignorepref = FALSE)
+/proc/window_flash(datum/client_base/C, ignorepref = FALSE)
 	if(ismob(C))
 		var/mob/M = C
 		if(M.client)

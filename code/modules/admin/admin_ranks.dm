@@ -68,7 +68,7 @@ GLOBAL_PROTECT(admin_ranks)
 			flag = R_ADMIN
 	return flag
 
-/proc/admin_keyword_to_path(word) //use this with verb keywords eg +/client/proc/blah
+/proc/admin_keyword_to_path(word) //use this with verb keywords eg +/datum/client_base/proc/blah
 	return text2path(copytext(word, 2, findtext(word, " ", 2, 0)))
 
 // Adds/removes rights to this admin_rank
@@ -178,7 +178,7 @@ GLOBAL_PROTECT(admin_ranks)
 	//clear the datums references
 	if(!target)
 		GLOB.admin_datums.Cut()
-		for(var/client/C in GLOB.admins)
+		for(var/datum/client_base/C in GLOB.admins)
 			C.remove_admin_verbs()
 			C.holder = null
 		GLOB.admins.Cut()
@@ -255,7 +255,7 @@ GLOBAL_PROTECT(admin_ranks)
 
 
 #ifdef TESTING
-/client/verb/changerank(newrank in GLOB.admin_ranks)
+/datum/client_base/verb/changerank(newrank in GLOB.admin_ranks)
 	if(holder)
 		holder.rank = newrank
 	else
@@ -263,7 +263,7 @@ GLOBAL_PROTECT(admin_ranks)
 	remove_admin_verbs()
 	holder.associate(src)
 
-/client/verb/changerights(newrights as num)
+/datum/client_base/verb/changerights(newrights as num)
 	if(holder)
 		holder.rank.rights = newrights
 	else
@@ -355,7 +355,7 @@ GLOBAL_PROTECT(admin_ranks)
 			else
 				D = new(R,adm_ckey)	//new admin
 
-			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
+			var/datum/client_base/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
 
 			updateranktodb(adm_ckey, new_rank)
@@ -367,7 +367,7 @@ GLOBAL_PROTECT(admin_ranks)
 			if(!D)
 				return	//they're not an admin!
 
-			var/keyword = input("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null) as null|text
+			var/keyword = input("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/datum/client_base/proc/someverb", "Permission toggle", null, null) as null|text
 			if(!keyword)
 				return
 
@@ -383,7 +383,7 @@ GLOBAL_PROTECT(admin_ranks)
 				//we don't add this clone to the admin_ranks list, as it is unique to that ckey
 			D.rank.process_keyword(keyword)
 
-			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
+			var/datum/client_base/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
 
 			message_admins("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")

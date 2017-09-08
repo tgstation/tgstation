@@ -243,7 +243,7 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 
 
 
-/client/proc/print_pointers()
+/datum/client_base/proc/print_pointers()
 	set name = "Debug Signals"
 	set category = "Debug"
 

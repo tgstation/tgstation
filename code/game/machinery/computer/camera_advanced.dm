@@ -127,7 +127,7 @@
 /mob/camera/aiEye/remote/RemoveImages()
 	..()
 	if(visible_icon)
-		var/client/C = GetViewerClient()
+		var/datum/client_base/C = GetViewerClient()
 		if(C)
 			C.images -= user_image
 

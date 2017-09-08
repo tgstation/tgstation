@@ -21,7 +21,7 @@
 		return (reason) ? reason : 1 //see above for why we need to do this
 	return 0
 
-/proc/jobban_buildcache(client/C)
+/proc/jobban_buildcache(datum/client_base/C)
 	if(!SSdbcore.Connect())
 		return
 	if(C && istype(C))

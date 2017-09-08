@@ -1,4 +1,4 @@
-/client/verb/sethotkeys(from_pref = 0 as num)
+/datum/client_base/verb/sethotkeys(from_pref = 0 as num)
 	set name = "Set Hotkeys"
 	set hidden = TRUE
 	set waitfor = FALSE

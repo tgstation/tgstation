@@ -8,7 +8,7 @@ Configuration:
 - Set control to the correct skin element (remember to actually place the skin element)
 - Set file to the correct path for the .html file (remember to actually place the html file)
 - Attach the datum to the user client on login, e.g.
-	/client/New()
+	/datum/client_base/New()
 		src.tooltips = new /datum/tooltip(src)
 
 Usage:
@@ -32,14 +32,14 @@ Notes:
 
 
 /datum/tooltip
-	var/client/owner
+	var/datum/client_base/owner
 	var/control = "mainwindow.tooltip"
 	var/showing = 0
 	var/queueHide = 0
 	var/init = 0
 
 
-/datum/tooltip/New(client/C)
+/datum/tooltip/New(datum/client_base/C)
 	if (C)
 		src.owner = C
 		src.owner << browse(file2text('code/modules/tooltip/tooltip.html'), "window=[src.control]")

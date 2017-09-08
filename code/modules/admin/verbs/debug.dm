@@ -1,4 +1,4 @@
-/client/proc/Debug2()
+/datum/client_base/proc/Debug2()
 	set category = "Debug"
 	set name = "Debug-Game"
 	if(!check_rights(R_DEBUG))
@@ -26,7 +26,7 @@ Because if you select a player mob as owner it tries to do the proc for
 But you can call procs that are of type /mob/living/carbon/human/proc/ for that player.
 */
 
-/client/proc/callproc()
+/datum/client_base/proc/callproc()
 	set category = "Debug"
 	set name = "Advanced ProcCall"
 	set waitfor = 0
@@ -128,7 +128,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	return usr && usr.client && GLOB.AdminProcCaller == usr.client.ckey
 #endif
 
-/client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
+/datum/client_base/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
 	set category = "Debug"
 	set name = "Atom ProcCall"
 	set waitfor = 0
@@ -162,7 +162,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 
 
 
-/client/proc/get_callproc_args()
+/datum/client_base/proc/get_callproc_args()
 	var/argnum = input("Number of arguments","Number:",0) as num|null
 	if(isnull(argnum))
 		return
@@ -181,7 +181,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	if(LAZYLEN(named_args))
 		. += named_args
 
-/client/proc/get_callproc_returnval(returnval,procname)
+/datum/client_base/proc/get_callproc_returnval(returnval,procname)
 	. = ""
 	if(islist(returnval))
 		var/list/returnedlist = returnval
@@ -205,7 +205,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		. = "<font color='blue'>[procname] returned: [!isnull(returnval) ? returnval : "null"]</font>"
 
 
-/client/proc/Cell()
+/datum/client_base/proc/Cell()
 	set category = "Debug"
 	set name = "Air Status in Location"
 	if(!mob)
@@ -226,7 +226,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	to_chat(usr, t)
 	SSblackbox.add_details("admin_verb","Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Make Robot"
 
@@ -242,7 +242,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	else
 		alert("Invalid mob")
 
-/client/proc/cmd_admin_blobize(mob/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_blobize(mob/M in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Make Blob"
 
@@ -260,7 +260,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		alert("Invalid mob")
 
 
-/client/proc/cmd_admin_animalize(mob/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_animalize(mob/M in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Make Simple Animal"
 
@@ -281,7 +281,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		M.Animalize()
 
 
-/client/proc/makepAI(turf/T in GLOB.mob_list)
+/datum/client_base/proc/makepAI(turf/T in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Make pAI"
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
@@ -308,7 +308,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			SSpai.candidates.Remove(candidate)
 	SSblackbox.add_details("admin_verb","Make pAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_alienize(mob/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_alienize(mob/M in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Make Alien"
 
@@ -323,7 +323,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	else
 		alert("Invalid mob")
 
-/client/proc/cmd_admin_slimeize(mob/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_slimeize(mob/M in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Make slime"
 
@@ -399,7 +399,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	return matches
 
 //TODO: merge the vievars version into this or something maybe mayhaps
-/client/proc/cmd_debug_del_all(object as text)
+/datum/client_base/proc/cmd_debug_del_all(object as text)
 	set category = "Debug"
 	set name = "Del-All"
 
@@ -423,7 +423,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		SSblackbox.add_details("admin_verb","Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/cmd_debug_make_powernets()
+/datum/client_base/proc/cmd_debug_make_powernets()
 	set category = "Debug"
 	set name = "Make Powernets"
 	SSmachines.makepowernets()
@@ -431,7 +431,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
 	SSblackbox.add_details("admin_verb","Make Powernets") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_grantfullaccess(mob/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_grantfullaccess(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Grant Full Access"
 
@@ -473,7 +473,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
 
-/client/proc/cmd_assume_direct_control(mob/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_assume_direct_control(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Assume direct control"
 	set desc = "Direct intervention"
@@ -492,7 +492,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		qdel(adminmob)
 	SSblackbox.add_details("admin_verb","Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_areatest(on_station)
+/datum/client_base/proc/cmd_admin_areatest(on_station)
 	set category = "Mapping"
 	set name = "Test Areas"
 
@@ -586,17 +586,17 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	for(var/areatype in areas_without_camera)
 		to_chat(world, "* [areatype]")
 
-/client/proc/cmd_admin_areatest_station()
+/datum/client_base/proc/cmd_admin_areatest_station()
 	set category = "Mapping"
 	set name = "Test Areas (STATION Z)"
 	cmd_admin_areatest(TRUE)
 
-/client/proc/cmd_admin_areatest_all()
+/datum/client_base/proc/cmd_admin_areatest_all()
 	set category = "Mapping"
 	set name = "Test Areas (ALL)"
 	cmd_admin_areatest(FALSE)
 
-/client/proc/cmd_admin_dress(mob/living/carbon/human/M in GLOB.mob_list)
+/datum/client_base/proc/cmd_admin_dress(mob/living/carbon/human/M in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Select equipment"
 	if(!ishuman(M))
@@ -661,7 +661,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode].</span>")
 
-/client/proc/startSinglo()
+/datum/client_base/proc/startSinglo()
 
 	set category = "Debug"
 	set name = "Start Singularity"
@@ -719,7 +719,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		if(SMES.anchored)
 			SMES.input_attempt = 1
 
-/client/proc/cmd_debug_mob_lists()
+/datum/client_base/proc/cmd_debug_mob_lists()
 	set category = "Debug"
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
@@ -740,7 +740,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		if("Joined Clients")
 			to_chat(usr, jointext(GLOB.joined_player_list,","))
 
-/client/proc/cmd_display_del_log()
+/datum/client_base/proc/cmd_display_del_log()
 	set category = "Debug"
 	set name = "Display del() Log"
 	set desc = "Displays a list of things that have failed to GC this round"
@@ -759,14 +759,14 @@ GLOBAL_PROTECT(AdminProcCallCount)
 
 	usr << browse(dat, "window=dellog")
 
-/client/proc/cmd_display_init_log()
+/datum/client_base/proc/cmd_display_init_log()
 	set category = "Debug"
 	set name = "Display Initialzie() Log"
 	set desc = "Displays a list of things that didn't handle Initialize() properly"
 
 	usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
 
-/client/proc/debug_huds(i as num)
+/datum/client_base/proc/debug_huds(i as num)
 	set category = "Debug"
 	set name = "Debug HUDs"
 	set desc = "Debug the data or antag HUDs"
@@ -775,7 +775,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		return
 	debug_variables(GLOB.huds[i])
 
-/client/proc/jump_to_ruin()
+/datum/client_base/proc/jump_to_ruin()
 	set category = "Debug"
 	set name = "Jump to Ruin"
 	set desc = "Displays a list of all placed ruins to teleport to."
@@ -807,7 +807,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		to_chat(usr, "<span class='name'>[template.name]</span>")
 		to_chat(usr, "<span class='italics'>[template.description]</span>")
 
-/client/proc/clear_dynamic_transit()
+/datum/client_base/proc/clear_dynamic_transit()
 	set category = "Debug"
 	set name = "Clear Dynamic Transit"
 	set desc = "Deallocates all transit space, restoring it to round start conditions."
@@ -819,7 +819,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	log_admin("[key_name(src)] cleared dynamic transit space.")
 
 
-/client/proc/toggle_medal_disable()
+/datum/client_base/proc/toggle_medal_disable()
 	set category = "Debug"
 	set name = "Toggle Medal Disable"
 	set desc = "Toggles the safety lock on trying to contact the medal hub."
@@ -832,7 +832,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	SSblackbox.add_details("admin_verb","Toggle Medal Disable") // If...
 	log_admin("[key_name(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")
 
-/client/proc/view_runtimes()
+/datum/client_base/proc/view_runtimes()
 	set category = "Debug"
 	set name = "View Runtimes"
 	set desc = "Open the runtime Viewer"
@@ -842,7 +842,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 
 	GLOB.error_cache.show_to(src)
 
-/client/proc/pump_random_event()
+/datum/client_base/proc/pump_random_event()
 	set category = "Debug"
 	set name = "Pump Random Event"
 	set desc = "Schedules the event subsystem to fire a new random event immediately. Some events may fire without notification."

@@ -144,7 +144,7 @@
 // HERE BE DEBUG DRAGONS //
 ///////////////////////////
 
-/client/proc/debugNatureMapGenerator()
+/datum/client_base/proc/debugNatureMapGenerator()
 	set name = "Test Nature Map Generator"
 	set category = "Debug"
 

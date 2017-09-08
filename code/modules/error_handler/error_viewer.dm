@@ -24,7 +24,7 @@ GLOBAL_DATUM(error_cache, /datum/error_viewer/error_cache)
 /datum/error_viewer
 	var/name = ""
 
-/datum/error_viewer/proc/browse_to(client/user, html)
+/datum/error_viewer/proc/browse_to(datum/client_base/user, html)
 	var/datum/browser/browser = new(user.mob, "error_viewer", null, 600, 400)
 	browser.set_content(html)
 	browser.add_head_content({"

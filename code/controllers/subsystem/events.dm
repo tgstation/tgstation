@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(events)
 
 //allows a client to trigger an event
 //aka Badmin Central
-/client/proc/forceEvent()
+/datum/client_base/proc/forceEvent()
 	set name = "Trigger Event"
 	set category = "Fun"
 

@@ -240,7 +240,7 @@
 	. = list2params(.)
 
 
-/client/proc/stickybanpanel()
+/datum/client_base/proc/stickybanpanel()
 	set name = "Sticky Ban Panel"
 	set category = "Admin"
 	if (!holder)

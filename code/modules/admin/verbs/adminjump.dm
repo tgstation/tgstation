@@ -1,4 +1,4 @@
-/client/proc/jumptoarea(area/A in GLOB.sortedAreas)
+/datum/client_base/proc/jumptoarea(area/A in GLOB.sortedAreas)
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
@@ -25,7 +25,7 @@
 	message_admins("[key_name_admin(usr)] jumped to [A]")
 	SSblackbox.add_details("admin_verb","Jump To Area") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/jumptoturf(turf/T in world)
+/datum/client_base/proc/jumptoturf(turf/T in world)
 	set name = "Jump to Turf"
 	set category = "Admin"
 	if(!src.holder)
@@ -38,7 +38,7 @@
 	SSblackbox.add_details("admin_verb","Jump To Turf") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/client/proc/jumptomob(mob/M in GLOB.mob_list)
+/datum/client_base/proc/jumptomob(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Jump to Mob"
 
@@ -57,7 +57,7 @@
 		else
 			to_chat(A, "This mob is not located in the game world.")
 
-/client/proc/jumptocoord(tx as num, ty as num, tz as num)
+/datum/client_base/proc/jumptocoord(tx as num, ty as num, tz as num)
 	set category = "Admin"
 	set name = "Jump to Coordinate"
 
@@ -73,7 +73,7 @@
 		SSblackbox.add_details("admin_verb","Jump To Coordiate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("[key_name_admin(usr)] jumped to coordinates [tx], [ty], [tz]")
 
-/client/proc/jumptokey()
+/datum/client_base/proc/jumptokey()
 	set category = "Admin"
 	set name = "Jump to Key"
 
@@ -84,7 +84,7 @@
 	var/list/keys = list()
 	for(var/mob/M in GLOB.player_list)
 		keys += M.client
-	var/client/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
+	var/datum/client_base/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 	if(!selection)
 		to_chat(src, "No keys found.")
 		return
@@ -96,7 +96,7 @@
 
 	SSblackbox.add_details("admin_verb","Jump To Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/Getmob(mob/M in GLOB.mob_list)
+/datum/client_base/proc/Getmob(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
@@ -112,7 +112,7 @@
 	M.forceMove(loc)
 	SSblackbox.add_details("admin_verb","Get Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/Getkey()
+/datum/client_base/proc/Getkey()
 	set category = "Admin"
 	set name = "Get Key"
 	set desc = "Key to teleport"
@@ -124,7 +124,7 @@
 	var/list/keys = list()
 	for(var/mob/M in GLOB.player_list)
 		keys += M.client
-	var/client/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
+	var/datum/client_base/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 	if(!selection)
 		return
 	var/mob/M = selection.mob
@@ -140,7 +140,7 @@
 		usr.loc = M.loc
 		SSblackbox.add_details("admin_verb","Get Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/sendmob(mob/M in sortmobs())
+/datum/client_base/proc/sendmob(mob/M in sortmobs())
 	set category = "Admin"
 	set name = "Send Mob"
 	if(!src.holder)

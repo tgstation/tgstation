@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	return (mean + stddev * R1)
 #undef ACCURACY
 
-/proc/mouse_angle_from_client(client/client)
+/proc/mouse_angle_from_client(datum/client_base/client)
 	var/list/mouse_control = params2list(client.mouseParams)
 	if(mouse_control["screen-loc"])
 		var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
