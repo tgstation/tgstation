@@ -120,3 +120,7 @@
 
 /obj/structure/ladder/auto_connect //They will connect to ladders with the same X and Y without needing to share an ID
 	auto_connect = TRUE
+
+
+/obj/structure/ladder/singularity_pull()
+	return
