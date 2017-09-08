@@ -1288,7 +1288,7 @@
 "yN" = (/mob/living/simple_animal/bot/medbot/mysterious{desc = "If you don't accidentally blow yourself up from time to time you're not really a wizard anyway."; faction = list("neutral","silicon","creature"); name = "Nobody's Perfect"},/turf/open/floor/engine/cult,/area/wizard_station)
 "yO" = (/obj/machinery/light,/turf/open/floor/engine/cult,/area/wizard_station)
 "yP" = (/obj/item/reagent_containers/food/snacks/meat/slab/xeno,/turf/open/floor/grass,/area/wizard_station)
-"yQ" = (/obj/structure/table/reinforced,/obj/item/gun/ballistic/shotgun/automatic/combat,/obj/item/ammo_casing/shotgun/breaching,/obj/item/ammo_casing/shotgun/frag12,/obj/item/ammo_casing/shotgun/incendiary/dragonsbreath,/obj/item/ammo_casing/shotgun/incendiary/dragonsbreath,/obj/item/ammo_casing/shotgun/incendiary/dragonsbreath,/turf/open/floor/plasteel/white,/area/syndicate_mothership/control)
+"yQ" = (/obj/structure/table/reinforced,/obj/item/gun/ballistic/shotgun/automatic/combat,/obj/item/ammo_casing/shotgun/meteorslug,/obj/item/ammo_casing/shotgun/frag12,/obj/item/ammo_casing/shotgun/dragonsbreath,/turf/open/floor/plasteel/white,/area/syndicate_mothership/control)
 "yR" = (/obj/structure/table/wood,/obj/item/paper_bin,/obj/item/pen/fourcolor,/turf/open/floor/plasteel/vault{dir = 8},/area/centcom/ferry)
 "yS" = (/obj/machinery/computer/card/centcom,/turf/open/floor/plasteel/grimy,/area/centcom/ferry)
 "yT" = (/obj/structure/table/reinforced,/obj/item/book/manual/wiki/security_space_law,/obj/item/device/taperecorder,/turf/open/floor/plasteel/grimy,/area/centcom/ferry)
