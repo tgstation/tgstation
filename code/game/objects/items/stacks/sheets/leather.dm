@@ -32,6 +32,13 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	singular_name = "corgi hide piece"
 	icon_state = "sheet-corgi"
 
+/obj/item/stack/sheet/animalhide/gondola
+	name = "gondola hide"
+	desc = "The extremely valuable by-product of gondola hunting."
+	singular_name = "gondola hide piece"
+	icon_state = "sheet-gondola"
+
+
 GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3), \
 	))
