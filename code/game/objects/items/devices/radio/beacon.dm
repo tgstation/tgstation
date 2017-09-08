@@ -43,7 +43,7 @@
 		qdel(src)*/ //Bacon beacons are no more rip in peace
 
 /obj/item/device/radio/beacon/attackby(obj/item/W, mob/user)
-	..()
 	if(istype(W, /obj/item/gun/energy/e_gun/dragnet))
 		var/obj/item/gun/energy/e_gun/dragnet/D = W
 		D.set_target(src, user)
+	return ..()
