@@ -9,7 +9,13 @@ GLOBAL_PROTECT(reboot_mode)
 		return world.params[SERVICE_VERSION_PARAM]
 
 /world/proc/ExportService(command)
-	return RunningService() && shell("python code/modules/server_tools/nudge.py \"[command]\"") == 0
+	if(!RunningService())
+		return FALSE
+	if(fexists(SERVICE_INTERFACE_DLL))
+		call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(command)	//trust no retval
+		return TRUE
+	else	//fallback to the legacy method
+		return shell("python code/modules/server_tools/nudge.py \"[command]\"") == 0
 
 /world/proc/IRCBroadcast(msg)
 	ExportService("[SERVICE_REQUEST_IRC_BROADCAST] [msg]")
