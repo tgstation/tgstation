@@ -2,6 +2,10 @@
 	var/list/relationships = list()
 
 /mob/living/carbon/monkey/proc/adjust_relation(target, amount)
+	var/R = relationships[target]
+	if(isnull(R))
+		relationships[target] = min(1 + amount, 0)
+		return
 	relationships[target] = min(relationships[target] + amount, 0)
 
 /mob/living/carbon/monkey/proc/get_relation(target)
@@ -79,7 +83,7 @@
 					attack_paw(buckled)
 					a_intent = INTENT_HELP
 					get_off_shoulder(buckled)
-				if(on_shoulder && prob(1))
+				if(buckled && prob(1))
 					get_off_shoulder(buckled)
 				return FALSE
 			if(target != null && !Adjacent(target))
