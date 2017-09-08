@@ -579,7 +579,7 @@
 			var/turf/T = get_turf(client.eye)
 			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
-			stat("Instances:", "[world.contents.len]")
+			stat("Instances:", "[num2text(world.contents.len, 10)]")
 			GLOB.stat_entry()
 			config.stat_entry()
 			stat(null)
