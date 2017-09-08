@@ -21,7 +21,9 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(reboot_mode, REBOOT_MODE_NORMAL)
 		return world.params[SERVICE_VERSION_PARAM]
 
 /world/proc/ExportService(command)
-	return RunningService() && shell("python [SERVER_TOOLS_INSTALLATION_PATH]/nudge.py \"[command]\"") == 0
+	. = FALSE
+	call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(command)	//trust no retval
+	return TRUE
 
 /world/proc/ChatBroadcast(message)
 	ExportService("[SERVICE_REQUEST_IRC_BROADCAST] [message]")
@@ -30,14 +32,9 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(reboot_mode, REBOOT_MODE_NORMAL)
 	ExportService("[SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE] [message]")
 
 /world/proc/ServiceEndProcess()
-	if(!RunningService())
-		return
-	log_world("Self terminating!");
-	sleep(world.tick_lag)	//flush the chat buffers
-	call("[SERVER_TOOLS_INSTALLATION_PATH]/terminate/terminate.dll", "TerminateSelf")()
-	//if we get here...
-	log_world("Failed to self terminate!")
-	SEND_SOUND(world, sound('sound/voice/binsult.ogg'))
+	SERVER_TOOLS_LOG("Sending shutdown request!");
+	sleep(world.tick_lag)	//flush the buffers
+	ExportService(SERVICE_REQUEST_KILL_PROCESS)
 
 //called at the exact moment the world is supposed to reboot
 /world/proc/ServiceReboot()
