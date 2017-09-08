@@ -66,6 +66,9 @@
 		deconstruct(FALSE)
 
 /obj/structure/transit_tube_pod/container_resist(mob/living/user)
+	if(!user.incapacitated())
+		empty_pod()
+		return
 	if(!moving)
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
