@@ -18,7 +18,7 @@
 				S.cell.use(200)
 		if(ismonkey(user))
 			sound = 'hippiestation/sound/voice/scream_monkey.ogg'
-		if(istype(user, /mob/living/simple_animal/hostile/gorilla)
+		if(istype(user, /mob/living/simple_animal/hostile/gorilla))
 			sound = 'sound/creatures/gorilla.ogg'
 		if(ishuman(user))
 			user.adjustOxyLoss(5)
