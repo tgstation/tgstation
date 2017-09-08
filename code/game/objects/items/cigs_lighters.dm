@@ -77,11 +77,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
 	if(lit && cig && user.a_intent == INTENT_HELP)
 		if(cig.lit)
-			to_chat(user, "<span class='notice'>The [cig] is already lit.</span>")
+			to_chat(user, "<span class='notice'>The [cig.name] is already lit.</span>")
 		if(M == user)
 			cig.attackby(src, user)
 		else
-			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig].</span>")
+			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 	else
 		..()
 
@@ -237,11 +237,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
 	if(lit && cig && user.a_intent == INTENT_HELP)
 		if(cig.lit)
-			to_chat(user, "<span class='notice'>The [cig] is already lit.</span>")
+			to_chat(user, "<span class='notice'>The [cig.name] is already lit.</span>")
 		if(M == user)
 			cig.attackby(src, user)
 		else
-			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig].</span>")
+			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 	else
 		return ..()
 
@@ -545,14 +545,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
 	if(lit && cig && user.a_intent == INTENT_HELP)
 		if(cig.lit)
-			to_chat(user, "<span class='notice'>The [cig] is already lit.</span>")
+			to_chat(user, "<span class='notice'>The [cig.name] is already lit.</span>")
 		if(M == user)
 			cig.attackby(src, user)
 		else
 			if(fancy)
 				cig.light("<span class='rose'>[user] whips the [name] out and holds it for [M]. [user.p_their(TRUE)] arm is as steady as the unflickering flame they light \the [cig] with.</span>")
 			else
-				cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig].</span>")
+				cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights the [cig.name].</span>")
 	else
 		..()
 
@@ -609,8 +609,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			qdel(target)
 			qdel(src)
 			user.put_in_active_hand(R)
-			to_chat(user, "<span class='notice'>You roll the [target] into a rolling paper.</span>")
-			R.desc = "Dried [target] rolled up in a thin piece of paper."
+			to_chat(user, "<span class='notice'>You roll the [target.name] into a rolling paper.</span>")
+			R.desc = "Dried [target.name] rolled up in a thin piece of paper."
 		else
 			to_chat(user, "<span class='warning'>You need to dry this first!</span>")
 	else

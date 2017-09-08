@@ -703,7 +703,7 @@
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I]!</span>")
+					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0
 			if( !(I.slot_flags & SLOT_BELT) )
 				return
@@ -745,7 +745,7 @@
 			var/obj/item/bodypart/O = H.get_bodypart("chest")
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I]!</span>")
+					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0
 			if( !(I.slot_flags & SLOT_ID) )
 				return 0
@@ -760,7 +760,7 @@
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I]!</span>")
+					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return
@@ -776,7 +776,7 @@
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I]!</span>")
+					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return 0
@@ -790,7 +790,7 @@
 				return 0
 			if(!H.wear_suit)
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a suit before you can attach this [I]!</span>")
+					to_chat(H, "<span class='warning'>You need a suit before you can attach this [I.name]!</span>")
 				return 0
 			if(!H.wear_suit.allowed)
 				if(!disable_warning)
@@ -798,7 +798,7 @@
 				return 0
 			if(I.w_class > WEIGHT_CLASS_BULKY)
 				if(!disable_warning)
-					to_chat(H, "The [I] is too big to attach.") //should be src?
+					to_chat(H, "The [I.name] is too big to attach.") //should be src?
 				return 0
 			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return 1
@@ -1211,7 +1211,7 @@
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
-		if(H.check_shields(I, I.force, "the [I]", MELEE_ATTACK, I.armour_penetration))
+		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 			return 0
 	if(H.check_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")

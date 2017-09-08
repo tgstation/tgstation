@@ -72,9 +72,9 @@ obj/item/construction
 		S.use(amount_to_use)
 		matter += value*amount_to_use
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S] sheets into the [src]. </span>")
+		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into the [src]. </span>")
 		return 1
-	to_chat(user, "<span class='warning'>You can't insert any more [S] sheets into the [src]!</span>")
+	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the [src]!</span>")
 	return 0
 
 /obj/item/construction/proc/activate()
