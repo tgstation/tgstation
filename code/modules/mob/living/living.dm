@@ -88,13 +88,16 @@
 		return
 	if(ismob(A))
 		var/mob/M = A
-		return MobCollide(M)
+		if(MobCollide(M))
+			return
 	if(isobj(A))
 		var/obj/O = A
-		return ObjCollide(O)
+		if(ObjCollide(O))
+			return
 	if(ismovableatom(A))
 		var/atom/movable/AM = A
-		return PushAM(AM)
+		if(PushAM(AM))
+			return
 
 /mob/living/CollidedWith(atom/movable/AM)
 	..()
@@ -112,8 +115,11 @@
 		var/old_p = pulling? (pulling.pass_flags & PASSMOB) : NONE
 		var/atom/movable/cached = pulling
 		pass_flags |= PASSMOB
-		if(cached)
-			cached.pass_flags |= PASSMOB
+		var/obj/item/I = cached
+		if(cached && (isliving(cached) || (istype(I) && (I.w_class < WEIGHT_CLASS_BULKY))))
+			var/mob/living/l = cached
+			if(l.mob_size <= mob_size)
+				cached.pass_flags |= PASSMOB
 		Move(get_turf(M))
 		if(!old)
 			pass_flags &= ~PASSMOB
@@ -125,7 +131,6 @@
 
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
-
 
 	//Should stop you pushing a restrained person out of the way
 	if(isliving(M))

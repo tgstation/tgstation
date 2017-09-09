@@ -115,7 +115,7 @@
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
-/atom/movable/proc/Moved(atom/OldLoc, Dir)
+/atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -217,7 +217,7 @@
 	if((A))
 		if(throwing)
 			throwing.hit_atom(A)
-			. = 1
+			. = TRUE
 			if(!A || QDELETED(A))
 				return
 		A.CollidedWith(src)
@@ -248,16 +248,16 @@
 					continue
 				AM.Crossed(src, oldloc)
 
-		Moved(oldloc, 0)
-		return 1
-	return 0
+		Moved(oldloc, NONE, TRUE)
+		return TRUE
+	return FALSE
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()
 	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+		buckled.unbuckle_mob(src, force = TRUE)
 	if(has_buckled_mobs())
-		unbuckle_all_mobs(force=1)
+		unbuckle_all_mobs(force = TRUE)
 	. = ..()
 	if(client)
 		reset_perspective(destination)
