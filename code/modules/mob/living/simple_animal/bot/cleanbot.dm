@@ -214,7 +214,7 @@
 			icon_state = "cleanbot[on]"
 	else if(istype(A, /obj/item))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+		playsound(loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 		A.acid_act(75, 10)
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
@@ -235,7 +235,7 @@
 				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.")
 			say(phrase)
 			victim.emote("scream")
-			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+			playsound(loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 			victim.acid_act(5, 2, 100)
 		else if(A == src) // Wets floors and spawns foam randomly
 			if(prob(75))

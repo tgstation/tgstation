@@ -101,7 +101,7 @@
 /obj/machinery/modular_computer/process()
 	if(cpu)
 		// Keep names in sync.
-		cpu.name = src.name
+		cpu.name = name
 		cpu.process()
 
 // Used in following function to reduce copypaste

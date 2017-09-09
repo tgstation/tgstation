@@ -219,7 +219,7 @@
 /mob/living/pointed(atom/A as mob|obj|turf in view())
 	if(incapacitated())
 		return 0
-	if(src.status_flags & FAKEDEATH)
+	if(status_flags & FAKEDEATH)
 		return 0
 	if(!..())
 		return 0
@@ -310,17 +310,17 @@
 		L += Storage.return_inv()
 		return L
 	else
-		L += src.contents
-		for(var/obj/item/storage/S in src.contents)	//Check for storage items
+		L += contents
+		for(var/obj/item/storage/S in contents)	//Check for storage items
 			L += get_contents(S)
-		for(var/obj/item/clothing/under/U in src.contents)	//Check for jumpsuit accessories
+		for(var/obj/item/clothing/under/U in contents)	//Check for jumpsuit accessories
 			L += U.contents
-		for(var/obj/item/folder/F in src.contents)	//Check for folders
+		for(var/obj/item/folder/F in contents)	//Check for folders
 			L += F.contents
 		return L
 
 /mob/living/proc/check_contents_for(A)
-	var/list/L = src.get_contents()
+	var/list/L = get_contents()
 
 	for(var/obj/B in L)
 		if(B.type == A)
@@ -658,7 +658,7 @@
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
-	what = src.get_active_held_item()
+	what = get_active_held_item()
 	if(what && (what.flags_1 & NODROP_1))
 		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
 		return
@@ -782,7 +782,7 @@
 	if(butcher_results)
 		for(var/path in butcher_results)
 			for(var/i = 1; i <= butcher_results[path];i++)
-				new path(src.loc)
+				new path(loc)
 			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 	visible_message("<span class='notice'>[user] butchers [src].</span>")
 	gib(0, 0, 1)
@@ -837,8 +837,8 @@
 	return 1
 
 /mob/living/proc/check_acedia()
-	if(src.mind && src.mind.objectives)
-		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
+	if(mind && mind.objectives)
+		for(var/datum/objective/sintouched/acedia/A in mind.objectives)
 			return 1
 	return 0
 
@@ -875,9 +875,9 @@
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
-		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
+		visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
-		src.set_light(3)
+		set_light(3)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		return TRUE
@@ -887,7 +887,7 @@
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
-		src.set_light(0)
+		set_light(0)
 		clear_alert("fire")
 		update_fire()
 

@@ -53,7 +53,7 @@
 
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
-	playsound(get_turf(src.mob), S, 50, 0, 0)
+	playsound(get_turf(mob), S, 50, 0, 0)
 	SSblackbox.add_details("admin_verb","Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/play_web_sound()
@@ -127,7 +127,7 @@
 /client/proc/stop_sounds()
 	set category = "Debug"
 	set name = "Stop All Playing Sounds"
-	if(!src.holder)
+	if(!holder)
 		return
 
 	log_admin("[key_name(src)] stopped all currently playing sounds.")

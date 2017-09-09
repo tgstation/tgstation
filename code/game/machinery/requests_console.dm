@@ -258,7 +258,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					dat += "Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>"
 		var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 450, 440)
 		popup.set_content(dat)
-		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 		popup.open()
 	return
 
@@ -460,31 +460,31 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	capitalize(title)
 	switch(priority)
 		if(2)		//High priority
-			if(src.newmessagepriority < 2)
-				src.newmessagepriority = 2
-				src.update_icon()
-			if(!src.silent)
-				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
+			if(newmessagepriority < 2)
+				newmessagepriority = 2
+				update_icon()
+			if(!silent)
+				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 				say(title)
-				src.messages += "<span class='bad'>High Priority</span><BR><b>From:</b> [linkedsender]<BR>[message]"
+				messages += "<span class='bad'>High Priority</span><BR><b>From:</b> [linkedsender]<BR>[message]"
 
 		if(3)		// Extreme Priority
-			if(src.newmessagepriority < 3)
-				src.newmessagepriority = 3
-				src.update_icon()
+			if(newmessagepriority < 3)
+				newmessagepriority = 3
+				update_icon()
 			if(1)
-				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
+				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 				say(title)
-			src.messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [linkedsender]<BR>[message]"
+			messages += "<span class='bad'>!!!Extreme Priority!!!</span><BR><b>From:</b> [linkedsender]<BR>[message]"
 
 		else		// Normal priority
-			if(src.newmessagepriority < 1)
-				src.newmessagepriority = 1
-				src.update_icon()
-			if(!src.silent)
-				playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
+			if(newmessagepriority < 1)
+				newmessagepriority = 1
+				update_icon()
+			if(!silent)
+				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 				say(title)
-			src.messages += "<b>From:</b> [linkedsender]<BR>[message]"
+			messages += "<b>From:</b> [linkedsender]<BR>[message]"
 
 /obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/crowbar))

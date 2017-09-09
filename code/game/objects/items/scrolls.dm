@@ -21,7 +21,7 @@
 /obj/item/teleportation_scroll/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = "<B>Teleportation Scroll:</B><BR>"
-	dat += "Number of uses: [src.uses]<BR>"
+	dat += "Number of uses: [uses]<BR>"
 	dat += "<HR>"
 	dat += "<B>Four uses, use them wisely:</B><BR>"
 	dat += "<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A><BR>"
@@ -32,7 +32,7 @@
 
 /obj/item/teleportation_scroll/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || src.loc != usr)
+	if (usr.stat || usr.restrained() || loc != usr)
 		return
 	if (!ishuman(usr))
 		return 1

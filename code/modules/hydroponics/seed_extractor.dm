@@ -91,7 +91,7 @@
 		return
 	else if (istype(O, /obj/item/seeds))
 		if(add_seed(O))
-			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
+			to_chat(user, "<span class='notice'>You add [O] to [name].</span>")
 			updateUsrDialog()
 		return
 	else if(user.a_intent != INTENT_HARM)
@@ -110,14 +110,14 @@
 	var/amount = 0
 
 /datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie, var/poten, var/am = 1)
-	src.name = name
-	src.lifespan = life
-	src.endurance = endur
-	src.maturation = matur
-	src.production = prod
-	src.yield = yie
-	src.potency = poten
-	src.amount = am
+	name = name
+	lifespan = life
+	endurance = endur
+	maturation = matur
+	production = prod
+	yield = yie
+	potency = poten
+	amount = am
 
 /obj/machinery/seed_extractor/attack_hand(mob/user)
 	user.set_machine(src)
@@ -168,10 +168,10 @@
 	for (var/obj/T in contents)//Now we find the seed we need to vend
 		var/obj/item/seeds/O = T
 		if (O.plantname == href_list["name"] && O.lifespan == href_list["li"] && O.endurance == href_list["en"] && O.maturation == href_list["ma"] && O.production == href_list["pr"] && O.yield == href_list["yi"] && O.potency == href_list["pot"])
-			O.loc = src.loc
+			O.loc = loc
 			break
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)

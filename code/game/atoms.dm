@@ -33,7 +33,7 @@
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
-	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+	if(GLOB.use_preloader && (type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		GLOB._preloader.load(src)
 
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
@@ -230,7 +230,7 @@
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
-		if(istype(src.loc, container))
+		if(istype(loc, container))
 			return 1
 	else if(src in container)
 		return 1
@@ -264,7 +264,7 @@
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
-	if(src.blood_DNA && !istype(src, /obj/effect/decal))
+	if(blood_DNA && !istype(src, /obj/effect/decal))
 		if(gender == PLURAL)
 			f_name = "some "
 		else
@@ -446,7 +446,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	var/list/y_arr = null
 	for(cur_x=1,cur_x<=GLOB.global_map.len,cur_x++)
 		y_arr = GLOB.global_map[cur_x]
-		cur_y = y_arr.Find(src.z)
+		cur_y = y_arr.Find(z)
 		if(cur_y)
 			break
 //	to_chat(world, "X = [cur_x]; Y = [cur_y]")

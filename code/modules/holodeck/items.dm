@@ -113,7 +113,7 @@
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
-		L.loc = src.loc
+		L.loc = loc
 		L.Knockdown(100)
 		visible_message("<span class='danger'>[user] dunks [L] into \the [src]!</span>")
 		user.stop_pulling()
@@ -171,7 +171,7 @@
 		to_chat(user, "<span class='warning'>This device is not powered!</span>")
 		return
 
-	currentarea = get_area(src.loc)
+	currentarea = get_area(loc)
 	if(!currentarea)
 		qdel(src)
 
@@ -214,7 +214,7 @@
 
 /obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, params)
 	if(user.drop_item())
-		I.loc = src.loc
+		I.loc = loc
 	else
 		return ..()
 

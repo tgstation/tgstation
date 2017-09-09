@@ -126,7 +126,7 @@
 			//Just build whatever it is
 			new buildpath(loc)
 	else
-		src.visible_message("<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>")
+		visible_message("<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>")
 	busy = FALSE
 	flick("limbgrower_unfill",src)
 	icon_state = "limbgrower_idleoff"

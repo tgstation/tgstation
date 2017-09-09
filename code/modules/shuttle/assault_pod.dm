@@ -6,14 +6,14 @@
 	height = 7
 
 /obj/docking_port/mobile/assault_pod/request()
-	if(z == initial(src.z)) //No launching pods that have already launched
+	if(z == initial(z)) //No launching pods that have already launched
 		return ..()
 
 
 /obj/docking_port/mobile/assault_pod/dock(obj/docking_port/stationary/S1)
 	. = ..()
 	if(!istype(S1, /obj/docking_port/stationary/transit))
-		playsound(get_turf(src.loc), 'sound/effects/explosion1.ogg',50,1)
+		playsound(get_turf(loc), 'sound/effects/explosion1.ogg',50,1)
 
 
 

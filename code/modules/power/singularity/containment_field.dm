@@ -111,7 +111,7 @@
 		if(prob(20))
 			user.Stun(40)
 		user.take_overall_damage(0, shock_damage)
-		user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
+		user.visible_message("<span class='danger'>[user.name] was shocked by the [name]!</span>", \
 		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
 		"<span class='italics'>You hear an electrical crack.</span>")
 

@@ -51,7 +51,7 @@
 	if(T)
 		user.visible_message("[user] begins to clean \the [T] with [src].", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
 
-		if(do_after(user, src.mopspeed, target = T))
+		if(do_after(user, mopspeed, target = T))
 			to_chat(user, "<span class='notice'>You finish mopping.</span>")
 			clean(T)
 

@@ -64,7 +64,7 @@
 			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
 	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
@@ -106,8 +106,8 @@
 	if(href_list["back"])
 		screenstate = 0
 
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
+	add_fingerprint(usr)
+	updateUsrDialog()
 	return
 
 /*
@@ -212,11 +212,11 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			dat += "<A href='?src=\ref[src];switchscreen=5'>5. Upload New Title to Archive</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=6'>6. Upload Scanned Title to Newscaster</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=7'>7. Print Corporate Materials</A><BR>"
-			if(src.emagged)
+			if(emagged)
 				dat += "<A href='?src=\ref[src];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
-			if(src.arcanecheckout)
+			if(arcanecheckout)
 				print_forbidden_lore(user)
-				src.arcanecheckout = 0
+				arcanecheckout = 0
 		if(1)
 			// Inventory
 			dat += "<H3>Inventory</H3><BR>"
@@ -244,9 +244,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		if(3)
 			// Check Out a Book
 			dat += "<h3>Check Out a Book</h3><BR>"
-			dat += "Book: [src.buffer_book] "
+			dat += "Book: [buffer_book] "
 			dat += "<A href='?src=\ref[src];editbook=1'>\[Edit\]</A><BR>"
-			dat += "Recipient: [src.buffer_mob] "
+			dat += "Recipient: [buffer_mob] "
 			dat += "<A href='?src=\ref[src];editmob=1'>\[Edit\]</A><BR>"
 			dat += "Checkout Date : [world.time/600]<BR>"
 			dat += "Due Date: [(world.time + checkoutperiod)/600]<BR>"
@@ -310,7 +310,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 
 	var/datum/browser/popup = new(user, "library", name, 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/findscanner(viewrange)
@@ -370,9 +370,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			if("8")
 				screenstate = 8
 	if(href_list["arccheckout"])
-		if(src.emagged)
-			src.arcanecheckout = 1
-		src.screenstate = 0
+		if(emagged)
+			arcanecheckout = 1
+		screenstate = 0
 	if(href_list["increasetime"])
 		checkoutperiod += 1
 	if(href_list["decreasetime"])
@@ -473,7 +473,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 				break
 	if(href_list["printbible"])
 		if(cooldown < world.time)
-			var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible(src.loc)
+			var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible(loc)
 			if(SSreligion.bible_icon_state && SSreligion.bible_item_state)
 				B.icon_state = SSreligion.bible_icon_state
 				B.item_state = SSreligion.bible_item_state
@@ -484,7 +484,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			say("Printer currently unavailable, please wait a moment.")
 	if(href_list["printposter"])
 		if(cooldown < world.time)
-			new /obj/item/poster/random_official(src.loc)
+			new /obj/item/poster/random_official(loc)
 			cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")
@@ -524,7 +524,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		dat += "<BR>"
 	var/datum/browser/popup = new(user, "scanner", name, 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/libraryscanner/Topic(href, href_list)
@@ -541,9 +541,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		cache = null
 	if(href_list["eject"])
 		for(var/obj/item/book/B in contents)
-			B.loc = src.loc
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
+			B.loc = loc
+	add_fingerprint(usr)
+	updateUsrDialog()
 	return
 
 
@@ -583,7 +583,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(P)
 		if(!stat)
 			visible_message("[src] whirs as it prints and binds a new book.")
-			var/obj/item/book/B = new(src.loc)
+			var/obj/item/book/B = new(loc)
 			B.dat = P.info
 			B.name = "Print Job #" + "[rand(100, 999)]"
 			B.icon_state = "book[rand(1,7)]"

@@ -223,7 +223,7 @@
 
 		if(iscorgi(target))
 			var/mob/living/simple_animal/pet/dog/corgi/C = target
-			src.loc = get_turf(C)
+			loc = get_turf(C)
 			C.facehugger = null
 	else
 		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", \

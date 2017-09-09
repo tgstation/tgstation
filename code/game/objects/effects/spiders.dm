@@ -67,7 +67,7 @@
 	if(amount_grown >= 100)
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
-			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
+			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(loc)
 			S.poison_type = poison_type
 			S.poison_per_bite = poison_per_bite
 			S.faction = faction.Copy()
@@ -105,7 +105,7 @@
 
 /obj/structure/spider/spiderling/Collide(atom/user)
 	if(istype(user, /obj/structure/table))
-		src.loc = user.loc
+		loc = user.loc
 	else
 		..()
 
@@ -159,7 +159,7 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom)
 			if(prob(40))
-				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
+				visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
 	else if(prob(10))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
@@ -172,7 +172,7 @@
 		if(amount_grown >= 100)
 			if(!grow_as)
 				grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
-			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
+			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(loc)
 			S.poison_per_bite = poison_per_bite
 			S.poison_type = poison_type
 			S.faction = faction.Copy()
@@ -208,7 +208,7 @@
 
 /obj/structure/spider/cocoon/Destroy()
 	var/turf/T = get_turf(src)
-	src.visible_message("<span class='warning'>\The [src] splits open.</span>")
+	visible_message("<span class='warning'>\The [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.forceMove(T)
 	return ..()

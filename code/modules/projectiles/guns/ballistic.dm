@@ -109,7 +109,7 @@
 /obj/item/gun/ballistic/attack_self(mob/living/user)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(magazine)
-		magazine.loc = get_turf(src.loc)
+		magazine.loc = get_turf(loc)
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
@@ -171,7 +171,7 @@
 		if(sawn_state == SAWN_OFF)
 			return
 		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
-		name = "sawn-off [src.name]"
+		name = "sawn-off [name]"
 		desc = sawn_desc
 		w_class = WEIGHT_CLASS_NORMAL
 		item_state = "gun"

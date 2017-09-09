@@ -2,16 +2,16 @@
 	set category = "Special Verbs"
 	set name = "Dsay" //Gave this shit a shorter name so you only have to time out "dsay" rather than "dead say" to use it --NeoFite
 	set hidden = 1
-	if(!src.holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	if(!src.mob)
+	if(!mob)
 		return
 	if(prefs.muted & MUTE_DEADCHAT)
 		to_chat(src, "<span class='danger'>You cannot send DSAY messages (muted).</span>")
 		return
 
-	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))
+	if (handle_spam_prevention(msg,MUTE_DEADCHAT))
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
@@ -21,7 +21,7 @@
 		return
 	var/static/nicknames = world.file2list("config/admin_nicknames.txt")
 
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([src.holder.fakekey ? pick(nicknames) : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([holder.fakekey ? pick(nicknames) : key])</span> says, <span class='message'>\"[msg]\"</span></span>"
 
 	for (var/mob/M in GLOB.player_list)
 		if(isnewplayer(M))

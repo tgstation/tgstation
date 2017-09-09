@@ -41,7 +41,7 @@
 /obj/vehicle/space/speedbike/speedwagon/Collide(atom/movable/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
-		var/atom/throw_target = get_edge_target_turf(A, src.dir)
+		var/atom/throw_target = get_edge_target_turf(A, dir)
 		if(crash_all)
 			A.throw_at(throw_target, 4, 3)
 			visible_message("<span class='danger'>[src] crashes into [A]!</span>")
@@ -62,7 +62,7 @@
 
 /obj/vehicle/space/speedbike/speedwagon/Moved()
 	. = ..()
-	if(src.has_buckled_mobs())
+	if(has_buckled_mobs())
 		for(var/atom/A in range(2, src))
-			if(!(A in src.buckled_mobs))
+			if(!(A in buckled_mobs))
 				Collide(A)

@@ -165,7 +165,7 @@
 	reagent_id = "beer"
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
-	explosion(src.loc,0,3,5,7,10)
+	explosion(loc,0,3,5,7,10)
 	if(!QDELETED(src))
 		qdel(src)
 

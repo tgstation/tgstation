@@ -52,7 +52,7 @@
 	var/obj/structure/transit_tube_pod/TP = new(loc)
 	R.transfer_fingerprints_to(TP)
 	TP.add_fingerprint(user)
-	TP.setDir(turn(src.dir, -90))
+	TP.setDir(turn(dir, -90))
 	user.visible_message("[user] inserts [R].", "<span class='notice'>You insert [R].</span>")
 	qdel(R)
 
@@ -71,7 +71,7 @@
 						if(do_after(user, 15, target = src))
 							if(open_status == STATION_TUBE_OPEN && GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.has_buckled_mobs())
 								GM.Knockdown(100)
-								src.CollidedWith(GM)
+								CollidedWith(GM)
 						break
 		else
 			for(var/obj/structure/transit_tube_pod/pod in loc)

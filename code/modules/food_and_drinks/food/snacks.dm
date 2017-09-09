@@ -187,10 +187,10 @@
 		return FALSE
 
 	if ( \
-			!isturf(src.loc) || \
-			!(locate(/obj/structure/table) in src.loc) && \
-			!(locate(/obj/structure/table/optable) in src.loc) && \
-			!(locate(/obj/item/storage/bag/tray) in src.loc) \
+			!isturf(loc) || \
+			!(locate(/obj/structure/table) in loc) && \
+			!(locate(/obj/structure/table/optable) in loc) && \
+			!(locate(/obj/item/storage/bag/tray) in loc) \
 		)
 		to_chat(user, "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>")
 		return FALSE

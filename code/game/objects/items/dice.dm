@@ -172,7 +172,7 @@
 		user.visible_message("[user] has thrown [src]. It lands on [result]. [comment]", \
 							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
 							 "<span class='italics'>You hear [src] rolling, it sounds like a [fake_result].</span>")
-	else if(!src.throwing) //Dice was thrown and is coming to rest
+	else if(!throwing) //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
 /obj/item/dice/d4/Crossed(mob/living/carbon/human/H)
@@ -185,7 +185,7 @@
 
 /obj/item/dice/update_icon()
 	cut_overlays()
-	add_overlay("[src.icon_state][src.result]")
+	add_overlay("[icon_state][result]")
 
 /obj/item/dice/microwave_act(obj/machinery/microwave/M)
 	if(can_be_rigged)

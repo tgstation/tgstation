@@ -266,15 +266,15 @@
 	Path_ID.access = C.get_access()
 
 	MYID = new(src)
-	MYID.name = "[src.real_name]'s ID Card ([myjob.title])"
+	MYID.name = "[real_name]'s ID Card ([myjob.title])"
 	MYID.assignment = "[myjob.title]"
-	MYID.registered_name = src.real_name
+	MYID.registered_name = real_name
 	MYID.access = Path_ID.access // Automatons have strange powers... strange indeed
 
 	RPID = new(src)
-	RPID.name = "[src.real_name]'s ID Card ([myjob.title])"
+	RPID.name = "[real_name]'s ID Card ([myjob.title])"
 	RPID.assignment = "[myjob.title]"
-	RPID.registered_name = src.real_name
+	RPID.registered_name = real_name
 	RPID.access = myjob.get_access()
 
 	equip_to_slot_or_del(MYID, slot_wear_id)
@@ -661,10 +661,10 @@
 				drop_item()
 				dressup(TARGET)
 				update_hands = 1
-				if(MYPDA in src.loc || MYID in src.loc)
-					if(MYPDA in src.loc)
+				if(MYPDA in loc || MYID in loc)
+					if(MYPDA in loc)
 						equip_to_appropriate_slot(MYPDA)
-					if(MYID in src.loc)
+					if(MYID in loc)
 						equip_to_appropriate_slot(MYID)
 		//THIEVING SKILLS END
 		//-------------TOUCH ME
@@ -902,7 +902,7 @@
 			knownStrings -= pick(chatmsg)
 
 	if(chatmsg != ";" && chatmsg != "")
-		src.say(chatmsg)
+		say(chatmsg)
 
 
 /mob/living/carbon/human/interactive/proc/getAllContents()
@@ -1110,7 +1110,7 @@
 			if(drinkChoice)
 				var/obj/item/reagent_containers/food/drinks/D = new drinkChoice(get_turf(src))
 				RT.attackby(D,src)
-				src.say("[pick("Something to wet your whistle!","Down the hatch, a tasty beverage!","One drink, coming right up!","Tasty liquid for your oral intake!","Enjoy!")]")
+				say("[pick("Something to wet your whistle!","Down the hatch, a tasty beverage!","One drink, coming right up!","Tasty liquid for your oral intake!","Enjoy!")]")
 				customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], serving up a [D]!")
 
 /mob/living/carbon/human/interactive/proc/shitcurity(obj)
@@ -1209,7 +1209,7 @@
 		for(var/mob/living/carbon/human/C in nearby)
 			if(C.health <= 75)
 				if(get_dist(src,C) <= 2)
-					src.say("Wait, [C], let me heal you!")
+					say("Wait, [C], let me heal you!")
 					M.attack(C,src)
 					inactivity_period = 25
 				else
@@ -1221,7 +1221,7 @@
 			for(var/mob/living/carbon/human/C in nearby)
 				if(C.health <= 75 && C.reagents.get_reagent_amount("tricordrazine") <= 0) // make sure they wont be overdosing
 					if(get_dist(src,C) <= 2)
-						src.say("Wait, [C], let me heal you!")
+						say("Wait, [C], let me heal you!")
 						HPS.attack(C,src)
 						inactivity_period = 25
 					else

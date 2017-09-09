@@ -4,7 +4,7 @@
 	set name = "Show Laws"
 	if(usr.stat == DEAD)
 		return //won't work if dead
-	src.show_laws()
+	show_laws()
 
 /mob/living/silicon/ai/show_laws(everyone = 0)
 	var/who
@@ -15,8 +15,8 @@
 		who = src
 	to_chat(who, "<b>Obey these laws:</b>")
 
-	src.laws_sanity_check()
-	src.laws.show_laws(who)
+	laws_sanity_check()
+	laws.show_laws(who)
 	if(!everyone)
 		for(var/mob/living/silicon/robot/R in connected_robots)
 			if(R.lawupdate)

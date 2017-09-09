@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	for(var/X in H.bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(BP.status == BODYPART_ROBOTIC)
-			to_chat(user, "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>")
+			to_chat(user, "<span class='warning'>[deity_name] refuses to heal this metallic taint!</span>")
 			return 0
 
 	var/heal_amt = 10
@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 				H.update_damage_overlays()
 		H.visible_message("<span class='notice'>[user] heals [H] with the power of [deity_name]!</span>")
 		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")
-		playsound(src.loc, "punch", 25, 1, -1)
+		playsound(loc, "punch", 25, 1, -1)
 	return 1
 
 /obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
@@ -130,12 +130,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		if(smack)
 			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 					"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
-			playsound(src.loc, "punch", 25, 1, -1)
+			playsound(loc, "punch", 25, 1, -1)
 			add_logs(user, M, "attacked", src)
 
 	else
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
-		playsound(src.loc, "punch", 25, 1, -1)
+		playsound(loc, "punch", 25, 1, -1)
 
 /obj/item/storage/book/bible/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		H.mind.isholy = TRUE
 		uses -= 1
 		to_chat(H, "<span class='userdanger'>You try to open the book AND IT BITES YOU!</span>")
-		playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+		playsound(loc, 'sound/effects/snap.ogg', 50, 1)
 		H.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
 		to_chat(H, "<span class='notice'>Your name appears on the inside cover, in blood.</span>")
 		var/ownername = H.real_name

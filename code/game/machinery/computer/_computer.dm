@@ -67,7 +67,7 @@
 
 /obj/machinery/computer/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver) && circuit && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, I.usesound, 50, 1)
+		playsound(loc, I.usesound, 50, 1)
 		to_chat(user, "<span class='notice'> You start to disconnect the monitor...</span>")
 		if(do_after(user, 20*I.toolspeed, target = src))
 			deconstruct(TRUE, user)
@@ -78,11 +78,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
-				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 			else
-				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 75, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/machinery/computer/obj_break(damage_flag)
 	if(circuit && !(flags_1 & NODECONSTRUCT_1)) //no circuit, no breaking
@@ -106,16 +106,16 @@
 	on_deconstruction()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(circuit) //no circuit, no computer frame
-			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
+			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(loc)
 			A.circuit = circuit
 			A.anchored = TRUE
 			if(stat & BROKEN)
 				if(user)
 					to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				else
-					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-				new /obj/item/shard(src.loc)
-				new /obj/item/shard(src.loc)
+					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				new /obj/item/shard(loc)
+				new /obj/item/shard(loc)
 				A.state = 3
 				A.icon_state = "3"
 			else

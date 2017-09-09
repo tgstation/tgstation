@@ -98,8 +98,8 @@
 	..()
 
 /obj/item/defibrillator/MouseDrop(obj/over_object)
-	if(ismob(src.loc))
-		var/mob/M = src.loc
+	if(ismob(loc))
+		var/mob/M = loc
 		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
@@ -145,11 +145,11 @@
 		deductcharge(1000 / severity)
 	if(safety)
 		safety = 0
-		src.visible_message("<span class='notice'>[src] beeps: Safety protocols disabled!</span>")
+		visible_message("<span class='notice'>[src] beeps: Safety protocols disabled!</span>")
 		playsound(get_turf(src), 'sound/machines/defib_saftyOff.ogg', 50, 0)
 	else
 		safety = 1
-		src.visible_message("<span class='notice'>[src] beeps: Safety protocols enabled!</span>")
+		visible_message("<span class='notice'>[src] beeps: Safety protocols enabled!</span>")
 		playsound(get_turf(src), 'sound/machines/defib_saftyOn.ogg', 50, 0)
 	update_icon()
 	..()
@@ -490,7 +490,7 @@
 		if(do_after(user, 20, target = H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			for(var/obj/item/carried_item in H.contents)
 				if(istype(carried_item, /obj/item/clothing/suit/space))
-					if((!src.combat && !req_defib) || (req_defib && !defib.combat))
+					if((!combat && !req_defib) || (req_defib && !defib.combat))
 						user.audible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient's chest is obscured. Operation aborted.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 						busy = FALSE

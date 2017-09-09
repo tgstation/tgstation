@@ -2,16 +2,16 @@
 /mob/living/carbon/get_eye_protection()
 	var/number = ..()
 
-	if(istype(src.head, /obj/item/clothing/head))			//are they wearing something on their head
-		var/obj/item/clothing/head/HFP = src.head			//if yes gets the flash protection value from that item
+	if(istype(head, /obj/item/clothing/head))			//are they wearing something on their head
+		var/obj/item/clothing/head/HFP = head			//if yes gets the flash protection value from that item
 		number += HFP.flash_protect
 
-	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
-		var/obj/item/clothing/glasses/GFP = src.glasses
+	if(istype(glasses, /obj/item/clothing/glasses))		//glasses
+		var/obj/item/clothing/glasses/GFP = glasses
 		number += GFP.flash_protect
 
-	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
-		var/obj/item/clothing/mask/MFP = src.wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask))		//mask
+		var/obj/item/clothing/mask/MFP = wear_mask
 		number += MFP.flash_protect
 
 	var/obj/item/organ/eyes/E = getorganslot("eye_sight")

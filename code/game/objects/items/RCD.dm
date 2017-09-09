@@ -53,7 +53,7 @@ obj/item/construction
 			return
 		qdel(W)
 		matter += R.ammoamt
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		loaded = 1
 	else if(istype(W, /obj/item/stack/sheet/metal) || istype(W, /obj/item/stack/sheet/glass))
 		loaded = loadwithsheets(W, sheetmultiplier, user)
@@ -71,17 +71,17 @@ obj/item/construction
 		var/amount_to_use = min(S.amount, maxsheets)
 		S.use(amount_to_use)
 		matter += value*amount_to_use
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into the [src]. </span>")
 		return 1
 	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the [src]!")
 	return 0
 
 /obj/item/construction/proc/activate()
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 
 /obj/item/construction/attack_self(mob/user)
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
 	if(prob(20))
 		spark_system.start()
 
@@ -200,7 +200,7 @@ obj/item/construction
 
 	var/datum/browser/popup = new(usr, "airlock_electronics", "Access Control", 900, 500)
 	popup.set_content(t1)
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(usr.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	onclose(usr, "airlock")
 
@@ -311,7 +311,7 @@ obj/item/construction
 			if(A.rcd_act(user, src, rcd_results["mode"]))
 				useResource(rcd_results["cost"], user)
 				activate()
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				playsound(loc, 'sound/machines/click.ogg', 50, 1)
 				return TRUE
 
 /obj/item/construction/rcd/New()
@@ -518,7 +518,7 @@ obj/item/construction
 				if(checkResource(deconcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing [A]...</span>")
 					user.Beam(A,icon_state="nzcrentrs_power",time=15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
 							return 0
@@ -532,8 +532,8 @@ obj/item/construction
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a wall light...</span>")
 					user.Beam(A,icon_state="nzcrentrs_power",time=15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 0)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/effects/light_flicker.ogg', 50, 0)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(W))
 							return FALSE
@@ -547,7 +547,7 @@ obj/item/construction
 								candidates += C
 						if(!candidates.len)
 							to_chat(user, "<span class='warning'>Valid target not found...</span>")
-							playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, 1)
+							playsound(loc, 'sound/misc/compiler-failure.ogg', 30, 1)
 							return FALSE
 						for(var/turf/open/O in candidates)
 							if(istype(O))
@@ -578,8 +578,8 @@ obj/item/construction
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
 					user.Beam(A,icon_state="nzcrentrs_power",time=15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(F))
 							return 0

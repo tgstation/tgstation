@@ -61,7 +61,7 @@
 	if(istype(loc, /obj/item/chrono_eraser))
 		TED = loc
 	else //admin must have spawned it
-		TED = new(src.loc)
+		TED = new(loc)
 		qdel(src)
 
 /obj/item/gun/energy/chrono_gun/update_icon()
@@ -81,11 +81,11 @@
 	return ..()
 
 /obj/item/gun/energy/chrono_gun/proc/field_connect(obj/effect/chrono_field/F)
-	var/mob/living/user = src.loc
+	var/mob/living/user = loc
 	if(F.gun)
 		if(isliving(user) && F.captured)
 			to_chat(user, "<span class='alert'><b>FAIL: <i>[F.captured]</i> already has an existing connection.</b></span>")
-		src.field_disconnect(F)
+		field_disconnect(F)
 	else
 		startpos = get_turf(src)
 		field = F
@@ -96,7 +96,7 @@
 
 /obj/item/gun/energy/chrono_gun/proc/field_disconnect(obj/effect/chrono_field/F)
 	if(F && field == F)
-		var/mob/living/user = src.loc
+		var/mob/living/user = loc
 		if(F.gun == src)
 			F.gun = null
 		if(isliving(user) && F.captured)
@@ -108,7 +108,7 @@
 	if(F)
 		if(field == F)
 			var/turf/currentpos = get_turf(src)
-			var/mob/living/user = src.loc
+			var/mob/living/user = loc
 			if((currentpos == startpos) && (field in view(CHRONO_BEAM_RANGE, currentpos)) && !user.lying && (user.stat == CONSCIOUS))
 				return 1
 		field_disconnect(F)
@@ -164,7 +164,7 @@
 /obj/effect/chrono_field/New(loc, var/mob/living/target, var/obj/item/gun/energy/chrono_gun/G)
 	if(target && isliving(target) && G)
 		target.loc = src
-		src.captured = target
+		captured = target
 		var/icon/mob_snapshot = getFlatIcon(target)
 		var/icon/cached_icon = new()
 

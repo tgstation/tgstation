@@ -64,7 +64,7 @@
 		updatestealthalert()
 		toggle = FALSE
 	else if(stealthcooldown <= world.time)
-		if(src.loc == summoner)
+		if(loc == summoner)
 			to_chat(src, "<span class='danger'><B>You have to be manifested to enter stealth!</span></B>")
 			return
 		melee_damage_lower = 50

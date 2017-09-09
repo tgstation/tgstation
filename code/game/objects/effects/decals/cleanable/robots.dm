@@ -18,7 +18,7 @@
 		sleep(2)
 		if (i > 0)
 			if (prob(40))
-				new /obj/effect/decal/cleanable/oil/streak(src.loc)
+				new /obj/effect/decal/cleanable/oil/streak(loc)
 			else if (prob(10))
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(3, 1, src)

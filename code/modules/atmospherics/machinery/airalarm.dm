@@ -641,14 +641,14 @@
 	switch(buildstage)
 		if(2)
 			if(istype(W, /obj/item/wirecutters) && panel_open && wires.is_all_cut())
-				playsound(src.loc, W.usesound, 50, 1)
+				playsound(loc, W.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
 				new /obj/item/stack/cable_coil(loc, 5)
 				buildstage = 1
 				update_icon()
 				return
 			else if(istype(W, /obj/item/screwdriver))  // Opening that Air Alarm up.
-				playsound(src.loc, W.usesound, 50, 1)
+				playsound(loc, W.usesound, 50, 1)
 				panel_open = !panel_open
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 				update_icon()
@@ -657,7 +657,7 @@
 				if(stat & (NOPOWER|BROKEN))
 					to_chat(user, "<span class='warning'>It does nothing!</span>")
 				else
-					if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
+					if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 						locked = !locked
 						to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
 					else
@@ -668,14 +668,14 @@
 				return
 		if(1)
 			if(istype(W, /obj/item/crowbar))
-				user.visible_message("[user.name] removes the electronics from [src.name].",\
+				user.visible_message("[user.name] removes the electronics from [name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
-				playsound(src.loc, W.usesound, 50, 1)
+				playsound(loc, W.usesound, 50, 1)
 				if (do_after(user, 20*W.toolspeed, target = src))
 					if (buildstage == 1)
 						to_chat(user, "<span class='notice'>You remove the air alarm electronics.</span>")
-						new /obj/item/electronics/airalarm( src.loc )
-						playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+						new /obj/item/electronics/airalarm( loc )
+						playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 						buildstage = 0
 						update_icon()
 				return
@@ -711,7 +711,7 @@
 
 			if(istype(W, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
-				playsound(src.loc, W.usesound, 50, 1)
+				playsound(loc, W.usesound, 50, 1)
 				new /obj/item/wallframe/airalarm( user.loc )
 				qdel(src)
 				return

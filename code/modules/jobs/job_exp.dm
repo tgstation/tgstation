@@ -10,7 +10,7 @@ GLOBAL_PROTECT(exp_to_update)
 		return 0
 	if(!exp_requirements || !exp_type)
 		return 0
-	if(!job_is_xp_locked(src.title))
+	if(!job_is_xp_locked(title))
 		return 0
 	if(config.use_exp_restrictions_admin_bypass && check_rights(R_ADMIN, FALSE, C.mob))
 		return 0

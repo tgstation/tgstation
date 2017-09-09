@@ -20,7 +20,7 @@
 	. = ..()
 	if(!mapload)
 		return
-	var/obj/item/pen/P = locate(/obj/item/pen) in src.loc
+	var/obj/item/pen/P = locate(/obj/item/pen) in loc
 	if(P && !bin_pen)
 		P.loc = src
 		bin_pen = P
@@ -160,7 +160,7 @@
 /obj/item/paper_bin/bundlenatural/attackby(obj/item/W, mob/user)
 	if(W.is_sharp())
 		to_chat(user, "<span class='notice'>You snip \the [src], spilling paper everywhere.</span>")
-		var/turf/T = get_turf(src.loc)
+		var/turf/T = get_turf(loc)
 		while(total_paper > 0)
 			total_paper--
 			var/obj/item/paper/P

@@ -358,10 +358,10 @@
 
 /obj/item/device/camera/proc/injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
-	for(var/datum/picture in src.aipictures)
+	for(var/datum/picture in aipictures)
 		numberer++
 	var/datum/picture/P = new()
-	P.fields["name"] = "Image [numberer] (taken by [src.loc.name])"
+	P.fields["name"] = "Image [numberer] (taken by [loc.name])"
 	P.fields["icon"] = icon
 	P.fields["img"] = img
 	P.fields["desc"] = desc
@@ -374,12 +374,12 @@
 
 /obj/item/device/camera/proc/injectmasteralbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
-	var/mob/living/silicon/robot/C = src.loc
+	var/mob/living/silicon/robot/C = loc
 	if(C.connected_ai)
 		for(var/datum/picture in C.connected_ai.aicamera.aipictures)
 			numberer++
 		var/datum/picture/P = new()
-		P.fields["name"] = "Image [numberer] (taken by [src.loc.name])"
+		P.fields["name"] = "Image [numberer] (taken by [loc.name])"
 		P.fields["icon"] = icon
 		P.fields["img"] = img
 		P.fields["desc"] = desc
@@ -419,7 +419,7 @@
 
 /obj/item/device/camera/siliconcam/proc/viewpictures(user)
 	if(iscyborg(user)) // Cyborg
-		var/mob/living/silicon/robot/C = src.loc
+		var/mob/living/silicon/robot/C = loc
 		var/obj/item/device/camera/siliconcam/Cinfo
 		if(C.connected_ai)
 			Cinfo = C.connected_ai.aicamera
@@ -454,18 +454,18 @@
 		camera_mode_on()
 
 /obj/item/device/camera/siliconcam/proc/camera_mode_off()
-	src.in_camera_mode = 0
+	in_camera_mode = 0
 	to_chat(usr, "<B>Camera Mode deactivated</B>")
 
 /obj/item/device/camera/siliconcam/proc/camera_mode_on()
-	src.in_camera_mode = 1
+	in_camera_mode = 1
 	to_chat(usr, "<B>Camera Mode activated</B>")
 
 /obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
 	var/list/nametemp = list()
 	var/find
 	var/datum/picture/selection
-	var/mob/living/silicon/robot/C = src.loc
+	var/mob/living/silicon/robot/C = loc
 	var/obj/item/device/camera/siliconcam/targetcam = null
 	if(C.toner < 20)
 		to_chat(usr, "Insufficent toner to print image.")

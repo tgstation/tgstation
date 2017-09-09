@@ -76,17 +76,17 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	jobs["Medical Response Officer"] = 223
 	jobs["Assistant"] = 999 //Unknowns/custom jobs should appear after civilians, and before assistants
 
-	src.jobs = jobs
-	src.interfaces = list()
-	src.data = list()
+	jobs = jobs
+	interfaces = list()
+	data = list()
 	register_asset("crewmonitor.js",'crew.js')
 	register_asset("crewmonitor.css",'crew.css')
 
 /datum/crewmonitor/Destroy()
-	if (src.interfaces)
+	if (interfaces)
 		for (var/datum/html_interface/hi in interfaces)
 			qdel(hi)
-		src.interfaces = null
+		interfaces = null
 
 	return ..()
 
@@ -95,28 +95,28 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		sendResources(mob.client)
 	if (!z) z = mob.z
 
-	if (z > 0 && src.interfaces)
+	if (z > 0 && interfaces)
 		var/datum/html_interface/hi
 
-		if (!src.interfaces["[z]"])
-			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 540, "<link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
+		if (!interfaces["[z]"])
+			interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 540, "<link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
 
-			hi = src.interfaces["[z]"]
+			hi = interfaces["[z]"]
 
 			hi.updateContent("content", "<div id=\"minimap\"><a href=\"javascript:zoomIn();\" class=\"zoom in\">+</a><a href=\"javascript:zoomOut();\" class=\"zoom\">-</a></div><div id=\"textbased\"></div>")
 
-			src.update(z, TRUE)
+			update(z, TRUE)
 		else
-			hi = src.interfaces["[z]"]
-			src.update(z,TRUE)
+			hi = interfaces["[z]"]
+			update(z,TRUE)
 
 		// Debugging purposes
 		mob << browse_rsc(file("code/game/machinery/computer/crew.js"), "crew.js")
 		mob << browse_rsc(file("code/game/machinery/computer/crew.css"), "crew.css")
 
-		hi = src.interfaces["[z]"]
+		hi = interfaces["[z]"]
 		hi.show(mob)
-		src.updateFor(mob, hi, z)
+		updateFor(mob, hi, z)
 
 /datum/crewmonitor/proc/updateFor(hclient_or_mob, datum/html_interface/hi, z)
 	// This check will succeed if updateFor is called after showing to the player, but will fail
@@ -129,8 +129,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	hi.callJavaScript("onAfterUpdate", null, hclient_or_mob)
 
 /datum/crewmonitor/proc/update(z, ignore_unused = FALSE)
-	if (src.interfaces["[z]"])
-		var/datum/html_interface/hi = src.interfaces["[z]"]
+	if (interfaces["[z]"])
+		var/datum/html_interface/hi = interfaces["[z]"]
 
 		if (ignore_unused || hi.isUsed())
 			var/list/results = list()
@@ -201,14 +201,14 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.can_track(null))
 
-			src.data = results
-			src.updateFor(null, hi, z) // updates for everyone
+			data = results
+			updateFor(null, hi, z) // updates for everyone
 
 /datum/crewmonitor/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
 	var/z = ""
 
-	for (z in src.interfaces)
-		if (src.interfaces[z] == hi) break
+	for (z in interfaces)
+		if (interfaces[z] == hi) break
 
 	if(hclient.client.mob && IsAdminGhost(hclient.client.mob))
 		return TRUE
@@ -249,13 +249,13 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		AI.switchCamera(C)
 
 /mob/living/carbon/human/Move()
-	if (src.w_uniform)
-		var/old_z = src.z
+	if (w_uniform)
+		var/old_z = z
 
 		. = ..()
 
-		if (old_z != src.z) GLOB.crewmonitor.queueUpdate(old_z)
-		GLOB.crewmonitor.queueUpdate(src.z)
+		if (old_z != z) GLOB.crewmonitor.queueUpdate(old_z)
+		GLOB.crewmonitor.queueUpdate(z)
 	else
 		return ..()
 

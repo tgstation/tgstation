@@ -7,7 +7,7 @@
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
-	if(src.check_access(null))
+	if(check_access(null))
 		return TRUE
 	if(issilicon(M))
 		if(ispAI(M))
@@ -19,7 +19,7 @@
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.get_active_held_item()) || src.check_access(H.wear_id))
+		if(check_access(H.get_active_held_item()) || check_access(H.wear_id))
 			return TRUE
 	else if(ismonkey(M) || isalienadult(M))
 		var/mob/living/carbon/george = M
@@ -63,19 +63,19 @@
 /obj/proc/check_access(obj/item/I)
 	gen_access()
 
-	if(!istype(src.req_access, /list)) //something's very wrong
+	if(!istype(req_access, /list)) //something's very wrong
 		return TRUE
 
-	var/list/L = src.req_access
-	if(!L.len && (!src.req_one_access || !src.req_one_access.len)) //no requirements
+	var/list/L = req_access
+	if(!L.len && (!req_one_access || !req_one_access.len)) //no requirements
 		return TRUE
 	if(!I)
 		return FALSE
-	for(var/req in src.req_access)
+	for(var/req in req_access)
 		if(!(req in I.GetAccess())) //doesn't have this access
 			return FALSE
-	if(src.req_one_access && src.req_one_access.len)
-		for(var/req in src.req_one_access)
+	if(req_one_access && req_one_access.len)
+		for(var/req in req_one_access)
 			if(req in I.GetAccess()) //has an access from the single access list
 				return TRUE
 		return FALSE
@@ -83,21 +83,21 @@
 
 
 /obj/proc/check_access_list(list/L)
-	if(!src.req_access  && !src.req_one_access)
+	if(!req_access  && !req_one_access)
 		return TRUE
-	if(!istype(src.req_access, /list))
+	if(!istype(req_access, /list))
 		return TRUE
-	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))
+	if(!req_access.len && (!req_one_access || !req_one_access.len))
 		return TRUE
 	if(!L)
 		return FALSE
 	if(!istype(L, /list))
 		return FALSE
-	for(var/req in src.req_access)
+	for(var/req in req_access)
 		if(!(req in L)) //doesn't have this access
 			return FALSE
-	if(src.req_one_access && src.req_one_access.len)
-		for(var/req in src.req_one_access)
+	if(req_one_access && req_one_access.len)
+		for(var/req in req_one_access)
 			if(req in L) //has an access from the single access list
 				return TRUE
 		return FALSE

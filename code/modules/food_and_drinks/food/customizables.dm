@@ -248,7 +248,7 @@
 		var/obj/item/reagent_containers/food/snacks/breadslice/BS = I
 		if(finished)
 			return
-		to_chat(user, "<span class='notice'>You finish the [src.name].</span>")
+		to_chat(user, "<span class='notice'>You finish the [name].</span>")
 		finished = 1
 		name = "[customname] sandwich"
 		BS.reagents.trans_to(src, BS.reagents.total_volume)

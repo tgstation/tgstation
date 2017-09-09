@@ -37,7 +37,7 @@
 	// Non diagonal case
 	if(T0.x == x || T0.y == y)
 		// Check for border blockages
-		return T0.ClickCross(get_dir(T0,src), border_only = 1, target_atom = target, mover = mover) && src.ClickCross(get_dir(src,T0), border_only = 1, target_atom = target, mover = mover)
+		return T0.ClickCross(get_dir(T0,src), border_only = 1, target_atom = target, mover = mover) && ClickCross(get_dir(src,T0), border_only = 1, target_atom = target, mover = mover)
 
 	// Diagonal case
 	var/in_dir = get_dir(T0,src) // eg. northwest (1+8) = 9 (00001001)
@@ -54,7 +54,7 @@
 		if(!T1.ClickCross(get_dir(T1,src), border_only = 0, target_atom = target, mover = mover) || !T1.ClickCross(get_dir(T1,T0), border_only = 0, target_atom = target, mover = mover))
 			continue // couldn't enter or couldn't leave T1
 
-		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target, mover = mover))
+		if(!ClickCross(get_dir(src,T1), border_only = 1, target_atom = target, mover = mover))
 			continue // could not enter src
 
 		return 1 // we don't care about our own density

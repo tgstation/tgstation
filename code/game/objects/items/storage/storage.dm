@@ -346,7 +346,7 @@
 
 		add_fingerprint(usr)
 		if(rustle_jimmies && !prevent_warning)
-			playsound(src.loc, "rustle", 50, 1, -5)
+			playsound(loc, "rustle", 50, 1, -5)
 
 		if(!prevent_warning)
 			for(var/mob/M in viewers(usr, null))

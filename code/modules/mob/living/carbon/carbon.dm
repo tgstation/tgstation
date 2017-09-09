@@ -16,7 +16,7 @@
 	return ..()
 
 /mob/living/carbon/relaymove(mob/user, direction)
-	if(user in src.stomach_contents)
+	if(user in stomach_contents)
 		if(prob(40))
 			if(prob(25))
 				audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
@@ -32,18 +32,18 @@
 									"<span class='userdanger'>[user] attacks your stomach wall with the [I.name]!</span>")
 				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
 
-				if(prob(src.getBruteLoss() - 50))
+				if(prob(getBruteLoss() - 50))
 					for(var/atom/movable/A in stomach_contents)
 						A.loc = loc
 						stomach_contents.Remove(A)
-					src.gib()
+					gib()
 
 
 /mob/living/carbon/swap_hand(held_index)
 	if(!held_index)
 		held_index = (active_hand_index % held_items.len)+1
 
-	var/obj/item/item_in_hand = src.get_active_held_item()
+	var/obj/item/item_in_hand = get_active_held_item()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		var/obj/item/twohanded/TH = item_in_hand
 		if(istype(TH))
@@ -144,7 +144,7 @@
 		return
 
 	var/atom/movable/thrown_thing
-	var/obj/item/I = src.get_active_held_item()
+	var/obj/item/I = get_active_held_item()
 
 	if(!I)
 		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
@@ -234,7 +234,7 @@
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
 /mob/living/carbon/is_muzzled()
-	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+	return(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 
 /mob/living/carbon/hallucinating()
 	if(hallucination)
@@ -748,7 +748,7 @@
 	if(handcuffed)
 		drop_all_held_items()
 		stop_pulling()
-		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
+		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = handcuffed)
 	else
 		clear_alert("handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.

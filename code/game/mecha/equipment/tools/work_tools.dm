@@ -175,7 +175,7 @@
 		return 1
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
-	return "[..()] \[[src.reagents.total_volume]\]"
+	return "[..()] \[[reagents.total_volume]\]"
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/on_reagent_change()
 	return
@@ -339,7 +339,7 @@
 			cable.amount += to_load
 			target.use(to_load)
 			occupant_message("<span class='notice'>[to_load] meters of cable successfully loaded.</span>")
-			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 		else
 			occupant_message("<span class='warning'>Reel is full.</span>")
 	else

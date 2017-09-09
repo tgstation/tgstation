@@ -96,10 +96,10 @@
 		C = new_overmind
 
 	if(C)
-		var/mob/camera/blob/B = new(src.loc, 1)
+		var/mob/camera/blob/B = new(loc, 1)
 		B.key = C.key
 		B.blob_core = src
-		src.overmind = B
+		overmind = B
 		update_icon()
 		if(B.mind && !B.mind.special_role)
 			B.mind.special_role = "Blob Overmind"

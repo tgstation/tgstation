@@ -43,14 +43,14 @@
 	if(severity != 1 && shielded && target != src)
 		return
 	if(target == src)
-		src.ChangeTurf(src.baseturf)
+		ChangeTurf(baseturf)
 		return
 	switch(severity)
 		if(1)
 			if(prob(80))
 				ReplaceWithLattice()
 			else if(prob(50))
-				ChangeTurf(src.baseturf)
+				ChangeTurf(baseturf)
 			else
 				make_plating(1)
 		if(2)
@@ -68,7 +68,7 @@
 			ReplaceWithLattice()
 
 /turf/open/floor/engine/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/floor/engine/attack_hand(mob/user)
 	user.Move_Pulled(src)

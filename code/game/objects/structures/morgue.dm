@@ -51,7 +51,7 @@
 	open()
 
 /obj/structure/bodycontainer/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/bodycontainer/attack_hand(mob/user)
 	if(locked)
@@ -77,7 +77,7 @@
 		var/t = stripped_input(user, "What would you like the label to be?", text("[]", name), null)
 		if (user.get_active_held_item() != P)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if ((!in_range(src, usr) && loc != user))
 			return
 		if (t)
 			name = text("[]- '[]'", initial(name), t)
@@ -107,14 +107,14 @@
 		open()
 
 /obj/structure/bodycontainer/proc/open()
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 	var/turf/T = get_step(src, opendir)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 	update_icon()
 
 /obj/structure/bodycontainer/proc/close()
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
 			AM.forceMove(src)
@@ -189,13 +189,13 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		icon_state = "crema0"
 	else
 
-		if(src.contents.len > 1)
-			src.icon_state = "crema2"
+		if(contents.len > 1)
+			icon_state = "crema2"
 		else
-			src.icon_state = "crema1"
+			icon_state = "crema1"
 
 		if(locked)
-			src.icon_state = "crema_active"
+			icon_state = "crema_active"
 
 	return
 
@@ -237,7 +237,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		if(!QDELETED(src))
 			locked = FALSE
 			update_icon()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
+			playsound(loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
 
 /obj/structure/bodycontainer/crematorium/creamatorium
 	name = "creamatorium"
@@ -280,10 +280,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	qdel(src)
 
 /obj/structure/tray/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/tray/attack_hand(mob/user)
-	if (src.connected)
+	if (connected)
 		connected.close()
 		add_fingerprint(user)
 	else
@@ -301,7 +301,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			return
 	if(!ismob(user) || user.lying || user.incapacitated())
 		return
-	O.loc = src.loc
+	O.loc = loc
 	if (user != O)
 		visible_message("<span class='warning'>[user] stuffs [O] into [src].</span>")
 	return

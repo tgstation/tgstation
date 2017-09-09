@@ -348,14 +348,14 @@
 /mob/living/simple_animal/slime/examine(mob/user)
 
 	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!\n"
-	if (src.stat == DEAD)
+	if (stat == DEAD)
 		msg += "<span class='deadsay'>It is limp and unresponsive.</span>\n"
 	else
 		if (stat == UNCONSCIOUS) // Slime stasis
 			msg += "<span class='deadsay'>It appears to be alive but unresponsive.</span>\n"
-		if (src.getBruteLoss())
+		if (getBruteLoss())
 			msg += "<span class='warning'>"
-			if (src.getBruteLoss() < 40)
+			if (getBruteLoss() < 40)
 				msg += "It has some punctures in its flesh!"
 			else
 				msg += "<B>It has severe punctures and tears in its flesh!</B>"

@@ -39,10 +39,10 @@
 		return
 
 	if (t)
-		src.name = "data disk- '[t]'"
+		name = "data disk- '[t]'"
 	else
-		src.name = "data disk"
-	src.add_fingerprint(usr)
+		name = "data disk"
+	add_fingerprint(usr)
 	return
 
 /*
@@ -106,9 +106,9 @@
 				update_label()
 
 /obj/item/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
-					"<span class='notice'>You show \the [src.name].</span>")
-	src.add_fingerprint(user)
+	user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [name].</span>", \
+					"<span class='notice'>You show \the [name].</span>")
+	add_fingerprint(user)
 	return
 
 /obj/item/card/id/examine(mob/user)
@@ -171,7 +171,7 @@ update_label("John Doe", "Clowny")
 		return
 	if(istype(O, /obj/item/card/id))
 		var/obj/item/card/id/I = O
-		src.access |= I.access
+		access |= I.access
 		if(isliving(user) && user.mind)
 			if(user.mind.special_role)
 				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")

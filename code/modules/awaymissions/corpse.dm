@@ -201,8 +201,8 @@
 	if(A)
 		return
 	var/mob/living/silicon/ai/spawned/M = new(loc) //spawn new AI at landmark as var M
-	M.name = src.name
-	M.real_name = src.name
+	M.name = name
+	M.real_name = name
 	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 	M.death() //call the AI's death proc
 	qdel(src)
@@ -217,8 +217,8 @@
 	S.colour = mobcolour
 
 /obj/effect/mob_spawn/human/facehugger/create() //Creates a squashed facehugger
-	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
-	O.name = src.name
+	var/obj/item/clothing/mask/facehugger/O = new(loc) //variable O is a new facehugger at the location of the landmark
+	O.name = name
 	O.Die() //call the facehugger's death proc
 	qdel(src)
 

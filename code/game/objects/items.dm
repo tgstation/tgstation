@@ -176,20 +176,20 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!isturf(loc) || usr.stat || usr.restrained() || !usr.canmove)
 		return
 
-	var/turf/T = src.loc
+	var/turf/T = loc
 
-	src.loc = null
+	loc = null
 
-	src.loc = T
+	loc = T
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	..()
 	var/pronoun
-	if(src.gender == PLURAL)
+	if(gender == PLURAL)
 		pronoun = "They are"
 	else
 		pronoun = "It is"
-	var/size = weightclass2text(src.w_class)
+	var/size = weightclass2text(w_class)
 	to_chat(user, "[pronoun] a [size] item." )
 
 	if(user.research_scanner) //Mob has a research scanner active.
@@ -310,7 +310,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	attack_paw(A)
 
 /obj/item/attack_ai(mob/user)
-	if(istype(src.loc, /obj/item/robot_module))
+	if(istype(loc, /obj/item/robot_module))
 		//If the item is part of a cyborg module, equip it
 		if(!iscyborg(user))
 			return
@@ -488,9 +488,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
-	playsound(loc, src.hitsound, 30, 1, -1)
+	playsound(loc, hitsound, 30, 1, -1)
 
 	user.do_attack_animation(M)
 
@@ -509,7 +509,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		M.take_bodypart_damage(7)
 
-	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
+	add_logs(user, M, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	M.adjust_blurriness(3)
 	M.adjust_eye_damage(rand(2,4))

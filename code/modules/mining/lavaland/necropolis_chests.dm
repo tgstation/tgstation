@@ -212,7 +212,7 @@
 	linked.teleporting = TRUE
 	var/turf/T = get_turf(src)
 	new /obj/effect/temp_visual/warp_cube(T, user, teleport_color, TRUE)
-	SSblackbox.add_details("warp_cube","[src.type]")
+	SSblackbox.add_details("warp_cube","[type]")
 	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
 	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
 	user.forceMove(link_holder) //mess around with loc so the user can't wander around
@@ -244,7 +244,7 @@
 /obj/item/device/warp_cube/red/Initialize()
 	..()
 	if(!linked)
-		var/obj/item/device/warp_cube/blue = new(src.loc)
+		var/obj/item/device/warp_cube/blue = new(loc)
 		linked = blue
 		blue.linked = src
 
@@ -332,7 +332,7 @@
 		SSblackbox.add_details("immortality_talisman","Activated") // usage
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in [user.p_their()] place!</span>")
-		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
+		var/obj/effect/immortality_talisman/Z = new(get_turf(loc))
 		Z.name = "hole in reality"
 		Z.desc = "It's shaped an awful lot like [user.name]."
 		Z.setDir(user.dir)
@@ -400,9 +400,9 @@
 	..()
 	if(!bag)
 		var/obj/item/storage/backpack/shared/S = new(src)
-		var/obj/item/device/shared_storage/blue = new(src.loc)
+		var/obj/item/device/shared_storage/blue = new(loc)
 
-		src.bag = S
+		bag = S
 		blue.bag = S
 
 

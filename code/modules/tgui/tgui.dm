@@ -54,25 +54,25 @@
   * return datum/tgui The requested UI.
  **/
 /datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state, browser_id = null)
-	src.user = user
-	src.src_object = src_object
-	src.ui_key = ui_key
-	src.window_id = browser_id ? browser_id : "\ref[src_object]-[ui_key]"
-	src.custom_browser_id = browser_id ? TRUE : FALSE
+	user = user
+	src_object = src_object
+	ui_key = ui_key
+	window_id = browser_id ? browser_id : "\ref[src_object]-[ui_key]"
+	custom_browser_id = browser_id ? TRUE : FALSE
 
 	set_interface(interface)
 
 	if(title)
-		src.title = sanitize(title)
+		title = sanitize(title)
 	if(width)
-		src.width = width
+		width = width
 	if(height)
-		src.height = height
+		height = height
 
-	src.master_ui = master_ui
+	master_ui = master_ui
 	if(master_ui)
 		master_ui.children += src
-	src.state = state
+	state = state
 
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/tgui)
 	assets.send(user)
@@ -142,7 +142,7 @@
   * required window_options list The window options to set.
  **/
 /datum/tgui/proc/set_window_options(list/window_options)
-	src.window_options = window_options
+	window_options = window_options
 
  /**
   * public
@@ -152,7 +152,7 @@
   * required style string The new UI style.
  **/
 /datum/tgui/proc/set_style(style)
-	src.style = lowertext(style)
+	style = lowertext(style)
 
  /**
   * public
@@ -162,7 +162,7 @@
   * required interface string The new UI interface.
  **/
 /datum/tgui/proc/set_interface(interface)
-	src.interface = lowertext(interface)
+	interface = lowertext(interface)
 
  /**
   * public
@@ -363,13 +363,13 @@
   * optional push bool Push an update to the UI (an update is always sent for UI_DISABLED).
  **/
 /datum/tgui/proc/set_status(status, push = 0)
-	if(src.status != status) // Only update if status has changed.
-		if(src.status == UI_DISABLED)
-			src.status = status
+	if(status != status) // Only update if status has changed.
+		if(status == UI_DISABLED)
+			status = status
 			if(push)
 				update()
 		else
-			src.status = status
+			status = status
 			if(status == UI_DISABLED || push) // Update if the UI just because disabled, or a push is requested.
 				push_data(null, force = 1)
 

@@ -356,10 +356,10 @@
 	TT.diagonals_first = diagonals_first
 	TT.callback = callback
 
-	var/dist_x = abs(target.x - src.x)
-	var/dist_y = abs(target.y - src.y)
-	var/dx = (target.x > src.x) ? EAST : WEST
-	var/dy = (target.y > src.y) ? NORTH : SOUTH
+	var/dist_x = abs(target.x - x)
+	var/dist_y = abs(target.y - y)
+	var/dx = (target.x > x) ? EAST : WEST
+	var/dy = (target.y > y) ? NORTH : SOUTH
 
 	if (dist_x == dist_y)
 		TT.pure_diagonal = 1

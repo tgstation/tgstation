@@ -33,7 +33,7 @@
 
 /obj/item/wallframe/proc/attach(turf/on_wall, mob/user)
 	if(result_path)
-		playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
+		playsound(loc, 'sound/machines/click.ogg', 75, 1)
 		user.visible_message("[user.name] attaches [src] to the wall.",
 			"<span class='notice'>You attach [src] to the wall.</span>",
 			"<span class='italics'>You hear clicking.</span>")

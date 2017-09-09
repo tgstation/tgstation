@@ -14,7 +14,7 @@
 	if(IsGuestKey(user.key))
 		return 0
 
-	var/savefile/F = new /savefile(src.savefile_path(user))
+	var/savefile/F = new /savefile(savefile_path(user))
 
 
 	WRITE_FILE(F["name"], name)
@@ -53,8 +53,8 @@
 			alert(user, "Your savefile was incompatible with this version and was deleted.")
 		return 0
 
-	F["name"] >> src.name
-	F["description"] >> src.description
-	F["role"] >> src.role
-	F["comments"] >> src.comments
+	F["name"] >> name
+	F["description"] >> description
+	F["role"] >> role
+	F["comments"] >> comments
 	return 1

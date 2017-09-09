@@ -53,7 +53,7 @@
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
-			if(ch_name in src.channels)
+			if(ch_name in channels)
 				continue
 			channels += ch_name
 			channels[ch_name] = keyslot.channels[ch_name]
@@ -479,7 +479,7 @@
 		if(!position || !(position.z in level))
 			return -1
 	if(freq == GLOB.SYND_FREQ)
-		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
+		if(!(syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
 	if(freq == GLOB.CENTCOM_FREQ)
 		if(!independent)

@@ -239,7 +239,7 @@
 
 
 /obj/machinery/magnetic_controller/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/magnetic_controller/attack_hand(mob/user)
 	if(stat & (BROKEN|NOPOWER))

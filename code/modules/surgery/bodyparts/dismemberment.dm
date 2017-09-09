@@ -19,7 +19,7 @@
 
 	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
 	affecting.receive_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
-	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
+	C.visible_message("<span class='danger'><B>[C]'s [name] has been violently dismembered!</B></span>")
 	C.emote("scream")
 	drop_limb()
 
@@ -238,7 +238,7 @@
 /obj/item/bodypart/proc/replace_limb(mob/living/carbon/C, special)
 	if(!istype(C))
 		return
-	var/obj/item/bodypart/O = locate(src.type) in C.bodyparts
+	var/obj/item/bodypart/O = locate(type) in C.bodyparts
 	if(O)
 		O.drop_limb(1)
 	attach_limb(C, special)
@@ -246,7 +246,7 @@
 /obj/item/bodypart/head/replace_limb(mob/living/carbon/C, special)
 	if(!istype(C))
 		return
-	var/obj/item/bodypart/head/O = locate(src.type) in C.bodyparts
+	var/obj/item/bodypart/head/O = locate(type) in C.bodyparts
 	if(O)
 		if(!special)
 			return

@@ -58,7 +58,7 @@
 	if(!isturf(tturf))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
-		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
+		visible_message("<span class='warning'>The [name] digs its tentacles under [target.name]!</span>")
 		new /obj/effect/goliath_tentacle/original(tturf)
 		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
@@ -137,8 +137,8 @@
 			new /obj/effect/goliath_tentacle(T)
 
 /obj/effect/goliath_tentacle/proc/Trip()
-	for(var/mob/living/M in src.loc)
-		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
+	for(var/mob/living/M in loc)
+		visible_message("<span class='danger'>The [name] grabs hold of [M.name]!</span>")
 		M.Stun(100)
 		M.adjustBruteLoss(rand(10,15))
 		latched = TRUE

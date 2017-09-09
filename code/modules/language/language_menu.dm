@@ -2,7 +2,7 @@
 	var/datum/language_holder/language_holder
 
 /datum/language_menu/New(language_holder)
-	src.language_holder = language_holder
+	language_holder = language_holder
 
 /datum/language_menu/Destroy()
 	language_holder = null

@@ -85,8 +85,8 @@
 		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
 		if(do_after(user, 30*I.toolspeed, target = src))
 			to_chat(usr, "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>")
-			reagents.reaction(src.loc)
-			src.reagents.clear_reagents()
+			reagents.reaction(loc)
+			reagents.clear_reagents()
 	else
 		return ..()
 

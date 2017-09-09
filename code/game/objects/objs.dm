@@ -100,12 +100,12 @@
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
 				is_in_use = 1
-				src.attack_hand(M)
+				attack_hand(M)
 		if(isAI(usr) || iscyborg(usr) || IsAdminGhost(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = 1
-					src.attack_ai(usr)
+					attack_ai(usr)
 
 		// check for TK users
 
@@ -115,7 +115,7 @@
 				if(usr.client && usr.machine==src)
 					if(H.dna.check_mutation(TK))
 						is_in_use = 1
-						src.attack_hand(usr)
+						attack_hand(usr)
 		in_use = is_in_use
 
 /obj/proc/updateDialog()
@@ -126,7 +126,7 @@
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
 				is_in_use = 1
-				src.interact(M)
+				interact(M)
 		var/ai_in_use = AutoUpdateAI(src)
 
 		if(!ai_in_use && !is_in_use)
@@ -154,16 +154,16 @@
 	return
 
 /mob/proc/set_machine(obj/O)
-	if(src.machine)
+	if(machine)
 		unset_machine()
-	src.machine = O
+	machine = O
 	if(istype(O))
 		O.in_use = 1
 
 /obj/item/proc/updateSelfDialog()
-	var/mob/M = src.loc
+	var/mob/M = loc
 	if(istype(M) && M.client && M.machine == src)
-		src.attack_self(M)
+		attack_self(M)
 
 /obj/proc/hide(h)
 	return

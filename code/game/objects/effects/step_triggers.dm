@@ -64,7 +64,7 @@
 		if(tiles)
 			if(curtiles >= tiles)
 				break
-		if(AM.z != src.z)
+		if(AM.z != z)
 			break
 
 		curtiles++

@@ -23,7 +23,7 @@
 			var/list/access = list()
 			access["name"] = get_access_desc(j)
 			access["id"] = j
-			access["req"] = (j in src.accesses)
+			access["req"] = (j in accesses)
 			accesses[++accesses.len] = access
 		region["name"] = get_region_accesses_name(i)
 		region["accesses"] = accesses

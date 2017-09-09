@@ -19,7 +19,7 @@
 						D.visible_message("<span class='notice'>[D] begins to cannibalize parts from [src].</span>", "<span class='notice'>You begin to cannibalize parts from [src]...</span>")
 						if(do_after(D, 60, 0, target = src))
 							D.visible_message("<span class='notice'>[D] repairs itself using [src]'s remains!</span>", "<span class='notice'>You repair yourself using [src]'s remains.</span>")
-							D.adjustBruteLoss(-src.maxHealth)
+							D.adjustBruteLoss(-maxHealth)
 							new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
 							qdel(src)
 						else
@@ -141,7 +141,7 @@
 		seeStatic = 0 //I MUST SEE THEIR TERRIFIED FACES
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
 		speed = 1 //gotta go slow
-		message_admins("[src] ([src.key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
+		message_admins("[src] ([key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
 	else
 		if(!hacked)
 			return
@@ -159,7 +159,7 @@
 		speed = initial(speed)
 		if(is_servant_of_ratvar(src))
 			remove_servant_of_ratvar(src, TRUE)
-		message_admins("[src] ([src.key]), a hacked drone, was restored to factory defaults!")
+		message_admins("[src] ([key]), a hacked drone, was restored to factory defaults!")
 	update_drone_icon()
 	updateSeeStaticMobs()
 

@@ -117,14 +117,14 @@
 			recycle_item(AM)
 			items_recycled++
 		else
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
-			AM.loc = src.loc
+			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			AM.loc = loc
 
 	if(items_recycled && sound)
-		playsound(src.loc, item_recycle_sound, 50, 1)
+		playsound(loc, item_recycle_sound, 50, 1)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
-	I.loc = src.loc
+	I.loc = loc
 
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(I)
@@ -137,25 +137,25 @@
 
 
 /obj/machinery/recycler/proc/emergency_stop(mob/living/L)
-	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+	playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	safety_mode = TRUE
 	update_icon()
-	L.loc = src.loc
+	L.loc = loc
 	addtimer(CALLBACK(src, .proc/reboot), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
-	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+	playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 	safety_mode = FALSE
 	update_icon()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
 
-	L.loc = src.loc
+	L.loc = loc
 
 	if(issilicon(L))
-		playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+		playsound(loc, 'sound/items/welder.ogg', 50, 1)
 	else
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/gib = TRUE
 	// By default, the emagged recycler will gib all non-carbons. (human simple animal mobs don't count)

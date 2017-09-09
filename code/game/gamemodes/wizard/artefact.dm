@@ -42,10 +42,10 @@
 	var/spawn_fast = 0
 
 /obj/effect/rend/New(loc, var/spawn_type, var/spawn_amt, var/desc, var/spawn_fast)
-	src.spawn_path = spawn_type
-	src.spawn_amt_left = spawn_amt
-	src.desc = desc
-	src.spawn_fast = spawn_fast
+	spawn_path = spawn_type
+	spawn_amt_left = spawn_amt
+	desc = desc
+	spawn_fast = spawn_fast
 	START_PROCESSING(SSobj, src)
 	return
 

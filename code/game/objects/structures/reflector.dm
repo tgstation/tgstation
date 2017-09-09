@@ -16,7 +16,7 @@
 /obj/structure/reflector/bullet_act(obj/item/projectile/P)
 	var/turf/reflector_turf = get_turf(src)
 	var/turf/reflect_turf
-	var/new_dir = get_reflection(src.dir,P.dir)
+	var/new_dir = get_reflection(dir,P.dir)
 	if(!istype(P, /obj/item/projectile/beam))
 		return..()
 	if(new_dir)
@@ -45,7 +45,7 @@
 		if(anchored)
 			to_chat(user, "Unweld the [src] first!")
 		if(do_after(user, 80*W.toolspeed, target = src))
-			playsound(src.loc, W.usesound, 50, 1)
+			playsound(loc, W.usesound, 50, 1)
 			to_chat(user, "You dismantle the [src].")
 			new framebuildstacktype(loc, framebuildstackamount)
 			new buildstacktype(loc, buildstackamount)
@@ -55,8 +55,8 @@
 		switch(anchored)
 			if(0)
 				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
 					if (do_after(user,20*W.toolspeed, target = src))
@@ -66,8 +66,8 @@
 						to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
 			if(1)
 				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
-					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
 					if (do_after(user,20*W.toolspeed, target = src))
@@ -86,7 +86,7 @@
 				return
 			else
 				S.use(5)
-				new /obj/structure/reflector/single (src.loc)
+				new /obj/structure/reflector/single (loc)
 				qdel (src)
 		if(istype(W, /obj/item/stack/sheet/rglass))
 			if(S.get_amount() < 10)
@@ -94,12 +94,12 @@
 				return
 			else
 				S.use(10)
-				new /obj/structure/reflector/double (src.loc)
+				new /obj/structure/reflector/double (loc)
 				qdel(src)
 		if(istype(W, /obj/item/stack/sheet/mineral/diamond))
 			if(S.get_amount() >= 1)
 				S.use(1)
-				new /obj/structure/reflector/box (src.loc)
+				new /obj/structure/reflector/box (loc)
 				qdel(src)
 	else
 		return ..()
@@ -115,10 +115,10 @@
 
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (src.anchored)
+	if (anchored)
 		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
 		return 0
-	src.setDir(turn(src.dir, 270))
+	setDir(turn(dir, 270))
 	return 1
 
 

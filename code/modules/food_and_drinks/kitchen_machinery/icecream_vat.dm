@@ -129,9 +129,9 @@
 		product_types[make_type] += amount
 		var/flavour = get_flavour_name(make_type)
 		if(make_type > 4)
-			src.visible_message("<span class='info'>[user] cooks up some [flavour] cones.</span>")
+			visible_message("<span class='info'>[user] cooks up some [flavour] cones.</span>")
 		else
-			src.visible_message("<span class='info'>[user] whips up some [flavour] icecream.</span>")
+			visible_message("<span class='info'>[user] whips up some [flavour] icecream.</span>")
 	else
 		to_chat(user, "<span class='warning'>You don't have the ingredients to make this!</span>")
 
@@ -141,16 +141,16 @@
 	if(href_list["select"])
 		dispense_flavour = text2num(href_list["select"])
 		flavour_name = get_flavour_name(dispense_flavour)
-		src.visible_message("<span class='notice'>[usr] sets [src] to dispense [flavour_name] flavoured ice cream.</span>")
+		visible_message("<span class='notice'>[usr] sets [src] to dispense [flavour_name] flavoured ice cream.</span>")
 
 	if(href_list["cone"])
 		var/dispense_cone = text2num(href_list["cone"])
 		var/cone_name = get_flavour_name(dispense_cone)
 		if(product_types[dispense_cone] >= 1)
 			product_types[dispense_cone] -= 1
-			var/obj/item/reagent_containers/food/snacks/icecream/I = new(src.loc)
+			var/obj/item/reagent_containers/food/snacks/icecream/I = new(loc)
 			I.set_cone_type(cone_name)
-			src.visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
+			visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
 		else
 			to_chat(usr, "<span class='warning'>There are no [cone_name] cones left!</span>")
 
@@ -201,7 +201,7 @@
 
 /obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(var/flavour_name)
 	name = "[flavour_name] icecream"
-	src.add_overlay("icecream_[flavour_name]")
+	add_overlay("icecream_[flavour_name]")
 	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
 		if ("vanilla")
 			desc = "A delicious [cone_type] cone filled with vanilla ice cream. All the other ice creams take content from it."

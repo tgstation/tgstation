@@ -528,8 +528,8 @@
 /obj/machinery/porta_turret/proc/setState(on, mode)
 	if(controllock)
 		return
-	src.on = on
-	src.mode = mode
+	on = on
+	mode = mode
 	power_change()
 
 /obj/machinery/porta_turret/stationary //is this even used anywhere
@@ -667,7 +667,7 @@
 		control_area = get_area_instance_from_text(control_area)
 		if(control_area == null)
 			control_area = get_area(src)
-			stack_trace("Bad control_area path for [src], [src.control_area]")
+			stack_trace("Bad control_area path for [src], [control_area]")
 	else if(!control_area)
 		control_area = get_area(src)
 
@@ -703,7 +703,7 @@
 					user << browse(null, "window=turretid")
 			else
 				if (user.machine==src)
-					src.attack_hand(user)
+					attack_hand(user)
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
@@ -744,7 +744,7 @@
 
 	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([area.name])")
 	popup.set_content(t)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/turretid/Topic(href, href_list)
@@ -758,7 +758,7 @@
 		toggle_on()
 	else if (href_list["toggleLethal"])
 		toggle_lethal()
-	src.attack_hand(usr)
+	attack_hand(usr)
 
 /obj/machinery/turretid/proc/toggle_lethal()
 	lethal = !lethal

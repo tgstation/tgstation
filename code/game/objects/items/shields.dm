@@ -127,7 +127,7 @@
 /obj/item/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
 	icon_state = "teleriot[active]"
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 
 	if(active)
 		force = 8

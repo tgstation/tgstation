@@ -58,7 +58,7 @@
 
 	if(!fueljar)//No fuel but we are on, shutdown
 		toggle_power()
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
+		playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		return
 
 	add_avail(stored_power)
@@ -72,7 +72,7 @@
 
 
 /obj/machinery/power/am_control_unit/proc/produce_power()
-	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+	playsound(loc, 'sound/effects/bang.ogg', 25, 1)
 	var/core_power = reported_core_efficiency//Effectively how much fuel we can safely deal with
 	if(core_power <= 0)
 		return 0//Something is wrong
@@ -93,7 +93,7 @@
 		for(var/obj/machinery/am_shielding/AMS in linked_cores)
 			AMS.stability -= core_damage
 			AMS.check_stability(1)
-		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
+		playsound(loc, 'sound/effects/bang.ogg', 50, 1)
 	return
 
 
@@ -159,21 +159,21 @@
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench))
 		if(!anchored)
-			playsound(src.loc, W.usesound, 75, 1)
-			user.visible_message("[user.name] secures the [src.name] to the floor.", \
+			playsound(loc, W.usesound, 75, 1)
+			user.visible_message("[user.name] secures the [name] to the floor.", \
 				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
-			src.anchored = TRUE
+			anchored = TRUE
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
-			playsound(src.loc, W.usesound, 75, 1)
-			user.visible_message("[user.name] unsecures the [src.name].", \
+			playsound(loc, W.usesound, 75, 1)
+			user.visible_message("[user.name] unsecures the [name].", \
 				"<span class='notice'>You remove the anchor bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
-			src.anchored = FALSE
+			anchored = FALSE
 			disconnect_from_network()
 		else
-			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>")
+			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [name] is unable to be moved!</span>")
 
 	else if(istype(W, /obj/item/am_containment))
 		if(fueljar)
@@ -183,7 +183,7 @@
 		if(!user.transferItemToLoc(W, src))
 			return
 		fueljar = W
-		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
+		user.visible_message("[user.name] loads an [W.name] into the [name].", \
 				"<span class='notice'>You load an [W.name].</span>", \
 				"<span class='italics'>You hear a thunk.</span>")
 	else
@@ -200,7 +200,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/welder.ogg', 100, 1)
 		else
 			return
 	if(damage >= 20)
@@ -243,10 +243,10 @@
 	active = !active
 	if(active)
 		use_power = ACTIVE_POWER_USE
-		visible_message("The [src.name] starts up.")
+		visible_message("The [name] starts up.")
 	else
 		use_power = !powerfail
-		visible_message("The [src.name] shuts down.")
+		visible_message("The [name] shuts down.")
 	update_icon()
 	return
 
@@ -341,7 +341,7 @@
 
 	if(href_list["ejectjar"])
 		if(fueljar)
-			fueljar.loc = src.loc
+			fueljar.loc = loc
 			fueljar = null
 			//fueljar.control_unit = null currently it does not care where it is
 			//update_icon() when we have the icon for it

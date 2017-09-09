@@ -20,7 +20,7 @@
 /obj/structure/toilet/attack_hand(mob/living/user)
 	if(swirlie)
 		user.changeNext_move(CLICK_CD_MELEE)
-		playsound(src.loc, "swing_hit", 25, 1)
+		playsound(loc, "swing_hit", 25, 1)
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
 
@@ -45,7 +45,7 @@
 							GM.adjustOxyLoss(5)
 					swirlie = null
 				else
-					playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+					playsound(loc, 'sound/effects/bang.ogg', 25, 1)
 					GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams you into [src]!</span>")
 					GM.adjustBruteLoss(5)
 		else
@@ -492,7 +492,7 @@
 
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
-		new /obj/item/reagent_containers/glass/rag(src.loc)
+		new /obj/item/reagent_containers/glass/rag(loc)
 		to_chat(user, "<span class='notice'>You tear off a strip of gauze and make a rag.</span>")
 		G.use(1)
 		return
@@ -590,7 +590,7 @@
 		color = input(user,"Choose Color") as color
 	else if(istype(W, /obj/item/screwdriver))
 		if(anchored)
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
 			if(do_after(user, 50*W.toolspeed, target = src))
 				if(!anchored)
@@ -598,7 +598,7 @@
 				anchored = FALSE
 				to_chat(user, "<span class='notice'>You unscrew [src] from the floor.</span>")
 		else
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
 			if(do_after(user, 50*W.toolspeed, target = src))
 				if(anchored)
@@ -607,7 +607,7 @@
 				to_chat(user, "<span class='notice'>You screw [src] to the floor.</span>")
 	else if(istype(W, /obj/item/wirecutters))
 		if(!anchored)
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
 			if(do_after(user, 50*W.toolspeed, target = src))
 				if(anchored)
@@ -633,7 +633,7 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+				playsound(loc, 'sound/weapons/slash.ogg', 80, 1)
 			else
 				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)

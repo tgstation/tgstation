@@ -159,7 +159,7 @@
 	if(H != null)
 		to_chat(user, "<span class='notice'>[src] is too cumbersome to carry in one hand!</span>")
 		return
-	if(src.loc != user)
+	if(loc != user)
 		wield(user)
 	..()
 
@@ -460,7 +460,7 @@
 		var/mob/M = loc
 		var/input = stripped_input(M,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
 		if(input)
-			src.war_cry = input
+			war_cry = input
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
 	var/obj/item/twohanded/spear/S = locate() in parts_list

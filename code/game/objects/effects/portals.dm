@@ -114,7 +114,7 @@
 
 /obj/effect/portal/Destroy()				//Calls on_portal_destroy(destroyed portal, location of destroyed portal) on creator if creator has such call.
 	if(creator && hascall(creator, "on_portal_destroy"))
-		call(creator, "on_portal_destroy")(src, src.loc)
+		call(creator, "on_portal_destroy")(src, loc)
 	creator = null
 	GLOB.portals -= src
 	unlink_atmos()

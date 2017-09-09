@@ -61,24 +61,24 @@
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
 	else if(ishuman(target) && user.zone_selected == "mouth")
 		var/mob/living/carbon/human/H = user
-		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
+		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
 		H.lip_style = null //removes lipstick
 		H.update_body()
 		return
 	else if(istype(target, /obj/structure/window))
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.set_opacity(initial(target.opacity))
 	else
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
@@ -113,7 +113,7 @@
 
 /obj/item/bikehorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src.loc, honksound, 50, 1)
+	playsound(loc, honksound, 50, 1)
 	return (BRUTELOSS)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -124,8 +124,8 @@
 /obj/item/bikehorn/attack_self(mob/user)
 	if(!(next_usable > world.time))
 		next_usable = world.time + cooldowntime
-		playsound(src.loc, honksound, 50, 1)
-		src.add_fingerprint(user)
+		playsound(loc, honksound, 50, 1)
+		add_fingerprint(user)
 
 /obj/item/bikehorn/Crossed(mob/living/L)
 	if(isliving(L))

@@ -23,14 +23,14 @@
 /obj/item/areaeditor/attack_self(mob/user)
 	add_fingerprint(user)
 	var/text = "<BODY><HTML><head><title>[src]</title></head> \
-				<h2>[station_name()] [src.name]</h2> \
+				<h2>[station_name()] [name]</h2> \
 				<small>[fluffnotice]</small><hr>"
 	switch(get_area_type())
 		if(AREA_SPACE)
-			text += "<p>According to the [src.name], you are now in an unclaimed territory.</p> \
+			text += "<p>According to the [name], you are now in an unclaimed territory.</p> \
 			<p><a href='?src=\ref[src];create_area=1'>Mark this place as new area.</a></p>"
 		if(AREA_SPECIAL)
-			text += "<p>This place is not noted on the [src.name].</p>"
+			text += "<p>This place is not noted on the [name].</p>"
 	return text
 
 

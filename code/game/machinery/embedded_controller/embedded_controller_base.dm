@@ -29,7 +29,7 @@
 /obj/machinery/embedded_controller/interact(mob/user)
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "computer", name) // Set up the popup browser window
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.set_content(return_text())
 	popup.open()
 
@@ -66,7 +66,7 @@
 		program.process()
 
 	update_icon()
-	src.updateDialog()
+	updateDialog()
 
 /obj/machinery/embedded_controller/radio
 	var/frequency

@@ -345,7 +345,7 @@
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/spacevine/Crossed(mob/crosser)
 	if(isliving(crosser))
@@ -477,11 +477,11 @@
 
 /obj/structure/spacevine/proc/grow()
 	if(!energy)
-		src.icon_state = pick("Med1", "Med2", "Med3")
+		icon_state = pick("Med1", "Med2", "Med3")
 		energy = 1
 		set_opacity(1)
 	else
-		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
+		icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		energy = 2
 
 	for(var/datum/spacevine_mutation/SM in mutations)
@@ -489,7 +489,7 @@
 
 /obj/structure/spacevine/proc/entangle_mob()
 	if(!has_buckled_mobs() && prob(25))
-		for(var/mob/living/V in src.loc)
+		for(var/mob/living/V in loc)
 			entangle(V)
 			if(has_buckled_mobs())
 				break //only capture one mob at a time

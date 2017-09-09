@@ -46,8 +46,8 @@
 
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
-	src.icon_state = "[sprite_name][!safety]"
-	src.desc = "The safety is [safety ? "on" : "off"]."
+	icon_state = "[sprite_name][!safety]"
+	desc = "The safety is [safety ? "on" : "off"]."
 	to_chat(user, "The safety is [safety ? "on" : "off"].")
 	return
 
@@ -83,7 +83,7 @@
 		var/transferred = W.reagents.trans_to(src, max_water)
 		if(transferred > 0)
 			to_chat(user, "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>")
-			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+			playsound(loc, 'sound/effects/refill.ogg', 50, 1, -6)
 			for(var/datum/reagent/water/R in reagents.reagent_list)
 				R.cooling_temperature = cooling_power
 		else
@@ -102,16 +102,16 @@
 		refilling = FALSE
 		return
 	if (!safety)
-		if (src.reagents.total_volume < 1)
+		if (reagents.total_volume < 1)
 			to_chat(usr, "<span class='warning'>\The [src] is empty!</span>")
 			return
 
-		if (world.time < src.last_use + 12)
+		if (world.time < last_use + 12)
 			return
 
-		src.last_use = world.time
+		last_use = world.time
 
-		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
+		playsound(loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
 
 		var/direction = get_dir(src,target)
 
@@ -159,7 +159,7 @@
 				W.reagents = R
 				R.my_atom = W
 				if(!W || !src) return
-				src.reagents.trans_to(W,1)
+				reagents.trans_to(W,1)
 				for(var/b=0, b<power, b++)
 					step_towards(W,my_target)
 					if(!W || !W.reagents) return

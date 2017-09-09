@@ -54,7 +54,7 @@
 	if (istype(W, /obj/item/wirecutters))
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			if(do_after(user, 30*W.toolspeed, target = src) && bulb)
 				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.forceMove(loc)
@@ -98,7 +98,7 @@
 	if (!powered() || !bulb)
 		return
 
-	if (bulb.crit_fail || (last_flash && world.time < src.last_flash + 150))
+	if (bulb.crit_fail || (last_flash && world.time < last_flash + 150))
 		return
 
 	if(!bulb.flash_recharge(30)) //Bulb can burn out if it's used too often too fast
@@ -106,7 +106,7 @@
 		return
 	bulb.times_used ++
 
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
 	last_flash = world.time
 	use_power(1000)
@@ -166,7 +166,7 @@
 
 /obj/machinery/flasher/portable/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/wrench))
-		playsound(src.loc, W.usesound, 100, 1)
+		playsound(loc, W.usesound, 100, 1)
 
 		if (!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")

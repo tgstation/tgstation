@@ -53,7 +53,7 @@
 
 		sleep(max(0, projectile_delay))
 
-	chassis.log_message("Fired from [src.name], targeting [target].")
+	chassis.log_message("Fired from [name], targeting [target].")
 	return 1
 
 
@@ -187,7 +187,7 @@
 		else
 			M.Jitter(500)
 
-	log_message("Honked from [src.name]. HONK!")
+	log_message("Honked from [name]. HONK!")
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Mecha Honker in [ADMIN_COORDJMP(T)]",0,1)
 	log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Mecha Honker in [COORD(T)]")
@@ -212,7 +212,7 @@
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_equip_info()
-	return "[..()] \[[src.projectiles]\][(src.projectiles < initial(src.projectiles))?" - <a href='?src=\ref[src];rearm=1'>Rearm</a>":null]"
+	return "[..()] \[[projectiles]\][(projectiles < initial(projectiles))?" - <a href='?src=\ref[src];rearm=1'>Rearm</a>":null]"
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rearm()
@@ -222,8 +222,8 @@
 			projectiles++
 			projectiles_to_add--
 			chassis.use_power(projectile_energy_cost)
-	send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
-	log_message("Rearmed [src.name].")
+	send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
+	log_message("Rearmed [name].")
 	return 1
 
 
@@ -235,13 +235,13 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/Topic(href, href_list)
 	..()
 	if (href_list["rearm"])
-		src.rearm()
+		rearm()
 	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action(atom/target)
 	if(..())
 		projectiles -= get_shot_amount()
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 		return 1
 
 

@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		target.client.images |= current_image
 
 /obj/effect/hallucination/simple/proc/GetImage()
-	var/image/I = image(image_icon,src,image_state,image_layer,dir=src.dir)
+	var/image/I = image(image_icon,src,image_state,image_layer,dir=dir)
 	I.pixel_x = px
 	I.pixel_y = py
 	if(col_mod)
@@ -632,19 +632,19 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 
 
 /obj/effect/fake_attacker/proc/updateimage()
-//	del src.currentimage
-	if(src.dir == NORTH)
-		del src.currentimage
-		src.currentimage = new /image(up,src)
-	else if(src.dir == SOUTH)
-		del src.currentimage
-		src.currentimage = new /image(down,src)
-	else if(src.dir == EAST)
-		del src.currentimage
-		src.currentimage = new /image(right,src)
-	else if(src.dir == WEST)
-		del src.currentimage
-		src.currentimage = new /image(left,src)
+//	del currentimage
+	if(dir == NORTH)
+		del currentimage
+		currentimage = new /image(up,src)
+	else if(dir == SOUTH)
+		del currentimage
+		currentimage = new /image(down,src)
+	else if(dir == EAST)
+		del currentimage
+		currentimage = new /image(right,src)
+	else if(dir == WEST)
+		del currentimage
+		currentimage = new /image(left,src)
 	SEND_IMAGE(my_target, currentimage)
 
 
@@ -655,14 +655,14 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			collapse()
 			continue
 		if(get_dist(src,my_target) > 1)
-			src.setDir(get_dir(src,my_target))
+			setDir(get_dir(src,my_target))
 			step_towards(src,my_target)
 			updateimage()
 		else
 			if(prob(15))
 				if(weapon_name)
 					my_target.playsound_local(my_target, weap.hitsound, weap.get_clamped_volume(), 1)
-					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
+					my_target.show_message("<span class='danger'>[name] has attacked [my_target] with [weapon_name]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(20))
 						my_target.blur_eyes(3)
@@ -671,7 +671,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 							fake_blood(my_target)
 				else
 					my_target.playsound_local(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 25, 1)
-					my_target.show_message("<span class='userdanger'>[src.name] has punched [my_target]!</span>", 1)
+					my_target.show_message("<span class='userdanger'>[name] has punched [my_target]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)

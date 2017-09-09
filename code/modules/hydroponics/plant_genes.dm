@@ -36,7 +36,7 @@
 /datum/plant_gene/core/can_add(obj/item/seeds/S)
 	if(!..())
 		return FALSE
-	return S.get_gene(src.type)
+	return S.get_gene(type)
 
 /datum/plant_gene/core/lifespan
 	name = "Lifespan"

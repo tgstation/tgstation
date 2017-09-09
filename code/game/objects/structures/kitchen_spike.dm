@@ -19,7 +19,7 @@
 		if(R.get_amount() >= 4)
 			R.use(4)
 			to_chat(user, "<span class='notice'>You add spikes to the frame.</span>")
-			var/obj/F = new /obj/structure/kitchenspike(src.loc)
+			var/obj/F = new /obj/structure/kitchenspike(loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
 	else if(istype(I, /obj/item/weldingtool))
@@ -27,15 +27,15 @@
 		if(!WT.remove_fuel(0, user))
 			return
 		to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
-		playsound(src.loc, WT.usesound, 40, 1)
+		playsound(loc, WT.usesound, 40, 1)
 		if(do_after(user, 40*WT.toolspeed, 1, target = src))
 			if(!WT.isOn())
 				return
-			playsound(src.loc, WT.usesound, 50, 1)
+			playsound(loc, WT.usesound, 50, 1)
 			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 							"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
-			new /obj/item/stack/sheet/metal(src.loc, 4)
+			new /obj/item/stack/sheet/metal(loc, 4)
 			qdel(src)
 		return
 	else
@@ -54,7 +54,7 @@
 
 
 /obj/structure/kitchenspike/attack_paw(mob/user)
-	return src.attack_hand(usr)
+	return attack_hand(usr)
 
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
@@ -79,9 +79,9 @@
 				return
 			if(user.pulling != L)
 				return
-			playsound(src.loc, 'sound/effects/splat.ogg', 25, 1)
+			playsound(loc, 'sound/effects/splat.ogg', 25, 1)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
-			L.loc = src.loc
+			L.loc = loc
 			L.emote("scream")
 			L.add_splatter_floor()
 			L.adjustBruteLoss(30)
@@ -134,17 +134,17 @@
 		animate(M, transform = m180, time = 3)
 		M.pixel_y = M.get_standard_pixel_y_offset(180)
 		M.adjustBruteLoss(30)
-		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
+		visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
 		unbuckle_mob(M,force=1)
 		M.emote("scream")
 		M.AdjustKnockdown(20)
 
 /obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
 	if(disassembled)
-		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc)
+		var/obj/F = new /obj/structure/kitchenspike_frame(loc)
 		transfer_fingerprints_to(F)
 	else
-		new /obj/item/stack/sheet/metal(src.loc, 4)
+		new /obj/item/stack/sheet/metal(loc, 4)
 	new /obj/item/stack/rods(loc, 4)
 	qdel(src)
 

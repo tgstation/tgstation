@@ -50,7 +50,7 @@ effective or pretty fucking useless.
 		else
 			to_chat(M, "<span class='userdanger'>You feel a sudden, electric jolt travel through your head.</span>")
 
-	playsound(src.loc, 'sound/misc/interference.ogg', 50, 1)
+	playsound(loc, 'sound/misc/interference.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You trigger [src].</span>")
 	times_used += 1
 	if(times_used >= max_uses)
@@ -202,7 +202,7 @@ effective or pretty fucking useless.
 	if(!user)
 		return
 	to_chat(user, "<span class='notice'>You activate [src].</span>")
-	src.user = user
+	user = user
 	START_PROCESSING(SSobj, src)
 	old_alpha = user.alpha
 	on = TRUE

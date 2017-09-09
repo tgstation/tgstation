@@ -90,7 +90,7 @@
 /turf/proc/recalc_atom_opacity()
 	has_opaque_atom = opacity
 	if (!has_opaque_atom)
-		for (var/atom/A in src.contents) // Loop through every movable atom on our tile PLUS ourselves (we matter too...)
+		for (var/atom/A in contents) // Loop through every movable atom on our tile PLUS ourselves (we matter too...)
 			if (A.opacity)
 				has_opaque_atom = TRUE
 				break

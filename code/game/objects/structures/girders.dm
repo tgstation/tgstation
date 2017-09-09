@@ -28,7 +28,7 @@
 	add_fingerprint(user)
 	if(istype(W, /obj/item/screwdriver))
 		if(state == GIRDER_DISPLACED)
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] disassembles the girder.</span>", \
 								"<span class='notice'>You start to disassemble the girder...</span>", "You hear clanking and banging noises.")
 			if(do_after(user, 40*W.toolspeed, target = src))
@@ -40,7 +40,7 @@
 				M.add_fingerprint(user)
 				qdel(src)
 		else if(state == GIRDER_REINF)
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			to_chat(user, "<span class='notice'>You start unsecuring support struts...</span>")
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if(state != GIRDER_REINF)
@@ -48,7 +48,7 @@
 				to_chat(user, "<span class='notice'>You unsecure the support struts.</span>")
 				state = GIRDER_REINF_STRUTS
 		else if(state == GIRDER_REINF_STRUTS)
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			to_chat(user, "<span class='notice'>You start securing support struts...</span>")
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if(state != GIRDER_REINF_STRUTS)
@@ -61,7 +61,7 @@
 			if(!isfloorturf(loc))
 				to_chat(user, "<span class='warning'>A floor must be present to secure the girder!</span>")
 				return
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			to_chat(user, "<span class='notice'>You start securing the girder...</span>")
 			if(do_after(user, 40*W.toolspeed, target = src))
 				to_chat(user, "<span class='notice'>You secure the girder.</span>")
@@ -69,7 +69,7 @@
 				transfer_fingerprints_to(G)
 				qdel(src)
 		else if(state == GIRDER_NORMAL && can_displace)
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			to_chat(user, "<span class='notice'>You start unsecuring the girder...</span>")
 			if(do_after(user, 40*W.toolspeed, target = src))
 				to_chat(user, "<span class='notice'>You unsecure the girder.</span>")
@@ -94,7 +94,7 @@
 		qdel(src)
 
 	else if(istype(W, /obj/item/wirecutters) && state == GIRDER_REINF_STRUTS)
-		playsound(src.loc, W.usesound, 100, 1)
+		playsound(loc, W.usesound, 100, 1)
 		to_chat(user, "<span class='notice'>You start removing the inner grille...</span>")
 		if(do_after(user, 40*W.toolspeed, target = src))
 			to_chat(user, "<span class='notice'>You remove the inner grille.</span>")
@@ -107,10 +107,10 @@
 		if(iswallturf(loc))
 			to_chat(user, "<span class='warning'>There is already a wall present!</span>")
 			return
-		if(!isfloorturf(src.loc))
+		if(!isfloorturf(loc))
 			to_chat(user, "<span class='warning'>A floor must be present to build a false wall!</span>")
 			return
-		if (locate(/obj/structure/falsewall) in src.loc.contents)
+		if (locate(/obj/structure/falsewall) in loc.contents)
 			to_chat(user, "<span class='warning'>There is already a false wall present!</span>")
 			return
 
@@ -122,7 +122,7 @@
 					return
 				to_chat(user, "<span class='notice'>You start building a reinforced false wall...</span>")
 				if(do_after(user, 20, target = src))
-					if(!src.loc || !S || S.get_amount() < 2)
+					if(!loc || !S || S.get_amount() < 2)
 						return
 					S.use(2)
 					to_chat(user, "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>")
@@ -135,7 +135,7 @@
 					return
 				to_chat(user, "<span class='notice'>You start adding plating...</span>")
 				if (do_after(user, 40, target = src))
-					if(!src.loc || !S || S.get_amount() < 5)
+					if(!loc || !S || S.get_amount() < 5)
 						return
 					S.use(5)
 					to_chat(user, "<span class='notice'>You add the plating.</span>")
@@ -156,7 +156,7 @@
 					return
 				to_chat(user, "<span class='notice'>You start building a false wall...</span>")
 				if(do_after(user, 20, target = src))
-					if(!src.loc || !S || S.get_amount() < 2)
+					if(!loc || !S || S.get_amount() < 2)
 						return
 					S.use(2)
 					to_chat(user, "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>")
@@ -186,7 +186,7 @@
 					return
 				to_chat(user, "<span class='notice'>You start building a reinforced false wall...</span>")
 				if(do_after(user, 20, target = src))
-					if(!src.loc || !S || S.get_amount() < 2)
+					if(!loc || !S || S.get_amount() < 2)
 						return
 					S.use(2)
 					to_chat(user, "<span class='notice'>You create a reinforced false wall. Push on it to open or close the passage.</span>")
@@ -199,7 +199,7 @@
 						return
 					to_chat(user, "<span class='notice'>You start finalizing the reinforced wall...</span>")
 					if(do_after(user, 50, target = src))
-						if(!src.loc || !S || S.get_amount() < 1)
+						if(!loc || !S || S.get_amount() < 1)
 							return
 						S.use(1)
 						to_chat(user, "<span class='notice'>You fully reinforce the wall.</span>")
@@ -213,7 +213,7 @@
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing the girder...</span>")
 					if (do_after(user, 60, target = src))
-						if(!src.loc || !S || S.get_amount() < 1)
+						if(!loc || !S || S.get_amount() < 1)
 							return
 						S.use(1)
 						to_chat(user, "<span class='notice'>You reinforce the girder.</span>")
@@ -229,7 +229,7 @@
 					to_chat(user, "<span class='warning'>You need at least two sheets to create a false wall!</span>")
 					return
 				if(do_after(user, 20, target = src))
-					if(!src.loc || !S || S.get_amount() < 2)
+					if(!loc || !S || S.get_amount() < 2)
 						return
 					S.use(2)
 					to_chat(user, "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>")
@@ -243,7 +243,7 @@
 					return
 				to_chat(user, "<span class='notice'>You start adding plating...</span>")
 				if (do_after(user, 40, target = src))
-					if(!src.loc || !S || S.get_amount() < 2)
+					if(!loc || !S || S.get_amount() < 2)
 						return
 					S.use(2)
 					to_chat(user, "<span class='notice'>You add the plating.</span>")
@@ -260,7 +260,7 @@
 		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
 			if(!user.drop_item())
 				return
-			P.loc = src.loc
+			P.loc = loc
 			to_chat(user, "<span class='notice'>You fit the pipe into \the [src].</span>")
 	else
 		return ..()
@@ -334,7 +334,7 @@
 	else if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			playsound(src.loc, W.usesound, 50, 1)
+			playsound(loc, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You start slicing apart the girder...</span>")
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if( !WT.isOn() )

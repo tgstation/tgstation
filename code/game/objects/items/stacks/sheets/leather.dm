@@ -204,7 +204,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")
 		if(do_after(user,50, target = src))
-			to_chat(user, "<span class='notice'>You cut the hair from this [src.singular_name].</span>")
+			to_chat(user, "<span class='notice'>You cut the hair from this [singular_name].</span>")
 			var/obj/item/stack/sheet/hairlesshide/HS = new(user.loc)
 			HS.amount = 1
 			use(1)
@@ -221,17 +221,17 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 		wetness--
 		if(wetness == 0)
 			//Try locating an exisitng stack on the tile and add to there if possible
-			for(var/obj/item/stack/sheet/leather/HS in src.loc)
+			for(var/obj/item/stack/sheet/leather/HS in loc)
 				if(HS.amount < 50)
 					HS.amount++
-					src.use(1)
+					use(1)
 					wetness = initial(wetness)
 					break
 			//If it gets to here it means it did not find a suitable stack on the tile.
-			var/obj/item/stack/sheet/leather/HS = new(src.loc)
+			var/obj/item/stack/sheet/leather/HS = new(loc)
 			HS.amount = 1
 			wetness = initial(wetness)
-			src.use(1)
+			use(1)
 
 /obj/item/stack/sheet/wetleather/microwave_act(obj/machinery/microwave/MW)
 	..()

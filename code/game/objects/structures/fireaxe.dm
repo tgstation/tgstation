@@ -73,7 +73,7 @@
 			else
 				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(open)
@@ -110,7 +110,7 @@
 			user.put_in_hands(fireaxe)
 			fireaxe = null
 			to_chat(user, "<span class='caution'>You take the fire axe from the [name].</span>")
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 			update_icon()
 			return
 	if(locked)

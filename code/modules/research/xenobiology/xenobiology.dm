@@ -494,7 +494,7 @@
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
-	for(var/mob/dead/observer/O in src.loc)
+	for(var/mob/dead/observer/O in loc)
 		if(!O.client)
 			continue
 		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
@@ -510,7 +510,7 @@
 
 /obj/effect/golemrune/attack_hand(mob/living/user)
 	var/mob/dead/observer/ghost
-	for(var/mob/dead/observer/O in src.loc)
+	for(var/mob/dead/observer/O in loc)
 		if(!O.client)
 			continue
 		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
@@ -529,7 +529,7 @@
 	G.name = G.real_name
 	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
 	G.dna.species.auto_equip(G)
-	G.loc = src.loc
+	G.loc = loc
 	G.key = ghost.key
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
 	Serve [user], and assist [user.p_them()] in completing their goals at any cost.")
@@ -573,7 +573,7 @@
 	set waitfor = FALSE
 	playsound(src, 'sound/magic/timeparadox2.ogg', 75, 1, -1)
 	for(var/i in 1 to duration-1)
-		for(var/atom/A in orange (freezerange, src.loc))
+		for(var/atom/A in orange (freezerange, loc))
 			if(isliving(A))
 				var/mob/living/M = A
 				if(M in immune)

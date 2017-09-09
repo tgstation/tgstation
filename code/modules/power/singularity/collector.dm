@@ -44,10 +44,10 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 	if(..())
 		return
 	if(anchored)
-		if(!src.locked)
+		if(!locked)
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
-			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
+			user.visible_message("[user.name] turns the [name] [active? "on":"off"].", \
+			"<span class='notice'>You turn the [name] [active? "on":"off"].</span>")
 			var/fuel
 			if(loaded_tank)
 				fuel = loaded_tank.air_contents.gases["plasma"]
@@ -126,13 +126,13 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = FALSE
-	var/obj/item/tank/internals/plasma/Z = src.loaded_tank
+	var/obj/item/tank/internals/plasma/Z = loaded_tank
 	if (!Z)
 		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
 	Z.plane = initial(Z.plane)
-	src.loaded_tank = null
+	loaded_tank = null
 	if(active)
 		toggle_power()
 	else

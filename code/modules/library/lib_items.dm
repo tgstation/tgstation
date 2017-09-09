@@ -265,15 +265,15 @@
 		if(do_after(user, 30, target = src))
 			to_chat(user, "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>")
 			var/obj/item/storage/book/B = new
-			B.name = src.name
-			B.title = src.title
-			B.icon_state = src.icon_state
+			B.name = name
+			B.title = title
+			B.icon_state = icon_state
 			if(user.is_holding(src))
 				qdel(src)
 				user.put_in_hands(B)
 				return
 			else
-				B.loc = src.loc
+				B.loc = loc
 				qdel(src)
 				return
 		return

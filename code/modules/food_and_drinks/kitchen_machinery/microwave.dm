@@ -54,8 +54,8 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
-	if(src.broken > 0)
-		if(src.broken == 2 && istype(O, /obj/item/wirecutters)) // If it's broken and they're using a screwdriver
+	if(broken > 0)
+		if(broken == 2 && istype(O, /obj/item/wirecutters)) // If it's broken and they're using a screwdriver
 			user.visible_message( \
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
@@ -65,8 +65,8 @@
 					"[user] fixes part of the microwave.", \
 					"<span class='notice'>You fix part of the microwave.</span>" \
 				)
-				src.broken = 1 // Fix it a bit
-		else if(src.broken == 1 && istype(O, /obj/item/weldingtool)) // If it's broken and they're doing the wrench
+				broken = 1 // Fix it a bit
+		else if(broken == 1 && istype(O, /obj/item/weldingtool)) // If it's broken and they're doing the wrench
 			user.visible_message( \
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
@@ -76,10 +76,10 @@
 					"[user] fixes the microwave.", \
 					"<span class='notice'>You fix the microwave.</span>" \
 				)
-				src.icon_state = "mw"
-				src.broken = 0 // Fix it!
-				src.dirty = 0 // just to be sure
-				src.container_type = OPENCONTAINER_1
+				icon_state = "mw"
+				broken = 0 // Fix it!
+				dirty = 0 // just to be sure
+				container_type = OPENCONTAINER_1
 				return 0 //to use some fuel
 		else
 			to_chat(user, "<span class='warning'>It's broken!</span>")
@@ -93,11 +93,11 @@
 				"[user] has cleaned the microwave.", \
 				"<span class='notice'>You clean the microwave.</span>" \
 			)
-			src.dirty = 0 // It's clean!
-			src.broken = 0 // just to be sure
-			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER_1
-			src.updateUsrDialog()
+			dirty = 0 // It's clean!
+			broken = 0 // just to be sure
+			icon_state = "mw"
+			container_type = OPENCONTAINER_1
+			updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
 			to_chat(user, "<span class='warning'>You need more space cleaner!<span>")
@@ -114,12 +114,12 @@
 				"[user] has cleaned the microwave.", \
 				"<span class='notice'>You clean the microwave.</span>" \
 			)
-			src.dirty = 0 // It's clean!
-			src.broken = 0 // just to be sure
-			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER_1
+			dirty = 0 // It's clean!
+			broken = 0 // just to be sure
+			icon_state = "mw"
+			container_type = OPENCONTAINER_1
 
-	else if(src.dirty==100) // The microwave is all dirty so can't be used!
+	else if(dirty==100) // The microwave is all dirty so can't be used!
 		to_chat(user, "<span class='warning'>It's dirty!</span>")
 		return 1
 
@@ -156,7 +156,7 @@
 	updateUsrDialog()
 
 /obj/machinery/microwave/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/microwave/attack_ai(mob/user)
 	return 0
@@ -277,21 +277,21 @@
 	updateUsrDialog()
 
 /obj/machinery/microwave/proc/stop()
-	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	playsound(loc, 'sound/machines/ding.ogg', 50, 1)
 	abort()
 
 /obj/machinery/microwave/proc/dispose()
 	for (var/obj/O in contents)
-		O.loc = src.loc
+		O.loc = loc
 	to_chat(usr, "<span class='notice'>You dispose of the microwave contents.</span>")
 	updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) // Play a splat sound
+	playsound(loc, 'sound/effects/splat.ogg', 50, 1) // Play a splat sound
 	icon_state = "mwbloody1" // Make it look dirty!!
 
 /obj/machinery/microwave/proc/muck_finish()
-	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	playsound(loc, 'sound/machines/ding.ogg', 50, 1)
 	visible_message("<span class='warning'>The microwave gets covered in muck!</span>")
 	dirty = 100 // Make it dirty so it can't be used util cleaned
 	icon_state = "mwbloody" // Make it look dirty too

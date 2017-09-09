@@ -134,7 +134,7 @@
 		lastcirc = circ
 		update_icon()
 
-	src.updateDialog()
+	updateDialog()
 
 /obj/machinery/power/generator/process()
 	//Setting this number higher just makes the change in power output slower, it doesnt actualy reduce power output cause **math**
@@ -187,7 +187,7 @@
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "teg", "Thermo-Electric Generator", 460, 300)
 	popup.set_content(get_menu())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return 1
 

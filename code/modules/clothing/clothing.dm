@@ -336,7 +336,7 @@ BLIND     // can't see anything
 		return
 	mask_adjusted = !mask_adjusted
 	if(!mask_adjusted)
-		src.icon_state = initial(icon_state)
+		icon_state = initial(icon_state)
 		gas_transfer_coefficient = initial(gas_transfer_coefficient)
 		permeability_coefficient = initial(permeability_coefficient)
 		flags_1 |= visor_flags
@@ -683,13 +683,13 @@ BLIND     // can't see anything
 		return
 	if (!can_use(M))
 		return
-	if(src.has_sensor == LOCKED_SENSORS)
+	if(has_sensor == LOCKED_SENSORS)
 		to_chat(usr, "The controls are locked.")
 		return 0
-	if(src.has_sensor == BROKEN_SENSORS)
+	if(has_sensor == BROKEN_SENSORS)
 		to_chat(usr, "The sensors have shorted out!")
 		return 0
-	if(src.has_sensor <= NO_SENSORS)
+	if(has_sensor <= NO_SENSORS)
 		to_chat(usr, "This suit does not have any sensors.")
 		return 0
 
@@ -700,7 +700,7 @@ BLIND     // can't see anything
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
-	if (src.loc == usr)
+	if (loc == usr)
 		switch(sensor_mode)
 			if(0)
 				to_chat(usr, "<span class='notice'>You disable your suit's remote sensing equipment.</span>")

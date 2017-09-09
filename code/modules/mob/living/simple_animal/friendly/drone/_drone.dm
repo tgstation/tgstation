@@ -236,7 +236,7 @@
 	if(alarmsource.z != z)
 		return
 	if(stat != DEAD)
-		var/list/L = src.alarms[class]
+		var/list/L = alarms[class]
 		for (var/I in L)
 			if (I == A.name)
 				var/list/alarm = L[I]

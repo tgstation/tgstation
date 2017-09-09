@@ -19,8 +19,8 @@
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
 		if(!(H.disabilities & BLIND))
 			if(H.glasses == src)
 				to_chat(H, "<span class='danger'>The [src] overloads and blinds you!</span>")

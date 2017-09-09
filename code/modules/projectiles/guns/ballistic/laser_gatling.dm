@@ -30,7 +30,7 @@
 	overheat = max(0, overheat - heat_diffusion)
 
 /obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
-	if(src.loc == user)
+	if(loc == user)
 		if(!armed)
 			if(user.get_item_by_slot(slot_back) == src)
 				armed = 1
@@ -86,7 +86,7 @@
 	if(user)
 		to_chat(user, "<span class='notice'>You attach the [gun.name] to the [name].</span>")
 	else
-		src.visible_message("<span class='warning'>The [gun.name] snaps back onto the [name]!</span>")
+		visible_message("<span class='warning'>The [gun.name] snaps back onto the [name]!</span>")
 	update_icon()
 	user.update_inv_back()
 

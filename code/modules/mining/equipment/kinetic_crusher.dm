@@ -113,7 +113,7 @@
 	if(!charged)
 		charged = TRUE
 		icon_state = "mining_hammer1"
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+		playsound(loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 
 //destablizing force
 /obj/item/projectile/destabilizer

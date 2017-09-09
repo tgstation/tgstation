@@ -76,7 +76,7 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>you can't add anymore to [target]!</span>")
 			return
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>")
 
 /obj/item/reagent_containers/food/condiment/on_reagent_change()
@@ -250,7 +250,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You tear open [src] above [target] and the condiments drip onto it.</span>")
-			src.reagents.trans_to(target, amount_per_transfer_from_this)
+			reagents.trans_to(target, amount_per_transfer_from_this)
 			qdel(src)
 
 /obj/item/reagent_containers/food/condiment/pack/on_reagent_change()

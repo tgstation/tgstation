@@ -183,7 +183,7 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user as mob|obj)
 	..()
-	src.pump(user)
+	pump(user)
 
 /obj/item/gun/ballistic/shotgun/automatic/combat
 	name = "combat shotgun"

@@ -34,7 +34,7 @@
 	var/list/alerted = null
 	if(egged < world.time)
 		var/mob/living/Snake = null
-		for(var/mob/living/L in src.contents)
+		for(var/mob/living/L in contents)
 			Snake = L
 			break
 		if(Snake)

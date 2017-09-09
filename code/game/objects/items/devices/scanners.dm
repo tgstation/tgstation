@@ -47,7 +47,7 @@ MASS SPECTROMETER
 
 /obj/item/device/t_scanner/proc/scan()
 
-	for(var/turf/T in range(2, src.loc) )
+	for(var/turf/T in range(2, loc) )
 		for(var/obj/O in T.contents)
 
 			if(O.level != 1)

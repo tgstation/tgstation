@@ -60,7 +60,7 @@
 
 		scanning = 1
 
-		user.visible_message("\The [user] points the [src.name] at \the [A] and performs a forensic scan.")
+		user.visible_message("\The [user] points the [name] at \the [A] and performs a forensic scan.")
 		to_chat(user, "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>")
 
 
@@ -146,8 +146,8 @@
 
 		// Get a new user
 		var/mob/holder = null
-		if(ismob(src.loc))
-			holder = src.loc
+		if(ismob(loc))
+			holder = loc
 
 		if(!found_something)
 			add_log("<I># No forensic traces found #</I>", 0) // Don't display this to the holder user

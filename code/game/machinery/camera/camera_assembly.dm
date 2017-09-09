@@ -47,7 +47,7 @@
 				return
 
 			else if(istype(W, /obj/item/wrench))
-				playsound(src.loc, W.usesound, 50, 1)
+				playsound(loc, W.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You unattach the assembly from its place.</span>")
 				new /obj/item/wallframe/camera(get_turf(src))
 				qdel(src)
@@ -77,7 +77,7 @@
 		if(3)
 			// State 3
 			if(istype(W, /obj/item/screwdriver))
-				playsound(src.loc, W.usesound, 50, 1)
+				playsound(loc, W.usesound, 50, 1)
 
 				var/input = stripped_input(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
 				if(!input)
@@ -90,10 +90,10 @@
 					return
 
 				state = 4
-				var/obj/machinery/camera/C = new(src.loc)
-				src.loc = C
+				var/obj/machinery/camera/C = new(loc)
+				loc = C
 				C.assembly = src
-				C.setDir(src.dir)
+				C.setDir(dir)
 
 				C.network = tempnetwork
 				var/area/A = get_area(src)
@@ -102,7 +102,7 @@
 
 			else if(istype(W, /obj/item/wirecutters))
 				new/obj/item/stack/cable_coil(get_turf(src), 2)
-				playsound(src.loc, W.usesound, 50, 1)
+				playsound(loc, W.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You cut the wires from the circuits.</span>")
 				state = 2
 				return
@@ -121,7 +121,7 @@
 		var/obj/U = locate(/obj) in upgrades
 		if(U)
 			to_chat(user, "<span class='notice'>You unattach an upgrade from the assembly.</span>")
-			playsound(src.loc, W.usesound, 50, 1)
+			playsound(loc, W.usesound, 50, 1)
 			U.loc = get_turf(src)
 			upgrades -= U
 		return
@@ -132,7 +132,7 @@
 	if(!WT.remove_fuel(0, user))
 		return 0
 	to_chat(user, "<span class='notice'>You start to weld \the [src]...</span>")
-	playsound(src.loc, WT.usesound, 50, 1)
+	playsound(loc, WT.usesound, 50, 1)
 	if(do_after(user, 20*WT.toolspeed, target = src))
 		if(WT.isOn())
 			playsound(loc, 'sound/items/welder2.ogg', 50, 1)

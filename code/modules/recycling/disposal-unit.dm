@@ -86,7 +86,7 @@
 		else if(istype(I, /obj/item/weldingtool) && panel_open)
 			var/obj/item/weldingtool/W = I
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
+				playsound(loc, 'sound/items/welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 				if(do_after(user,20*I.toolspeed, target = src) && panel_open)
 					if(!W.isOn())
@@ -226,7 +226,7 @@
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 	if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
 		for(var/atom/movable/AM in H)
-			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
+			target = get_offset_target_turf(loc, rand(5)-rand(5), rand(5)-rand(5))
 
 			AM.forceMove(T)
 			AM.pipe_eject(0)
@@ -240,7 +240,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(stored)
 			stored.forceMove(T)
-			src.transfer_fingerprints_to(stored)
+			transfer_fingerprints_to(stored)
 			stored.anchored = FALSE
 			stored.density = TRUE
 			stored.update_icon()

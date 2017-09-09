@@ -43,12 +43,12 @@
 		to_chat(src, "<span class='danger'>You have been banned from deadchat.</span>")
 		return
 
-	if (src.client)
-		if(src.client.prefs.muted & MUTE_DEADCHAT)
+	if (client)
+		if(client.prefs.muted & MUTE_DEADCHAT)
 			to_chat(src, "<span class='danger'>You cannot talk in deadchat (muted).</span>")
 			return
 
-		if(src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
+		if(client.handle_spam_prevention(message,MUTE_DEADCHAT))
 			return
 
 	var/mob/dead/observer/O = src
@@ -65,9 +65,9 @@
 	var/K
 
 	if(key)
-		K = src.key
+		K = key
 
-	message = src.say_quote(message, get_spans())
+	message = say_quote(message, get_spans())
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
 
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)

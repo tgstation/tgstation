@@ -41,22 +41,22 @@
 		stat |= NOPOWER
 
 /obj/machinery/robotic_fabricator/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/robotic_fabricator/attack_hand(mob/user)
 	var/dat
 	if (..())
 		return
 
-	if (src.operating)
+	if (operating)
 		dat = {"
-<TT>Building [src.being_built.name].<BR>
+<TT>Building [being_built.name].<BR>
 Please wait until completion...</TT><BR>
 <BR>
 "}
 	else
 		dat = {"
-<B>Metal Amount:</B> [min(150000, src.metal_amount)] cm<sup>3</sup> (MAX: 150,000)<BR><HR>
+<B>Metal Amount:</B> [min(150000, metal_amount)] cm<sup>3</sup> (MAX: 150,000)<BR><HR>
 <BR>
 <A href='?src=\ref[src];make=1'>Left Arm (25,000 cc metal.)<BR>
 <A href='?src=\ref[src];make=2'>Right Arm (25,000 cc metal.)<BR>
@@ -76,10 +76,10 @@ Please wait until completion...</TT><BR>
 		return
 
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 
 	if (href_list["make"])
-		if (!src.operating)
+		if (!operating)
 			var/part_type = text2num(href_list["make"])
 
 			var/build_type = ""
@@ -124,22 +124,22 @@ Please wait until completion...</TT><BR>
 
 			var/building = text2path(build_type)
 			if (!isnull(building))
-				if (src.metal_amount >= build_cost)
+				if (metal_amount >= build_cost)
 					operating = TRUE
-					src.use_power = ACTIVE_POWER_USE
+					use_power = ACTIVE_POWER_USE
 
-					src.metal_amount = max(0, src.metal_amount - build_cost)
+					metal_amount = max(0, metal_amount - build_cost)
 
-					src.being_built = new building(src)
+					being_built = new building(src)
 
-					src.add_overlay("fab-active")
-					src.updateUsrDialog()
+					add_overlay("fab-active")
+					updateUsrDialog()
 
 					spawn (build_time)
-						if (!isnull(src.being_built))
-							src.being_built.loc = get_turf(src)
-							src.being_built = null
-						src.use_power = IDLE_POWER_USE
+						if (!isnull(being_built))
+							being_built.loc = get_turf(src)
+							being_built = null
+						use_power = IDLE_POWER_USE
 						operating = FALSE
 						cut_overlay("fab-active")
 		return

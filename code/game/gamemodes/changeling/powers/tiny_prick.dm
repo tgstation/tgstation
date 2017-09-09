@@ -27,7 +27,7 @@
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind && mind.changeling && mind.changeling.chosen_sting)
-		src.mind.changeling.chosen_sting.unset_sting(src)
+		mind.changeling.chosen_sting.unset_sting(src)
 
 /obj/effect/proc_holder/changeling/sting/can_sting(mob/user, mob/target)
 	if(!..())

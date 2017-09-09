@@ -30,7 +30,7 @@
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
 	if(dir)
-		src.setDir(dir)
+		setDir(dir)
 	if(building)
 		buildstage = 0
 		panel_open = TRUE
@@ -45,7 +45,7 @@
 /obj/machinery/firealarm/update_icon()
 	cut_overlays()
 
-	var/area/A = src.loc
+	var/area/A = loc
 	A = A.loc
 
 	if(panel_open)
@@ -61,7 +61,7 @@
 		if(stat & NOPOWER)
 			return
 
-		if(src.z == ZLEVEL_STATION)
+		if(z == ZLEVEL_STATION)
 			add_overlay("overlay_[GLOB.security_level]")
 		else
 			//var/green = SEC_LEVEL_GREEN
@@ -96,7 +96,7 @@
 		return
 	var/area/A = get_area(src)
 	A.firealert(src)
-	playsound(src.loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
+	playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
 
 /obj/machinery/firealarm/proc/alarm_in(time)
 	addtimer(CALLBACK(src, .proc/alarm), time)
@@ -121,7 +121,7 @@
 	var/list/data = list()
 	data["emagged"] = emagged
 
-	if(src.z == ZLEVEL_STATION)
+	if(z == ZLEVEL_STATION)
 		data["seclevel"] = get_security_level()
 	else
 		data["seclevel"] = "green"
@@ -146,7 +146,7 @@
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/screwdriver) && buildstage == 2)
-		playsound(src.loc, W.usesound, 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 		update_icon()
@@ -172,7 +172,7 @@
 			if(2)
 				if(istype(W, /obj/item/device/multitool))
 					detecting = !detecting
-					if (src.detecting)
+					if (detecting)
 						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
 					else
 						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
@@ -180,7 +180,7 @@
 
 				else if (istype(W, /obj/item/wirecutters))
 					buildstage = 1
-					playsound(src.loc, W.usesound, 50, 1)
+					playsound(loc, W.usesound, 50, 1)
 					new /obj/item/stack/cable_coil(user.loc, 5)
 					to_chat(user, "<span class='notice'>You cut the wires from \the [src].</span>")
 					update_icon()
@@ -198,8 +198,8 @@
 					return
 
 				else if(istype(W, /obj/item/crowbar))
-					playsound(src.loc, W.usesound, 50, 1)
-					user.visible_message("[user.name] removes the electronics from [src.name].", \
+					playsound(loc, W.usesound, 50, 1)
+					user.visible_message("[user.name] removes the electronics from [name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
 					if(do_after(user, 20*W.toolspeed, target = src))
 						if(buildstage == 1)
@@ -225,7 +225,7 @@
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.loc = user.loc
-					playsound(src.loc, W.usesound, 50, 1)
+					playsound(loc, W.usesound, 50, 1)
 					qdel(src)
 					return
 	return ..()
@@ -266,7 +266,7 @@
 /obj/machinery/firealarm/partyalarm/reset()
 	if (stat & (NOPOWER|BROKEN))
 		return
-	var/area/A = src.loc
+	var/area/A = loc
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
@@ -277,7 +277,7 @@
 /obj/machinery/firealarm/partyalarm/alarm()
 	if (stat & (NOPOWER|BROKEN))
 		return
-	var/area/A = src.loc
+	var/area/A = loc
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
