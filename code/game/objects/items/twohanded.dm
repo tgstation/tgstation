@@ -500,6 +500,12 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = FALSE
 
+/obj/item/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to tear [user.p_their()] head off with the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
+	myhead.dismember()
+	return(BRUTELOSS)
+
 /obj/item/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
 	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
