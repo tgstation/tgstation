@@ -41,3 +41,8 @@
 		M.adjustToxLoss(-2, 0)
 		. = 1
 	return ..() || .
+
+/datum/reagent/water/reaction_turf(turf/open/T, reac_volume)
+	. = ..()
+	for(var/mob/living/simple_animal/hostile/gremlin/G in src)
+		G.divide()

@@ -1,3 +1,5 @@
+#define GREMLIN_VENT_CHANCE 1.75
+
 //Gremlins
 //Small monsters that don't attack humans or other animals. Instead they mess with electronics, computers and machinery
 
@@ -12,10 +14,10 @@ var/list/bad_gremlin_items = list()
 	icon_state = "gremlin"
 	icon_living = "gremlin"
 	icon_dead = "gremlin_dead"
-	
+
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/in_vent = FALSE
-	
+
 	health = 25
 	maxHealth = 25
 	search_objects = 3 //Completely ignore mobs
@@ -23,9 +25,10 @@ var/list/bad_gremlin_items = list()
 	//Tampering is handled by the 'npc_tamper()' obj proc
 	wanted_objects = list(
 		/obj/machinery,
-		/obj/item/reagent_containers/food
+		/obj/item/reagent_containers/food,
+		/obj/structure/sink
 	)
-	
+
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent
 
@@ -46,6 +49,8 @@ var/list/bad_gremlin_items = list()
 	//List of objects that we don't even want to try to tamper with
 	//Subtypes of these are calculated too
 	var/list/unwanted_objects = list(/obj/machinery/atmospherics/pipe, /turf, /obj/structure) //ensure gremlins dont try to fuck with walls / normal pipes / glass / etc
+
+	var/min_next_vent = 0
 
 	//Amount of ticks spent pathing to the target. If it gets above a certain amount, assume that the target is unreachable and stop
 	var/time_chasing_target = 0
@@ -138,28 +143,33 @@ var/list/bad_gremlin_items = list()
 
 /mob/living/simple_animal/hostile/gremlin/Life()
 	//Don't try to path to one target for too long. If it takes longer than a certain amount of time, assume it can't be reached and find a new one
-	if(in_vent)
-		target = null
-	if(entry_vent && get_dist(src, entry_vent) <= 1)
-		var/list/vents = list()
-		var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
-			vents += temp_vent
-		if(!vents.len)
-			entry_vent = null
-			in_vent = FALSE
-			return
-		exit_vent = pick(vents)
-		addtimer(CALLBACK(src, .proc/exit_vents), rand(20,60))
+	if(!client) //don't do this shit if there's a client, they're capable of ventcrawling manually
+		if(in_vent)
+			target = null
+		if(entry_vent && get_dist(src, entry_vent) <= 1)
+			var/list/vents = list()
+			var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
+			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
+				vents += temp_vent
+			if(!vents.len)
+				entry_vent = null
+				in_vent = FALSE
+				return
+			exit_vent = pick(vents)
+			visible_message("<span class='notice'>[src] crawls into the ventilation ducts!</span>")
 
-		
-	if(!entry_vent && && !in_vent && prob(1)) //small chance to go into a vent
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
-			if(!v.welded)
-				entry_vent = v
-				in_vent = TRUE
-				walk_to(src, entry_vent, 1)
-				break
+			loc = exit_vent
+			var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
+			addtimer(CALLBACK(src, .proc/exit_vents), travel_time) //come out at exit vent in 2 to 20 seconds
+
+
+		if(world.time > min_next_vent && !entry_vent && !in_vent && prob(GREMLIN_VENT_CHANCE)) //small chance to go into a vent
+			for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
+				if(!v.welded)
+					entry_vent = v
+					in_vent = TRUE
+					walk_to(src, entry_vent)
+					break
 	if(!target)
 		time_chasing_target = 0
 	else
@@ -182,10 +192,14 @@ var/list/bad_gremlin_items = list()
 		return
 	loc = exit_vent.loc
 	entry_vent = null
+	exit_vent = null
 	in_vent = FALSE
 	var/area/new_area = get_area(loc)
+	message_admins("[src] came out at [new_area][ADMIN_JMP(loc)]!")
 	if(new_area)
 		new_area.Entered(src)
+	visible_message("<span class='notice'>[src] climbs out of the ventilation ducts!</span>")
+	min_next_vent = world.time + 900 //90 seconds between ventcrawls
 
 //This allows player-controlled gremlins to tamper with machinery
 /mob/living/simple_animal/hostile/gremlin/UnarmedAttack(var/atom/A)
@@ -202,6 +216,25 @@ var/list/bad_gremlin_items = list()
 
 /mob/living/simple_animal/hostile/gremlin/IsAdvancedToolUser()
 	return 1
+
+/mob/living/simple_animal/hostile/gremlin/proc/divide()
+	//Health is halved and then reduced by 2. A new gremlin is spawned with the same health as the parent
+	//Need to have at least 6 health for this, otherwise resulting health would be less than 1
+	if(health < 7.5)
+		return
+
+	visible_message("<span class='notice'>\The [src] splits into two!</span>")
+	var/mob/living/simple_animal/hostile/gremlin/G = new /mob/living/simple_animal/hostile/gremlin(get_turf(src))
+
+	if(mind)
+		mind.transfer_to(G)
+
+	health = round(health * 0.5) - 2
+	maxHealth = health
+	resize *= 0.9
+
+	G.health = health
+	G.maxHealth = maxHealth
 
 /mob/living/simple_animal/hostile/gremlin/traitor
 	health = 85
