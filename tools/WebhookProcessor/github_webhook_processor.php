@@ -442,8 +442,6 @@ function update_pr_balance($payload) {
 function auto_update($payload){
 	global $enable_live_tracking;
 	global $path_to_script;
-	global $hookSecret;
-	global $apiKey;
 	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script))
 		return;
 	
