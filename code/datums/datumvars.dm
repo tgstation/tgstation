@@ -25,10 +25,10 @@
 /datum/proc/vv_get_dropdown()
 	. = list()
 	. += "---"
-	.["Call Proc"] = "?_src_=vars;proc_call=\ref[src]"
-	.["Mark Object"] = "?_src_=vars;mark_object=\ref[src]"
-	.["Delete"] = "?_src_=vars;delete=\ref[src]"
-	.["Show VV To Player"] = "?_src_=vars;expose=\ref[src]"
+	.["Call Proc"] = "?_src_=vars;[HrefToken()];proc_call=\ref[src]"
+	.["Mark Object"] = "?_src_=vars;[HrefToken()];mark_object=\ref[src]"
+	.["Delete"] = "?_src_=vars;[HrefToken()];delete=\ref[src]"
+	.["Show VV To Player"] = "?_src_=vars;[HrefToken(TRUE)];expose=\ref[src]"
 
 
 /datum/proc/on_reagent_change()
@@ -81,26 +81,26 @@
 	if(istype(D, /atom))
 		var/atom/A = D
 		if(isliving(A))
-			atomsnowflake += "<a href='?_src_=vars;rename=[refid]'><b>[D]</b></a>"
+			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];rename=[refid]'><b>[D]</b></a>"
 			if(A.dir)
-				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=[refid];rotatedir=right'>>></a></font>"
+				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=[refid];rotatedir=right'>>></a></font>"
 			var/mob/living/M = A
 			atomsnowflake += {"
-				<br><font size='1'><a href='?_src_=vars;datumedit=[refid];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=[refid];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>
+				<br><font size='1'><a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=[refid];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>
 				<br><font size='1'>
-					BRUTE:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=brute'>[M.getBruteLoss()]</a>
-					FIRE:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=fire'>[M.getFireLoss()]</a>
-					TOXIN:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=toxin'>[M.getToxLoss()]</a>
-					OXY:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
-					CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=clone'>[M.getCloneLoss()]</a>
-					BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=brain'>[M.getBrainLoss()]</a>
-					STAMINA:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
+					BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute'>[M.getBruteLoss()]</a>
+					FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire'>[M.getFireLoss()]</a>
+					TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin'>[M.getToxLoss()]</a>
+					OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+					CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone'>[M.getCloneLoss()]</a>
+					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain'>[M.getBrainLoss()]</a>
+					STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
 				</font>
 			"}
 		else
-			atomsnowflake += "<a href='?_src_=vars;datumedit=[refid];varnameedit=name'><b>[D]</b></a>"
+			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b>[D]</b></a>"
 			if(A.dir)
-				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=[refid];rotatedir=right'>>></a></font>"
+				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=[refid];rotatedir=right'>>></a></font>"
 	else
 		atomsnowflake += "<b>[D]</b>"
 
@@ -124,12 +124,12 @@
 	if (islist)
 		dropdownoptions = list(
 			"---",
-			"Add Item" = "?_src_=vars;listadd=[refid]",
-			"Remove Nulls" = "?_src_=vars;listnulls=[refid]",
-			"Remove Dupes" = "?_src_=vars;listdupes=[refid]",
-			"Set len" = "?_src_=vars;listlen=[refid]",
-			"Shuffle" = "?_src_=vars;listshuffle=[refid]",
-			"Show VV To Player" = "?_src_=vars;expose=[refid]"
+			"Add Item" = "?_src_=vars;[HrefToken()];listadd=[refid]",
+			"Remove Nulls" = "?_src_=vars;[HrefToken()];listnulls=[refid]",
+			"Remove Dupes" = "?_src_=vars;[HrefToken()];listdupes=[refid]",
+			"Set len" = "?_src_=vars;[HrefToken()];listlen=[refid]",
+			"Shuffle" = "?_src_=vars;[HrefToken()];listshuffle=[refid]",
+			"Show VV To Player" = "?_src_=vars;[HrefToken()];expose=[refid]"
 			)
 	else
 		dropdownoptions = D.vv_get_dropdown()
@@ -335,7 +335,7 @@
 					</td>
 					<td width='50%'>
 						<div align='center'>
-							<a id='refresh_link' href='?_src_=vars;datumrefresh=[refid]'>Refresh</a>
+							<a id='refresh_link' href='?_src_=vars;[HrefToken()];datumrefresh=[refid]'>Refresh</a>
 							<form>
 								<select name="file" size="1"
 									onchange="loadPage(this.form.elements\[0\])"
@@ -394,9 +394,9 @@
 				name = DA[name] //name is really the index until this line
 			else
 				value = DA[name]
-			header = "<li style='backgroundColor:white'>(<a href='?_src_=vars;listedit=\ref[DA];index=[index]'>E</a>) (<a href='?_src_=vars;listchange=\ref[DA];index=[index]'>C</a>) (<a href='?_src_=vars;listremove=\ref[DA];index=[index]'>-</a>) "
+			header = "<li style='backgroundColor:white'>(<a href='?_src_=vars;[HrefToken()];listedit=\ref[DA];index=[index]'>E</a>) (<a href='?_src_=vars;[HrefToken()];listchange=\ref[DA];index=[index]'>C</a>) (<a href='?_src_=vars;[HrefToken()];listremove=\ref[DA];index=[index]'>-</a>) "
 		else
-			header = "<li style='backgroundColor:white'>(<a href='?_src_=vars;datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;datummass=\ref[DA];varnamemass=[name]'>M</a>) "
+			header = "<li style='backgroundColor:white'>(<a href='?_src_=vars;[HrefToken()];datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;[HrefToken()];datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;[HrefToken()];datummass=\ref[DA];varnamemass=[name]'>M</a>) "
 	else
 		header = "<li>"
 
@@ -439,9 +439,9 @@
 	else if (istype(value, /datum))
 		var/datum/D = value
 		if ("[D]" != "[D.type]") //if the thing as a name var, lets use it.
-			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D] [D.type]"
+			item = "<a href='?_src_=vars;[HrefToken()];Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D] [D.type]"
 		else
-			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D.type]"
+			item = "<a href='?_src_=vars;[HrefToken()];Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D.type]"
 
 	else if (islist(value))
 		var/list/L = value
@@ -459,9 +459,9 @@
 
 				items += debug_variable(key, val, level + 1, sanitize = sanitize)
 
-			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a><ul>[items.Join()]</ul>"
+			item = "<a href='?_src_=vars;[HrefToken()];Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a><ul>[items.Join()]</ul>"
 		else
-			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a>"
+			item = "<a href='?_src_=vars;[HrefToken()];Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a>"
 
 	else
 		item = "[VV_HTML_ENCODE(name)] = <span class='value'>[VV_HTML_ENCODE(value)]</span>"
@@ -471,7 +471,7 @@
 #undef VV_HTML_ENCODE
 
 /client/proc/view_var_Topic(href, href_list, hsrc)
-	if( (usr.client != src) || !src.holder )
+	if( (usr.client != src) || !src.holder || !holder.CheckAdminHref(href, href_list))
 		return
 	if(href_list["Vars"])
 		debug_variables(locate(href_list["Vars"]))
@@ -561,7 +561,7 @@
 		var/prompt = alert("Do you want to grant [C] access to view this VV window? (they will not be able to edit or change anything nor open nested vv windows unless they themselves are an admin)", "Confirm", "Yes", "No")
 		if (prompt != "Yes" || !usr.client)
 			return
-		message_admins("[key_name_admin(usr)] Showed [key_name_admin(C)] a <a href='?_src_=vars;datumrefresh=\ref[thing]'>VV window</a>")
+		message_admins("[key_name_admin(usr)] Showed [key_name_admin(C)] a <a href='?_src_=vars;[HrefToken(TRUE)];datumrefresh=\ref[thing]'>VV window</a>")
 		log_admin("Admin [key_name(usr)] Showed [key_name(C)] a VV window of a [thing]")
 		to_chat(C, "[usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"] has granted you access to view a View Variables window")
 		C.debug_variables(thing)

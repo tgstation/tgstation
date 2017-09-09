@@ -615,10 +615,10 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	. += "---"
 	var/turf/curturf = get_turf(src)
 	if (curturf)
-		.["Jump to"] = "?_src_=holder;adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
-	.["Add reagent"] = "?_src_=vars;addreagent=\ref[src]"
-	.["Trigger EM pulse"] = "?_src_=vars;emp=\ref[src]"
-	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
+		.["Jump to"] = "?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
+	.["Add reagent"] = "?_src_=vars;[HrefToken()];addreagent=\ref[src]"
+	.["Trigger EM pulse"] = "?_src_=vars;[HrefToken()];emp=\ref[src]"
+	.["Trigger explosion"] = "?_src_=vars;[HrefToken()];explode=\ref[src]"
 
 /atom/proc/drop_location()
 	var/atom/L = loc
