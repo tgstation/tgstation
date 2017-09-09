@@ -142,7 +142,7 @@ GLOBAL_PROTECT(config_dir)
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
-	var/brother_scaling_coeff = 15		//how much does the amount of players get divided by to determine brothers
+	var/brother_scaling_coeff = 25		//how many players per brother team
 	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
 	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 	var/abductor_scaling_coeff = 15 	//how many players per abductor team
