@@ -1,5 +1,0 @@
-author: "Thefastfoodguy"
-delete-after: True
-changes: 
-  - tweak: "gremlins can now ventcrawl"
-  - rscadd: "gremlins now split into two smaller gremlins with half the health when sprayed with water"
