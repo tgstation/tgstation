@@ -203,3 +203,12 @@
 
 /obj/machinery/computer/slot_machine/npc_tamper_act(mob/living/L)
 	spin(L)
+
+/obj/structure/sink/npc_tamper_act(mob/living/L)
+	if(istype(L, /mob/living/simple_animal/hostile/gremlin))
+		visible_message("<span class='danger'>\The [L] climbs into \the [src] and turns the faucet on!</span>")
+
+		var/mob/living/simple_animal/hostile/gremlin/G = L
+		G.divide()
+
+	return NPC_TAMPER_ACT_NOMSG
