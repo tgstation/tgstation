@@ -149,7 +149,7 @@
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		if(oxyloss)
+		if(oxyloss && (health > HEALTH_THRESHOLD_CRIT))
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases["o2"][MOLES]
 		clear_alert("not_enough_oxy")
