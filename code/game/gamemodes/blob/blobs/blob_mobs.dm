@@ -221,7 +221,6 @@
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/independent = FALSE
-	var/list/blobs_in_area
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
 	..()
@@ -230,7 +229,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
-		blobs_in_area = range(2, src)
+		var/list/blobs_in_area = range(2, src)
 		if(independent)
 			return // strong independent blobbernaut that don't need no blob
 		var/damagesources = 0
