@@ -221,6 +221,7 @@
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/independent = FALSE
+	var/list/blobs_in_area
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
 	..()
@@ -229,10 +230,11 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
+		blobs_in_area = range(2, src)
 		if(independent)
 			return // strong independent blobbernaut that don't need no blob
 		var/damagesources = 0
-		if(!(locate(/obj/structure/blob) in range(2, src)))
+		if(!(locate(/obj/structure/blob) in blobs_in_area))
 			damagesources++
 		if(!factory)
 			damagesources++
@@ -244,9 +246,9 @@
 			if(overmind)
 				I.color = overmind.blob_reagent_datum.complementary_color
 			flick_overlay_view(I, src, 8)
-		if(factory && (locate(/obj/structure/blob/core) in range(2, src)))
+		if(factory && (locate(/obj/structure/blob/core) in blobs_in_area))
 			adjustHealth(-maxHealth*0.1)
-		if(factory && (locate(/obj/structure/blob/node) in range(2, src)))
+		if(factory && (locate(/obj/structure/blob/node) in blobs_in_area))
 			adjustHealth(-maxHealth*0.05)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
