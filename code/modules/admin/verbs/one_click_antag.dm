@@ -11,6 +11,7 @@
 /datum/admins/proc/one_click_antag()
 
 	var/dat = {"
+<<<<<<< HEAD
 		<a href='?src=\ref[src];makeAntag=traitors'>Make Traitors</a><br>
 		<a href='?src=\ref[src];makeAntag=changelings'>Make Changelings</a><br>
 		<a href='?src=\ref[src];makeAntag=revs'>Make Revs</a><br>
@@ -24,6 +25,19 @@
 		<a href='?src=\ref[src];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
 		<a href='?src=\ref[src];makeAntag=messiah'>Make Messiah (Requires Ghost)</a><br>
 		<a href='?src=\ref[src];makeAntag=shadowling'>Make Shadowling</a><br>
+=======
+		<a href='?src=\ref[src];[HrefToken()];makeAntag=traitors'>Make Traitors</a><br>
+		<a href='?src=\ref[src];[HrefToken()];makeAntag=changelings'>Make Changelings</a><br>
+		<a href='?src=\ref[src];[HrefToken()];makeAntag=revs'>Make Revs</a><br>
+		<a href='?src=\ref[src];[HrefToken()];makeAntag=cult'>Make Cult</a><br>
+		<a href='?src=\ref[src];[HrefToken()];makeAntag=clockcult'>Make Clockwork Cult</a><br>
+		<a href='?src=\ref[src];[HrefToken()];makeAntag=blob'>Make Blob</a><br>
+		<a href='?src=\ref[src];[HrefToken()];makeAntag=wizard'>Make Wizard (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];[HrefToken()];makeAntag=nukeops'>Make Nuke Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];[HrefToken()];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];[HrefToken()];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];[HrefToken()];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
+>>>>>>> 84b1e3d71e... [s] Adds a security token to all admin hrefs (#29839)
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
