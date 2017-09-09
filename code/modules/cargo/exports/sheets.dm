@@ -58,7 +58,7 @@
 	export_types = list(/obj/item/stack/sheet/animalhide/lizard)
 
 // Gondola hide. Mindbogglingly expensive.
-/datum/export/stack/skin/lizard
+/datum/export/stack/skin/gondola
 	cost = 10000
 	unit_name = "gondola hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/gondola)
