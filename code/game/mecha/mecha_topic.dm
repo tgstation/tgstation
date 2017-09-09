@@ -115,6 +115,7 @@
 						<div class='links'>
 						<a href='?src=\ref[src];toggle_id_upload=1'><span id='t_id_upload'>[add_req_access?"L":"Unl"]ock ID upload panel</span></a><br>
 						<a href='?src=\ref[src];toggle_maint_access=1'><span id='t_maint_access'>[maint_access?"Forbid":"Permit"] maintenance protocols</span></a><br>
+						<a href='?src=\ref[src];toggle_port_connection=1'><span id='t_port_connection'>[connected_port?"Disconnect from":"Connect to"] gas port</span></a><br>
 						<a href='?src=\ref[src];dna_lock=1'>DNA-lock</a><br>
 						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
 						<a href='?src=\ref[src];change_name=1'>Change exosuit name</a><br>
@@ -305,6 +306,24 @@
 			return
 		maint_access = !maint_access
 		send_byjax(src.occupant,"exosuit.browser","t_maint_access","[maint_access?"Forbid":"Permit"] maintenance protocols")
+
+	if (href_list["toggle_port_connection"])
+		if (!port_connection)
+			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
+			if (!connect(possible_port))
+				occupant_message("<span class='notice'>Can not connect to port.</span>")
+				return
+			else
+				occupant_message("<span class='notice'>Connected to port.</span>")
+		if (port_connection)
+			if (!disconnect())
+				// Something realy bad has heppend!
+				occupant_message("<span class='notice'>Can not disconnect from port.</span>")
+				return
+			else
+				occupant_message("<span class='notice'>Disconnected from port.</span>")
+		port_connection = !port_connection
+		send_byjax(src.occupant,"exosuit.browser","t_port_connection","[connected_port?"Disconnect from":"Connect to"] gas port")
 
 	if(href_list["dna_lock"])
 		if(occupant && !iscarbon(occupant))
