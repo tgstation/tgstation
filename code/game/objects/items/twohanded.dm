@@ -503,12 +503,13 @@
 /obj/item/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
 		user.visible_message("<span class='suicide'>[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		playsound(src, "sound/weapons/chainsawhit.ogg", 100, 1)
 		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
 		if(myhead)
 			myhead.dismember()
-	playsound(src, "sound/weapons/chainsawhit.ogg", 100, 1)
 	if(!on) //this may look like shitcode but i had to, for some reason it wouldn't recognize the if(on) above
 		user.visible_message("<span class='suicide'>[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		playsound(src, "sound/weapons/genhit1.ogg", 100, 1)
 	return(BRUTELOSS)
 
 /obj/item/twohanded/required/chainsaw/attack_self(mob/user)
