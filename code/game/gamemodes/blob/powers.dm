@@ -97,8 +97,8 @@
 	if(!can_buy(price))
 		return
 	var/area/A = get_area(T)
-	if(!A.blob_allowed)
-		to_chat(src, "<span class='warning'>You cannot place a blob here!</span>")
+	if(istype(A, /area/shuttle))
+		to_chat(src, "<span class='warning'>You cannot place a blob on a shuttle!</span>")
 		return FALSE
 	var/obj/structure/blob/N = B.change_to(blobType, src)
 	return N
@@ -132,8 +132,6 @@
 	set category = "Blob"
 	set name = "Create Node Blob (50)"
 	set desc = "Create a node, which will power nearby factory and resource blobs."
-	if(!T)
-		var/T = get_turf(src)
 	createSpecial(50, /obj/structure/blob/node, 5, 0)
 
 /mob/camera/blob/verb/create_factory()
@@ -200,7 +198,7 @@
 		to_chat(src, "<span class='userdanger'>You have no core and are about to die! May you rest in peace.</span>")
 		return
 	var/area/A = get_area(T)
-	if(isspaceturf(T) || A && !A.blob_allowed)
+	if(isspaceturf(T) || istype(A, /area/shuttle))
 		to_chat(src, "<span class='warning'>You cannot relocate your core here!</span>")
 		return
 	if(!can_buy(80))
@@ -252,7 +250,7 @@
 		to_chat(src, "<span class='warning'>There is no blob adjacent to the target tile!</span>")
 		return
 	var/area/A = get_area(T)
-	if(!A.blob_allowed)
+	if(istype(A, /area/shuttle))
 		to_chat(src, "<span class='warning'>You cannot place a blob here!</span>")
 		return FALSE
 	if(can_buy(4))
