@@ -9,8 +9,6 @@
 	response_harm   = "kicks"
 	emote_see = list("watches.", "stares off into the distance.","contemplates.")
 	faction = list("gondola")
-	see_in_dark = 5
-	speak_chance = 1
 	turns_per_move = 10
 	icon = 'icons/mob/gondolas.dmi'
 	icon_state = "gondola"
@@ -23,7 +21,7 @@
 	maxbodytemp = 1500
 
 /mob/living/simple_animal/pet/gondola/IsVocal() //Gondolas are the silent walker.
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/pet/gondola/emote()
 	return
