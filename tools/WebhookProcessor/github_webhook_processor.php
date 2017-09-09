@@ -449,7 +449,7 @@ function auto_update($payload){
 	
 	$content = file_get_contents('https://raw.githubusercontent.com/' . $payload['pull_request']['base']['repo']['full_name'] . '/master/'. $path_to_script);
 
-	create_comment($payload, "Edit detected. Self updating... Here is my new code:\n``" . "`php\n" . $content . "\n``" . '`');
+	create_comment($payload, "Edit detected. Self updating... Here is my new code:\n``" . "`HTML+PHP\n" . $content . "\n``" . '`');
 
 	$code_file = fopen(basename($path_to_script), 'w');
 	fwrite($code_file, $content);
