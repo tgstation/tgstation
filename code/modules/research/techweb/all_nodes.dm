@@ -8,7 +8,7 @@
 	starting_node = TRUE
 	display_name = "Basic Research Technology"
 	description = "NT default research technologies."
-	design_ids = list("basic_matter_bin", "basic_cell" "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani",
+	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani",
 	"destructive_analyzer", "protolathe", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
 	"space_heater")			//Default research tech, prevents bricking
 
@@ -145,7 +145,7 @@
 	description = "Modern engineering techonlogy."
 	display_name = "Industrial Engineering"
 	prereq_ids = list("base")
-	design_ids = list("solarcontrol", "recharger" "power_monitor", "rped", "pacman", "adv_capacitor" "adv_scanning", "emitter" "high_cell" "adv_matter_bin",
+	design_ids = list("solarcontrol", "recharger", "power_monitor", "rped", "pacman", "adv_capacitor", "adv_scanning", "emitter", "high_cell", "adv_matter_bin",
 	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "weldingmask", "mesons", "thermomachine", "tesla_coil", "grounding_rod")
 	research_cost = 5000
 	export_price = 5000
@@ -249,7 +249,7 @@
 	prereq_ids = list("industrial_engineering", "cyborg")
 	design_ids = list("borg_upgrade_holding", "borg_upgrade_lavaproof", "borg_upgrade_thrusters", "borg_upgrade_selfrepair")
 	research_cost = 5000
-	export_prie = 5000
+	export_price = 5000
 
 /datum/techweb_node/cyborg_upg_med
 	id = "cyborg_upg_med"
@@ -344,14 +344,14 @@
 	prereq_ids = list("robotics", "neural_programming")
 	design_ids = list("aicore", "safeguard_module", "onehuman_module", "protectstation_module", "quarantine_module", "oxygen_module", "freeform_module",
 	"reset_module", "purge_module", "remove_module", "freeformcore_module", "asimov_module", "paladin_module", "tyrant_module", "corporate_module",
-	"default_module", "borg_ai_control", "mecha_tracking_ai_control", "ai_upload", "intellicard"
+	"default_module", "borg_ai_control", "mecha_tracking_ai_control", "ai_upload", "intellicard")
 	research_cost = 5000
 	export_price = 5000
 
 /datum/techweb_node/cloning
 	id = "cloning"
 	display_name = "Genetic Engineering"
-	description = "We have the technology to make him.")
+	description = "We have the technology to make him."
 	prereq_ids = list("biotech")
 	design_ids = list("clonecontrol", "clonepod", "clonescanner", "scan_console")
 	research_cost = 5000
@@ -396,7 +396,7 @@
 /datum/techweb_node/adv_bluespace
 	id = "adv_bluespace"
 	display_name = "Advanced Bluespace Research"
-	description = "Deeper understanding of how the Bluespace dimension works")
+	description = "Deeper understanding of how the Bluespace dimension works"
 	prereq_ids = list("practical_bluespace", "high_efficiency")
 	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console",
 	"teleconsole", "bag_holding", "bluespace_crystal", "wormholeprojector")
