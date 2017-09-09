@@ -12,6 +12,10 @@ $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 global $apiKey;
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
 
+//Used to prevent potential RCEs
+global $repoOwnerAndName;
+$repoOwnerAndName = "tgstation/tgstation";
+
 //servers to announce PRs to.
 global $servers;
 $servers = array();
