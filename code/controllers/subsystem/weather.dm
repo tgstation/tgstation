@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(weather)
 /datum/controller/subsystem/weather/Initialize(start_timeofday)
 	..()
 	for(var/V in subtypesof(/datum/weather))
-		var/datum/weather/W = new V //Weather's New() will handle adding stuff to the list
+		new V //Weather's New() will handle adding stuff to the list
 
 /datum/controller/subsystem/weather/proc/run_weather(weather_name, Z)
 	if(!weather_name)
