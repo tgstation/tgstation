@@ -42,7 +42,7 @@
 	if (!P)
 		return
 
-	src.visible_message("[picked_slime] is sucked into [src].")
+	visible_message("[picked_slime] is sucked into [src].")
 	picked_slime.loc = src
 
 /datum/food_processor_process
@@ -50,9 +50,9 @@
 	var/output
 	var/time = 40
 /datum/food_processor_process/proc/process_food(loc, what, obj/machinery/processor/processor)
-	if (src.output && loc && processor)
+	if (output && loc && processor)
 		for(var/i = 0, i < processor.rating_amount, i++)
-			new src.output(loc)
+			new output(loc)
 	if (what)
 		qdel(what) // Note to self: Make this safer
 
@@ -160,7 +160,7 @@
 	return 0
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user, params)
-	if(src.processing)
+	if(processing)
 		to_chat(user, "<span class='warning'>The processor is in the process of processing!</span>")
 		return 1
 	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
@@ -206,9 +206,9 @@
 			return ..()
 
 /obj/machinery/processor/attack_hand(mob/user)
-	if (src.stat != 0) //NOPOWER etc
+	if (stat != 0) //NOPOWER etc
 		return
-	if(src.processing)
+	if(processing)
 		to_chat(user, "<span class='warning'>The processor is in the process of processing!</span>")
 		return 1
 	if(user.a_intent == INTENT_GRAB && user.pulling && (isslime(user.pulling) || ismonkey(user.pulling)))
@@ -220,17 +220,17 @@
 		pushed_mob.forceMove(src)
 		user.stop_pulling()
 		return
-	if(src.contents.len == 0)
+	if(contents.len == 0)
 		to_chat(user, "<span class='warning'>The processor is empty!</span>")
 		return 1
 	processing = TRUE
 	user.visible_message("[user] turns on [src].", \
 		"<span class='notice'>You turn on [src].</span>", \
 		"<span class='italics'>You hear a food processor.</span>")
-	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+	playsound(loc, 'sound/machines/blender.ogg', 50, 1)
 	use_power(500)
 	var/total_time = 0
-	for(var/O in src.contents)
+	for(var/O in contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
 			log_admin("DEBUG: [O] in processor hasnt got a suitable recipe. How did it get in there? Please report it immediatly!!!")
@@ -239,15 +239,15 @@
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
 	sleep(total_time / rating_speed)
-	for(var/O in src.contents)
+	for(var/O in contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
 			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0
 			continue
-		P.process_food(src.loc, O, src)
+		P.process_food(loc, O, src)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	processing = FALSE
-	src.visible_message("\The [src] finishes processing.")
+	visible_message("\The [src] finishes processing.")
 
 /obj/machinery/processor/verb/eject()
 	set category = "Object"
@@ -256,15 +256,15 @@
 
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	src.empty()
+	empty()
 	add_fingerprint(usr)
 	return
 
 /obj/machinery/processor/proc/empty()
 	for (var/obj/O in src)
-		O.loc = src.loc
+		O.loc = loc
 	for (var/mob/M in src)
-		M.loc = src.loc
+		M.loc = loc
 	return
 
 /obj/machinery/processor/slime

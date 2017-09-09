@@ -169,7 +169,7 @@ a.updated {
 	dat += "</body></html>"
 	var/datum/browser/popup = new(user, "computer", "Stock Exchange", 600, 600)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -289,7 +289,7 @@ a.updated {
 				continue
 		var/datum/browser/popup = new(usr, "stock_logs", "Stock Transaction Logs", 600, 400)
 		popup.set_content(dat)
-		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+		popup.set_title_image(usr.browse_rsc_icon(icon, icon_state))
 		popup.open()
 
 	if (href_list["archive"])
@@ -317,7 +317,7 @@ a.updated {
 		dat += "</div></body></html>"
 		var/datum/browser/popup = new(usr, "archive_[S.name]", "Stock News", 600, 400)
 		popup.set_content(dat)
-		popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+		popup.set_title_image(usr.browse_rsc_icon(icon, icon_state))
 		popup.open()
 
 	if (href_list["cycleview"])
@@ -325,5 +325,5 @@ a.updated {
 		if (vmode > 1)
 			vmode = 0
 
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
+	add_fingerprint(usr)
+	updateUsrDialog()

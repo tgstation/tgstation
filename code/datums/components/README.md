@@ -54,7 +54,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/proc/GetExactComponent(component_type(type)) -> datum/component?` (public, final)
     * Returns a reference to a component whose type MATCHES component_type if that component exists in the datum, null otherwise
 1. `GET_COMPONENT(varname, component_type)` OR `GET_COMPONENT_FROM(varname, component_type, src)`
-    * Shorthand for `var/component_type/varname = src.GetComponent(component_type)`
+    * Shorthand for `var/component_type/varname = GetComponent(component_type)`
 1. `/datum/proc/AddComponent(component_type(type), ...) -> datum/component`  (public, final)
     * Creates an instance of `component_type` in the datum and passes `...` to its `Initialize()` call
     * Sends the `COMSIG_COMPONENT_ADDED` signal to the datum

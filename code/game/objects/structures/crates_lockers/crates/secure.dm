@@ -31,10 +31,10 @@
 /obj/structure/closet/crate/secure/proc/boom(mob/user)
 	if(user)
 		to_chat(user, "<span class='danger'>The crate's anti-tamper system activates!</span>")
-		var/message = "[ADMIN_LOOKUPFLW(user)] has detonated [src.name]."
+		var/message = "[ADMIN_LOOKUPFLW(user)] has detonated [name]."
 		GLOB.bombers += message
 		message_admins(message)
-		log_game("[key_name(user)] has detonated [src.name].")
+		log_game("[key_name(user)] has detonated [name].")
 	for(var/atom/movable/AM in src)
 		qdel(AM)
 	explosion(get_turf(src), 0, 1, 5, 5)

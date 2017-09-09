@@ -79,7 +79,7 @@
 		if(!c.can_use())
 			continue
 
-		var/turf/point = locate(src.x + (CHUNK_SIZE / 2), src.y + (CHUNK_SIZE / 2), src.z)
+		var/turf/point = locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)
 		if(get_dist(point, c) > CHUNK_SIZE + (CHUNK_SIZE / 2))
 			continue
 
@@ -136,9 +136,9 @@
 	x &= ~(CHUNK_SIZE - 1)
 	y &= ~(CHUNK_SIZE - 1)
 
-	src.x = x
-	src.y = y
-	src.z = z
+	x = x
+	y = y
+	z = z
 
 	for(var/obj/machinery/camera/c in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
 		if(c.can_use())

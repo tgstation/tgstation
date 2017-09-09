@@ -81,23 +81,23 @@
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(uses >= max_uses)
-			to_chat(user, "<span class='warning'>[src.name] is full.</span>")
+			to_chat(user, "<span class='warning'>[name] is full.</span>")
 			return
 		else if(G.use(decrement))
 			AddUses(increment)
-			to_chat(user, "<span class='notice'>You insert a piece of glass into the [src.name]. You have [uses] light\s remaining.</span>")
+			to_chat(user, "<span class='notice'>You insert a piece of glass into the [name]. You have [uses] light\s remaining.</span>")
 			return
 		else
 			to_chat(user, "<span class='warning'>You need one sheet of glass to replace lights!</span>")
 
 	if(istype(W, /obj/item/shard))
 		if(uses >= max_uses)
-			to_chat(user, "<span class='warning'>[src.name] is full.</span>")
+			to_chat(user, "<span class='warning'>[name] is full.</span>")
 			return
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
 		AddUses(round(increment*0.75))
-		to_chat(user, "<span class='notice'>You insert a shard of glass into the [src.name]. You have [uses] light\s remaining.</span>")
+		to_chat(user, "<span class='notice'>You insert a shard of glass into the [name]. You have [uses] light\s remaining.</span>")
 		qdel(W)
 		return
 
@@ -112,7 +112,7 @@
 		else
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
-			to_chat(user, "<span class='notice'>You insert the [L.name] into the [src.name]</span>")
+			to_chat(user, "<span class='notice'>You insert the [L.name] into the [name]</span>")
 			AddShards(1, user)
 			qdel(L)
 		return
@@ -126,7 +126,7 @@
 			if(istype(I, /obj/item/light))
 				var/obj/item/light/L = I
 				found_lightbulbs = TRUE
-				if(src.uses >= max_uses)
+				if(uses >= max_uses)
 					break
 				if(L.status == LIGHT_OK)
 					replaced_something = TRUE
@@ -142,7 +142,7 @@
 			to_chat(user, "<span class='warning'>\The [S] contains no bulbs.</span>")
 			return
 
-		if(!replaced_something && src.uses == max_uses)
+		if(!replaced_something && uses == max_uses)
 			to_chat(user, "<span class='warning'>\The [src] is full!</span>")
 			return
 
@@ -163,7 +163,7 @@
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."
 
 /obj/item/device/lightreplacer/proc/Use(mob/user)
-	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	playsound(loc, 'sound/machines/click.ogg', 50, 1)
 	AddUses(-1)
 	return 1
 
@@ -179,7 +179,7 @@
 	bulb_shards = bulb_shards % shards_required
 	if(new_bulbs != 0)
 		to_chat(user, "<span class='notice'>\The [src] has fabricated a new bulb from the broken glass it has stored. It now has [uses] uses.</span>")
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		playsound(loc, 'sound/machines/ding.ogg', 50, 1)
 	return new_bulbs
 
 /obj/item/device/lightreplacer/proc/Charge(var/mob/user)
@@ -223,7 +223,7 @@
 
 /obj/item/device/lightreplacer/proc/Emag()
 	emagged = !emagged
-	playsound(src.loc, "sparks", 100, 1)
+	playsound(loc, "sparks", 100, 1)
 	if(emagged)
 		name = "shortcircuited [initial(name)]"
 	else
@@ -231,7 +231,7 @@
 	update_icon()
 
 /obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(uses > 0)
 		return 1
 	else

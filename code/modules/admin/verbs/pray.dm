@@ -9,12 +9,12 @@
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
-	log_prayer("[src.key]/([src.name]): [msg]")
+	log_prayer("[key]/([name]): [msg]")
 	if(usr.client)
 		if(usr.client.prefs.muted & MUTE_PRAY)
 			to_chat(usr, "<span class='danger'>You cannot pray (muted).</span>")
 			return
-		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
+		if(client.handle_spam_prevention(msg,MUTE_PRAY))
 			return
 
 	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage.dmi', "bible")

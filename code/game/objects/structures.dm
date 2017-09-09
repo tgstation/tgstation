@@ -55,18 +55,18 @@
 		return
 	if(!user.drop_item())
 		return
-	if (O.loc != src.loc)
+	if (O.loc != loc)
 		step(O, get_dir(O, src))
 	return
 
 /obj/structure/proc/do_climb(atom/movable/A)
 	if(climbable)
 		density = FALSE
-		. = step(A,get_dir(A,src.loc))
+		. = step(A,get_dir(A,loc))
 		density = TRUE
 
 /obj/structure/proc/climb_structure(mob/living/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
 								"<span class='notice'>You start climbing onto [src]...</span>")
 	var/adjusted_climb_time = climb_time
@@ -76,7 +76,7 @@
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 	structureclimber = user
 	if(do_mob(user, user, adjusted_climb_time))
-		if(src.loc) //Checking if structure has been destroyed
+		if(loc) //Checking if structure has been destroyed
 			if(do_climb(user))
 				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>You climb onto [src].</span>")

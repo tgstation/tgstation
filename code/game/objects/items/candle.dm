@@ -37,14 +37,14 @@
 		light(msg)
 
 /obj/item/candle/fire_act(exposed_temperature, exposed_volume)
-	if(!src.lit)
+	if(!lit)
 		light() //honk
 	..()
 
 /obj/item/candle/proc/light(show_message)
-	if(!src.lit)
-		src.lit = TRUE
-		//src.damtype = "fire"
+	if(!lit)
+		lit = TRUE
+		//damtype = "fire"
 		if(show_message)
 			usr.visible_message(show_message)
 		set_light(CANDLE_LUMINOSITY)
@@ -58,7 +58,7 @@
 	if(!infinite)
 		wax--
 	if(!wax)
-		new/obj/item/trash/candle(src.loc)
+		new/obj/item/trash/candle(loc)
 		qdel(src)
 	update_icon()
 	open_flame()

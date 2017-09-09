@@ -44,7 +44,7 @@
 			siphoning = FALSE
 		else
 			new /obj/item/stack/spacecash/c200(get_turf(src)) // will autostack
-			playsound(src.loc, 'sound/items/poster_being_created.ogg', 100, 1)
+			playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
 			SSshuttle.points -= 200
 			if(next_warning < world.time && prob(15))
 				var/area/A = get_area(loc)
@@ -58,7 +58,7 @@
 /obj/machinery/computer/bank_machine/attack_hand(mob/user)
 	if(..())
 		return
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	var/dat = "[world.name] secure vault. Authorized personnel only.<br>"
 	dat += "Current Balance: [SSshuttle.points] credits.<br>"
 	if(!siphoning)
@@ -70,7 +70,7 @@
 
 	var/datum/browser/popup = new(user, "computer", "Bank Vault", 300, 200)
 	popup.set_content("<center>[dat]</center>")
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(usr.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/bank_machine/Topic(href, href_list)

@@ -295,7 +295,7 @@
 
 /obj/item/switchblade/attack_self(mob/user)
 	extended = !extended
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
 		force = 20
 		w_class = WEIGHT_CLASS_NORMAL

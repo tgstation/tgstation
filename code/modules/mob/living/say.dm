@@ -318,7 +318,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(message_mode == MODE_CHANGELING)
 		switch(lingcheck())
 			if(3)
-				var/msg = "<i><font color=#800040><b>[src.mind]:</b> [message]</font></i>"
+				var/msg = "<i><font color=#800040><b>[mind]:</b> [message]</font></i>"
 				for(var/_M in GLOB.mob_list)
 					var/mob/M = _M
 					if(M in GLOB.dead_mob_list)

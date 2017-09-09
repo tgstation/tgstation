@@ -486,8 +486,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			ghost.ckey = M.ckey
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
 	log_admin("[key_name(usr)] assumed direct control of [M].")
-	var/mob/adminmob = src.mob
-	M.ckey = src.ckey
+	var/mob/adminmob = mob
+	M.ckey = ckey
 	if( isobserver(adminmob) )
 		qdel(adminmob)
 	SSblackbox.add_details("admin_verb","Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

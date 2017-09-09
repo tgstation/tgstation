@@ -102,7 +102,7 @@
 		if("openLink")
 			src << link(href_list["link"])
 
-	..()	//redirect to hsrc.Topic()
+	..()	//redirect to hTopic()
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
@@ -111,18 +111,18 @@
 	return 1
 
 /client/proc/handle_spam_prevention(message, mute_type)
-	if(config.automute_on && !holder && src.last_message == message)
-		src.last_message_count++
-		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
+	if(config.automute_on && !holder && last_message == message)
+		last_message_count++
+		if(last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			to_chat(src, "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
 			cmd_admin_mute(src, mute_type, 1)
 			return 1
-		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
+		if(last_message_count >= SPAM_TRIGGER_WARNING)
 			to_chat(src, "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>")
 			return 0
 	else
 		last_message = message
-		src.last_message_count = 0
+		last_message_count = 0
 		return 0
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
@@ -389,11 +389,11 @@ GLOBAL_LIST(external_rsc_urls)
 	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db(connectiontopic)
-	if (IsGuestKey(src.key))
+	if (IsGuestKey(key))
 		return
 	if(!SSdbcore.Connect())
 		return
-	var/sql_ckey = sanitizeSQL(src.ckey)
+	var/sql_ckey = sanitizeSQL(ckey)
 	var/datum/DBQuery/query_get_related_ip = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
 	query_get_related_ip.Execute()
 	related_accounts_ip = ""
@@ -406,8 +406,8 @@ GLOBAL_LIST(external_rsc_urls)
 	while (query_get_related_cid.NextRow())
 		related_accounts_cid += "[query_get_related_cid.item[1]], "
 	var/admin_rank = "Player"
-	if (src.holder && src.holder.rank)
-		admin_rank = src.holder.rank.name
+	if (holder && holder.rank)
+		admin_rank = holder.rank.name
 	else
 		if (check_randomizer(connectiontopic))
 			return
@@ -481,7 +481,7 @@ GLOBAL_LIST(external_rsc_urls)
 		if(R.Find(F))
 			. = R.group[1]
 		else
-			CRASH("Age check regex failed for [src.ckey]")
+			CRASH("Age check regex failed for [ckey]")
 
 /client/proc/check_randomizer(topic)
 	. = FALSE

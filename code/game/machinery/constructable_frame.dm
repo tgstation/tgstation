@@ -83,7 +83,7 @@
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
-					playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+					playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 					to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
 					if(do_after(user, 20*P.toolspeed, target = src))
 						if(C.get_amount() >= 5 && state == 1)
@@ -95,7 +95,7 @@
 					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
 				return
 			if(istype(P, /obj/item/screwdriver) && !anchored)
-				playsound(src.loc, P.usesound, 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
 				if(do_after(user, 40*P.toolspeed, target = src))
@@ -107,7 +107,7 @@
 				return
 			if(istype(P, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				playsound(src.loc, P.usesound, 75, 1)
+				playsound(loc, P.usesound, 75, 1)
 				if(do_after(user, 40*P.toolspeed, target = src))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
@@ -117,7 +117,7 @@
 		if(2)
 			if(istype(P, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				playsound(src.loc, P.usesound, 75, 1)
+				playsound(loc, P.usesound, 75, 1)
 				if(do_after(user, 40*P.toolspeed, target = src))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					anchored = !anchored
@@ -130,7 +130,7 @@
 				var/obj/item/circuitboard/machine/B = P
 				if(!user.drop_item())
 					return
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 				circuit = B
 				B.loc = src
@@ -146,19 +146,19 @@
 				return
 
 			if(istype(P, /obj/item/wirecutters))
-				playsound(src.loc, P.usesound, 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
 				icon_state = "box_0"
-				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
+				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( loc )
 				A.amount = 5
 				return
 
 		if(3)
 			if(istype(P, /obj/item/crowbar))
-				playsound(src.loc, P.usesound, 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				state = 2
-				circuit.loc = src.loc
+				circuit.loc = loc
 				components.Remove(circuit)
 				circuit = null
 				if(components.len == 0)
@@ -166,7 +166,7 @@
 				else
 					to_chat(user, "<span class='notice'>You remove the circuit board and other components.</span>")
 					for(var/atom/movable/A in components)
-						A.loc = src.loc
+						A.loc = loc
 				desc = initial(desc)
 				req_components = null
 				components = null
@@ -180,8 +180,8 @@
 						component_check = 0
 						break
 				if(component_check)
-					playsound(src.loc, P.usesound, 50, 1)
-					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, 1)
+					playsound(loc, P.usesound, 50, 1)
+					var/obj/machinery/new_machine = new circuit.build_path(loc, 1)
 					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
 						qdel(O)

@@ -15,7 +15,7 @@
 
 /obj/screen/buildmode/New(bd)
 	..()
-	src.bd = bd
+	bd = bd
 
 /obj/screen/buildmode/mode
 	icon_state = "buildmode1"

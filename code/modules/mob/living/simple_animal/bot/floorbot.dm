@@ -320,7 +320,7 @@
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
 		sleep(50)
-		if(mode == BOT_REPAIRING && src.loc == target_turf)
+		if(mode == BOT_REPAIRING && loc == target_turf)
 			if(autotile) //Build the floor and include a tile.
 				target_turf.ChangeTurf(/turf/open/floor/plasteel)
 			else //Build a hull plating without a floor tile.
@@ -335,7 +335,7 @@
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
 			sleep(50)
-			if(mode == BOT_REPAIRING && F && src.loc == F)
+			if(mode == BOT_REPAIRING && F && loc == F)
 				F.broken = 0
 				F.burnt = 0
 				F.ChangeTurf(/turf/open/floor/plasteel)
@@ -346,7 +346,7 @@
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
 			sleep(50)
-			if(mode == BOT_REPAIRING && F && src.loc == F)
+			if(mode == BOT_REPAIRING && F && loc == F)
 				F.broken = 0
 				F.burnt = 0
 				F.ChangeTurf(initial(tiletype.turf_type))

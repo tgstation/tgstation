@@ -44,10 +44,10 @@
 		AM.loc = src
 		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 			var/obj/structure/bigDelivery/T = AM
-			src.destinationTag = T.sortTag
+			destinationTag = T.sortTag
 		if(istype(AM, /obj/item/smallDelivery) && !hasmob)
 			var/obj/item/smallDelivery/T = AM
-			src.destinationTag = T.sortTag
+			destinationTag = T.sortTag
 
 
 // start the movement process
@@ -111,10 +111,10 @@
 /obj/structure/disposalholder/relaymove(mob/user)
 	if (user.stat)
 		return
-	if (src.loc)
-		for (var/mob/M in get_hearers_in_view(src.loc.loc))
+	if (loc)
+		for (var/mob/M in get_hearers_in_view(loc.loc))
 			M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", 2)
-	playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
+	playsound(loc, 'sound/effects/clang.ogg', 50, 0, 0)
 
 // called to vent all gas in holder to a location
 /obj/structure/disposalholder/proc/vent_gas(turf/T)
@@ -183,7 +183,7 @@
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
 		H.active = 0
-		var/turf/T = src.loc
+		var/turf/T = loc
 		expel(H, T, 0)
 	return ..()
 
@@ -218,7 +218,7 @@
 
 // update the icon_state to reflect hidden status
 /obj/structure/disposalpipe/proc/update()
-	var/turf/T = src.loc
+	var/turf/T = loc
 	hide(T.intact && !isspaceturf(T))	// space never hides pipes
 
 // hide called by levelupdate if turf intact status changes
@@ -268,7 +268,7 @@
 
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 	for(var/atom/movable/AM in H)
-		AM.forceMove(src.loc)
+		AM.forceMove(loc)
 		AM.pipe_eject(direction)
 		if(target)
 			AM.throw_at(target, eject_range, 1)
@@ -292,7 +292,7 @@
 //weldingtool: unfasten and convert to obj/disposalconstruct
 
 /obj/structure/disposalpipe/attackby(obj/item/I, mob/user, params)
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
@@ -300,7 +300,7 @@
 		var/obj/item/weldingtool/W = I
 		if(can_be_deconstructed(user))
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
+				playsound(loc, 'sound/items/welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start slicing the disposal pipe...</span>")
 				// check if anything changed over 2 seconds
 				if(do_after(user,30, target = src))
@@ -329,7 +329,7 @@
 		else
 			for(var/D in GLOB.cardinals)
 				if(D & dpdir)
-					var/obj/structure/disposalpipe/broken/P = new(src.loc)
+					var/obj/structure/disposalpipe/broken/P = new(loc)
 					P.setDir(D)
 	qdel(src)
 
@@ -477,7 +477,7 @@
 			else
 				sortTypes |= O.currTag
 				to_chat(user, "<span class='notice'>Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
-			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
+			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 	else
 		return ..()
 
@@ -570,13 +570,13 @@
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null
-	var/obj/machinery/disposal/D = locate() in src.loc
+	var/obj/machinery/disposal/D = locate() in loc
 	if(D)
 		linked = D
 		if (!D.trunk)
 			D.trunk = src
 
-	var/obj/structure/disposaloutlet/O = locate() in src.loc
+	var/obj/structure/disposaloutlet/O = locate() in loc
 	if(O)
 		linked = O
 
@@ -607,7 +607,7 @@
 				D.expel(H)	// expel at disposal
 	else
 		if(H)
-			src.expel(H, get_turf(src), 0)	// expel at turf
+			expel(H, get_turf(src), 0)	// expel at turf
 	return null
 
 /obj/structure/disposalpipe/trunk/nextdir(fromdir)
@@ -694,23 +694,23 @@
 	if(istype(I, /obj/item/screwdriver))
 		if(mode==0)
 			mode=1
-			playsound(src.loc, I.usesound, 50, 1)
+			playsound(loc, I.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You remove the screws around the power connection.</span>")
 		else if(mode==1)
 			mode=0
-			playsound(src.loc, I.usesound, 50, 1)
+			playsound(loc, I.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You attach the screws around the power connection.</span>")
 
 	else if(istype(I, /obj/item/weldingtool) && mode==1)
 		var/obj/item/weldingtool/W = I
 		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder2.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 			if(do_after(user,20*I.toolspeed, target = src))
 				if(!src || !W.isOn()) return
 				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
 				stored.loc = loc
-				src.transfer_fingerprints_to(stored)
+				transfer_fingerprints_to(stored)
 				stored.update_icon()
 				stored.anchored = FALSE
 				stored.density = TRUE
@@ -733,7 +733,7 @@
 	else
 		dirs = GLOB.alldirs.Copy()
 
-	src.streak(dirs)
+	streak(dirs)
 
 /obj/effect/decal/cleanable/robot_debris/gib/pipe_eject(direction)
 	var/list/dirs
@@ -742,4 +742,4 @@
 	else
 		dirs = GLOB.alldirs.Copy()
 
-	src.streak(dirs)
+	streak(dirs)

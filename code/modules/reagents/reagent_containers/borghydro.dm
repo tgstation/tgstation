@@ -76,8 +76,8 @@ Borg Hypospray
 	modes[reagent] = modes.len + 1
 
 /obj/item/reagent_containers/borghypo/proc/regenerate_reagents()
-	if(iscyborg(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
+	if(iscyborg(loc))
+		var/mob/living/silicon/robot/R = loc
 		if(R && R.cell)
 			for(var/i in 1 to reagent_ids.len)
 				var/datum/reagents/RG = reagent_list[i]
@@ -167,8 +167,8 @@ Borg Shaker
 	return //Can't inject stuff with a shaker, can we? //not with that attitude
 
 /obj/item/reagent_containers/borghypo/borgshaker/regenerate_reagents()
-	if(iscyborg(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
+	if(iscyborg(loc))
+		var/mob/living/silicon/robot/R = loc
 		if(R && R.cell)
 			for(var/i in modes) //Lots of reagents in this one, so it's best to regenrate them all at once to keep it from being tedious.
 				var/valueofi = modes[i]

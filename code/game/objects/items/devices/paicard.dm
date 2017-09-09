@@ -113,8 +113,8 @@
 //		WIRE_TRANSMIT = 4
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
-	src.pai = personality
-	src.add_overlay("pai-null")
+	pai = personality
+	add_overlay("pai-null")
 
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
@@ -126,18 +126,18 @@
 
 /obj/item/device/paicard/proc/setEmotion(emotion)
 	if(pai)
-		src.cut_overlays()
+		cut_overlays()
 		switch(emotion)
-			if(1) src.add_overlay("pai-happy")
-			if(2) src.add_overlay("pai-cat")
-			if(3) src.add_overlay("pai-extremely-happy")
-			if(4) src.add_overlay("pai-face")
-			if(5) src.add_overlay("pai-laugh")
-			if(6) src.add_overlay("pai-off")
-			if(7) src.add_overlay("pai-sad")
-			if(8) src.add_overlay("pai-angry")
-			if(9) src.add_overlay("pai-what")
-			if(10) src.add_overlay("pai-null")
+			if(1) add_overlay("pai-happy")
+			if(2) add_overlay("pai-cat")
+			if(3) add_overlay("pai-extremely-happy")
+			if(4) add_overlay("pai-face")
+			if(5) add_overlay("pai-laugh")
+			if(6) add_overlay("pai-off")
+			if(7) add_overlay("pai-sad")
+			if(8) add_overlay("pai-angry")
+			if(9) add_overlay("pai-what")
+			if(10) add_overlay("pai-null")
 
 /obj/item/device/paicard/proc/alertUpdate()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")

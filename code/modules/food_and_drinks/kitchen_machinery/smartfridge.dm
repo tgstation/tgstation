@@ -133,7 +133,7 @@
 		O.forceMove(src)
 
 /obj/machinery/smartfridge/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/smartfridge/attack_ai(mob/user)
 	return FALSE
@@ -308,7 +308,7 @@
 			S.loc = get_turf(src)
 		else
 			var/dried = S.dried_type
-			new dried(src.loc)
+			new dried(loc)
 			qdel(S)
 		return TRUE
 	for(var/obj/item/stack/sheet/wetleather/WL in contents)

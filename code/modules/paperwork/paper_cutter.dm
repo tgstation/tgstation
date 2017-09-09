@@ -20,7 +20,7 @@
 
 /obj/item/papercutter/suicide_act(mob/user)
 	if(storedcutter)
-		user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			var/obj/item/bodypart/BP = C.get_bodypart("head")
@@ -29,7 +29,7 @@
 				playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 		return (BRUTELOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[user] repeatedly bashes [name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 		return (BRUTELOSS)
 
@@ -81,7 +81,7 @@
 		update_icon()
 
 	if(storedpaper)
-		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1)
+		playsound(loc, 'sound/weapons/slash.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You neatly cut [storedpaper].</span>")
 		storedpaper = null
 		qdel(storedpaper)

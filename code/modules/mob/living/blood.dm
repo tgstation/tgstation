@@ -91,11 +91,11 @@
 /mob/living/carbon/proc/bleed(amt)
 	if(blood_volume)
 		blood_volume = max(blood_volume - amt, 0)
-		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
+		if(isturf(loc)) //Blood loss still happens in locker, floor stays clean
 			if(amt >= 10)
-				add_splatter_floor(src.loc)
+				add_splatter_floor(loc)
 			else
-				add_splatter_floor(src.loc, 1)
+				add_splatter_floor(loc, 1)
 
 /mob/living/carbon/human/bleed(amt)
 	if(!(NOBLOOD in dna.species.species_traits))

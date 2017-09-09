@@ -66,7 +66,7 @@
 	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")
 		add_fingerprint(user)
-		playsound(src.loc, I.usesound, 50, 1)
+		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 40*I.toolspeed, target = src))
 			if(QDELETED(src))
 				return

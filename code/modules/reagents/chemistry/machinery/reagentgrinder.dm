@@ -122,7 +122,7 @@
 								return 1
 						beaker =  I
 						update_icon()
-						src.updateUsrDialog()
+						updateUsrDialog()
 				else
 						to_chat(user, "<span class='warning'>There's already a container inside [src].</span>")
 				return 1 //no afterattack
@@ -151,7 +151,7 @@
 				if(!I.contents.len)
 						to_chat(user, "<span class='notice'>You empty [I] into [src].</span>")
 
-				src.updateUsrDialog()
+				updateUsrDialog()
 				return 1
 
 		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
@@ -163,11 +163,11 @@
 
 		if(user.transferItemToLoc(I, src))
 				holdingitems += I
-				src.updateUsrDialog()
+				updateUsrDialog()
 				return 0
 
 /obj/machinery/reagentgrinder/attack_paw(mob/user)
-		return src.attack_hand(user)
+		return attack_hand(user)
 
 /obj/machinery/reagentgrinder/attack_ai(mob/user)
 		return 0
@@ -223,7 +223,7 @@
 
 		var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder")
 		popup.set_content(dat)
-		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+		popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 		popup.open(1)
 		return
 
@@ -252,7 +252,7 @@
 				return
 		if (!beaker)
 				return
-		beaker.loc = src.loc
+		beaker.loc = loc
 		beaker = null
 		update_icon()
 		updateUsrDialog()
@@ -265,7 +265,7 @@
 				return
 
 		for(var/obj/item/O in holdingitems)
-				O.loc = src.loc
+				O.loc = loc
 				holdingitems -= O
 		holdingitems = list()
 		updateUsrDialog()
@@ -317,7 +317,7 @@
 				return
 		if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 				return
-		playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
+		playsound(loc, 'sound/machines/juicer.ogg', 20, 1)
 		var/offset = prob(50) ? -2 : 2
 		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
 		operating = TRUE
@@ -355,7 +355,7 @@
 				return
 		if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 				return
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		playsound(loc, 'sound/machines/blender.ogg', 50, 1)
 		var/offset = prob(50) ? -2 : 2
 		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
 		operating = TRUE
@@ -469,7 +469,7 @@
 				return
 		if (!beaker)
 				return
-		playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
+		playsound(loc, 'sound/machines/juicer.ogg', 20, 1)
 		var/offset = prob(50) ? -2 : 2
 		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
 		operating = TRUE
@@ -484,7 +484,7 @@
 				//Recipe to make Butter
 				while(beaker.reagents.get_reagent_amount("milk") >= 15)
 						beaker.reagents.remove_reagent("milk", 15)
-						new /obj/item/reagent_containers/food/snacks/butter(src.loc)
+						new /obj/item/reagent_containers/food/snacks/butter(loc)
 				//Recipe to make Mayonnaise
 				if (beaker.reagents.has_reagent("eggyolk"))
 						var/amount = beaker.reagents.get_reagent_amount("eggyolk")

@@ -244,7 +244,7 @@
 /mob/proc/spellremove(mob/M)
 	if(!mind)
 		return
-	for(var/X in src.mind.spell_list)
+	for(var/X in mind.spell_list)
 		var/obj/effect/proc_holder/spell/spell_to_remove = X
 		qdel(spell_to_remove)
 		mind.spell_list -= spell_to_remove

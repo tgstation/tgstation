@@ -13,7 +13,7 @@
 	if(..())
 		return
 	user.set_machine(src)
-	var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
+	var/dat = "<html><head><title>[name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
 		var/list/trackerlist = list()
@@ -73,7 +73,7 @@
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())
 		return 0
-	var/obj/mecha/M = src.loc
+	var/obj/mecha/M = loc
 	var/cell_charge = M.get_charge()
 	var/answer = {"<b>Name:</b> [M.name]
 <b>Integrity:</b> [M.obj_integrity/M.max_integrity*100]%
@@ -99,8 +99,8 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
-	if(istype(src.loc, /obj/mecha))
-		return src.loc
+	if(istype(loc, /obj/mecha))
+		return loc
 	return 0
 
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
@@ -112,7 +112,7 @@
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
 	if(!istype(loc, /obj/mecha))
 		return 0
-	var/obj/mecha/M = src.loc
+	var/obj/mecha/M = loc
 	return M.get_log_html()
 
 

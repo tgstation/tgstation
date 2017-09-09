@@ -45,10 +45,10 @@
 		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</a></p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
 
-	if(!IsGuestKey(src.key))
+	if(!IsGuestKey(key))
 		if (SSdbcore.Connect())
 			var/isadmin = 0
-			if(src.client && src.client.holder)
+			if(client && client.holder)
 				isadmin = 1
 			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
 			if(query_get_new_polls.Execute())
@@ -178,7 +178,7 @@
 		if(istext(pollid))
 			pollid = text2num(pollid)
 		if(isnum(pollid) && IsInteger(pollid))
-			src.poll_player(pollid)
+			poll_player(pollid)
 		return
 
 	if(href_list["votepollid"] && href_list["votetype"])
@@ -254,13 +254,13 @@
 
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
 /mob/dead/new_player/proc/make_me_an_observer()
-	if(QDELETED(src) || !src.client)
+	if(QDELETED(src) || !client)
 		ready = PLAYER_NOT_READY
 		return FALSE
 
 	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No")
 
-	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
+	if(QDELETED(src) || !client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
 		src << browse(null, "window=playersetup") //closes the player setup window
 		new_player_panel()
@@ -305,7 +305,7 @@
 			return 0
 	if(jobban_isbanned(src,rank))
 		return 0
-	if(!job.player_old_enough(src.client))
+	if(!job.player_old_enough(client))
 		return 0
 	if(job.required_playtime_remaining(client))
 		return 0

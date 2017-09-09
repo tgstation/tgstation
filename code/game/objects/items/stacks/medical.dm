@@ -63,7 +63,7 @@
 				else if (critter.health == critter.maxHealth)
 					to_chat(user, "<span class='notice'> [M] is at full health.</span>")
 					return
-				else if(src.heal_brute < 1)
+				else if(heal_brute < 1)
 					to_chat(user, "<span class='notice'> [src] won't help [M] at all.</span>")
 					return
 			user.visible_message("<span class='green'>[user] applies [src] on [M].</span>", "<span class='green'>You apply [src] on [M].</span>")
@@ -96,7 +96,7 @@
 		else
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
 	else
-		M.heal_bodypart_damage((src.heal_brute/2), (src.heal_burn/2))
+		M.heal_bodypart_damage((heal_brute/2), (heal_burn/2))
 
 	use(1)
 

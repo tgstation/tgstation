@@ -7,8 +7,8 @@
 	var/list/Lines = list()
 
 	if(holder)
-		if (check_rights(R_ADMIN,0) && isobserver(src.mob))//If they have +ADMIN and are a ghost they can see players IC names and statuses.
-			var/mob/dead/observer/G = src.mob
+		if (check_rights(R_ADMIN,0) && isobserver(mob))//If they have +ADMIN and are a ghost they can see players IC names and statuses.
+			var/mob/dead/observer/G = mob
 			if(!G.started_as_observer)//If you aghost to do this, KorPhaeron will deadmin you in your sleep.
 				log_admin("[key_name(usr)] checked advanced who in-round")
 			for(var/client/C in GLOB.clients)

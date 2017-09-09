@@ -33,7 +33,7 @@
 	//CARN: admin-alert for chuckle-fuckery.
 	admin_investigate_setup()
 
-	src.energy = starting_energy
+	energy = starting_energy
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
@@ -139,14 +139,14 @@
 	if(!dissipate)
 		return
 	if(dissipate_track >= dissipate_delay)
-		src.energy -= dissipate_strength
+		energy -= dissipate_strength
 		dissipate_track = 0
 	else
 		dissipate_track++
 
 
 /obj/singularity/proc/expand(force_size = 0)
-	var/temp_allowed_size = src.allowed_size
+	var/temp_allowed_size = allowed_size
 	if(force_size)
 		temp_allowed_size = force_size
 	if(temp_allowed_size >= STAGE_SIX && !consumedSupermatter)
@@ -273,7 +273,7 @@
 
 /obj/singularity/proc/consume(atom/A)
 	var/gain = A.singularity_act(current_size, src)
-	src.energy += gain
+	energy += gain
 	if(istype(A, /obj/machinery/power/supermatter_shard) && !consumedSupermatter)
 		desc = "[initial(desc)] It glows fiercely with inner fire."
 		name = "supermatter-charged [initial(name)]"
@@ -316,7 +316,7 @@
 	else
 		steps = step
 	var/list/turfs = list()
-	var/turf/T = src.loc
+	var/turf/T = loc
 	for(var/i = 1 to steps)
 		T = get_step(T,direction)
 	if(!isturf(T))
@@ -391,7 +391,7 @@
 	if (energy>200)
 		radiation += round((energy-150)/10,1)
 		radiationmin = round((radiation/5),1)
-	for(var/mob/living/M in view(toxrange, src.loc))
+	for(var/mob/living/M in view(toxrange, loc))
 		M.rad_act(rand(radiationmin,radiation))
 
 
@@ -415,12 +415,12 @@
 				if(istype(H.glasses, /obj/item/clothing/glasses/meson))
 					var/obj/item/clothing/glasses/meson/MS = H.glasses
 					if(MS.vision_flags == SEE_TURFS)
-						to_chat(H, "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>")
+						to_chat(H, "<span class='notice'>You look directly into the [name], good thing you had your protective eyewear on!</span>")
 						return
 
 		M.apply_effect(60, STUN)
-		M.visible_message("<span class='danger'>[M] stares blankly at the [src.name]!</span>", \
-						"<span class='userdanger'>You look directly into the [src.name] and feel weak.</span>")
+		M.visible_message("<span class='danger'>[M] stares blankly at the [name]!</span>", \
+						"<span class='userdanger'>You look directly into the [name] and feel weak.</span>")
 	return
 
 
@@ -437,6 +437,6 @@
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)
 	var/dist = max((current_size - 2),1)
-	explosion(src.loc,(dist),(dist*2),(dist*4))
+	explosion(loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)

@@ -87,10 +87,10 @@
 		var/turf/position = get_turf(src)
 		if(isnull(position) || !(position.z in level))
 			return -1
-	if(!src.listening)
+	if(!listening)
 		return -1
 	if(freq == GLOB.SYND_FREQ)
-		if(!(src.syndie))
+		if(!(syndie))
 			return -1//Prevents broadcast of messages over devices lacking the encryption
 
 	return canhear_range

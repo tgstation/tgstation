@@ -23,7 +23,7 @@
 
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
-	src.target = null
+	target = null
 	return ..()
 
 /obj/machinery/meter/process_atmos()
@@ -76,7 +76,7 @@
 
 /obj/machinery/meter/proc/status()
 	var/t = ""
-	if (src.target)
+	if (target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
 			t += "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)] K ([round(environment.temperature-T0C,0.01)]&deg;C)"
@@ -93,23 +93,23 @@
 
 /obj/machinery/meter/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/wrench))
-		playsound(src.loc, W.usesound, 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 		if (do_after(user, 40*W.toolspeed, target = src))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
 				"<span class='italics'>You hear ratchet.</span>")
-			new /obj/item/pipe_meter(src.loc)
+			new /obj/item/pipe_meter(loc)
 			qdel(src)
 	else
 		return ..()
 
 /obj/machinery/meter/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/meter/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/meter/attack_hand(mob/user)
 
@@ -131,4 +131,4 @@
 
 /obj/machinery/meter/turf/Initialize()
 	..()
-	src.target = loc
+	target = loc

@@ -31,7 +31,7 @@
 	interact(user)
 
 /obj/machinery/computer/robotics/interact(mob/user)
-	if (src.z > 6)
+	if (z > 6)
 		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 	user.set_machine(src)
@@ -90,7 +90,7 @@
 
 	var/datum/browser/popup = new(user, "computer", "Cyborg Control Console", 400, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -99,10 +99,10 @@
 		return
 
 	if (href_list["temp"])
-		src.temp = null
+		temp = null
 
 	else if (href_list["killbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["killbot"]) in GLOB.silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
@@ -123,7 +123,7 @@
 			to_chat(usr, "<span class='danger'>Access Denied.</span>")
 
 	else if (href_list["stopbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["stopbot"]) in GLOB.silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
@@ -157,7 +157,7 @@
 				add_servant_of_ratvar(R)
 
 	else if (href_list["killdrone"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"]) in GLOB.mob_list
 			if(D.hacked)
 				to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
@@ -172,5 +172,5 @@
 				D.gib()
 
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return

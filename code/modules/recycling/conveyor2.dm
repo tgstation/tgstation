@@ -121,7 +121,7 @@
 			if(QDELETED(src))
 				return //prevent multiple decontructs
 			if(!(stat & BROKEN))
-				var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
+				var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(loc)
 				C.id = id
 				transfer_fingerprints_to(C)
 			to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
@@ -142,7 +142,7 @@
 
 	else if(user.a_intent != INTENT_HARM)
 		if(user.drop_item())
-			I.loc = src.loc
+			I.loc = loc
 	else
 		return ..()
 
@@ -182,7 +182,7 @@
 /*
 /obj/machinery/conveyor/verb/destroy()
 	set src in view()
-	src.broken()
+	broken()
 */
 
 /obj/machinery/conveyor/power_change()
@@ -272,14 +272,14 @@
 
 	// find any switches with same id as this one, and set their positions to match us
 	for(var/obj/machinery/conveyor_switch/S in GLOB.machines)
-		if(S.id == src.id)
+		if(S.id == id)
 			S.position = position
 			S.update()
 		CHECK_TICK
 
 /obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/crowbar))
-		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
+		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(loc)
 		C.id = id
 		transfer_fingerprints_to(C)
 		to_chat(user, "<span class='notice'>You deattach the conveyor switch.</span>")
@@ -337,7 +337,7 @@
 		return
 	var/found = 0
 	for(var/obj/machinery/conveyor/C in view())
-		if(C.id == src.id)
+		if(C.id == id)
 			found = 1
 			break
 	if(!found)

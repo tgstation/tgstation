@@ -38,7 +38,7 @@
 	if(istype(W, /obj/item/storage/bag/ore))
 		var/obj/item/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
-			for(var/obj/item/ore/O in src.contents)
+			for(var/obj/item/ore/O in contents)
 				O.attackby(W,user)
 				return
 
@@ -209,7 +209,7 @@
 				C.produce_tunnel_from_data(rand(10, 15), dir)
 			else
 				SpawnFloor(tunnel)
-		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
+		else //if(!istype(tunnel, parent)) // We hit space/normal/wall, stop our tunnel.
 			break
 
 		// Chance to change our direction left or right.

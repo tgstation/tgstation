@@ -66,10 +66,10 @@
 
 /mob/living/proc/handle_diginvis()
 	if(!digitaldisguise)
-		src.digitaldisguise = image(loc = src)
-	src.digitaldisguise.override = 1
+		digitaldisguise = image(loc = src)
+	digitaldisguise.override = 1
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
-		AI.client.images |= src.digitaldisguise
+		AI.client.images |= digitaldisguise
 
 
 /mob/living/proc/handle_random_events()

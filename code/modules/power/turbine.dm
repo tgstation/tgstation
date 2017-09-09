@@ -334,11 +334,11 @@
 		if(compressor.stat || compressor.turbine.stat)
 			dat += "[compressor.stat ? "<B>Compressor is inoperable</B><BR>" : "<B>Turbine is inoperable</B>"]"
 		else
-			dat += {"Turbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
+			dat += {"Turbine status: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
 			\n<BR>
-			\nTurbine speed: [src.compressor.rpm]rpm<BR>
-			\nPower currently being generated: [DisplayPower(src.compressor.turbine.lastgen)]<BR>
-			\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
+			\nTurbine speed: [compressor.rpm]rpm<BR>
+			\nPower currently being generated: [DisplayPower(compressor.turbine.lastgen)]<BR>
+			\nInternal gas temperature: [compressor.gas_contained.temperature]K<BR>
 			\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
 			\n<BR>
 			\n"}
@@ -366,9 +366,9 @@
 	else if(href_list["search"])
 		locate_machinery()
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/machinery/computer/turbine_computer/process()
-	src.updateDialog()
+	updateDialog()
 	return

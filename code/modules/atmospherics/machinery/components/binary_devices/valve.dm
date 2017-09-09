@@ -62,7 +62,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	valve_type = "d"
 
 /obj/machinery/atmospherics/components/binary/valve/digital/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/atmospherics/components/binary/valve/digital/update_icon_nopipes(animation)
 	if(stat & NOPOWER)

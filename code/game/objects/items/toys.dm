@@ -99,7 +99,7 @@
 		qdel(src)
 
 /obj/item/toy/balloon/update_icon()
-	if(src.reagents.total_volume >= 1)
+	if(reagents.total_volume >= 1)
 		icon_state = "waterballoon"
 		item_state = "balloon"
 	else
@@ -154,20 +154,20 @@
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
 	if(istype(A, /obj/item/toy/ammo/gun))
-		if (src.bullets >= 7)
+		if (bullets >= 7)
 			to_chat(user, "<span class='warning'>It's already fully loaded!</span>")
 			return 1
 		if (A.amount_left <= 0)
 			to_chat(user, "<span class='warning'>There are no more caps!</span>")
 			return 1
-		if (A.amount_left < (7 - src.bullets))
-			src.bullets += A.amount_left
+		if (A.amount_left < (7 - bullets))
+			bullets += A.amount_left
 			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", A.amount_left))
 			A.amount_left = 0
 		else
-			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", 7 - src.bullets))
-			A.amount_left -= 7 - src.bullets
-			src.bullets = 7
+			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", 7 - bullets))
+			A.amount_left -= 7 - bullets
+			bullets = 7
 		A.update_icon()
 		return 1
 	else
@@ -179,13 +179,13 @@
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
-	src.add_fingerprint(user)
-	if (src.bullets < 1)
+	add_fingerprint(user)
+	if (bullets < 1)
 		user.show_message("<span class='warning'>*click*</span>", 2)
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
-	src.bullets--
+	bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
 						"<span class='danger'>You fire [src] at [target]!</span>", \
 						 "<span class='italics'>You hear a gunshot!</span>")
@@ -200,7 +200,7 @@
 	var/amount_left = 7
 
 /obj/item/toy/ammo/gun/update_icon()
-	src.icon_state = text("357OLD-[]", src.amount_left)
+	icon_state = text("357OLD-[]", amount_left)
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	..()
@@ -663,7 +663,7 @@
 	H.parentdeck = src
 	var/O = src
 	H.apply_card_vars(H,O)
-	src.cards -= choice
+	cards -= choice
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
@@ -753,7 +753,7 @@
 		dat += "<A href='?src=\ref[src];pick=[t]'>A [t].</A><BR>"
 	dat += "Which card will you remove next?"
 	var/datum/browser/popup = new(user, "cardhand", "Hand of Cards", 400, 240)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.set_content(dat)
 	popup.open()
 
@@ -769,8 +769,8 @@
 		if (cardUser.is_holding(src))
 			var/choice = href_list["pick"]
 			var/obj/item/toy/cards/singlecard/C = new/obj/item/toy/cards/singlecard(cardUser.loc)
-			src.currenthand -= choice
-			C.parentdeck = src.parentdeck
+			currenthand -= choice
+			C.parentdeck = parentdeck
 			C.cardname = choice
 			C.apply_card_vars(C,O)
 			C.pickup(cardUser)
@@ -778,16 +778,16 @@
 			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from [cardUser.p_their()] hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
 
 			interact(cardUser)
-			if(src.currenthand.len < 3)
-				src.icon_state = "[deckstyle]_hand2"
-			else if(src.currenthand.len < 4)
-				src.icon_state = "[deckstyle]_hand3"
-			else if(src.currenthand.len < 5)
-				src.icon_state = "[deckstyle]_hand4"
-			if(src.currenthand.len == 1)
-				var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(src.loc)
-				N.parentdeck = src.parentdeck
-				N.cardname = src.currenthand[1]
+			if(currenthand.len < 3)
+				icon_state = "[deckstyle]_hand2"
+			else if(currenthand.len < 4)
+				icon_state = "[deckstyle]_hand3"
+			else if(currenthand.len < 5)
+				icon_state = "[deckstyle]_hand4"
+			if(currenthand.len == 1)
+				var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(loc)
+				N.parentdeck = parentdeck
+				N.cardname = currenthand[1]
 				N.apply_card_vars(N,O)
 				qdel(src)
 				N.pickup(cardUser)
@@ -798,17 +798,17 @@
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	if(istype(C))
-		if(C.parentdeck == src.parentdeck)
-			src.currenthand += C.cardname
+		if(C.parentdeck == parentdeck)
+			currenthand += C.cardname
 			user.visible_message("[user] adds a card to [user.p_their()] hand.", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			qdel(C)
 			interact(user)
 			if(currenthand.len > 4)
-				src.icon_state = "[deckstyle]_hand5"
+				icon_state = "[deckstyle]_hand5"
 			else if(currenthand.len > 3)
-				src.icon_state = "[deckstyle]_hand4"
+				icon_state = "[deckstyle]_hand4"
 			else if(currenthand.len > 2)
-				src.icon_state = "[deckstyle]_hand3"
+				icon_state = "[deckstyle]_hand3"
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
 	else
@@ -853,30 +853,30 @@
 	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
 		return
 	if(!flipped)
-		src.flipped = 1
+		flipped = 1
 		if (cardname)
-			src.icon_state = "sc_[cardname]_[deckstyle]"
-			src.name = src.cardname
+			icon_state = "sc_[cardname]_[deckstyle]"
+			name = cardname
 		else
-			src.icon_state = "sc_Ace of Spades_[deckstyle]"
-			src.name = "What Card"
-		src.pixel_x = 5
+			icon_state = "sc_Ace of Spades_[deckstyle]"
+			name = "What Card"
+		pixel_x = 5
 	else if(flipped)
-		src.flipped = 0
-		src.icon_state = "singlecard_down_[deckstyle]"
-		src.name = "card"
-		src.pixel_x = -5
+		flipped = 0
+		icon_state = "singlecard_down_[deckstyle]"
+		name = "card"
+		pixel_x = -5
 
 /obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/cards/singlecard/))
 		var/obj/item/toy/cards/singlecard/C = I
-		if(C.parentdeck == src.parentdeck)
+		if(C.parentdeck == parentdeck)
 			var/obj/item/toy/cards/cardhand/H = new/obj/item/toy/cards/cardhand(user.loc)
 			H.currenthand += C.cardname
-			H.currenthand += src.cardname
+			H.currenthand += cardname
 			H.parentdeck = C.parentdeck
 			H.apply_card_vars(H,C)
-			to_chat(user, "<span class='notice'>You combine the [C.cardname] and the [src.cardname] into a hand.</span>")
+			to_chat(user, "<span class='notice'>You combine the [C.cardname] and the [cardname] into a hand.</span>")
 			qdel(C)
 			qdel(src)
 			H.pickup(user)
@@ -1009,7 +1009,7 @@
 
 //Attack self
 /obj/item/toy/carpplushie/attack_self(mob/user)
-	playsound(src.loc, bitesound, 20, 1)
+	playsound(loc, bitesound, 20, 1)
 	to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 	return ..()
 
@@ -1050,7 +1050,7 @@
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	user.drop_item()
-	src.throw_at(target, throw_range, throw_speed)
+	throw_at(target, throw_range, throw_speed)
 
 /obj/item/toy/snowball/throw_impact(atom/hit_atom)
 	if(!..())
@@ -1069,7 +1069,7 @@
 
 /obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	user.drop_item()
-	src.throw_at(target, throw_range, throw_speed)
+	throw_at(target, throw_range, throw_speed)
 
 /*
  * Xenomorph action figure

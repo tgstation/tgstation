@@ -58,7 +58,7 @@
   * and be a part of another object.
  **/
 /datum/proc/ui_host()
-	return src // Default src.
+	return src // Default 
 
  /**
   * global
@@ -87,5 +87,5 @@
 	if(istype(ui))
 		ui.close()
 		// Unset machine just to be sure.
-		if(src && src.mob)
-			src.mob.unset_machine()
+		if(src && mob)
+			mob.unset_machine()

@@ -141,7 +141,7 @@
 			large_dense += border_obstacle
 
 	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
+	if (!CanPass(mover, src))
 		mover.Collide(src)
 		return FALSE
 
@@ -183,7 +183,7 @@
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1)
-			O.hide(src.intact)
+			O.hide(intact)
 
 // override for space turfs, since they should never hide anything
 /turf/open/space/levelupdate()
@@ -363,7 +363,7 @@
 				continue
 			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.singularity_act()
-	ChangeTurf(src.baseturf)
+	ChangeTurf(baseturf)
 	return(2)
 
 /turf/proc/can_have_cabling()

@@ -27,7 +27,7 @@
 	icon_state = "latexballon_bursted"
 	item_state = "lgloves"
 	if(isliving(loc))
-		var/mob/living/user = src.loc
+		var/mob/living/user = loc
 		user.update_inv_hands()
 	loc.assume_air(air_contents)
 

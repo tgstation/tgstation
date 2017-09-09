@@ -278,8 +278,8 @@
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = FALSE
-	force = initial(src.force)
-	damtype = initial(src.damtype)
+	force = initial(force)
+	damtype = initial(damtype)
 	if(ismob(loc))
 		var/mob/U = loc
 		update_brightness(U)

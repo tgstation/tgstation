@@ -39,10 +39,10 @@
 /obj/item/device/assembly/signaler/interact(mob/user, flag1)
 	if(is_secured(user))
 		var/t1 = "-------"
-	//	if ((src.b_stat && !( flag1 )))
-	//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (src.wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (src.wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
+	//	if ((b_stat && !( flag1 )))
+	//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
 	//	else
-	//		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
+	//		t1 = "-------"	Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
 		var/dat = {"
 <TT>
 
@@ -51,14 +51,14 @@
 Frequency:
 <A href='byond://?src=\ref[src];freq=-10'>-</A>
 <A href='byond://?src=\ref[src];freq=-2'>-</A>
-[format_frequency(src.frequency)]
+[format_frequency(frequency)]
 <A href='byond://?src=\ref[src];freq=2'>+</A>
 <A href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
 Code:
 <A href='byond://?src=\ref[src];code=-5'>-</A>
 <A href='byond://?src=\ref[src];code=-1'>-</A>
-[src.code]
+[code]
 <A href='byond://?src=\ref[src];code=1'>+</A>
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 [t1]
@@ -83,10 +83,10 @@ Code:
 		set_frequency(new_frequency)
 
 	if(href_list["code"])
-		src.code += text2num(href_list["code"])
-		src.code = round(src.code)
-		src.code = min(100, src.code)
-		src.code = max(1, src.code)
+		code += text2num(href_list["code"])
+		code = round(code)
+		code = min(100, code)
+		code = max(1, code)
 
 	if(href_list["send"])
 		spawn( 0 )
@@ -129,7 +129,7 @@ Code:
 				continue
 			if(S == src)
 				continue
-			if((S.frequency == src.frequency) && (S.code == src.code))
+			if((S.frequency == frequency) && (S.code == code))
 				spawn(0)
 					if(S)
 						S.pulse(0)
@@ -140,7 +140,7 @@ Code:
 		return 0
 	if(signal.encryption != code)
 		return 0
-	if(!(src.wires & WIRE_RADIO_RECEIVE))
+	if(!(wires & WIRE_RADIO_RECEIVE))
 		return 0
 	pulse(1)
 	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)

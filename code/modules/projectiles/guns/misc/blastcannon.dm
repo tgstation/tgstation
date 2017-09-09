@@ -90,7 +90,7 @@
 	var/heavy = power * 0.2
 	var/medium = power * 0.5
 	var/light = power
-	user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [src.name] and fires a blast wave at \the [target]!</span>","<span class='danger'>You open \the [bomb] on your [src.name] and fire a blast wave at \the [target]!</span>")
+	user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [name] and fires a blast wave at \the [target]!</span>","<span class='danger'>You open \the [bomb] on your [name] and fire a blast wave at \the [target]!</span>")
 	playsound(user, "explosion", 100, 1)
 	var/turf/starting = get_turf(user)
 	var/area/A = get_area(user)

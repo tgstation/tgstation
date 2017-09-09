@@ -274,13 +274,13 @@
 		var/href = "close=1"
 		if(hsrc)
 			//to_chat(world, "[src] Topic [href] [hsrc]")
-			usr = src.mob
-			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
+			usr = mob
+			Topic(href, params2list(href), hsrc)	// this will direct to the atom's
 			return										// Topic() proc via client.Topic()
 
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
-	if(src && src.mob)
-		//to_chat(world, "[src] was [src.mob.machine], setting to null")
-		src.mob.unset_machine()
+	if(src && mob)
+		//to_chat(world, "[src] was [mob.machine], setting to null")
+		mob.unset_machine()
 	return

@@ -59,7 +59,7 @@
 	set name = "Jump to Core"
 	set desc = "Move your camera to your core."
 	if(blob_core)
-		src.loc = blob_core.loc
+		loc = blob_core.loc
 
 /mob/camera/blob/verb/jump_to_node()
 	set category = "Blob"

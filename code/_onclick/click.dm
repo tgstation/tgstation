@@ -281,7 +281,7 @@
 	return
 
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
+	if(!stat && mind && mind.changeling && mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
@@ -341,7 +341,7 @@
 	return
 
 /mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
+	if(!stat && mind && mind.changeling && mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
@@ -369,7 +369,7 @@
 	return
 
 /mob/proc/ShiftMiddleClickOn(atom/A)
-	src.pointed(A)
+	pointed(A)
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)

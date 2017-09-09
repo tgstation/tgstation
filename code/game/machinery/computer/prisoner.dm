@@ -36,7 +36,7 @@
 		var/turf/Tr = null
 		for(var/obj/item/implant/chem/C in GLOB.tracked_chem_implants)
 			Tr = get_turf(C)
-			if((Tr) && (Tr.z != src.z))
+			if((Tr) && (Tr.z != z))
 				continue//Out of range
 			if(!C.imp_in)
 				continue
@@ -51,7 +51,7 @@
 			if(!isliving(T.imp_in))
 				continue
 			Tr = get_turf(T)
-			if((Tr) && (Tr.z != src.z))
+			if((Tr) && (Tr.z != z))
 				continue//Out of range
 
 			var/loc_display = "Unknown"
@@ -66,7 +66,7 @@
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
 	var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -78,7 +78,7 @@
 
 /obj/machinery/computer/prisoner/process()
 	if(!..())
-		src.updateDialog()
+		updateDialog()
 	return
 
 
@@ -125,7 +125,7 @@
 				I.activate(10)
 
 		else if(href_list["lock"])
-			if(src.allowed(usr))
+			if(allowed(usr))
 				screen = !screen
 			else
 				to_chat(usr, "Unauthorized Access.")
@@ -140,6 +140,6 @@
 				to_chat(R, "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>")
 				log_talk(usr,"[key_name(usr)] sent an implant message to [R]/[R.ckey]: '[warning]'",LOGSAY)
 
-		src.add_fingerprint(usr)
-	src.updateUsrDialog()
+		add_fingerprint(usr)
+	updateUsrDialog()
 	return

@@ -61,13 +61,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		/mob/dead/observer/proc/open_spawners_menu)
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
-		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
+		ghostimage_default = image(icon,src,icon_state + "_nodir")
 	else
-		ghostimage_default = image(src.icon,src,src.icon_state)
+		ghostimage_default = image(icon,src,icon_state)
 	ghostimage_default.override = TRUE
 	GLOB.ghost_images_default |= ghostimage_default
 
-	ghostimage_simple = image(src.icon,src,"ghost_nodir")
+	ghostimage_simple = image(icon,src,"ghost_nodir")
 	ghostimage_simple.override = TRUE
 	GLOB.ghost_images_simple |= ghostimage_simple
 

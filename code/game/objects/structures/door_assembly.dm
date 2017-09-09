@@ -365,10 +365,10 @@
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
-		var/t = stripped_input(user, "Enter the name for the door.", src.name, src.created_name,MAX_NAME_LEN)
+		var/t = stripped_input(user, "Enter the name for the door.", name, created_name,MAX_NAME_LEN)
 		if(!t)
 			return
-		if(!in_range(src, usr) && src.loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 		created_name = t
 
@@ -392,7 +392,7 @@
 
 
 			icontype = input(user, "Please select a paintjob for this airlock.") in optionlist
-			if((!in_range(src, usr) && src.loc != usr) || !WT.use(user))
+			if((!in_range(src, usr) && loc != usr) || !WT.use(user))
 				return
 			var/has_solid = FALSE
 			var/has_glass = FALSE
@@ -507,7 +507,7 @@
 		if(WT.remove_fuel(0,user))
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
 								"You start to disassemble the airlock assembly...")
-			playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
+			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if( !WT.isOn() )
@@ -524,22 +524,22 @@
 					break
 
 			if(door_check)
-				playsound(src.loc, W.usesound, 100, 1)
+				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] secures the airlock assembly to the floor.", \
 									 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
 									 "<span class='italics'>You hear wrenching.</span>")
 
 				if(do_after(user, 40*W.toolspeed, target = src))
-					if( src.anchored )
+					if( anchored )
 						return
 					to_chat(user, "<span class='notice'>You secure the airlock assembly.</span>")
-					src.name = "secured airlock assembly"
-					src.anchored = TRUE
+					name = "secured airlock assembly"
+					anchored = TRUE
 			else
 				to_chat(user, "There is another door here!")
 
 		else
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			user.visible_message("[user] unsecures the airlock assembly from the floor.", \
 								 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
 								 "<span class='italics'>You hear wrenching.</span>")
@@ -560,64 +560,64 @@
 		if(do_after(user, 40, target = src))
 			if(C.get_amount() < 1 || state != 0) return
 			C.use(1)
-			src.state = 1
+			state = 1
 			to_chat(user, "<span class='notice'>You wire the airlock assembly.</span>")
-			src.name = "wired airlock assembly"
+			name = "wired airlock assembly"
 
 	else if(istype(W, /obj/item/wirecutters) && state == 1 )
-		playsound(src.loc, W.usesound, 100, 1)
+		playsound(loc, W.usesound, 100, 1)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", \
 							"<span class='notice'>You start to cut the wires from the airlock assembly...</span>")
 
 		if(do_after(user, 40*W.toolspeed, target = src))
-			if( src.state != 1 )
+			if( state != 1 )
 				return
 			to_chat(user, "<span class='notice'>You cut the wires from the airlock assembly.</span>")
 			new/obj/item/stack/cable_coil(get_turf(user), 1)
-			src.state = 0
-			src.name = "secured airlock assembly"
+			state = 0
+			name = "secured airlock assembly"
 
 	else if(istype(W, /obj/item/electronics/airlock) && state == 1 )
-		playsound(src.loc, W.usesound, 100, 1)
+		playsound(loc, W.usesound, 100, 1)
 		user.visible_message("[user] installs the electronics into the airlock assembly.", \
 							"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
 		if(do_after(user, 40, target = src))
-			if( src.state != 1 )
+			if( state != 1 )
 				return
 			if(!user.drop_item())
 				return
 
 			W.loc = src
 			to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
-			src.state = 2
-			src.name = "near finished airlock assembly"
-			src.electronics = W
+			state = 2
+			name = "near finished airlock assembly"
+			electronics = W
 
 
 	else if(istype(W, /obj/item/crowbar) && state == 2 )
-		playsound(src.loc, W.usesound, 100, 1)
+		playsound(loc, W.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 								"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 
 		if(do_after(user, 40*W.toolspeed, target = src))
-			if( src.state != 2 )
+			if( state != 2 )
 				return
 			to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
-			src.state = 1
-			src.name = "wired airlock assembly"
+			state = 1
+			name = "wired airlock assembly"
 			var/obj/item/electronics/airlock/ae
 			if (!electronics)
-				ae = new/obj/item/electronics/airlock( src.loc )
+				ae = new/obj/item/electronics/airlock( loc )
 			else
 				ae = electronics
 				electronics = null
-				ae.loc = src.loc
+				ae.loc = loc
 	else if(istype(W, /obj/item/stack/sheet) && !mineral)
 		var/obj/item/stack/sheet/G = W
 		if(G)
 			if(G.get_amount() >= 1)
 				if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
-					playsound(src.loc, 'sound/items/crowbar.ogg', 100, 1)
+					playsound(loc, 'sound/items/crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 					if(do_after(user, 40, target = src))
@@ -634,8 +634,8 @@
 						material = "glass"
 						//This list contains the airlock paintjobs that have a glass version:
 						if(icontext in list("eng", "atmo", "sec", "com", "med", "res", "min"))
-							src.airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
-							src.glass_type = text2path("/obj/machinery/door/airlock/glass_[typetext]")
+							airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
+							glass_type = text2path("/obj/machinery/door/airlock/glass_[typetext]")
 						else
 							//This airlock is default or does not have a glass version, so we revert to the default glass airlock. |- Ricotez
 							airlock_type = /obj/machinery/door/airlock
@@ -645,7 +645,7 @@
 				else if(istype(G, /obj/item/stack/sheet/mineral))
 					var/M = G.sheettype
 					if(G.get_amount() >= 2)
-						playsound(src.loc, 'sound/items/crowbar.ogg', 100, 1)
+						playsound(loc, 'sound/items/crowbar.ogg', 100, 1)
 						user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 						if(do_after(user, 40, target = src))
@@ -658,28 +658,28 @@
 							glass_type = /obj/machinery/door/airlock/glass
 
 	else if(istype(W, /obj/item/screwdriver) && state == 2 )
-		playsound(src.loc, W.usesound, 100, 1)
+		playsound(loc, W.usesound, 100, 1)
 		user.visible_message("[user] finishes the airlock.", \
 							 "<span class='notice'>You start finishing the airlock...</span>")
 
 		if(do_after(user, 40*W.toolspeed, target = src))
-			if(src.loc && state == 2)
+			if(loc && state == 2)
 				to_chat(user, "<span class='notice'>You finish the airlock.</span>")
 				var/obj/machinery/door/airlock/door
 				if(mineral == "glass")
-					door = new src.glass_type( src.loc )
+					door = new glass_type( loc )
 				else
-					door = new src.airlock_type( src.loc )
-				//door.req_access = src.req_access
-				door.electronics = src.electronics
-				door.heat_proof = src.heat_proof_finished
-				if(src.electronics.one_access)
-					door.req_one_access = src.electronics.accesses
+					door = new airlock_type( loc )
+				//door.req_access = req_access
+				door.electronics = electronics
+				door.heat_proof = heat_proof_finished
+				if(electronics.one_access)
+					door.req_one_access = electronics.accesses
 				else
-					door.req_access = src.electronics.accesses
+					door.req_access = electronics.accesses
 				if(created_name)
 					door.name = created_name
-				src.electronics.loc = door
+				electronics.loc = door
 				qdel(src)
 	else
 		return ..()

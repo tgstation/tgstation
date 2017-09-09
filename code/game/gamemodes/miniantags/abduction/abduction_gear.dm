@@ -613,9 +613,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(src.loc, I.usesound, 50, 1)
+		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))
 			qdel(src)
@@ -628,7 +628,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
 		if(do_after(user, 50, target = src))
 			P.use(1)
-			new /obj/structure/table/abductor(src.loc)
+			new /obj/structure/table/abductor(loc)
 			qdel(src)
 		return
 	if(istype(I, /obj/item/stack/sheet/mineral/silver))
@@ -639,7 +639,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
 		if(do_after(user, 50, target = src))
 			P.use(1)
-			new /obj/structure/table/optable/abductor(src.loc)
+			new /obj/structure/table/optable/abductor(loc)
 			qdel(src)
 
 /obj/structure/table/abductor
@@ -711,7 +711,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(WT.remove_fuel(0,user))
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
 								"You start to disassemble the airlock assembly...")
-			playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
+			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if( !WT.isOn() )
 					return

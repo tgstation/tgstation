@@ -171,7 +171,7 @@
 				user.visible_message("[user] wires the windoor assembly.", "<span class='notice'>You start to wire the windoor assembly...</span>")
 
 				if(do_after(user, 40, target = src))
-					if(!src || !anchored || src.state != "01")
+					if(!src || !anchored || state != "01")
 						return
 					var/obj/item/stack/cable_coil/CC = W
 					if(!CC.use(1))
@@ -215,7 +215,7 @@
 
 				if(do_after(user, 40, target = src))
 					if(!src || electronics)
-						W.loc = src.loc
+						W.loc = loc
 						return
 					to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
 					name = "near finished windoor assembly"

@@ -23,21 +23,21 @@
 /datum/html_interface_client/New(client/client)
 	. = ..()
 
-	src.client = client
+	client = client
 
 /datum/html_interface_client/proc/putExtraVar(key, value)
-	if (!src.extra_vars) src.extra_vars = new/list()
-	src.extra_vars[key] = value
+	if (!extra_vars) extra_vars = new/list()
+	extra_vars[key] = value
 
 /datum/html_interface_client/proc/removeExtraVar(key)
-	if (src.extra_vars)
-		. = src.extra_vars[key]
+	if (extra_vars)
+		. = extra_vars[key]
 
-		src.extra_vars.Remove(key)
+		extra_vars.Remove(key)
 
-		if (!src.extra_vars.len) src.extra_vars = null
+		if (!extra_vars.len) extra_vars = null
 
 	return .
 
 /datum/html_interface_client/proc/getExtraVar(key)
-	if (src.extra_vars) return src.extra_vars[key]
+	if (extra_vars) return extra_vars[key]

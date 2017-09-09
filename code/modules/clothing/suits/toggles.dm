@@ -34,7 +34,7 @@
 	..()
 
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
-	src.icon_state = "[initial(icon_state)]"
+	icon_state = "[initial(icon_state)]"
 	suittoggled = FALSE
 	if(ishuman(hood.loc))
 		var/mob/living/carbon/H = hood.loc
@@ -52,8 +52,8 @@
 
 /obj/item/clothing/suit/hooded/proc/ToggleHood()
 	if(!suittoggled)
-		if(ishuman(src.loc))
-			var/mob/living/carbon/human/H = src.loc
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
 			if(H.wear_suit != src)
 				to_chat(H, "<span class='warning'>You must be wearing [src] to put up the hood!</span>")
 				return
@@ -62,7 +62,7 @@
 				return
 			else if(H.equip_to_slot_if_possible(hood,slot_head,0,0,1))
 				suittoggled = TRUE
-				src.icon_state = "[initial(icon_state)]_t"
+				icon_state = "[initial(icon_state)]_t"
 				H.update_inv_wear_suit()
 				for(var/X in actions)
 					var/datum/action/A = X
@@ -110,12 +110,12 @@
 		return 0
 
 	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
-	if(src.suittoggled)
-		src.icon_state = "[initial(icon_state)]"
-		src.suittoggled = FALSE
-	else if(!src.suittoggled)
-		src.icon_state = "[initial(icon_state)]_t"
-		src.suittoggled = TRUE
+	if(suittoggled)
+		icon_state = "[initial(icon_state)]"
+		suittoggled = FALSE
+	else if(!suittoggled)
+		icon_state = "[initial(icon_state)]_t"
+		suittoggled = TRUE
 	usr.update_inv_wear_suit()
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -172,7 +172,7 @@
 		H.transferItemToLoc(helmet, src, TRUE)
 		H.update_inv_wear_suit()
 		to_chat(H, "<span class='notice'>The helmet on the hardsuit disengages.</span>")
-		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+		playsound(loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	else
 		helmet.forceMove(src)
 
@@ -181,13 +181,13 @@
 	RemoveHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
-	var/mob/living/carbon/human/H = src.loc
+	var/mob/living/carbon/human/H = loc
 	if(!helmettype)
 		return
 	if(!helmet)
 		return
 	if(!suittoggled)
-		if(ishuman(src.loc))
+		if(ishuman(loc))
 			if(H.wear_suit != src)
 				to_chat(H, "<span class='warning'>You must be wearing [src] to engage the helmet!</span>")
 				return
@@ -198,6 +198,6 @@
 				to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = TRUE
 				H.update_inv_wear_suit()
-				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+				playsound(loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	else
 		RemoveHelmet()

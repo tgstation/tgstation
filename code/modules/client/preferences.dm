@@ -457,7 +457,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if(jobban_isbanned(user, "Syndicate"))
 				dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
-				src.be_special = list()
+				be_special = list()
 
 
 			for (var/i in GLOB.special_roles)

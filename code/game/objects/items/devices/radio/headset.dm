@@ -28,8 +28,8 @@
 	return ..()
 
 /obj/item/device/radio/headset/receive_range(freq, level, AIuser)
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
 		if(H.ears == src)
 			return ..(freq, level)
 	else if(AIuser)
@@ -266,16 +266,16 @@
 	..()
 	if(keyslot2)
 		for(var/ch_name in keyslot2.channels)
-			if(ch_name in src.channels)
+			if(ch_name in channels)
 				continue
-			src.channels += ch_name
-			src.channels[ch_name] = keyslot2.channels[ch_name]
+			channels += ch_name
+			channels[ch_name] = keyslot2.channels[ch_name]
 
 		if(keyslot2.translate_binary)
-			src.translate_binary = 1
+			translate_binary = 1
 
 		if(keyslot2.syndie)
-			src.syndie = 1
+			syndie = 1
 
 		if (keyslot2.independent)
 			independent = TRUE

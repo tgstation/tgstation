@@ -44,9 +44,9 @@
 
 /obj/structure/grille/ratvar_act()
 	if(broken)
-		new /obj/structure/grille/ratvar/broken(src.loc)
+		new /obj/structure/grille/ratvar/broken(loc)
 	else
-		new /obj/structure/grille/ratvar(src.loc)
+		new /obj/structure/grille/ratvar(loc)
 	qdel(src)
 
 /obj/structure/grille/CollidedWith(atom/movable/AM)
@@ -117,7 +117,7 @@
 		if(!shock(user, 90))
 			user.visible_message("<span class='notice'>[user] rebuilds the broken grille.</span>", \
 								 "<span class='notice'>You rebuild the broken grille.</span>")
-			new grille_type(src.loc)
+			new grille_type(loc)
 			R.use(1)
 			qdel(src)
 			return
@@ -138,7 +138,7 @@
 				return
 			to_chat(user, "<span class='notice'>You start placing the window...</span>")
 			if(do_after(user,20, target = src))
-				if(!src.loc || !anchored) //Grille broken or unanchored while waiting
+				if(!loc || !anchored) //Grille broken or unanchored while waiting
 					return
 				for(var/obj/structure/window/WINDOW in loc) //Another window already installed on grille
 					return
@@ -174,15 +174,15 @@
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
 	if(!(flags_1&NODECONSTRUCT_1))
-		var/obj/R = new rods_type(src.loc, rods_amount)
+		var/obj/R = new rods_type(loc, rods_amount)
 		transfer_fingerprints_to(R)
 		qdel(src)
 	..()
 
 /obj/structure/grille/obj_break()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		new broken_type(src.loc)
-		var/obj/R = new rods_type(src.loc, rods_broken)
+		new broken_type(loc)
+		var/obj/R = new rods_type(loc, rods_broken)
 		transfer_fingerprints_to(R)
 		qdel(src)
 
@@ -221,7 +221,7 @@
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
-				playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
+				playsound(loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 				tesla_zap(src, 3, C.powernet.avail * 0.01) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
 				C.powernet.load += C.powernet.avail * 0.0375 // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()

@@ -59,7 +59,7 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(processing==1)
 		to_chat(usr, "<span class='notice'>The machine is processing.</span>")
 		return
@@ -83,13 +83,13 @@
 			create_coins(M.coin_type)
 			coinsToProduce--
 			newCoins++
-			src.updateUsrDialog()
+			updateUsrDialog()
 			sleep(5)
 
 		icon_state = "coinpress0"
 		processing = FALSE
 		coinsToProduce = temp_coins
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/machinery/mineral/mint/proc/create_coins(P)

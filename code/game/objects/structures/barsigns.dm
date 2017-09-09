@@ -49,17 +49,17 @@
 /obj/structure/sign/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
+			playsound(loc, 'sound/effects/glasshit.ogg', 75, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/sign/barsign/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 
 
 /obj/structure/sign/barsign/attack_hand(mob/user)
-	if (!src.allowed(user))
+	if (!allowed(user))
 		to_chat(user, "<span class='info'>Access denied.</span>")
 		return
 	if (broken)

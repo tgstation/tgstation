@@ -134,7 +134,7 @@
 	to_chat(user, "[src] is now in [mode] mode.")
 
 /obj/item/grenade/barrier/prime()
-	new /obj/structure/barricade/security(get_turf(src.loc))
+	new /obj/structure/barricade/security(get_turf(loc))
 	switch(mode)
 		if(VERTICAL)
 			var/target_turf = get_step(src, NORTH)

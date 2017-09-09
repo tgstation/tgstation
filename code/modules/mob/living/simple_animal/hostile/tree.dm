@@ -42,7 +42,7 @@
 /mob/living/simple_animal/hostile/tree/Life()
 	..()
 	if(isopenturf(loc))
-		var/turf/open/T = src.loc
+		var/turf/open/T = loc
 		if(T.air && T.air.gases["co2"])
 			var/co2 = T.air.gases["co2"][MOLES]
 			if(co2 > 0)

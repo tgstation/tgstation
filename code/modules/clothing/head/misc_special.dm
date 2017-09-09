@@ -49,7 +49,7 @@
 	heat = 1000
 
 /obj/item/clothing/head/hardhat/cakehat/process()
-	var/turf/location = src.loc
+	var/turf/location = loc
 	if(ishuman(location))
 		var/mob/living/carbon/human/M = location
 		if(M.is_holding(src) || M.head == src)
@@ -93,13 +93,13 @@
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(earflaps)
-		src.icon_state = "ushankaup"
-		src.item_state = "ushankaup"
+		icon_state = "ushankaup"
+		item_state = "ushankaup"
 		earflaps = 0
 		to_chat(user, "<span class='notice'>You raise the ear flaps on the ushanka.</span>")
 	else
-		src.icon_state = "ushankadown"
-		src.item_state = "ushankadown"
+		icon_state = "ushankadown"
+		item_state = "ushankadown"
 		earflaps = 1
 		to_chat(user, "<span class='notice'>You lower the ear flaps on the ushanka.</span>")
 

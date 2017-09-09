@@ -65,7 +65,7 @@
 	var/datum/language_holder/language_holder
 
 /datum/mind/New(var/key)
-	src.key = key
+	key = key
 	soulOwner = src
 	martial_art = default_martial_art
 
@@ -187,7 +187,7 @@
 
 /datum/mind/proc/remove_traitor()
 	if(src in SSticker.mode.traitors)
-		src.remove_antag_datum(ANTAG_DATUM_TRAITOR)
+		remove_antag_datum(ANTAG_DATUM_TRAITOR)
 	SSticker.mode.update_traitor_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()

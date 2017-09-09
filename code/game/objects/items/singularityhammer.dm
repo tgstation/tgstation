@@ -100,7 +100,7 @@
 /obj/item/twohanded/mjollnir/attack(mob/living/M, mob/user)
 	..()
 	if(wielded)
-		playsound(src.loc, "sparks", 50, 1)
+		playsound(loc, "sparks", 50, 1)
 		shock(M)
 
 /obj/item/twohanded/mjollnir/throw_impact(atom/target)

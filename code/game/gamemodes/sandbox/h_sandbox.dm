@@ -6,8 +6,8 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	var/datum/hSB/sandbox = null
 /mob/proc/CanBuild()
 	sandbox = new/datum/hSB
-	sandbox.owner = src.ckey
-	if(src.client.holder)
+	sandbox.owner = ckey
+	if(client.holder)
 		sandbox.admin = 1
 	verbs += new/mob/proc/sandbox_panel
 /mob/proc/sandbox_panel()
@@ -101,7 +101,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	usr << browse(hsbinfo, "window=hsbpanel")
 
 /datum/hSB/Topic(href, href_list)
-	if(!usr || !src || !(src.owner == usr.ckey))
+	if(!usr || !src || !(owner == usr.ckey))
 		if(usr)
 			usr << browse(null,"window=sandbox")
 		return

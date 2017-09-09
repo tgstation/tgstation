@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/Collide(atom/A)
 	if(A)
 		ram_turf(get_turf(A))
-		playsound(src.loc, meteorsound, 40, 1)
+		playsound(loc, meteorsound, 40, 1)
 		get_hit()
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
@@ -191,11 +191,11 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 			if((M.orbiting) && (SSaugury.watchers[M]))
 				continue
 			var/turf/T = get_turf(M)
-			if(!T || T.z != src.z)
+			if(!T || T.z != z)
 				continue
-			var/dist = get_dist(M.loc, src.loc)
+			var/dist = get_dist(M.loc, loc)
 			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
-			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, S = meteor_sound)
+			M.playsound_local(loc, null, 50, 1, random_frequency, 10, S = meteor_sound)
 
 ///////////////////////
 //Meteor types
@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/medium/meteor_effect()
 	..()
-	explosion(src.loc, 0, 1, 2, 3, 0)
+	explosion(loc, 0, 1, 2, 3, 0)
 
 //Large-sized
 /obj/effect/meteor/big
@@ -233,7 +233,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/big/meteor_effect()
 	..()
-	explosion(src.loc, 1, 2, 3, 4, 0)
+	explosion(loc, 1, 2, 3, 4, 0)
 
 //Flaming meteor
 /obj/effect/meteor/flaming
@@ -247,7 +247,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/flaming/meteor_effect()
 	..()
-	explosion(src.loc, 1, 2, 3, 4, 0, 0, 5)
+	explosion(loc, 1, 2, 3, 4, 0, 0, 5)
 
 //Radiation meteor
 /obj/effect/meteor/irradiated
@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
-	explosion(src.loc, 0, 0, 4, 3, 0)
+	explosion(loc, 0, 0, 4, 3, 0)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
 	radiation_pulse(get_turf(src), 2, 5, 50, 1)
 
@@ -334,12 +334,12 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()
-	explosion(src.loc, 5, 10, 15, 20, 0)
+	explosion(loc, 5, 10, 15, 20, 0)
 
 /obj/effect/meteor/tunguska/Collide()
 	..()
 	if(prob(20))
-		explosion(src.loc,2,4,6,8)
+		explosion(loc,2,4,6,8)
 
 //////////////////////////
 //Spookoween meteors

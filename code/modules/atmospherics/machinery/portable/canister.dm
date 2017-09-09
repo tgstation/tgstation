@@ -286,7 +286,7 @@
 
 	stat |= BROKEN
 	density = FALSE
-	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	update_icon()
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 

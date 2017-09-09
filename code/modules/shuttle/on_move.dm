@@ -160,7 +160,7 @@ All ShuttleMove procs go here
 	SSair.remove_from_active(src)
 	SSair.remove_from_active(oldT)
 
-	src.CalculateAdjacentTurfs()
+	CalculateAdjacentTurfs()
 	oldT.CalculateAdjacentTurfs()
 
 	SSair.add_to_active(src, TRUE)
@@ -249,8 +249,8 @@ All ShuttleMove procs go here
 	. = ..()
 	var/missing_nodes = FALSE
 	for(DEVICE_TYPE_LOOP)
-		if(src.nodes[I])
-			var/obj/machinery/atmospherics/node = src.nodes[I]
+		if(nodes[I])
+			var/obj/machinery/atmospherics/node = nodes[I]
 			var/connected = FALSE
 			for(var/D in GLOB.cardinals)
 				if(node in get_step(src, D))
@@ -260,7 +260,7 @@ All ShuttleMove procs go here
 			if(!connected)
 				nullifyNode(I)
 
-		if(!src.nodes[I])
+		if(!nodes[I])
 			missing_nodes = TRUE
 
 	if(missing_nodes)
@@ -298,7 +298,7 @@ All ShuttleMove procs go here
 
 /obj/machinery/power/terminal/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if(level==1)
 		hide(T.intact)
 
@@ -331,7 +331,7 @@ All ShuttleMove procs go here
 			var/turf/target = get_edge_target_turf(src, throw_dir)
 			var/range = movement_force["THROW"]
 			var/speed = range/5
-			src.throw_at(target, range, speed)
+			throw_at(target, range, speed)
 		if(movement_force["KNOCKDOWN"])
 			Knockdown(movement_force["KNOCKDOWN"])
 

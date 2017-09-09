@@ -23,7 +23,7 @@
 		cubes_made = M.rating
 	cube_production = cubes_made
 	required_grind = req_grind
-	src.desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cubes_made] cube(s) for every [required_grind] monkey(s) inserted."
+	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cubes_made] cube(s) for every [required_grind] monkey(s) inserted."
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
@@ -64,7 +64,7 @@
 		return
 	qdel(target)
 	to_chat(user, "<span class='notice'>You stuff the monkey into the machine.</span>")
-	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+	playsound(loc, 'sound/machines/juicer.ogg', 50, 1)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	use_power(500)
@@ -75,14 +75,14 @@
 
 
 /obj/machinery/monkey_recycler/attack_hand(mob/user)
-	if (src.stat != 0) //NOPOWER etc
+	if (stat != 0) //NOPOWER etc
 		return
 	if(grinded >= required_grind)
 		to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
-		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
+		playsound(loc, 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= required_grind
 		for(var/i = 0, i < cube_production, i++)
-			new /obj/item/reagent_containers/food/snacks/monkeycube(src.loc)
+			new /obj/item/reagent_containers/food/snacks/monkeycube(loc)
 		to_chat(user, "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>")
 	else
 		to_chat(user, "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>")

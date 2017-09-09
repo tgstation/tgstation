@@ -42,7 +42,7 @@
 		//D.name = "PDA Style [colorlist.len+1]" //Gotta set the name, otherwise it all comes up as "PDA"
 		D.name = D.icon_state //PDAs don't have unique names, but using the sprite names works.
 
-		src.colorlist += D
+		colorlist += D
 
 /obj/machinery/pdapainter/Destroy()
 	QDEL_NULL(storedpda)
@@ -138,7 +138,7 @@
 		return
 
 	if(storedpda)
-		storedpda.loc = get_turf(src.loc)
+		storedpda.loc = get_turf(loc)
 		storedpda = null
 		update_icon()
 	else

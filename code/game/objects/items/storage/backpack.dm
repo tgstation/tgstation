@@ -65,7 +65,7 @@
 					playsound(src, pshoom, 40, 1)
 				user.Beam(dumping_location,icon_state="rped_upgrade",time=5)
 				return 1
-		to_chat(user, "The [src.name] buzzes.")
+		to_chat(user, "The [name] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	return 0
 
@@ -88,7 +88,7 @@
 
 /obj/item/storage/backpack/holding/singularity_act(current_size)
 	var/dist = max((current_size - 2),1)
-	explosion(src.loc,(dist),(dist*2),(dist*4))
+	explosion(loc,(dist),(dist*2),(dist*4))
 	return
 
 

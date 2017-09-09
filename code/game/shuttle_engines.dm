@@ -41,7 +41,7 @@
 		var/obj/item/weldingtool/WT = I
 		switch(state)
 			if(ENGINE_UNWRENCHED)
-				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
+				to_chat(user, "<span class='warning'>The [name] needs to be wrenched to the floor!</span>")
 			if(EM_SECURED)
 				if(WT.remove_fuel(0,user))
 					playsound(loc, WT.usesound, 50, 1)

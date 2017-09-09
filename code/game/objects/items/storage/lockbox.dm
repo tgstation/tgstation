@@ -27,12 +27,12 @@
 			locked = !locked
 			if(locked)
 				icon_state = icon_locked
-				to_chat(user, "<span class='danger'>You lock the [src.name]!</span>")
+				to_chat(user, "<span class='danger'>You lock the [name]!</span>")
 				close_all()
 				return
 			else
 				icon_state = icon_closed
-				to_chat(user, "<span class='danger'>You unlock the [src.name]!</span>")
+				to_chat(user, "<span class='danger'>You unlock the [name]!</span>")
 				return
 		else
 			to_chat(user, "<span class='danger'>Access Denied.</span>")
@@ -44,7 +44,7 @@
 
 /obj/item/storage/lockbox/MouseDrop(over_object, src_location, over_location)
 	if (locked)
-		src.add_fingerprint(usr)
+		add_fingerprint(usr)
 		to_chat(usr, "<span class='warning'>It's locked!</span>")
 		return 0
 	..()
@@ -54,7 +54,7 @@
 		broken = TRUE
 		locked = FALSE
 		desc += "It appears to be broken."
-		icon_state = src.icon_broken
+		icon_state = icon_broken
 		if(user)
 			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
 			return

@@ -288,10 +288,10 @@
 		if(process_payment())
 			fabricate_and_recalc_price(1)
 			if((devtype == 1) && fabricated_laptop)
-				fabricated_laptop.forceMove(src.loc)
+				fabricated_laptop.forceMove(loc)
 				fabricated_laptop = null
 			else if((devtype == 2) && fabricated_tablet)
-				fabricated_tablet.forceMove(src.loc)
+				fabricated_tablet.forceMove(loc)
 				fabricated_tablet = null
 			credits -= total_price
 			say("Enjoy your new product!")

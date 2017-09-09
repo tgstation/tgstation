@@ -261,7 +261,7 @@
 /turf/open/floor/vines/ex_act(severity, target)
 	..()
 	if(severity < 3 || target == src)
-		ChangeTurf(src.baseturf)
+		ChangeTurf(baseturf)
 
 /turf/open/floor/vines/narsie_act(force, ignore_mobs, probability = 20)
 	if(prob(probability) || force)
@@ -272,7 +272,7 @@
 	..()
 	if(current_size >= STAGE_FIVE)
 		if(prob(50))
-			ChangeTurf(src.baseturf)
+			ChangeTurf(baseturf)
 
 /turf/open/floor/vines/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
 	. = ..()

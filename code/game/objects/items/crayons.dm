@@ -132,7 +132,7 @@
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		to_chat(user, "<span class='warning'>There is no more of \the [src.name] left!</span>")
+		to_chat(user, "<span class='warning'>There is no more of \the [name] left!</span>")
 		if(self_contained)
 			qdel(src)
 		. = TRUE
@@ -356,7 +356,7 @@
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
-		to_chat(user, "You take a bite of the [src.name]. Delicious!")
+		to_chat(user, "You take a bite of the [name]. Delicious!")
 		var/eaten = use_charges(5)
 		if(check_empty(user)) //Prevents divsion by zero
 			return

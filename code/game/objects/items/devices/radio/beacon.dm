@@ -30,10 +30,10 @@
 	set src in usr
 
 	if ((usr.canmove && !( usr.restrained() )))
-		src.code = t
-	if (!( src.code ))
-		src.code = "beacon"
-	src.add_fingerprint(usr)
+		code = t
+	if (!( code ))
+		code = "beacon"
+	add_fingerprint(usr)
 	return
 
 /*

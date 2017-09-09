@@ -85,7 +85,7 @@
 /mob/living/simple_animal/hostile/mining_drone/death()
 	..()
 	visible_message("<span class='danger'>[src] is destroyed!</span>")
-	new /obj/effect/decal/cleanable/robot_debris(src.loc)
+	new /obj/effect/decal/cleanable/robot_debris(loc)
 	DropOre(0)
 	qdel(src)
 	return
@@ -131,7 +131,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
 	var/obj/item/ore/O
-	for(O in src.loc)
+	for(O in loc)
 		O.loc = src
 	for(var/dir in GLOB.alldirs)
 		var/turf/T = get_step(src,dir)
@@ -148,7 +148,7 @@
 		to_chat(src, "<span class='notice'>You dump your stored ore.</span>")
 	for(var/obj/item/ore/O in contents)
 		contents -= O
-		O.loc = src.loc
+		O.loc = loc
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/adjustHealth(amount)

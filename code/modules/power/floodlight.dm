@@ -25,7 +25,7 @@
 	else if(istype(O, /obj/item/light/tube) && (state == FLOODLIGHT_NEEDS_LIGHTS))
 		if(user.transferItemToLoc(O))
 			to_chat(user, "<span class='notice'>You put lights in the [src].</span>")
-			new /obj/machinery/power/floodlight(src.loc)
+			new /obj/machinery/power/floodlight(loc)
 			qdel(src)
 	else if(istype(O, /obj/item/screwdriver) && (state == FLOODLIGHT_NEEDS_SECURING))
 		to_chat(user, "<span class='notice'>You fasten the wiring and electronics in [src].</span>")

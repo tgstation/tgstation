@@ -151,7 +151,7 @@
 	prisoner.Knockdown(40) // small travel dizziness
 	to_chat(prisoner, "<span class='warning'>The teleportation makes you a little dizzy.</span>")
 	new /obj/effect/particle_effect/sparks(prisoner.loc)
-	playsound(src.loc, "sparks", 50, 1)
+	playsound(loc, "sparks", 50, 1)
 	if(teleporter.locked)
 		teleporter.locked = FALSE
 	teleporter.toggle_open()

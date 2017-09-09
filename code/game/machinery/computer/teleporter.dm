@@ -11,7 +11,7 @@
 	var/obj/machinery/teleport/station/power_station
 	var/calibrating
 	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
-					//Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
+					//Setting this to 1 will set locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
 /obj/machinery/computer/teleporter/Initialize()
 	. = ..()

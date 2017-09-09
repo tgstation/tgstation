@@ -198,16 +198,16 @@
 	set category = "Spider"
 	set desc = "Spread a sticky web to slow down prey."
 
-	var/T = src.loc
+	var/T = loc
 
 	if(stat == DEAD)
 		return
 	if(busy != SPINNING_WEB)
 		busy = SPINNING_WEB
-		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
+		visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 		stop_automated_movement = 1
 		if(do_after(src, 40, target = T))
-			if(busy == SPINNING_WEB && src.loc == T)
+			if(busy == SPINNING_WEB && loc == T)
 				new /obj/structure/spider/stickyweb(T)
 		busy = SPIDER_IDLE
 		stop_automated_movement = FALSE
@@ -229,7 +229,7 @@
 				continue
 			if(Adjacent(L))
 				choices += L
-		for(var/obj/O in src.loc)
+		for(var/obj/O in loc)
 			if(O.anchored)
 				continue
 			if(Adjacent(O))
@@ -279,13 +279,13 @@
 		to_chat(src, "<span class='warning'>You are too hungry to do this!</span>")
 	else if(busy != LAYING_EGGS)
 		busy = LAYING_EGGS
-		src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
+		visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
 		stop_automated_movement = 1
-		if(do_after(src, 50, target = src.loc))
+		if(do_after(src, 50, target = loc))
 			if(busy == LAYING_EGGS)
 				E = locate() in get_turf(src)
 				if(!E)
-					var/obj/structure/spider/eggcluster/C = new /obj/structure/spider/eggcluster(src.loc)
+					var/obj/structure/spider/eggcluster/C = new /obj/structure/spider/eggcluster(loc)
 					if(ckey)
 						C.player_spiders = 1
 					C.poison_type = poison_type

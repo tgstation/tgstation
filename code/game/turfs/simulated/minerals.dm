@@ -75,7 +75,7 @@
 		return attack_hand(user)
 
 /turf/closed/mineral/proc/gets_drilled()
-	if (mineralType && (src.mineralAmt > 0) && (src.mineralAmt < 11))
+	if (mineralType && (mineralAmt > 0) && (mineralAmt < 11))
 		var/i
 		for(i in 1 to mineralAmt)
 			new mineralType(src)
@@ -109,12 +109,12 @@
 	else if(iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active, /obj/item/pickaxe))
-			src.attackby(R.module_active,R)
+			attackby(R.module_active,R)
 			return
 /*	else if(istype(AM, /obj/mecha))
 		var/obj/mecha/M = AM
 		if(istype(M.selected, /obj/item/mecha_parts/mecha_equipment/drill))
-			src.attackby(M.selected,M)
+			attackby(M.selected,M)
 			return*/
 //Aparantly mechs are just TOO COOL to call Collide())
 	else
@@ -128,12 +128,12 @@
 	switch(severity)
 		if(3)
 			if (prob(75))
-				src.gets_drilled(null, 1)
+				gets_drilled(null, 1)
 		if(2)
 			if (prob(90))
-				src.gets_drilled(null, 1)
+				gets_drilled(null, 1)
 		if(1)
-			src.gets_drilled(null, 1)
+			gets_drilled(null, 1)
 	return
 
 /turf/closed/mineral/Spread(turf/T)
@@ -161,9 +161,9 @@
 		if(T && ismineralturf(T))
 			var/turf/closed/mineral/M = T
 			M.mineralAmt = rand(1, 5)
-			M.environment_type = src.environment_type
-			M.turf_type = src.turf_type
-			M.baseturf = src.baseturf
+			M.environment_type = environment_type
+			M.turf_type = turf_type
+			M.baseturf = baseturf
 			src = M
 			M.levelupdate()
 
@@ -448,7 +448,7 @@
 		stage = GIBTONITE_STABLE
 		if(det_time < 0)
 			det_time = 0
-		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [src.det_time] reactions left till the explosion!</span>")
+		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [det_time] reactions left till the explosion!</span>")
 
 /turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated

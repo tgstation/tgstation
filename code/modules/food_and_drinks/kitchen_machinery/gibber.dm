@@ -46,7 +46,7 @@
 		add_overlay("gridle")
 
 /obj/machinery/gibber/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/gibber/container_resist(mob/living/user)
 	go_out()
@@ -75,7 +75,7 @@
 			return
 
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		if(do_after(user, gibtime, target = src))
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
@@ -112,7 +112,7 @@
 
 	if(usr.incapacitated())
 		return
-	src.go_out()
+	go_out()
 	add_fingerprint(usr)
 	return
 
@@ -121,14 +121,14 @@
 	update_icon()
 
 /obj/machinery/gibber/proc/startgibbing(mob/user)
-	if(src.operating)
+	if(operating)
 		return
-	if(!src.occupant)
+	if(!occupant)
 		visible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
 	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
-	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+	playsound(loc, 'sound/machines/juicer.ogg', 50, 1)
 	operating = TRUE
 	update_icon()
 
@@ -179,18 +179,18 @@
 	add_logs(user, occupant, "gibbed")
 	mob_occupant.death(1)
 	mob_occupant.ghostize()
-	qdel(src.occupant)
-	spawn(src.gibtime)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	qdel(occupant)
+	spawn(gibtime)
+		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = FALSE
 		var/turf/T = get_turf(src)
 		var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
 		var/obj/item/skin = allskin
-		skin.loc = src.loc
+		skin.loc = loc
 		skin.throw_at(pick(nearby_turfs),meat_produced,3)
 		for (var/i=1 to meat_produced)
 			var/obj/item/meatslab = allmeat[i]
-			meatslab.loc = src.loc
+			meatslab.loc = loc
 			meatslab.throw_at(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced)
 				var/turf/gibturf = pick(nearby_turfs)

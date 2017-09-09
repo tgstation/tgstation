@@ -144,7 +144,7 @@
 	return ..()
 
 /mob/living/carbon/true_devil/attack_ghost(mob/dead/observer/user as mob)
-	if(ascended || user.mind.soulOwner == src.mind)
+	if(ascended || user.mind.soulOwner == mind)
 		var/mob/living/simple_animal/imp/S = new(get_turf(loc))
 		S.key = user.key
 		S.mind.assigned_role = "Imp"

@@ -27,47 +27,47 @@
 
 	var/dat = ""
 
-	if (src.occupier)
+	if (occupier)
 		var/laws
-		dat += "<h3>Stored AI: [src.occupier.name]</h3>"
-		dat += "<b>System integrity:</b> [(src.occupier.health+100)/2]%<br>"
+		dat += "<h3>Stored AI: [occupier.name]</h3>"
+		dat += "<b>System integrity:</b> [(occupier.health+100)/2]%<br>"
 
-		if (src.occupier.laws.zeroth)
-			laws += "<b>0:</b> [src.occupier.laws.zeroth]<BR>"
+		if (occupier.laws.zeroth)
+			laws += "<b>0:</b> [occupier.laws.zeroth]<BR>"
 
-		for (var/index = 1, index <= src.occupier.laws.ion.len, index++)
-			var/law = src.occupier.laws.ion[index]
+		for (var/index = 1, index <= occupier.laws.ion.len, index++)
+			var/law = occupier.laws.ion[index]
 			if (length(law) > 0)
 				var/num = ionnum()
 				laws += "<b>[num]:</b> [law]<BR>"
 
 		var/number = 1
-		for (var/index = 1, index <= src.occupier.laws.inherent.len, index++)
-			var/law = src.occupier.laws.inherent[index]
+		for (var/index = 1, index <= occupier.laws.inherent.len, index++)
+			var/law = occupier.laws.inherent[index]
 			if (length(law) > 0)
 				laws += "<b>[number]:</b> [law]<BR>"
 				number++
 
-		for (var/index = 1, index <= src.occupier.laws.supplied.len, index++)
-			var/law = src.occupier.laws.supplied[index]
+		for (var/index = 1, index <= occupier.laws.supplied.len, index++)
+			var/law = occupier.laws.supplied[index]
 			if (length(law) > 0)
 				laws += "<b>[number]:</b> [law]<BR>"
 				number++
 
 		dat += "<b>Laws:</b><br>[laws]<br>"
 
-		if (src.occupier.stat == DEAD)
+		if (occupier.stat == DEAD)
 			dat += "<span class='bad'>AI non-functional</span>"
 		else
 			dat += "<span class='good'>AI functional</span>"
-		if (!src.active)
+		if (!active)
 			dat += {"<br><br><A href='byond://?src=\ref[src];fix=1'>Begin Reconstruction</A>"}
 		else
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
 	dat += {"<br><A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 	var/datum/browser/popup = new(user, "computer", "AI System Integrity Restorer", 400, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
