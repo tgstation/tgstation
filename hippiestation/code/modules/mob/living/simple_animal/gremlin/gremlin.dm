@@ -18,8 +18,8 @@ var/list/bad_gremlin_items = list()
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/in_vent = FALSE
 
-	health = 25
-	maxHealth = 25
+	health = 20
+	maxHealth = 20
 	search_objects = 3 //Completely ignore mobs
 
 	//Tampering is handled by the 'npc_tamper()' obj proc
