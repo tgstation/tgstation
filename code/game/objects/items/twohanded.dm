@@ -505,6 +505,7 @@
 	var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
 	if(myhead)
 		myhead.dismember()
+		playsound(src, "sound/weapons/chainsawhit.ogg", 100, 1)
 	return(BRUTELOSS)
 
 /obj/item/twohanded/required/chainsaw/attack_self(mob/user)
