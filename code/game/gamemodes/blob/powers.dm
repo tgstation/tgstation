@@ -198,7 +198,7 @@
 		to_chat(src, "<span class='userdanger'>You have no core and are about to die! May you rest in peace.</span>")
 		return
 	var/area/A = get_area(T)
-	if(isspaceturf(T) || istype(A, /area/shuttle))
+	if(isspaceturf(T) || A && !A.blob_allowed)
 		to_chat(src, "<span class='warning'>You cannot relocate your core here!</span>")
 		return
 	if(!can_buy(80))
