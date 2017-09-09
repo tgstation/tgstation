@@ -29,6 +29,8 @@
 	if (notransform)
 		return
 
+	OnHippieLifeAfterNoTransform() // hippiestation/code/modules/mob/living/carbon/human/life.dm
+
 	if(..()) //not dead
 		handle_active_genes()
 
@@ -378,6 +380,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /mob/living/carbon/human/handle_status_effects()
 	..()
+	checklisp()
 	if(drunkenness)
 		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
 

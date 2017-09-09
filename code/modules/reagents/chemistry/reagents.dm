@@ -49,10 +49,10 @@
 
 /datum/reagent/proc/reaction_obj(obj/O, volume)
 	return
-
+/*overriden and modified to allow for any chem without an existing override to apply turf reagent decals
 /datum/reagent/proc/reaction_turf(turf/T, volume)
 	return
-
+*/
 /datum/reagent/proc/on_mob_life(mob/living/M)
 	current_cycle++
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.

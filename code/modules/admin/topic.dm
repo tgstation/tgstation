@@ -18,7 +18,7 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
-	
+
 	if(!CheckAdminHref(href, href_list))
 		return
 
@@ -2285,4 +2285,3 @@
 		dat += thing_to_check
 
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
-

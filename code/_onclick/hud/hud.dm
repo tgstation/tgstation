@@ -108,6 +108,7 @@
 	healths = null
 	healthdoll = null
 	internals = null
+	staminas = null
 	lingchemdisplay = null
 	devilsouldisplay = null
 	lingstingdisplay = null

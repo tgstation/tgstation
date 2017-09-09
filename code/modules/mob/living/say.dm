@@ -102,6 +102,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 
 	if(stat == DEAD)
+		if(message == "*fart" || message == "*scream") //Avoid deachat spam via the hotkeys
+			return
 		say_dead(original_message)
 		return
 
@@ -158,7 +160,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message = Ellipsis(message, 10, 1)
 			last_words = message
 			message_mode = MODE_WHISPER_CRIT
-			succumbed = TRUE
 	else
 		log_talk(src,"[name]/[key] : [message]",LOGSAY)
 
@@ -423,7 +424,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(message_mode == MODE_WHISPER)
 		. = verb_whisper
 	else if(message_mode == MODE_WHISPER_CRIT)
-		. = "[verb_whisper] in [p_their()] last breath"
+		. = "painfully [verb_whisper]"
 	else if(stuttering)
 		. = "stammers"
 	else if(getBrainLoss() >= 60)

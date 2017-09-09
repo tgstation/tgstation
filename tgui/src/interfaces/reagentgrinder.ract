@@ -1,0 +1,43 @@
+{{#if data.processing}}
+<ui-notice>
+  <span>The grinder is currently processing and cannot be used.</span>
+</ui-notice>
+{{/if}}
+<ui-display title='Processing Chamber' button>
+  {{#partial button}}
+    <ui-button icon='eject' state='{{(data.operating == 0) && data.contents ? null : "disabled"}}' action='eject'>Eject Contents</ui-button>
+  {{/partial}}
+  <ui-section label='Grinding'>
+    <span class='{{data.operating ? "average" : "good"}}'>{{data.operating ? "Busy" : "Ready"}}</span>
+	<ui-button icon='refresh' state='{{(data.operating == 0) && data.contents ? null : "disabled"}}' action='grind'>Activate</ui-button>
+  </ui-section>
+  <ui-section label='Contents'>
+    {{#if data.contents}}
+      {{#each adata.contentslist}}
+        <span class='highlight' intro-outro='fade'>The {{name}}</span><br/>
+      {{else}}
+        <span>No Contents</span>
+      {{/each}}
+    {{else}}
+      <span>No Contents</span>
+    {{/if}}
+	</ui-section>
+</ui-display>
+<ui-display title='Container' button>
+  {{#partial button}}
+    <ui-button icon='eject' state='{{(data.operating == 0) && data.isBeakerLoaded ? null : "disabled"}}' action='detach'>Detach</ui-button>
+  {{/partial}}
+  <ui-section label='Reagents'>
+    {{#if data.isBeakerLoaded}}
+      <span>{{Math.round(adata.beakerCurrentVolume)}}/{{data.beakerMaxVolume}} Units</span>
+      <br/>
+      {{#each adata.beakerContents}}
+        <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br/>
+      {{else}}
+        <span class='bad'>Container Empty</span>
+      {{/each}}
+    {{else}}
+      <span class='average'>No Container</span>
+    {{/if}}
+	</ui-section>
+</ui-display>

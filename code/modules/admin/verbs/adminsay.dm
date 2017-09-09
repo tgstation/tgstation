@@ -19,4 +19,3 @@
 		to_chat(GLOB.admins, msg)
 
 	SSblackbox.add_details("admin_verb","Asay") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-

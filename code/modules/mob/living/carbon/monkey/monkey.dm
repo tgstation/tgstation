@@ -42,6 +42,7 @@
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
 	internal_organs += new /obj/item/organ/eyes
+	internal_organs += new /obj/item/organ/butt
 	internal_organs += new /obj/item/organ/ears
 	internal_organs += new /obj/item/organ/liver
 	internal_organs += new /obj/item/organ/stomach

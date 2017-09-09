@@ -239,7 +239,7 @@
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#B22222"
 	tastes = list("bacon" = 1)
-	foodtype = RAW | MEAT 
+	foodtype = RAW | MEAT
 
 /obj/item/reagent_containers/food/snacks/meat/bacon
 	name = "piece of bacon"
