@@ -140,7 +140,7 @@
 	unit_name = "Tarot cards"
 	export_types = list(/obj/item/guardiancreator)
 	
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
+/datum/export/weapon/inquisitor
 	cost = 10000
 	unit_name = "Inquisitor hardsuit"
 	export_types = list(/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor)
