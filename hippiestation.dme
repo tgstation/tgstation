@@ -2364,6 +2364,7 @@
 #include "hippiestation\code\modules\mob\living\simple_animal\gremlin\gremlin.dm"
 #include "hippiestation\code\modules\mob\living\simple_animal\gremlin\gremlin_act.dm"
 #include "hippiestation\code\modules\mob\living\simple_animal\guardian\types\standard.dm"
+#include "hippiestation\code\modules\mob\living\simple_animal\hostile\feral_cat.dm"
 #include "hippiestation\code\modules\mob\living\simple_animal\hostile\sharks.dm"
 #include "hippiestation\code\modules\modular_computers\computers\item\laptop.dm"
 #include "hippiestation\code\modules\paperwork\photocopier.dm"
