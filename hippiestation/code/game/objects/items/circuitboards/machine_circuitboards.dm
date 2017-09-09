@@ -1,7 +1,6 @@
 /obj/item/circuitboard/machine/pressure
 	name = "circuit board (Pressurized reaction vessel)"
 	build_path = /obj/machinery/chem/pressure
-	origin_tech = "materials=5;engineering=5;programming=2;plasmatech=3;biotech=2"
 	req_components = list(
 							/obj/item/stock_parts/matter_bin = 1,
 							/obj/item/stock_parts/capacitor = 2,
@@ -14,7 +13,6 @@
 /obj/item/circuitboard/machine/centrifuge
 	name = "circuit board (Centrifuge)"
 	build_path = /obj/machinery/chem/centrifuge
-	origin_tech = "materials=6;engineering=6;programming=5;plasmatech=2;biotech=4"
 	req_components = list(
 							/obj/item/stock_parts/matter_bin = 2,
 							/obj/item/stock_parts/capacitor = 1,
@@ -27,7 +25,6 @@
 /obj/item/circuitboard/machine/radioactive
 	name = "circuit board (Radioactive molecular reassembler)"
 	build_path = /obj/machinery/chem/radioactive
-	origin_tech = "materials=6;engineering=6;programming=5;plasmatech=2;biotech=4"
 	req_components = list(
 							/obj/item/stock_parts/matter_bin = 1,
 							/obj/item/stock_parts/capacitor = 5,
@@ -40,7 +37,6 @@
 /obj/item/circuitboard/machine/bluespace
 	name = "circuit board (Bluespace recombobulator)"
 	build_path = /obj/machinery/chem/bluespace
-	origin_tech = "materials=6;engineering=6;programming=5;plasmatech=3;biotech=4,bluespace = 3"
 	req_components = list(
 							/obj/item/stock_parts/matter_bin = 3,
 							/obj/item/stock_parts/capacitor = 10,
