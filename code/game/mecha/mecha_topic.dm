@@ -313,17 +313,17 @@
 				occupant_message("Disconnected from the air system port.")
 				log_message("Disconnected from gas port.")
 			else
-				occupant_message("<span class='warning'>Unable to disconnected from the air system port!</span>")
+				occupant_message("<span class='warning'>Unable to disconnect from the air system port!</span>")
 				return
 		else
-			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
+			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
 			if(internal_tank.connect(possible_port))
 				occupant_message("Connected to the air system port.")
 				log_message("Connected to gas port.")
 			else
-				occupant_message("<span class='warning'>Unable to connected with air system port!</span>")
+				occupant_message("<span class='warning'>Unable to connect with air system port!</span>")
 				return
-		send_byjax(src.occupant,"exosuit.browser","t_port_connection","[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port")
+		send_byjax(occupant,"exosuit.browser","t_port_connection","[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port")
 
 	if(href_list["dna_lock"])
 		if(occupant && !iscarbon(occupant))
