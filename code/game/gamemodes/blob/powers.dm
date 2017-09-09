@@ -96,6 +96,10 @@
 				return
 	if(!can_buy(price))
 		return
+	var/area/A = get_area(T)
+	if(!A.blob_allowed)
+		to_chat(src, "<span class='warning'>You cannot place a blob here!</span>")
+		return FALSE
 	var/obj/structure/blob/N = B.change_to(blobType, src)
 	return N
 
@@ -130,9 +134,6 @@
 	set desc = "Create a node, which will power nearby factory and resource blobs."
 	if(!T)
 		var/T = get_turf(src)
-	if(T.z != ZLEVEL_STATION)
-			to_chat(src, "<span class='warning'>You cannot place a node here!</span>")
-			return FALSE
 	createSpecial(50, /obj/structure/blob/node, 5, 0)
 
 /mob/camera/blob/verb/create_factory()
@@ -250,6 +251,10 @@
 	if(!possibleblobs.len)
 		to_chat(src, "<span class='warning'>There is no blob adjacent to the target tile!</span>")
 		return
+	var/area/A = get_area(T)
+	if(!A.blob_allowed)
+		to_chat(src, "<span class='warning'>You cannot place a blob here!</span>")
+		return FALSE
 	if(can_buy(4))
 		var/attacksuccess = FALSE
 		for(var/mob/living/L in T)
