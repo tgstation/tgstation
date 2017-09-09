@@ -1,6 +1,6 @@
 /datum/admins/proc/CheckAdminHref(href, href_list)
 	var/auth = href_list["admin_token"]
-	. = auth && auth != href_token && auth != GLOB.href_token
+	. = auth && (auth == href_token || auth == GLOB.href_token)
 	if(.)
 		return
 	var/msg = !auth ? "no" : "a bad"
