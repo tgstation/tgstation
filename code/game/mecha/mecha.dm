@@ -40,7 +40,6 @@
 	var/last_message = 0
 	var/add_req_access = 1
 	var/maint_access = 0
-	var/port_connection = 0
 	var/dna_lock//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect_system/spark_spread/spark_system = new
@@ -475,7 +474,7 @@
 		user.forceMove(get_turf(src))
 		to_chat(user, "<span class='notice'>You climb out from [src].</span>")
 		return 0
-	if(connected_port)
+	if(internal_tank.connected_port)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
@@ -764,48 +763,11 @@
 		. = t_air.return_pressure()
 	return
 
-
 /obj/mecha/proc/return_temperature()
 	var/datum/gas_mixture/t_air = return_air()
 	if(t_air)
 		. = t_air.return_temperature()
 	return
-
-// copy-paste from portable_atmospherics.dm
-/obj/mecha/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
-	if (!new_port)
-		occupant_message("<span class='notice'>Gas port is nof found.</span>")
-		return 0
-
-	if (new_port.connected_device)
-		occupant_message("<span class='notice'>Gas port is occupied.</span>")
-		return 0
-
-	//Make sure not already connected to something else
-	if (connected_port)
-		return 0
-
-	//Make sure are close enough for a valid connection
-	if(new_port.loc != loc)
-		return 0
-
-	//Perform the connection
-	connected_port = new_port
-	connected_port.connected_device = src
-	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
-	connected_port_parent.reconcile_air()
-
-	log_message("Connected to gas port.")
-	return 1
-
-/obj/mecha/proc/disconnect()
-	if(!connected_port)
-		return 0
-
-	connected_port.connected_device = null
-	connected_port = null
-	log_message("Disconnected from gas port.")
-	return 1
 
 /obj/mecha/portableConnectorReturnAir()
 	return internal_tank.return_air()
