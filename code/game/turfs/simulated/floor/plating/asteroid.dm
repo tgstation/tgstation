@@ -62,6 +62,10 @@
 		return ..()
 	ChangeTurf(/turf/open/space)
 
+/turf/open/floor/plating/asteroid/ex_act(severity, target)
+	. = SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
+	contents_explosion(severity, target)
+
 
 /turf/open/floor/plating/asteroid/basalt
 	name = "volcanic floor"

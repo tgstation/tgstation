@@ -63,7 +63,7 @@
 					if(isplatingturf(OT))
 						var/turf/open/floor/plating/POT = parent
 						POT.icon_plating = "[POT.postdig_icon]"
-					OT.icon_state = "[OT.postdig_icon]"
+						POT.icon_state = "[OT.postdig_icon]"
 
 			if(OT.slowdown) //Things like snow slow you down until you dig them.
 				OT.slowdown = 0
