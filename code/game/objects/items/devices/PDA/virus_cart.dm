@@ -90,7 +90,7 @@
 		return
 	if(!isnull(target) && !target.toff)
 		charges--
-		var/lock_code = "[rand(100,999)] [pick(phonetic_alphabet)]
+		var/lock_code = "[rand(100,999)] [pick(world.file2list("strings/phonetic_alphabet.txt")]
 		to_chat(U, "<span class='notice'>Virus Sent!  The unlock code to the target is: [lock_code]</span>")
 		if(!target.hidden_uplink)
 			var/obj/item/device/uplink/uplink = new(target)
