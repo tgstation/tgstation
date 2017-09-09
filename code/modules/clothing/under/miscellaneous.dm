@@ -730,11 +730,3 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
-
-/obj/item/clothing/under/pharoah
-	name = "pharoah tunic"
-	desc = "Fitting for the avatar of space Osiris."
-	icon_state = "pharoah"
-	item_state = "pharoah"
-	item_color = "pharoah"
-	can_adjust = FALSE
