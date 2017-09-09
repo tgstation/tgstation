@@ -280,6 +280,7 @@
 	body_parts_covered = HEAD
 	flags_1 = THICKMATERIAL_1
 	flags_inv = HIDEHAIR|HIDEEARS
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
 	name = "bloated human suit"

@@ -1,0 +1,4 @@
+author: "Jay"
+delete-after: True
+changes: 
+  - bugfix: "Goliaths can be butchered again"
