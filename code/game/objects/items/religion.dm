@@ -49,7 +49,7 @@
 	for(var/V in inspired)
 		var/mob/living/carbon/human/H = V
 		if(H != user)
-			to_chat(H, "<span class='notice'>Your confidence surges as [user] flourishes their [name]!</span>")
+			to_chat(H, "<span class='notice'>Your confidence surges as [user] flourishes [user.p_their()] [name]!</span>")
 		inspiration(H)
 		special_inspiration(H)
 
