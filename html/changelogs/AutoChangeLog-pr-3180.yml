@@ -1,0 +1,4 @@
+author: "Thefastfoodguy"
+delete-after: True
+changes: 
+  - bugfix: "try to fix softglove sniping"
