@@ -30,6 +30,7 @@
 	return ..()
 
 /obj/structure/transit_tube/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 

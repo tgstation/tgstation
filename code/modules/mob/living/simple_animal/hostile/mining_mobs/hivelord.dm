@@ -110,7 +110,20 @@
 	del_on_death = 1
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
+	shiny_chance = 5
 	var/mob/living/carbon/human/stored_mob
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/make_shiny()
+	name = "dwarf legion"
+	real_name = name
+	desc = "On the rare occasion that a human with dwarfism falls to a legion, they can become infested like any other."
+	icon_state = "dwarf_legion"
+	icon_living = "dwarf_legion"
+	icon_aggro = "dwarf_legion"
+	icon_dead = "dwarf_legion"
+	maxHealth = 60
+	health = 60
+	speed = 2 //faster!
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
@@ -170,11 +183,13 @@
 	H.adjustBruteLoss(1000)
 	L.stored_mob = H
 	H.forceMove(L)
+	if(H.dna.check_mutation(DWARFISM))
+		L.make_shiny() //dwarf legions aren't just fluff!
 	qdel(src)
 
 //Advanced Legion is slightly tougher to kill and can raise corpses (revive other legions)
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/advanced
-	stat_attack = 2
+	stat_attack = DEAD
 	maxHealth = 120
 	health = 120
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
@@ -184,7 +199,7 @@
 	icon_dead = "dwarf_legion"
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
-	stat_attack = 2
+	stat_attack = DEAD
 	can_infest_dead = TRUE
 
 //Legion that spawns Legions
