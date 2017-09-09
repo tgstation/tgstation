@@ -27,9 +27,6 @@
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
 			return FALSE
-		if(T.z != ZLEVEL_STATION)
-			to_chat(src, "<span class='warning'>You cannot place your core here!</span>")
-			return FALSE
 		for(var/obj/O in T)
 			if(istype(O, /obj/structure/blob))
 				if(istype(O, /obj/structure/blob/normal))
@@ -131,6 +128,11 @@
 	set category = "Blob"
 	set name = "Create Node Blob (50)"
 	set desc = "Create a node, which will power nearby factory and resource blobs."
+	if(!T)
+		var/T = get_turf(src)
+	if(T.z != ZLEVEL_STATION)
+			to_chat(src, "<span class='warning'>You cannot place a node here!</span>")
+			return FALSE
 	createSpecial(50, /obj/structure/blob/node, 5, 0)
 
 /mob/camera/blob/verb/create_factory()
