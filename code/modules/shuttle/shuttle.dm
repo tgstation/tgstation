@@ -574,7 +574,7 @@
 
 		if(move_mode & MOVE_AREA)
 			areas_to_move[old_area] = TRUE
-		
+
 		old_turfs[place] = move_mode
 
 	/*******************************************All onShuttleMove procs******************************************/

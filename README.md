@@ -83,10 +83,8 @@ the new version.
 
 ## MAPS
 Hippie Station currently comes equipped with six maps.
-
 * [Hippie BoxStation (default)](http://tgstation13.org/wiki/Boxstation)
 * [BoxStation](http://tgstation13.org/wiki/Boxstation)
-* [MetaStation](https://tgstation13.org/wiki/MetaStation)
 * [DeltaStation](https://tgstation13.org/wiki/DeltaStation)
 * [OmegaStation](https://tgstation13.org/wiki/OmegaStation)
 * [PubbyStation](https://tgstation13.org/wiki/PubbyStation)

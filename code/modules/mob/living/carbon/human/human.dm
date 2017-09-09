@@ -34,10 +34,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	handcrafting = new()
 
-	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
-
-	update_teeth()
-
 	..()
 
 /mob/living/carbon/human/create_internal_organs()
@@ -67,7 +63,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	internal_organs += new dna.species.mutantears
 	internal_organs += new dna.species.mutanttongue
 	internal_organs += new /obj/item/organ/brain
-	internal_organs += new /obj/item/organ/butt
 	..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
@@ -217,13 +212,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(legcuffed)
 		dat += "<tr><td><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A></td></tr>"
 
-	for(var/I in bodyparts)
-		if(istype(I, /obj/item/bodypart))
-			var/obj/item/bodypart/L = I
-
-			for(var/obj/item/J in L.embedded_objects)
-				dat += "<tr><td><a href='byond://?src=\ref[src];embedded_object=\ref[J];embedded_limb=\ref[L]'>Embedded in [L]: [J]</a><br></td></tr>"
-
 	dat += {"</table>
 	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
@@ -252,8 +240,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
-			usr.visible_message("<span class='warning'>[usr] attempts to remove \the [I] from [usr == src ? "their" : name + "'s"] [L.name].</span>",\
-								"<span class='notice'>You attempt to remove \the [I] from [usr == src ? "your" : name + "'s"] [L.name]... (It will take [time_taken/10] seconds.)</span>")
+			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [time_taken/10] seconds.)</span>")
 			if(do_after(usr, time_taken, needhand = 1, target = src))
 				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 					return
@@ -261,10 +248,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 				L.receive_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.forceMove(get_turf(src))
 				usr.put_in_hands(I)
-				emote("scream")
-
-				visible_message("[usr] successfully rips \the [I] out of [usr == src ? "their" : name + "'s"] [L.name]!",\
-								"<span class='notice'>You successfully remove \the [I] from [usr == src ? "your" : name + "'s"] [L.name].</span>")
+				usr.emote("scream")
+				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 			return
@@ -804,7 +789,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = health
+			var/health_amount = health - staminaloss
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)
@@ -922,7 +907,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	.["Make alien"] = "?_src_=vars;[HrefToken()];makealien=\ref[src]"
 	.["Make slime"] = "?_src_=vars;[HrefToken()];makeslime=\ref[src]"
 	.["Toggle Purrbation"] = "?_src_=vars;[HrefToken()];purrbation=\ref[src]"
-	.["Make Cluwne"] = "?_src_=vars;[HrefToken()];cluwneing=\ref[src]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target) || !isliving(user) || stat || user.stat)//Get consent first :^)
