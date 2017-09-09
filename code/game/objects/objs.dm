@@ -199,7 +199,7 @@
 
 /obj/vv_get_dropdown()
 	. = ..()
-	.["Delete all of type"] = "?_src_=vars;delall=\ref[src]"
+	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=\ref[src]"
 
 /obj/examine(mob/user)
 	..()
