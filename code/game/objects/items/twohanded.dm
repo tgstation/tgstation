@@ -501,8 +501,9 @@
 	var/on = FALSE
 
 /obj/item/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins to tear [user.p_their()] head off with the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
+	if(myhead)
 	myhead.dismember()
 	return(BRUTELOSS)
 
