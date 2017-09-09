@@ -115,7 +115,7 @@
 	unit_name = "Lifesteal mod disk"
 	export_types = list(/obj/item/borg/upgrade/modkit/lifesteal)
 	
-/datum/export/weapon/Inferno
+/datum/export/weapon/inferno
 	cost = 10000
 	unit_name = "Inferno"
 	export_types = list(/obj/item/grenade/clusterbuster/inferno)
@@ -135,7 +135,7 @@
 	unit_name = "Beserker suit"
 	export_types = list(/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker)
 	
-/datum/export/weapon/tarotcards
+/datum/export/weapon/tarot
 	cost = 20000
 	unit_name = "Tarot cards"
 	export_types = list(/obj/item/guardiancreator)
