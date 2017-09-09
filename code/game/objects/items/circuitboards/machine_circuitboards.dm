@@ -723,9 +723,9 @@
 		/obj/item/stock_parts/console_screen = 1,
 		/obj/item/stack/sheet/glass = 1)
 
-/obj/item/circuitboard/machine/vending/toyliberationstation
+/obj/item/circuitboard/machine/vending/donksofttoyvendor
 	name = "Donksoft Toy Vendor (Machine Board)"
-	build_path = /obj/machinery/vending/toyliberationstation
+	build_path = /obj/machinery/vending/donksofttoyvendor
 	origin_tech = "programming=1;syndicate=2"
 	req_components = list(
 		/obj/item/stock_parts/console_screen = 1,
