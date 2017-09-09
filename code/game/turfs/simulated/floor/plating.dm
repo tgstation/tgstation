@@ -29,6 +29,7 @@
 		icon_state = icon_plating //Because asteroids are 'platings' too.
 
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
+	. = SendSignal(COMSIG_PARENT_ATTACKBY, C, user, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/stack/rods))
@@ -70,6 +71,7 @@
 				icon_state = icon_plating
 				burnt = 0
 				broken = 0
+	return
 
 /turf/open/floor/plating/foam
 	name = "metal foam plating"
