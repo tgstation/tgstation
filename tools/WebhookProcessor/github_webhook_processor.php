@@ -442,10 +442,11 @@ function update_pr_balance($payload) {
 function auto_update($payload){
 	global $enable_live_tracking;
 	global $path_to_script;
+	global $repoOwnerAndName;
 	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script))
 		return;
 	
-	$content = file_get_contents('https://raw.githubusercontent.com/' . $payload['pull_request']['base']['repo']['full_name'] . '/master/'. $path_to_script);
+	$content = file_get_contents('https://raw.githubusercontent.com/' . $repoOwnerAndName . '/master/'. $path_to_script);
 
 	create_comment($payload, "Edit detected. Self updating... Here is my new code:\n``" . "`HTML+PHP\n" . $content . "\n``" . '`');
 
