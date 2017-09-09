@@ -287,3 +287,7 @@
 			ChangeTurf(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
+
+/turf/closed/wall/examine(mob/user)
+	..()
+	to_chat(user, "The outer plating is <i>welded</i> firmly in place.")
