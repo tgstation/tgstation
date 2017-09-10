@@ -403,7 +403,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/ammo_box/magazine/m10mm/hp
 	cost = 3
 
-/datum/uplink_item/ammo/pistolhp
+/datum/uplink_item/ammo/pistolaps
 	name = "9mm Handgun Magazine"
 	desc = "An additional 15-round 9mm magazine, compatible with the Stetchkin APS pistol, found in the Spetsnaz Pyro bundle."
 	item = /obj/item/ammo_box/magazine/pistolm9mm
