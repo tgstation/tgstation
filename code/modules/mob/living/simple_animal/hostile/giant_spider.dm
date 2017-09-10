@@ -142,6 +142,12 @@
 	icon_dead = "nurse_dead"
 	maxHealth = 40
 	health = 40
+	var/datum/action/innate/spider/comm/letmetalkpls
+
+	/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Initialize()
+		..()
+		letmetalkpls = new
+		letmetalkpls.Grant(src)
 
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
@@ -336,34 +342,38 @@
 		busy = SPIDER_IDLE
 		stop_automated_movement = FALSE
 
-/datum/action/spider/comm
+/mob/living/simple_animal/hostile/poison/giant_spider/Login()
+	..()
+	GLOB.spidermobs += src
+
+/mob/living/simple_animal/hostile/poison/giant_spider/Logout(GLOB.spidermobs)
+	..()
+	GLOB.spidermobs -= src
+
+/datum/action/innate/spider/comm
 	name = "Command"
 	button_icon_state = "cult_comms"
 
-	/datum/action/comm/IsAvailable()
-	if(!mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife(owner))
+/datum/action/innate/spider/comm/IsAvailable()
+	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife))
 		return FALSE
-	return ..()
+	return TRUE
 
-	/datum/action/innate/spider/comm/Activate()
-	var/input = stripped_input(usr, "Input a message for your legions to follow.", "Command", "")
-	if(!input || !IsAvailable())
-		return
-
+/datum/action/innate/spider/comm/Trigger()
+	if(IsAvailable())
+		var/input = stripped_input(usr, "Input a message for your legions to follow.", "Command", "")
+		if(QDELETED(src) || !input || !IsAvailable())
+			return FALSE
 	spider_command(usr, input)
+	return TRUE
 
-/proc/spider_command(mob/living/user, message)
+/datum/action/innate/spider/comm/proc/spider_command(mob/living/user, message)
 	var/my_message
 	if(!message)
 		return
-	my_message = "<b>COMMAND FROM SPIDER QUEEN:</b> [message]
-	for(var/mob/M in GLOB.mob_list)
-		if(/mob/living/simple_animal/hostile/poison/giant_spider(M))
-			to_chat(M, my_message)
-		else if(M in GLOB.dead_mob_list)
-			var/link = FOLLOW_LINK(M, user)
-			to_chat(M, "[link] [my_message]")
-
+	my_message = "<b>COMMAND FROM SPIDER QUEEN:</b> [message]"
+	for(var/mob/living/simple_animal/hostile/poison/giant_spider/M in GLOB.spidermobs)
+		to_chat(M, my_message)
 	log_talk(user, "SPIDERCOMMAND:[key_name(user)] : [message]",LOGSAY)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
