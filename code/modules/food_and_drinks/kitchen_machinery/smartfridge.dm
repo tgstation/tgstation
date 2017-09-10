@@ -148,6 +148,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "smartvend", name, 440, 550, master_ui, state)
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /obj/machinery/smartfridge/ui_data(mob/user)
@@ -156,16 +157,20 @@
 	var/listofitems = list()
 	for (var/I in src)
 		var/atom/movable/O = I
-		if (listofitems[O.name])
-			listofitems[O.name]["amount"]++
-		else
-			listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
+		if (!QDELETED(O))
+			if (listofitems[O.name])
+				listofitems[O.name]["amount"]++
+			else
+				listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
 	sortList(listofitems)
 
 	.["contents"] = listofitems
 	.["name"] = name
 	.["isdryer"] = FALSE
 
+
+/obj/machinery/smartfridge/handle_atom_del(atom/A) // Update the UIs in case something inside gets deleted
+	SStgui.update_uis(src)
 
 /obj/machinery/smartfridge/ui_act(action, params)
 	. = ..()
@@ -227,20 +232,7 @@
 	..()
 
 /obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
-	. = list()
-
-	var/listofitems = list()
-	for (var/I in src)
-		var/atom/movable/O = I
-
-		if (listofitems[O.name])
-			listofitems[O.name]["amount"]++
-		else
-			listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
-	sortList(listofitems)
-
-	.["contents"] = listofitems
-	.["name"] = name
+	. = ..()
 	.["isdryer"] = TRUE
 	.["verb"] = "Take"
 	.["drying"] = drying
@@ -249,6 +241,7 @@
 /obj/machinery/smartfridge/drying_rack/ui_act(action, params)
 	. = ..()
 	if(.)
+		update_icon() // This is to handle a case where the last item is taken out manually instead of through drying pop-out
 		return
 	switch(action)
 		if("Dry")
@@ -280,6 +273,7 @@
 	..()
 	if(drying)
 		if(rack_dry())//no need to update unless something got dried
+			SStgui.update_uis(src)
 			update_icon()
 
 /obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
