@@ -113,8 +113,9 @@
 	health = 40
 	melee_damage_lower = 1 //what doesn't kill you...
 	melee_damage_upper = 1
-	poison_per_bite = 80 //will soon after if there isn't medical attention!
+	poison_per_bite = 15
 	move_to_delay = 4
+	poison_type = "venom" //will soon after if there isn't medical attention!
 
 //tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
@@ -127,6 +128,7 @@
 	melee_damage_upper = 40
 	poison_per_bite = 0
 	move_to_delay = 8
+	speed = 3
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
 	name = "giant ice spider"
