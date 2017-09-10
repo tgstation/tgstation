@@ -429,6 +429,7 @@
 		else
 			return 0
 
+	var/old_direction = dir
 	var/atom/movable/pullee = pulling
 	if(pullee && get_dist(src, pullee) > 1)
 		stop_pulling()
@@ -455,10 +456,8 @@
 		s_active.close(src)
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
-		var/turf/target_turf = get_turf(src)
-		var/old_dir = turn(direct, 180)
-		var/turf/start = get_step(target_turf, old_dir)
-		makeTrail(target_turf, start)
+
+		makeTrail(newloc, T, old_direction)
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
@@ -476,7 +475,7 @@
 			if(MOVE_INTENT_WALK)
 				. += config.walk_speed
 
-/mob/living/proc/makeTrail(turf/target_turf, turf/start)
+/mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
 		return
 	var/blood_exists = FALSE
@@ -490,8 +489,8 @@
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
 				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
 				var/newdir = get_dir(target_turf, start)
-				if(newdir != dir)
-					newdir = newdir | dir
+				if(newdir != direction)
+					newdir = newdir | direction
 					if(newdir == 3) //N + S
 						newdir = NORTH
 					else if(newdir == 12) //E + W
