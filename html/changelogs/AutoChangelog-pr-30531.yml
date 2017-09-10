@@ -1,0 +1,4 @@
+author: "Kerbin_Fiber"
+delete-after: True
+changes: 
+  - rscadd: "Adds Donksoft Toy Vendor board to the Circuit Imprinter when Illegal tech is high enough and removes riot darts from the station made toy vendor"
