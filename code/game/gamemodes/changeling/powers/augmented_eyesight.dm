@@ -14,14 +14,16 @@
 		return
 	var/obj/item/organ/eyes/E = user.getorganslot("eye_sight")
 	if(E)
-		if(E.flash_protect)
+		if(active)
 			E.sight_flags |= SEE_MOBS
 			E.flash_protect = -1
 			to_chat(user, "We adjust our eyes to sense prey through walls.")
+			active = 1
 		else
 			E.sight_flags -= SEE_MOBS
 			E.flash_protect = 2
 			to_chat(user, "We adjust our eyes to protect them from bright lights.")
+			active = 0
 		user.update_sight()
 	else
 		to_chat(user, "We can't adjust our eyes if we don't have any!")
