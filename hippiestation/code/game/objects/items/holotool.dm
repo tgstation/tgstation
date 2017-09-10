@@ -19,12 +19,8 @@
 	WR.forceMove(src)
 	WR.name = namee
 	WR.usesound = usesound //use the same sound as we do
-	WR.toolspeed = 0.75
-	WR.flags_1 |= NODROP_1
-
-/obj/item/holotool/proc/SetSpeed(speed)
-	for(var/obj/item/I in contents)
-		I.toolspeed = speed
+	WR.toolspeed = 0.55
+	WR.flags_1 = NODROP_1
 
 /obj/item/holotool/proc/AddTools()
 	AddTool(/obj/item/wrench, "holo-wrench")
