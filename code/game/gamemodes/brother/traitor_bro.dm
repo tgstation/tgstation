@@ -55,7 +55,7 @@
 	var/const/team_amount = 2 //hard limit on brother teams if scaling is turned off
 	var/const/min_team_size = 2
 
-	var/meeting_areas = list("Medbay Entrance", "Science Entrance", "Engineering Entrance", "Bridge Entrance", "The Bar", "Dorms", "Escape Dock", "Arrivals", "Holodeck", "Primary Tool Storage", "Recreation Area")
+	var/meeting_areas = list("The Bar", "Dorms", "Escape Dock", "Arrivals", "Holodeck", "Primary Tool Storage", "Recreation Area", "Chapel", "Library")
 
 /datum/game_mode/traitor/bros/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -93,7 +93,7 @@
 			M.add_antag_datum(ANTAG_DATUM_BROTHER, team)
 			modePlayer += M
 	brother_teams += pre_brother_teams
-	..()
+	return ..()
 
 /datum/game_mode/proc/auto_declare_completion_brother()
 	if(!LAZYLEN(brother_teams))

@@ -5,14 +5,14 @@
 
 /datum/antagonist/brother/New(datum/mind/new_owner, datum/objective_team/brother_team/T)
 	team = T
-	..()
+	return ..()
 
 /datum/antagonist/brother/on_gain()
 	SSticker.mode.brothers += owner
 	owner.special_role = special_role
 	owner.objectives += team.objectives
 	finalize_brother()
-	..()
+	return ..()
 
 /datum/antagonist/brother/on_removal()
 	SSticker.mode.brothers -= owner
@@ -21,7 +21,7 @@
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	owner.special_role = null
-	..()
+	return ..()
 
 /datum/antagonist/brother/proc/give_meeting_area()
 	if(!owner.current || !team || !team.meeting_area)

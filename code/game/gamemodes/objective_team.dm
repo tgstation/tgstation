@@ -5,7 +5,7 @@
 	var/member_name = "member"
 
 /datum/objective_team/New(starting_members)
-	..()
+	. = ..()
 	if(starting_members)
 		members += starting_members
 
