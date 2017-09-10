@@ -312,8 +312,20 @@
 	var/list/occupantData = list()
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
+		switch(occupant.stat)
+			if(CONSCIOUS)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "good"
+			if(SOFT_CRIT)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "average"
+			if(UNCONSCIOUS)
+				data["occupant"]["stat"] = "Unconscious"
+				data["occupant"]["statstate"] = "average"
+			if(DEAD)
+				data["occupant"]["stat"] = "Dead"
+				data["occupant"]["statstate"] = "bad"
 		occupantData["name"] = mob_occupant.name
-		occupantData["stat"] = mob_occupant.stat
 		occupantData["health"] = mob_occupant.health
 		occupantData["maxHealth"] = mob_occupant.maxHealth
 		occupantData["minHealth"] = HEALTH_THRESHOLD_DEAD
