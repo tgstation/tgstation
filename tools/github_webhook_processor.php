@@ -454,13 +454,17 @@ function update_pr_balance($payload) {
 	fclose($balances_file);
 }
 
+$github_diff = null;	//for caching
 function has_tree_been_edited($payload, $tree){
-	//go to the diff url
-	$url = $payload['pull_request']['diff_url'];
-	$content = file_get_contents($url);
+	global $github_diff;
+	if ($github_diff === null) {
+		//go to the diff url
+		$url = $payload['pull_request']['diff_url'];
+		$github_diff = file_get_contents($url);
+	}
 	//find things in the _maps/map_files tree
 	//e.g. diff --git a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm
-	return $content !== FALSE && strpos($content, 'diff --git a/' . $tree) !== FALSE;
+	return $github_diff !== FALSE && strpos($github_diff, 'diff --git a/' . $tree) !== FALSE;
 }
 
 function checkchangelog($payload, $merge = false, $compile = true) {
