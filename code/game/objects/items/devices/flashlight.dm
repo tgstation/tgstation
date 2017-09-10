@@ -16,7 +16,7 @@
 	var/flashlight_power = 1 //strength of the light when on
 
 /obj/item/device/flashlight/Initialize()
-	..()
+	. = ..()
 	update_brightness()
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
@@ -409,7 +409,7 @@
 /obj/item/device/flashlight/glowstick/Initialize()
 	fuel = rand(1600, 2000)
 	light_color = color
-	..()
+	. = ..()
 
 /obj/item/device/flashlight/glowstick/Destroy()
 	STOP_PROCESSING(SSobj, src)
