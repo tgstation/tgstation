@@ -50,12 +50,19 @@
 	see_in_dark = 4
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	var/playable_spider = FALSE
+	var/directive = "" //Message passed down to children, to relay the creator's orders
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
 		var/mob/dead/observer/ghost = usr
 		if(istype(ghost) && playable_spider)
 			humanize_spider(ghost)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/Login()
+	..()
+	if(directive)
+		to_chat(src, "<span class='notice'>Your mother left you a directive! Follow it at all costs.</span>")
+		to_chat(src, "<span class='notice'><b>[directive]</b></span>")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
 	if(!humanize_spider(user))
@@ -287,13 +294,21 @@
 				if(!E)
 					var/obj/structure/spider/eggcluster/C = new /obj/structure/spider/eggcluster(src.loc)
 					if(ckey)
-						C.player_spiders = 1
+						C.player_spiders = TRUE
+					C.directive = directive
 					C.poison_type = poison_type
 					C.poison_per_bite = poison_per_bite
 					C.faction = faction.Copy()
 					fed--
 		busy = SPIDER_IDLE
 		stop_automated_movement = FALSE
+
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/SetDirective()
+	set name = "Set Directive"
+	set category = "Spider"
+	set desc = "Set a directive for your children to follow"
+
+	directive = stripped_input(usr, "Enter the new directive", "Create directive", "[directive]", MAX_MESSAGE_LEN)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
