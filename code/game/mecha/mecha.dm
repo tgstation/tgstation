@@ -451,6 +451,9 @@
 	. = ..()
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
+	if (internal_tank.disconnect()) // Something moved us and broke connection
+		occupant_message("<span class='warning'>Air port connection teared off!</span>")
+		log_message("Lost connection to gas port.")
 
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
 	. = ..()
