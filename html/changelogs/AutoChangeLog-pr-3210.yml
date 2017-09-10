@@ -1,5 +1,0 @@
-author: "Thefastfoodguy"
-delete-after: True
-changes: 
-  - bugfix: "Using holotools on a table should no longer drop the tool onto the table"
-  - tweak: "Holotools should be faster"

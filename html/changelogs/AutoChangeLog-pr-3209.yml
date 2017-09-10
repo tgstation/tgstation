@@ -1,4 +1,0 @@
-author: "Thefastfoodguy"
-delete-after: True
-changes: 
-  - rscadd: "cluwneban/catban hrefs now use href tokens"
