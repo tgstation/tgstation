@@ -523,12 +523,12 @@
 				for(var/datum/mind/brother in team.members)
 					var/mob/M = brother.current
 					if(M)
-						dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+						dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 						dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-						dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-						dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
+						dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td>"
+						dat += "<td><A HREF='?_src_=holder;[HrefToken()];traitor=\ref[M]'>Show Objective</A></td></tr>"
 					else
-						dat += "<tr><td><a href='?_src_=vars;Vars=\ref[brother]'>[brother.name]([brother.key])</a><i>Brother body destroyed!</i></td>"
+						dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[brother]'>[brother.name]([brother.key])</a><i>Brother body destroyed!</i></td>"
 						dat += "<td><A href='?priv_msg=[brother.key]'>PM</A></td></tr>"
 				dat += "</table>"
 
