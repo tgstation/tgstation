@@ -57,12 +57,10 @@
 		losebreath++
 
 	else if(health <= HEALTH_THRESHOLD_CRIT)
-		if(prob(33))
-			losebreath++
+		losebreath += 0.25
 
 	//Suffocate
 	if(losebreath > 0)
-		losebreath--
 		if(prob(10))
 			emote("gasp")
 		if(istype(loc, /obj/))
@@ -112,7 +110,9 @@
 	if(!breath || (breath.total_moles() == 0) || !lungs)
 		if(reagents.has_reagent("epinephrine") && lungs)
 			return
-		adjustOxyLoss(1)
+		var/oxy_loss = min(losebreath, 1)
+		adjustOxyLoss(oxy_loss)
+		losebreath -= oxy_loss
 		failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return 0
@@ -149,7 +149,6 @@
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		if(oxyloss && (health > HEALTH_THRESHOLD_CRIT))
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases["o2"][MOLES]
 		clear_alert("not_enough_oxy")
