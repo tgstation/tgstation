@@ -7,7 +7,8 @@
 				CAT_ROBOT,
 				CAT_MISC,
 				CAT_PRIMAL,
-				CAT_FOOD)
+				CAT_FOOD,
+				CAT_CLOTHING)
 	var/list/subcategories = list(
 						list(	//Weapon subcategories
 							CAT_WEAPON,
