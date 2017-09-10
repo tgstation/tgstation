@@ -5,6 +5,9 @@
 #define SECURITY_HAS_MAINT_ACCESS 2
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
+GLOBAL_VAR_INIT(config_dir, "config/")
+GLOBAL_PROTECT(config_dir)
+
 /datum/configuration/can_vv_get(var_name)
 	var/static/list/banned_gets = list("autoadmin", "autoadmin_rank")
 	if (var_name in banned_gets)
@@ -12,7 +15,7 @@
 	return ..()
 
 /datum/configuration/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("cross_address", "cross_allowed", "autoadmin", "autoadmin_rank")
+	var/static/list/banned_edits = list("cross_address", "cross_allowed", "autoadmin", "autoadmin_rank", "invoke_youtubedl")
 	if(var_name in banned_edits)
 		return FALSE
 	return ..()
@@ -89,6 +92,8 @@
 
 	var/panic_server_name
 	var/panic_address //Reconnect a player this linked server if this server isn't accepting new players
+
+	var/invoke_youtubedl
 
 	//IP Intel vars
 	var/ipintel_email
@@ -177,6 +182,7 @@
 	var/rename_cyborg = 0
 	var/ooc_during_round = 0
 	var/emojis = 0
+	var/no_credits_round_end = FALSE
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -275,6 +281,8 @@
 
 	var/list/policies = list()
 
+	var/debug_admin_hrefs = FALSE	//turns off admin href token protection for debugging purposes
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -296,20 +304,20 @@
 	Reload()
 
 /datum/configuration/proc/Reload()
-	load("config/config.txt")
-	load("config/comms.txt", "comms")
-	load("config/game_options.txt","game_options")
-	load("config/policies.txt", "policies")
-	loadsql("config/dbconfig.txt")
+	load("config.txt")
+	load("comms.txt", "comms")
+	load("game_options.txt","game_options")
+	load("policies.txt", "policies")
+	loadsql("dbconfig.txt")
 	if (maprotation)
-		loadmaplist("config/maps.txt")
+		loadmaplist("maps.txt")
 
 	// apply some settings from config..
 	GLOB.abandon_allowed = respawn
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
+	filename = "[GLOB.config_dir][filename]"
 	var/list/Lines = world.file2list(filename)
-
 	for(var/t in Lines)
 		if(!t)
 			continue
@@ -471,6 +479,8 @@
 				if("panic_server_address")
 					if(value != "byond://address:port")
 						panic_address = value
+				if("invoke_youtubedl")
+					invoke_youtubedl = value
 				if("show_irc_name")
 					showircname = 1
 				if("see_own_notes")
@@ -558,6 +568,8 @@
 					error_msg_delay = text2num(value)
 				if("irc_announce_new_game")
 					irc_announce_new_game = TRUE
+				if("debug_admin_hrefs")
+					debug_admin_hrefs = TRUE
 				else
 #if DM_VERSION > 511
 #error Replace the line below with WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
@@ -581,6 +593,8 @@
 					ooc_during_round			= 1
 				if("emojis")
 					emojis					= 1
+				if("no_credits_round_end")
+					no_credits_round_end	= TRUE
 				if("run_delay")
 					run_speed				= text2num(value)
 				if("walk_delay")
@@ -824,6 +838,7 @@
 			WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 
 /datum/configuration/proc/loadmaplist(filename)
+	filename = "[GLOB.config_dir][filename]"
 	var/list/Lines = world.file2list(filename)
 
 	var/datum/map_config/currentmap = null
@@ -876,6 +891,7 @@
 
 
 /datum/configuration/proc/loadsql(filename)
+	filename = "[GLOB.config_dir][filename]"
 	var/list/Lines = world.file2list(filename)
 	for(var/t in Lines)
 		if(!t)

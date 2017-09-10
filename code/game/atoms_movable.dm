@@ -214,7 +214,7 @@
 //to differentiate it, naturally everyone forgot about this immediately and so some things
 //would bump twice, so now it's called Collide
 /atom/movable/proc/Collide(atom/A)
-	if((A))
+	if(A)
 		if(throwing)
 			throwing.hit_atom(A)
 			. = 1
@@ -496,7 +496,7 @@
 /atom/movable/vv_get_dropdown()
 	. = ..()
 	. -= "Jump to"
-	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"
+	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[src]"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)

@@ -120,6 +120,7 @@
 		return 1
 
 /obj/machinery/meter/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		new /obj/item/pipe_meter(loc)
 		qdel(src)

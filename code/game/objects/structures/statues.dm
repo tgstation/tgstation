@@ -155,11 +155,8 @@
 
 /obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
 	var/burn = FALSE
-	if(istype(Proj, /obj/item/projectile/beam))
+	if(!(Proj.nodamage) && Proj.damage_type == BURN)
 		PlasmaBurn(2500)
-		burn = TRUE
-	else if(istype(Proj, /obj/item/projectile/ion))
-		PlasmaBurn(500)
 		burn = TRUE
 	if(burn)
 		var/turf/T = get_turf(src)

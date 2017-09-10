@@ -52,6 +52,6 @@
 	new /obj/item/clothing/neck/tie/red(src)
 	new /obj/item/clothing/under/syndicate/sniper(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds/haemorrhage(src)
+	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/suppressor/specialoffer(src)
 

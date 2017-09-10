@@ -32,6 +32,8 @@
 	var/running_bob_anim = FALSE
 
 	var/escape_in_progress = FALSE
+	var/message_cooldown
+	var/breakout_time = 0.5
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -219,7 +221,9 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
-	container_resist(user)
+	if(message_cooldown <= world.time)
+		message_cooldown = world.time + 50
+		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = 0)
 	if(!state_open && !panel_open)
@@ -239,16 +243,17 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
-	if(escape_in_progress)
-		to_chat(user, "<span class='notice'>You are already trying to exit (This will take around 30 seconds)</span>")
-		return
-	escape_in_progress = TRUE
-	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
-	audible_message("<span class='notice'>You hear a thump from [src].</span>")
-	if(do_after(user, 300))
-		if(occupant == user) // Check they're still here.
-			open_machine()
-	escape_in_progress = FALSE
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.visible_message("<span class='notice'>You see [user] kicking against the glass of [src]!</span>", \
+		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
+		"<span class='italics'>You hear a thump from [src].</span>")
+	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
+		if(!user || user.stat != CONSCIOUS || user.loc != src )
+			return
+		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+			"<span class='notice'>You successfully break out of [src]!</span>")
+		open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	..()
@@ -303,30 +308,46 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
 	var/list/data = list()
 	data["isOperating"] = on
-	data["hasOccupant"] = occupant ? 1 : 0
+	data["hasOccupant"] = occupant ? TRUE : FALSE
 	data["isOpen"] = state_open
 	data["autoEject"] = autoeject
 
-	var/list/occupantData = list()
+	data["occupant"] = list()
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
-		occupantData["name"] = mob_occupant.name
-		occupantData["stat"] = mob_occupant.stat
-		occupantData["health"] = mob_occupant.health
-		occupantData["maxHealth"] = mob_occupant.maxHealth
-		occupantData["minHealth"] = HEALTH_THRESHOLD_DEAD
-		occupantData["bruteLoss"] = mob_occupant.getBruteLoss()
-		occupantData["oxyLoss"] = mob_occupant.getOxyLoss()
-		occupantData["toxLoss"] = mob_occupant.getToxLoss()
-		occupantData["fireLoss"] = mob_occupant.getFireLoss()
-		occupantData["bodyTemperature"] = mob_occupant.bodytemperature
-	data["occupant"] = occupantData
-
+		data["occupant"]["name"] = mob_occupant.name
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "good"
+			if(SOFT_CRIT)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "average"
+			if(UNCONSCIOUS)
+				data["occupant"]["stat"] = "Unconscious"
+				data["occupant"]["statstate"] = "average"
+			if(DEAD)
+				data["occupant"]["stat"] = "Dead"
+				data["occupant"]["statstate"] = "bad"
+		data["occupant"]["health"] = round(mob_occupant.health, 1)
+		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
+		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+		data["occupant"]["bruteLoss"] = round(mob_occupant.getBruteLoss(), 1)
+		data["occupant"]["oxyLoss"] = round(mob_occupant.getOxyLoss(), 1)
+		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
+		data["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss(), 1)
+		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
+		if(mob_occupant.bodytemperature < 225)
+			data["occupant"]["temperaturestatus"] = "good"
+		else if(mob_occupant.bodytemperature < 273.15)
+			data["occupant"]["temperaturestatus"] = "average"
+		else
+			data["occupant"]["temperaturestatus"] = "bad"
 
 	var/datum/gas_mixture/air1 = AIR1
-	data["cellTemperature"] = round(air1.temperature)
+	data["cellTemperature"] = round(air1.temperature, 1)
 
-	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
 	var beakerContents = list()
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)

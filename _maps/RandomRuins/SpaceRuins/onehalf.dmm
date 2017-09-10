@@ -350,7 +350,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Mining Drone Bay APC";
 	pixel_y = 24
@@ -848,7 +847,6 @@
 	d2 = 4
 	},
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Bridge APC";
 	pixel_y = 24

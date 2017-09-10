@@ -204,9 +204,9 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/meteorshot
-	name = "Meteorshot Shell"
-	result = /obj/item/ammo_casing/shotgun/meteorshot
+/datum/crafting_recipe/meteorslug
+	name = "Meteorslug Shell"
+	result = /obj/item/ammo_casing/shotgun/meteorslug
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/obj/item/rcd_ammo = 1,
 				/obj/item/stock_parts/manipulator = 2)
@@ -228,7 +228,7 @@
 
 /datum/crafting_recipe/dragonsbreath
 	name = "Dragonsbreath Shell"
-	result = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
+	result = /obj/item/ammo_casing/shotgun/dragonsbreath
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1, /datum/reagent/phosphorus = 5)
 	tools = list(/obj/item/screwdriver)
 	time = 5
@@ -270,17 +270,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
-/datum/crafting_recipe/improvisedslugoverload
-	name = "Overload Improvised Shell"
-	result = /obj/item/ammo_casing/shotgun/improvised/overload
-	reqs = list(/obj/item/ammo_casing/shotgun/improvised = 1,
-				/datum/reagent/blackpowder = 10,
-				/datum/reagent/toxin/plasma = 20)
-	tools = list(/obj/item/screwdriver)
-	time = 5
-	category = CAT_WEAPONRY
-	subcategory = CAT_AMMO
-
 /datum/crafting_recipe/laserslug
 	name = "Laser Slug Shell"
 	result = /obj/item/ammo_casing/shotgun/laserslug
@@ -308,8 +297,8 @@
 	name = "Chainsaw"
 	result = /obj/item/twohanded/required/chainsaw
 	reqs = list(/obj/item/circular_saw = 1,
-				/obj/item/stack/cable_coil = 1,
-				/obj/item/stack/sheet/plasteel = 1)
+				/obj/item/stack/cable_coil = 3,
+				/obj/item/stack/sheet/plasteel = 5)
 	tools = list(/obj/item/weldingtool)
 	time = 50
 	category = CAT_WEAPONRY
@@ -555,7 +544,10 @@
 	name = "Pressure Plate"
 	result = /obj/item/device/pressure_plate
 	time = 5
-	reqs = list(/obj/item/stack/sheet/plasteel = 1, /obj/item/stack/tile/plasteel = 1, /obj/item/stack/cable_coil = 2)
+	reqs = list(/obj/item/stack/sheet/metal = 1,
+				  /obj/item/stack/tile/plasteel = 1,
+				  /obj/item/stack/cable_coil = 2,
+				  /obj/item/device/assembly/igniter = 1)
 	category = CAT_MISC
 
 

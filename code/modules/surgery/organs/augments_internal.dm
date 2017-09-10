@@ -87,6 +87,7 @@
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/I in stored_items)
 		I.flags_1 &= ~NODROP_1
+	stored_items = list()
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)

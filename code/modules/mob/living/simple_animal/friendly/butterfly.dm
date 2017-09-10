@@ -28,3 +28,6 @@
 	. = ..()
 	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
+
+/mob/living/simple_animal/butterfly/bee_friendly()
+	return TRUE //treaty signed at the Beeneeva convention
