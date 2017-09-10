@@ -89,6 +89,12 @@
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted
 	pin = /obj/item/device/firing_pin
 
+/obj/item/gun/ballistic/automatic/smgm45/toy/riot
+	mag_type = /obj/item/ammo_box/magazine/toy/smgm45/riot
+
+/obj/item/gun/ballistic/automatic/c20r/toy/riot/unrestricted
+	pin = /obj/item/device/firing_pin
+
 /obj/item/gun/ballistic/automatic/l6_saw/toy
 	name = "donksoft LMG"
 	desc = "A heavily modified toy light machine gun, designated 'L6 SAW'. Ages 8 and up."
@@ -99,4 +105,10 @@
 	casing_ejector = 0
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted
+	pin = /obj/item/device/firing_pin
+
+/obj/item/gun/ballistic/automatic/l6_saw/toy/riot
+	mag_type = /obj/item/ammo_box/magazine/toy/m762/riot
+
+/obj/item/gun/ballistic/automatic/l6_saw/toy/riot/unrestricted
 	pin = /obj/item/device/firing_pin
