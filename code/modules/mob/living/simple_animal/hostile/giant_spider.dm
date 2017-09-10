@@ -103,6 +103,19 @@
 	poison_per_bite = 5
 	move_to_delay = 5
 
+//vipers are the rare variant of the hunter, no damage but so much poison medical care will be needed fast. Low hp, high speed and no damage so hit and run tactics.
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
+	desc = "Furry and black, it makes you shudder to look at it. This one has effervescent purple eyes."
+	icon_state = "hunter"
+	icon_living = "hunter"
+	icon_dead = "hunter_dead"
+	maxHealth = 40
+	health = 40
+	melee_damage_lower = 1 //what doesn't kill you...
+	melee_damage_upper = 1
+	poison_per_bite = 80 //will soon after if there isn't medical attention!
+	move_to_delay = 4
+
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
 	name = "giant ice spider"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
