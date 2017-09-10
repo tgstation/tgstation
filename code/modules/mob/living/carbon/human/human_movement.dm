@@ -29,13 +29,6 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_move(src, NewLoc)
 
-	if(lying && prob(getBruteLoss()*200/maxHealth))
-
-		var/turf/target_turf = get_turf(src)
-		var/old_dir = turn(direct, 180)
-		var/turf/start = get_step(target_turf, old_dir)
-		makeTrail(target_turf, start)
-
 	if(shoes)
 		if(!lying && !buckled)
 			if(loc == NewLoc)
