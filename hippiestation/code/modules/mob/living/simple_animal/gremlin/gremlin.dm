@@ -98,6 +98,8 @@ var/list/bad_gremlin_items = list()
 	return markov_chain(generate_markov_input(), rand(2,5), rand(100,700)) //The numbers are chosen arbitarily
 
 /mob/living/simple_animal/hostile/gremlin/proc/tamper(obj/M)
+	if(!M.suit_fibers) 
+		M.suit_fibers = list()
 	switch(M.npc_tamper_act(src))
 		if(NPC_TAMPER_ACT_FORGET)
 			visible_message(pick(
