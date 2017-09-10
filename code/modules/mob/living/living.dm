@@ -444,10 +444,6 @@
 
 		var/pull_dir = get_dir(src, pulling)
 		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
-			if(isliving(pulling))
-				var/mob/living/M = pulling
-				if(M.lying && !M.buckled && (prob(M.getBruteLoss()*200/M.maxHealth)))
-					M.makeTrail(T, M.loc)
 			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
 			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
 				stop_pulling()
@@ -458,7 +454,6 @@
 	if (s_active && !(CanReach(s_active,view_only = TRUE)))
 		s_active.close(src)
 
-	if(lying && prob(getBruteLoss()*200/maxHealth))
 		var/turf/target_turf = get_turf(src)
 		var/old_dir = turn(direct, 180)
 		var/turf/start = get_step(target_turf, old_dir)
