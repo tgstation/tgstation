@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(garbage)
 
 	var/highest_del_time = 0
 	var/highest_del_tickusage = 0
-	var/track_harddels = FALSE		//Whether we track hard deletions. First step to fixing a problem is seeing what's causing it.
+	var/track_harddels = TRUE		//Whether we track hard deletions. First step to fixing a problem is seeing what's causing it.
 
 	var/list/queue = list() 	// list of refID's of things that should be garbage collected
 								// refID's are associated with the time at which they time out and need to be manually del()
@@ -69,9 +69,9 @@ SUBSYSTEM_DEF(garbage)
 	HandleToBeQueued()
 	if(state == SS_RUNNING)
 		HandleQueue()
-	
+
 	if (state == SS_PAUSED) //make us wait again before the next run.
-		state = SS_RUNNING 
+		state = SS_RUNNING
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(garbage)
 			var/type = A.type
 			testing("GC: -- \ref[A] | [type] was unable to be GC'd and was deleted --")
 			didntgc["[type]"]++
-			
+
 			HardDelete(A)
 
 			++delslasttick
@@ -151,13 +151,13 @@ SUBSYSTEM_DEF(garbage)
 	var/time = world.timeofday
 	var/tick = TICK_USAGE
 	var/ticktime = world.time
-	
+
 	var/type = A.type
 	var/refID = "\ref[A]"
-	
+
 	hard_deleted[A.type]++
 	del(A)
-	
+
 	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))
 	if (tick > highest_del_tickusage)
 		highest_del_tickusage = tick
@@ -170,7 +170,7 @@ SUBSYSTEM_DEF(garbage)
 		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
 		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
 		postpone(time/5)
-	
+
 /datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
@@ -187,7 +187,7 @@ SUBSYSTEM_DEF(garbage)
 /proc/qdel(datum/D, force=FALSE)
 	if(!istype(D))
 		del(D)
-		hard_deleted["NON_DATUM"]++
+		SSgarbage.hard_deleted["NON_DATUM"]++
 		return
 #ifdef TESTING
 	SSgarbage.qdel_list += "[D.type]"
