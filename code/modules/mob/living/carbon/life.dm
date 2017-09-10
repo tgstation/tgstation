@@ -54,13 +54,13 @@
 	var/datum/gas_mixture/breath
 
 	if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
-		losebreath++
+		losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
 	else if(health <= HEALTH_THRESHOLD_CRIT)
-		losebreath += 0.25
+		losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
 	//Suffocate
-	if(losebreath >= 1)
+	if(losebreath >= 1) //You've missed a breath, take oxy damage
 		losebreath--
 		if(prob(10))
 			emote("gasp")
