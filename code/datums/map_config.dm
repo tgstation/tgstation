@@ -119,6 +119,8 @@
 			return MAIN_STATION
 		if("CENTCOM")
 			return CENTCOM
+		if("CITY_OF_COGS")
+			return CITY_OF_COGS
 		if("MINING")
 			return MINING
 		if("EMPTY_AREA_1")

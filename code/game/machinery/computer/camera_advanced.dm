@@ -265,9 +265,10 @@
 	button_icon_state = "warp_down"
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
+	var/obj/effect/clockwork/warp_marker/warping
 
 /datum/action/innate/servant_warp/Activate()
-	if(QDELETED(target) || !ishuman(owner) || !owner.canUseTopic(target))
+	if(QDELETED(target) || !ishuman(owner) || !owner.canUseTopic(target) || warping)
 		return
 	var/mob/living/carbon/human/user = owner
 	var/mob/camera/aiEye/remote/remote_eye = user.remote_control
@@ -289,11 +290,17 @@
 		return
 	do_sparks(5, TRUE, user)
 	do_sparks(5, TRUE, T)
-	user.visible_message("<span class='warning'>[user]'s [target.name] flares, and they flicker and vanish!</span>", "<span class='bold sevtug_small'>You warp to [AR]!</span>")
+	warping = new(T)
+	user.visible_message("<span class='warning'>[user]'s [target.name] flares!</span>", "<span class='bold sevtug_small'>You begin warping to [AR]...</span>")
+	if(!do_after(user, 50, target = warping))
+		to_chat(user, "<span class='bold sevtug_small'>Warp interrupted.</span>")
+		QDEL_NULL(warping)
+		return
 	T.visible_message("<span class='warning'>[user] warps in!</span>")
 	playsound(user, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	playsound(T, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	user.forceMove(get_turf(T))
 	user.setDir(SOUTH)
-	flash_color(user, flash_color = "#AF0AAF", flash_time = 25)
+	flash_color(user, flash_color = "#AF0AAF", flash_time = 5)
 	R.remove_eye_control(user)
+	QDEL_NULL(warping)

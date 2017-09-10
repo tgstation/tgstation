@@ -3,7 +3,7 @@
 	name = "glowing arrow"
 	desc = "A faintly glowing image of an arrow on the ground. Convenient!"
 	icon_state = "servant_blocker"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	density = TRUE
 
 /obj/effect/clockwork/servant_blocker/Destroy(force)
