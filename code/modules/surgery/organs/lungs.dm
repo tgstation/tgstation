@@ -122,7 +122,8 @@
 			H.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		else
 			H.failed_last_breath = FALSE
-			H.adjustOxyLoss(-5)
+			if(H.health >= HEALTH_THRESHOLD_CRIT)
+				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases["o2"][MOLES]
 			H.clear_alert("not_enough_oxy")
 
@@ -149,7 +150,8 @@
 			H.throw_alert("nitro", /obj/screen/alert/not_enough_nitro)
 		else
 			H.failed_last_breath = FALSE
-			H.adjustOxyLoss(-5)
+			if(H.health >= HEALTH_THRESHOLD_CRIT)
+				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases["n2"][MOLES]
 			H.clear_alert("nitro")
 
@@ -185,7 +187,8 @@
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = FALSE
-			H.adjustOxyLoss(-5)
+			if(H.health >= HEALTH_THRESHOLD_CRIT)
+				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases["co2"][MOLES]
 			H.clear_alert("not_enough_co2")
 
@@ -214,7 +217,8 @@
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = FALSE
-			H.adjustOxyLoss(-5)
+			if(H.health >= HEALTH_THRESHOLD_CRIT)
+				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases["plasma"][MOLES]
 			H.clear_alert("not_enough_tox")
 
