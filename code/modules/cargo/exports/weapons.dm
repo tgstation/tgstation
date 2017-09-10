@@ -110,37 +110,52 @@
 	unit_name = "Book of Babel"
 	export_types = list(/obj/item/book_of_babel)
 	
-/datum/export/weapon/lifesteal
-	cost = 10000
-	unit_name = "Lifesteal mod disk"
-	export_types = list(/obj/item/borg/upgrade/modkit/lifesteal)
-	
-/datum/export/weapon/inferno
-	cost = 10000
-	unit_name = "Inferno"
-	export_types = list(/obj/item/grenade/clusterbuster/inferno)
-	
 /datum/export/weapon/hook
 	cost = 10000
 	unit_name = "Meat hook"
 	export_types = list(/obj/item/gun/magic/hook)
 	
-/datum/export/weapon/shipbottle
-	cost = 10000
+/datum/export/weapon/shipbottle //the price for not breaking the bottle.
+	cost = 20000
 	unit_name = "Ship in a bottle"
 	export_types = list(/obj/item/ship_in_a_bottle)
 	
-/datum/export/weapon/beserker
-	cost = 10000
-	unit_name = "Beserker suit"
-	export_types = list(/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker)
-	
-/datum/export/weapon/tarot
+/datum/export/weapon/tarot //price for sacraficing a very profitiable ally
 	cost = 20000
 	unit_name = "Tarot cards"
 	export_types = list(/obj/item/guardiancreator)
+
+/datum/export/weapon/red //second half of telecube
+	cost = 5000
+	unit_name = "Red Cube"
+	export_types = list(/obj/item/device/warp_cube/red)
 	
-/datum/export/weapon/inquisitor
+/datum/export/weapon/blue //first half of telecube
+	cost = 5000
+	unit_name = "Blue Cube"
+	export_types = list(/obj/item/device/warp_cube)
+	
+/datum/export/weapon/wisplantern //thermals on lavaland
 	cost = 10000
-	unit_name = "Inquisitor hardsuit"
-	export_types = list(/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor)
+	unit_name = "Wisp Lantern"
+	export_types = list(/obj/item/device/wisp_lantern)
+	
+/datum/export/weapon/flight //if xenobiology ever reaches the point to get these without shuttle being called they deserve it
+	cost = 10000
+	unit_name = "Strange Elixer"
+	export_types = list(/obj/item/reagent_containers/glass/bottle/potion/flight)
+	
+/datum/export/weapon/cheart //is a very powerfull healing artifact in the robust hands
+	cost = 10000
+	unit_name = "Cursed Heart"
+	export_types = list(/obj/item/organ/heart/cursed/wizard)
+	
+/datum/export/weapon/ckatana
+	cost = 10000
+	unit_name = "Katana"
+	export_types = list(/obj/item/katana/cursed)
+	
+/datum/export/weapon/geye //xray
+	cost = 10000
+	unit_name = "God eye"
+	export_types = list(/obj/item/clothing/glasses/godeye)
