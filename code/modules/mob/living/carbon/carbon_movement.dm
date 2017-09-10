@@ -55,11 +55,6 @@
 				nutrition -= HUNGER_FACTOR/10
 		if((disabilities & FAT) && m_intent == MOVE_INTENT_RUN && bodytemperature <= 360)
 			bodytemperature += 2
-		if(lying && prob(getBruteLoss()*200/maxHealth))
-			var/turf/target_turf = get_turf(src)
-			var/old_dir = turn(direct, 180)
-			var/turf/start = get_step(target_turf, old_dir)
-			makeTrail(target_turf, start)
 
 /mob/living/carbon/Moved(oldLoc, Dir)
 	. = ..()
