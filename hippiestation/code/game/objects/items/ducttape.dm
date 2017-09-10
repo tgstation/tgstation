@@ -38,6 +38,10 @@
 		user.emote("scream")
 		qdel(src)
 
+/obj/item/clothing/mask/hippie/tape/speechModification(message)
+	var/M = muffledspeech(message)
+	return M
+
 /obj/item/stack/ducttape
 	desc = "It's duct tape. You can use it to tape something... or someone."
 	name = "duct tape"
@@ -45,6 +49,7 @@
 	icon_state = "tape"
 	item_state = "tape"
 	amount = 15
+	flags_1 = NOBLUDGEON_1
 	max_amount = 15
 	throwforce = 0
 	w_class = 2.0
@@ -57,16 +62,16 @@
 
 /obj/item/stack/ducttape/afterattack(atom/W, mob/user as mob, proximity_flag)
 	if(!proximity_flag) return //It should only work on adjacent target.
-	if(ishuman(W) && (user.zone_selected == "mouth"))
+	if(ishuman(W) && (user.zone_selected == "mouth" || user.zone_selected == "head"))
 		var/mob/living/carbon/human/H = W
-		if( \
-				(H.head && H.head.flags_cover & HEADCOVERSMOUTH) || \
-				(H.wear_mask) \
-			)
-			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet first.</span>")
+		if(H.head && (H.head.flags_cover & HEADCOVERSMOUTH))
+			to_chat(user, "<span class='danger'>You're going to need to remove [H.head] first.</span>")
+			return
+		if(H.wear_mask) //don't even check to see if the mask covers the mouth as the tape takes up mask slot
+			to_chat(user, "<span class='danger'>You're going to need to remove [H.wear_mask] first.</span>")
 			return
 		playsound(loc, 'hippiestation/sound/misc/ducttape1.ogg', 30, 1)
-		if(do_mob(user, H, 20) && !H.wear_mask)
+		if(do_mob(user, H, 20))
 			// H.wear_mask = new/obj/item/clothing/mask/hippie/tape(H)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/hippie/tape(H), slot_wear_mask)
 			to_chat(user, "<span class='notice'>You tape [H]'s mouth.</span>")

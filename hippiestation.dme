@@ -2341,6 +2341,7 @@
 #include "hippiestation\code\modules\mining\machine_stacking.dm"
 #include "hippiestation\code\modules\mining\machine_unloading.dm"
 #include "hippiestation\code\modules\mob\mob_defines.dm"
+#include "hippiestation\code\modules\mob\mob_helpers.dm"
 #include "hippiestation\code\modules\mob\mob_movement.dm"
 #include "hippiestation\code\modules\mob\nearcrit.dm"
 #include "hippiestation\code\modules\mob\dead\new_player\sprite_accessories.dm"
