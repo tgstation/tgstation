@@ -408,7 +408,7 @@
 
 /obj/item/nullrod/egyptian
 	name = "egyptian staff"
-	desc = "A tutorial in mummification is carved into the staff, probably best to not look at the pictures."
+	desc = "A tutorial in mummification is carved into the staff. You could probably follow the steps yourself if you had some bandages."
 	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "pharoah_sceptre"
 	item_state = "pharoah_sceptre"
