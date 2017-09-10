@@ -129,6 +129,8 @@
 	poison_per_bite = 0
 	move_to_delay = 8
 	speed = 3
+	status_flags = NONE
+	mob_size = MOB_SIZE_LARGE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
 	name = "giant ice spider"
