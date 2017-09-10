@@ -519,15 +519,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/M)
 	if(QDELETED(light_holder))
-		light_holder = new(M)
-		light_holder.set_light(3, 0.7, "#FFCC00")
+		M.reagents.del_reagent("tequilasunrise") //If we lost our light object somehow, remove the reagent
 	else if(light_holder.loc != M)
 		light_holder.forceMove(M)
 	return ..()
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_delete(mob/living/M)
 	to_chat(M, "<span class='notice'>The warmth in your body fades.</span>")
-	qdel(light_holder)
+	if(light_holder)
+		qdel(light_holder)
 
 /datum/reagent/consumable/ethanol/toxins_special
 	name = "Toxins Special"
