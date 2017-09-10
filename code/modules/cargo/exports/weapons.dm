@@ -159,3 +159,8 @@
 	cost = 10000
 	unit_name = "God eye"
 	export_types = list(/obj/item/clothing/glasses/godeye)
+	
+/datum/export/weapon/spectral
+	cost = 10000
+	unit_name = "Spectral Sword"
+	export_types = list(/obj/item/melee/ghost_sword)
