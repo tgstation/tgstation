@@ -56,8 +56,11 @@
 	if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
 		losebreath++
 
+	else if(health <= HEALTH_THRESHOLD_CRIT)
+		losebreath += 0.25
+
 	//Suffocate
-	if(losebreath > 0)
+	if(losebreath >= 1)
 		losebreath--
 		if(prob(10))
 			emote("gasp")
@@ -109,6 +112,7 @@
 		if(reagents.has_reagent("epinephrine") && lungs)
 			return
 		adjustOxyLoss(1)
+
 		failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return 0
@@ -145,7 +149,7 @@
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		if(oxyloss)
+		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases["o2"][MOLES]
 		clear_alert("not_enough_oxy")
