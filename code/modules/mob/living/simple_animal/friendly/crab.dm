@@ -59,7 +59,7 @@
 
 /mob/living/simple_animal/crab/kreb
 	name = "Kreb"
-	desc = "This is a real crab. The other crabs are simply gubbucks in disguise!
+	desc = "This is a real crab. The other crabs are simply gubbucks in disguise!"
 	real_name = "Kreb"
 	icon_state = "kreb"
 	icon_living = "kreb"
@@ -74,4 +74,4 @@
 	real_name = "Evil Kreb"
 	icon_state = "evilkreb"
 	icon_living = "evilkreb"
-	icon_dead = "evilkreb_dead
+	icon_dead = "evilkreb_dead"
