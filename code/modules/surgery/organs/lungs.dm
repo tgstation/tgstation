@@ -322,6 +322,10 @@
 	icon_state = "lungs-c"
 	origin_tech = "biotech=4"
 
+/obj/item/organ/lungs/cybernetic/emp_act()
+	owner.losebreath = 20
+
+
 /obj/item/organ/lungs/cybernetic/upgraded
 	name = "upgraded cybernetic lungs"
 	desc = "A more advanced version of the stock cybernetic lungs. They are capable of filtering out lower levels of toxins and carbon-dioxide."
