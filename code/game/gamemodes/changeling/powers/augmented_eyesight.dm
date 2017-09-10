@@ -7,23 +7,22 @@
 	helptext = "Grants us thermal vision or flash protection. We will become a lot more vulnerable to flash-based devices while thermal vision is active."
 	chemical_cost = 0
 	dna_cost = 2 //Would be 1 without thermal vision
-	active = 0 //Whether or not vision is enhanced
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
 	var/obj/item/organ/eyes/E = user.getorganslot("eye_sight")
 	if(E)
-		if(active)
+		if(!active)
 			E.sight_flags |= SEE_MOBS
 			E.flash_protect = -1
 			to_chat(user, "We adjust our eyes to sense prey through walls.")
-			active = 1
+			active = TRUE //Defined in code/modules/spells/spell.dm
 		else
 			E.sight_flags -= SEE_MOBS
 			E.flash_protect = 2
 			to_chat(user, "We adjust our eyes to protect them from bright lights.")
-			active = 0
+			active = FALSE
 		user.update_sight()
 	else
 		to_chat(user, "We can't adjust our eyes if we don't have any!")
