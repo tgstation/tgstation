@@ -2098,6 +2098,7 @@
 /obj/structure/table,
 /obj/item/stack/packageWrap,
 /obj/item/pen,
+/obj/item/stack/ducttape,
 /turf/open/floor/plasteel,
 /area/security/main)
 "aeC" = (
@@ -13287,6 +13288,8 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
+/obj/item/stack/ducttape,
+/obj/item/stack/ducttape,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aDm" = (
@@ -19227,6 +19230,8 @@
 /obj/structure/table,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
+/obj/item/stack/ducttape,
+/obj/item/stack/ducttape,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "aQZ" = (
@@ -20280,6 +20285,7 @@
 "aTL" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
+/obj/item/stack/ducttape,
 /turf/open/floor/plasteel,
 /area/storage/tools)
 "aTM" = (
@@ -27008,6 +27014,7 @@
 /obj/structure/table,
 /obj/item/clothing/head/soft,
 /obj/item/clothing/head/soft,
+/obj/item/stack/ducttape,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bjo" = (
@@ -31934,6 +31941,7 @@
 	pixel_x = -24
 	},
 /obj/item/folder/yellow,
+/obj/item/stack/ducttape,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "btu" = (
@@ -58434,7 +58442,7 @@
 	height = 13;
 	id = "ferry";
 	name = "ferry shuttle";
-	port_direction =  1;
+	port_direction = 1;
 	preferred_direction = 4;
 	roundstart_move = "ferry_away";
 	width = 5
@@ -58631,7 +58639,7 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "NT Medical Ship";
-	port_direction =  8;
+	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
 	timid = null;
@@ -63314,7 +63322,7 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
-	port_direction =  1;
+	port_direction = 1;
 	roundstart_move = "syndicate_away";
 	width = 18
 	},
@@ -115438,15 +115446,15 @@ bJO
 bWr
 bWr
 dbS
-bTo
-bTo
-bTo
-bTo
+dbN
+dbN
+dbN
+dbN
 bYj
 bZc
 bPN
-bTo
-bTo
+dbN
+dbN
 bQZ
 bNB
 ceM
@@ -115696,13 +115704,13 @@ bQX
 dbO
 bPN
 dbT
-bTo
+dbN
 bWp
-bTo
+dbN
 bYi
 dcg
 dck
-bTo
+dbN
 cbV
 bQZ
 blQ
@@ -115960,7 +115968,7 @@ caZ
 cba
 dcl
 cbc
-bTo
+dbN
 bQZ
 cdR
 ceO
@@ -116464,11 +116472,11 @@ bMu
 bMu
 bEC
 dbM
-dbP
+dbM
 bTl
 bQU
 dbW
-bTo
+dbN
 bOw
 dce
 dci
@@ -116724,10 +116732,10 @@ bQT
 bSg
 bTk
 bSh
-dbX
+dbW
 dcb
 bOv
-bYk
+dce
 dcj
 bPN
 cjW
@@ -116982,9 +116990,9 @@ bSi
 bTm
 bUn
 dbY
-bTo
+dbN
 bOw
-bYk
+dce
 bYm
 bZZ
 ckN
@@ -117238,7 +117246,7 @@ bQT
 bSh
 coT
 bTl
-dbZ
+dbY
 bNZ
 bOy
 bZd
@@ -117504,7 +117512,7 @@ cab
 cbd
 cbX
 ccT
-bSc
+dcl
 dcx
 cfu
 cgu
@@ -118006,11 +118014,11 @@ bNy
 bOH
 bEs
 bQY
-dbQ
-bTo
-bTo
-bTo
-bTo
+dbN
+dbN
+dbN
+dbN
+dbN
 bXs
 bPL
 bQI
@@ -118264,16 +118272,16 @@ bOG
 bEs
 dbN
 bSk
-bTo
-bTo
-bTo
-bTo
+dbN
+dbN
+dbN
+dbN
 bXr
 bPF
-bTo
-bTo
-bTo
-cbY
+dbN
+dbN
+dbN
+dcj
 bQZ
 cOe
 cNW
@@ -118520,11 +118528,11 @@ bNz
 bOI
 bEs
 bRa
-dbR
-bTo
-bTo
+dbN
+dbN
+dbN
 bVs
-bTo
+dbN
 bXt
 bPM
 bZh
