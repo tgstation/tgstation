@@ -46,7 +46,7 @@
 	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
 	var/shell_type = /obj/effect/mob_spawn/human/golem
 	var/has_owner = FALSE //if the resulting golem obeys someone
-	w_class = WEIGHT_CLASS_BULKY 
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
@@ -74,7 +74,7 @@
 
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/O = I
-		var/species = golem_shell_species_types[O.type]
+		var/species = golem_shell_species_types[O.merge_type]
 		if(species)
 			if(O.use(10))
 				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
