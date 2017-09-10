@@ -116,6 +116,18 @@
 	poison_per_bite = 80 //will soon after if there isn't medical attention!
 	move_to_delay = 4
 
+//tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
+/mob/living/simple_animal/hostile/poison/giant_spider/tarantula
+	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes."
+	icon_state = "guard"
+	icon_living = "guard"
+	icon_dead = "guard_dead"
+	maxHealth = 400 // woah nelly
+	melee_damage_lower = 35
+	melee_damage_upper = 40
+	poison_per_bite = 0
+	move_to_delay = 8
+
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
 	name = "giant ice spider"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
