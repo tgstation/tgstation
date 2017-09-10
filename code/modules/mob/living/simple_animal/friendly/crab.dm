@@ -43,7 +43,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"
-	gold_core_spawnable = 0
+	gold_core_spawnable = FALSE
 
 /mob/living/simple_animal/crab/evil
 	name = "Evil Crab"
@@ -55,7 +55,7 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "stomps"
-	gold_core_spawnable = 1
+	gold_core_spawnable = TRUE
 
 /mob/living/simple_animal/crab/kreb
 	name = "Kreb"
@@ -67,7 +67,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"
-	gold_core_spawnable = 0
+	gold_core_spawnable = FALSE
 
 /mob/living/simple_animal/crab/evil/kreb
 	name = "Evil Kreb"
