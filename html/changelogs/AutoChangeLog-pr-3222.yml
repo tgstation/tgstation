@@ -1,6 +1,0 @@
-author: "Thefastfoodguy"
-delete-after: True
-changes: 
-  - rscadd: "animated grabs!"
-  - tweak: "NECK level grabs no longer knockdown. KILL level grabs still do"
-  - rscadd: "human meatshields"
