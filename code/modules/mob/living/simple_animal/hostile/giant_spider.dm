@@ -360,10 +360,9 @@
 	return TRUE
 
 /datum/action/innate/spider/comm/Trigger()
-	if(IsAvailable())
-		var/input = stripped_input(usr, "Input a message for your legions to follow.", "Command", "")
-		if(QDELETED(src) || !input || !IsAvailable())
-			return FALSE
+	var/input = stripped_input(usr, "Input a message for your legions to follow.", "Command", "")
+	if(QDELETED(src) || !input || !IsAvailable())
+		return FALSE
 	spider_command(usr, input)
 	return TRUE
 
