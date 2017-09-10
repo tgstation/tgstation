@@ -1,0 +1,6 @@
+author: "Thefastfoodguy"
+delete-after: True
+changes: 
+  - rscadd: "Tool/art storage now has duct tape!"
+  - rscadd: "Duct tape can now spawn in maint"
+  - rscadd: "Having your mouth taped shut makes you talk like MMPHH MMMPHHPHPH"
