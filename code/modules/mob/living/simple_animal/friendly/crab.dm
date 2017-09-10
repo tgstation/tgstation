@@ -45,6 +45,18 @@
 	response_harm   = "stomps"
 	gold_core_spawnable = 0
 
+/mob/living/simple_animal/crab/evil
+	name = "Evil Crab"
+	real_name = "Evil Crab"
+	desc = "Unnerving, isn't it? It has to be planning something nefarious..."
+	icon_state = "evilcrab"
+	icon_living = "evilcrab"
+	icon_dead = "evilcrab_dead"
+	response_help = "pokes"
+	response_disarm = "shoves"
+	response_harm = "stomps"
+	gold_core_spawnable = 1
+
 /mob/living/simple_animal/crab/kreb
 	name = "Kreb"
 	desc = "This is a real crab. The other crabs are simply gubbucks in disguise!
@@ -52,3 +64,14 @@
 	icon_state = "kreb"
 	icon_living = "kreb"
 	icon_dead = "kreb_dead"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "stomps"
+	gold_core_spawnable = 0
+
+/mob/living/simple_animal/crab/evil/kreb
+	name = "Evil Kreb"
+	real_name = "Evil Kreb"
+	icon_state = "evilkreb"
+	icon_living = "evilkreb"
+	icon_dead = "evilkreb_dead
