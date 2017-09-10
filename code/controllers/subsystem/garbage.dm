@@ -384,24 +384,6 @@ SUBSYSTEM_DEF(garbage)
 	if(!running_find_references)
 		find_references(TRUE)
 
-/client/verb/show_qdeleted()
-	set category = "Debug"
-	set name = "Show qdel() Log"
-	set desc = "Render the qdel() log and display it"
-
-	var/dat = "<B>List of things that have been qdel()eted this round</B><BR><BR>"
-
-	var/tmplist = list()
-	for(var/elem in SSgarbage.qdel_list)
-		if(!(elem in tmplist))
-			tmplist[elem] = 0
-		tmplist[elem]++
-
-	for(var/path in tmplist)
-		dat += "[path] - [tmplist[path]] times<BR>"
-
-	usr << browse(dat, "window=qdeletedlog")
-
 /datum/proc/DoSearchVar(X, Xname)
 	if(usr && usr.client && !usr.client.running_find_references) return
 	if(istype(X, /datum))
