@@ -195,6 +195,14 @@ CHECK_RANDOMIZER
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
 
+## System command that invokes youtube-dl, used by Play Internet Sound.
+## You can install youtube-dl with
+## "pip install youtube-dl" if you have pip installed
+## from https://github.com/rg3/youtube-dl/releases
+## or your package manager
+## The default value assumes youtube-dl is in your system PATH
+# INVOKE_YOUTUBEDL youtube-dl
+
 ## In-game features
 ##Toggle for having jobs load up from the .txt
 # LOAD_JOBS_FROM_TXT
@@ -339,3 +347,6 @@ MINUTE_TOPIC_LIMIT 100
 
 ## Send a message to IRC when starting a new game
 #IRC_ANNOUNCE_NEW_GAME
+
+## Allow admin hrefs that don't use the new token system, will eventually be removed
+DEBUG_ADMIN_HREFS

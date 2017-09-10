@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/nukeoffer/sniper
 	name = "Sniper bundle"
 	desc = "Elegant and refined: Contains a collapsed sniper rifle in an expensive carrying case, a hollow-point \
-			haemorrhage magazine, a soporific knockout magazine, a free surplus supressor, and a worn out suit and tie."
+			a soporific knockout magazine, a free surplus supressor, and a worn out suit and tie."
 	item = /obj/item/storage/briefcase/sniperbundle
 	cost = 20 // normally 26
 
@@ -443,11 +443,11 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/ammo_box/magazine/m12g/dragon
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/shotgun/breach
-	name = "12g Breaching Shells"
-	desc = "An economic variant of the CMC meteorshot slugs, not as effective for knocking \
-			down targets, but still great for blasting airlocks off their frames."
-	item = /obj/item/ammo_box/magazine/m12g/breach
+/datum/uplink_item/ammo/shotgun/meteor
+	name = "12g Meteorslug Shells"
+	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
+            Great for blasting airlocks off their frames."
+	item = /obj/item/ammo_box/magazine/m12g/meteor
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/bag
@@ -482,12 +482,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/mm195x129
 
-/datum/uplink_item/ammo/machinegun/bleeding
-	name = "1.95x129mm (Bleeding) Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with special properties \
-			to induce internal bleeding on targets."
-	item = /obj/item/ammo_box/magazine/mm195x129/bleeding
-
 /datum/uplink_item/ammo/machinegun/hollow
 	name = "1.95x129mm (Hollow-Point) Box Magazine"
 	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
@@ -520,12 +514,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "A 3-round magazine of soporific ammo designed for use with .50 sniper rifles. Put your enemies to sleep today!"
 	item = /obj/item/ammo_box/magazine/sniper_rounds/soporific
 	cost = 6
-
-/datum/uplink_item/ammo/sniper/haemorrhage
-	name = ".50 Haemorrhage Magazine"
-	desc = "A 5-round magazine of haemorrhage ammo designed for use with .50 sniper rifles; causes heavy bleeding \
-			in the target."
-	item = /obj/item/ammo_box/magazine/sniper_rounds/haemorrhage
 
 /datum/uplink_item/ammo/sniper/penetrator
 	name = ".50 Penetrator Magazine"
