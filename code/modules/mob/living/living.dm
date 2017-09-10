@@ -454,6 +454,7 @@
 	if (s_active && !(CanReach(s_active,view_only = TRUE)))
 		s_active.close(src)
 
+	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
 		var/turf/target_turf = get_turf(src)
 		var/old_dir = turn(direct, 180)
 		var/turf/start = get_step(target_turf, old_dir)
