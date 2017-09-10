@@ -41,12 +41,12 @@
 	return TRUE
 
 /datum/effect_system/trail_follow/process()
-	generate()
+	generate_effect()
 
 /datum/effect_system/trail_follow/generate_effect()
 	if(!check_conditions())
 		return stop()
-	if(!(oldposition == get_turf(holder)))
+	if(oldposition && !(oldposition == get_turf(holder)))
 		if(!oldposition.has_gravity() || !nograv_required)
 			var/obj/effect/E = new effect_type(oldposition)
 			set_dir(E)
