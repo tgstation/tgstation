@@ -2,10 +2,10 @@ SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = 15
 	wait = 2 SECONDS
-	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
+	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
-	var/list/collection_timeout = list(0, 10 SECONDS, 2 MINUTES)	// deciseconds to wait before moving something up in the queue to the next level
+	var/list/collection_timeout = list(0, 2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
 
 	//Stat tracking
 	var/delslasttick = 0			// number of del()'s we've done this tick
@@ -19,24 +19,11 @@ SUBSYSTEM_DEF(garbage)
 	var/list/pass_counts
 	var/list/fail_counts
 
+	var/list/items = list()			// Holds our qdel_item statistics datums
 
-	//Queues
+	//Queue
 	var/list/queues
 
-
-	//Bad boy tracking
-	var/list/didntgc = list()		// list of all types that have failed to GC associated with the number of times that's happened.
-									// the types are stored as strings
-
-	var/list/harddeletetime = list()// Same as above but the total amount of milliseconds spent hard deleting this type
-
-	var/list/sleptDestroy = list()	// Same as above but these are paths that slept during their Destroy call
-
-	var/list/noqdelhint = list()	// list of all types that do not return a QDEL_HINT
-
-	var/list/noforcerespect = list()// all types that did not respect qdel(A, force=TRUE) and returned one of the immortality qdel hints
-
-	var/list/qdel_list = list()	// list of all types that have been qdel()eted (and the number)
 
 /datum/controller/subsystem/garbage/PreInit()
 	queues = new(GC_QUEUE_COUNT)
@@ -44,8 +31,8 @@ SUBSYSTEM_DEF(garbage)
 	fail_counts = new(GC_QUEUE_COUNT)
 	for(var/i in 1 to GC_QUEUE_COUNT)
 		queues[i] = list()
-		pass_counts[i] = list()
-		fail_counts[i] = list()
+		pass_counts[i] = 0
+		fail_counts[i] = 0
 
 /datum/controller/subsystem/garbage/stat_entry(msg)
 	var/list/counts = list()
@@ -69,20 +56,27 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/controller/subsystem/garbage/Shutdown()
 	//Adds the del() log to the qdel log file
-	if(didntgc.len || sleptDestroy.len)
-		var/list/dellog = list()
-		for(var/path in didntgc)
-			dellog += "Path : [path]\n"
-			dellog += "Failures : [didntgc[path]]\n"
-			var/info
-			if((info = sleptDestroy[path]))
-				dellog += "Sleeps : [info]\n"
-			if((info = harddeletetime[path]))
-				dellog += "Time Wasted: [info]\n"
-		for(var/path in sleptDestroy - didntgc)
-			dellog += "Path : [path]\n"
-			dellog += "Sleeps : [sleptDestroy[path]]\n"
-		log_qdel(dellog.Join())
+	var/list/dellog = list()
+
+	//sort by how long it's wasted hard deleting
+	sortTim(items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
+	for(var/path in items)
+		var/datum/qdel_item/I = items[path]
+		dellog += "Path: [path]"
+		if (I.failures)
+			dellog += "\tFailures: [I.failures]"
+		dellog += "\tqdel() Count: [I.qdels]"
+		dellog += "\tDestroy() Cost: [I.destroy_time]ms"
+		if (I.hard_deletes)
+			dellog += "\tTotal Hard Deletes [I.hard_deletes]"
+			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
+		if (I.slept_destroy)
+			dellog += "\tSleeps: [I.slept_destroy]"
+		if (I.no_respect_force)
+			dellog += "\tIgnored force: [I.no_respect_force] times"
+		if (I.no_hint)
+			dellog += "\tNo hint: [I.no_hint] times"
+	log_qdel(dellog.Join("\n"))
 
 /datum/controller/subsystem/garbage/fire()
 	//the fact that this resets its processing each fire (rather then resume where it left off) is intentional.
@@ -154,9 +148,8 @@ SUBSYSTEM_DEF(garbage)
 		D = locate(refID)
 
 		if (!D || D.gc_destroyed != GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
-			if (level == GC_QUEUE_CHECK)
-				++gcedlasttick
-				++totalgcs
+			++gcedlasttick
+			++totalgcs
 			pass_counts[level]++
 			if (MC_TICK_CHECK)
 				break
@@ -170,10 +163,9 @@ SUBSYSTEM_DEF(garbage)
 				D.find_references()
 				#endif
 				var/type = D.type
-				testing("GC: -- \ref[D] | [type] was unable to be GC'd and was sent to endo --")
-				didntgc["[type]"]++
-				++delslasttick
-				++totaldels
+				var/datum/qdel_item/I = items[type]
+				testing("GC: -- \ref[D] | [type] was unable to be GC'd --")
+				I.failures++
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
 				if (MC_TICK_CHECK)
@@ -211,12 +203,13 @@ SUBSYSTEM_DEF(garbage)
 
 	queue[refid] = gctime
 
-//this is purely to separate things profile wise.
+//this is mainly to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
 	var/time = world.timeofday
 	var/tick = TICK_USAGE
 	var/ticktime = world.time
-
+	++delslasttick
+	++totaldels
 	var/type = D.type
 	var/refID = "\ref[D]"
 
@@ -224,7 +217,11 @@ SUBSYSTEM_DEF(garbage)
 
 	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))
 
-	harddeletetime["[type]"] += TICK_DELTA_TO_MS(tick)
+	var/datum/qdel_item/I = items[type]
+
+	I.hard_deletes++
+	I.hard_delete_time += TICK_DELTA_TO_MS(tick)
+
 
 	if (tick > highest_del_tickusage)
 		highest_del_tickusage = tick
@@ -249,24 +246,43 @@ SUBSYSTEM_DEF(garbage)
 			queues[i] |= SSgarbage.queues[i]
 
 
+/datum/qdel_item
+	var/name = ""
+	var/qdels = 0			//Total number of times it's passed thru qdel.
+	var/destroy_time = 0	//Total amount of milliseconds spent processing this type's Destroy()
+	var/failures = 0		//Times it was queued for soft deletion but failed to soft delete.
+	var/hard_deletes = 0 	//Different from failures because it also includes QDEL_HINT_HARDDEL deletions
+	var/hard_delete_time = 0//Total amount of milliseconds spent hard deleting this type.
+	var/no_respect_force = 0//Number of times it's not respected force=TRUE
+	var/no_hint = 0			//Number of times it's not even bother to give a qdel hint
+	var/slept_destroy = 0	//Number of times it's slept in its destroy
+
+/datum/qdel_item/New(mytype)
+	name = mytype
+
+
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/D, force=FALSE)
 	if(!istype(D))
 		del(D)
 		return
-#ifdef TESTING
-	SSgarbage.qdel_list += "[D.type]"
-#else
-	SSgarbage.qdel_list["[D.type]"]++
-#endif
+	var/datum/qdel_item/I = SSgarbage.items[D.type]
+	if (!I)
+		I = SSgarbage.items[D.type] = new /datum/qdel_item(D.type)
+	I.qdels++
+
+
 	if(isnull(D.gc_destroyed))
 		D.SendSignal(COMSIG_PARENT_QDELETED)
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
+		var/start_tick = world.tick_usage
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
 		if(world.time != start_time)
-			SSgarbage.sleptDestroy["[D.type]"]++
+			I.slept_destroy++
+		else
+			I.destroy_time += TICK_USAGE_TO_MS(start_tick)
 		if(!D)
 			return
 		switch(hint)
@@ -281,13 +297,16 @@ SUBSYSTEM_DEF(garbage)
 					return
 				// Returning LETMELIVE after being told to force destroy
 				// indicates the objects Destroy() does not respect force
-				if(!SSgarbage.noforcerespect["[D.type]"])
-					SSgarbage.noforcerespect["[D.type]"] = "[D.type]"
+				#ifdef TESTING
+				if(!I.no_respect_force)
 					testing("WARNING: [D.type] has been force deleted, but is \
 						returning an immortal QDEL_HINT, indicating it does \
 						not respect the force flag for qdel(). It has been \
 						placed in the queue, further instances of this type \
 						will also be queued.")
+				#endif
+				I.no_respect_force++
+
 				SSgarbage.PreQueue(D)
 			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
 				SSgarbage.HardQueue(D)
@@ -299,9 +318,11 @@ SUBSYSTEM_DEF(garbage)
 				D.find_references()
 				#endif
 			else
-				if(!SSgarbage.noqdelhint["[D.type]"])
-					SSgarbage.noqdelhint["[D.type]"] = "[D.type]"
+				#ifdef TESTING
+				if(!I.no_hint)
 					testing("WARNING: [D.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
+				#endif
+				I.no_hint++
 				SSgarbage.PreQueue(D)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
