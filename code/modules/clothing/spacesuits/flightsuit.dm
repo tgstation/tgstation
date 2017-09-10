@@ -248,7 +248,7 @@
 		if(momentum_speed_y >= i)
 			step(wearer, drift_dir_y)
 		sleep(1)
-	if(prob(emp_damage * 30))
+	if(prob(emp_damage * 15))
 		step(wearer, pick(GLOB.alldirs))
 
 /obj/item/device/flightpack/on_mob_move(dir, mob/mob, turf/oldLoc, forced)
