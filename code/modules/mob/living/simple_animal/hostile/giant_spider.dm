@@ -116,6 +116,7 @@
 	poison_per_bite = 15
 	move_to_delay = 4
 	poison_type = "venom" //will soon after if there isn't medical attention!
+	speed = 4
 
 //tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
@@ -124,6 +125,7 @@
 	icon_living = "guard"
 	icon_dead = "guard_dead"
 	maxHealth = 400 // woah nelly
+	health = 400
 	melee_damage_lower = 35
 	melee_damage_upper = 40
 	poison_per_bite = 0
@@ -131,6 +133,16 @@
 	speed = 3
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
+
+//midwives are the queen of the spiders, can send messages to all them and web faster. That rare round where you get a queen spider and turn your 'for honor' players into 'r6siege' players will be a fun one.
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife
+	desc = "Furry and black, it makes you shudder to look at it. This one has scintillating green eyes."
+	icon_state = "nurse"
+	icon_living = "nurse"
+	icon_dead = "nurse_dead"
+	maxHealth = 40
+	health = 40
+
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
 	name = "giant ice spider"
@@ -323,6 +335,36 @@
 					fed--
 		busy = SPIDER_IDLE
 		stop_automated_movement = FALSE
+
+/datum/action/spider/comm
+	name = "Command"
+	button_icon_state = "cult_comms"
+
+	/datum/action/comm/IsAvailable()
+	if(!mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife(owner))
+		return FALSE
+	return ..()
+
+	/datum/action/innate/spider/comm/Activate()
+	var/input = stripped_input(usr, "Input a message for your legions to follow.", "Command", "")
+	if(!input || !IsAvailable())
+		return
+
+	spider_command(usr, input)
+
+/proc/spider_command(mob/living/user, message)
+	var/my_message
+	if(!message)
+		return
+	my_message = "<b>COMMAND FROM SPIDER QUEEN:</b> [message]
+	for(var/mob/M in GLOB.mob_list)
+		if(/mob/living/simple_animal/hostile/poison/giant_spider(M))
+			to_chat(M, my_message)
+		else if(M in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(M, user)
+			to_chat(M, "[link] [my_message]")
+
+	log_talk(user, "SPIDERCOMMAND:[key_name(user)] : [message]",LOGSAY)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
