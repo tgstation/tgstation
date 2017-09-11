@@ -316,7 +316,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //BASIC FUNCTIONS===================================
 
 			if("Refresh")//Refresh, goes to the end of the proc.
-			if ("Toggle_Font")
+			if ("Toggle_Font" && mode == 0)
 				//CODE REVISION 2
 				font_index = (font_index + 1) % 4
 
