@@ -357,6 +357,7 @@
 		Collide(AM)
 
 /obj/item/projectile/Destroy()
+	STOP_PROCESSING(SSprojectiles, src)
 	return ..()
 
 /obj/item/projectile/experience_pressure_difference()
