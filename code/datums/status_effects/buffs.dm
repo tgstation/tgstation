@@ -396,15 +396,15 @@
 	var/oldcolor = owner.color
 	owner.color = "#ff0000"
 	owner.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through them!", "You shrug off the stun!", " glowing with a blazing red aura!")
-	owner.status_flags |= GODMODE
 	owner.spin(duration,1)
 	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), duration)
-	playsound(owner, 'sound/weapons/whirlwind.ogg', 75, 1)
+	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
 	return ..()
 
 
 /datum/status_effect/sword_spin/tick()
+	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
 	var/obj/item/slashy
 	slashy = owner.get_active_held_item()
 	for(var/mob/living/M in orange(1,owner))
@@ -412,4 +412,3 @@
 
 /datum/status_effect/sword_spin/on_remove()
 	owner.visible_message("<span class='warning'>[owner]'s inhuman strength dissipates and the sword's runes grow cold!</span>")
-	owner.status_flags &= ~GODMODE
