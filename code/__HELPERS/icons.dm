@@ -929,6 +929,8 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 GLOBAL_LIST_INIT(human_dummy_list, list())	//Dummy mob = In use (TRUE/FALSE)
 
 /proc/generate_or_wait_for_human_dummy(slotkey)
+	if(!slotkey)
+		return new /mob/living/carbon/human/dummy
 	if(!GLOB.human_dummy_list[slotkey])
 		var/mob/living/carbon/human/dummy/D = new
 		GLOB.human_dummy_list[slotkey] = D
@@ -941,16 +943,18 @@ GLOBAL_LIST_INIT(human_dummy_list, list())	//Dummy mob = In use (TRUE/FALSE)
 		return D
 
 /proc/unset_busy_human_dummy(slotnumber)
+	if(!slotnumber)
+		return
 	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotnumber]
 	if(istype(D))
 		D.wipe_state()
 		D.in_use = FALSE
 
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs)
+/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key)
 	var/static/list/humanoid_icon_cache = list()
 	if(!icon_id || !humanoid_icon_cache[icon_id])
-		var/mob/living/carbon/human/dummy/body = new()
+		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
 
 		if(prefs)
 			prefs.copy_to(body)
@@ -980,8 +984,10 @@ GLOBAL_LIST_INIT(human_dummy_list, list())	//Dummy mob = In use (TRUE/FALSE)
 		qdel(body)
 
 		humanoid_icon_cache[icon_id] = out_icon
+		unset_busy_human_dummy(dummy_key)
 		return out_icon
 	else
+		unset_busy_human_dummy(dummy_key)
 		return humanoid_icon_cache[icon_id]
 
 
