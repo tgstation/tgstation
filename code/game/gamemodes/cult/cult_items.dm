@@ -202,7 +202,7 @@
 	else
 		return FALSE
 
-/datum/action/innate/cult/dash/proc/Activate()
+/datum/action/innate/cult/dash/Activate()
 	sword.attack_self(holder)
 
 /datum/action/innate/cult/dash/proc/Teleport(mob/user, atom/target)
