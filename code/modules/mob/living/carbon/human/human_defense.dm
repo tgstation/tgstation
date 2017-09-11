@@ -164,7 +164,7 @@
 	else
 		affecting = get_bodypart(ran_zone(user.zone_selected))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
-	
+
 	SSblackbox.add_details("item_used_for_combat","[I.type]|[I.force]")
 	SSblackbox.add_details("zone_targeted","[target_area]")
 
