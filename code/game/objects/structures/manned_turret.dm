@@ -157,7 +157,7 @@
 	playsound(src, 'sound/weapons/gunshot_smg.ogg', 75, 1)
 	P.xo = target.x - targets_from.x
 	P.yo = target.y - targets_from.y
-	P.Angle = calculated_projectile_vars[1] + rand(-9, 9)
+	P.Angle = calculated_projectile_vars[1] + SSrng.random(-9, 9)
 	P.p_x = calculated_projectile_vars[2]
 	P.p_y = calculated_projectile_vars[3]
 	P.fire()

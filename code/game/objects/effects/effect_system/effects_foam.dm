@@ -145,7 +145,7 @@
 
 
 /obj/effect/particle_effect/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(prob(max(0, exposed_temperature - 475))) //foam dissolves when heated
+	if(SSrng.probability(max(0, exposed_temperature - 475))) //foam dissolves when heated
 		kill_foam()
 
 

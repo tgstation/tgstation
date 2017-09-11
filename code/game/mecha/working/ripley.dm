@@ -95,8 +95,8 @@
 	. = ..()
 	if(cell)
 		cell.charge = Floor(cell.charge * 0.25) //Starts at very low charge
-	if(prob(70)) //Maybe add a drill
-		if(prob(15)) //Possible diamond drill... Feeling lucky?
+	if(SSrng.probability(70)) //Maybe add a drill
+		if(SSrng.probability(15)) //Possible diamond drill... Feeling lucky?
 			var/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/D = new
 			D.attach(src)
 		else
@@ -139,7 +139,7 @@
 /obj/mecha/working/ripley/contents_explosion(severity, target)
 	for(var/X in cargo)
 		var/obj/O = X
-		if(prob(30/severity))
+		if(SSrng.probability(30/severity))
 			cargo -= O
 			O.forceMove(loc)
 	. = ..()

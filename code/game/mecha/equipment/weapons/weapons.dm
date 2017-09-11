@@ -43,7 +43,7 @@
 		var/spread = 0
 		if(variance)
 			if(randomspread)
-				spread = round((rand() - 0.5) * variance)
+				spread = round((SSrng.random() - 0.5) * variance)
 			else
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
 		A.preparePixelProjectile(target, targloc, chassis.occupant, params, spread)
@@ -181,7 +181,7 @@
 		M.stuttering += 20
 		M.adjustEarDamage(0, 30)
 		M.Knockdown(60)
-		if(prob(30))
+		if(SSrng.probability(30))
 			M.Stun(200)
 			M.Unconscious(80)
 		else

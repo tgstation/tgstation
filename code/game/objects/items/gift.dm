@@ -17,9 +17,9 @@
 
 /obj/item/a_gift/New()
 	..()
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
-	icon_state = "giftdeliverypackage[rand(1,5)]"
+	pixel_x = SSrng.random(-10,10)
+	pixel_y = SSrng.random(-10,10)
+	icon_state = "giftdeliverypackage[SSrng.random(1,5)]"
 
 /obj/item/a_gift/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] peeks inside [src] and cries [user.p_them()]self to death! It looks like [user.p_they()] [user.p_were()] on the naughty list...</span>")
@@ -70,7 +70,7 @@
 	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
 	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo)) //All toys, except for abstract types and syndicate cards.
 
-	var/gift_type = pick(gift_type_list)
+	var/gift_type = SSrng.pick_from_list(gift_type_list)
 
 	if(!ispath(gift_type, /obj/item))
 		return

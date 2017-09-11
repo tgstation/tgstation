@@ -88,14 +88,14 @@
 		return
 	var/mob/living/carbon/ML = A
 	if(istype(ML))
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/dam_zone = SSrng.pick_from_list("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/obj/item/bodypart/affecting = null
 		if(ishuman(ML))
 			var/mob/living/carbon/human/H = ML
 			affecting = H.get_bodypart(ran_zone(dam_zone))
 		var/armor = ML.run_armor_check(affecting, "melee")
-		if(prob(75))
-			ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
+		if(SSrng.probability(75))
+			ML.apply_damage(SSrng.random(1,3), BRUTE, affecting, armor)
 			ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
 							"<span class='userdanger'>[name] bites [ML]!</span>")
 			if(armor >= 2)

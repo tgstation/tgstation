@@ -73,14 +73,14 @@
 	stage = min(stage, max_stages)
 
 	if(!cure)
-		if(prob(stage_prob))
+		if(SSrng.probability(stage_prob))
 			stage = min(stage + 1,max_stages)
 	else
-		if(prob(cure_chance))
+		if(SSrng.probability(cure_chance))
 			stage = max(stage - 1, 1)
 
 	if(disease_flags & CURABLE)
-		if(cure && prob(cure_chance))
+		if(cure && SSrng.probability(cure_chance))
 			cure()
 
 
@@ -103,7 +103,7 @@
 	if((spread_flags & SPECIAL || spread_flags & NON_CONTAGIOUS || spread_flags & BLOOD) && !force_spread)
 		return
 
-	if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
+	if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && SSrng.probability(affected_mob.satiety/10)))
 		return
 
 	var/spread_range = 1

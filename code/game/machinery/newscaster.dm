@@ -244,7 +244,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		stat &= ~NOPOWER
 		update_icon()
 	else
-		spawn(rand(0, 15))
+		spawn(SSrng.random(0, 15))
 			stat |= NOPOWER
 			update_icon()
 
@@ -902,7 +902,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF")
 	var/mob/living/carbon/human/H = user
 	var/obj/W = new /obj/item/reagent_containers/food/drinks/bottle/whiskey(H.loc)
-	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), 1)
+	playsound(H.loc, 'sound/items/drink.ogg', SSrng.random(10,50), 1)
 	W.reagents.trans_to(H, W.reagents.total_volume)
 	user.visible_message("<span class='suicide'>[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!</span>")
 

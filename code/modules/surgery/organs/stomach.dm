@@ -20,20 +20,20 @@
 	if(H.disgust)
 		var/pukeprob = 5 + 0.05 * H.disgust
 		if(H.disgust >= DISGUST_LEVEL_GROSS)
-			if(prob(10))
+			if(SSrng.probability(10))
 				H.stuttering += 1
 				H.confused += 2
-			if(prob(10) && !H.stat)
+			if(SSrng.probability(10) && !H.stat)
 				to_chat(H, "<span class='warning'>You feel kind of iffy...</span>")
 			H.jitteriness = max(H.jitteriness - 3, 0)
 		if(H.disgust >= DISGUST_LEVEL_VERYGROSS)
-			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
+			if(SSrng.probability(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
 				H.confused += 2.5
 				H.stuttering += 1
 				H.vomit(10, 0, 1, 0, 1, 0)
 			H.Dizzy(5)
 		if(H.disgust >= DISGUST_LEVEL_DISGUSTED)
-			if(prob(25))
+			if(SSrng.probability(25))
 				H.blur_eyes(3) //We need to add more shit down here
 
 		H.adjust_disgust(-0.5 * disgust_metabolism)

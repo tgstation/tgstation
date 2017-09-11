@@ -210,12 +210,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 	switch(invocation_type)
 		if("shout")
-			if(prob(50))//Auto-mute? Fuck that noise
+			if(SSrng.probability(50))//Auto-mute? Fuck that noise
 				user.say(invocation)
 			else
 				user.say(replacetext(invocation," ","`"))
 		if("whisper")
-			if(prob(50))
+			if(SSrng.probability(50))
 				user.whisper(invocation)
 			else
 				user.whisper(replacetext(invocation," ","`"))
@@ -269,7 +269,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		recharging = TRUE
 	if(sound)
 		playMagSound()
-	if(prob(critfailchance))
+	if(SSrng.probability(critfailchance))
 		critfail(targets)
 	else
 		cast(targets,user=user)
@@ -397,7 +397,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				else
 					switch(random_target_priority)
 						if(TARGET_RANDOM)
-							M = pick(possible_targets)
+							M = SSrng.pick_from_list(possible_targets)
 						if(TARGET_CLOSEST)
 							for(var/mob/living/L in possible_targets)
 								if(M)
@@ -419,11 +419,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				if(!possible_targets.len)
 					break
 				if(target_ignore_prev)
-					var/target = pick(possible_targets)
+					var/target = SSrng.pick_from_list(possible_targets)
 					possible_targets -= target
 					targets += target
 				else
-					targets += pick(possible_targets)
+					targets += SSrng.pick_from_list(possible_targets)
 
 	if(!include_user && (user in targets))
 		targets -= user

@@ -177,7 +177,7 @@ SUBSYSTEM_DEF(job)
 			var/list/candidates = FindOccupationCandidates(job, level)
 			if(!candidates.len)
 				continue
-			var/mob/dead/new_player/candidate = pick(candidates)
+			var/mob/dead/new_player/candidate = SSrng.pick_from_list(candidates)
 			if(AssignRole(candidate, command_position))
 				return 1
 	return 0
@@ -195,7 +195,7 @@ SUBSYSTEM_DEF(job)
 		var/list/candidates = FindOccupationCandidates(job, level)
 		if(!candidates.len)
 			continue
-		var/mob/dead/new_player/candidate = pick(candidates)
+		var/mob/dead/new_player/candidate = SSrng.pick_from_list(candidates)
 		AssignRole(candidate, command_position)
 
 /datum/controller/subsystem/job/proc/FillAIPosition()
@@ -208,7 +208,7 @@ SUBSYSTEM_DEF(job)
 			var/list/candidates = list()
 			candidates = FindOccupationCandidates(job, level)
 			if(candidates.len)
-				var/mob/dead/new_player/candidate = pick(candidates)
+				var/mob/dead/new_player/candidate = SSrng.pick_from_list(candidates)
 				if(AssignRole(candidate, "AI"))
 					ai_selected++
 					break
@@ -531,7 +531,7 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
 	if(latejoin_trackers.len)
-		SendToAtom(M, pick(latejoin_trackers), buckle)
+		SendToAtom(M, SSrng.pick_from_list(latejoin_trackers), buckle)
 	else
 		//bad mojo
 		var/area/shuttle/arrival/A = locate() in GLOB.sortedAreas
@@ -547,7 +547,7 @@ SUBSYSTEM_DEF(job)
 					if(!is_blocked_turf(T, TRUE))
 						avail += T
 				if(avail.len)
-					SendToAtom(M, pick(avail), FALSE)
+					SendToAtom(M, SSrng.pick_from_list(avail), FALSE)
 					return
 
 		//pick an open spot on arrivals and dump em

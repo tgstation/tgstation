@@ -72,7 +72,7 @@
 
 /obj/effect/holodeck_effect/mobspawner/activate(var/obj/machinery/computer/holodeck/HC)
 	if(islist(mobtype))
-		mobtype = pick(mobtype)
+		mobtype = SSrng.pick_from_list(mobtype)
 	mob = new mobtype(loc)
 
 	// these vars are not really standardized but all would theoretically create stuff on death

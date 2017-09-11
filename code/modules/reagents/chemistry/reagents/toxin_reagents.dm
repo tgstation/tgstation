@@ -38,9 +38,9 @@
 		return
 	if(!M.has_dna())
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
+	if((method==VAPOR && SSrng.probability(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
-		if(prob(98))
+		if(SSrng.probability(98))
 			M.randmutb()
 		else
 			M.randmutg()
@@ -109,7 +109,7 @@
 		M.adjustOxyLoss(5, 0)
 		if(C)
 			C.losebreath += 2
-		if(prob(20))
+		if(SSrng.probability(20))
 			M.emote("gasp")
 	..()
 
@@ -123,11 +123,11 @@
 	taste_mult = 1.3
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/M)
-	if(prob(10))
+	if(SSrng.probability(10))
 		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
-		M.adjustToxLoss(rand(20,60)*REM, 0)
+		M.adjustToxLoss(SSrng.random(20,60)*REM, 0)
 		. = 1
-	else if(prob(40))
+	else if(SSrng.probability(40))
 		M.heal_bodypart_damage(5*REM,0, 0)
 		. = 1
 	..()
@@ -198,7 +198,7 @@
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
-		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
+		alien_weeds.take_damage(SSrng.random(15,35), BRUTE, 0) // Kills alien weeds pretty fast
 	else if(istype(O, /obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
 	else if(istype(O, /obj/structure/spacevine))
@@ -387,8 +387,8 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/histamine/on_mob_life(mob/living/M)
-	if(prob(50))
-		switch(pick(1, 2, 3, 4))
+	if(SSrng.probability(50))
+		switch(SSrng.pick_from_list(1, 2, 3, 4))
 			if(1)
 				to_chat(M, "<span class='danger'>You can barely see!</span>")
 				M.blur_eyes(3)
@@ -397,7 +397,7 @@
 			if(3)
 				M.emote("sneeze")
 			if(4)
-				if(prob(75))
+				if(SSrng.probability(75))
 					to_chat(M, "You scratch at an itch.")
 					M.adjustBruteLoss(2*REM, 0)
 					. = 1
@@ -420,8 +420,8 @@
 	toxpwr = 1
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/M)
-	if(prob(5))
-		holder.add_reagent("histamine", pick(5,15))
+	if(SSrng.probability(5))
+		holder.add_reagent("histamine", SSrng.pick_from_list(5,15))
 		holder.remove_reagent("formaldehyde", 1.2)
 	else
 		return ..()
@@ -439,8 +439,8 @@
 	toxpwr = 0.2*volume
 	M.adjustBruteLoss((0.3*volume)*REM, 0)
 	. = 1
-	if(prob(15))
-		M.reagents.add_reagent("histamine", pick(5,10))
+	if(SSrng.probability(15))
+		M.reagents.add_reagent("histamine", SSrng.pick_from_list(5,10))
 		M.reagents.remove_reagent("venom", 1.1)
 	else
 		..()
@@ -474,9 +474,9 @@
 	toxpwr = 1.25
 
 /datum/reagent/toxin/cyanide/on_mob_life(mob/living/M)
-	if(prob(5))
+	if(SSrng.probability(5))
 		M.losebreath += 1
-	if(prob(8))
+	if(SSrng.probability(8))
 		to_chat(M, "You feel horrendously weak!")
 		M.Stun(40, 0)
 		M.adjustToxLoss(2*REM, 0)
@@ -506,20 +506,20 @@
 		M.reagents.add_reagent("itching_powder", reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/M)
-	if(prob(15))
+	if(SSrng.probability(15))
 		to_chat(M, "You scratch at your head.")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
-	if(prob(15))
+	if(SSrng.probability(15))
 		to_chat(M, "You scratch at your leg.")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
-	if(prob(15))
+	if(SSrng.probability(15))
 		to_chat(M, "You scratch at your arm.")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
-	if(prob(3))
-		M.reagents.add_reagent("histamine",rand(1,3))
+	if(SSrng.probability(3))
+		M.reagents.add_reagent("histamine",SSrng.random(1,3))
 		M.reagents.remove_reagent("itching_powder",1.2)
 		return
 	..()
@@ -534,15 +534,15 @@
 	toxpwr = 2.5
 
 /datum/reagent/toxin/initropidril/on_mob_life(mob/living/M)
-	if(prob(25))
-		var/picked_option = rand(1,3)
+	if(SSrng.probability(25))
+		var/picked_option = SSrng.random(1,3)
 		switch(picked_option)
 			if(1)
 				M.Knockdown(60, 0)
 				. = 1
 			if(2)
 				M.losebreath += 10
-				M.adjustOxyLoss(rand(5,25), 0)
+				M.adjustOxyLoss(SSrng.random(5,25), 0)
 				. = 1
 			if(3)
 				if(ishuman(M))
@@ -553,7 +553,7 @@
 							H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
 					else
 						H.losebreath += 10
-						H.adjustOxyLoss(rand(5,25), 0)
+						H.adjustOxyLoss(SSrng.random(5,25), 0)
 						. = 1
 	return ..() || .
 
@@ -571,7 +571,7 @@
 	if(current_cycle >= 10)
 		M.Stun(40, 0)
 		. = 1
-	if(prob(20))
+	if(SSrng.probability(20))
 		M.losebreath += 4
 	..()
 
@@ -663,16 +663,16 @@
 
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/M)
 	.=..()
-	if(current_cycle >=11 && prob(min(50,current_cycle)) && ishuman(M))
+	if(current_cycle >=11 && SSrng.probability(min(50,current_cycle)) && ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
+		H.vomit(10, SSrng.probability(10), SSrng.probability(50), SSrng.random(0,4), TRUE, SSrng.probability(30))
 		for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 			if(R != src)
 				H.reagents.remove_reagent(R.id,1)
 
 /datum/reagent/toxin/spewium/overdose_process(mob/living/M)
 	. = ..()
-	if(current_cycle >=33 && prob(15) && ishuman(M))
+	if(current_cycle >=33 && SSrng.probability(15) && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.spew_organ()
 		H.vomit(0, TRUE, TRUE, 4)
@@ -755,10 +755,10 @@
 			var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/matrix/skew = matrix()
 			var/intensity = 8
-			skew.set_skew(rand(-intensity,intensity), rand(-intensity,intensity))
+			skew.set_skew(SSrng.random(-intensity,intensity), SSrng.random(-intensity,intensity))
 			var/matrix/newmatrix = skew
 
-			if(prob(33)) // 1/3rd of the time, let's make it stack with the previous matrix! Mwhahahaha!
+			if(SSrng.probability(33)) // 1/3rd of the time, let's make it stack with the previous matrix! Mwhahahaha!
 				var/obj/screen/plane_master/PM = M.hud_used.plane_masters["[GAME_PLANE]"]
 				newmatrix = skew * PM.transform
 
@@ -854,7 +854,7 @@
 		M.confused = Clamp(M.confused + 3, 0, 5)
 	if(M.dizziness < 6)
 		M.dizziness = Clamp(M.dizziness + 3, 0, 5)
-	if(prob(20))
+	if(SSrng.probability(20))
 		to_chat(M, "You feel confused and disorientated.")
 	..()
 
@@ -870,7 +870,7 @@
 	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
 	if(M.staminaloss < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
-	if(prob(30))
+	if(SSrng.probability(30))
 		to_chat(M, "You should sit down and take a rest...")
 	..()
 
@@ -889,7 +889,7 @@
 	if(current_cycle > delay)
 		holder.remove_reagent(id, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
-		if(prob(10))
+		if(SSrng.probability(10))
 			M.Knockdown(20, 0)
 		. = 1
 	..()

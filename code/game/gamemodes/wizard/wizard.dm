@@ -20,7 +20,7 @@
 
 /datum/game_mode/wizard/pre_setup()
 
-	var/datum/mind/wizard = pick(antag_candidates)
+	var/datum/mind/wizard = SSrng.pick_from_list(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "Wizard"
@@ -29,7 +29,7 @@
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
 		return 0
 	for(var/datum/mind/wiz in wizards)
-		wiz.current.loc = pick(GLOB.wizardstart)
+		wiz.current.loc = SSrng.pick_from_list(GLOB.wizardstart)
 
 	return 1
 
@@ -48,7 +48,7 @@
 
 
 /datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
-	switch(rand(1,100))
+	switch(SSrng.random(1,100))
 		if(1 to 30)
 
 			var/datum/objective/assassinate/kill_objective = new
@@ -97,8 +97,8 @@
 
 /datum/game_mode/proc/name_wizard(mob/living/carbon/human/wizard_mob)
 	//Allows the wizard to choose a custom name or go with a random one. Spawn 0 so it does not lag the round starting.
-	var/wizard_name_first = pick(GLOB.wizard_first)
-	var/wizard_name_second = pick(GLOB.wizard_second)
+	var/wizard_name_first = SSrng.pick_from_list(GLOB.wizard_first)
+	var/wizard_name_second = SSrng.pick_from_list(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	spawn(0)
 		var/newname = copytext(sanitize(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)

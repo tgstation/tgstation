@@ -40,7 +40,7 @@
 	var/list/theareas = get_areas_in_range(100, chassis)
 	if(!theareas.len)
 		return
-	var/area/thearea = pick(theareas)
+	var/area/thearea = SSrng.pick_from_list(theareas)
 	var/list/L = list()
 	var/turf/pos = get_turf(src)
 	for(var/turf/T in get_area_turfs(thearea.type))
@@ -54,7 +54,7 @@
 				L+=T
 	if(!L.len)
 		return
-	var/turf/target_turf = pick(L)
+	var/turf/target_turf = SSrng.pick_from_list(L)
 	if(!target_turf)
 		return
 	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, src, 300, 1, /obj/effect/portal/anom)
@@ -62,7 +62,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_COORDJMP(T)]",0,1)
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [COORD(T)]")
 	src = null
-	QDEL_LIST_IN(created, rand(150,300))
+	QDEL_LIST_IN(created, SSrng.random(150,300))
 	return 1
 
 
@@ -236,7 +236,7 @@
 	var/repaired = 0
 	if(chassis.internal_damage & MECHA_INT_SHORT_CIRCUIT)
 		h_boost *= -2
-	else if(chassis.internal_damage && prob(15))
+	else if(chassis.internal_damage && SSrng.probability(15))
 		for(var/int_dam_flag in repairable_damage)
 			if(chassis.internal_damage & int_dam_flag)
 				chassis.clearInternalDamage(int_dam_flag)
@@ -424,7 +424,7 @@
 		return
 	var/datum/gas_mixture/GM = new
 	GM.assert_gas("plasma")
-	if(prob(10))
+	if(SSrng.probability(10))
 		GM.gases["plasma"][MOLES] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
 		T.visible_message("The [src] suddenly disgorges a cloud of heated plasma.")

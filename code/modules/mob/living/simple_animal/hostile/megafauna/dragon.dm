@@ -105,13 +105,13 @@ Difficulty: Medium
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
-	if(prob(15 + anger_modifier) && !client)
+	if(SSrng.probability(15 + anger_modifier) && !client)
 		if(health < maxHealth/2)
 			INVOKE_ASYNC(src, .proc/swoop_attack, TRUE, null, 50)
 		else
 			fire_rain()
 
-	else if(prob(10+anger_modifier) && !client)
+	else if(SSrng.probability(10+anger_modifier) && !client)
 		if(health > maxHealth/2)
 			INVOKE_ASYNC(src, .proc/swoop_attack)
 		else
@@ -124,7 +124,7 @@ Difficulty: Medium
 		return
 	target.visible_message("<span class='boldwarning'>Fire rains from the sky!</span>")
 	for(var/turf/turf in range(9,get_turf(target)))
-		if(prob(11))
+		if(SSrng.probability(11))
 			new /obj/effect/temp_visual/target(turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
@@ -179,7 +179,7 @@ Difficulty: Medium
 	else if(target.x > initial_x)
 		negative = FALSE
 	else if(target.x == initial_x) //if their x is the same, pick a direction
-		negative = prob(50)
+		negative = SSrng.probability(50)
 	var/obj/effect/temp_visual/dragon_flight/F = new /obj/effect/temp_visual/dragon_flight(loc, negative)
 
 	negative = !negative //invert it for the swoop down later
@@ -250,7 +250,7 @@ Difficulty: Medium
 			if(L && !QDELETED(L)) // Some mobs are deleted on death
 				var/throw_dir = get_dir(src, L)
 				if(L.loc == loc)
-					throw_dir = pick(GLOB.alldirs)
+					throw_dir = SSrng.pick_from_list(GLOB.alldirs)
 				var/throwtarget = get_edge_target_turf(src, throw_dir)
 				L.throw_at(throwtarget, 3)
 				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")

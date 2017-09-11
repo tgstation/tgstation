@@ -108,13 +108,13 @@
 
 		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases
 			if(1)
-				phrase = rand(1,5)	// set the upper limit as the phrase above the first 'bad cop' phrase, the mask will only play 'nice' phrases
+				phrase = SSrng.random(1,5)	// set the upper limit as the phrase above the first 'bad cop' phrase, the mask will only play 'nice' phrases
 			if(2)
-				phrase = rand(1,11)	// default setting, set upper limit to last 'bad cop' phrase. Mask will play good cop and bad cop phrases
+				phrase = SSrng.random(1,11)	// default setting, set upper limit to last 'bad cop' phrase. Mask will play good cop and bad cop phrases
 			if(3)
-				phrase = rand(1,18)	// user has unlocked all phrases, set upper limit to last phrase. The mask will play all phrases
+				phrase = SSrng.random(1,18)	// user has unlocked all phrases, set upper limit to last phrase. The mask will play all phrases
 			if(4)
-				phrase = rand(12,18)	// user has broke the restrictor, it will now only play shitcurity phrases
+				phrase = SSrng.random(12,18)	// user has broke the restrictor, it will now only play shitcurity phrases
 
 		if(!safety)
 			phrase_text = "FUCK YOUR CUNT YOU SHIT EATING COCKSTORM AND EAT A DONG FUCKING ASS RAMMING SHIT FUCK EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS OF FUCK AND POO AND SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT."

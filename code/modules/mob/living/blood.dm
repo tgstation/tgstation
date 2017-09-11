@@ -50,21 +50,21 @@
 			blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
 
 		//Effects of bloodloss
-		var/word = pick("dizzy","woozy","faint")
+		var/word = SSrng.pick_from_list("dizzy","woozy","faint")
 		switch(blood_volume)
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-				if(prob(5))
+				if(SSrng.probability(5))
 					to_chat(src, "<span class='warning'>You feel [word].</span>")
 				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
-				if(prob(5))
+				if(SSrng.probability(5))
 					blur_eyes(6)
 					to_chat(src, "<span class='warning'>You feel very [word].</span>")
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 				adjustOxyLoss(5)
-				if(prob(15))
-					Unconscious(rand(20,60))
+				if(SSrng.probability(15))
+					Unconscious(SSrng.random(20,60))
 					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
 			if(0 to BLOOD_VOLUME_SURVIVE)
 				death()
@@ -250,7 +250,7 @@
 		if(drop)
 			if(drop.drips < 3)
 				drop.drips++
-				drop.add_overlay(pick(drop.random_icon_states))
+				drop.add_overlay(SSrng.pick_from_list(drop.random_icon_states))
 				drop.transfer_mob_blood_dna(src)
 				return
 			else

@@ -32,7 +32,7 @@
 /datum/game_mode/proc/add_devil_objectives(datum/mind/devil_mind, quantity)
 	var/list/validtypes = list(/datum/objective/devil/soulquantity, /datum/objective/devil/soulquality, /datum/objective/devil/sintouch, /datum/objective/devil/buy_target)
 	for(var/i = 1 to quantity)
-		var/type = pick(validtypes)
+		var/type = SSrng.pick_from_list(validtypes)
 		var/datum/objective/devil/objective = new type(null)
 		objective.owner = devil_mind
 		devil_mind.objectives += objective

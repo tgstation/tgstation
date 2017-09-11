@@ -7,7 +7,7 @@
 
 /datum/station_goal/bluespace_cannon/get_report()
 	return {"Our military presence is inadequate in your sector.
-	 We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.
+	 We need you to construct BSA-[SSrng.random(1,99)] Artillery position aboard your station.
 
 	 Base parts are available for shipping via cargo.
 	 -Nanotrasen Naval Command"}
@@ -271,7 +271,7 @@
 
 /obj/machinery/computer/bsa_control/proc/get_impact_turf()
 	if(istype(target, /area))
-		return pick(get_area_turfs(target))
+		return SSrng.pick_from_list(get_area_turfs(target))
 	else if(istype(target, /obj/item/device/gps))
 		return get_turf(target)
 

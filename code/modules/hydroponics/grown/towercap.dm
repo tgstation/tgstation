@@ -168,8 +168,8 @@
 	if(!has_buckled_mobs() && do_after(user, 50, target = src))
 		for(var/I in 1 to 5)
 			var/obj/item/grown/log/L = new /obj/item/grown/log(src.loc)
-			L.pixel_x += rand(1,4)
-			L.pixel_y += rand(1,4)
+			L.pixel_x += SSrng.random(1,4)
+			L.pixel_y += SSrng.random(1,4)
 		if(can_buckle || grill)
 			new /obj/item/stack/rods(loc, 1)
 		qdel(src)
@@ -224,7 +224,7 @@
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
-		else if(istype(A, /obj/item) && prob(20))
+		else if(istype(A, /obj/item) && SSrng.probability(20))
 			var/obj/item/O = A
 			O.microwave_act()
 

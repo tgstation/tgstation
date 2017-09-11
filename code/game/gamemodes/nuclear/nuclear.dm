@@ -30,7 +30,7 @@
 		n_agents = antag_candidates.len
 
 	while(n_agents > 0)
-		var/datum/mind/new_syndicate = pick(antag_candidates)
+		var/datum/mind/new_syndicate = SSrng.pick_from_list(antag_candidates)
 		syndicates += new_syndicate
 		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
 		n_agents--
@@ -102,7 +102,7 @@
 
 
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
-	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
+	var/leader_title = SSrng.pick_from_list("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
 	spawn(1)
 		nukeops_lastname = nukelastname(synd_mind.current)
 		NukeNameAssign(nukeops_lastname,syndicates) //allows time for the rest of the syndies to be chosen
@@ -294,8 +294,8 @@
 
 
 /proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	var/randomname = pick(GLOB.last_names)
-	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
+	var/randomname = SSrng.pick_from_list(GLOB.last_names)
+	var/newname = copytext(sanitize(input(M,"You are the nuke operative [SSrng.pick_from_list("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
 
 	if (!newname)
 		newname = randomname

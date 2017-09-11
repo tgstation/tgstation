@@ -256,7 +256,7 @@
 					//	move that over to our new list
 					//	and repeat until we've moved all of them
 					while (local_options.len)
-						key = local_options[rand(1, local_options.len)]
+						key = local_options[SSrng.random(1, local_options.len)]
 						local_options -= key
 					var/value = options[key]
 					options -= key

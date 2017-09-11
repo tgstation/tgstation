@@ -131,15 +131,15 @@
 /mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
-		if(prob(reflectchance))
+		if(SSrng.probability(reflectchance))
 			apply_damage(P.damage * 0.5, P.damage_type)
 			visible_message("<span class='danger'>The [P.name] is reflected by [src]'s armored shell!</span>", \
 							"<span class='userdanger'>The [P.name] is reflected by your armored shell!</span>")
 
 			// Find a turf near or on the original location to bounce to
 			if(P.starting)
-				var/new_x = P.starting.x + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
-				var/new_y = P.starting.y + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
+				var/new_x = P.starting.x + SSrng.pick_from_list(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
+				var/new_y = P.starting.y + SSrng.pick_from_list(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
 				var/turf/curloc = get_turf(src)
 
 				// redirect the projectile
@@ -335,7 +335,7 @@
 			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
 			return FALSE
 		do_attack_animation(C)
-		var/obj/item/bodypart/BP = pick(parts)
+		var/obj/item/bodypart/BP = SSrng.pick_from_list(parts)
 		BP.dismember()
 		return FALSE
 	. = ..()
@@ -404,7 +404,7 @@
 		return
 	else
 		if(LAZYLEN(GLOB.cult_narsie.souls_needed))
-			the_construct.master = pick(GLOB.cult_narsie.souls_needed)
+			the_construct.master = SSrng.pick_from_list(GLOB.cult_narsie.souls_needed)
 			to_chat(the_construct, "<span class='cultitalic'>You are now tracking your prey, [the_construct.master] - harvest them!</span>")
 		else
 			to_chat(the_construct, "<span class='cultitalic'>Nar'Sie has completed her harvest!</span>")

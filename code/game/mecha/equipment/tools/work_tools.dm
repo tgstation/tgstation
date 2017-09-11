@@ -154,7 +154,7 @@
 					var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(chassis))
 					if(!W)
 						return
-					var/turf/my_target = pick(the_targets)
+					var/turf/my_target = SSrng.pick_from_list(the_targets)
 					var/datum/reagents/R = new/datum/reagents(5)
 					W.reagents = R
 					R.my_atom = W

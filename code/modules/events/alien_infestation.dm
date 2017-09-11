@@ -18,8 +18,8 @@
 
 
 /datum/round_event/ghost_role/alien_infestation/setup()
-	announceWhen = rand(announceWhen, announceWhen + 50)
-	if(prob(50))
+	announceWhen = SSrng.random(announceWhen, announceWhen + 50)
+	if(SSrng.probability(50))
 		spawncount++
 
 /datum/round_event/ghost_role/alien_infestation/kill()

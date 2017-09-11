@@ -112,7 +112,7 @@
 
 	if(self_sustaining)
 		adjustNutri(1)
-		adjustWater(rand(3,5))
+		adjustWater(SSrng.random(3,5))
 		adjustWeeds(-2)
 		adjustPests(-2)
 		adjustToxic(-2)
@@ -129,12 +129,12 @@
 
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
-			if(prob(50))
+			if(SSrng.probability(50))
 				adjustNutri(-1 / rating)
 
 			// Lack of nutrients hurts non-weeds
 			if(nutrilevel <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
-				adjustHealth(-rand(1,3))
+				adjustHealth(-SSrng.random(1,3))
 
 //Photosynthesis/////////////////////////////////////////////////////////
 			// Lack of light hurts non-mushrooms
@@ -150,20 +150,20 @@
 
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
-			adjustWater(-rand(1,6) / rating)
+			adjustWater(-SSrng.random(1,6) / rating)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
 			if(waterlevel <= 10 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-				adjustHealth(-rand(0,1) / rating)
+				adjustHealth(-SSrng.random(0,1) / rating)
 				if(waterlevel <= 0)
-					adjustHealth(-rand(0,2) / rating)
+					adjustHealth(-SSrng.random(0,2) / rating)
 
 			// Sufficient water level and nutrient level = plant healthy but also spawns weeds
 			else if(waterlevel > 10 && nutrilevel > 0)
-				adjustHealth(rand(1,2) / rating)
-				if(myseed && prob(myseed.weed_chance))
+				adjustHealth(SSrng.random(1,2) / rating)
+				if(myseed && SSrng.probability(myseed.weed_chance))
 					adjustWeeds(myseed.weed_rate)
-				else if(prob(5))  //5 percent chance the weed population will increase
+				else if(SSrng.probability(5))  //5 percent chance the weed population will increase
 					adjustWeeds(1 / rating)
 
 //Toxins/////////////////////////////////////////////////////////////////
@@ -171,10 +171,10 @@
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
 			if(toxic >= 40 && toxic < 80)
 				adjustHealth(-1 / rating)
-				adjustToxic(-rand(1,10) / rating)
+				adjustToxic(-SSrng.random(1,10) / rating)
 			else if(toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
 				adjustHealth(-3)
-				adjustToxic(-rand(1,10) / rating)
+				adjustToxic(-SSrng.random(1,10) / rating)
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
@@ -194,7 +194,7 @@
 
 			// If the plant is too old, lose health fast
 			if(age > myseed.lifespan)
-				adjustHealth(-rand(1,5) / rating)
+				adjustHealth(-SSrng.random(1,5) / rating)
 
 			// Harvest code
 			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
@@ -203,14 +203,14 @@
 					harvest = 1
 				else
 					lastproduce = age
-			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
+			if(SSrng.probability(5))  // On each tick, there's a 5 percent chance the pest population will increase
 				adjustPests(1 / rating)
 		else
-			if(waterlevel > 10 && nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
+			if(waterlevel > 10 && nutrilevel > 0 && SSrng.probability(10))  // If there's no plant, the percentage chance is 10%
 				adjustWeeds(1 / rating)
 
 		// Weeeeeeeeeeeeeeedddssss
-		if(weedlevel >= 10 && prob(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
+		if(weedlevel >= 10 && SSrng.probability(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(myseed)
 				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) && !myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism)) // If a normal plant
 					weedinvasion()
@@ -225,17 +225,17 @@
 	if (mutmod == 0)
 		return
 	if (mutmod == 1)
-		if(prob(80))		//80%
+		if(SSrng.probability(80))		//80%
 			mutate()
-		else if(prob(75))	//15%
+		else if(SSrng.probability(75))	//15%
 			hardmutate()
 		return
 	if (mutmod == 2)
-		if(prob(50))		//50%
+		if(SSrng.probability(50))		//50%
 			mutate()
-		else if(prob(50))	//25%
+		else if(SSrng.probability(50))	//25%
 			hardmutate()
-		else if(prob(50))	//12.5%
+		else if(SSrng.probability(50))	//12.5%
 			mutatespecie()
 		return
 	return
@@ -340,7 +340,7 @@
 		myseed = null
 	else
 		oldPlantName = "empty tray"
-	switch(rand(1,18))		// randomly pick predominative weed
+	switch(SSrng.random(1,18))		// randomly pick predominative weed
 		if(16 to 18)
 			myseed = new /obj/item/seeds/reishi(src)
 		if(14 to 15)
@@ -382,7 +382,7 @@
 
 	var/oldPlantName = myseed.plantname
 	if(myseed.mutatelist.len > 0)
-		var/mutantseed = pick(myseed.mutatelist)
+		var/mutantseed = SSrng.pick_from_list(myseed.mutatelist)
 		qdel(myseed)
 		myseed = null
 		myseed = new mutantseed
@@ -406,7 +406,7 @@
 		if(myseed)
 			qdel(myseed)
 			myseed = null
-		var/newWeed = pick(/obj/item/seeds/liberty, /obj/item/seeds/angel, /obj/item/seeds/nettle/death, /obj/item/seeds/kudzu)
+		var/newWeed = SSrng.pick_from_list(/obj/item/seeds/liberty, /obj/item/seeds/angel, /obj/item/seeds/nettle/death, /obj/item/seeds/kudzu)
 		myseed = new newWeed
 		dead = 0
 		hardmutate()
@@ -448,7 +448,7 @@
 
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
 	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
-		switch(rand(100))
+		switch(SSrng.random(100))
 			if(91 to 100)
 				adjustHealth(-10)
 				to_chat(user, "<span class='warning'>The plant shrivels and burns.</span>")
@@ -529,14 +529,14 @@
 		adjustHealth(-round(S.get_reagent_amount("fluorine") * 2))
 		adjustToxic(round(S.get_reagent_amount("flourine") * 2.5))
 		adjustWater(-round(S.get_reagent_amount("flourine") * 0.5))
-		adjustWeeds(-rand(1,4))
+		adjustWeeds(-SSrng.random(1,4))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 	if(S.has_reagent("chlorine", 1))
 		adjustHealth(-round(S.get_reagent_amount("chlorine") * 1))
 		adjustToxic(round(S.get_reagent_amount("chlorine") * 1.5))
 		adjustWater(-round(S.get_reagent_amount("chlorine") * 0.5))
-		adjustWeeds(-rand(1,3))
+		adjustWeeds(-SSrng.random(1,3))
 
 	// White Phosphorous + water -> phosphoric acid. That's not a good thing really.
 	// Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
@@ -544,12 +544,12 @@
 		adjustHealth(-round(S.get_reagent_amount("phosphorus") * 0.75))
 		adjustNutri(round(S.get_reagent_amount("phosphorus") * 0.1))
 		adjustWater(-round(S.get_reagent_amount("phosphorus") * 0.5))
-		adjustWeeds(-rand(1,2))
+		adjustWeeds(-SSrng.random(1,2))
 
 	// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
 	if(S.has_reagent("sugar", 1))
-		adjustWeeds(rand(1,2))
-		adjustPests(rand(1,2))
+		adjustWeeds(SSrng.random(1,2))
+		adjustPests(SSrng.random(1,2))
 		adjustNutri(round(S.get_reagent_amount("sugar") * 0.1))
 
 	// It is water!
@@ -572,37 +572,37 @@
 	if(S.has_reagent("sacid", 1))
 		adjustHealth(-round(S.get_reagent_amount("sacid") * 1))
 		adjustToxic(round(S.get_reagent_amount("sacid") * 1.5))
-		adjustWeeds(-rand(1,2))
+		adjustWeeds(-SSrng.random(1,2))
 
 	// SERIOUSLY
 	if(S.has_reagent("facid", 1))
 		adjustHealth(-round(S.get_reagent_amount("facid") * 2))
 		adjustToxic(round(S.get_reagent_amount("facid") * 3))
-		adjustWeeds(-rand(1,4))
+		adjustWeeds(-SSrng.random(1,4))
 
 	// Plant-B-Gone is just as bad
 	if(S.has_reagent("plantbgone", 1))
 		adjustHealth(-round(S.get_reagent_amount("plantbgone") * 5))
 		adjustToxic(round(S.get_reagent_amount("plantbgone") * 6))
-		adjustWeeds(-rand(4,8))
+		adjustWeeds(-SSrng.random(4,8))
 
 	// why, just why
 	if(S.has_reagent("napalm", 1))
 		if(!(myseed.resistance_flags & FIRE_PROOF))
 			adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
 			adjustToxic(round(S.get_reagent_amount("napalm") * 7))
-			adjustWeeds(-rand(5,9))
+			adjustWeeds(-SSrng.random(5,9))
 
 	//Weed Spray
 	if(S.has_reagent("weedkiller", 1))
 		adjustToxic(round(S.get_reagent_amount("weedkiller") * 0.5))
 		//old toxicity was 4, each spray is default 10 (minimal of 5) so 5 and 2.5 are the new ammounts
-		adjustWeeds(-rand(1,2))
+		adjustWeeds(-SSrng.random(1,2))
 
 	//Pest Spray
 	if(S.has_reagent("pestkiller", 1))
 		adjustToxic(round(S.get_reagent_amount("pestkiller") * 0.5))
-		adjustPests(-rand(1,2))
+		adjustPests(-SSrng.random(1,2))
 
 	// Healing
 	if(S.has_reagent("cryoxadone", 1))
@@ -621,7 +621,7 @@
 		var/salt = S.get_reagent_amount("saltpetre")
 		adjustHealth(round(salt * 0.25))
 		if (myseed)
-			myseed.adjust_production(-round(salt/100)-prob(salt%100))
+			myseed.adjust_production(-round(salt/100)-SSrng.probability(salt%100))
 			myseed.adjust_potency(round(salt*0.50))
 	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 	if(S.has_reagent("ash", 1))
@@ -635,7 +635,7 @@
 		adjustNutri(round(S.get_reagent_amount("diethylamine") * 2))
 		if(myseed)
 			myseed.adjust_yield(round(S.get_reagent_amount("diethylamine") * 0.02))
-		adjustPests(-rand(1,2))
+		adjustPests(-SSrng.random(1,2))
 
 	// Compost, effectively
 	if(S.has_reagent("nutriment", 1))
@@ -650,7 +650,7 @@
 	// FEED ME
 	if(S.has_reagent("blood", 1))
 		adjustNutri(round(S.get_reagent_amount("blood") * 1))
-		adjustPests(rand(2,4))
+		adjustPests(SSrng.random(2,4))
 
 	// FEED ME SEYMOUR
 	if(S.has_reagent("strangereagent", 1))
@@ -661,10 +661,10 @@
 		adjustWater(round(S.get_reagent_amount("adminordrazine") * 1))
 		adjustHealth(round(S.get_reagent_amount("adminordrazine") * 1))
 		adjustNutri(round(S.get_reagent_amount("adminordrazine") * 1))
-		adjustPests(-rand(1,5))
-		adjustWeeds(-rand(1,5))
+		adjustPests(-SSrng.random(1,5))
+		adjustWeeds(-SSrng.random(1,5))
 	if(S.has_reagent("adminordrazine", 5))
-		switch(rand(100))
+		switch(SSrng.random(100))
 			if(66  to 100)
 				mutatespecie()
 			if(33	to 65)
@@ -901,7 +901,7 @@
 
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
 	var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato)
-	var/chosen = pick(livingplants)
+	var/chosen = SSrng.pick_from_list(livingplants)
 	var/mob/living/simple_animal/hostile/C = new chosen
 	C.faction = list("plants")
 

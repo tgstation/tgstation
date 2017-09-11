@@ -70,13 +70,13 @@ In all, this is a lot like the monkey code. /N
 	if(..())
 		if (stat != DEAD)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-			apply_damage(rand(1, 3), BRUTE, affecting)
+			apply_damage(SSrng.random(1, 3), BRUTE, affecting)
 
 
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/damage = SSrng.random(M.melee_damage_lower, M.melee_damage_upper)
 		switch(M.melee_damage_type)
 			if(BRUTE)
 				adjustBruteLoss(damage)
@@ -93,9 +93,9 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
-		var/damage = rand(5, 35)
+		var/damage = SSrng.random(5, 35)
 		if(M.is_adult)
-			damage = rand(10, 40)
+			damage = SSrng.random(10, 40)
 		adjustBruteLoss(damage)
 		add_logs(M, src, "attacked")
 		updatehealth()
@@ -115,7 +115,7 @@ In all, this is a lot like the monkey code. /N
 
 		if(3)
 			take_overall_damage(30,0)
-			if(prob(50))
+			if(SSrng.probability(50))
 				Unconscious(20)
 			adjustEarDamage(15,60)
 

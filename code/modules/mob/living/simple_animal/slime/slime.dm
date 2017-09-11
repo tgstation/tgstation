@@ -104,12 +104,12 @@
 
 /mob/living/simple_animal/slime/proc/update_name()
 	if(slime_name_regex.Find(name))
-		number = rand(1, 1000)
+		number = SSrng.random(1, 1000)
 		name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
 		real_name = name
 
 /mob/living/simple_animal/slime/proc/random_colour()
-	set_colour(pick(slime_colours))
+	set_colour(SSrng.pick_from_list(slime_colours))
 
 /mob/living/simple_animal/slime/regenerate_icons()
 	cut_overlays()
@@ -164,10 +164,10 @@
 				probab = 70
 			if(10)
 				probab = 95
-		if(prob(probab))
+		if(SSrng.probability(probab))
 			if(istype(O, /obj/structure/window) || istype(O, /obj/structure/grille))
 				if(nutrition <= get_hunger_nutrition() && !Atkcool)
-					if (is_adult || prob(5))
+					if (is_adult || SSrng.probability(5))
 						O.attack_slime(src)
 						Atkcool = 1
 						spawn(45)
@@ -270,7 +270,7 @@
 	if(buckled)
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
-			if(prob(60))
+			if(SSrng.probability(60))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
@@ -281,7 +281,7 @@
 				discipline_slime(M)
 
 		else
-			if(prob(30))
+			if(SSrng.probability(30))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [buckled]!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
@@ -322,23 +322,23 @@
 		return
 	if(W.force > 0)
 		attacked += 10
-		if(prob(25))
+		if(SSrng.probability(25))
 			user.do_attack_animation(src)
 			user.changeNext_move(CLICK_CD_MELEE)
 			to_chat(user, "<span class='danger'>[W] passes right through [src]!</span>")
 			return
-		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
+		if(Discipline && SSrng.probability(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
 	if(W.force >= 3)
 		var/force_effect = 2 * W.force
 		if(is_adult)
 			force_effect = round(W.force/2)
-		if(prob(10 + force_effect))
+		if(SSrng.probability(10 + force_effect))
 			discipline_slime(user)
 	..()
 
 /mob/living/simple_animal/slime/proc/apply_water()
-	adjustBruteLoss(rand(15,20))
+	adjustBruteLoss(SSrng.random(15,20))
 	if(!client)
 		if(Target) // Like cats
 			Target = null
@@ -382,7 +382,7 @@
 	if(stat)
 		return
 
-	if(prob(80) && !client)
+	if(SSrng.probability(80) && !client)
 		Discipline++
 
 		if(!is_adult)
@@ -394,7 +394,7 @@
 	if(buckled)
 		Feedstop(silent=1) //we unbuckle the slime from the mob it latched onto.
 
-	SStun = world.time + rand(20,60)
+	SStun = world.time + SSrng.random(20,60)
 	spawn(0)
 		canmove = 0
 		if(user)
@@ -418,4 +418,4 @@
 		return 3
 
 /mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
-	. = ..(mapload, pick(slime_colours), prob(50))
+	. = ..(mapload, SSrng.pick_from_list(slime_colours), SSrng.probability(50))

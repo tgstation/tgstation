@@ -189,7 +189,7 @@
 	for(var/obj/item/I in H)
 		H.dropItemToGround(I)
 
-	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
+	var/hat = SSrng.pick_from_list(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
 	H.equip_to_slot_or_del(new hat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
@@ -273,7 +273,7 @@
 					user.unset_machine()
 			if("r_leg","l_leg")
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
-				var/turf/T = get_step(target,pick(GLOB.cardinals))
+				var/turf/T = get_step(target,SSrng.pick_from_list(GLOB.cardinals))
 				target.Move(T)
 			if("r_arm","l_arm")
 				target.click_random_mob()
@@ -294,10 +294,10 @@
 			possible |= H
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
-	if(prob(50) || force)
+	if(SSrng.probability(50) || force)
 		var/way = dir2text(get_dir(victim,get_turf(src)))
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [way]</span>")
-	if(prob(20) || force)
+	if(SSrng.probability(20) || force)
 		var/area/A = get_area(src)
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
 

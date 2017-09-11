@@ -49,7 +49,7 @@
 
 /mob/living/simple_animal/hostile/illusion/AttackingTarget()
 	. = ..()
-	if(. && isliving(target) && prob(multiply_chance))
+	if(. && isliving(target) && SSrng.probability(multiply_chance))
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			return

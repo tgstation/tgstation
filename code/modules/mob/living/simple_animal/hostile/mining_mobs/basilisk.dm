@@ -81,7 +81,7 @@
 	butcher_results = list(/obj/item/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/make_shiny()
-	if(prob(75))
+	if(SSrng.probability(75))
 		name = "magmawing watcher"
 		real_name = name
 		desc = "When raised very close to lava, some watchers adapt to the extreme heat and change coloration. Such watchers are known as magmawings and use intense heat as their tool for hunting and defense."

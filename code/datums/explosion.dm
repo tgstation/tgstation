@@ -177,7 +177,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 		//------- EX_ACT AND TURF FIRES -------
 
-		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
+		if(flame_dist && SSrng.probability(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
 
 		if(dist > EXPLODE_NONE)
@@ -191,7 +191,7 @@ GLOBAL_LIST_EMPTY(explosions)
 		var/throw_dir = get_dir(epicenter,T)
 		for(var/obj/item/I in T)
 			if(!I.anchored)
-				var/throw_range = rand(throw_dist, max_range)
+				var/throw_range = SSrng.random(throw_dist, max_range)
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = EXPLOSION_THROW_SPEED //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)

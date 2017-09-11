@@ -60,7 +60,7 @@
 		files.known_designs = list()
 		for(var/v in files.known_tech)
 			var/datum/tech/T = files.known_tech[v]
-			if(prob(1))
+			if(SSrng.probability(1))
 				updateRD++
 				T.level--
 		if(updateRD)

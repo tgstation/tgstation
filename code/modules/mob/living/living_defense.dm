@@ -103,10 +103,10 @@
 		switch(M.damtype)
 			if(BRUTE)
 				Unconscious(20)
-				take_overall_damage(rand(M.force/2, M.force))
+				take_overall_damage(SSrng.random(M.force/2, M.force))
 				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if(BURN)
-				take_overall_damage(0, rand(M.force/2, M.force))
+				take_overall_damage(0, SSrng.random(M.force/2, M.force))
 				playsound(src, 'sound/items/welder.ogg', 50, 1)
 			if(TOX)
 				M.mech_toxin_damage(src)
@@ -220,7 +220,7 @@
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
 			return 0
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-		if (prob(75))
+		if (SSrng.probability(75))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
@@ -239,7 +239,7 @@
 
 		else
 			L.do_attack_animation(src)
-			if(prob(90))
+			if(SSrng.probability(90))
 				add_logs(L, src, "attacked")
 				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
 					"<span class='userdanger'>[L.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -323,7 +323,7 @@
 	if(client)
 		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
 	else
-		switch(rand(1, 6))
+		switch(SSrng.random(1, 6))
 			if(1)
 				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
 			if(2)

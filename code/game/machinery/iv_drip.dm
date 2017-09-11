@@ -117,7 +117,7 @@
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 		to_chat(attached, "<span class='userdanger'>The IV drip needle is ripped out of you!</span>")
-		attached.apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
+		attached.apply_damage(3, BRUTE, SSrng.pick_from_list("r_arm", "l_arm"))
 		attached = null
 		update_icon()
 		return PROCESS_KILL
@@ -141,12 +141,12 @@
 			amount = min(amount, 4)
 			// If the beaker is full, ping
 			if(!amount)
-				if(prob(5))
+				if(SSrng.probability(5))
 					visible_message("[src] pings.")
 				return
 
 			// If the human is losing too much blood, beep.
-			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
+			if(attached.blood_volume < BLOOD_VOLUME_SAFE && SSrng.probability(5))
 				visible_message("[src] beeps loudly.")
 				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 			attached.transfer_blood_to(beaker, amount)

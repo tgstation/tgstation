@@ -87,7 +87,7 @@
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
-	if(prob(30))
+	if(SSrng.probability(30))
 		M.adjustToxLoss(1, 0)
 		. = 1
 	..()
@@ -105,7 +105,7 @@
 	if(holder.has_reagent("histamine"))
 		holder.remove_reagent("histamine", 5)
 	M.hallucination = max(0, M.hallucination - 10)
-	if(prob(30))
+	if(SSrng.probability(30))
 		M.adjustToxLoss(1, 0)
 		. = 1
 	..()
@@ -305,22 +305,22 @@
 		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
 		last_added = new_blood_level - M.blood_volume
 		M.blood_volume = new_blood_level
-	if(prob(33))
+	if(SSrng.probability(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
 		. = 1
 	..()
 
 /datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
-	if(prob(3))
+	if(SSrng.probability(3))
 		to_chat(M, "<span class = 'warning'>You feel salty.</span>")
 		holder.add_reagent("sodiumchloride", 1)
 		holder.remove_reagent("salglu_solution", 0.5)
-	else if(prob(3))
+	else if(SSrng.probability(3))
 		to_chat(M, "<span class = 'warning'>You feel sweet.</span>")
 		holder.add_reagent("sugar", 1)
 		holder.remove_reagent("salglu_solution", 0.5)
-	if(prob(33))
+	if(SSrng.probability(33))
 		M.adjustBruteLoss(0.5*REM, 0)
 		M.adjustFireLoss(0.5*REM, 0)
 		. = 1
@@ -527,7 +527,7 @@
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
 	M.adjustOxyLoss(-12*REM, 0)
 	M.silent = max(M.silent, 5)
-	if(prob(33))
+	if(SSrng.probability(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
 	..()
@@ -553,35 +553,35 @@
 	. = 1
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		M.adjustToxLoss(0.5*REM, 0)
 		M.losebreath++
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		M.adjustToxLoss(2*REM, 0)
 		M.losebreath += 2
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage2(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		M.adjustToxLoss(3*REM, 0)
 		M.losebreath += 3
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage3(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		M.adjustToxLoss(4*REM, 0)
 		M.losebreath += 4
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage4(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		M.adjustToxLoss(5*REM, 0)
 		M.losebreath += 5
 		. = 1
@@ -596,7 +596,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/M)
-	if(prob(10))
+	if(SSrng.probability(10))
 		M.drowsyness += 1
 	M.jitteriness -= 1
 	M.reagents.remove_reagent("histamine",3)
@@ -625,7 +625,7 @@
 	..()
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
@@ -634,7 +634,7 @@
 	..()
 
 /datum/reagent/medicine/morphine/addiction_act_stage1(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
@@ -643,7 +643,7 @@
 	..()
 
 /datum/reagent/medicine/morphine/addiction_act_stage2(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
@@ -654,7 +654,7 @@
 	..()
 
 /datum/reagent/medicine/morphine/addiction_act_stage3(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
@@ -665,7 +665,7 @@
 	..()
 
 /datum/reagent/medicine/morphine/addiction_act_stage4(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
@@ -689,7 +689,7 @@
 	if (!eyes)
 		return
 	if(M.disabilities & BLIND)
-		if(prob(20))
+		if(SSrng.probability(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
 			M.cure_blind()
 			M.cure_nearsighted()
@@ -723,7 +723,7 @@
 		M.adjustOxyLoss(-5*REM, 0)
 		. = 1
 	M.losebreath = 0
-	if(prob(20))
+	if(SSrng.probability(20))
 		M.Dizzy(5)
 		M.Jitter(5)
 	..()
@@ -757,14 +757,14 @@
 		M.losebreath = 0
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	. = 1
-	if(prob(20))
+	if(SSrng.probability(20))
 		M.AdjustStun(-20, 0)
 		M.AdjustKnockdown(-20, 0)
 		M.AdjustUnconscious(-20, 0)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		M.adjustStaminaLoss(2.5*REM, 0)
 		M.adjustToxLoss(1*REM, 0)
 		M.losebreath++
@@ -873,7 +873,7 @@
 	. = 1
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/M)
-	if(prob(33))
+	if(SSrng.probability(33))
 		M.adjustStaminaLoss(2.5*REM, 0)
 		M.adjustToxLoss(1*REM, 0)
 		M.losebreath++
@@ -992,7 +992,7 @@
 	taste_description = "grossness"
 
 /datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/M)
-	if(prob(80))
+	if(SSrng.probability(80))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
 		M.adjustOxyLoss(-1*REM, 0)
@@ -1067,7 +1067,7 @@
 		M.jitteriness -= 3
 	if (M.hallucination >= 5)
 		M.hallucination -= 5
-	if(prob(20))
+	if(SSrng.probability(20))
 		M.adjustBrainLoss(1*REM)
 	M.adjustStaminaLoss(2.5*REM, 0)
 	..()

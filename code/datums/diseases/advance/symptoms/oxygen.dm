@@ -46,6 +46,6 @@ Bonus
 			if(regenerate_blood && M.blood_volume < BLOOD_VOLUME_NORMAL)
 				M.blood_volume += 1
 		else
-			if(prob(base_message_chance))
-				to_chat(M, "<span class='notice'>[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]</span>")
+			if(SSrng.probability(base_message_chance))
+				to_chat(M, "<span class='notice'>[SSrng.pick_from_list("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]</span>")
 	return

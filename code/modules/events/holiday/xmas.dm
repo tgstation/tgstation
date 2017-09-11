@@ -28,7 +28,7 @@
 		if(xmas.z != ZLEVEL_STATION)
 			continue
 		for(var/turf/open/floor/T in orange(1,xmas))
-			for(var/i=1,i<=rand(1,5),i++)
+			for(var/i=1,i<=SSrng.random(1,5),i++)
 				new /obj/item/a_gift(T)
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
@@ -50,8 +50,8 @@
 	if( !cracked && ishuman(target) && (target.stat == CONSCIOUS) && !target.get_active_held_item() )
 		target.visible_message("[user] and [target] pop \an [src]! *pop*", "<span class='notice'>You pull \an [src] with [target]! *pop*</span>", "<span class='italics'>You hear a pop.</span>")
 		var/obj/item/paper/Joke = new /obj/item/paper(user.loc)
-		Joke.name = "[pick("awful","terrible","unfunny")] joke"
-		Joke.info = pick("What did one snowman say to the other?\n\n<i>'Is it me or can you smell carrots?'</i>",
+		Joke.name = "[SSrng.pick_from_list("awful","terrible","unfunny")] joke"
+		Joke.info = SSrng.pick_from_list("What did one snowman say to the other?\n\n<i>'Is it me or can you smell carrots?'</i>",
 			"Why couldn't the snowman get laid?\n\n<i>He was frigid!</i>",
 			"Where are santa's helpers educated?\n\n<i>Nowhere, they're ELF-taught.</i>",
 			"What happened to the man who stole advent calanders?\n\n<i>He got 25 days.</i>",
@@ -113,7 +113,7 @@
 		spawn(0)
 			var/response = alert(M, "Santa is coming to town! Do you want to be santa?", "Ho ho ho!", "Yes", "No")
 			if(response == "Yes" && M && M.client && M.stat == DEAD && !santa)
-				santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
+				santa = new /mob/living/carbon/human(SSrng.pick_from_list(GLOB.blobstart))
 				santa.key = M.key
 				qdel(M)
 

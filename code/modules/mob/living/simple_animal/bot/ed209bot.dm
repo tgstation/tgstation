@@ -62,9 +62,9 @@
 			bot_core.req_access = list(ACCESS_MAINT_TUNNELS, ACCESS_THEATRE)
 			arrest_type = 1
 			if((lasercolor == "b") && (name == "\improper ED-209 Security Robot"))//Picks a name if there isn't already a custome one
-				name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
+				name = SSrng.pick_from_list("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
 			if((lasercolor == "r") && (name == "\improper ED-209 Security Robot"))
-				name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
+				name = SSrng.pick_from_list("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
 
 	//SECHUD
 	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
@@ -231,7 +231,7 @@ Auto Patrol[]"},
 
 		targets += C
 	if(targets.len>0)
-		var/mob/living/carbon/t = pick(targets)
+		var/mob/living/carbon/t = SSrng.pick_from_list(targets)
 		if((t.stat!=2) && (t.lying != 1) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
 			shootAt(t)
 	switch(mode)
@@ -354,7 +354,7 @@ Auto Patrol[]"},
 			target = C
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
-			playsound(loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, 0)
+			playsound(loc, SSrng.pick_from_list('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, 0)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
 			spawn(0)
@@ -392,12 +392,12 @@ Auto Patrol[]"},
 		G.cell.charge = 0
 		G.update_icon()
 
-	if(prob(50))
+	if(SSrng.probability(50))
 		new /obj/item/bodypart/l_leg/robot(Tsec)
-		if(prob(25))
+		if(SSrng.probability(25))
 			new /obj/item/bodypart/r_leg/robot(Tsec)
-	if(prob(25))//50% chance for a helmet OR vest
-		if(prob(50))
+	if(SSrng.probability(25))//50% chance for a helmet OR vest
+		if(SSrng.probability(50))
 			new /obj/item/clothing/head/helmet(Tsec)
 		else
 			if(!lasercolor)
@@ -458,7 +458,7 @@ Auto Patrol[]"},
 
 /mob/living/simple_animal/bot/ed209/emp_act(severity)
 
-	if(severity==2 && prob(70))
+	if(severity==2 && SSrng.probability(70))
 		..(severity-1)
 	else
 		new /obj/effect/temp_visual/emp(loc)
@@ -468,11 +468,11 @@ Auto Patrol[]"},
 				continue
 			targets += C
 		if(targets.len)
-			if(prob(50))
-				var/mob/toshoot = pick(targets)
+			if(SSrng.probability(50))
+				var/mob/toshoot = SSrng.pick_from_list(targets)
 				if(toshoot)
 					targets-=toshoot
-					if(prob(50) && emagged < 2)
+					if(SSrng.probability(50) && emagged < 2)
 						emagged = 2
 						set_weapon()
 						shootAt(toshoot)
@@ -480,9 +480,9 @@ Auto Patrol[]"},
 						set_weapon()
 					else
 						shootAt(toshoot)
-			else if(prob(50))
+			else if(SSrng.probability(50))
 				if(targets.len)
-					var/mob/toarrest = pick(targets)
+					var/mob/toarrest = SSrng.pick_from_list(targets)
 					if(toarrest)
 						target = toarrest
 						mode = BOT_HUNT

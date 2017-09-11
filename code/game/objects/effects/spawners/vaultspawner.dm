@@ -6,13 +6,13 @@
 
 /obj/effect/vaultspawner/New(turf/location,lX = minX,uX = maxX,lY = minY,uY = maxY,type = null)
 	if(!type)
-		type = pick("sandstone","rock","alien")
+		type = SSrng.pick_from_list("sandstone","rock","alien")
 
 	var/lowBoundX = location.x
 	var/lowBoundY = location.y
 
-	var/hiBoundX = location.x + rand(lX,uX)
-	var/hiBoundY = location.y + rand(lY,uY)
+	var/hiBoundX = location.x + SSrng.random(lX,uX)
+	var/hiBoundY = location.y + SSrng.random(lY,uY)
 
 	var/z = location.z
 

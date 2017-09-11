@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(events)
 
 //decides which world.time we should select another random event at.
 /datum/controller/subsystem/events/proc/reschedule()
-	scheduled = world.time + rand(frequency_lower, max(frequency_lower,frequency_upper))
+	scheduled = world.time + SSrng.random(frequency_lower, max(frequency_lower,frequency_upper))
 
 //selects a random event based on whether it can occur and it's 'weight'(probability)
 /datum/controller/subsystem/events/proc/spawnEvent()
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(events)
 				return
 		sum_of_weights += E.weight
 
-	sum_of_weights = rand(0,sum_of_weights)	//reusing this variable. It now represents the 'weight' we want to select
+	sum_of_weights = SSrng.random(0,sum_of_weights)	//reusing this variable. It now represents the 'weight' we want to select
 
 	for(var/datum/round_event_control/E in control)
 		if(!E.canSpawnEvent(players_amt, gamemode))
@@ -111,7 +111,7 @@ SUBSYSTEM_DEF(events)
 	/area/crew_quarters/heads/chief)
 
 	//Need to locate() as it's just a list of paths.
-	return locate(pick((GLOB.the_station_areas - safe_areas) + danger_areas)) in GLOB.sortedAreas
+	return locate(SSrng.pick_from_list((GLOB.the_station_areas - safe_areas) + danger_areas)) in GLOB.sortedAreas
 
 
 //allows a client to trigger an event

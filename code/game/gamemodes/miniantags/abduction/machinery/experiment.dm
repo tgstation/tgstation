@@ -184,7 +184,7 @@
 		sleep(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 		to_chat(H, "<big><span class='warning'><b>You can't remember how you got here...</b></span></big>")
-		var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
+		var/objtype = (SSrng.probability(75) ? /datum/objective/abductee/random : SSrng.pick_from_list(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
 		var/datum/objective/abductee/O = new objtype()
 		SSticker.mode.abductees += H.mind
 		H.mind.objectives += O

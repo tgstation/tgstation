@@ -33,7 +33,7 @@
 	if(!vendingMachines.len)
 		kill()
 		return
-	originMachine = pick(vendingMachines)
+	originMachine = SSrng.pick_from_list(vendingMachines)
 	vendingMachines.Remove(originMachine)
 	originMachine.shut_up = 0
 	originMachine.shoot_inventory = 1
@@ -51,7 +51,7 @@
 	vendingMachines = removeNullsFromList(vendingMachines)
 	if(!vendingMachines.len)	//if every machine is infected
 		for(var/obj/machinery/vending/upriser in infectedMachines)
-			if(prob(70) && !QDELETED(upriser))
+			if(SSrng.probability(70) && !QDELETED(upriser))
 				var/mob/living/simple_animal/hostile/mimic/copy/M = new(upriser.loc, upriser, null, 1) // it will delete upriser on creation and override any machine checks
 				M.faction = list("profit")
 				M.speak = rampant_speeches.Copy()
@@ -63,11 +63,11 @@
 		kill()
 		return
 	if(IsMultiple(activeFor, 4))
-		var/obj/machinery/vending/rebel = pick(vendingMachines)
+		var/obj/machinery/vending/rebel = SSrng.pick_from_list(vendingMachines)
 		vendingMachines.Remove(rebel)
 		infectedMachines.Add(rebel)
 		rebel.shut_up = 0
 		rebel.shoot_inventory = 1
 
 		if(IsMultiple(activeFor, 8))
-			originMachine.speak(pick(rampant_speeches))
+			originMachine.speak(SSrng.pick_from_list(rampant_speeches))

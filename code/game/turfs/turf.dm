@@ -401,7 +401,7 @@
 			CHECK_TICK
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
-	. = (prob(probability) || force)
+	. = (SSrng.probability(probability) || force)
 	for(var/I in src)
 		var/atom/A = I
 		if(ignore_mobs && ismob(A))
@@ -410,7 +410,7 @@
 			A.narsie_act()
 
 /turf/ratvar_act(force, ignore_mobs, probability = 40)
-	. = (prob(probability) || force)
+	. = (SSrng.probability(probability) || force)
 	for(var/I in src)
 		var/atom/A = I
 		if(ignore_mobs && ismob(A))
@@ -503,7 +503,7 @@
 	return T
 
 /turf/handle_fall(mob/faller, forced)
-	faller.lying = pick(90, 270)
+	faller.lying = SSrng.pick_from_list(90, 270)
 	if(!forced)
 		return
 	if(has_gravity(src))

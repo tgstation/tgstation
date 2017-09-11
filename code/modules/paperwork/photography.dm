@@ -319,8 +319,8 @@
 	P.icon = ic
 	P.img = temp
 	P.desc = mobs
-	P.pixel_x = rand(-10, 10)
-	P.pixel_y = rand(-10, 10)
+	P.pixel_x = SSrng.random(-10, 10)
+	P.pixel_y = SSrng.random(-10, 10)
 
 	if(blueprints)
 		P.blueprints = 1
@@ -336,8 +336,8 @@
 	var/icon = ic
 	var/img = temp
 	var/desc = mobs
-	var/pixel_x = rand(-10, 10)
-	var/pixel_y = rand(-10, 10)
+	var/pixel_x = SSrng.random(-10, 10)
+	var/pixel_y = SSrng.random(-10, 10)
 
 	var/injectblueprints = 1
 	if(blueprints)
@@ -437,7 +437,7 @@
 
 	captureimage(target, user, flag)
 
-	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
+	playsound(loc, SSrng.pick_from_list('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
 	pictures_left--
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
@@ -486,8 +486,8 @@
 			break
 	var/obj/item/photo/p = new /obj/item/photo(C.loc)
 	p.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"], selection.fields["blueprints"])
-	p.pixel_x = rand(-10, 10)
-	p.pixel_y = rand(-10, 10)
+	p.pixel_x = SSrng.random(-10, 10)
+	p.pixel_y = SSrng.random(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
 	visible_message("[C.name] spits out a photograph from a narrow slot on its chassis.")
 	to_chat(usr, "<span class='notice'>You print a photograph.</span>")
@@ -520,7 +520,7 @@
 		..()
 		return
 	if(contents.len)
-		var/obj/item/I = pick(contents)
+		var/obj/item/I = SSrng.pick_from_list(contents)
 		user.put_in_hands(I)
 		to_chat(user, "<span class='notice'>You carefully remove the photo from \the [src].</span>")
 		displayed = null
@@ -547,7 +547,7 @@
 	if(displayed)
 		PF.framed = displayed
 	if(contents.len)
-		var/obj/item/I = pick(contents)
+		var/obj/item/I = SSrng.pick_from_list(contents)
 		I.forceMove(PF)
 
 
@@ -610,7 +610,7 @@
 			F.displayed = framed
 			framed = null
 		if(contents.len)
-			var/obj/item/I = pick(contents)
+			var/obj/item/I = SSrng.pick_from_list(contents)
 			I.forceMove(F)
 		F.update_icon()
 	qdel(src)

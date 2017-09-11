@@ -20,7 +20,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	priority_announce("What the fuck was that?!", "General Alert")
 
 /datum/round_event/immovable_rod/start()
-	var/startside = pick(GLOB.cardinals)
+	var/startside = SSrng.pick_from_list(GLOB.cardinals)
 	var/turf/startT = spaceDebrisStartLoc(startside, ZLEVEL_STATION)
 	var/turf/endT = spaceDebrisFinishLoc(startside, ZLEVEL_STATION)
 	new /obj/effect/immovablerod(startT, endT)
@@ -69,11 +69,11 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	return 0
 
 /obj/effect/immovablerod/Collide(atom/clong)
-	if(prob(10))
+	if(SSrng.probability(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		audible_message("<span class='danger'>You hear a CLANG!</span>")
 
-	if(clong && prob(25))
+	if(clong && SSrng.probability(25))
 		x = clong.x
 		y = clong.y
 
@@ -98,5 +98,5 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.adjustBruteLoss(160)
-	if(L && (L.density || prob(10)))
+	if(L && (L.density || SSrng.probability(10)))
 		L.ex_act(EXPLODE_HEAVY)

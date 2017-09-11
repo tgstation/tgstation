@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 	var/ID = pick_n_take(GLOB.possible_uplinker_IDs)
 	if(!ID)
-		ID = rand(1,999)
+		ID = SSrng.random(1,999)
 	name = "[name] [ID]"
 
 /obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)

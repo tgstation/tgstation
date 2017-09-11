@@ -21,7 +21,7 @@
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 
 /datum/round_event/shuttle_loan/start()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY)
+	dispatch_type = SSrng.pick_from_list(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY)
 
 /datum/round_event/shuttle_loan/announce()
 	SSshuttle.shuttle_loan = src
@@ -97,9 +97,9 @@
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
-				if(prob(75))
+				if(SSrng.probability(75))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
-				if(prob(50))
+				if(SSrng.probability(50))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 
 			if(RUSKY_PARTY)
@@ -109,9 +109,9 @@
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged)	//drops a mateba
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear/russian)
-				if(prob(75))
+				if(SSrng.probability(75))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
-				if(prob(50))
+				if(SSrng.probability(50))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear/russian)
 
 			if(SPIDER_GIFT)
@@ -121,7 +121,7 @@
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/nurse)
-				if(prob(50))
+				if(SSrng.probability(50))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/hunter)
 
 				var/turf/T = pick_n_take(empty_shuttle_turfs)
@@ -135,14 +135,14 @@
 					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/obj/effect/mob_spawn/human/corpse/assistant/infected_assistant = pick(/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection, /obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection, /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection)
+				var/obj/effect/mob_spawn/human/corpse/assistant/infected_assistant = SSrng.pick_from_list(/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection, /obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection, /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection)
 				var/turf/T
 				for(var/i=0, i<10, i++)
-					if(prob(15))
+					if(SSrng.probability(15))
 						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
-					else if(prob(15))
+					else if(SSrng.probability(15))
 						shuttle_spawns.Add(/obj/item/reagent_containers/syringe)
-					else if(prob(25))
+					else if(SSrng.probability(25))
 						shuttle_spawns.Add(/obj/item/shard)
 					T = pick_n_take(empty_shuttle_turfs)
 					new infected_assistant(T)
@@ -167,7 +167,7 @@
 					pack.generate(pick_n_take(empty_shuttle_turfs))
 
 				for(var/i in 1 to 5)
-					var/decal = pick(/obj/effect/decal/cleanable/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
+					var/decal = SSrng.pick_from_list(/obj/effect/decal/cleanable/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
 					new decal(pick_n_take(empty_shuttle_turfs))
 			if(PIZZA_DELIVERY)
 				shuttle_spawns.Add(/obj/item/pizzabox/margherita)
@@ -175,7 +175,7 @@
 				shuttle_spawns.Add(/obj/item/pizzabox/meat)
 				shuttle_spawns.Add(/obj/item/pizzabox/meat)
 				shuttle_spawns.Add(/obj/item/pizzabox/vegetable)
-				if(prob(10))
+				if(SSrng.probability(10))
 					shuttle_spawns.Add(/obj/item/pizzabox/bomb)
 				else
 					shuttle_spawns.Add(/obj/item/pizzabox/margherita)

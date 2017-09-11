@@ -2,9 +2,9 @@
 	var/t_amount = 0
 	if(t_max == -1)
 		if(extractor)
-			t_max = rand(1,4) * extractor.seed_multiplier
+			t_max = SSrng.random(1,4) * extractor.seed_multiplier
 		else
-			t_max = rand(1,4)
+			t_max = SSrng.random(1,4)
 
 	var/seedloc = O.loc
 	if(extractor)

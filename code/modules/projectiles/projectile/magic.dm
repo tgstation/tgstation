@@ -80,7 +80,7 @@
 			CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
-	var/door_type = pick(door_types)
+	var/door_type = SSrng.pick_from_list(door_types)
 	var/obj/structure/mineral_door/D = new door_type(T)
 	T.ChangeTurf(/turf/open/floor/plating)
 	D.Open()
@@ -127,18 +127,18 @@
 
 	var/mob/living/new_mob
 
-	var/randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
+	var/randomize = SSrng.pick_from_list("monkey","robot","slime","xeno","humanoid","animal")
 	switch(randomize)
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
 		if("robot")
-			var/robot = pick("cyborg","syndiborg","drone")
+			var/robot = SSrng.pick_from_list("cyborg","syndiborg","drone")
 			switch(robot)
 				if("cyborg")
 					new_mob = new /mob/living/silicon/robot(M.loc)
 				if("syndiborg")
 					var/path
-					if(prob(50))
+					if(SSrng.probability(50))
 						path = /mob/living/silicon/robot/syndicate
 					else
 						path = /mob/living/silicon/robot/syndicate/medical
@@ -157,15 +157,15 @@
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 		if("xeno")
-			if(prob(50))
+			if(SSrng.probability(50))
 				new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 			else
 				new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 
 		if("animal")
 			var/path
-			if(prob(50))
-				var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp", "watcher", "goliath", "headcrab", "morph", "stickman", "stickdog", "lesserdragon", "gorilla")
+			if(SSrng.probability(50))
+				var/beast = SSrng.pick_from_list("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp", "watcher", "goliath", "headcrab", "morph", "stickman", "stickdog", "lesserdragon", "gorilla")
 				switch(beast)
 					if("carp")
 						path = /mob/living/simple_animal/hostile/carp
@@ -208,7 +208,7 @@
 					if("gorilla")
 						path = /mob/living/simple_animal/hostile/gorilla
 			else
-				var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly","cak")
+				var/animal = SSrng.pick_from_list("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly","cak")
 				switch(animal)
 					if("parrot")
 						path = /mob/living/simple_animal/parrot
@@ -246,13 +246,13 @@
 			A.copy_to(new_mob, icon_updates=0)
 
 			var/mob/living/carbon/human/H = new_mob
-			if(prob(50))
+			if(SSrng.probability(50))
 				var/list/all_species = list()
 				for(var/speciestype in subtypesof(/datum/species))
 					var/datum/species/S = new speciestype()
 					if(!S.dangerous_existence)
 						all_species += speciestype
-				H.set_species(pick(all_species), icon_update=0)
+				H.set_species(SSrng.pick_from_list(all_species), icon_update=0)
 			H.update_body()
 			H.update_hair()
 			H.update_body_parts()
@@ -374,7 +374,7 @@
 
 /obj/item/projectile/magic/aoe/lightning/fire(setAngle)
 	if(caster)
-		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+		chain = caster.Beam(src, icon_state = "lightning[SSrng.random(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
 
 /obj/item/projectile/magic/aoe/lightning/on_hit(target)

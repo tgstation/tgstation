@@ -35,8 +35,8 @@
 
 /obj/machinery/computer/slot_machine/Initialize()
 	. = ..()
-	jackpots = rand(1, 4) //false hope
-	plays = rand(75, 200)
+	jackpots = SSrng.random(1, 4) //false hope
+	plays = SSrng.random(75, 200)
 
 	toggle_reel_spin(1) //The reels won't spin unless we activate them
 
@@ -82,12 +82,12 @@
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/coin))
 		var/obj/item/coin/C = I
-		if(prob(2))
+		if(SSrng.probability(2))
 			if(!user.drop_item())
 				return
 			C.loc = loc
 			C.throw_at(user, 3, 10)
-			if(prob(10))
+			if(SSrng.probability(10))
 				balance = max(balance - SPIN_PRICE, 0)
 			to_chat(user, "<span class='warning'>[src] spits your coin back out!</span>")
 
@@ -161,14 +161,14 @@
 /obj/machinery/computer/slot_machine/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(prob(15 * severity))
+	if(SSrng.probability(15 * severity))
 		return
-	if(prob(1)) // :^)
+	if(SSrng.probability(1)) // :^)
 		emagged = TRUE
 	var/severity_ascending = 4 - severity
-	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)
-	balance = max(rand(balance - (50 * severity_ascending), balance + (50 * severity_ascending)), 0)
-	money -= max(0, give_coins(min(rand(-50, 100 * severity_ascending)), money)) //This starts at -50 because it shouldn't always dispense coins yo
+	money = max(SSrng.random(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)
+	balance = max(SSrng.random(balance - (50 * severity_ascending), balance + (50 * severity_ascending)), 0)
+	money -= max(0, give_coins(min(SSrng.random(-50, 100 * severity_ascending)), money)) //This starts at -50 because it shouldn't always dispense coins yo
 	spin()
 
 /obj/machinery/computer/slot_machine/proc/spin(mob/user)
@@ -228,7 +228,7 @@
 		if(reels[reel])
 			reel[3] = reel[2]
 			reel[2] = reel[1]
-			reel[1] = pick(symbols)
+			reel[1] = SSrng.pick_from_list(symbols)
 
 /obj/machinery/computer/slot_machine/proc/give_prizes(usrname, mob/user)
 	var/linelength = get_lines()
@@ -241,7 +241,7 @@
 		money = 0
 
 		for(var/i = 0, i < 5, i++)
-			var/cointype = pick(subtypesof(/obj/item/coin))
+			var/cointype = SSrng.pick_from_list(subtypesof(/obj/item/coin))
 			var/obj/item/coin/C = new cointype(loc)
 			random_step(C, 2, 50)
 

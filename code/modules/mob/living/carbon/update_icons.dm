@@ -14,7 +14,7 @@
 				pixel_y = get_standard_pixel_y_offset()
 				final_pixel_y = get_standard_pixel_y_offset(lying)
 				if(dir & (EAST|WEST)) //Facing east or west
-					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
+					final_dir = SSrng.pick_from_list(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
 	if(resize != RESIZE_DEFAULT_SIZE)
 		changed++

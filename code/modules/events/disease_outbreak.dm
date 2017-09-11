@@ -17,17 +17,17 @@
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak7.ogg')
 
 /datum/round_event/disease_outbreak/setup()
-	announceWhen = rand(15, 30)
+	announceWhen = SSrng.random(15, 30)
 
 
 /datum/round_event/disease_outbreak/start()
 	var/advanced_virus = FALSE
 	max_severity = 3 + max(Floor((world.time - control.earliest_start)/6000),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
-	if(prob(20 + (10 * max_severity)))
+	if(SSrng.probability(20 + (10 * max_severity)))
 		advanced_virus = TRUE
 
 	if(!virus_type && !advanced_virus)
-		virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
+		virus_type = SSrng.pick_from_list(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
 
 	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
 		var/turf/T = get_turf(H)

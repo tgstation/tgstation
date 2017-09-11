@@ -471,7 +471,7 @@
 		// species datums
 		R.fields["mrace"] = dna.species
 	else
-		var/datum/species/rando_race = pick(config.roundstart_races)
+		var/datum/species/rando_race = SSrng.pick_from_list(config.roundstart_races)
 		R.fields["mrace"] = rando_race.type
 
 	R.fields["ckey"] = mob_occupant.ckey

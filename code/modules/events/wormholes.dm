@@ -16,8 +16,8 @@
 	var/number_of_wormholes = 400
 
 /datum/round_event/wormholes/setup()
-	announceWhen = rand(0, 20)
-	endWhen = rand(40, 80)
+	announceWhen = SSrng.random(0, 20)
+	endWhen = SSrng.random(40, 80)
 
 /datum/round_event/wormholes/start()
 	for(var/turf/open/floor/T in world)
@@ -25,7 +25,7 @@
 			pick_turfs += T
 
 	for(var/i = 1, i <= number_of_wormholes, i++)
-		var/turf/T = pick(pick_turfs)
+		var/turf/T = SSrng.pick_from_list(pick_turfs)
 		wormholes += new /obj/effect/portal/wormhole(T, null, 300, null, FALSE)
 
 /datum/round_event/wormholes/announce()
@@ -34,7 +34,7 @@
 /datum/round_event/wormholes/tick()
 	if(activeFor % shift_frequency == 0)
 		for(var/obj/effect/portal/wormhole/O in wormholes)
-			var/turf/T = pick(pick_turfs)
+			var/turf/T = SSrng.pick_from_list(pick_turfs)
 			if(T)
 				O.forceMove(T)
 
@@ -63,7 +63,7 @@
 
 	if(ismovableatom(M))
 		if(GLOB.portals.len)
-			var/obj/effect/portal/P = pick(GLOB.portals)
+			var/obj/effect/portal/P = SSrng.pick_from_list(GLOB.portals)
 			if(P && isturf(P.loc))
 				hard_target = P.loc
 		if(!hard_target)

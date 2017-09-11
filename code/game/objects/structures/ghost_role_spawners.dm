@@ -17,7 +17,7 @@
 	assignedrole = "Lifebringer"
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
+	var/plant_name = SSrng.pick_from_list("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
 	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
 	new_spawn.real_name = plant_name
 	if(ishuman(new_spawn))
@@ -91,8 +91,8 @@
 	return ..()
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
-	new_spawn.real_name = "Wish Granter's Victim ([rand(0,999)])"
-	var/wish = rand(1,4)
+	new_spawn.real_name = "Wish Granter's Victim ([SSrng.random(0,999)])"
+	var/wish = SSrng.random(1,4)
 	switch(wish)
 		if(1)
 			to_chat(new_spawn, "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>")
@@ -150,7 +150,7 @@
 		H.set_cloned_appearance()
 		if(!name)
 			if(has_owner)
-				H.real_name = "[initial(X.prefix)] Golem ([rand(1,999)])"
+				H.real_name = "[initial(X.prefix)] Golem ([SSrng.random(1,999)])"
 			else
 				H.real_name = H.dna.species.random_name()
 		else
@@ -204,10 +204,10 @@
 
 /obj/effect/mob_spawn/human/hermit/Initialize(mapload)
 	. = ..()
-	var/arrpee = rand(1,4)
+	var/arrpee = SSrng.random(1,4)
 	switch(arrpee)
 		if(1)
-			flavour_text += "you were a [pick("arms dealer", "shipwright", "docking manager")]'s assistant on a small trading station several sectors from here. Raiders attacked, and there was \
+			flavour_text += "you were a [SSrng.pick_from_list("arms dealer", "shipwright", "docking manager")]'s assistant on a small trading station several sectors from here. Raiders attacked, and there was \
 			only one pod left when you got to the escape bay. You took it and launched it alone, and the crowd of terrified faces crowding at the airlock door as your pod's engines burst to \
 			life and sent you to this hell are forever branded into your memory.</b>"
 			outfit.uniform = /obj/item/clothing/under/assistantformal
@@ -264,15 +264,15 @@
 	assignedrole = "Escaped Prisoner"
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
-	L.real_name = "NTP #LL-0[rand(111,999)]" //Nanotrasen Prisoner #Lavaland-(numbers)
+	L.real_name = "NTP #LL-0[SSrng.random(111,999)]" //Nanotrasen Prisoner #Lavaland-(numbers)
 	L.name = L.real_name
 
 /obj/effect/mob_spawn/human/prisoner_transport/Initialize(mapload)
 	. = ..()
 	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
 	"worship of a forbidden deity", "interspecies relations", "mutiny")
-	flavour_text += "[pick(crimes)]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
-	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")]</b>."
+	flavour_text += "[SSrng.pick_from_list(crimes)]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
+	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [SSrng.pick_from_list("house", "apartment", "spaceship", "station")]</b>."
 
 /datum/outfit/lavalandprisoner
 	name = "Lavaland Prisoner"

@@ -22,7 +22,7 @@
 
 /obj/item/organ/heart/gland/proc/Start()
 	active = 1
-	next_activation = world.time + rand(cooldown_low,cooldown_high)
+	next_activation = world.time + SSrng.random(cooldown_low,cooldown_high)
 
 
 /obj/item/organ/heart/gland/Remove(var/mob/living/carbon/M, special = 0)
@@ -48,7 +48,7 @@
 	if(next_activation <= world.time)
 		activate()
 		uses--
-		next_activation  = world.time + rand(cooldown_low,cooldown_high)
+		next_activation  = world.time + SSrng.random(cooldown_low,cooldown_high)
 	if(!uses)
 		active = 0
 
@@ -108,7 +108,7 @@
 
 /obj/item/organ/heart/gland/pop/activate()
 	to_chat(owner, "<span class='notice'>You feel unlike yourself.</span>")
-	var/species = pick(list(/datum/species/lizard, /datum/species/jelly/slime, /datum/species/pod, /datum/species/fly, /datum/species/jelly))
+	var/species = SSrng.pick_from_list(list(/datum/species/lizard, /datum/species/jelly/slime, /datum/species/pod, /datum/species/fly, /datum/species/jelly))
 	owner.set_species(species)
 
 /obj/item/organ/heart/gland/ventcrawling
@@ -131,7 +131,7 @@
 
 /obj/item/organ/heart/gland/viral/activate()
 	to_chat(owner, "<span class='warning'>You feel sick.</span>")
-	var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/magnitis)
+	var/virus_type = SSrng.pick_from_list(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/magnitis)
 	var/datum/disease/D = new virus_type()
 	D.carrier = TRUE
 	owner.viruses += D

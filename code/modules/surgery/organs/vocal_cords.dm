@@ -406,7 +406,7 @@
 		for(var/i=1, i<=(5*power_multiplier), i++)
 			for(var/V in listeners)
 				var/mob/living/L = V
-				step(L, direction ? direction : pick(GLOB.cardinals))
+				step(L, direction ? direction : SSrng.pick_from_list(GLOB.cardinals))
 			sleep(10)
 
 	//WALK
@@ -519,7 +519,7 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if(prob(25))
+			if(SSrng.probability(25))
 				L.say("HOW HIGH?!!")
 			L.emote("jump")
 			sleep(5) //So the chat flows more naturally

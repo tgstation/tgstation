@@ -403,7 +403,7 @@
 		if(name == string)
 			target += src
 		if(target.len)
-			ai_actual_track(pick(target))
+			ai_actual_track(SSrng.pick_from_list(target))
 		else
 			to_chat(src, "Target is not on or near any active cameras on the station.")
 		return
@@ -813,7 +813,7 @@
 		forceMove(card)
 		card.AI = src
 		to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
-		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([SSrng.random(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
 /mob/living/silicon/ai/can_buckle()
 	return 0

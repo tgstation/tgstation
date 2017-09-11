@@ -27,7 +27,7 @@
 	else if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.dna && C.dna.check_mutation(HULK))
-			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+			C.say(SSrng.pick_from_list(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else if(C.status_flags & CANKNOCKDOWN)
 			addtimer(CALLBACK(C, /mob/living/carbon.proc/do_jitter_animation, jitter), 5)
 
@@ -169,7 +169,7 @@
 
 /obj/item/projectile/energy/tesla/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+		chain = firer.Beam(src, icon_state = "lightning[SSrng.random(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
 
 /obj/item/projectile/energy/tesla/Destroy()

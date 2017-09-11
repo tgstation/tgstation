@@ -225,7 +225,7 @@ This file contains the arcane tome files.
 	user.visible_message("<span class='warning'>[user] [user.blood_volume ? "cuts open their arm and begins writing in their own blood":"begins sketching out a strange design"]!</span>", \
 						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
 	if(user.blood_volume)
-		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
+		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, SSrng.pick_from_list("l_arm", "r_arm"))
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
 	if(istype(get_turf(user), /turf/open/floor/engine/cult))
 		scribe_mod *= 0.5

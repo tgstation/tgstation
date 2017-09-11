@@ -110,8 +110,8 @@
 
 /turf/open/floor/grass/snow/basalt/Initialize()
 	..()
-	if(prob(15))
-		icon_state = "basalt[rand(0, 12)]"
+	if(SSrng.probability(15))
+		icon_state = "basalt[SSrng.random(0, 12)]"
 		set_basalt_light(src)
 
 
@@ -127,8 +127,8 @@
 
 /turf/open/floor/grass/fakebasalt/Initialize()
 	..()
-	if(prob(15))
-		icon_state = "basalt[rand(0, 12)]"
+	if(SSrng.probability(15))
+		icon_state = "basalt[SSrng.random(0, 12)]"
 		set_basalt_light(src)
 
 
@@ -165,7 +165,7 @@
 
 
 /turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
-	. = (prob(probability) || force)
+	. = (SSrng.probability(probability) || force)
 	for(var/I in src)
 		var/atom/A = I
 		if(ignore_mobs && ismob(A))

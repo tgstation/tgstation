@@ -36,7 +36,7 @@
 			if(istype(item, /obj/item/spellbook))
 				if(istype(item, /obj/item/spellbook/oneuse))
 					var/obj/item/spellbook/oneuse/I = item
-					if(prob(80))
+					if(SSrng.probability(80))
 						L.visible_message("<span class='warning'>[I] catches fire!</span>")
 						qdel(I)
 					else
@@ -45,11 +45,11 @@
 						break
 				else
 					to_chat(L, "<span class='danger'>Glowing red letters appear on the front cover...</span>")
-					to_chat(L, "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE! VERY CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
+					to_chat(L, "<span class='warning'>[SSrng.pick_from_list("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE! VERY CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
 					burnt_out = 1
 			else if(istype(item, /obj/item/gun/magic))
 				var/obj/item/gun/magic/I = item
-				if(prob(80) && !I.can_charge)
+				if(SSrng.probability(80) && !I.can_charge)
 					I.max_charges--
 				if(I.max_charges <= 0)
 					I.max_charges = 0
@@ -64,7 +64,7 @@
 			else if(istype(item, /obj/item/stock_parts/cell/))
 				var/obj/item/stock_parts/cell/C = item
 				if(!C.self_recharge)
-					if(prob(80))
+					if(SSrng.probability(80))
 						C.maxcharge -= 200
 					if(C.maxcharge <= 1) //Div by 0 protection
 						C.maxcharge = 1
@@ -78,7 +78,7 @@
 					if(istype(I, /obj/item/stock_parts/cell/))
 						var/obj/item/stock_parts/cell/C = I
 						if(!C.self_recharge)
-							if(prob(80))
+							if(SSrng.probability(80))
 								C.maxcharge -= 200
 							if(C.maxcharge <= 1) //Div by 0 protection
 								C.maxcharge = 1

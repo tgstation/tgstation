@@ -73,7 +73,7 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='warning'>[user] hits [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	if(!shock(user, 70))
-		take_damage(rand(5,10), BRUTE, "melee", 1)
+		take_damage(SSrng.random(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
@@ -88,7 +88,7 @@
 		return 1
 	else
 		if(istype(mover, /obj/item/projectile) && density)
-			return prob(30)
+			return SSrng.probability(30)
 		else
 			return !density
 
@@ -193,7 +193,7 @@
 /obj/structure/grille/proc/shock(mob/user, prb)
 	if(!anchored || broken)		// anchored/broken grilles are never connected
 		return 0
-	if(!prob(prb))
+	if(!SSrng.probability(prb))
 		return 0
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
 		return 0
@@ -217,7 +217,7 @@
 
 /obj/structure/grille/hitby(AM as mob|obj)
 	if(isobj(AM))
-		if(prob(50) && anchored && !broken)
+		if(SSrng.probability(50) && anchored && !broken)
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
@@ -255,7 +255,7 @@
 		new /obj/effect/temp_visual/ratvar/beam/grille(get_turf(src))
 
 /obj/structure/grille/ratvar/narsie_act()
-	take_damage(rand(1, 3), BRUTE)
+	take_damage(SSrng.random(1, 3), BRUTE)
 	if(src)
 		var/previouscolor = color
 		color = "#960000"

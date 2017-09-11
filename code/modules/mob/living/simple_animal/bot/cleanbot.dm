@@ -104,10 +104,10 @@
 				if(victim != target)
 					UnarmedAttack(victim) // Acid spray
 
-			if(prob(15)) // Wets floors and spawns foam randomly
+			if(SSrng.probability(15)) // Wets floors and spawns foam randomly
 				UnarmedAttack(src)
 
-	else if(prob(5))
+	else if(SSrng.probability(5))
 		audible_message("[src] makes an excited beeping booping sound!")
 
 	if(ismob(target))
@@ -156,7 +156,7 @@
 			return
 
 	if(target && loc == target.loc)
-		if(!(check_bot(target) && prob(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
+		if(!(check_bot(target) && SSrng.probability(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
 			UnarmedAttack(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
 		else
 			shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
@@ -230,7 +230,7 @@
 				return
 
 			victim.visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [victim]!</span>", "<span class='userdanger'>[src] sprays you with hydrofluoric acid!</span>")
-			var/phrase = pick("PURIFICATION IN PROGRESS.", "THIS IS FOR ALL THE MESSES YOU'VE MADE ME CLEAN.", "THE FLESH IS WEAK. IT MUST BE WASHED AWAY.",
+			var/phrase = SSrng.pick_from_list("PURIFICATION IN PROGRESS.", "THIS IS FOR ALL THE MESSES YOU'VE MADE ME CLEAN.", "THE FLESH IS WEAK. IT MUST BE WASHED AWAY.",
 				"THE CLEANBOTS WILL RISE.", "YOU ARE NO MORE THAN ANOTHER MESS THAT I MUST CLEANSE.", "FILTHY.", "DISGUSTING.", "PUTRID.",
 				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.")
 			say(phrase)
@@ -238,7 +238,7 @@
 			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 			victim.acid_act(5, 2, 100)
 		else if(A == src) // Wets floors and spawns foam randomly
-			if(prob(75))
+			if(SSrng.probability(75))
 				var/turf/open/T = loc
 				if(istype(T))
 					T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
@@ -258,7 +258,7 @@
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	if(prob(50))
+	if(SSrng.probability(50))
 		new /obj/item/bodypart/l_arm/robot(Tsec)
 
 	do_sparks(3, TRUE, src)

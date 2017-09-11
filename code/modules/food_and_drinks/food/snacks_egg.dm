@@ -126,7 +126,7 @@
 			user.visible_message("[user] takes a piece of omelette with their fork!", \
 				"<span class='notice'>You take a piece of omelette with your fork.</span>")
 
-			var/datum/reagent/R = pick(reagents.reagent_list)
+			var/datum/reagent/R = SSrng.pick_from_list(reagents.reagent_list)
 			reagents.remove_reagent(R.id, 1)
 			F.forkload = R
 			if(reagents.total_volume <= 0)

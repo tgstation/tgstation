@@ -185,7 +185,7 @@ Frequency:
 			continue
 		turfs += T
 	if(turfs.len)
-		L["None (Dangerous)"] = pick(turfs)
+		L["None (Dangerous)"] = SSrng.pick_from_list(turfs)
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") as null|anything in L
 	if (!t1 || user.get_active_held_item() != src || user.incapacitated())
 		return

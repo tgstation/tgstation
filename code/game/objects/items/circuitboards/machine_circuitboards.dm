@@ -296,7 +296,7 @@
 /obj/item/circuitboard/machine/thermomachine/Initialize()
 	. = ..()
 	if(!build_path)
-		if(prob(50))
+		if(SSrng.probability(50))
 			name = "Freezer (Machine Board)"
 			build_path = PATH_FREEZER
 		else

@@ -311,14 +311,14 @@
 				glow.light_range = glow.range * 0.85
 				glow.update_light()
 				continue
-		if(prob(2))  // Unique effects for the dance floor that show up randomly to mix things up
+		if(SSrng.probability(2))  // Unique effects for the dance floor that show up randomly to mix things up
 			INVOKE_ASYNC(src, .proc/hierofunk)
 		sleep(selection.song_beat)
 
 
 /obj/machinery/disco/proc/dance(var/mob/living/M) //Show your moves
 	set waitfor = FALSE
-	switch(rand(0,9))
+	switch(SSrng.random(0,9))
 		if(0 to 1)
 			dance2(M)
 		if(2 to 3)
@@ -386,13 +386,13 @@
 
 
 /obj/machinery/disco/proc/dance4(var/mob/living/M)
-	var/speed = rand(1,3)
+	var/speed = SSrng.random(1,3)
 	set waitfor = 0
 	var/time = 30
 	while(time)
 		sleep(speed)
 		for(var/i in 1 to speed)
-			M.setDir(pick(GLOB.cardinals))
+			M.setDir(SSrng.pick_from_list(GLOB.cardinals))
 			M.lay_down(TRUE)
 		 time--
 
@@ -462,7 +462,7 @@
 			if(!(M in rangers))
 				rangers[M] = TRUE
 				M.playsound_local(get_turf(M), null, 100, channel = CHANNEL_JUKEBOX, S = song_played)
-			if(prob(5+(allowed(M)*4)) && M.canmove)
+			if(SSrng.probability(5+(allowed(M)*4)) && M.canmove)
 				dance(M)
 		for(var/mob/L in rangers)
 			if(get_dist(src,L) > 10)

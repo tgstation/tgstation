@@ -22,7 +22,7 @@
 		if(distance < heavy_range)
 			T.emp_act(EMP_HEAVY)
 		else if(distance == heavy_range)
-			if(prob(50))
+			if(SSrng.probability(50))
 				T.emp_act(EMP_HEAVY)
 			else
 				T.emp_act(EMP_LIGHT)

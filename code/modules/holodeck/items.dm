@@ -43,7 +43,7 @@
 	..()
 
 /obj/item/holo/esword/New()
-	item_color = pick("red","blue","green","purple")
+	item_color = SSrng.pick_from_list("red","blue","green","purple")
 	..()
 
 /obj/item/holo/esword/attack_self(mob/living/user as mob)
@@ -86,7 +86,7 @@
 		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		M.apply_damage(10, STAMINA)
-		if(prob(5))
+		if(SSrng.probability(5))
 			M.Knockdown(60)
 			visible_message("<span class='danger'>[M] is knocked right off [M.p_their()] feet!</span>")
 
@@ -122,7 +122,7 @@
 
 /obj/structure/holohoop/hitby(atom/movable/AM)
 	if (isitem(AM) && !istype(AM,/obj/item/projectile))
-		if(prob(50))
+		if(SSrng.probability(50))
 			AM.forceMove(get_turf(src))
 			visible_message("<span class='warning'>Swish! [AM] lands in [src].</span>")
 			return

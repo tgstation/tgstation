@@ -64,10 +64,10 @@
 	addEvent(E)
 
 /datum/stock/proc/affectPublicOpinion(var/boost)
-	optimism += rand(0, 500) / 500 * boost
-	average_optimism += rand(0, 150) / 5000 * boost
-	speculation += rand(-1, 50) / 10 * boost
-	performance += rand(0, 150) / 100 * boost
+	optimism += SSrng.random(0, 500) / 500 * boost
+	average_optimism += SSrng.random(0, 150) / 5000 * boost
+	speculation += SSrng.random(-1, 50) / 10 * boost
+	performance += SSrng.random(0, 150) / 100 * boost
 
 /datum/stock/proc/generateIndustry()
 	if (findtext(name, "Farms"))
@@ -82,9 +82,9 @@
 		industry = new /datum/industry/consumer
 	else
 		var/ts = typesof(/datum/industry) - /datum/industry
-		var/in_t = pick(ts)
+		var/in_t = SSrng.pick_from_list(ts)
 		industry = new in_t
-	for (var/i = 0, i < rand(2, 5), i++)
+	for (var/i = 0, i < SSrng.random(2, 5), i++)
 		products += industry.generateProductName(name)
 
 /datum/stock/proc/frc(amt)
@@ -107,17 +107,17 @@
 	supplyGrowth(-amt)
 
 /datum/stock/proc/fluctuate()
-	var/change = rand(-100, 100) / 10 + optimism * rand(200) / 10
-	optimism -= (optimism - average_optimism) * (rand(10,80) / 1000)
+	var/change = SSrng.random(-100, 100) / 10 + optimism * SSrng.random(200) / 10
+	optimism -= (optimism - average_optimism) * (SSrng.random(10,80) / 1000)
 	var/shift_score = change + current_trend
 	var/as_score = abs(shift_score)
-	var/sh_change_dev = rand(-10, 10) / 10
+	var/sh_change_dev = SSrng.random(-10, 10) / 10
 	var/sh_change = shift_score / (as_score + 100) + sh_change_dev
 	var/shareholder_change = round(sh_change)
 	outside_shareholders += shareholder_change
 	var/share_change = shareholder_change * average_shares
-	if (as_score > 20 && prob(as_score / 4))
-		var/avg_change_dev = rand(-10, 10) / 10
+	if (as_score > 20 && SSrng.probability(as_score / 4))
+		var/avg_change_dev = SSrng.random(-10, 10) / 10
 		var/avg_change = shift_score / (as_score + 100) + avg_change_dev
 		average_shares += avg_change
 		share_change += outside_shareholders * avg_change
@@ -126,29 +126,29 @@
 	supplyDrop(share_change)
 	available_shares += share_change // temporary
 
-	if (prob(25))
-		average_optimism = max(min(average_optimism + (rand(-3, 3) - current_trend * 0.15) / 100, 1), -1)
+	if (SSrng.probability(25))
+		average_optimism = max(min(average_optimism + (SSrng.random(-3, 3) - current_trend * 0.15) / 100, 1), -1)
 
 	var/aspec = abs(speculation)
-	if (prob((aspec - 75) * 2))
-		speculation += rand(-4, 4)
+	if (SSrng.probability((aspec - 75) * 2))
+		speculation += SSrng.random(-4, 4)
 	else
-		if (prob(50))
-			speculation += rand(-4, 4)
+		if (SSrng.probability(50))
+			speculation += SSrng.random(-4, 4)
 		else
-			speculation += rand(-400, 0) / 1000 * speculation
-			if (prob(1) && prob(5)) // pop that bubble
-				speculation += rand(-4000, 0) / 1000 * speculation
+			speculation += SSrng.random(-400, 0) / 1000 * speculation
+			if (SSrng.probability(1) && SSrng.probability(5)) // pop that bubble
+				speculation += SSrng.random(-4000, 0) / 1000 * speculation
 	var/fucking_stock_spikes = current_value + 500
 	var/piece_of_shit_fuck = current_value - 500
-	var/i_hate_this_code = (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
+	var/i_hate_this_code = (speculation / SSrng.random(25000, 50000) + performance / SSrng.random(100, 800)) * current_value
 	if(i_hate_this_code < fucking_stock_spikes || i_hate_this_code > piece_of_shit_fuck)
 		current_value += i_hate_this_code
 	if (current_value < 5)
 		current_value = 5
 
 	if (performance != 0)
-		performance = rand(900,1050) / 1000 * performance
+		performance = SSrng.random(900,1050) / 1000 * performance
 		if (abs(performance) < 0.2)
 			performance = 0
 
@@ -162,7 +162,7 @@
 		unifyShares()
 
 	last_trend = current_trend
-	current_trend += rand(-200, 200) / 100 + optimism * rand(200) / 10 + max(50 - abs(speculation), 0) / 50 * rand(0, 200) / 1000 * (-current_trend) + max(speculation - 50, 0) * rand(0, 200) / 1000 * speculation / 400
+	current_trend += SSrng.random(-200, 200) / 100 + optimism * SSrng.random(200) / 10 + max(50 - abs(speculation), 0) / 50 * SSrng.random(0, 200) / 1000 * (-current_trend) + max(speculation - 50, 0) * SSrng.random(0, 200) / 1000 * speculation / 400
 
 /datum/stock/proc/unifyShares()
 	for (var/I in shareholders)
@@ -216,7 +216,7 @@
 		if (borrow.offer_expires < world.time)
 			borrow_brokers -= borrow
 			qdel(borrow)
-	if (prob(5))
+	if (SSrng.probability(5))
 		generateBrokers()
 	fluctuation_counter++
 	if (fluctuation_counter >= fluctuation_rate)
@@ -231,16 +231,16 @@
 		return
 	if (!GLOB.stockExchange.stockBrokers.len)
 		GLOB.stockExchange.generateBrokers()
-	var/broker = pick(GLOB.stockExchange.stockBrokers)
+	var/broker = SSrng.pick_from_list(GLOB.stockExchange.stockBrokers)
 	var/datum/borrow/B = new
 	B.broker = broker
 	B.stock = src
-	B.lease_time = rand(4, 7) * 600
-	B.grace_time = rand(1, 3) * 600
-	B.share_amount = rand(1, 10) * 100
-	B.deposit = rand(20, 70) / 100
+	B.lease_time = SSrng.random(4, 7) * 600
+	B.grace_time = SSrng.random(1, 3) * 600
+	B.share_amount = SSrng.random(1, 10) * 100
+	B.deposit = SSrng.random(20, 70) / 100
 	B.share_debt = B.share_amount
-	B.offer_expires = rand(5, 10) * 600 + world.time
+	B.offer_expires = SSrng.random(5, 10) * 600 + world.time
 	borrow_brokers += B
 
 /datum/stock/proc/modifyAccount(whose, by, force=0)

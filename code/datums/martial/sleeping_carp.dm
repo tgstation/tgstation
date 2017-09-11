@@ -42,7 +42,7 @@
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.emote("scream")
 		D.drop_item()
-		D.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
+		D.apply_damage(5, BRUTE, SSrng.pick_from_list("l_arm", "r_arm"))
 		D.Stun(60)
 		return 1
 	add_logs(A, D, "wrist wrenched (Sleeping Carp)")
@@ -123,12 +123,12 @@
 	if(check_streak(A,D))
 		return 1
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-	var/atk_verb = pick("punches", "kicks", "chops", "hits", "slams")
+	var/atk_verb = SSrng.pick_from_list("punches", "kicks", "chops", "hits", "slams")
 	D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
 					  "<span class='userdanger'>[A] [atk_verb] you!</span>")
-	D.apply_damage(rand(10,15), BRUTE)
+	D.apply_damage(SSrng.random(10,15), BRUTE)
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, 1, -1)
-	if(prob(D.getBruteLoss()) && !D.lying)
+	if(SSrng.probability(D.getBruteLoss()) && !D.lying)
 		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>The blow sends you to the ground!</span>")
 		D.Knockdown(80)
 	add_logs(A, D, "[atk_verb] (Sleeping Carp)")
@@ -196,7 +196,7 @@
 
 /obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
-	if((CLUMSY in user.disabilities) && prob(50))
+	if((CLUMSY in user.disabilities) && SSrng.probability(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
 		user.Knockdown(60)
 		if(ishuman(user))
@@ -225,11 +225,11 @@
 									  "[user] smashes [H]'s head with [src]!", \
 									  "[user] beats [H] with front of [src]!", \
 									  "[user] twirls and slams [H] with [src]!")
-		H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
-							   "<span class='userdanger'>[pick(fluffmessages)]</span>")
+		H.visible_message("<span class='warning'>[SSrng.pick_from_list(fluffmessages)]</span>", \
+							   "<span class='userdanger'>[SSrng.pick_from_list(fluffmessages)]</span>")
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
-		H.adjustStaminaLoss(rand(13,20))
-		if(prob(10))
+		H.adjustStaminaLoss(SSrng.random(13,20))
+		if(SSrng.probability(10))
 			H.visible_message("<span class='warning'>[H] collapses!</span>", \
 								   "<span class='userdanger'>Your legs give out!</span>")
 			H.Knockdown(80)

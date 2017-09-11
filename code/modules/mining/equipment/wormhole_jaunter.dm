@@ -54,7 +54,7 @@
 	if(!L.len)
 		to_chat(user, "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>")
 		return
-	var/chosen_beacon = pick(L)
+	var/chosen_beacon = SSrng.pick_from_list(L)
 	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
 	try_move_adjacent(J)
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
@@ -66,7 +66,7 @@
 	if(usr.get_item_by_slot(slot_belt) == src)
 		if(power == 1)
 			triggered = TRUE
-		else if(power == 2 && prob(50))
+		else if(power == 2 && SSrng.probability(50))
 			triggered = TRUE
 
 	if(triggered)
@@ -93,7 +93,7 @@
 /obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
 	if(!ismob(M) && !isobj(M))	//No don't teleport lighting and effects!
 		return
-		
+
 	if(M.anchored && (!ismob(M) || (istype(M, /obj/mecha) && !mech_sized)))
 		return
 

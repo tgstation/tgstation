@@ -27,7 +27,7 @@
 	var/my_message
 	if(!message)
 		return
-	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/common)
+	user.whisper("O bidai nabora se[SSrng.pick_from_list("'","`")]sma!", language = /datum/language/common)
 	user.whisper(html_decode(message))
 	var/title = "Acolyte"
 	var/span = "cultitalic"
@@ -184,7 +184,7 @@
 						if(4)
 							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, 1)
 							if(B.current != owner)
-								var/turf/final = pick(destinations)
+								var/turf/final = SSrng.pick_from_list(destinations)
 								if(istype(B.current.loc, /obj/item/device/soulstone))
 									var/obj/item/device/soulstone/S = B.current.loc
 									S.release_shades(owner)
@@ -280,7 +280,7 @@
 		for(var/datum/mind/B in SSticker.mode.cult)
 			if(B.current && B.current.stat != DEAD && B.current.client)
 				to_chat(B.current, "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [GLOB.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
-				SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
+				SEND_SOUND(B.current, sound(SSrng.pick_from_list('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 				B.current.client.images += GLOB.blood_target_image
 		attached_action.owner.update_action_buttons_icon()
 		remove_ranged_ability("<span class='cult'>The marking rite is complete! It will last for 90 seconds.</span>")

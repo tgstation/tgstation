@@ -15,7 +15,7 @@
 	stainself = 1
 
 /datum/guardianname/carp/New()
-	prefixname = pick(GLOB.carp_names)
+	prefixname = SSrng.pick_from_list(GLOB.carp_names)
 
 /datum/guardianname/carp/sand
 	suffixcolour = "Sand"
@@ -70,7 +70,7 @@
 	theme = "magic"
 
 /datum/guardianname/magic/New()
-	prefixname = pick("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces", "Ophiuchus")
+	prefixname = SSrng.pick_from_list("Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces", "Ophiuchus")
 
 /datum/guardianname/magic/red
 	suffixcolour = "Red"
@@ -98,7 +98,7 @@
 	colour = "#78C4DB"
 
 /datum/guardianname/tech/New()
-	prefixname = pick("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Silver", "Zinc", "Titanium", "Chromium", "Nickel", "Platinum", "Tellurium", "Palladium", "Rhodium", "Cobalt", "Osmium", "Tungsten", "Iridium")
+	prefixname = SSrng.pick_from_list("Gallium", "Indium", "Thallium", "Bismuth", "Aluminium", "Mercury", "Iron", "Silver", "Zinc", "Titanium", "Chromium", "Nickel", "Platinum", "Tellurium", "Palladium", "Rhodium", "Cobalt", "Osmium", "Tungsten", "Iridium")
 
 /datum/guardianname/tech/rose
 	suffixcolour = "Rose"

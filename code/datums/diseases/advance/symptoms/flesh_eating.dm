@@ -46,14 +46,14 @@ Bonus
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(2,3)
-			if(prob(base_message_chance))
-				to_chat(M, "<span class='warning'>[pick("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]</span>")
+			if(SSrng.probability(base_message_chance))
+				to_chat(M, "<span class='warning'>[SSrng.pick_from_list("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]</span>")
 		if(4,5)
-			to_chat(M, "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>")
+			to_chat(M, "<span class='userdanger'>[SSrng.pick_from_list("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>")
 			Flesheat(M, A)
 
 /datum/symptom/flesh_eating/proc/Flesheat(mob/living/M, datum/disease/advance/A)
-	var/get_damage = rand(15,25) * power
+	var/get_damage = SSrng.random(15,25) * power
 	M.adjustBruteLoss(get_damage)
 	if(pain)
 		M.adjustStaminaLoss(get_damage)
@@ -111,15 +111,15 @@ Bonus
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(2,3)
-			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You feel your body break apart.", "Your skin rubs off like dust.")]</span>")
+			if(SSrng.probability(base_message_chance) && !suppress_warning)
+				to_chat(M, "<span class='warning'>[SSrng.pick_from_list("You feel your body break apart.", "Your skin rubs off like dust.")]</span>")
 		if(4,5)
-			if(prob(base_message_chance / 2)) //reduce spam
-				to_chat(M, "<span class='userdanger'>[pick("You feel your muscles weakening.", "Some of your skin detaches itself.", "You feel sandy.")]</span>")
+			if(SSrng.probability(base_message_chance / 2)) //reduce spam
+				to_chat(M, "<span class='userdanger'>[SSrng.pick_from_list("You feel your muscles weakening.", "Some of your skin detaches itself.", "You feel sandy.")]</span>")
 			Flesh_death(M, A)
 
 /datum/symptom/flesh_death/proc/Flesh_death(mob/living/M, datum/disease/advance/A)
-	var/get_damage = rand(6,10)
+	var/get_damage = SSrng.random(6,10)
 	M.adjustBruteLoss(get_damage)
 	if(chems)
 		M.reagents.add_reagent_list(list("heparin" = 2, "lipolicide" = 2))

@@ -22,16 +22,16 @@
 
 /obj/structure/flora/ash/New()
 	..()
-	base_icon = "[icon_state][rand(1, 4)]"
+	base_icon = "[icon_state][SSrng.random(1, 4)]"
 	icon_state = base_icon
-	if(prob(15))
+	if(SSrng.probability(15))
 		harvest(null, TRUE)
 
 /obj/structure/flora/ash/proc/harvest(user, no_drop)
 	if(harvested)
 		return 0
 	if(!no_drop)
-		var/rand_harvested = rand(harvest_amount_low, harvest_amount_high)
+		var/rand_harvested = SSrng.random(harvest_amount_low, harvest_amount_high)
 		if(rand_harvested)
 			if(user)
 				var/msg = harvest_message_med
@@ -46,7 +46,7 @@
 	name = harvested_name
 	desc = harvested_desc
 	harvested = TRUE
-	addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
+	addtimer(CALLBACK(src, .proc/regrow), SSrng.random(regrowth_time_low, regrowth_time_high))
 	return 1
 
 /obj/structure/flora/ash/proc/regrow()
@@ -138,14 +138,14 @@
 	regrowth_time_high = 7200
 
 /obj/structure/flora/ash/cacti/Crossed(mob/AM)
-	if(ishuman(AM) && has_gravity(loc) && prob(70))
+	if(ishuman(AM) && has_gravity(loc) && SSrng.probability(70))
 		var/mob/living/carbon/human/H = AM
 		if(!H.shoes && !H.lying) //ouch, my feet.
-			var/picked_def_zone = pick("l_leg", "r_leg")
+			var/picked_def_zone = SSrng.pick_from_list("l_leg", "r_leg")
 			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
 			if(!istype(O) || (PIERCEIMMUNE in H.dna.species.species_traits))
 				return
-			H.apply_damage(rand(3, 6), BRUTE, picked_def_zone)
+			H.apply_damage(SSrng.random(3, 6), BRUTE, picked_def_zone)
 			H.Knockdown(40)
 			H.visible_message("<span class='danger'>[H] steps on a cactus!</span>", \
 				"<span class='userdanger'>You step on a cactus!</span>")
@@ -163,8 +163,8 @@
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/New()
 	..()
-	pixel_x = rand(-4, 4)
-	pixel_y = rand(-4, 4)
+	pixel_x = SSrng.random(-4, 4)
+	pixel_y = SSrng.random(-4, 4)
 
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings //for actual crafting

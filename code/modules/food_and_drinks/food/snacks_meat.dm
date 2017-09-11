@@ -27,7 +27,7 @@
 
 /obj/item/reagent_containers/food/snacks/carpmeat/New()
 	..()
-	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
+	eatverb = SSrng.pick_from_list("bite","chew","choke down","gnaw","swallow","chomp")
 
 /obj/item/reagent_containers/food/snacks/carpmeat/imitation
 	name = "imitation carp fillet"
@@ -116,7 +116,7 @@
 
 /obj/item/reagent_containers/food/snacks/sausage/New()
 	..()
-	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
+	eatverb = SSrng.pick_from_list("bite","chew","nibble","deep throat","gobble","chomp")
 
 /obj/item/reagent_containers/food/snacks/kebab
 	trash = /obj/item/stack/rods
@@ -212,7 +212,7 @@
 
 /obj/item/reagent_containers/food/snacks/stewedsoymeat/New()
 	..()
-	eatverb = pick("slurp","sip","suck","inhale","drink")
+	eatverb = SSrng.pick_from_list("slurp","sip","suck","inhale","drink")
 
 /obj/item/reagent_containers/food/snacks/boiledspiderleg
 	name = "boiled spider leg"
@@ -257,7 +257,7 @@
 
 /obj/item/reagent_containers/food/snacks/nugget/New()
 	..()
-	var/shape = pick("lump", "star", "lizard", "corgi")
+	var/shape = SSrng.pick_from_list("lump", "star", "lizard", "corgi")
 	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
 	icon_state = "nugget_[shape]"
 

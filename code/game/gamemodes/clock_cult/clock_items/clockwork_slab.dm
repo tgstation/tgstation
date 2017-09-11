@@ -143,7 +143,7 @@
 			if(S == src)
 				continue
 			S.production_time = production_time + 50 //set it to our next production plus five seconds, so that if you hold the same slabs, the same one will always generate
-		to_chat(L, "<span class='warning'>Your slab cl[pick("ank", "ink", "unk", "ang")]s as it produces a </span><span class='[get_component_span(component_to_generate)]'>component</span><span class='warning'>.</span>")
+		to_chat(L, "<span class='warning'>Your slab cl[SSrng.pick_from_list("ank", "ink", "unk", "ang")]s as it produces a </span><span class='[get_component_span(component_to_generate)]'>component</span><span class='warning'>.</span>")
 
 /obj/item/clockwork/slab/examine(mob/user)
 	..()
@@ -487,7 +487,7 @@
 			dat += "It should also be noted that some scripture cannot be recited alone. Especially with more powerful scripture, you may need multiple Servants to recite a piece of \
 			scripture; both of you will need to stand still until the recital completes. <i>Only human and silicon Servants are valid for scripture recital!</i> Constructs cannot help \
 			in reciting scripture.<br><br>"
-			dat += "Finally, scripture is separated into four \"tiers\" based on power: Drivers, Scripts, Applications, and Judgement.[prob(1) ? " (The Revenant tier was removed a long time ago. \
+			dat += "Finally, scripture is separated into four \"tiers\" based on power: Drivers, Scripts, Applications, and Judgement.[SSrng.probability(1) ? " (The Revenant tier was removed a long time ago. \
 			Get with the times.)" : ""] You can view the requirements to unlock each tier in its scripture list. Once a tier is unlocked, it's unlocked permanently; the cult only needs to fill the \
 			requirement for unlocking a tier once!<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"

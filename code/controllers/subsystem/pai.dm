@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(pai)
 				return FALSE
 			var/mob/living/silicon/pai/pai = new(card)
 			if(!candidate.name)
-				pai.name = pick(GLOB.ninja_names)
+				pai.name = SSrng.pick_from_list(GLOB.ninja_names)
 			else
 				pai.name = candidate.name
 			pai.real_name = pai.name

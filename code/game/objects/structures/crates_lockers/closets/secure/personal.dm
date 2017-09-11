@@ -6,9 +6,9 @@
 
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()
-	if(prob(50))
+	if(SSrng.probability(50))
 		new /obj/item/storage/backpack/duffelbag(src)
-	if(prob(50))
+	if(SSrng.probability(50))
 		new /obj/item/storage/backpack(src)
 	else
 		new /obj/item/storage/backpack/satchel(src)

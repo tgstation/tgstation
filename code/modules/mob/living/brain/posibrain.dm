@@ -153,10 +153,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob = new(src)
 	var/new_name
 	if(!LAZYLEN(possible_names))
-		new_name = pick(GLOB.posibrain_names)
+		new_name = SSrng.pick_from_list(GLOB.posibrain_names)
 	else
-		new_name = pick(possible_names)
-	brainmob.name = "[new_name]-[rand(100, 999)]"
+		new_name = SSrng.pick_from_list(possible_names)
+	brainmob.name = "[new_name]-[SSrng.random(100, 999)]"
 	brainmob.real_name = brainmob.name
 	brainmob.loc = src
 	brainmob.container = src

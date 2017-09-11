@@ -160,9 +160,9 @@
 	//Exclude lasertag guns from the CLUMSY check.
 	if(clumsy_check)
 		if(istype(user))
-			if (user.disabilities & CLUMSY && prob(40))
+			if (user.disabilities & CLUMSY && SSrng.probability(40))
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
-				var/shot_leg = pick("l_leg", "r_leg")
+				var/shot_leg = SSrng.pick_from_list("l_leg", "r_leg")
 				process_fire(user,user,0,params, zone_override = shot_leg)
 				user.drop_item()
 				return
@@ -215,10 +215,10 @@
 
 	var/sprd = 0
 	var/randomized_gun_spread = 0
-	var/rand_spr = rand()
+	var/rand_spr = SSrng.random()
 	if(spread)
-		randomized_gun_spread =	rand(0,spread)
-	var/randomized_bonus_spread = rand(0, bonus_spread)
+		randomized_gun_spread =	SSrng.random(0,spread)
+	var/randomized_bonus_spread = SSrng.random(0, bonus_spread)
 
 	if(burst_size > 1)
 		firing_burst = 1
@@ -230,7 +230,7 @@
 					break
 			if(chambered && chambered.BB)
 				if(randomspread)
-					sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
+					sprd = round((SSrng.random() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 				else //Smart spread
 					sprd = round((((rand_spr/burst_size) * i) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
 
@@ -251,7 +251,7 @@
 		firing_burst = 0
 	else
 		if(chambered)
-			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
+			sprd = round((SSrng.random() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
 				shoot_with_empty_chamber(user)
 				return

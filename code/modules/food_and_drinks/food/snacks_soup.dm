@@ -10,7 +10,7 @@
 
 /obj/item/reagent_containers/food/snacks/soup/New()
 	..()
-	eatverb = pick("slurp","sip","suck","inhale","drink")
+	eatverb = SSrng.pick_from_list("slurp","sip","suck","inhale","drink")
 
 /obj/item/reagent_containers/food/snacks/soup/wish
 	name = "wish soup"
@@ -20,7 +20,7 @@
 	tastes = list("wishes" = 1)
 
 /obj/item/reagent_containers/food/snacks/soup/wish/New()
-	var/wish_true = prob(25)
+	var/wish_true = SSrng.probability(25)
 	if(wish_true)
 		desc = "A wish come true!"
 		bonus_reagents = list("nutriment" = 9, "vitamin" = 1)
@@ -100,7 +100,7 @@
 	tastes = list("chaos" = 1)
 
 /obj/item/reagent_containers/food/snacks/soup/mystery/New()
-	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
+	extra_reagent = SSrng.pick_from_list("capsaicin", "frostoil", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
 	bonus_reagents = list("[extra_reagent]" = 5, "nutriment" = 6)
 	..()
 	reagents.add_reagent("[extra_reagent]", 5)
@@ -175,7 +175,7 @@
 
 /obj/item/reagent_containers/food/snacks/soup/beet/New()
 	..()
-	name = pick("borsch","bortsch","borstch","borsh","borshch","borscht")
+	name = SSrng.pick_from_list("borsch","bortsch","borstch","borsh","borshch","borscht")
 	tastes = list(name = 1)
 
 

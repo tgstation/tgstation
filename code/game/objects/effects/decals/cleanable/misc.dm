@@ -14,8 +14,8 @@
 /obj/effect/decal/cleanable/ash/Initialize()
 	..()
 	reagents.add_reagent("ash", 30)
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = SSrng.random(-5, 5)
+	pixel_y = SSrng.random(-5, 5)
 
 /obj/effect/decal/cleanable/ash/large
 	name = "large pile of ashes"
@@ -151,8 +151,8 @@
 		qdel(src)
 
 /obj/effect/decal/cleanable/shreds/Initialize()
-	pixel_x = rand(-10, 10)
-	pixel_y = rand(-10, 10)
+	pixel_x = SSrng.random(-10, 10)
+	pixel_y = SSrng.random(-10, 10)
 	..()
 
 /obj/effect/decal/cleanable/salt

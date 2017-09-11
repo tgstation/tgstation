@@ -112,7 +112,7 @@
 		return 1
 	add_logs(A, D, "CQC'd")
 	A.do_attack_animation(D)
-	var/picked_hit_type = pick("CQC'd", "Big Bossed")
+	var/picked_hit_type = SSrng.pick_from_list("CQC'd", "Big Bossed")
 	var/bonus_damage = 13
 	if(D.IsKnockdown() || D.resting || D.lying)
 		bonus_damage += 5
@@ -139,7 +139,7 @@
 	var/obj/item/I = null
 	if(check_streak(A,D))
 		return 1
-	if(prob(65))
+	if(SSrng.probability(65))
 		if(!D.stat || !D.IsKnockdown() || !restraining)
 			I = D.get_active_held_item()
 			D.visible_message("<span class='warning'>[A] strikes [D]'s jaw with their hand!</span>", \

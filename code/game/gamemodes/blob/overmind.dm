@@ -40,11 +40,11 @@
 			manualplace_min_time += world.time
 		autoplace_max_time += world.time
 	GLOB.overminds += src
-	var/new_name = "[initial(name)] ([rand(1, 999)])"
+	var/new_name = "[initial(name)] ([SSrng.random(1, 999)])"
 	name = new_name
 	real_name = new_name
 	last_attack = world.time
-	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob)))
+	var/datum/reagent/blob/BC = SSrng.pick_from_list((subtypesof(/datum/reagent/blob)))
 	blob_reagent_datum = new BC
 	color = blob_reagent_datum.complementary_color
 	if(blob_core)

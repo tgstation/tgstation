@@ -40,18 +40,18 @@
 /datum/language/proc/get_random_name(gender, name_count=2, syllable_count=4, syllable_divisor=2)
 	if(!syllables || !syllables.len)
 		if(gender==FEMALE)
-			return capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))
+			return capitalize(SSrng.pick_from_list(GLOB.first_names_female)) + " " + capitalize(SSrng.pick_from_list(GLOB.last_names))
 		else
-			return capitalize(pick(GLOB.first_names_male)) + " " + capitalize(pick(GLOB.last_names))
+			return capitalize(SSrng.pick_from_list(GLOB.first_names_male)) + " " + capitalize(SSrng.pick_from_list(GLOB.last_names))
 
 	var/full_name = ""
 	var/new_name = ""
 
 	for(var/i in 0 to name_count)
 		new_name = ""
-		var/Y = rand(Floor(syllable_count/syllable_divisor), syllable_count)
+		var/Y = SSrng.random(Floor(syllable_count/syllable_divisor), syllable_count)
 		for(var/x in Y to 0)
-			new_name += pick(syllables)
+			new_name += SSrng.pick_from_list(syllables)
 		full_name += " [capitalize(lowertext(new_name))]"
 
 	return "[trim(full_name)]"
@@ -84,12 +84,12 @@
 	var/capitalize = TRUE
 
 	while(length(scrambled_text) < input_size)
-		var/next = pick(syllables)
+		var/next = SSrng.pick_from_list(syllables)
 		if(capitalize)
 			next = capitalize(next)
 			capitalize = FALSE
 		scrambled_text += next
-		var/chance = rand(100)
+		var/chance = SSrng.random(100)
 		if(chance <= sentence_chance)
 			scrambled_text += ". "
 			capitalize = TRUE

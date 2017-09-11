@@ -13,7 +13,7 @@
 
 /obj/structure/toilet/Initialize()
 	. = ..()
-	open = round(rand(0, 1))
+	open = round(SSrng.random(0, 1))
 	update_icon()
 
 
@@ -55,7 +55,7 @@
 		if(!contents.len)
 			to_chat(user, "<span class='notice'>The cistern is empty.</span>")
 		else
-			var/obj/item/I = pick(contents)
+			var/obj/item/I = SSrng.pick_from_list(contents)
 			if(ishuman(user))
 				user.put_in_hands(I)
 			else
@@ -450,7 +450,7 @@
 			H.lip_color = initial(H.lip_color)
 			H.wash_cream()
 			H.regenerate_icons()
-		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
+		user.drowsyness = max(user.drowsyness - SSrng.random(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else
 		user.clean_blood()
 

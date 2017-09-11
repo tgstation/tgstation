@@ -68,7 +68,7 @@
 		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
 		return
 
-	user.forceMove(pick(L))
+	user.forceMove(SSrng.pick_from_list(L))
 
 	smoke.start()
 	uses--

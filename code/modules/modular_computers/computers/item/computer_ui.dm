@@ -92,7 +92,7 @@
 				return
 
 			P.kill_program(forced = TRUE)
-			to_chat(user, "<span class='notice'>Program [P.filename].[P.filetype] with PID [rand(100,999)] has been killed.</span>")
+			to_chat(user, "<span class='notice'>Program [P.filename].[P.filetype] with PID [SSrng.random(100,999)] has been killed.</span>")
 
 		if("PC_runprogram")
 			var/prog = params["name"]

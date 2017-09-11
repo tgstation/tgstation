@@ -150,7 +150,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 				M.client.move_delay = max(world.time + 5, M.client.move_delay)
 		return
 	else
-		var/obj/effect/landmark/dest = pick(randomspawns)
+		var/obj/effect/landmark/dest = SSrng.pick_from_list(randomspawns)
 		if(dest)
 			AM.forceMove(get_turf(dest))
 			AM.setDir(SOUTH)

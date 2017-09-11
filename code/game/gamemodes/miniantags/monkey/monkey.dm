@@ -27,7 +27,7 @@
 	for(var/j = 0, j < carriers_to_make, j++)
 		if (!antag_candidates.len)
 			break
-		var/datum/mind/carrier = pick(antag_candidates)
+		var/datum/mind/carrier = SSrng.pick_from_list(antag_candidates)
 		carriers += carrier
 		carrier.special_role = "monkey"
 		carrier.restricted_roles = restricted_jobs

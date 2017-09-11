@@ -27,7 +27,7 @@
 		i++
 		if(i + 1 > pre_traitors.len)
 			i = 0
-		target_list[traitor] = pre_traitors[i+1]	
+		target_list[traitor] = pre_traitors[i+1]
 	..()
 
 
@@ -36,7 +36,7 @@
 	check_potential_agents()
 
 	// As soon as we get 3 or 4 extra latejoin traitors, make them traitors and kill each other.
-	if(late_joining_list.len >= rand(3, 4))
+	if(late_joining_list.len >= SSrng.random(3, 4))
 		// True randomness
 		shuffle_inplace(late_joining_list)
 		// Reset the target_list, it'll be used again in force_traitor_objectives

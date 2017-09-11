@@ -85,7 +85,7 @@
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
 		if(traitor_mob&&istype(traitor_mob))
-			if(!silent) 
+			if(!silent)
 				to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			traitor_mob.dna.remove_mutation(CLOWNMUT)
 
@@ -127,8 +127,8 @@
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	return
 /datum/antagonist/traitor/human/forge_traitor_objectives()
-	var/is_hijacker = prob(10)
-	var/martyr_chance = prob(20)
+	var/is_hijacker = SSrng.probability(10)
+	var/martyr_chance = SSrng.probability(20)
 	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
 	if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
 		if(!SSticker.mode.exchange_red)
@@ -171,7 +171,7 @@
 /datum/antagonist/traitor/AI/forge_traitor_objectives()
 	var/objective_count = 0
 
-	if(prob(30))
+	if(SSrng.probability(30))
 		objective_count += forge_single_objective()
 
 	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
@@ -187,14 +187,14 @@
 	return 0
 /datum/antagonist/traitor/human/forge_single_objective() //Returns how many objectives are added
 	.=1
-	if(prob(50))
+	if(SSrng.probability(50))
 		var/list/active_ais = active_ais()
-		if(active_ais.len && prob(100/GLOB.joined_player_list.len))
+		if(active_ais.len && SSrng.probability(100/GLOB.joined_player_list.len))
 			var/datum/objective/destroy/destroy_objective = new
 			destroy_objective.owner = owner
 			destroy_objective.find_target()
 			add_objective(destroy_objective)
-		else if(prob(30))
+		else if(SSrng.probability(30))
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
 			maroon_objective.find_target()
@@ -212,7 +212,7 @@
 
 /datum/antagonist/traitor/AI/forge_single_objective()
 	.=1
-	var/special_pick = rand(1,4)
+	var/special_pick = SSrng.random(1,4)
 	switch(special_pick)
 		if(1)
 			var/datum/objective/block/block_objective = new
@@ -300,7 +300,7 @@
 	exchange_objective.owner = owner
 	add_objective(exchange_objective)
 
-	if(prob(20))
+	if(SSrng.probability(20))
 		var/datum/objective/steal/exchange/backstab/backstab_objective = new
 		backstab_objective.set_faction(faction)
 		backstab_objective.owner = owner

@@ -43,8 +43,8 @@ Bonus
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(1, 2, 3, 4)
-			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You feel dizzy.", "Your head spins.")]</span>")
+			if(SSrng.probability(base_message_chance) && !suppress_warning)
+				to_chat(M, "<span class='warning'>[SSrng.pick_from_list("You feel dizzy.", "Your head spins.")]</span>")
 		else
 			to_chat(M, "<span class='userdanger'>A wave of dizziness washes over you!</span>")
 			M.Dizzy(5)

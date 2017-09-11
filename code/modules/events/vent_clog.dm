@@ -17,7 +17,7 @@
 
 
 /datum/round_event/vent_clog/setup()
-	endWhen = rand(25, 100)
+	endWhen = SSrng.random(25, 100)
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
@@ -35,7 +35,7 @@
 		if(vent && vent.loc)
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = vent
-			R.add_reagent(pick(gunk), 50)
+			R.add_reagent(SSrng.pick_from_list(gunk), 50)
 
 			var/datum/effect_system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 1, vent, silent = 1)
@@ -43,7 +43,7 @@
 			smoke.start()
 			qdel(R)
 
-			var/cockroaches = prob(33) ? 3 : 0
+			var/cockroaches = SSrng.probability(33) ? 3 : 0
 			while(cockroaches)
 				new /mob/living/simple_animal/cockroach(get_turf(vent))
 				cockroaches--

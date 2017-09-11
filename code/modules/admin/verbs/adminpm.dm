@@ -50,7 +50,7 @@
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
-	
+
 	var/datum/admin_help/AH = C.current_ticket
 
 	if(AH)
@@ -84,7 +84,7 @@
 			recipient = GLOB.directory[whom]
 	else if(istype(whom, /client))
 		recipient = whom
-	
+
 
 	if(irc)
 		if(!ircreplyamount)	//to prevent people from spamming irc
@@ -308,7 +308,7 @@
 	return "Message Successful"
 
 /proc/GenIrcStealthKey()
-	var/num = (rand(0,1000))
+	var/num = (SSrng.random(0,1000))
 	var/i = 0
 	while(i == 0)
 		i = 1

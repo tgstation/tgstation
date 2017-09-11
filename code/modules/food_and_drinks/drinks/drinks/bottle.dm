@@ -32,12 +32,12 @@
 	B.icon_state = src.icon_state
 
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
-	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
+	I.Blend(B.broken_outline, ICON_OVERLAY, SSrng.random(5), 1)
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	B.icon = I
 
 	if(isGlass)
-		if(prob(33))
+		if(SSrng.probability(33))
 			new/obj/item/shard(new_location)
 		playsound(src, "shatter", 70, 1)
 	else
@@ -261,12 +261,12 @@
 		"\[MOVE ALONG CITIZEN\]", "\[NOTHING TO SEE HERE\]")
 	var/chance = 50
 
-	if(prob(chance))
+	if(SSrng.probability(chance))
 		shortname = pick_n_take(removals)
 
 	var/list/final_fullname = list()
 	for(var/word in splittext(fullname, " "))
-		if(prob(chance))
+		if(SSrng.probability(chance))
 			word = pick_n_take(removals)
 		final_fullname += word
 

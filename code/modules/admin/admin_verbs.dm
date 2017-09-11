@@ -428,7 +428,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	return txt
 
 /client/proc/createStealthKey()
-	var/num = (rand(0,1000))
+	var/num = (SSrng.random(0,1000))
 	var/i = 0
 	while(i == 0)
 		i = 1
@@ -679,7 +679,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			j = 100
 
 			do
-				area = pick(GLOB.the_station_areas)
+				area = SSrng.pick_from_list(GLOB.the_station_areas)
 
 				if (area)
 
@@ -689,7 +689,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 						k = 100
 
 						do
-							tile = pick(candidates)
+							tile = SSrng.pick_from_list(candidates)
 						while ((!tile || !istype(tile)) && --k > 0)
 
 						if (tile)

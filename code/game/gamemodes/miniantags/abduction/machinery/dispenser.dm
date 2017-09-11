@@ -11,7 +11,7 @@
 
 /obj/machinery/abductor/gland_dispenser/proc/random_color()
 	//TODO : replace with presets or spectrum
-	return rgb(rand(0,255),rand(0,255),rand(0,255))
+	return rgb(SSrng.random(0,255),SSrng.random(0,255),SSrng.random(0,255))
 
 /obj/machinery/abductor/gland_dispenser/Initialize()
 	. = ..()
@@ -21,7 +21,7 @@
 	amounts = new/list(gland_types.len)
 	for(var/i=1,i<=gland_types.len,i++)
 		gland_colors[i] = random_color()
-		amounts[i] = rand(1,5)
+		amounts[i] = SSrng.random(1,5)
 
 /obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
 	if(..())

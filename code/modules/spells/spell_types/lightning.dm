@@ -57,13 +57,13 @@
 		return
 
 	playsound(get_turf(user), 'sound/magic/lightningbolt.ogg', 50, 1)
-	user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
+	user.Beam(target,icon_state="lightning[SSrng.random(1,12)]",time=5)
 
 	Bolt(user,target,30,5,user)
 	Reset(user)
 
 /obj/effect/proc_holder/spell/targeted/tesla/proc/Bolt(mob/origin,mob/target,bolt_energy,bounces,mob/user = usr)
-	origin.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
+	origin.Beam(target,icon_state="lightning[SSrng.random(1,12)]",time=5)
 	var/mob/living/carbon/current = target
 	if(bounces < 1)
 		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
@@ -78,6 +78,6 @@
 			possible_targets += M
 		if(!possible_targets.len)
 			return
-		var/mob/living/next = pick(possible_targets)
+		var/mob/living/next = SSrng.pick_from_list(possible_targets)
 		if(next)
 			Bolt(current,next,max((bolt_energy-5),5),bounces-1,user)

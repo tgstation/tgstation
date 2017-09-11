@@ -15,9 +15,9 @@
 	M.set_drugginess(15)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(M.canmove)
-			if(prob(10)) step(M, pick(GLOB.cardinals))
-	if(prob(7))
-		M.emote(pick("twitch","drool","moan","giggle"))
+			if(SSrng.probability(10)) step(M, SSrng.pick_from_list(GLOB.cardinals))
+	if(SSrng.probability(7))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan","giggle"))
 	..()
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
@@ -25,7 +25,7 @@
 
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
-	if(M.hallucination < volume && prob(20))
+	if(M.hallucination < volume && SSrng.probability(20))
 		M.hallucination += 5
 	..()
 
@@ -39,8 +39,8 @@
 	taste_description = "smoke"
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/M)
-	if(prob(1))
-		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
+	if(SSrng.probability(1))
+		var/smoke_message = SSrng.pick_from_list("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
@@ -67,8 +67,8 @@
 	addiction_threshold = 10
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/M)
-	if(prob(5))
-		var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
+	if(SSrng.probability(5))
+		var/high_message = SSrng.pick_from_list("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
@@ -115,8 +115,8 @@
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/M)
-	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
-	if(prob(5))
+	var/high_message = SSrng.pick_from_list("You feel calm.", "You feel collected.", "You feel like you need to relax.")
+	if(SSrng.probability(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	..()
 
@@ -133,12 +133,12 @@
 	. = 1
 
 /datum/reagent/krokodil/addiction_act_stage2(mob/living/M)
-	if(prob(25))
+	if(SSrng.probability(25))
 		to_chat(M, "<span class='danger'>Your skin feels loose...</span>")
 	..()
 
 /datum/reagent/drug/krokodil/addiction_act_stage3(mob/living/M)
-	if(prob(25))
+	if(SSrng.probability(25))
 		to_chat(M, "<span class='danger'>Your skin starts to peel away...</span>")
 	M.adjustBruteLoss(3*REM, 0)
 	..()
@@ -166,8 +166,8 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/M)
-	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
-	if(prob(5))
+	var/high_message = SSrng.pick_from_list("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
+	if(SSrng.probability(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.AdjustStun(-40, 0)
 	M.AdjustKnockdown(-40, 0)
@@ -176,59 +176,59 @@
 	M.status_flags |= GOTTAGOREALLYFAST
 	M.Jitter(2)
 	M.adjustBrainLoss(0.25)
-	if(prob(5))
-		M.emote(pick("twitch", "shiver"))
+	if(SSrng.probability(5))
+		M.emote(SSrng.pick_from_list("twitch", "shiver"))
 	..()
 	. = 1
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i in 1 to 4)
-			step(M, pick(GLOB.cardinals))
-	if(prob(20))
+			step(M, SSrng.pick_from_list(GLOB.cardinals))
+	if(SSrng.probability(20))
 		M.emote("laugh")
-	if(prob(33))
+	if(SSrng.probability(33))
 		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
 	..()
 	M.adjustToxLoss(1, 0)
-	M.adjustBrainLoss(pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
+	M.adjustBrainLoss(SSrng.pick_from_list(0.5, 0.6, 0.7, 0.8, 0.9, 1))
 	. = 1
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
 	M.Jitter(5)
-	if(prob(20))
-		M.emote(pick("twitch","drool","moan"))
+	if(SSrng.probability(20))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan"))
 	..()
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage2(mob/living/M)
 	M.Jitter(10)
 	M.Dizzy(10)
-	if(prob(30))
-		M.emote(pick("twitch","drool","moan"))
+	if(SSrng.probability(30))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan"))
 	..()
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage3(mob/living/M)
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 4, i++)
-			step(M, pick(GLOB.cardinals))
+			step(M, SSrng.pick_from_list(GLOB.cardinals))
 	M.Jitter(15)
 	M.Dizzy(15)
-	if(prob(40))
-		M.emote(pick("twitch","drool","moan"))
+	if(SSrng.probability(40))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan"))
 	..()
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage4(mob/living/carbon/human/M)
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
-			step(M, pick(GLOB.cardinals))
+			step(M, SSrng.pick_from_list(GLOB.cardinals))
 	M.Jitter(20)
 	M.Dizzy(20)
 	M.adjustToxLoss(5, 0)
-	if(prob(50))
-		M.emote(pick("twitch","drool","moan"))
+	if(SSrng.probability(50))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan"))
 	..()
 	. = 1
 
@@ -244,8 +244,8 @@
 
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
-	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
-	if(prob(5))
+	var/high_message = SSrng.pick_from_list("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
+	if(SSrng.probability(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.AdjustStun(-60, 0)
 	M.AdjustKnockdown(-60, 0)
@@ -255,8 +255,8 @@
 	M.adjustToxLoss(0.1, 0)
 	M.hallucination += 10
 	if(M.canmove && !ismovableatom(M.loc))
-		step(M, pick(GLOB.cardinals))
-		step(M, pick(GLOB.cardinals))
+		step(M, SSrng.pick_from_list(GLOB.cardinals))
+		step(M, SSrng.pick_from_list(GLOB.cardinals))
 	..()
 	. = 1
 
@@ -264,10 +264,10 @@
 	M.hallucination += 10
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i in 1 to 8)
-			step(M, pick(GLOB.cardinals))
-	if(prob(20))
-		M.emote(pick("twitch","drool","moan"))
-	if(prob(33))
+			step(M, SSrng.pick_from_list(GLOB.cardinals))
+	if(SSrng.probability(20))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan"))
+	if(SSrng.probability(33))
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
@@ -277,48 +277,48 @@
 	M.hallucination += 10
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
-			step(M, pick(GLOB.cardinals))
+			step(M, SSrng.pick_from_list(GLOB.cardinals))
 	M.Jitter(5)
 	M.adjustBrainLoss(10)
-	if(prob(20))
-		M.emote(pick("twitch","drool","moan"))
+	if(SSrng.probability(20))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan"))
 	..()
 
 /datum/reagent/drug/bath_salts/addiction_act_stage2(mob/living/M)
 	M.hallucination += 20
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
-			step(M, pick(GLOB.cardinals))
+			step(M, SSrng.pick_from_list(GLOB.cardinals))
 	M.Jitter(10)
 	M.Dizzy(10)
 	M.adjustBrainLoss(10)
-	if(prob(30))
-		M.emote(pick("twitch","drool","moan"))
+	if(SSrng.probability(30))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan"))
 	..()
 
 /datum/reagent/drug/bath_salts/addiction_act_stage3(mob/living/M)
 	M.hallucination += 30
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 12, i++)
-			step(M, pick(GLOB.cardinals))
+			step(M, SSrng.pick_from_list(GLOB.cardinals))
 	M.Jitter(15)
 	M.Dizzy(15)
 	M.adjustBrainLoss(10)
-	if(prob(40))
-		M.emote(pick("twitch","drool","moan"))
+	if(SSrng.probability(40))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan"))
 	..()
 
 /datum/reagent/drug/bath_salts/addiction_act_stage4(mob/living/carbon/human/M)
 	M.hallucination += 40
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 16, i++)
-			step(M, pick(GLOB.cardinals))
+			step(M, SSrng.pick_from_list(GLOB.cardinals))
 	M.Jitter(50)
 	M.Dizzy(50)
 	M.adjustToxLoss(5, 0)
 	M.adjustBrainLoss(10)
-	if(prob(50))
-		M.emote(pick("twitch","drool","moan"))
+	if(SSrng.probability(50))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan"))
 	..()
 	. = 1
 
@@ -330,12 +330,12 @@
 	color = "#78FFF0"
 
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/M)
-	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
-	if(prob(5))
+	var/high_message = SSrng.pick_from_list("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
+	if(SSrng.probability(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.adjustStaminaLoss(-18, 0)
 	M.adjustToxLoss(0.5, 0)
-	if(prob(50))
+	if(SSrng.probability(50))
 		M.losebreath++
 		M.adjustOxyLoss(1, 0)
 	..()

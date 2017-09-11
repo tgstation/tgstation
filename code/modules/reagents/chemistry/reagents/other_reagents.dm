@@ -205,17 +205,17 @@
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering+4, 10)
 		M.Dizzy(5)
-		if(iscultist(M) && prob(5))
-			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
-		else if(is_servant_of_ratvar(M) && prob(8))
-			switch(pick("speech", "message", "emote"))
+		if(iscultist(M) && SSrng.probability(5))
+			M.say(SSrng.pick_from_list("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
+		else if(is_servant_of_ratvar(M) && SSrng.probability(8))
+			switch(SSrng.pick_from_list("speech", "message", "emote"))
 				if("speech")
-					clockwork_say(M, "...[text2ratvar(pick("Engine... your light grows dark...", "Where are you, master?", "He lies rusting in Error...", "Purge all untruths and... and... something..."))]")
+					clockwork_say(M, "...[text2ratvar(SSrng.pick_from_list("Engine... your light grows dark...", "Where are you, master?", "He lies rusting in Error...", "Purge all untruths and... and... something..."))]")
 				if("message")
-					to_chat(M, "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
+					to_chat(M, "<span class='boldwarning'>[SSrng.pick_from_list("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
 					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
 				if("emote")
-					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
+					M.visible_message("<span class='warning'>[M] [SSrng.pick_from_list("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data >= 75)	// 30 units, 135 seconds
 		if(iscultist(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
@@ -332,7 +332,7 @@
 					if("caucasian3")
 						N.skin_tone = "mediterranean"
 					if("caucasian2")
-						N.skin_tone = pick("caucasian3", "latino")
+						N.skin_tone = SSrng.pick_from_list("caucasian3", "latino")
 					if("caucasian1")
 						N.skin_tone = "caucasian2"
 					if ("albino")
@@ -388,13 +388,13 @@
 		else if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
 			N.dna.features["mcolor"] = "f80"
 		N.regenerate_icons()
-		if(prob(7))
+		if(SSrng.probability(7))
 			if(N.w_uniform)
-				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
+				M.visible_message(SSrng.pick_from_list("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
 			else
 				M.visible_message("<b>[M]</b> flexes [M.p_their()] arms.")
-	if(prob(10))
-		M.say(pick("Shit was SO cash.", "You are everything bad in the world.", "What sports do you play, other than 'jack off to naked drawn Japanese people?'", "Don’t be a stranger. Just hit me with your best shot.", "My name is John and I hate every single one of you."))
+	if(SSrng.probability(10))
+		M.say(SSrng.pick_from_list("Shit was SO cash.", "You are everything bad in the world.", "What sports do you play, other than 'jack off to naked drawn Japanese people?'", "Don’t be a stranger. Just hit me with your best shot.", "My name is John and I hate every single one of you."))
 	..()
 	return
 
@@ -551,7 +551,7 @@
 		if(initial(S.blacklisted))
 			continue
 		possible_morphs += S
-	race = pick(possible_morphs)
+	race = SSrng.pick_from_list(possible_morphs)
 	..()
 
 /datum/reagent/mulligan
@@ -600,8 +600,8 @@
 
 /datum/reagent/serotrotium/on_mob_life(mob/living/M)
 	if(ishuman(M))
-		if(prob(7))
-			M.emote(pick("twitch","drool","moan","gasp"))
+		if(SSrng.probability(7))
+			M.emote(SSrng.pick_from_list("twitch","drool","moan","gasp"))
 	..()
 
 /datum/reagent/oxygen
@@ -673,9 +673,9 @@
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
 	if(M.canmove && !isspaceturf(M.loc))
-		step(M, pick(GLOB.cardinals))
-	if(prob(5))
-		M.emote(pick("twitch","drool","moan"))
+		step(M, SSrng.pick_from_list(GLOB.cardinals))
+	if(SSrng.probability(5))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan"))
 	M.adjustBrainLoss(2)
 	..()
 
@@ -753,9 +753,9 @@
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
 	if(M.canmove && !isspaceturf(M.loc))
-		step(M, pick(GLOB.cardinals))
-	if(prob(5))
-		M.emote(pick("twitch","drool","moan"))
+		step(M, SSrng.pick_from_list(GLOB.cardinals))
+	if(SSrng.probability(5))
+		M.emote(SSrng.pick_from_list("twitch","drool","moan"))
 	..()
 
 /datum/reagent/glycerol
@@ -882,7 +882,7 @@
 	..()
 
 /datum/reagent/bluespace/on_mob_life(mob/living/M)
-	if(current_cycle > 10 && prob(15))
+	if(current_cycle > 10 && SSrng.probability(15))
 		to_chat(M, "<span class='warning'>You feel unstable...</span>")
 		M.Jitter(2)
 		current_cycle = 1
@@ -951,7 +951,7 @@
 			qdel(C)
 
 		for(var/mob/living/simple_animal/slime/M in T)
-			M.adjustToxLoss(rand(5,10))
+			M.adjustToxLoss(SSrng.random(5,10))
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -1028,11 +1028,11 @@
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/M)
 	M.jitteriness = max(M.jitteriness-5,0)
-	if(prob(80))
+	if(SSrng.probability(80))
 		M.adjustBrainLoss(1*REM)
-	if(prob(50))
+	if(SSrng.probability(50))
 		M.drowsyness = max(M.drowsyness, 3)
-	if(prob(10))
+	if(SSrng.probability(10))
 		M.emote("drool")
 	..()
 
@@ -1045,7 +1045,7 @@
 	taste_description = "sludge"
 
 /datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && SSrng.probability(min(reac_volume,100)*(1 - touch_protection))))
 		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
 
 /datum/reagent/xenomicrobes
@@ -1057,7 +1057,7 @@
 	taste_description = "sludge"
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && SSrng.probability(min(reac_volume,100)*(1 - touch_protection))))
 		M.ContractDisease(new /datum/disease/transformation/xeno(0))
 
 /datum/reagent/fungalspores
@@ -1068,7 +1068,7 @@
 	taste_description = "slime"
 
 /datum/reagent/fungalspores/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && SSrng.probability(min(reac_volume,100)*(1 - touch_protection))))
 		M.ForceContractDisease(new /datum/disease/tuberculosis(0))
 
 /datum/reagent/fluorosurfactant//foam precursor
@@ -1154,7 +1154,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.blood_volume = max(H.blood_volume - 2.5, 0)
-	if(prob(20))
+	if(SSrng.probability(20))
 		M.losebreath += 2
 		M.confused = min(M.confused + 2, 5)
 	..()
@@ -1253,7 +1253,7 @@
 	taste_description = "plant food"
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/M)
-	if(prob(tox_prob))
+	if(SSrng.probability(tox_prob))
 		M.adjustToxLoss(1*REM, 0)
 		. = 1
 	..()
@@ -1380,22 +1380,22 @@
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/M)
 	if(M && isliving(M))
-		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+		M.add_atom_colour(SSrng.pick_from_list(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/colorful_reagent/reaction_mob(mob/living/M, reac_volume)
 	if(M && isliving(M))
-		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+		M.add_atom_colour(SSrng.pick_from_list(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/colorful_reagent/reaction_obj(obj/O, reac_volume)
 	if(O)
-		O.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+		O.add_atom_colour(SSrng.pick_from_list(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/colorful_reagent/reaction_turf(turf/T, reac_volume)
 	if(T)
-		T.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+		T.add_atom_colour(SSrng.pick_from_list(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/hair_dye
@@ -1411,8 +1411,8 @@
 	if(method == TOUCH || method == VAPOR)
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.hair_color = pick(potential_colors)
-			H.facial_hair_color = pick(potential_colors)
+			H.hair_color = SSrng.pick_from_list(potential_colors)
+			H.facial_hair_color = SSrng.pick_from_list(potential_colors)
 			H.update_hair()
 
 /datum/reagent/barbers_aid
@@ -1427,8 +1427,8 @@
 	if(method == TOUCH || method == VAPOR)
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hair_styles_list)
-			var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hair_styles_list)
+			var/datum/sprite_accessory/hair/picked_hair = SSrng.pick_from_list(GLOB.hair_styles_list)
+			var/datum/sprite_accessory/facial_hair/picked_beard = SSrng.pick_from_list(GLOB.facial_hair_styles_list)
 			H.hair_style = picked_hair
 			H.facial_hair_style = picked_beard
 			H.update_hair()
@@ -1546,8 +1546,8 @@
 	taste_description = "strange honey"
 
 /datum/reagent/royal_bee_jelly/on_mob_life(mob/living/M)
-	if(prob(2))
-		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
+	if(SSrng.probability(2))
+		M.say(SSrng.pick_from_list("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
 	..()
 
 //Misc reagents

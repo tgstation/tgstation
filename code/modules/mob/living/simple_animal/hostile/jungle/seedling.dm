@@ -128,7 +128,7 @@
 			if(target_dist > 7)//Offscreen check
 				SolarBeamStartup(target)
 				return
-			if(get_dist(src,target) >= 4 && prob(40))
+			if(get_dist(src,target) >= 4 && SSrng.probability(40))
 				SolarBeamStartup(target)
 				return
 		addtimer(CALLBACK(src, .proc/Volley), 5)
@@ -186,8 +186,8 @@
 		readied_shot.starting = our_turf
 		readied_shot.firer = src
 		readied_shot.original = target
-		readied_shot.yo = target.y - our_turf.y + rand(-1,1)
-		readied_shot.xo = target.x - our_turf.x + rand(-1,1)
+		readied_shot.yo = target.y - our_turf.y + SSrng.random(-1,1)
+		readied_shot.xo = target.x - our_turf.x + SSrng.random(-1,1)
 		readied_shot.fire()
 		playsound(src, projectilesound, 100, 1)
 

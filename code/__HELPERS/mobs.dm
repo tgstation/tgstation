@@ -1,14 +1,14 @@
 /proc/random_blood_type()
-	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+	return pickweight(list("O-" = 4, "O+" = 36, "A-" = 3, "A+" = 28, "B-" = 1, "B+" = 20, "AB-" = 1, "AB+" = 5))
 
 /proc/random_eye_color()
-	switch(pick(20;"brown",20;"hazel",20;"grey",15;"blue",15;"green",1;"amber",1;"albino"))
+	switch(pickweight(list("brown" = 20, "hazel" = 20, "grey" = 20, "blue" = 15, "green" = 15, "amber" = 1, "albino" = 1)))
 		if("brown")
 			return "630"
 		if("hazel")
 			return "542"
 		if("grey")
-			return pick("666","777","888","999","aaa","bbb","ccc")
+			return SSrng.pick_from_list("666","777","888","999","aaa","bbb","ccc")
 		if("blue")
 			return "36c"
 		if("green")
@@ -16,7 +16,7 @@
 		if("amber")
 			return "fc0"
 		if("albino")
-			return pick("c","d","e","f") + pick("0","1","2","3","4","5","6","7","8","9") + pick("0","1","2","3","4","5","6","7","8","9")
+			return SSrng.pick_from_list("c","d","e","f") + SSrng.pick_from_list("0","1","2","3","4","5","6","7","8","9") + SSrng.pick_from_list("0","1","2","3","4","5","6","7","8","9")
 		else
 			return "000"
 
@@ -25,27 +25,27 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.underwear_m)
+			return SSrng.pick_from_list(GLOB.underwear_m)
 		if(FEMALE)
-			return pick(GLOB.underwear_f)
+			return SSrng.pick_from_list(GLOB.underwear_f)
 		else
-			return pick(GLOB.underwear_list)
+			return SSrng.pick_from_list(GLOB.underwear_list)
 
 /proc/random_undershirt(gender)
 	if(!GLOB.undershirt_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.undershirt_m)
+			return SSrng.pick_from_list(GLOB.undershirt_m)
 		if(FEMALE)
-			return pick(GLOB.undershirt_f)
+			return SSrng.pick_from_list(GLOB.undershirt_f)
 		else
-			return pick(GLOB.undershirt_list)
+			return SSrng.pick_from_list(GLOB.undershirt_list)
 
 /proc/random_socks()
 	if(!GLOB.socks_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
-	return pick(GLOB.socks_list)
+	return SSrng.pick_from_list(GLOB.socks_list)
 
 /proc/random_features()
 	if(!GLOB.tails_list_human.len)
@@ -70,32 +70,32 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs"))
+	return(list("mcolor" = SSrng.pick_from_list("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = SSrng.pick_from_list(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = SSrng.pick_from_list(GLOB.snouts_list), "horns" = SSrng.pick_from_list(GLOB.horns_list), "ears" = "None", "frills" = SSrng.pick_from_list(GLOB.frills_list), "spines" = SSrng.pick_from_list(GLOB.spines_list), "body_markings" = SSrng.pick_from_list(GLOB.body_markings_list), "legs" = "Normal Legs"))
 
 /proc/random_hair_style(gender)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.hair_styles_male_list)
+			return SSrng.pick_from_list(GLOB.hair_styles_male_list)
 		if(FEMALE)
-			return pick(GLOB.hair_styles_female_list)
+			return SSrng.pick_from_list(GLOB.hair_styles_female_list)
 		else
-			return pick(GLOB.hair_styles_list)
+			return SSrng.pick_from_list(GLOB.hair_styles_list)
 
 /proc/random_facial_hair_style(gender)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.facial_hair_styles_male_list)
+			return SSrng.pick_from_list(GLOB.facial_hair_styles_male_list)
 		if(FEMALE)
-			return pick(GLOB.facial_hair_styles_female_list)
+			return SSrng.pick_from_list(GLOB.facial_hair_styles_female_list)
 		else
-			return pick(GLOB.facial_hair_styles_list)
+			return SSrng.pick_from_list(GLOB.facial_hair_styles_list)
 
 /proc/random_unique_name(gender, attempts_to_find_unique_name=10)
 	for(var/i=1, i<=attempts_to_find_unique_name, i++)
 		if(gender==FEMALE)
-			. = capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))
+			. = capitalize(SSrng.pick_from_list(GLOB.first_names_female)) + " " + capitalize(SSrng.pick_from_list(GLOB.last_names))
 		else
-			. = capitalize(pick(GLOB.first_names_male)) + " " + capitalize(pick(GLOB.last_names))
+			. = capitalize(SSrng.pick_from_list(GLOB.first_names_male)) + " " + capitalize(SSrng.pick_from_list(GLOB.last_names))
 
 		if(i != attempts_to_find_unique_name && !findname(.))
 			break
@@ -115,7 +115,7 @@
 			break
 
 /proc/random_skin_tone()
-	return pick(GLOB.skin_tones)
+	return SSrng.pick_from_list(GLOB.skin_tones)
 
 GLOBAL_LIST_INIT(skin_tones, list(
 	"albino",
@@ -397,14 +397,14 @@ Proc for attack log creation, because really why not
 		var/atom/movable/X = new spawn_type(T)
 		X.admin_spawned = admin_spawn
 
-		if(always_max_walk || prob(walk_chance))
+		if(always_max_walk || SSrng.probability(walk_chance))
 			if(always_max_walk)
 				step_count = max_walk
 			else
-				step_count = rand(1, max_walk)
+				step_count = SSrng.random(1, max_walk)
 
 			for(var/i in 1 to step_count)
-				step(X, pick(NORTH, SOUTH, EAST, WEST))
+				step(X, SSrng.pick_from_list(NORTH, SOUTH, EAST, WEST))
 
 /proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
 	for(var/mob/M in GLOB.player_list)

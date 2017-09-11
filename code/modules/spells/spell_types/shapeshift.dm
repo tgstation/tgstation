@@ -32,7 +32,7 @@
 				return
 			shapeshift_type = new_shapeshift_type
 			if(!shapeshift_type) //If you aren't gonna decide I am!
-				shapeshift_type = pick(animal_list)
+				shapeshift_type = SSrng.pick_from_list(animal_list)
 			shapeshift_type = animal_list[shapeshift_type]
 		if(M in current_shapes)
 			Restore(M)

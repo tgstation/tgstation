@@ -38,7 +38,7 @@
 
 /obj/item/toy/eightball/Initialize(mapload)
 	..()
-	if(prob(1))
+	if(SSrng.probability(1))
 		new /obj/item/toy/eightball/haunted(get_turf(src))
 		qdel(src)
 
@@ -68,7 +68,7 @@
 	return
 
 /obj/item/toy/eightball/proc/get_answer()
-	return pick(possible_answers)
+	return SSrng.pick_from_list(possible_answers)
 
 /obj/item/toy/eightball/proc/clear_cooldown()
 	on_cooldown = FALSE
@@ -82,7 +82,7 @@
 
 /obj/item/toy/eightball/broken/Initialize(mapload)
 	..()
-	fixed_answer = pick(possible_answers)
+	fixed_answer = SSrng.pick_from_list(possible_answers)
 
 /obj/item/toy/eightball/broken/get_answer()
 	return fixed_answer
@@ -139,7 +139,7 @@
 
 /obj/item/toy/eightball/haunted/get_answer()
 	if(!votes.len)
-		return pick(possible_answers)
+		return SSrng.pick_from_list(possible_answers)
 
 	var/list/tallied_votes = get_vote_tallies()
 

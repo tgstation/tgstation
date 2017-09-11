@@ -23,8 +23,8 @@ Mineral Sheets
 	icon = 'icons/obj/mining.dmi'
 
 /obj/item/stack/sheet/mineral/Initialize(mapload)
-	pixel_x = rand(-4, 4)
-	pixel_y = rand(-4, 4)
+	pixel_x = SSrng.random(-4, 4)
+	pixel_y = SSrng.random(-4, 4)
 	. = ..()
 
 /*

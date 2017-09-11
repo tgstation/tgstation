@@ -14,7 +14,7 @@
 	if(!holder_canadates) //Very unlikely, but just in case
 		return 0
 
-	var/mob/living/carbon/human/H = pick(holder_canadates)
+	var/mob/living/carbon/human/H = SSrng.pick_from_list(holder_canadates)
 	new /obj/item/greentext(H.loc)
 	to_chat(H, "<font color='green'>The mythical greentext appear at your feet! Pick it up if you dare...</font>")
 

@@ -15,7 +15,7 @@
 /obj/effect/proc_holder/spell/targeted/summon_wealth/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/C in targets)
 		if(user.drop_item())
-			var/obj/item = pick(
+			var/obj/item = SSrng.pick_from_list(
 					new /obj/item/coin/gold(user.loc),
 					new /obj/item/coin/diamond(user.loc),
 					new /obj/item/coin/silver(user.loc),

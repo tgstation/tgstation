@@ -57,7 +57,7 @@
 
 /obj/item/storage/firstaid/fire/Initialize(mapload)
 	..()
-	icon_state = pick("ointment","firefirstaid")
+	icon_state = SSrng.pick_from_list("ointment","firefirstaid")
 
 /obj/item/storage/firstaid/fire/PopulateContents()
 	if(empty)
@@ -77,7 +77,7 @@
 
 /obj/item/storage/firstaid/toxin/Initialize(mapload)
 	. = ..()
-	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
+	icon_state = SSrng.pick_from_list("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
 
 /obj/item/storage/firstaid/toxin/PopulateContents()
 	if(empty)

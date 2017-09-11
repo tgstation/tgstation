@@ -159,7 +159,7 @@
 
 /obj/machinery/door/airlock/uranium/process()
 	if(world.time > last_event+20)
-		if(prob(50))
+		if(SSrng.probability(50))
 			radiate()
 		last_event = world.time
 	..()
@@ -390,7 +390,7 @@
 		new /obj/effect/temp_visual/cult/sac(loc)
 		var/atom/throwtarget
 		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-		SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
+		SEND_SOUND(L, sound(SSrng.pick_from_list('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
 		flash_color(L, flash_color="#960000", flash_time=20)
 		L.Knockdown(40)
 		L.throw_at(throwtarget, 5, 1,src)
@@ -464,7 +464,7 @@
 	to_chat(user, gear_text)
 
 /obj/machinery/door/airlock/clockwork/emp_act(severity)
-	if(prob(80/severity))
+	if(SSrng.probability(80/severity))
 		open()
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)

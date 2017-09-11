@@ -192,11 +192,11 @@
 	var/crate_value = 30
 	var/list/uplink_items = get_uplink_items(SSticker.mode)
 	while(crate_value)
-		var/category = pick(uplink_items)
-		var/item = pick(uplink_items[category])
+		var/category = SSrng.pick_from_list(uplink_items)
+		var/item = SSrng.pick_from_list(uplink_items[category])
 		var/datum/uplink_item/I = uplink_items[category][item]
 
-		if(!I.surplus || prob(100 - I.surplus))
+		if(!I.surplus || SSrng.probability(100 - I.surplus))
 			continue
 		if(crate_value < I.cost)
 			continue
@@ -1075,7 +1075,7 @@
 
 /datum/supply_pack/organic/critter/corgi/generate()
 	. = ..()
-	if(prob(50))
+	if(SSrng.probability(50))
 		var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
 		qdel(D)
 		new /mob/living/simple_animal/pet/dog/corgi/Lisa(.)
@@ -1090,7 +1090,7 @@
 
 /datum/supply_pack/organic/critter/cat/generate()
 	. = ..()
-	if(prob(50))
+	if(SSrng.probability(50))
 		var/mob/living/simple_animal/pet/cat/C = locate() in .
 		qdel(C)
 		new /mob/living/simple_animal/pet/cat/Proc(.)

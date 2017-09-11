@@ -33,7 +33,7 @@
 	prepare()
 
 	if(M.has_dna() && !(RADIMMUNE in M.dna.species.species_traits) && !(M.disabilities & NOCLONE))
-		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
+		M.radiation += SSrng.random(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
 			HM.force_lose(M)
@@ -315,7 +315,7 @@
 		return FALSE
 
 	if(M.has_dna() && !(M.disabilities & NOCLONE))
-		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
+		M.radiation += SSrng.random(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/endtime = world.time+duration
 		for(var/datum/mutation/human/HM in remove_mutations)

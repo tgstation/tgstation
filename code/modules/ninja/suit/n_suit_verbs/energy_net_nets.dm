@@ -63,7 +63,7 @@ It is possible to destroy the net by the occupant or someone else.
 	new /obj/effect/temp_visual/dir_setting/ninja/phase/out(affecting.drop_location(), affecting.dir)
 
 	visible_message("[affecting] suddenly vanishes!")
-	affecting.forceMove(pick(GLOB.holdingfacility)) //Throw mob in to the holding facility.
+	affecting.forceMove(SSrng.pick_from_list(GLOB.holdingfacility)) //Throw mob in to the holding facility.
 	to_chat(affecting, "<span class='danger'>You appear in a strange place!</span>")
 
 	if(!QDELETED(master))//As long as they still exist.

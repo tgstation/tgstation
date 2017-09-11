@@ -50,7 +50,7 @@
 		for(var/thing in archdrops)
 			var/maxtodrop = archdrops[thing]
 			for(var/i in 1 to maxtodrop)
-				if(prob(prob2drop)) // can't win them all!
+				if(SSrng.probability(prob2drop)) // can't win them all!
 					new thing(OT)
 
 		if(isopenturf(OT))
@@ -72,13 +72,13 @@
 /datum/component/archaeology/proc/SingDig(S, current_size)
 	switch(current_size)
 		if(STAGE_THREE)
-			if(prob(30))
+			if(SSrng.probability(30))
 				gets_dug()
 		if(STAGE_FOUR)
-			if(prob(50))
+			if(SSrng.probability(50))
 				gets_dug()
 		else
-			if(current_size >= STAGE_FIVE && prob(70))
+			if(current_size >= STAGE_FIVE && SSrng.probability(70))
 				gets_dug()
 
 /datum/component/archaeology/proc/BombDig(severity, target)
@@ -86,7 +86,7 @@
 		if(3)
 			return
 		if(2)
-			if(prob(20))
+			if(SSrng.probability(20))
 				gets_dug()
 		if(1)
 			gets_dug()

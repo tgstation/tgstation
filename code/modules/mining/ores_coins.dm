@@ -296,8 +296,8 @@
 
 /obj/item/ore/Initialize()
 	..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = SSrng.random(0,16)-8
+	pixel_y = SSrng.random(0,8)-8
 
 /obj/item/ore/ex_act()
 	return
@@ -323,8 +323,8 @@
 
 /obj/item/coin/Initialize()
 	..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = SSrng.random(0,16)-8
+	pixel_y = SSrng.random(0,8)-8
 
 /obj/item/coin/examine(mob/user)
 	..()
@@ -441,7 +441,7 @@
 		if(string_attached) //does the coin have a wire attached
 			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
 			return //do not flip the coin
-		var/coinflip = pick(sideslist)
+		var/coinflip = SSrng.pick_from_list(sideslist)
 		cooldown = world.time + 15
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"

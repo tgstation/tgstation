@@ -41,7 +41,7 @@
 			to_chat(src, "<span class='warning'>It is too early to place your blob core!</span>")
 			return 0
 	else if(placement_override == 1)
-		var/turf/T = pick(GLOB.blobstart)
+		var/turf/T = SSrng.pick_from_list(GLOB.blobstart)
 		loc = T //got overrided? you're somewhere random, motherfucker
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
@@ -156,7 +156,7 @@
 	B.max_integrity = initial(B.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
 	B.obj_integrity = min(B.obj_integrity, B.max_integrity)
 	B.update_icon()
-	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
+	B.visible_message("<span class='warning'><b>The blobbernaut [SSrng.pick_from_list("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
 	flick("blobbernaut_produce", blobber)
@@ -169,7 +169,7 @@
 	blob_mobs += blobber
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50, blobber) //players must answer rapidly
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
-		var/client/C = pick(candidates)
+		var/client/C = SSrng.pick_from_list(candidates)
 		blobber.key = C.key
 		SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
 		SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
@@ -273,10 +273,10 @@
 					diagonalblobs += IB
 			var/obj/structure/blob/OB
 			if(cardinalblobs.len)
-				OB = pick(cardinalblobs)
+				OB = SSrng.pick_from_list(cardinalblobs)
 				OB.expand(T, src)
 			else
-				OB = pick(diagonalblobs)
+				OB = SSrng.pick_from_list(diagonalblobs)
 				if(attacksuccess)
 					OB.blob_attack_animation(T, src)
 					playsound(OB, 'sound/effects/splat.ogg', 50, 1)
@@ -302,7 +302,7 @@
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in blob_mobs)
 		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
-			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
+			BS.Goto(SSrng.pick_from_list(surrounding_turfs), BS.move_to_delay)
 
 /mob/camera/blob/verb/blob_broadcast()
 	set category = "Blob"
@@ -328,7 +328,7 @@
 			free_chem_rerolls--
 
 /mob/camera/blob/proc/set_chemical()
-	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
+	var/datum/reagent/blob/BC = SSrng.pick_from_list((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new BC
 	color = blob_reagent_datum.complementary_color
 	for(var/BL in GLOB.blobs)

@@ -48,7 +48,7 @@ GLOBAL_LIST_EMPTY(blobs_legit) //used for win-score calculations, contains only 
 	for(var/j = 0, j < cores_to_spawn, j++)
 		if (!antag_candidates.len)
 			break
-		var/datum/mind/blob = pick(antag_candidates)
+		var/datum/mind/blob = SSrng.pick_from_list(antag_candidates)
 		blob_overminds += blob
 		blob.assigned_role = "Blob"
 		blob.special_role = "Blob"
@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY(blobs_legit) //used for win-score calculations, contains only 
 	for(var/datum/mind/blob in blob_overminds)
 		var/mob/camera/blob/B = blob.current.become_overmind(TRUE, round(blob_base_starting_points/blob_overminds.len))
 		B.mind.name = B.name
-		var/turf/T = pick(GLOB.blobstart)
+		var/turf/T = SSrng.pick_from_list(GLOB.blobstart)
 		B.loc = T
 		B.base_point_rate = blob_point_rate
 
@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(blobs_legit) //used for win-score calculations, contains only 
 
 	. = ..()
 
-	var/message_delay = rand(messagedelay_low, messagedelay_high) //between 4 and 6 minutes with 2400 low and 3600 high.
+	var/message_delay = SSrng.random(messagedelay_low, messagedelay_high) //between 4 and 6 minutes with 2400 low and 3600 high.
 
 	sleep(message_delay)
 

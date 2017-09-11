@@ -206,7 +206,7 @@
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
 		return 0
 	stasis = TRUE
-	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
+	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [SSrng.pick_from_list("breaking apart", "drifting away")]...</span>")
 	notransform = TRUE
 	revealed = TRUE
 	invisibility = 0
@@ -391,7 +391,7 @@
 			inert = TRUE
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
-		var/client/C = pick(candidates)
+		var/client/C = SSrng.pick_from_list(candidates)
 		revenant.client = C
 		key_of_revenant = C.key
 		if(!key_of_revenant)
@@ -422,7 +422,7 @@
 	var/targetAmount = 100
 
 /datum/objective/revenant/New()
-	targetAmount = rand(350,600)
+	targetAmount = SSrng.random(350,600)
 	explanation_text = "Absorb [targetAmount] points of essence from humans."
 	..()
 
@@ -451,7 +451,7 @@
 									 "Make the clown as miserable as possible.", \
 									 "Make the captain as miserable as possible.", \
 									 "Prevent the use of energy weapons where possible.")
-	explanation_text = pick(explanationTexts)
+	explanation_text = SSrng.pick_from_list(explanationTexts)
 	..()
 
 /datum/objective/revenantFluff/check_completion()

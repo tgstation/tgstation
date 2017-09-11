@@ -8,7 +8,7 @@
 
 /obj/effect/decal/cleanable/Initialize(mapload)
 	if (random_icon_states && length(src.random_icon_states) > 0)
-		src.icon_state = pick(src.random_icon_states)
+		src.icon_state = SSrng.pick_from_list(src.random_icon_states)
 	create_reagents(300)
 	if(src.loc && isturf(src.loc))
 		for(var/obj/effect/decal/cleanable/C in src.loc)

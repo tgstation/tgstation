@@ -218,7 +218,7 @@
 			stat &= ~NOPOWER
 			update_icon()
 		else
-			spawn(rand(0, 15))
+			spawn(SSrng.random(0, 15))
 				stat |= NOPOWER
 				update_icon()
 
@@ -230,13 +230,13 @@
 			//try and salvage its components
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off...</span>")
 			if(do_after(user, 20*I.toolspeed, target = src))
-				if(prob(70))
+				if(SSrng.probability(70))
 					if(stored_gun)
 						stored_gun.forceMove(loc)
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
-					if(prob(50))
-						new /obj/item/stack/sheet/metal(loc, rand(1,4))
-					if(prob(50))
+					if(SSrng.probability(50))
+						new /obj/item/stack/sheet/metal(loc, SSrng.random(1,4))
+					if(SSrng.probability(50))
 						new /obj/item/device/assembly/prox_sensor(loc)
 				else
 					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
@@ -293,13 +293,13 @@
 	if(on && emp_vunerable)
 		//if the turret is on, the EMP no matter how severe disables the turret for a while
 		//and scrambles its settings, with a slight chance of having an emag effect
-		check_records = pick(0, 1)
-		criminals = pick(0, 1)
-		auth_weapons = pick(0, 1)
-		stun_all = pick(0, 0, 0, 0, 1)	//stun_all is a pretty big deal, so it's least likely to get turned on
+		check_records = SSrng.pick_from_list(0, 1)
+		criminals = SSrng.pick_from_list(0, 1)
+		auth_weapons = SSrng.pick_from_list(0, 1)
+		stun_all = SSrng.pick_from_list(0, 0, 0, 0, 1)	//stun_all is a pretty big deal, so it's least likely to get turned on
 
 		on=0
-		spawn(rand(60,600))
+		spawn(SSrng.random(60,600))
 			if(!on)
 				on=1
 
@@ -308,7 +308,7 @@
 /obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
 	if(.) //damage received
-		if(prob(30))
+		if(SSrng.probability(30))
 			spark_system.start()
 		if(on && !attacked && !emagged)
 			attacked = TRUE
@@ -402,7 +402,7 @@
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
-		var/atom/movable/M = pick(targets)
+		var/atom/movable/M = SSrng.pick_from_list(targets)
 		targets -= M
 		if(target(M))
 			return 1

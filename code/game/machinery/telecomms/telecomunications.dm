@@ -204,10 +204,10 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 		traffic -= netspeed
 
 /obj/machinery/telecomms/emp_act(severity)
-	if(prob(100/severity))
+	if(SSrng.probability(100/severity))
 		if(!(stat & EMPED))
 			stat |= EMPED
 			var/duration = (300 * 10)/severity
-			spawn(rand(duration - 20, duration + 20)) // Takes a long time for the machines to reboot.
+			spawn(SSrng.random(duration - 20, duration + 20)) // Takes a long time for the machines to reboot.
 				stat &= ~EMPED
 	..()

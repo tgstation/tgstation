@@ -808,7 +808,7 @@
 	var/mob/stored_swap = null //Used in used book recoils to store an identity for mindswaps
 
 /obj/item/spellbook/oneuse/mindswap/onlearned()
-	spellname = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
+	spellname = SSrng.pick_from_list("fireball","smoke","blind","forcewall","knock","barnyard","charge")
 	icon_state = "book[spellname]"
 	name = "spellbook of [spellname]" //Note, desc doesn't change by design
 	..()
@@ -900,7 +900,7 @@
 /obj/item/spellbook/oneuse/random/Initialize()
 	..()
 	var/static/banned_spells = list(/obj/item/spellbook/oneuse/mimery_blockade, /obj/item/spellbook/oneuse/mimery_guns)
-	var/real_type = pick(subtypesof(/obj/item/spellbook/oneuse) - banned_spells)
+	var/real_type = SSrng.pick_from_list(subtypesof(/obj/item/spellbook/oneuse) - banned_spells)
 	new real_type(loc)
 	qdel(src)
 
