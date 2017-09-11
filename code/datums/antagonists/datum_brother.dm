@@ -19,7 +19,7 @@
 	team.members -= owner
 	owner.objectives -= team.objectives
 	if(owner.current)
-		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
+		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
 	owner.special_role = null
 	return ..()
 

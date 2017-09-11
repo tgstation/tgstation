@@ -10,4 +10,4 @@
 		members += starting_members
 
 /datum/objective_team/proc/is_solo()
-	return LAZYLEN(members.len) == 1
+	return members.len == 1

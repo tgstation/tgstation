@@ -80,7 +80,7 @@
 			antag_candidates -= bro
 			team.members += bro
 			bro.restricted_roles = restricted_jobs
-			log_game("[bro.key] (ckey) has been selected as a Brother")
+			log_game("[key_name(bro)] (ckey) has been selected as a Brother")
 		pre_brother_teams += team
 	return ..()
 
