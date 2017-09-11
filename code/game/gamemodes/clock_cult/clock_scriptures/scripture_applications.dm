@@ -175,7 +175,7 @@
 		to_chat(invoker, "<span class='inathneq'>\"It is too late to construct one of these, champion.\"</span>")
 		return FALSE
 	var/turf/T = get_turf(invoker)
-	if(!T || T.z != ZLEVEL_STATION)
+	if(!T || !(T.z in GLOB.station_z_levels))
 		to_chat(invoker, "<span class='inathneq'>\"You must be on the station to construct one of these, champion.\"</span>")
 		return FALSE
 	return ..()
