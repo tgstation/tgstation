@@ -223,6 +223,17 @@
     build_path = /obj/item/organ/cyberimp/arm/surgery
     category = list("Misc", "Medical Designs")
 
+/datum/design/cyberimp_surgical_alien
+    name = "Alien Surgical Arm Implant"
+    desc = "A set of alien surgical tools hidden behind a concealed panel on the user's arm."
+    id = "ci-surgery-alien"
+    req_tech = list("materials" = 6, "engineering" = 4, "biotech" = 6, "programming" = 3, "magnets" = 4, "abductor" = 3)
+    build_type = PROTOLATHE | MECHFAB
+    materials = list(MAT_METAL = 11000, MAT_GLASS = 3000, MAT_SILVER = 3000, MAT_PLASMA = 2750, MAT_TITANIUM = 8250, MAT_DIAMOND = 500)
+    construction_time = 800
+    build_path = /obj/item/organ/cyberimp/arm/surgery/alien
+    category = list("Medical Designs")
+
 /datum/design/cyberimp_toolset
 	name = "Toolset Arm Implant"
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
