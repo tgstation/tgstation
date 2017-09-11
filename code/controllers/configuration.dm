@@ -692,15 +692,16 @@
 						WRITE_FILE(GLOB.config_error_log, "Incorrect probability configuration definition: [prob_name]  [prob_value].")
 				if("adjust")
 					var/adj_pos = findtext(value, " ")
-					var/adj_name = null
+					to_chat(world, "value: [value]")
 					var/adj_value = null
 
 					if(adj_pos)
-						adj_name = text2num(copytext(value, 1, adj_pos))
-						adj_value = text2num(copytext(value, adj_pos + 1))
-						adjust[adj_name] = adj_value
+						adj_value = text2num(copytext(value, 1, adj_pos))
+						adjust += adj_value
+						to_chat(world, "slot weight =[adj_value].")
 					else
-						WRITE_FILE(GLOB.config_error_log, "Incorrect round weight adjustment configuration definition: [adj_name] [adj_value].")
+						to_chat(world, "FUCK")
+						WRITE_FILE(GLOB.config_error_log, "Incorrect round weight adjustment configuration definition.")
 				if("protect_roles_from_antagonist")
 					protect_roles_from_antagonist	= 1
 				if("protect_assistant_from_antagonist")
@@ -953,8 +954,9 @@
 			var/recent_round = SSpersistence.saved_modes.Find(M.config_tag)
 			var/adjustment
 			while(recent_round)
+				to_chat(world, "Finding weight for mode [M.config_tag] at slot [recent_round], result is: [adjust[recent_round]].")
 				adjustment += adjust[recent_round]
-				recent_round = SSpersistence.saved_modes.Find(recent_round+1,M.config_tag)
+				recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
 			final_weight *= ((100-adjustment)/100)
 			runnable_modes[M] = final_weight
 			to_chat(world, "tag=[M.config_tag], prob inital=[probabilities[M.config_tag]], prob_final = [final_weight].")
