@@ -152,7 +152,6 @@
 			extinguishMob(H)
 		for(var/mob/living/silicon/robot/borgie in T.contents)
 			borgie.update_headlamp(TRUE, 150)
-			borgie.lamp_recharging = TRUE
 			borgie.lamp_intensity = 0
 		for(var/obj/machinery/camera/cam in T.contents)
 			cam.set_light(0)
