@@ -423,7 +423,7 @@ function auto_update($payload){
 	global $path_to_script;
 	global $repoOwnerAndName;
 	global $tracked_branch;
-	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script))
+	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script) || $payload['pull_request']['base']['ref'] != $tracked_branch)
 		return;
 	
 	$content = file_get_contents('https://raw.githubusercontent.com/' . $repoOwnerAndName . '/' . $tracked_branch . '/'. $path_to_script);
