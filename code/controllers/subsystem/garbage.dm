@@ -258,7 +258,7 @@ SUBSYSTEM_DEF(garbage)
 	var/slept_destroy = 0	//Number of times it's slept in its destroy
 
 /datum/qdel_item/New(mytype)
-	name = mytype
+	name = "[mytype]"
 
 
 // Should be treated as a replacement for the 'del' keyword.
