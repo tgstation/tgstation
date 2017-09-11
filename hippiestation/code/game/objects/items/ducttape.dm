@@ -6,6 +6,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.90
 	strip_delay = 10
+	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 	var/used = FALSE
 
 /obj/item/clothing/mask/hippie/tape/attack_hand(mob/user as mob)
