@@ -370,7 +370,7 @@
 	if(state == 0 && anchored)
 		to_chat(user, "The anchoring bolts are <i>wrenched</i> in place.\nThe mainentance panel has small holes for the <i>wiring</i>. Can additionally be named with a pen or have reinforced glass windows added.")
 	if(state == 1)
-		to_chat(user, "The maintenance panel's <i>wires</i> are aligned neatly.\nThere's an empty <i>circuit</i> slot with 'Electronics' written above it.")
+		to_chat(user, "The maintenance panel's <i>wires</i> are aligned neatly.\nThere's an empty <i>circuit</i> slot.")
 	if(state == 2)
 		to_chat(user, "The electronics circuit is <i>connected loosely</i> to its slot.\nThe maintenance panel has long <i>screws</i> sticking out.")
 
