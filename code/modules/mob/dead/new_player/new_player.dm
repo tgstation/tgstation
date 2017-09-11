@@ -408,6 +408,9 @@
 		if(job && IsJobAvailable(job.title))
 			available_job_count++;
 
+
+	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
+
 	if(length(SSjob.prioritized_jobs))
 		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"
 		var/amt = length(SSjob.prioritized_jobs)
