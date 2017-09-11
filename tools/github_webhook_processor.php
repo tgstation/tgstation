@@ -300,7 +300,7 @@ function handle_pr($payload) {
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
 		case 'opened':
-			if(!is_maintainer($payload))
+			if(!is_maintainer($payload, $payload['pull_request']['user']['login']))
 				tag_pr($payload, true);
 			if(get_pr_code_friendliness($payload) < 0){
 				$balances = pr_balances();
@@ -416,9 +416,8 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 	return $affecting;
 }
 
-function is_maintainer($payload){
+function is_maintainer($payload, $author){
 	global $maintainer_team_id;
-	$author = $payload['pull_request']['user']['login'];
 	$repo_is_org = $payload['pull_request']['base']['repo']['owner']['type'] == 'Organization';
 	if($maintainer_team_id == null || !$repo_is_org) {
 		$collaburl = $payload['pull_request']['base']['repo']['collaborators_url'] . '/' . $author . '/permissions';
@@ -439,10 +438,10 @@ function update_pr_balance($payload) {
 	global $trackPRBalance;
 	if(!$trackPRBalance)
 		return;
-	if(is_maintainer($payload))	//immune
+	$author = $payload['pull_request']['user']['login'];
+	if(is_maintainer($payload, $author))	//immune
 		return;
 	$balances = pr_balances();
-	$author = $payload['pull_request']['user']['login'];
 	if(!isset($balances[$author]))
 		$balances[$author] = $startingPRBalance;
 	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
