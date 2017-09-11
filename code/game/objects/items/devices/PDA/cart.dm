@@ -134,7 +134,7 @@
 	access = CART_REAGENT_SCANNER | CART_ATMOS
 
 /obj/item/cartridge/signal/Initialize()
-	..()
+	. = ..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
 
@@ -183,7 +183,7 @@
 	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
 
 /obj/item/cartridge/rd/Initialize()
-	..()
+	. = ..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/cartridge/captain
