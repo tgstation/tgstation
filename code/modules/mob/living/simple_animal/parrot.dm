@@ -295,7 +295,7 @@
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(!stat && M.a_intent == INTENT_HELP)
+	if(stat != DEAD && M.a_intent == INTENT_HELP)
 		handle_automated_speech(1) //assured speak/emote
 	return
 
@@ -733,7 +733,7 @@
 			visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
 			return held_item
 
-	to_chat(src, "<span class='warning'>There is nothing of interest to take!</spawn>")
+	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
 	return 0
 
 /mob/living/simple_animal/parrot/verb/drop_held_item_player()
@@ -944,7 +944,7 @@
 		speech_buffer = list()
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
-	var/json_file = file("data/npc_saves/Punpun.json")
+	var/json_file = file("data/npc_saves/Poly.json")
 	var/list/file_data = list()
 	if(islist(speech_buffer))
 		file_data["phrases"] = speech_buffer

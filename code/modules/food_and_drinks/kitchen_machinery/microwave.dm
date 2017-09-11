@@ -100,7 +100,7 @@
 			src.updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
-			to_chat(user, "<span class='warning'>You need more space cleaner!<span>")
+			to_chat(user, "<span class='warning'>You need more space cleaner!</span>")
 			return 1
 
 	else if(istype(O, /obj/item/soap/)) // If they're trying to clean it then let them
@@ -239,7 +239,7 @@
 				metal += O.materials[MAT_METAL]
 
 		if(metal)
-			visible_message("<span class='warning'>Sparks fly around [src]!")
+			visible_message("<span class='warning'>Sparks fly around [src]!</span>")
 			if(prob(max(metal/2, 33)))
 				explosion(loc,0,1,2)
 			broke()

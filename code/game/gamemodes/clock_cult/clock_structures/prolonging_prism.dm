@@ -126,7 +126,7 @@
 			if(!hex_combo)
 				hex_combo = mutable_appearance('icons/effects/64x64.dmi', n, RIPPLE_LAYER)
 			else
-				hex_combo.overlays += mutable_appearance('icons/effects/64x64.dmi', n, RIPPLE_LAYER)
+				hex_combo.add_overlay(mutable_appearance('icons/effects/64x64.dmi', n, RIPPLE_LAYER))
 	if(hex_combo) //YOU BUILT A HEXAGON
 		hex_combo.pixel_x = -16
 		hex_combo.pixel_y = -16

@@ -819,8 +819,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	GLOB.observer_default_invisibility = amount
 
 /mob/dead/observer/proc/open_spawners_menu()
-	set name = "Mob spawners menu"
-	set desc = "See all currently available ghost spawners"
+	set name = "Spawners Menu"
+	set desc = "See all currently available spawners"
 	set category = "Ghost"
 	if(!spawners_menu)
 		spawners_menu = new(src)

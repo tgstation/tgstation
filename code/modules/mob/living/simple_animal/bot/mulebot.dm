@@ -650,7 +650,7 @@
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
 	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
-					"<span class='userdanger'>[src] drives over you!<span>")
+					"<span class='userdanger'>[src] drives over you!</span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)

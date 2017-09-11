@@ -260,7 +260,7 @@
 	// The direction the shuttle prefers to travel in
 	var/preferred_direction = NORTH
 	// And the angle from the front of the shuttle to the port
-	var/port_angle = 0 // used to be travelDir
+	var/port_direction = NORTH
 
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
@@ -570,7 +570,7 @@
 			move_mode = moving_atom.beforeShuttleMove(newT, rotation, move_mode)							//atoms
 
 		move_mode = oldT.fromShuttleMove(newT, underlying_turf_type, baseturf_cache, move_mode)	//turfs
-		move_mode = newT.toShuttleMove(oldT, dir, move_mode)												//turfs
+		move_mode = newT.toShuttleMove(oldT, move_mode , src)												//turfs
 
 		if(move_mode & MOVE_AREA)
 			areas_to_move[old_area] = TRUE

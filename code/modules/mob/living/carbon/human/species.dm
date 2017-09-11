@@ -946,7 +946,7 @@
 
 					if(prob(15))
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
-							to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...<span>")
+							to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
 							addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 				if(75 to 100)
@@ -1230,7 +1230,6 @@
 
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
-	H.damage_clothes(I.force, I.damtype, "melee", affecting.body_zone)
 
 	H.send_item_attack_message(I, user, hit_area)
 

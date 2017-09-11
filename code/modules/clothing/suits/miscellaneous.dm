@@ -280,6 +280,7 @@
 	body_parts_covered = HEAD
 	flags_1 = THICKMATERIAL_1
 	flags_inv = HIDEHAIR|HIDEEARS
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
 	name = "bloated human suit"
@@ -439,6 +440,14 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
+
+/obj/item/clothing/suit/nemes
+	name = "pharoah tunic"
+	desc = "Lavish space tomb not included."
+	icon_state = "pharoah"
+	icon_state = "pharoah"
+	body_parts_covered = CHEST|GROIN
+
 
 
 // WINTER COATS
