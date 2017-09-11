@@ -135,7 +135,7 @@
 					if(L.reagents.total_volume >= L.reagents.maximum_volume)
 						return
 					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!", \
-									"<span class='userdanger'>[user] injects [L] with the syringe!")
+									"<span class='userdanger'>[user] injects [L] with the syringe!</span>")
 
 				var/list/rinject = list()
 				for(var/datum/reagent/R in reagents.reagent_list)

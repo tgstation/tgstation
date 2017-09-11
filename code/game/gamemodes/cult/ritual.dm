@@ -258,7 +258,7 @@ This file contains the arcane tome files.
 		return FALSE
 
 	if(T.z != ZLEVEL_STATION && T.z != ZLEVEL_MINING)
-		to_chat(user, "<span class='warning'>The veil is not weak enough here.")
+		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 		return FALSE
 
 	return TRUE
