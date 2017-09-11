@@ -241,7 +241,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/CollectRoundtype()
 	saved_modes[3] = saved_modes[2]
 	saved_modes[2] = saved_modes[1]
-	saved_modes[1] = SSticker.mode
+	saved_modes[1] = SSticker.mode.config_tag
 	var/json_file = file("data/RecentModes.json")
 	var/list/file_data = list()
 	file_data["data"] = saved_modes

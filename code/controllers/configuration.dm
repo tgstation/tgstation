@@ -126,6 +126,7 @@
 	var/list/probabilities = list()		// relative probability of each mode
 	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
 	var/list/max_pop = list()
+	var/list/adjust = list() 			// weight adjustments for recent modes
 
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
@@ -689,7 +690,17 @@
 							WRITE_FILE(GLOB.config_error_log, "Unknown game mode probability configuration definition: [prob_name].")
 					else
 						WRITE_FILE(GLOB.config_error_log, "Incorrect probability configuration definition: [prob_name]  [prob_value].")
+				if("adjust")
+					var/adj_pos = findtext(value, " ")
+					var/adj_name = null
+					var/adj_value = null
 
+					if(adj_pos)
+						adj_name = text2num(copytext(value, 1, adj_pos))
+						adj_value = text2num(copytext(value, adj_pos + 1))
+						adjust[adj_name] = adj_value
+					else
+						WRITE_FILE(GLOB.config_error_log, "Incorrect round weight adjustment configuration definition: [adj_name] [adj_value].")
 				if("protect_roles_from_antagonist")
 					protect_roles_from_antagonist	= 1
 				if("protect_assistant_from_antagonist")
@@ -938,11 +949,15 @@
 		if(max_pop[M.config_tag])
 			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
-			var/adjusted_weight = probabilities[M.config_tag]
-			var/textmode = "[M]"
-			if(SSpersistence.saved_modes.Find(textmode))
-				adjusted_weight *= (sqrt(SSpersistence.saved_modes.Find(textmode)) * 0.5)
-			runnable_modes[M] = adjusted_weight
+			var/final_weight = probabilities[M.config_tag]
+			var/recent_round = SSpersistence.saved_modes.Find(M.config_tag)
+			var/adjustment
+			while(recent_round)
+				adjustment += adjust[recent_round]
+				recent_round = SSpersistence.saved_modes.Find(recent_round+1,M.config_tag)
+			final_weight *= ((100-adjustment)/100)
+			runnable_modes[M] = final_weight
+			to_chat(world, "tag=[M.config_tag], prob inital=[probabilities[M.config_tag]], prob_final = [final_weight].")
 	return runnable_modes
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)
