@@ -154,7 +154,7 @@
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled()
 	deltimer(timerid)
-	timerid = addtimer(CALLBACK(src, .proc/trip), 7, TIMER_STOPPABLE)
+	timerid = addtimer(CALLBACK(src, .proc/tripanim), 7, TIMER_STOPPABLE)
 
 /obj/effect/temp_visual/goliath_tentacle/original/Initialize(mapload, new_spawner)
 	. = ..()
@@ -165,9 +165,12 @@
 		if(T)
 			new /obj/effect/temp_visual/goliath_tentacle(T, spawner)
 
-/obj/effect/temp_visual/goliath_tentacle/proc/trip()
+/obj/effect/temp_visual/goliath_tentacle/proc/tripanim()
 	icon_state = "Goliath_tentacle_wiggle"
-	sleep(3)
+	deltimer(timerid)
+	timerid = addtimer(CALLBACK(src, .proc/trip), 3, TIMER_STOPPABLE)
+
+/obj/effect/temp_visual/goliath_tentacle/proc/trip()
 	var/latched = FALSE
 	for(var/mob/living/L in loc)
 		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
@@ -177,9 +180,12 @@
 		L.adjustBruteLoss(rand(10,15))
 		latched = TRUE
 	if(!latched)
-		icon_state = "Goliath_tentacle_retract"
-		timerid = QDEL_IN(src, 7)
+		retract()
 	else
-		sleep(100)
-		icon_state = "Goliath_tentacle_retract"
-		timerid = QDEL_IN(src, 7)
+		deltimer(timerid)
+		timerid = addtimer(CALLBACK(src, .proc/retract), 10, TIMER_STOPPABLE)
+
+/obj/effect/temp_visual/goliath_tentacle/proc/retract()
+	icon_state = "Goliath_tentacle_retract"
+	deltimer(timerid)
+	timerid = QDEL_IN(src, 7)
