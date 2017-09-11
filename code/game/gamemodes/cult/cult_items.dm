@@ -179,7 +179,7 @@
 	if(istype(target, /obj/structure/constructshell) && shards.len)
 		var/obj/item/device/soulstone/SS = shards[1]
 		if(SS.transfer_soul("CONSTRUCT",target,user))
-			shards -= SS
+			shards.Cut(1,2)
 			qdel(SS)
 
 /datum/action/innate/cult/dash
