@@ -250,7 +250,7 @@
 	assignedrole = "Translocated Vet"
 
 /obj/effect/mob_spawn/human/doctor/alive/lavaland/Destroy()
-	var/obj/structure/fluff/empty_sleeper/S = new(get_turf(src))
+	var/obj/structure/fluff/empty_sleeper/S = new(drop_location())
 	S.setDir(dir)
 	return ..()
 
