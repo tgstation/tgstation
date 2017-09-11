@@ -931,12 +931,13 @@ GLOBAL_LIST_INIT(human_dummy_list, list())	//Dummy mob = In use (TRUE/FALSE)
 /proc/generate_or_wait_for_human_dummy(slotkey)
 	if(!slotkey)
 		return new /mob/living/carbon/human/dummy
+	var/mob/living/carbon/human/dummy/D
 	if(!GLOB.human_dummy_list[slotkey])
-		var/mob/living/carbon/human/dummy/D = new
+		D = new
 		GLOB.human_dummy_list[slotkey] = D
  	else
-		var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotkey]
-		UNTIL(!D.in_use)
+		D = GLOB.human_dummy_list[slotkey]
+	UNTIL(!D.in_use)
 	D.in_use = TRUE
 	return D
 
