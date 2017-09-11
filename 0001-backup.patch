@@ -1,0 +1,82 @@
+From 89df0fabfd779c67937202e6fd2fff274445e564 Mon Sep 17 00:00:00 2001
+From: Armhulen <hugohenrythompson@gmail.com>
+Date: Sun, 10 Sep 2017 19:58:16 -0700
+Subject: [PATCH] backup
+
+---
+ .../mob/living/simple_animal/hostile/giant_spider.dm     | 16 ++++++----------
+ tgstation.dme                                            | 10 +++++-----
+ 2 files changed, 11 insertions(+), 15 deletions(-)
+
+diff --git a/code/modules/mob/living/simple_animal/hostile/giant_spider.dm b/code/modules/mob/living/simple_animal/hostile/giant_spider.dm
+index d3012177a3..ecc53139fc 100644
+--- a/code/modules/mob/living/simple_animal/hostile/giant_spider.dm
++++ b/code/modules/mob/living/simple_animal/hostile/giant_spider.dm
+@@ -118,19 +118,19 @@
+ 	poison_type = "venom" //will soon after if there isn't medical attention!
+ 	speed = 4
+ 
+-//tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
++//tarantulas are really tanky, moves fast on webs but slower than a normal guard off of webs.
+ /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
+ 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes."
+ 	icon_state = "guard"
+ 	icon_living = "guard"
+ 	icon_dead = "guard_dead"
+-	maxHealth = 400 // woah nelly
+-	health = 400
+-	melee_damage_lower = 35
+-	melee_damage_upper = 40
++	maxHealth = 300 // woah nelly
++	health = 300
++	melee_damage_lower = 30
++	melee_damage_upper = 30
+ 	poison_per_bite = 0
+ 	move_to_delay = 8
+-	speed = 3
++	speed = 7 //changing this to be fast on webs.
+ 	status_flags = NONE
+ 	mob_size = MOB_SIZE_LARGE
+ 
+@@ -346,10 +346,6 @@
+ 	..()
+ 	GLOB.spidermobs += src
+ 
+-/mob/living/simple_animal/hostile/poison/giant_spider/Logout(GLOB.spidermobs)
+-	..()
+-	GLOB.spidermobs -= src
+-
+ /datum/action/innate/spider/comm
+ 	name = "Command"
+ 	button_icon_state = "cult_comms"
+diff --git a/tgstation.dme b/tgstation.dme
+index 1ec043a20f..91671e3112 100755
+--- a/tgstation.dme
++++ b/tgstation.dme
+@@ -13,7 +13,7 @@
+ // END_PREFERENCES
+ 
+ // BEGIN_INCLUDE
+-#include "_maps\basemap.dm"
++#include "_maps\runtimestation.dm"
+ #include "code\_compile_options.dm"
+ #include "code\world.dm"
+ #include "code\__DATASTRUCTURES\globals.dm"
+@@ -689,10 +689,10 @@
+ #include "code\game\objects\effects\decals\decal.dm"
+ #include "code\game\objects\effects\decals\misc.dm"
+ #include "code\game\objects\effects\decals\remains.dm"
+-#include "code\game\objects\effects\decals\cleanable\aliens.dm"
+-#include "code\game\objects\effects\decals\cleanable\humans.dm"
+-#include "code\game\objects\effects\decals\cleanable\misc.dm"
+-#include "code\game\objects\effects\decals\cleanable\robots.dm"
++#include "code\game\objects\effects\decals\Cleanable\aliens.dm"
++#include "code\game\objects\effects\decals\Cleanable\humans.dm"
++#include "code\game\objects\effects\decals\Cleanable\misc.dm"
++#include "code\game\objects\effects\decals\Cleanable\robots.dm"
+ #include "code\game\objects\effects\effect_system\effect_system.dm"
+ #include "code\game\objects\effects\effect_system\effects_explosion.dm"
+ #include "code\game\objects\effects\effect_system\effects_foam.dm"
+-- 
+2.11.0.windows.3
+
