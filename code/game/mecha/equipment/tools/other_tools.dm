@@ -94,10 +94,12 @@
 				send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 			else if(target!=locked)
 				if(locked in view(chassis))
+					var/turf/targ = get_turf(target)
+					var/turf/orig = get_turf(locked)
 					locked.throw_at(target, 14, 1.5)
 					locked = null
 					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
-					log_game("[key_name(chassis.occupant)] used a Gravitational Catapult to throw [locked]([COORD(get_turf(locked))]) at [target]([COORD(get_turf(target))]).")
+					log_game("[key_name(chassis.occupant)] used a Gravitational Catapult to throw [locked]([COORD(orig)]) at [target]([COORD(targ)]).")
 					return TRUE
 				else
 					locked = null
@@ -117,7 +119,7 @@
 						step_away(A,target)
 						sleep(2)
 			var/turf/T = get_turf(target)
-			log_game("[key_name(chassis.occupant)] used a Gravitational Catapult repulse wave on ([T.x],[T.y],[T.z])")
+			log_game("[key_name(chassis.occupant)] used a Gravitational Catapult repulse wave on ([COORD(T)])")
 			return TRUE
 
 
