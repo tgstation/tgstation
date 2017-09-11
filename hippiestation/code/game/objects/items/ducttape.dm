@@ -57,6 +57,17 @@
 
 /obj/item/stack/ducttape/afterattack(atom/W, mob/user as mob, proximity_flag)
 	if(!proximity_flag) return //It should only work on adjacent target.
+	if(istype(W, /obj/item/storage/bag/tray))
+		var/obj/item/shield/trayshield/new_item = new(user.loc)
+		to_chat(user, "<span class='notice'>You strap [src] to \the [W].</span>")
+		var/replace = (user.get_inactive_held_item()==W)
+		qdel(W)
+		if(src.use(3) == 0)
+			user.drop_item()
+			qdel(src)
+		if(replace)
+			user.put_in_hands(new_item)
+		playsound(user, 'hippiestation/sound/misc/ducttape1.ogg', 50, 1)
 	if(ishuman(W) && (user.zone_selected == "mouth"))
 		var/mob/living/carbon/human/H = W
 		if( \
