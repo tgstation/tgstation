@@ -1,5 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "People in soft crit will take oxyloss more slowly than people in full crit if they remain still."
-  - rscadd: "People dragging themselves in critical condition will now leave blood trails. This will rapidly deal oxyloss to you."

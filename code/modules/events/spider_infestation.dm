@@ -22,7 +22,7 @@
 /datum/round_event/spider_infestation/start()
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in world)
-		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
+		if((temp_vent.loc.z in GLOB.station_z_levels) && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
 			if(temp_vent_parent.other_atmosmch.len > 20)
 				vents += temp_vent

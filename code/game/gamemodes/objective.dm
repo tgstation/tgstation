@@ -152,7 +152,7 @@
 	if(!target || !considered_alive(target) || considered_afk(target))
 		return TRUE
 	var/turf/T = get_turf(target.current)
-	return T && T.z > ZLEVEL_STATION
+	return T && !(T.z in GLOB.station_z_levels)
 
 /datum/objective/mutiny/update_explanation_text()
 	..()

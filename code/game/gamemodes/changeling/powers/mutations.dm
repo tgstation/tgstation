@@ -247,7 +247,7 @@
 
 
 /obj/item/gun/magic/tentacle/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	to_chat(user, "<span class='warning'>The [name] is not ready yet.<span>")
+	to_chat(user, "<span class='warning'>The [name] is not ready yet.</span>")
 
 /obj/item/gun/magic/tentacle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] coils [src] tightly around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -343,10 +343,10 @@
 								on_hit(I) //grab the item as if you had hit it directly with the tentacle
 								return 1
 							else
-								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off [C]'s hands!<span>")
+								to_chat(firer, "<span class='danger'>You can't seem to pry [I] off [C]'s hands!</span>")
 								return 0
 						else
-							to_chat(firer, "<span class='danger'>[C] has nothing in hand to disarm!<span>")
+							to_chat(firer, "<span class='danger'>[C] has nothing in hand to disarm!</span>")
 							return 0
 
 					if(INTENT_GRAB)
