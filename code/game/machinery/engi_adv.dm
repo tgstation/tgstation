@@ -6,7 +6,7 @@
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb0"
 	density = TRUE
-	use_power = 0
+	use_power = FALSE
 
 	var/timer_set = 90
 	var/ui_style = "nanotrasen"
@@ -36,7 +36,7 @@
 /obj/machinery/construction_nuke/examine(mob/user)
 	. = ..()
 	if(timing)
-		to_chat(user, "There are [get_time_left()] seconds until detonation.")
+		to_chat(user, "<span class='notice'>There are [get_time_left()] seconds until detonation.</span>")
 
 /obj/machinery/construction_nuke/update_icon()
 	. = ..()
@@ -102,14 +102,14 @@
 	updateUsrDialog()
 
 
-/obj/machinery/construction_nuke/proc/set_payload()
+/obj/machinery/construction_nuke/proc/set_payload(mob/user)
 	playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
 	if(timing || bomb_set)
 		to_chat(usr, "<span class='danger'>Error: Payload cannot be altered while the device is armed.</span>")
 		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
 	payload = input(usr, "Choose your Payload", "Payload:") as null|anything in possible_payloads
-	if (QDELETED(src) && Adjacent(usr))
+	if (QDELETED(src) || !Adjacent(usr))
 		return
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
 	switch(payload)
@@ -148,7 +148,7 @@
 /obj/machinery/construction_nuke/proc/set_timer()
 	playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
 	timer_set = input("Set timer in seconds:", name, timer_set)
-	if (QDELETED(src) && Adjacent(usr))
+	if (QDELETED(src) || !Adjacent(usr))
 		return
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
 	timer_set = Clamp(timer_set, 90, 300)
@@ -220,8 +220,7 @@
 		return
 	exploding = TRUE
 	update_icon()
-	for(var/mob/M in GLOB.player_list)
-		M.playsound_local(get_turf(M), 'sound/machines/Alarm.ogg', 100, FALSE, pressure_affected = FALSE)
+	sound_to_playing_players('sound/machines/Alarm.ogg')
 	addtimer(CALLBACK(src, .proc/boom), 100, TIMER_CLIENT_TIME)
 
 /obj/machinery/construction_nuke/proc/boom()
