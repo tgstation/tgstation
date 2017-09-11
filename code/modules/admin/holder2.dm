@@ -1,6 +1,9 @@
 GLOBAL_LIST_EMPTY(admin_datums)
 GLOBAL_PROTECT(admin_datums)
 
+GLOBAL_VAR_INIT(href_token, GenerateToken())
+GLOBAL_PROTECT(href_token)
+
 /datum/admins
 	var/datum/admin_rank/rank
 
@@ -16,6 +19,7 @@ GLOBAL_PROTECT(admin_datums)
 	var/datum/newscaster/wanted_message/admincaster_wanted_message = new /datum/newscaster/wanted_message
 	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
 	var/admin_signature
+	var/href_token
 
 /datum/admins/New(datum/admin_rank/R, ckey)
 	if(!ckey)
@@ -28,7 +32,24 @@ GLOBAL_PROTECT(admin_datums)
 		return
 	rank = R
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
+	href_token = GenerateToken()
 	GLOB.admin_datums[ckey] = src
+
+/proc/GenerateToken()
+	. = ""
+	for(var/I in 1 to 32)
+		. += "[rand(10)]"
+
+/proc/HrefToken(forceGlobal = FALSE)
+	var/tok = GLOB.href_token
+	if(!forceGlobal && usr)
+		var/client/C = usr.client
+		if(!C)
+			CRASH("No client for HrefToken()!")
+		var/datum/admins/holder = C.holder
+		if(holder)
+			tok = holder.href_token
+	return "admin_token=[tok]"
 
 /datum/admins/proc/associate(client/C)
 	if(IsAdminAdvancedProcCall())

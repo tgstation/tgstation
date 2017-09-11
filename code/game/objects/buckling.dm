@@ -62,7 +62,7 @@
 	M.setDir(dir)
 	buckled_mobs |= M
 	M.update_canmove()
-	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled, new_master = src)
+	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
 	post_buckle_mob(M)
 
 	return TRUE
@@ -131,5 +131,3 @@
 				"<span class='italics'>You hear metal clanking.</span>")
 		add_fingerprint(user)
 	return M
-
-
