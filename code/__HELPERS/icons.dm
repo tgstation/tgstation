@@ -934,7 +934,7 @@ GLOBAL_LIST_INIT(human_dummy_list, list())	//Dummy mob = In use (TRUE/FALSE)
 	if(!GLOB.human_dummy_list[slotkey])
 		var/mob/living/carbon/human/dummy/D = new
 		GLOB.human_dummy_list[slotkey] = D
-	else
+ 	else
 		var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotkey]
 		UNTIL(!D.in_use)
 	D.in_use = TRUE
@@ -979,15 +979,11 @@ GLOBAL_LIST_INIT(human_dummy_list, list())	//Dummy mob = In use (TRUE/FALSE)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=EAST)
 
-		qdel(body)
-
 		humanoid_icon_cache[icon_id] = out_icon
-		unset_busy_human_dummy(dummy_key)
+		dummy_key? unset_busy_human_dummy(dummy_key) : qdel(body)
 		return out_icon
 	else
-		unset_busy_human_dummy(dummy_key)
 		return humanoid_icon_cache[icon_id]
-
 
 //Hook, override to run code on- wait this is images
 //Images have dir without being an atom, so they get their own definition.
