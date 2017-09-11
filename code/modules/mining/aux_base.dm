@@ -86,7 +86,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 
 	if(href_list["move"])
-		if(!(z in GLOB.station_z_levels && shuttleId == "colony_drop"))
+		if(!(z in GLOB.station_z_levels) && shuttleId == "colony_drop"))
 			to_chat(usr, "<span class='warning'>You can't move the base again!</span>")
 			return
 		var/shuttle_error = SSshuttle.moveShuttle(shuttleId, href_list["move"], 1)
