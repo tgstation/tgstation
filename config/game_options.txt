@@ -97,7 +97,7 @@ PROBABILITY DEVIL_AGENTS 0
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
 
-## Percent weight changes for three of the most recent modes where the top figure is the most recent.
+## Percent weight reductions for three of the most recent modes where the top figure is the most recent.
 
 ADJUST 45
 ADJUST 30
