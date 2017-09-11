@@ -78,8 +78,8 @@
 	w_class = WEIGHT_CLASS_HUGE
 	block_chance = 50
 	throwforce = 20
-	force = 40
-	armour_penetration = 30
+	force = 35
+	armour_penetration = 45
 	throw_speed = 1
 	throw_range = 3
 	sharpness = IS_SHARP
@@ -94,12 +94,12 @@
 	inhand_y_dimension = 64
 	actions_types = list()
 	flags_2 = SLOWS_WHILE_IN_HAND_2
-	var/datum/action/innate/spin2win/linked_action
+	var/datum/action/innate/cult/dash/jaunt
+	var/datum/action/innate/cult/spin2win/linked_action
 	var/spinning = FALSE
-	var/dash_toggled = FALSE
-	var/charges = 1
-	var/charge_rate = 250
+	var/spin_cooldown = 250
 	var/list/shards = list()
+	var/dash_toggled = TRUE
 
 /obj/item/twohanded/required/cult_bastard/Initialize()
 	. = ..()
@@ -131,6 +131,8 @@
 			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
 			user.Knockdown(50)
 			return
+	jaunt = new(user)
+	jaunt.Grant(user, src)
 	linked_action = new(user)
 	linked_action.Grant(user, src)
 	user.update_icons()
@@ -138,6 +140,7 @@
 /obj/item/twohanded/required/cult_bastard/dropped(mob/user)
 	. = ..()
 	linked_action.Remove(user)
+	jaunt.Remove(user)
 	user.update_icons()
 
 /obj/item/twohanded/required/cult_bastard/IsReflect()
@@ -161,8 +164,8 @@
 
 /obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
-	if(dash_toggled && charges)
-		dash(user, target)
+	if(dash_toggled && jaunt.IsAvailable())
+		jaunt.Teleport(user, target)
 		return
 	if(!proximity)
 		return
@@ -179,19 +182,31 @@
 			shards -= SS
 			qdel(SS)
 
-/obj/item/twohanded/required/cult_bastard/proc/charge()
-	charges = Clamp(charges + 1, 0, 1)
-	playsound(src, 'sound/magic/exit_blood.ogg', 25, 1)
-	if(istype(loc, /mob/living))
-		to_chat(loc, "<span class='cultitalic'>[src] is ready for another blood jaunt.</span>")
+/datum/action/innate/cult/dash
+	name = "Rend the Veil"
+	desc = "Use the sword to shear open the flimsy fabric of this reality and teleport to your target."
+	button_icon_state = "phaseshift"
+	var/charged = TRUE
+	var/charge_rate = 250
+	var/cooldown = 0
+	var/mob/living/carbon/human/holder
+	var/obj/item/twohanded/required/cult_bastard/sword
 
-/obj/item/twohanded/required/cult_bastard/proc/dash(mob/user, atom/target)
-	if(!charges)
-		return
-	if(isliving(target))
-		return
-	if(target.density)
-		return
+/datum/action/innate/cult/dash/Grant(mob/user, obj/bastard)
+	. = ..()
+	sword = bastard
+	holder = user
+
+/datum/action/innate/cult/dash/IsAvailable()
+	if(iscultist(holder) && charged)
+		return TRUE
+	else
+		return FALSE
+
+/datum/action/innate/cult/dash/proc/Activate()
+	sword.attack_self(holder)
+
+/datum/action/innate/cult/dash/proc/Teleport(mob/user, atom/target)
 	var/turf/T = get_turf(target)
 	if(target in view(user.client.view, get_turf(user)))
 		var/obj/spot1 = new /obj/effect/temp_visual/dir_setting/cult/phase/out(get_turf(user), user.dir)
@@ -199,11 +214,16 @@
 		playsound(T, 'sound/magic/enter_blood.ogg', 25, 1)
 		var/obj/spot2 = new /obj/effect/temp_visual/dir_setting/cult/phase(get_turf(user), user.dir)
 		spot1.Beam(spot2,"sendbeam",time=20)
-		charges = Clamp(charges - 1, 0, 1)
+		charged = FALSE
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)
 
+/datum/action/innate/cult/dash/proc/charge()
+	charged = TRUE
+	playsound(sword, 'sound/magic/exit_blood.ogg', 50, 1)
+	to_chat(holder, "<span class='cultitalic'>The sword is ready for another blood jaunt.</span>")
 
-/datum/action/innate/spin2win
+
+/datum/action/innate/cult/spin2win
 	name = "Geometer's Fury"
 	desc = "You draw on the power of the sword's ancient runes, spinning it wildly around you as you become immune to most attacks."
 	background_icon_state = "bg_demon"
@@ -212,19 +232,19 @@
 	var/mob/living/carbon/human/holder
 	var/obj/item/twohanded/required/cult_bastard/sword
 
-/datum/action/innate/spin2win/Grant(mob/user, obj/bastard)
+/datum/action/innate/cult/spin2win/Grant(mob/user, obj/bastard)
 	. = ..()
 	sword = bastard
 	holder = user
 
-/datum/action/innate/spin2win/IsAvailable()
+/datum/action/innate/cult/spin2win/IsAvailable()
 	if(iscultist(holder) && cooldown <= world.time)
 		return TRUE
 	else
 		return FALSE
 
-/datum/action/innate/spin2win/Activate()
-	cooldown = world.time + 250
+/datum/action/innate/cult/spin2win/Activate()
+	cooldown = world.time + sword.spin_cooldown
 	holder.changeNext_move(50)
 	holder.apply_status_effect(/datum/status_effect/sword_spin)
 	sword.spinning = TRUE
@@ -233,11 +253,11 @@
 	addtimer(CALLBACK(src, .proc/stop_spinning), 50)
 	holder.update_action_buttons_icon()
 
-/datum/action/innate/spin2win/proc/stop_spinning()
+/datum/action/innate/cult/spin2win/proc/stop_spinning()
 	sword.spinning = FALSE
 	sword.block_chance = 50
 	sword.slowdown -= 1.5
-	sleep(200)
+	sleep(sword.spin_cooldown)
 	holder.update_action_buttons_icon()
 
 /obj/item/restraints/legcuffs/bola/cult
