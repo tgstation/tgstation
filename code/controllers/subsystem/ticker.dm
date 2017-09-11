@@ -68,7 +68,9 @@ SUBSYSTEM_DEF(ticker)
 	load_mode()
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
-	login_music = pick(music) - old_login_music
+	if(music.len > 1)
+		music -= old_login_music
+	login_music = pick(music)
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
