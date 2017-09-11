@@ -260,10 +260,9 @@ function check_ready_for_review($payload, $labels){
 
 	$reviews_ids_with_changes_requested = array();
 
-	foreach($reviews as $R){
-		if($R['state'] == 'CHANGES_REQUESTED' && isset($R['author_association']) && ($R['author_association'] == 'MEMBER' || $R['author_association'] == 'CONTRIBUTOR' || $R['author_association'] == 'OWNER'))
+	foreach($reviews as $R)
+		if($R['state'] == 'CHANGES_REQUESTED' && is_maintainer($payload, $R['user']['login']))
 			$reviews_ids_with_changes_requested[] = $R['id'];
-	}
 
 	if(count($reviews_ids_with_changes_requested) == 0){
 		if($has_label_already)
