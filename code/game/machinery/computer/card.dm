@@ -208,6 +208,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						if(job in SSjob.prioritized_jobs)
 							dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Deprioritize</a>"
 						else
+							if(SSjob.prioritized_jobs.len < 5)
 								dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Prioritize</a>"
 							else
 								dat += "Denied"
@@ -529,6 +530,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				if(j in SSjob.prioritized_jobs)
 					SSjob.prioritized_jobs -= j
 					priority = FALSE
+				else if(j.total_positions <= j.current_positions)
 					to_chat(usr, "<span class='notice'>[j.title] has had all positions filled. Open up more slots before prioritizing it.</span>")
 					return
 				else

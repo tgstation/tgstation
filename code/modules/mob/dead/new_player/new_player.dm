@@ -410,6 +410,8 @@
 
 
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
+		if(prioritized_job.current_positions >= prioritized_job.total_positions)
+			SSjob.prioritized_jobs -= prioritized_job
 
 	if(length(SSjob.prioritized_jobs))
 		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"
