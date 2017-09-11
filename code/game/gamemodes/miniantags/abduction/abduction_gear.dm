@@ -548,12 +548,20 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	origin_tech = "materials=2;biotech=2;abductor=2"
 	toolspeed = 0.25
 
+/obj/item/scalpel/alien/augment
+	name = "alien toolarm scalpel"
+	desc = "Gleaming sharp knife made out of silvery-green metal attached directly to your bone for extra-accuracy."
+
 /obj/item/hemostat/alien
 	name = "alien hemostat"
 	desc = "You've never seen this before."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 	toolspeed = 0.25
+
+/obj/item/hemostat/alien/augment
+	name = "alien toolarm hemostat"
+	desc = "Tiny servos power a pair of pincers to stop bleeding with automatic pressure control."
 
 /obj/item/retractor/alien
 	name = "alien retractor"
@@ -562,12 +570,20 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	origin_tech = "materials=2;biotech=2;abductor=2"
 	toolspeed = 0.25
 
+/obj/item/retractor/alien/augment
+	name = "alien toolarm retractor"
+	desc = "Femto-or-less-mechanical manipulator for retracting stuff."
+
 /obj/item/circular_saw/alien
 	name = "alien saw"
 	desc = "Do the aliens also lose this, and need to find an alien hatchet?"
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 	toolspeed = 0.25
+
+/obj/item/circular_saw/alien/augment
+	name = "alien toolarm saw"
+	desc = "A small but very fast spinning saw. And it's not vibrating at all!"
 
 /obj/item/surgicaldrill/alien
 	name = "alien drill"
@@ -576,6 +592,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	origin_tech = "materials=2;biotech=2;abductor=2"
 	toolspeed = 0.25
 
+/obj/item/surgicaldrill/alien/augment
+	name = "alien toolarm drill"
+	desc = "We do not know what purpose alien surgeons found for the drill. But they made it a really fast one."
+
 /obj/item/cautery/alien
 	name = "alien cautery"
 	desc = "Why would bloodless aliens have a tool to stop bleeding? \
@@ -583,6 +603,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 	toolspeed = 0.25
+
+/obj/item/cautery/alien/augment
+	name = "alien toolarm cautery"
+	desc = "May be it was originally a laser gun for alien surgeons self-protection. But we can use it only to cauter wounds."
 
 /obj/item/clothing/head/helmet/abductor
 	name = "agent headgear"
