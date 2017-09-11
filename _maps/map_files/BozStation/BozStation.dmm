@@ -18999,6 +18999,7 @@
 /area/hallway/primary/central)
 "aPC" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/geoscape,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aPD" = (
