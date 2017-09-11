@@ -355,7 +355,7 @@
 		else
 			user.listed_turf = T
 			user.client.statpanel = T.name
-	user.Stat() //responsive ui pls
+	//user.Stat() //this doesn't work, don't try it
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)
