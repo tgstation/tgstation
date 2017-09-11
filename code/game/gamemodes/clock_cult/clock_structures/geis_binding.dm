@@ -23,10 +23,10 @@
 
 /obj/structure/destructible/clockwork/geis_binding/Initialize(mapload, obj/item/clockwork/slab/the_slab)
 	. = ..()
-	START_PROCESSING(SSprocessing, src)
+	//START_PROCESSING(SSprocessing, src)
 
 /obj/structure/destructible/clockwork/geis_binding/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
+	//STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
 /obj/structure/destructible/clockwork/geis_binding/examine(mob/user)
