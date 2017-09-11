@@ -563,9 +563,6 @@
 	..()
 
 
-<<<<<<< HEAD
-
-=======
 /obj/item/jacobs_ladder
 	name = "jacob's ladder"
 	desc = "A celestial ladder that violates the laws of physics."
@@ -587,7 +584,6 @@
 	name = "jacob's ladder"
 	desc = "An indestructible celestial ladder that violates the laws of physics."
 	auto_connect = TRUE
->>>>>>> 7c553c6d80... Span
 
 ///Bosses
 
