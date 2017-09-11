@@ -118,5 +118,13 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
+/obj/structure/ladder/unbreakable/singularity_pull()
+	return
+
 /obj/structure/ladder/auto_connect //They will connect to ladders with the same X and Y without needing to share an ID
 	auto_connect = TRUE
+
+
+/obj/structure/ladder/singularity_pull()
+	visible_message("<span class='danger'>[src] is torn to pieces by the gravitational pull!</span>")
+	qdel(src)
