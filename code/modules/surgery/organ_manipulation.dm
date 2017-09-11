@@ -70,6 +70,10 @@
 		if(target_zone != I.zone || target.getorganslot(I.slot))
 			to_chat(user, "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
+		var/obj/item/bodypart/aug = target.get_bodypart(target_zone)
+		if(I.require_limb_augment && aug.status != BODYPART_ROBOTIC)
+			to_chat(user, "<span class='notice'>[I] require augmented [parse_zone(target_zone)]!</span>")
+			return -1
 
 		user.visible_message("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].",
 			"<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>")
