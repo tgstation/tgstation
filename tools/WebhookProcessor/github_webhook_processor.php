@@ -20,27 +20,6 @@
 
 require_once 'secret.php';
 
-$enable_live_tracking = true;	//auto update this file from the repository
-$path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
-
-$trackPRBalance = true;	//set this to false to disable PR balance tracking
-$prBalanceJson = '';	//Set this to the path you'd like the writable pr balance file to be stored, not setting it writes it to the working directory
-$startingPRBalance = 3;	//Starting balance for never before seen users
-//team 133041: tgstation/commit-access
-$maintainer_team_id = 133041;	//org team id that is exempt from PR balance system, setting this to null will use anyone with write access to the repo. Get from https://api.github.com/orgs/:org/teams
-
-
-//anti-spam measures. Don't announce PRs in game to people unless they've gotten a pr merged before
-//options are:
-//	"repo" - user has to have a pr merged in the repo before.
-//	"org" - user has to have a pr merged in any repo in the organization (for repos owned directly by users, this applies to any repo directly owned by the same user.)
-//	"disable" - disables.
-//defaults to org if left blank or given invalid values.
-$validation = "org";
-
-//how many merged prs must they have under the rules above to have their pr announced to the game servers.
-$validation_count = 1;
-
 //CONFIG END
 set_error_handler(function($severity, $message, $file, $line) {
 	throw new \ErrorException($message, 0, $severity, $file, $line);
