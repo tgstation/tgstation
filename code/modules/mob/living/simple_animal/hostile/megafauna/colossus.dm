@@ -292,7 +292,7 @@ Difficulty: Very Hard
 	if(fexists("data/npc_saves/Blackbox.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
 		S["stored_items"] >> stored_items
-		fdel(S)
+		fdel("data/npc_saves/Blackbox.sav")
 	else
 		var/json_file = file("data/npc_saves/Blackbox.json")
 		if(!fexists(json_file))

@@ -9,11 +9,11 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
+	postdig_icon_change = TRUE
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
-	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	var/sand_type = /obj/item/ore/glass
 	var/floor_variance = 20 //probability floor has a different icon state
+	archdrops = list(/obj/item/ore/glass = 5)
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
@@ -21,6 +21,9 @@
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
+
+	if(LAZYLEN(archdrops))
+		AddComponent(/datum/component/archaeology, 100, archdrops)
 
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
@@ -31,46 +34,7 @@
 /turf/open/floor/plating/asteroid/MakeDry(wet_setting = TURF_WET_WATER)
 	return
 
-/turf/open/floor/plating/asteroid/ex_act(severity, target)
-	contents_explosion(severity, target)
-	switch(severity)
-		if(3)
-			return
-		if(2)
-			if(prob(20))
-				src.gets_dug()
-		if(1)
-			src.gets_dug()
-
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
-	//note that this proc does not call ..()
-	if(!W || !user)
-		return 0
-	var/digging_speed = 0
-	if (istype(W, /obj/item/shovel))
-		var/obj/item/shovel/S = W
-		digging_speed = S.digspeed
-	else if (istype(W, /obj/item/pickaxe))
-		var/obj/item/pickaxe/P = W
-		digging_speed = P.digspeed
-	if (digging_speed)
-		var/turf/T = user.loc
-		if(!isturf(T))
-			return
-
-		if (dug)
-			to_chat(user, "<span class='warning'>This area has already been dug!</span>")
-			return
-
-		to_chat(user, "<span class='notice'>You start digging...</span>")
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
-
-		if(do_after(user, digging_speed, target = src))
-			if(istype(src, /turf/open/floor/plating/asteroid))
-				to_chat(user, "<span class='notice'>You dig a hole.</span>")
-				gets_dug()
-				SSblackbox.add_details("pick_used_mining","[W.type]")
-
 	if(istype(W, /obj/item/storage/bag/ore))
 		var/obj/item/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
@@ -88,36 +52,15 @@
 			var/turf/open/floor/light/F = T
 			F.state = L.state
 		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
-
-/turf/open/floor/plating/asteroid/proc/gets_dug()
-	if(dug)
 		return
-	for(var/i in 1 to 5)
-		new sand_type(src)
-	dug = 1
-	icon_plating = "[environment_type]_dug"
-	icon_state = "[environment_type]_dug"
-	slowdown = 0
-	return
+
+	return ..()
+
 
 /turf/open/floor/plating/asteroid/singularity_act()
 	if(turf_z_is_planet(src))
 		return ..()
 	ChangeTurf(/turf/open/space)
-
-/turf/open/floor/plating/asteroid/singularity_pull(S, current_size)
-	if(dug)
-		return
-	switch(current_size)
-		if(STAGE_THREE)
-			if(!prob(30))
-				gets_dug()
-		if(STAGE_FOUR)
-			if(prob(50))
-				gets_dug()
-		else 
-			if(current_size >= STAGE_FIVE && prob(70))
-				gets_dug()
 
 
 /turf/open/floor/plating/asteroid/basalt
@@ -127,7 +70,7 @@
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
-	sand_type = /obj/item/ore/glass/basalt
+	archdrops = list(/obj/item/ore/glass/basalt = 5)
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
@@ -147,10 +90,10 @@
 		if("basalt5", "basalt9")
 			B.set_light(1.4, 0.6, LIGHT_COLOR_LAVA) //barely anything!
 
-/turf/open/floor/plating/asteroid/basalt/gets_dug()
-	if(!dug)
-		set_light(0)
+/turf/open/floor/plating/asteroid/basalt/ComponentActivated(datum/component/C)
 	..()
+	if(istype(C, /datum/component/archaeology))
+		set_light(0)
 
 
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
@@ -340,8 +283,8 @@
 	initial_gas_mix = "TEMP=180"
 	slowdown = 2
 	environment_type = "snow"
-	sand_type = /obj/item/stack/sheet/mineral/snow
 	flags_1 = NONE
+	archdrops = list(/obj/item/stack/sheet/mineral/snow = 5)
 
 /turf/open/floor/plating/asteroid/snow/airless
 	initial_gas_mix = "TEMP=2.7"

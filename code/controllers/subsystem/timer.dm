@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(timer)
 		if (ctime_timer.timeToRun <= REALTIMEOFDAY)
 			--clienttime_timers.len
 			var/datum/callback/callBack = ctime_timer.callBack
-			ctime_timer.spent = TRUE
+			ctime_timer.spent = REALTIMEOFDAY
 			callBack.InvokeAsync()
 			qdel(ctime_timer)
 		else
@@ -105,11 +105,11 @@ SUBSYSTEM_DEF(timer)
 			if (!callBack)
 				qdel(timer)
 				bucket_resolution = null //force bucket recreation
-				CRASH("Invalid timer: [timer] timer.timeToRun=[timer.timeToRun]||QDELETED(timer)=[QDELETED(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
+				CRASH("Invalid timer: [get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
 
 			if (!timer.spent)
 				spent += timer
-				timer.spent = TRUE
+				timer.spent = world.time
 				callBack.InvokeAsync()
 				last_invoke_tick = world.time
 
@@ -135,9 +135,11 @@ SUBSYSTEM_DEF(timer)
 	. = "Timer: [TE]"
 	. += "Prev: [TE.prev ? TE.prev : "NULL"], Next: [TE.next ? TE.next : "NULL"]"
 	if(TE.spent)
-		. += ", SPENT"
+		. += ", SPENT([TE.spent])"
 	if(QDELETED(TE))
 		. += ", QDELETED"
+	if(!TE.callBack)
+		. += ", NO CALLBACK"
 
 /datum/controller/subsystem/timer/proc/shift_buckets()
 	var/list/bucket_list = src.bucket_list
@@ -216,7 +218,7 @@ SUBSYSTEM_DEF(timer)
 	var/timeToRun
 	var/hash
 	var/list/flags
-	var/spent = FALSE //set to true right before running.
+	var/spent = 0 //time we ran the timer.
 	var/name //for easy debugging.
 	//cicular doublely linked list
 	var/datum/timedevent/next
@@ -242,6 +244,9 @@ SUBSYSTEM_DEF(timer)
 		SStimer.timer_id_dict["timerid" + num2text(id, 8)] = src
 
 	name = "Timer: " + num2text(id, 8) + ", TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
+
+	if (spent)
+		CRASH("HOLY JESUS. WHAT IS THAT? WHAT THE FUCK IS THAT?")
 
 	if (callBack.object != GLOBAL_PROC)
 		LAZYADD(callBack.object.active_timers, src)

@@ -12,7 +12,7 @@
 	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/atmos_alert/Initialize()
-	..()
+	. = ..()
 	set_frequency(receive_frequency)
 
 /obj/machinery/computer/atmos_alert/Destroy()

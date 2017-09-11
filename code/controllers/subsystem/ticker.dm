@@ -383,7 +383,7 @@ SUBSYSTEM_DEF(ticker)
 		if(bomb && bomb.loc)
 			bombloc = bomb.z
 		else if(!station_missed)
-			bombloc = ZLEVEL_STATION
+			bombloc = ZLEVEL_STATION_PRIMARY
 
 		if(mode)
 			mode.explosion_in_progress = 0
@@ -461,8 +461,9 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
+	var/nocredits = config.no_credits_round_end
 	for(var/client/C in GLOB.clients)
-		if(!C.credits)
+		if(!C.credits && !nocredits)
 			C.RollCredits()
 		C.playtitlemusic(40)
 
@@ -514,7 +515,7 @@ SUBSYSTEM_DEF(ticker)
 
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in GLOB.mob_list)
-		if (aiPlayer.stat != 2 && aiPlayer.mind)
+		if (aiPlayer.stat != DEAD && aiPlayer.mind)
 			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
 			aiPlayer.show_laws(1)
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
@@ -534,7 +535,7 @@ SUBSYSTEM_DEF(ticker)
 
 	for (var/mob/living/silicon/robot/robo in GLOB.mob_list)
 		if (!robo.connected_ai && robo.mind)
-			if (robo.stat != 2)
+			if (robo.stat != DEAD)
 				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
 			else
 				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>")

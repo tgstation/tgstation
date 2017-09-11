@@ -3,9 +3,10 @@
 */
 
 //mob/var/stat things
-#define CONSCIOUS   0
-#define UNCONSCIOUS	1
-#define DEAD	    2
+#define CONSCIOUS	0
+#define SOFT_CRIT	1	
+#define UNCONSCIOUS	2
+#define DEAD		3
 
 //mob disabilities stat
 
@@ -21,9 +22,8 @@
 // bitflags for machine stat variable
 #define BROKEN		1
 #define NOPOWER		2
-#define POWEROFF	4		// tbd
-#define MAINT		8			// under maintaince
-#define EMPED		16		// temporary broken by EMP pulse
+#define MAINT		4			// under maintaince
+#define EMPED		8		// temporary broken by EMP pulse
 
 //ai power requirement defines
 #define POWER_REQ_NONE 0

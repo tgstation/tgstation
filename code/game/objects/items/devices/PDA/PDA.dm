@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
 	var/fon = 0 //Is the flashlight function on?
-	var/f_lum = 3 //Luminosity for the flashlight function
+	var/f_lum = 2.3 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
@@ -352,9 +352,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(fon)
 					fon = 0
 					set_light(0)
-				else
+				else if(f_lum)
 					fon = 1
-					set_light(2.3)
+					set_light(f_lum)
 				update_icon()
 			if("Medical Scan")
 				if(scanmode == 1)
@@ -856,7 +856,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/list/plist = list()
 	var/list/namecounts = list()
 
-	if(user.stat == 2)
+	if(user.stat == DEAD)
 		return //won't work if dead
 
 	if(src.aiPDA.toff)
@@ -889,7 +889,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /mob/living/silicon/ai/verb/cmd_toggle_pda_receiver()
 	set category = "AI Commands"
 	set name = "PDA - Toggle Sender/Receiver"
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return //won't work if dead
 	if(!isnull(aiPDA))
 		aiPDA.toff = !aiPDA.toff
@@ -900,7 +900,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /mob/living/silicon/ai/verb/cmd_toggle_pda_silent()
 	set category = "AI Commands"
 	set name = "PDA - Toggle Ringer"
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return //won't work if dead
 	if(!isnull(aiPDA))
 		//0
@@ -910,7 +910,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
 
 /mob/living/silicon/ai/proc/cmd_show_message_log(mob/user)
-	if(user.stat == 2)
+	if(user.stat == DEAD)
 		return //won't work if dead
 	if(!isnull(aiPDA))
 		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
