@@ -321,14 +321,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 				//CODE REVISION 2
 				font_index = (font_index + 1) % 4
 
-				if (font_index == 0)
-					font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;"
-				if (font_index == 1)
-					font_mode = "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
-				if (font_index == 2)
-					font_mode = "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
-				if (font_index == 3)
-					font_mode = "font-family:monospace;"
+				switch(font_index)
+					if (0)
+						font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;"
+					if (1)
+						font_mode = "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
+					if (2)
+						font_mode = "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
+					if (3)
+						font_mode = "font-family:monospace;"
 			if ("Change_Color")
 				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').")
 				background_color = new_color
