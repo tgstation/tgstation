@@ -28,6 +28,7 @@ $servers[1]['comskey'] = '89aj90cq2fm0amc90832mn9rm90';
 
 $enable_live_tracking = true;	//auto update this file from the repository
 $path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
+$tracked_branch = "master";
 
 $trackPRBalance = true;	//set this to false to disable PR balance tracking
 $prBalanceJson = '';	//Set this to the path you'd like the writable pr balance file to be stored, not setting it writes it to the working directory
