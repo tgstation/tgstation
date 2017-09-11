@@ -166,12 +166,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 					for(var/mob/living/simple_animal/shade/EX in SS)
 						SSticker.mode.remove_cultist(EX.mind, 1, 0)
 						EX.icon_state = "ghost1"
-						EX.name = "purified [EX.name]"
+						EX.name = "Purified [EX.name]"
 						EX.status_flags &= ~GODMODE
 						EX.canmove = 1
 						EX.forceMove(get_turf(user))
 						EX.cancel_camera()
-						to_chat(EX, "<b>You have been released from your prison, but you are still bound to [user.real_name]'s will. Help them succeed in stopping the cult at all costs.</b>")
+						to_chat(EX, "<span class='warning'><b>You have been released from your prison, but you are now bound to [user.real_name]'s will. Help them succeed in stopping the cult!</b></span>")
 					qdel(SS)
 				new /obj/item/nullrod/claymore(get_turf(sword))
 				user.visible_message("<span class='notice'>[user] has purified the [sword]!!</span>")
