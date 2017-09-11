@@ -257,15 +257,8 @@ This file contains the arcane tome files.
 		to_chat(user, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
 
-<<<<<<< HEAD
-	if(T.z != ZLEVEL_STATION && T.z != ZLEVEL_MINING)
-		to_chat(user, "<span class='warning'>The veil is not weak enough here.")
-=======
-
 	if(!(T.z in GLOB.station_z_levels) && T.z != ZLEVEL_MINING)
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
-
->>>>>>> 10a3238fd6... Makes the station Z level into a list instead of a single define (#30297)
 		return FALSE
 
 	return TRUE
