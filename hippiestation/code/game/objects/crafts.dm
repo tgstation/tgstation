@@ -46,6 +46,12 @@
 
 /obj/item/shield/trayshield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 4, attack_type = MELEE_ATTACK)
 	if(..())
+		if(damage < 4)
+			damage = 4
+		if(istype(hitby, /obj/item/projectile))
+			var/obj/item/projectile/P
+			if(P.nodamage || !damage)
+				damage = 0
 		damage_received += damage
 		if(damage_received >= max_damage)
 			if(ishuman(owner))
