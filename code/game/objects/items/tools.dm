@@ -83,7 +83,7 @@
 	user.put_in_active_hand(s_drill)
 
 /obj/item/wrench/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!")
+	user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 /obj/item/wrench/medical

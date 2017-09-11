@@ -70,7 +70,7 @@
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
 	if(safety)
 		safety = FALSE
-		to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.")
+		to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.</span>")
 	else
 		return
 
@@ -181,7 +181,3 @@
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
 		cooldown = world.time
 		cooldown_special = world.time
-
-
-
-

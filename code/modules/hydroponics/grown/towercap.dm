@@ -163,7 +163,7 @@
 
 /obj/structure/bonfire/attack_hand(mob/user)
 	if(burning)
-		to_chat(user, "<span class='warning'>You need to extinguish [src] before removing the logs!")
+		to_chat(user, "<span class='warning'>You need to extinguish [src] before removing the logs!</span>")
 		return
 	if(!has_buckled_mobs() && do_after(user, 50, target = src))
 		for(var/I in 1 to 5)

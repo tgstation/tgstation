@@ -147,7 +147,7 @@ effective or pretty fucking useless.
 	usr.set_machine(src)
 	if(href_list["rad"])
 		irradiate = !irradiate
-	
+
 	else if(href_list["stealthy"])
 		stealth = !stealth
 
@@ -242,11 +242,10 @@ effective or pretty fucking useless.
 	var/range = 12
 
 /obj/item/device/jammer/attack_self(mob/user)
-	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] the [src]<span>")
+	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] the [src].</span>")
 	active = !active
 	if(active)
 		GLOB.active_jammers |= src
 	else
 		GLOB.active_jammers -= src
 	update_icon()
-

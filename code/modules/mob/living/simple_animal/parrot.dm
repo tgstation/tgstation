@@ -733,7 +733,7 @@
 			visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
 			return held_item
 
-	to_chat(src, "<span class='warning'>There is nothing of interest to take!</spawn>")
+	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
 	return 0
 
 /mob/living/simple_animal/parrot/verb/drop_held_item_player()

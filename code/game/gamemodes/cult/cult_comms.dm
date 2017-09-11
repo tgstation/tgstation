@@ -118,7 +118,7 @@
 			if(B.current)
 				B.current.update_action_buttons_icon()
 				if(!B.current.incapacitated())
-					to_chat(B.current,"<span class='cultlarge'>[Nominee] has died in the process of attempting to win the cult's support!")
+					to_chat(B.current,"<span class='cultlarge'>[Nominee] has died in the process of attempting to win the cult's support!</span>")
 		return FALSE
 	if(!Nominee.mind)
 		GLOB.cult_vote_called = FALSE
@@ -126,7 +126,7 @@
 			if(B.current)
 				B.current.update_action_buttons_icon()
 				if(!B.current.incapacitated())
-					to_chat(B.current,"<span class='cultlarge'>[Nominee] has gone catatonic in the process of attempting to win the cult's support!")
+					to_chat(B.current,"<span class='cultlarge'>[Nominee] has gone catatonic in the process of attempting to win the cult's support!</span>")
 		return FALSE
 	if(LAZYLEN(yes_voters) <= LAZYLEN(asked_cultists) * 0.5)
 		GLOB.cult_vote_called = FALSE
@@ -134,7 +134,7 @@
 			if(B.current)
 				B.current.update_action_buttons_icon()
 				if(!B.current.incapacitated())
-					to_chat(B.current, "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte.")
+					to_chat(B.current, "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte.</span>")
 		return FALSE
 	GLOB.cult_mastered = TRUE
 	SSticker.mode.remove_cultist(Nominee.mind, TRUE)
@@ -144,7 +144,7 @@
 			for(var/datum/action/innate/cult/mastervote/vote in B.current.actions)
 				vote.Remove(B.current)
 			if(!B.current.incapacitated())
-				to_chat(B.current,"<span class='cultlarge'>[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!")
+				to_chat(B.current,"<span class='cultlarge'>[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!</span>")
 	return TRUE
 
 /datum/action/innate/cult/master/IsAvailable()

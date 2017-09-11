@@ -120,17 +120,15 @@
 	else
 		..()
 
-/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target)
-	if (isitem(mover) && mover.throwing)
-		var/obj/item/I = mover
-		if(istype(I, /obj/item/projectile))
+/obj/structure/holohoop/hitby(atom/movable/AM)
+	if (isitem(AM) && !istype(AM,/obj/item/projectile))
+		if(prob(50))
+			AM.forceMove(get_turf(src))
+			visible_message("<span class='warning'>Swish! [AM] lands in [src].</span>")
 			return
-		if(SSrng.probability(50))
-			I.forceMove(get_turf(src))
-			visible_message("<span class='warning'>Swish! [I] lands in [src].</span>")
 		else
-			visible_message("<span class='danger'>[I] bounces off of [src]'s rim!</span>")
-		return 0
+			visible_message("<span class='danger'>[AM] bounces off of [src]'s rim!</span>")
+			return ..()
 	else
 		return ..()
 

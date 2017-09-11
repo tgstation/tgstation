@@ -37,7 +37,7 @@
 		if(no_den_usage)
 			var/area/A = get_area(user)
 			if(istype(A, /area/wizard_station))
-				to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>")
+				to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].</span>")
 				return
 			else
 				no_den_usage = 0

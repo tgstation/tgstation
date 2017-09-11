@@ -901,12 +901,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Make monkey"] = "?_src_=vars;makemonkey=\ref[src]"
-	.["Set Species"] = "?_src_=vars;setspecies=\ref[src]"
-	.["Make cyborg"] = "?_src_=vars;makerobot=\ref[src]"
-	.["Make alien"] = "?_src_=vars;makealien=\ref[src]"
-	.["Make slime"] = "?_src_=vars;makeslime=\ref[src]"
-	.["Toggle Purrbation"] = "?_src_=vars;purrbation=\ref[src]"
+	.["Make monkey"] = "?_src_=vars;[HrefToken()];makemonkey=\ref[src]"
+	.["Set Species"] = "?_src_=vars;[HrefToken()];setspecies=\ref[src]"
+	.["Make cyborg"] = "?_src_=vars;[HrefToken()];makerobot=\ref[src]"
+	.["Make alien"] = "?_src_=vars;[HrefToken()];makealien=\ref[src]"
+	.["Make slime"] = "?_src_=vars;[HrefToken()];makeslime=\ref[src]"
+	.["Toggle Purrbation"] = "?_src_=vars;[HrefToken()];purrbation=\ref[src]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target) || !isliving(user) || stat || user.stat)//Get consent first :^)

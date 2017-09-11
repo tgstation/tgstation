@@ -363,7 +363,7 @@
 	to_chat(src, "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs.")
 	to_chat(src, "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>")
 	to_chat(src, "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob")
-	to_chat(src, "Attempting to talk will send a message to all other GLOB.overminds, allowing you to coordinate with them.")
+	to_chat(src, "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them.")
 	if(!placed && autoplace_max_time <= world.time)
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>")
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen.</font></span>")

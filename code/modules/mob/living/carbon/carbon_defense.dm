@@ -243,7 +243,7 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)
-		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!")
+		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!</span>")
 		return
 
 	if(health >= 0 && !(status_flags & FAKEDEATH))

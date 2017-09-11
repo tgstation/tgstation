@@ -116,6 +116,8 @@ SUBSYSTEM_DEF(events)
 
 //allows a client to trigger an event
 //aka Badmin Central
+// > Not in modules/admin
+// REEEEEEEEE
 /client/proc/forceEvent()
 	set name = "Trigger Event"
 	set category = "Fun"
@@ -131,7 +133,7 @@ SUBSYSTEM_DEF(events)
 	var/magic 	= ""
 	var/holiday = ""
 	for(var/datum/round_event_control/E in SSevents.control)
-		dat = "<BR><A href='?src=\ref[src];forceevent=\ref[E]'>[E]</A>"
+		dat = "<BR><A href='?src=\ref[src];[HrefToken()];forceevent=\ref[E]'>[E]</A>"
 		if(E.holidayID)
 			holiday	+= dat
 		else if(E.wizardevent)

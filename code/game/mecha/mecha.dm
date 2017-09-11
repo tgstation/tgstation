@@ -623,7 +623,7 @@
 	if(user.can_dominate_mechs)
 		examine(user) //Get diagnostic information!
 		for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)
-			to_chat(user, "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:")
+			to_chat(user, "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:</span>")
 			to_chat(user, "[B.get_mecha_info()]")
 			break
 		//Nothing like a big, red link to make the player feel powerful!
@@ -675,7 +675,7 @@
 			AI.linked_core = new /obj/structure/AIcore/deactivated(AI.loc)
 			if(AI.can_dominate_mechs)
 				if(occupant) //Oh, I am sorry, were you using that?
-					to_chat(AI, "<span class='warning'>Pilot detected! Forced ejection initiated!")
+					to_chat(AI, "<span class='warning'>Pilot detected! Forced ejection initiated!</span>")
 					to_chat(occupant, "<span class='danger'>You have been forcibly ejected!</span>")
 					go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
 			ai_enter_mech(AI, interaction)
@@ -691,7 +691,7 @@
 				to_chat(user, "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>")
 				return
 			if(occupant || dna_lock) //Normal AIs cannot steal mechs!
-				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].")
+				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].</span>")
 				return
 			AI.control_disabled = 0
 			AI.radio_enabled = 1

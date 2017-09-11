@@ -122,7 +122,8 @@
 			H.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		else
 			H.failed_last_breath = FALSE
-			H.adjustOxyLoss(-5)
+			if(H.health >= HEALTH_THRESHOLD_CRIT)
+				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases["o2"][MOLES]
 			H.clear_alert("not_enough_oxy")
 
@@ -149,7 +150,8 @@
 			H.throw_alert("nitro", /obj/screen/alert/not_enough_nitro)
 		else
 			H.failed_last_breath = FALSE
-			H.adjustOxyLoss(-5)
+			if(H.health >= HEALTH_THRESHOLD_CRIT)
+				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases["n2"][MOLES]
 			H.clear_alert("nitro")
 
@@ -185,7 +187,8 @@
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = FALSE
-			H.adjustOxyLoss(-5)
+			if(H.health >= HEALTH_THRESHOLD_CRIT)
+				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases["co2"][MOLES]
 			H.clear_alert("not_enough_co2")
 
@@ -214,7 +217,8 @@
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = FALSE
-			H.adjustOxyLoss(-5)
+			if(H.health >= HEALTH_THRESHOLD_CRIT)
+				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases["plasma"][MOLES]
 			H.clear_alert("not_enough_tox")
 
@@ -315,6 +319,29 @@
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
+
+/obj/item/organ/lungs/cybernetic
+	name = "cybernetic lungs"
+	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
+	icon_state = "lungs-c"
+	origin_tech = "biotech=4"
+
+/obj/item/organ/lungs/cybernetic/emp_act()
+	owner.losebreath = 20
+
+
+/obj/item/organ/lungs/cybernetic/upgraded
+	name = "upgraded cybernetic lungs"
+	desc = "A more advanced version of the stock cybernetic lungs. They are capable of filtering out lower levels of toxins and carbon-dioxide."
+	icon_state = "lungs-c-u"
+	origin_tech = "biotech=5"
+
+	safe_toxins_max = 20
+	safe_co2_max = 20
+
+	cold_level_1_threshold = 200
+	cold_level_2_threshold = 140
+	cold_level_3_threshold = 100
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

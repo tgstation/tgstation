@@ -1157,7 +1157,7 @@
 		charge = C
 	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
 		if(note)
-			to_chat(user, "<span class='warning'>There's already something pinned to this airlock! Use wirecutters to remove it.<spa>")
+			to_chat(user, "<span class='warning'>There's already something pinned to this airlock! Use wirecutters to remove it.</span>")
 			return
 		if(!user.transferItemToLoc(C, src))
 			to_chat(user, "<span class='warning'>For some reason, you can't attach [C]!</span>")
