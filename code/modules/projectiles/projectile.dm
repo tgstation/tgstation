@@ -20,14 +20,27 @@
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
-	var/paused = FALSE //for suspending the projectile midair
 	var/p_x = 16
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
+
+	//Fired processing vars
+	var/fired = FALSE	//Have we been fired yet
+	var/paused = FALSE	//for suspending the projectile midair
+	var/old_pixel_x = 0
+	var/old_pixel_y = 0
+	var/Pixel_x = 0
+	var/Pixel_y = 0
+	var/pixel_x_offset = 0
+	var/pixel_y_offset = 0
+	var/new_x = 0
+	var/new_y = 0
+	var/next_run = 0
+
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
-	var/legacy = 0			//legacy projectile system
+	var/legacy = FALSE			//legacy projectile system
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
 	var/ricochets = 0
 	var/ricochets_max = 2
@@ -193,7 +206,18 @@
 	return FALSE
 
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
-	return 1 //Bullets don't drift in space
+	return TRUE	//Bullets don't drift in space
+
+/obj/item/projectile/process()
+	if(!loc || !fired)
+		return PROCESS_KILL
+	if(paused || !Angle || !isturf(loc) || (next_run > world.time))
+		return
+	if(legacy)
+		legacy_move()	//Someone fucking kill legacy projectiles.
+		return
+	next_run = world.time
+	pixel_move()
 
 /obj/item/projectile/proc/fire(setAngle, atom/direct_target)
 	if(!log_override && firer && original)
@@ -205,82 +229,71 @@
 		return
 	if(isnum(setAngle))
 		Angle = setAngle
-	var/old_pixel_x = pixel_x
-	var/old_pixel_y = pixel_y
-	if(!legacy) //new projectiles
-		set waitfor = 0
-		var/next_run = world.time
-		while(loc)
-			if(paused)
-				next_run = world.time
-				sleep(1)
-				continue
+	old_pixel_x = pixel_x
+	old_pixel_y = pixel_y
+	fired = TRUE
+	START_PROCESSING(SSprojectiles, src)
 
-			if((!( current ) || loc == current))
-				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+/obj/item/projectile/proc/pixel_move()
+	if((!( current ) || loc == current))
+		current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 
-			if(!Angle)
-				Angle=round(Get_Angle(src,current))
-			if(spread)
-				Angle += (rand() - 0.5) * spread
-			if(!nondirectional_sprite)
-				var/matrix/M = new
-				M.Turn(Angle)
-				transform = M
+	if(!Angle)
+		Angle=round(Get_Angle(src,current))
+	if(spread)
+		Angle += (rand() - 0.5) * spread
+	if(!nondirectional_sprite)
+		var/matrix/M = new
+		M.Turn(Angle)
+		transform = M
 
-			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
-			var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
-			var/pixel_x_offset = old_pixel_x + Pixel_x
-			var/pixel_y_offset = old_pixel_y + Pixel_y
-			var/new_x = x
-			var/new_y = y
+	Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
+	Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
+	pixel_x_offset = old_pixel_x + Pixel_x
+	pixel_y_offset = old_pixel_y + Pixel_y
+	new_x = x
+	new_y = y
 
-			while(pixel_x_offset > 16)
-				pixel_x_offset -= 32
-				old_pixel_x -= 32
-				new_x++// x++
-			while(pixel_x_offset < -16)
-				pixel_x_offset += 32
-				old_pixel_x += 32
-				new_x--
-			while(pixel_y_offset > 16)
-				pixel_y_offset -= 32
-				old_pixel_y -= 32
-				new_y++
-			while(pixel_y_offset < -16)
-				pixel_y_offset += 32
-				old_pixel_y += 32
-				new_y--
+	while(pixel_x_offset > 16)
+		pixel_x_offset -= 32
+		old_pixel_x -= 32
+		new_x++// x++
+	while(pixel_x_offset < -16)
+		pixel_x_offset += 32
+		old_pixel_x += 32
+		new_x--
+	while(pixel_y_offset > 16)
+		pixel_y_offset -= 32
+		old_pixel_y -= 32
+		new_y++
+	while(pixel_y_offset < -16)
+		pixel_y_offset += 32
+		old_pixel_y += 32
+		new_y--
 
-			pixel_x = old_pixel_x
-			pixel_y = old_pixel_y
-			step_towards(src, locate(new_x, new_y, z))
-			next_run += max(world.tick_lag, speed)
-			var/delay = next_run - world.time
-			if(delay <= world.tick_lag*2)
-				pixel_x = pixel_x_offset
-				pixel_y = pixel_y_offset
-			else
-				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
-			old_pixel_x = pixel_x_offset
-			old_pixel_y = pixel_y_offset
-			if(can_hit_target(original, permutated))
-				Collide(original)
-			Range()
-			if (delay > 0)
-				sleep(delay)
+	pixel_x = old_pixel_x
+	pixel_y = old_pixel_y
+	step_towards(src, locate(new_x, new_y, z))
+	next_run += max(world.tick_lag, speed)
+	var/delay = next_run - world.time
+	if(delay <= world.tick_lag*2)
+		pixel_x = pixel_x_offset
+		pixel_y = pixel_y_offset
+	else
+		animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
+	old_pixel_x = pixel_x_offset
+	old_pixel_y = pixel_y_offset
+	if(can_hit_target(original, permutated))
+		Collide(original)
+	Range()
 
-	else //old projectile system
-		set waitfor = 0
-		while(loc)
-			if(!paused)
-				if((!( current ) || loc == current))
-					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-				step_towards(src, current)
-				if(can_hit_target(original, permutated))
-					Collide(original)
-				Range()
-			sleep(config.run_speed * 0.9)
+/obj/item/projectile/proc/legacy_move()
+	if((!( current ) || loc == current))
+		current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+	step_towards(src, current)
+	if(can_hit_target(original, permutated))
+		Collide(original)
+	Range()
 
 //Returns true if the target atom is on our current turf and above the right layer
 /obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)
