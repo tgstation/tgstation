@@ -215,6 +215,9 @@ function tag_pr($payload, $opened) {
 
 	if(strpos(strtolower($title), '[wip]') !== FALSE)
 		$tags[] = 'Work In Progress';
+	
+	if(count($tags) == 0 && count($remove) == 0)
+		return array();
 
 	$url = $payload['pull_request']['issue_url'] . '/labels';
 
@@ -230,7 +233,6 @@ function tag_pr($payload, $opened) {
 	$final = array();
 	foreach($tags as $t)
 		$final[] = $t;
-
 
 	echo apisend($url, 'PUT', $final);
 
