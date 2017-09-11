@@ -57,15 +57,15 @@
 	if(parts)
 		if(!parts.len)
 			return FALSE
-		var/obj/item/bodypart/BP = pick(parts)
+		var/obj/item/bodypart/BP = SSrng.pick_from_list(parts)
 		BP.dismember()
 		return ..()
 	. = ..()
 	if(. && isliving(target))
 		var/mob/living/L = target
-		if(prob(80))
+		if(SSrng.probability(80))
 			var/atom/throw_target = get_edge_target_turf(L, dir)
-			L.throw_at(throw_target, rand(1,2), 7, src) 
+			L.throw_at(throw_target, SSrng.random(1,2), 7, src) 
 		else
 			L.Knockdown(20)
 			visible_message("<span class='danger'>[src] knocks [L] down!</span>")
@@ -78,7 +78,7 @@
 	return iswallturf(T)
 
 /mob/living/simple_animal/hostile/gorilla/handle_automated_speech(override)
-	if(speak_chance && (override || prob(speak_chance)))
+	if(speak_chance && (override || SSrng.probability(speak_chance)))
 		playsound(src, "sound/creatures/gorilla.ogg", 200)
 	..()
 
@@ -89,7 +89,7 @@
 
 /mob/living/simple_animal/hostile/gorilla/proc/oogaooga()
 	oogas++
-	if(oogas >= rand(2,6))
+	if(oogas >= SSrng.random(2,6))
 		playsound(src, "sound/creatures/gorilla.ogg", 200)
 		oogas = 0
 

@@ -299,7 +299,7 @@
 			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name]).")
 
 		else if(uplink_loc == PDA)
-			PDA.lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+			PDA.lock_code = "[SSrng.random(100,999)] [SSrng.pick_from_list(GLOB.phonetic_alphabet)]"
 
 			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name]).")

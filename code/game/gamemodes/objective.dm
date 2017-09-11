@@ -623,7 +623,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/absorb
 
 /datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
-	target_amount = rand (lowbound,highbound)
+	target_amount = SSrng.random(lowbound,highbound)
 	var/n_p = 1 //autowin
 	if (SSticker.current_state == GAME_STATE_SETTING_UP)
 		for(var/mob/dead/new_player/P in GLOB.player_list)

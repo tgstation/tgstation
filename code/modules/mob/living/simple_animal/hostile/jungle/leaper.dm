@@ -168,7 +168,7 @@
 	update_icons()
 
 /mob/living/simple_animal/hostile/jungle/leaper/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(prob(33) && !ckey)
+	if(SSrng.probability(33) && !ckey)
 		ranged_cooldown = 0 //Keeps em on their toes instead of a constant rotation
 	..()
 
@@ -195,7 +195,7 @@
 	density = FALSE
 	pass_flags |= PASSMOB
 	notransform = TRUE
-	var/turf/new_turf = locate((target.x + rand(-3,3)),(target.y + rand(-3,3)),target.z)
+	var/turf/new_turf = locate((target.x + SSrng.random(-3,3)),(target.y + SSrng.random(-3,3)),target.z)
 	if(player_hop)
 		new_turf = get_turf(target)
 		hop_cooldown = world.time + PLAYER_HOP_DELAY
@@ -235,7 +235,7 @@
 		if(!QDELETED(L)) // Some mobs are deleted on death
 			var/throw_dir = get_dir(src, L)
 			if(L.loc == loc)
-				throw_dir = pick(GLOB.alldirs)
+				throw_dir = SSrng.pick_from_list(GLOB.alldirs)
 			var/throwtarget = get_edge_target_turf(src, throw_dir)
 			L.throw_at(throwtarget, 3, 1)
 			visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")

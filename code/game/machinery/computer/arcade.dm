@@ -685,13 +685,13 @@
 
 				var/FU = 0
 				var/FO = 0
-				if(prob(success))
-					FU = rand(5,15)
-					FO = rand(5,15)
+				if(SSrng.probability(success))
+					FU = SSrng.random(5,15)
+					FO = SSrng.random(5,15)
 					last_spaceport_action = "You successfully raided the spaceport! You gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
 				else
-					FU = rand(-5,-15)
-					FO = rand(-5,-15)
+					FU = SSrng.random(-5,-15)
+					FO = SSrng.random(-5,-15)
 					last_spaceport_action = "You failed to raid the spaceport! You lost [FU*-1] Fuel and [FO*-1] Food in your scramble to escape! ([FU]FU,[FO]FO)"
 
 					//your chance of lose a crewmember is 1/2 your chance of success
@@ -868,9 +868,9 @@
 					var/chancetokill = 30*lings_aboard-(5*alive) //eg: 30*2-(10) = 50%, 2 lings, 2 crew is 50% chance
 					if(SSrng.probability(chancetokill))
 						var/deadguy = remove_crewmember()
-						var/murder_text = pick("The changeling[ling2 ? "s" : ""] bring[ling2 ? "" : "s"] down [deadguy] and disembowel[ling2 ? "" : "s"] them in a spray of gore!", \
-						"[ling2 ? pick(ling1, ling2) : ling1] corners [deadguy] and impales them through the stomach!", \
-						"[ling2 ? pick(ling1, ling2) : ling1] decapitates [deadguy] in a single cleaving arc!")
+						var/murder_text = SSrng.pick_from_list("The changeling[ling2 ? "s" : ""] bring[ling2 ? "" : "s"] down [deadguy] and disembowel[ling2 ? "" : "s"] them in a spray of gore!", \
+						"[ling2 ? SSrng.pick_from_list(ling1, ling2) : ling1] corners [deadguy] and impales them through the stomach!", \
+						"[ling2 ? SSrng.pick_from_list(ling1, ling2) : ling1] decapitates [deadguy] in a single cleaving arc!")
 						eventdat += "<br>[murder_text]"
 					else
 						eventdat += "<br><br><b>You valiantly fight off the changeling[ling2 ? "s":""]!</b>"
@@ -883,7 +883,7 @@
 						eventdat += "<br><i>Well, it's perfectly good food...</i>\
 						<br>You cut the changeling[ling2 ? "s" : ""] into meat, gaining <b>[ling2 ? "30" : "15"]</b> Food!"
 				else
-					eventdat += "<br><br>[pick("Sensing unfavorable odds", "After a failed attack", "Suddenly breaking nerve")], \
+					eventdat += "<br><br>[SSrng.pick_from_list("Sensing unfavorable odds", "After a failed attack", "Suddenly breaking nerve")], \
 					the changeling[ling2 ? "s":""] vanish[ling2 ? "" : "es"] into space through the airlocks! You're safe... for now."
 					if(ling2)
 						lings_aboard = max(0,lings_aboard-2)

@@ -927,7 +927,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	for(var/mob/dead/observer/O in get_turf(src))
 		if(O.client && !jobban_isbanned(O, ROLE_CULTIST))
 			ghosts_on_rune += O
-	var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
+	var/mob/dead/observer/ghost_to_spawn = SSrng.pick_from_list(ghosts_on_rune)
 	var/mob/living/carbon/human/cult_ghost/new_human = new(get_turf(src))
 	new_human.real_name = ghost_to_spawn.real_name
 	new_human.alpha = 150 //Makes them translucent

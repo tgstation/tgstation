@@ -89,7 +89,7 @@
 					web_sound_url = content_url_regex.match
 
 					if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-						pitch = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
+						pitch = SSrng.pick_from_list(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
 						to_chat(src, "You feel the Honkmother messing with your song...")
 
 					log_admin("[key_name(src)] played web sound: [web_sound_input]")

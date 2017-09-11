@@ -360,7 +360,7 @@ GLOBAL_LIST(external_rsc_urls)
 		holder.owner = null
 		GLOB.admins -= src
 		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
-			var/cheesy_message = pick(
+			var/cheesy_message = SSrng.pick_from_list(
 				"I have no admins online!",\
 				"I'm all alone :(",\
 				"I'm feeling lonely :(",\

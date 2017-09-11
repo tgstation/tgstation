@@ -31,14 +31,14 @@ GLOBAL_PROTECT(href_token)
 		throw EXCEPTION("Admin datum created without a rank")
 		return
 	rank = R
-	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
+	admin_signature = "Nanotrasen Officer #[SSrng.random(0,9)][SSrng.random(0,9)][SSrng.random(0,9)]"
 	href_token = GenerateToken()
 	GLOB.admin_datums[ckey] = src
 
 /proc/GenerateToken()
 	. = ""
 	for(var/I in 1 to 32)
-		. += "[rand(10)]"
+		. += "[SSrng.random(10)]"
 
 /proc/HrefToken(forceGlobal = FALSE)
 	var/tok = GLOB.href_token

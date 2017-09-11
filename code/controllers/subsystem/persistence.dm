@@ -46,7 +46,7 @@ SUBSYSTEM_DEF(persistence)
 		old_secret_satchels = json["data"]
 		if(old_secret_satchels.len)
 			if(old_secret_satchels.len >= 20) //guards against low drop pools assuring that one player cannot reliably find his own gear.
-				var/pos = rand(1, old_secret_satchels.len)
+				var/pos = SSrng.random(1, old_secret_satchels.len)
 				old_secret_satchels.Cut(pos, pos+1)
 				F.x = old_secret_satchels[pos]["x"]
 				F.y = old_secret_satchels[pos]["y"]
@@ -186,7 +186,7 @@ SUBSYSTEM_DEF(persistence)
 		var/list/data = list()
 		data["x"] = F.x
 		data["y"] = F.y
-		data["saved_obj"] = pick(savable_obj)
+		data["saved_obj"] = SSrng.pick_from_list(savable_obj)
 		satchels += list(data)
 	var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
 	var/list/file_data = list()

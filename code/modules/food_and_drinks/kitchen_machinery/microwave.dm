@@ -240,7 +240,7 @@
 
 		if(metal)
 			visible_message("<span class='warning'>Sparks fly around [src]!</span>")
-			if(prob(max(metal/2, 33)))
+			if(SSrng.probability(max(metal/2, 33)))
 				explosion(loc,0,1,2)
 			broke()
 			return

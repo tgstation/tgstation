@@ -339,7 +339,7 @@
 
 /obj/machinery/disposal/bin/hitby(atom/movable/AM)
 	if(isitem(AM) && AM.CanEnterDisposals())
-		if(prob(75))
+		if(SSrng.probability(75))
 			AM.forceMove(src)
 			visible_message("<span class='notice'>[AM] lands in [src].</span>")
 			update_icon()

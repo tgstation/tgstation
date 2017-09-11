@@ -36,7 +36,7 @@
 		return
 
 
-	if(prob(80))	//mid dirt  - 1/15
+	if(SSrng.probability(80))	//mid dirt  - 1/15
 		return
 
 		//Construction zones. Blood, sweat, and oil.  Oh, and dirt.
@@ -48,7 +48,7 @@
 														/area/construction,
 														/area/survivalpod))
 	if(is_type_in_typecache(A, engine_dirt_areas))
-		if(prob(3))
+		if(SSrng.probability(3))
 			new /obj/effect/decal/cleanable/blood/old(src)
 		else
 			if(SSrng.probability(35))
@@ -64,8 +64,8 @@
 	var/static/list/bathroom_dirt_areas = typecacheof(list(	/area/crew_quarters/toilet,
 															/area/awaymission/research/interior/bathroom))
 	if(is_type_in_typecache(A, bathroom_dirt_areas))
-		if(prob(40))
-			if(prob(90))
+		if(SSrng.probability(40))
+			if(SSrng.probability(90))
 				new /obj/effect/decal/cleanable/vomit/old(src)
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
@@ -74,12 +74,12 @@
 		//Hangars and pods covered in oil.
 	var/static/list/oily_areas = typecacheof(list(/area/quartermaster))
 	if(is_type_in_typecache(A, oily_areas))
-		if(prob(25))
+		if(SSrng.probability(25))
 			new /obj/effect/decal/cleanable/oil(src)
 		return
 
 
-	if(prob(75))	//low dirt  - 1/60
+	if(SSrng.probability(75))	//low dirt  - 1/60
 		return
 
 		//Areas where gibs will be present. Robusting probably happened some time ago.
@@ -88,8 +88,8 @@
 														/area/security,
 														/area/crew_quarters/heads/hos))
 	if(is_type_in_typecache(A, gib_covered_areas))
-		if(prob(20))
-			if(prob(5))
+		if(SSrng.probability(20))
+			if(SSrng.probability(5))
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
@@ -99,8 +99,8 @@
 	var/static/list/kitchen_dirt_areas = typecacheof(list(/area/crew_quarters/kitchen,
 														/area/crew_quarters/cafeteria))
 	if(is_type_in_typecache(A, kitchen_dirt_areas))
-		if(prob(60))
-			if(prob(50))
+		if(SSrng.probability(60))
+			if(SSrng.probability(50))
 				new /obj/effect/decal/cleanable/egg_smudge(src)
 			else
 				new /obj/effect/decal/cleanable/flour(src)
@@ -110,8 +110,8 @@
 	var/static/list/medical_dirt_areas = typecacheof(list(/area/medical,
 														/area/crew_quarters/heads/cmo))
 	if(is_type_in_typecache(A, medical_dirt_areas))
-		if(prob(66))
-			if(prob(5))
+		if(SSrng.probability(66))
+			if(SSrng.probability(5))
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
@@ -126,7 +126,7 @@
 	var/static/list/science_dirt_areas = typecacheof(list(/area/science,
 														/area/crew_quarters/heads/hor))
 	if(is_type_in_typecache(A, medical_dirt_areas))
-		if(prob(20))
+		if(SSrng.probability(20))
 			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
 		return
 

@@ -35,7 +35,7 @@
 	for(var/mob/living/silicon/ai/M in GLOB.living_mob_list)
 		M.laws_sanity_check()
 		if(M.stat != DEAD && M.see_in_dark != 0)
-			if(prob(replaceLawsetChance))
+			if(SSrng.probability(replaceLawsetChance))
 				M.laws.pick_weighted_lawset()
 
 			if(SSrng.probability(removeRandomLawChance))

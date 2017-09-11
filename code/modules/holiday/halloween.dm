@@ -36,7 +36,7 @@
 
 /obj/structure/closet/initialize()
 	..()
-	if(prob(30))
+	if(SSrng.probability(30))
 		set_spooky_trap()
 
 /obj/structure/closet/dump_contents()
@@ -44,16 +44,16 @@
 	trigger_spooky_trap()
 
 /obj/structure/closet/proc/set_spooky_trap()
-	if(prob(0.1))
+	if(SSrng.probability(0.1))
 		trapped = INSANE_CLOWN
 		return
-	if(prob(1))
+	if(SSrng.probability(1))
 		trapped = ANGRY_FAITHLESS
 		return
-	if(prob(15))
+	if(SSrng.probability(15))
 		trapped = SCARY_BATS
 		return
-	if(prob(20))
+	if(SSrng.probability(20))
 		trapped = HOWLING_GHOST
 		return
 	else
@@ -76,7 +76,7 @@
 		QDEL_IN(trapped_mob, 90)
 
 	else if(trapped == HOWLING_GHOST)
-		visible_message("<span class='userdanger'><font size='5'>[pick("OooOOooooOOOoOoOOooooOOOOO", "BooOOooOooooOOOO", "BOO!", "WoOOoOoooOooo")]</font></span>")
+		visible_message("<span class='userdanger'><font size='5'>[SSrng.pick_from_list("OooOOooooOOOoOoOOooooOOOOO", "BooOOooOooooOOOO", "BOO!", "WoOOoOoooOooo")]</font></span>")
 		playsound(loc, 'sound/spookoween/ghosty_wind.ogg', 300, 1)
 		new /mob/living/simple_animal/shade/howling_ghost(loc)
 		trapped = 0
@@ -84,7 +84,7 @@
 	else if(trapped == SCARY_BATS)
 		visible_message("<span class='userdanger'><font size='5'>Protect your hair!</font></span>")
 		playsound(loc, 'sound/spookoween/bats.ogg', 300, 1)
-		var/number = rand(1,3)
+		var/number = SSrng.random(1,3)
 		for(var/i=0,i < number,i++)
 			new /mob/living/simple_animal/hostile/retaliate/bat(loc)
 		trapped = 0
@@ -131,40 +131,40 @@
 
 /mob/living/simple_animal/shade/howling_ghost/Initialize()
 	..()
-	icon_state = pick("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
+	icon_state = SSrng.pick_from_list("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
 	icon_living = icon_state
 	status_flags |= GODMODE
-	timer = rand(1,15)
+	timer = SSrng.random(1,15)
 
 /mob/living/simple_animal/shade/howling_ghost/Life()
 	..()
 	timer--
-	if(prob(20))
+	if(SSrng.probability(20))
 		roam()
 	if(timer == 0)
 		spooky_ghosty()
-		timer = rand(1,15)
+		timer = SSrng.random(1,15)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/EtherealMove(direction)
 	loc = get_step(src, direction)
 	setDir(direction)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/roam()
-	if(prob(80))
-		var/direction = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
+	if(SSrng.probability(80))
+		var/direction = SSrng.pick_from_list(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
 		EtherealMove(direction)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/spooky_ghosty()
-	if(prob(20)) //haunt
-		playsound(loc, pick('sound/spookoween/ghosty_wind.ogg','sound/spookoween/ghost_whisper.ogg','sound/spookoween/chain_rattling.ogg'), 300, 1)
-	if(prob(10)) //flickers
+	if(SSrng.probability(20)) //haunt
+		playsound(loc, SSrng.pick_from_list('sound/spookoween/ghosty_wind.ogg','sound/spookoween/ghost_whisper.ogg','sound/spookoween/chain_rattling.ogg'), 300, 1)
+	if(SSrng.probability(10)) //flickers
 		var/obj/machinery/light/L = locate(/obj/machinery/light) in view(5, src)
 		if(L)
 			L.flicker()
-	if(prob(5)) //poltergeist
+	if(SSrng.probability(5)) //poltergeist
 		var/obj/item/I = locate(/obj/item) in view(3, src)
 		if(I)
-			var/direction = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
+			var/direction = SSrng.pick_from_list(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
 			step(I,direction)
 		return
 
@@ -195,7 +195,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/Initialize()
 	..()
-	timer = rand(5,15)
+	timer = SSrng.random(5,15)
 	status_flags = (status_flags | GODMODE)
 	return
 
@@ -217,8 +217,8 @@
 		playsound(M.loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 		qdel(src)
 	if(timer == 0)
-		timer = rand(5,15)
-		playsound(M.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 300, 1)
+		timer = SSrng.random(5,15)
+		playsound(M.loc, SSrng.pick_from_list('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 300, 1)
 		spawn(12)
 			loc = M.loc
 
@@ -230,12 +230,12 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/adjustHealth()
 	. = 0
-	if(prob(5))
+	if(SSrng.probability(5))
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/nullrod))
-		if(prob(5))
+		if(SSrng.probability(5))
 			visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
 			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 			qdel(src)

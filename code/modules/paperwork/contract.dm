@@ -37,9 +37,9 @@
 		if(user.mind && (user.mind.assigned_role == "Lawyer"))
 			deconvert = TRUE
 		else if (user.mind && (user.mind.assigned_role =="Head of Personnel") || (user.mind.assigned_role == "CentCom Commander"))
-			deconvert = prob (25) // the HoP doesn't have AS much legal training
+			deconvert = SSrng.probability(25) // the HoP doesn't have AS much legal training
 		else
-			deconvert = prob (5)
+			deconvert = SSrng.probability(5)
 	if(deconvert)
 		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotrasen!</span>")
 		to_chat(M, "<span class='boldnotice'>You feel that your soul has returned to its rightful owner, Nanotrasen.</span>")

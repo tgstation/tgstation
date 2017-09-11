@@ -165,7 +165,7 @@
 
 /obj/item/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
 	if((blocked != 100) && (!ismob(target) && breakthings))
-		target.ex_act(rand(1,2))
+		target.ex_act(SSrng.random(1,2))
 	return ..()
 
 /obj/item/projectile/bullet/p50/soporific
@@ -285,7 +285,7 @@
 
 /obj/item/projectile/bullet/pellet/shotgun_improvised/Initialize()
 	. = ..()
-	range = rand(1, 8)
+	range = SSrng.random(1, 8)
 
 /obj/item/projectile/bullet/pellet/shotgun_improvised/on_range()
 	do_sparks(1, TRUE, src)

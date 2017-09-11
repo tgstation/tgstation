@@ -34,7 +34,7 @@
 	if(..())
 		return
 
-	var/spawner_ref = pick(GLOB.mob_spawners[params["name"]])
+	var/spawner_ref = SSrng.pick_from_list(GLOB.mob_spawners[params["name"]])
 	var/obj/effect/mob_spawn/MS = locate(spawner_ref) in GLOB.poi_list
 
 	switch(action)

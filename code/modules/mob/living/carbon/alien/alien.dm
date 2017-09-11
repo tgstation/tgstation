@@ -100,9 +100,9 @@
 
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)
-		return pick (list("xltrails_1", "xltrails2"))
+		return SSrng.pick_from_list(list("xltrails_1", "xltrails2"))
 	else
-		return pick (list("xttrails_1", "xttrails2"))
+		return SSrng.pick_from_list(list("xttrails_1", "xttrails2"))
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.

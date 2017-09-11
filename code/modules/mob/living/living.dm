@@ -455,7 +455,7 @@
 	if (s_active && !(CanReach(s_active,view_only = TRUE)))
 		s_active.close(src)
 
-	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
+	if(lying && !buckled && SSrng.probability(getBruteLoss()*200/maxHealth))
 
 		makeTrail(newloc, T, old_direction)
 
@@ -495,7 +495,7 @@
 						newdir = NORTH
 					else if(newdir == 12) //E + W
 						newdir = EAST
-				if((newdir in GLOB.cardinals) && (prob(50)))
+				if((newdir in GLOB.cardinals) && (SSrng.probability(50)))
 					newdir = turn(get_dir(target_turf, start), 180)
 				if(!blood_exists)
 					new /obj/effect/decal/cleanable/trail_holder(start)

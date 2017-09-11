@@ -8,7 +8,7 @@
 		H.SetStun(0)
 		H.SetKnockdown(0)
 		H.stuttering = 0
-		H.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
+		H.say(SSrng.pick_from_list("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
 		a_boost--
 		to_chat(H, "<span class='notice'>There are <B>[a_boost]</B> adrenaline boosts remaining.</span>")
 		s_coold = 3
