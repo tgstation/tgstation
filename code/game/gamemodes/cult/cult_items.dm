@@ -146,7 +146,7 @@
 /obj/item/twohanded/required/cult_bastard/IsReflect()
 	if(spinning)
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-		return 1
+		return TRUE
 	else
 		..()
 
@@ -155,12 +155,12 @@
 		if(attack_type == PROJECTILE_ATTACK)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 100, 1)
-			return 1
+			return TRUE
 		else
 			playsound(src, 'sound/weapons/parry.ogg', 75, 1)
 			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
@@ -188,7 +188,6 @@
 	button_icon_state = "phaseshift"
 	var/charged = TRUE
 	var/charge_rate = 250
-	var/cooldown = 0
 	var/mob/living/carbon/human/holder
 	var/obj/item/twohanded/required/cult_bastard/sword
 
@@ -215,10 +214,12 @@
 		var/obj/spot2 = new /obj/effect/temp_visual/dir_setting/cult/phase(get_turf(user), user.dir)
 		spot1.Beam(spot2,"sendbeam",time=20)
 		charged = FALSE
+		holder.update_action_buttons_icon()
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)
 
 /datum/action/innate/cult/dash/proc/charge()
 	charged = TRUE
+	holder.update_action_buttons_icon()
 	playsound(sword, 'sound/magic/exit_blood.ogg', 50, 1)
 	to_chat(holder, "<span class='cultitalic'>The sword is ready for another blood jaunt.</span>")
 
