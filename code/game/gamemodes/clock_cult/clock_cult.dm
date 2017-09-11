@@ -251,7 +251,7 @@ Credit where due:
 	W.update_label()
 
 /obj/item/paper/servant_primer
-	name = "The Ark & You: A Primer On Servitude"
+	name = "The Ark And You: A Primer On Servitude"
 	color = "#DAAA18"
 	info = "<b>DON'T PANIC.</b><br><br>\
 	Here's a quick primer on what you should know here.\
@@ -279,10 +279,7 @@ Credit where due:
 	<hr>\
 	<h2>Things that have changed:</h2>\
 	<ul>\
-	<li><b>Power is now shared</b> between all Sigils of Transmission.</li>\
-	<li><b>Kindle is now a projectile</b> with a range of approximately three tiles.</li>\
-	<li><b>Heralding Ratvar</b> no longer adds ten minutes to the Ark timer.</li>\
-	<li><b>You are warned when attempting to create a combat marauder at Reebe</b>, as they will likely be useless.</li>\
+	<li><b><i>Conversion has been removed.</i></b></li>\
 	</ul>\
 	<hr>\
 	<b>Good luck!</b>"

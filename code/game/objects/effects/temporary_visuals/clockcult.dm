@@ -233,3 +233,23 @@
 		var/turf/T = get_step(src, V)
 		new/obj/effect/temp_visual/steam(T, V)
 	return INITIALIZE_HINT_QDEL
+
+//Foreshadows a servant warping in.
+/obj/effect/temp_visual/ratvar/warp_marker
+	name = "illuminant marker"
+	desc = "A silhouette of dim light. It's getting brighter!"
+	resistance_flags = INDESTRUCTIBLE
+	icon = 'icons/effects/genetics.dmi'
+	icon_state = "servitude"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	alpha = 0
+	light_color = "#FFE48E"
+	light_range = 2
+	light_power = 0.7
+	duration = 55
+
+/obj/effect/temp_visual/ratvar/warp_marker/Initialize(mapload, mob/living/servant)
+	. = ..()
+	animate(src, alpha = 255, time = 50)
+

@@ -239,6 +239,11 @@
 	. = ..()
 	ratvar_act()
 
+/obj/machinery/computer/camera_advanced/ratvar/process()
+	if(prob(1))
+		playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 25, TRUE)
+		new/obj/effect/temp_visual/steam_release(get_turf(src))
+
 /obj/machinery/computer/camera_advanced/ratvar/CreateEye()
 	..()
 	eyeobj.visible_icon = 1
@@ -265,7 +270,7 @@
 	button_icon_state = "warp_down"
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
-	var/obj/effect/clockwork/warp_marker/warping
+	var/obj/effect/temp_visual/ratvar/warp_marker/warping
 
 /datum/action/innate/servant_warp/Activate()
 	if(QDELETED(target) || !ishuman(owner) || !owner.canUseTopic(target) || warping)

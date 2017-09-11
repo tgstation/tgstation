@@ -163,26 +163,6 @@
 	quickbind_desc = "Stuns and mutes a target from a short range."
 
 
-//Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
-/datum/clockwork_scripture/create_object/sigil_of_submission
-	descname = "Trap, Conversion"
-	name = "Sigil of Submission"
-	desc = "Places a luminous sigil that will convert any non-Servants that remain on it for 8 seconds."
-	invocations = list("Divinity, enlighten...", "...those who trespass here!")
-	channel_time = 60
-	consumed_components = list(GEIS_CAPACITOR = 1)
-	whispered = TRUE
-	object_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A luminous sigil appears below you. Any non-Servants to cross it will be converted after 8 seconds if they do not move.</span>"
-	usage_tip = "This is the primary conversion method, though it will not penetrate mindshield implants."
-	tier = SCRIPTURE_DRIVER
-	one_per_tile = TRUE
-	primary_component = GEIS_CAPACITOR
-	sort_priority = 7
-	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Submission, which will convert non-Servants that remain on it."
-
-
 //Replicant: Creates a new clockwork slab.
 /datum/clockwork_scripture/create_object/replicant
 	descname = "New Clockwork Slab"
@@ -197,7 +177,7 @@
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = REPLICANT_ALLOY
-	sort_priority = 8
+	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Creates a new Clockwork Slab."
 
@@ -218,7 +198,7 @@
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
-	sort_priority = 9
+	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
 	var/static/prev_cost = 0
@@ -252,3 +232,22 @@
 	sort_priority = 10
 	quickbind = TRUE
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
+
+
+//Integration Cog: Creates an integration cog that can be inserted into APCs to passively siphon power.
+/datum/clockwork_scripture/create_object/integration_cog
+	descname = "APC Power Siphoner"
+	name = "Integration Cog"
+	desc = "Fabricates an integration cog, which can be used on an open APC to replace its innards and passively siphon its power."
+	invocations = list("Take that which sustains them!")
+	channel_time = 10
+	whispered = TRUE
+	object_path = /obj/item/clockwork/integration_cog
+	creator_message = "<span class='brass'>You form an integration cog, which can be inserted into an open APC to passively siphon power.</span>"
+	usage_tip = "Tampering isn't visible unless the APC is opened."
+	tier = SCRIPTURE_DRIVER
+	space_allowed = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 10
+	quickbind = TRUE
+	quickbind_desc = "Creates an integration cog, which can be used to siphon power from an open APC."
