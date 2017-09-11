@@ -526,8 +526,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_delete(mob/living/M)
 	to_chat(M, "<span class='notice'>The warmth in your body fades.</span>")
-	if(light_holder)
-		qdel(light_holder)
+	QDEL_NULL(light_holder)
 
 /datum/reagent/consumable/ethanol/toxins_special
 	name = "Toxins Special"
