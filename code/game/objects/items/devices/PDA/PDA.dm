@@ -317,8 +317,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 			if("Refresh")//Refresh, goes to the end of the proc.
 			if ("Toggle_Font")
-			//CODE REVISION 2
-			font_index = (font_index + 1) % 4
+				//CODE REVISION 2
+				font_index = (font_index + 1) % 4
 
 				if (font_index == 0)
 					font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;"
