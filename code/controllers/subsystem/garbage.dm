@@ -13,7 +13,6 @@ SUBSYSTEM_DEF(garbage)
 
 	var/highest_del_time = 0
 	var/highest_del_tickusage = 0
-	var/track_harddels = TRUE		//Whether we track hard deletions. First step to fixing a problem is seeing what's causing it.
 
 	var/list/queue = list() 	// list of refID's of things that should be garbage collected
 								// refID's are associated with the time at which they time out and need to be manually del()
@@ -24,7 +23,6 @@ SUBSYSTEM_DEF(garbage)
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
 	var/list/sleptDestroy = list()	//Same as above but these are paths that slept during their Destroy call
-	var/list/hard_deleted = list()	//type = number of times it was hard deleted
 
 	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
 	// all types that did not respect qdel(A, force=TRUE) and returned one
@@ -54,24 +52,24 @@ SUBSYSTEM_DEF(garbage)
 	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
 	if(didntgc.len || sleptDestroy.len)
 		var/list/dellog = list()
-		var/list/things = hard_deleted + didntgc + sleptDestroy
-		for(var/path in things)
+		for(var/path in didntgc)
 			dellog += "Path : [path] \n"
-			if(hard_deleted[path])
-				dellog += "Hard Deletions: [hard_deleted[path]] \n"
-			if(didntgc[path])
-				dellog += "Failures : [didntgc[path]] \n"
-			if(sleptDestroy[path])
+			dellog += "Failures : [didntgc[path]] \n"
+			if(path in sleptDestroy)
 				dellog += "Sleeps : [sleptDestroy[path]] \n"
+				sleptDestroy -= path
+		for(var/path in sleptDestroy)
+			dellog += "Path : [path] \n"
+			dellog += "Sleeps : [sleptDestroy[path]] \n"
 		text2file(dellog.Join(), "[GLOB.log_directory]/qdel.log")
 
 /datum/controller/subsystem/garbage/fire()
 	HandleToBeQueued()
 	if(state == SS_RUNNING)
 		HandleQueue()
-
+	
 	if (state == SS_PAUSED) //make us wait again before the next run.
-		state = SS_RUNNING
+		state = SS_RUNNING 
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
@@ -116,7 +114,7 @@ SUBSYSTEM_DEF(garbage)
 			var/type = A.type
 			testing("GC: -- \ref[A] | [type] was unable to be GC'd and was deleted --")
 			didntgc["[type]"]++
-
+			
 			HardDelete(A)
 
 			++delslasttick
@@ -151,13 +149,12 @@ SUBSYSTEM_DEF(garbage)
 	var/time = world.timeofday
 	var/tick = TICK_USAGE
 	var/ticktime = world.time
-
+	
 	var/type = A.type
 	var/refID = "\ref[A]"
-
-	hard_deleted[A.type]++
+	
 	del(A)
-
+	
 	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))
 	if (tick > highest_del_tickusage)
 		highest_del_tickusage = tick
@@ -170,7 +167,7 @@ SUBSYSTEM_DEF(garbage)
 		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
 		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
 		postpone(time/5)
-
+	
 /datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
@@ -187,7 +184,6 @@ SUBSYSTEM_DEF(garbage)
 /proc/qdel(datum/D, force=FALSE)
 	if(!istype(D))
 		del(D)
-		SSgarbage.hard_deleted["NON_DATUM"]++
 		return
 #ifdef TESTING
 	SSgarbage.qdel_list += "[D.type]"
