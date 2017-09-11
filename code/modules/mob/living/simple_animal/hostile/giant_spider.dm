@@ -103,9 +103,9 @@
 	poison_per_bite = 5
 	move_to_delay = 5
 
-//vipers are the rare variant of the hunter, no damage but so much poison medical care will be needed fast. Low hp, high speed and no damage so hit and run tactics.
+//vipers are the rare variant of the hunter, no IMMEDIATE damage but so much poison medical care will be needed fast.
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
-	name = viper
+	name = "viper"
 	desc = "Furry and black, it makes you shudder to look at it. This one has effervescent purple eyes."
 	icon_state = "hunter"
 	icon_living = "hunter"
@@ -117,11 +117,11 @@
 	poison_per_bite = 30
 	move_to_delay = 4
 	poison_type = "polonium" //slow acting but this at 30u per bite will seriously mess you up, perfect viper poison
-	speed = 4
+	speed = 3
 
 //tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
-	name = tarantula
+	name = "tarantula"
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes."
 	icon_state = "guard"
 	icon_living = "guard"
@@ -138,7 +138,7 @@
 
 //midwives are the queen of the spiders, can send messages to all them and web faster. That rare round where you get a queen spider and turn your 'for honor' players into 'r6siege' players will be a fun one.
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife
-	name = midwife
+	name = "midwife"
 	desc = "Furry and black, it makes you shudder to look at it. This one has scintillating green eyes."
 	icon_state = "midwife"
 	icon_living = "midwife"
