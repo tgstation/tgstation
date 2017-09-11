@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,28)
+	var/loot = rand(1,27)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -570,7 +570,7 @@
 
 /obj/item/jacobs_ladder
 	name = "jacob's ladder"
-	desc = "A celestial ladder that violates the laws of physics, but respects the coordinate plane."
+	desc = "A celestial ladder that violates the laws of physics."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder00"
 
@@ -578,7 +578,7 @@
 	var/turf/T = get_turf(src)
 	var/ladder_x = T.x
 	var/ladder_y = T.y
-	to_chat(user, "You unfold the ladder. It extends much farther than you were expecting.")
+	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
 	for(var/i in 1 to world.maxz)
 		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT)
 			continue
@@ -587,7 +587,7 @@
 
 /obj/structure/ladder/unbreakable/jacob
 	name = "jacob's ladder"
-	desc = "An indestructible celestial ladder that violates the laws of physics, but respects the coordinate plane."
+	desc = "An indestructible celestial ladder that violates the laws of physics."
 	auto_connect = TRUE
 
 ///Bosses
