@@ -1,0 +1,8 @@
+{
+    "map_name": "Boz Station",
+    "map_path": "map_files/BozStation",
+    "map_file": "BozStation.dmm",
+    "minetype": "lavaland",
+    "transition_config": "default"
+    "allow_custom_shuttles": "yes"
+}

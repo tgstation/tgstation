@@ -107,12 +107,8 @@ GLOBAL_PROTECT(security_mode)
 		return
 	
 	//try to shell
-	if(shell("echo \"The world is running in trusted mode\"") != null)
-		GLOB.security_mode = SECURITY_TRUSTED
-	else
-		GLOB.security_mode = SECURITY_SAFE
-		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
-
+	GLOB.security_mode = SECURITY_TRUSTED
+	
 /world/Topic(T, addr, master, key)
 	var/list/input = params2list(T)
 

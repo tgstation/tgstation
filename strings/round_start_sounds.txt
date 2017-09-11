@@ -1,4 +1,5 @@
 sound/ambience/title1.ogg
 sound/ambience/title2.ogg
-sound/ambience/title3.ogg
-sound/ambience/clown.ogg
+sound/ambience/hero.ogg
+sound/ambience/i_did_not_grief_them.ogg
+sound/ambience/title4.ogg
