@@ -346,10 +346,6 @@
 	..()
 	GLOB.spidermobs += src
 
-/mob/living/simple_animal/hostile/poison/giant_spider/Logout(GLOB.spidermobs)
-	..()
-	GLOB.spidermobs -= src
-
 /datum/action/innate/spider/comm
 	name = "Command"
 	button_icon_state = "cult_comms"
