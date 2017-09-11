@@ -4,7 +4,7 @@
 #define MOVING_TO_TARGET 3
 #define SPINNING_COCOON 4
 
-/mob/living/simple_animal/hostile/poison
+/mob/living/simple_animal/hostile/poison //this guy's a fukkin idiot everyone knows that spiders inject venom not poison
 	var/poison_per_bite = 5
 	var/poison_type = "toxin"
 
@@ -111,11 +111,11 @@
 	icon_dead = "hunter_dead"
 	maxHealth = 40
 	health = 40
-	melee_damage_lower = 1 //what doesn't kill you...
+	melee_damage_lower = 1
 	melee_damage_upper = 1
-	poison_per_bite = 15
+	poison_per_bite = 30
 	move_to_delay = 4
-	poison_type = "venom" //will soon after if there isn't medical attention!
+	poison_type = "polonium" //slow acting but this at 30u per bite will seriously mess you up, perfect viper poison
 	speed = 4
 
 //tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
@@ -144,10 +144,10 @@
 	health = 40
 	var/datum/action/innate/spider/comm/letmetalkpls
 
-	/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Initialize()
-		..()
-		letmetalkpls = new
-		letmetalkpls.Grant(src)
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Initialize()
+	. = ..()
+	letmetalkpls = new
+	letmetalkpls.Grant(src)
 
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
@@ -367,13 +367,13 @@
 	return TRUE
 
 /datum/action/innate/spider/comm/proc/spider_command(mob/living/user, message)
-	var/my_message
 	if(!message)
 		return
+	var/my_message
 	my_message = "<b>COMMAND FROM SPIDER QUEEN:</b> [message]"
 	for(var/mob/living/simple_animal/hostile/poison/giant_spider/M in GLOB.spidermobs)
 		to_chat(M, my_message)
-	log_talk(user, "SPIDERCOMMAND:[key_name(user)] : [message]",LOGSAY)
+	log_talk(user, "SPIDERCOMMAND: [key_name(user)] : [message]",LOGSAY)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
