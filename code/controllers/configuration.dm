@@ -968,7 +968,7 @@ GLOBAL_PROTECT(config_dir)
 			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
 			var/final_weight = probabilities[M.config_tag]
-			if(SSpersistence.saved_modes.len == 3 && adjust.len == 3)
+			if(SSpersistence.saved_modes.len == 3 && repeated_mode_adjust.len == 3)
 				var/recent_round = min(SSpersistence.saved_modes.Find(M.config_tag),3)
 				var/adjustment = 0
 				while(recent_round)
