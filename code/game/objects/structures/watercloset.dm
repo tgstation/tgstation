@@ -274,16 +274,16 @@
 				ismist = 0
 
 
-/obj/machinery/shower/Crossed(atom/movable/O)
+/obj/machinery/shower/Crossed(atom/movable/AM)
 	..()
 	if(on)
-		if(isliving(O))
-			var/mob/living/L = O
+		if(isliving(AM))
+			var/mob/living/L = AM
 			if(wash_mob(L)) //it's a carbon mob.
 				var/mob/living/carbon/C = L
 				C.slip(80,null,NO_SLIP_WHEN_WALKING)
-		else
-			wash_obj(O)
+		else if(is_obj(AM))
+			wash_obj(AM)
 
 
 /obj/machinery/shower/proc/wash_obj(obj/O)
