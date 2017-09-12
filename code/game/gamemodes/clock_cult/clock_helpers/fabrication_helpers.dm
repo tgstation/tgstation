@@ -249,28 +249,6 @@
 			user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops covering [src] with glowing orange energy.</span>", \
 			"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
 
-//Hitting a sigil of transmission will try to charge from it.
-/obj/effect/clockwork/sigil/transmission/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
-	. = TRUE
-	var/list/charge_values = list()
-	if(!fabricator.sigil_charge_checks(charge_values, src, user))
-		return
-	user.visible_message("<span class='notice'>[user]'s [fabricator.name] starts draining glowing orange energy from [src]...</span>", \
-	"<span class='alloy'>You start recharging your [fabricator.name]...</span>")
-	fabricator.recharging = src
-	while(fabricator && user && src)
-		if(!do_after(user, 10, target = src, extra_checks = CALLBACK(fabricator, /obj/item/clockwork/replica_fabricator.proc/sigil_charge_checks, charge_values, src, user, TRUE)))
-			break
-		modify_charge(charge_values["power_gain"])
-		fabricator.modify_stored_power(charge_values["power_gain"])
-		playsound(src, 'sound/effects/light_flicker.ogg', charge_values["power_gain"] * 0.1, 1)
-
-	if(fabricator)
-		fabricator.recharging = null
-		if(user)
-			user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops draining glowing orange energy from [src].</span>", \
-			"<span class='alloy'>You finish recharging your [fabricator.name]. It now contains <b>[DisplayPower(fabricator.get_power())]/[DisplayPower(fabricator.get_max_power())]</b> power.</span>")
-
 //Fabricator mob heal proc, to avoid as much copypaste as possible.
 /mob/living/proc/fabricator_heal(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator)
 	var/list/repair_values = list()

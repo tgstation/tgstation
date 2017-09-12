@@ -328,20 +328,3 @@
 			<b>[DisplayPower(repair_values["amount_to_heal"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)]</b> to fully repair [target == user ? "yourself" : "[target.p_them()]"]!</span>")
 		return FALSE
 	return TRUE
-
-//The sigil charge check proc.
-/obj/item/clockwork/replica_fabricator/proc/sigil_charge_checks(list/charge_values, obj/effect/clockwork/sigil/transmission/sigil, mob/user, silent)
-	if(!islist(charge_values) || QDELETED(sigil) || QDELETED(user))
-		return FALSE
-	if(can_use_power(RATVAR_POWER_CHECK))
-		return FALSE
-	charge_values["power_gain"] = Clamp(sigil.power_charge, 0, POWER_WALL_MINUS_FLOOR)
-	if(!charge_values["power_gain"])
-		if(!silent)
-			to_chat(user, "<span class='warning'>The [sigil.sigil_name] contains no power!</span>")
-		return FALSE
-	if(stored_power + charge_values["power_gain"] > max_power)
-		if(!silent)
-			to_chat(user, "<span class='warning'>Your [name] contains too much power to charge from the [sigil.sigil_name]!</span>")
-		return FALSE
-	return TRUE

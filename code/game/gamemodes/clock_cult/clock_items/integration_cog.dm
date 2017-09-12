@@ -28,10 +28,8 @@
 	else
 		var/obj/item/stock_parts/cell/cell = apc.cell
 		if(cell && (cell.charge / cell.maxcharge > COG_MAX_SIPHON_THRESHOLD))
-			for(var/obj/effect/clockwork/sigil/transmission/T in GLOB.all_clockwork_objects) //Convert APC power into clockwork power at a 5W/1W ratio
-				cell.use(1)
-				T.modify_charge(-0.2 - GLOB.ratvar_approaches)
-				break //Power is shared, so only do it once; this runs very quickly so it's about 1W/second
+			cell.use(1)
+			adjust_clockwork_power(0.2) //Power is shared, so only do it once; this runs very quickly so it's about 1W/second
 		if(prob(1))
 			playsound(apc, 'sound/machines/clockcult/steam_whoosh.ogg', 10, TRUE)
 			new/obj/effect/temp_visual/steam(get_turf(apc), pick(GLOB.cardinals))

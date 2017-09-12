@@ -65,7 +65,7 @@
 				min_power_usable = get_component_cost(i)
 			else
 				min_power_usable = min(min_power_usable, get_component_cost(i))
-		if(total_accessable_power() < min_power_usable)
+		if(!can_access_clockwork_power(src, min_power_usable))
 			to_chat(user, "<span class='nezbere'>\"You need more power to activate this daemon, friend.\"</span>")
 			return
 		var/servants = 0
@@ -92,7 +92,7 @@
 				if(!component_id_to_produce)
 					to_chat(user, "<span class='warning'>You decide not to select a component and activate the daemon.</span>")
 					return
-				if(total_accessable_power() < get_component_cost(component_id_to_produce))
+				if(!can_access_clockwork_power(src, get_component_cost(component_id_to_produce)))
 					to_chat(user, "<span class='warning'>There is too little power to produce this type of component!</span>")
 					return
 				toggle(0, user)

@@ -176,7 +176,7 @@
 		return
 	if(!motor.active) //it being off makes it fall off much faster
 		if(!is_servant && !warned_turnoff)
-			if(motor.total_accessable_power() > motor.mania_cost)
+			if(can_access_clockwork_power(motor, motor.mania_cost))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(turnoff_messages))]\"</span>")
 			else
 				var/pickedmessage = pick(powerloss_messages)
