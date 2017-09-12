@@ -99,10 +99,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "ax" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "ay" = (
 /obj/structure/window/shuttle,
@@ -114,10 +111,7 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "aA" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "aB" = (
 /obj/structure/grille{
@@ -190,7 +184,7 @@
 	name = "The Lighthouse";
 	roundstart_move = "ferry_away";
 	timid = 1;
-	port_angle = 180;
+	port_direction = 2;
 	width = 16
 	},
 /turf/open/floor/mineral/titanium/blue,

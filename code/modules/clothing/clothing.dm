@@ -22,7 +22,6 @@
 	var/cooldown = 0
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
-	var/gang //Is this a gang outfit?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
@@ -162,7 +161,7 @@
 		update_clothes_damaged_state(TRUE)
 	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
 		var/mob/M = loc
-		M.visible_message("<span class='warning'>[M]'s [name] starts to fall apart!", "<span class='warning'>Your [name] starts to fall apart!")
+		M.visible_message("<span class='warning'>[M]'s [name] starts to fall apart!", "<span class='warning'>Your [name] starts to fall apart!</span>")
 
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
 	var/index = "\ref[initial(icon)]-[initial(icon_state)]"

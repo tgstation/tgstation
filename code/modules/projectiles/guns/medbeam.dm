@@ -101,7 +101,7 @@
 				qdel(dummy)
 				return 0
 		for(var/obj/effect/ebeam/medical/B in turf)// Don't cross the str-beams!
-			if(B.owner != current_beam)
+			if(B.owner.origin != current_beam.origin)
 				explosion(B.loc,0,3,5,8)
 				qdel(dummy)
 				return 0

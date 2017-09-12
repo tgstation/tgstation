@@ -228,22 +228,6 @@
 	name = "Telecommunications Server Monitor (Computer Board)"
 	build_path = /obj/machinery/computer/telecomms/server
 
-/obj/item/circuitboard/computer/shuttle
-	name = "Shuttle (Computer Board)"
-	build_path = /obj/machinery/computer/shuttle
-	var/shuttleId
-	var/possible_destinations = ""
-
-/obj/item/circuitboard/computer/shuttle/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/multitool))
-		var/chosen_id = round(input(usr, "Choose an ID number (-1 for reset):", "Input an Integer", null) as num|null)
-		if(chosen_id >= 0)
-			shuttleId = chosen_id
-		else
-			shuttleId = initial(shuttleId)
-	else
-		return ..()
-
 /obj/item/circuitboard/computer/labor_shuttle
 	name = "Labor Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/labor
@@ -305,7 +289,7 @@
 	name = "\improper Power Flow Control Console (Computer Board)"
 	build_path = /obj/machinery/computer/apc_control
 
-/obj/item/circuitboard/computer/shuttle/monastery_shuttle
+/obj/item/circuitboard/computer/monastery_shuttle
 	name = "Monastery Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/monastery_shuttle
 

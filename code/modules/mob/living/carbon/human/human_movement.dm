@@ -28,6 +28,7 @@
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_move(src, NewLoc)
+
 	if(shoes)
 		if(!lying && !buckled)
 			if(loc == NewLoc)
@@ -55,7 +56,6 @@
 				//End bloody footprints
 
 				S.step_action()
-
 /mob/living/carbon/human/Moved()
 	. = ..()
 	if(buckled_mobs && buckled_mobs.len && riding_datum)

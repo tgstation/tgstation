@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	callTime = 600
 
 	dir = WEST
-	port_angle = 90
+	port_direction = EAST
 	width = 12
 	dwidth = 5
 	height = 7
@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	SSshuttle.supply = src
 
 /obj/docking_port/mobile/supply/canMove()
-	if(z == ZLEVEL_STATION)
+	if(z in GLOB.station_z_levels)
 		return check_blacklist(shuttle_areas)
 	return ..()
 
@@ -67,7 +67,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/dock()
 	if(getDockedId() == "supply_away") // Buy when we leave home.
 		buy()
-	if(..()) // Fly/enter transit.
+	. = ..() // Fly/enter transit.
+	if(. != DOCKING_SUCCESS)
 		return
 	if(getDockedId() == "supply_away") // Sell when we get home
 		sell()

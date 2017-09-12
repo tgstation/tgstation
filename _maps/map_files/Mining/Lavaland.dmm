@@ -3420,6 +3420,10 @@
 /obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel,
 /area/mine/production)
+"Wz" = (
+/obj/effect/mapping_helpers/planet_z,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aa
@@ -3676,7 +3680,7 @@ aj
 aj
 aj
 aj
-aj
+Wz
 "}
 (2,1,1) = {"
 aa

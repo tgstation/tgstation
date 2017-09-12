@@ -368,11 +368,6 @@
 	desc = "An illegally modified .50 cal sniper rifle with suppression compatibility. Quickscoping still doesn't work."
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
-/obj/item/gun/ballistic/automatic/sniper_rifle/gang
-	name = "black market sniper rifle"
-	desc = "A long ranged weapon that does significant damage. It is well worn from years of service."
-	mag_type = /obj/item/ammo_box/magazine/sniper_rounds/gang
-
 // Old Semi-Auto Rifle //
 
 /obj/item/gun/ballistic/automatic/surplus

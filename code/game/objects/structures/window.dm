@@ -105,6 +105,7 @@
 	qdel(src)
 
 /obj/structure/window/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 

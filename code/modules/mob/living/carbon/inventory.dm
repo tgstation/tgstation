@@ -95,24 +95,30 @@
 
 	if(I == head)
 		head = null
-		head_update(I)
+		if(!QDELETED(src))
+			head_update(I)
 	else if(I == back)
 		back = null
-		update_inv_back()
+		if(!QDELETED(src))
+			update_inv_back()
 	else if(I == wear_mask)
 		wear_mask = null
-		wear_mask_update(I, toggle_off = 1)
+		if(!QDELETED(src))
+			wear_mask_update(I, toggle_off = 1)
 	if(I == wear_neck)
 		wear_neck = null
-		update_inv_neck(I)
+		if(!QDELETED(src))
+			update_inv_neck(I)
 	else if(I == handcuffed)
 		handcuffed = null
 		if(buckled && buckled.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
-		update_handcuffed()
+		if(!QDELETED(src))
+			update_handcuffed()
 	else if(I == legcuffed)
 		legcuffed = null
-		update_inv_legcuffed()
+		if(!QDELETED(src))
+			update_inv_legcuffed()
 
 //handle stuff to update when a mob equips/unequips a mask.
 /mob/living/proc/wear_mask_update(obj/item/clothing/C, toggle_off = 1)

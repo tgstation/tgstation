@@ -132,7 +132,7 @@
 
 /datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
-		if(isAI(A) && A.stat != 2) //See if any AI's are alive inside that card.
+		if(isAI(A) && A.stat != DEAD) //See if any AI's are alive inside that card.
 			return 1
 	return 0
 
@@ -186,7 +186,7 @@
 	return ..()
 
 //Old ninja objectives.
-/datum/objective_item/special/pinpointer
+/datum/objective_item/special/pinpointer/nuke
 	name = "the captain's pinpointer."
 	targetitem = /obj/item/pinpointer
 	difficulty = 10

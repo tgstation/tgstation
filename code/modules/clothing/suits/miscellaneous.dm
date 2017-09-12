@@ -280,6 +280,7 @@
 	body_parts_covered = HEAD
 	flags_1 = THICKMATERIAL_1
 	flags_inv = HIDEHAIR|HIDEEARS
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
 	name = "bloated human suit"
@@ -413,6 +414,24 @@
 	icon_state = "letterman_n"
 	item_state = "letterman_n"
 
+/obj/item/clothing/suit/dracula
+	name = "dracula coat"
+	desc = "Looks like this belongs in a very old movie set"
+	icon_state = "draculacoat"
+	item_state = "draculacoat"
+
+/obj/item/clothing/suit/drfreeze_coat
+	name = "doctor freeze's labcoat"
+	desc = "A labcoat imbued with the power of features and freezes."
+	icon_state = "drfreeze_coat"
+	item_state = "drfreeze_coat"
+
+/obj/item/clothing/suit/gothcoat
+	name = "gothic coat"
+	desc = "Perfect for those who want stalk in a corner of a bar."
+	icon_state = "gothcoat"
+	item_state = "gothcoat"
+
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
 	desc = "A suit made out of chitinous alien hide."
@@ -421,6 +440,14 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
+
+/obj/item/clothing/suit/nemes
+	name = "pharoah tunic"
+	desc = "Lavish space tomb not included."
+	icon_state = "pharoah"
+	icon_state = "pharoah"
+	body_parts_covered = CHEST|GROIN
+
 
 
 // WINTER COATS

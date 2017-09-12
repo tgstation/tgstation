@@ -32,8 +32,6 @@
 	var/selected_category
 	var/screen = 1
 
-	var/datum/material_container/materials
-
 	var/list/categories = list(
 							"Tools",
 							"Electronics",
@@ -48,15 +46,15 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS))
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS))
+	. = ..()
+
 	wires = new /datum/wires/autolathe(src)
 	stored_research = new /datum/techweb/autolathe
 	matching_designs = list()
-	return ..()
 
 /obj/machinery/autolathe/Destroy()
 	QDEL_NULL(wires)
-	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/autolathe/interact(mob/user)
@@ -81,6 +79,7 @@
 	popup.open()
 
 /obj/machinery/autolathe/on_deconstruction()
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
@@ -122,42 +121,26 @@
 		busy = FALSE
 		return TRUE
 
-	if(O.flags_2 & HOLOGRAM_2)
-		return TRUE
+	return ..()
 
-	var/material_amount = materials.get_item_material_amount(O)
-	if(!material_amount)
-		to_chat(user, "<span class='warning'>This object does not contain sufficient amounts of metal or glass to be accepted by the autolathe.</span>")
-		return TRUE
-	if(!materials.has_space(material_amount))
-		to_chat(user, "<span class='warning'>The autolathe is full. Please remove metal or glass from the autolathe in order to insert more.</span>")
-		return TRUE
-	if(!user.temporarilyRemoveItemFromInventory(O))
-		to_chat(user, "<span class='warning'>\The [O] is stuck to you and cannot be placed into the autolathe.</span>")
-		return TRUE
-
-	busy = TRUE
-	var/inserted = materials.insert_item(O)
-	if(inserted)
-		if(istype(O, /obj/item/stack))
-			if (O.materials[MAT_METAL])
-				flick("autolathe_o",src)//plays metal insertion animation
-			if (O.materials[MAT_GLASS])
-				flick("autolathe_r",src)//plays glass insertion animation
-			to_chat(user, "<span class='notice'>You insert [inserted] sheet[inserted>1 ? "s" : ""] to the autolathe.</span>")
-			use_power(inserted*100)
-			if(!QDELETED(O))
-				user.put_in_active_hand(O)
+/obj/machinery/mecha_part_fabricator/ComponentActivated(datum/component/C)
+	..()
+	if(istype(C, /datum/component/material_container))
+		var/datum/component/material_container/M = C
+		if(!M.last_insert_success)
+			return
+		var/lit = M.last_inserted_type
+		if(ispath(lit, /obj/item/ore/bluespace_crystal))
+			use_power(max(500,M.last_amount_inserted/10))
 		else
-			to_chat(user, "<span class='notice'>You insert a material total of [inserted] to the autolathe.</span>")
-			use_power(max(500,inserted/10))
-			qdel(O)
-	else
-		user.put_in_active_hand(O)
-
-	busy = FALSE
-	updateUsrDialog()
-	return TRUE
+			var/obj/item/stack/S = lit
+			var/list/initmats = initial(S.materials)
+			if (initmats[MAT_METAL])
+				flick("autolathe_o",src)//plays metal insertion animation
+			if (initmats[MAT_GLASS])
+				flick("autolathe_r",src)//plays glass insertion animation
+			use_power(M.last_amount_inserted*100)
+		updateUsrDialog()
 
 /obj/machinery/autolathe/Topic(href, href_list)
 	if(..())
@@ -192,6 +175,7 @@
 
 			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
 
+			GET_COMPONENT(materials, /datum/component/material_container)
 			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
@@ -245,6 +229,7 @@
 	var/T = 0
 	for(var/obj/item/stock_parts/matter_bin/MB in component_parts)
 		T += MB.rating*75000
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.max_amount = T
 	T=1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -293,6 +278,7 @@
 			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
 
 		if(ispath(D.build_path, /obj/item/stack))
+			GET_COMPONENT(materials, /datum/component/material_container)
 			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=10'>x10</a>"
@@ -324,6 +310,7 @@
 			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
 
 		if(ispath(D.build_path, /obj/item/stack))
+			GET_COMPONENT(materials, /datum/component/material_container)
 			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=10'>x10</a>"
@@ -338,6 +325,7 @@
 	return dat
 
 /obj/machinery/autolathe/proc/materials_printout()
+	GET_COMPONENT(materials, /datum/component/material_container)
 	var/dat = "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
@@ -350,6 +338,7 @@
 
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff * amount)))
 		return FALSE
 	if(D.materials[MAT_GLASS] && (materials.amount(MAT_GLASS) < (D.materials[MAT_GLASS] * coeff * amount)))

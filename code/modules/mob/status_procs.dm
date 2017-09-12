@@ -146,7 +146,7 @@
 		var/old_eye_blind = eye_blind
 		eye_blind = max(eye_blind, amount)
 		if(!old_eye_blind)
-			if(stat == CONSCIOUS)
+			if(stat == CONSCIOUS || stat == SOFT_CRIT)
 				throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 
@@ -155,12 +155,12 @@
 		var/old_eye_blind = eye_blind
 		eye_blind += amount
 		if(!old_eye_blind)
-			if(stat == CONSCIOUS)
+			if(stat == CONSCIOUS || stat == SOFT_CRIT)
 				throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 	else if(eye_blind)
 		var/blind_minimum = 0
-		if(stat != CONSCIOUS || (disabilities & BLIND))
+		if((stat != CONSCIOUS && stat != SOFT_CRIT) || (disabilities & BLIND))
 			blind_minimum = 1
 		eye_blind = max(eye_blind+amount, blind_minimum)
 		if(!eye_blind)
@@ -172,12 +172,12 @@
 		var/old_eye_blind = eye_blind
 		eye_blind = amount
 		if(client && !old_eye_blind)
-			if(stat == CONSCIOUS)
+			if(stat == CONSCIOUS || stat == SOFT_CRIT)
 				throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 	else if(eye_blind)
 		var/blind_minimum = 0
-		if(stat != CONSCIOUS || (disabilities & BLIND))
+		if((stat != CONSCIOUS && stat != SOFT_CRIT) || (disabilities & BLIND))
 			blind_minimum = 1
 		eye_blind = blind_minimum
 		if(!eye_blind)
