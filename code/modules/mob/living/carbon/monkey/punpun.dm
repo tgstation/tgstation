@@ -76,6 +76,6 @@
 	if(!ancestor_name)
 		file_data["ancestor_name"] = name
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(json_file))
+	WRITE_FILE(json_file, json_encode(file_data))
 	if(!dead)
 		memory_saved = 1
