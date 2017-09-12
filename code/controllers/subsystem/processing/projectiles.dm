@@ -4,6 +4,7 @@ PROCESSING_SUBSYSTEM_DEF(projectiles)
 	wait = 1
 	stat_tag = "PP"
 	flags = SS_NO_INIT|SS_TICKER|SS_KEEP_TIMING
+
 /datum/controller/subsystem/processing/projectiles/fire(resumed = 0)
 	if (!resumed)
 		currentrun = processing.Copy()

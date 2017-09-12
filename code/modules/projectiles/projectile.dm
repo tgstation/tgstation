@@ -26,6 +26,8 @@
 	//Fired processing vars
 	var/fired = FALSE	//Have we been fired yet
 	var/paused = FALSE	//for suspending the projectile midair
+	var/last_projectile_move = 0
+	var/time_offset = 0
 	var/old_pixel_x = 0
 	var/old_pixel_y = 0
 	var/Pixel_x = 0
@@ -34,7 +36,6 @@
 	var/pixel_y_offset = 0
 	var/new_x = 0
 	var/new_y = 0
-	var/next_run = 0
 
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
@@ -211,13 +212,17 @@
 /obj/item/projectile/process()
 	if(!loc || !fired)
 		return PROCESS_KILL
-	if(paused || !Angle || !isturf(loc) || (next_run > world.time))
+	if(paused || !Angle || !isturf(loc))
 		return
-	if(legacy)
-		legacy_move()	//Someone fucking kill legacy projectiles.
-		return
-	next_run = world.time
-	pixel_move()
+	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
+	var/moves = Floor(elapsed_time_deciseconds / speed)
+	time_offset = elapsed_time_deciseconds % speed
+	for(var/i in 1 to moves)
+		if(legacy)
+			legacy_move()	//Someone fucking kill legacy projectiles.
+			return
+		pixel_move(moves)
+	last_projectile_move = world.time
 
 /obj/item/projectile/proc/fire(setAngle, atom/direct_target)
 	if(!log_override && firer && original)
@@ -234,7 +239,7 @@
 	fired = TRUE
 	START_PROCESSING(SSprojectiles, src)
 
-/obj/item/projectile/proc/pixel_move()
+/obj/item/projectile/proc/pixel_move(moves)
 	if((!( current ) || loc == current))
 		current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 
@@ -274,13 +279,8 @@
 	pixel_x = old_pixel_x
 	pixel_y = old_pixel_y
 	step_towards(src, locate(new_x, new_y, z))
-	next_run += max(world.tick_lag, speed)
-	var/delay = next_run - world.time
-	if(delay <= world.tick_lag*2)
-		pixel_x = pixel_x_offset
-		pixel_y = pixel_y_offset
-	else
-		animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
+	var/animation_time = ((SSprojectiles.flags & SS_TICKER? (SSprojectiles.wait * world.tick_lag) : SSprojectiles.wait) / moves)
+	animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = animation_time, flags = ANIMATION_END_NOW)
 	old_pixel_x = pixel_x_offset
 	old_pixel_y = pixel_y_offset
 	if(can_hit_target(original, permutated))
