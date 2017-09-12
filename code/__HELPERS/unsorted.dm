@@ -1437,6 +1437,8 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 	f = null
 	fdel(temp_file)
 
+#define UNTIL(X) while(!(X)) stoplag()
+
 /proc/pass()
 	return
 

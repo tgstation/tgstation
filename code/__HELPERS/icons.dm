@@ -925,28 +925,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		return J
 	return 0
 
-//Inefficient pooling/caching way.
-GLOBAL_LIST_INIT(human_dummy_list, list())	//Dummy mob = In use (TRUE/FALSE)
-
-/proc/generate_or_wait_for_human_dummy(slotkey)
-	if(!slotkey)
-		return new /mob/living/carbon/human/dummy
-	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotkey]
-	if(!D)
-		D = new
-		GLOB.human_dummy_list[slotkey] = D
-	UNTIL(!D.in_use)
-	D.in_use = TRUE
-	return D
-
-/proc/unset_busy_human_dummy(slotnumber)
-	if(!slotnumber)
-		return
-	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotnumber]
-	if(istype(D))
-		D.wipe_state()
-		D.in_use = FALSE
-
 //For creating consistent icons for human looking simple animals
 /proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key)
 	var/static/list/humanoid_icon_cache = list()
