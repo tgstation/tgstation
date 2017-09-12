@@ -313,8 +313,8 @@
 	else
 		return ..()
 
-/obj/structure/disposalpipe/attack_hand(mob/user)
-	if(stored.ptype == DISP_4JUNCTION)
+/obj/structure/disposalconstruct/attack_hand(mob/user)
+	if(ptype == DISP_4JUNCTION)
 		setDir(turn(dir, -90))
 		dpdir = dir
 		update_icon()

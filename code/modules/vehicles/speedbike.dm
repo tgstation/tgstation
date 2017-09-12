@@ -35,7 +35,7 @@
 	icon_state = "atmo_bike"
 	overlay_state = "cover_atmo"
 	var/obj/machinery/portable_atmospherics/scrubber/huge/internal_scubber = null
-	var/obj/item/weapon/extinguisher/vehicle/internal_extinguisher = null
+	var/obj/item/extinguisher/vehicle/internal_extinguisher = null
 	var/ex_out = FALSE
 	var/obj/machinery/portable_atmospherics/canister/proto/default/oxygen/CAN = null
 	var/loaded = TRUE
@@ -45,12 +45,12 @@
 	. = ..()
 	internal_scubber = new /obj/machinery/portable_atmospherics/scrubber/huge(src)
 	internal_scubber.on = 1
-	internal_extinguisher = new /obj/item/weapon/extinguisher/vehicle(src)
+	internal_extinguisher = new /obj/item/extinguisher/vehicle(src)
 	internal_extinguisher.vehicle = src
 	CAN = new /obj/machinery/portable_atmospherics/canister/oxygen(src)
 //	CAN = new /obj/machinery/portable_atmospherics/canister/proto/default/oxygen(src)
 
-/obj/item/weapon/extinguisher/vehicle
+/obj/item/extinguisher/vehicle
 	name = "extinguisher nozzle"
 	desc = "A heavy duty nozzle attached to a massive reserve tank."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
@@ -64,7 +64,7 @@
 	recoil = 0
 	var/obj/vehicle/space/speedbike/atmos/vehicle = null
 
-/obj/item/weapon/extinguisher/vehicle/dropped(mob/user)
+/obj/item/extinguisher/vehicle/dropped(mob/user)
 	..()
 	user << "<span class='notice'>The fire hose snaps back into the [src]!</span>"
 	playsound(get_turf(src),'sound/items/change_jaws.ogg', 75, 1)
@@ -102,10 +102,10 @@
 		qdel(H)
 
 /datum/action/innate/atmos_bike
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
 	var/obj/vehicle/space/speedbike/atmos/bike
 	var/obj/machinery/portable_atmospherics/scrubber/huge/inner_scrubber
-	var/obj/item/weapon/extinguisher/vehicle/VEX
+	var/obj/item/extinguisher/vehicle/VEX
 
 /datum/action/innate/atmos_bike/Grant(mob/living/L, obj/vehicle/B)
 	bike = B
@@ -273,7 +273,7 @@
 	icon_state = "engi_bike"
 	overlay_state = "cover_engi"
 	var/obj/machinery/repair_turret/turret = null
-	var/obj/item/weapon/inducer/vehicle/mounted = null
+	var/obj/item/inducer/vehicle/mounted = null
 	var/inducer_out = FALSE
 	light_range = 7
 
@@ -281,7 +281,7 @@
 /obj/vehicle/space/speedbike/repair/Initialize()
 	. = ..()
 	turret = new(loc)
-	mounted = new(loc)
+	mounted = new(src)
 	mounted.vehicle = src
 
 /obj/vehicle/space/speedbike/repair/buckle_mob(mob/living/M, force = 0, check_loc = 1)
@@ -300,7 +300,7 @@
 		qdel(H)
 
 /datum/action/innate/repair_bike
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
 	var/obj/vehicle/space/speedbike/repair/bike
 	var/obj/machinery/repair_turret/tesla
 
@@ -357,7 +357,7 @@
 	name = "Equip power inducer"
 	desc = "Used to charge power cells in weapons and APCs"
 	button_icon_state = "flightpack_power"
-	var/obj/item/weapon/inducer/vehicle = null
+	var/obj/item/inducer/vehicle = null
 
 /datum/action/innate/repair_bike/induction/Activate()
 	if(!bike.inducer_out)
@@ -426,7 +426,7 @@
 		var/N = 0
 		var/list/C = list()
 		new /obj/effect/temp_visual/small_smoke(target_loc)
-		for(var/obj/item/weapon/shard/S in range(1,target_loc))
+		for(var/obj/item/shard/S in range(1,target_loc))
 			C += S
 		if(C.len >= 2)
 			cooldown = world.time + 120

@@ -270,7 +270,6 @@
 				R.turret.pixel_y = 10
 
 
-
 datum/riding/space/speedbike/atmos
 	vehicle_move_delay = 1
 
