@@ -146,9 +146,9 @@
 
 /obj/effect/temp_visual/goliath_tentacle/Initialize(mapload, mob/living/new_spawner)
 	. = ..()
-	var/tentacle_found = locate(/obj/effect/temp_visual/goliath_tentacle) in loc
-	if(tentacle_found != src)
-		return INITIALIZE_HINT_QDEL
+	for(var/obj/effect/temp_visual/goliath_tentacle/T in loc)
+		if(T != src)
+			return INITIALIZE_HINT_QDEL
 	if(!QDELETED(new_spawner))
 		spawner = new_spawner
 	if(ismineralturf(loc))
