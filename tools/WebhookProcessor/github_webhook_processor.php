@@ -443,9 +443,18 @@ function auto_update($payload){
 	
 	$content = file_get_contents('https://raw.githubusercontent.com/' . $repoOwnerAndName . '/' . $tracked_branch . '/'. $path_to_script);
 
-	create_comment($payload, "Edit detected. Self updating... Here is my new code:\n``" . "`HTML+PHP\n" . $content . "\n``" . '`');
+	$comment = 'Edit detected. Self updating... Here is ';
+	$path_to_self = basename($path_to_script);
+	if(function_exists("xdiff_string_diff")){
+		$old = file_get_contents($path_to_self);
+		$diff = xdiff_string_diff($old, $content, 3);
+		$comment .= "the diff of my new/old code:\n``" . "`diff\n" . $diff . "\n``" . '`';
+	}
+	else
+		$comment .= "my new code (install [xdiff](https://pecl.php.net/package/xdiff/1.5.2/windows) to make this a diff instead):\n``" . "`HTML+PHP\n" . $content . "\n``" . '`';
+	create_comment($payload, $comment);
 
-	$code_file = fopen(basename($path_to_script), 'w');
+	$code_file = fopen($path_to_self, 'w');
 	fwrite($code_file, $content);
 	fclose($code_file);
 }
