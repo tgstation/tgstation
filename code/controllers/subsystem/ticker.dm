@@ -834,12 +834,10 @@ SUBSYSTEM_DEF(ticker)
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
+		'sound/roundend/gravity.ogg',
+		'sound/roundend/some_trouble.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))
