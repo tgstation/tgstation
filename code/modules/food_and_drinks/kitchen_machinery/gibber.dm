@@ -186,11 +186,11 @@
 		var/turf/T = get_turf(src)
 		var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
 		if(skin)
-			skin.loc = loc
+			skin.loc = forceMove(loc)
 			skin.throw_at(pick(nearby_turfs),meat_produced,3)
 		for (var/i=1 to meat_produced)
 			var/obj/item/meatslab = allmeat[i]
-			meatslab.loc = src.loc
+			meatslab.loc = forceMove(loc)
 			meatslab.throw_at(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced)
 				var/turf/gibturf = pick(nearby_turfs)
