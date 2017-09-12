@@ -101,12 +101,9 @@ PROBABILITY DEVIL_AGENTS 0
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
 
-## Percent weight reductions for three of the most recent modes where the top figure is the most recent.
+## Percent weight reductions for three of the most recent modes
 
-ADJUST 45
-ADJUST 30
-ADJUST 10
-
+REPEATED_MODE_ADJUST 45 30 10
 
 ## Toggles for continuous modes.
 ## Modes that aren't continuous will end the instant all antagonists are dead.
