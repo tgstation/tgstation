@@ -7,6 +7,7 @@ GLOBAL_LIST_EMPTY(chempiles)
 	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/chempile/examine(mob/user)
+	. = ..()
 	if(user.research_scanner || isobserver(user))
 		if(LAZYLEN(reagents.reagent_list)) //find a reagent list if there is and check if it has entries
 			to_chat(user, "<span class='notice'>Chemical contents:</span>")
