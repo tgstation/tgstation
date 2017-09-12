@@ -31,7 +31,7 @@
 	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/cat/Initialize()
-	..()
+	. = ..()
 	verbs += /mob/living/proc/lay_down
 
 /mob/living/simple_animal/pet/cat/update_canmove()
@@ -91,7 +91,7 @@
 		icon_living = "original"
 		icon_dead = "original_dead"
 	Read_Memory()
-	..()
+	. = ..()
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)

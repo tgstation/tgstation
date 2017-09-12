@@ -622,7 +622,7 @@
 		if(3)
 			var/count = 0
 			for(var/mob/living/carbon/monkey/Monkey in world)
-				if(Monkey.z == ZLEVEL_STATION)
+				if(Monkey.z in GLOB.station_z_levels)
 					count++
 			return "Kill all [count] of the monkeys on the station"
 		if(4)
