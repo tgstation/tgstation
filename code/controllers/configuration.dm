@@ -133,7 +133,7 @@ GLOBAL_PROTECT(config_dir)
 	var/list/probabilities = list()		// relative probability of each mode
 	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
 	var/list/max_pop = list()
-	var/list/adjust = list() 			// weight adjustments for recent modes
+	var/list/repeated_mode_adjust = list() 			// weight adjustments for recent modes
 
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
@@ -710,9 +710,12 @@ GLOBAL_PROTECT(config_dir)
 							WRITE_FILE(GLOB.config_error_log, "Unknown game mode probability configuration definition: [prob_name].")
 					else
 						WRITE_FILE(GLOB.config_error_log, "Incorrect probability configuration definition: [prob_name]  [prob_value].")
-				if("adjust")
+				if("repeated_mode_adjust")
 					if(value)
-						adjust += text2num(value)
+						repeated_mode_adjust.Cut()
+						var/values = splittext(value," ")
+						for(var/v in values)
+							repeated_mode_adjust += text2num(v)
 					else
 						WRITE_FILE(GLOB.config_error_log, "Incorrect round weight adjustment configuration definition for [value].")
 				if("protect_roles_from_antagonist")
@@ -966,12 +969,13 @@ GLOBAL_PROTECT(config_dir)
 			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
 			var/final_weight = probabilities[M.config_tag]
-			var/recent_round = SSpersistence.saved_modes.Find(M.config_tag)
-			var/adjustment
-			while(recent_round)
-				adjustment += adjust[recent_round]
-				recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
-			final_weight *= ((100-adjustment)/100)
+			if(SSpersistence.saved_modes.len == 3 && repeated_mode_adjust.len == 3)
+				var/recent_round = min(SSpersistence.saved_modes.Find(M.config_tag),3)
+				var/adjustment = 0
+				while(recent_round)
+					adjustment += repeated_mode_adjust[recent_round]
+					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
+				final_weight *= ((100-adjustment)/100)
 			runnable_modes[M] = final_weight
 	return runnable_modes
 
