@@ -178,7 +178,7 @@
 		SSblackbox.add_details("wisp_lantern","Returned")
 
 /obj/item/device/wisp_lantern/Initialize()
-	..()
+	. = ..()
 	wisp = new(src)
 
 /obj/item/device/wisp_lantern/Destroy()

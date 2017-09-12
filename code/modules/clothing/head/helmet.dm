@@ -195,7 +195,7 @@
 	flags_2 = NONE
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
-	..()
+	. = ..()
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"

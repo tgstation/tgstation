@@ -152,7 +152,7 @@
 	var/static/arena_reset = FALSE
 
 /obj/machinery/capture_the_flag/Initialize()
-	..()
+	. = ..()
 	if(!ctf_object_typecache)
 		ctf_object_typecache = typecacheof(list(
 			/turf,
@@ -613,7 +613,7 @@
 	icon_state = "barrier0"
 
 /obj/effect/ctf/dead_barricade/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		CTF.dead_barricades += src
 
