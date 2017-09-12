@@ -8,7 +8,7 @@
 		if(I.reagents.has_reagent("radium", a_transfer) && a_boost < a_maxamount)
 			I.reagents.remove_reagent("radium", a_transfer)
 			a_boost++;
-			to_chat(U, "<span class='notice'>There are now [a_boost] adrenaline boosts remaining.</notice>")
+			to_chat(U, "<span class='notice'>There are now [a_boost] adrenaline boosts remaining.</span>")
 			return
 
 	else if(istype(I, /obj/item/stock_parts/cell))

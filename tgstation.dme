@@ -1685,6 +1685,7 @@
 #include "code\modules\mob\living\simple_animal\friendly\dog.dm"
 #include "code\modules\mob\living\simple_animal\friendly\farm_animals.dm"
 #include "code\modules\mob\living\simple_animal\friendly\fox.dm"
+#include "code\modules\mob\living\simple_animal\friendly\gondola.dm"
 #include "code\modules\mob\living\simple_animal\friendly\lizard.dm"
 #include "code\modules\mob\living\simple_animal\friendly\mouse.dm"
 #include "code\modules\mob\living\simple_animal\friendly\penguin.dm"

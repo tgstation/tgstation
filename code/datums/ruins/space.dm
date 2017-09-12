@@ -18,6 +18,7 @@
 	name = "Asteroid 1"
 	description = "I-spy with my little eye, something beginning with R."
 
+
 /datum/map_template/ruin/space/asteroid2
 	id = "asteroid2"
 	suffix = "asteroid2.dmm"
@@ -248,3 +249,9 @@
 	suffix = "miracle.dmm"
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"
+
+/datum/map_template/ruin/space/gondoland
+	id = "gondolaasteroid"
+	suffix = "gondolaasteroid.dmm"
+	name = "Gondoland"
+	description = "Just an ordinary rock- wait, what's that thing?"
