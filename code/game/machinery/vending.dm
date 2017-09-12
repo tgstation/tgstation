@@ -1158,8 +1158,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/suit/syndicatefake = 5,
 					/obj/item/clothing/head/syndicatefake = 5) //OPS IN DORMS oh wait it's just a assistant
 	contraband = list(/obj/item/gun/ballistic/shotgun/toy/crossbow = 10,   //Congrats, you unlocked the +18 setting!
-						/obj/item/gun/ballistic/automatic/c20r/toy/riot/unrestricted = 10,
-						/obj/item/gun/ballistic/automatic/l6_saw/toy/riot/unrestricted = 10,
+						/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot = 10,
+						/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot = 10,
 						/obj/item/ammo_box/foambox/riot = 20,
 						/obj/item/toy/katana = 10,
 						/obj/item/twohanded/dualsaber/toy = 5,
