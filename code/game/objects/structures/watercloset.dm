@@ -375,11 +375,10 @@
 	if(on)
 		wash_turf()
 		for(var/atom/movable/G in loc)
-			if(isliving(G))
-				var/mob/living/L = G
-				wash_mob(L)
-			else
-				wash_obj(G)
+			if(isliving(AM))
+				wash_mob(AM)
+			else if(isobj(AM))
+				wash_obj(AM)
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal (loc, 3)
