@@ -6,8 +6,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.90
 	strip_delay = 10
-	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
-	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 	var/used = FALSE
 
 /obj/item/clothing/mask/hippie/tape/attack_hand(mob/user as mob)
@@ -48,6 +46,8 @@
 	desc = "It's duct tape. You can use it to tape something... or someone."
 	name = "duct tape"
 	icon = 'hippiestation/icons/obj/bureaucracy.dmi'
+	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 	icon_state = "tape"
 	item_state = "tape"
 	amount = 15
