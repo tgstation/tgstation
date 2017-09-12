@@ -176,7 +176,7 @@ function tag_pr($payload, $opened) {
 	else if ($mergable === FALSE)
 		$tags[] = 'Merge Conflict';
 
-	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL');
+	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL', 'strings/brain_damage_lines.json' => 'Brain Damage Line');
 	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound', 'config' => 'Config Update');
 	foreach($treetags as $tree => $tag)
 		if(has_tree_been_edited($payload, $tree))
@@ -373,6 +373,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Feature' => -1,
 		'Balance/Rebalance' => -1,
 		'Tweak' => -1,
+		'Brain Damage Line' => -10,
 		'PRB: Reset' => $startingPRBalance - $oldbalance,
 	);
 
