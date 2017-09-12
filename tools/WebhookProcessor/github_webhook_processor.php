@@ -18,6 +18,22 @@
 //CONFIG START (all defaults are random examples, do change them)
 //Use single quotes for config options that are strings.
 
+//These are all default settings that are described in secret.php
+$hookSecret = '08ajh0qj93209qj90jfq932j32r';
+$apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
+$repoOwnerAndName = "tgstation/tgstation";
+$servers = array();
+$enable_live_tracking = true;
+$path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
+$tracked_branch = "master";
+$trackPRBalance = true;
+$prBalanceJson = '';
+$startingPRBalance = 3;
+$maintainer_team_id = 133041;
+$validation = "org";
+$validation_count = 1;
+$tracked_branch = 'master';
+
 require_once 'secret.php';
 
 //CONFIG END
