@@ -84,7 +84,7 @@
 	del_on_death = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
-	..()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/death), 100)
 
 //Legion
