@@ -300,7 +300,8 @@ function handle_pr($payload) {
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
 		case 'opened':
-			tag_pr($payload, true);
+			if(!is_maintainer($payload, $payload['pull_request']['user']['login']))
+				tag_pr($payload, true);
 			if(get_pr_code_friendliness($payload) < 0){
 				$balances = pr_balances();
 				$author = $payload['pull_request']['user']['login'];
