@@ -15,10 +15,8 @@
  */
 
 
-//CONFIG START (all defaults are random examples, do change them)
-//Use single quotes for config options that are strings.
+//CONFIGS ARE IN SECRET.PHP, THESE ARE JUST DEFAULTS!
 
-//These are all default settings that are described in secret.php
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
 $repoOwnerAndName = "tgstation/tgstation";
@@ -43,6 +41,7 @@ set_error_handler(function($severity, $message, $file, $line) {
 set_exception_handler(function($e) {
 	header('HTTP/1.1 500 Internal Server Error');
 	echo "Error on line {$e->getLine()}: " . htmlSpecialChars($e->getMessage());
+	file_put_contents('htwebhookerror.log', "Error on line {$e->getLine()}: " . $e->getMessage(), FILE_APPEND);
 	die();
 });
 $rawPost = NULL;
