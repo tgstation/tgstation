@@ -1,6 +1,0 @@
-author: "Thefastfoodguy"
-delete-after: True
-changes: 
-  - rscadd: "Geis now converts"
-  - rscadd: "Readded sigils of accession"
-  - rscadd: "Sigils of Submission now require scripts driver"
