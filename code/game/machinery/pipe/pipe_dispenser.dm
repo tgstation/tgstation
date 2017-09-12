@@ -144,6 +144,7 @@ Nah
 <A href='?src=\ref[src];dmake=[DISP_PIPE_BENT]'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];dmake=[DISP_JUNCTION]'>Junction</A><BR>
 <A href='?src=\ref[src];dmake=[DISP_YJUNCTION]'>Y-Junction</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_4JUNCTION]'>4-Junction</A><BR>
 <A href='?src=\ref[src];dmake=[DISP_END_TRUNK]'>Trunk</A><BR>
 <A href='?src=\ref[src];dmake=[DISP_END_BIN]'>Bin</A><BR>
 <A href='?src=\ref[src];dmake=[DISP_END_OUTLET]'>Outlet</A><BR>
