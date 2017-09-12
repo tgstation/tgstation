@@ -445,7 +445,7 @@
 	else
 		..()
 
-/datum/reagent/toxin/spidervenom
+/datum/reagent/toxin/vipervenom
 	name = "Viper Venom"
 	id = "venom2"
 	description = "Venom extracted from a viper. Does low damage and takes a long time to go away, but left untreated will slowly advance and get worse." //Charcoal, dammit!
@@ -456,66 +456,69 @@
 
 /datum/reagent/toxin/spidervenom/on_mob_life(mob/living/M) //this is a big deal, the venom works like a virus kinda
 	var/stage = 1
-		if(stage = 1)
+		if(stage == 1)
 			toxpwr = 1 //baby toxins, no effects. you're good!
 			if(prob(5))
 				to_chat(M, "<span class='danger'>You don't feel so well!</span>")
-					stage+
-		if(stage = 2)
-			toxpwr = 2 //babytoxins? might wanna see med
+				stage++
+		if(stage == 2)
+			toxpwr = 2 //baby toxins? might wanna see med
 			var/headache = FALSE
 			if(prob(5))
-				if(headache = FALSE)
-					to_chat(M, "<span class='danger'>You start to get a pounding headache...</span>")
-						headache = TRUE
-					else
-						to_chat(M, "<span class='danger'>Your head continues to pound...</span>")
-
-			prob 5 M.adjustStaminaLoss(15)
+				switch(pick(1, 2, 3))
+					if(1)
+						if(!headache)
+							to_chat(M, "<span class='danger'>You start to get a pounding headache...</span>")
+							headache = TRUE
+						else
+							to_chat(M, "<span class='danger'>Your head continues to pound...</span>")
+					if(2)
+						M.adjustStaminaLoss(15)
+						(M, "<span class='danger'>You feel sick...</span>")
+					if(3)
+						to_chat(M, "<span class='danger'>You feel queasy and your head is throbbing!</span>")
+						stage++
+		if(stage == 3)
+			toxpwr = 2 //same power but the effects start to really set in
 			if(prob(5))
-				to_chat(M, "<span class='danger'>You feel queasy and your head is throbbing!</span>")
-					stage+
-		if(stage = 3)
-			toxpwr = 2 //same power but...
-						if(prob(5))
-				if(headache = FALSE)
+				if(!headache)
 					to_chat(M, "<span class='danger'>You start to get a pounding headache...</span>")
-						headache = TRUE
-					else
-						to_chat(M, "<span class='danger'>Your head continues to pound...</span>")
+					headache = TRUE
+				to_chat(M, "<span class='danger'>Your head continues to pound...</span>")
 			//weakness here, wip
-			//small chance for organ failure here, wip wip wip!
+			if(prob(1) && !internal_organs.len)
+				return
+				/obj/item/organ/guts = pick(M.internal_organs) //there's a var for this it should work
+				qdel //this might give some maintainers ire, infact this whole thing...
 			if(prob(5))
 				to_chat(M, "<span class='danger'>You feel your insides burning!</span>")
-					stage+
-		if(stage = 4)
+				stage++
+		if(stage == 4)
 			toxpwr = 4 //feel the burn!
 			var/brainslurry = FALSE //best name so far, what now coders
 			if(prob(5))
-				switch(pick(1, 2, 3, 4))
-					if(1)
-						if(brainslurry = FALSE)
-							to_chat(M, "<span class='danger'>Your mind starts to feel... calm...</span>")
-							adjustBrainLoss((1*volume)*REM, 0)
-							brainslurry = TRUE
-								else
-									to_chat(M, "<span class='danger'>Ahh... Everything is so...</span>")
-									adjustBrainLoss((1*volume)*REM, 0)
+				switch(rand(1, 4))
+					if(1 && !brainslurry)
+						to_chat(M, "<span class='danger'>Your mind starts to feel... calm...</span>")
+						adjustBrainLoss((1*volume)*REM, 0)
+						brainslurry = TRUE
+					else
+						to_chat(M, "<span class='danger'>Ahh... Everything is so...</span>")
+						adjustBrainLoss((1*volume)*REM, 0)
 					if(2)
 						M.Stun(40, 0)
-						if(brainslurry = FALSE)
+						if(!brainslurry)
 							to_chat(M, "<span class='danger'>Oh god, the pain!</span>")
-						to_chat(M, "<span class='danger'>I just need to give in...</span>")
+						else
+							to_chat(M, "<span class='danger'>I just need to give in...</span>")
 
-					if(3)
-						if(!internal_organs.len)
-							return
-						/obj/item/organ/guts = pick(internal_organs) //there's a var for this it should work
-						qdel //this might give some maintainers ire
+					if(3 && !internal_organs.len)
+						return
+							/obj/item/organ/guts = pick(M.internal_organs)
+							qdel
 
 					if(4)
-			//stuns
-			//organs melting, yay
+						return // maybe just a burst of a random damage type here, wip
 
 
 
