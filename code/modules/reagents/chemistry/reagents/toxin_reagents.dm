@@ -490,15 +490,30 @@
 					stage+
 		if(stage = 4)
 			toxpwr = 4 //feel the burn!
-			var/brainslurry //best name so far, what now coders
-			if(prob(15))
-				if(brainslurry = FALSE)
-					to_chat(M, "<span class='danger'>Your mind starts to feel... calm...</span>")
-						adjustBrainLoss((1*volume)*REM, 0)
-						brainslurry = TRUE
-					else
-						to_chat(M, "<span class='danger'>Ahh... Everything is so...</span>")
-						adjustBrainLoss((1*volume)*REM, 0)
+			var/brainslurry = FALSE //best name so far, what now coders
+			if(prob(5))
+				switch(pick(1, 2, 3, 4))
+					if(1)
+						if(brainslurry = FALSE)
+							to_chat(M, "<span class='danger'>Your mind starts to feel... calm...</span>")
+							adjustBrainLoss((1*volume)*REM, 0)
+							brainslurry = TRUE
+								else
+									to_chat(M, "<span class='danger'>Ahh... Everything is so...</span>")
+									adjustBrainLoss((1*volume)*REM, 0)
+					if(2)
+						M.Stun(40, 0)
+						if(brainslurry = FALSE)
+							to_chat(M, "<span class='danger'>Oh god, the pain!</span>")
+						to_chat(M, "<span class='danger'>I just need to give in...</span>")
+
+					if(3)
+						if(!internal_organs.len)
+							return
+						/obj/item/organ/guts = pick(internal_organs) //there's a var for this it should work
+						qdel //this might give some maintainers ire
+
+					if(4)
 			//stuns
 			//organs melting, yay
 
