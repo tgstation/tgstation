@@ -146,7 +146,8 @@
 
 /obj/effect/temp_visual/goliath_tentacle/Initialize(mapload, mob/living/new_spawner)
 	. = ..()
-	if(locate(/obj/effect/temp_visual/goliath_tentacle) in loc)
+	var/tentacle_found = locate(/obj/effect/temp_visual/goliath_tentacle) in loc
+	if(tentacle_found != src)
 		return INITIALIZE_HINT_QDEL
 	if(!QDELETED(new_spawner))
 		spawner = new_spawner
