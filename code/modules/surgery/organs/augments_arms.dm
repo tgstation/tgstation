@@ -235,3 +235,10 @@
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm"
 	contents = newlist(/obj/item/retractor/augment, /obj/item/hemostat/augment, /obj/item/cautery/augment, /obj/item/surgicaldrill/augment, /obj/item/scalpel/augment, /obj/item/circular_saw/augment, /obj/item/surgical_drapes)
 	origin_tech = "materials=3;engineering=3;biotech=3;programming=2;magnets=3"
+
+/obj/item/organ/cyberimp/arm/surgery/alien
+	name = "alien surgical toolset implant"
+	desc = "A set of hightec alien surgical tools hidden behind a concealed panel on the user's arm"
+	require_limb_augment = TRUE
+	contents = newlist(/obj/item/retractor/alien/augment, /obj/item/hemostat/alien/augment, /obj/item/cautery/alien/augment, /obj/item/surgicaldrill/alien/augment, /obj/item/scalpel/alien/augment, /obj/item/circular_saw/alien/augment, /obj/item/surgical_drapes)
+	origin_tech = "materials=5;engineering=3;biotech=5;programming=2;magnets=3;abductor=2"
