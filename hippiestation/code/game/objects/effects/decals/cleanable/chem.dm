@@ -6,6 +6,14 @@ GLOBAL_LIST_EMPTY(chempiles)
 	icon_state = "chempile"
 	mergeable_decal = FALSE
 
+/obj/effect/decal/cleanable/chempile/examine(mob/user)
+	if(user.research_scanner || isobserver(user))
+		if(LAZYLEN(reagents.reagent_list)) //find a reagent list if there is and check if it has entries
+			to_chat(user, "<span class='notice'>Chemical contents:</span>")
+			for(var/RE in reagents.reagent_list) //no reagents will be left behind
+				var/datum/reagent/R = RE
+				to_chat(user, "<span class='warning'>[R]: [round(R.volume,0.01)]u</span>")
+
 /obj/effect/decal/cleanable/chempile/experience_pressure_difference(pressure_difference)
 	if(reagents)
 		reagents.chem_pressure = pressure_difference / 100
