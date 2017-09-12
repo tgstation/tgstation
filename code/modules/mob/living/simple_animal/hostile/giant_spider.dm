@@ -4,7 +4,7 @@
 #define MOVING_TO_TARGET 3
 #define SPINNING_COCOON 4
 
-/mob/living/simple_animal/hostile/poison //this guy's a fukkin idiot everyone knows that spiders inject venom not poison
+/mob/living/simple_animal/hostile/poison
 	var/poison_per_bite = 5
 	var/poison_type = "toxin"
 
@@ -116,7 +116,7 @@
 	melee_damage_upper = 1
 	poison_per_bite = 30
 	move_to_delay = 4
-	poison_type = "polonium" //slow acting but this at 30u per bite will seriously mess you up, perfect viper poison
+	poison_type = "venom2" //all in venom, glass cannon. you bite 5 times and they are DEFINITELY dead, but 40 health and you are extremely obvious. Ambush, maybe?
 	speed = 3
 
 //tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
