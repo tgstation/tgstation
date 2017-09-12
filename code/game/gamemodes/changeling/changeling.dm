@@ -285,9 +285,9 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 		honorific = "Ms."
 	else
 		honorific = "Mr."
-	if(GLOB.greek_letters.txt)
-		changelingID = pick(GLOB.greek_letters.txt)
-		GLOB.greek_letters.txt -= changelingID
+	if(GLOB.greek_letters)
+		changelingID = pick(GLOB.greek_letters)
+		GLOB.greek_letters -= changelingID
 		changelingID = "[honorific] [changelingID]"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
