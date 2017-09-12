@@ -374,7 +374,7 @@
 /obj/machinery/shower/process()
 	if(on)
 		wash_turf()
-		for(var/atom/movable/G in loc)
+		for(var/atom/movable/AM in loc)
 			if(isliving(AM))
 				wash_mob(AM)
 			else if(isobj(AM))
