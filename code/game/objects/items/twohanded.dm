@@ -507,7 +507,7 @@
 		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
 		if(myhead)
 			myhead.dismember()
-	if(!on) //this may look like shitcode but i had to, for some reason it wouldn't recognize the if(on) above
+	else
 		user.visible_message("<span class='suicide'>[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		playsound(src, "sound/weapons/genhit1.ogg", 100, 1)
 	return(BRUTELOSS)
