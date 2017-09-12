@@ -428,6 +428,7 @@ function ehjaxCallback(data) {
 			} else {
 				handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
 			}
+			sendVolumeUpdate();
 		} else if (data.firebug) {
 			if (data.trigger) {
 				internalOutput('<span class="internal boldnshit">Loading firebug console, triggered by '+data.trigger+'...</span>', 'internal');
