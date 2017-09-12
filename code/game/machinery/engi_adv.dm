@@ -90,26 +90,26 @@
 		return
 	switch(href_list["action"])
 		if ("payload")
-			set_payload()
+			set_payload(usr)
 		if ("set")
-			set_timer()
+			set_timer(usr)
 		if ("anchor")
-			set_anchor()
+			set_anchor(usr)
 		if ("safety")
-			set_safety()
+			set_safety(usr)
 		if ("activate")
-			set_active()
+			set_active(usr)
 	updateUsrDialog()
 
 
 /obj/machinery/construction_nuke/proc/set_payload(mob/user)
 	playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
 	if(timing || bomb_set)
-		to_chat(usr, "<span class='danger'>Error: Payload cannot be altered while the device is armed.</span>")
+		to_chat(user, "<span class='danger'>Error: Payload cannot be altered while the device is armed.</span>")
 		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
-	payload = input(usr, "Choose your Payload", "Payload:") as null|anything in possible_payloads
-	if (QDELETED(src) || !Adjacent(usr))
+	payload = input(user, "Choose your Payload", "Payload:") as null|anything in possible_payloads
+	if (QDELETED(src) || !Adjacent(user))
 		return
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
 	switch(payload)
@@ -145,27 +145,27 @@
 			payload_floor = text2path("/turf/open/floor/mineral/[payload]")
 
 
-/obj/machinery/construction_nuke/proc/set_timer()
+/obj/machinery/construction_nuke/proc/set_timer(mob/user)
 	playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
 	timer_set = input("Set timer in seconds:", name, timer_set)
-	if (QDELETED(src) || !Adjacent(usr))
+	if (QDELETED(src) || !Adjacent(user))
 		return
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
 	timer_set = Clamp(timer_set, 90, 300)
 
-/obj/machinery/construction_nuke/proc/set_anchor()
+/obj/machinery/construction_nuke/proc/set_anchor(mob/user)
 	if(timing || !safety)
-		to_chat(usr, "<span class='warning'>Cannot remove anchors while the safety is off!</span>")
+		to_chat(user, "<span class='warning'>Cannot remove anchors while the safety is off!</span>")
 		return
 	if(!isinspace())
 		anchored = !anchored
 		playsound(src, 'sound/items/Deconstruct.ogg', 75, 1)
 		update_icon()
 	else
-		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
-/obj/machinery/construction_nuke/proc/set_safety()
+		to_chat(user, "<span class='warning'>There is nothing to anchor to!</span>")
+/obj/machinery/construction_nuke/proc/set_safety(mob/user)
 	if(!anchored)
-		to_chat(usr, "<span class='danger'>Error: Safety cannot be altered on an unanchored device.</span>")
+		to_chat(user, "<span class='danger'>Error: Safety cannot be altered on an unanchored device.</span>")
 		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
 	safety = !safety
@@ -180,20 +180,20 @@
 		playsound(src, 'sound/machines/engine_alert1.ogg', 50, 1)
 	update_icon()
 
-/obj/machinery/construction_nuke/proc/set_active()
+/obj/machinery/construction_nuke/proc/set_active(mob/user)
 	var/area/A = get_area(src)
 	if(safety && !bomb_set)
-		to_chat(usr, "<span class='danger'>Error: The safety is still on.</span>")
+		to_chat(user, "<span class='danger'>Error: The safety is still on.</span>")
 		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
 	if(!A.blob_allowed)
-		to_chat(usr, "<span class='danger'>Error: The device's safety countermeasures flash red: you cannot arm this device outside of the station.</span>")
+		to_chat(user, "<span class='danger'>Error: The device's safety countermeasures flash red: you cannot arm this device outside of the station.</span>")
 		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
 	timing = !timing
 	if(timing)
 		if(cooldown > world.time)
-			to_chat(usr, "<span class='danger'>Error: The device is still resetting from the last activation, it will be ready again in [round((cooldown-world.time)/10)] seconds.</span>")
+			to_chat(user, "<span class='danger'>Error: The device is still resetting from the last activation, it will be ready again in [round((cooldown-world.time)/10)] seconds.</span>")
 			playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 			timing = FALSE
 			return
