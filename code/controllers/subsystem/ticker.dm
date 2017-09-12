@@ -383,7 +383,7 @@ SUBSYSTEM_DEF(ticker)
 		if(bomb && bomb.loc)
 			bombloc = bomb.z
 		else if(!station_missed)
-			bombloc = ZLEVEL_STATION
+			bombloc = ZLEVEL_STATION_PRIMARY
 
 		if(mode)
 			mode.explosion_in_progress = 0

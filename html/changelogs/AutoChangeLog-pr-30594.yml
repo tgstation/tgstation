@@ -1,4 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - rscadd: "Adds a volume slider for admin midis to the chat options menu."

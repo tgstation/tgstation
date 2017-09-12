@@ -110,13 +110,18 @@
 	del_on_death = 1
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
-	shiny_chance = 5
+	var/dwarf_mob = FALSE
 	var/mob/living/carbon/human/stored_mob
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/legion/make_shiny()
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random/Initialize()
+	. = ..()
+	if(prob(5))
+		new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(loc)
+		return INITIALIZE_HINT_QDEL
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf
 	name = "dwarf legion"
-	real_name = name
-	desc = "On the rare occasion that a human with dwarfism falls to a legion, they can become infested like any other."
+	desc = "You can still see what was once a rather small human under the shifting mass of corruption."
 	icon_state = "dwarf_legion"
 	icon_living = "dwarf_legion"
 	icon_aggro = "dwarf_legion"
@@ -124,6 +129,8 @@
 	maxHealth = 60
 	health = 60
 	speed = 2 //faster!
+	crusher_drop_mod = 20
+	dwarf_mob = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
@@ -134,6 +141,8 @@
 			stored_mob = null
 		else if(fromtendril)
 			new /obj/effect/mob_spawn/human/corpse/charredskeleton(T)
+		else if(dwarf_mob)
+			new /obj/effect/mob_spawn/human/corpse/damaged/legioninfested/dwarf(T)
 		else
 			new /obj/effect/mob_spawn/human/corpse/damaged/legioninfested(T)
 	..(gibbed)
@@ -177,14 +186,16 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
 	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
-	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L
+	if(H.dna.check_mutation(DWARFISM)) //dwarf legions aren't just fluff!
+		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
+	else
+		L = new(H.loc)
 	visible_message("<span class='warning'>[L] staggers to their feet!</span>")
 	H.death()
 	H.adjustBruteLoss(1000)
 	L.stored_mob = H
 	H.forceMove(L)
-	if(H.dna.check_mutation(DWARFISM))
-		L.make_shiny() //dwarf legions aren't just fluff!
 	qdel(src)
 
 //Advanced Legion is slightly tougher to kill and can raise corpses (revive other legions)
@@ -250,6 +261,10 @@
 	mob_color = "#454545"
 
 //Legion infested mobs
+
+/obj/effect/mob_spawn/human/corpse/damaged/legioninfested/dwarf/equip(mob/living/carbon/human/H)
+	. = ..()
+	H.dna.add_mutation(DWARFISM)
 
 /obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
 	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist")) = 4))

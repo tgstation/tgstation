@@ -330,6 +330,11 @@
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
 
+/obj/item/nullrod/armblade/tentacle
+	name = "unholy blessing"
+	icon_state = "tentacle"
+	item_state = "tentacle"
+
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
