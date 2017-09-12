@@ -19,7 +19,7 @@
 
 
 /obj/item/clothing/head/helmet/Initialize()
-	..()
+	. = ..()
 
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = 1
