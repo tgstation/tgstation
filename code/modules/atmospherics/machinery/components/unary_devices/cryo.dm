@@ -286,7 +286,7 @@
 		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
 		return
 	if(!on && !occupant && !state_open)
-		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
+		if(default_deconstruction_screwdriver(user, "pod-off", "pod-off", I))
 			return
 		if(exchange_parts(user, I))
 			return
