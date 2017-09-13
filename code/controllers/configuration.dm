@@ -128,6 +128,8 @@ GLOBAL_PROTECT(config_dir)
 	//game_options.txt configs
 	var/force_random_names = 0
 	var/list/mode_names = list()
+	var/list/mode_reports = list()
+	var/list/mode_false_report_weight = list()
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
@@ -297,6 +299,8 @@ GLOBAL_PROTECT(config_dir)
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
+				mode_reports[M.config_tag] = M.generate_report()
+				mode_false_report_weight[M.config_tag] = M.false_report_weight
 				if(M.votable)
 					votable_modes += M.config_tag
 		qdel(M)
