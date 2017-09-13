@@ -140,7 +140,6 @@
 	if(!drained)
 		for(var/X in linkedturfs) //Check for pool-turfs linked to the controller.
 			var/turf/open/pool/W = X
-			update_color(W)
 			for(var/mob/living/M in W) //Check for mobs in the linked pool-turfs.
 				switch(temperature) //Apply different effects based on what the temperature is set to.
 					if(5) //Scalding
