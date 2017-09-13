@@ -121,7 +121,7 @@
 	if(abandoned)
 		var/outcome = rand(1,100)
 		switch(outcome)
-			if(1 to 6)
+			if(1 to 9)
 				var/turf/here = get_turf(src)
 				for(var/turf/closed/T in range(2, src))
 					here.changeTurf(T.type)
@@ -130,15 +130,15 @@
 				here.changeTurf(/turf/closed/wall)
 				qdel(src)
 				return INITIALIZE_HINT_QDEL
-			if(7 to 9)
+			if(9 to 11)
 				lights = FALSE
 				bolt()
-			if(10 to 13)
+			if(12 to 15)
 				bolt()
-			if(14 to 20)
+			if(16 to 23)
 				welded = TRUE
 				update_icon()
-			if(21 to 25)
+			if(24 to 30)
 				panel_open = TRUE
 				update_icon()
 	prepare_huds()
