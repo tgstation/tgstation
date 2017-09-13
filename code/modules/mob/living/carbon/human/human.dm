@@ -33,12 +33,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	create_internal_organs()
 
 	handcrafting = new()
-
+	
 	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
-
 	update_teeth()
-
-	..()
+	. = ..()
 
 /mob/living/carbon/human/create_internal_organs()
 	if(!(NOHUNGER in dna.species.species_traits))

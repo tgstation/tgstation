@@ -7,7 +7,7 @@
 	var/area/starting_area
 
 /mob/camera/aiEye/remote/base_construction/Initialize()
-	..()
+	. = ..()
 	starting_area = get_area(loc)
 
 /mob/camera/aiEye/remote/base_construction/setLoc(var/t)
@@ -54,7 +54,7 @@
 	RCD = new(src)
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload) //Map spawned consoles have a filled RCD and stocked special structures
 		RCD.matter = RCD.max_matter
 		fans_remaining = 4
