@@ -286,7 +286,7 @@
 		qdel(src)
 
 /obj/item/ore/Initialize()
-	..()
+	. = ..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
@@ -313,7 +313,7 @@
 	var/value = 1
 
 /obj/item/coin/Initialize()
-	..()
+	. = ..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 

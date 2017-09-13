@@ -7,7 +7,7 @@
 	var/do_icon_rotate = TRUE
 
 /obj/effect/decal/cleanable/crayon/Initialize(mapload, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0, var/alt_icon = null)
-	..()
+	. = ..()
 
 	name = e_name
 	desc = "A [name] vandalizing the station."
