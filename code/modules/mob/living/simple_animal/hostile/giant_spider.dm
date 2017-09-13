@@ -107,9 +107,9 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
 	name = "viper"
 	desc = "Furry and black, it makes you shudder to look at it. This one has effervescent purple eyes."
-	icon_state = "hunter"
-	icon_living = "hunter"
-	icon_dead = "hunter_dead"
+	icon_state = "viper"
+	icon_living = "viper"
+	icon_dead = "viper_dead"
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 1
@@ -123,9 +123,9 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
 	name = "tarantula"
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes."
-	icon_state = "guard"
-	icon_living = "guard"
-	icon_dead = "guard_dead"
+	icon_state = "tarantula"
+	icon_living = "tarantula"
+	icon_dead = "tarantula_dead"
 	maxHealth = 300 // woah nelly
 	health = 300
 	melee_damage_lower = 35
