@@ -135,6 +135,7 @@ SUBSYSTEM_DEF(ticker)
 			if(!mode.explosion_in_progress && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
+				GLOB.dooc_allowed = TRUE // Previous line already announces OOC availability, also DOOC has no convenience procs anyways
 				declare_completion(force_ending)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
