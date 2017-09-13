@@ -118,10 +118,12 @@
 		update_color()
 
 /obj/machinery/poolcontroller/proc/update_color()
-	if(LAZYLEN(beaker.reagents.reagent_list))
-		W.color = mix_color_from_reagents(beaker.reagents.reagent_list)
-	else
-		W.color = initial(W.color)
+	for(var/X in linkedturfs)
+		var/turf/open/pool/W = X
+		if(LAZYLEN(beaker.reagents.reagent_list))
+			W.color = mix_color_from_reagents(beaker.reagents.reagent_list)
+		else
+			W.color = initial(W.color)
 
 
 /obj/machinery/poolcontroller/process()
