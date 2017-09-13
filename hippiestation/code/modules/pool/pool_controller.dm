@@ -115,15 +115,13 @@
 			if(beaker && cur_reagent)
 				beaker.reagents.reaction(objects, VAPOR, 1)
 			reagenttimer = 4
-		update_color()
+		update_color(W)
 
-/obj/machinery/poolcontroller/proc/update_color()
-	for(var/X in linkedturfs)
-		var/turf/open/pool/W = X
-		if(LAZYLEN(beaker.reagents.reagent_list))
-			W.color = mix_color_from_reagents(beaker.reagents.reagent_list)
-		else
-			W.color = initial(W.color)
+/obj/machinery/poolcontroller/proc/update_color(turf/open/pool/W)
+	if(LAZYLEN(beaker.reagents.reagent_list))
+		W.color = mix_color_from_reagents(beaker.reagents.reagent_list)
+	else
+		W.color = initial(W.color)
 
 
 /obj/machinery/poolcontroller/process()
@@ -139,10 +137,10 @@
 		poolreagent()
 
 /obj/machinery/poolcontroller/proc/updatePool()
-	update_color()
 	if(!drained)
 		for(var/X in linkedturfs) //Check for pool-turfs linked to the controller.
 			var/turf/open/pool/W = X
+			update_color(W)
 			for(var/mob/living/M in W) //Check for mobs in the linked pool-turfs.
 				switch(temperature) //Apply different effects based on what the temperature is set to.
 					if(5) //Scalding
