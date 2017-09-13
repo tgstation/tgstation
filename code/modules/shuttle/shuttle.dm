@@ -615,6 +615,14 @@
 		var/area/internal_area = thing
 		internal_area.afterShuttleMove()																	//areas
 
+	// Parallax handling
+	var/new_parallax_dir = FALSE
+	if(istype(new_dock, /obj/docking_port/stationary/transit))
+		new_parallax_dir = preferred_direction
+	for(var/i in shuttle_areas)
+		var/area/place = i
+		place.parallax_movedir = new_parallax_dir
+
 	check_poddoors()
 	new_dock.last_dock_time = world.time
 	setDir(new_dock.dir)
