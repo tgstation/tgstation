@@ -119,7 +119,7 @@
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 	if(abandoned)
-		var/outcome = rand(0,100)
+		var/outcome = rand(1,100)
 		switch(outcome)
 			if(1 to 6)
 				for(var/turf/closed/T in range(2, src))
