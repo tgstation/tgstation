@@ -2,8 +2,8 @@
 	name = "crate"
 	desc = "A rectangular steel crate."
 	icon = 'icons/obj/crates.dmi'
-	icon_state = "crate"
-	icon_living = "crate"
+	icon_state = "mimicopen"
+	icon_living = "mimicopen"
 
 	response_help = "touches"
 	response_disarm = "pushes"
@@ -41,9 +41,13 @@
 // Pickup loot
 /mob/living/simple_animal/hostile/mimic/crate/Initialize(mapload)
 	..()
+	
 	if(mapload)	//eat shit
 		for(var/obj/item/I in loc)
 			I.loc = src
+
+	var/datum/action/innate/mimic/root/R = new
+	R.Grant(src)
 
 /mob/living/simple_animal/hostile/mimic/crate/DestroySurroundings()
 	..()
@@ -73,8 +77,8 @@
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 /mob/living/simple_animal/hostile/mimic/crate/proc/trigger()
-	if(!attempt_open)
-		visible_message("<b>[src]</b> starts to move!")
+	if(!attempt_open) //Have not attempted to open
+		visible_message("<b>[src]</b> starts to move!") //We pissed it off
 		attempt_open = TRUE
 
 /mob/living/simple_animal/hostile/mimic/crate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -266,3 +270,22 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		return
 	icon_state = TrueGun.icon_state
 	icon_living = TrueGun.icon_state
+
+/datum/action/innate/mimic/root
+	name = "Root"
+	button_icon_state = "mimicA"
+	desc = "Roots yourself in place and disguises you as a normal crate. Anyone to try to open you up is given a nasty surprise!"
+
+/datum/action/innate/mimic/root/Activate()
+	var/mob/living/simple_animal/hostile/mimic/crate/S = owner
+
+	if(S.attempt_open == TRUE) //If we have tried to open it
+		S.visible_message("<span class='danger'><b>[S]</b> disguises itself as a crate</span>")
+
+		S.attempt_open = FALSE	//I WAS HIDING
+		S.icon_state = "crate"
+		S.icon_living = "crate"
+
+
+	//TBD, but see trellio
+	return
