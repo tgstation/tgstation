@@ -28,7 +28,6 @@
 	var/shaved = 0
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
-	var/facehugger
 	var/nofur = 0 		//Corgis that have risen past the material plane of existence.
 	gold_core_spawnable = 2
 
@@ -462,13 +461,6 @@
 			back_icon = DF.get_overlay()
 		add_overlay(back_icon)
 
-	if(facehugger)
-		var/mutable_appearance/facehugger_overlay = mutable_appearance('icons/mob/mask.dmi')
-		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))
-			facehugger_overlay.icon_state = "facehugger_corgipuppy"
-		else
-			facehugger_overlay.icon_state = "facehugger_corgi"
-		add_overlay(facehugger_overlay)
 	if(pcollar)
 		add_overlay(collar)
 		add_overlay(pettag)
