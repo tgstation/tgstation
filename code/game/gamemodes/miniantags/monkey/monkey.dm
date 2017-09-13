@@ -5,6 +5,7 @@
 	name = "monkey"
 	config_tag = "monkey"
 	antag_flag = ROLE_MONKEY
+	false_report_weight = 1
 
 	required_players = 20
 	required_enemies = 1
@@ -111,3 +112,7 @@
 	else
 		SSticker.mode_result = "loss - staff stopped the monkeys"
 		to_chat(world, "<span class='userdanger'>The staff managed to contain the monkey infestation!</span>")
+
+/datum/game_mode/monkey/generate_report()
+	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "bananna blight")] outbreak that turn humans into monkies has been \
+			reported in your quadrant.  Any such infections may be treated with bananna juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at Centcom."

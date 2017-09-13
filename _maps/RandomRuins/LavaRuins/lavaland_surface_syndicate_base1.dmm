@@ -694,8 +694,8 @@
 /area/ruin/powered/syndicate_lava_base)
 "bJ" = (
 /obj/structure/table/reinforced,
-/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
