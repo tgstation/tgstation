@@ -18,7 +18,7 @@
 	var/obj/effect/countdown/anomaly/countdown
 
 /obj/effect/anomaly/Initialize(mapload, new_lifespan)
-	..()
+	. = ..()
 	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)

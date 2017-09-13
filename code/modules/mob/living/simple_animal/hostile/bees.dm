@@ -56,7 +56,7 @@
 
 
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
-	..()
+	. = ..()
 	generate_bee_visuals()
 
 
@@ -275,7 +275,7 @@
 
 
 /obj/item/queen_bee/bought/Initialize()
-	..()
+	. = ..()
 	queen = new(src)
 
 
