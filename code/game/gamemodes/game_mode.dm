@@ -282,21 +282,6 @@
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
 	likely threats to appear in your sector.</b>"
-<<<<<<< HEAD
-	var/list/possible_modes = list()
-	possible_modes.Add("blob", "changeling", "clock_cult", "cult", "extended", "malf", "nuclear", "revolution", "traitor", "wizard", "shadowling")
-	possible_modes -= name //remove the current gamemode to prevent it from being randomly deleted, it will be readded later
-
-	for(var/i in 1 to 6) //Remove a few modes to leave four
-		possible_modes -= pick(possible_modes)
-
-	possible_modes |= name //Re-add the actual gamemode - the intercept will thus always have the correct mode in its list
-	possible_modes = shuffle(possible_modes) //Meta prevention
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/V in possible_modes)
-		intercepttext += i_text.build(V)
-=======
 	var/list/report_weights = config.mode_false_report_weight.Copy()
 	report_weights[config_tag] = 0 //Prevent the current mode from being falsely selected.
 	var/list/reports = list()
@@ -310,7 +295,6 @@
 	for(var/report in reports)
 		intercepttext += "<hr>"
 		intercepttext += report
->>>>>>> 0eef60e841... Refactors roundstart centcom threat report. (#30241)
 
 	if(station_goals.len)
 		intercepttext += "<hr><b>Special Orders for [station_name()]:</b>"
