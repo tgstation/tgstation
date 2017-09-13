@@ -9,9 +9,9 @@
 	var/datum/gas_mixture/air_contents = new()
 
 
-/obj/structure/transit_tube_pod/New(loc)
-	..()
-	air_contents.assert_gases("o2", "n2")
+/obj/structure/transit_tube_pod/Initialize()
+	. = ..()
+	air_contents.add_gases("o2", "n2")
 	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD
 	air_contents.gases["n2"][MOLES] = MOLES_N2STANDARD
 	air_contents.temperature = T20C
