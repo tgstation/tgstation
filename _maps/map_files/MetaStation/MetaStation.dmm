@@ -8054,9 +8054,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/sign/kiddieplaque{
-	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside.";
-	name = "Library Rules Sign";
+/obj/structure/sign/kiddieplaque/library{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -47686,10 +47684,7 @@
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bNb" = (
-/obj/structure/sign/atmosplaque{
-	desc = "A guide to the exhibit, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today.";
-	icon_state = "kiddieplaque";
-	name = "\improper 'Perfect Drone' sign";
+/obj/structure/sign/kiddieplaque/perfect_drone{
 	pixel_y = 32
 	},
 /obj/machinery/droneDispenser,
@@ -47796,10 +47791,7 @@
 /area/bridge/showroom/corporate)
 "bNj" = (
 /obj/structure/showcase/perfect_employee,
-/obj/structure/sign/atmosplaque{
-	desc = "A guide to the exhibit, explaining how recent developments in loyalty implant and cloning technologies by Nanotrasen Corporation have led to the development and the effective immortality of the 'perfect man', the loyal Nanotrasen Employee.";
-	icon_state = "kiddieplaque";
-	name = "\improper 'Perfect Man' sign";
+/obj/structure/sign/kiddieplaque/perfect_man{
 	pixel_y = 32
 	},
 /obj/structure/window/reinforced,
@@ -76443,10 +76435,7 @@
 /turf/open/floor/carpet,
 /area/chapel/main)
 "cPE" = (
-/obj/structure/sign/atmosplaque{
-	desc = "A plaque commemorating the fallen, may they rest in peace, forever asleep amongst the stars. Someone has drawn a picture of a crying badger at the bottom.";
-	icon_state = "kiddieplaque";
-	name = "Remembrance Plaque";
+/obj/structure/sign/kiddieplaque/badger{
 	pixel_y = 32
 	},
 /obj/item/reagent_containers/food/snacks/grown/poppy{
