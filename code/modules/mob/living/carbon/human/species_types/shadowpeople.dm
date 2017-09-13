@@ -26,7 +26,6 @@
 /datum/species/shadow/nightmare
 	name = "Nightmare"
 	id = "nightmare"
-	limbs_id = "shadow"
 	burnmod = 1.5
 	blacklisted = TRUE
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
@@ -70,8 +69,9 @@
 
 /obj/item/light_eater
 	name = "light eater"
-	icon_state = "arm_blade"
-	item_state = "arm_blade"
+	desc = "A mass of tentacles, cloaked in thick, black smoke. Attacking a target with it will extinguish any lights they're carrying."
+	icon_state = "tentacle"
+	item_state = "light_eater"
 	force = 25
 	armour_penetration = 35
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -79,6 +79,7 @@
 	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
+	attack_verb = list("consumed", "devoured", "eaten")
 
 /obj/item/light_eater/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
