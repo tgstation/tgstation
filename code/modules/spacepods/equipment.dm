@@ -185,10 +185,10 @@
 	if(istype(I, /obj/item/screwdriver))
 		if(enabled)
 			enabled = FALSE
-			user.show_message("<span class='notice'>You disable \the [src]'s power.")
+			to_chat(user, "<span class='notice'>You disable \the [src]'s power.")
 			return
 		enabled = TRUE
-		user.show_message("<span class='notice'>You enable \the [src]'s power.</span>")
+		to_chat(user, "<span class='notice'>You enable \the [src]'s power.</span>")
 	else
 		..()
 
