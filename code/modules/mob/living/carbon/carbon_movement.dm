@@ -18,7 +18,7 @@
 			. += legcuffed.slowdown
 
 	if(stat == SOFT_CRIT)
-		. = max(SOFTCRIT_MIN_SLOWDOWN, . + SOFTCRIT_ADD_SLOWDOWN) //regardless of how fast you are, you move at a maximum of SOFTCRIT_MIN_SLOWDOWN while in softcrit
+		. += SOFTCRIT_ADD_SLOWDOWN
 
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube)
 	if(movement_type & FLYING)
