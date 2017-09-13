@@ -115,10 +115,13 @@
 			if(beaker && cur_reagent)
 				beaker.reagents.reaction(objects, VAPOR, 1)
 			reagenttimer = 4
-		if(LAZYLEN(beaker.reagents.reagent_list))
-			W.color = mix_color_from_reagents(beaker.reagents.reagent_list)
-		else
-			W.color = initial(W.color)
+		update_color()
+
+/obj/machinery/poolcontroller/proc/update_color()
+	if(LAZYLEN(beaker.reagents.reagent_list))
+		W.color = mix_color_from_reagents(beaker.reagents.reagent_list)
+	else
+		W.color = initial(W.color)
 
 
 /obj/machinery/poolcontroller/process()
@@ -134,6 +137,7 @@
 		poolreagent()
 
 /obj/machinery/poolcontroller/proc/updatePool()
+	update_color()
 	if(!drained)
 		for(var/X in linkedturfs) //Check for pool-turfs linked to the controller.
 			var/turf/open/pool/W = X
