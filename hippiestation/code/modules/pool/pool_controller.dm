@@ -115,6 +115,10 @@
 			if(beaker && cur_reagent)
 				beaker.reagents.reaction(objects, VAPOR, 1)
 			reagenttimer = 4
+		if(LAZYLEN(beaker.reagents.reagent_list))
+			W.color = mix_color_from_reagents(beaker.reagents.reagent_list)
+		else
+			W.color = initial(W.color)
 
 
 /obj/machinery/poolcontroller/process()
