@@ -33,16 +33,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	create_internal_organs()
 
 	handcrafting = new()
-
-<<<<<<< HEAD
+	
 	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
-
 	update_teeth()
-
-	..()
-=======
 	. = ..()
->>>>>>> 6e468720ab... Fixes to more Initialize procs (#30641)
 
 /mob/living/carbon/human/create_internal_organs()
 	if(!(NOHUNGER in dna.species.species_traits))
