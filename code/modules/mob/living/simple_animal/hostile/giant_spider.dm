@@ -50,7 +50,19 @@
 	see_in_dark = 4
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	var/playable_spider = FALSE
+	var/datum/action/innate/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
+
+/mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
+	. = ..()
+	lay_web = new
+	lay_web.Grant(src)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
+	if(lay_web)
+		lay_web.Remove(src)
+		QDEL_NULL(lay_web)
+	return ..()
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
@@ -95,7 +107,6 @@
 	poison_per_bite = 3
 	var/atom/movable/cocoon_target
 	var/fed = 0
-	var/datum/action/innate/lay_web/lay_web
 	var/datum/action/innate/wrap/wrap
 	var/datum/action/innate/lay_eggs/lay_eggs
 	var/datum/action/innate/set_directive/set_directive
@@ -111,6 +122,21 @@
 	lay_eggs.Grant(src)
 	set_directive = new
 	set_directive.Grant(src)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/Destroy()
+	if(lay_web)
+		lay_web.Remove(src)
+		QDEL_NULL(lay_web)
+	if(wrap)
+		wrap.Remove(src)
+		QDEL_NULL(wrap)
+	if(lay_eggs)
+		lay_eggs.Remove(src)
+		QDEL_NULL(lay_eggs)
+	if(set_directive)
+		set_directive.Remove(src)
+		QDEL_NULL(set_directive)
+	return ..()
 
 //hunters have the most poison and move the fastest, so they can find prey
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter
