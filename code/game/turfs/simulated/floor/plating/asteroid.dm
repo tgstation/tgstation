@@ -35,6 +35,8 @@
 	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
+	if(..())
+		return TRUE
 	if(istype(W, /obj/item/storage/bag/ore))
 		var/obj/item/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
