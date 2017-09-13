@@ -48,16 +48,39 @@
 	adjustmask()
 
 /obj/item/clothing/suit/space/hostile_environment
-	name = "hostile environment suit"
-	desc = "A suit with an experimental protective layer of plasma gel to protect against the hazards of Lavaland."
+	name = "H.E.C.K. suit"
+	desc = "Hostile Environiment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	item_state = "hostile_env"
 	flags_1 = THICKMATERIAL_1 //not spaceproof
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	slowdown = 0
-	armor = list(melee = 50, bullet = 25, laser = 35, energy = 30, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
+	armor = list(melee = 50, bullet = 30, laser = 25, energy = 20, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
+	var/cooldown = 600
+	var/next_adrenal = 0
+
+/obj/item/clothing/suit/space/hostile_environment/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/suit/space/hostile_environment/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/clothing/suit/space/hostile_environment/process()
+	if(world.time < next_adrenal || !iscarbon(loc))
+		return
+	var/mob/living/carbon/C = loc
+	if(C.IsStun() || C.IsKnockdown() || C.IsSleeping() || IsUnconscious())
+		C.SetStun(0)
+		C.SetKnockdown(0)
+		C.SetSleeping(0)
+		C.SetUnconscious(0)
+		next_adrenal = world.time + cooldown
+		to_chat(C, "<span class='userdanger'>You suddenly feel [src] infusing you with energy!</span>")
+
 
 /obj/item/clothing/suit/space/hostile_environment/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/toy/crayon/spraycan))
@@ -75,15 +98,15 @@
 		return ..()
 
 /obj/item/clothing/head/helmet/space/hostile_environment
-	name = "hostile environment helmet"
-	desc = "A helmet with an experimental protective layer of plasma gel to protect against the hazards of Lavaland."
+	name = "H.E.C.K. helmet"
+	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	item_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	flags_1 = THICKMATERIAL_1 // no space protection
-	armor = list(melee = 50, bullet = 25, laser = 35,energy = 30, bomb = 50, bio = 100, rad = 50, fire = 50, acid = 50)
-	resistance_flags = FIRE_PROOF
+	armor = list(melee = 50, bullet = 30, laser = 25,energy = 20, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/item/clothing/head/helmet/space/hostile_environment/Initialize()
 	. = ..()

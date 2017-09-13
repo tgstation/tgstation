@@ -73,7 +73,7 @@
 		if(!do_mob(user, target) || used)
 			return
 		target.visible_message("<span class='danger'>[user] injects [target] with the syringe with [src]!", \
-						"<span class='userdanger'>[user] injects [target] with the syringe with [src]!")
+						"<span class='userdanger'>[user] injects [target] with the syringe with [src]!</span>")
 
 	else
 		to_chat(user, "<span class='notice'>You inject yourself with [src].</span>")

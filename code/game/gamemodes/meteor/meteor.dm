@@ -1,6 +1,7 @@
 /datum/game_mode/meteor
 	name = "meteor"
 	config_tag = "meteor"
+	false_report_weight = 1
 	var/meteordelay = 2000
 	var/nometeors = 0
 	var/rampupdelta = 5
@@ -53,3 +54,7 @@
 	SSticker.mode_result = "end - evacuation"
 	..()
 	return 1
+
+/datum/game_mode/meteor/generate_report()
+	return "[pick("Asteroids have", "Meteors have", "Large rocks have", "Stellar minerals have", "Space hail has", "Debris has")] been detected near your station, and a collision is possible, \
+			though unlikely.  Be prepared for largescale impacts and destruction.  Please note that the debris will prevent the escape shuttle from arriving quickly."

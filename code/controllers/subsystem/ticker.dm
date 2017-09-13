@@ -67,6 +67,9 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
+	if(music.len > 1)
+		music -= old_login_music
 	login_music = pick(music)
 
 	if(!GLOB.syndicate_code_phrase)
@@ -383,7 +386,7 @@ SUBSYSTEM_DEF(ticker)
 		if(bomb && bomb.loc)
 			bombloc = bomb.z
 		else if(!station_missed)
-			bombloc = ZLEVEL_STATION
+			bombloc = ZLEVEL_STATION_PRIMARY
 
 		if(mode)
 			mode.explosion_in_progress = 0
@@ -843,3 +846,4 @@ SUBSYSTEM_DEF(ticker)
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))
+	text2file(login_music, "data/last_round_lobby_music.txt")

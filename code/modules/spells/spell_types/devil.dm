@@ -114,7 +114,7 @@
 						to_chat(user, "<span class='warning'>You are no longer near a potential signer.</span>")
 
 			else
-				to_chat(user, "<span class='warning'>You can only re-appear near a potential signer.")
+				to_chat(user, "<span class='warning'>You can only re-appear near a potential signer.</span>")
 				revert_cast()
 				return ..()
 		else
@@ -166,7 +166,7 @@
 	fakefire()
 	src.loc = get_turf(src)
 	src.client.eye = src
-	src.visible_message("<span class='warning'><B>[src] appears in a fiery blaze!</B>")
+	src.visible_message("<span class='warning'><B>[src] appears in a fiery blaze!</B></span>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 	addtimer(CALLBACK(src, .proc/fakefireextinguish), 15, TIMER_UNIQUE)
 

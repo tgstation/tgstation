@@ -233,6 +233,9 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleprayersounds)()
 	set category = "Preferences"
 	set desc = "Stop Current Sounds"
 	SEND_SOUND(usr, sound(null))
+	var/client/C = usr.client
+	if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
+		C.chatOutput.sendMusic(" ")
 	SSblackbox.add_details("preferences_verb","Stop Self Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

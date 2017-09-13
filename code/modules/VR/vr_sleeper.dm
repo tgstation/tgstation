@@ -122,7 +122,7 @@
 				if(vr_human)
 					qdel(vr_human)
 			else
-				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.")
+				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.</span>")
 			. = TRUE
 		if("toggle_open")
 			if(state_open)

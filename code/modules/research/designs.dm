@@ -259,26 +259,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs
 	category = list("Mining Designs", "Cyborg Upgrade Modules")
 
-/datum/design/hostile_environment_suit
-	name = "Hostile Environment Suit"
-	desc = "A suit with an experimental protective layer of plasma gel to protect against the hazards of Lavaland."
-	id = "hostile_env_suit"
-	req_tech = list("materials" = 7, "combat" = 5, "engineering" = 6, "plasmatech" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 15000, MAT_TITANIUM = 5000, MAT_PLASMA = 7500, MAT_DIAMOND = 3000)
-	build_path = /obj/item/clothing/suit/space/hostile_environment
-	category = list("Mining Designs")
-
-/datum/design/hostile_environment_helmet
-	name = "Hostile Environment Helmet"
-	desc = "A helmet with an experimental protective layer of plasma gel to protect against the hazards of Lavaland."
-	id = "hostile_env_helm"
-	req_tech = list("materials" = 7, "combat" = 5, "engineering" = 6, "plasmatech" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_TITANIUM = 2000, MAT_PLASMA = 2500, MAT_DIAMOND = 1000)
-	build_path = /obj/item/clothing/head/helmet/space/hostile_environment
-	category = list("Mining Designs")
-
 
 /////////////////////////////////////////
 //////////////Blue Space/////////////////

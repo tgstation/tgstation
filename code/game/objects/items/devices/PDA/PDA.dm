@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
 	var/fon = 0 //Is the flashlight function on?
-	var/f_lum = 3 //Luminosity for the flashlight function
+	var/f_lum = 2.3 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
@@ -112,6 +112,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return
 
 /obj/item/device/pda/attack_self(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return
+
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
 	assets.send(user)
 
@@ -352,9 +356,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(fon)
 					fon = 0
 					set_light(0)
-				else
+				else if(f_lum)
 					fon = 1
-					set_light(2.3)
+					set_light(f_lum)
 				update_icon()
 			if("Medical Scan")
 				if(scanmode == 1)

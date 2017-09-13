@@ -45,7 +45,7 @@
 		to_chat(user, "<span class='warning'>This SMES has no power terminal!</span>")
 
 /obj/machinery/power/smes/Initialize()
-	..()
+	. = ..()
 	dir_loop:
 		for(var/d in GLOB.cardinals)
 			var/turf/T = get_step(src, d)
