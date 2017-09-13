@@ -1,3 +1,6 @@
+
+#define MOVES_HITSCAN -1		//Not actually hitscan but close as we get.
+
 /obj/item/projectile
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
@@ -30,8 +33,8 @@
 	var/time_offset = 0
 	var/old_pixel_x = 0
 	var/old_pixel_y = 0
-	var/Pixel_x = 0
-	var/Pixel_y = 0
+	var/pixel_x_increment = 0
+	var/pixel_y_increment = 0
 	var/pixel_x_offset = 0
 	var/pixel_y_offset = 0
 	var/new_x = 0
@@ -210,19 +213,27 @@
 	return TRUE	//Bullets don't drift in space
 
 /obj/item/projectile/process()
+	speed = SSprojectiles.speed_override	//DEBUG
+
 	if(!loc || !fired)
 		return PROCESS_KILL
 	if(paused || !Angle || !isturf(loc))
 		return
+	to_chat(world, "DEBUG: speed [speed] angle [Angle] last move time [last_projectile_move] world time [world.time] time offste [time_offset]")
 	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
-	var/moves = Floor(elapsed_time_deciseconds / speed)
-	time_offset = elapsed_time_deciseconds % speed
-	for(var/i in 1 to moves)
-		if(legacy)
-			legacy_move()	//Someone fucking kill legacy projectiles.
-			return
-		pixel_move(moves)
-	last_projectile_move = world.time
+	time_offset = 0
+	var/required_moves = speed > 0? Floor(elapsed_time_deciseconds / speed) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
+	if(required_moves == MOVES_HITSCAN)
+		required_moves = SSprojectiles.global_max_tick_moves
+	else
+		if(required_moves > SSprojectiles.global_max_tick_moves)
+			var/overrun = required_moves - SSprojectiles.global_max_tick_moves
+			required_moves = SSprojectiles.global_max_tick_moves
+			time_offset += overrun * speed
+		time_offset += Modulus(elapsed_time_deciseconds, speed)
+
+	for(var/i in 1 to required_moves)
+		legacy? legacy_move() : pixel_move(required_moves)
 
 /obj/item/projectile/proc/fire(setAngle, atom/direct_target)
 	if(!log_override && firer && original)
@@ -236,6 +247,7 @@
 		Angle = setAngle
 	old_pixel_x = pixel_x
 	old_pixel_y = pixel_y
+	last_projectile_move = world.time
 	fired = TRUE
 	START_PROCESSING(SSprojectiles, src)
 
@@ -252,10 +264,10 @@
 		M.Turn(Angle)
 		transform = M
 
-	Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
-	Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
-	pixel_x_offset = old_pixel_x + Pixel_x
-	pixel_y_offset = old_pixel_y + Pixel_y
+	pixel_x_increment=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
+	pixel_y_increment=round((cos(Angle)+16*cos(Angle)*2), 1)
+	pixel_x_offset = old_pixel_x + pixel_x_increment
+	pixel_y_offset = old_pixel_y + pixel_y_increment
 	new_x = x
 	new_y = y
 
@@ -276,16 +288,18 @@
 		old_pixel_y += 32
 		new_y--
 
+	step_towards(src, locate(new_x, new_y, z))
 	pixel_x = old_pixel_x
 	pixel_y = old_pixel_y
-	step_towards(src, locate(new_x, new_y, z))
 	var/animation_time = ((SSprojectiles.flags & SS_TICKER? (SSprojectiles.wait * world.tick_lag) : SSprojectiles.wait) / moves)
+	to_chat(world, "DEBUG: Animation time [animation_time]")
 	animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = animation_time, flags = ANIMATION_END_NOW)
 	old_pixel_x = pixel_x_offset
 	old_pixel_y = pixel_y_offset
 	if(can_hit_target(original, permutated))
 		Collide(original)
 	Range()
+	last_projectile_move = world.time
 
 /obj/item/projectile/proc/legacy_move()
 	if((!( current ) || loc == current))
@@ -294,6 +308,7 @@
 	if(can_hit_target(original, permutated))
 		Collide(original)
 	Range()
+	last_projectile_move = world.time
 
 //Returns true if the target atom is on our current turf and above the right layer
 /obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)

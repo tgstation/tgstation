@@ -4,6 +4,9 @@ PROCESSING_SUBSYSTEM_DEF(projectiles)
 	wait = 1
 	stat_tag = "PP"
 	flags = SS_NO_INIT|SS_TICKER|SS_KEEP_TIMING
+	var/global_max_tick_moves = 10
+
+	var/speed_override = 0.8		//DEBUG
 
 /datum/controller/subsystem/processing/projectiles/fire(resumed = 0)
 	if (!resumed)
