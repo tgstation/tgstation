@@ -1,6 +1,0 @@
-author: "VexingRaven"
-delete-after: True
-changes: 
-  - bugfix: "Changeling Augmented Eyesight ability now grants flash protection when toggled off"
-  - bugfix: "Changeling Augmented Eyesight ability can now be toggled properly"
-  - bugfix: "Changeling Augmented Eyesight ability is properly removed when readapting"
