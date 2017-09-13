@@ -17,6 +17,12 @@
 		if(legcuffed)
 			. += legcuffed.slowdown
 
+<<<<<<< HEAD
+=======
+	if(stat == SOFT_CRIT)
+		. += SOFTCRIT_ADD_SLOWDOWN
+
+>>>>>>> 7585870a12... Removes the slowdown cap
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube)
 	if(movement_type & FLYING)
 		return 0
