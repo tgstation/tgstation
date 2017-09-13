@@ -40,7 +40,7 @@
 	storm = 	storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 	storm.color = "#00FF00"
 
-	station_areas = get_areas_in_z(ZLEVEL_STATION)
+	station_areas = get_areas_in_z(ZLEVEL_STATION_PRIMARY)
 
 	number_of_bosses = 0
 	for(var/boss in boss_types)

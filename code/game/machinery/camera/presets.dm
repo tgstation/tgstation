@@ -24,7 +24,7 @@
 	name = "motion-sensitive security camera"
 
 /obj/machinery/camera/motion/Initialize()
-	..()
+	. = ..()
 	upgradeMotion()
 
 // ALL UPGRADES

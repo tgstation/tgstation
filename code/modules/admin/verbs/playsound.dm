@@ -79,7 +79,7 @@
 				to_chat(src, "<span class='warning'>For youtube-dl shortcuts like ytsearch: please use the appropriate full url from the website.</span>")
 				return
 			var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
-			var/list/output = world.shelleo("[config.invoke_youtubedl] --format \"bestaudio\[ext=aac]/bestaudio\[ext=mp3]/bestaudio\[ext=m4a]\" --get-url \"[shell_scrubbed_input]\"")
+			var/list/output = world.shelleo("[config.invoke_youtubedl] --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height<=360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --get-url \"[shell_scrubbed_input]\"")
 			var/errorlevel = output[SHELLEO_ERRORLEVEL]
 			var/stdout = output[SHELLEO_STDOUT]
 			var/stderr = output[SHELLEO_STDERR]
@@ -135,4 +135,7 @@
 	for(var/mob/M in GLOB.player_list)
 		if(M.client)
 			SEND_SOUND(M, sound(null))
+			var/client/C = M.client
+			if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
+				C.chatOutput.sendMusic(" ")
 	SSblackbox.add_details("admin_verb","Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -25,7 +25,7 @@
 
 /datum/round_event/presents/start()
 	for(var/obj/structure/flora/tree/pine/xmas in world)
-		if(xmas.z != ZLEVEL_STATION)
+		if(!(xmas.z in GLOB.station_z_levels))
 			continue
 		for(var/turf/open/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)

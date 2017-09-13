@@ -90,8 +90,10 @@
 /obj/structure/blob/proc/Life()
 	return
 
-/obj/structure/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
-	src.Be_Pulsed()
+/obj/structure/blob/proc/Pulse_Area(mob/camera/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
+	if(QDELETED(pulsing_overmind))
+		pulsing_overmind = overmind
+	Be_Pulsed()
 	var/expanded = FALSE
 	if(prob(70) && expand())
 		expanded = TRUE

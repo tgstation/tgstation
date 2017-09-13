@@ -27,7 +27,7 @@
 /obj/machinery/computer/cargo/emag_act(mob/user)
 	if(emagged)
 		return
-	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!",
+	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 	"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
 	emagged = TRUE
@@ -201,4 +201,3 @@
 	status_signal.data["command"] = command
 
 	frequency.post_signal(src, status_signal)
-

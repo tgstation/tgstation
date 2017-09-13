@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -166,7 +166,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "aF" = (
-/obj/machinery/door/unpowered/shuttle{
+/obj/machinery/door/airlock/shuttle{
 	name = "Restroom"
 	},
 /turf/open/floor/plasteel/bar,
@@ -263,6 +263,9 @@
 /area/ruin/powered/animal_hospital)
 "aX" = (
 /obj/item/stack/cable_coil/random,
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 30
+	},
 /turf/open/floor/plating,
 /area/ruin/powered/animal_hospital)
 "aY" = (
@@ -335,6 +338,9 @@
 /area/ruin/powered/animal_hospital)
 "bk" = (
 /obj/structure/reagent_dispensers/fueltank,
+/obj/item/device/flashlight/glowstick/blue,
+/obj/item/device/flashlight/glowstick/blue,
+/obj/item/device/flashlight/glowstick/blue,
 /turf/open/floor/plating,
 /area/ruin/powered/animal_hospital)
 "bl" = (
@@ -373,16 +379,15 @@
 	},
 /area/ruin/powered/animal_hospital)
 "bn" = (
-/obj/structure/bed/dogbed,
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/sleeper{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bo" = (
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/food/snacks/cheesewedge,
-/obj/item/reagent_containers/food/snacks/cheesewedge,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bp" = (
@@ -420,10 +425,8 @@
 	},
 /area/ruin/powered/animal_hospital)
 "bv" = (
-/obj/effect/mob_spawn/mouse{
-	dir = 4;
-	flavour_text = "<font size=3><b>Y</b></font><b>ou're a mousey! You're getting pretty old as mice go, and you haven't been feeling well as of late. Your master loves you a lot so he took you to this place so you can get better! You can't wait to see him again!<b>";
-	mob_name = "Stallman Jr."
+/obj/effect/mob_spawn/human/doctor/alive/lavaland{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
@@ -433,8 +436,7 @@
 /area/ruin/powered/animal_hospital)
 "bx" = (
 /obj/machinery/door/airlock/medical{
-	name = "Patient Room";
-	req_access_txt = "0"
+	name = "Rejuvenation Pods"
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
@@ -468,12 +470,11 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bD" = (
-/obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/cyanide{
-	desc = "A cocktail of chemotherapy drugs intended to treat bladder cancer.";
-	name = "MVAC regimen"
+/mob/living/simple_animal/bot/medbot{
+	desc = "A little medical robot. It's programmed to only act in emergencies.";
+	heal_threshold = 40;
+	name = "emergency Medibot"
 	},
-/obj/item/reagent_containers/syringe,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bE" = (
@@ -553,16 +554,12 @@
 	},
 /area/lavaland/surface/outdoors)
 "bP" = (
-/obj/structure/chair/office/light{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bQ" = (
-/obj/structure/table/glass,
-/obj/item/clothing/neck/petcollar,
-/obj/item/pen/blue,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bR" = (
@@ -581,6 +578,8 @@
 /obj/structure/closet,
 /obj/item/defibrillator/loaded,
 /obj/item/storage/belt/medical,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /turf/open/floor/plasteel/blue/side{
 	dir = 6
@@ -664,46 +663,46 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "cg" = (
-/obj/machinery/door/unpowered/shuttle{
+/obj/machinery/door/airlock/shuttle{
 	name = "Break Room"
 	},
 /turf/open/floor/plasteel/cmo,
 /area/ruin/powered/animal_hospital)
 "ch" = (
-/obj/machinery/door/unpowered/shuttle{
-	name = "Emergency Care"
+/obj/machinery/door/airlock/shuttle{
+	name = "Operating Theatre"
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "ci" = (
-/obj/machinery/door/unpowered/shuttle{
-	desc = "There's a note wedged in the seam saying something about directing pizza here.";
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/door/airlock/shuttle{
+	desc = "There's a smudged note wedged into it that says something about pizza dropoffs.";
 	name = "Staff Entrance"
 	},
-/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/ruin/powered/animal_hospital)
 "cj" = (
-/obj/machinery/door/unpowered/shuttle{
+/obj/machinery/door/airlock/shuttle{
 	name = "Morgue"
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/animal_hospital)
 "ck" = (
-/obj/machinery/door/unpowered/shuttle{
+/obj/machinery/door/airlock/shuttle{
 	name = "Medical Supplies"
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "cl" = (
-/obj/machinery/door/unpowered/shuttle{
+/obj/machinery/door/airlock/shuttle{
 	name = "Safety Supplies"
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "cm" = (
-/obj/machinery/door/unpowered/shuttle{
-	name = "Tool Storage"
+/obj/machinery/door/airlock/shuttle{
+	name = "Storage"
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/animal_hospital)
@@ -810,6 +809,33 @@
 "cF" = (
 /obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/animal_hospital)
+"cG" = (
+/obj/machinery/door/airlock/shuttle{
+	desc = "There's a smudged note wedged into it that says something about pizza dropoffs.";
+	name = "Staff Entrance"
+	},
+/turf/open/floor/plasteel/cmo,
+/area/ruin/powered/animal_hospital)
+"cH" = (
+/mob/living/simple_animal/bot/cleanbot,
+/turf/open/floor/plasteel/blue/side{
+	dir = 0
+	},
+/area/ruin/powered/animal_hospital)
+"cI" = (
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/toxin,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"cJ" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 
 (1,1,1) = {"
@@ -1037,7 +1063,7 @@ cw
 ae
 aV
 ba
-bh
+cI
 aG
 aL
 br
@@ -1092,7 +1118,7 @@ aj
 at
 as
 ae
-ct
+aL
 aK
 ck
 ao
@@ -1122,7 +1148,7 @@ ak
 as
 az
 ae
-aM
+cv
 aP
 ae
 ae
@@ -1152,7 +1178,7 @@ al
 au
 as
 ae
-ct
+aL
 aK
 cl
 ao
@@ -1181,9 +1207,9 @@ ae
 am
 cs
 as
-cg
+cG
 aK
-aP
+cH
 ae
 aW
 ao
@@ -1249,12 +1275,12 @@ ae
 ae
 ae
 ae
+bh
+bv
+bv
+cJ
 bn
 bv
-bC
-ae
-bn
-bN
 bP
 ae
 cE
@@ -1280,10 +1306,10 @@ be
 bk
 ae
 bo
-bw
+ao
 bD
-ae
-bK
+ao
+ao
 ao
 bQ
 ae
@@ -1311,11 +1337,11 @@ ae
 ae
 af
 bx
-ae
+af
 ae
 af
 bx
-ae
+af
 ae
 aa
 aa
