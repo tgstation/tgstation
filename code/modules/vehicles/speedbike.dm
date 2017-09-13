@@ -47,8 +47,7 @@
 	internal_scubber.on = 1
 	internal_extinguisher = new /obj/item/extinguisher/vehicle(src)
 	internal_extinguisher.vehicle = src
-	CAN = new /obj/machinery/portable_atmospherics/canister/oxygen(src)
-//	CAN = new /obj/machinery/portable_atmospherics/canister/proto/default/oxygen(src)
+	CAN = new /obj/machinery/portable_atmospherics/canister/proto/default/oxygen(src)
 
 /obj/item/extinguisher/vehicle
 	name = "extinguisher nozzle"
@@ -87,11 +86,13 @@
 	var/datum/action/innate/atmos_bike/extinguish/E = new()
 	var/datum/action/innate/atmos_bike/flood/F = new()
 	var/datum/action/innate/atmos_bike/control/C = new()
+	var/datum/action/innate/atmos_bike/resin_wall/R = new()
 	N.Grant(M, src)
 	S.Grant(M, src)
 	E.Grant(M, src)
 	F.Grant(M, src)
 	C.Grant(M, src)
+	R.Grant(M, src)
 
 
 /obj/vehicle/space/speedbike/atmos/unbuckle_mob(mob/living/M)
@@ -102,6 +103,8 @@
 		qdel(H)
 
 /datum/action/innate/atmos_bike
+	background_icon_state = "bg_tech_blue"
+	icon_icon = 'icons/mob/actions/actions_vehicle.dmi'
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
 	var/obj/vehicle/space/speedbike/atmos/bike
 	var/obj/machinery/portable_atmospherics/scrubber/huge/inner_scrubber
@@ -259,7 +262,23 @@
 		button_icon_state = "mech_eject"
 		UpdateButtonIcon()
 
+/datum/action/innate/atmos_bike/resin_wall
+	name = "Resin Wall Dispenser"
+	desc = "Dispenses a resin to help contain and control air flow"
+	button_icon_state = "resin"
+	var/resin_synth = 3
 
+/datum/action/innate/atmos_bike/resin_wall/Activate()
+	if(resin_synth >= 1)
+		var/obj/effect/particle_effect/foam/metal/resin/R = new /obj/effect/particle_effect/foam/metal/resin(get_turf(owner))
+		R.amount = 0
+		resin_synth--
+		sleep(150)
+		if(!owner || QDELETED(owner))
+			return
+		resin_synth++
+	else
+		owner << "<span class='warning'>Resin mixture is still being synthesized, try again later.</span>"
 
 
 // Engineer's repair-bike and unique repair turret
@@ -300,6 +319,8 @@
 		qdel(H)
 
 /datum/action/innate/repair_bike
+	background_icon_state = "bg_tech_on"
+	icon_icon = 'icons/mob/actions/actions_vehicle.dmi'
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
 	var/obj/vehicle/space/speedbike/repair/bike
 	var/obj/machinery/repair_turret/tesla
@@ -316,7 +337,7 @@
 /datum/action/innate/repair_bike/foam_wall
 	name = "Metal Foam Dispenser"
 	desc = "Dispenses metal foam to help contain and control breaches"
-	button_icon_state = "mech_phasing_off"
+	button_icon_state = "foam"
 	var/metal_synth = 3
 
 /datum/action/innate/repair_bike/foam_wall/Activate()
@@ -334,29 +355,28 @@
 /datum/action/innate/repair_bike/toggle_turret
 	name = "Toggle Repair Turret"
 	desc = "Toggles the mounted repair turret"
-	button_icon_state = "lightning0"
-	background_icon_state = "bg_default_on"
+	button_icon_state = "mini_off"
 
 /datum/action/innate/repair_bike/toggle_turret/Activate()
 	if(tesla.active)
 		tesla.active = FALSE
 		tesla.icon_state = "mini_off"
+		button_icon_state = "mini_off"
 		STOP_PROCESSING(SSobj, tesla)
-		background_icon_state = "bg_default"
 		UpdateButtonIcon()
 		return
 	if(!tesla.active)
 		tesla.active = TRUE
 		tesla.icon_state = "mini_on"
+		button_icon_state = "mini_on"
 		START_PROCESSING(SSobj, tesla)
-		background_icon_state = "bg_default_on"
 		UpdateButtonIcon()
 		return
 
 /datum/action/innate/repair_bike/induction
 	name = "Equip power inducer"
 	desc = "Used to charge power cells in weapons and APCs"
-	button_icon_state = "flightpack_power"
+	button_icon_state = "inducer"
 	var/obj/item/inducer/vehicle = null
 
 /datum/action/innate/repair_bike/induction/Activate()
