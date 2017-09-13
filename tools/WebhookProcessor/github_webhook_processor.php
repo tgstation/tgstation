@@ -320,8 +320,8 @@ function handle_pr($payload) {
 					create_comment($payload, 'You currently have a negative Fix/Feature pull request delta of ' . $balances[$author] . '. Maintainers may close this PR at will. Fixing issues or improving the codebase will improve this score.');
 			}
 			break;
-		case 'synchronize':
 		case 'edited':
+		case 'synchronize':
 			$labels = tag_pr($payload, false);
 			if($payload['action'] == 'synchronize')
 				check_ready_for_review($payload, $labels);
