@@ -34,7 +34,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	handcrafting = new()
 
-	..()
+	. = ..()
 
 /mob/living/carbon/human/create_internal_organs()
 	if(!(NOHUNGER in dna.species.species_traits))
