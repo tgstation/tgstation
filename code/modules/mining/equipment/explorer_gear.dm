@@ -79,7 +79,7 @@
 			to_chat(C, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b></span>")
 		else
 			to_chat(C, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
-	if(C.IsStun() || C.IsKnockdown() || C.IsSleeping() || IsUnconscious())
+	if(C.IsStun() || C.IsKnockdown() || C.IsSleeping() || C.IsUnconscious())
 		C.SetStun(0)
 		C.SetKnockdown(0)
 		C.SetSleeping(0)
