@@ -128,11 +128,12 @@
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/Hydro = target
 		pollinate(Hydro)
-	else if(target == beehome)
-		var/obj/structure/beebox/BB = target
-		loc = BB
-		target = null
-		wanted_objects -= typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
+	else if(istype(target, /obj/structure/beebox))
+		if(target == beehome)
+			var/obj/structure/beebox/BB = target
+			loc = BB
+			target = null
+			wanted_objects -= typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
 		return //no don't attack the goddamm box
 	else
 		. = ..()
