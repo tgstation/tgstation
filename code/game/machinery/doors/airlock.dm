@@ -122,13 +122,14 @@
 		var/outcome = rand(1,100)
 		switch(outcome)
 			if(1 to 6)
+				var/turf/here = get_turf(src)
 				for(var/turf/closed/T in range(2, src))
-					new T.type(loc)
+					here.changeTurf(T.type)
 					qdel(src)
-					return
-				new /turf/closed/wall(loc)
+					return INITIALIZE_HINT_QDEL
+				here.changeTurf(/turf/closed/wall)
 				qdel(src)
-				return
+				return INITIALIZE_HINT_QDEL
 			if(7 to 9)
 				lights = FALSE
 				bolt()
