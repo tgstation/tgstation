@@ -17,7 +17,7 @@
 	for(var/I in other_archdrops)
 		_archdrops[I] += other_archdrops[I]
 
-/datum/component/archaeology/proc/Dig(mob/user, obj/item/W)
+/datum/component/archaeology/proc/Dig(obj/item/W, mob/living/user)
 	if(dug)
 		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
 		return FALSE
@@ -63,7 +63,7 @@
 					if(isplatingturf(OT))
 						var/turf/open/floor/plating/POT = parent
 						POT.icon_plating = "[POT.postdig_icon]"
-					OT.icon_state = "[OT.postdig_icon]"
+						POT.icon_state = "[OT.postdig_icon]"
 
 			if(OT.slowdown) //Things like snow slow you down until you dig them.
 				OT.slowdown = 0
