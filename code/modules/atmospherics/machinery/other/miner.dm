@@ -128,7 +128,7 @@
 	update_power()
 	check_operation()
 	if(active && !broken)
-		if(isnull(gas_mixture) && gas_mixture.len)
+		if(LAZYLEN(gax_mixture))
 			return FALSE
 		if(do_use_power(active_power_usage))
 			mine_gas()
@@ -221,15 +221,15 @@
 /obj/machinery/atmospherics/miner/gas_portal/update_icon()
 	return //The portals don't have overlays.
 
-/obj/machinery/atmospherics/miner/gas_portal/moles_to_spawn(var/turf/open/turf)
+/obj/machinery/atmospherics/miner/gas_portal/moles_to_spawn(var/turf/open/target_turf)
 	//Releases exactly enough gas to reach the target pressure.
-	var/datum/gas_mixture/G = turf.return_air()
+	var/datum/gas_mixture/G = target_turf.return_air()
 	return max(0,(1-G.return_pressure()/max_ext_kpa)*spawn_mol)
 	
 
 /obj/machinery/atmospherics/miner/gas_portal/repressurizer
 	name = "Bluespace atmosphere restorer"
-	desc = "A miniature bluespace portal used to siphon the atmosphere from a backwater planet so that you may refill a depresurized area on the station. This portal will dissipate one minute after creation."
+	desc = "A miniature bluespace portal used to siphon the atmosphere from a backwater planet so that you may refill a depresurized area. This portal will dissipate one minute after creation."
 	icon_state = "air_portal"
 	gas_mixture = list("n2" = N2STANDARD, "o2" = O2STANDARD)
 	spawn_mol = MOLES_CELLSTANDARD
