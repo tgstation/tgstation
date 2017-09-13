@@ -203,13 +203,6 @@
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_GLASS = 1000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
 
-/datum/design/mag_oldsmg/tx_mag
-	name = "WT-550 Auto Gun Uranium Magazine (4.6x30mm TX)"
-	desc = "A 20 round uranium tipped magazine for the out of date security WT-550 Auto Rifle"
-	id = "mag_oldsmg_tx"
-	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_URANIUM = 2000)
-	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
-
 /datum/design/stunshell
 	name = "Stun Shell"
 	desc = "A stunning shell for a shotgun."

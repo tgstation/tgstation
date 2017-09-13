@@ -34,7 +34,7 @@
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in get_crewmember_minds())
-		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
+		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target))
 			possible_targets += possible_target
 	if(possible_targets.len > 0)
 		target = pick(possible_targets)
@@ -126,7 +126,7 @@
 		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 			return 1
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z > ZLEVEL_STATION) || (target.current.client && target.current.client.is_afk()))			//If they leave the station or go afk they count as dead for this
+		if(T && (!(T.z in GLOB.station_z_levels)) || (target.current.client && target.current.client.is_afk()))			//If they leave the station or go afk they count as dead for this
 			return 2
 		return 0
 	return 1

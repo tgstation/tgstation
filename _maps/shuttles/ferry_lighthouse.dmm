@@ -184,7 +184,7 @@
 	name = "The Lighthouse";
 	roundstart_move = "ferry_away";
 	timid = 1;
-	port_angle = 180;
+	port_direction = 2;
 	width = 16
 	},
 /turf/open/floor/mineral/titanium/blue,

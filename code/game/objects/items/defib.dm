@@ -135,10 +135,10 @@
 /obj/item/defibrillator/emag_act(mob/user)
 	if(safety)
 		safety = 0
-		to_chat(user, "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer.")
+		to_chat(user, "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer.</span>")
 	else
 		safety = 1
-		to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer.")
+		to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer.</span>")
 
 /obj/item/defibrillator/emp_act(severity)
 	if(cell)
@@ -497,7 +497,7 @@
 						update_icon()
 						return
 			if(H.stat == DEAD)
-				H.visible_message("<span class='warning'>[H]'s body convulses a bit.")
+				H.visible_message("<span class='warning'>[H]'s body convulses a bit.</span>")
 				playsound(get_turf(src), "bodyfall", 50, 1)
 				playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 				total_brute	= H.getBruteLoss()

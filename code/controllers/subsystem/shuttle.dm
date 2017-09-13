@@ -288,7 +288,7 @@ SUBSYSTEM_DEF(shuttle)
 				continue
 
 		var/turf/T = get_turf(thing)
-		if(T && T.z == ZLEVEL_STATION)
+		if(T && (T.z in GLOB.station_z_levels))
 			callShuttle = 0
 			break
 
@@ -375,7 +375,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/travel_dir = M.preferred_direction
 	// Remember, the direction is the direction we appear to be
 	// coming from
-	var/dock_angle = dir2angle(M.preferred_direction) + M.port_angle + 180
+	var/dock_angle = dir2angle(M.preferred_direction) + dir2angle(M.port_direction) + 180
 	var/dock_dir = angle2dir(dock_angle)
 
 	var/transit_width = SHUTTLE_TRANSIT_BORDER * 2

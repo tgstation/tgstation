@@ -19,6 +19,8 @@
 	var/auto_replenish = TRUE
 	var/special = FALSE
 	var/special_name = "special function"
+	var/message_cooldown
+	var/breakout_time = 1
 
 /obj/machinery/implantchair/Initialize()
 	. = ..()
@@ -112,22 +114,22 @@
 	update_icon()
 
 /obj/machinery/implantchair/container_resist(mob/living/user)
-	if(state_open)
-		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about about a minute.)</span>")
-	audible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>",hearing_distance = 2)
-
-	if(do_after(user, 600, target = src))
+	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
+		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
-		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
+		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
 /obj/machinery/implantchair/relaymove(mob/user)
-	container_resist(user)
+	if(message_cooldown <= world.time)
+		message_cooldown = world.time + 50
+		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
 /obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
@@ -184,4 +186,3 @@
 	message_admins("[key_name_admin(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	log_game("[key_name_admin(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	return 1
-

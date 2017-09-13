@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	GLOB.parasites += src
 	setthemename(theme)
 
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
 	if(summoner)
@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
 	med_hud_set_health()
 	med_hud_set_status()
-	if(summoner)
+	if(!QDELETED(summoner))
 		if(summoner.stat == DEAD)
 			forceMove(summoner.loc)
 			to_chat(src, "<span class='danger'>Your summoner has died!</span>")
@@ -655,7 +655,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	name = "holoparasite injector kit"
 
 /obj/item/storage/box/syndie_kit/guardian/Initialize()
-	..()
+	. = ..()
 	new /obj/item/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/paper/guides/antag/guardian(src)
 	return
