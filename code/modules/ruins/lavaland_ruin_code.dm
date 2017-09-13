@@ -46,71 +46,35 @@
 	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
 	var/shell_type = /obj/effect/mob_spawn/human/golem
 	var/has_owner = FALSE //if the resulting golem obeys someone
-	w_class = WEIGHT_CLASS_BULKY 
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
-	var/species
-	if(istype(I, /obj/item/stack/))
+	var/static/list/golem_shell_species_types = list(
+		/obj/item/stack/sheet/metal	                = /datum/species/golem,
+		/obj/item/stack/sheet/glass 	            = /datum/species/golem/glass,
+		/obj/item/stack/sheet/plasteel 	            = /datum/species/golem/plasteel,
+		/obj/item/stack/sheet/mineral/sandstone	    = /datum/species/golem/sand,
+		/obj/item/stack/sheet/mineral/plasma	    = /datum/species/golem/plasma,
+		/obj/item/stack/sheet/mineral/diamond	    = /datum/species/golem/diamond,
+		/obj/item/stack/sheet/mineral/gold	        = /datum/species/golem/gold,
+		/obj/item/stack/sheet/mineral/silver	    = /datum/species/golem/silver,
+		/obj/item/stack/sheet/mineral/uranium	    = /datum/species/golem/uranium,
+		/obj/item/stack/sheet/mineral/bananium	    = /datum/species/golem/bananium,
+		/obj/item/stack/sheet/mineral/titanium	    = /datum/species/golem/titanium,
+		/obj/item/stack/sheet/mineral/plastitanium	= /datum/species/golem/plastitanium,
+		/obj/item/stack/sheet/mineral/abductor	    = /datum/species/golem/alloy,
+		/obj/item/stack/sheet/mineral/wood	        = /datum/species/golem/wood,
+		/obj/item/stack/sheet/bluespace_crystal	    = /datum/species/golem/bluespace,
+		/obj/item/stack/sheet/runed_metal	        = /datum/species/golem/runic,
+		/obj/item/stack/medical/gauze	            = /datum/species/golem/cloth,
+		/obj/item/stack/sheet/cloth	                = /datum/species/golem/cloth,
+		/obj/item/stack/sheet/mineral/adamantine	= /datum/species/golem/adamantine,
+		/obj/item/stack/sheet/plastic	            = /datum/species/golem/plastic)
+
+	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/O = I
-
-		if(istype(O, /obj/item/stack/sheet/metal))
-			species = /datum/species/golem
-
-		if(istype(O, /obj/item/stack/sheet/glass))
-			species = /datum/species/golem/glass
-
-		if(istype(O, /obj/item/stack/sheet/plasteel))
-			species = /datum/species/golem/plasteel
-
-		if(istype(O, /obj/item/stack/sheet/mineral/sandstone))
-			species = /datum/species/golem/sand
-
-		if(istype(O, /obj/item/stack/sheet/mineral/plasma))
-			species = /datum/species/golem/plasma
-
-		if(istype(O, /obj/item/stack/sheet/mineral/diamond))
-			species = /datum/species/golem/diamond
-
-		if(istype(O, /obj/item/stack/sheet/mineral/gold))
-			species = /datum/species/golem/gold
-
-		if(istype(O, /obj/item/stack/sheet/mineral/silver))
-			species = /datum/species/golem/silver
-
-		if(istype(O, /obj/item/stack/sheet/mineral/uranium))
-			species = /datum/species/golem/uranium
-
-		if(istype(O, /obj/item/stack/sheet/mineral/bananium))
-			species = /datum/species/golem/bananium
-
-		if(istype(O, /obj/item/stack/sheet/mineral/titanium))
-			species = /datum/species/golem/titanium
-
-		if(istype(O, /obj/item/stack/sheet/mineral/plastitanium))
-			species = /datum/species/golem/plastitanium
-
-		if(istype(O, /obj/item/stack/sheet/mineral/abductor))
-			species = /datum/species/golem/alloy
-
-		if(istype(O, /obj/item/stack/sheet/mineral/wood))
-			species = /datum/species/golem/wood
-
-		if(istype(O, /obj/item/stack/sheet/bluespace_crystal))
-			species = /datum/species/golem/bluespace
-
-		if(istype(O, /obj/item/stack/sheet/runed_metal))
-			species = /datum/species/golem/runic
-
-		if(istype(O, /obj/item/stack/medical/gauze) || istype(O, /obj/item/stack/sheet/cloth))
-			species = /datum/species/golem/cloth
-
-		if(istype(O, /obj/item/stack/sheet/mineral/adamantine))
-			species = /datum/species/golem/adamantine
-
-		if(istype(O, /obj/item/stack/sheet/plastic))
-			species = /datum/species/golem/plastic
-
+		var/species = golem_shell_species_types[O.merge_type]
 		if(species)
 			if(O.use(10))
 				to_chat(user, "You finish up the golem shell with ten sheets of [O].")

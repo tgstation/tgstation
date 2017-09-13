@@ -48,7 +48,7 @@
 		if(active)
 			return 0
 		var/turf/T = get_turf(src)
-		if(!T || T.z != ZLEVEL_STATION)
+		if(!T || !(T.z in GLOB.station_z_levels))
 			to_chat(user, "<span class='warning'>[src] must be on the station to function!</span>")
 			return 0
 		if(SSshuttle.emergency.mode != SHUTTLE_CALL)
@@ -63,7 +63,7 @@
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/process()
 	var/turf/own_turf = get_turf(src)
-	if(SSshuttle.emergency.mode != SHUTTLE_CALL || delay_remaining <= 0 || !own_turf || own_turf.z != ZLEVEL_STATION)
+	if(SSshuttle.emergency.mode != SHUTTLE_CALL || delay_remaining <= 0 || !own_turf || !(own_turf.z in GLOB.station_z_levels))
 		forced_disable(FALSE)
 		return
 	. = ..()
@@ -97,7 +97,7 @@
 		mean_x = Ceiling(mean_x)
 	else
 		mean_x = Floor(mean_x)
-	var/turf/semi_random_center_turf = locate(mean_x, mean_y, ZLEVEL_STATION)
+	var/turf/semi_random_center_turf = locate(mean_x, mean_y, ZLEVEL_STATION_PRIMARY)
 	for(var/t in getline(src, semi_random_center_turf))
 		prism_turfs[t] = TRUE
 	var/placement_style = prob(50)

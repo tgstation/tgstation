@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/active = TRUE //qdelery
 
 /obj/effect/hallucination/simple/Initialize(mapload, var/mob/living/carbon/T)
-	..()
+	. = ..()
 	target = T
 	current_image = GetImage()
 	if(target.client)
@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	image_state = "alienh_pounce"
 
 /obj/effect/hallucination/simple/xeno/Initialize(mapload, mob/living/carbon/T)
-	..()
+	. = ..()
 	name = "alien hunter ([rand(1, 1000)])"
 
 /obj/effect/hallucination/simple/xeno/throw_impact(A)

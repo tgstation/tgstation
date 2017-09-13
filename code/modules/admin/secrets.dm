@@ -45,10 +45,6 @@
 		dat += {"
 			<B>Fun Secrets</B><BR>
 			<BR>
-<<<<<<< HEAD
-
-=======
->>>>>>> 6e5ebf9c41fc97d5ee0daf4fd22536844438ace0
 			<A href='?src=\ref[src];[HrefToken()];secrets=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=monkey'>Turn all humans into monkeys</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=anime'>Chinese Cartoons</A><BR>
@@ -456,7 +452,7 @@
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Egalitarian Station")
 			for(var/obj/machinery/door/airlock/W in GLOB.machines)
-				if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
+				if((W.z in GLOB.station_z_levels) && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/ai/commandreport.ogg')
