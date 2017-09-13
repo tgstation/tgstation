@@ -40,7 +40,7 @@
 
 // Pickup loot
 /mob/living/simple_animal/hostile/mimic/crate/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)	//eat shit
 		for(var/obj/item/I in loc)
 			I.loc = src
@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	gold_core_spawnable = 0
 
 /mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = 0)
-	..()
+	. = ..()
 	CopyObject(copy, creator, destroy_original)
 
 /mob/living/simple_animal/hostile/mimic/copy/Life()

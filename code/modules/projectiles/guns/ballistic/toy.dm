@@ -77,38 +77,34 @@
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/gun/ballistic/automatic/c20r/toy
+/obj/item/gun/ballistic/automatic/c20r/toy //This is the syndicate variant with syndicate firing pin and riot darts.
 	name = "donksoft SMG"
 	desc = "A bullpup two-round burst toy SMG, designated 'C-20r'. Ages 8 and up."
 	icon = 'icons/obj/guns/toy.dmi'
 	can_suppress = TRUE
 	needs_permit = 0
-	mag_type = /obj/item/ammo_box/magazine/toy/smgm45
+	mag_type = /obj/item/ammo_box/magazine/toy/smgm45/riot
 	casing_ejector = 0
 
-/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/device/firing_pin
+	mag_type = /obj/item/ammo_box/magazine/toy/smgm45
 
-/obj/item/gun/ballistic/automatic/smgm45/toy/riot
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/smgm45/riot
 
-/obj/item/gun/ballistic/automatic/c20r/toy/riot/unrestricted
-	pin = /obj/item/device/firing_pin
-
-/obj/item/gun/ballistic/automatic/l6_saw/toy
+/obj/item/gun/ballistic/automatic/l6_saw/toy //This is the syndicate variant with syndicate firing pin and riot darts.
 	name = "donksoft LMG"
 	desc = "A heavily modified toy light machine gun, designated 'L6 SAW'. Ages 8 and up."
 	icon = 'icons/obj/guns/toy.dmi'
 	can_suppress = FALSE
 	needs_permit = 0
-	mag_type = /obj/item/ammo_box/magazine/toy/m762
+	mag_type = /obj/item/ammo_box/magazine/toy/m762/riot
 	casing_ejector = 0
 
-/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted
+/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/device/firing_pin
+	mag_type = /obj/item/ammo_box/magazine/toy/m762
 
-/obj/item/gun/ballistic/automatic/l6_saw/toy/riot
+/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/m762/riot
-
-/obj/item/gun/ballistic/automatic/l6_saw/toy/riot/unrestricted
-	pin = /obj/item/device/firing_pin
