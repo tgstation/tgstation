@@ -11,3 +11,9 @@
 /obj/item/paper/fluff/ruins/thederelict/nukie_objectives
 	name = "Objectives of a Nuclear Operative"
 	info = "<b>Objective #1</b>: Destroy the station with a nuclear device."
+
+/obj/item/paper/crumpled/bloody/ruins/thederelict/unfinished
+	name = "unfinished paper scrap"
+	desc = "Looks like someone started shakily writing a will in space common, but were interrupted by something bloody..."
+	info = "I, Victor Belyakov, do hereby leave my _- "
+

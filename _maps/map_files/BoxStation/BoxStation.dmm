@@ -853,8 +853,7 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "acm" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	areastring = "/area/ai_monitored/security/armory";
 	name = "Armory APC";
@@ -2412,7 +2411,7 @@
 	dir = 4;
 	id = "pod3";
 	name = "escape pod 3";
-	port_angle = 180;
+	port_direction = 2;
 	preferred_direction = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -6369,7 +6368,7 @@
 	height = 5;
 	id = "laborcamp";
 	name = "labor camp shuttle";
-	port_angle = 90;
+	port_direction = 4;
 	width = 9
 	},
 /obj/docking_port/stationary{
@@ -16558,7 +16557,7 @@
 	height = 7;
 	id = "arrival";
 	name = "arrival shuttle";
-	port_angle = -90;
+	port_direction = 8;
 	preferred_direction = 8;
 	width = 15
 	},
@@ -21012,8 +21011,7 @@
 	},
 /area/bridge)
 "aWW" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Bridge APC";
 	areastring = "/area/bridge";
@@ -22814,7 +22812,6 @@
 /area/quartermaster/storage)
 "bbu" = (
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Captain's Office APC";
 	areastring = "/area/crew_quarters/heads/captain";
@@ -23871,8 +23868,7 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai_upload)
 "bed" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Upload APC";
 	areastring = "/area/ai_monitored/turret_protected/ai_upload";
@@ -32615,7 +32611,7 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
-	port_angle = 0;
+	port_direction = 1;
 	roundstart_move = "syndicate_away";
 	width = 18
 	},
@@ -38037,7 +38033,7 @@
 	height = 5;
 	id = "mining";
 	name = "mining shuttle";
-	port_angle = 90;
+	port_direction = 4;
 	width = 7
 	},
 /obj/docking_port/stationary{
@@ -42411,8 +42407,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bSX" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Virology APC";
 	areastring = "/area/medical/virology";
@@ -43994,8 +43989,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Telecomms Server APC";
 	areastring = "/area/tcommsat/server";
@@ -46151,8 +46145,7 @@
 /obj/structure/closet/secure_closet/engineering_chief{
 	req_access_txt = "0"
 	},
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "CE Office APC";
 	areastring = "/area/crew_quarters/heads/chief";
@@ -49188,8 +49181,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cib" = (
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 1;
 	name = "Engineering APC";
 	areastring = "/area/engine/engineering";
@@ -49226,8 +49218,7 @@
 	dir = 1
 	},
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 1;
 	name = "Engineering APC";
 	areastring = "/area/engine/engineering";
@@ -52761,7 +52752,7 @@
 	dir = 4;
 	id = "pod4";
 	name = "escape pod 4";
-	port_angle = 180;
+	port_direction = 2;
 	preferred_direction = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -53068,7 +53059,7 @@
 	dir = 8;
 	id = "pod2";
 	name = "escape pod 2";
-	port_angle = 180
+	port_direction = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_2)
@@ -55884,8 +55875,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "AI Chamber APC";
 	areastring = "/area/ai_monitored/turret_protected/ai";
@@ -56262,7 +56252,7 @@
 	height = 13;
 	id = "ferry";
 	name = "ferry shuttle";
-	port_angle = 0;
+	port_direction = 1;
 	preferred_direction = 4;
 	roundstart_move = "ferry_away";
 	width = 5
@@ -56286,7 +56276,7 @@
 	dir = 8;
 	id = "pod1";
 	name = "escape pod 1";
-	port_angle = 180
+	port_direction = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
@@ -56455,7 +56445,7 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "NT Medical Ship";
-	port_angle = -90;
+	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
 	timid = null;
@@ -60986,7 +60976,7 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
-	port_angle = 0;
+	port_direction = 1;
 	roundstart_move = "syndicate_away";
 	width = 18
 	},
@@ -62573,7 +62563,6 @@
 /area/quartermaster/sorting)
 "cNL" = (
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Central Maintenance APC";
 	areastring = "/area/maintenance/central";

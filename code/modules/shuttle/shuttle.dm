@@ -260,7 +260,7 @@
 	// The direction the shuttle prefers to travel in
 	var/preferred_direction = NORTH
 	// And the angle from the front of the shuttle to the port
-	var/port_angle = 0 // used to be travelDir
+	var/port_direction = NORTH
 
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
@@ -410,7 +410,7 @@
 	mode = SHUTTLE_RECALL
 
 /obj/docking_port/mobile/proc/enterTransit()
-	if(SSshuttle.lockdown && z == ZLEVEL_STATION)	//emp went off, no escape
+	if(SSshuttle.lockdown && (z in GLOB.station_z_levels))	//emp went off, no escape
 		return
 	previous = null
 //		if(!destination)
@@ -418,7 +418,7 @@
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/obj/docking_port/stationary/S1 = assigned_transit
 	if(S1)
-		if(dock(S1))
+		if(dock(S1) != DOCKING_SUCCESS)
 			WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
 		else
 			previous = S0
@@ -498,7 +498,7 @@
 
 	if(new_dock.get_docked() == src)
 		remove_ripples()
-		return DOCKING_COMPLETE
+		return DOCKING_SUCCESS
 
 	if(!force)
 		if(!check_dock(new_dock))
@@ -570,11 +570,11 @@
 			move_mode = moving_atom.beforeShuttleMove(newT, rotation, move_mode)							//atoms
 
 		move_mode = oldT.fromShuttleMove(newT, underlying_turf_type, baseturf_cache, move_mode)	//turfs
-		move_mode = newT.toShuttleMove(oldT, dir, move_mode)												//turfs
+		move_mode = newT.toShuttleMove(oldT, move_mode , src)												//turfs
 
 		if(move_mode & MOVE_AREA)
 			areas_to_move[old_area] = TRUE
-		
+
 		old_turfs[place] = move_mode
 
 	/*******************************************All onShuttleMove procs******************************************/
@@ -650,11 +650,11 @@
 	// then try again
 	switch(mode)
 		if(SHUTTLE_CALL)
-			if(dock(destination, preferred_direction))
+			if(dock(destination, preferred_direction) != DOCKING_SUCCESS)
 				setTimer(20)
 				return
 		if(SHUTTLE_RECALL)
-			if(dock(previous))
+			if(dock(previous) != DOCKING_SUCCESS)
 				setTimer(20)
 				return
 		if(SHUTTLE_IGNITING)

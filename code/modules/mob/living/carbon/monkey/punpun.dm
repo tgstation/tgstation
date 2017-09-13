@@ -21,7 +21,7 @@
 		else
 			name = pick(pet_monkey_names)
 		gender = pick(MALE, FEMALE)
-	..()
+	. = ..()
 
 	//These have to be after the parent new to ensure that the monkey
 	//bodyparts are actually created before we try to equip things to
@@ -76,6 +76,6 @@
 	if(!ancestor_name)
 		file_data["ancestor_name"] = name
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(json_file))
+	WRITE_FILE(json_file, json_encode(file_data))
 	if(!dead)
 		memory_saved = 1

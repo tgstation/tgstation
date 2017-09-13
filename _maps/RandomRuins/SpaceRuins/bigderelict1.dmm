@@ -67,7 +67,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ao" = (
 /obj/machinery/power/apc{
-	cell_type = 0;
+	start_charge = 0;
 	dir = 4;
 	name = "Cargo Bay APC";
 	pixel_x = 24
@@ -258,9 +258,7 @@
 	name = "critter crate - mr.tiggles";
 	opened = 1
 	},
-/obj/item/paper/crumpled/ruins/snowdin{
-	info = "<i>A crumpled piece of manifest paper, out of the barely legible pen writing,  you can see something about a warning involving whatever was originally in the crate.</i>"
-	},
+/obj/item/paper/crumpled/ruins/bigderelict1/manifest,
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
@@ -454,10 +452,7 @@
 	name = "Tradeport Officer";
 	random = 1
 	},
-/obj/item/paper/crumpled/ruins/snowdin{
-	icon_state = "scrap_bloodied";
-	info = "If anyone finds this, please, don't let my kids know I died a coward.."
-	},
+/obj/item/paper/crumpled/ruins/bigderelict1/coward,
 /obj/effect/decal/cleanable/blood/old{
 	name = "dried blood splatter";
 	pixel_x = -29
@@ -754,7 +749,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "ca" = (
 /obj/machinery/power/apc{
-	cell_type = 0;
+	start_charge = 0;
 	dir = 4;
 	name = "Power Storage APC";
 	pixel_x = 23;
@@ -850,7 +845,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "ck" = (
 /obj/machinery/power/apc{
-	cell_type = 0;
+	start_charge = 0;
 	dir = 2;
 	name = "Tradepost APC";
 	pixel_y = -24
@@ -2011,7 +2006,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "el" = (
 /obj/machinery/power/apc{
-	cell_type = 0;
+	start_charge = 0;
 	dir = 4;
 	name = "Cargo Storage APC";
 	pixel_x = 24

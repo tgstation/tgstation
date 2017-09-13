@@ -145,11 +145,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/succumbed = FALSE
 
-	if(message_mode == MODE_WHISPER)
+	var/fullcrit = InFullCritical()
+	if((InCritical() && !fullcrit) || message_mode == MODE_WHISPER)
 		message_range = 1
-		spans |= SPAN_ITALICS
+		message_mode = MODE_WHISPER
 		log_talk(src,"[key_name(src)] : [message]",LOGWHISPER)
-		if(in_critical)
+		if(fullcrit)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
 			var/message_len = length(message)
@@ -165,7 +166,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message)
 		return
 
-	spans += get_spans()
+	spans |= get_spans()
 
 	if(language)
 		var/datum/language/L = GLOB.language_datum_instances[language]
@@ -179,6 +180,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		spans |= SPAN_ITALICS
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
+	if(radio_return & NOPASS)
+		return 1
 
 	//No screams in space, unless you're next to someone.
 	var/turf/T = get_turf(src)
@@ -296,10 +299,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/get_message_mode(message)
 	var/key = copytext(message, 1, 2)
-	if(key == ";")
-		return MODE_HEADSET
-	else if(key == "#")
+	if(key == "#")
 		return MODE_WHISPER
+	else if(key == ";")
+		return MODE_HEADSET
 	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
 		var/key_symbol = lowertext(copytext(message, 2, 3))
 		return GLOB.department_radio_keys[key_symbol]
@@ -385,6 +388,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/radio(message, message_mode, list/spans, language)
 	switch(message_mode)
+		if(MODE_WHISPER)
+			return ITALICS
 		if(MODE_R_HAND)
 			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
 				if (r_hand)

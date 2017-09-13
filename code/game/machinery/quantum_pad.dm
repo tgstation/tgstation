@@ -15,6 +15,20 @@
 	var/teleporting = 0 //if it's in the process of teleporting
 	var/power_efficiency = 1
 	var/obj/machinery/quantumpad/linked_pad
+	
+	//mapping
+	var/static/list/mapped_quantum_pads = list()
+	var/map_pad_id = "" as text //what's my name
+	var/map_pad_link_id = "" as text //who's my friend
+	
+/obj/machinery/quantumpad/Initialize()
+	. = ..()
+	if(map_pad_id)
+		mapped_quantum_pads[map_pad_id] = src
+		
+/obj/machinery/quantumpad/Destroy()
+	mapped_quantum_pads -= map_pad_id
+	return ..()
 
 /obj/machinery/quantumpad/RefreshParts()
 	var/E = 0
@@ -60,8 +74,9 @@
 		return
 
 	if(!linked_pad || QDELETED(linked_pad))
-		to_chat(user, "<span class='warning'>There is no linked pad!</span>")
-		return
+		if(!map_pad_link_id || !initMappedLink())
+			to_chat(user, "<span class='warning'>There is no linked pad!</span>")
+			return
 
 	if(world.time < last_teleport + teleport_cooldown)
 		to_chat(user, "<span class='warning'>[src] is recharging power. Please wait [round((last_teleport + teleport_cooldown - world.time) / 10)] seconds.</span>")
@@ -80,7 +95,6 @@
 		return
 	src.add_fingerprint(user)
 	doteleport(user)
-	return
 
 /obj/machinery/quantumpad/proc/sparks()
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
@@ -88,6 +102,8 @@
 	s.start()
 
 /obj/machinery/quantumpad/attack_ghost(mob/dead/observer/ghost)
+	if(!linked_pad && map_pad_link_id)
+		initMappedLink()
 	if(linked_pad)
 		ghost.forceMove(get_turf(linked_pad))
 
@@ -136,6 +152,12 @@
 						continue
 				do_teleport(ROI, get_turf(linked_pad))
 
+/obj/machinery/quantumpad/proc/initMappedLink()
+	. = FALSE
+	var/obj/machinery/quantumpad/link = mapped_quantum_pads[map_pad_link_id]
+	if(link)
+		linked_pad = link
+		. = TRUE
 
 /obj/item/paper/guides/quantumpad
 	name = "Quantum Pad For Dummies"

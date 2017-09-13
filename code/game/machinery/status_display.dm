@@ -107,7 +107,7 @@
 			var/line1
 			var/line2
 			if(SSshuttle.supply.mode == SHUTTLE_IDLE)
-				if(SSshuttle.supply.z == ZLEVEL_STATION)
+				if(SSshuttle.supply.z in GLOB.station_z_levels)
 					line1 = "CARGO"
 					line2 = "Docked"
 			else

@@ -1072,7 +1072,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Aromatic beverage served piping hot. According to folk tales it can almost wake the dead."
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/M)
-	if(M.stat == UNCONSCIOUS && M.health <= 0)
+	if(M.health <= 0)
 		M.adjustBruteLoss(-7, 0)
 		M.adjustFireLoss(-7, 0)
 		M.adjustToxLoss(-7, 0)
