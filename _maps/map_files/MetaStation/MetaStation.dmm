@@ -6000,6 +6000,7 @@
 /area/maintenance/port/fore)
 "alF" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Secure Storage Room";
 	req_access_txt = "65"
 	},
@@ -7030,6 +7031,7 @@
 "anE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -8013,6 +8015,7 @@
 /area/maintenance/port/fore)
 "apv" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -9399,6 +9402,7 @@
 /area/maintenance/port/fore)
 "asl" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -9843,6 +9847,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -10619,6 +10624,7 @@
 /area/maintenance/starboard/fore)
 "aut" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -11945,6 +11951,7 @@
 /area/crew_quarters/dorms)
 "awI" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -26781,6 +26788,7 @@
 "aZv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -40973,6 +40981,7 @@
 "bzz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
+	abandoned = 1;
 	name = "Vacant Office";
 	opacity = 1;
 	req_access_txt = "32"
@@ -49128,6 +49137,7 @@
 /area/maintenance/port)
 "bPI" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Vacant Office Maintenance";
 	req_access_txt = "32";
 	req_one_access_txt = "0"
@@ -49787,6 +49797,7 @@
 /area/maintenance/port)
 "bRf" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -51070,6 +51081,7 @@
 "bTr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -54268,6 +54280,7 @@
 /area/maintenance/disposal/incinerator)
 "bZD" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 0;
 	name = "Incinerator Access";
 	req_access_txt = "12"
 	},
@@ -54363,6 +54376,7 @@
 /area/maintenance/solars/port/aft)
 "bZO" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -56191,6 +56205,7 @@
 /area/maintenance/port/aft)
 "cde" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -57351,6 +57366,7 @@
 /area/maintenance/starboard)
 "cfl" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
@@ -60663,6 +60679,7 @@
 /area/maintenance/starboard/aft)
 "clX" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	locked = 0;
 	name = "Storage Room";
 	req_access_txt = "0";
@@ -65587,6 +65604,7 @@
 /area/maintenance/starboard/aft)
 "cuZ" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Storage Room";
 	req_access_txt = "0";
 	req_one_access_txt = "12;47"
@@ -66669,6 +66687,7 @@
 /area/science/storage)
 "cwZ" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "airlock access";
 	req_access_txt = "0";
 	req_one_access_txt = "12;47"
@@ -71951,6 +71970,7 @@
 /area/medical/medbay/aft)
 "cGP" = (
 /obj/machinery/door/airlock{
+	abandoned = 1;
 	name = "Medical Surplus Storeroom";
 	req_access_txt = "5"
 	},
@@ -73435,6 +73455,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Medical Surplus Storeroom";
 	req_access_txt = "12";
 	req_one_access_txt = "0"
@@ -74109,6 +74130,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	locked = 0;
 	name = "Storage Room";
 	req_access_txt = "0";
@@ -90803,6 +90825,24 @@
 	dir = 1
 	},
 /area/construction/mining/aux_base)
+"dDL" = (
+/obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
+	name = "Storage Room";
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
+"dDM" = (
+/obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
+	name = "Storage Room";
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 
 (1,1,1) = {"
 aaa
@@ -100196,7 +100236,7 @@ aVs
 aVs
 aVs
 cVF
-cVW
+cVF
 cWn
 cVF
 cVF
@@ -129958,7 +129998,7 @@ arI
 atd
 bai
 ate
-dpP
+dDM
 axP
 dnS
 axY
@@ -131755,7 +131795,7 @@ ape
 dnS
 arL
 ate
-dpP
+dDL
 avt
 awJ
 axS

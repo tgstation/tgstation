@@ -119,24 +119,27 @@
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 	if(abandoned)
-		var/outcome = rand(100)
+		var/outcome = rand(0,100)
 		switch(outcome)
-			if(1 to 5)
-				for(var/turf/T in range(2, src)
+			if(1 to 6)
+				for(var/turf/closed/T in range(2, src))
 					new T.type(loc)
 					qdel(src)
-			if(6 to 10)
+					return
+				new /turf/closed/wall(loc)
+				qdel(src)
+				return
+			if(7 to 9)
 				lights = FALSE
 				bolt()
-			if(11 to 15)
+			if(10 to 13)
 				bolt()
-			if(16 to 20)
+			if(14 to 20)
 				welded = TRUE
-				set_airlock_overlays(AIRLOCK_CLOSED)
 				update_icon()
 			if(21 to 25)
 				panel_open = TRUE
-				update_icon()		
+				update_icon()
 	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)

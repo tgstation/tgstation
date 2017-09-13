@@ -4968,6 +4968,7 @@
 /area/maintenance/department/crew_quarters/dorms)
 "ali" = (
 /obj/machinery/door/airlock{
+	abandoned = 1;
 	id_tag = "mainthideout";
 	name = "Hideout"
 	},
@@ -5669,6 +5670,7 @@
 /area/maintenance/department/crew_quarters/dorms)
 "amH" = (
 /obj/machinery/door/airlock/atmos{
+	abandoned = 1;
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -5933,6 +5935,7 @@
 /area/space)
 "anm" = (
 /obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
 	name = "Pete's Speakeasy";
 	req_access_txt = "12"
 	},
@@ -15122,6 +15125,7 @@
 /area/hallway/primary/central)
 "aHn" = (
 /obj/machinery/door/airlock{
+	abandoned = 1;
 	name = "Starboard Emergency Storage";
 	req_access_txt = "0"
 	},
@@ -38011,6 +38015,7 @@
 /area/maintenance/department/engine)
 "bEm" = (
 /obj/machinery/door/airlock/atmos{
+	abandoned = 1;
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -44661,6 +44666,7 @@
 /area/maintenance/department/engine)
 "bTf" = (
 /obj/machinery/door/airlock/atmos{
+	abandoned = 1;
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -72392,13 +72398,13 @@ aaa
 aaa
 aaa
 aFS
-cBO
-cBP
+cBN
+cBN
 aKs
 aFS
 aFS
-cBT
-cBU
+cBN
+cBN
 aFS
 aKs
 aFS
@@ -72652,7 +72658,7 @@ aFS
 aIs
 aJx
 aJx
-cBR
+cBN
 aMI
 aNZ
 aNZ
@@ -73166,7 +73172,7 @@ aFS
 aIu
 aJy
 aKt
-cBS
+cBN
 aIx
 aOa
 aOa
@@ -73936,14 +73942,14 @@ aGQ
 aHw
 aIw
 aIw
-cBQ
+cBN
 aIx
 aIx
 aOc
 aPj
 aOc
 aIx
-cBV
+cBN
 aMI
 aMI
 aMI
