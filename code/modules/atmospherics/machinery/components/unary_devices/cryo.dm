@@ -393,4 +393,11 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return 0 //you can't see the pipe network when inside a cryo cell.
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/return_temperature()
+	var/datum/gas_mixture/G = AIR1
+
+	if(G.total_moles() > 10)
+		return G.temperature
+	return ..()
+
 #undef CRYOMOBS
