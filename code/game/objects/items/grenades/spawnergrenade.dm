@@ -47,7 +47,7 @@
 /obj/item/grenade/spawnergrenade/repressurizer
 	name = "Atmospheric restoration grenade"
 	desc = "Quickly repressurizes a room by opening numerous portals which will siphon air from a backwater planet."
-	spawner_type = /obj/machinery/portable_atmospherics/canister/air/repressurizer
+	spawner_type = /obj/machinery/atmospherics/miner/gas_portal/repressurizer
 	walk_distance = 10
 	walk_chance = 100
 	deliveryamt = 10
