@@ -47889,7 +47889,7 @@
 	name = "'Perfect Man' employee exhibit"
 	},
 /obj/structure/sign/atmosplaque{
-	desc = "A guide to the exhibit, explaining how recent developments in loyalty implant and cloning technologies by Nanotrasen Corporation have led to the development and the effective immortality of the 'perfect man', the loyal Nanotrasen Employee.";
+	desc = "A guide to the exhibit, explaining how recent developments in mindshield implant and cloning technologies by Nanotrasen Corporation have led to the development and the effective immortality of the 'perfect man', the loyal Nanotrasen Employee.";
 	icon_state = "kiddieplaque";
 	name = "\improper 'Perfect Man' sign";
 	pixel_y = 32
@@ -47906,11 +47906,11 @@
 /obj/structure/window/reinforced,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/showcase{
-	desc = "A flimsy model of a standard Nanotrasen automated loyalty implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!";
+	desc = "A flimsy model of a standard Nanotrasen automated mindshield implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!";
 	icon = 'icons/obj/machines/implantchair.dmi';
 	icon_state = "implantchair";
 	layer = 2.7;
-	name = "Nanotrasen automated loyalty implanter exhibit";
+	name = "Nanotrasen automated mindshield implanter exhibit";
 	pixel_y = 4
 	},
 /turf/open/floor/carpet,
