@@ -2214,6 +2214,8 @@
 #include "hippiestation\code\game\gamemodes\objective_items.dm"
 #include "hippiestation\code\game\gamemodes\clock_cult\geis.dm"
 #include "hippiestation\code\game\gamemodes\clock_cult\sigils.dm"
+#include "hippiestation\code\game\gamemodes\clock_cult\clock_effects\clock_sigils.dm"
+#include "hippiestation\code\game\gamemodes\clock_cult\clock_scriptures\scripture_drivers.dm"
 #include "hippiestation\code\game\gamemodes\messiah\MakeJesus.dm"
 #include "hippiestation\code\game\gamemodes\messiah\miracles.dm"
 #include "hippiestation\code\game\gamemodes\messiah\outfit.dm"

@@ -2,6 +2,11 @@
 	tier = SCRIPTURE_SCRIPT
 	usage_tip = "This the primary way to make conversion traps, though it will not penetrate mindshield implants."
 
+/obj/effect/clockwork/sigil/submission
+	alpha = 75 // This makes it hard to see and more useful as an actual trap
+	light_range = 1 //weak light
+	light_power = 1
+
 /obj/effect/temp_visual/ratvar/sigil/accession
 	color = "#AF0AAF"
 	layer = ABOVE_MOB_LAYER
