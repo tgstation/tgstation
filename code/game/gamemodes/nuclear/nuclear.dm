@@ -5,6 +5,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
+	false_report_weight = 10
 	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
 	required_enemies = 2
 	recommended_enemies = 5
@@ -273,6 +274,10 @@
 	..()
 	return
 
+/datum/game_mode/nuclear/generate_report()
+	return "One of Central Command's trading routes was recently disrupted by a raid carried out by the Gorlex Marauders. They seemed to only be after one ship - a highly-sensitive \
+			transport containing a nuclear fission explosive, although it is useless without the proper code and authorization disk. While the code was likely found in minutes, the only disk that \
+			can activate this explosive is on your station. Ensure that it is protected at all times, and remain alert for possible intruders."
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	if( syndicates.len || (SSticker && istype(SSticker.mode, /datum/game_mode/nuclear)) )
