@@ -3033,13 +3033,8 @@
 /area/security/main)
 "ahh" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 2;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_y = 20
 	},
 /turf/open/space,
