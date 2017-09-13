@@ -42,7 +42,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/volume_pump/process_atmos()
 //	..()
-	if(!is_operational() || !on)
+	if(!on || !is_operational())
 		return
 
 	var/datum/gas_mixture/air1 = AIR1
@@ -163,7 +163,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	. = ..()
-	if(. && is_operational() && on)
+	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
 

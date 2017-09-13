@@ -105,7 +105,7 @@
 	..()
 	if(!is_operational())
 		return
-	if (!NODE1)
+	if(!NODE1)
 		on = FALSE
 	if(!on || welded)
 		return
@@ -279,7 +279,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
 	. = ..()
-	if(. && is_operational() && on)
+	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
 
