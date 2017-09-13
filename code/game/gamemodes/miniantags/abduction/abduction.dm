@@ -7,6 +7,7 @@
 	name = "abduction"
 	config_tag = "abduction"
 	antag_flag = ROLE_ABDUCTOR
+	false_report_weight = 1
 	recommended_enemies = 2
 	required_players = 15
 	maximum_players = 50
@@ -243,3 +244,7 @@
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_ABDUCTOR]
 	hud.leave_hud(alien_mind.current)
 	set_antag_hud(alien_mind.current, null)
+
+/datum/game_mode/abduction/generate_report()
+	return "Nearby spaceships report crewmembers having been [pick("kidnapped", "abducted", "captured")] and [pick("tortured", "experimented on", "probed", "implanted")] by mysterious \
+			grey humanoids, before being sent back.  Be advised that the kidnapped crewmembers behave strangely upon return to duties."

@@ -27,7 +27,7 @@
 		if(quickdraw)
 			to_chat(user, "<span class='notice'>You discreetly slip [W] into [src]. Alt-click [src] to remove it.</span>")
 		else
-			to_chat(user, "<span class='notice'>You discreetly slip [W] into [src].")
+			to_chat(user, "<span class='notice'>You discreetly slip [W] into [src].</span>")
 
 /obj/item/storage/internal/pocket/big
 	max_w_class = WEIGHT_CLASS_NORMAL

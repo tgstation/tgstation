@@ -540,7 +540,7 @@
 	dwidth = 15;
 	height = 20;
 	name = "Cere emergency shuttle";
-	port_angle = 90;
+	port_direction = 4;
 	preferred_direction = 2;
 	width = 42
 	},

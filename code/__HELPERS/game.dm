@@ -9,10 +9,8 @@
 #define CULT_POLL_WAIT 2400
 
 /proc/get_area(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isarea(A), A=A.loc); //semicolon is for the empty statement
-	return A
+	var/turf/T = get_turf(A)
+	return T ? T.loc : null
 
 /proc/get_area_name(atom/X)
 	var/area/Y = get_area(X)

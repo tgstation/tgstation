@@ -83,7 +83,7 @@
 	user.put_in_active_hand(s_drill)
 
 /obj/item/wrench/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!")
+	user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 /obj/item/wrench/medical
@@ -192,7 +192,7 @@
 		var/mutable_appearance/body = mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver")
 		var/mutable_appearance/head = mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_head")
 		body.color = color
-		head.overlays += body
+		head.add_overlay(body)
 		return head
 	else
 		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)

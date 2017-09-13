@@ -1,24 +1,10 @@
-<script>
-  component.exports = {
-    computed: {
-      occupantStatState () {
-        switch (this.get('data.occupant.stat')) {
-          case 0: return 'good'
-          case 1: return 'average'
-          default: return 'bad'
-        }
-      }
-    }
-  }
-</script>
-
 <ui-display title='Occupant'>
   <ui-section label='Occupant'>
 	 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
   </ui-section>
   {{#if data.occupied}}
     <ui-section label='State'>
-      <span class='{{occupantStatState}}'>{{data.occupant.stat == 0 ? "Conscious" : data.occupant.stat == 1 ? "Unconcious" : "Dead"}}</span>
+      <span class='{{data.occupant.statstate}}'>{{data.occupant.stat}}</span>
   	</ui-section>
     <ui-section label='Health'>
       <ui-bar min='{{data.occupant.minHealth}}' max='{{data.occupant.maxHealth}}' value='{{data.occupant.health}}'

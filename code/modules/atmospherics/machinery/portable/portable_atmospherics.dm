@@ -48,7 +48,7 @@
 		return 0
 
 	//Make sure are close enough for a valid connection
-	if(new_port.loc != loc)
+	if(new_port.loc != get_turf(src))
 		return 0
 
 	//Perform the connection

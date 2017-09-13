@@ -86,7 +86,7 @@
 		icon_state = null
 		active = TRUE
 		if(tile_overlay)
-			loc.overlays += tile_overlay
+			loc.add_overlay(tile_overlay)
 	else
 		if(crossed)
 			trigger()	//no cheesing.
