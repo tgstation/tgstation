@@ -553,7 +553,7 @@
 		to_chat(user, "It appears to have no author.")
 
 /obj/item/spellbook/Initialize()
-	..()
+	. = ..()
 	prepare_spells()
 
 /obj/item/spellbook/proc/prepare_spells()

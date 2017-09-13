@@ -45,10 +45,6 @@
 		dat += {"
 			<B>Fun Secrets</B><BR>
 			<BR>
-<<<<<<< HEAD
-
-=======
->>>>>>> 6e5ebf9c41fc97d5ee0daf4fd22536844438ace0
 			<A href='?src=\ref[src];[HrefToken()];secrets=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=monkey'>Turn all humans into monkeys</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=anime'>Chinese Cartoons</A><BR>
