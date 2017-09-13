@@ -77,8 +77,8 @@
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 /mob/living/simple_animal/hostile/mimic/crate/proc/trigger()
-	if(!attempt_open) //Have not attempted to open
-		visible_message("<b>[src]</b> starts to move!") //We pissed it off
+	if(!attempt_open)
+		visible_message("<b>[src]</b> starts to move!")
 		attempt_open = TRUE
 
 /mob/living/simple_animal/hostile/mimic/crate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -279,13 +279,10 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 /datum/action/innate/mimic/root/Activate()
 	var/mob/living/simple_animal/hostile/mimic/crate/S = owner
 
-	if(S.attempt_open == TRUE) //If we have tried to open it
+	if(S.attempt_open)
 		S.visible_message("<span class='danger'><b>[S]</b> disguises itself as a crate</span>")
 
-		S.attempt_open = FALSE	//I WAS HIDING
+		S.attempt_open = FALSE
 		S.icon_state = "crate"
 		S.icon_living = "crate"
 
-
-	//TBD, but see trellio
-	return
