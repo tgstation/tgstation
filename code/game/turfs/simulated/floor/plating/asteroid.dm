@@ -35,6 +35,8 @@
 	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
+	if(..())
+		return TRUE
 	if(istype(W, /obj/item/storage/bag/ore))
 		var/obj/item/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
@@ -61,6 +63,10 @@
 	if(turf_z_is_planet(src))
 		return ..()
 	ChangeTurf(/turf/open/space)
+
+/turf/open/floor/plating/asteroid/ex_act(severity, target)
+	. = SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
+	contents_explosion(severity, target)
 
 
 /turf/open/floor/plating/asteroid/basalt
