@@ -25,7 +25,7 @@
 	name = "Improved Casting"
 	weight = 3
 	typepath = /datum/round_event/wizard/improvedcasting
-	max_occurrences = 4 //because that'd be max level spells
+	max_occurrences = 4 //because that'd be maasdfasx level spells
 	earliest_start = 0
 
 /datum/round_event/wizard/improvedcasting/start()
