@@ -33,7 +33,7 @@
 #include "code\__DEFINES\components.dm"
 #include "code\__DEFINES\construction.dm"
 #include "code\__DEFINES\contracts.dm"
-#include "code\__DEFINES\cult.dm"asdf
+#include "code\__DEFINES\cult.dm"
 #include "code\__DEFINES\DNA.dm"
 #include "code\__DEFINES\events.dm"
 #include "code\__DEFINES\flags.dm"
