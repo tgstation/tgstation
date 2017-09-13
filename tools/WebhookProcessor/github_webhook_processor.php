@@ -263,7 +263,7 @@ function check_ready_for_review($payload, $labels = null){
 		if(isset($R['author_association'])){
 			$lower_association = strtolower($R['author_association']);
 			if($lower_association == 'member' || $lower_association == 'contributor' || $lower_association == 'owner'){
-				$lowerstate = strtolower($R['state']);
+				$lower_state = strtolower($R['state']);
 				if($lower_state == 'changes_requested')
 					$reviews_ids_with_changes_requested[] = $R['id'];
 				else if ($lower_state == 'approved'){
