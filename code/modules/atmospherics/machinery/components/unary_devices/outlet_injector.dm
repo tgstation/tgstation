@@ -30,7 +30,7 @@
 	if(showpipe)
 		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions))
 
-	if(!NODE1 || !on || stat & (NOPOWER|BROKEN))
+	if(!NODE1 || !on || !is_operational())
 		icon_state = "inje_off"
 		return
 
@@ -48,7 +48,7 @@
 
 	injecting = 0
 
-	if(!on || stat & (NOPOWER|BROKEN))
+	if(!on || !is_operational())
 		return
 
 	var/datum/gas_mixture/air_contents = AIR1
@@ -63,11 +63,9 @@
 
 		update_parents()
 
-	return 1
-
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
 
-	if(on || injecting || stat & (NOPOWER|BROKEN))
+	if(on || injecting || !is_operational())
 		return
 
 	var/datum/gas_mixture/air_contents = AIR1
@@ -108,8 +106,6 @@
 
 	radio_connection.post_signal(src, signal)
 
-	return 1
-
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()
 	set_frequency(frequency)
 	broadcast_status()
@@ -139,9 +135,6 @@
 		spawn(2)
 			broadcast_status()
 		return //do not update_icon
-
-		//log_admin("DEBUG \[[world.timeofday]\]: outlet_injector/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
-		//return
 
 	spawn(2)
 		broadcast_status()
@@ -191,10 +184,8 @@
 	broadcast_status()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
-	if(!..())
-		return
-	if (!(stat & NOPOWER|BROKEN) && on)
+	. = ..()
+	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
-	else
-		return 1
+		return FALSE
 

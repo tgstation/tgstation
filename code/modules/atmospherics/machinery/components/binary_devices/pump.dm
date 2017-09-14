@@ -17,7 +17,7 @@ Thus, the two variables affect pump operation are set in New():
 	name = "gas pump"
 	desc = "A pump that moves gas by pressure."
 
-	can_unwrench = 1
+	can_unwrench = TRUE
 
 	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
@@ -36,7 +36,7 @@ Thus, the two variables affect pump operation are set in New():
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/pump/update_icon_nopipes()
-	if(stat & NOPOWER)
+	if(!is_operational())
 		icon_state = "pump_off"
 		return
 
@@ -44,10 +44,8 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/process_atmos()
 //	..()
-	if(stat & (NOPOWER|BROKEN))
-		return 0
-	if(!on)
-		return 0
+	if(!on || !is_operational())
+		return
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
@@ -56,7 +54,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	if((target_pressure - output_starting_pressure) < 0.01)
 		//No need to pump gas if target is already reached!
-		return 1
+		return
 
 	//Calculate necessary moles to transfer using PV=nRT
 	if((air1.total_moles() > 0) && (air1.temperature>0))
@@ -69,8 +67,6 @@ Thus, the two variables affect pump operation are set in New():
 
 		update_parents()
 
-	return 1
-
 //Radio remote control
 /obj/machinery/atmospherics/components/binary/pump/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -80,7 +76,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -95,8 +91,6 @@ Thus, the two variables affect pump operation are set in New():
 	)
 
 	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
-
-	return 1
 
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -144,7 +138,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return
 
 	var/old_on = on //for logging
 
@@ -166,16 +160,14 @@ Thus, the two variables affect pump operation are set in New():
 
 	broadcast_status()
 	update_icon()
-	return
 
 /obj/machinery/atmospherics/components/binary/pump/power_change()
 	..()
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
-	if(..())
-		if(!(stat & NOPOWER) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
-		else
-			return 1
+	. = ..()
+	if(. && on && is_operational())
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		return FALSE
 

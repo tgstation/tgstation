@@ -39,7 +39,6 @@
 		icon_state = icon_state_on
 	else
 		icon_state = initial(icon_state)
-	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_nopipes()
 	cut_overlays()

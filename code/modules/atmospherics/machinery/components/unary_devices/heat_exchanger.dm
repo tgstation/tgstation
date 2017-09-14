@@ -5,7 +5,7 @@
 	name = "heat exchanger"
 	desc = "Exchanges heat between two input gases. Setup for fast heat transfer"
 
-	can_unwrench = 1
+	can_unwrench = TRUE
 
 	layer = LOW_OBJ_LAYER
 
@@ -34,11 +34,7 @@
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/process_atmos()
 	..()
-
-	if(!partner)
-		return
-
-	if(SSair.times_fired <= update_cycle)
+	if(!partner || SSair.times_fired <= update_cycle)
 		return
 
 	update_cycle = SSair.times_fired
@@ -66,5 +62,3 @@
 
 	if(abs(other_old_temperature-partner_air_contents.temperature) > 1)
 		partner.update_parents()
-
-	return 1
