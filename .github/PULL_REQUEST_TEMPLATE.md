@@ -1,4 +1,4 @@
-[Changelogs]: # (Your PR must contain a detailed changelog of your changes, titled and categorized appropriately. An example changelog has been provided below. Please edit appropriately)
+[Changelogs]: # (Your PR should contain a detailed changelog of notable code changes, titled and categorized appropriately. An example changelog has been provided below. Please edit appropriately)
 
 :cl: optional name here
 add: Added new things
