@@ -1,7 +1,0 @@
-author: "GuyonBroadway"
-delete-after: True
-changes: 
-  - balance: "Made initially casting Geis much faster."
-  - balance: "Made casting vanguard much faster, now you can probably use it in a firefight."
-  - balance: "Made the Sigil of submission slightly more see-through and harder to see in the dark."
-  - balance: "Vitality matrix now only needs 100 vitality to revive someone, humanize a few monkeys and toss them in."
