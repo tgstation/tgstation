@@ -15,11 +15,7 @@ ChangelingRain Joan
 NewSta1 NewSta
 theOperand Miauw
 PraiseRatvar Frozenguy5
-<<<<<<< HEAD
 HonkBot __REMOVE__
 JamieH Jambread
 FuryMcFlurry Fury McFlurry
-=======
-FuryMcFlurry Fury McFlurry
 vuonojenmustaturska Naksu
->>>>>>> 4041913bc4... Merge pull request #30699 from tgstation/Cyberboss-patch-9
