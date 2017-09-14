@@ -68,15 +68,14 @@
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/hostile_environment/process()
-	if(world.time < next_adrenal || !iscarbon(loc))
-		return
-	var/mob/living/carbon/C = loc
-	if(prob(2)) //cursed by bubblegum
-		if(prob(15))
-			new datum/hallucination/oh_yeah(C)
-			to_chat(C, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b></span>")
-		else
-			to_chat(C, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
+	if(iscarbon(loc))
+		var/mob/living/carbon/C = loc
+		if(prob(2)) //cursed by bubblegum
+			if(prob(15))
+				new /datum/hallucination/oh_yeah(C)
+				to_chat(C, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b></span>")
+			else
+				to_chat(C, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
 
 /obj/item/clothing/suit/space/hostile_environment/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/toy/crayon/spraycan))
