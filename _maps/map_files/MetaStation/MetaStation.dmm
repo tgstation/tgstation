@@ -8054,9 +8054,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/sign/kiddieplaque{
-	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside.";
-	name = "Library Rules Sign";
+/obj/structure/sign/kiddieplaque/library{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -24572,13 +24570,8 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
 "aVn" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 2;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_y = 20
 	},
 /turf/open/floor/plasteel/black,
@@ -24589,13 +24582,8 @@
 	dir = 2;
 	network = list("RD")
 	},
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 2;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_y = 20
 	},
 /obj/structure/cable{
@@ -26249,13 +26237,8 @@
 	dir = 4;
 	network = list("RD")
 	},
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -26281,13 +26264,8 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "aYB" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -28117,13 +28095,8 @@
 	},
 /area/security/checkpoint/engineering)
 "bbF" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -28152,13 +28125,8 @@
 	dir = 8;
 	network = list("RD")
 	},
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -33363,13 +33331,8 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
 "blF" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 2;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_y = 20
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -33384,13 +33347,8 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "blH" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 2;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_y = 20
 	},
 /turf/open/floor/plasteel/darkblue/corner{
@@ -34372,13 +34330,8 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -34394,13 +34347,8 @@
 /turf/closed/wall/r_wall,
 /area/aisat)
 "bnw" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -34565,13 +34513,8 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/storage/satellite)
 "bnI" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -36941,13 +36884,8 @@
 /area/aisat)
 "brU" = (
 /obj/structure/window/reinforced,
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -38800,13 +38738,8 @@
 /area/engine/break_room)
 "bvw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 2;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_y = 20
 	},
 /turf/open/floor/plasteel/grimy,
@@ -38824,13 +38757,8 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 2;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_y = 20
 	},
 /turf/open/floor/plasteel/grimy,
@@ -43162,13 +43090,8 @@
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "bEg" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 2;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_y = 20
 	},
 /turf/open/floor/plasteel/black/telecomms/mainframe,
@@ -47751,12 +47674,7 @@
 /area/teleporter)
 "bNa" = (
 /obj/structure/window/reinforced,
-/obj/structure/showcase{
-	desc = "A stand with an retired construction mech bolted to it. The clamps are rated at 9300PSI. It seems to be falling apart.";
-	icon = 'icons/mecha/mecha.dmi';
-	icon_state = "firefighter";
-	name = "construction mech exhibit"
-	},
+/obj/structure/showcase/mecha/ripley,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -47766,10 +47684,7 @@
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bNb" = (
-/obj/structure/sign/atmosplaque{
-	desc = "A guide to the exhibit, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today.";
-	icon_state = "kiddieplaque";
-	name = "\improper 'Perfect Drone' sign";
+/obj/structure/sign/kiddieplaque/perfect_drone{
 	pixel_y = 32
 	},
 /obj/machinery/droneDispenser,
@@ -47777,12 +47692,7 @@
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bNc" = (
-/obj/structure/showcase{
-	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. It is described as the premier unit used to defend corporate interests and employees.";
-	icon = 'icons/mecha/mecha.dmi';
-	icon_state = "marauder";
-	name = "combat mech exhibit"
-	},
+/obj/structure/showcase/mecha/marauder,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -47872,26 +47782,16 @@
 	icon_state = "1-2"
 	},
 /obj/structure/window/reinforced,
-/obj/structure/showcase{
-	desc = "Signs describe how cloning pods like these ensure that every Nanotrasen employee can carry out their contracts in full, even in the unlikely event of their catastrophic death. Hopefully they aren't all made of cardboard, like this one.";
-	icon = 'icons/obj/cloning.dmi';
-	icon_state = "pod_0";
+/obj/structure/showcase/machinery/cloning_pod{
 	layer = 4;
-	name = "cloning pod exhibit";
 	pixel_x = 2;
 	pixel_y = 5
 	},
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bNj" = (
-/obj/structure/showcase{
-	desc = "A stand with a model of the perfect Nanotrasen Employee bolted to it. Signs indicate it is robustly genetically engineered, as well as being ruthlessly loyal.";
-	name = "'Perfect Man' employee exhibit"
-	},
-/obj/structure/sign/atmosplaque{
-	desc = "A guide to the exhibit, explaining how recent developments in loyalty implant and cloning technologies by Nanotrasen Corporation have led to the development and the effective immortality of the 'perfect man', the loyal Nanotrasen Employee.";
-	icon_state = "kiddieplaque";
-	name = "\improper 'Perfect Man' sign";
+/obj/structure/showcase/perfect_employee,
+/obj/structure/sign/kiddieplaque/perfect_man{
 	pixel_y = 32
 	},
 /obj/structure/window/reinforced,
@@ -47905,12 +47805,8 @@
 	},
 /obj/structure/window/reinforced,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/showcase{
-	desc = "A flimsy model of a standard Nanotrasen automated loyalty implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!";
-	icon = 'icons/obj/machines/implantchair.dmi';
-	icon_state = "implantchair";
+/obj/structure/showcase/machinery/implanter{
 	layer = 2.7;
-	name = "Nanotrasen automated loyalty implanter exhibit";
 	pixel_y = 4
 	},
 /turf/open/floor/carpet,
@@ -49915,12 +49811,8 @@
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
 "bRz" = (
-/obj/structure/showcase{
-	desc = "The famous Nanotrasen-brand microwave, the multi-purpose cooking appliance every station needs! This one appears to be drawn onto a cardboard box.";
+/obj/structure/showcase/machinery/microwave{
 	dir = 1;
-	icon = 'icons/obj/kitchen.dmi';
-	icon_state = "mw";
-	name = "Nanotrasen-brand microwave";
 	pixel_y = 2
 	},
 /obj/structure/table/wood,
@@ -49998,12 +49890,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/showcase{
-	desc = "A slightly battered looking TV. Various Nanotrasen infomercials play on a loop, accompanied by a jaunty tune.";
+/obj/structure/showcase/machinery/tv{
 	dir = 1;
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "television";
-	name = "Nanotrasen corporate newsfeed";
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -76547,10 +76435,7 @@
 /turf/open/floor/carpet,
 /area/chapel/main)
 "cPE" = (
-/obj/structure/sign/atmosplaque{
-	desc = "A plaque commemorating the fallen, may they rest in peace, forever asleep amongst the stars. Someone has drawn a picture of a crying badger at the bottom.";
-	icon_state = "kiddieplaque";
-	name = "Remembrance Plaque";
+/obj/structure/sign/kiddieplaque/badger{
 	pixel_y = 32
 	},
 /obj/item/reagent_containers/food/snacks/grown/poppy{
