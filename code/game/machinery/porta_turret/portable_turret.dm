@@ -70,7 +70,7 @@
 
 	var/datum/effect_system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
-	var/obj/machinery/turretid/cp = null
+	var/obj/machinery/turretid/cps = list()
 
 /obj/machinery/porta_turret/Initialize()
 	. = ..()
@@ -145,9 +145,10 @@
 	//deletes its own cover with it
 	QDEL_NULL(cover)
 	base = null
-	if(cp)
+	var/obj/machinery/turretid/cp
+	for(cp in cps)
 		cp.turrets -= src
-		cp = null
+	cps = null
 	QDEL_NULL(stored_gun)
 	QDEL_NULL(spark_system)
 	return ..()
@@ -531,6 +532,10 @@
 	src.on = on
 	src.mode = mode
 	power_change()
+	
+/obj/machinery/porta_turret/proc/tellCPs()
+	for (var/obj/machinery/turretid/cp in cps)
+		cp.set_state(on, mode)
 
 /obj/machinery/porta_turret/stationary //is this even used anywhere
 	mode = TURRET_LETHAL
@@ -673,7 +678,7 @@
 
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
-		T.cp = src
+		T.cps += src
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
@@ -769,12 +774,21 @@
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
+	var/first = 1
 	for (var/obj/machinery/porta_turret/aTurret in turrets)
 		aTurret.setState(enabled, lethal)
+		if (first)
+			first = 0
+			aTurret.tellCPs()
 	update_icon()
 
 /obj/machinery/turretid/power_change()
 	..()
+	update_icon()
+	
+/obj/machinery/turretid/proc/set_state(en, leth)
+	enabled = en
+	lethal = leth
 	update_icon()
 
 /obj/machinery/turretid/update_icon()
