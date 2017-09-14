@@ -186,6 +186,9 @@
 		else if(!bloody && rcolor)
 			color1.color = rcolor
 			color1.watereffect.color = rcolor
+		else if(!bloody && !rcolor)
+			color1.color = null
+			color1.watereffect.color = null
 
 /obj/machinery/poolcontroller/proc/miston() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
 	for(var/X in linkedturfs)
