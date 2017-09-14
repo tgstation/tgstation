@@ -19,7 +19,7 @@
 	if(showpipe)
 		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions)) //it works for now
 
-	if(!NODE1 || !on || stat & BROKEN)
+	if(!NODE1 || !on || !is_operational())
 		icon_state = "o2gen_off"
 		return
 

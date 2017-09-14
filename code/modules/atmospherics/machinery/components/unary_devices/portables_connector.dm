@@ -3,7 +3,7 @@
 	desc = "For connecting portables devices related to atmospherics control."
 	icon = 'icons/obj/atmospherics/components/unary_devices.dmi'
 	icon_state = "connector_map" //Only for mapping purposes, so mappers can see direction
-	can_unwrench = 1
+	can_unwrench = TRUE
 	var/obj/machinery/portable_atmospherics/connected_device
 	use_power = NO_POWER_USE
 	level = 0
@@ -29,11 +29,10 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/portables_connector/can_unwrench(mob/user)
-	if(..())
-		if(connected_device)
-			to_chat(user, "<span class='warning'>You cannot unwrench [src], detach [connected_device] first!</span>")
-		else
-			return 1
+	. = ..()
+	if(. && connected_device)
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], detach [connected_device] first!</span>")
+		return FALSE
 
 /obj/machinery/atmospherics/components/unary/portables_connector/portableConnectorReturnAir()
 	return connected_device.portableConnectorReturnAir()

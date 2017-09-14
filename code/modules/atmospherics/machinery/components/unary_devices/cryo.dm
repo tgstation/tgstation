@@ -115,7 +115,7 @@
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 22
 
-		if(on && is_operational() && !running_bob_anim)
+		if(on && !running_bob_anim && is_operational())
 			icon_state = "pod-on"
 			running_bob_anim = TRUE
 			run_bob_anim(TRUE, occupant_overlay)
