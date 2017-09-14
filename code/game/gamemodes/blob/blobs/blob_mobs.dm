@@ -237,6 +237,10 @@
 			damagesources++
 		if(!factory)
 			damagesources++
+		if(factory && (locate(/obj/structure/blob/core) in blobs_in_area))
+			adjustHealth(-maxHealth*0.1)
+		if(factory && (locate(/obj/structure/blob/node) in blobs_in_area))
+			adjustHealth(-maxHealth*0.05)
 		if(damagesources)
 			for(var/i in 1 to damagesources)
 				adjustHealth(maxHealth*0.025) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
@@ -245,10 +249,6 @@
 			if(overmind)
 				I.color = overmind.blob_reagent_datum.complementary_color
 			flick_overlay_view(I, src, 8)
-			if(factory && (locate(/obj/structure/blob/core) in blobs_in_area))
-				adjustHealth(-maxHealth*0.1)
-			if(factory && (locate(/obj/structure/blob/node) in blobs_in_area))
-				adjustHealth(-maxHealth*0.05)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
