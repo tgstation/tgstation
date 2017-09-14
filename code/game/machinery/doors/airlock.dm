@@ -124,10 +124,10 @@
 			if(1 to 9)
 				var/turf/here = get_turf(src)
 				for(var/turf/closed/T in range(2, src))
-					here.changeTurf(T.type)
+					here.ChangeTurf(T.type)
 					qdel(src)
 					return INITIALIZE_HINT_QDEL
-				here.changeTurf(/turf/closed/wall)
+				here.ChangeTurf(/turf/closed/wall)
 				qdel(src)
 				return INITIALIZE_HINT_QDEL
 			if(9 to 11)
