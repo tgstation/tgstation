@@ -407,7 +407,7 @@
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if ((src in SSticker.mode.changelings) && special_role)
-			text += "<b>YES</b> | <a href='?src=\ref[src];changeling=clear'>no</a>"
+			text += "<b>YES</b> | <a href='?src=\ref[src];[HrefToken()];changeling=clear'>no</a>"
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
 			if(changeling && changeling.stored_profiles.len && (current.real_name != changeling.first_prof.name) )
