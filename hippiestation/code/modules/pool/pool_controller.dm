@@ -164,9 +164,8 @@
 
 			for(var/obj/effect/decal/cleanable/decal in W)
 				CHECK_TICK
-				if(bloody < 800)
-					animate(decal, alpha = 10, time = 20)
-					QDEL_IN(decal, 25)
+				animate(decal, alpha = 10, time = 20)
+				QDEL_IN(decal, 25)
 				if(istype(decal,/obj/effect/decal/cleanable/blood) || istype(decal, /obj/effect/decal/cleanable/trail_holder))
 					bloody = TRUE
 	changecolor()
@@ -292,6 +291,7 @@
 					new /obj/effect/effect/waterspout(linkeddrain.loc)
 					temperature = 3
 				handle_temp()
+				bloody = FALSE
 				. = TRUE
 
 /obj/machinery/poolcontroller/attack_hand(mob/user)
