@@ -172,7 +172,7 @@
 
 /obj/machinery/poolcontroller/proc/changecolor()
 	var/rcolor
-	if(LAZYLEN(beaker.reagents.reagent_list))
+	if(beaker && LAZYLEN(beaker.reagents.reagent_list))
 		rcolor = mix_color_from_reagents(beaker.reagents.reagent_list)
 	for(var/X in linkedturfs)
 		var/turf/open/pool/color1 = X
@@ -186,7 +186,8 @@
 		else if(!bloody && rcolor)
 			color1.color = rcolor
 			color1.watereffect.color = rcolor
-		else if(!bloody && !rcolor)
+
+		if(!bloody && (!beaker || !LAZYLEN(beaker.reagents.reagent_list)))
 			color1.color = null
 			color1.watereffect.color = null
 
