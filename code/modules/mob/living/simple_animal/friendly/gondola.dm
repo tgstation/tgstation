@@ -1,16 +1,7 @@
-#define GONDOLA_HEIGHT_LONG "gondola_body_long"
-#define GONDOLA_HEIGHT_AVERAGE "gondola_body_medium"
-#define GONDOLA_HEIGHT_SHORT "gondola_body_short"
-
-#define GONDOLA_COLOR_LIGHT "A87855"
-#define GONDOLA_COLOR_AVERAGE "915E48"
-#define GONDOLA_COLOR_DARK "683E2C"
-
-#define GONDOLA_MOUSTACHE_LARGE "gondola_moustache_large"
-#define GONDOLA_MOUSTACHE_SMALL "gondola_moustache_small"
-
-#define GONDOLA_EYES_CLOSE "gondola_eyes_close"
-#define GONDOLA_EYES_FAR "gondola_eyes_far"
+#define GONDOLA_HEIGHT pick("gondola_body_long", "gondola_body_medium", "gondola_body_short")
+#define GONDOLA_COLOR pick("A87855", "915E48", "683E2C")
+#define GONDOLA_MOUSTACHE pick("gondola_moustache_large", "gondola_moustache_small")
+#define GONDOLA_EYES pick("gondola_eyes_close", "gondola_eyes_far")
 
 //Gondolas
 
@@ -24,8 +15,8 @@
 	faction = list("gondola")
 	turns_per_move = 10
 	icon = 'icons/mob/gondolas.dmi'
-	icon_state = null
-	icon_living = null
+	icon_state = "gondola"
+	icon_living = "gondola"
 	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 1)
 	//Gondolas aren't affected by cold.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -40,23 +31,24 @@
 	CreateGondola()
 
 /mob/living/simple_animal/pet/gondola/proc/CreateGondola()
-	var/height = pick(GONDOLA_HEIGHT_LONG, GONDOLA_HEIGHT_AVERAGE, GONDOLA_HEIGHT_SHORT)
+	icon_state = null
+	icon_living = null
+	var/height = GONDOLA_HEIGHT
 	var/mutable_appearance/body_overlay = mutable_appearance(icon, height)
-	var/mutable_appearance/eyes_overlay = mutable_appearance(icon, "[pick(GONDOLA_EYES_CLOSE, GONDOLA_EYES_FAR)]")
-	var/mutable_appearance/moustache_overlay = mutable_appearance(icon, "[pick(GONDOLA_MOUSTACHE_LARGE, GONDOLA_MOUSTACHE_SMALL)]")
-
-	var/fur_color = "#[pick(GONDOLA_COLOR_LIGHT,GONDOLA_COLOR_AVERAGE,GONDOLA_COLOR_DARK)]"
-	body_overlay.color = fur_color
+	var/mutable_appearance/eyes_overlay = mutable_appearance(icon, GONDOLA_EYES)
+	var/mutable_appearance/moustache_overlay = mutable_appearance(icon, GONDOLA_MOUSTACHE)
+	body_overlay.color = ("#[GONDOLA_COLOR]")
 
 	//Offset the face to match the Gondola's height.
 	switch(height)
-		if(GONDOLA_HEIGHT_AVERAGE)
-			eyes_overlay.pixel_y -= 4
-			moustache_overlay.pixel_y -= 4
-		if(GONDOLA_HEIGHT_SHORT)
-			eyes_overlay.pixel_y -= 8
-			moustache_overlay.pixel_y -= 8
+		if("gondola_body_medium")
+			eyes_overlay.pixel_y = -4
+			moustache_overlay.pixel_y = -4
+		if("gondola_body_short")
+			eyes_overlay.pixel_y = -8
+			moustache_overlay.pixel_y = -8
 
+	cut_overlays(TRUE)
 	add_overlay(body_overlay)
 	add_overlay(eyes_overlay)
 	add_overlay(moustache_overlay)
@@ -66,3 +58,8 @@
 
 /mob/living/simple_animal/pet/gondola/emote()
 	return
+
+#undef GONDOLA_HEIGHT
+#undef GONDOLA_COLOR
+#undef GONDOLA_MOUSTACHE
+#undef GONDOLA_EYES
