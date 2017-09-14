@@ -566,10 +566,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		var/list/otherwise = M.GetAllContents()
 		for(var/obj/item/disk/tech_disk/TD in otherwise)
 			for(var/datum/tech/T in TD.tech_stored)
-				var/existing = current_tech[T.id]
-				if(existing && T.level)
-					if(T.level > existing)
-						current_tech[T.id] = T.level
+				if(!T.id || !T.level)
+					continue
+				else if(!current_tech[T.id])
+					current_tech[T.id] = T.level
+				else if(T.level > current_tech[T.id])
+					current_tech[T.id] = T.level
 	var/total = 0
 	for(var/i in current_tech)
 		total += current_tech[i]
