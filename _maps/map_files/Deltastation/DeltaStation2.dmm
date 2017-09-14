@@ -46872,6 +46872,7 @@
 /obj/item/gun/ballistic/shotgun/riot,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/item/gun/ballistic/shotgun/riot,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bNh" = (
