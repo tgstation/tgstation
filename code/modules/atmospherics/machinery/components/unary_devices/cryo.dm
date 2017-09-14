@@ -392,6 +392,6 @@
 	return // can't ventcrawl in or out of cryo.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
-	return // you can't see the pipe network when inside a cryo cell.
+	return 0 // you can't see the pipe network when inside a cryo cell.
 
 #undef CRYOMOBS
