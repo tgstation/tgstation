@@ -535,8 +535,6 @@
 			toner = tonermax
 			qdel(W)
 			to_chat(user, "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>")
-<<<<<<< HEAD
-=======
 
 	else if(istype(W, /obj/item/device/flashlight))
 		if(!opened)
@@ -550,7 +548,6 @@
 			lamp_cooldown = 0
 			qdel(W)
 			to_chat(user, "<span class='notice'>You replace the headlamp bulbs.</span>")
->>>>>>> 17e036340e... Flashes are important for killing robots
 	else
 		return ..()
 
