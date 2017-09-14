@@ -141,7 +141,7 @@
 	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
-	to_chat(user, "The outer plating is <i>welded</i> firmly in place.")
+	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
 	return null
 
 /*

@@ -290,4 +290,4 @@
 
 /turf/closed/wall/examine(mob/user)
 	..()
-	to_chat(user, "The outer plating is <i>welded</i> firmly in place.")
+	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
