@@ -81,7 +81,7 @@
 	desc = "Charges your slab with divine energy, allowing you to bind a nearby heretic for conversion. This is very obvious and will make your slab visible in-hand."
 	invocations = list("Divinity, grant...", "...me strength...", "...to enlighten...", "...the heathen!")
 	whispered = TRUE
-	channel_time = 20
+	channel_time = 5 // Blood cult get a free instant stun they can use whenever and wherever they want,
 	usage_tip = "Is melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
@@ -93,7 +93,7 @@
 	ranged_message = "<span class='sevtug_small'><i>You charge the clockwork slab with divine energy.</i>\n\
 	<b>Left-click a target within melee range to convert!\n\
 	Click your slab to cancel.</b></span>"
-	timeout_time = 100
+	timeout_time = 200
 
 /datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
 	var/servants = 0
