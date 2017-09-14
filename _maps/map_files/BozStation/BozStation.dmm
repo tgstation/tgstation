@@ -15424,18 +15424,18 @@
 /area/science/xenobiology)
 "aIT" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "cargounload"
 	},
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor2";
-	name = "supply dock loading door"
+	name = "supply dock unloading door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "aIU" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "cargounload"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -15447,7 +15447,7 @@
 /area/quartermaster/storage)
 "aIV" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "cargounload"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -15456,7 +15456,7 @@
 /area/quartermaster/storage)
 "aIW" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "cargounload"
 	},
 /turf/open/floor/plasteel,
@@ -17169,7 +17169,7 @@
 /area/science/xenobiology)
 "aLW" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "cargoload"
 	},
 /obj/machinery/door/poddoor{
@@ -17180,7 +17180,7 @@
 /area/shuttle/supply)
 "aLX" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "cargoload"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -17194,7 +17194,7 @@
 /area/quartermaster/storage)
 "aLY" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "cargoload"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -17205,7 +17205,7 @@
 /area/quartermaster/storage)
 "aLZ" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "cargoload"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -17215,7 +17215,7 @@
 /area/quartermaster/storage)
 "aMa" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "cargoload"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -17228,7 +17228,7 @@
 /area/quartermaster/storage)
 "aMb" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "cargoload"
 	},
 /obj/effect/turf_decal/stripes/line{
