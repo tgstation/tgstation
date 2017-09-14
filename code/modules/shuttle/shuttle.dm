@@ -567,6 +567,8 @@
 
 		for(var/i in 1 to oldT.contents.len)
 			var/atom/movable/moving_atom = oldT.contents[i]
+			if(moving_atom.loc != oldT) //fix for multi-tile objects
+				continue
 			move_mode = moving_atom.beforeShuttleMove(newT, rotation, move_mode)							//atoms
 
 		move_mode = oldT.fromShuttleMove(newT, underlying_turf_type, baseturf_cache, move_mode)	//turfs
@@ -588,6 +590,8 @@
 		if(move_mode & MOVE_CONTENTS)
 			for(var/thing in oldT)
 				var/atom/movable/moving_atom = thing
+				if(moving_atom.loc != oldT) //fix for multi-tile objects
+					continue
 				moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock)//atoms
 				moved_atoms += moving_atom
 		if(move_mode & MOVE_TURF)
