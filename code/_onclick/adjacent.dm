@@ -76,6 +76,10 @@
 		for(var/turf/T in locs)
 			if(T.Adjacent(neighbor,src))
 				return TRUE
+	if(istype(neighbor, /atom/movable))
+		var/atom/movable/NM = neighbor
+		if(NM.Adjacent(src))
+			return TRUE
 	return FALSE
 
 // This is necessary for storage items not on your person.
