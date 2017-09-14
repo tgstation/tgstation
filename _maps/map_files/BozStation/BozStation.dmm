@@ -862,7 +862,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "acb" = (
-/obj/item/storage/backpack/satchel/flat/secret{
+/obj/item/storage/backpack/satchel/flat/prison{
 	name = "?????"
 	},
 /obj/machinery/computer/arcade,
