@@ -37,7 +37,7 @@
 	..()
 
 	if(!on)
-		return
+		return 0
 
 	var/datum/gas_mixture/air_contents = AIR1
 
