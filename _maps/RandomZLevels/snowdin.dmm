@@ -633,12 +633,7 @@
 	},
 /area/awaymission/snowdin/base)
 "bC" = (
-/obj/structure/showcase{
-	desc = "A strange machine thats supposedly used to help pick up and decrypt wave signals. ";
-	icon = 'icons/obj/machines/telecomms.dmi';
-	icon_state = "processor";
-	name = "subsystem signal decrypter"
-	},
+/obj/structure/showcase/machinery/signal_decrypter,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -2498,12 +2493,7 @@
 /area/awaymission/snowdin/post)
 "gL" = (
 /obj/machinery/light/small,
-/obj/structure/showcase{
-	desc = "A strange machine thats supposedly used to help pick up and decrypt wave signals. ";
-	icon = 'icons/obj/machines/telecomms.dmi';
-	icon_state = "processor";
-	name = "subsystem signal decrypter"
-	},
+/obj/structure/showcase/machinery/signal_decrypter,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},

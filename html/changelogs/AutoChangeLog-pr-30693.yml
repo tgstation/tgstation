@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - bugfix: "It is possible to multitool the cargo computer circuitboard for contraband again"

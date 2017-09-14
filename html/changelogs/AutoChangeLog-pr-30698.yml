@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Replaced leftover references to loyalty implants with mindshield implants."
