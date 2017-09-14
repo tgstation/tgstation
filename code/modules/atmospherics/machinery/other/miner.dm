@@ -128,7 +128,7 @@
 	update_power()
 	check_operation()
 	if(active && !broken)
-		if(LAZYLEN(gax_mixture))
+		if(LAZYLEN(gas_mixture))
 			return FALSE
 		if(do_use_power(active_power_usage))
 			mine_gas()
