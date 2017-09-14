@@ -141,8 +141,8 @@
 
 /turf/closed/bullet_act(obj/item/projectile/Proj)
 	..()
-	if(prob(Proj.damage * 2) && !Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		var/image/bullet_hole = mutable_appearance('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
+	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		var/mutable_appearance/bullet_hole = mutable_appearance('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
 
 		var/random_x = rand(-13, 13)
 		bullet_hole.pixel_x += random_x
@@ -150,4 +150,4 @@
 		var/random_y = rand(-13, 13)
 		bullet_hole.pixel_y += random_y
 
-		add_overlay(bullet_hole)
+		add_overlay(bullet_hole, TRUE)
