@@ -553,33 +553,27 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Download [target_amount] research level\s."
 	return target_amount
 
-/datum/objective/download/check_completion()//NINJACODE
-	if(!ishuman(owner.current))
-		return 0
-
-	var/mob/living/carbon/human/H = owner.current
-	if(!H || H.stat == DEAD)
-		return 0
-
-	if(!istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
-		return 0
-
-	var/obj/item/clothing/suit/space/space_ninja/SN = H.wear_suit
-	if(!SN.s_initialized)
-		return 0
-
-	var/current_amount
-	if(!SN.stored_research.len)
-		return 0
-	else
-		for(var/datum/tech/current_data in SN.stored_research)
-			if(current_data.level)
-				current_amount += (current_data.level-1)
-	if(current_amount<target_amount)
-		return 0
-	return 1
-
-
+/datum/objective/download/check_completion()
+	var/list/current_tech = list()
+	if(ismob(owner.current))
+		var/mob/M = owner.current			//Yeah if you get morphed and you eat a quantum tech disk with the RD's latest backup good on you soldier.
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H && (H.stat != DEAD) && istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+				var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
+				for(var/datum/tech/T in S.stored_research)
+					current_tech[T.id] = T.level? T.level : 0
+		var/list/otherwise = M.GetAllContents()
+		for(var/obj/item/disk/tech_disk/TD in otherwise)
+			for(var/datum/tech/T in TD.tech_stored)
+				var/existing = current_tech[T.id]
+				if(existing && T.level)
+					if(T.level > existing)
+						current_tech[T.id] = T.level
+	var/total = 0
+	for(var/i in current_tech)
+		total += current_tech[i]
+	return total >= target_amount
 
 /datum/objective/capture
 
