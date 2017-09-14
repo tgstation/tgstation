@@ -19,6 +19,10 @@
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	power_change()
+	if(!QDELETED(C))
+		qdel(circuit)
+		circuit = C
+		C.forceMove(src)
 
 /obj/machinery/computer/Destroy()
 	QDEL_NULL(circuit)

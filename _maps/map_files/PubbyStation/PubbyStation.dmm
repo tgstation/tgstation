@@ -3033,13 +3033,8 @@
 /area/security/main)
 "ahh" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 2;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_y = 20
 	},
 /turf/open/space,
@@ -29070,10 +29065,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "blV" = (
-/obj/structure/sign/atmosplaque{
-	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today.";
-	icon_state = "kiddieplaque";
-	name = "\improper 'Perfect Drone' sign";
+/obj/structure/sign/kiddieplaque/perfect_drone{
 	pixel_y = 32
 	},
 /turf/open/floor/engine,

@@ -1,4 +1,0 @@
-author: "Lordpidey"
-delete-after: True
-changes: 
-  - bugfix: "Centcom roundstart threat reports are fixed, and can now be used to narrow down the types of threats facing the station."

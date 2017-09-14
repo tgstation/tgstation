@@ -73,8 +73,8 @@ As the Warden, if a prisoner's crimes are heinous enough you can put them in per
 As the Warden, you can implant criminals you suspect might re-offend with devices that will track their location and allow you to remotely inject them with disabling chemicals. 
 As the Warden, you can use handcuffs on orange prisoner shoes to turn them into cuffed shoes, forcing prisoners to walk and potentially thwarting an escape.
 As a Security Officer, communicate and coordinate with your fellow officers using the security channel (:s) to avoid confusion.
-As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are loyalty implanted. Use this to your advantage in a revolution to definitively tell who is on your side!
-As a Security Officer, loyalty implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
+As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are mindshield implanted. Use this to your advantage in a revolution to definitively tell who is on your side!
+As a Security Officer, mindshield implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
 As a Security Officer, examining someone while wearing sechuds or HUDsunglasses will let you set their arrest level, which will cause Beepsky and other security bots to chase after them.
 As a Security Officer, implanting a gang member the first time will deconvert them, but destroy the implant. You must implant them a second time to protect them from further conversion attempts. Keep in mind that gang members have ways to destroy implants in people!
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
@@ -145,8 +145,8 @@ As the Blob, removing strong blobs, resource nodes, factories, and nodes will gi
 As the Blob, talking will send a message to all other overminds and all Blobbernauts, allowing you to direct attacks and coordinate.
 As a Blobbernaut, you can communicate with overminds and other Blobbernauts via :b.
 As a Blobbernaut, your HUD shows your health and the core health of the overmind that created you.
-As a Revolutionary, you cannot convert a head of staff or someone who has a loyalty implant, such as a security officer or those they implant. Implants can however be surgically removed, and do not carry over with cloning. Take control of medbay to keep control of conversions!
-As a Revolutionary, cargo can be your best friend or your worst nightmare. In the best case scenario you will be able to order a limitless amount of guns and armor, in the worst case scenario security will take control and order a limitless number of loyalty implants to turn your fellow revolutionaries against you.
+As a Revolutionary, you cannot convert a head of staff or someone who has a mindshield implant, such as a security officer or those they implant. Implants can however be surgically removed, and do not carry over with cloning. Take control of medbay to keep control of conversions!
+As a Revolutionary, cargo can be your best friend or your worst nightmare. In the best case scenario you will be able to order a limitless amount of guns and armor, in the worst case scenario security will take control and order a limitless number of mindshield implants to turn your fellow revolutionaries against you.
 As a Revolutionary, your main power comes from how quickly you spread. Convert people as fast as you can and overwhelm the heads of staff before security can arm up.
 As a Changeling, the Extract DNA sting counts for your genome absorb objective, but does not let you respec your powers.
 As a Changeling, you can absorb someone by strangling them and using the Absorb verb; this gives you the ability to rechoose your powers, the DNA of whoever you absorbed, the memory of the absorbed, and some samples of things the absorbed said.
@@ -180,7 +180,7 @@ As a Wizard, the fireball spell performs very poorly at close range, as it can e
 As a Wizard, summoning guns will turn a large portion of the crew against themselves, but will also give everyone anything from a pea shooter to a BFG 9000. Use at your own risk!
 As a Wizard, the staff of chaos can fire any type of bolts from the magical wands. This can range from bolts of instant death to healing or reviving someone.
 As a Wizard, most spells become unusable if you are not wearing your robe, hat, and sandals.
-As a Gangster, you can destroy loyalty implants with an implant breaker, letting you reconvert that person.
+As a Gangster, you can destroy mindshield implants with an implant breaker, letting you reconvert that person.
 As a Gangster, your influence is based on how many areas you have tagged and how many people are wearing your gang's outfit; more areas and more people wearing the outfit will give you more influence.
 As a Gangster, your gang outfits are very robust, giving moderate resistances to most direct damage at the cost of stealth.
 As a Gang Boss, don't wait too long to promote lieutenants! If you get caught by security or enemy gangsters, hopefully you have a backup.
