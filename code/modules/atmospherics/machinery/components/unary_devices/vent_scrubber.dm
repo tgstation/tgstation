@@ -270,7 +270,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(!is_operational() || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return
+		return 0
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
