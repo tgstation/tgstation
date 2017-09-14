@@ -49,4 +49,4 @@ $validation = "org";
 $validation_count = 1;
 
 //enforce changelogs on PRs
-$require_changelogs = true;
+$require_changelogs = false;
