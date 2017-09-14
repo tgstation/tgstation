@@ -239,7 +239,7 @@
 			damagesources++
 		if(factory && (locate(/obj/structure/blob/core) in blobs_in_area))
 			adjustHealth(-maxHealth*0.1)
-		if(factory && (locate(/obj/structure/blob/node) in blobs_in_area))
+		else if(factory && (locate(/obj/structure/blob/node) in blobs_in_area))
 			adjustHealth(-maxHealth*0.05)
 		if(damagesources)
 			for(var/i in 1 to damagesources)
