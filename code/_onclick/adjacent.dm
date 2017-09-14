@@ -27,6 +27,10 @@
 */
 /turf/Adjacent(atom/neighbor, atom/target = null, atom/movable/mover = null)
 	var/turf/T0 = get_turf(neighbor)
+	if(istype(neighbor, /atom/movable))
+		var/atom/movable/NM = neighbor
+		if(NM.Adjacent(src, FALSE))
+			return TRUE
 
 	if(T0 == src) //same turf
 		return TRUE
@@ -59,10 +63,6 @@
 
 		return TRUE // we don't care about our own density
 
-	if(istype(neighbor, /atom/movable))
-		var/atom/movable/NM = neighbor
-		if(NM.Adjacent(src, FALSE))
-			return TRUE
 
 	return FALSE
 
