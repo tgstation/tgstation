@@ -5,7 +5,7 @@
 			and not to pinch the ORM so they can upgrade it for you."
 	name = "\improper APLU \"Miner\""
 
-/obj/mecha/working/ripley/mining/Initialize()
+/obj/mecha/working/ripley/mining_roundstart/Initialize()
 	. = ..()
 	if(prob(15)) // Maybe get a diamond drill one every few rounds.
 		var/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/D = new
