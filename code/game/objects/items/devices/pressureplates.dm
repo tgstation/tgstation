@@ -35,7 +35,7 @@
 		return
 	if(trigger_mob && isliving(AM))
 		var/mob/living/L = AM
-		to_chat(L, "<span class='warning'>You feel a click under your feet!</span>")
+		to_chat(L, "<span class='warning'>You feel something click beneath you!</span>")
 	else if(!trigger_item)
 		return
 	can_trigger = FALSE
