@@ -149,7 +149,7 @@
 			if(!building_checks(R, multiplier))
 				return
 
-		var/atom/O = new R.result_type( usr.loc )
+		var/atom/movable/O = new R.result_type()
 		O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 
@@ -168,11 +168,10 @@
 			new_item.amount = R.res_amount*multiplier
 			new_item.update_icon()
 
-			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
-				return
-
 		if (isitem(O))
 			usr.put_in_hands(O)
+		else
+			O.forceMove(usr.loc)
 		O.add_fingerprint(usr)
 
 		//BubbleWrap - so newly formed boxes are empty
