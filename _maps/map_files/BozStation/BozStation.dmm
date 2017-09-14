@@ -13798,9 +13798,10 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/turretid{
 	control_area = /area/ai_monitored/turret_protected/ai;
+	name = "turret control panel 1";
 	pixel_x = 24;
 	pixel_y = -24;
-	tag = "Turret Control"
+	tag = "Turret Control 1"
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -16418,6 +16419,13 @@
 	layer = 2.9
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/turretid{
+	control_area = /area/ai_monitored/turret_protected/ai;
+	name = "turret control panel 2";
+	pixel_x = -4;
+	pixel_y = -26;
+	tag = "Turret Control 2"
+	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
 "aKK" = (
@@ -16899,11 +16907,6 @@
 	layer = 2.9
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/turretid{
-	control_area = /area/ai_monitored/turret_protected/ai;
-	pixel_x = -5;
-	tag = "Turret Control"
-	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
 "aLz" = (
@@ -16935,14 +16938,14 @@
 /obj/machinery/button/door{
 	id = "aicoredoor";
 	name = "AI Chamber Access Control";
-	pixel_x = -26;
+	pixel_x = -22;
 	pixel_y = -3;
 	req_access_txt = "16"
 	},
 /obj/machinery/button/door{
 	id = "aicorewindow";
 	name = "AI Core Shutters";
-	pixel_x = -26;
+	pixel_x = -22;
 	pixel_y = 6;
 	req_access_txt = "16"
 	},
