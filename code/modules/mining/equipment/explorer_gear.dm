@@ -56,10 +56,8 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	slowdown = 0
-	armor = list(melee = 50, bullet = 30, laser = 25, energy = 20, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
+	armor = list(melee = 70, bullet = 40, laser = 10, energy = 10, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
-	var/cooldown = 600
-	var/next_adrenal = 0
 
 /obj/item/clothing/suit/space/hostile_environment/Initialize()
 	. = ..()
@@ -73,20 +71,12 @@
 	if(world.time < next_adrenal || !iscarbon(loc))
 		return
 	var/mob/living/carbon/C = loc
-	if(prob(1)) //cursed by bubblegum
-		if(prob(25))
+	if(prob(2)) //cursed by bubblegum
+		if(prob(15))
 			new datum/hallucination/oh_yeah(C)
 			to_chat(C, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b></span>")
 		else
 			to_chat(C, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
-	if(C.IsStun() || C.IsKnockdown() || C.IsSleeping() || C.IsUnconscious())
-		C.SetStun(0)
-		C.SetKnockdown(0)
-		C.SetSleeping(0)
-		C.SetUnconscious(0)
-		next_adrenal = world.time + cooldown
-		to_chat(C, "<span class='userdanger'>You feel [src] infusing you with energy!</span>")
-
 
 /obj/item/clothing/suit/space/hostile_environment/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/toy/crayon/spraycan))
@@ -111,7 +101,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	flags_1 = THICKMATERIAL_1 // no space protection
-	armor = list(melee = 50, bullet = 30, laser = 25,energy = 20, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
+	armor = list(melee = 70, bullet = 40, laser = 10,energy = 10, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/item/clothing/head/helmet/space/hostile_environment/Initialize()
