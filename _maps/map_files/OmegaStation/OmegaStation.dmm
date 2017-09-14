@@ -2145,8 +2145,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/sign/goldenplaque{
-	name = "The Most Robust Captain Award for Robustness";
+/obj/structure/sign/goldenplaque/captain{
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -25832,10 +25831,7 @@
 /turf/open/floor/plasteel,
 /area/library)
 "aRa" = (
-/obj/structure/sign/kiddieplaque{
-	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside.";
-	name = "Library Rules Sign"
-	},
+/obj/structure/sign/kiddieplaque/library,
 /turf/closed/wall,
 /area/library)
 "aRb" = (
@@ -33827,10 +33823,7 @@
 /area/chapel/main)
 "bgb" = (
 /obj/structure/bookcase,
-/obj/structure/sign/atmosplaque{
-	desc = "A plaque commemorating the fallen, may they rest in peace, forever asleep amongst the stars. Someone has drawn a picture of a crying badger at the bottom.";
-	icon_state = "kiddieplaque";
-	name = "Remembrance Plaque";
+/obj/structure/sign/kiddieplaque/badger{
 	pixel_y = 32
 	},
 /obj/machinery/light/small{
@@ -34861,10 +34854,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/atmosplaque{
-	desc = "A plaque commemorating the fallen, may they rest in peace, forever asleep amongst the stars. Someone has drawn a picture of a crying badger at the bottom.";
-	icon_state = "kiddieplaque";
-	name = "Remembrance Plaque";
+/obj/structure/sign/kiddieplaque/badger{
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
