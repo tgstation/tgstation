@@ -111,7 +111,7 @@
 		return
 
 	if(control_disabled)
-		to_chat(src, "<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>")
+		to_chat(src, "<span class='warning'>Wireless interface disabled, unable to interact with announcement PA.</span>")
 		return
 
 	var/list/words = splittext(trim(message), " ")

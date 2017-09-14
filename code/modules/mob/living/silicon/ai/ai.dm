@@ -309,7 +309,7 @@
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(control_disabled)
-		to_chat(usr, "Wireless control is disabled!")
+		to_chat(usr, "<span class='warning'>Wireless control is disabled!</span>")
 		return
 
 	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
@@ -347,7 +347,7 @@
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
 	if(control_disabled)
-		to_chat(src, "Wireless control is disabled!")
+		to_chat(src, "<span class='warning'>Wireless control is disabled!</span>")
 		return
 	SSshuttle.cancelEvac(src)
 
@@ -459,7 +459,7 @@
 		return
 
 	if(control_disabled)
-		to_chat(src, "Wireless communication is disabled.")
+		to_chat(src, "<span class='warning'>Wireless control is disabled.</span>")
 		return
 	var/turf/ai_current_turf = get_turf(src)
 	var/ai_Zlevel = ai_current_turf.z
@@ -924,7 +924,7 @@
 	if(incapacitated())
 		return
 	if(control_disabled)
-		to_chat(src, "<span class='danger'>Wireless networking module is offline.</span>")
+		to_chat(src, "<span class='warning'>Wireless networking module is offline.</span>")
 		return
 
 	var/list/possible = list()
