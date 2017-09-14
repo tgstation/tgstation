@@ -265,15 +265,6 @@
 							return
 					else
 						return
-<<<<<<< HEAD
-				L.loc = locate(locx,locy,mobloc.z)
-				var/limit = 2//For only two trailing shadows.
-				for(var/turf/T in getline(mobloc, L.loc))
-					new /obj/effect/temp_visual/dir_setting/ninja/shadow(T, L.dir)
-					limit--
-					if(limit<=0)
-						break
-=======
 				var/target = locate(locx,locy,mobloc.z)
 				if(target)
 					L.loc = target
@@ -283,7 +274,6 @@
 						limit--
 						if(limit<=0)
 							break
->>>>>>> 59d72305f0... name conflict
 			else
 				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
 				L.loc = get_step(L, direct)
