@@ -20,8 +20,6 @@
 	var/drainable = FALSE
 	var/drained = FALSE
 	var/bloody = 0
-	var/bloodcolor = "#FFFFFF"
-	var/lastbloody = 99
 	var/obj/machinery/drain/linkeddrain = null
 	var/timer = 0 //we need a cooldown on that shit.
 	var/reagenttimer = 0 //We need 2.
@@ -115,6 +113,7 @@
 			if(beaker && cur_reagent)
 				beaker.reagents.reaction(objects, VAPOR, 1)
 			reagenttimer = 4
+	changecolor()
 
 
 /obj/machinery/poolcontroller/process()
@@ -165,44 +164,31 @@
 
 			for(var/obj/effect/decal/cleanable/decal in W)
 				CHECK_TICK
-				if(bloody < 800)
-					animate(decal, alpha = 10, time = 20)
-					QDEL_IN(decal, 25)
+				animate(decal, alpha = 10, time = 20)
+				QDEL_IN(decal, 25)
 				if(istype(decal,/obj/effect/decal/cleanable/blood) || istype(decal, /obj/effect/decal/cleanable/trail_holder))
-					bloody++
-					if(bloody > lastbloody)
-						changecolor()
+					bloody = TRUE
+	changecolor()
 
 /obj/machinery/poolcontroller/proc/changecolor()
-	lastbloody = bloody+99
-	switch(bloody)
-		if(0 to 99)
-			bloodcolor = "#FFFFFF"
-		if(100 to 199)
-			bloodcolor = "#FFDDDD"
-		if(100 to 199)
-			bloodcolor = "#FFCCCC"
-		if(200 to 299)
-			bloodcolor = "#FFBBBB"
-		if(300 to 399)
-			bloodcolor = "#FFAAAA"
-		if(400 to 499)
-			bloodcolor = "#FF9999"
-		if(500 to 599)
-			bloodcolor = "#FF8888"
-		if(600 to 699)
-			bloodcolor = "#FF7777"
-		if(700 to 799)
-			bloodcolor = "#FF7777"
-		if(800 to 899)
-			bloodcolor = "#FF6666"
-		if(900 to INFINITY)
-			bloodcolor = "#FF5555"
-			src.bloody = 1000
+	var/rcolor
+	if(LAZYLEN(beaker.reagents.reagent_list))
+		rcolor = mix_color_from_reagents(beaker.reagents.reagent_list)
 	for(var/X in linkedturfs)
 		var/turf/open/pool/color1 = X
-		color1.color = "bloodcolor"
-		color1.watereffect.color = "bloodcolor"
+		if(bloody)
+			if(rcolor)
+				color1.color = BlendRGB(rgb(150, 20, 20), rcolor, 0.5)
+				color1.watereffect.color = BlendRGB(rgb(150, 20, 20), rcolor, 0.5)
+			else
+				color1.color = rgb(150, 20, 20)
+				color1.watereffect.color = rgb(150, 20, 20)
+		else if(!bloody && rcolor)
+			color1.color = rcolor
+			color1.watereffect.color = rcolor
+		else if(!bloody && !rcolor)
+			color1.color = null
+			color1.watereffect.color = null
 
 /obj/machinery/poolcontroller/proc/miston() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
 	for(var/X in linkedturfs)
@@ -294,6 +280,7 @@
 				B.loc = loc
 				beaker = null
 				. = TRUE
+			changecolor()
 		if("drain")
 			if(drainable)
 				mistoff()
@@ -307,6 +294,7 @@
 					new /obj/effect/effect/waterspout(linkeddrain.loc)
 					temperature = 3
 				handle_temp()
+				bloody = FALSE
 				. = TRUE
 
 /obj/machinery/poolcontroller/attack_hand(mob/user)
