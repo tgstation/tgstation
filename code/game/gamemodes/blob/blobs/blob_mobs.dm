@@ -237,10 +237,13 @@
 			damagesources++
 		if(!factory)
 			damagesources++
-		if(factory && (locate(/obj/structure/blob/core) in blobs_in_area))
-			adjustHealth(-maxHealth*0.1)
-		if(factory && (locate(/obj/structure/blob/node) in blobs_in_area))
-			adjustHealth(-maxHealth*0.05)
+		else
+			if(factory && (locate(/obj/structure/blob/core) in blobs_in_area))
+				adjustHealth(-maxHealth*0.1)
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
+			if(factory && (locate(/obj/structure/blob/node) in blobs_in_area))
+				adjustHealth(-maxHealth*0.05)
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
 		if(damagesources)
 			for(var/i in 1 to damagesources)
 				adjustHealth(maxHealth*0.025) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
