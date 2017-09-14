@@ -130,15 +130,13 @@
 				return INITIALIZE_HINT_QDEL
 			if(9 to 11)
 				lights = FALSE
-				bolt()
+				locked = TRUE
 			if(12 to 15)
-				bolt()
+				locked = TRUE
 			if(16 to 23)
 				welded = TRUE
-				update_icon()
 			if(24 to 30)
 				panel_open = TRUE
-				update_icon()
 	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
