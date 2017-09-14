@@ -6,14 +6,28 @@
 	density = 1
 	anchored = FALSE
 	verb_say = "states"
+	dir = EAST
 	var/drain_rate = 0	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
 	var/active = FALSE
 	var/goal = 100
-	var/optional_message
 	var/list/possible_machines = list(
-		/datum/omnibox/factory
-	)
+		new /datum/omnibox("Vehicle Factory", /obj/machinery/power/omnibox/factory, /obj/machinery/power/omnibox/omnicube)
+		)
+
+/datum/omnibox
+	var/id = "Placeholder"
+	var/list/types = list()
+
+/datum/omnibox/New(name, path1, path2, path3)
+	id = name
+	if(path1)
+		types += path1
+	if(path2)
+		types += path2
+	if(path3)
+		types += path3
+
 
 /obj/machinery/power/omnibox/examine(mob/user)
 	..()
@@ -27,11 +41,11 @@
 		if(istype(O, /obj/item/wrench))
 			if(!anchored && !isinspace())
 				connect_to_network()
-				user << "<span class='notice'>You secure the [src] to the floor.</span>"
+				to_chat(user, "<span class='notice'>You secure the [src] to the floor.</span>")
 				anchored = TRUE
 			else if(anchored)
 				disconnect_from_network()
-				user << "<span class='notice'>You unsecure and disconnect the [src].</span>"
+				to_chat(user, "<span class='notice'>You unsecure and disconnect the [src].</span>")
 				anchored = FALSE
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			return
@@ -58,13 +72,14 @@
 		return
 	user.set_machine(src)
 	var/list/dat = list()
-	dat += ("<b>[name]</b><br>")
-	if (power_drained >= goal && goal)
-		dat += "<B>The omnibox has reached maximum charge. Please select a desired development.</B><BR>"
-		dat += "<HR>"
-		for(var/m in possible_machines)
-			var/datum/omnibox/O = m
-			dat += "<a href='?src=\ref[src];action=[O.id]'></a> - [initial(O.desc)]<br>"
+	dat += ("<B><U>[name]</U></B><br>")
+	if (power_drained >= goal)
+		dat +="<div class='statusDisplay'>"
+		dat += "The Omnibox has reached maximum charge. Please select a desired development:<table border='0' width='300'>"
+		dat += "</div>"
+		for(var/datum/omnibox/O in possible_machines)
+			dat += "<tr><td><A href='?src=\ref[src];create=\ref[O]'>Select</A> - [O.id]</td></tr>"
+		dat += "</table>"
 	else
 		if (active)
 			dat += ("Omni: <A href='?src=\ref[src];action=disable'>On</A><br>")
@@ -75,8 +90,6 @@
 		dat += ("Total Power converted: [power_drained] kilowatts<br><br>")
 		if (goal)
 			dat += ("<B>The [src] is [(100*(power_drained/goal))]% complete</B><br>")
-		if (optional_message)
-			dat += optional_message
 		dat += ("<br><A href='?src=\ref[src];action=close'>Close</A>")
 	var/datum/browser/popup = new(user, "vending", "Omnibox", 400, 350)
 	popup.set_content(dat.Join())
@@ -103,13 +116,29 @@
 			src.updateUsrDialog()
 			if(active && !crit_fail && anchored)
 				icon_state = "[src]1"
+		if ("Vehicle Factory")
+
+			qdel(src)
+		if ("change_direction")
+			setDir(turn(dir, 90))
 		if ("close")
 			usr.unset_machine()
-		if ("Vehicle Factory")
-			var/datum/omnibox/factory/F
-			for(var/obj/machinery/MA in F.types)
-				MA = new(loc)
-			qdel(src)
+	if(href_list["create"])
+		var/datum/omnibox/choice = locate(href_list["create"])
+		Produce(choice)
+	updateUsrDialog()
+
+/obj/machinery/power/omnibox/proc/Produce(datum/omnibox/choice)
+	if(!choice)
+		return
+	var/turf/T = get_turf(src)
+	qdel(src)
+	new /obj/effect/temp_visual/small_smoke(T)
+	for(var/M in choice.types)
+		new M(T)
+	for(var/i in 1 to 6)
+		playsound(T, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg', 'sound/effects/sparks1.ogg', 'sound/effects/seedling_chargeup.ogg', 'sound/effects/light_flicker.ogg'), 80, 1, -1)
+		sleep(8)
 
 
 /obj/machinery/power/omnibox/process()
@@ -118,7 +147,7 @@
 			powernet.load += drain_rate*1000
 			power_drained += drain_rate
 		else
-			visible_message("Power conversion levels have exceeded energy grid supply, shutting down")
+			visible_message("Power consumption levels has exceeded energy grid supply, shutting down")
 			active = FALSE
 			drain_rate = 0
 			icon_state = "[src]0"
@@ -127,18 +156,8 @@
 		drain_rate = 0
 		icon_state = "[src]0"
 
-/datum/omnibox
-	var/id = "Placeholder"
-	var/desc = "This shouldn't exist"
-	var/list/types = list()
 
-/datum/omnibox/factory
-	id = "Vehicle Factory"
-	desc = "An advanced assembly line capable of turning raw energy into prototype vehicles"
-	types = list(
-		/obj/machinery/power/omnibox/factory,
-		/obj/machinery/power/omnibox/omnicube
-	)
+
 
 /obj/machinery/power/omnibox/omnicube
 	name = "Omnicube Generator"
@@ -148,9 +167,31 @@
 	var/cube = 10000
 	var/surplus = 0
 
-/obj/machinery/power/omnibox/omnicube/Initialize()
-	. = ..()
-	optional_message = "<B>Based on current power levels, the [src] is expected to create [power_drained/10000] omnicube every two seconds.</B><br>"
+/obj/machinery/power/omnibox/omnicube/interact(mob/user)
+	if (!anchored)
+		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")
+		return
+	if(!Adjacent(user) && (!isAI(user)))
+		return
+	user.set_machine(src)
+	var/list/dat = list()
+	dat += ("<b>[name]</b><br>")
+	if (active)
+		dat += ("Omni: <A href='?src=\ref[src];action=disable'>On</A><br>")
+	else
+		dat += ("Omni: <A href='?src=\ref[src];action=enable'>Off</A><br>")
+	dat += ("Power Consumption Level: <A href='?src=\ref[src];action=set_power'>[drain_rate] kilowatts</A><br><br>")
+	dat += ("Current Grid Power Available: [(powernet == null ? "Unconnected" : "[powernet.netexcess/1000] kilowatts")]<br>")
+	dat += ("Total Power converted: [power_drained] kilowatts<br><br>")
+	if (goal)
+		dat += ("<B>The [src] is [(100*(surplus/goal))]% complete</B><br>")
+	dat += "Cube Direction: [dir2text(dir)] - <A href='?src=\ref[src];action=change_direction'>Change Direction</A><br>"
+	dat += "<br><B>Based on current power levels, the [src] is expected to create [drain_rate/10000] omnicube every two seconds.</B><br>"
+	dat += ("<br><A href='?src=\ref[src];action=close'>Close</A>")
+	var/datum/browser/popup = new(user, "vending", "Omnicube Generator", 400, 350)
+	popup.set_content(dat.Join())
+	popup.open()
+
 
 /obj/machinery/power/omnibox/omnicube/process()
 	if(active && !crit_fail && anchored && powernet)
@@ -160,7 +201,8 @@
 			surplus += drain_rate
 			while(surplus >= cube)
 				surplus -= 10000
-				new /obj/item/omnicube(locate(min(x+1,world.maxx),y,z))
+				var/obj/O = new /obj/item/omnicube(loc)
+				O.ConveyorMove(dir)
 		else
 			visible_message("Power conversion levels have exceeded energy grid supply, shutting down")
 			active = FALSE
@@ -170,6 +212,8 @@
 		active = FALSE
 		drain_rate = 0
 		icon_state = "[src]0"
+
+
 
 /obj/machinery/power/omnibox/factory
 	name = "Vehicle Factory"
@@ -189,9 +233,9 @@
 
 /obj/machinery/power/omnibox/factory/Initialize()
 	. = ..()
-	phase1 = rand(10)
-	phase2 = rand(10,15)
-	phase3 = rand(15,20)
+	phase1 = rand(3,8)
+	phase2 = rand(9,13)
+	phase3 = rand(14,18)
 	ideal = phase1
 	desc += " The factory's instruments are currently harmonized to a [ideal] second wavelength."
 
@@ -232,10 +276,16 @@
 			playsound(src, 'sound/machines/ding.ogg', 25, 0)
 			if(progress >= finished)
 				progress -= finished
+				new /obj/effect/temp_visual/small_smoke(src)
+				new /obj/effect/temp_visual/small_smoke(locate(min(x+1,world.maxx),y,z))
+				new /obj/effect/temp_visual/small_smoke(locate(x,min(y+1,world.maxy),z))
 				new /obj/vehicle/space/speedbike/atmos(locate(min(x+1,world.maxx),y,z))
 				new /obj/vehicle/space/speedbike/repair(locate(x,min(y+1,world.maxy),z))
 				iterations = 0
 				ideal = phase1
+				for(var/i in 1 to 6)
+					playsound(src, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg', 'sound/effects/sparks1.ogg', 'sound/effects/seedling_chargeup.ogg', 'sound/effects/light_flicker.ogg'), 80, 1, -1)
+					sleep(8)
 				return
 			if(round(progress/(finished/3)) > iterations)
 				iterations++
@@ -251,6 +301,8 @@
 	else
 		active = FALSE
 		icon_state = "[src]0"
+
+
 
 obj/item/omnicube
 	name = "Omnicube"
