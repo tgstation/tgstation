@@ -113,13 +113,7 @@
 			if(beaker && cur_reagent)
 				beaker.reagents.reaction(objects, VAPOR, 1)
 			reagenttimer = 4
-		update_color(W)
-
-/obj/machinery/poolcontroller/proc/update_color(turf/open/pool/W)
-	if(LAZYLEN(beaker.reagents.reagent_list))
-		W.color = mix_color_from_reagents(beaker.reagents.reagent_list)
-	else
-		W.color = initial(W.color)
+	changecolor()
 
 
 /obj/machinery/poolcontroller/process()
@@ -175,7 +169,7 @@
 					QDEL_IN(decal, 25)
 				if(istype(decal,/obj/effect/decal/cleanable/blood) || istype(decal, /obj/effect/decal/cleanable/trail_holder))
 					bloody = TRUE
-					changecolor()
+	changecolor()
 
 /obj/machinery/poolcontroller/proc/changecolor()
 	var/rcolor
@@ -284,6 +278,7 @@
 				B.loc = loc
 				beaker = null
 				. = TRUE
+			changecolor()
 		if("drain")
 			if(drainable)
 				mistoff()
