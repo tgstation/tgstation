@@ -159,7 +159,7 @@
 	name = "Plasteel Golem"
 	id = "plasteel golem"
 	fixed_mut_color = "bbb"
-	stunmod = 0.40
+	stunmod = 0.4
 	punchdamagelow = 12
 	punchdamagehigh = 21
 	punchstunthreshold = 18 //still 40% stun chance
