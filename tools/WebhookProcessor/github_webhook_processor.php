@@ -31,7 +31,7 @@ $maintainer_team_id = 133041;
 $validation = "org";
 $validation_count = 1;
 $tracked_branch = 'master';
-$require_changelogs = true;
+$require_changelogs = false;
 
 require_once 'secret.php';
 
