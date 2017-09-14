@@ -20,17 +20,21 @@
 
 /*
 	Adjacency (to turf):
-	* If you are in the same turf, always true
+	* If you are in the same turf,	 always true
 	* If you are vertically/horizontally adjacent, ensure there are no border objects
 	* If you are diagonally adjacent, ensure you can pass through at least one of the mutually adjacent square.
 		* Passing through in this case ignores anything with the LETPASSTHROW pass flag, such as tables, racks, and morgue trays.
 */
 /turf/Adjacent(atom/neighbor, atom/target = null, atom/movable/mover = null)
-	var/turf/T0 = get_turf(neighbor)
+
 	if(istype(neighbor, /atom/movable))
-		var/atom/movable/NM = neighbor
-		if(NM.Adjacent(src, FALSE))
-			return TRUE
+		var/atom/movable/AM = neighbor
+		if((AM.bound_width != world.icon_size || AM.bound_height != world.icon_size) && (AM.locs && AM.locs.len > 1))
+			for(var/turf/T in AM.locs)
+				if(T.Adjacent(src))
+					return TRUE
+
+	var/turf/T0 = get_turf(neighbor)
 
 	if(T0 == src) //same turf
 		return TRUE
