@@ -29,11 +29,12 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/portables_connector/can_unwrench(mob/user)
-	if(..())
-		if(connected_device)
-			to_chat(user, "<span class='warning'>You cannot unwrench [src], detach [connected_device] first!</span>")
-		else
-			return 1
+	if(!..())
+		return
+	if(connected_device)
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], detach [connected_device] first!</span>")
+	else
+		return 1
 
 /obj/machinery/atmospherics/components/unary/portables_connector/portableConnectorReturnAir()
 	return connected_device.portableConnectorReturnAir()

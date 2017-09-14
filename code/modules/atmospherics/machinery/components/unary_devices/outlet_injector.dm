@@ -45,10 +45,11 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/process_atmos()
 	..()
+
 	injecting = 0
 
 	if(!on || stat & (NOPOWER|BROKEN))
-		return 0
+		return
 
 	var/datum/gas_mixture/air_contents = AIR1
 
@@ -65,8 +66,9 @@
 	return 1
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
+
 	if(on || injecting || stat & (NOPOWER|BROKEN))
-		return 0
+		return
 
 	var/datum/gas_mixture/air_contents = AIR1
 
@@ -74,11 +76,8 @@
 
 	if(air_contents.temperature > 0)
 		var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
 		loc.assume_air(removed)
-
 		update_parents()
 
 	flick("inje_inject", src)
@@ -90,8 +89,9 @@
 		radio_connection = SSradio.add_object(src, frequency)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/broadcast_status()
+
 	if(!radio_connection)
-		return 0
+		return
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -116,8 +116,9 @@
 	..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/receive_signal(datum/signal/signal)
+
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
@@ -141,8 +142,10 @@
 
 		//log_admin("DEBUG \[[world.timeofday]\]: outlet_injector/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 		//return
+
 	spawn(2)
 		broadcast_status()
+
 	update_icon()
 
 
@@ -188,9 +191,10 @@
 	broadcast_status()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
-	if(..())
-		if (!(stat & NOPOWER|BROKEN) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
-		else
-			return 1
+	if(!..())
+		return
+	if (!(stat & NOPOWER|BROKEN) && on)
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+	else
+		return 1
 

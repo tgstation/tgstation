@@ -20,8 +20,6 @@
 	else
 		icon_state = "he_exposed"
 
-	return
-
 /obj/machinery/atmospherics/components/unary/heat_exchanger/atmosinit()
 	if(!partner)
 		var/partner_connect = turn(dir,180)
@@ -36,11 +34,12 @@
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/process_atmos()
 	..()
+
 	if(!partner)
-		return 0
+		return
 
 	if(SSair.times_fired <= update_cycle)
-		return 0
+		return
 
 	update_cycle = SSair.times_fired
 	partner.update_cycle = SSair.times_fired

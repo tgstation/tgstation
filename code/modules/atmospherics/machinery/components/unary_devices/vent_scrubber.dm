@@ -156,19 +156,18 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
 	..()
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (NOPOWER|BROKEN) || welded)
 		return
-	if (!NODE1)
+	if(!NODE1 || !on)
 		on = FALSE
-	if(!on || welded)
-		return 0
+		return
 	scrub(loc)
 	if(widenet)
-		for (var/turf/tile in adjacent_turfs)
+		for(var/turf/tile in adjacent_turfs)
 			scrub(tile)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/tile)
-	if (!istype(tile))
+	if(!istype(tile))
 		return 0
 
 	var/datum/gas_mixture/environment = tile.return_air()
@@ -260,7 +259,7 @@
 //There is no easy way for an object to be notified of changes to atmos can pass flags
 //	So we check every machinery process (2 seconds)
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process()
-	if (widenet)
+	if(widenet)
 		check_turfs()
 
 //we populate a list of turfs with nonatmos-blocked cardinal turfs AND
@@ -273,10 +272,8 @@
 
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (NOPOWER|BROKEN) || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return
-	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return 0
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
@@ -363,11 +360,12 @@
 		return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
-	if(..())
-		if (!(stat & NOPOWER) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
-		else
-			return 1
+	if(!..())
+		return
+	if (!(stat & NOPOWER) && on)
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+	else
+		return 1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded
