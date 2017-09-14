@@ -1,0 +1,14 @@
+[package]
+authors = ["Tad Hardesty <tad@platymuus.com>"]
+name = "ss13-discord"
+version = "0.1.0"
+
+[[bin]]
+name = "updatevoice"
+path = "main.rs"
+
+[dependencies]
+toml = "0.4.5"
+
+[dependencies.discord]
+git = "https://github.com/SpaceManiac/discord-rs"
