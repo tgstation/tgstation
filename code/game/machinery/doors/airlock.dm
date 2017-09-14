@@ -125,10 +125,8 @@
 				var/turf/here = get_turf(src)
 				for(var/turf/closed/T in range(2, src))
 					here.ChangeTurf(T.type)
-					qdel(src)
 					return INITIALIZE_HINT_QDEL
 				here.ChangeTurf(/turf/closed/wall)
-				qdel(src)
 				return INITIALIZE_HINT_QDEL
 			if(9 to 11)
 				lights = FALSE
