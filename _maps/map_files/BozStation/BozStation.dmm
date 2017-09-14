@@ -4450,7 +4450,7 @@
 "aka" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4499,7 +4499,7 @@
 "ake" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4991,7 +4991,7 @@
 "alk" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
@@ -7150,7 +7150,7 @@
 "aqq" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Chapel Maintenance";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -9066,7 +9066,7 @@
 "avp" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -10448,7 +10448,7 @@
 "ayA" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -10991,8 +10991,8 @@
 /area/science/research)
 "azR" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	name = "Science Maintenance";
+	req_access_txt = "47"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -11496,7 +11496,7 @@
 "aAX" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -12820,7 +12820,7 @@
 "aDM" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -13178,7 +13178,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -19549,7 +19549,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -19632,7 +19632,7 @@
 "aQU" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -20678,7 +20678,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	req_access_txt = "0"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -20763,14 +20763,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "aTk" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "48"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
