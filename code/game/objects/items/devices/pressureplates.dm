@@ -21,7 +21,7 @@
 	var/trigger_delay = 10
 
 /obj/item/device/pressure_plate/Initialize()
-	..()
+	. = ..()
 	tile_overlay = image(icon = 'icons/turf/floors.dmi', icon_state = "pp_overlay")
 	if(roundstart_signaller)
 		sigdev = new
@@ -31,6 +31,7 @@
 			hide(TRUE)
 
 /obj/item/device/pressure_plate/Crossed(atom/movable/AM)
+	. = ..()
 	if(!can_trigger || !active)
 		return
 	if(trigger_mob && isliving(AM))
@@ -50,7 +51,7 @@
 	if(istype(I, /obj/item/device/assembly/signaler) && !istype(sigdev) && removable_signaller && L.transferItemToLoc(I, src))
 		sigdev = I
 		to_chat(L, "<span class='notice'>You attach [I] to [src]!</span>")
-	. = ..()
+	return ..()
 
 /obj/item/device/pressure_plate/attack_self(mob/living/L)
 	if(removable_signaller && istype(sigdev))
@@ -58,7 +59,7 @@
 		if(!L.put_in_hands(sigdev))
 			sigdev.forceMove(get_turf(src))
 		sigdev = null
-	. = ..()
+	return ..()
 
 /obj/item/device/pressure_plate/hide(yes)
 	if(yes)
