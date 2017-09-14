@@ -2887,7 +2887,7 @@
 	dir = 4
 	},
 /obj/machinery/navbeacon{
-	codes = "patrol;next_patrol=Bar";
+	codes_txt = "patrol;next_patrol=Bar";
 	location = "Security"
 	},
 /mob/living/simple_animal/bot/ed209{
