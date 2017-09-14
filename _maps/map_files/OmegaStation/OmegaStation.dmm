@@ -2253,7 +2253,6 @@
 	req_access = null;
 	req_access_txt = "57"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
@@ -5308,9 +5307,6 @@
 	icon_state = "0-2"
 	},
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -87332,7 +87328,7 @@ ape
 aqm
 abt
 abN
-atu
+acw
 abt
 aad
 aad
