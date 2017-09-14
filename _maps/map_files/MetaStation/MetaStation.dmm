@@ -91442,6 +91442,10 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/syndicate)
+"dFJ" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plasteel/vault,
+/area/shuttle/syndicate)
 
 (1,1,1) = {"
 aaa
@@ -99179,7 +99183,7 @@ aaa
 aae
 cTJ
 cTJ
-dFI
+aae
 dhm
 dhm
 dhm
@@ -99436,7 +99440,7 @@ aae
 aae
 cTJ
 cTJ
-aae
+dFJ
 dhm
 dhm
 dhm

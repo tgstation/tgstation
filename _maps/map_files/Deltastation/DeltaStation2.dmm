@@ -114890,6 +114890,10 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/syndicate)
+"exl" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plasteel/vault,
+/area/shuttle/syndicate)
 
 (1,1,1) = {"
 aaa
@@ -124437,7 +124441,7 @@ aaa
 adn
 aeh
 aeh
-exk
+adn
 aeG
 aeG
 aeG
@@ -124694,7 +124698,7 @@ adn
 adn
 aeh
 aeh
-adn
+exl
 aeG
 aeG
 aeG

@@ -64719,6 +64719,10 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/syndicate)
+"cVD" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plasteel/vault,
+/area/shuttle/syndicate)
 
 (1,1,1) = {"
 aaa
@@ -77345,7 +77349,7 @@ aaa
 aac
 cIz
 cIz
-cVC
+aac
 cIJ
 cIJ
 cIJ
@@ -77602,7 +77606,7 @@ aac
 aac
 cIz
 cIz
-aac
+cVD
 cIJ
 cIJ
 cIJ
