@@ -59,6 +59,11 @@
 
 		return TRUE // we don't care about our own density
 
+	if(istype(neighbor, /atom/movable))
+		var/atom/movable/NM = neighbor
+		if(NM.Adjacent(src, FALSE))
+			return TRUE
+
 	return FALSE
 
 /*
