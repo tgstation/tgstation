@@ -4967,8 +4967,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "ali" = (
-/obj/machinery/door/airlock{
-	abandoned = 1;
+/obj/machinery/door/airlock/abandoned{
 	id_tag = "mainthideout";
 	name = "Hideout"
 	},
@@ -5669,8 +5668,7 @@
 	},
 /area/maintenance/department/crew_quarters/dorms)
 "amH" = (
-/obj/machinery/door/airlock/atmos{
-	abandoned = 1;
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -5934,8 +5932,7 @@
 /turf/open/space/basic,
 /area/space)
 "anm" = (
-/obj/machinery/door/airlock/maintenance{
-	abandoned = 1;
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Pete's Speakeasy";
 	req_access_txt = "12"
 	},
@@ -15124,8 +15121,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aHn" = (
-/obj/machinery/door/airlock{
-	abandoned = 1;
+/obj/machinery/door/airlock/abandoned{
 	name = "Starboard Emergency Storage";
 	req_access_txt = "0"
 	},
@@ -38014,8 +38010,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bEm" = (
-/obj/machinery/door/airlock/atmos{
-	abandoned = 1;
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -44665,8 +44660,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bTf" = (
-/obj/machinery/door/airlock/atmos{
-	abandoned = 1;
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
