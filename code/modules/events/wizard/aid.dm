@@ -11,11 +11,11 @@
 
 	for(var/mob/living/L in GLOB.mob_list) //Hey if a corgi has magic missle he should get the same benifit as anyone
 		if(L.mind && L.mind.spell_list.len != 0)
-			var/spell_improved = 0
+			var/spell_improved = FALSE
 			for(var/obj/effect/proc_holder/spell/S in L.mind.spell_list)
 				if(S.clothes_req)
 					S.clothes_req = 0
-					spell_improved = 1
+					spell_improved = TRUE
 			if(spell_improved)
 				to_chat(L, "<span class='notice'>You suddenly feel like you never needed those garish robes in the first place...</span>")
 
