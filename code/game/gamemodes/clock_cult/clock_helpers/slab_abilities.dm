@@ -21,6 +21,7 @@
 		remove_ranged_ability()
 		return TRUE
 
+/*
 //For the Geis scripture; binds a target to convert.
 /obj/effect/proc_holder/slab/geis
 	ranged_mousepointer = 'icons/effects/geis_target.dmi'
@@ -85,6 +86,7 @@
 /obj/effect/proc_holder/slab/geis/proc/reset_user_notransform(mob/living/user)
 	if(user)
 		user.notransform = FALSE
+*/
 
 //For the Sentinel's Compromise scripture; heals a target servant.
 /obj/effect/proc_holder/slab/compromise
@@ -145,6 +147,7 @@
 		remove_ranged_ability()
 
 	return TRUE
+
 
 //For the cyborg Linked Vanguard scripture, grants you and a nearby ally Vanguard
 /obj/effect/proc_holder/slab/vanguard

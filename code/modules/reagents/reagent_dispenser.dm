@@ -25,7 +25,9 @@
 
 /obj/structure/reagent_dispensers/Initialize()
 	create_reagents(tank_volume)
-	reagents.add_reagent(reagent_id, tank_volume)
+	if(reagent_id)
+		reagents.add_reagent(reagent_id, tank_volume)
+	generate_reagent_icon()
 	. = ..()
 
 /obj/structure/reagent_dispensers/examine(mob/user)
@@ -138,7 +140,7 @@
 /obj/structure/reagent_dispensers/water_cooler
 	name = "liquid cooler"
 	desc = "A machine that dispenses liquid to drink."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'hippiestation/icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	anchored = TRUE
 	tank_volume = 500

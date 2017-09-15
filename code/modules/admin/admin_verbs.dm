@@ -65,11 +65,15 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
+	/client/proc/reset_atmos, /* Clean air */
+	/client/proc/fill_breach, /* Fill hullbreach */
+	/client/proc/aooc, /* Antag OOC */
 	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
 	/client/proc/toggleadminhelpsound,
-	/client/proc/respawn_character
+	/client/proc/respawn_character,
+	/client/proc/kill_turf_chems
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
@@ -92,6 +96,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/forceEvent,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
+	/client/proc/spawn_human,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
 	/client/proc/polymorph_all,
@@ -238,10 +243,10 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 		var/rights = holder.rank.rights
-		verbs += GLOB.admin_verbs_default
 		if(rights & R_BUILDMODE)
 			verbs += /client/proc/togglebuildmodeself
 		if(rights & R_ADMIN)
+			verbs += GLOB.admin_verbs_default
 			verbs += GLOB.admin_verbs_admin
 		if(rights & R_BAN)
 			verbs += GLOB.admin_verbs_ban
@@ -255,6 +260,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			verbs += GLOB.admin_verbs_possess
 		if(rights & R_PERMISSIONS)
 			verbs += GLOB.admin_verbs_permissions
+		if(rights & R_MENTOR)
+			verbs += GLOB.admin_verbs_mentor
 		if(rights & R_STEALTH)
 			verbs += /client/proc/stealth
 		if(rights & R_ADMIN)
@@ -280,6 +287,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		GLOB.admin_verbs_fun,
 		GLOB.admin_verbs_server,
 		GLOB.admin_verbs_debug,
+		GLOB.admin_verbs_mentor,
 		GLOB.admin_verbs_possess,
 		GLOB.admin_verbs_permissions,
 		/client/proc/stealth,

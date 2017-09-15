@@ -116,6 +116,10 @@
 #define ui_construct_pull "EAST,CENTER-2:15"
 #define ui_construct_health "EAST,CENTER:15"  //same as borgs and humans
 
+//constructs
+#define ui_construct_pull "EAST,CENTER-2:15"
+#define ui_construct_health "EAST,CENTER:15"  //same as borgs and humans
+
 // AI
 
 #define ui_ai_core "SOUTH:6,WEST"

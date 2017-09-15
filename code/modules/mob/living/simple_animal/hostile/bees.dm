@@ -134,7 +134,7 @@
 			forceMove(BB)
 			target = null
 			wanted_objects -= typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
-		return //no don't attack the goddamm box
+		return //no don't attack the goddamm box you fucking retard
 	else
 		. = ..()
 		if(. && beegent && isliving(target))

@@ -564,3 +564,4 @@ AI MODULES
 /obj/item/aiModule/core/full/balance
 	name = "'Guardian of Balance' Core AI Module"
 	law_id = "balance"
+
