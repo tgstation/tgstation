@@ -1,6 +1,6 @@
 /turf/closed/wall
 	name = "wall"
-	desc = "A huge chunk of metal used to separate rooms.\n<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>"
+	desc = "A huge chunk of metal used to separate rooms."
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
 	explosion_block = 1
@@ -24,6 +24,15 @@
 	/turf/closed/wall/r_wall/rust,
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
+
+/turf/closed/wall/examine(mob/user)
+	..()
+	if(name == "reinforced wall")
+		return
+	deconstruction_hints(user)
+
+/turf/closed/wall/proc/deconstruction_hints(mob/user)
+	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
 
 /turf/closed/wall/attack_tk()
 	return
