@@ -279,7 +279,7 @@
 	var/mob/camera/aiEye/remote/remote_eye = user.remote_control
 	var/obj/machinery/computer/camera_advanced/ratvar/R  = target
 	var/turf/T = get_turf(remote_eye)
-	if(user.z != ZLEVEL_CITYOFCOGS || T.z != ZLEVEL_STATION)
+	if(user.z != ZLEVEL_CITYOFCOGS || !(T.z in GLOB.station_z_levels))
 		return
 	if(isclosedturf(T))
 		to_chat(user, "<span class='sevtug_small'>You can't teleport into a wall.</span>")

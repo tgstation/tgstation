@@ -154,7 +154,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()
 	var/turf/T = get_turf(invoker)
-	if(!T || (T.z != ZLEVEL_STATION && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND && T.z != ZLEVEL_CITYOFCOGS))
+	if(!T || (!(T.z in GLOB.station_z_levels) && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND && T.z != ZLEVEL_CITYOFCOGS))
 		channel_time *= 2
 		for(var/i in consumed_components)
 			if(consumed_components[i])
