@@ -291,7 +291,7 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
-	if(!skipface && is_thrall(src) && in_range(user,src))
+	if((!skipface || isobserver(user)) && is_thrall(src) && (in_range(user,src) || isobserver(user))
 		msg += "Their features seem unnaturally tight and drawn.\n"		
 
 	if(ishuman(user))
