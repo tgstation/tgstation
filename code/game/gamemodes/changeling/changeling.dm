@@ -340,6 +340,10 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 			return
 	if(!target)
 		return
+	if(NO_DNA_COPY in target.dna.species.species_traits)
+		if(verbose)
+			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
+		return
 	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
 		if(verbose)
 			to_chat(user, "<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
