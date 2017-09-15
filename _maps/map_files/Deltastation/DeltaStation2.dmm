@@ -83137,7 +83137,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /obj/structure/cable/white{
 	d2 = 4;
 	icon_state = "0-4"
@@ -83166,7 +83168,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/northwest,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 9
+	},
 /obj/structure/cable/white{
 	d1 = 4;
 	d2 = 8;
@@ -83183,7 +83187,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dfJ" = (
@@ -83196,7 +83202,9 @@
 	icon_state = "0-8"
 	},
 /obj/structure/cable/white,
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/northeast,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dfK" = (
@@ -83708,7 +83716,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dgT" = (
@@ -83729,7 +83739,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dgW" = (
@@ -86306,7 +86318,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/corner,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dma" = (
@@ -87505,7 +87519,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/southwest,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 10
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "doH" = (
@@ -87517,7 +87533,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "doI" = (
@@ -87526,7 +87542,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "doJ" = (
