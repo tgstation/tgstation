@@ -5,10 +5,12 @@
 
 /client/proc/RollCredits()
 	set waitfor = FALSE
+	if(!fexists("config/credits.dmi"))
+		return
 	LAZYINITLIST(credits)
 	var/list/_credits = credits
 	verbs += /client/proc/ClearCredits
-	var/static/list/credit_order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states('icons/credits.dmi')) - "Thanks for playing!")
+	var/static/list/credit_order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states("config/credits.dmi")) - "Thanks for playing!")
 	for(var/I in credit_order_for_this_round)
 		if(!credits)
 			return
@@ -25,7 +27,7 @@
 	credits = null
 
 /obj/screen/credit
-	icon = 'icons/credits.dmi'
+	icon = "config/credits.dmi"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 0
 	screen_loc = "12,1"
