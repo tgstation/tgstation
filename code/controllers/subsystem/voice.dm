@@ -17,9 +17,11 @@ SUBSYSTEM_DEF(voice)
 	var/force_ct = 0 // counter
 
 /datum/controller/subsystem/voice/proc/refresh_client(client/C)
-	queue += C
+	message_admins("SSvoice: refreshing client [C]")
+	queue |= C
 
 /datum/controller/subsystem/voice/proc/refresh_everybody()
+	message_admins("SSvoice: refreshing everybody")
 	force_ct = force_wait
 
 /datum/controller/subsystem/voice/fire(resumed = 0)
@@ -31,6 +33,8 @@ SUBSYSTEM_DEF(voice)
 			currentrun = GLOB.clients.Copy()
 		else
 			currentrun = queue.Copy()
+			if (currentrun.len)
+				message_admins("SSvoice: processing [currentrun.len] refreshes")
 		queue.len = 0
 
 	// For clients in current_run, mark them as changed if needed
@@ -169,7 +173,7 @@ SUBSYSTEM_DEF(voice)
 
 	// radio's good for nothing if it can't reach the station
 	var/turf/position = get_turf(M)
-	if (!(position.z in GLOB.station_z_levels) && !subspace_on)
+	if ((!(position.z in GLOB.station_z_levels) || subspace_transmission) && !subspace_on)
 		return 0
 
 	. = 0
@@ -177,12 +181,33 @@ SUBSYSTEM_DEF(voice)
 	// receive_range should be checking the frequency and everything else
 	var/dist = get_dist(src, M)
 	//to_chat(M, "[src]: dist=[dist], recv_range=[receive_range(VOICE_FREQ, M.z)], canhear_range=[canhear_range], subspace=[subspace_transmission], listening=[listening], broadcasting=[broadcasting]")
-	if (dist <= receive_range(VOICE_FREQ, list(M.z)))
+	if (dist <= receive_range(VOICE_FREQ, list(position.z)))
 		. |= VOICE_HEAR
 
 	// manually do all the speaking stuff, corresponds to talk_into
-	if (dist <= canhear_range && frequency == VOICE_FREQ && !wires.is_cut(WIRE_TX) && (ptt || broadcasting) && (!subspace_transmission || subspace_on))
+	if (dist <= canhear_range && frequency == VOICE_FREQ && !wires.is_cut(WIRE_TX) && (ptt || broadcasting))
 		. |= VOICE_SPEAK
+
+/mob/living/Moved()
+	. = ..()
+	if (client)
+		SSvoice.refresh_client(client)
+
+/mob/living/afterShuttleMove()
+	. = ..()
+	if (. && client)
+		spawn(1) SSvoice.refresh_client(client)
+
+// TODO: hook changes to the ears and hands slots
+
+// TODO: consider redoing the queue so that requests are processed immediately,
+// and then subsequent requests for the same client are debounced until some
+// cooldown (like .5s or 1s maybe). Clients that haven't refreshed in a while
+// (like 5s or 10s maybe) are regularly refreshed.
+
+// TODO: in-game icon indicators
+
+// TODO: a separate push-to-talk setting
 
 #undef VOICE_NONE
 #undef VOICE_SPEAK
