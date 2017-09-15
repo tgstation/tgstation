@@ -238,14 +238,14 @@
 		if(!factory)
 			damagesources++
 		else
-			if(factory && (locate(/obj/structure/blob/core) in blobs_in_area))
+			if(locate(/obj/structure/blob/core) in blobs_in_area)
 				adjustHealth(-maxHealth*0.1)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 				if(overmind)
 					H.color = overmind.blob_reagent_datum.complementary_color
 				else
 					H.color = "#000000"
-			if(factory && (locate(/obj/structure/blob/node) in blobs_in_area))
+			if(locate(/obj/structure/blob/node) in blobs_in_area)
 				adjustHealth(-maxHealth*0.05)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
 				if(overmind)
