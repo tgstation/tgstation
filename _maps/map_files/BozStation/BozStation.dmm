@@ -2586,6 +2586,7 @@
 /obj/machinery/camera{
 	c_tag = "Brig Access"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -2846,9 +2847,7 @@
 	},
 /area/security/brig)
 "agI" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
