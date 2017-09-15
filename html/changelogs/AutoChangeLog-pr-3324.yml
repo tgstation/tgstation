@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Prevents dead monkeys from fleeing their attackers or escaping His Grace only to be eaten again"
