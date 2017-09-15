@@ -173,8 +173,19 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
-	var/can_continue = 0
-	can_continue = src.mode.pre_setup()		//Choose antagonists
+	var/can_continue = FALSE
+	if(mode)
+		can_continue = mode.pre_setup()		//Choose antagonists
+	else
+		LOG_GAME("Warning: mode was null! Attempting to try again.")
+		message_admins("Warning: mode was null! Attempting to try again.")
+		mode = pickweight(runnable_modes)
+		if(mode)
+			can_continue = mode.pre_setup()
+			message_admins("Second try at mode selection success.")
+			LOG_GAME("Second try at mode selection success.")
+		else
+			can_continue = FALSE
 	CHECK_TICK
 	SSjob.DivideOccupations() 				//Distribute jobs
 	CHECK_TICK
