@@ -71,18 +71,7 @@
 	item = /obj/item/storage/box/syndie_kit/guardian
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/badass/sports/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/possible_items = list(
-								"/obj/item/storage/box/syndie_kit/wrestling",
-								"/obj/item/storage/box/syndie_kit/bowling",
-								"/obj/item/storage/box/syndie_kit/hockey",
-								"/obj/item/storage/box/syndie_kit/football"
-								)
-	if(possible_items.len)
-		var/obj/item/I = pick(possible_items)
-		return new I(loc)
-
+	
 /datum/uplink_item/nukeoffer/blastco
 	name = "Unlock the BlastCo(tm) Armory"
 	desc = "Enough gear to fully equip a team with explosive based weaponry."
