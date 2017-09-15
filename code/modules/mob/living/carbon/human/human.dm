@@ -24,18 +24,10 @@
 	create_internal_organs()
 
 	handcrafting = new()
-<<<<<<< HEAD
 
-	. = ..()
-||||||| merged common ancestors
-
-	..()
-=======
-	
 	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
 	update_teeth()
 	. = ..()
->>>>>>> 8060537bda06c3c3ba58d24667354e24cd5341d4
 
 /mob/living/carbon/human/create_internal_organs()
 	if(!(NOHUNGER in dna.species.species_traits))

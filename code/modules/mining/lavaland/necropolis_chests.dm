@@ -28,10 +28,7 @@
 		if(7)
 			new /obj/item/pickaxe/diamond(src)
 		if(8)
-			if(prob(50))
-				new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
-			else
-				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
+			new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
@@ -41,7 +38,7 @@
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
-			new /obj/item/jacobs_ladder(src)
+			new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
 		if(14)
 			new /obj/item/nullrod/scythe/talking(src)
 		if(15)
@@ -49,10 +46,7 @@
 		if(16)
 			new /obj/item/guardiancreator(src)
 		if(17)
-			if(prob(50))
-				new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
-			else
-				new /obj/item/disk/design_disk/modkit_disc/bounty(src)
+			new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
 		if(18)
 			new /obj/item/device/warp_cube/red(src)
 		if(19)
@@ -75,7 +69,8 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-
+		if(28)
+			new /obj/item/disk/design_disk/modkit_disc/bounty(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -568,7 +563,6 @@
 	..()
 
 
-<<<<<<< HEAD
 /obj/item/jacobs_ladder
 	name = "jacob's ladder"
 	desc = "A celestial ladder that violates the laws of physics."
@@ -585,38 +579,11 @@
 			continue
 		new /obj/structure/ladder/unbreakable/jacob(ladder_x, ladder_y, i)
 	qdel(src)
-||||||| merged common ancestors
-=======
-/obj/item/jacobs_ladder
-	name = "jacob's ladder"
-	desc = "A celestial ladder that violates the laws of physics."
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "ladder00"
->>>>>>> 8060537bda06c3c3ba58d24667354e24cd5341d4
-
-<<<<<<< HEAD
-/obj/structure/ladder/unbreakable/jacob
-	name = "jacob's ladder"
-	desc = "An indestructible celestial ladder that violates the laws of physics."
-	auto_connect = TRUE
-||||||| merged common ancestors
-=======
-/obj/item/jacobs_ladder/attack_self(mob/user)
-	var/turf/T = get_turf(src)
-	var/ladder_x = T.x
-	var/ladder_y = T.y
-	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
-	for(var/i in 1 to world.maxz)
-		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT)
-			continue
-		new /obj/structure/ladder/unbreakable/jacob(ladder_x, ladder_y, i)
-	qdel(src)
 
 /obj/structure/ladder/unbreakable/jacob
 	name = "jacob's ladder"
 	desc = "An indestructible celestial ladder that violates the laws of physics."
 	auto_connect = TRUE
->>>>>>> 8060537bda06c3c3ba58d24667354e24cd5341d4
 
 ///Bosses
 
@@ -1316,5 +1283,3 @@
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
 		B.damage = 15 //keeps monster damage boost due to lower damage
-
-
