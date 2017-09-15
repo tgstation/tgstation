@@ -34,6 +34,7 @@
 	if(var_name == "value")
 		if(protection & CONFIG_ENTRY_LOCKED)
 			return FALSE
+		var_edited = TRUE
 		return ValidateAndSet("[var_value]")
 	if(var_name in banned_edits)
 		return FALSE
@@ -83,7 +84,10 @@
 /datum/config_entry/number/clamped/ValidateAndSet(str_val)
 	. = ..()
 	if(.)
-		value = Clamp(value, min_val, max_val)
+		var/temp = value
+		value = Clamp(temp, min_val, max_val)
+		if(value != temp && !var_edited)
+			WRITE_FILE(GLOB.config_error_log, "Clamping [name] from [temp] to [value]!")
 
 /datum/config_entry/flag
 	value = FALSE
