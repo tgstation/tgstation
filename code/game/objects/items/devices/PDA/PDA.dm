@@ -332,7 +332,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if (3)
 						font_mode = "font-family:monospace;"
 			if ("Change_Color")
-				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').")
+				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').")as color
 				background_color = new_color
 
 			if("Return")//Return
