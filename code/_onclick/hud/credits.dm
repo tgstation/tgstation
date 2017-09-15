@@ -5,9 +5,10 @@
 
 /client/proc/RollCredits()
 	set waitfor = FALSE
-	if(!fexists("config/credits.dmi"))
+	var/path = "[GLOB.config_dir]credits.dmi"
+	if(!fexists(path))
 		return
-	var/icon/credits_icon = new("config/credits.dmi")
+	var/icon/credits_icon = new(path)
 	LAZYINITLIST(credits)
 	var/list/_credits = credits
 	verbs += /client/proc/ClearCredits
@@ -15,7 +16,7 @@
 	for(var/I in credit_order_for_this_round)
 		if(!credits)
 			return
-		_credits += new /obj/screen/credit(null, I, src)
+		_credits += new /obj/screen/credit(null, I, src, credits_icon)
 		sleep(CREDIT_SPAWN_SPEED)
 	sleep(CREDIT_ROLL_SPEED - CREDIT_SPAWN_SPEED)
 	verbs -= /client/proc/ClearCredits
