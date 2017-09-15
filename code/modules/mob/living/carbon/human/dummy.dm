@@ -6,6 +6,10 @@
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
+/mob/living/carbon/human/dummy/Destroy()
+	in_use = FALSE
+	return ..()
+
 /mob/living/carbon/human/dummy/Life()
 	return
 
