@@ -176,3 +176,53 @@
 	item = /obj/item/grenade/spawnergrenade/cat
 	surplus = 30
 
+/datum/uplink_item/stealthy_tools/chameleon
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
+	player_minimum = 0
+
+/datum/uplink_item/stealthy_tools/syndigaloshes
+	item = /obj/item/clothing/shoes/chameleon
+	cost = 2
+    player_minimum = 0
+	
+/datum/uplink_item/stealthy_tools/syndigaloshes/nuke
+	cost = 2
+	player_minimum = 0
+	
+/datum/uplink_item/stealthy_tools/mulligan
+	cost = 2
+	
+/datum/uplink_item/device_tools/syndietome
+    cost = 5
+	
+/datum/uplink_item/device_tools/binary
+    cost = 2
+	
+/datum/uplink_item/device_tools/singularity_beacon
+    cost = 8
+	
+/datum/uplink_item/device_tools/syndicate_bomb
+    cost = 10
+	
+/datum/uplink_item/device_tools/syndicate_detonator
+    cost = 1 //Nuke ops already spawn with one
+	
+/datum/uplink_item/device_tools/jammer
+    cost = 3
+	
+/datum/uplink_item/device_tools/codespeak_manual_deluxe
+    cost = 4
+	
+/datum/uplink_item/device_tools/autosurgeon
+    name = "Autosurgeon"
+	desc = "A surgery device that instantly implants you with whatever implant has been inserted in it. Infinite uses. \
+			Use a screwdriver to remove an implant from it."
+	item = /obj/item/device/autosurgeon
+    cost = 4
+	
+/datum/uplink_item/implants/microbomb
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
+
+/datum/uplink_item/implants/macrobomb
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
