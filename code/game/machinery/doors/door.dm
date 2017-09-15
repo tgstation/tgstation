@@ -35,7 +35,7 @@
 
 /obj/machinery/door/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Its maintenance panel has four <b>screws</b> on it.</span>")
+	to_chat(user, "<span class='notice'Its maintenance panel is <b>screwed</b> in place.</span>")
 
 /obj/machinery/door/New()
 	..()

@@ -365,14 +365,20 @@
 
 /obj/structure/door_assembly/examine(mob/user)
 	..()
-	if(state == 0 && !anchored)
-		to_chat(user, "<span class='notice'>The metal covers are <b>welded</b> firmly in place. The anchoring bolts are <i>unwrenched</i>.</span>")
-	if(state == 0 && anchored)
-		to_chat(user, "<span class='notice'>The anchoring bolts are <b>wrenched</b> in place. The mainentance panel has small holes for the <i>wiring</i>. Can additionally be named with a pen or have reinforced glass windows added.</span>")
-	if(state == 1)
-		to_chat(user, "<span class='notice'>The maintenance panel's <b>wires</b> are aligned neatly. There's an empty <i>circuit</i> slot.</span>")
-	if(state == 2)
-		to_chat(user, "<span class='notice'>The electronics circuit is <b>connected loosely</b> to its slot. The maintenance panel has long <i>screws</i> sticking out.</span>")
+	switch(state)
+		if(0)
+			if(anchored)
+				to_chat(user, "<span class='notice'>The anchoring bolts are <b>wrenched</b> in place, but the maintenance panel lacks <i>wiring</i>.</span>")
+			else
+				to_chat(user, "<span class='notice'>The assembly is <b>welded together</b>, but the anchoring bolts are <i>unwrenched</i>.</span>")
+		if(1)
+			to_chat(user, "<span class='notice'>The maintenance panel is <b>wired</b>, but the circuit slot is <i>empty</i>.</span>")
+		if(2)
+			to_chat(user, "<span class='notice'>The circuit is <b>connected loosely</b> to its slot, but the maintenance panel is <i>unscrewed and open</i>.</span>")
+	if(!mineral || !material)
+		to_chat(user, "<span class='notice'>There is a small <i>paper</i> placard on the assembly. There are <i>empty</i> slots for glass windows or mineral covers.</span>")
+	else
+		to_chat(user, "<span class='notice'>There is a small <i>paper</i> placard on the assembly.</span>")
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))

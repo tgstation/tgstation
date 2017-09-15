@@ -14,7 +14,7 @@
 	explosion_block = 2
 
 /turf/closed/wall/r_wall/examine(mob/user)
-	..()
+	. = ..()
 	switch(d_state)
 		if(INTACT)
 			to_chat(user, "<span class='notice'>The outer <b>grille</b> is fully intact.</span>")
