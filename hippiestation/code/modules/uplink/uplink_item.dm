@@ -220,6 +220,7 @@
 			Use a screwdriver to remove an implant from it."
 	item = /obj/item/device/autosurgeon
     cost = 4
+	surplus = 60
 	
 /datum/uplink_item/implants/microbomb
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
