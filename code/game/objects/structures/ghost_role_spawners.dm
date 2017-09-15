@@ -478,7 +478,7 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
-	new/obj/structure/showcase/oldpod/used(get_turf(src))
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
 /obj/effect/mob_spawn/human/oldeng
@@ -502,7 +502,7 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldeng/Destroy()
-	new/obj/structure/showcase/oldpod/used(get_turf(src))
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
 /obj/effect/mob_spawn/human/oldsci
@@ -525,5 +525,5 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsci/Destroy()
-	new/obj/structure/showcase/oldpod/used(get_turf(src))
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
