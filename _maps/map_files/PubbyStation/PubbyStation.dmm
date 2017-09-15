@@ -3033,13 +3033,8 @@
 /area/security/main)
 "ahh" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 2;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_y = 20
 	},
 /turf/open/space,
@@ -4965,7 +4960,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "ali" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/abandoned{
 	id_tag = "mainthideout";
 	name = "Hideout"
 	},
@@ -5665,7 +5660,7 @@
 	},
 /area/maintenance/department/crew_quarters/dorms)
 "amH" = (
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -5929,7 +5924,7 @@
 /turf/open/space/basic,
 /area/space)
 "anm" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Pete's Speakeasy";
 	req_access_txt = "12"
 	},
@@ -15114,7 +15109,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aHn" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/abandoned{
 	name = "Starboard Emergency Storage";
 	req_access_txt = "0"
 	},
@@ -29070,10 +29065,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "blV" = (
-/obj/structure/sign/atmosplaque{
-	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today.";
-	icon_state = "kiddieplaque";
-	name = "\improper 'Perfect Drone' sign";
+/obj/structure/sign/kiddieplaque/perfect_drone{
 	pixel_y = 32
 	},
 /turf/open/floor/engine,
@@ -37997,7 +37989,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bEm" = (
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -44646,7 +44638,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bTf" = (
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -72374,13 +72366,13 @@ aaa
 aaa
 aaa
 aFS
-cBO
-cBP
+cBN
+cBN
 aKs
 aFS
 aFS
-cBT
-cBU
+cBN
+cBN
 aFS
 aKs
 aFS
@@ -72634,7 +72626,7 @@ aFS
 aIs
 aJx
 aJx
-cBR
+cBN
 aMI
 aNZ
 aNZ
@@ -73148,7 +73140,7 @@ aFS
 aIu
 aJy
 aKt
-cBS
+cBN
 aIx
 aOa
 aOa
@@ -73918,14 +73910,14 @@ aGQ
 aHw
 aIw
 aIw
-cBQ
+cBN
 aIx
 aIx
 aOc
 aPj
 aOc
 aIx
-cBV
+cBN
 aMI
 aMI
 aMI

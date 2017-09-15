@@ -9,7 +9,7 @@
 	var/datum/action/innate/vest_disguise_swap/vest_disguise_action = new
 	var/datum/action/innate/set_droppoint/set_droppoint_action = new
 	var/obj/machinery/abductor/console/console
-	z_lock = ZLEVEL_STATION
+	z_lock = ZLEVEL_STATION_PRIMARY
 
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera"

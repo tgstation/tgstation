@@ -375,7 +375,7 @@
 	faction += "hostile"
 
 /mob/living/carbon/human/interactive/Initialize()
-	..()
+	. = ..()
 
 	set_species(/datum/species/synth)
 
@@ -1596,7 +1596,7 @@
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_MEAN
 	faction += "bot_angry"
-	..()
+	. = ..()
 
 /mob/living/carbon/human/interactive/friendly/Initialize()
 	TRAITS |= TRAIT_FRIENDLY
@@ -1604,7 +1604,7 @@
 	faction += "bot_friendly"
 	faction += "neutral"
 	functions -= "combat"
-	..()
+	. = ..()
 
 /mob/living/carbon/human/interactive/greytide/Initialize()
 	TRAITS |= TRAIT_ROBUST
@@ -1615,7 +1615,7 @@
 	targetInterestShift = 2 // likewise
 	faction += "bot_grey"
 	graytide = 1
-	..()
+	. = ..()
 
 //Walk softly and carry a big stick
 /mob/living/carbon/human/interactive/robust/Initialize()
@@ -1623,4 +1623,4 @@
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_SMART
 	faction += "bot_power"
-	..()
+	. = ..()

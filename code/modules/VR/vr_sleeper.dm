@@ -49,6 +49,10 @@
 	open_machine()
 
 
+/obj/machinery/vr_sleeper/container_resist(mob/living/user)
+	open_machine()
+
+
 /obj/machinery/vr_sleeper/Destroy()
 	open_machine()
 	cleanup_vr_human()
@@ -118,7 +122,7 @@
 				if(vr_human)
 					qdel(vr_human)
 			else
-				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.")
+				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.</span>")
 			. = TRUE
 		if("toggle_open")
 			if(state_open)

@@ -39,7 +39,7 @@
 	#define TILE_EMAG		7
 
 /mob/living/simple_animal/bot/floorbot/Initialize()
-	..()
+	. = ..()
 	update_icon()
 	var/datum/job/engineer/J = new/datum/job/engineer
 	access_card.access += J.get_access()
