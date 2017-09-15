@@ -5120,7 +5120,7 @@
 /area/maintenance/starboard/fore)
 "alA" = (
 /obj/structure/table/wood,
-/obj/item/toy/carpplushie,
+/obj/item/toy/plush/carpplushie,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/vault{
 	dir = 8

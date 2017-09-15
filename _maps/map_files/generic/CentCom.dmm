@@ -6419,7 +6419,7 @@
 "qX" = (
 /obj/structure/table,
 /obj/item/toy/katana,
-/obj/item/toy/carpplushie,
+/obj/item/toy/plush/carpplushie,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
