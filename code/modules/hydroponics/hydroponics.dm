@@ -622,7 +622,7 @@
 		adjustHealth(round(salt * 0.25))
 		if (myseed)
 			myseed.adjust_production(-round(salt/100)-prob(salt%100))
-			myseed.adjust_potency(round(salt*0.50))
+			myseed.adjust_potency(round(salt*0.5))
 	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 	if(S.has_reagent("ash", 1))
 		adjustHealth(round(S.get_reagent_amount("ash") * 0.25))
