@@ -13,3 +13,11 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define FRIDAY		"Fri"
 #define SATURDAY	"Sat"
 #define SUNDAY		"Sun"
+
+#define SECONDS *10
+
+#define MINUTES SECONDS*60
+
+#define HOURS MINUTES*60
+
+#define TICKS *world.tick_lag

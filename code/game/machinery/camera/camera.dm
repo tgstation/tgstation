@@ -47,7 +47,7 @@
 	GLOB.cameranet.addCamera(src)
 	proximity_monitor = new(src, 1)
 
-	if(mapload && z == ZLEVEL_STATION && prob(3) && !start_active)
+	if(mapload && (z in GLOB.station_z_levels) && prob(3) && !start_active)
 		toggle_cam()
 
 /obj/machinery/camera/Destroy()

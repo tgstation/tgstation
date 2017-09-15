@@ -15,7 +15,7 @@
 	layer = OBJ_LAYER
 
 /obj/structure/chair/Initialize()
-	..()
+	. = ..()
 	if(!anchored)	//why would you put these on the shuttle?
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
 

@@ -31,15 +31,15 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/max_i = 10//number of tries to spawn meteor.
 	while(!isspaceturf(pickedstart))
 		var/startSide = pick(GLOB.cardinals)
-		pickedstart = spaceDebrisStartLoc(startSide, ZLEVEL_STATION)
-		pickedgoal = spaceDebrisFinishLoc(startSide, ZLEVEL_STATION)
+		pickedstart = spaceDebrisStartLoc(startSide, ZLEVEL_STATION_PRIMARY)
+		pickedgoal = spaceDebrisFinishLoc(startSide, ZLEVEL_STATION_PRIMARY)
 		max_i--
 		if(max_i<=0)
 			return
 	var/Me = pickweight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
-	M.z_original = ZLEVEL_STATION
+	M.z_original = ZLEVEL_STATION_PRIMARY
 	spawn(0)
 		walk_towards(M, M.dest, 1)
 
@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	pass_flags = PASSTABLE
 	var/heavy = 0
 	var/meteorsound = 'sound/effects/meteorimpact.ogg'
-	var/z_original = ZLEVEL_STATION
+	var/z_original = ZLEVEL_STATION_PRIMARY
 	var/threat = 0 // used for determining which meteors are most interesting
 	var/lifetime = DEFAULT_METEOR_LIFETIME
 

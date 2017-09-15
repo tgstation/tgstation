@@ -115,6 +115,7 @@
 						<div class='links'>
 						<a href='?src=\ref[src];toggle_id_upload=1'><span id='t_id_upload'>[add_req_access?"L":"Unl"]ock ID upload panel</span></a><br>
 						<a href='?src=\ref[src];toggle_maint_access=1'><span id='t_maint_access'>[maint_access?"Forbid":"Permit"] maintenance protocols</span></a><br>
+						<a href='?src=\ref[src];toggle_port_connection=1'><span id='t_port_connection'>[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port</span></a><br>
 						<a href='?src=\ref[src];dna_lock=1'>DNA-lock</a><br>
 						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
 						<a href='?src=\ref[src];change_name=1'>Change exosuit name</a><br>
@@ -305,6 +306,24 @@
 			return
 		maint_access = !maint_access
 		send_byjax(src.occupant,"exosuit.browser","t_maint_access","[maint_access?"Forbid":"Permit"] maintenance protocols")
+
+	if (href_list["toggle_port_connection"])
+		if(internal_tank.connected_port)
+			if(internal_tank.disconnect())
+				occupant_message("Disconnected from the air system port.")
+				log_message("Disconnected from gas port.")
+			else
+				occupant_message("<span class='warning'>Unable to disconnect from the air system port!</span>")
+				return
+		else
+			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
+			if(internal_tank.connect(possible_port))
+				occupant_message("Connected to the air system port.")
+				log_message("Connected to gas port.")
+			else
+				occupant_message("<span class='warning'>Unable to connect with air system port!</span>")
+				return
+		send_byjax(occupant,"exosuit.browser","t_port_connection","[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port")
 
 	if(href_list["dna_lock"])
 		if(occupant && !iscarbon(occupant))

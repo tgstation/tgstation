@@ -249,6 +249,11 @@
 	everyone? Where did they go? What happened to the hospital? And is that <i>smoke</i> you smell? You need to find someone else. Maybe they can tell you what happened.</b>"
 	assignedrole = "Translocated Vet"
 
+/obj/effect/mob_spawn/human/doctor/alive/lavaland/Destroy()
+	var/obj/structure/fluff/empty_sleeper/S = new(drop_location())
+	S.setDir(dir)
+	return ..()
+
 //Prisoner containment sleeper: Spawns in crashed prison ships in lavaland. Ghosts become escaped prisoners and are advised to find a way out of the mess they've gotten themselves into.
 /obj/effect/mob_spawn/human/prisoner_transport
 	name = "prisoner containment sleeper"
@@ -473,7 +478,7 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
-	new/obj/structure/showcase/oldpod/used(get_turf(src))
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
 /obj/effect/mob_spawn/human/oldeng
@@ -497,7 +502,7 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldeng/Destroy()
-	new/obj/structure/showcase/oldpod/used(get_turf(src))
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
 /obj/effect/mob_spawn/human/oldsci
@@ -520,5 +525,5 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsci/Destroy()
-	new/obj/structure/showcase/oldpod/used(get_turf(src))
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()

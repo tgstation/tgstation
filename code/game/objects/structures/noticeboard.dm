@@ -9,7 +9,7 @@
 	var/notices = 0
 
 /obj/structure/noticeboard/Initialize(mapload)
-	..()
+	. = ..()
 
 	if(!mapload)
 		return

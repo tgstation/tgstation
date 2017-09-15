@@ -14,7 +14,7 @@
 		for(var/obj/effect/decal/cleanable/C in src.loc)
 			if(C != src && C.type == src.type)
 				replace_decal(C)
-	..()
+	. = ..()
 
 
 
