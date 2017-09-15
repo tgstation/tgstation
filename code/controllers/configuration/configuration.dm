@@ -1,35 +1,91 @@
-//Configuraton defines //TODO: Move all yes/no switches into bitflags
-
-//Used by jobs_have_maint_access
-#define ASSISTANTS_HAVE_MAINT_ACCESS 1
-#define SECURITY_HAS_MAINT_ACCESS 2
-#define EVERYONE_HAS_MAINT_ACCESS 4
-
 GLOBAL_VAR_INIT(config_dir, "config/")
 GLOBAL_PROTECT(config_dir)
 
-/datum/configuration/can_vv_get(var_name)
-	var/static/list/banned_gets = list("autoadmin", "autoadmin_rank")
-	if (var_name in banned_gets)
-		return FALSE
-	return ..()
+/datum/controller/configuration
+	name = "Configuration"
 
-/datum/configuration/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("cross_address", "cross_allowed", "autoadmin", "autoadmin_rank", "invoke_youtubedl")
-	if(var_name in banned_edits)
-		return FALSE
-	return ..()
+	var/hiding_entries_by_type = TRUE	//Set for readability, admins can set this to FALSE if they want to debug it
+	var/list/entries
+	var/list/entries_by_type
+
+	var/list/gamemode_cache
+
+/datum/controller/configuration/New()
+	LoadModes()
+	InitEntries()
+	if(Get(/datum/config_entry/flag/maprotation))
+		loadmaplist(CONFIG_MAPS_FILE)
+
+/datum/controller/configuration/proc/InitEntries()
+	var/list/_entries = entries = list()
+	var/list/_entries_by_type = entries_by_type = list()
+	for(var/I in typesof(/datum/config_entry))	//typesof is faster in this case
+		var/datum/config_entry/E = I
+		if(initial(E.abstract_type) == I)
+			continue
+		E = new I
+		_entries_by_type[I] = E
+		_entries[E.name] = E
+
+	for(var/I in CONFIG_ENTRY_FILES)
+		LoadEntries(I)
+
+/datum/controller/configuration/proc/LoadEntries(filename)
+	var/list/lines = world.file2list("[GLOB.config_dir][filename]")
+	var/list/_entries = entries
+	for(var/L in Lines)
+		if(!L)
+			continue
+
+		if(copytext(L, 1, 2) == "#")
+			continue
+
+		var/pos = findtext(L, " ")
+		var/entry = null
+		var/value = null
+
+		if(pos)
+			entry = lowertext(copytext(L, 1, pos))
+			value = copytext(L, pos + 1)
+		else
+			entry = lowertext(L)
+
+		if(!entry)
+			continue
+		
+		var/datum/config_entry/E = _entries[entry]
+		if(!E)
+			WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[entry]'")
+			continue
+		
+		if(filename != E.resident_file)
+			WRITE_FILE(GLOB.config_error_log, "Found [entry] in [filename] when it should have been in [E.resident_file]! Ignoring.")
+			continue
+
+		var/validated = E.ValidateAndSet(value))
+		if(!validated)
+			WRITE_FILE(GLOB.config_error_log, "Failed to validate setting for [entry]")
+		else if(E.modified)
+			WRITE_FILE(GLOB.config_error_log, "Duplicate setting for [entry] detected! Using latest.")
+		
+		if(validated)
+			E.modified = TRUE
+
+
+/datum/controller/configuration/can_vv_get(var_name)
+	return (var_name != "entries_by_type" || !hiding_entries_by_type) && ..()
+
+/datum/controller/configuration/proc/Get(entry_type)
+	var/datum/config_entry/E = entry_type
+	var/entry_is_abstract = initial(E.abstract_type) == entry_type
+	if(entry_is_abstract)
+		CRASH("Tried to retrieve an abstract config_entry: [entry_type]")
+	E = entries_by_type[entry_type]
+	if(!E)
+		CRASH("Missing config entry for [entry_type]!")
+	return E.value
 
 /datum/configuration
-	var/name = "Configuration"			// datum name
-
-	var/autoadmin = 0
-	var/autoadmin_rank = "Game Admin"
-
-	var/server_name = null				// server name (the name of the game window)
-	var/server_sql_name = null			// short form server name used for the DB
-	var/station_name = null				// station name (the name of the station in-game)
-	var/lobby_countdown = 120			// In between round countdown.
 	var/round_end_countdown = 25		// Post round murder death kill countdown
 	var/hub = 0
 
@@ -265,8 +321,6 @@ GLOBAL_PROTECT(config_dir)
 	var/cross_allowed = FALSE
 	var/showircname = 0
 
-	var/list/gamemode_cache = null
-
 	var/minutetopiclimit
 	var/secondtopiclimit
 
@@ -286,8 +340,8 @@ GLOBAL_PROTECT(config_dir)
 
 	var/debug_admin_hrefs = FALSE	//turns off admin href token protection for debugging purposes
 
-/datum/configuration/New()
-	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
+/datum/controller/configuration/proc/LoadModes()
+	gamemode_cache = typecacheof(/datum/game_mode, TRUE)
 	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
@@ -306,9 +360,7 @@ GLOBAL_PROTECT(config_dir)
 		qdel(M)
 	votable_modes += "secret"
 
-	Reload()
-
-/datum/configuration/proc/Reload()
+/datum/controller/configuration/proc/Reload()
 	load("config.txt")
 	load("comms.txt", "comms")
 	load("game_options.txt","game_options")
@@ -849,7 +901,7 @@ GLOBAL_PROTECT(config_dir)
 		else
 			WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 
-/datum/configuration/proc/loadmaplist(filename)
+/datum/controller/configuration/proc/loadmaplist(filename)
 	filename = "[GLOB.config_dir][filename]"
 	var/list/Lines = world.file2list(filename)
 
@@ -902,51 +954,7 @@ GLOBAL_PROTECT(config_dir)
 				WRITE_FILE(GLOB.config_error_log, "Unknown command in map vote config: '[command]'")
 
 
-/datum/configuration/proc/loadsql(filename)
-	filename = "[GLOB.config_dir][filename]"
-	var/list/Lines = world.file2list(filename)
-	for(var/t in Lines)
-		if(!t)
-			continue
-
-		t = trim(t)
-		if(length(t) == 0)
-			continue
-		else if(copytext(t, 1, 2) == "#")
-			continue
-
-		var/pos = findtext(t, " ")
-		var/name = null
-		var/value = null
-
-		if(pos)
-			name = lowertext(copytext(t, 1, pos))
-			value = copytext(t, pos + 1)
-		else
-			name = lowertext(t)
-
-		if(!name)
-			continue
-
-		switch(name)
-			if("sql_enabled")
-				sql_enabled = 1
-			if("address")
-				global.sqladdress = value
-			if("port")
-				global.sqlport = value
-			if("feedback_database")
-				global.sqlfdbkdb = value
-			if("feedback_login")
-				global.sqlfdbklogin = value
-			if("feedback_password")
-				global.sqlfdbkpass = value
-			if("feedback_tableprefix")
-				global.sqlfdbktableprefix = value
-			else
-				WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
-
-/datum/configuration/proc/pick_mode(mode_name)
+/datum/controller/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
 	for(var/T in gamemode_cache)
@@ -956,7 +964,7 @@ GLOBAL_PROTECT(config_dir)
 		qdel(M)
 	return new /datum/game_mode/extended()
 
-/datum/configuration/proc/get_runnable_modes()
+/datum/controller/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
@@ -983,7 +991,7 @@ GLOBAL_PROTECT(config_dir)
 			runnable_modes[M] = final_weight
 	return runnable_modes
 
-/datum/configuration/proc/get_runnable_midround_modes(crew)
+/datum/controller/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in (gamemode_cache - SSticker.mode.type))
 		var/datum/game_mode/M = new T()
@@ -1003,7 +1011,7 @@ GLOBAL_PROTECT(config_dir)
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
 
-/datum/configuration/proc/stat_entry()
+/datum/controller/configuration/stat_entry()
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
 
