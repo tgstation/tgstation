@@ -468,7 +468,7 @@ SUBSYSTEM_DEF(ticker)
 	for(var/client/C in GLOB.clients)
 		if(!C.credits && !nocredits)
 			C.RollCredits()
-		C.playtitlemusic(40)
+			C.playtitlemusic(40)
 
 	//Player status report
 	for(var/mob/Player in GLOB.mob_list)
