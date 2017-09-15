@@ -1579,6 +1579,7 @@
 #include "code\modules\mob\living\carbon\alien\special\facehugger.dm"
 #include "code\modules\mob\living\carbon\human\damage_procs.dm"
 #include "code\modules\mob\living\carbon\human\death.dm"
+#include "code\modules\mob\living\carbon\human\dummy.dm"
 #include "code\modules\mob\living\carbon\human\emote.dm"
 #include "code\modules\mob\living\carbon\human\examine.dm"
 #include "code\modules\mob\living\carbon\human\human.dm"
