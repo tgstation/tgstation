@@ -205,7 +205,7 @@
 			kill_objective.find_target()
 			add_objective(kill_objective)
 	else
-		if(prob(70))
+		if(prob(85))
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = owner
 			steal_objective.find_target()
