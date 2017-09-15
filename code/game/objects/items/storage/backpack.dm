@@ -293,10 +293,8 @@
 	SSpersistence.new_secret_satchels += src
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/device/radio(src)
-	new /obj/item/device/assembly/signaler(src)
-	new /obj/item/device/assembly/signaler(src)
+	new /obj/item/stack/tile/plasteel(src)
+	new /obj/item/crowbar(src)
 
 /obj/item/storage/backpack/satchel/flat/Destroy()
 	SSpersistence.new_secret_satchels -= src
@@ -322,6 +320,12 @@
 		for(var/R in reward_all_of_these)
 			new R(src)
 		revealed = 1
+
+/obj/item/storage/backpack/satchel/flat/prison/PopulateContents()
+	new /obj/item/screwdriver(src)
+	new /obj/item/device/radio(src)
+	new /obj/item/device/assembly/signaler(src)
+	new /obj/item/device/assembly/signaler(src)
 
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"
