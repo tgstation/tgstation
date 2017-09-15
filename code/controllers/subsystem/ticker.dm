@@ -179,6 +179,9 @@ SUBSYSTEM_DEF(ticker)
 	else
 		LOG_GAME("Warning: mode was null! Attempting to try again.")
 		message_admins("Warning: mode was null! Attempting to try again.")
+		if(GLOB.master_mode == "secret")
+			hide_mode = TRUE
+		runnable_modes = config.get_runnable_modes(TRUE)
 		mode = pickweight(runnable_modes)
 		if(mode)
 			can_continue = mode.pre_setup()
