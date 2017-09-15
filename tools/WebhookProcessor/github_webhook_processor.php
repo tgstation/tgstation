@@ -323,7 +323,8 @@ function handle_pr($payload) {
 		case 'edited':
 		case 'synchronize':
 			$labels = tag_pr($payload, false);
-			check_ready_for_review($payload, $labels);
+			if($payload['action'] == 'synchronize')
+				check_ready_for_review($payload, $labels);
 			return;
 		case 'reopened':
 			$action = $payload['action'];
