@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - rscadd: "Due to budget cuts, airlocks that control access to non-functional maint rooms and other abandoned areas now have a chance to spawn welded, bolted, screwdrivered, or flat out replaced by a wall at roundstart."
