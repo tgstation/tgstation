@@ -236,10 +236,10 @@ SUBSYSTEM_DEF(ticker)
 
 	PostSetup()
 
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
-	set waitfor = 0
+	set waitfor = FALSE
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count(1)
