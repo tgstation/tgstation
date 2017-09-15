@@ -276,6 +276,7 @@ GLOBAL_PROTECT(config_dir)
 	var/error_msg_delay = 50 // How long to wait between messaging admins about occurrences of a unique error
 
 	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
+	var/arrivals_shuttle_require_undocked = FALSE	//Require the arrivals shuttle to be undocked before latejoiners can join
 	var/arrivals_shuttle_require_safe_latejoin = FALSE	//Require the arrivals shuttle to be operational in order for latejoiners to join
 
 	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
@@ -817,6 +818,8 @@ GLOBAL_PROTECT(config_dir)
 					GLOB.MAX_EX_FLAME_RANGE = BombCap
 				if("arrivals_shuttle_dock_window")
 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
+				if("arrivals_shuttle_require_undocked")
+					arrivals_shuttle_require_undocked = TRUE
 				if("arrivals_shuttle_require_safe_latejoin")
 					arrivals_shuttle_require_safe_latejoin = TRUE
 				if("mice_roundstart")
