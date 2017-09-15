@@ -131,7 +131,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	changeling.objectives += absorb_objective
 
 	if(prob(60))
-		if(prob(70))
+		if(prob(85))
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = changeling
 			steal_objective.find_target()
