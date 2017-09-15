@@ -71,8 +71,8 @@ SUBSYSTEM_DEF(voice)
 
 /client
 	var/voice_last = VOICE_ALL
-	var/voice_last_subspace
-	var/voice_until_subspace_check = 0
+	var/voice_last_subspace = list(ZLEVEL_STATION_PRIMARY)
+	var/voice_next_subspace_check = 1
 
 /client/proc/voice_check()
 	// Fast paths:
@@ -104,21 +104,40 @@ SUBSYSTEM_DEF(voice)
 	// Long path: check the mob's environment as needed
 	. = 0
 
-	var/subspace_on = TRUE
+	// Subspace checking
+	var/turf/position = get_turf(mob)
+	var/subspace_on = (position.z in voice_last_subspace)
+	if (voice_next_subspace_check && voice_next_subspace_check <= world.time)
+		voice_next_subspace_check = 0 // don't overlap checks
+		spawn // testing takes time for the signal to transfer
+			// store the list of Z-levels so when we move we stay current
+			var/datum/signal/signal = mob.telecomms_process()
+			var/list/previous = list2params(voice_last_subspace)
+			if (!signal.data["done"])
+				voice_last_subspace = list()
+			else
+				voice_last_subspace = signal.data["level"]
+			to_chat(src, "subspace_ck: [list2params(voice_last_subspace)]")
+			voice_next_subspace_check = world.time + rand(50, 100)
+			if (list2params(voice_last_subspace) != previous)
+				// if it's changed, refresh immediately
+				SSvoice.refresh_client(src)
+			else
+				to_chat(src, "it didn't change")
 
-	var/checked = 0
+	//var/checked = 0
 	// Check ears for a headset (";" prefix)
 	if (istype(mob, /mob/living/carbon))
 		var/mob/living/carbon/M = mob
 		var/obj/item/device/radio/headset/R = M.ears
 		if (istype(M.ears))
-			checked++
+			//checked++
 			. |= R.voice_check(mob, subspace_on, ptt=TRUE)
 
 	// Check hands for a headset or SBR (":l", ":r" prefixes)
 	if (VOICE_SPEAK & mob_can & ~.)
 		for (var/obj/item/device/radio/R in mob.held_items)
-			checked++
+			//checked++
 			. |= R.voice_check(mob, subspace_on, ptt=TRUE)
 
 	// Check surrounding environment for an intercom (":i" prefix)
@@ -126,19 +145,19 @@ SUBSYSTEM_DEF(voice)
 	if (VOICE_SPEAK & mob_can & ~.)
 		// should match MODE_INTERCOM check in mob/living/say.dm
 		for (var/obj/item/device/radio/intercom/R in view(1, mob))
-			checked++
+			//checked++
 			. |= R.voice_check(mob, subspace_on, ptt=TRUE)
 
 	// Check surrounding environment for open mics...
 	if (VOICE_SPEAK & mob_can & ~.)
 		for (var/obj/item/device/radio/R in get_hearers_in_view(VOICE_MAX_RANGE, mob))
-			checked++
+			//checked++
 			. |= R.voice_check(mob, subspace_on)
 
 	// ... and for open speakers
 	if (VOICE_HEAR & mob_can & ~.)
 		for (var/obj/item/device/radio/R in range(VOICE_MAX_RANGE, mob))
-			checked++
+			//checked++
 			. |= R.voice_check(mob, subspace_on)
 
 	// Backup check in case we set a flag incidentally
@@ -146,6 +165,13 @@ SUBSYSTEM_DEF(voice)
 	. &= mob_can
 
 /obj/item/device/radio/proc/voice_check(mob/M, subspace_on, ptt=FALSE)
+	if (!on) return 0 // short path
+
+	// radio's good for nothing if it can't reach the station
+	var/turf/position = get_turf(M)
+	if (!(position.z in GLOB.station_z_levels) && !subspace_on)
+		return 0
+
 	. = 0
 
 	// receive_range should be checking the frequency and everything else
@@ -155,7 +181,7 @@ SUBSYSTEM_DEF(voice)
 		. |= VOICE_HEAR
 
 	// manually do all the speaking stuff, corresponds to talk_into
-	if (on && dist <= canhear_range && frequency == VOICE_FREQ && !wires.is_cut(WIRE_TX) && (ptt || broadcasting) && (!subspace_transmission || subspace_on))
+	if (dist <= canhear_range && frequency == VOICE_FREQ && !wires.is_cut(WIRE_TX) && (ptt || broadcasting) && (!subspace_transmission || subspace_on))
 		. |= VOICE_SPEAK
 
 #undef VOICE_NONE
