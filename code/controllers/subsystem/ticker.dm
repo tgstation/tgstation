@@ -177,7 +177,7 @@ SUBSYSTEM_DEF(ticker)
 	if(mode)
 		can_continue = mode.pre_setup()		//Choose antagonists
 	else
-		LOG_GAME("Warning: mode was null! Attempting to try again.")
+		log_game("Warning: mode was null! Attempting to try again.")
 		message_admins("Warning: mode was null! Attempting to try again.")
 		if(GLOB.master_mode == "secret")
 			hide_mode = TRUE
@@ -186,7 +186,7 @@ SUBSYSTEM_DEF(ticker)
 		if(mode)
 			can_continue = mode.pre_setup()
 			message_admins("Second try at mode selection success.")
-			LOG_GAME("Second try at mode selection success.")
+			log_game("Second try at mode selection success.")
 		else
 			can_continue = FALSE
 	CHECK_TICK
