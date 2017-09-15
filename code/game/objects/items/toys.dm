@@ -40,7 +40,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
 	item_state = "balloon-empty"
-	
+
 
 /obj/item/toy/balloon/New()
 	create_reagents(10)
@@ -1012,6 +1012,41 @@
 	playsound(src.loc, bitesound, 20, 1)
 	to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 	return ..()
+
+/*
+ *  Misc Plushies
+ */
+
+/obj/item/toy/carpplushie/lizardplushie
+	name = "lizard plushie"
+	desc = "An adorable stuffed toy that resembles a lizardperson."
+	icon_state = "plushie_lizard"
+	item_state = "plushie_lizard"
+	attack_verb = list("clawed", "hissed", "tail slapped")
+	bitesound = 'sound/weapons/slash.ogg'
+
+/obj/item/toy/carpplushie/snakeplushie
+	name = "snake plushie"
+	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
+	icon_state = "plushie_snake"
+	item_state = "plushie_snake"
+	attack_verb = list("bitten", "hissed", "tail slapped")
+
+/obj/item/toy/carpplushie/nukeplushie
+	name = "operative plushie"
+	desc = "An stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious."
+	icon_state = "plushie_nuke"
+	item_state = "plushie_nuke"
+	attack_verb = list("shot", "nuked", "detonated")
+	bitesound = 'sound/effects/hit_punch.ogg'
+
+/obj/item/toy/carpplushie/slimeplushie
+	name = "slime plushie"
+	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
+	icon_state = "plushie_slime"
+	item_state = "plushie_slime"
+	attack_verb = list("blorbled", "slimed", "absorbed")
+	bitesound = 'sound/effects/blobattack.ogg'
 
 /*
  * Toy big red button
