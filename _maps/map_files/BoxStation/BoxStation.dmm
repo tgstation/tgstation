@@ -6124,7 +6124,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ank" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
@@ -6898,7 +6898,7 @@
 /area/security/detectives_office)
 "ape" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Vacant Office B";
 	req_access_txt = "32"
 	},
@@ -7054,7 +7054,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "apx" = (
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -8271,7 +8271,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "asy" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -8645,7 +8645,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "atB" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
@@ -9080,7 +9080,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "auG" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
@@ -9270,7 +9270,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "avf" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Chemical Storage";
 	req_access_txt = "12"
 	},
@@ -10052,7 +10052,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Electrical Maintenance";
 	req_access_txt = "11"
 	},
@@ -10228,7 +10228,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "axj" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -21393,7 +21393,7 @@
 /turf/open/floor/carpet,
 /area/chapel/main)
 "aXX" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Vacant Office A";
 	req_access_txt = "32"
 	},
@@ -29902,7 +29902,7 @@
 	},
 /area/science/explab)
 "brE" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "0";
 	req_one_access_txt = "8;12"
 	},
@@ -36554,7 +36554,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bGo" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -38891,7 +38891,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bKU" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Construction Area";
 	req_access_txt = "32"
 	},
@@ -42578,7 +42578,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bTw" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
@@ -44802,7 +44802,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/port/aft)
 "bYy" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Incinerator Access";
 	req_access_txt = "12"
 	},
@@ -46152,7 +46152,7 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "cbv" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Research Delivery access";
 	req_access_txt = "12"
 	},
@@ -46297,7 +46297,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cbO" = (
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -46470,7 +46470,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Construction Area Maintenance";
 	req_access_txt = "32"
 	},
@@ -47843,7 +47843,7 @@
 /turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "cfs" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Air Supply Maintenance";
 	req_access_txt = "12"
 	},
@@ -47868,7 +47868,7 @@
 /turf/closed/wall/r_wall,
 /area/science/misc_lab)
 "cfv" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -50071,7 +50071,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ckm" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Biohazard Disposals";
 	req_access_txt = "12"
 	},
@@ -52745,7 +52745,7 @@
 /turf/open/space,
 /area/maintenance/disposal/incinerator)
 "cpR" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/abandoned{
 	name = "Observatory Access"
 	},
 /turf/open/floor/plating,
@@ -56587,7 +56587,7 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "cyL" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
@@ -62565,7 +62565,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cNV" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "0";
 	req_one_access_txt = "8;12"
 	},
@@ -63889,6 +63889,30 @@
 	dir = 4
 	},
 /area/construction/mining/aux_base)
+"cTF" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cTG" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cTH" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cTI" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 
 (1,1,1) = {"
 aaa
@@ -83847,7 +83871,7 @@ bHE
 bYu
 bZk
 bCq
-bTz
+cTG
 bCq
 bCq
 bCq
@@ -85143,7 +85167,7 @@ bCq
 bCq
 bCq
 bCq
-bTz
+cTH
 bCq
 bLv
 bLv
@@ -86152,7 +86176,7 @@ bLv
 bPZ
 bHE
 bHE
-bTz
+cTF
 bHE
 bLv
 aoV
@@ -109819,7 +109843,7 @@ cmq
 ciI
 cnJ
 cri
-bYr
+cTI
 cmn
 cBT
 cBU
