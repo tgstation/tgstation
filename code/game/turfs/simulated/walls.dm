@@ -1,6 +1,6 @@
 /turf/closed/wall
 	name = "wall"
-	desc = "A huge chunk of metal used to separate rooms."
+	desc = "A huge chunk of metal used to separate rooms.\n<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>"
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
 	explosion_block = 1
@@ -287,7 +287,3 @@
 			ChangeTurf(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
-
-/turf/closed/wall/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
