@@ -1,0 +1,4 @@
+author: "Thefastfoodguy"
+delete-after: True
+changes: 
+  - rscadd: "Ghosts can now examine thralls from any distance, even if they have a mask"
