@@ -64,16 +64,6 @@
 	cost = 10
 	surplus = 45
 
-/* Sports */
-/datum/uplink_item/badass/sports
-	name = "Sports bundle"
-	desc = "A hand-selected box of paraphernalia from one of the best sports. \
-			Currently available are hockey, wrestling, football, and bowling kits."
-	item = /obj/item/paper
-	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
-
 /* Holo Parasites */
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
@@ -227,3 +217,31 @@
 
 /datum/uplink_item/implants/macrobomb
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
+	
+/datum/uplink_item/dangerous/hockey
+	name = "Ka-nada Hockey Set"
+	desc = "Become one of the legends of the most brutal game in space. The items cannot be taken off once you wear them."
+	item = /obj/item/storage/box/syndie_kit/hockey
+	cost = 20
+	exclude_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/dangerous/bowling
+	name = "Bowling Set"
+	desc = "Niko, it's me, your cousin! Let's go bowling."
+	item = /obj/item/storage/box/syndie_kit/bowling
+	cost = 12
+	exclude_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/dangerous/wrestling
+	name = "Wrestling Set"
+	desc = "OH YEAH BROTHERRRR!"
+	item = /obj/item/storage/box/syndie_kit/wrestling
+	cost = 8 //The wrestling set is not as powerful as it once was
+	exclude_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/dangerous/football
+	name = "Football Set"
+	desc = "Actually Rugby."
+	item = /obj/item/storage/box/syndie_kit/football
+	cost = 16
+	exclude_modes = list(/datum/game_mode/nuclear)
