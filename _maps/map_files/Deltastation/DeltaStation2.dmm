@@ -22792,7 +22792,7 @@
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aUi" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/machinery/atmospherics/miner/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aUj" = (
@@ -24891,7 +24891,7 @@
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aYb" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aYc" = (
@@ -26169,7 +26169,7 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "baH" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/atmospherics/miner/toxins,
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "baI" = (
@@ -27529,7 +27529,7 @@
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "bdE" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "bdF" = (
@@ -29265,9 +29265,7 @@
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bgR" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide{
-	valve_open = 1
-	},
+/obj/machinery/atmospherics/miner/n2o,
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bgS" = (
