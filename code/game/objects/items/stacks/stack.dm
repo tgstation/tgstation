@@ -149,7 +149,7 @@
 			if(!building_checks(R, multiplier))
 				return
 
-		var/atom/movable/O = new R.result_type()
+		var/obj/O = new R.result_type()
 		O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 
@@ -171,7 +171,7 @@
 		if (isitem(O))
 			usr.put_in_hands(O)
 		else
-			O.forceMove(usr.loc)
+			O.forceMove(usr.drop_location())
 		O.add_fingerprint(usr)
 
 		//BubbleWrap - so newly formed boxes are empty
