@@ -1,0 +1,4 @@
+author: "Basilman"
+delete-after: True
+changes: 
+  - rscadd: "Gondolas are now procedural generated."
