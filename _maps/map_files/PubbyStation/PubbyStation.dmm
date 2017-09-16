@@ -31507,10 +31507,7 @@
 	},
 /area/medical/medbay/central)
 "brj" = (
-/obj/machinery/chem_master{
-	layer = 2.7;
-	pixel_x = -2
-	},
+/obj/machinery/chem_master,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 9
 	},
@@ -31536,10 +31533,7 @@
 	},
 /area/medical/chemistry)
 "brm" = (
-/obj/machinery/chem_master{
-	layer = 2.7;
-	pixel_x = -2
-	},
+/obj/machinery/chem_master,
 /obj/machinery/button/door{
 	id = "chemistry_shutters";
 	name = "Shutters Control";

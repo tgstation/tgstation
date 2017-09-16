@@ -26419,9 +26419,7 @@
 	},
 /area/medical/chemistry)
 "aSl" = (
-/obj/machinery/chem_master{
-	density = 0
-	},
+/obj/machinery/chem_master,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
