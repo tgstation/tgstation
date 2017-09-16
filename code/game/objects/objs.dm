@@ -58,7 +58,7 @@
 
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	..()
-	if(HAS_SECONDARY_FLAG(src, FROZEN))
+	if(flags_2 & FROZEN_2)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
 		qdel(src)
 
@@ -169,15 +169,18 @@
 	return
 
 /obj/singularity_pull(S, current_size)
+	..()
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
 
 /obj/get_spans()
 	return ..() | SPAN_ROBOT
 
-/obj/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
-	var/turf/T = get_turf(src)
-	return T.storage_contents_dump_act(src_object, user)
+/obj/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
+	return
+
+/obj/get_dumping_location(obj/item/storage/source,mob/user)
+	return get_turf(src)
 
 /obj/proc/CanAStarPass()
 	. = !density
@@ -196,7 +199,7 @@
 
 /obj/vv_get_dropdown()
 	. = ..()
-	.["Delete all of type"] = "?_src_=vars;delall=\ref[src]"
+	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=\ref[src]"
 
 /obj/examine(mob/user)
 	..()
@@ -223,6 +226,3 @@
 		current_skin = choice
 		icon_state = unique_reskin[choice]
 		to_chat(M, "[src] is now skinned as '[choice].'")
-
-/obj/proc/gang_contraband_value()
-	return 0

@@ -43,7 +43,7 @@
 		icon_state = "light_off"
 
 
-/turf/open/floor/light/ChangeTurf(turf/T)
+/turf/open/floor/light/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
 	set_light(0)
 	return ..()
 
@@ -67,7 +67,7 @@
 /turf/open/floor/light/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
-	if(istype(C, /obj/item/weapon/light/bulb)) //only for light tiles
+	if(istype(C, /obj/item/light/bulb)) //only for light tiles
 		if(state && user.drop_item())
 			qdel(C)
 			state = 0 //fixing it by bashing it with a light bulb, fun eh?

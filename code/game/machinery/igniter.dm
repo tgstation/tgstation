@@ -81,8 +81,8 @@
 		icon_state = "[base_state]-p"
 //		src.sd_SetLuminosity(0)
 
-/obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/screwdriver))
+/obj/machinery/sparker/attackby(obj/item/W, mob/user, params)
+	if (istype(W, /obj/item/screwdriver))
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)

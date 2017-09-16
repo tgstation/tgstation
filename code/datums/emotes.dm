@@ -38,7 +38,7 @@
 	msg = replace_pronoun(user, msg)
 
 	var/mob/living/L = user
-	for(var/obj/item/weapon/implant/I in L.implants)
+	for(var/obj/item/implant/I in L.implants)
 		I.trigger(key, L)
 
 	if(!msg)

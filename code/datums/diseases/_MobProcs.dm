@@ -43,7 +43,7 @@
 		SSdisease.active_diseases += DD //Add it to the active diseases list, now that it's actually in a mob and being processed.
 
 		//Copy properties over. This is so edited diseases persist.
-		var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed")
+		var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed","symptoms")
 		for(var/V in DD.vars)
 			if(V in skipped)
 				continue
@@ -92,7 +92,7 @@
 
 		switch(target_zone)
 			if(1)
-				if(isobj(H.head) && !istype(H.head, /obj/item/weapon/paper))
+				if(isobj(H.head) && !istype(H.head, /obj/item/paper))
 					Cl = H.head
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(H.wear_mask))

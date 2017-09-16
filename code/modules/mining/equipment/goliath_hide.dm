@@ -7,7 +7,7 @@
 	singular_name = "hide plate"
 	max_amount = 6
 	novariants = FALSE
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	var/static/list/goliath_platable_armor_typecache = typecacheof(list(

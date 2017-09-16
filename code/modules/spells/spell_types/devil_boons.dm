@@ -16,9 +16,9 @@
 	for(var/mob/living/carbon/C in targets)
 		if(user.drop_item())
 			var/obj/item = pick(
-					new /obj/item/weapon/coin/gold(user.loc),
-					new /obj/item/weapon/coin/diamond(user.loc),
-					new /obj/item/weapon/coin/silver(user.loc),
+					new /obj/item/coin/gold(user.loc),
+					new /obj/item/coin/diamond(user.loc),
+					new /obj/item/coin/silver(user.loc),
 					new /obj/item/clothing/accessory/medal/gold(user.loc),
 					new /obj/item/stack/sheet/mineral/gold(user.loc),
 					new /obj/item/stack/sheet/mineral/silver(user.loc),

@@ -7,7 +7,7 @@
 	max_integrity = 500
 	var/state = 0
 	var/datum/ai_laws/laws = new()
-	var/obj/item/weapon/circuitboard/circuit = null
+	var/obj/item/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
 
 /obj/structure/AIcore/New()
@@ -24,14 +24,14 @@
 	return ..()
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/weapon/wrench))
+	if(istype(P, /obj/item/wrench))
 		return default_unfasten_wrench(user, P, 20)
 	if(!anchored)
-		if(istype(P, /obj/item/weapon/weldingtool))
+		if(istype(P, /obj/item/weldingtool))
 			if(state != EMPTY_CORE)
 				to_chat(user, "<span class='warning'>The core must be empty to deconstruct it!</span>")
 				return
-			var/obj/item/weapon/weldingtool/WT = P
+			var/obj/item/weldingtool/WT = P
 			if(!WT.isOn())
 				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
 				return
@@ -44,7 +44,7 @@
 	else
 		switch(state)
 			if(EMPTY_CORE)
-				if(istype(P, /obj/item/weapon/circuitboard/aicore))
+				if(istype(P, /obj/item/circuitboard/aicore))
 					if(!user.drop_item())
 						return
 					playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -55,13 +55,13 @@
 					P.forceMove(src)
 					return
 			if(CIRCUIT_CORE)
-				if(istype(P, /obj/item/weapon/screwdriver))
+				if(istype(P, /obj/item/screwdriver))
 					playsound(loc, P.usesound, 50, 1)
 					to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 					state = SCREWED_CORE
 					update_icon()
 					return
-				if(istype(P, /obj/item/weapon/crowbar))
+				if(istype(P, /obj/item/crowbar))
 					playsound(loc, P.usesound, 50, 1)
 					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 					state = EMPTY_CORE
@@ -70,7 +70,7 @@
 					circuit = null
 					return
 			if(SCREWED_CORE)
-				if(istype(P, /obj/item/weapon/screwdriver) && circuit)
+				if(istype(P, /obj/item/screwdriver) && circuit)
 					playsound(loc, P.usesound, 50, 1)
 					to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 					state = CIRCUIT_CORE
@@ -89,7 +89,7 @@
 						to_chat(user, "<span class='warning'>You need five lengths of cable to wire the AI core!</span>")
 					return
 			if(CABLED_CORE)
-				if(istype(P, /obj/item/weapon/wirecutters))
+				if(istype(P, /obj/item/wirecutters))
 					if(brain)
 						to_chat(user, "<span class='warning'>Get that [brain.name] out of there first!</span>")
 					else
@@ -114,11 +114,11 @@
 						to_chat(user, "<span class='warning'>You need two sheets of reinforced glass to insert them into the AI core!</span>")
 					return
 
-				if(istype(P, /obj/item/weapon/aiModule))
+				if(istype(P, /obj/item/aiModule))
 					if(brain && brain.laws.id != DEFAULT_AI_LAWID)
 						to_chat(user, "<span class='warning'>The installed [brain.name] already has set laws!</span>")
 						return
-					var/obj/item/weapon/aiModule/module = P
+					var/obj/item/aiModule/module = P
 					module.install(laws, user)
 					return
 
@@ -152,7 +152,7 @@
 					update_icon()
 					return
 
-				if(istype(P, /obj/item/weapon/crowbar) && brain)
+				if(istype(P, /obj/item/crowbar) && brain)
 					playsound(loc, P.usesound, 50, 1)
 					to_chat(user, "<span class='notice'>You remove the brain.</span>")
 					brain.forceMove(loc)
@@ -161,7 +161,7 @@
 					return
 
 			if(GLASS_CORE)
-				if(istype(P, /obj/item/weapon/crowbar))
+				if(istype(P, /obj/item/crowbar))
 					playsound(loc, P.usesound, 50, 1)
 					to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 					state = CABLED_CORE
@@ -169,7 +169,7 @@
 					new /obj/item/stack/sheet/rglass(loc, 2)
 					return
 
-				if(istype(P, /obj/item/weapon/screwdriver))
+				if(istype(P, /obj/item/screwdriver))
 					playsound(loc, P.usesound, 50, 1)
 					to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 					if(brain)
@@ -191,7 +191,7 @@
 					P.transfer_ai("INACTIVE", "AICARD", src, user)
 					return
 
-				if(istype(P, /obj/item/weapon/screwdriver))
+				if(istype(P, /obj/item/screwdriver))
 					playsound(loc, P.usesound, 50, 1)
 					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 					state = GLASS_CORE
@@ -271,6 +271,6 @@ That prevents a few funky behaviors.
 		to_chat(user, "There is no AI loaded on this terminal!")
 
 
-/obj/item/weapon/circuitboard/aicore
+/obj/item/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
 	origin_tech = "programming=3"

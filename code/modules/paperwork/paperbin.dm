@@ -1,4 +1,4 @@
-/obj/item/weapon/paper_bin
+/obj/item/paper_bin
 	name = "paper bin"
 	desc = "Contains all the paper you'll never need."
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -11,44 +11,44 @@
 	throw_speed = 3
 	throw_range = 7
 	pressure_resistance = 8
-	var/papertype = /obj/item/weapon/paper
+	var/papertype = /obj/item/paper
 	var/total_paper = 30
 	var/list/papers = list()
-	var/obj/item/weapon/pen/bin_pen
+	var/obj/item/pen/bin_pen
 
-/obj/item/weapon/paper_bin/Initialize(mapload)
+/obj/item/paper_bin/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		return
-	var/obj/item/weapon/pen/P = locate(/obj/item/weapon/pen) in src.loc
+	var/obj/item/pen/P = locate(/obj/item/pen) in src.loc
 	if(P && !bin_pen)
 		P.loc = src
 		bin_pen = P
 		update_icon()
 		var/static/warned = FALSE
-		if(P.type == /obj/item/weapon/pen && !warned)
+		if(P.type == /obj/item/pen && !warned)
 			warning("one or more paperbins ate a pen duing initialize()")
 			warned = TRUE
 
-/obj/item/weapon/paper_bin/fire_act(exposed_temperature, exposed_volume)
+/obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
 	if(!total_paper)
 		return
 	..()
 
-/obj/item/weapon/paper_bin/Destroy()
+/obj/item/paper_bin/Destroy()
 	if(papers)
 		for(var/i in papers)
 			qdel(i)
 		papers = null
 	. = ..()
 
-/obj/item/weapon/paper_bin/fire_act(exposed_temperature, exposed_volume)
+/obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
 	if(total_paper)
 		total_paper = 0
 		update_icon()
 	..()
 
-/obj/item/weapon/paper_bin/MouseDrop(atom/over_object)
+/obj/item/paper_bin/MouseDrop(atom/over_object)
 	var/mob/living/M = usr
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
@@ -63,16 +63,16 @@
 	add_fingerprint(M)
 
 
-/obj/item/weapon/paper_bin/attack_paw(mob/user)
+/obj/item/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/item/weapon/paper_bin/attack_hand(mob/user)
+/obj/item/paper_bin/attack_hand(mob/user)
 	if(user.lying)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(bin_pen)
-		var/obj/item/weapon/pen/P = bin_pen
+		var/obj/item/pen/P = bin_pen
 		P.loc = user.loc
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
@@ -82,7 +82,7 @@
 		total_paper--
 		update_icon()
 		// If there's any custom paper on the stack, use that instead of creating a new paper.
-		var/obj/item/weapon/paper/P
+		var/obj/item/paper/P
 		if(papers.len > 0)
 			P = papers[papers.len]
 			papers.Remove(P)
@@ -103,17 +103,17 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paper_bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/paper))
-		var/obj/item/weapon/paper/P = I
+/obj/item/paper_bin/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/paper))
+		var/obj/item/paper/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		papers.Add(P)
 		total_paper++
 		update_icon()
-	else if(istype(I, /obj/item/weapon/pen) && !bin_pen)
-		var/obj/item/weapon/pen/P = I
+	else if(istype(I, /obj/item/pen) && !bin_pen)
+		var/obj/item/pen/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
@@ -122,7 +122,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/paper_bin/examine(mob/user)
+/obj/item/paper_bin/examine(mob/user)
 	..()
 	if(total_paper)
 		to_chat(user, "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+".")
@@ -130,7 +130,7 @@
 		to_chat(user, "It doesn't contain anything.")
 
 
-/obj/item/weapon/paper_bin/update_icon()
+/obj/item/paper_bin/update_icon()
 	if(total_paper < 1)
 		icon_state = "paper_bin0"
 	else
@@ -139,31 +139,31 @@
 	if(bin_pen)
 		add_overlay(mutable_appearance(bin_pen.icon, bin_pen.icon_state))
 
-/obj/item/weapon/paper_bin/construction
+/obj/item/paper_bin/construction
 	name = "construction paper bin"
 	desc = "Contains all the paper you'll never need, IN COLOR!"
 	icon_state = "paper_binc"
-	papertype = /obj/item/weapon/paper/construction
+	papertype = /obj/item/paper/construction
 
-/obj/item/weapon/paper_bin/bundlenatural
+/obj/item/paper_bin/bundlenatural
 	name = "natural paper bundle"
 	desc = "A bundle of paper created using traditional methods."
 	icon_state = "paper_bundle"
-	papertype = /obj/item/weapon/paper/natural
+	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
-/obj/item/weapon/paper_bin/bundlenatural/attack_hand(mob/user)
+/obj/item/paper_bin/bundlenatural/attack_hand(mob/user)
 	..()
 	if(total_paper < 1)
 		qdel(src)
-/obj/item/weapon/paper_bin/bundlenatural/fire_act(exposed_temperature, exposed_volume)
+/obj/item/paper_bin/bundlenatural/fire_act(exposed_temperature, exposed_volume)
 	qdel(src)
-/obj/item/weapon/paper_bin/bundlenatural/attackby(obj/item/weapon/W, mob/user)
+/obj/item/paper_bin/bundlenatural/attackby(obj/item/W, mob/user)
 	if(W.is_sharp())
 		to_chat(user, "<span class='notice'>You snip \the [src], spilling paper everywhere.</span>")
 		var/turf/T = get_turf(src.loc)
 		while(total_paper > 0)
 			total_paper--
-			var/obj/item/weapon/paper/P
+			var/obj/item/paper/P
 			if(papers.len > 0)
 				P = papers[papers.len]
 				papers -= P

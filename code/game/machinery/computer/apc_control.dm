@@ -4,7 +4,7 @@
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
 	req_access = list(ACCESS_ENGINE)
-	circuit = /obj/item/weapon/circuitboard/computer/apc_control
+	circuit = /obj/item/circuitboard/computer/apc_control
 	light_color = LIGHT_COLOR_YELLOW
 	var/list/apcs //APCs the computer has access to
 	var/mob/living/operator //Who's operating the computer right now
@@ -66,7 +66,7 @@
 				if(filters["Responsive"] && !APC.aidisabled)
 					continue
 				dat += "<a href='?src=\ref[src];access_apc=\ref[APC]'>[A]</a><br>\
-				<b>Charge:</b> [APC.cell.charge] / [APC.cell.maxcharge] W ([round((APC.cell.charge / APC.cell.maxcharge) * 100)]%)<br>\
+				<b>Charge:</b> [DisplayPower(APC.cell.charge)] / [DisplayPower(APC.cell.maxcharge)] ([round((APC.cell.charge / APC.cell.maxcharge) * 100)]%)<br>\
 				<b>Area:</b> [APC.area]<br>\
 				[APC.aidisabled || APC.panel_open ? "<font color='#FF0000'>APC does not respond to interface query.</font>" : "<font color='#00FF00'>APC responds to interface query.</font>"]<br><br>"
 			dat += "<a href='?src=\ref[src];check_logs=1'>Check Logs</a><br>"
@@ -97,7 +97,7 @@
 	if(!usr || !usr.canUseTopic(src) || usr.incapacitated() || stat || QDELETED(src))
 		return
 	if(href_list["authenticate"])
-		var/obj/item/weapon/card/id/ID = usr.get_active_held_item()
+		var/obj/item/card/id/ID = usr.get_active_held_item()
 		if(!istype(ID))
 			ID = usr.get_idcard()
 		if(ID && istype(ID))
@@ -106,7 +106,7 @@
 				auth_id = "[ID.registered_name] ([ID.assignment])"
 				log_activity("logged in")
 		if(!authenticated) //Check for emags
-			var/obj/item/weapon/card/emag/E = usr.get_active_held_item()
+			var/obj/item/card/emag/E = usr.get_active_held_item()
 			if(E && istype(E) && usr.Adjacent(src))
 				to_chat(usr, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 				authenticated = TRUE

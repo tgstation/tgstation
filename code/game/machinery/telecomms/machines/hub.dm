@@ -20,7 +20,7 @@
 	machinetype = 7
 	long_range_link = 1
 	netspeed = 40
-	circuit = /obj/item/weapon/circuitboard/machine/telecomms/hub
+	circuit = /obj/item/circuitboard/machine/telecomms/hub
 
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(is_freq_listening(signal))

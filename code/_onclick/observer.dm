@@ -82,7 +82,7 @@
 	else
 		to_chat(user, "[src] has no destination.")
 
-/obj/item/weapon/storage/attack_ghost(mob/user)
+/obj/item/storage/attack_ghost(mob/user)
 	orient2hud(user)
 	show_to(user)
 

@@ -9,12 +9,12 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	max_amount = 60
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user, params)
 
-	if(istype(O, /obj/item/weapon/wirecutters))
+	if(istype(O, /obj/item/wirecutters))
 		var/obj/item/stack/cable_coil/CC = new (user.loc)
 		CC.amount = 5
 		CC.add_fingerprint(user)

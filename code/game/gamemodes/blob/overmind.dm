@@ -4,7 +4,7 @@
 	desc = "The overmind. It controls the blob."
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = 1
 	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
@@ -50,7 +50,7 @@
 	if(blob_core)
 		blob_core.update_icon()
 
-	..()
+	.= ..()
 
 /mob/camera/blob/Life()
 	if(!blob_core)

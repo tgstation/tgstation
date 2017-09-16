@@ -210,7 +210,7 @@
 */
 /var/html_whitelist = list("b","i","u","em","strong","/b","/i","/u","/em","/strong") //basic font change. And yes I'm too lazy to write '/' handling
 //replaces < and > in non-whitelisted tags with &lt; and &gt;
-/proc/strip_html_smart(var/input,var/max_length=MAX_MESSAGE_LEN) 
+/proc/strip_html_smart(var/input,var/max_length=MAX_MESSAGE_LEN)
 	if(!input)
 		return
 	var/opentag = 1

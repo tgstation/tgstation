@@ -69,43 +69,6 @@
 	return
 
 
-/datum/spacevine_mutation/space_covering
-	name = "space protective"
-	hue = "#aa77aa"
-	quality = POSITIVE
-
-/datum/spacevine_mutation/space_covering
-	var/static/list/coverable_turfs
-
-/datum/spacevine_mutation/space_covering/New()
-	. = ..()
-	if(!coverable_turfs)
-		coverable_turfs = typecacheof(list(/turf/open/space)) - /turf/open/space/transit
-
-/datum/spacevine_mutation/space_covering/on_grow(obj/structure/spacevine/holder)
-	process_mutation(holder)
-
-/datum/spacevine_mutation/space_covering/process_mutation(obj/structure/spacevine/holder)
-	var/turf/T = get_turf(holder)
-	if(is_type_in_typecache(T, coverable_turfs))
-		var/currtype = T.type
-		T.ChangeTurf(/turf/open/floor/vines)
-		T.baseturf = currtype
-
-/datum/spacevine_mutation/space_covering/on_death(obj/structure/spacevine/holder)
-	var/turf/T = get_turf(holder)
-	if(istype(T, /turf/open/floor/vines))
-		T.ChangeTurf(T.baseturf)
-
-/datum/spacevine_mutation/bluespace
-	name = "bluespace"
-	hue = "#3333ff"
-	quality = MINOR_NEGATIVE
-
-/datum/spacevine_mutation/bluespace/on_spread(obj/structure/spacevine/holder, turf/target)
-	if(holder.energy > 1 && !locate(/obj/structure/spacevine) in target)
-		holder.master.spawn_spacevine_piece(target, holder)
-
 /datum/spacevine_mutation/light
 	name = "light"
 	hue = "#ffff00"
@@ -314,7 +277,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = SPACEVINE_LAYER
-	mouse_opacity = 2 //Clicking anywhere on the turf is good enough
+	mouse_opacity = MOUSE_OPACITY_OPAQUE //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
 	var/energy = 0
@@ -322,7 +285,7 @@
 	var/list/mutations = list()
 
 /obj/structure/spacevine/Initialize()
-	..()
+	. = ..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/spacevine/examine(mob/user)
@@ -427,10 +390,10 @@
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Delete Vines"] = "?_src_=\ref[src];purge_vines=1"
+	.["Delete Vines"] = "?_src_=\ref[src];[HrefToken()];purge_vines=1"
 
 /datum/spacevine_controller/Topic(href, href_list)
-	if(..() || !check_rights(R_ADMIN, FALSE))
+	if(..() || !check_rights(R_ADMIN, FALSE) || !usr.client.holder.CheckAdminHref(href, href_list))
 		return
 
 	if(href_list["purge_vines"])

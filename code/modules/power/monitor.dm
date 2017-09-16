@@ -7,7 +7,7 @@
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 100
-	circuit = /obj/item/weapon/circuitboard/computer/powermonitor
+	circuit = /obj/item/circuitboard/computer/powermonitor
 
 	var/obj/structure/cable/attached
 
@@ -66,8 +66,8 @@
 	data["areas"] = list()
 
 	if(attached)
-		data["supply"] = attached.powernet.viewavail
-		data["demand"] = attached.powernet.viewload
+		data["supply"] = DisplayPower(attached.powernet.viewavail)
+		data["demand"] = DisplayPower(attached.powernet.viewload)
 		for(var/obj/machinery/power/terminal/term in attached.powernet.nodes)
 			var/obj/machinery/power/apc/A = term.master
 			if(istype(A))
@@ -79,7 +79,7 @@
 				data["areas"] += list(list(
 					"name" = A.area.name,
 					"charge" = cell_charge,
-					"load" = A.lastused_total,
+					"load" = DisplayPower(A.lastused_total),
 					"charging" = A.charging,
 					"eqp" = A.equipment,
 					"lgt" = A.lighting,

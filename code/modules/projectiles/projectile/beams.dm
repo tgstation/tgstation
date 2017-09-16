@@ -77,7 +77,7 @@
 	if(isturf(target) || istype(target, /obj/structure/))
 		target.ex_act(EXPLODE_HEAVY)
 
-/obj/item/projectile/beam/pulse/shot
+/obj/item/projectile/beam/pulse/shotgun
 	damage = 40
 
 /obj/item/projectile/beam/pulse/heavy

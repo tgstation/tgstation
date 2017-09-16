@@ -91,14 +91,14 @@
 	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/weapon/robot_module/security
+	module_type = /obj/item/robot_module/security
 	origin_tech = "engineering=4;powerstorage=4;combat=4"
 
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R)
 	if(..())
 		return
 
-	var/obj/item/weapon/gun/energy/disabler/cyborg/T = locate() in R.module.modules
+	var/obj/item/gun/energy/disabler/cyborg/T = locate() in R.module.modules
 	if(!T)
 		to_chat(usr, "<span class='notice'>There's no disabler in this unit!</span>")
 		return
@@ -133,19 +133,19 @@
 	desc = "A diamond drill replacement for the mining module's standard drill."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
+	module_type = /obj/item/robot_module/miner
 	origin_tech = "engineering=4;materials=5"
 
 /obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R)
 	if(..())
 		return
 
-	for(var/obj/item/weapon/pickaxe/drill/cyborg/D in R.module)
+	for(var/obj/item/pickaxe/drill/cyborg/D in R.module)
 		R.module.remove_module(D, TRUE)
-	for(var/obj/item/weapon/shovel/S in R.module)
+	for(var/obj/item/shovel/S in R.module)
 		R.module.remove_module(S, TRUE)
 
-	var/obj/item/weapon/pickaxe/drill/cyborg/diamond/DD = new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module)
+	var/obj/item/pickaxe/drill/cyborg/diamond/DD = new /obj/item/pickaxe/drill/cyborg/diamond(R.module)
 	R.module.basic_modules += DD
 	R.module.add_module(DD, FALSE, TRUE)
 	return 1
@@ -155,17 +155,17 @@
 	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
+	module_type = /obj/item/robot_module/miner
 	origin_tech = "engineering=4;materials=4;bluespace=4"
 
 /obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
 	if(..())
 		return
 
-	for(var/obj/item/weapon/storage/bag/ore/cyborg/S in R.module)
+	for(var/obj/item/storage/bag/ore/cyborg/S in R.module)
 		R.module.remove_module(S, TRUE)
 
-	var/obj/item/weapon/storage/bag/ore/holding/H = new /obj/item/weapon/storage/bag/ore/holding(R.module)
+	var/obj/item/storage/bag/ore/holding/H = new /obj/item/storage/bag/ore/holding(R.module)
 	R.module.basic_modules += H
 	R.module.add_module(H, FALSE, TRUE)
 	return 1
@@ -194,7 +194,7 @@
 	icon_state = "ash_plating"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
+	module_type = /obj/item/robot_module/miner
 	origin_tech = "engineering=4;materials=4;plasmatech=4"
 
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R)
@@ -313,14 +313,14 @@
 		to produce more advanced and complex medical reagents."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/weapon/robot_module/medical
+	module_type = /obj/item/robot_module/medical
 	origin_tech = null
 	var/list/additional_reagents = list()
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R)
 	if(..())
 		return
-	for(var/obj/item/weapon/reagent_containers/borghypo/H in R.module)
+	for(var/obj/item/reagent_containers/borghypo/H in R.module)
 		if(H.accepts_reagent_upgrades)
 			for(var/re in additional_reagents)
 				H.add_reagent(re)
@@ -355,7 +355,7 @@
 		return
 
 	var/found_hypo = FALSE
-	for(var/obj/item/weapon/reagent_containers/borghypo/H in R.module)
+	for(var/obj/item/reagent_containers/borghypo/H in R.module)
 		H.bypass_protection = TRUE
 		found_hypo = TRUE
 
@@ -370,14 +370,14 @@
 		defibrillator, for on the scene revival."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/weapon/robot_module/medical
+	module_type = /obj/item/robot_module/medical
 	origin_tech = "programming=4;engineering=6;materials=5;powerstorage=5;biotech=5"
 
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R)
 	if(..())
 		return
 
-	var/obj/item/weapon/twohanded/shockpaddles/cyborg/S = new(R.module)
+	var/obj/item/twohanded/shockpaddles/cyborg/S = new(R.module)
 	R.module.basic_modules += S
 	R.module.add_module(S, FALSE, TRUE)
 

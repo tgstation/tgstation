@@ -5,7 +5,7 @@
 	icon_screen = "comm"
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_HEADS)
-	circuit = /obj/item/weapon/circuitboard/computer/communications
+	circuit = /obj/item/circuitboard/computer/communications
 	var/authenticated = 0
 	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/messagetitle = list()
@@ -36,7 +36,7 @@
 	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/communications/proc/checkCCcooldown()
-	var/obj/item/weapon/circuitboard/computer/communications/CM = circuit
+	var/obj/item/circuitboard/computer/communications/CM = circuit
 	if(CM.lastTimeUsed + 600 > world.time)
 		return FALSE
 	return TRUE
@@ -54,14 +54,14 @@
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	if (z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM) //Can only use on centcom and SS13
+	if(!(z in GLOB.station_z_levels) && z != ZLEVEL_CENTCOM) //Can only use on centcom and SS13
 		to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 	usr.set_machine(src)
 
 	if(!href_list["operation"])
 		return
-	var/obj/item/weapon/circuitboard/computer/communications/CM = circuit
+	var/obj/item/circuitboard/computer/communications/CM = circuit
 	switch(href_list["operation"])
 		// main interface
 		if("main")
@@ -70,7 +70,7 @@
 		if("login")
 			var/mob/M = usr
 
-			var/obj/item/weapon/card/id/I = M.get_active_held_item()
+			var/obj/item/card/id/I = M.get_active_held_item()
 			if(!istype(I))
 				I = M.get_idcard()
 
@@ -96,7 +96,7 @@
 
 		if("swipeidseclevel")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.get_active_held_item()
+			var/obj/item/card/id/I = M.get_active_held_item()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -392,7 +392,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/communications/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/card/id))
+	if(istype(I, /obj/item/card/id))
 		attack_hand(user)
 	else
 		return ..()
@@ -456,7 +456,8 @@
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
 					if(config.cross_allowed)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crossserver'>Send a message to an allied station</A> \]"
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"
+					if(SSmapping.config.allow_custom_shuttles == "yes")
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
@@ -692,5 +693,5 @@
 	return ..()
 
 /obj/machinery/computer/communications/proc/overrideCooldown()
-	var/obj/item/weapon/circuitboard/computer/communications/CM = circuit
+	var/obj/item/circuitboard/computer/communications/CM = circuit
 	CM.lastTimeUsed = 0

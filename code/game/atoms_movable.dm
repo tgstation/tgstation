@@ -1,11 +1,3 @@
-
-#ifndef PIXEL_SCALE
-#define PIXEL_SCALE 0
-#if DM_VERSION >= 512
-#error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
-#endif
-#endif
-
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
@@ -124,6 +116,7 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	SendSignal(COMSIG_MOVABLE_MOVED, OldLoc, Dir)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -137,7 +130,7 @@
 	if (orbiting)
 		orbiting.Check()
 
-	if(flags & CLEAN_ON_MOVE)
+	if(flags_1 & CLEAN_ON_MOVE_1)
 		clean_on_move()
 
 	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
@@ -176,8 +169,8 @@
 					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
 
 /atom/movable/Destroy(force)
-	var/inform_admins = HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
-	var/stationloving = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+	var/inform_admins = (flags_2 & INFORM_ADMINS_ON_RELOCATE_2)
+	var/stationloving = (flags_2 & STATIONLOVING_2)
 
 	if(inform_admins && force)
 		var/turf/T = get_turf(src)
@@ -221,8 +214,9 @@
 //This is tg's equivalent to the byond bump, it used to be called bump with a second arg
 //to differentiate it, naturally everyone forgot about this immediately and so some things
 //would bump twice, so now it's called Collide
-/atom/movable/proc/Collide(atom/A)	
-	if((A))
+/atom/movable/proc/Collide(atom/A)
+	SendSignal(COMSIG_MOVABLE_COLLIDE, A)
+	if(A)
 		if(throwing)
 			throwing.hit_atom(A)
 			. = 1
@@ -315,6 +309,7 @@
 
 /atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
 	set waitfor = 0
+	SendSignal(COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
 	return hit_atom.hitby(src)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked)
@@ -323,7 +318,7 @@
 	..()
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if (!target || (flags & NODROP) || speed <= 0)
+	if (!target || (flags_1 & NODROP_1) || speed <= 0)
 		return
 
 	if (pulledby)
@@ -504,7 +499,7 @@
 /atom/movable/vv_get_dropdown()
 	. = ..()
 	. -= "Jump to"
-	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"
+	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[src]"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)
@@ -550,24 +545,24 @@
 */
 
 /atom/movable/proc/set_stationloving(state, inform_admins=FALSE)
-	var/currently = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+	var/currently = (flags_2 & STATIONLOVING_2)
 
 	if(inform_admins)
-		SET_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+		flags_2 |= INFORM_ADMINS_ON_RELOCATE_2
 	else
-		CLEAR_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+		flags_2 &= ~INFORM_ADMINS_ON_RELOCATE_2
 
 	if(state == currently)
 		return
 	else if(!state)
 		STOP_PROCESSING(SSinbounds, src)
-		CLEAR_SECONDARY_FLAG(src, STATIONLOVING)
+		flags_2 &= ~STATIONLOVING_2
 	else
 		START_PROCESSING(SSinbounds, src)
-		SET_SECONDARY_FLAG(src, STATIONLOVING)
+		flags_2 |= STATIONLOVING_2
 
 /atom/movable/proc/relocate()
-	var/targetturf = find_safe_turf(ZLEVEL_STATION)
+	var/targetturf = find_safe_turf(ZLEVEL_STATION_PRIMARY)
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)
 			targetturf = get_turf(pick(GLOB.blobstart))
@@ -577,8 +572,8 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
-	else if(istype(loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = loc
+	else if(istype(loc, /obj/item/storage))
+		var/obj/item/storage/S = loc
 		S.remove_from_storage(src, targetturf)
 	else
 		forceMove(targetturf)
@@ -593,13 +588,13 @@
 		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		var/turf/targetturf = relocate()
 		log_game("[src] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
-		if(HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE))
+		if(flags_2 & INFORM_ADMINS_ON_RELOCATE_2)
 			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
 
 /atom/movable/proc/in_bounds()
 	. = FALSE
 	var/turf/currentturf = get_turf(src)
-	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION || currentturf.z == ZLEVEL_TRANSIT))
+	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || (currentturf.z in GLOB.station_z_levels) || currentturf.z == ZLEVEL_TRANSIT))
 		. = TRUE
 
 

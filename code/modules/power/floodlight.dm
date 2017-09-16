@@ -9,7 +9,7 @@
 	var/state = FLOODLIGHT_NEEDS_WRENCHING
 
 /obj/structure/floodlight_frame/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/wrench) && (state == FLOODLIGHT_NEEDS_WRENCHING))
+	if(istype(O, /obj/item/wrench) && (state == FLOODLIGHT_NEEDS_WRENCHING))
 		to_chat(user, "<span class='notice'>You secure the [src].</span>")
 		anchored = TRUE
 		state = FLOODLIGHT_NEEDS_WIRES
@@ -22,12 +22,12 @@
 			desc = "A bare metal frame looking vaguely like a floodlight. Requires securing with a screwdriver."
 			icon_state = "floodlight_c2"
 			state = FLOODLIGHT_NEEDS_SECURING
-	else if(istype(O, /obj/item/weapon/light/tube) && (state == FLOODLIGHT_NEEDS_LIGHTS))
+	else if(istype(O, /obj/item/light/tube) && (state == FLOODLIGHT_NEEDS_LIGHTS))
 		if(user.transferItemToLoc(O))
 			to_chat(user, "<span class='notice'>You put lights in the [src].</span>")
 			new /obj/machinery/power/floodlight(src.loc)
 			qdel(src)
-	else if(istype(O, /obj/item/weapon/screwdriver) && (state == FLOODLIGHT_NEEDS_SECURING))
+	else if(istype(O, /obj/item/screwdriver) && (state == FLOODLIGHT_NEEDS_SECURING))
 		to_chat(user, "<span class='notice'>You fasten the wiring and electronics in [src].</span>")
 		name = "secured [name]"
 		desc = "A bare metal frame that looks like a floodlight. Requires light tubes."
@@ -82,7 +82,7 @@
 		to_chat(user, "You set the [src] to [setting_text].")
 
 /obj/machinery/power/floodlight/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/wrench))
+	if(istype(O, /obj/item/wrench))
 		default_unfasten_wrench(user, O, time = 20)
 		change_setting(1)
 		if(anchored)

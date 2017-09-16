@@ -150,9 +150,9 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "ax" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/item/clothing/mask/surgical,
-/obj/item/weapon/razor,
+/obj/item/razor,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -165,11 +165,11 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "az" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/syringes{
+/obj/item/storage/box/syringes{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/weapon/storage/box/beakers,
+/obj/item/storage/box/beakers,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -246,7 +246,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/gun/energy/floragun,
+/obj/item/gun/energy/floragun,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -314,7 +314,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aN" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder,
+/obj/item/folder,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -327,8 +327,8 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aP" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/glass/bottle/liver_enhance_virion,
-/obj/item/weapon/reagent_containers/dropper,
+/obj/item/reagent_containers/glass/bottle/liver_enhance_virion,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -362,7 +362,7 @@
 	d2 = 4
 	},
 /obj/structure/rack,
-/obj/item/weapon/melee/baton/cattleprod,
+/obj/item/melee/baton/cattleprod,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -381,15 +381,15 @@
 	},
 /obj/structure/rack,
 /obj/item/clothing/suit/space/hardsuit/medical,
-/obj/item/weapon/tank/internals/emergency_oxygen/double,
+/obj/item/tank/internals/emergency_oxygen/double,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
 /area/ruin/space/has_grav/abandonedzoo)
 "aU" = (
 /obj/structure/rack,
-/obj/item/weapon/crowbar,
-/obj/item/weapon/shield/riot,
+/obj/item/crowbar,
+/obj/item/shield/riot,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -405,21 +405,21 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aW" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/syringe,
+/obj/item/gun/syringe,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
 /area/ruin/space/has_grav/abandonedzoo)
 "aX" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/grenade/chem_grenade/antiweed{
+/obj/item/grenade/chem_grenade/antiweed{
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/weapon/grenade/chem_grenade/antiweed{
+/obj/item/grenade/chem_grenade/antiweed{
 	pixel_x = 4
 	},
-/obj/item/weapon/grenade/chem_grenade/antiweed{
+/obj/item/grenade/chem_grenade/antiweed{
 	pixel_x = -3;
 	pixel_y = -1
 	},
@@ -432,7 +432,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aY" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/energy/temperature{
+/obj/item/gun/energy/temperature{
 	pin = /obj/item/device/firing_pin
 	},
 /turf/open/floor/plasteel{
@@ -441,8 +441,8 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aZ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/cultivator,
-/obj/item/weapon/shovel,
+/obj/item/cultivator,
+/obj/item/shovel,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -515,21 +515,21 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bi" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,
-/obj/item/weapon/reagent_containers/glass/bottle/mutagen,
+/obj/item/reagent_containers/hypospray/medipen/stimpack,
+/obj/item/reagent_containers/glass/bottle/mutagen,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
 /area/ruin/space/has_grav/abandonedzoo)
 "bj" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/surgicaldrill,
-/obj/item/weapon/hemostat,
-/obj/item/weapon/scalpel,
-/obj/item/weapon/surgical_drapes,
-/obj/item/weapon/retractor,
-/obj/item/weapon/cautery,
-/obj/item/weapon/circular_saw,
+/obj/item/surgicaldrill,
+/obj/item/hemostat,
+/obj/item/scalpel,
+/obj/item/surgical_drapes,
+/obj/item/retractor,
+/obj/item/cautery,
+/obj/item/circular_saw,
 /obj/machinery/light,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -556,7 +556,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bn" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/carrotfries,
+/obj/item/reagent_containers/food/snacks/carrotfries,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -587,7 +587,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bp" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/green,
+/obj/item/bedsheet/green,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -599,7 +599,7 @@
 	pixel_x = 3;
 	pixel_y = -4
 	},
-/obj/item/weapon/wirecutters,
+/obj/item/wirecutters,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "br" = (
@@ -747,13 +747,13 @@
 	density = 0;
 	icon_state = "brokengrille"
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bO" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bP" = (
@@ -793,7 +793,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bT" = (
 /obj/structure/grille,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
@@ -810,7 +810,7 @@
 /turf/template_noop,
 /area/template_noop)
 "bW" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/template_noop,
 /area/template_noop)
 "bX" = (

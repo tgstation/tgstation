@@ -131,10 +131,10 @@
 /area/awaymission/beach)
 "ay" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
-/obj/item/weapon/storage/box/beakers,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/storage/box/beakers,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "az" = (
@@ -150,7 +150,7 @@
 /area/awaymission/beach)
 "aB" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/reagent_containers/glass/rag,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "aC" = (

@@ -96,7 +96,8 @@
 								colour2 = rgb(255,128,0)
 
 						if(ismob(AM))
-							if(AM:client)
+							var/mob/M = AM
+							if(M.client)
 								colour = rgb(255,0,0)
 							else
 								colour = rgb(255,128,128)
@@ -242,7 +243,8 @@
 								colour = rgb(255,255,0)
 
 						if(ismob(AM))
-							if(AM:client)
+							var/mob/M = AM
+							if(M.client)
 								colour = rgb(255,0,0)
 							else
 								colour = rgb(255,128,128)

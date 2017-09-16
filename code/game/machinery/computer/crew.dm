@@ -6,7 +6,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 250
 	active_power_usage = 500
-	circuit = /obj/item/weapon/circuitboard/computer/crew
+	circuit = /obj/item/circuitboard/computer/crew
 
 	light_color = LIGHT_COLOR_BLUE
 
@@ -135,7 +135,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if (ignore_unused || hi.isUsed())
 			var/list/results = list()
 			var/obj/item/clothing/under/U
-			var/obj/item/weapon/card/id/I
+			var/obj/item/card/id/I
 			var/turf/pos
 			var/ijob
 			var/name

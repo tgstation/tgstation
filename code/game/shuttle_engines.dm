@@ -25,7 +25,7 @@
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/structure/shuttle/engine/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/structure/shuttle/engine/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
@@ -37,8 +37,8 @@
 	add_fingerprint(user)
 	if(default_unfasten_wrench(user, I))
 		return
-	else if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = I
+	else if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = I
 		switch(state)
 			if(ENGINE_UNWRENCHED)
 				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")

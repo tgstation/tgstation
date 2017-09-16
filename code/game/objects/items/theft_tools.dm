@@ -79,7 +79,7 @@
 		return ..()
 
 //snowflake screwdriver, works as a key to start nuke theft, traitor only
-/obj/item/weapon/screwdriver/nuke
+/obj/item/screwdriver/nuke
 	name = "screwdriver"
 	desc = "A screwdriver with an ultra thin tip."
 	icon = 'icons/obj/nuke_tools.dmi'
@@ -88,7 +88,7 @@
 	toolspeed = 0.5
 	random_color = FALSE
 
-/obj/item/weapon/paper/guides/antag/nuke_instructions
+/obj/item/paper/guides/antag/nuke_instructions
 	info = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\
 	<ul>\
 	<li>Use a screwdriver with a very thin tip (provided) to unscrew the terminal's front panel</li>\
@@ -101,7 +101,7 @@
 
 // STEALING SUPERMATTER
 
-/obj/item/weapon/paper/guides/antag/supermatter_sliver
+/obj/item/paper/guides/antag/supermatter_sliver
 	info = "How to safely extract a supermatter sliver:<br>\
 	<ul>\
 	<li>Approach an active supermatter crystal with proper protective gear. DO NOT MAKE PHYSICAL CONTACT.</li>\
@@ -127,8 +127,8 @@
 	return FALSE
 
 /obj/item/nuke_core/supermatter_sliver/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/weapon/hemostat/supermatter))
-		var/obj/item/weapon/hemostat/supermatter/tongs = W
+	if(istype(W, /obj/item/hemostat/supermatter))
+		var/obj/item/hemostat/supermatter/tongs = W
 		if (tongs.sliver)
 			to_chat(user, "<span class='notice'>\The [tongs] is already holding a supermatter sliver!</span>")
 			return FALSE
@@ -136,7 +136,7 @@
 		tongs.sliver = src
 		tongs.icon_state = "supermatter_tongs_loaded"
 		to_chat(user, "<span class='notice'>You carefully pick up [src] with [tongs].</span>")
-	else if(istype(W, /obj/item/weapon/scalpel/supermatter) || istype(W, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
+	else if(istype(W, /obj/item/scalpel/supermatter) || istype(W, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
 		return
 	else
 		to_chat(user, "<span class='notice'>As it touches \the [src], both \the [src] and \the [W] burst into dust!</span>")
@@ -164,7 +164,7 @@
 	QDEL_NULL(sliver)
 	return ..()
 
-/obj/item/nuke_core_container/supermatter/load(obj/item/weapon/hemostat/supermatter/T, mob/user)
+/obj/item/nuke_core_container/supermatter/load(obj/item/hemostat/supermatter/T, mob/user)
 	if(!istype(T) || !T.sliver)
 		return FALSE
 	T.sliver.forceMove(src)
@@ -184,14 +184,14 @@
 		if(ismob(loc))
 			to_chat(loc, "<span class='warning'>[src] is permanently sealed, [sliver] is safely contained.</span>")
 
-/obj/item/nuke_core_container/supermatter/attackby(obj/item/weapon/hemostat/supermatter/tongs, mob/user)
+/obj/item/nuke_core_container/supermatter/attackby(obj/item/hemostat/supermatter/tongs, mob/user)
 	if(istype(tongs))
 		//try to load shard into core
 		load(tongs, user)
 	else
 		return ..()
 
-/obj/item/weapon/scalpel/supermatter
+/obj/item/scalpel/supermatter
 	name = "supermatter scalpel"
 	desc = "A scalpel with a tip of condensed freon gas, searingly cold to the touch, that can safely shave a sliver off a supermatter crystal."
 	icon = 'icons/obj/nuke_tools.dmi'
@@ -200,7 +200,7 @@
 	damtype = "fire"
 	usesound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/hemostat/supermatter
+/obj/item/hemostat/supermatter
 	name = "supermatter extraction tongs"
 	desc = "A pair of tongs made from condensed freon gas, searingly cold to the touch, that can safely grip a supermatter sliver."
 	icon = 'icons/obj/nuke_tools.dmi'
@@ -209,11 +209,11 @@
 	damtype = "fire"
 	var/obj/item/nuke_core/supermatter_sliver/sliver
 
-/obj/item/weapon/hemostat/supermatter/Destroy()
+/obj/item/hemostat/supermatter/Destroy()
 	QDEL_NULL(sliver)
 	return ..()
 
-/obj/item/weapon/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
+/obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
 	if(!sliver)
 		return
 	if(ismovableatom(O) && O != sliver)
@@ -221,14 +221,14 @@
 		to_chat(usr, "<span class='notice'>\The [sliver] is dusted along with \the [O]!</span>")
 		QDEL_NULL(sliver)
 
-/obj/item/weapon/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
+/obj/item/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
 	if(sliver)
 		sliver.forceMove(loc)
 		to_chat(usr, "<span class='notice'>\The [sliver] falls out of \the [src] as you throw them.</span>")
 		sliver = null
 	..()
 
-/obj/item/weapon/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/user)
+/obj/item/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/user)
 	if(ismob(AM))
 		var/mob/victim = AM
 		victim.dust()

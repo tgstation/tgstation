@@ -57,9 +57,7 @@
 			symptoms = GenerateSymptoms(0, 2)
 		else
 			for(var/datum/symptom/S in D.symptoms)
-				var/datum/symptom/new_symp = new S.type
-				new_symp.name = S.name
-				new_symp.neutered = S.neutered
+				var/datum/symptom/new_symp = S.Copy()
 				symptoms += new_symp
 
 	Refresh()
@@ -415,7 +413,7 @@
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
-			if(H.z != ZLEVEL_STATION)
+			if(!(H.z in GLOB.station_z_levels))
 				continue
 			if(!H.HasDisease(D))
 				H.ForceContractDisease(D)

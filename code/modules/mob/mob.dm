@@ -326,6 +326,7 @@
 	if(AM.pulledby)
 		if(!supress_message)
 			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+		add_logs(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
 	pulling = AM
@@ -336,6 +337,7 @@
 
 	if(ismob(AM))
 		var/mob/M = AM
+		add_logs(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 		if(!iscarbon(src))
@@ -435,7 +437,7 @@
 
 	if (!( GLOB.abandon_allowed ))
 		return
-	if ((stat != 2 || !( SSticker )))
+	if ((stat != DEAD || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
@@ -504,7 +506,7 @@
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				if(!(what.flags & ABSTRACT))
+				if(!(what.flags_1 & ABSTRACT_1))
 					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
@@ -577,7 +579,7 @@
 			var/turf/T = get_turf(client.eye)
 			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
-			stat("Instances:", "[world.contents.len]")
+			stat("Instances:", "[num2text(world.contents.len, 10)]")
 			GLOB.stat_entry()
 			config.stat_entry()
 			stat(null)
@@ -612,6 +614,8 @@
 				if(A.invisibility > see_invisible)
 					continue
 				if(overrides.len && (A in overrides))
+					continue
+				if(A.IsObscured())
 					continue
 				statpanel(listed_turf.name, null, A)
 
@@ -860,8 +864,8 @@
 	var/search_pda = 1
 
 	for(var/A in searching)
-		if( search_id && istype(A, /obj/item/weapon/card/id) )
-			var/obj/item/weapon/card/id/ID = A
+		if( search_id && istype(A, /obj/item/card/id) )
+			var/obj/item/card/id/ID = A
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname
 				ID.update_label()
@@ -938,18 +942,18 @@
 /mob/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Gib"] = "?_src_=vars;gib=\ref[src]"
-	.["Give Spell"] = "?_src_=vars;give_spell=\ref[src]"
-	.["Remove Spell"] = "?_src_=vars;remove_spell=\ref[src]"
-	.["Give Disease"] = "?_src_=vars;give_disease=\ref[src]"
-	.["Toggle Godmode"] = "?_src_=vars;godmode=\ref[src]"
-	.["Drop Everything"] = "?_src_=vars;drop_everything=\ref[src]"
-	.["Regenerate Icons"] = "?_src_=vars;regenerateicons=\ref[src]"
-	.["Make Space Ninja"] = "?_src_=vars;ninja=\ref[src]"
-	.["Show player panel"] = "?_src_=vars;mob_player_panel=\ref[src]"
-	.["Toggle Build Mode"] = "?_src_=vars;build_mode=\ref[src]"
-	.["Assume Direct Control"] = "?_src_=vars;direct_control=\ref[src]"
-	.["Offer Control to Ghosts"] = "?_src_=vars;offer_control=\ref[src]"
+	.["Gib"] = "?_src_=vars;[HrefToken()];gib=\ref[src]"
+	.["Give Spell"] = "?_src_=vars;[HrefToken()];give_spell=\ref[src]"
+	.["Remove Spell"] = "?_src_=vars;[HrefToken()];remove_spell=\ref[src]"
+	.["Give Disease"] = "?_src_=vars;[HrefToken()];give_disease=\ref[src]"
+	.["Toggle Godmode"] = "?_src_=vars;[HrefToken()];godmode=\ref[src]"
+	.["Drop Everything"] = "?_src_=vars;[HrefToken()];drop_everything=\ref[src]"
+	.["Regenerate Icons"] = "?_src_=vars;[HrefToken()];regenerateicons=\ref[src]"
+	.["Make Space Ninja"] = "?_src_=vars;[HrefToken()];ninja=\ref[src]"
+	.["Show player panel"] = "?_src_=vars;[HrefToken()];mob_player_panel=\ref[src]"
+	.["Toggle Build Mode"] = "?_src_=vars;[HrefToken()];build_mode=\ref[src]"
+	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=\ref[src]"
+	.["Offer Control to Ghosts"] = "?_src_=vars;[HrefToken()];offer_control=\ref[src]"
 
 /mob/vv_get_var(var_name)
 	switch(var_name)

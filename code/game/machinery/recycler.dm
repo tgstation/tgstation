@@ -8,30 +8,30 @@
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	anchored = TRUE
 	density = TRUE
-	circuit = /obj/item/weapon/circuitboard/machine/recycler
+	circuit = /obj/item/circuitboard/machine/recycler
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
 	var/icon_name = "grinder-o"
 	var/blood = 0
 	var/eat_dir = WEST
 	var/amount_produced = 50
-	var/datum/material_container/materials
 	var/crush_damage = 1000
 	var/eat_victim_items = TRUE
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
 /obj/machinery/recycler/Initialize()
-	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
+	. = ..()
 	update_icon()
-	return ..()
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
 	var/mat_mod = 0
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		mat_mod = 2 * B.rating
 	mat_mod *= 50000
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		amt_made = 12.5 * M.rating //% of materials salvaged
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
 
@@ -126,6 +126,7 @@
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
 	I.loc = src.loc
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(I)
 	if(!material_amount)
 		qdel(I)
@@ -187,9 +188,9 @@
 	name = "dangerous old crusher"
 	emagged = TRUE
 	crush_damage = 120
-	flags = NODECONSTRUCT
+	flags_1 = NODECONSTRUCT_1
 
-/obj/item/weapon/paper/guides/recycler
+/obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"
 	info = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect the said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then deliver these minerals to cargo or engineering. You are our last hope for a clean station, do not screw this up!"
 

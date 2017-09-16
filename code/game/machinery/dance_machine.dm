@@ -60,7 +60,7 @@
 
 /obj/machinery/disco/attackby(obj/item/O, mob/user, params)
 	if(!active)
-		if(istype(O, /obj/item/weapon/wrench))
+		if(istype(O, /obj/item/wrench))
 			if(!anchored && !isinspace())
 				to_chat(user,"<span class='notice'>You secure the [src] to the floor.</span>")
 				anchored = TRUE

@@ -6,7 +6,7 @@
 	item_state = "electropack"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
@@ -35,7 +35,7 @@
 			return
 	..()
 
-/obj/item/device/electropack/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
@@ -52,8 +52,8 @@
 
 		user.put_in_hands(A)
 		A.add_fingerprint(user)
-		if(src.flags & NODROP)
-			A.flags |= NODROP
+		if(src.flags_1 & NODROP_1)
+			A.flags_1 |= NODROP_1
 	else
 		return ..()
 

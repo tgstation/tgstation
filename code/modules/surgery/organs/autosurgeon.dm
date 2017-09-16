@@ -38,6 +38,9 @@
 	if(!uses)
 		desc = "[initial(desc)] Looks like it's been used up."
 
+/obj/item/device/autosurgeon/attack_self_tk(mob/user)
+	return //stops TK fuckery
+
 /obj/item/device/autosurgeon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, organ_type))
 		if(storedorgan)
@@ -51,7 +54,7 @@
 		I.forceMove(src)
 		storedorgan = I
 		to_chat(user, "<span class='notice'>You insert the [I] into [src].</span>")
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(istype(I, /obj/item/screwdriver))
 		if(!storedorgan)
 			to_chat(user, "<span class='notice'>There's no implant in [src] for you to remove.</span>")
 		else

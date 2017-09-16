@@ -2,6 +2,9 @@
 
 INITIALIZE_IMMEDIATE(/mob/dead)
 
+/mob/dead
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+
 /mob/dead/Initialize()
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")

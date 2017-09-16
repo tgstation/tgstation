@@ -19,7 +19,7 @@
 	items = list(
 		/obj/item/clothing/suit/chickensuit,
 		/obj/item/clothing/head/chicken,
-		/obj/item/weapon/reagent_containers/food/snacks/egg)
+		/obj/item/reagent_containers/food/snacks/egg)
 
 /obj/effect/spawner/bundle/costume/gladiator
 	name = "gladitator costume spawner"
@@ -77,7 +77,7 @@
 		/obj/item/clothing/glasses/monocle,
 		/obj/effect/spawner/lootdrop/minor/bowler_or_that,
 		/obj/item/clothing/shoes/sneakers/black,
-		/obj/item/weapon/cane,
+		/obj/item/cane,
 		/obj/item/clothing/under/sl_suit,
 		/obj/item/clothing/mask/fakemoustache)
 
@@ -147,7 +147,7 @@
 	items = list(
 		/obj/item/clothing/under/sundress,
 		/obj/item/clothing/head/witchwig,
-		/obj/item/weapon/staff/broom)
+		/obj/item/staff/broom)
 
 /obj/effect/spawner/bundle/costume/wizard
 	name = "wizard costume spawner"
@@ -155,7 +155,7 @@
 		/obj/item/clothing/shoes/sandal,
 		/obj/item/clothing/suit/wizrobe/fake,
 		/obj/item/clothing/head/wizard/fake,
-		/obj/item/weapon/staff)
+		/obj/item/staff)
 
 /obj/effect/spawner/bundle/costume/sexyclown
 	name = "sexy clown costume spawner"
