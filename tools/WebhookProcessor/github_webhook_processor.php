@@ -243,15 +243,23 @@ function dismiss_review($payload, $id){
 
 function check_ready_for_review($payload, $labels = null){
 	$r4rlabel = 'Ready for Review';
+	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
 	$has_label_already = false;
+	$should_not_have_label = false;
 	if($labels == null)
 		$labels = get_labels($payload);
 	//if the label is already there we may need to remove it
-	foreach($labels as $L)
-		if($L == $r4rlabel){
+	foreach($labels as $L){
+		if(in_array($L, $labels_which_should_not_be_ready))
+			$should_not_have_label = true;
+		if($L == $r4rlabel)
 			$has_label_already = true;
-			break;
-		}
+	}
+	
+	if($has_label_already && $should_not_have_label){
+		remove_ready_for_review($payload, $labels, $r4rlabel);
+		return;
+	}
 
 	//find all reviews to see if changes were requested at some point
 	$reviews = json_decode(apisend($payload['pull_request']['url'] . '/reviews'), true);
