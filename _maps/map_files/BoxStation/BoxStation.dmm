@@ -63913,6 +63913,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"cTJ" = (
+/obj/machinery/party/turntable,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
 
 (1,1,1) = {"
 aaa
@@ -83871,7 +83875,7 @@ bHE
 bYu
 bZk
 bCq
-cTG
+cTF
 bCq
 bCq
 bCq
@@ -85167,7 +85171,7 @@ bCq
 bCq
 bCq
 bCq
-cTH
+cTF
 bCq
 bLv
 bLv
@@ -99751,7 +99755,7 @@ aGI
 aId
 aJD
 aKP
-aMx
+aOL
 aNJ
 aQe
 aOL
@@ -100008,7 +100012,7 @@ aGH
 aIc
 aJC
 aKO
-aMw
+cTJ
 aNI
 aMw
 aOK
