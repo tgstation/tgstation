@@ -949,11 +949,12 @@ GLOBAL_PROTECT(config_dir)
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
+	// ^ This guy didn't try hard enough
 	for(var/T in gamemode_cache)
-		var/datum/game_mode/M = new T()
-		if(M.config_tag && M.config_tag == mode_name)
-			return M
-		qdel(M)
+		var/datum/game_mode/M = T
+		var/ct = initial(M.config_tag)
+		if(ct && ct == mode_name)
+			return new T
 	return new /datum/game_mode/extended()
 
 /datum/configuration/proc/get_runnable_modes()
