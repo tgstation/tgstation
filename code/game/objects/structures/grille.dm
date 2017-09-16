@@ -123,7 +123,7 @@
 			return
 
 //window placing begin
-	else if(istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass))
+	else if(is_glass_sheet(W))
 		if (!broken)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
@@ -143,7 +143,11 @@
 				for(var/obj/structure/window/WINDOW in loc) //Another window already installed on grille
 					return
 				var/obj/structure/window/WD
-				if(istype(W, /obj/item/stack/sheet/rglass))
+				if(istype(W, /obj/item/stack/sheet/plasmarglass))
+					WD = new/obj/structure/window/plasma/reinforced/fulltile(loc) //reinforced plasma window
+				else if(istype(W, /obj/item/stack/sheet/plasmaglass))
+					WD = new/obj/structure/window/plasma/fulltile(loc) //plasma window
+				else if(istype(W, /obj/item/stack/sheet/rglass))
 					WD = new/obj/structure/window/reinforced/fulltile(loc) //reinforced window
 				else
 					WD = new/obj/structure/window/fulltile(loc) //normal window
