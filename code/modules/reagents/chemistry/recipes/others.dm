@@ -109,7 +109,7 @@
 	mob_react = 1
 
 /datum/chemical_reaction/bluespacesolidification/on_reaction(datum/reagents/holder, created_volume)
-	new /obj/item/weapon/ore/bluespace_crystal(get_turf(holder.my_atom))
+	new /obj/item/ore/bluespace_crystal(get_turf(holder.my_atom))
 
 
 /datum/chemical_reaction/capsaicincondensation

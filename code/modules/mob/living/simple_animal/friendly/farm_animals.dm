@@ -28,7 +28,7 @@
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
-
+/*
 /mob/living/simple_animal/hostile/retaliate/goat/maidan
 	name = "Space pig"
 	desc = "Ukrainian spy escaped from a space prison.."
@@ -60,7 +60,7 @@
 	melee_damage_upper = 15
 	stop_automated_movement_when_pulled = 1
 	gold_core_spawnable = 1
-
+*/
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
 	. = ..()
