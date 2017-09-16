@@ -46,7 +46,6 @@
 	var/Angle = 0
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
-	var/legacy = FALSE			//legacy projectile system
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
 	var/ricochets = 0
 	var/ricochets_max = 2
@@ -157,7 +156,7 @@
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
 /obj/item/projectile/Collide(atom/A)
-	if(check_ricochet() && check_ricochet_flag(A) && ricochets < ricochets_max)
+	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
 			ignore_source_check = TRUE
@@ -201,7 +200,7 @@
 	qdel(src)
 	return TRUE
 
-/obj/item/projectile/proc/check_ricochet()
+/obj/item/projectile/proc/check_ricochet(atom/A)
 	if(prob(ricochet_chance))
 		return TRUE
 	return FALSE
@@ -220,7 +219,6 @@
 		return PROCESS_KILL
 	if(paused || !Angle || !isturf(loc))
 		return
-	to_chat(world, "DEBUG: speed [speed] angle [Angle] last move time [last_projectile_move] world time [world.time] time offste [time_offset]")
 	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
 	time_offset = 0
 	var/required_moves = speed > 0? Floor(elapsed_time_deciseconds / speed) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
@@ -234,7 +232,7 @@
 		time_offset += Modulus(elapsed_time_deciseconds, speed)
 
 	for(var/i in 1 to required_moves)
-		legacy? legacy_move() : pixel_move(required_moves)
+		pixel_move(required_moves)
 
 /obj/item/projectile/proc/fire(setAngle, atom/direct_target)
 	old_alpha = alpha
@@ -297,19 +295,10 @@
 	step_towards(src, locate(new_x, new_y, z))
 	pixel_x = old_pixel_x
 	pixel_y = old_pixel_y
-	var/animation_time = ((SSprojectiles.flags & SS_TICKER? (SSprojectiles.wait * world.tick_lag) : SSprojectiles.wait) / moves)
+	//var/animation_time = ((SSprojectiles.flags & SS_TICKER? (SSprojectiles.wait * world.tick_lag) : SSprojectiles.wait) / moves)
 	animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = 1, flags = ANIMATION_END_NOW)
 	old_pixel_x = pixel_x_offset
 	old_pixel_y = pixel_y_offset
-	if(can_hit_target(original, permutated))
-		Collide(original)
-	Range()
-	last_projectile_move = world.time
-
-/obj/item/projectile/proc/legacy_move()
-	if((!( current ) || loc == current))
-		current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-	step_towards(src, current)
 	if(can_hit_target(original, permutated))
 		Collide(original)
 	Range()
