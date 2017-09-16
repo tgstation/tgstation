@@ -1,9 +1,4 @@
 /obj/effect/proc_holder/spell
-	name = "Generic Vampire Power"
-	charge_max = 200
-	action_icon = 'hippiestation/icons/mob/vampire.dmi'
-	action_background_icon_state = "bg_demon"
-	clothes_req = FALSE
 	human_req = TRUE
 	var/gain_desc = null
 	var/blood_used = 0
@@ -20,6 +15,12 @@
 		if(V.usable_blood < blood_used)
 			to_chat(user, "<span class='warning'>You do not have enough blood to cast this!</span>")
 			return FALSE
+
+/obj/effect/proc_holder/spell/Initialize()
+	. = ..()
+	if(vamp_req)
+		clothes_req = FALSE
+		human_req = TRUE
 
 
 /obj/effect/proc_holder/spell/before_cast(list/targets)
@@ -42,7 +43,7 @@
 			// stop!!
 			targets.Cut()
 
-		if(targets.len)
+		if(LAZYLEN(target))
 			to_chat(usr, "<span class='notice'><b>You have [vampire.usable_blood] left to use.</b></span>")
 
 
@@ -96,6 +97,9 @@
 	action_icon_state = "rejuv"
 	charge_max = 200
 	stat_allowed = 1
+	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
+	vamp_req = TRUE
 
 /obj/effect/proc_holder/spell/self/rejuvenate/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/U = user
@@ -122,6 +126,9 @@
 	desc= "A piercing stare that incapacitates your victim for a good length of time."
 	action_icon_state = "hypnotize"
 	blood_used = 20
+	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
+	vamp_req = TRUE
 
 /obj/effect/proc_holder/spell/targeted/hypnotise/cast(list/targets, mob/user = usr)
 	for(var/mob/living/target in targets)
@@ -141,7 +148,10 @@
 	desc = "Changes your name and appearance at the cost of 50 blood and has a cooldown of 3 minutes."
 	gain_desc = "You have gained the shapeshifting ability, at the cost of stored blood you can change your form permanently."
 	action_icon_state = "genetic_poly"
+	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
 	blood_used = 50
+	vamp_req = TRUE
 
 /obj/effect/proc_holder/spell/self/shapeshift/cast(list/targets, mob/user = usr)
 	if(ishuman(user))
@@ -156,6 +166,9 @@
 	gain_desc = "You have gained the Cloak of Darkness ability which when toggled makes you near invisible in the shroud of darkness."
 	action_icon_state = "cloak"
 	charge_max = 10
+	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
+	vamp_req = TRUE
 
 /obj/effect/proc_holder/spell/self/cloak/New()
 	..()
@@ -181,7 +194,10 @@
 	desc = "Touches your victim with infected blood giving them Grave Fever, which will, left untreated, causes toxic building and frequent collapsing."
 	gain_desc = "You have gained the Diseased Touch ability which causes those you touch to become weak unless treated medically."
 	action_icon_state = "disease"
+	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
 	blood_used = 100
+	vamp_req = TRUE
 
 /obj/effect/proc_holder/spell/targeted/disease/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/target in targets)
@@ -198,7 +214,10 @@
 	desc = "An extremely loud shriek that stuns nearby humans and breaks windows as well."
 	gain_desc = "You have gained the Chiropteran Screech ability which stuns anything with ears in a large radius and shatters glass in the process."
 	action_icon_state = "reeee"
+	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
 	blood_used = 30
+	vamp_req = TRUE
 
 /obj/effect/proc_holder/spell/self/screech/cast(list/targets, mob/user = usr)
 	user.visible_message("<span class='warning'>[user] lets out an ear piercing shriek!</span>", "<span class='warning'>You let out a loud shriek.</span>", "<span class='warning'>You hear a loud painful shriek!</span>")
@@ -224,7 +243,10 @@
 	desc = "You summon a pair of space bats who attack nearby targets until they or their target is dead."
 	gain_desc = "You have gained the Summon Bats ability."
 	action_icon_state = "bats"
+	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
 	charge_max = 1200
+	vamp_req = TRUE
 	blood_used = 75
 	var/num_bats = 2
 
@@ -258,6 +280,8 @@
 	var/jaunt_in_type = /obj/effect/temp_visual/wizard
 	var/jaunt_out_type = /obj/effect/temp_visual/wizard/out
 	action_icon_state = "jaunt"
+	action_background_icon_state = "bg_demon"
+	vamp_req = TRUE
 
 /obj/effect/proc_holder/spell/targeted/mistform/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
