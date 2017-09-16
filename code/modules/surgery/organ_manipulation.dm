@@ -1,6 +1,6 @@
 /datum/surgery/organ_manipulation
 	name = "organ manipulation"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders,
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/fuck_with_wound, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders,
 	/datum/surgery_step/incise, /datum/surgery_step/manipulate_organs)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("chest", "head")
@@ -9,7 +9,7 @@
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders,
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/fuck_with_wound, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders,
 	/datum/surgery_step/incise, /datum/surgery_step/manipulate_organs)
 
 /datum/surgery/organ_manipulation/alien
@@ -19,11 +19,16 @@
 	steps = list(/datum/surgery_step/saw, /datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/manipulate_organs)
 
 
-
+/datum/surgery_step/fuck_with_wound
+	name = "fuck_with_wound"
+	accept_hand = 1
+	time = 10
+	repeatable = 1
 
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
+	//repeateble = 1
 	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
 	var/implements_extract = list(/obj/item/hemostat = 100, /obj/item/crowbar = 55)
 	var/implements_mend = list(/obj/item/cautery = 100, /obj/item/weldingtool = 70, /obj/item/lighter = 45, /obj/item/match = 20)

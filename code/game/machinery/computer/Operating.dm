@@ -61,6 +61,16 @@
 		for(var/datum/surgery/procedure in patient.surgeries)
 			dat += "[capitalize(procedure.name)]<BR>"
 			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
-			dat += "Next step: [capitalize(surgery_step.name)]<BR>"
+			dat += "Next step: [capitalize(surgery_step.name)]"
+			if(surgery_step.repeatable)
+				var/datum/surgery/surgery = surgery_step.surgery
+				if(surgery)
+					dat += " or "
+					var/datum/surgery_step/next_step = surgery.steps[surgery.status + 1]
+					if(next_step)
+						dat += "[capitalize(next_step.name)]"
+					else
+						dat += "finish operation" // Current step is repeatable, but there is no next step. Try to finish it with cautery.
+			dat += "<BR>"
 		dat += "</div>"
 	return dat
