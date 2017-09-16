@@ -10,30 +10,10 @@ SUBSYSTEM_DEF(voice)
 	var/list/client/current_run = list()
 	var/list/client/changed = list()
 
-	// for debugging, a "full refresh" every so often should catch things we
-	// aren't handling yet
-	var/force_wait = 150 // how many ds between full refreshes
-	var/force_ct = 0 // counter
-
-/datum/controller/subsystem/voice/proc/refresh_client(client/C)
-	//message_admins("SSvoice: refresh request for [C]")
-	C.voice.needs_check = TRUE
-
-/datum/controller/subsystem/voice/proc/refresh_everybody()
-	message_admins("SSvoice: refresh everybody request")
-	force_ct = force_wait
-
 /datum/controller/subsystem/voice/fire(resumed = 0)
 	// Populate current_run from queue as needed
 	if (!resumed)
 		src.current_run = GLOB.clients.Copy()
-
-		// Periodic full refresh handling
-		force_ct += wait
-		if (force_ct >= force_wait)
-			force_ct = 0
-			for (var/client/C in src.current_run)
-				C.voice.needs_check = TRUE
 	else
 		message_admins("SSvoice: resuming")
 
@@ -43,9 +23,12 @@ SUBSYSTEM_DEF(voice)
 		var/client/C = current_run[current_run.len]
 		var/datum/voicestuff/voice = C.voice
 		current_run.len--
-		if (!voice.needs_check || voice.next_check > world.time)
+
+		// Only check if (marked && not too recent) || very old
+		if (!((voice.next_check < world.time - 100) || (voice.next_check < world.time && voice.needs_check)))
 			continue
-		message_admins("SSvoice: refresh [C]")
+
+		//message_admins("SSvoice: refresh [C]")
 		voice.needs_check = FALSE
 		// Only handle a given person every so often
 		voice.next_check = world.time + 10
@@ -152,9 +135,7 @@ SUBSYSTEM_DEF(voice)
 			voice.next_subspace_check = world.time + rand(25, 75)
 			if (list2params(voice.subspace_zlevels) != previous)
 				// if it's changed, refresh immediately
-				SSvoice.refresh_client(src)
-			else
-				//to_chat(src, "it didn't change")
+				src.voice.needs_check = TRUE
 
 	//var/checked = 0
 	// Check ears for a headset (";" prefix)
@@ -218,6 +199,23 @@ SUBSYSTEM_DEF(voice)
 	if (dist <= canhear_range && frequency == VOICE_FREQ && !wires.is_cut(WIRE_TX) && (ptt || broadcasting))
 		. |= VOICE_SPEAK | (broadcasting ? VOICE_SPEAK_FREELY : 0)
 
+/obj/item/device/radio/equipped(mob/user, slot)
+	..()
+	if (user.client)
+		user.client.voice.needs_check = TRUE
+
+/obj/item/device/radio/dropped(mob/user)
+	..()
+	if (user.client)
+		user.client.voice.needs_check = TRUE
+
+/obj/item/device/radio/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if (action in list("frequency", "listen", "broadcast", "channel", "subspace"))
+		for (var/mob/living/M in get_hearers_in_view(canhear_range, src))
+			if (M.client)
+				M.client.voice.needs_check = TRUE
+
 /mob/living/Moved()
 	. = ..()
 	if (client)
@@ -228,14 +226,8 @@ SUBSYSTEM_DEF(voice)
 	if (. && client)
 		spawn(1) client.voice.needs_check = TRUE
 
-// TODO: hook changes to the ears and hands slots
-
-// TODO: in-game icon indicators
-
-// TODO: a separate push-to-talk setting
-
 // TODO: cache radio coverage per-turf, recalculate infrequently or only when
-// needed, and use that rather than an expensive object lookup
+// needed, and use that rather than an object lookup.
 
 // ---------- Screen pieces
 
