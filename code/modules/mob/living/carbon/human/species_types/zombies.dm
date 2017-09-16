@@ -3,8 +3,8 @@
 	name = "High Functioning Zombie"
 	id = "zombie"
 	say_mod = "moans"
-	sexes = 0
-	blacklisted = 1
+	sexes = FALSE
+	blacklisted = SPECIES_BLACKLIST_SLIME_MUT
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,NOTRANSSTING)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
@@ -20,6 +20,7 @@
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 2
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
+	blacklisted = SPECIES_BLACKLIST_MAGIC_MIRROR
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	. = min(2, amount)

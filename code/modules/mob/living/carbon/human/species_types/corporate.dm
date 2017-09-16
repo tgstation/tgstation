@@ -13,7 +13,7 @@
 	punchstunthreshold = 25
 	attack_verb = "smash"
 	attack_sound = 'sound/weapons/resonator_blast.ogg'
-	blacklisted = 1
-	use_skintones = 0
+	blacklisted = SPECIES_BLACKLIST_MAGIC_MIRROR
+	use_skintones = FALSE
 	species_traits = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
-	sexes = 0
+	sexes = FALSE
