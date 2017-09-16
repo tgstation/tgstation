@@ -130,8 +130,8 @@
 				if(available_software.Find(target))
 					var/cost = src.available_software[target]
 					if(ram >= cost)
-						ram -= cost
 						software.Add(target)
+						ram -= cost
 					else
 						temp = "Insufficient RAM available."
 				else
