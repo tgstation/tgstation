@@ -8,13 +8,20 @@
 		stat("Total Blood", vamp.total_blood)
 		stat("Usable Blood", vamp.usable_blood)
 
+/mob/living/carbon/human/Life()
+	. = ..()
+	if(is_vampire(src))
+		var/datum/antagonist/vampire/vamp = mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+		vamp.vampire_life()
+
+
 /datum/game_mode/vampire
 	name = "vampire"
 	config_tag = "vampire"
 	antag_flag = ROLE_VAMPIRE
 	false_report_weight = 1
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Head of Security", "Captain", "Security Officer", "Chaplain")
+	protected_jobs = list("Head of Security", "Captain", "Security Officer", "Chaplain", "Detective", "Warden")
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 3
