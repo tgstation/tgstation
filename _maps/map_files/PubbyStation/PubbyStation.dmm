@@ -2168,7 +2168,7 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "afe" = (
-/obj/item/twohanded/required/kirbyplants/photosynthetic{;
+/obj/item/twohanded/required/kirbyplants/photosynthetic{
 	pixel_y = 10
 	},
 /obj/structure/cable/yellow{
@@ -14642,7 +14642,9 @@
 	},
 /area/crew_quarters/heads/captain)
 "aGn" = (
-/obj/item/twohanded/required/kirbyplants/photosynthetic,
+/obj/item/twohanded/required/kirbyplants/photosynthetic{
+	layer = 3.1
+	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
@@ -35382,7 +35384,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants/photosynthetic{;
+/obj/item/twohanded/required/kirbyplants/photosynthetic{
 	pixel_y = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,

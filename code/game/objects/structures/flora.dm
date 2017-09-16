@@ -301,7 +301,8 @@
 	icon_state = "plant-25"
 
 /obj/item/twohanded/required/kirbyplants/photosynthetic
-	name = "Photosynthetic Potted plant"
+	name = "photosynthetic potted plant"
+	desc = "A bioluminescent plant."
 	icon_state = "plant-09"
 	light_color = "#2cb2e8"
 	light_range = 3
