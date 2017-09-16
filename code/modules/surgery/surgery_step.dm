@@ -5,11 +5,10 @@
 	var/accept_hand = 0				//does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
 	var/accept_any_item = 0			//does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
 	var/time = 10					//how long does the step take?
-	var/repeatable = 0				//does this step may be repeated?
-	var/datum/surgery/surgery = null
+	var/repeatable = 0				//does this step may be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
 
 
-/datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool)
+/datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/success = 0
 	if(accept_hand)
 		if(!tool)
@@ -33,20 +32,23 @@
 			else
 				to_chat(user, "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>")
 				return 1	//returns 1 so we don't stab the guy in the dick or wherever.
+
+	if(repeatable)
+		var/datum/surgery_step/next_step = surgery.get_surgery_next_step()
+		if(next_step)
+			surgery.status++
+			if(next_step.try_op(user, target, user.zone_selected, user.get_active_held_item(), surgery))
+				return 1
+			else
+				surgery.status--
+
 	if(iscyborg(user) && user.a_intent != INTENT_HARM) //to save asimov borgs a LOT of heartache
 		return 1
-
-	if(repeatable && surgery.steps[surgery.status + 1])
-		surgery.status++
-		if (try_op(user, target, target_zone, tool, surgery))
-			return 1
-		else
-			surgery.status--
 
 	return 0
 
 
-/datum/surgery_step/proc/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool)
+/datum/surgery_step/proc/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	surgery.step_in_progress = 1
 
 	var/speed_mod = 1
@@ -81,15 +83,15 @@
 	surgery.step_in_progress = 0
 
 
-/datum/surgery_step/proc/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool)
+/datum/surgery_step/proc/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to perform surgery on [target].", "<span class='notice'>You begin to perform surgery on [target]...</span>")
 
 
-/datum/surgery_step/proc/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool)
+/datum/surgery_step/proc/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] succeeds!", "<span class='notice'>You succeed.</span>")
 	return 1
 
-/datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool)
+/datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='warning'>[user] screws up!</span>", "<span class='warning'>You screw up!</span>")
 	return 0
 
