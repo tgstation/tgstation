@@ -1315,11 +1315,11 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/role_restricted/traitorsec
 	name = "Bloodhound upgrade modules"
- 	desc = "A box containing an cyborg upgrade module that instantly hacks a cyborg and unlocks the outlawed securiy module (in a inconspicuous black-and-red paintjob)"
- 	item = /obj/item/storage/box/syndie_kit/traitorsec_boards
- 	cost = 16
- 	restricted_roles = list("Roboticist", "Research Director")
- 	surplus = 5
+	desc = "A box containing an cyborg upgrade module that instantly hacks a cyborg and unlocks the outlawed securiy module (in a inconspicuous black-and-red paintjob)"
+	item = /obj/item/storage/box/syndie_kit/traitorsec_boards
+	cost = 16
+	restricted_roles = list("Roboticist", "Research Director")
+	surplus = 5
 	
 // Pointless
 /datum/uplink_item/badass
