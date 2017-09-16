@@ -956,7 +956,7 @@ GLOBAL_PROTECT(config_dir)
 		qdel(M)
 	return new /datum/game_mode/extended()
 
-/datum/configuration/proc/get_runnable_modes()
+/datum/configuration/proc/get_runnable_modes(var/ignore_weight = FALSE)
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
@@ -971,7 +971,7 @@ GLOBAL_PROTECT(config_dir)
 			M.required_players = min_pop[M.config_tag]
 		if(max_pop[M.config_tag])
 			M.maximum_players = max_pop[M.config_tag]
-		if(M.can_start())
+		if(M.can_start() && !ignore_weight)
 			var/final_weight = probabilities[M.config_tag]
 			if(SSpersistence.saved_modes.len == 3 && repeated_mode_adjust.len == 3)
 				var/recent_round = min(SSpersistence.saved_modes.Find(M.config_tag),3)
