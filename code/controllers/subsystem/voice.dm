@@ -1,82 +1,109 @@
-// Used to process voice comms. Fires twice per second.
+// Used to process voice comms.
 
 SUBSYSTEM_DEF(voice)
 	name = "Voice Comms"
 	priority = 25
 	flags = SS_BACKGROUND | SS_NO_INIT
-	wait = 5
+	wait = 2
 
 	// queue of clients whose state might have changed
-	var/list/client/queue = list()
-	var/list/client/currentrun = list()
+	var/list/client/current_run = list()
 	var/list/client/changed = list()
 
 	// for debugging, a "full refresh" every so often should catch things we
 	// aren't handling yet
-	var/force_wait = 50 // how many ds between full refreshes
+	var/force_wait = 150 // how many ds between full refreshes
 	var/force_ct = 0 // counter
 
 /datum/controller/subsystem/voice/proc/refresh_client(client/C)
-	message_admins("SSvoice: refreshing client [C]")
-	queue |= C
+	//message_admins("SSvoice: refresh request for [C]")
+	C.voice.needs_check = TRUE
 
 /datum/controller/subsystem/voice/proc/refresh_everybody()
-	message_admins("SSvoice: refreshing everybody")
+	message_admins("SSvoice: refresh everybody request")
 	force_ct = force_wait
 
 /datum/controller/subsystem/voice/fire(resumed = 0)
 	// Populate current_run from queue as needed
 	if (!resumed)
+		src.current_run = GLOB.clients.Copy()
+
+		// Periodic full refresh handling
 		force_ct += wait
 		if (force_ct >= force_wait)
 			force_ct = 0
-			currentrun = GLOB.clients.Copy()
-		else
-			currentrun = queue.Copy()
-			if (currentrun.len)
-				message_admins("SSvoice: processing [currentrun.len] refreshes")
-		queue.len = 0
+			for (var/client/C in src.current_run)
+				C.voice.needs_check = TRUE
+	else
+		message_admins("SSvoice: resuming")
 
 	// For clients in current_run, mark them as changed if needed
-	var/list/client/current_run = currentrun
+	var/list/client/current_run = src.current_run
 	while (current_run.len)
 		var/client/C = current_run[current_run.len]
+		var/datum/voicestuff/voice = C.voice
 		current_run.len--
+		if (!voice.needs_check || voice.next_check > world.time)
+			continue
+		message_admins("SSvoice: refresh [C]")
+		voice.needs_check = FALSE
+		// Only handle a given person every so often
+		voice.next_check = world.time + 10
 
-		var/voice = C.voice_check()
-		if (voice == null)
-			message_admins("voice_check on [C] crashed, check logs")
-		if (voice != C.voice_last)
-			C.voice_last = voice
+		var/status = C.voice_check()
+		if (status == null)
+			message_admins("SSvoice: voice_check on [C] crashed, check logs")
+		if (status != voice.status)
+			voice.status = status
 			changed += C
 
+		// This is a hacky way to get these things onto the client's screen,
+		// without going through the per-mob HUD. Maybe this means some portion
+		// of the voice status discovery code should be moved to mobs instead.
+		C.screen |= voice.screen_speak
+		C.screen |= voice.screen_hear
+		voice.screen_speak.update_voice(voice.status)
+		voice.screen_hear.update_voice(voice.status)
+
 		if (MC_TICK_CHECK)
+			message_admins("SSvoice: suspending")
 			return
 
 	// Batch every changed client in one shell invocation
 	if (changed.len)
 		var/shell_cmd = "updatevoice.exe"
 		for (var/client/C in changed)
-			shell_cmd += " [C.ckey]=[C.voice_last]"
+			shell_cmd += " [C.ckey]=[C.voice.status]"
 		changed.len = 0
 
 		message_admins(shell_cmd) // TODO: actually shell out
 
-// Additions to client
+// ---------- Definitions and whatnot
 
 #define VOICE_NONE 0
-#define VOICE_SPEAK 1
-#define VOICE_HEAR 2
-#define VOICE_ALL 3
+#define VOICE_HEAR 1
+#define VOICE_SPEAK 2
+#define VOICE_SPEAK_FREELY 4
+#define VOICE_ALL 7
 
 #define VOICE_LANG /datum/language/common
 #define VOICE_FREQ GLOB.radiochannels["Common"]
 #define VOICE_MAX_RANGE 3   // biggest canhear_range of any radio
 
-/client
-	var/voice_last = VOICE_ALL
-	var/voice_last_subspace = list(ZLEVEL_STATION_PRIMARY)
-	var/voice_next_subspace_check = 1
+/datum/voicestuff
+	var/status = VOICE_ALL
+	var/subspace_zlevels = list(ZLEVEL_STATION_PRIMARY)
+	var/next_subspace_check = 1
+
+	var/next_check = 1
+	var/needs_check = TRUE
+
+	var/obj/screen/voicestatus/speak/screen_speak = new
+	var/obj/screen/voicestatus/hear/screen_hear = new
+
+/client/var/datum/voicestuff/voice = new
+
+// ---------- Additions to client
 
 /client/proc/voice_check()
 	// Fast paths:
@@ -101,7 +128,7 @@ SUBSYSTEM_DEF(voice)
 	var/mob_can_hear = (mob.can_hear() && !!mob.has_language(VOICE_LANG))
 	var/mob_can_speak = (mob.can_speak() && mob.can_speak_in_language(VOICE_LANG) && mob.stat == CONSCIOUS)
 	// TODO: consider disable speaking for severe impediments (e.g. no tounge)
-	var/mob_can = (mob_can_hear ? VOICE_HEAR : 0) | (mob_can_speak ? VOICE_SPEAK : 0)
+	var/mob_can = (mob_can_hear ? VOICE_HEAR : 0) | (mob_can_speak ? (VOICE_SPEAK | VOICE_SPEAK_FREELY) : 0)
 	if (mob_can == VOICE_NONE)
 		return VOICE_NONE
 
@@ -110,24 +137,24 @@ SUBSYSTEM_DEF(voice)
 
 	// Subspace checking
 	var/turf/position = get_turf(mob)
-	var/subspace_on = (position.z in voice_last_subspace)
-	if (voice_next_subspace_check && voice_next_subspace_check <= world.time)
-		voice_next_subspace_check = 0 // don't overlap checks
+	var/subspace_on = (position.z in voice.subspace_zlevels)
+	if (voice.next_subspace_check && voice.next_subspace_check <= world.time)
+		voice.next_subspace_check = 0 // don't overlap checks
 		spawn // testing takes time for the signal to transfer
 			// store the list of Z-levels so when we move we stay current
 			var/datum/signal/signal = mob.telecomms_process()
-			var/list/previous = list2params(voice_last_subspace)
+			var/list/previous = list2params(voice.subspace_zlevels)
 			if (!signal.data["done"])
-				voice_last_subspace = list()
+				voice.subspace_zlevels = list()
 			else
-				voice_last_subspace = signal.data["level"]
-			to_chat(src, "subspace_ck: [list2params(voice_last_subspace)]")
-			voice_next_subspace_check = world.time + rand(50, 100)
-			if (list2params(voice_last_subspace) != previous)
+				voice.subspace_zlevels = signal.data["level"]
+			//to_chat(src, "subspace_ck: [list2params(voice.subspace_zlevels)]")
+			voice.next_subspace_check = world.time + rand(25, 75)
+			if (list2params(voice.subspace_zlevels) != previous)
 				// if it's changed, refresh immediately
 				SSvoice.refresh_client(src)
 			else
-				to_chat(src, "it didn't change")
+				//to_chat(src, "it didn't change")
 
 	//var/checked = 0
 	// Check ears for a headset (";" prefix)
@@ -153,7 +180,7 @@ SUBSYSTEM_DEF(voice)
 			. |= R.voice_check(mob, subspace_on, ptt=TRUE)
 
 	// Check surrounding environment for open mics...
-	if (VOICE_SPEAK & mob_can & ~.)
+	if ((VOICE_SPEAK | VOICE_SPEAK_FREELY) & mob_can & ~.)
 		for (var/obj/item/device/radio/R in get_hearers_in_view(VOICE_MAX_RANGE, mob))
 			//checked++
 			. |= R.voice_check(mob, subspace_on)
@@ -168,6 +195,8 @@ SUBSYSTEM_DEF(voice)
 	//to_chat(src, "checked = [checked]; result = [.]; mob_can = [mob_can]")
 	. &= mob_can
 
+// ---------- Additions to mobs and radios
+
 /obj/item/device/radio/proc/voice_check(mob/M, subspace_on, ptt=FALSE)
 	if (!on) return 0 // short path
 
@@ -181,38 +210,50 @@ SUBSYSTEM_DEF(voice)
 	// receive_range should be checking the frequency and everything else
 	var/dist = get_dist(src, M)
 	//to_chat(M, "[src]: dist=[dist], recv_range=[receive_range(VOICE_FREQ, M.z)], canhear_range=[canhear_range], subspace=[subspace_transmission], listening=[listening], broadcasting=[broadcasting]")
-	if (dist <= receive_range(VOICE_FREQ, list(position.z)))
+	var/range = receive_range(VOICE_FREQ, list(position.z))
+	if (range > -1 && dist <= range && M in get_hearers_in_view(range, src))
 		. |= VOICE_HEAR
 
 	// manually do all the speaking stuff, corresponds to talk_into
 	if (dist <= canhear_range && frequency == VOICE_FREQ && !wires.is_cut(WIRE_TX) && (ptt || broadcasting))
-		. |= VOICE_SPEAK
+		. |= VOICE_SPEAK | (broadcasting ? VOICE_SPEAK_FREELY : 0)
 
 /mob/living/Moved()
 	. = ..()
 	if (client)
-		SSvoice.refresh_client(client)
+		client.voice.needs_check = TRUE
 
 /mob/living/afterShuttleMove()
 	. = ..()
 	if (. && client)
-		spawn(1) SSvoice.refresh_client(client)
+		spawn(1) client.voice.needs_check = TRUE
 
 // TODO: hook changes to the ears and hands slots
-
-// TODO: consider redoing the queue so that requests are processed immediately,
-// and then subsequent requests for the same client are debounced until some
-// cooldown (like .5s or 1s maybe). Clients that haven't refreshed in a while
-// (like 5s or 10s maybe) are regularly refreshed.
 
 // TODO: in-game icon indicators
 
 // TODO: a separate push-to-talk setting
 
-#undef VOICE_NONE
-#undef VOICE_SPEAK
-#undef VOICE_HEAR
-#undef VOICE_ALL
-#undef VOICE_LANG
-#undef VOICE_FREQ
-#undef VOICE_MAX_RANGE
+// TODO: cache radio coverage per-turf, recalculate infrequently or only when
+// needed, and use that rather than an expensive object lookup
+
+// ---------- Screen pieces
+
+/obj/screen/voicestatus
+	name = "voice indicator"
+	icon = 'icons/mob/screen_voice.dmi'
+	icon_state = "blank"
+
+/obj/screen/voicestatus/speak
+	name = "speech indicator"
+	screen_loc = "EAST:-4,SOUTH+2:9"
+
+/obj/screen/voicestatus/speak/proc/update_voice(state)
+	icon_state = ((state & VOICE_SPEAK) ? "" : "no") + "speak" + ((state & VOICE_SPEAK_FREELY) ? "2" : "")
+
+/obj/screen/voicestatus/hear
+	name = "hearing indicator"
+	screen_loc = "EAST:12,SOUTH+2:9"
+
+/obj/screen/voicestatus/hear/proc/update_voice(state)
+	icon_state = (state & VOICE_HEAR) ? "hear" : "nohear"
