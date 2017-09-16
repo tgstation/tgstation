@@ -43,7 +43,7 @@
 			// stop!!
 			targets.Cut()
 
-		if(LAZYLEN(target))
+		if(LAZYLEN(targets))
 			to_chat(usr, "<span class='notice'><b>You have [vampire.usable_blood] left to use.</b></span>")
 
 
