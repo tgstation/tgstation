@@ -341,7 +341,7 @@
 	hat_offset = 3
 
 /obj/item/robot_module/security/traitorsec
-	name = "Bloodhound"
+	name = "Opressor"
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	feedback_key = "cyborg_traitorsec"
