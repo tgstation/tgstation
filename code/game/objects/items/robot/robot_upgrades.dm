@@ -413,6 +413,6 @@
 	if(..())
 		return 0
 
-	R.module.transform_to(/obj/item/weapon/robot_module/security/traitorsec)
+	R.module.transform_to(/obj/item/robot_module/security/traitorsec)
 	R.emag_act(user)
 	return 1
