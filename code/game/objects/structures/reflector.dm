@@ -152,6 +152,8 @@
 	var/incidence = get_angle_of_incidence(rotation_angle, P.Angle)
 	var/incidence_norm = get_angle_of_incidence(rotation_angle, P.Angle, FALSE)
 	var/new_angle_s = rotation_angle + incidence
+	if(incidence_norm > 90 || incidence_norm < -90)
+		return FALSE
 	while(new_angle_s > 180)	// Translate to regular projectile degrees
 		new_angle_s -= 360
 	while(new_angle_s < -180)
@@ -181,7 +183,7 @@
 	var/incidence = get_angle_of_incidence(rotation_angle, P.Angle)
 	var/incidence_norm = get_angle_of_incidence(rotation_angle, P.Angle, FALSE)
 	var/new_angle_s = rotation_angle + incidence
-	if(incidence_norm < 90 || incidence_norm > -90)
+	if(incidence_norm > 90 || incidence_norm < -90)
 		new_angle_s += 180
 	while(new_angle_s > 180)	// Translate to regular projectile degrees
 		new_angle_s -= 360
