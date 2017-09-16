@@ -823,9 +823,7 @@
 /area/crew_quarters/heads/hop)
 "abt" = (
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "abu" = (
 /turf/open/floor/plating/astplate,
 /area/ruin/unpowered{
@@ -1018,24 +1016,18 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/starboard/fore)
 "abM" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/starboard/fore)
 "abN" = (
 /obj/structure/sign/vacuum,
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "abO" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt,
@@ -1044,9 +1036,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "abP" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/astplate,
@@ -1105,9 +1095,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/fore)
 "abX" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1381,9 +1369,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/starboard/fore)
 "acv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1391,9 +1377,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "acw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
@@ -1407,9 +1391,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "acx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -1420,9 +1402,7 @@
 /obj/effect/landmark/xeno_spawn,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "acy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
@@ -1433,9 +1413,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "acz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -1554,9 +1532,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/fore)
 "acO" = (
 /obj/structure/mirror{
 	pixel_x = -26
@@ -1911,13 +1887,21 @@
 "adm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Starboard Bow Maintenace APC";
+	areastring = "/area/maintenance/starboard/fore";
+	pixel_x = 26
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/starboard/fore)
 "adn" = (
 /turf/closed/wall,
 /area/quartermaster/storage)
@@ -2047,9 +2031,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/fore)
 "adG" = (
 /obj/structure/toilet{
 	dir = 4
@@ -2268,10 +2250,13 @@
 "adY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/starboard/fore)
 "adZ" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -2494,10 +2479,19 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Fore Maintenace APC";
+	areastring = "/area/maintenance/fore";
+	pixel_x = -26;
+	pixel_y = 3
+	},
+/obj/structure/cable/white{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/fore)
 "aeu" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
@@ -2986,15 +2980,18 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/security/detectives_office)
+/area/maintenance/fore)
 "afj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/fore)
 "afk" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
@@ -3277,10 +3274,13 @@
 "afB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/blobstart,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/starboard/fore)
 "afC" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -3461,10 +3461,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /obj/effect/landmark/event_spawn,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/fore)
 "afW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -3481,7 +3484,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/heads/captain/private)
+/area/maintenance/fore)
 "afX" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -3759,13 +3762,16 @@
 "agu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/starboard/fore)
 "agv" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
@@ -3939,9 +3945,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/fore)
 "agO" = (
 /obj/machinery/light{
 	dir = 8
@@ -4245,10 +4249,13 @@
 "ahj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/starboard/fore)
 "ahk" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -4547,7 +4554,6 @@
 /obj/item/storage/secure/safe{
 	pixel_x = 32
 	},
-/obj/item/reagent_containers/food/drinks/flask/det,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24;
 	pixel_y = -26
@@ -4564,9 +4570,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/fore)
 "ahH" = (
 /obj/structure/sign/securearea{
 	pixel_x = -32
@@ -4723,30 +4727,22 @@
 /area/bridge)
 "ahY" = (
 /turf/closed/wall/r_wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ahZ" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aia" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aib" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aic" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -4757,9 +4753,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aid" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
@@ -5010,9 +5004,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/fore)
 "aiy" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_command{
@@ -5096,9 +5088,7 @@
 /turf/open/floor/plasteel/loadingarea{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aiE" = (
 /obj/structure/cable/white{
 	d2 = 2;
@@ -5106,24 +5096,18 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aiF" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "hopline";
 	name = "Queue Shutters"
 	},
 /turf/open/floor/plasteel/loadingarea,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aiG" = (
 /obj/structure/sign/electricshock,
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aiH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -5133,10 +5117,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/starboard/fore)
 "aiI" = (
 /obj/structure/filingcabinet/filingcabinet,
 /obj/machinery/airalarm{
@@ -5375,9 +5362,7 @@
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aje" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -5391,17 +5376,13 @@
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajf" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5410,9 +5391,7 @@
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5420,9 +5399,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aji" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -5430,9 +5407,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajj" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -5446,9 +5421,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5460,9 +5433,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5474,9 +5445,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5490,9 +5459,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajn" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -5505,9 +5472,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajo" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -5521,17 +5486,13 @@
 /turf/open/floor/plasteel/blue/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajp" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/blue/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajq" = (
 /obj/structure/sign/securearea{
 	pixel_y = 32
@@ -5542,9 +5503,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5555,9 +5514,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajs" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /obj/machinery/camera{
@@ -5568,9 +5525,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajt" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -5584,9 +5539,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aju" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5596,9 +5549,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5610,9 +5561,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5624,9 +5573,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajx" = (
 /obj/structure/sign/securearea{
 	pixel_y = 32
@@ -5640,9 +5587,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5651,9 +5596,7 @@
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajz" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -5664,9 +5607,7 @@
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajA" = (
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
@@ -5682,9 +5623,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5692,9 +5631,7 @@
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajC" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -5707,9 +5644,7 @@
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajD" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -5722,9 +5657,7 @@
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5732,9 +5665,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -5750,17 +5681,13 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ajH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/plasticflaps{
@@ -6027,9 +5954,7 @@
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akd" = (
 /obj/effect/landmark/lightsout,
 /obj/structure/cable/white{
@@ -6046,9 +5971,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ake" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6062,9 +5985,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akf" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6077,9 +5998,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akg" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6093,9 +6012,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akh" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6110,9 +6027,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aki" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -6129,9 +6044,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akj" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6149,9 +6062,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akk" = (
 /obj/structure/sign/electricshock{
 	pixel_y = -32
@@ -6168,9 +6079,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akl" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6187,9 +6096,7 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akm" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6202,9 +6109,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akn" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6221,9 +6126,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ako" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6240,9 +6143,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akp" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6261,9 +6162,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akq" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6278,9 +6177,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akr" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -6307,9 +6204,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aks" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -6328,9 +6223,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akt" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6348,9 +6241,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "L1"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aku" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6364,9 +6255,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "L3"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akv" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6385,9 +6274,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "L5"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akw" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6411,9 +6298,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "L7"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akx" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6424,9 +6309,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "L9"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aky" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6439,9 +6322,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "L11"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akz" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6459,9 +6340,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "L13"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akA" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6472,9 +6351,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akB" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -6488,9 +6365,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akC" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -6516,9 +6391,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akD" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -6535,9 +6408,7 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akE" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -6559,9 +6430,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akF" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -6583,9 +6452,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akG" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -6603,9 +6470,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akH" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -6624,9 +6489,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akI" = (
 /obj/structure/sign/electricshock{
 	pixel_y = -32
@@ -6640,9 +6503,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6657,9 +6518,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -6670,10 +6529,13 @@
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "akL" = (
 /obj/structure/closet/wardrobe/cargotech,
 /turf/open/floor/plasteel/brown{
@@ -6840,9 +6702,7 @@
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alc" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -6853,15 +6713,11 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ald" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ale" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -6872,15 +6728,11 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alg" = (
 /turf/closed/wall/r_wall,
 /area/teleporter)
@@ -6921,9 +6773,7 @@
 /obj/structure/cable/white,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "all" = (
 /obj/structure/sign/directions/engineering{
 	dir = 8;
@@ -6936,9 +6786,7 @@
 	pixel_y = -8
 	},
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alm" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -6955,9 +6803,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "L2"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aln" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -6965,9 +6811,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "L4"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -6978,24 +6822,18 @@
 /turf/open/floor/plasteel{
 	icon_state = "L6"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alp" = (
 /turf/open/floor/plasteel{
 	icon_state = "L8"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "L10"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -7003,9 +6841,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "L12"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "als" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
@@ -7021,9 +6857,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "L14"
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alt" = (
 /obj/structure/sign/directions/engineering{
 	desc = "A direction sign, pointing out which way the Supply department is.";
@@ -7042,21 +6876,15 @@
 	pixel_y = -8
 	},
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alu" = (
 /turf/closed/wall/r_wall,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "alv" = (
 /obj/structure/cable/white,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "alw" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -7074,9 +6902,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "alx" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "evashutters";
@@ -7088,17 +6914,13 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aly" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -7109,9 +6931,7 @@
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alA" = (
 /obj/structure/table/reinforced,
 /obj/structure/noticeboard{
@@ -7336,9 +7156,7 @@
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alS" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -7355,9 +7173,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -7370,18 +7186,14 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alV" = (
 /obj/structure/urinal{
 	pixel_y = 28
@@ -7391,18 +7203,14 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alW" = (
 /obj/structure/urinal{
 	pixel_y = 28
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/bin,
@@ -7410,9 +7218,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "alY" = (
 /obj/machinery/shieldwallgen,
 /obj/effect/decal/cleanable/dirt,
@@ -7486,9 +7292,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amf" = (
 /obj/structure/closet/crate/bin,
 /obj/structure/cable/white{
@@ -7503,17 +7307,13 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amg" = (
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -7523,27 +7323,19 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ami" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amk" = (
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aml" = (
 /obj/structure/closet/emcloset,
 /obj/structure/cable/white{
@@ -7558,9 +7350,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amm" = (
 /obj/structure/cable/white{
 	d2 = 8;
@@ -7568,9 +7358,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amn" = (
 /obj/structure/cable/white{
 	d2 = 4;
@@ -7578,9 +7366,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "amo" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/metal{
@@ -7602,9 +7388,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "amp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -7622,26 +7406,20 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "amq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "amr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "ams" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/electrical{
@@ -7661,9 +7439,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "amt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -7676,9 +7452,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amu" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -7691,9 +7465,7 @@
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amv" = (
 /obj/machinery/computer/stockexchange,
 /obj/structure/table/reinforced,
@@ -7892,9 +7664,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amP" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -7905,15 +7675,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/side,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amR" = (
 /obj/machinery/airalarm{
 	dir = 1;
@@ -7921,9 +7687,7 @@
 	},
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/neutral/side,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
@@ -7932,9 +7696,7 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "amT" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/cable_coil/white,
@@ -8003,9 +7765,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ana" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -8017,20 +7777,14 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anb" = (
 /turf/open/floor/plasteel/neutral/side,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "and" = (
 /obj/structure/closet/firecloset,
 /obj/structure/sign/nanotrasen{
@@ -8043,24 +7797,18 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ane" = (
 /obj/structure/sign/electricshock,
 /turf/closed/wall/r_wall,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "anf" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "ang" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -8075,9 +7823,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "anh" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/belt/utility,
@@ -8087,18 +7833,14 @@
 /obj/item/device/flashlight/flare,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "ani" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "anj" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/cleanable/dirt,
@@ -8111,9 +7853,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "ank" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
@@ -8121,9 +7861,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
@@ -8136,9 +7874,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anm" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -8401,9 +8137,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anI" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -8416,9 +8150,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anJ" = (
 /obj/machinery/door/airlock{
 	name = "Toilet Unit"
@@ -8427,9 +8159,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anK" = (
 /obj/machinery/door/airlock{
 	name = "Toilet Unit"
@@ -8439,9 +8169,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anL" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -8499,9 +8227,7 @@
 "anQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
@@ -8517,9 +8243,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anS" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -8529,9 +8253,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
@@ -8542,9 +8264,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "anU" = (
 /obj/structure/closet/crate/rcd{
 	pixel_y = 4
@@ -8569,9 +8289,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "anV" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -8582,16 +8300,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "anW" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "anX" = (
 /obj/machinery/requests_console{
 	department = "E.V.A. Storage";
@@ -8610,14 +8324,10 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "anY" = (
 /turf/closed/wall,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "anZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
@@ -8627,9 +8337,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aoa" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -8642,9 +8350,7 @@
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aob" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -8654,9 +8360,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aoc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -8664,9 +8368,7 @@
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aod" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -8675,9 +8377,7 @@
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aoe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -8689,9 +8389,7 @@
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aof" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -8700,9 +8398,7 @@
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aog" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/structure/cable/white{
@@ -8713,9 +8409,7 @@
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aoh" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -8939,9 +8633,7 @@
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aoC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
@@ -8954,9 +8646,7 @@
 /obj/machinery/light/small,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aoD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/toilet{
@@ -8969,9 +8659,7 @@
 /obj/effect/landmark/blobstart,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aoE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/toilet{
@@ -8984,9 +8672,7 @@
 /obj/effect/landmark/start/assistant,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aoF" = (
 /obj/structure/table/reinforced,
 /obj/item/stock_parts/cell/high,
@@ -9080,9 +8766,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aoO" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -9103,9 +8787,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aoP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -9116,9 +8798,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aoQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -9132,9 +8812,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aoR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -9147,9 +8825,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aoS" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -9215,16 +8891,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aoX" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aoY" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/newscaster{
@@ -9234,9 +8906,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aoZ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -9248,9 +8918,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "apa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -9273,9 +8941,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/brown/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "apb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -9290,9 +8956,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "apc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -9305,9 +8969,7 @@
 /turf/open/floor/plasteel/brown/corner{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "apd" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -9318,9 +8980,7 @@
 /turf/open/floor/plasteel/brown/corner{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ape" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -9332,9 +8992,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/brown,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "apf" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -9343,9 +9001,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "apg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -9364,9 +9020,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/brown/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aph" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -9379,9 +9033,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "api" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
@@ -9701,9 +9353,7 @@
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "apH" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -9725,9 +9375,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "apI" = (
 /turf/closed/wall,
 /area/storage/primary)
@@ -9869,9 +9517,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "apU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -9896,30 +9542,22 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "apV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "apW" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "apX" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "apY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -9977,9 +9615,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aqd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display{
@@ -9994,9 +9630,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aqe" = (
 /obj/machinery/power/apc{
 	dir = 2;
@@ -10010,9 +9644,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aqf" = (
 /obj/machinery/status_display{
 	pixel_y = -32
@@ -10024,9 +9656,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aqg" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/plasteel{
@@ -10051,18 +9681,14 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aqh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aqi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -10071,16 +9697,12 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/brown/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aqj" = (
 /obj/machinery/computer/cargo/request,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aqk" = (
 /obj/structure/chair{
 	dir = 1
@@ -10088,9 +9710,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aql" = (
 /obj/structure/chair{
 	dir = 1
@@ -10098,9 +9718,7 @@
 /obj/effect/landmark/start/assistant,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aqm" = (
 /obj/structure/table,
 /obj/machinery/light,
@@ -10111,9 +9729,7 @@
 /obj/item/pen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aqn" = (
 /obj/structure/chair{
 	dir = 1
@@ -10124,9 +9740,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aqo" = (
 /obj/structure/chair{
 	dir = 1
@@ -10135,9 +9749,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aqp" = (
 /obj/machinery/autolathe,
 /obj/structure/extinguisher_cabinet{
@@ -10150,9 +9762,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aqq" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency{
@@ -10297,9 +9907,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/astplate,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "aqH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -10430,9 +10038,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aqT" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/belt/utility,
@@ -10518,15 +10124,11 @@
 /area/maintenance/port/central)
 "ara" = (
 /turf/closed/wall,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "arb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "arc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
@@ -10542,9 +10144,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "ard" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -10554,9 +10154,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "are" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
@@ -10567,9 +10165,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "arf" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
@@ -10579,9 +10175,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "arg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -10609,9 +10203,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "arj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -10620,9 +10212,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ark" = (
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
@@ -10899,9 +10489,7 @@
 /area/engine/atmos)
 "arB" = (
 /turf/open/floor/plating/astplate,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "arC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -11322,18 +10910,14 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "ase" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "asf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -11342,28 +10926,20 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "asg" = (
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "ash" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "asi" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "asj" = (
 /obj/machinery/vending/cola,
 /obj/machinery/newscaster{
@@ -11372,9 +10948,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "ask" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -11460,9 +11034,7 @@
 /turf/open/floor/plasteel/loadingarea{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ass" = (
 /obj/machinery/mineral/mint,
 /obj/effect/decal/cleanable/dirt,
@@ -11472,15 +11044,11 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ast" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/loadingarea,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "asu" = (
 /obj/structure/shuttle/engine/propulsion/burst,
 /obj/structure/window/reinforced{
@@ -11610,9 +11178,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "asJ" = (
 /obj/structure/closet/wardrobe/red,
 /obj/item/clothing/under/rank/security/grey,
@@ -11799,9 +11365,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "asU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_engineering{
@@ -11986,9 +11550,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "atj" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/firealarm{
@@ -12002,30 +11564,28 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "atk" = (
 /turf/closed/wall,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "atl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
 /turf/closed/wall,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "atm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "atn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
 /turf/closed/wall,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "ato" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -12047,9 +11607,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "atq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -12063,18 +11621,14 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "atr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ats" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -12082,9 +11636,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "att" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -12093,9 +11645,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "atu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
@@ -12112,9 +11662,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "atv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -12125,9 +11673,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "atw" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/light/small{
@@ -12260,9 +11806,7 @@
 /turf/open/floor/plasteel/caution/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "atL" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Security Maintenance";
@@ -12290,9 +11834,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "atN" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -12306,9 +11848,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "atO" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_engineering{
@@ -12525,9 +12065,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "auc" = (
 /obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -8;
@@ -12539,22 +12077,16 @@
 /obj/structure/table/wood,
 /obj/item/kitchen/fork,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aud" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aue" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "auf" = (
 /obj/structure/table/reinforced,
 /obj/item/lighter{
@@ -12565,14 +12097,14 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "aug" = (
 /obj/structure/sign/barsign{
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/black,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "auh" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks,
@@ -12589,11 +12121,11 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "aui" = (
 /obj/machinery/status_display,
 /turf/closed/wall,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "auj" = (
 /obj/structure/table/wood,
 /obj/structure/reagent_dispensers/beerkeg,
@@ -12606,7 +12138,7 @@
 	network = list("MINE")
 	},
 /turf/open/floor/plasteel/vault,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "auk" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -12615,7 +12147,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/vault,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "aul" = (
 /obj/structure/closet/gmcloset,
 /obj/item/wrench,
@@ -12632,11 +12164,11 @@
 	pixel_x = 26
 	},
 /turf/open/floor/plasteel/vault,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "aum" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "aun" = (
 /obj/effect/landmark/blobstart,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -12656,9 +12188,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aup" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/airalarm{
@@ -12671,9 +12201,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "auq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 4;
@@ -12794,9 +12322,7 @@
 "auD" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "auE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/space_heater,
@@ -12809,18 +12335,14 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "auF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "auG" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
@@ -12828,9 +12350,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "auH" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -12843,9 +12363,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "auI" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -12858,9 +12376,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "auJ" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -12876,9 +12392,7 @@
 /obj/effect/landmark/revenantspawn,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "auK" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -12893,9 +12407,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "auL" = (
 /obj/effect/landmark/blobstart,
 /obj/structure/cable/white{
@@ -12912,9 +12424,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/red/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "auM" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -12933,9 +12443,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "auN" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -12948,9 +12456,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "auO" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -12977,9 +12483,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "auP" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -12992,9 +12496,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "auQ" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -13007,9 +12509,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "auR" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -13023,9 +12523,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "auS" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -13038,9 +12536,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "auT" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellow/side{
@@ -13125,9 +12621,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "avf" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -13139,9 +12633,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "avg" = (
 /obj/structure/table/wood,
 /obj/item/device/paicard,
@@ -13149,9 +12641,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "avh" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -13159,26 +12649,20 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "avi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "avj" = (
 /obj/structure/chair/stool/bar,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "avk" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -13187,7 +12671,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "avl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -13196,7 +12680,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "avm" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer,
@@ -13206,14 +12690,14 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "avn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/sign/poster/random,
 /turf/closed/wall,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "avo" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/beanbag,
@@ -13222,7 +12706,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "avp" = (
 /obj/effect/landmark/start/bartender,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -13232,7 +12716,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "avq" = (
 /obj/machinery/chem_master/condimaster{
 	name = "HoochMaster 2000"
@@ -13247,13 +12731,13 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "avr" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "avs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -13272,9 +12756,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "avu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -13286,16 +12768,12 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "avv" = (
 /obj/machinery/shieldgen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "avw" = (
 /obj/machinery/shieldgen,
 /obj/effect/decal/cleanable/dirt,
@@ -13303,9 +12781,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "avx" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
@@ -13418,9 +12894,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/caution,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "avJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -13432,9 +12906,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/caution,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "avK" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -13453,9 +12925,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "avL" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -13466,10 +12936,18 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Port Bow Maintenance APC";
+	areastring = "/area/maintenance/port/fore";
+	pixel_y = -26
+	},
+/obj/structure/cable/white{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "avM" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -13484,18 +12962,14 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "avN" = (
 /obj/structure/girder,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "avO" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/black,
@@ -13511,9 +12985,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "avP" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
@@ -13533,9 +13005,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "avQ" = (
 /obj/structure/table,
 /obj/item/clothing/under/rank/security,
@@ -13550,17 +13020,13 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "avR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/port/fore)
 "avS" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -13572,9 +13038,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "avT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -13588,9 +13052,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "avU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -13599,17 +13061,13 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "avV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "avW" = (
 /obj/machinery/airalarm{
 	dir = 1;
@@ -13619,9 +13077,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "avX" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -13632,9 +13088,7 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "avY" = (
 /obj/structure/table/reinforced,
 /obj/item/stock_parts/cell/high,
@@ -13747,9 +13201,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "awk" = (
 /obj/structure/chair/stool,
 /obj/effect/landmark/start/assistant,
@@ -13760,42 +13212,32 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "awl" = (
 /obj/structure/table/wood,
 /obj/item/storage/bag/tray,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "awm" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "awn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "awo" = (
 /obj/structure/chair/stool/bar,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "awp" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/matches{
@@ -13808,7 +13250,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "awq" = (
 /obj/effect/landmark/start/bartender,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -13818,7 +13260,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/black,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "awr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -13832,7 +13274,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "aws" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -13851,7 +13293,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "awt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -13864,7 +13306,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "awu" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable/white{
@@ -13875,7 +13317,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "awv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -13891,7 +13333,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "aww" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -13944,9 +13386,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "awz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -13955,9 +13395,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "awA" = (
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
@@ -14086,7 +13524,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/engine/atmos)
+/area/maintenance/port/fore)
 "awN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/plasticflaps{
@@ -14112,9 +13550,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "awP" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
@@ -14144,9 +13580,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "awU" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -14159,9 +13593,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "awV" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
@@ -14169,23 +13601,19 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "awW" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "awX" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "awY" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -14196,7 +13624,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "awZ" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/barman_recipes,
@@ -14206,11 +13634,11 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "axa" = (
 /obj/machinery/vending/boozeomat,
 /turf/closed/wall,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "axb" = (
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder{
@@ -14224,7 +13652,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "axc" = (
 /obj/structure/closet/gmcloset,
 /obj/item/wrench,
@@ -14238,7 +13666,7 @@
 /obj/item/stack/cable_coil/random,
 /obj/machinery/light,
 /turf/open/floor/plasteel/black,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "axd" = (
 /obj/structure/closet/secure_closet/bar,
 /obj/machinery/light_switch{
@@ -14250,7 +13678,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "axe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -14266,9 +13694,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "axg" = (
 /obj/structure/rack,
 /obj/item/crowbar/red,
@@ -14277,9 +13703,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "axh" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/small{
@@ -14512,17 +13936,13 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "axC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "axD" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -14655,9 +14075,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "axP" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -14665,9 +14083,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "axQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -14676,9 +14092,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "axR" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -14693,7 +14107,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "axS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -14704,7 +14118,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/black,
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "axT" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
@@ -14725,7 +14139,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "axU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -14745,14 +14159,10 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "axW" = (
 /turf/closed/wall,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "axX" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -14974,9 +14384,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ayu" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -15090,9 +14498,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "ayJ" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -15101,32 +14507,24 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "ayK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "ayL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "ayM" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "ayN" = (
 /obj/item/storage/fancy/cigarettes/cigars{
 	pixel_y = 6
@@ -15139,7 +14537,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "ayO" = (
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster{
@@ -15149,7 +14547,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar)
+/area/crew_quarters/bar/atrium)
 "ayP" = (
 /turf/closed/wall,
 /area/maintenance/starboard/central)
@@ -15205,16 +14603,12 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ayV" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "ayW" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable/white{
@@ -15241,9 +14635,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "ayX" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
@@ -15259,9 +14651,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "ayY" = (
 /obj/structure/chair,
 /obj/machinery/light{
@@ -15279,9 +14669,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "ayZ" = (
 /obj/structure/chair,
 /obj/machinery/ai_status_display{
@@ -15295,9 +14683,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aza" = (
 /obj/structure/chair,
 /obj/machinery/firealarm{
@@ -15306,15 +14692,11 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "azb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "azc" = (
 /obj/structure/chair{
 	dir = 4
@@ -15622,9 +15004,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "azJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -15636,9 +15016,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "azK" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/britcup,
@@ -15646,9 +15024,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "azL" = (
 /obj/structure/closet/crate/bin,
 /obj/structure/extinguisher_cabinet{
@@ -15658,9 +15034,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "azM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -15728,9 +15102,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "azT" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -15739,33 +15111,25 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "azU" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "azV" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "azW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "azX" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -15773,9 +15137,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "azY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable/white{
@@ -15784,9 +15146,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "azZ" = (
 /obj/structure/chair{
 	dir = 8
@@ -15794,9 +15154,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aAa" = (
 /obj/structure/chair{
 	dir = 4
@@ -16073,9 +15431,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "aAB" = (
-/obj/machinery/computer/station_alert{
-	density = 0
-	},
+/obj/machinery/computer/station_alert,
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 4;
@@ -16092,9 +15448,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aAD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -16183,7 +15537,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Atrium APC";
-	areastring = "/area/crew_quarters/bar";
+	areastring = "/area/crew_quarters/bar/atrium";
 	pixel_x = -26;
 	pixel_y = 3
 	},
@@ -16192,9 +15546,7 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aAO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -16223,9 +15575,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aAP" = (
 /obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -8;
@@ -16243,9 +15593,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aAQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -16256,9 +15604,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aAR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -16269,9 +15615,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aAS" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -16282,9 +15626,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aAT" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -16375,9 +15717,7 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aAZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -16387,9 +15727,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aBa" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -16400,17 +15738,13 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aBb" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aBc" = (
 /obj/machinery/computer/security,
 /obj/machinery/newscaster/security_unit{
@@ -16419,22 +15753,16 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aBd" = (
 /obj/structure/chair/office/dark,
 /turf/open/floor/plasteel/red/side,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aBe" = (
 /obj/machinery/computer/secure_data,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/side,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aBf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -16443,9 +15771,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/red/side,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aBg" = (
 /obj/machinery/camera{
 	c_tag = "Security - Departures Starboard";
@@ -16455,9 +15781,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aBh" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
@@ -16467,16 +15791,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aBi" = (
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aBj" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock";
@@ -16743,9 +16063,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aBL" = (
 /obj/effect/landmark/lightsout,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -16758,9 +16076,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aBM" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -16912,16 +16228,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aBZ" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/cheesiehonkers,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aCa" = (
 /obj/machinery/light{
 	dir = 4
@@ -16930,9 +16242,7 @@
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aCb" = (
 /obj/machinery/status_display,
 /turf/closed/wall,
@@ -16969,9 +16279,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aCh" = (
 /obj/machinery/vending/snack,
 /obj/machinery/firealarm{
@@ -16982,9 +16290,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aCi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
@@ -16992,9 +16298,7 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aCj" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -17024,9 +16328,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aCk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
@@ -17039,9 +16341,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aCl" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -17068,9 +16368,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aCm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
@@ -17078,16 +16376,12 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aCn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aCo" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Holding Area";
@@ -17383,15 +16677,11 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aCM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aCN" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
@@ -17466,9 +16756,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aCV" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -17545,9 +16833,7 @@
 "aDc" = (
 /obj/machinery/status_display,
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aDd" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -17561,9 +16847,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aDe" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -17573,9 +16857,7 @@
 /turf/open/floor/plasteel/escape{
 	dir = 1
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aDg" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -17586,15 +16868,11 @@
 /turf/open/floor/plasteel/escape{
 	dir = 1
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aDh" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aDi" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
@@ -17603,9 +16881,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aDj" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock"
@@ -17707,9 +16983,7 @@
 "aDv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aDw" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -17723,9 +16997,7 @@
 /turf/open/floor/plasteel/escape{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aDx" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -17738,17 +17010,13 @@
 /turf/open/floor/plasteel/caution{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aDy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/caution{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aDz" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -17756,9 +17024,7 @@
 /turf/open/floor/plasteel/caution{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aDA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -17766,9 +17032,7 @@
 /turf/open/floor/plasteel/caution{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aDB" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -17777,17 +17041,13 @@
 /turf/open/floor/plasteel/caution{
 	dir = 5
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aDC" = (
 /obj/structure/table/reinforced,
 /obj/item/airlock_painter,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aDD" = (
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
@@ -17922,27 +17182,21 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aDP" = (
 /obj/effect/landmark/xmastree,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aDQ" = (
 /obj/structure/chair/stool/bar,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aDR" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -18023,32 +17277,24 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aEa" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aEb" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aEc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aEd" = (
 /obj/structure/chair{
 	dir = 4
@@ -18056,24 +17302,18 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aEe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aEf" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aEg" = (
 /obj/structure/chair{
 	dir = 4
@@ -18347,9 +17587,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/sign/nosmoking_2,
 /turf/closed/wall/r_wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aEB" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -18358,9 +17596,7 @@
 /turf/open/floor/plasteel/escape{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aEC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -18371,34 +17607,26 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aED" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aEE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aEF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aEG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -18406,9 +17634,7 @@
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aEH" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -18421,9 +17647,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aEI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -18437,9 +17661,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aEJ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -18448,9 +17670,7 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aEK" = (
 /obj/machinery/vending/clothing,
 /obj/machinery/firealarm{
@@ -18600,16 +17820,12 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aEX" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/chips,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aEY" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -18747,17 +17963,13 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -18770,32 +17982,24 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aFk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aFl" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aFn" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aFo" = (
 /obj/structure/extinguisher_cabinet,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -18978,9 +18182,7 @@
 /turf/open/floor/plasteel/arrival{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -19001,9 +18203,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -19012,9 +18212,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFF" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -19026,9 +18224,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -19040,9 +18236,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -19053,9 +18247,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/yellow/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFI" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -19073,9 +18265,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -19089,9 +18279,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -19110,9 +18298,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFL" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -19124,9 +18310,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -19150,9 +18334,7 @@
 	network = list("MINE")
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aFO" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/soda_cans/cola,
@@ -19160,18 +18342,14 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aFP" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aFQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -19228,9 +18406,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFY" = (
 /obj/machinery/holopad,
 /obj/effect/landmark/lightsout,
@@ -19242,9 +18418,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aFZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -19254,23 +18428,17 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aGa" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aGb" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aGc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
@@ -19279,9 +18447,7 @@
 	name = "WARNING: EXTERNAL AIRLOCK"
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aGd" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -19418,9 +18584,7 @@
 /turf/open/floor/plasteel/arrival{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aGq" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -19433,9 +18597,7 @@
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aGr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/light,
@@ -19446,33 +18608,25 @@
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aGs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aGt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel/yellow/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aGu" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/yellow/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aGv" = (
 /obj/structure/table/reinforced,
 /obj/item/stock_parts/cell/high,
@@ -19480,9 +18634,7 @@
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aGw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -19497,17 +18649,13 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aGx" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aGy" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
@@ -19712,9 +18860,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aGO" = (
 /obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -8;
@@ -19729,9 +18875,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aGP" = (
 /obj/structure/chair/stool,
 /obj/effect/landmark/start/assistant,
@@ -19739,9 +18883,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aGQ" = (
 /obj/machinery/holopad,
 /obj/item/device/radio/intercom{
@@ -19749,9 +18891,7 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aGR" = (
 /obj/machinery/vending/dinnerware,
 /obj/machinery/button/door{
@@ -19841,9 +18981,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aGY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -19855,9 +18993,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aHe" = (
 /turf/open/floor/plasteel/vault{
 	dir = 1
@@ -20254,9 +19390,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aHD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -20268,9 +19402,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aHE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -20283,9 +19415,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aHF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -20456,9 +19586,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aHS" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -20469,16 +19597,12 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aHT" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/coffee,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aHU" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -20488,9 +19612,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aHV" = (
 /obj/machinery/status_display,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -20528,9 +19650,7 @@
 /obj/item/pen,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aHZ" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -20538,17 +19658,13 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aIa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aIb" = (
 /obj/structure/sign/radiation{
 	pixel_x = -32
@@ -20866,9 +19982,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aIA" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -20879,9 +19993,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aIB" = (
 /turf/closed/wall,
 /area/janitor)
@@ -21048,9 +20160,7 @@
 	},
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aIR" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /obj/effect/turf_decal/bot,
@@ -21138,9 +20248,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aIY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -21154,15 +20262,11 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aIZ" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aJa" = (
 /obj/structure/table,
 /obj/item/storage/pill_bottle/dice,
@@ -21175,20 +20279,14 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aJb" = (
 /turf/open/floor/plasteel/escape,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aJc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/escape,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aJe" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock";
@@ -21684,17 +20782,13 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aJX" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aJY" = (
 /obj/structure/sign/nosmoking_2,
 /turf/closed/wall,
@@ -21798,15 +20892,11 @@
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aKh" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aKi" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -21819,9 +20909,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aKj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/plasticflaps{
@@ -21831,9 +20919,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aKl" = (
 /obj/structure/cable/white{
 	d2 = 8;
@@ -21842,9 +20928,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aKm" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Cargo"
@@ -22405,9 +21489,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aLg" = (
 /obj/machinery/vending/snack,
 /obj/machinery/firealarm{
@@ -22421,9 +21503,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aLh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -22473,33 +21553,25 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aLn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aLt" = (
 /turf/open/floor/plasteel/brown{
 	dir = 5
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aLu" = (
 /obj/structure/fans/tiny,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aLv" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
@@ -22509,9 +21581,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aLw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -23002,9 +22072,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aMu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -23018,9 +22086,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aMv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -23071,9 +22137,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aMz" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -23082,33 +22146,25 @@
 /turf/open/floor/plasteel/brown{
 	dir = 8
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aMA" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aMB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /obj/effect/landmark/lightsout,
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aMC" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aMD" = (
 /obj/machinery/recharge_station,
 /obj/machinery/status_display{
@@ -23473,18 +22529,14 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aNi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aNj" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/item/reagent_containers/glass/bucket,
@@ -23645,9 +22697,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aNz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -23658,9 +22708,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "aNA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -23736,9 +22784,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aNG" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -23756,9 +22802,7 @@
 /turf/open/floor/plasteel/brown{
 	dir = 8
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aNH" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/dirt,
@@ -23767,9 +22811,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aNI" = (
 /obj/structure/closet/crate,
 /obj/item/device/radio/intercom{
@@ -23779,9 +22821,7 @@
 /obj/machinery/light,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aNJ" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/dirt,
@@ -23790,9 +22830,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aNK" = (
 /obj/structure/closet/crate,
 /obj/machinery/firealarm{
@@ -23801,9 +22839,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "aNL" = (
 /obj/structure/table,
 /obj/item/clipboard,
@@ -24428,9 +23464,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aOP" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable/white{
@@ -24447,9 +23481,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aOQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24463,9 +23495,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aOR" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -24483,9 +23513,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aOS" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -24498,9 +23526,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aOT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24519,9 +23545,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aOU" = (
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/lightsout,
@@ -24535,9 +23559,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aOV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24557,9 +23579,7 @@
 /turf/open/floor/plasteel/green/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aOW" = (
 /obj/machinery/light{
 	dir = 1
@@ -24584,9 +23604,7 @@
 /turf/open/floor/plasteel/purple/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aOX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24610,9 +23628,7 @@
 /turf/open/floor/plasteel/green/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aOY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable/white{
@@ -24628,9 +23644,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aOZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24646,9 +23660,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24665,9 +23677,7 @@
 /turf/open/floor/plasteel/green/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24680,9 +23690,7 @@
 /turf/open/floor/plasteel/blue/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24699,9 +23707,7 @@
 /turf/open/floor/plasteel/green/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -24970,9 +23976,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPv" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -24985,9 +23989,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -25001,9 +24003,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPx" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -25019,17 +24019,13 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPy" = (
 /obj/structure/table,
 /obj/item/storage/briefcase,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPz" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
@@ -25271,9 +24267,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPX" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -25290,18 +24284,14 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPY" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aPZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -25316,9 +24306,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -25330,18 +24318,14 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQb" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -25351,9 +24335,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -25362,9 +24344,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQe" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -25373,9 +24353,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQf" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -25388,9 +24366,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -25398,9 +24374,7 @@
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 8
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -25535,9 +24509,7 @@
 "aQw" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/purple/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQx" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -25548,9 +24520,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -25562,9 +24532,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQz" = (
 /obj/structure/sign/securearea{
 	pixel_y = -32
@@ -25574,9 +24542,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQA" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -25591,9 +24557,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "aQB" = (
 /obj/structure/table/wood,
 /obj/item/crowbar/red,
@@ -30751,7 +29715,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "baJ" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -30764,7 +29728,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "baK" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
@@ -30775,7 +29739,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "baL" = (
 /obj/machinery/light{
 	dir = 8
@@ -31201,7 +30165,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bby" = (
 /obj/machinery/light_switch{
 	pixel_x = -26;
@@ -31213,7 +30177,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bbz" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -31231,16 +30195,16 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bbA" = (
 /obj/structure/cable/white{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	areastring = "/area/security/checkpoint";
 	dir = 4;
 	name = "Security Checkpoint APC";
-	areastring = "/area/hallway/primary/central";
 	pixel_x = 26
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -31249,7 +30213,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bbB" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -31628,7 +30592,7 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bcn" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -31636,7 +30600,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bco" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -31644,7 +30608,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bcp" = (
 /obj/machinery/status_display{
 	pixel_x = 32
@@ -31653,7 +30617,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bcq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -31993,7 +30957,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bde" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -32012,7 +30976,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bdf" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -32033,7 +30997,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bdg" = (
 /obj/machinery/computer/security,
 /obj/machinery/light{
@@ -32045,7 +31009,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bdh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
@@ -32053,7 +31017,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bdi" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -32541,14 +31505,14 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white,
 /turf/open/floor/plating,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bec" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bed" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -32557,7 +31521,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/neutral,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bee" = (
 /obj/machinery/computer/secure_data,
 /obj/machinery/ai_status_display{
@@ -32566,7 +31530,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bef" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -32875,7 +31839,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "beI" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -32884,7 +31848,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/side,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "beJ" = (
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/airalarm{
@@ -32898,7 +31862,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "beK" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -33192,7 +32156,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central)
+/area/security/checkpoint)
 "bfg" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -36022,15 +34986,12 @@
 /area/shuttle/arrival)
 "bkd" = (
 /obj/effect/turf_decal/delivery,
+/obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "bke" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/emergency,
-/obj/machinery/camera{
-	c_tag = "Arrivals Suttle 1";
-	network = list("Labor")
-	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
@@ -36104,6 +35065,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/arrival)
@@ -36305,19 +35269,18 @@
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "bkN" = (
+/obj/structure/closet/wardrobe/black,
 /turf/open/floor/plasteel/neutral/side,
 /area/shuttle/arrival)
 "bkO" = (
+/obj/structure/closet/wardrobe/grey,
 /turf/open/floor/plasteel/blue/corner,
 /area/shuttle/arrival)
 "bkP" = (
 /turf/open/floor/plasteel/blue/side,
 /area/shuttle/arrival)
 "bkQ" = (
-/obj/machinery/camera{
-	c_tag = "Arrivals Shuttle 2";
-	dir = 1
-	},
+/obj/structure/closet/wardrobe/yellow,
 /turf/open/floor/plasteel/blue/corner{
 	dir = 8
 	},
@@ -36346,9 +35309,15 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "bkU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /obj/machinery/door/airlock/shuttle{
 	name = "Arrival Shuttle Airlock";
 	req_access_txt = "0"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
@@ -36431,9 +35400,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "blg" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -36446,9 +35413,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "blh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -36462,9 +35427,7 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "bli" = (
 /obj/structure/closet/firecloset,
 /obj/machinery/camera{
@@ -36474,9 +35437,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "blj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36491,9 +35452,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "blk" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics Tank 3";
@@ -36520,9 +35479,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "blm" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/camera{
@@ -36532,9 +35489,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "bln" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -36571,9 +35526,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "blp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
@@ -36781,17 +35734,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "blM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "blN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36800,9 +35749,7 @@
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "blO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36811,9 +35758,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "blU" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -36823,14 +35768,10 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "blX" = (
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "blY" = (
 /obj/machinery/door/airlock/glass{
 	name = "Departure Lounge"
@@ -36839,37 +35780,27 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "blZ" = (
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bmb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bmh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bmw" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bmx" = (
 /turf/closed/wall,
 /area/space)
@@ -36887,9 +35818,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bmD" = (
 /turf/open/floor/plasteel,
 /area/space)
@@ -36901,9 +35830,7 @@
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bmH" = (
 /turf/open/floor/plasteel,
 /area/space)
@@ -38409,9 +37336,7 @@
 /turf/open/floor/plasteel/escape{
 	dir = 1
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsw" = (
 /obj/structure/chair{
 	dir = 4
@@ -38424,9 +37349,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsx" = (
 /obj/structure/chair{
 	dir = 4
@@ -38443,9 +37366,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsy" = (
 /obj/structure/chair{
 	dir = 4
@@ -38456,9 +37377,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38477,9 +37396,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "bsA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38490,9 +37407,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "bsB" = (
 /obj/machinery/door/airlock/glass{
 	name = "Departure Lounge"
@@ -38509,9 +37424,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38522,9 +37435,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38539,9 +37450,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsE" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/light,
@@ -38551,9 +37460,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38562,9 +37469,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38573,9 +37478,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38584,9 +37487,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38595,9 +37496,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38612,9 +37511,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38623,9 +37520,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38634,9 +37529,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38652,9 +37545,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -38672,9 +37563,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -38686,9 +37575,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsP" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -38699,9 +37586,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsQ" = (
 /obj/structure/chair{
 	dir = 4
@@ -38721,9 +37606,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -38732,9 +37615,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsS" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -38742,9 +37623,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -38753,9 +37632,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsU" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -38770,9 +37647,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/escape,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsW" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -38795,9 +37670,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsY" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -38805,9 +37678,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bsZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_mining{
@@ -38820,9 +37691,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bta" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -38832,9 +37701,7 @@
 /turf/open/floor/plasteel/brown{
 	dir = 9
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "btb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -38847,9 +37714,7 @@
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "btc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -38861,9 +37726,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "btd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -38874,9 +37737,7 @@
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bte" = (
 /obj/structure/window/reinforced/tinted/fulltile,
 /obj/structure/grille,
@@ -38907,7 +37768,7 @@
 	dir = 2;
 	dwidth = 4;
 	height = 17;
-	name = "delta arrivals shuttle";
+	name = "omega arrivals shuttle";
 	width = 9
 	},
 /obj/docking_port/stationary{
@@ -38915,7 +37776,7 @@
 	dwidth = 4;
 	height = 17;
 	id = "arrivals_stationary";
-	name = "delta arrivals";
+	name = "omega arrivals";
 	width = 9
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -38951,9 +37812,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "btn" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8;
@@ -38963,9 +37822,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bto" = (
 /obj/machinery/computer/secure_data/syndie,
 /turf/open/floor/plasteel/vault{
@@ -40193,10 +39050,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/maintenance/starboard/fore)
 "bxx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -40229,9 +39089,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "bxA" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -40273,9 +39131,7 @@
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "bxE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -40297,9 +39153,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "bxH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/event_spawn,
@@ -40330,15 +39184,11 @@
 "bxL" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "bxM" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/exit{
-	name = "\improper Departure Lounge"
-	})
+/area/hallway/secondary/exit)
 "bxN" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -40354,16 +39204,12 @@
 "bxO" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar{
-	name = "Atrium"
-	})
+/area/crew_quarters/bar/atrium)
 "bxP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "bxQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -40373,9 +39219,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/hallway/primary/central{
-	name = "Primary Hallway"
-	})
+/area/hallway/primary/central)
 "bxR" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -40444,6 +39288,157 @@
 	heat_capacity = 1e+006
 	},
 /area/hallway/secondary/entry)
+"bxZ" = (
+/turf/closed/wall,
+/area/maintenance/starboard/fore)
+"bya" = (
+/turf/closed/wall,
+/area/maintenance/starboard/fore)
+"byb" = (
+/turf/closed/wall,
+/area/maintenance/starboard/fore)
+"byc" = (
+/turf/closed/wall,
+/area/maintenance/starboard/fore)
+"byd" = (
+/turf/closed/wall,
+/area/maintenance/starboard/fore)
+"bye" = (
+/turf/closed/wall,
+/area/maintenance/fore)
+"byf" = (
+/obj/structure/sign/vacuum,
+/turf/closed/wall,
+/area/maintenance/starboard/fore)
+"byg" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/fore)
+"byh" = (
+/obj/structure/sign/vacuum,
+/turf/closed/wall,
+/area/maintenance/starboard/fore)
+"byi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/fore)
+"byj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	name = "External Airlock";
+	req_access_txt = "13"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/fore)
+"byk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/landmark/xeno_spawn,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/fore)
+"byl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	name = "External Airlock";
+	req_access_txt = "13"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/fore)
+"bym" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8;
+	heat_capacity = 1e+006
+	},
+/area/maintenance/starboard/fore)
+"byn" = (
+/obj/structure/closet/wardrobe/grey,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/arrival)
+"byo" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"byp" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"byq" = (
+/obj/structure/cable/white{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/security/checkpoint)
+"byr" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"bys" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall,
+/area/security/checkpoint)
+"byt" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"byu" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"byv" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"byw" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"byx" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"byy" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"byz" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"byA" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall,
+/area/security/checkpoint)
+"byB" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"byC" = (
+/turf/closed/wall,
+/area/security/checkpoint)
+"byD" = (
+/turf/closed/wall,
+/area/security/checkpoint)
 
 (1,1,1) = {"
 aaa
@@ -78303,7 +77298,7 @@ aad
 aad
 aad
 aad
-abt
+bye
 abW
 acN
 adF
@@ -79888,7 +78883,7 @@ aMo
 aNs
 aHM
 aPd
-aQh
+aQc
 aRf
 aSk
 aTr
@@ -80145,7 +79140,7 @@ aMp
 aNt
 aOi
 aPe
-aQi
+aQg
 aRh
 aSl
 aTs
@@ -80658,8 +79653,8 @@ aLc
 aMr
 aNv
 aOh
-aPg
-aQi
+aPb
+aQg
 aRj
 aSn
 aTu
@@ -81172,10 +80167,10 @@ aLe
 aHM
 aNx
 aOh
-aPg
+aPb
 aQl
 aRk
-aSo
+anH
 aTw
 aTw
 aTw
@@ -81428,11 +80423,11 @@ asg
 ase
 ara
 ara
-aOl
+all
 aPi
 aQm
-aRl
-aSp
+aIz
+awO
 aTx
 aTx
 aVo
@@ -81688,26 +80683,26 @@ arb
 aOm
 aPj
 aQn
-aRm
-aSq
+amg
+aIZ
 aTy
 aUx
 aVp
 aUx
 aWP
-aSs
+aDc
 aYc
 aYW
-aXv
-aXv
+byo
+byt
 bbx
 bcm
 bdd
 beb
-aXv
-aZT
+byy
+byA
 bfK
-bgg
+aQd
 bgT
 bhG
 bxY
@@ -81945,26 +80940,26 @@ aNy
 aOn
 aPk
 aQo
-aRm
-aSr
+amg
+anQ
 aTz
 aUy
 aUy
 aUy
 aWQ
-aXv
+abt
 aYc
 aYW
-aXv
+byp
 baI
 bby
 bcn
 bde
 bec
 beH
-aXv
+byB
 bfK
-bgg
+aQd
 bgU
 bhH
 bix
@@ -82202,17 +81197,17 @@ ard
 aOo
 aPl
 aQp
-aRn
-aSr
+ami
+anQ
 aTA
 aUy
 aVq
 aUy
 aWR
-aXv
+abt
 aYd
 bls
-aZS
+byq
 baJ
 bbz
 bco
@@ -82459,26 +81454,26 @@ aNz
 aOp
 aPm
 aQq
-aRo
-aSr
+amk
+anQ
 aTB
 aUy
 aUy
 aUy
 aWS
-aXv
+abt
 aYe
 aYW
-aXv
+byr
 baK
 bbA
 bcp
 bdg
 bee
 beJ
-aXv
+byC
 bfK
-bgi
+avV
 bgU
 bhH
 bix
@@ -82500,7 +81495,7 @@ bko
 bkQ
 bkV
 bla
-blz
+bld
 bkb
 aaa
 aaa
@@ -82716,26 +81711,26 @@ arf
 aOq
 aPn
 aQr
-aRo
-aSs
+amk
+aDc
 aTC
 aUz
 aVr
 aUz
 aWT
-aSq
+aIZ
 aYc
 aYW
-aZT
-aXv
-aXv
-aXv
+bys
+byu
+byv
+byw
 bdh
-aXv
-aXv
-aXv
+byx
+byz
+byD
 bfM
-bgi
+avV
 bgV
 bhG
 biw
@@ -82754,7 +81749,7 @@ bko
 bko
 bko
 bko
-bkN
+byn
 bka
 bka
 bkb
@@ -82973,8 +81968,8 @@ ara
 aOr
 aPo
 aQs
-aRp
-aSo
+aCM
+anH
 aTD
 aTD
 aVs
@@ -82987,12 +81982,12 @@ aTD
 baL
 aTD
 bcq
-bdi
+aED
 aTD
-bdi
+aED
 aTD
-bfN
-bgj
+aFG
+aGx
 bgR
 bhJ
 biy
@@ -83206,7 +82201,7 @@ aoT
 apZ
 ara
 ara
-atk
+ara
 auf
 avk
 awp
@@ -83227,7 +82222,7 @@ aJY
 aLh
 aMv
 ayP
-aOs
+ayV
 aPp
 aQt
 blp
@@ -83249,7 +82244,7 @@ bef
 beK
 bfg
 bfO
-bgk
+anc
 bgW
 bhK
 biz
@@ -83260,14 +82255,14 @@ aaa
 bjO
 bjZ
 bka
-bka
+bkm
 bka
 bkb
 bkb
 bkb
 bkb
 bkG
-bka
+bkm
 bka
 bka
 aaa
@@ -83504,8 +82499,8 @@ bcs
 bdk
 aZa
 beL
-bfh
-aOs
+aHE
+ayV
 bgl
 bgX
 bhL
@@ -83982,7 +82977,7 @@ aui
 avn
 aws
 axa
-atk
+ara
 ayP
 azM
 aAT
@@ -84239,7 +83234,7 @@ auj
 avo
 awt
 axb
-atk
+ara
 ayQ
 azN
 aAU
@@ -84496,7 +83491,7 @@ auk
 avp
 awu
 axc
-atk
+ara
 ayR
 azO
 aAV
@@ -84514,7 +83509,7 @@ aCe
 aNB
 ayP
 aPd
-aQh
+aQc
 aRr
 aSx
 aTJ
@@ -84753,7 +83748,7 @@ aul
 avq
 awv
 axd
-atk
+ara
 ayS
 azP
 aso
@@ -85541,7 +84536,7 @@ abt
 abt
 abt
 abt
-aPv
+aPp
 avU
 aRv
 aSB
@@ -86012,18 +85007,18 @@ aad
 aad
 aad
 aad
-abt
+bxZ
 abL
 acu
 adm
 bxw
-adm
+bym
 afB
 agu
 ahj
 adY
 aiH
-ajG
+alz
 akK
 alz
 amu
@@ -86269,9 +85264,9 @@ aad
 aad
 aad
 aad
-abt
+bxZ
 abM
-acv
+byi
 adn
 adn
 adn
@@ -86526,9 +85521,9 @@ aad
 aad
 aad
 aad
-abt
-abN
-acw
+bxZ
+byf
+byj
 adn
 adZ
 aeP
@@ -86783,9 +85778,9 @@ aac
 aad
 aad
 aad
-abt
-abO
-acx
+bxZ
+byg
+byk
 adn
 aea
 aeQ
@@ -87040,9 +86035,9 @@ aad
 aad
 aad
 aad
-abt
-abN
-acy
+bxZ
+byf
+byl
 adn
 aeb
 aeR
