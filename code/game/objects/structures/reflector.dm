@@ -29,7 +29,6 @@
 	return 0
 
 /obj/structure/reflector/bullet_act(obj/item/projectile/P)
-	P.paused = TRUE	//Halt it so we can process
 	var/pdir = P.dir
 	var/pangle = P.Angle
 	var/ploc = get_turf(P)
@@ -38,7 +37,6 @@
 	return auto_reflect(P, pdir, ploc, pangle)
 
 /obj/structure/reflector/proc/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
-	P.paused = FALSE
 	P.ignore_source_check = TRUE
 	return -1
 
@@ -142,7 +140,6 @@
 	finished = TRUE
 	buildstacktype = /obj/item/stack/sheet/glass
 	buildstackamount = 5
-	rotation_angle = 135
 
 /obj/structure/reflector/single/anchored
 	anchored = TRUE
@@ -154,7 +151,13 @@
 /obj/structure/reflector/single/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
 	var/incidence = get_angle_of_incidence(rotation_angle, P.Angle)
 	var/incidence_norm = get_angle_of_incidence(rotation_angle, P.Angle, FALSE)
-	to_chat(world, "DEBUG: Incidence: [incidence] ([incidence_norm])")
+	var/new_angle_s = rotation_angle + incidence
+	while(new_angle_s > 180)	// Translate to regular projectile degrees
+		new_angle_s -= 360
+	while(new_angle_s < -180)
+		new_angle_s += 360
+	P.Angle = new_angle_s
+	return ..()
 
 //DOUBLE
 
@@ -166,7 +169,6 @@
 	finished = TRUE
 	buildstacktype = /obj/item/stack/sheet/rglass
 	buildstackamount = 10
-	rotation_angle = 135
 
 /obj/structure/reflector/double/anchored
 	anchored = TRUE
@@ -178,14 +180,15 @@
 /obj/structure/reflector/double/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
 	var/incidence = get_angle_of_incidence(rotation_angle, P.Angle)
 	var/incidence_norm = get_angle_of_incidence(rotation_angle, P.Angle, FALSE)
-	to_chat(world, "DEBUG: Incidence: [incidence] ([incidence_norm]) Projectile Angle [P.Angle] Projectile Direction [pdir]")
 	var/new_angle_s = rotation_angle + incidence
+	if(incidence_norm < 90 || incidence_norm > -90)
+		new_angle_s += 180
 	while(new_angle_s > 180)	// Translate to regular projectile degrees
 		new_angle_s -= 360
 	while(new_angle_s < -180)
 		new_angle_s += 360
 	P.Angle = new_angle_s
-	return -1
+	return ..()
 
 //BOX
 
