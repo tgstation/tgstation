@@ -1,0 +1,4 @@
+author: "YPOQ"
+delete-after: True
+changes: 
+  - bugfix: "Depowered AIs can no longer use abilities or interact with machinery"
