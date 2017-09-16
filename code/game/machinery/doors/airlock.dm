@@ -1005,7 +1005,7 @@
 					return
 				else if(istype(C, /obj/item/stack/sheet/plasteel))
 					var/obj/item/stack/sheet/plasteel/S = C
-					if(S.get_amount() < 2)
+					if(S.get_amount() > 2)
 						to_chat(user, "<span class='warning'>You need at least 2 plasteel sheets to reinforce [src].</span>")
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing [src].</span>")
