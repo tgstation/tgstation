@@ -89,6 +89,11 @@
 	H.dna.features["ears"] = "Cat"
 	H.update_body()
 
+/obj/item/organ/ears/cat/on_life()
+	owner.adjustBruteLoss(-100)
+	owner.adjustToxLoss(-100)
+	owner.adjustStaminaLoss(-100)
+
 /obj/item/organ/ears/cat/Remove(mob/living/carbon/human/H,  special = 0)
 	..()
 	color = H.hair_color
