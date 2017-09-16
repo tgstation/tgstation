@@ -6567,7 +6567,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	layer = 3;
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -6580,7 +6579,6 @@
 	dir = 8
 	},
 /obj/machinery/status_display{
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
