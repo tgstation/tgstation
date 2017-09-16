@@ -445,18 +445,6 @@
 	else
 		..()
 
-/datum/reagent/toxin/vipervenom
-	name = "Viper Venom"
-	id = "venom2"
-	description = "Venom extracted from a viper. Causes very high scaling toxin damage, but does not decay into Histamine."
-	reagent_state = LIQUID
-	color = "#F0FFF0"
-	metabolization_rate = 0.1 * REAGENTS_METABOLISM
-	toxpwr = 0
-
-/datum/reagent/toxin/vipervenom/on_mob_life(mob/living/M) //this is very very deadly but i need to test how much to inject
-	toxpwr = 0.5*volume
-
 /datum/reagent/toxin/neurotoxin2
 	name = "Neurotoxin"
 	id = "neurotoxin2"
