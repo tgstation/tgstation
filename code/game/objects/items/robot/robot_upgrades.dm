@@ -403,7 +403,7 @@
 	return TRUE
 
 /obj/item/borg/upgrade/traitorsec
-	name = "Opressor upgrade module"
+	name = "Oppressor upgrade module"
 	desc = "Ilegal upgrade board that unlocks the banned security module."
 	icon_state = "cyborg_upgrade3"
 	origin_tech = "data=4;combat=4;syndicate=3"
