@@ -340,7 +340,7 @@
 	can_be_pushed = FALSE
 	hat_offset = 3
 
-/obj/item/weapon/robot_module/security/traitorsec
+/obj/item/robot_module/security/traitorsec
 	name = "Bloodhound"
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
