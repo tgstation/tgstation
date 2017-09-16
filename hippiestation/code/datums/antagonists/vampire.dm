@@ -12,16 +12,16 @@
 	var/list/powers = list() // list of current powers
 
 	var/list/upgrade_tiers = list(
-		/obj/effect/proc_holder/spell/vampire/self/rejuvenate = 0,
-		/obj/effect/proc_holder/spell/vampire/targeted/hypnotise = 0,
+		/obj/effect/proc_holder/spell/self/rejuvenate = 0,
+		/obj/effect/proc_holder/spell/targeted/hypnotise = 0,
 		/datum/vampire_passive/vision = 200,
-		/obj/effect/proc_holder/spell/vampire/self/shapeshift = 200,
-		/obj/effect/proc_holder/spell/vampire/self/cloak = 250,
-		/obj/effect/proc_holder/spell/vampire/targeted/disease = 275,
-		/obj/effect/proc_holder/spell/vampire/bats = 350,
-		/obj/effect/proc_holder/spell/vampire/self/screech = 350,
+		/obj/effect/proc_holder/spell/self/shapeshift = 200,
+		/obj/effect/proc_holder/spell/self/cloak = 250,
+		/obj/effect/proc_holder/spell/targeted/disease = 275,
+		/obj/effect/proc_holder/spell/bats = 350,
+		/obj/effect/proc_holder/spell/self/screech = 350,
 		/datum/vampire_passive/regen = 425,
-		/obj/effect/proc_holder/spell/vampire/targeted/mistform = 500,
+		/obj/effect/proc_holder/spell/targeted/mistform = 500,
 		/datum/vampire_passive/full = 666)
 
 /datum/antagonist/vampire/on_gain()
@@ -239,8 +239,8 @@
 /datum/antagonist/vampire/proc/announce_new_power(list/old_powers)
 	for(var/p in powers)
 		if(!(p in old_powers))
-			if(istype(p, /obj/effect/proc_holder/spell/vampire))
-				var/obj/effect/proc_holder/spell/vampire/power = p
+			if(istype(p, /obj/effect/proc_holder/spell))
+				var/obj/effect/proc_holder/spell/power = p
 				to_chat(owner.current, "<span class='notice'>[power.gain_desc]</span>")
 			else if(istype(p, /datum/vampire_passive))
 				var/datum/vampire_passive/power = p
