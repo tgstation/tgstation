@@ -30,6 +30,7 @@
 		throw_atom(AM)
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)
+	set waitfor = FALSE
 	if(!AM || istype(AM, /obj/docking_port))
 		return
 	if(AM.loc != src) 	// Multi-tile objects are "in" multiple locs but its loc is it's true placement.
