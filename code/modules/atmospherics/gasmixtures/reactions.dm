@@ -35,34 +35,6 @@
 /datum/gas_reaction/proc/react(datum/gas_mixture/air, atom/location)
 	return NO_REACTION
 
-//agent b: converts hot co2 and agent b to oxygen. requires plasma as a catalyst. endothermic
-/datum/gas_reaction/agent_b
-	priority = 2
-	name = "Agent B"
-	id = "agent_b"
-
-/datum/gas_reaction/agent_b/init_reqs()
-	min_requirements = list(
-		"TEMP" = 900,
-		"agent_b" = MINIMUM_HEAT_CAPACITY,
-		"plasma" = MINIMUM_HEAT_CAPACITY,
-		"co2" = MINIMUM_HEAT_CAPACITY
-	)
-
-
-/datum/gas_reaction/agent_b/react(datum/gas_mixture/air)
-	var/list/cached_gases = air.gases
-	var/reaction_rate = min(cached_gases["co2"][MOLES]*0.75, cached_gases["plasma"][MOLES]*0.25, cached_gases["agent_b"][MOLES]*0.05)
-
-	cached_gases["co2"][MOLES] -= reaction_rate
-	cached_gases["agent_b"][MOLES] -= reaction_rate*0.05
-
-	air.assert_gas("o2") //only need to assert oxygen, as this reaction doesn't occur without the other gases existing
-	cached_gases["o2"][MOLES] += reaction_rate
-
-	air.temperature -= (reaction_rate*20000)/air.heat_capacity()
-
-	return REACTING
 
 //freon: does a freezy thing?
 /datum/gas_reaction/freon
@@ -100,7 +72,7 @@
 	id = "fire"
 
 /datum/gas_reaction/fire/init_reqs()
-	min_requirements = list("TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //doesn't include plasma reqs b/c of volatile fuel stuff - consider finally axing volatile fuel
+	min_requirements = list("TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //doesn't include plasma reqs b/c of other, rarer, burning gases.
 
 /datum/gas_reaction/fire/react(datum/gas_mixture/air, turf/open/location)
 	var/energy_released = 0
@@ -113,23 +85,23 @@
 	cached_results[id] = 0
 
 	//General volatile gas burn
-	if(cached_gases["v_fuel"] && cached_gases["v_fuel"][MOLES])
+	if(cached_gases["tritium"] && cached_gases["tritium"][MOLES])
 		var/burned_fuel
 		if(!cached_gases["o2"])
 			burned_fuel = 0
-		else if(cached_gases["o2"][MOLES] < cached_gases["v_fuel"][MOLES])
-			burned_fuel = cached_gases["o2"][MOLES]
-			cached_gases["v_fuel"][MOLES] -= burned_fuel
+		else if(cached_gases["o2"][MOLES] < cached_gases["tritium"][MOLES])
+			burned_fuel = cached_gases["o2"][MOLES]/2
+			cached_gases["tritium"][MOLES] -= burned_fuel
 			cached_gases["o2"][MOLES] = 0
 		else
-			burned_fuel = cached_gases["v_fuel"][MOLES]
-			cached_gases["o2"][MOLES] -= cached_gases["v_fuel"][MOLES]
+			burned_fuel = cached_gases["tritium"][MOLES]*2
+			cached_gases["o2"][MOLES] -= cached_gases["tritium"][MOLES]
 
 		if(burned_fuel)
 			energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
 
-			air.assert_gas("co2")
-			cached_gases["co2"][MOLES] += burned_fuel
+			air.assert_gas("water_vapor")
+			cached_gases["water_vapor"][MOLES] += burned_fuel
 
 			cached_results[id] += burned_fuel
 
@@ -179,9 +151,9 @@
 
 	return cached_results[id] ? REACTING : NO_REACTION
 
-//fusion: a terrible idea that was fun to try. turns co2 and plasma into REALLY HOT oxygen and nitrogen. super exothermic lol
+//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting.
 /datum/gas_reaction/fusion
-	exclude = TRUE
+	exclude = FALSE
 	priority = 2
 	name = "Plasmic Fusion"
 	id = "fusion"
@@ -190,36 +162,38 @@
 	min_requirements = list(
 		"ENER" = PLASMA_BINDING_ENERGY * 10,
 		"plasma" = MINIMUM_HEAT_CAPACITY,
-		"co2" = MINIMUM_HEAT_CAPACITY
+		"tritium" = MINIMUM_HEAT_CAPACITY
 	)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 
-	if((cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])/air.total_moles() < FUSION_PURITY_THRESHOLD)
-		//Fusion wont occur if the level of impurities is too high.
+	if(((cached_gases["plasma"][MOLES]+cached_gases["tritium"][MOLES])/air.total_moles() < FUSION_PURITY_THRESHOLD) || air.return_pressure() < 10*ONE_ATMOSPHERE)
+		//Fusion wont occur if the level of impurities is too high or if there is too little pressure.
 		return NO_REACTION
 
 	//to_chat(world, "pre [temperature, [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]])
 	var/old_heat_capacity = air.heat_capacity()
-	var/carbon_efficency = min(cached_gases["plasma"][MOLES]/cached_gases["co2"][MOLES],MAX_CARBON_EFFICENCY)
+	var/catalyst_efficency = max(min(cached_gases["plasma"][MOLES]/cached_gases["tritium"][MOLES],MAX_CARBON_EFFICENCY)-(temperature/FUSION_HEAT_DROPOFF),0)
 	var/reaction_energy = air.thermal_energy()
-	var/moles_impurities = air.total_moles()-(cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])
+	var/moles_impurities = air.total_moles()-(cached_gases["plasma"][MOLES]+cached_gases["tritium"][MOLES])
 
-	var/plasma_fused = (PLASMA_FUSED_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
-	var/carbon_catalyzed = (CARBON_CATALYST_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
-	var/oxygen_added = carbon_catalyzed
-	var/nitrogen_added = (plasma_fused-oxygen_added)-(air.thermal_energy()/PLASMA_BINDING_ENERGY)
+	var/plasma_fused = (PLASMA_FUSED_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)*4
+	var/tritium_catalyzed = (CARBON_CATALYST_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)
+	var/oxygen_added = tritium_catalyzed
+	var/waste_added = (plasma_fused-oxygen_added)-(air.thermal_energy()/PLASMA_BINDING_ENERGY)
+	reaction_energy = max(reaction_energy+((catalyst_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/catalyst_efficency)+2)*10)+((plasma_fused/(moles_impurities/catalyst_efficency))*PLASMA_BINDING_ENERGY),0)
 
-	reaction_energy = max(reaction_energy+((carbon_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY),0)
-
-	air.assert_gases("o2", "n2")
-
+	air.assert_gases("o2", "n2","water_vapor","n2o","browns")
+	//Fusion produces an absurd amount of waste products now, requiring active filtration.
 	cached_gases["plasma"][MOLES] -= plasma_fused
-	cached_gases["co2"][MOLES] -= carbon_catalyzed
+	cached_gases["tritium"][MOLES] -= tritium_catalyzed
 	cached_gases["o2"][MOLES] += oxygen_added
-	cached_gases["n2"][MOLES] += nitrogen_added
+	cached_gases["n2"][MOLES] += waste_added
+	cached_gases["water_vapor"][MOLES] += waste_added
+	cached_gases["n2o"][MOLES] += waste_added
+	cached_gases["browns"][MOLES] += waste_added
 
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -227,6 +201,71 @@
 			air.temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
 			//Prevents whatever mechanism is causing it to hit negative temperatures.
 		//to_chat(world, "post [temperature], [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]])
+		return REACTING
+
+/datum/gas_reaction/brownsformation //The formation of brown gas. Endothermic.
+	priority = 3
+	name = "Brown Gas formation"
+	id = "brownsformation"
+
+/datum/gas_reaction/brownsformation/init_reqs()
+	min_requirements = list(
+		"oxygen" = 20,
+		"nitrogen" = 20,
+		"temp" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*200
+	)
+
+/datum/gas_reaction/brownsformation/react(datum/gas_mixture/air)
+	var/list/cached_gases = air.gases
+	var/temperature = air.temperature
+
+	var/old_heat_capacity = air.heat_capacity()
+	var/heat_efficency = temperature/FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100
+	var/energy_used = heat_efficency*BROWNS_FORMATION_ENERGY
+	air.assert_gases("oxygen","nitrogen","browns")
+
+	cached_gases["oxygen"][MOLES] -= heat_efficency
+	cached_gases["nitrogen"][MOLES] -= heat_efficency
+	cached_gases["browns"][MOLES] += heat_efficency*2
+
+	if(energy_used > 0)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = max(((temperature*old_heat_capacity - energy_used)/new_heat_capacity),TCMB)
+		return REACTING
+
+/datum/gas_reaction/bzformation //Formation of BZ by combining plasma and tritium at low pressures. Exothermic.
+	priority = 3
+	name = "BZ Gas formation"
+	id = "bzformation"
+
+/datum/gas_reaction/bzformation/init_reqs()
+	min_requirements = list(
+		"tritium" = 10,
+		"plasma" = 10,
+	)
+
+
+/datum/gas_reaction/bzformation/react(datum/gas_mixture/air)
+	var/list/cached_gases = air.gases
+	var/temperature = air.temperature
+	var/pressure = air.return_pressure()
+
+	var/old_heat_capacity = air.heat_capacity()
+	var/reaction_efficency = pressure/0.1*ONE_ATMOSPHERE
+	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
+
+
+	air.assert_gases("tritium","plasma","BZ")
+	cached_gases["bz"][MOLES]+= reaction_efficency
+	cached_gases["tritium"][MOLES]-= 2*reaction_efficency
+	cached_gases["plasma"][MOLES]-= reaction_efficency
+
+
+	if(energy_released > 0)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = max(((temperature*old_heat_capacity + energy_released)/new_heat_capacity),TCMB)
 		return REACTING
 
 #undef REACTING

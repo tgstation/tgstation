@@ -77,15 +77,17 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 	moles_visible = 1
 	dangerous = TRUE
 
-/datum/gas/oxygen_agent_b
-	id = "agent_b"
-	specific_heat = 300
-	name = "Oxygen Agent B"
+/datum/gas/brown_gas //This is nitric oxide, but given generic name to avoid confusion with nitrous oxide(N20 vs. NO2)
+	id = "browns"
+	specific_heat = 20
+	name = "Brown Gas"
+	dangerous = TRUE
 
-/datum/gas/volatile_fuel
-	id = "v_fuel"
-	specific_heat = 30
-	name = "Volatile Fuel"
+/datum/gas/tritium
+	id = "tritium"
+	specific_heat = 10
+	name = "Tritium"
+	dangerous = TRUE
 
 /datum/gas/bz
 	id = "bz"
