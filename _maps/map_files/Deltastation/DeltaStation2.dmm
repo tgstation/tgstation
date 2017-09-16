@@ -24300,8 +24300,7 @@
 /area/quartermaster/office)
 "aWW" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-18";
-	layer = 4.1
+	icon_state = "plant-18"
 	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/office)
@@ -24794,8 +24793,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/fireaxecabinet{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 8
@@ -58707,9 +58705,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/table/reinforced,
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-07";
-	name = "Photosynthetic Potted plant";
+/obj/item/twohanded/required/kirbyplants/photosynthetic{
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/vault{
@@ -68427,8 +68423,7 @@
 /area/crew_quarters/locker)
 "cCc" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-18";
-	layer = 4.1
+	icon_state = "plant-18"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5

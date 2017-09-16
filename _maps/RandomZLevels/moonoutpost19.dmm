@@ -6766,7 +6766,6 @@
 "jq" = (
 /obj/item/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
-	layer = 4.1;
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel{
@@ -9781,7 +9780,6 @@
 "ob" = (
 /obj/item/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
-	layer = 4.1;
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/neutral/side{

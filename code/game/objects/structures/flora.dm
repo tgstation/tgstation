@@ -300,6 +300,12 @@
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
 
+/obj/item/twohanded/required/kirbyplants/photosynthetic
+	name = "Photosynthetic Potted plant"
+	icon_state = "plant-09"
+	light_color = "#2cb2e8"
+	light_range = 3
+
 
 //a rock is flora according to where the icon file is
 //and now these defines
