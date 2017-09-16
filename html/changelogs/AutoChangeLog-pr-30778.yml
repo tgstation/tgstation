@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - rscdel: "Removed unused vine floors and their sprite."
