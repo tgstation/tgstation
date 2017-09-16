@@ -4069,8 +4069,6 @@
 "ajo" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/red/side{
@@ -4408,8 +4406,6 @@
 /obj/structure/table/wood,
 /obj/machinery/recharger,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/light{
@@ -4710,9 +4706,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 5
 	},
@@ -6577,7 +6571,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
 	layer = 3;
 	pixel_x = -32
 	},
@@ -6591,7 +6584,6 @@
 	dir = 8
 	},
 /obj/machinery/status_display{
-	density = 0;
 	layer = 3;
 	pixel_x = 32
 	},
@@ -7478,12 +7470,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "bridgespace";
-	name = "bridge external shutters";
-	opacity = 0
+	name = "bridge external shutters"
 	},
 /turf/open/floor/plating,
 /area/bridge)
@@ -7942,8 +7931,6 @@
 /area/bridge)
 "arK" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/item/folder/yellow{
@@ -9397,22 +9384,16 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "auK" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "bridgespace";
-	name = "bridge external shutters";
-	opacity = 0
+	name = "bridge external shutters"
 	},
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "auL" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "bridgespace";
-	name = "bridge external shutters";
-	opacity = 0
+	name = "bridge external shutters"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
@@ -10197,8 +10178,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/arrival{
@@ -10555,12 +10534,9 @@
 /area/bridge)
 "axf" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "bridgespace";
-	name = "bridge external shutters";
-	opacity = 0
+	name = "bridge external shutters"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -10916,12 +10892,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "bridgespace";
-	name = "bridge external shutters";
-	opacity = 0
+	name = "bridge external shutters"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12479,8 +12452,6 @@
 /area/crew_quarters/heads/hop)
 "aBF" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/structure/bed/dogbed/ian,
@@ -14377,13 +14348,10 @@
 	name = "Reception Window";
 	req_access_txt = "0"
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "hop";
 	layer = 3.1;
-	name = "privacy shutters";
-	opacity = 0
+	name = "privacy shutters"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
@@ -15710,8 +15678,6 @@
 "aID" = (
 /obj/structure/chair,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/red/side{
@@ -17377,8 +17343,6 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 30;
 	supply_display = 1
 	},
@@ -17421,9 +17385,7 @@
 	dir = 4;
 	id = "packageSort2"
 	},
-/obj/structure/plasticflaps{
-	opacity = 0
-	},
+/obj/structure/plasticflaps,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -20652,8 +20614,6 @@
 	id = "QMLoad"
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 30;
 	supply_display = 1
 	},
@@ -22809,13 +22769,10 @@
 	name = "Security Checkpoint";
 	req_access_txt = "1"
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "papersplease";
 	layer = 3.1;
-	name = "privacy shutters";
-	opacity = 0
+	name = "privacy shutters"
 	},
 /obj/item/folder/red,
 /obj/item/pen,
@@ -24694,13 +24651,10 @@
 	req_access_txt = "1"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "papersplease";
 	layer = 3.1;
-	name = "privacy shutters";
-	opacity = 0
+	name = "privacy shutters"
 	},
 /obj/item/crowbar,
 /obj/effect/turf_decal/delivery,
@@ -26265,8 +26219,6 @@
 	d2 = 2
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/black,
@@ -34295,9 +34247,7 @@
 	dir = 4
 	},
 /obj/structure/bed/roller,
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/medical/medbay/central)
 "bwQ" = (
@@ -38366,7 +38316,6 @@
 /obj/item/pen,
 /obj/item/stamp/rd,
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = -30;
 	supply_display = 0
 	},
@@ -39395,8 +39344,6 @@
 "bHc" = (
 /obj/machinery/computer/med_data,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/freezer,
@@ -40976,9 +40923,7 @@
 /area/medical/medbay/central)
 "bKB" = (
 /obj/structure/bed/roller,
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/freezer,
 /area/medical/surgery)
 "bKC" = (
@@ -41904,7 +41849,6 @@
 	},
 /obj/item/storage/box/syringes,
 /obj/structure/reagent_dispensers/virusfood{
-	density = 0;
 	pixel_x = 32
 	},
 /obj/item/reagent_containers/spray/cleaner,

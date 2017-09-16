@@ -3899,10 +3899,7 @@
 	},
 /area/awaymission/snowdin)
 "kA" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	icon = 'icons/turf/snow.dmi';

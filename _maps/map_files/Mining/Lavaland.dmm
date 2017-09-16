@@ -358,8 +358,6 @@
 /area/mine/laborcamp)
 "bj" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,

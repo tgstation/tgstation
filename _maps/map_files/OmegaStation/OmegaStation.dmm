@@ -27,10 +27,7 @@
 /area/space)
 "aag" = (
 /obj/structure/lattice,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/space,
 /area/space)
 "aah" = (
@@ -235,6 +232,8 @@
 "aaz" = (
 /obj/machinery/computer/card,
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkred/side{
@@ -374,6 +373,8 @@
 "aaL" = (
 /obj/machinery/computer/monitor,
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkyellow/side{
@@ -398,6 +399,8 @@
 	name = "command camera"
 	},
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
@@ -493,6 +496,8 @@
 	name = "command camera"
 	},
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
@@ -524,6 +529,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
@@ -581,6 +588,8 @@
 /area/bridge)
 "abb" = (
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -698,6 +707,8 @@
 	dir = 10
 	},
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
@@ -1927,7 +1938,6 @@
 /area/quartermaster/storage)
 "adp" = (
 /obj/machinery/status_display{
-	density = 0;
 	name = "cargo display";
 	supply_display = 1
 	},
@@ -2812,7 +2822,6 @@
 /area/crew_quarters/heads/hop)
 "aeP" = (
 /obj/machinery/status_display{
-	density = 0;
 	name = "cargo display";
 	pixel_x = -32;
 	supply_display = 1
@@ -4519,9 +4528,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "ahE" = (
-/obj/machinery/computer/security/wooden_tv{
-	density = 0
-	},
+/obj/machinery/computer/security/wooden_tv,
 /obj/structure/table/wood,
 /obj/machinery/button/door{
 	id = "detectivewindows";
@@ -4596,9 +4603,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "ahK" = (
-/obj/machinery/computer/security/wooden_tv{
-	density = 0
-	},
+/obj/machinery/computer/security/wooden_tv,
 /obj/structure/table/wood,
 /obj/machinery/button/door{
 	id = "captainhall";
@@ -16073,9 +16078,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "aAB" = (
-/obj/machinery/computer/station_alert{
-	density = 0
-	},
+/obj/machinery/computer/station_alert,
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 4;
@@ -19850,6 +19853,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -33079,6 +33084,8 @@
 /area/maintenance/port)
 "beX" = (
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36566,6 +36573,8 @@
 	network = list("SS13")
 	},
 /obj/structure/cable/white{
+	d1 = 2;
+	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -38453,6 +38462,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -38559,6 +38570,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -38570,6 +38583,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -38581,6 +38596,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -38592,6 +38609,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -38620,6 +38639,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -38631,6 +38652,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -38758,6 +38781,8 @@
 	})
 "bsU" = (
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -38775,6 +38800,8 @@
 	})
 "bsW" = (
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
