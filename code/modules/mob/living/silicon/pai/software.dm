@@ -127,7 +127,7 @@
 		if("buy")
 			if(subscreen == 1)
 				var/target = href_list["buy"]
-				if(available_software.Find(target))
+				if(available_software.Find(target) && !software.Find(target))
 					var/cost = src.available_software[target]
 					if(ram >= cost)
 						software.Add(target)
@@ -248,6 +248,7 @@
 				medHUD = !medHUD
 				if(medHUD)
 					add_med_hud()
+					
 				else
 					var/datum/atom_hud/med = GLOB.huds[med_hud]
 					med.remove_hud_from(src)
