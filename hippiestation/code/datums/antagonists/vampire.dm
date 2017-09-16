@@ -33,10 +33,10 @@
 		forge_single_objective()
 
 	if(!(locate(/datum/objective/escape) in owner.objectives))
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = owner
-			add_objective(escape_objective)
-			return
+		var/datum/objective/escape/escape_objective = new
+		escape_objective.owner = owner
+		add_objective(escape_objective)
+		return
 
 /datum/antagonist/vampire/proc/add_objective(var/datum/objective/O)
 	owner.objectives += O
