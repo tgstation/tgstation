@@ -9,7 +9,7 @@
 	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
-	var/obj/item/weapon/card/id/prisoner/inserted_id
+	var/obj/item/card/id/prisoner/inserted_id
 	var/obj/machinery/door/airlock/release_door
 	var/door_tag = "prisonshuttle"
 	var/obj/item/device/radio/Radio //needed to send messages to sec radio
@@ -22,7 +22,7 @@
 	locate_stacking_machine()
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/card/id/prisoner))
+	if(istype(I, /obj/item/card/id/prisoner))
 		if(!inserted_id)
 			if(!user.drop_item())
 				return
@@ -82,7 +82,7 @@
 					inserted_id = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/weapon/card/id/prisoner))
+				if(istype(I, /obj/item/card/id/prisoner))
 					if(!usr.drop_item())
 						return
 					I.forceMove(src)
@@ -155,9 +155,9 @@
 	user.examinate(src)
 
 /obj/machinery/mineral/labor_points_checker/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/card/id))
-		if(istype(I, /obj/item/weapon/card/id/prisoner))
-			var/obj/item/weapon/card/id/prisoner/prisoner_id = I
+	if(istype(I, /obj/item/card/id))
+		if(istype(I, /obj/item/card/id/prisoner))
+			var/obj/item/card/id/prisoner/prisoner_id = I
 			to_chat(user, "<span class='notice'><B>ID: [prisoner_id.registered_name]</B></span>")
 			to_chat(user, "<span class='notice'>Points Collected:[prisoner_id.points]</span>")
 			to_chat(user, "<span class='notice'>Point Quota: [prisoner_id.goal]</span>")

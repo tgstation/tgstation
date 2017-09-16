@@ -22,7 +22,7 @@
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	density = TRUE
-	circuit = /obj/item/weapon/circuitboard/computer/scan_consolenew
+	circuit = /obj/item/circuitboard/computer/scan_consolenew
 	var/radduration = 2
 	var/radstrength = 1
 
@@ -31,7 +31,7 @@
 	var/injectorready = 0	//world timer cooldown var
 	var/current_screen = "mainmenu"
 	var/obj/machinery/dna_scannernew/connected = null
-	var/obj/item/weapon/disk/data/diskette = null
+	var/obj/item/disk/data/diskette = null
 	var/list/delayed_action = null
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -41,7 +41,7 @@
 	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
+	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			if(!user.drop_item())
 				return
@@ -390,11 +390,11 @@
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
-					var/obj/item/weapon/dnainjector/timed/I
+					var/obj/item/dnainjector/timed/I
 					switch(href_list["text"])
 						if("se")
 							if(buffer_slot["SE"])
-								I = new /obj/item/weapon/dnainjector/timed(loc)
+								I = new /obj/item/dnainjector/timed(loc)
 								var/powers = 0
 								for(var/datum/mutation/human/HM in GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations)
 									if(HM.check_block_string(buffer_slot["SE"]))
@@ -417,19 +417,19 @@
 									I.damage_coeff  = connected.damage_coeff
 						if("ui")
 							if(buffer_slot["UI"])
-								I = new /obj/item/weapon/dnainjector/timed(loc)
+								I = new /obj/item/dnainjector/timed(loc)
 								I.fields = list("UI"=buffer_slot["UI"])
 								if(connected)
 									I.damage_coeff = connected.damage_coeff
 						if("ue")
 							if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
-								I = new /obj/item/weapon/dnainjector/timed(loc)
+								I = new /obj/item/dnainjector/timed(loc)
 								I.fields = list("name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
 								if(connected)
 									I.damage_coeff  = connected.damage_coeff
 						if("mixed")
 							if(buffer_slot["UI"] && buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
-								I = new /obj/item/weapon/dnainjector/timed(loc)
+								I = new /obj/item/dnainjector/timed(loc)
 								I.fields = list("UI"=buffer_slot["UI"],"name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
 								if(connected)
 									I.damage_coeff = connected.damage_coeff

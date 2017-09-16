@@ -316,7 +316,7 @@
 	name = initial(name)
 
 	//Handle dental implants
-	for(var/obj/item/weapon/reagent_containers/pill/P in src)
+	for(var/obj/item/reagent_containers/pill/P in src)
 		for(var/datum/action/item_action/hands_free/activate_pill/AP in P.actions)
 			P.forceMove(C)
 			AP.Grant(C)

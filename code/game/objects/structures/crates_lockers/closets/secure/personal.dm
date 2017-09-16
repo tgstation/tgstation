@@ -7,11 +7,11 @@
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()
 	if(prob(50))
-		new /obj/item/weapon/storage/backpack/duffelbag(src)
+		new /obj/item/storage/backpack/duffelbag(src)
 	if(prob(50))
-		new /obj/item/weapon/storage/backpack(src)
+		new /obj/item/storage/backpack(src)
 	else
-		new /obj/item/weapon/storage/backpack/satchel(src)
+		new /obj/item/storage/backpack/satchel(src)
 	new /obj/item/device/radio/headset( src )
 
 /obj/structure/closet/secure_closet/personal/patient
@@ -27,12 +27,12 @@
 	max_integrity = 70
 
 /obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
-	new /obj/item/weapon/storage/backpack/satchel/leather/withwallet( src )
+	new /obj/item/storage/backpack/satchel/leather/withwallet( src )
 	new /obj/item/device/instrument/piano_synth(src)
 	new /obj/item/device/radio/headset( src )
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user, params)
-	var/obj/item/weapon/card/id/I = W.GetID()
+	var/obj/item/card/id/I = W.GetID()
 	if(istype(I))
 		if(broken)
 			to_chat(user, "<span class='danger'>It appears to be broken.</span>")

@@ -4,7 +4,7 @@
 	icon_screen = "mecha"
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_ROBOTICS)
-	circuit = /obj/item/weapon/circuitboard/computer/mecha_control
+	circuit = /obj/item/circuitboard/computer/mecha_control
 	var/list/located = list()
 	var/screen = 0
 	var/stored_data
@@ -123,10 +123,10 @@
 	ai_beacon = TRUE
 
 
-/obj/item/weapon/storage/box/mechabeacons
+/obj/item/storage/box/mechabeacons
 	name = "exosuit tracking beacons"
 
-/obj/item/weapon/storage/box/mechabeacons/New()
+/obj/item/storage/box/mechabeacons/New()
 	..()
 	new /obj/item/mecha_parts/mecha_tracking(src)
 	new /obj/item/mecha_parts/mecha_tracking(src)

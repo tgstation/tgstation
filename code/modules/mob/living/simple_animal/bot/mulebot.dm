@@ -43,11 +43,11 @@
 	var/auto_pickup = 1 	// true if auto-pickup at beacon
 	var/report_delivery = 1 // true if bot will announce an arrival to a location.
 
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell
 	var/bloodiness = 0
 
 /mob/living/simple_animal/bot/mulebot/Initialize()
-	..()
+	. = ..()
 	wires = new /datum/wires/mulebot(src)
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
 	access_card.access = J.get_access()
@@ -79,19 +79,19 @@
 	reached_target = 0
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		..()
 		if(open)
 			on = FALSE
-	else if(istype(I, /obj/item/weapon/stock_parts/cell) && open && !cell)
+	else if(istype(I, /obj/item/stock_parts/cell) && open && !cell)
 		if(!user.drop_item())
 			return
-		var/obj/item/weapon/stock_parts/cell/C = I
+		var/obj/item/stock_parts/cell/C = I
 		C.loc = src
 		cell = C
 		visible_message("[user] inserts a cell into [src].",
 						"<span class='notice'>You insert the new cell into [src].</span>")
-	else if(istype(I, /obj/item/weapon/crowbar) && open && cell)
+	else if(istype(I, /obj/item/crowbar) && open && cell)
 		cell.add_fingerprint(usr)
 		cell.loc = loc
 		cell = null
@@ -650,7 +650,7 @@
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
 	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
-					"<span class='userdanger'>[src] drives over you!<span>")
+					"<span class='userdanger'>[src] drives over you!</span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)

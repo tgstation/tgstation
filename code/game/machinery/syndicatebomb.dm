@@ -21,7 +21,7 @@
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
 	var/defused = FALSE		//is the bomb capable of exploding?
-	var/obj/item/weapon/bombcore/payload = /obj/item/weapon/bombcore
+	var/obj/item/bombcore/payload = /obj/item/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
 	var/delayedbig = FALSE	//delay wire pulsed?
 	var/delayedlittle  = FALSE	//activation wire pulsed?
@@ -110,7 +110,7 @@
 		. = timer_set
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench) && can_unanchor)
+	if(istype(I, /obj/item/wrench) && can_unanchor)
 		if(!anchored)
 			if(!isturf(loc) || isspaceturf(loc))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>")
@@ -128,7 +128,7 @@
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(istype(I, /obj/item/screwdriver))
 		open_panel = !open_panel
 		update_icon()
 		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
@@ -136,7 +136,7 @@
 	else if(is_wire_tool(I) && open_panel)
 		wires.interact(user)
 
-	else if(istype(I, /obj/item/weapon/crowbar))
+	else if(istype(I, /obj/item/crowbar))
 		if(open_panel && wires.is_all_cut())
 			if(payload)
 				to_chat(user, "<span class='notice'>You carefully pry out [payload].</span>")
@@ -148,7 +148,7 @@
 			to_chat(user, "<span class='warning'>The wires connecting the shell to the explosives are holding it down!</span>")
 		else
 			to_chat(user, "<span class='warning'>The cover is screwed on, it won't pry off!</span>")
-	else if(istype(I, /obj/item/weapon/bombcore))
+	else if(istype(I, /obj/item/bombcore))
 		if(!payload)
 			if(!user.drop_item())
 				return
@@ -157,10 +157,10 @@
 			payload.loc = src
 		else
 			to_chat(user, "<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>")
-	else if(istype(I, /obj/item/weapon/weldingtool))
+	else if(istype(I, /obj/item/weldingtool))
 		if(payload || !wires.is_all_cut() || !open_panel)
 			return
-		var/obj/item/weapon/weldingtool/WT = I
+		var/obj/item/weldingtool/WT = I
 		if(!WT.isOn())
 			return
 		if(WT.get_fuel() < 5) //uses up 5 fuel.
@@ -221,7 +221,7 @@
 
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
-			if(payload && !istype(payload, /obj/item/weapon/bombcore/training))
+			if(payload && !istype(payload, /obj/item/bombcore/training))
 				message_admins("[ADMIN_LOOKUPFLW(user)] has primed a [name] ([payload]) for detonation at [A.name] [ADMIN_JMP(bombturf)]</a>.")
 				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name][COORD(bombturf)]")
 				payload.adminlog = "The [src.name] that [key_name(user)] had primed detonated!"
@@ -232,18 +232,18 @@
 	name = "training bomb"
 	icon_state = "training-bomb"
 	desc = "A salvaged syndicate device gutted of its explosives to be used as a training aid for aspiring bomb defusers."
-	payload = /obj/item/weapon/bombcore/training
+	payload = /obj/item/bombcore/training
 
 /obj/machinery/syndicatebomb/badmin
 	name = "generic summoning badmin bomb"
 	desc = "Oh god what is in this thing?"
-	payload = /obj/item/weapon/bombcore/badmin/summon
+	payload = /obj/item/bombcore/badmin/summon
 
 /obj/machinery/syndicatebomb/badmin/clown
 	name = "clown bomb"
 	icon_state = "clown-bomb"
 	desc = "HONK."
-	payload = /obj/item/weapon/bombcore/badmin/summon/clown
+	payload = /obj/item/bombcore/badmin/summon/clown
 	beepsound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/syndicatebomb/empty
@@ -261,12 +261,12 @@
 /obj/machinery/syndicatebomb/self_destruct
 	name = "self destruct device"
 	desc = "Do not taunt. Warranty invalid if exposed to high temperature. Not suitable for agents under 3 years of age."
-	payload = /obj/item/weapon/bombcore/large
+	payload = /obj/item/bombcore/large
 	can_unanchor = FALSE
 
 ///Bomb Cores///
 
-/obj/item/weapon/bombcore
+/obj/item/bombcore
 	name = "bomb payload"
 	desc = "A powerful secondary explosive of syndicate design and unknown composition, it should be stable under normal conditions..."
 	icon = 'icons/obj/assemblies.dmi'
@@ -283,15 +283,15 @@
 	var/range_light = 17
 	var/range_flame = 17
 
-/obj/item/weapon/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
+/obj/item/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
 	detonate()
 
 
-/obj/item/weapon/bombcore/burn()
+/obj/item/bombcore/burn()
 	detonate()
 	..()
 
-/obj/item/weapon/bombcore/proc/detonate()
+/obj/item/bombcore/proc/detonate()
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
@@ -300,20 +300,20 @@
 		qdel(loc)
 	qdel(src)
 
-/obj/item/weapon/bombcore/proc/defuse()
+/obj/item/bombcore/proc/defuse()
 //Note: 	Because of how var/defused is used you shouldn't override this UNLESS you intend to set the var to 0 or
 //			otherwise remove the core/reset the wires before the end of defuse(). It will repeatedly be called otherwise.
 
 ///Bomb Core Subtypes///
 
-/obj/item/weapon/bombcore/training
+/obj/item/bombcore/training
 	name = "dummy payload"
 	desc = "A nanotrasen replica of a syndicate payload. Its not intended to explode but to announce that it WOULD have exploded, then rewire itself to allow for more training."
 	origin_tech = null
 	var/defusals = 0
 	var/attempts = 0
 
-/obj/item/weapon/bombcore/training/proc/reset()
+/obj/item/bombcore/training/proc/reset()
 	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		if(holder.wires)
@@ -326,7 +326,7 @@
 		holder.update_icon()
 		holder.updateDialog()
 
-/obj/item/weapon/bombcore/training/detonate()
+/obj/item/bombcore/training/detonate()
 	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		attempts++
@@ -335,7 +335,7 @@
 	else
 		qdel(src)
 
-/obj/item/weapon/bombcore/training/defuse()
+/obj/item/bombcore/training/defuse()
 	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		attempts++
@@ -345,45 +345,45 @@
 		if(istype(holder))
 			reset()
 
-/obj/item/weapon/bombcore/badmin
+/obj/item/bombcore/badmin
 	name = "badmin payload"
 	desc = "If you're seeing this someone has either made a mistake or gotten dangerously savvy with var editing!"
 	origin_tech = null
 
-/obj/item/weapon/bombcore/badmin/defuse() //because we wouldn't want them being harvested by players
+/obj/item/bombcore/badmin/defuse() //because we wouldn't want them being harvested by players
 	var/obj/machinery/syndicatebomb/B = loc
 	qdel(B)
 	qdel(src)
 
-/obj/item/weapon/bombcore/badmin/summon
-	var/summon_path = /obj/item/weapon/reagent_containers/food/snacks/cookie
+/obj/item/bombcore/badmin/summon
+	var/summon_path = /obj/item/reagent_containers/food/snacks/cookie
 	var/amt_summon = 1
 
-/obj/item/weapon/bombcore/badmin/summon/detonate()
+/obj/item/bombcore/badmin/summon/detonate()
 	var/obj/machinery/syndicatebomb/B = src.loc
 	spawn_and_random_walk(summon_path, src, amt_summon, walk_chance=50, admin_spawn=TRUE)
 	qdel(B)
 	qdel(src)
 
-/obj/item/weapon/bombcore/badmin/summon/clown
+/obj/item/bombcore/badmin/summon/clown
 	summon_path = /mob/living/simple_animal/hostile/retaliate/clown
 	amt_summon 	= 100
 
-/obj/item/weapon/bombcore/badmin/summon/clown/defuse()
+/obj/item/bombcore/badmin/summon/clown/defuse()
 	playsound(src.loc, 'sound/misc/sadtrombone.ogg', 50)
 	..()
 
-/obj/item/weapon/bombcore/large
+/obj/item/bombcore/large
 	name = "large bomb payload"
 	range_heavy = 5
 	range_medium = 10
 	range_light = 20
 	range_flame = 20
 
-/obj/item/weapon/bombcore/large/underwall
+/obj/item/bombcore/large/underwall
 	layer = ABOVE_OPEN_TURF_LAYER
 
-/obj/item/weapon/bombcore/miniature
+/obj/item/bombcore/miniature
 	name = "small bomb core"
 	w_class = WEIGHT_CLASS_SMALL
 	range_heavy = 1
@@ -391,7 +391,7 @@
 	range_light = 4
 	range_flame = 2
 
-/obj/item/weapon/bombcore/chemical
+/obj/item/bombcore/chemical
 	name = "chemical payload"
 	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. Properties of the core may vary with grenade casing type, and must be loaded before use."
 	origin_tech = "combat=4;materials=3"
@@ -402,11 +402,11 @@
 	var/temp_boost = 50
 	var/time_release = 0
 
-/obj/item/weapon/bombcore/chemical/detonate()
+/obj/item/bombcore/chemical/detonate()
 
 	if(time_release > 0)
 		var/total_volume = 0
-		for(var/obj/item/weapon/reagent_containers/RC in beakers)
+		for(var/obj/item/reagent_containers/RC in beakers)
 			total_volume += RC.reagents.total_volume
 
 		if(total_volume < time_release) // If it's empty, the detonation is complete.
@@ -418,7 +418,7 @@
 		var/fraction = time_release/total_volume
 		var/datum/reagents/reactants = new(time_release)
 		reactants.my_atom = src
-		for(var/obj/item/weapon/reagent_containers/RC in beakers)
+		for(var/obj/item/reagent_containers/RC in beakers)
 			RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, 1, 1, 1)
 		chem_splash(get_turf(src), spread_range, list(reactants), temp_boost)
 
@@ -429,12 +429,12 @@
 
 	var/list/reactants = list()
 
-	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+	for(var/obj/item/reagent_containers/glass/G in beakers)
 		reactants += G.reagents
 
 	for(var/obj/item/slime_extract/S in beakers)
 		if(S.Uses)
-			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+			for(var/obj/item/reagent_containers/glass/G in beakers)
 				G.reagents.trans_to(S, G.reagents.total_volume)
 
 			if(S && S.reagents && S.reagents.total_volume)
@@ -454,14 +454,14 @@
 		qdel(loc)
 	qdel(src)
 
-/obj/item/weapon/bombcore/chemical/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/crowbar) && beakers.len > 0)
+/obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/crowbar) && beakers.len > 0)
 		playsound(loc, I.usesound, 50, 1)
 		for (var/obj/item/B in beakers)
 			B.loc = get_turf(src)
 			beakers -= B
 		return
-	else if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) || istype(I, /obj/item/weapon/reagent_containers/glass/bottle))
+	else if(istype(I, /obj/item/reagent_containers/glass/beaker) || istype(I, /obj/item/reagent_containers/glass/bottle))
 		if(beakers.len < max_beakers)
 			if(!user.drop_item())
 				return
@@ -473,17 +473,17 @@
 			return
 	..()
 
-/obj/item/weapon/bombcore/chemical/CheckParts(list/parts_list)
+/obj/item/bombcore/chemical/CheckParts(list/parts_list)
 	..()
 	// Using different grenade casings, causes the payload to have different properties.
-	var/obj/item/weapon/stock_parts/matter_bin/MB = locate(/obj/item/weapon/stock_parts/matter_bin) in src
+	var/obj/item/stock_parts/matter_bin/MB = locate(/obj/item/stock_parts/matter_bin) in src
 	if(MB)
 		max_beakers += MB.rating	// max beakers = 2-5.
 		qdel(MB)
-	for(var/obj/item/weapon/grenade/chem_grenade/G in src)
+	for(var/obj/item/grenade/chem_grenade/G in src)
 
-		if(istype(G, /obj/item/weapon/grenade/chem_grenade/large))
-			var/obj/item/weapon/grenade/chem_grenade/large/LG = G
+		if(istype(G, /obj/item/grenade/chem_grenade/large))
+			var/obj/item/grenade/chem_grenade/large/LG = G
 			max_beakers += 1 // Adding two large grenades only allows for a maximum of 7 beakers.
 			spread_range += 2 // Extra range, reduced density.
 			temp_boost += 50 // maximum of +150K blast using only large beakers. Not enough to self ignite.
@@ -494,17 +494,17 @@
 				else
 					S.loc = get_turf(src)
 
-		if(istype(G, /obj/item/weapon/grenade/chem_grenade/cryo))
+		if(istype(G, /obj/item/grenade/chem_grenade/cryo))
 			spread_range -= 1 // Reduced range, but increased density.
 			temp_boost -= 100 // minimum of -150K blast.
 
-		if(istype(G, /obj/item/weapon/grenade/chem_grenade/pyro))
+		if(istype(G, /obj/item/grenade/chem_grenade/pyro))
 			temp_boost += 150 // maximum of +350K blast, which is enough to self ignite. Which means a self igniting bomb can't take advantage of other grenade casing properties. Sorry?
 
-		if(istype(G, /obj/item/weapon/grenade/chem_grenade/adv_release))
+		if(istype(G, /obj/item/grenade/chem_grenade/adv_release))
 			time_release += 50 // A typical bomb, using basic beakers, will explode over 2-4 seconds. Using two will make the reaction last for less time, but it will be more dangerous overall.
 
-		for(var/obj/item/weapon/reagent_containers/glass/B in G)
+		for(var/obj/item/reagent_containers/glass/B in G)
 			if(beakers.len < max_beakers)
 				beakers += B
 				B.loc = src

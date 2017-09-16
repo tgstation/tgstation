@@ -13,7 +13,7 @@
 	density = FALSE
 	anchored = TRUE
 	state_open = TRUE
-	circuit = /obj/item/weapon/circuitboard/machine/sleeper
+	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
@@ -34,10 +34,10 @@
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		E += B.rating
 	var/I
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		I += M.rating
 
 	efficiency = initial(efficiency)* E
@@ -120,7 +120,19 @@
 	var/mob/living/mob_occupant = occupant
 	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
-		data["occupant"]["stat"] = mob_occupant.stat
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "good"
+			if(SOFT_CRIT)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "average"
+			if(UNCONSCIOUS)
+				data["occupant"]["stat"] = "Unconscious"
+				data["occupant"]["statstate"] = "average"
+			if(DEAD)
+				data["occupant"]["stat"] = "Dead"
+				data["occupant"]["statstate"] = "bad"
 		data["occupant"]["health"] = mob_occupant.health
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
 		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD

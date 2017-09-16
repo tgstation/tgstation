@@ -58,6 +58,7 @@
 	return ..()
 
 /obj/machinery/disposal/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 
@@ -77,13 +78,13 @@
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
-		if(istype(I, /obj/item/weapon/screwdriver))
+		if(istype(I, /obj/item/screwdriver))
 			panel_open = !panel_open
 			playsound(get_turf(src), I.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
-		else if(istype(I, /obj/item/weapon/weldingtool) && panel_open)
-			var/obj/item/weapon/weldingtool/W = I
+		else if(istype(I, /obj/item/weldingtool) && panel_open)
+			var/obj/item/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
@@ -95,7 +96,7 @@
 			return
 
 	if(user.a_intent != INTENT_HARM)
-		if(!user.drop_item() || (I.flags & ABSTRACT))
+		if(!user.drop_item() || (I.flags_1 & ABSTRACT_1))
 			return
 		place_item_in_disposal(I, user)
 		update_icon()
@@ -236,7 +237,7 @@
 
 /obj/machinery/disposal/deconstruct(disassembled = TRUE)
 	var/turf/T = loc
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(stored)
 			stored.forceMove(T)
 			src.transfer_fingerprints_to(stored)
@@ -247,8 +248,11 @@
 		AM.forceMove(T)
 	..()
 
+/obj/machinery/disposal/get_dumping_location(obj/item/storage/source,mob/user)
+	return src
+
 //How disposal handles getting a storage dump from a storage object
-/obj/machinery/disposal/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+/obj/machinery/disposal/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	for(var/obj/item/I in src_object)
 		if(user.s_active != src_object)
 			if(I.on_found(user))
@@ -270,8 +274,8 @@
 
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/storage/bag/trash))
-		var/obj/item/weapon/storage/bag/trash/T = I
+	if(istype(I, /obj/item/storage/bag/trash))
+		var/obj/item/storage/bag/trash/T = I
 		to_chat(user, "<span class='warning'>You empty the bag.</span>")
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)
@@ -332,20 +336,18 @@
 			eject()
 			. = TRUE
 
-/obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target)
-	if (isitem(mover) && mover.throwing)
-		var/obj/item/I = mover
-		if(istype(I, /obj/item/projectile))
-			return
+
+/obj/machinery/disposal/bin/hitby(atom/movable/AM)
+	if(isitem(AM) && AM.CanEnterDisposals())
 		if(prob(75))
-			I.forceMove(src)
-			visible_message("<span class='notice'>[I] lands in [src].</span>")
+			AM.forceMove(src)
+			visible_message("<span class='notice'>[AM] lands in [src].</span>")
 			update_icon()
 		else
-			visible_message("<span class='notice'>[I] bounces off of [src]'s rim!</span>")
-		return 0
+			visible_message("<span class='notice'>[AM] bounces off of [src]'s rim!</span>")
+			return ..()
 	else
-		return ..(mover, target)
+		return ..()
 
 /obj/machinery/disposal/bin/flush()
 	..()
@@ -454,12 +456,12 @@
 		trunk.linked = src	// link the pipe trunk to self
 
 /obj/machinery/disposal/deliveryChute/place_item_in_disposal(obj/item/I, mob/user)
-	if(I.disposalEnterTry())
+	if(I.CanEnterDisposals())
 		..()
 		flush()
 
 /obj/machinery/disposal/deliveryChute/CollidedWith(atom/movable/AM) //Go straight into the chute
-	if(!AM.disposalEnterTry())
+	if(!AM.CanEnterDisposals())
 		return
 	switch(dir)
 		if(NORTH)
@@ -482,16 +484,16 @@
 		M.forceMove(src)
 	flush()
 
-/atom/movable/proc/disposalEnterTry()
+/atom/movable/proc/CanEnterDisposals()
 	return 1
 
-/obj/item/projectile/disposalEnterTry()
+/obj/item/projectile/CanEnterDisposals()
 	return
 
-/obj/effect/disposalEnterTry()
+/obj/effect/CanEnterDisposals()
 	return
 
-/obj/mecha/disposalEnterTry()
+/obj/mecha/CanEnterDisposals()
 	return
 
 /obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)

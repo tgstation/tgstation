@@ -8,12 +8,12 @@
 /datum/export/solar/tracker_board
 	cost = 100
 	unit_name = "solar tracker board"
-	export_types = list(/obj/item/weapon/electronics/tracker)
+	export_types = list(/obj/item/electronics/tracker)
 
 /datum/export/solar/control_board
 	cost = 150
 	unit_name = "solar panel control board"
-	export_types = list(/obj/item/weapon/circuitboard/computer/solar_control)
+	export_types = list(/obj/item/circuitboard/computer/solar_control)
 
 /datum/export/swarmer
 	cost = 2000

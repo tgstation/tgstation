@@ -27,9 +27,6 @@
 /turf/closed/wall/mineral/cult/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent) //no metal
 	return list("operation_time" = 80, "new_obj_type" = /turf/closed/wall/clockwork, "power_cost" = POWER_WALL_TOTAL, "spawn_dir" = SOUTH)
 
-/turf/closed/wall/shuttle/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent) //two sheets of metal
-	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "power_cost" = POWER_WALL_TOTAL - (POWER_METAL * 2), "spawn_dir" = SOUTH)
-
 /turf/closed/wall/r_wall/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
 
@@ -272,7 +269,7 @@
 		fabricator.recharging = null
 		if(user)
 			user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops draining glowing orange energy from [src].</span>", \
-			"<span class='alloy'>You finish recharging your [fabricator.name]. It now contains <b>[fabricator.get_power()]W/[fabricator.get_max_power()]W</b> power.</span>")
+			"<span class='alloy'>You finish recharging your [fabricator.name]. It now contains <b>[DisplayPower(fabricator.get_power())]/[DisplayPower(fabricator.get_max_power())]</b> power.</span>")
 
 //Fabricator mob heal proc, to avoid as much copypaste as possible.
 /mob/living/proc/fabricator_heal(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator)
@@ -328,7 +325,7 @@
 		return
 	if(health == maxHealth)
 		return FALSE
-	else if(!(flags & GODMODE))
+	else if(!(flags_1 & GODMODE))
 		user.visible_message("<span class='notice'>[user]'s [fabricator.name] starts coverin[src == user ? "g [user.p_them()]" : "g [src]"] in glowing orange energy...</span>", \
 		"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [src]"]...</span>")
 		fabricator.repairing = src

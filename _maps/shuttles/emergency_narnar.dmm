@@ -11,7 +11,7 @@
 /area/shuttle/escape)
 "d" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "e" = (
@@ -26,11 +26,11 @@
 /area/shuttle/escape)
 "g" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "h" = (
@@ -99,12 +99,12 @@
 /area/shuttle/escape)
 "u" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "v" = (
@@ -164,7 +164,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
-/obj/item/weapon/extinguisher{
+/obj/item/extinguisher{
 	safety = 0
 	},
 /turf/open/floor/plasteel/cult,
@@ -218,12 +218,12 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "Q" = (
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
@@ -236,12 +236,12 @@
 /area/shuttle/escape)
 "S" = (
 /obj/structure/table/wood,
-/obj/item/weapon/tome,
+/obj/item/tome,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "T" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/cult,
+/obj/item/bedsheet/cult,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "U" = (

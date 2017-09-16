@@ -218,7 +218,7 @@
 /area/ruin/unpowered)
 "aJ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aK" = (
@@ -268,12 +268,12 @@
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aT" = (
-/obj/item/weapon/kitchen/fork,
+/obj/item/kitchen/fork,
 /turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aU" = (
 /obj/structure/table/wood,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
@@ -317,12 +317,12 @@
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bb" = (
-/obj/item/weapon/reagent_containers/food/snacks/donkpocket,
+/obj/item/reagent_containers/food/snacks/donkpocket,
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bc" = (
 /obj/structure/table,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bd" = (
@@ -395,7 +395,7 @@
 /area/ruin/unpowered)
 "bn" = (
 /obj/structure/lattice,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/template_noop,
 /area/template_noop)
 "bo" = (

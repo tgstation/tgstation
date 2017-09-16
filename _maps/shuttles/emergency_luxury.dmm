@@ -57,7 +57,7 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "ak" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/mineral/gold,
@@ -129,77 +129,77 @@
 /area/shuttle/escape)
 "ax" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti,
+/obj/item/reagent_containers/food/snacks/meatballspaghetti,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "ay" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/notasandwich,
+/obj/item/reagent_containers/food/snacks/notasandwich,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "az" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/pastatomato,
+/obj/item/reagent_containers/food/snacks/pastatomato,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aA" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/kebab/tofu,
+/obj/item/reagent_containers/food/snacks/kebab/tofu,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aB" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/honkdae,
+/obj/item/reagent_containers/food/snacks/honkdae,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aC" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/enchiladas,
+/obj/item/reagent_containers/food/snacks/enchiladas,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/candiedapple,
+/obj/item/reagent_containers/food/snacks/candiedapple,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/burger/baconburger,
+/obj/item/reagent_containers/food/snacks/burger/baconburger,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aF" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/benedict,
+/obj/item/reagent_containers/food/snacks/benedict,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aG" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/cakeslice/chocolate,
+/obj/item/reagent_containers/food/snacks/cakeslice/chocolate,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aH" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/chowmein,
+/obj/item/reagent_containers/food/snacks/chowmein,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aI" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/dulcedebatataslice,
+/obj/item/reagent_containers/food/snacks/dulcedebatataslice,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aJ" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/salad/validsalad,
+/obj/item/reagent_containers/food/snacks/salad/validsalad,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aK" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/carneburrito,
+/obj/item/reagent_containers/food/snacks/carneburrito,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/chawanmushi,
+/obj/item/reagent_containers/food/snacks/chawanmushi,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aM" = (
@@ -208,77 +208,77 @@
 /area/shuttle/escape)
 "aN" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/melonfruitbowl,
+/obj/item/reagent_containers/food/snacks/melonfruitbowl,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aO" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/khachapuri,
+/obj/item/reagent_containers/food/snacks/khachapuri,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aP" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/grilledcheese,
+/obj/item/reagent_containers/food/snacks/grilledcheese,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aQ" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry,
+/obj/item/reagent_containers/food/snacks/jelliedtoast/cherry,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aR" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/honeybun,
+/obj/item/reagent_containers/food/snacks/honeybun,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/eggplantparm,
+/obj/item/reagent_containers/food/snacks/eggplantparm,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/copypasta,
+/obj/item/reagent_containers/food/snacks/copypasta,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aU" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/bearsteak,
+/obj/item/reagent_containers/food/snacks/bearsteak,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aV" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti,
+/obj/item/reagent_containers/food/snacks/boiledspaghetti,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aW" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/cherrycupcake,
+/obj/item/reagent_containers/food/snacks/cherrycupcake,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aX" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/customizable/pizza,
+/obj/item/reagent_containers/food/snacks/customizable/pizza,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aY" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aZ" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/pie/grapetart,
+/obj/item/reagent_containers/food/snacks/pie/grapetart,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/burger/superbite,
+/obj/item/reagent_containers/food/snacks/burger/superbite,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "bb" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/cakeslice/slimecake,
+/obj/item/reagent_containers/food/snacks/cakeslice/slimecake,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "bc" = (
@@ -302,7 +302,7 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "bg" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
@@ -330,7 +330,7 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "bl" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-10"
 	},
 /obj/machinery/light{
@@ -357,7 +357,7 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "bp" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
@@ -367,7 +367,7 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "bq" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;

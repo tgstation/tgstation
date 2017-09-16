@@ -9,9 +9,9 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	circuit = /obj/item/weapon/circuitboard/machine/chem_master
-	var/obj/item/weapon/reagent_containers/beaker = null
-	var/obj/item/weapon/storage/pill_bottle/bottle = null
+	circuit = /obj/item/circuitboard/machine/chem_master
+	var/obj/item/reagent_containers/beaker = null
+	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
 	var/condi = 0
 	var/screen = "home"
@@ -25,7 +25,7 @@
 
 /obj/machinery/chem_master/RefreshParts()
 	reagents.maximum_volume = 0
-	for(var/obj/item/weapon/reagent_containers/glass/beaker/B in component_parts)
+	for(var/obj/item/reagent_containers/glass/beaker/B in component_parts)
 		reagents.maximum_volume += B.reagents.maximum_volume
 
 /obj/machinery/chem_master/ex_act(severity, target)
@@ -79,33 +79,31 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
+	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
 		. = 1 // no afterattack
 		if(panel_open)
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
 			return
 		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded in the machine!</span>")
+			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
 
 		beaker = I
-		beaker.loc = src
-		to_chat(user, "<span class='notice'>You add the beaker to the machine.</span>")
+		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
-	else if(!condi && istype(I, /obj/item/weapon/storage/pill_bottle))
+	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
-			to_chat(user, "<span class='warning'>A pill bottle is already loaded into the machine!</span>")
+			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
 
 		bottle = I
-		bottle.loc = src
-		to_chat(user, "<span class='notice'>You add the pill bottle into the dispenser slot.</span>")
+		to_chat(user, "<span class='notice'>You add [I] into the dispenser slot.</span>")
 		src.updateUsrDialog()
 	else
 		return ..()
@@ -211,13 +209,13 @@
 				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
-				var/obj/item/weapon/reagent_containers/pill/P
+				var/obj/item/reagent_containers/pill/P
 
 				for(var/i = 0; i < amount; i++)
 					if(bottle && bottle.contents.len < bottle.storage_slots)
-						P = new/obj/item/weapon/reagent_containers/pill(bottle)
+						P = new/obj/item/reagent_containers/pill(bottle)
 					else
-						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
+						P = new/obj/item/reagent_containers/pill(src.loc)
 					P.name = trim("[name] pill")
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
@@ -226,7 +224,7 @@
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
-				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
+				var/obj/item/reagent_containers/food/condiment/pack/P = new/obj/item/reagent_containers/food/condiment/pack(src.loc)
 
 				P.originalname = name
 				P.name = trim("[name] pack")
@@ -248,10 +246,10 @@
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
 			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 				return
-			var/obj/item/weapon/reagent_containers/pill/P
+			var/obj/item/reagent_containers/pill/P
 
 			for(var/i = 0; i < amount; i++)
-				P = new/obj/item/weapon/reagent_containers/pill/patch(src.loc)
+				P = new/obj/item/reagent_containers/pill/patch(src.loc)
 				P.name = trim("[name] patch")
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
@@ -267,7 +265,7 @@
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
-				var/obj/item/weapon/reagent_containers/food/condiment/P = new(src.loc)
+				var/obj/item/reagent_containers/food/condiment/P = new(src.loc)
 				P.originalname = name
 				P.name = trim("[name] bottle")
 				reagents.trans_to(P, P.volume)
@@ -281,16 +279,16 @@
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
 
-				var/obj/item/weapon/reagent_containers/glass/bottle/P
+				var/obj/item/reagent_containers/glass/bottle/P
 				for(var/i = 0; i < amount_full; i++)
-					P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+					P = new/obj/item/reagent_containers/glass/bottle(src.loc)
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
 					P.name = trim("[name] bottle")
 					reagents.trans_to(P, 30)
 
 				if(vol_part)
-					P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+					P = new/obj/item/reagent_containers/glass/bottle(src.loc)
 					P.name = trim("[name] bottle")
 					reagents.trans_to(P, vol_part)
 			. = TRUE

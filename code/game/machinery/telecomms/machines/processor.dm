@@ -16,7 +16,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	machinetype = 3
-	circuit = /obj/item/weapon/circuitboard/machine/telecomms/processor
+	circuit = /obj/item/circuitboard/machine/telecomms/processor
 	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
 
 /obj/machinery/telecomms/processor/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)

@@ -69,12 +69,12 @@
 /area/shuttle/escape)
 "ar" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "as" = (
@@ -120,8 +120,8 @@
 /area/shuttle/escape)
 "ay" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen{
+/obj/item/paper_bin,
+/obj/item/pen{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -133,7 +133,7 @@
 /area/shuttle/escape)
 "aA" = (
 /obj/structure/table,
-/obj/item/weapon/coin/mythril,
+/obj/item/coin/mythril,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aB" = (
@@ -169,11 +169,11 @@
 	pixel_x = 27
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/syringes{
+/obj/item/storage/box/syringes{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/beakers,
+/obj/item/storage/box/beakers,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aH" = (
@@ -214,12 +214,12 @@
 /area/shuttle/escape)
 "aN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/firstaid/regular{
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/obj/item/weapon/wrench/medical,
+/obj/item/wrench/medical,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aO" = (
@@ -245,11 +245,11 @@
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
+/obj/item/reagent_containers/glass/bottle/charcoal,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aU" = (

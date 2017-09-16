@@ -8,7 +8,7 @@
 /area/ruin/powered/beach)
 "ae" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /obj/item/stack/cable_coil,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
@@ -86,7 +86,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "at" = (
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "au" = (
@@ -112,7 +112,7 @@
 /area/ruin/powered/beach)
 "az" = (
 /obj/item/clothing/neck/necklace/dope,
-/obj/item/weapon/reagent_containers/spray/spraytan,
+/obj/item/reagent_containers/spray/spraytan,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aA" = (
@@ -130,10 +130,10 @@
 /area/ruin/powered/beach)
 "aD" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
-/obj/item/weapon/storage/box/beakers,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/storage/box/beakers,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -153,13 +153,13 @@
 /area/ruin/powered/beach)
 "aG" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/barman_recipes,
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/book/manual/barman_recipes,
+/obj/item/reagent_containers/glass/rag,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aH" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -172,7 +172,7 @@
 /area/ruin/powered/beach)
 "aJ" = (
 /obj/structure/closet/crate/bin,
-/obj/item/weapon/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
 /obj/item/trash/candy,
 /obj/item/toy/talking/owl,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -212,7 +212,7 @@
 /area/ruin/powered/beach)
 "aR" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila,
+/obj/item/reagent_containers/food/drinks/bottle/tequila,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aS" = (
@@ -230,7 +230,7 @@
 "aV" = (
 /obj/effect/mob_spawn/human/beach/alive{
 	flavour_text = "You're, like, totally a dudebro, bruh. Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?";
-	l_pocket = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/dank;
+	l_pocket = /obj/item/reagent_containers/food/snacks/pizzaslice/dank;
 	uniform = /obj/item/clothing/under/pants/youngfolksjeans
 	},
 /turf/open/floor/plating/beach/sand,
@@ -287,7 +287,7 @@
 /area/ruin/powered/beach)
 "bk" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/pastatomato,
+/obj/item/reagent_containers/food/snacks/pastatomato,
 /turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "bl" = (
@@ -311,10 +311,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/bikehorn/airhorn,
+/obj/item/bikehorn/airhorn,
 /obj/structure/table/wood,
-/obj/item/weapon/storage/firstaid,
-/obj/item/weapon/storage/firstaid/brute,
+/obj/item/storage/firstaid,
+/obj/item/storage/firstaid/brute,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bB" = (
@@ -329,7 +329,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bE" = (
-/obj/item/weapon/reagent_containers/spray/spraytan,
+/obj/item/reagent_containers/spray/spraytan,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bF" = (
@@ -350,7 +350,7 @@
 	},
 /obj/effect/mob_spawn/human/beach/alive{
 	flavour_text = "You're a spunky lifeguard! It's up to you to make sure nobody drowns or gets eaten by sharks and stuff.";
-	id = /obj/item/weapon/card/id;
+	id = /obj/item/card/id;
 	id_access = "Medical Doctor";
 	id_job = "Lifeguard";
 	mob_gender = "female"
@@ -362,7 +362,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bK" = (
-/obj/item/weapon/storage/backpack/duffelbag,
+/obj/item/storage/backpack/duffelbag,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bL" = (
@@ -386,7 +386,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bP" = (
-/obj/item/weapon/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bQ" = (
@@ -465,8 +465,8 @@
 /area/ruin/powered/beach)
 "cR" = (
 /obj/structure/table/wood,
-/obj/item/weapon/tank/internals/oxygen,
-/obj/item/weapon/pickaxe,
+/obj/item/tank/internals/oxygen,
+/obj/item/pickaxe,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)

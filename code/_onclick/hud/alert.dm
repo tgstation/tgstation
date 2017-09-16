@@ -92,7 +92,7 @@
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
 	var/alerttooltipstyle = ""
@@ -633,6 +633,7 @@ so as to remain in compliance with the most up-to-date laws."
 /obj/screen/alert/restrained/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something. Click the alert to unbuckle unless you're handcuffed."
+	icon_state = "buckled"
 
 /obj/screen/alert/restrained/handcuffed
 	name = "Handcuffed"
@@ -698,4 +699,3 @@ so as to remain in compliance with the most up-to-date laws."
 	severity = 0
 	master = null
 	screen_loc = ""
-

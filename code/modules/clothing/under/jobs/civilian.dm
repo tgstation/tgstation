@@ -32,6 +32,7 @@
 	item_color = "cargo"
 	body_parts_covered = CHEST|GROIN|ARMS
 	mutantrace_variation = MUTANTRACE_VARIATION
+	alt_covers_chest = TRUE
 
 
 /obj/item/clothing/under/rank/chaplain
@@ -76,7 +77,7 @@
 	icon_state = "hydroponics"
 	item_state = "g_suit"
 	item_color = "hydroponics"
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 
 /obj/item/clothing/under/rank/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."

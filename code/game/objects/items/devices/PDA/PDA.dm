@@ -12,7 +12,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_ID | SLOT_BELT
 	origin_tech = "programming=2"
@@ -23,14 +23,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	//Main variables
 	var/owner = null // String name of owner
 	var/default_cartridge = 0 // Access level defined by cartridge
-	var/obj/item/weapon/cartridge/cartridge = null //current cartridge
+	var/obj/item/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
 	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
 	var/fon = 0 //Is the flashlight function on?
-	var/f_lum = 3 //Luminosity for the flashlight function
+	var/f_lum = 2.3 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
@@ -47,14 +47,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
 	var/emped = 0
 
-	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
+	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 	var/icon/photo //Scanned photo
 
-	var/list/contained_item = list(/obj/item/weapon/pen, /obj/item/toy/crayon, /obj/item/weapon/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
+	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(inserted_item)
 		inserted_item = new inserted_item(src)
 	else
-		inserted_item =	new /obj/item/weapon/pen(src)
+		inserted_item =	new /obj/item/pen(src)
 	update_icon()
 
 /obj/item/device/pda/proc/update_label()
@@ -112,6 +112,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return
 
 /obj/item/device/pda/attack_self(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return
+
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
 	assets.send(user)
 
@@ -318,7 +322,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				id_check(U)
 			if("UpdateInfo")
 				ownjob = id.assignment
-				if(istype(id, /obj/item/weapon/card/id/syndicate))
+				if(istype(id, /obj/item/card/id/syndicate))
 					owner = id.registered_name
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
@@ -352,9 +356,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(fon)
 					fon = 0
 					set_light(0)
-				else
+				else if(f_lum)
 					fon = 1
-					set_light(2.3)
+					set_light(f_lum)
 				update_icon()
 			if("Medical Scan")
 				if(scanmode == 1)
@@ -674,13 +678,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(usr, "<span class='warning'>This PDA does not have a pen in it!</span>")
 
 //trying to insert or remove an id
-/obj/item/device/pda/proc/id_check(mob/user, obj/item/weapon/card/id/I)
+/obj/item/device/pda/proc/id_check(mob/user, obj/item/card/id/I)
 	if(!I)
 		if(id)
 			remove_id()
 			return 1
 		else
-			var/obj/item/weapon/card/id/C = user.get_active_held_item()
+			var/obj/item/card/id/C = user.get_active_held_item()
 			if(istype(C))
 				I = C
 
@@ -696,7 +700,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
+	if(istype(C, /obj/item/cartridge) && !cartridge)
 		if(!user.transferItemToLoc(C, src))
 			return
 		cartridge = C
@@ -704,8 +708,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
 		update_icon()
 
-	else if(istype(C, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/idcard = C
+	else if(istype(C, /obj/item/card/id))
+		var/obj/item/card/id/idcard = C
 		if(!idcard.registered_name)
 			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
 			return
@@ -739,8 +743,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 			inserted_item = C
 			update_icon()
-	else if(istype(C, /obj/item/weapon/photo))
-		var/obj/item/weapon/photo/P = C
+	else if(istype(C, /obj/item/photo))
+		var/obj/item/photo/P = C
 		photo = P.img
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
 	else if(hidden_uplink && hidden_uplink.active)
@@ -786,8 +790,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
 
 		if(5)
-			if (istype(A, /obj/item/weapon/tank))
-				var/obj/item/weapon/tank/T = A
+			if (istype(A, /obj/item/tank))
+				var/obj/item/tank/T = A
 				atmosanalyzer_scan(T.air_contents, user, T)
 			else if (istype(A, /obj/machinery/portable_atmospherics))
 				var/obj/machinery/portable_atmospherics/PA = A
@@ -799,13 +803,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 				var/obj/machinery/power/rad_collector/RC = A
 				if(RC.loaded_tank)
 					atmosanalyzer_scan(RC.loaded_tank.air_contents, user, RC)
-			else if (istype(A, /obj/item/weapon/flamethrower))
-				var/obj/item/weapon/flamethrower/F = A
+			else if (istype(A, /obj/item/flamethrower))
+				var/obj/item/flamethrower/F = A
 				if(F.ptank)
 					atmosanalyzer_scan(F.ptank.air_contents, user, F)
 
-	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
-		var/obj/item/weapon/paper/PP = A
+	if (!scanmode && istype(A, /obj/item/paper) && owner)
+		var/obj/item/paper/PP = A
 		if (!PP.info)
 			to_chat(user, "<span class='warning'>Unable to scan! Paper is blank.</span>")
 			return
@@ -831,7 +835,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if(T)
 		T.hotspot_expose(700,125)
-		if(istype(cartridge, /obj/item/weapon/cartridge/virus/syndicate))
+		if(istype(cartridge, /obj/item/cartridge/virus/syndicate))
 			explosion(T, -1, 1, 3, 4)
 		else
 			explosion(T, -1, -1, 2, 3)
@@ -856,7 +860,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/list/plist = list()
 	var/list/namecounts = list()
 
-	if(user.stat == 2)
+	if(user.stat == DEAD)
 		return //won't work if dead
 
 	if(src.aiPDA.toff)
@@ -889,7 +893,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /mob/living/silicon/ai/verb/cmd_toggle_pda_receiver()
 	set category = "AI Commands"
 	set name = "PDA - Toggle Sender/Receiver"
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return //won't work if dead
 	if(!isnull(aiPDA))
 		aiPDA.toff = !aiPDA.toff
@@ -900,7 +904,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /mob/living/silicon/ai/verb/cmd_toggle_pda_silent()
 	set category = "AI Commands"
 	set name = "PDA - Toggle Ringer"
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return //won't work if dead
 	if(!isnull(aiPDA))
 		//0
@@ -910,7 +914,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
 
 /mob/living/silicon/ai/proc/cmd_show_message_log(mob/user)
-	if(user.stat == 2)
+	if(user.stat == DEAD)
 		return //won't work if dead
 	if(!isnull(aiPDA))
 		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"

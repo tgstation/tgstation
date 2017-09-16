@@ -16,8 +16,8 @@ Bonus
 */
 
 /datum/symptom/genetic_mutation
-
 	name = "Deoxyribonucleic Acid Saboteur"
+	desc = "The virus bonds with the DNA of the host, causing damaging mutations until removed."
 	stealth = -2
 	resistance = -3
 	stage_speed = 0
@@ -30,6 +30,9 @@ Bonus
 	symptom_delay_min = 60
 	symptom_delay_max = 120
 	var/no_reset = FALSE
+	threshold_desc = "<b>Resistance 8:</b> Causes two harmful mutations at once.<br>\
+					  <b>Stage Speed 10:</b> Increases mutation frequency.<br>\
+					  <b>Stealth 5:</b> The mutations persist even if the virus is cured."
 
 /datum/symptom/genetic_mutation/Activate(datum/disease/advance/A)
 	if(!..())

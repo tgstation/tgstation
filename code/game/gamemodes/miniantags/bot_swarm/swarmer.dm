@@ -38,8 +38,8 @@
 /obj/effect/mob_spawn/swarmer/attack_hand(mob/living/user)
 	to_chat(user, "<span class='notice'>Picking up the swarmer may cause it to activate. You should be careful about this.</span>")
 
-/obj/effect/mob_spawn/swarmer/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver) && user.a_intent != INTENT_HARM)
+/obj/effect/mob_spawn/swarmer/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver) && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
 			"<span class='italics'>You hear clicking.</span>")
@@ -91,7 +91,7 @@
 	projectiletype = /obj/item/projectile/beam/disabler
 	ranged_cooldown_time = 20
 	projectilesound = 'sound/weapons/taser2.ogg'
-	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/weapon/ore/bluespace_crystal)
+	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/ore/bluespace_crystal)
 	del_on_death = 1
 	deathmessage = "explodes with a sharp pop!"
 	light_color = LIGHT_COLOR_CYAN
@@ -191,7 +191,7 @@
 		return 1
 	return ..()
 
-/obj/item/weapon/gun/swarmer_act()//Stops you from eating the entire armory
+/obj/item/gun/swarmer_act()//Stops you from eating the entire armory
 	return FALSE
 
 /obj/item/clockwork/alloy_shards/IntegrateAmount()
@@ -257,8 +257,13 @@
 /obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	var/isonshuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
+		var/area/A = get_area(T)
+		if(isspaceturf(T) || (!isonshuttle && (istype(A, /area/shuttle) || istype(A, /area/space))) || (isonshuttle && !istype(A, /area/shuttle)))
 			to_chat(S, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+			S.target = null
+			return FALSE
+		else if(istype(A, /area/engine/supermatter))
+			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
 			S.target = null
 			return FALSE
 	S.DisIntegrate(src)
@@ -301,10 +306,6 @@
 	to_chat(S, "<span class='warning'>This device is attempting to corrupt our entire network; attempting to interact with it is too risky. Aborting.</span>")
 	return FALSE
 
-/obj/effect/decal/cleanable/crayon/gang/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
-	return FALSE
-
 /obj/effect/rune/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
 	return FALSE
@@ -344,8 +345,13 @@
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	var/isonshuttle = istype(loc, /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
+		var/area/A = get_area(T)
+		if(isspaceturf(T) || (!isonshuttle && (istype(A, /area/shuttle) || istype(A, /area/space))) || (isonshuttle && !istype(A, /area/shuttle)))
 			to_chat(S, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+			S.target = null
+			return TRUE
+		else if(istype(A, /area/engine/supermatter))
+			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
 			S.target = null
 			return TRUE
 	return ..()
@@ -353,8 +359,13 @@
 /obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	var/isonshuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
+		var/area/A = get_area(T)
+		if(isspaceturf(T) || (!isonshuttle && (istype(A, /area/shuttle) || istype(A, /area/space))) || (isonshuttle && !istype(A, /area/shuttle)))
 			to_chat(S, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+			S.target = null
+			return TRUE
+		else if(istype(A, /area/engine/supermatter))
+			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
 			S.target = null
 			return TRUE
 	return ..()
@@ -447,7 +458,7 @@
 	if(target == src)
 		return
 
-	if(z != ZLEVEL_STATION && z != ZLEVEL_LAVALAND)
+	if(!(z in GLOB.station_z_levels) && z != ZLEVEL_LAVALAND)
 		to_chat(src, "<span class='warning'>Our bluespace transceiver cannot locate a viable bluespace link, our teleportation abilities are useless in this area.</span>")
 		return
 
@@ -458,8 +469,8 @@
 
 	var/turf/open/floor/F
 	switch(z) //Only the station/lavaland
-		if(ZLEVEL_STATION)
-			F =find_safe_turf(zlevels = ZLEVEL_STATION, extended_safety_checks = TRUE)
+		if(ZLEVEL_STATION_PRIMARY)
+			F =find_safe_turf(zlevels = ZLEVEL_STATION_PRIMARY, extended_safety_checks = TRUE)
 		if(ZLEVEL_LAVALAND)
 			F = find_safe_turf(zlevels = ZLEVEL_LAVALAND, extended_safety_checks = TRUE)
 	if(!F)
@@ -469,7 +480,7 @@
 
 	var/mob/living/carbon/human/H = target
 	if(ishuman(target) && (!H.handcuffed))
-		H.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(H)
+		H.handcuffed = new /obj/item/restraints/handcuffs/energy/used(H)
 		H.update_handcuffed()
 		add_logs(src, H, "handcuffed")
 

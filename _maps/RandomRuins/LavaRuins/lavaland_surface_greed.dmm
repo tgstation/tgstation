@@ -10,7 +10,7 @@
 /area/lavaland/surface/outdoors)
 "e" = (
 /obj/structure/table/wood/poker,
-/obj/item/weapon/gun/ballistic/revolver/russian/soul,
+/obj/item/gun/ballistic/revolver/russian/soul,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -26,7 +26,7 @@
 /area/ruin/powered/greed)
 "g" = (
 /obj/structure/table/wood/poker,
-/obj/item/weapon/coin/mythril,
+/obj/item/coin/mythril,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -36,7 +36,7 @@
 /area/ruin/powered/greed)
 "h" = (
 /obj/structure/table/wood/poker,
-/obj/item/weapon/coin/diamond,
+/obj/item/coin/diamond,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
@@ -48,7 +48,7 @@
 /area/ruin/powered/greed)
 "j" = (
 /obj/structure/table/wood/poker,
-/obj/item/weapon/coin/adamantine,
+/obj/item/coin/adamantine,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
@@ -60,7 +60,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "l" = (
-/obj/item/weapon/coin/gold,
+/obj/item/coin/gold,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "m" = (
@@ -72,12 +72,12 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "o" = (
-/obj/item/weapon/storage/bag/money,
+/obj/item/storage/bag/money,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "p" = (
 /obj/structure/table/wood/poker,
-/obj/item/weapon/ore/gold,
+/obj/item/ore/gold,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "q" = (
@@ -113,12 +113,12 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "v" = (
-/obj/item/weapon/coin/gold,
+/obj/item/coin/gold,
 /obj/machinery/light/small,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "w" = (
-/obj/item/weapon/storage/bag/money,
+/obj/item/storage/bag/money,
 /obj/machinery/light/small,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)

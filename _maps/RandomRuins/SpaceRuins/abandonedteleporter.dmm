@@ -22,7 +22,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "g" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
@@ -44,7 +44,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "l" = (
-/obj/item/weapon/stock_parts/cell,
+/obj/item/stock_parts/cell,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "m" = (
@@ -90,8 +90,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "w" = (
-/obj/item/weapon/shard,
-/obj/item/weapon/electronics/apc,
+/obj/item/shard,
+/obj/item/electronics/apc,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "x" = (
@@ -99,7 +99,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "y" = (
-/obj/item/weapon/storage/toolbox/electrical{
+/obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = -1
 	},
@@ -109,9 +109,9 @@
 /obj/structure/closet/crate,
 /obj/item/device/aicard,
 /obj/item/device/multitool,
-/obj/item/weapon/weldingtool,
-/obj/item/weapon/wrench,
-/obj/item/weapon/circuitboard/computer/teleporter,
+/obj/item/weldingtool,
+/obj/item/wrench,
+/obj/item/circuitboard/computer/teleporter,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "A" = (

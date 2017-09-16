@@ -22,7 +22,7 @@ Chaplain
 	if(H.mind)
 		H.mind.isholy = TRUE
 
-	var/obj/item/weapon/storage/book/bible/booze/B = new
+	var/obj/item/storage/book/bible/booze/B = new
 
 	if(SSreligion.religion)
 		B.deity_name = SSreligion.deity
@@ -31,8 +31,8 @@ Chaplain
 		B.item_state = SSreligion.bible_item_state
 		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [SSreligion.deity]. Defer to the Chaplain.")
 		H.equip_to_slot_or_del(B, slot_in_backpack)
-		var/nrt = SSreligion.holy_weapon_type || /obj/item/weapon/nullrod
-		var/obj/item/weapon/nullrod/N = new nrt(H)
+		var/nrt = SSreligion.holy_weapon_type || /obj/item/nullrod
+		var/obj/item/nullrod/N = new nrt(H)
 		H.equip_to_slot_or_del(N, slot_in_backpack)
 		return
 
@@ -91,5 +91,5 @@ Chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
 	backpack_contents = list(/obj/item/device/camera/spooky = 1)
 	accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
-	backpack = /obj/item/weapon/storage/backpack/cultpack
-	satchel = /obj/item/weapon/storage/backpack/cultpack
+	backpack = /obj/item/storage/backpack/cultpack
+	satchel = /obj/item/storage/backpack/cultpack

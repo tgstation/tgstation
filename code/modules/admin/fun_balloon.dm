@@ -1,7 +1,7 @@
 /obj/effect/fun_balloon
 	name = "fun balloon"
 	desc = "This is going to be a laugh riot."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE
 	var/popped = FALSE
@@ -86,7 +86,7 @@
 /obj/effect/station_crash
 	name = "station crash"
 	desc = "With no survivors!"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE
 
@@ -105,7 +105,7 @@
 /obj/effect/shuttle_build
 	name = "shuttle_build"
 	desc = "Some assembly required"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE
 
@@ -139,7 +139,7 @@
 		L.forceMove(LA)
 		L.hallucination = 0
 		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>")
-		for(var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw in L)
+		for(var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw in L)
 			qdel(chainsaw)
 	else
 		to_chat(L, "You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions.")

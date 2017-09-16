@@ -3,7 +3,7 @@
 	desc = "Used to teleport objects to and from a launchpad."
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
-	circuit = /obj/item/weapon/circuitboard/computer/launchpad_console
+	circuit = /obj/item/circuitboard/computer/launchpad_console
 	var/sending = TRUE
 	var/current_pad //current pad viewed on the screen
 	var/list/obj/machinery/launchpad/launchpads

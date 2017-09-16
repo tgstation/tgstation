@@ -33,7 +33,7 @@
 		..()
 
 /obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
+	if(istype(I, /obj/item/tome) && iscultist(user))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>")
 		if(!anchored)
@@ -78,11 +78,11 @@
 	var/pickedtype
 	switch(choice)
 		if("Eldritch Whetstone")
-			pickedtype = /obj/item/weapon/sharpener/cult
+			pickedtype = /obj/item/sharpener/cult
 		if("Zealot's Blindfold")
 			pickedtype = /obj/item/clothing/glasses/night/cultblind
 		if("Flask of Unholy Water")
-			pickedtype = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
+			pickedtype = /obj/item/reagent_containers/food/drinks/bottle/unholywater
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
@@ -218,7 +218,7 @@
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Supply Talisman")
-			pickedtype += /obj/item/weapon/paper/talisman/supply/weak
+			pickedtype += /obj/item/paper/talisman/supply/weak
 		if("Shuttle Curse")
 			pickedtype += /obj/item/device/shuttle_curse
 		if("Veil Walker Set")

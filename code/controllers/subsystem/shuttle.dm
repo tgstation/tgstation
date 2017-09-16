@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
 		transit_turfs += T
-		T.flags |= UNUSED_TRANSIT_TURF
+		T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
@@ -288,7 +288,7 @@ SUBSYSTEM_DEF(shuttle)
 				continue
 
 		var/turf/T = get_turf(thing)
-		if(T && T.z == ZLEVEL_STATION)
+		if(T && (T.z in GLOB.station_z_levels))
 			callShuttle = 0
 			break
 
@@ -339,7 +339,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(getDock(destination)))
 			return 2
 	else
-		if(M.dock(getDock(destination)))
+		if(M.dock(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
@@ -354,7 +354,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(D))
 			return 2
 	else
-		if(M.dock(D))
+		if(M.dock(D) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
@@ -375,7 +375,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/travel_dir = M.preferred_direction
 	// Remember, the direction is the direction we appear to be
 	// coming from
-	var/dock_angle = dir2angle(M.preferred_direction) + M.port_angle + 180
+	var/dock_angle = dir2angle(M.preferred_direction) + dir2angle(M.port_direction) + 180
 	var/dock_dir = angle2dir(dock_angle)
 
 	var/transit_width = SHUTTLE_TRANSIT_BORDER * 2
@@ -403,13 +403,13 @@ SUBSYSTEM_DEF(shuttle)
 		for(var/i in transit_turfs)
 			CHECK_TICK
 			var/turf/topleft = i
-			if(!(topleft.flags & UNUSED_TRANSIT_TURF))
+			if(!(topleft.flags_1 & UNUSED_TRANSIT_TURF_1))
 				continue
 			var/turf/bottomright = locate(topleft.x + transit_width,
 				topleft.y + transit_height, topleft.z)
 			if(!bottomright)
 				continue
-			if(!(bottomright.flags & UNUSED_TRANSIT_TURF))
+			if(!(bottomright.flags_1 & UNUSED_TRANSIT_TURF_1))
 				continue
 
 			proposed_zone = block(topleft, bottomright)
@@ -419,7 +419,7 @@ SUBSYSTEM_DEF(shuttle)
 				var/turf/T = j
 				if(!T)
 					continue base
-				if(!(T.flags & UNUSED_TRANSIT_TURF))
+				if(!(T.flags_1 & UNUSED_TRANSIT_TURF_1))
 					continue base
 			//to_chat(world, "[COORD(topleft)] and [COORD(bottomright)]")
 			break base
@@ -491,7 +491,7 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/i in new_transit_dock.assigned_turfs)
 		var/turf/T = i
 		T.ChangeTurf(transit_path)
-		T.flags &= ~(UNUSED_TRANSIT_TURF)
+		T.flags_1 &= ~(UNUSED_TRANSIT_TURF_1)
 
 	M.assigned_transit = new_transit_dock
 	return TRUE

@@ -25,28 +25,28 @@
 	lootdoubles = FALSE
 
 	loot = list(
-				/obj/item/weapon/gun/ballistic/automatic/pistol = 8,
-				/obj/item/weapon/gun/ballistic/shotgun/automatic/combat = 5,
-				/obj/item/weapon/gun/ballistic/revolver/mateba,
-				/obj/item/weapon/gun/ballistic/automatic/pistol/deagle
+				/obj/item/gun/ballistic/automatic/pistol = 8,
+				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
+				/obj/item/gun/ballistic/revolver/mateba,
+				/obj/item/gun/ballistic/automatic/pistol/deagle
 				)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
 	loot = list(
-				/obj/item/weapon/gun/ballistic/revolver/russian = 5,
-				/obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 1,
+				/obj/item/gun/ballistic/revolver/russian = 5,
+				/obj/item/storage/box/syndie_kit/throwing_weapons = 1,
 				/obj/item/toy/cards/deck/syndicate = 2
 				)
 
 /obj/effect/spawner/lootdrop/grille_or_trash
 	name = "maint grille or trash spawner"
 	loot = list(/obj/structure/grille = 5,
-			/obj/item/weapon/cigbutt = 1,
+			/obj/item/cigbutt = 1,
 			/obj/item/trash/cheesie = 1,
 			/obj/item/trash/candy = 1,
 			/obj/item/trash/chips = 1,
-			/obj/item/weapon/reagent_containers/food/snacks/deadmouse = 1,
+			/obj/item/reagent_containers/food/snacks/deadmouse = 1,
 			/obj/item/trash/pistachios = 1,
 			/obj/item/trash/plate = 1,
 			/obj/item/trash/popcorn = 1,
@@ -59,25 +59,25 @@
 	lootcount = 3
 	lootdoubles = FALSE
 	var/soups = list(
-			/obj/item/weapon/reagent_containers/food/snacks/soup/beet,
-			/obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato,
-			/obj/item/weapon/reagent_containers/food/snacks/soup/stew,
-			/obj/item/weapon/reagent_containers/food/snacks/soup/hotchili,
-			/obj/item/weapon/reagent_containers/food/snacks/soup/nettle,
-			/obj/item/weapon/reagent_containers/food/snacks/soup/meatball)
+			/obj/item/reagent_containers/food/snacks/soup/beet,
+			/obj/item/reagent_containers/food/snacks/soup/sweetpotato,
+			/obj/item/reagent_containers/food/snacks/soup/stew,
+			/obj/item/reagent_containers/food/snacks/soup/hotchili,
+			/obj/item/reagent_containers/food/snacks/soup/nettle,
+			/obj/item/reagent_containers/food/snacks/soup/meatball)
 	var/salads = list(
-			/obj/item/weapon/reagent_containers/food/snacks/salad/herbsalad,
-			/obj/item/weapon/reagent_containers/food/snacks/salad/validsalad,
-			/obj/item/weapon/reagent_containers/food/snacks/salad/fruit,
-			/obj/item/weapon/reagent_containers/food/snacks/salad/jungle,
-			/obj/item/weapon/reagent_containers/food/snacks/salad/aesirsalad)
+			/obj/item/reagent_containers/food/snacks/salad/herbsalad,
+			/obj/item/reagent_containers/food/snacks/salad/validsalad,
+			/obj/item/reagent_containers/food/snacks/salad/fruit,
+			/obj/item/reagent_containers/food/snacks/salad/jungle,
+			/obj/item/reagent_containers/food/snacks/salad/aesirsalad)
 	var/mains = list(
-			/obj/item/weapon/reagent_containers/food/snacks/bearsteak,
-			/obj/item/weapon/reagent_containers/food/snacks/enchiladas,
-			/obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat,
-			/obj/item/weapon/reagent_containers/food/snacks/burger/bigbite,
-			/obj/item/weapon/reagent_containers/food/snacks/burger/superbite,
-			/obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm)
+			/obj/item/reagent_containers/food/snacks/bearsteak,
+			/obj/item/reagent_containers/food/snacks/enchiladas,
+			/obj/item/reagent_containers/food/snacks/stewedsoymeat,
+			/obj/item/reagent_containers/food/snacks/burger/bigbite,
+			/obj/item/reagent_containers/food/snacks/burger/superbite,
+			/obj/item/reagent_containers/food/snacks/burger/fivealarm)
 
 /obj/effect/spawner/lootdrop/three_course_meal/Initialize(mapload)
 	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)

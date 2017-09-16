@@ -85,7 +85,7 @@
 	alerttooltipstyle = "hisgrace"
 
 /datum/status_effect/his_wrath/tick()
-	for(var/obj/item/weapon/his_grace/HG in owner.held_items)
+	for(var/obj/item/his_grace/HG in owner.held_items)
 		qdel(src)
 		return
 	owner.adjustBruteLoss(0.1)
@@ -139,6 +139,20 @@
 	if(owner.m_intent == MOVE_INTENT_WALK)
 		owner.toggle_move_intent()
 
+/datum/status_effect/geis_tracker
+	id = "geis_tracker"
+	duration = -1
+	alert_type = null
+	var/obj/structure/destructible/clockwork/geis_binding/binding
+
+/datum/status_effect/geis_tracker/on_creation(mob/living/new_owner, obj/structure/destructible/clockwork/geis_binding/new_binding)
+	. = ..()
+	if(.)
+		binding = new_binding
+
+/datum/status_effect/geis_tracker/tick()
+	if(QDELETED(binding))
+		qdel(src)
 
 /datum/status_effect/maniamotor
 	id = "maniamotor"
@@ -237,15 +251,19 @@
 	duration = -1
 	alert_type = null
 
+/datum/status_effect/cultghost/tick()
+	if(owner.reagents)
+		owner.reagents.del_reagent("holywater") //can't be deconverted
+
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/weapon/twohanded/required/kinetic_crusher/hammer_synced
+	var/obj/item/twohanded/required/kinetic_crusher/hammer_synced
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/weapon/twohanded/required/kinetic_crusher/new_hammer_synced)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/required/kinetic_crusher/new_hammer_synced)
 	. = ..()
 	if(.)
 		hammer_synced = new_hammer_synced

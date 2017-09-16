@@ -9,8 +9,8 @@
 /obj/effect/spawner/newbomb/Initialize()
 	. = ..()
 	var/obj/item/device/transfer_valve/V = new(src.loc)
-	var/obj/item/weapon/tank/internals/plasma/full/PT = new(V)
-	var/obj/item/weapon/tank/internals/oxygen/OT = new(V)
+	var/obj/item/tank/internals/plasma/full/PT = new(V)
+	var/obj/item/tank/internals/oxygen/OT = new(V)
 
 	PT.air_contents.temperature = btemp1 + T0C
 	OT.air_contents.temperature = btemp2 + T0C

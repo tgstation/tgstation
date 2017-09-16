@@ -9,10 +9,10 @@
 #define CULT_POLL_WAIT 2400
 
 /proc/get_area(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isarea(A), A=A.loc); //semicolon is for the empty statement
-	return A
+	if(isarea(A))
+		return A
+	var/turf/T = get_turf(A)
+	return T ? T.loc : null
 
 /proc/get_area_name(atom/X)
 	var/area/Y = get_area(X)
@@ -164,7 +164,7 @@
 	. = list()
 	while(processing_list.len)
 		var/atom/A = processing_list[1]
-		if(A.flags & HEAR)
+		if(A.flags_1 & HEAR_1)
 			. += A
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
