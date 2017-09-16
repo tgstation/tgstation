@@ -516,7 +516,7 @@
 		else
 			if(!user.drop_item())
 				return
-			if(U.action(src))
+			if(U.action(src,user))
 				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
 				if(U.one_use)
 					qdel(U)
