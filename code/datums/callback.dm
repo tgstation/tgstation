@@ -131,7 +131,7 @@
 
 //runs a list of callbacks asynchronously, returning once all of them return.
 //callbacks can be repeated.
-//callbacks-args is a optional list of argument lists, in the same order as the callbacks,
+//callbacks-args is an optional list of argument lists, in the same order as the callbacks,
 //	the inner lists will be sent to the callbacks when invoked() as additional args.
 //can optionly save and return a list of return values, in the same order as the original list of callbacks
 //resolution is the number of byond ticks between checks.
