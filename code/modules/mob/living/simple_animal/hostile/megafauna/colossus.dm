@@ -258,7 +258,7 @@ Difficulty: Very Hard
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))
 		return FALSE
-	if(O in blacklist)
+	if(blacklist[O])
 		visible_message("<span class='boldwarning'>[src] ripples as it rejects [O]. The device will not accept items that have been removed from it.</span>")
 		return FALSE
 	return TRUE
@@ -311,7 +311,7 @@ Difficulty: Very Hard
 //try catch doesn't always prevent byond runtimes from halting a proc,
 /obj/machinery/smartfridge/black_box/proc/create_item(item_type)
 	var/obj/O = new item_type(src)
-	blacklist |= O
+	blacklist[O] = TRUE
 
 /obj/machinery/smartfridge/black_box/Destroy(force = FALSE)
 	if(force)
