@@ -15,7 +15,7 @@ use std::path::{Path, PathBuf};
 use std::fs::{self, File};
 use std::{env, process, io};
 use std::sync::mpsc;
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, VecDeque};
 
 use discord::Discord;
 use discord::model::{ServerId, UserId};
@@ -115,6 +115,7 @@ fn main() {
 	}
 
 	let mut current_state = BTreeMap::new();
+	let mut to_change = VecDeque::<(String, u8)>::new();
 
 	// Delete any leftover requests from an earlier time
 	for file in request_files() {
@@ -138,7 +139,7 @@ fn main() {
 		}
 
 		let files = request_files();
-		if files.is_empty() {
+		if files.is_empty() && to_change.is_empty() {
 			sleep(100);
 			continue;
 		}
@@ -157,20 +158,30 @@ fn main() {
 		}
 
 		// Deduplicate requests for the same user, taking the most recent
-		let mut to_change = BTreeMap::new();
 		for argument in requests.iter() {
 			let mut split = argument.split("=");
 			let username = split.next().unwrap();
 			let bits = opt_fatal!(split.next(), "args: key without value: {}", username);
 			let bits: u8 = try_fatal!(bits.parse(), "args: value not u8: {}", bits);
 
-			to_change.insert(username, bits);
+			// Horrifying borrow-safety construct
+			if match to_change.iter_mut().find(|t| t.0 == username) {
+				Some(t) => { t.1 = bits; false },
+				None => true,
+			} {
+				to_change.push_back((username.to_owned(), bits));
+			}
 		}
 
-		for (username, bits) in to_change {
+		// Issue requests to Discord as fast as we are able. This is the part
+		// of the process which takes the longest time, and it takes longer if
+		// the connection is slow or we get rate-limited. So, only process one
+		// request per loop, so if we get held up we still receive and dedup
+		// requests that happened while we were busy.
+		if let Some((username, bits)) = to_change.pop_front() {
 			// perform username lookup
 			let userid;
-			match whois.get(username) {
+			match whois.get(&username) {
 				Some(&Value::Integer(n)) => { userid = discord::model::UserId(n as u64); }
 				_ => {
 					println!("unknown key: {}", username);

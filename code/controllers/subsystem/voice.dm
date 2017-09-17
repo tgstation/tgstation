@@ -19,8 +19,6 @@ SUBSYSTEM_DEF(voice)
 	// Populate current_run from queue as needed
 	if (!resumed)
 		src.current_run = GLOB.clients.Copy()
-	else
-		message_admins("SSvoice: resuming")
 
 	// Update subspace status if necessary
 	if (next_subspace_check && next_subspace_check <= world.time)
@@ -59,7 +57,7 @@ SUBSYSTEM_DEF(voice)
 		voice.screen_hear.update_voice(voice.status)
 
 		if (MC_TICK_CHECK)
-			message_admins("SSvoice: suspending")
+			message_admins("Voice subsystem suspended")
 			return
 
 	// Batch every changed client in one shell invocation
@@ -95,12 +93,17 @@ SUBSYSTEM_DEF(voice)
 	sleep(25)
 
 	// Now extract and store the Z-level list
+	var/previous = list2params(subspace_zlevels)
 	if (!signal.data["done"])
 		subspace_zlevels = list()
 	else
 		subspace_zlevels = signal.data["level"]
-	next_subspace_check = world.time + rand(50, 100)
+	var/current = list2params(subspace_zlevels)
+	if (current != previous)
+		message_admins("Subspace z-levels have changed: ([previous]) to ([current])")
+
 	// clients will update gradually
+	next_subspace_check = world.time + rand(50, 100)
 
 // ---------- Definitions and whatnot
 
