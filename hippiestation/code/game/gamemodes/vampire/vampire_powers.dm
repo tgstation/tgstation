@@ -20,6 +20,7 @@
 	. = ..()
 	if(vamp_req)
 		clothes_req = FALSE
+		range = 1
 		human_req = TRUE
 
 
@@ -51,7 +52,6 @@
 	. = ..()
 	if(vamp_req && is_vampire(target))
 		return FALSE
-
 /datum/vampire_passive
 	var/gain_desc
 
@@ -103,26 +103,23 @@
 
 /obj/effect/proc_holder/spell/self/rejuvenate/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/U = user
-	U.SetUnconscious(0)
-	U.SetStun(0)
-	U.SetKnockdown(0)
-	U.adjustStaminaLoss(-75)
 	U.stuttering = 0
 
 	var/datum/antagonist/vampire/V = U.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
 	if(!V) //sanity check
 		return
-	if(V.get_ability(/datum/vampire_passive/regen))
-		for(var/i = 1 to 5)
-			U.adjustBruteLoss(-2)
-			U.adjustOxyLoss(-5)
-			U.adjustToxLoss(-2)
-			U.adjustFireLoss(-2)
-			sleep(35)
+	for(var/i = 1 to 5)
+		U.adjustStaminaLoss(-10)
+		if(V.get_ability(/datum/vampire_passive/regen))
+			U.adjustBruteLoss(-1)
+			U.adjustOxyLoss(-2.5)
+			U.adjustToxLoss(-1)
+			U.adjustFireLoss(-1)
+		sleep(7.5)
 
 
 /obj/effect/proc_holder/spell/targeted/hypnotise
-	name = "Hypnotise (20)"
+	name = "Hypnotize (20)"
 	desc= "A piercing stare that incapacitates your victim for a good length of time."
 	action_icon_state = "hypnotize"
 	blood_used = 20
@@ -170,8 +167,8 @@
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
 
-/obj/effect/proc_holder/spell/self/cloak/New()
-	..()
+/obj/effect/proc_holder/spell/self/cloak/Initialize()
+	. = ..()
 	update_name()
 
 /obj/effect/proc_holder/spell/self/cloak/proc/update_name()
@@ -222,7 +219,7 @@
 /obj/effect/proc_holder/spell/self/screech/cast(list/targets, mob/user = usr)
 	user.visible_message("<span class='warning'>[user] lets out an ear piercing shriek!</span>", "<span class='warning'>You let out a loud shriek.</span>", "<span class='warning'>You hear a loud painful shriek!</span>")
 	for(var/mob/living/carbon/C in hearers(4))
-		if(C == user || (ishuman(C) && !C.get_ear_protection()) || is_vampire(C))
+		if(C == user || (ishuman(C) && C.get_ear_protection()) || is_vampire(C))
 			continue
 		to_chat(C, "<span class='warning'><font size='3'><b>You hear a ear piercing shriek and your senses dull!</font></b></span>")
 		C.Knockdown(4)
@@ -231,7 +228,7 @@
 		C.Stun(4)
 		C.Jitter(150)
 	for(var/obj/structure/window/W in view(4))
-		W.take_damage(W.max_integrity)
+		W.take_damage(75)
 	playsound(user.loc, 'sound/effects/screech.ogg', 100, 1)
 
 /obj/effect/proc_holder/spell/bats
@@ -265,68 +262,13 @@
 	for(var/T in targets)
 		new /mob/living/simple_animal/hostile/retaliate/bat(T, user)
 
-/obj/effect/proc_holder/spell/targeted/mistform
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform
 	name = "Mist Form (30)"
 	gain_desc = "You have gained the Mist Form ability which allows you to take on the form of mist for a short period and pass over any obstacle in your path."
-	charge_max = 300
 	blood_used = 30
-	range = -1
-	var/jaunt_duration = 50 //in deciseconds
-	var/jaunt_in_time = 5
-	var/jaunt_in_type = /obj/effect/temp_visual/wizard
-	var/jaunt_out_type = /obj/effect/temp_visual/wizard/out
-	action_icon_state = "jaunt"
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
-
-/obj/effect/proc_holder/spell/targeted/mistform/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
-	playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
-	for(var/mob/living/target in targets)
-		INVOKE_ASYNC(src, .proc/do_jaunt, target)
-
-/obj/effect/proc_holder/spell/targeted/mistform/proc/do_jaunt(mob/living/target)
-	target.notransform = 1
-	var/turf/mobloc = get_turf(target)
-	var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt(mobloc)
-	new jaunt_out_type(mobloc, target.dir)
-	target.ExtinguishMob()
-	if(target.buckled)
-		target.buckled.unbuckle_mob(target,force=1)
-	if(target.pulledby)
-		target.pulledby.stop_pulling()
-	target.stop_pulling()
-	if(target.has_buckled_mobs())
-		target.unbuckle_all_mobs(force=1)
-	target.loc = holder
-	target.reset_perspective(holder)
-	target.notransform=0 //mob is safely inside holder now, no need for protection.
-	jaunt_steam(mobloc)
-
-	sleep(jaunt_duration)
-
-	if(target.loc != holder) //mob warped out of the warp
-		qdel(holder)
-		return
-	mobloc = get_turf(target.loc)
-	jaunt_steam(mobloc)
-	target.canmove = 0
-	holder.reappearing = 1
-	playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
-	sleep(25 - jaunt_in_time)
-	new jaunt_in_type(mobloc, target.dir)
-	sleep(jaunt_in_time)
-	qdel(holder)
-	if(!QDELETED(target) && mobloc.density)
-		for(var/direction in GLOB.alldirs)
-			var/turf/T = get_step(mobloc, direction)
-			if(T && target.Move(T))
-				break
-		target.canmove = 1
-
-/obj/effect/proc_holder/spell/targeted/mistform/proc/jaunt_steam(mobloc)
-	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
-	steam.set_up(10, 0, mobloc)
-	steam.start()
 
 
 /obj/effect/proc_holder/spell/targeted/vampirize
@@ -341,10 +283,10 @@
 /obj/effect/proc_holder/spell/targeted/vampirize/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/target in targets)
 		if(is_vampire(target))
-			to_chat(user, "<span class='warning'>They're already a vampire!.</span>")
+			to_chat(user, "<span class='warning'>They're already a vampire!</span>")
 			continue
 		target.visible_message("<span class='warning'>[user] latches onto [target]'s neck, and a pure dread eminates from them.</span>", "<span class='warning'>You latch onto [target]'s neck, preparing to transfer your unholy blood to them.</span>", "<span class='warning'>A dreadful feeling overcomes you</span>")
-		target.reagents.add_reagent("salbutamol", 40) //incase you're choking the victim
+		target.reagents.add_reagent("salbutamol", 10) //incase you're choking the victim
 		for(var/progress = 0, progress <= 3, progress++)
 			switch(progress)
 				if(1)
@@ -353,8 +295,8 @@
 				if(2)
 					to_chat(target, "<span class='danger'>Demonic whispers fill your mind, and they become irressistible...</span>")
 				if(3)
-					to_chat(target, "<span class='danger'>The world blanks out, and you see a demo- no ange- demon- lil- glory- blessing... Lillith.</span>")
-					to_chat(user, "<span class='notice'>Excitement builds up in you as [target] sees the blessing of Lillith.</span>")
+					to_chat(target, "<span class='danger'>The world blanks out, and you see a demo- no ange- demon- lil- glory- blessing... Lilith.</span>")
+					to_chat(user, "<span class='notice'>Excitement builds up in you as [target] sees the blessing of Lilith.</span>")
 			if(!do_mob(user, target, 70))
 				to_chat(user, "<span class='danger'>The pact has failed! [target] has not became a vampire.</span>")
 				to_chat(target, "<span class='notice'>The visions stop, and you relax.</span>")

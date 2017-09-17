@@ -8,7 +8,6 @@
 
 	var/iscloaking = FALSE
 
-
 	var/list/powers = list() // list of current powers
 
 	var/list/upgrade_tiers = list(
@@ -21,7 +20,7 @@
 		/obj/effect/proc_holder/spell/bats = 350,
 		/obj/effect/proc_holder/spell/self/screech = 315,
 		/datum/vampire_passive/regen = 425,
-		/obj/effect/proc_holder/spell/targeted/mistform = 500,
+		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform = 500,
 		/datum/vampire_passive/full = 666,
 		/obj/effect/proc_holder/spell/targeted/vampirize = 700)
 
