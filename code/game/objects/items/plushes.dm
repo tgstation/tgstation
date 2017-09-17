@@ -26,7 +26,17 @@
 
 /obj/item/toy/plush/bubbleplush
 	name = "bubblegum plushie"
-	desc = "the friendly red demon that gives good miners gifts"
+	desc = "The friendly red demon that gives good miners gifts."
 	icon_state = "bubbleplush"
 	attack_verb = list("rends")
 	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
+
+/obj/item/toy/plush/plushvar
+	name = "ratvar plushie"
+	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
+	icon_state = "plushvar"
+
+/obj/item/toy/plush/narplush
+	name = "nar'sie plushie"
+	desc = "A small stuffed doll of the elder god nar'sie. Who thought this was a good children's toy?"
+	icon_state = "narplush"
