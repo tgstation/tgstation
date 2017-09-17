@@ -582,8 +582,8 @@
 	for(var/i in 1 to world.maxz)
 		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT)
 			continue
-		var/turf/T = locate(ladder_x, ladder_y, i)
-		new /obj/structure/ladder/unbreakable/jacob(T)
+		var/turf/T2 = locate(ladder_x, ladder_y, i)
+		new /obj/structure/ladder/unbreakable/jacob(T2)
 	qdel(src)
 
 /obj/structure/ladder/unbreakable/jacob
