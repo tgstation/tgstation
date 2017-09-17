@@ -25365,9 +25365,6 @@
 	},
 /area/medical/chemistry)
 "aSl" = (
-/obj/machinery/chem_master{
-	density = 0
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -25916,6 +25913,7 @@
 /area/medical/chemistry)
 "aTt" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/chem_master,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "aTu" = (
