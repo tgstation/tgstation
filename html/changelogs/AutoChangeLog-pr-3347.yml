@@ -1,9 +1,0 @@
-author: "Arzion5"
-delete-after: True
-changes: 
-  - rscadd: "Added the autosurgeon to the syndicate uplink. A vastly improved version of what the Chief Medical Officer starts with, it allows you to instantly implant yourself with any implants that you load in it, and it can be re-used indefinitely."
-  - rscdel: "Removed the Sports Bundle..."
-  - tweak: "...and separated it into its 4 individual possible bundles! You can now choose between the Hockey Set, the Football Set, the Bowling Set and the Wrestling Set, with their own prices based on how good they are! They can be found in the \"Loud and Aggressive\" section of your uplink."
-  - balance: "The Syndicate has recognized the utility of no-slip shoes, and have removed the player count restriction on purchasing them. Nuclear Operatives may now also buy the chameleon kit independently of the player count."
-  - balance: "A multitude amount of traitor items had their prices slightly reduced."
-  - tweak: "Did you miss the old days when you could rush and suicide-bomb the shuttle as a traitor by blowing all of your TC on one really large bomb implant? Well, you can now do that again! Traitors can now purchase microbomb and macrobomb implants."
