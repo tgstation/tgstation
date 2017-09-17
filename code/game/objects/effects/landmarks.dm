@@ -160,7 +160,7 @@
 /obj/effect/landmark/start/wizard/Initialize(mapload)
 	..()
 	GLOB.wizardstart += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/start/new_player
 	name = "New Player"
@@ -173,7 +173,7 @@
 
 /obj/effect/landmark/start/new_player/Initialize(mapload)
 	..()
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 
 
@@ -183,7 +183,7 @@
 /obj/effect/landmark/latejoin/Initialize(mapload)
 	..()
 	SSjob.latejoin_trackers += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 // carp.
 /obj/effect/landmark/carpspawn
@@ -229,7 +229,7 @@
 /obj/effect/landmark/xeno_spawn/Initialize(mapload)
 	..()
 	GLOB.xeno_spawn += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 // blobs.
 /obj/effect/landmark/blobstart
@@ -238,7 +238,7 @@
 /obj/effect/landmark/blobstart/Initialize(mapload)
 	..()
 	GLOB.blobstart += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/secequipment
 	name = "secequipment"
@@ -246,7 +246,7 @@
 /obj/effect/landmark/secequipment/Initialize(mapload)
 	..()
 	GLOB.secequipment += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/prisonwarp
 	name = "prisonwarp"
@@ -254,15 +254,15 @@
 /obj/effect/landmark/prisonwarp/Initialize(mapload)
 	..()
 	GLOB.prisonwarp += loc
-	qdel(src)
-
+	return INITIALIZE_HINT_QDEL
+	
 /obj/effect/landmark/ert_spawn
 	name = "Emergencyresponseteam"
 
 /obj/effect/landmark/ert_spawn/Initialize(mapload)
 	..()
 	GLOB.emergencyresponseteamspawn += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/holding_facility
 	name = "Holding Facility"
@@ -270,7 +270,7 @@
 /obj/effect/landmark/holding_facility/Initialize(mapload)
 	..()
 	GLOB.holdingfacility += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/thunderdome/observe
 	name = "tdomeobserve"
@@ -278,7 +278,7 @@
 /obj/effect/landmark/thunderdome/observe/Initialize(mapload)
 	..()
 	GLOB.tdomeobserve += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/thunderdome/one
 	name = "tdome1"
@@ -286,7 +286,7 @@
 /obj/effect/landmark/thunderdome/one/Initialize(mapload)
 	..()
 	GLOB.tdome1	+= loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/thunderdome/two
 	name = "tdome2"
@@ -294,7 +294,7 @@
 /obj/effect/landmark/thunderdome/two/Initialize(mapload)
 	..()
 	GLOB.tdome2 += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/thunderdome/admin
 	name = "tdomeadmin"
@@ -302,7 +302,7 @@
 /obj/effect/landmark/thunderdome/admin/Initialize(mapload)
 	..()
 	GLOB.tdomeadmin += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 //generic event spawns
 /obj/effect/landmark/event_spawn

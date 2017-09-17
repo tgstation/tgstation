@@ -12,7 +12,7 @@
 /obj/item/book/random/Initialize()
 	. = ..()
 	create_random_books(amount, src.loc, TRUE, category)
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/book/random/triple
 	amount = 3
