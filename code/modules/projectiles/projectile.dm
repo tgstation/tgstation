@@ -212,10 +212,9 @@
 	return TRUE	//Bullets don't drift in space
 
 /obj/item/projectile/process()
-
 	if(!loc || !fired)
 		return PROCESS_KILL
-	if(paused || !Angle || !isturf(loc))
+	if(paused || isnull(Angle) || !isturf(loc))
 		return
 	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
 	time_offset = 0
@@ -250,7 +249,8 @@
 	old_pixel_y = pixel_y
 	last_projectile_move = world.time
 	fired = TRUE
-	START_PROCESSING(SSprojectiles, src)
+	if(!isprocessing)
+		START_PROCESSING(SSprojectiles, src)
 
 /obj/item/projectile/proc/pixel_move(moves)
 	if((!( current ) || loc == current))
