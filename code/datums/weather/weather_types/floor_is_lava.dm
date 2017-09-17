@@ -16,7 +16,7 @@
 
 	area_type = /area
 	protected_areas = list(/area/space)
-	target_z = ZLEVEL_STATION
+	target_z = ZLEVEL_STATION_PRIMARY
 
 	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
 	immunity_type = "lava"
