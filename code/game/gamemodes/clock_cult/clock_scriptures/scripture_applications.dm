@@ -69,7 +69,7 @@
 /datum/clockwork_scripture/create_object/tinkerers_daemon
 	descname = "Powered Structure, Component Generator"
 	name = "Tinkerer's Daemon"
-	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, active daemons are outnumbered by Servants by a ratio of 5:1, \
+	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, active daemons are outnumbered by Servants by a ratio of 2:1, \
 	and there is at least one existing cache."
 	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80

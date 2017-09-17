@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon
 	name = "tinkerer's daemon"
 	desc = "A strange machine with three small brass obelisks attached to it."
-	clockwork_desc = "An efficient machine that can rapidly produce components at a small power cost. It will only function if active daemons are outnumbered by servants at a rate to 5:1."
+	clockwork_desc = "An efficient machine that can rapidly produce components at a small power cost. It will only function if active daemons are outnumbered by servants at a rate to 2:1."
 	icon_state = "tinkerers_daemon"
 	active_icon = "tinkerers_daemon"
 	inactive_icon = "tinkerers_daemon"
@@ -72,7 +72,7 @@
 		for(var/mob/living/L in GLOB.living_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
-		if(servants * 0.2 < 1)
+		if(servants * 0.5 < 1)
 			to_chat(user, "<span class='nezbere'>\"There are too few servants for daemons to work.\"</span>")
 			return
 		var/choice = alert(user,"Activate Daemon...",,"Specific Component","Random Component","Cancel")
@@ -131,7 +131,7 @@
 	for(var/mob/living/L in GLOB.living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
-	while(servants * 0.2 < LAZYLEN(GLOB.active_daemons))
+	while(servants * 0.5 < LAZYLEN(GLOB.active_daemons))
 		var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = GLOB.active_daemons[1]
 		if(!istype(D))
 			break
