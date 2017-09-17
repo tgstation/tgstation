@@ -230,7 +230,7 @@
 		dna.features = newfeatures
 
 	if(mrace)
-		var/datum/species/newrace = new mrace
+		var/datum/species/newrace = new mrace.type
 		set_species(newrace, icon_update=0)
 
 	if(newreal_name)
