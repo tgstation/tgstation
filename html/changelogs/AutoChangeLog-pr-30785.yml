@@ -1,0 +1,4 @@
+author: "TungstenOxide"
+delete-after: True
+changes: 
+  - tweak: "Swapped the action of purchasing a pAI software and subtracting the RAM from available pool."
