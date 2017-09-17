@@ -110,6 +110,9 @@
 		else
 			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
 
+	else if(istype(src, /obj/structure/falsewall/reinforced))
+		if(istype(W, /obj/item/wirecutters))
+			dismantle(user, TRUE)
 	else if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
@@ -141,6 +144,9 @@
 	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
+	if(istype(src, /obj/structure/falsewall/reinforced))
+		to_chat(user, "<span class='notice'>The outer <b>grille</b> is fully intact.</span>")
+		return
 	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
 	return null
 

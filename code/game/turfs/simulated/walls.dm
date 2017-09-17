@@ -27,7 +27,7 @@
 
 /turf/closed/wall/examine(mob/user)
 	..()
-	if(name == "reinforced wall")
+	if(istype(src, /turf/closed/wall/r_wall))
 		return
 	deconstruction_hints(user)
 
