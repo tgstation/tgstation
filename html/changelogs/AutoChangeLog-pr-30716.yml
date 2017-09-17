@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "OOC for dead people is now (re-)enabled at round-end"

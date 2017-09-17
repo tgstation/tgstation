@@ -227,8 +227,5 @@
 		icon_state = unique_reskin[choice]
 		to_chat(M, "[src] is now skinned as '[choice].'")
 
-/obj/proc/gang_contraband_value()
-	return 0
-
 /obj/proc/return_temperature()
 	return

@@ -73,7 +73,7 @@
 	var/datum/radio_frequency/radio_connection
 
 	var/list/TLV = list( // Breathable air.
-		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.80, ONE_ATMOSPHERE*  0.90, ONE_ATMOSPHERE * 1.10, ONE_ATMOSPHERE * 1.20), // kPa
+		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature"	= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
 		"o2"			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		"n2"			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
@@ -101,7 +101,7 @@
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
 	TLV = list(
-		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.80, ONE_ATMOSPHERE*  0.90, ONE_ATMOSPHERE * 1.10, ONE_ATMOSPHERE * 1.20), // kPa
+		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature"	= new/datum/tlv(200,210,273.15,283.15), // K
 		"o2"			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		"n2"			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa

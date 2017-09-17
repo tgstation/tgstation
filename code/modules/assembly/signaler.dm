@@ -104,8 +104,7 @@ Code:
 			code = signaler2.code
 			frequency = signaler2.frequency
 			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
-	else
-		..()
+	..()
 
 /obj/item/device/assembly/signaler/proc/signal()
 	if(!radio_connection) return
