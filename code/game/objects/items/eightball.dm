@@ -39,7 +39,7 @@
 /obj/item/toy/eightball/Initialize(mapload)
 	..()
 	if(prob(1))
-		new /obj/item/toy/eightball/haunted(get_turf(src))
+		new /obj/item/toy/eightball/haunted(loc)
 		qdel(src)
 
 /obj/item/toy/eightball/attack_self(mob/user)
