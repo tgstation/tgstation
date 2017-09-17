@@ -42,17 +42,12 @@
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(ROLE_VAMPIRE in applicant.client.prefs.be_special)
-			if(!applicant.stat)
-				if(applicant.mind)
-					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, "Syndicate") && !jobban_isbanned(applicant, "vampire"))
-							if(temp.age_check(applicant.client))
-								if(!(applicant.job in temp.restricted_jobs))
-									if(!(is_vampire(applicant)))
-										candidates += applicant
+		if((ROLE_VAMPIRE in applicant.client.prefs.be_special) && !applicant.stat && applicant.mind && !applicant.mind.special_role)
+			if(!jobban_isbanned(applicant, "Syndicate") && !jobban_isbanned(applicant, "vampire"))
+				if(temp.age_check(applicant.client) && !(applicant.job in temp.restricted_jobs) && !is_vampire(applicant))
+					candidates += applicant
 
-	if(candidates.len)
+	if(LAZYLEN(candidates))
 		H = pick(candidates)
 		add_vampire(H)
 		return TRUE
