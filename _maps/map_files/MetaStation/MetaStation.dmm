@@ -216,8 +216,7 @@
 	icon_state = "1-2"
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-03";
-	layer = 4.1
+	icon_state = "plant-03"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
@@ -237,9 +236,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/twohanded/required/kirbyplants{
-	layer = 4.1
-	},
+/obj/item/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aaE" = (
@@ -583,8 +580,6 @@
 /area/security/prison)
 "abr" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/barber{
@@ -1488,12 +1483,9 @@
 /turf/closed/wall/r_wall,
 /area/security/prison)
 "adb" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "permacell3";
-	name = "Cell Shutters";
-	opacity = 0
+	name = "Cell Shutters"
 	},
 /obj/machinery/door/airlock/glass{
 	id_tag = "permabolt3";
@@ -1506,12 +1498,9 @@
 /turf/closed/wall,
 /area/security/prison)
 "add" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "permacell2";
-	name = "Cell Shutters";
-	opacity = 0
+	name = "Cell Shutters"
 	},
 /obj/machinery/door/airlock/glass{
 	id_tag = "permabolt2";
@@ -1526,12 +1515,9 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "ade" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "permacell1";
-	name = "Cell Shutters";
-	opacity = 0
+	name = "Cell Shutters"
 	},
 /obj/machinery/door/airlock/glass{
 	id_tag = "permabolt1";
@@ -1787,8 +1773,6 @@
 	dir = 1
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /obj/machinery/computer/shuttle/pod{
@@ -1953,13 +1937,9 @@
 "adX" = (
 /obj/structure/bed/roller,
 /obj/structure/bed/roller,
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 2
 	},
@@ -2667,8 +2647,7 @@
 	dir = 9
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-16";
-	layer = 4.1
+	icon_state = "plant-16"
 	},
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'WARNING: Criminally Insane Inmates', describing the possible hazards of those contained within.";
@@ -2744,8 +2723,6 @@
 /area/crew_quarters/heads/hos)
 "afj" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_x = -32;
 	pixel_y = 32
 	},
@@ -2777,8 +2754,6 @@
 /area/crew_quarters/heads/hos)
 "afn" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_x = 32;
 	pixel_y = 32
 	},
@@ -2922,8 +2897,7 @@
 /area/maintenance/solars/port/fore)
 "afF" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "applebush";
-	layer = 4.1
+	icon_state = "applebush"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -3848,35 +3822,26 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "Prison Gate";
-	name = "Security Blast Door";
-	opacity = 0
+	name = "Security Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ahz" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "Prison Gate";
-	name = "Security Blast Door";
-	opacity = 0
+	name = "Security Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ahA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "Prison Gate";
-	name = "Security Blast Door";
-	opacity = 0
+	name = "Security Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -7360,9 +7325,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/whitered/side,
 /area/security/brig)
 "aoq" = (
@@ -13186,7 +13149,6 @@
 "azl" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = 32;
 	supply_display = 1
 	},
@@ -13580,7 +13542,6 @@
 /area/security/detectives_office)
 "azU" = (
 /obj/machinery/computer/security/wooden_tv{
-	density = 0;
 	pixel_x = 3;
 	pixel_y = 2
 	},
@@ -14517,7 +14478,6 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-20";
-	layer = 4.1;
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/bot{
@@ -15473,8 +15433,6 @@
 	dir = 1
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/red/corner{
@@ -18050,7 +18008,6 @@
 	pixel_y = 23
 	},
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = 32;
 	supply_display = 1
 	},
@@ -18549,8 +18506,6 @@
 	name = "Judge"
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/light{
@@ -18641,8 +18596,7 @@
 	pixel_y = 24
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -19661,9 +19615,7 @@
 	c_tag = "AI Upload Chamber - Fore";
 	network = list("SS13","RD","AIUpload")
 	},
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-07";
-	name = "Photosynthetic Potted plant";
+/obj/item/twohanded/required/kirbyplants/photosynthetic{
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/black,
@@ -19810,8 +19762,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/delivery,
@@ -21846,8 +21796,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/camera{
@@ -21916,8 +21864,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /obj/machinery/computer/shuttle/pod{
@@ -22041,7 +21987,6 @@
 /obj/item/clipboard,
 /obj/item/stamp/qm,
 /obj/machinery/status_display{
-	density = 0;
 	pixel_x = 32;
 	supply_display = 1
 	},
@@ -22173,8 +22118,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_x = 32
 	},
 /obj/machinery/flasher{
@@ -22239,8 +22182,7 @@
 	pixel_x = -27
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-03";
-	layer = 4.1
+	icon_state = "plant-03"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -23357,7 +23299,6 @@
 	dir = 8
 	},
 /obj/machinery/status_display{
-	density = 0;
 	pixel_x = 32;
 	supply_display = 1
 	},
@@ -24563,8 +24504,6 @@
 /area/ai_monitored/turret_protected/ai)
 "aVm" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -24597,8 +24536,6 @@
 /area/ai_monitored/turret_protected/ai)
 "aVq" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -24616,8 +24553,7 @@
 /area/hallway/secondary/entry)
 "aVt" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-13";
-	layer = 4.1
+	icon_state = "plant-13"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -24667,8 +24603,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -24772,7 +24706,6 @@
 /area/hallway/secondary/entry)
 "aVG" = (
 /obj/machinery/status_display{
-	density = 0;
 	supply_display = 1
 	},
 /turf/closed/wall,
@@ -24943,8 +24876,7 @@
 	pixel_y = 23
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "applebush";
-	layer = 4.1
+	icon_state = "applebush"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 9
@@ -24965,8 +24897,6 @@
 	dir = 1
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -25036,8 +24966,7 @@
 	pixel_x = 27
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-16";
-	layer = 4.1
+	icon_state = "plant-16"
 	},
 /obj/item/device/radio/intercom{
 	freerange = 0;
@@ -25158,8 +25087,6 @@
 	pixel_y = 25
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/structure/extinguisher_cabinet{
@@ -26292,8 +26219,7 @@
 /area/hallway/secondary/entry)
 "aYF" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-05";
-	layer = 4.1
+	icon_state = "plant-05"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -27436,7 +27362,6 @@
 "baA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = 32;
 	supply_display = 1
 	},
@@ -28225,7 +28150,6 @@
 "bbS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = 32;
 	supply_display = 1
 	},
@@ -28304,8 +28228,6 @@
 	pixel_x = -29
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -29060,8 +28982,6 @@
 /area/crew_quarters/heads/captain/private)
 "bdI" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -30251,12 +30171,9 @@
 /turf/open/floor/plasteel/black,
 /area/aisat)
 "bfT" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "Engineering";
-	name = "Engineering Security Doors";
-	opacity = 0
+	name = "Engineering Security Doors"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -30650,7 +30567,6 @@
 /area/quartermaster/sorting)
 "bgL" = (
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = 32;
 	supply_display = 1
 	},
@@ -30963,8 +30879,6 @@
 /area/bridge)
 "bhk" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/item/folder/yellow{
@@ -31582,8 +31496,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/black,
@@ -33311,8 +33223,6 @@
 "blC" = (
 /obj/machinery/teleport/station,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -33396,8 +33306,6 @@
 "blK" = (
 /obj/machinery/recharge_station,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/structure/cable/yellow{
@@ -33959,8 +33867,6 @@
 "bmJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_x = -32
 	},
 /obj/structure/disposalpipe/segment,
@@ -34959,8 +34865,6 @@
 	pixel_y = 5
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -35283,12 +35187,9 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bpm" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "transittube";
-	name = "Transit Tube Blast Door";
-	opacity = 0
+	name = "Transit Tube Blast Door"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -36101,8 +36002,6 @@
 /area/crew_quarters/heads/hop)
 "bqF" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/darkblue/corner{
@@ -37005,8 +36904,6 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "bse" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/porta_turret/ai{
@@ -37277,8 +37174,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -37395,8 +37290,6 @@
 /area/crew_quarters/heads/hop)
 "bsP" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/structure/bed/dogbed/ian,
@@ -37941,8 +37834,7 @@
 /area/hallway/secondary/entry)
 "btR" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-18";
-	layer = 4.1
+	icon_state = "plant-18"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -37971,8 +37863,7 @@
 /area/hallway/secondary/entry)
 "btU" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-08";
-	layer = 4.1
+	icon_state = "plant-08"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/port)
@@ -37984,8 +37875,7 @@
 /area/hallway/primary/port)
 "btW" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-03";
-	layer = 4.1
+	icon_state = "plant-03"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/port)
@@ -38602,23 +38492,17 @@
 /turf/open/floor/plating,
 /area/engine/break_room)
 "bvj" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door";
-	opacity = 0
+	name = "Atmos Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bvk" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door";
-	opacity = 0
+	name = "Atmos Blast Door"
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -38632,12 +38516,9 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bvl" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door";
-	opacity = 0
+	name = "Atmos Blast Door"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -38795,8 +38676,7 @@
 /area/tcommsat/computer)
 "bvB" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-20";
-	layer = 4.1
+	icon_state = "plant-20"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -39205,8 +39085,6 @@
 "bwu" = (
 /obj/machinery/holopad,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/light{
@@ -39749,8 +39627,6 @@
 	network = list("SS13")
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -39903,8 +39779,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -40124,13 +39998,10 @@
 	name = "Reception Window";
 	req_access_txt = "0"
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "hop";
 	layer = 3.1;
-	name = "privacy shutters";
-	opacity = 0
+	name = "privacy shutters"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
@@ -40397,12 +40268,9 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "byK" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "Engineering";
-	name = "Engineering Security Doors";
-	opacity = 0
+	name = "Engineering Security Doors"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -40496,8 +40364,6 @@
 /area/engine/atmos)
 "byS" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/light{
@@ -40996,8 +40862,6 @@
 /area/hallway/secondary/command)
 "bzN" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/bot,
@@ -41338,12 +41202,9 @@
 /area/hallway/primary/starboard)
 "bAA" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door";
-	opacity = 0
+	name = "Atmos Blast Door"
 	},
 /obj/structure/cable/yellow{
 	d2 = 2;
@@ -41521,8 +41382,6 @@
 /obj/structure/table/wood,
 /obj/item/folder/blue,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 31
 	},
 /obj/item/folder/blue,
@@ -41866,13 +41725,10 @@
 /area/hallway/primary/port)
 "bBH" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "council blast";
 	layer = 2.9;
-	name = "Council Blast Doors";
-	opacity = 0
+	name = "Council Blast Doors"
 	},
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -41882,13 +41738,10 @@
 /area/bridge)
 "bBI" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "council blast";
 	layer = 2.9;
-	name = "Council Blast Doors";
-	opacity = 0
+	name = "Council Blast Doors"
 	},
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -41902,13 +41755,10 @@
 /area/bridge)
 "bBJ" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "council blast";
 	layer = 2.9;
-	name = "Council Blast Doors";
-	opacity = 0
+	name = "Council Blast Doors"
 	},
 /obj/structure/cable/yellow{
 	d2 = 2;
@@ -41926,13 +41776,10 @@
 /area/bridge)
 "bBK" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "council blast";
 	layer = 2.9;
-	name = "Council Blast Doors";
-	opacity = 0
+	name = "Council Blast Doors"
 	},
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -41946,13 +41793,10 @@
 /area/bridge)
 "bBL" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "council blast";
 	layer = 2.9;
-	name = "Council Blast Doors";
-	opacity = 0
+	name = "Council Blast Doors"
 	},
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -42134,8 +41978,7 @@
 	density = 0;
 	icon_state = "pdoor0";
 	id = "atmos";
-	name = "Atmos Blast Door";
-	opacity = 0
+	name = "Atmos Blast Door"
 	},
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -42147,12 +41990,9 @@
 /obj/item/folder/yellow,
 /obj/item/pen,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door";
-	opacity = 0
+	name = "Atmos Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable/yellow{
@@ -42632,8 +42472,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -42775,8 +42613,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -43142,8 +42978,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/arrival{
@@ -44119,12 +43953,9 @@
 	freq = 1400;
 	location = "Atmospherics"
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door";
-	opacity = 0
+	name = "Atmos Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -45723,8 +45554,7 @@
 /area/tcommsat/server)
 "bJh" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
@@ -46189,8 +46019,6 @@
 	dir = 1
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -46555,8 +46383,7 @@
 /area/aisat)
 "bKS" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-06";
-	level = 4.1
+	icon_state = "plant-06"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -46971,8 +46798,6 @@
 "bLH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_x = -32
 	},
 /obj/machinery/camera{
@@ -47436,8 +47261,7 @@
 	pixel_y = -32
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-03";
-	layer = 4.1
+	icon_state = "plant-03"
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 6
@@ -48819,9 +48643,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bPn" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	req_access = "0"
-	},
+/obj/machinery/atmospherics/components/trinary/filter,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bPo" = (
@@ -51167,8 +50989,6 @@
 	dir = 1
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -51224,8 +51044,6 @@
 	dir = 1
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -53237,8 +53055,7 @@
 	pixel_x = -27
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "applebush";
-	layer = 4.1
+	icon_state = "applebush"
 	},
 /turf/open/floor/plasteel/blue/corner{
 	dir = 8
@@ -53339,8 +53156,7 @@
 	pixel_x = 24
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-10";
-	layer = 4.1
+	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/purple/corner{
 	dir = 2
@@ -54591,8 +54407,6 @@
 	},
 /obj/item/pen,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/machinery/light/small{
@@ -56948,8 +56762,7 @@
 	pixel_y = -30
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-08";
-	layer = 4.1
+	icon_state = "plant-08"
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 2
@@ -60150,9 +59963,7 @@
 /area/medical/medbay/central)
 "clo" = (
 /obj/structure/bed/roller,
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 2
 	},
@@ -61293,8 +61104,6 @@
 /area/medical/medbay/central)
 "cnC" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/structure/table/glass,
@@ -61652,8 +61461,7 @@
 /area/science/research)
 "coj" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-10";
-	layer = 4.1
+	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 2
@@ -61849,9 +61657,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "coE" = (
@@ -63401,9 +63207,7 @@
 /area/medical/surgery)
 "cro" = (
 /obj/structure/bed/roller,
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "crp" = (
@@ -63818,9 +63622,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "csc" = (
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /obj/item/roller,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -63940,9 +63742,7 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_x = -28
 	},
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 2
 	},
@@ -64447,8 +64247,6 @@
 /area/crew_quarters/heads/hor)
 "ctc" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/effect/landmark/xmastree/rdrod,
@@ -67423,8 +67221,6 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/white/side{
@@ -67795,9 +67591,7 @@
 /area/science/mixing)
 "czz" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	density = 0;
-	dir = 8;
-	req_access = "0"
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -69972,7 +69766,6 @@
 /obj/item/device/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
 /obj/structure/reagent_dispensers/virusfood{
-	density = 0;
 	pixel_y = 30
 	},
 /obj/structure/table/glass,
@@ -71162,9 +70955,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 8
 	},
@@ -71193,7 +70984,6 @@
 "cFQ" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -72818,12 +72608,8 @@
 "cIA" = (
 /obj/structure/bed/roller,
 /obj/structure/bed/roller,
-/obj/machinery/iv_drip{
-	density = 0
-	},
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/aft)
 "cIB" = (
@@ -73499,8 +73285,7 @@
 /area/science/research)
 "cJQ" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-10";
-	layer = 4.1
+	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 8
@@ -74791,8 +74576,7 @@
 	pixel_x = 27
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-14";
-	layer = 4.1
+	icon_state = "plant-14"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -75154,7 +74938,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "cMU" = (
 /obj/machinery/status_display{
-	density = 0;
 	layer = 4
 	},
 /turf/closed/wall,
@@ -76551,8 +76334,7 @@
 	pixel_x = -27
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-04";
-	layer = 4.1
+	icon_state = "plant-04"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -76621,8 +76403,7 @@
 	pixel_x = 29
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-16";
-	layer = 4.1
+	icon_state = "plant-16"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -78066,8 +77847,6 @@
 	dir = 1
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /obj/machinery/computer/shuttle/pod{
@@ -78256,8 +78035,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /obj/machinery/computer/shuttle/pod{
@@ -80817,9 +80594,7 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -85466,8 +85241,6 @@
 "diD" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/structure/sign/poster/official/random{
@@ -85692,8 +85465,7 @@
 	network = list("SS13")
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-24";
-	layer = 4.1
+	icon_state = "plant-24"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -89819,12 +89591,9 @@
 /area/engine/atmos)
 "dBK" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door";
-	opacity = 0
+	name = "Atmos Blast Door"
 	},
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,

@@ -144,8 +144,7 @@
 /area/shuttle/escape)
 "aB" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

@@ -175,4 +175,5 @@
 	desc = "A dispenser of low-potency virus mutagenic."
 	icon_state = "virus_food"
 	anchored = TRUE
+	density = FALSE
 	reagent_id = "virusfood"
