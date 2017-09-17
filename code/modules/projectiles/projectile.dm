@@ -30,6 +30,7 @@
 	var/fired = FALSE	//Have we been fired yet
 	var/paused = FALSE	//for suspending the projectile midair
 	var/last_projectile_move = 0
+	var/last_process = 0
 	var/time_offset = 0
 	var/old_pixel_x = 0
 	var/old_pixel_y = 0
@@ -212,10 +213,23 @@
 	return TRUE	//Bullets don't drift in space
 
 /obj/item/projectile/process()
+	last_process = world.time
 	if(!loc || !fired)
+		fired = FALSE
 		return PROCESS_KILL
-	if(paused || isnull(Angle) || !isturf(loc))
+	if(paused || !isturf(loc))
+		last_projectile_move += world.time - last_process		//Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
 		return
+	if(isnull(Angle))		//Shitcode to TRY to replace angle if none is found.
+		if((!( current ) || loc == current))
+			if(isnull(xo) || isnull(yo))
+				qdel(src)
+				CRASH("Projectile ([type]-[firer]-[COORD(src)]) deleted due to unresolvable null angle!")	//we ded.
+				return PROCESS_KILL
+			current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+		setAngle(Get_Angle(src,current))
+		if(spread)
+			setAngle(Angle + (rand() - 0.5) * spread)
 	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
 	time_offset = 0
 	var/required_moves = speed > 0? Floor(elapsed_time_deciseconds / speed) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
@@ -240,7 +254,7 @@
 		qdel(src)
 		return
 	if(isnum(setAngle))
-		Angle = setAngle
+		setAngle(setAngle)
 	if(!nondirectional_sprite)
 		var/matrix/M = new
 		M.Turn(Angle)
@@ -252,13 +266,17 @@
 	if(!isprocessing)
 		START_PROCESSING(SSprojectiles, src)
 
+/obj/item/projectile/proc/setAngle(new_angle)	//wrapper for overrides.
+	Angle = new_angle
+	return TRUE
+
 /obj/item/projectile/proc/pixel_move(moves)
 	if((!( current ) || loc == current))
 		current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-	if(!Angle)
-		Angle=round(Get_Angle(src,current))
+	if(isnull(Angle))
+		setAngle(Get_Angle(src,current))
 	if(spread)
-		Angle += (rand() - 0.5) * spread
+		setAngle(Angle + (rand() - 0.5) * spread)
 	if(!nondirectional_sprite)
 		var/matrix/M = new
 		M.Turn(Angle)
@@ -317,12 +335,12 @@
 	xo = targloc.x - curloc.x
 
 	var/list/calculated = calculate_projectile_angle_and_pixel_offsets(user, params)
-	Angle = calculated[1]
+	setAngle(calculated[1])
 	p_x = calculated[2]
 	p_y = calculated[3]
 
 	if(spread)
-		src.Angle += spread
+		setAngle(Angle + spread)
 
 /proc/calculate_projectile_angle_and_pixel_offsets(mob/user, params)
 	var/list/mouse_control = params2list(params)

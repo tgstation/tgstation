@@ -210,7 +210,9 @@
 	if(last_projectile_params)
 		P.p_x = last_projectile_params[2]
 		P.p_y = last_projectile_params[3]
-	P.fire(last_projectile_params? last_projectile_params[1] : dir2angle(dir))
+		P.fire(last_projectile_params[1])
+	else
+		P.fire(dir2angle(dir))
 	if(!manual)
 		last_shot = world.time
 		if(shot_number < 3)
