@@ -2597,7 +2597,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -3387,7 +3387,7 @@
 /turf/closed/wall,
 /area/security/vacantoffice)
 "ahx" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/abandoned{
 	name = "Auxiliary Office";
 	req_access_txt = "32"
 	},
@@ -4916,7 +4916,7 @@
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "alk" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Office Maintenance";
 	req_access_txt = "32"
 	},
@@ -7662,7 +7662,7 @@
 /area/maintenance/starboard/fore)
 "aqK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -8007,7 +8007,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "arq" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -8022,7 +8022,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "arr" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -9187,7 +9187,7 @@
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "atE" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -57923,7 +57923,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "chF" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -61438,7 +61438,7 @@
 	icon_state = "2-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/glass_security/abandoned{
 	name = "Storage Closet";
 	req_access_txt = "63"
 	},
@@ -67109,7 +67109,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "czB" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -70719,7 +70719,7 @@
 "cFS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -72894,7 +72894,7 @@
 /area/maintenance/starboard/aft)
 "cKH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -80767,7 +80767,7 @@
 /area/maintenance/starboard/aft)
 "daD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -80832,7 +80832,7 @@
 /area/medical/abandoned)
 "daJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -83088,7 +83088,7 @@
 /area/maintenance/starboard/aft)
 "dfA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -83137,7 +83137,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /obj/structure/cable/white{
 	d2 = 4;
 	icon_state = "0-4"
@@ -83166,7 +83168,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/northwest,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 9
+	},
 /obj/structure/cable/white{
 	d1 = 4;
 	d2 = 8;
@@ -83183,7 +83187,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dfJ" = (
@@ -83196,7 +83202,9 @@
 	icon_state = "0-8"
 	},
 /obj/structure/cable/white,
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/northeast,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dfK" = (
@@ -83708,7 +83716,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dgT" = (
@@ -83729,7 +83739,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dgW" = (
@@ -86306,7 +86318,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/corner,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dma" = (
@@ -87425,7 +87439,7 @@
 /area/maintenance/starboard/aft)
 "doy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -87480,7 +87494,7 @@
 /area/hallway/secondary/construction)
 "doE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -87505,7 +87519,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/southwest,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 10
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "doH" = (
@@ -87517,7 +87533,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "doI" = (
@@ -87526,7 +87542,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "doJ" = (
@@ -90613,7 +90631,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "duA" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -92604,7 +92622,7 @@
 /turf/closed/wall,
 /area/security/detectives_office/private_investigators_office)
 "dyt" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -95152,7 +95170,7 @@
 /area/maintenance/starboard/aft)
 "dDr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -112276,7 +112294,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "eqf" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},

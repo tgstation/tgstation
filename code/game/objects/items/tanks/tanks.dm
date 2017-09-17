@@ -74,7 +74,7 @@
 		if (icon == src) to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
-	to_chat(user, "<span class='notice'>The pressure gauge reads [src.air_contents.return_pressure()] kPa.</span>")
+	to_chat(user, "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>")
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
