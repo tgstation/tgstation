@@ -310,5 +310,5 @@
 		to_chat(target, "<span class='italics'>Strike fear into their hearts...</span>")
 		to_chat(user, "<span class='notice italics bold'>They have signed the pact!</span>")
 		to_chat(target, "<span class='userdanger'>You sign Lilith's Pact.</span>")
-		target.mind.store_memory("<B>[user] showed you the glory of Lillith. <I>You are not required to respect or obey [user] in any way</I></B>")
+		target.mind.store_memory("<B>[user] showed you the glory of Lilith. <I>You are not required to respect or obey [user] in any way</I></B>")
 		add_vampire(target)
