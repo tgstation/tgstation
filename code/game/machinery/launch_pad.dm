@@ -242,7 +242,6 @@
 	icon_state = "blpad-remote"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
-	origin_tech = "materials=3;magnets=2;bluespace=4;syndicate=3"
 	var/sending = TRUE
 	var/obj/machinery/launchpad/briefcase/pad
 

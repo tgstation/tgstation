@@ -6,7 +6,6 @@
 	item_state = "inducer-engi"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	origin_tech = "engineering=4;magnets=4;powerstorage=4"
 	force = 7
 	var/powertransfer = 1000
 	var/opened = FALSE

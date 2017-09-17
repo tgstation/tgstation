@@ -5,7 +5,6 @@
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
 	icon_state = "trayson-meson"
 	actions_types = list(/datum/action/item_action/toggle_mode)
-	origin_tech = "materials=3;magnets=3;engineering=3;plasmatech=3"
 
 	var/mesons_on = TRUE //if set to FALSE, these goggles work as t-ray scanners.
 	var/range = 1
@@ -99,7 +98,6 @@
 	name = "optical t-ray scanner"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	icon_state = "trayson-tray_off"
-	origin_tech = "materials=3;magnets=2;engineering=2"
 
 	mesons_on = FALSE
 	var/on = FALSE

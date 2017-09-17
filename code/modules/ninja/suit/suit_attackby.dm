@@ -52,6 +52,16 @@
 							break
 				to_chat(U, "<span class='notice'>Data analyzed and updated. Disk erased.</span>")
 
+		else if(istype(I, /obj/item/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
+			var/obj/item/disk/tech_disk/TD = I
+			var/has_research = 0
+			if(has_research)//If it has something on it.
+				to_chat(U, "Research information detected, processing...")
+				if(do_after(U,s_delay, target = src))
+					TD.stored_research.copy_research_to(stored_research)
+					to_chat(U, "<span class='notice'>Data analyzed and updated. Disk erased.</span>")
+				else
+					to_chat(U, "<span class='userdanger'>ERROR</span>: Procedure interrupted. Process terminated.")
 			else
 				to_chat(U, "<span class='userdanger'>ERROR</span>: Procedure interrupted. Process terminated.")
 		else

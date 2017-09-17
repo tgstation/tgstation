@@ -3,7 +3,6 @@
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
-	origin_tech = "magnets=1;engineering=1"
 	attachable = 1
 
 	var/scanning = 0

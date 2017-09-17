@@ -13,7 +13,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	icon = 'icons/obj/items_and_weapons.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
-	origin_tech = "combat=4;engineering=4;syndicate=2"
 	force = 12
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'

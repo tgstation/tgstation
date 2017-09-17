@@ -4,7 +4,6 @@
 	zone = "head"
 	slot = "zombie_infection"
 	icon_state = "blacktumor"
-	origin_tech = "biotech=5"
 	var/datum/species/old_species = /datum/species/human
 	var/living_transformation_time = 30
 	var/converts_living = FALSE

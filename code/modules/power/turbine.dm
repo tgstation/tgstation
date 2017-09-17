@@ -75,7 +75,6 @@
 	// The inlet of the compressor is the direction it faces
 	gas_contained = new
 	inturf = get_step(src, dir)
-
 	locate_machinery()
 	if(!turbine)
 		stat |= BROKEN

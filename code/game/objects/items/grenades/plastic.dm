@@ -161,7 +161,6 @@
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "syndicate=1"
 	var/timer = 10
 	var/open_panel = 0
 

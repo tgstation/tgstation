@@ -6,7 +6,6 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	icon_state = "gps-c"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
-	origin_tech = "materials=2;magnets=1;bluespace=2"
 	unique_rename = TRUE
 	var/gpstag = "COM0"
 	var/emped = FALSE

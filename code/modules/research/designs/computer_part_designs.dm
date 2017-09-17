@@ -93,7 +93,6 @@
 /datum/design/portabledrive/basic
 	name = "Data Disk"
 	id = "portadrive_basic"
-	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 800)
 	reagents_list = list("sacid" = 20)
@@ -103,7 +102,6 @@
 /datum/design/portabledrive/advanced
 	name = "Advanced Data Disk"
 	id = "portadrive_advanced"
-	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1600)
 	reagents_list = list("sacid" = 20)
@@ -113,7 +111,6 @@
 /datum/design/portabledrive/super
 	name = "Super Data Disk"
 	id = "portadrive_super"
-	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 3200)
 	reagents_list = list("sacid" = 20)
@@ -125,7 +122,6 @@
 /datum/design/cardslot
 	name = "ID Card Slot"
 	id = "cardslot"
-	req_tech = list("programming" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 600)
 	build_path = /obj/item/computer_hardware/card_slot
@@ -135,7 +131,6 @@
 /datum/design/aislot
 	name = "Intellicard Slot"
 	id = "aislot"
-	req_tech = list("programming" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 600)
 	build_path = /obj/item/computer_hardware/ai_slot
