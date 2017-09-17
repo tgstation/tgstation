@@ -64,7 +64,7 @@
 	return TRUE
 
 
-/datum/game_mode/devil/post_setup()
+/datum/game_mode/vampire/post_setup()
 	for(var/datum/mind/devil in devils)
 		add_vampire(devil)
 	modePlayer += devils

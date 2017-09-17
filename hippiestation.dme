@@ -2226,6 +2226,7 @@
 #include "hippiestation\code\game\gamemodes\shadowling\shadowling_items.dm"
 #include "hippiestation\code\game\gamemodes\shadowling\special_shadowling_abilities.dm"
 #include "hippiestation\code\game\gamemodes\vampire\grave_fever.dm"
+#include "hippiestation\code\game\gamemodes\vampire\traitor_vamp.dm"
 #include "hippiestation\code\game\gamemodes\vampire\vampire.dm"
 #include "hippiestation\code\game\gamemodes\vampire\vampire_bite.dm"
 #include "hippiestation\code\game\gamemodes\vampire\vampire_hud.dm"

@@ -27,7 +27,6 @@
 /datum/antagonist/vampire/on_gain()
 	give_objectives()
 	check_vampire_upgrade()
-	SSticker.mode.vampires += owner
 	..()
 
 /datum/antagonist/vampire/on_removal()
@@ -37,7 +36,6 @@
 		if(owner && H.hud_used && H.hud_used.vamp_blood_display)
 			H.hud_used.vamp_blood_display.invisibility = INVISIBILITY_ABSTRACT
 
-	SSticker.mode.vampires -= owner
 	for(var/O in objectives_given)
 		owner.objectives -= O
 	objectives_given = list()
