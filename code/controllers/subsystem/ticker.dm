@@ -67,6 +67,9 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
+	if(music.len > 1)
+		music -= old_login_music
 	login_music = pick(music)
 
 	if(!GLOB.syndicate_code_phrase)
@@ -158,6 +161,8 @@ SUBSYSTEM_DEF(ticker)
 				to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 				return 0
 			mode = pickweight(runnable_modes)
+			if(!mode)	//too few roundtypes all run too recently
+				mode = pick(runnable_modes)
 
 	else
 		mode = config.pick_mode(GLOB.master_mode)
@@ -233,10 +238,10 @@ SUBSYSTEM_DEF(ticker)
 
 	PostSetup()
 
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
-	set waitfor = 0
+	set waitfor = FALSE
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count(1)
@@ -841,3 +846,4 @@ SUBSYSTEM_DEF(ticker)
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))
+	text2file(login_music, "data/last_round_lobby_music.txt")

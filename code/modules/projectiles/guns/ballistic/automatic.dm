@@ -295,6 +295,12 @@
 	pin = /obj/item/device/firing_pin
 
 
+/obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
+	..()
+	if(cover_open && magazine)
+		to_chat(user, "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>")
+
+
 /obj/item/gun/ballistic/automatic/l6_saw/attack_self(mob/user)
 	cover_open = !cover_open
 	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")

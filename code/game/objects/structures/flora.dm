@@ -267,6 +267,7 @@
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.override = 1
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
+	I.layer = ABOVE_MOB_LAYER
 	..()
 
 /obj/item/twohanded/required/kirbyplants/dropped(mob/living/user)

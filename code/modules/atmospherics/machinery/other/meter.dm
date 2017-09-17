@@ -130,5 +130,5 @@
 /obj/machinery/meter/turf
 
 /obj/machinery/meter/turf/Initialize()
-	..()
+	. = ..()
 	src.target = loc

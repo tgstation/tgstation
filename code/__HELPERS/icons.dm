@@ -926,10 +926,10 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	return 0
 
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs)
+/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key)
 	var/static/list/humanoid_icon_cache = list()
 	if(!icon_id || !humanoid_icon_cache[icon_id])
-		var/mob/living/carbon/human/dummy/body = new()
+		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
 
 		if(prefs)
 			prefs.copy_to(body)
@@ -956,13 +956,11 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=EAST)
 
-		qdel(body)
-
 		humanoid_icon_cache[icon_id] = out_icon
+		dummy_key? unset_busy_human_dummy(dummy_key) : qdel(body)
 		return out_icon
 	else
 		return humanoid_icon_cache[icon_id]
-
 
 //Hook, override to run code on- wait this is images
 //Images have dir without being an atom, so they get their own definition.

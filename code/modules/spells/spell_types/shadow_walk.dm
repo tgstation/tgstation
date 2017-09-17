@@ -13,7 +13,7 @@
 	action_icon_state = "ninja_cloak"
 	action_background_icon_state = "bg_alien"
 
-/obj/effect/proc_holder/spell/targeted/shadowwalk/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/shadowwalk/cast(list/targets,mob/living/user = usr)
 	var/L = user.loc
 	if(istype(user.loc, /obj/effect/dummy/shadow))
 		var/obj/effect/dummy/shadow/S = L
@@ -22,9 +22,11 @@
 	else
 		var/turf/T = get_turf(user)
 		var/light_amount = T.get_lumcount()
-		if(light_amount < 0.2)
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
 			visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
+			user.AdjustStun(-20, 0)
+			user.AdjustKnockdown(-20, 0)
 			var/obj/effect/dummy/shadow/S2 = new(get_turf(user.loc))
 			user.forceMove(S2)
 			S2.jaunter = user
