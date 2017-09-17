@@ -53,6 +53,7 @@
 
 /obj/effect/portal/attack_hand(mob/user)
 	if(Adjacent(user))
+		user.forceMove(get_turf(src))
 		teleport(user)
 
 /obj/effect/portal/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
