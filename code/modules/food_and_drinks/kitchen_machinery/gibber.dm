@@ -9,7 +9,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 500
-	circuit = /obj/item/weapon/circuitboard/machine/gibber
+	circuit = /obj/item/circuitboard/machine/gibber
 
 	var/operating = FALSE //Is it on?
 	var/dirty = 0 // Does it need cleaning?
@@ -24,9 +24,9 @@
 
 /obj/machinery/gibber/RefreshParts()
 	var/gib_time = 40
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		gib_time -= 5 * M.rating
 		gibtime = gib_time
 		if(M.rating >= 2)
@@ -49,6 +49,9 @@
 	return src.attack_hand(user)
 
 /obj/machinery/gibber/container_resist(mob/living/user)
+	go_out()
+
+/obj/machinery/gibber/relaymove(mob/living/user)
 	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
@@ -139,18 +142,17 @@
 		sourcejob = gibee.job
 	var/sourcenutriment = mob_occupant.nutrition / 15
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
-	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
-	var/typeofskin = /obj/item/stack/sheet/animalhide/human
+	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human
+	var/typeofskin
 
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
-	var/obj/item/stack/sheet/animalhide/allskin
+	var/obj/item/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
+	var/obj/item/stack/sheet/animalhide/skin
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
 		if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
-			if(gibee.dna.species.skinned_type)
-				typeofskin = gibee.dna.species.skinned_type
+			typeofskin = gibee.dna.species.skinned_type
 
 	else if(iscarbon(occupant))
 		var/mob/living/carbon/C = occupant
@@ -162,8 +164,7 @@
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
 
 	for (var/i=1 to meat_produced)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
-		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
+		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
@@ -171,7 +172,9 @@
 			if(sourcejob)
 				newmeat.subjectjob = sourcejob
 		allmeat[i] = newmeat
-		allskin = newskin
+
+	if(typeofskin)
+		skin = new typeofskin
 
 	add_logs(user, occupant, "gibbed")
 	mob_occupant.death(1)
@@ -182,12 +185,12 @@
 		operating = FALSE
 		var/turf/T = get_turf(src)
 		var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
-		var/obj/item/skin = allskin
-		skin.loc = src.loc
-		skin.throw_at(pick(nearby_turfs),meat_produced,3)
+		if(skin)
+			skin.forceMove(loc)
+			skin.throw_at(pick(nearby_turfs),meat_produced,3)
 		for (var/i=1 to meat_produced)
 			var/obj/item/meatslab = allmeat[i]
-			meatslab.loc = src.loc
+			meatslab.forceMove(loc)
 			meatslab.throw_at(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced)
 				var/turf/gibturf = pick(nearby_turfs)

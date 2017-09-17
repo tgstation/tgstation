@@ -15,7 +15,7 @@
 /area/shuttle/escape)
 "ae" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "af" = (
@@ -30,11 +30,11 @@
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ai" = (
@@ -121,16 +121,16 @@
 /area/shuttle/escape)
 "ay" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "az" = (
-/obj/item/weapon/greentext/quiet{
+/obj/item/greentext/quiet{
 	anchored = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -216,7 +216,7 @@
 /area/shuttle/escape)
 "aM" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/random,
+/obj/item/bedsheet/random,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aN" = (
@@ -224,7 +224,7 @@
 	dir = 4
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/random,
+/obj/item/bedsheet/random,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aO" = (
@@ -232,12 +232,12 @@
 	dir = 8
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/random,
+/obj/item/bedsheet/random,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aP" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/random,
+/obj/item/bedsheet/random,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -310,12 +310,12 @@
 /area/shuttle/escape)
 "bb" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},

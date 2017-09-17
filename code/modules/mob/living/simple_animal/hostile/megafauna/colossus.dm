@@ -48,7 +48,7 @@ Difficulty: Very Hard
 	score_type = COLOSSUS_SCORE
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
-	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
+	butcher_results = list(/obj/item/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
 
@@ -93,7 +93,7 @@ Difficulty: Very Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
-	..()
+	. = ..()
 	internal = new/obj/item/device/gps/internal/colossus(src)
 
 /obj/effect/temp_visual/at_shield
@@ -250,7 +250,7 @@ Difficulty: Very Hard
 	use_power = NO_POWER_USE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
-	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
+	var/static/list/blacklist = typecacheof(list(/obj/item/spellbook))
 
 /obj/machinery/smartfridge/black_box/update_icon()
 	return
@@ -277,19 +277,29 @@ Difficulty: Very Hard
 		WriteMemory()
 
 /obj/machinery/smartfridge/black_box/proc/WriteMemory()
-	var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
+	var/json_file = file("data/npc_saves/Blackbox.json")
 	stored_items = list()
 
 	for(var/obj/O in (contents-component_parts))
 		stored_items += O.type
-
-	WRITE_FILE(S["stored_items"], stored_items)
+	var/list/file_data = list()
+	file_data["data"] = stored_items
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
 	memory_saved = TRUE
 
 /obj/machinery/smartfridge/black_box/proc/ReadMemory()
-	var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
-	S["stored_items"] 		>> stored_items
-
+	if(fexists("data/npc_saves/Blackbox.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
+		S["stored_items"] >> stored_items
+		fdel("data/npc_saves/Blackbox.sav")
+	else
+		var/json_file = file("data/npc_saves/Blackbox.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		stored_items = json["data"]
 	if(isnull(stored_items))
 		stored_items = list()
 
@@ -351,7 +361,7 @@ Difficulty: Very Hard
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = NO_POWER_USE
 	density = TRUE
-	flags = HEAR
+	flags_1 = HEAR_1
 	var/activation_method
 	var/list/possible_methods = list(ACTIVATE_TOUCH, ACTIVATE_SPEECH, ACTIVATE_HEAT, ACTIVATE_BULLET, ACTIVATE_ENERGY, ACTIVATE_BOMB, ACTIVATE_MOB_BUMP, ACTIVATE_WEAPON, ACTIVATE_MAGIC)
 
@@ -652,7 +662,7 @@ Difficulty: Very Hard
 	activation_method = ACTIVATE_TOUCH
 	cooldown_add = 50
 	activation_sound = 'sound/magic/timeparadox2.ogg'
-	var/list/banned_items_typecache = list(/obj/item/weapon/storage, /obj/item/weapon/implant, /obj/item/weapon/implanter, /obj/item/weapon/disk/nuclear, /obj/item/projectile, /obj/item/weapon/spellbook)
+	var/list/banned_items_typecache = list(/obj/item/storage, /obj/item/implant, /obj/item/implanter, /obj/item/disk/nuclear, /obj/item/projectile, /obj/item/spellbook)
 
 /obj/machinery/anomalous_crystal/refresher/Initialize()
 	. = ..()
@@ -667,7 +677,7 @@ Difficulty: Very Hard
 		for(var/i in T)
 			if(isitem(i) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i
-				if(!W.admin_spawned && !HAS_SECONDARY_FLAG(W, HOLOGRAM) && !(W.flags & ABSTRACT))
+				if(!W.admin_spawned && !(W.flags_2 & HOLOGRAM_2) && !(W.flags_1 & ABSTRACT_1))
 					L += W
 		if(L.len)
 			var/obj/item/CHOSEN = pick(L)

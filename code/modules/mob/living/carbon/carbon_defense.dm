@@ -24,9 +24,9 @@
 
 /mob/living/carbon/get_ear_protection()
 	var/number = ..()
-	if(ears && HAS_SECONDARY_FLAG(ears, BANG_PROTECT))
+	if(ears && (ears.flags_2 & BANG_PROTECT_2))
 		number += 1
-	if(head && HAS_SECONDARY_FLAG(head, BANG_PROTECT))
+	if(head && (head.flags_2 & BANG_PROTECT_2))
 		number += 1
 	var/obj/item/organ/ears/E = getorganslot("ears")
 	if(!E)
@@ -78,7 +78,6 @@
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
 		apply_damage(I.force, I.damtype, affecting)
-		damage_clothes(I.force, I.damtype, "melee", affecting.body_zone)
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			if(prob(33))
 				I.add_mob_blood(src)
@@ -210,7 +209,7 @@
 	..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
+	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
 		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
@@ -244,7 +243,7 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)
-		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!")
+		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!</span>")
 		return
 
 	if(health >= 0 && !(status_flags & FAKEDEATH))

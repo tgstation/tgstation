@@ -171,7 +171,7 @@
 
 /obj/item/organ/heart/gland/egg/activate()
 	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
-	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(owner.loc)
+	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.loc)
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
 

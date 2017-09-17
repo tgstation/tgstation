@@ -91,14 +91,14 @@
 		return 1
 
 	if(ishuman(user))
-		var/obj/item/weapon/card/id/D
-		var/obj/item/weapon/computer_hardware/card_slot/card_slot
+		var/obj/item/card/id/D
+		var/obj/item/computer_hardware/card_slot/card_slot
 		if(computer && card_slot)
 			card_slot = computer.all_components[MC_CARD]
 			D = card_slot.GetID()
 		var/mob/living/carbon/human/h = user
-		var/obj/item/weapon/card/id/I = h.get_idcard()
-		var/obj/item/weapon/card/id/C = h.get_active_held_item()
+		var/obj/item/card/id/I = h.get_idcard()
+		var/obj/item/card/id/C = h.get_active_held_item()
 		if(C)
 			C = C.GetID()
 		if(!(C && istype(C)))

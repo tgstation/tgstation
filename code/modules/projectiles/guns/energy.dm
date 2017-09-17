@@ -1,11 +1,11 @@
-/obj/item/weapon/gun/energy
+/obj/item/gun/energy
 	icon_state = "energy"
 	name = "energy gun"
 	desc = "A basic energy-based gun."
 	icon = 'icons/obj/guns/energy.dmi'
 
-	var/obj/item/weapon/stock_parts/cell/cell //What type of power cell this uses
-	var/cell_type = /obj/item/weapon/stock_parts/cell
+	var/obj/item/stock_parts/cell/cell //What type of power cell this uses
+	var/cell_type = /obj/item/stock_parts/cell
 	var/modifystate = 0
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
@@ -19,16 +19,16 @@
 	var/charge_delay = 4
 	var/use_cyborg_cell = 0 //whether the gun's cell drains the cyborg user's cell to recharge
 
-/obj/item/weapon/gun/energy/emp_act(severity)
+/obj/item/gun/energy/emp_act(severity)
 	cell.use(round(cell.charge / severity))
 	chambered = null //we empty the chamber
 	recharge_newshot() //and try to charge a new shot
 	update_icon()
 
-/obj/item/weapon/gun/energy/get_cell()
+/obj/item/gun/energy/get_cell()
 	return cell
 
-/obj/item/weapon/gun/energy/Initialize()
+/obj/item/gun/energy/Initialize()
 	. = ..()
 	if(cell_type)
 		cell = new cell_type(src)
@@ -41,7 +41,7 @@
 		START_PROCESSING(SSobj, src)
 	update_icon()
 
-/obj/item/weapon/gun/energy/proc/update_ammo_types()
+/obj/item/gun/energy/proc/update_ammo_types()
 	var/obj/item/ammo_casing/energy/shot
 	for (var/i = 1, i <= ammo_type.len, i++)
 		var/shottype = ammo_type[i]
@@ -51,12 +51,12 @@
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
 
-/obj/item/weapon/gun/energy/Destroy()
+/obj/item/gun/energy/Destroy()
 	QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/weapon/gun/energy/process()
+/obj/item/gun/energy/process()
 	if(selfcharge)
 		charge_tick++
 		if(charge_tick < charge_delay)
@@ -69,16 +69,16 @@
 			recharge_newshot(1)
 		update_icon()
 
-/obj/item/weapon/gun/energy/attack_self(mob/living/user as mob)
+/obj/item/gun/energy/attack_self(mob/living/user as mob)
 	if(ammo_type.len > 1)
 		select_fire(user)
 		update_icon()
 
-/obj/item/weapon/gun/energy/can_shoot()
+/obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	return cell.charge >= shot.e_cost
 
-/obj/item/weapon/gun/energy/recharge_newshot(no_cyborg_drain)
+/obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
 	if (!ammo_type || !cell)
 		return
 	if(use_cyborg_cell && !no_cyborg_drain)
@@ -95,14 +95,14 @@
 			if(!chambered.BB)
 				chambered.newshot()
 
-/obj/item/weapon/gun/energy/process_chamber()
+/obj/item/gun/energy/process_chamber()
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
 		cell.use(shot.e_cost)//... drain the cell cell
 	chambered = null //either way, released the prepared shot
 	recharge_newshot() //try to charge a new shot
 
-/obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
+/obj/item/gun/energy/proc/select_fire(mob/living/user)
 	select++
 	if (select > ammo_type.len)
 		select = 1
@@ -116,7 +116,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/gun/energy/update_icon()
+/obj/item/gun/energy/update_icon()
 	..()
 	if(!automatic_charge_overlays)
 		return
@@ -146,10 +146,10 @@
 		itemState += "[ratio]"
 		item_state = itemState
 
-/obj/item/weapon/gun/energy/ui_action_click()
+/obj/item/gun/energy/ui_action_click()
 	toggle_gunlight()
 
-/obj/item/weapon/gun/energy/suicide_act(mob/user)
+/obj/item/gun/energy/suicide_act(mob/user)
 	if (src.can_shoot() && can_trigger_gun(user))
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
@@ -169,7 +169,7 @@
 		return (OXYLOSS)
 
 
-/obj/item/weapon/gun/energy/vv_edit_var(var_name, var_value)
+/obj/item/gun/energy/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if("selfcharge")
 			if(var_value)
@@ -179,7 +179,7 @@
 	. = ..()
 
 
-/obj/item/weapon/gun/energy/ignition_effect(atom/A, mob/living/user)
+/obj/item/gun/energy/ignition_effect(atom/A, mob/living/user)
 	if(!can_shoot() || !ammo_type[select])
 		shoot_with_empty_chamber()
 		. = ""

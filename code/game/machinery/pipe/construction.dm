@@ -205,8 +205,8 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
-/obj/item/pipe/attackby(obj/item/weapon/W, mob/user, params)
-	if (!istype(W, /obj/item/weapon/wrench))
+/obj/item/pipe/attackby(obj/item/W, mob/user, params)
+	if (!istype(W, /obj/item/wrench))
 		return ..()
 	if (!isturf(src.loc))
 		return 1
@@ -267,10 +267,10 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	item_state = "buildpipe"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/pipe_meter/attackby(obj/item/W, mob/user, params)
 	..()
 
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!istype(W, /obj/item/wrench))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe!</span>")

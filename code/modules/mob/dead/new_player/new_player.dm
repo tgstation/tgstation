@@ -4,7 +4,7 @@
 	var/ready = 0
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
 
-	flags = NONE
+	flags_1 = NONE
 
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -109,7 +109,7 @@
 	if(href_list["ready"])
 		var/tready = text2num(href_list["ready"])
 		//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
-		//This is likely not an actual issue but I don't have time to prove that this 
+		//This is likely not an actual issue but I don't have time to prove that this
 		//no longer is required
 		if(SSticker.current_state <= GAME_STATE_PREGAME)
 			ready = tready
@@ -307,6 +307,8 @@
 		return 0
 	if(!job.player_old_enough(src.client))
 		return 0
+	if(job.required_playtime_remaining(client))
+		return 0
 	if(config.enforce_human_authority && !client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
 		return 0
 	return 1
@@ -405,6 +407,11 @@
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			available_job_count++;
+
+
+	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
+		if(prioritized_job.current_positions >= prioritized_job.total_positions)
+			SSjob.prioritized_jobs -= prioritized_job
 
 	if(length(SSjob.prioritized_jobs))
 		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"

@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/blastcannon
+/obj/item/gun/blastcannon
 	name = "pipe gun"
 	desc = "A pipe welded onto a gun stock, with a mechanical trigger. The pipe has an opening near the top, and there seems to be a spring loaded wheel in the hole."
 	icon_state = "empty_blastcannon"
@@ -15,12 +15,12 @@
 	var/datum/gas_mixture/air1
 	var/datum/gas_mixture/air2
 
-/obj/item/weapon/gun/blastcannon/New()
+/obj/item/gun/blastcannon/New()
 	if(!pin)
 		pin = new
 	. = ..()
 
-/obj/item/weapon/gun/blastcannon/Destroy()
+/obj/item/gun/blastcannon/Destroy()
 	if(bomb)
 		qdel(bomb)
 		bomb = null
@@ -28,7 +28,7 @@
 	air2 = null
 	. = ..()
 
-/obj/item/weapon/gun/blastcannon/attack_self(mob/user)
+/obj/item/gun/blastcannon/attack_self(mob/user)
 	if(bomb)
 		bomb.forceMove(user.loc)
 		user.put_in_hands(bomb)
@@ -37,7 +37,7 @@
 	update_icon()
 	. = ..(user)
 
-/obj/item/weapon/gun/blastcannon/update_icon()
+/obj/item/gun/blastcannon/update_icon()
 	if(bomb)
 		icon_state = icon_state_loaded
 		name = "blast cannon"
@@ -48,7 +48,7 @@
 		desc = initial(desc)
 	. = ..()
 
-/obj/item/weapon/gun/blastcannon/attackby(obj/O, mob/user)
+/obj/item/gun/blastcannon/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/device/transfer_valve))
 		var/obj/item/device/transfer_valve/T = O
 		if(!T.tank_one || !T.tank_two)
@@ -64,7 +64,7 @@
 		return TRUE
 	. = ..()
 
-/obj/item/weapon/gun/blastcannon/proc/calculate_bomb()
+/obj/item/gun/blastcannon/proc/calculate_bomb()
 	if(!istype(bomb)||!istype(bomb.tank_one)||!istype(bomb.tank_two))
 		return 0
 	air1 = bomb.tank_one.air_contents
@@ -81,7 +81,7 @@
 		return 0
 	return (pressure/TANK_FRAGMENT_SCALE)
 
-/obj/item/weapon/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
+/obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
 	if((!bomb) || (target == user) || (target.loc == user) || (!target) || (target.loc == user.loc) || (target.loc in range(user, 2)) || (target in range(user, 2)))
 		return ..()
 	var/power = calculate_bomb()

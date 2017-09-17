@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	idle_power_usage = 20
 	active_power_usage = 50
 
-	circuit = /obj/item/weapon/circuitboard/machine/announcement_system
+	circuit = /obj/item/circuitboard/machine/announcement_system
 
 	var/obj/item/device/radio/headset/radio
 	var/arrival = "%PERSON has signed up as %RANK"
@@ -60,7 +60,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	update_icon()
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/weapon/screwdriver))
+	if(istype(P, /obj/item/screwdriver))
 		playsound(src.loc, P.usesound, 50, 1)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")

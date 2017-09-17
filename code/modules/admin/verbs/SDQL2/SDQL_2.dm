@@ -10,7 +10,7 @@
 	-- Will change all the tube lights to green
 	UPDATE /obj/machinery/light IN world SET color = "#0F0" WHERE icon_state == "tube1"
 	-- Will delete all pickaxes. "IN world" is not required.
-	DELETE /obj/item/weapon/pickaxe
+	DELETE /obj/item/pickaxe
 	-- Will flicker the lights once, then turn all mobs green. The semicolon is important to separate the consecutive querys, but is not required for standard one-query use
 	CALL flicker(1) ON /obj/machinery/light; UPDATE /mob SET color = "#00cc00"
 
@@ -122,7 +122,7 @@
 
 /proc/SDQL_gen_vv_href(t)
 	var/text = ""
-	text += "<A HREF='?_src_=vars;Vars=\ref[t]'>\ref[t]</A>"
+	text += "<A HREF='?_src_=vars;[HrefToken()];Vars=\ref[t]'>\ref[t]</A>"
 	if(istype(t, /atom))
 		var/atom/a = t
 		var/turf/T = a.loc

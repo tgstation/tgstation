@@ -15,20 +15,20 @@
 	density = TRUE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret"	//the name applied to the product turret
-	var/obj/item/weapon/gun/installed_gun = null
+	var/obj/item/gun/installed_gun = null
 
 /obj/machinery/porta_turret_construct/attackby(obj/item/I, mob/user, params)
 	//this is a bit unwieldy but self-explanatory
 	switch(build_step)
 		if(PTURRET_UNSECURED)	//first step
-			if(istype(I, /obj/item/weapon/wrench) && !anchored)
+			if(istype(I, /obj/item/wrench) && !anchored)
 				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
 				anchored = TRUE
 				build_step = PTURRET_BOLTED
 				return
 
-			else if(istype(I, /obj/item/weapon/crowbar) && !anchored)
+			else if(istype(I, /obj/item/crowbar) && !anchored)
 				playsound(loc, I.usesound, 75, 1)
 				to_chat(user, "<span class='notice'>You dismantle the turret construction.</span>")
 				new /obj/item/stack/sheet/metal( loc, 5)
@@ -46,7 +46,7 @@
 					to_chat(user, "<span class='warning'>You need two sheets of metal to continue construction!</span>")
 				return
 
-			else if(istype(I, /obj/item/weapon/wrench))
+			else if(istype(I, /obj/item/wrench))
 				playsound(loc, I.usesound, 75, 1)
 				to_chat(user, "<span class='notice'>You unfasten the external bolts.</span>")
 				anchored = FALSE
@@ -55,14 +55,14 @@
 
 
 		if(PTURRET_START_INTERNAL_ARMOUR)
-			if(istype(I, /obj/item/weapon/wrench))
+			if(istype(I, /obj/item/wrench))
 				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You bolt the metal armor into place.</span>")
 				build_step = PTURRET_INTERNAL_ARMOUR_ON
 				return
 
-			else if(istype(I, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/WT = I
+			else if(istype(I, /obj/item/weldingtool))
+				var/obj/item/weldingtool/WT = I
 				if(!WT.isOn())
 					return
 				if(WT.get_fuel() < 5) //uses up 5 fuel.
@@ -81,8 +81,8 @@
 
 
 		if(PTURRET_INTERNAL_ARMOUR_ON)
-			if(istype(I, /obj/item/weapon/gun/energy)) //the gun installation part
-				var/obj/item/weapon/gun/energy/E = I
+			if(istype(I, /obj/item/gun/energy)) //the gun installation part
+				var/obj/item/gun/energy/E = I
 				if(!user.drop_item())
 					return
 				E.forceMove(src)
@@ -91,7 +91,7 @@
 				build_step = PTURRET_GUN_EQUIPPED
 				return
 
-			else if(istype(I, /obj/item/weapon/wrench))
+			else if(istype(I, /obj/item/wrench))
 				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You remove the turret's metal armor bolts.</span>")
 				build_step = PTURRET_START_INTERNAL_ARMOUR
@@ -108,7 +108,7 @@
 
 
 		if(PTURRET_SENSORS_ON)
-			if(istype(I, /obj/item/weapon/screwdriver))
+			if(istype(I, /obj/item/screwdriver))
 				playsound(loc, I.usesound, 100, 1)
 				build_step = PTURRET_CLOSED
 				to_chat(user, "<span class='notice'>You close the internal access hatch.</span>")
@@ -125,15 +125,15 @@
 					to_chat(user, "<span class='warning'>You need two sheets of metal to continue construction!</span>")
 				return
 
-			else if(istype(I, /obj/item/weapon/screwdriver))
+			else if(istype(I, /obj/item/screwdriver))
 				playsound(loc, I.usesound, 100, 1)
 				build_step = PTURRET_SENSORS_ON
 				to_chat(user, "<span class='notice'>You open the internal access hatch.</span>")
 				return
 
 		if(PTURRET_START_EXTERNAL_ARMOUR)
-			if(istype(I, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/WT = I
+			if(istype(I, /obj/item/weldingtool))
+				var/obj/item/weldingtool/WT = I
 				if(!WT.isOn())
 					return
 				if(WT.get_fuel() < 5)
@@ -151,7 +151,7 @@
 
 					var/obj/machinery/porta_turret/turret
 					//fuck lasertag turrets
-					if(istype(installed_gun, /obj/item/weapon/gun/energy/laser/bluetag) || istype(installed_gun, /obj/item/weapon/gun/energy/laser/redtag))
+					if(istype(installed_gun, /obj/item/gun/energy/laser/bluetag) || istype(installed_gun, /obj/item/gun/energy/laser/redtag))
 						turret = new/obj/machinery/porta_turret/lasertag(loc)
 					else
 						turret = new/obj/machinery/porta_turret(loc)
@@ -160,14 +160,14 @@
 					turret.setup(installed_gun)
 					qdel(src)
 
-			else if(istype(I, /obj/item/weapon/crowbar))
+			else if(istype(I, /obj/item/crowbar))
 				playsound(loc, I.usesound, 75, 1)
 				to_chat(user, "<span class='notice'>You pry off the turret's exterior armor.</span>")
 				new /obj/item/stack/sheet/metal(loc, 2)
 				build_step = PTURRET_CLOSED
 				return
 
-	if(istype(I, /obj/item/weapon/pen))	//you can rename turrets like bots!
+	if(istype(I, /obj/item/pen))	//you can rename turrets like bots!
 		var/t = stripped_input(user, "Enter new turret name", name, finish_name)
 		if(!t)
 			return

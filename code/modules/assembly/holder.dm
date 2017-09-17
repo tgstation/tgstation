@@ -5,7 +5,7 @@
 	item_state = "assembly"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 2
@@ -81,8 +81,8 @@
 	..()
 	return
 
-/obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/item/device/assembly_holder/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		var/turf/T = get_turf(src)
 		if(!T)
 			return 0

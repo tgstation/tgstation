@@ -16,12 +16,12 @@
 
 /datum/surgery_step/add_prosthetic
 	name = "add prosthetic"
-	implements = list(/obj/item/bodypart = 100, /obj/item/weapon/organ_storage = 100, /obj/item/weapon/twohanded/required/chainsaw = 100, /obj/item/weapon/melee/synthetic_arm_blade = 100)
+	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100, /obj/item/twohanded/required/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
 	time = 32
 	var/organ_rejection_dam = 0
 
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(istype(tool, /obj/item/weapon/organ_storage))
+	if(istype(tool, /obj/item/organ_storage))
 		if(!tool.contents.len)
 			to_chat(user, "<span class='notice'>There is nothing inside [tool]!</span>")
 			return -1
@@ -58,7 +58,7 @@
 		return -1
 
 /datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(istype(tool, /obj/item/weapon/organ_storage))
+	if(istype(tool, /obj/item/organ_storage))
 		tool.icon_state = "evidenceobj"
 		tool.desc = "A container for holding body parts."
 		tool.cut_overlays()
@@ -77,12 +77,12 @@
 		L.attach_limb(target)
 		user.visible_message("[user] finishes attaching [tool]!", "<span class='notice'>You attach [tool].</span>")
 		qdel(tool)
-		if(istype(tool, /obj/item/weapon/twohanded/required/chainsaw))
-			var/obj/item/weapon/mounted_chainsaw/new_arm = new(target)
+		if(istype(tool, /obj/item/twohanded/required/chainsaw))
+			var/obj/item/mounted_chainsaw/new_arm = new(target)
 			target_zone == "r_arm" ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return 1
-		else if(istype(tool, /obj/item/weapon/melee/synthetic_arm_blade))
-			var/obj/item/weapon/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
+		else if(istype(tool, /obj/item/melee/synthetic_arm_blade))
+			var/obj/item/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
 			target_zone == "r_arm" ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return 1
 

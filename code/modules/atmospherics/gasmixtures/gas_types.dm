@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = FLY_LAYER
 	appearance_flags = TILE_BOUND
 

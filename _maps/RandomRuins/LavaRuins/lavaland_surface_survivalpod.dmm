@@ -50,13 +50,13 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "l" = (
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "m" = (
 /obj/structure/bed/pod,
-/obj/item/weapon/bedsheet/black,
+/obj/item/bedsheet/black,
 /obj/structure/tubes,
 /obj/machinery/light/small{
 	dir = 4
@@ -76,7 +76,7 @@
 /area/lavaland/surface/outdoors)
 "p" = (
 /obj/structure/table/survival_pod,
-/obj/item/weapon/kitchen/knife/combat/survival,
+/obj/item/kitchen/knife/combat/survival,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "q" = (
@@ -94,7 +94,7 @@
 /area/ruin/powered)
 "r" = (
 /obj/structure/tubes,
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)

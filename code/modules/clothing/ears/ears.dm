@@ -15,11 +15,7 @@
 	strip_delay = 15
 	equip_delay_other = 25
 	resistance_flags = FLAMMABLE
-
-/obj/item/clothing/ears/earmuffs/Initialize(mapload)
-	. = ..()
-	SET_SECONDARY_FLAG(src, BANG_PROTECT)
-	SET_SECONDARY_FLAG(src, HEALS_EARS)
+	flags_2 = BANG_PROTECT_2|HEALS_EARS_2
 
 /obj/item/clothing/ears/headphones
 	name = "headphones"

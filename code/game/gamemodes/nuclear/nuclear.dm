@@ -5,6 +5,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
+	false_report_weight = 10
 	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
 	required_enemies = 2
 	recommended_enemies = 5
@@ -114,9 +115,9 @@
 	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
 	synd_mind.current.put_in_hands_or_del(challenge)
 
-	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
+	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/card/id)
 	if(foundIDs.len)
-		for(var/obj/item/weapon/card/id/ID in foundIDs)
+		for(var/obj/item/card/id/ID in foundIDs)
 			ID.name = "lead agent card"
 			ID.access += ACCESS_SYNDICATE_LEADER
 	else
@@ -127,7 +128,7 @@
 		A.command = TRUE
 
 	if(nuke_code)
-		var/obj/item/weapon/paper/P = new
+		var/obj/item/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
 		var/mob/living/carbon/human/H = synd_mind.current
@@ -186,7 +187,7 @@
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
-	for(var/obj/item/weapon/disk/nuclear/D in GLOB.poi_list)
+	for(var/obj/item/disk/nuclear/D in GLOB.poi_list)
 		if(!D.onCentCom())
 			disk_rescued = 0
 			break
@@ -273,6 +274,10 @@
 	..()
 	return
 
+/datum/game_mode/nuclear/generate_report()
+	return "One of Central Command's trading routes was recently disrupted by a raid carried out by the Gorlex Marauders. They seemed to only be after one ship - a highly-sensitive \
+			transport containing a nuclear fission explosive, although it is useless without the proper code and authorization disk. While the code was likely found in minutes, the only disk that \
+			can activate this explosive is on your station. Ensure that it is protected at all times, and remain alert for possible intruders."
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	if( syndicates.len || (SSticker && istype(SSticker.mode, /datum/game_mode/nuclear)) )
@@ -323,12 +328,12 @@
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	back = /obj/item/weapon/storage/backpack
+	back = /obj/item/storage/backpack
 	ears = /obj/item/device/radio/headset/syndicate/alt
-	l_pocket = /obj/item/weapon/pinpointer/syndicate
-	id = /obj/item/weapon/card/id/syndicate
-	belt = /obj/item/weapon/gun/ballistic/automatic/pistol
-	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1)
+	l_pocket = /obj/item/pinpointer/nuke/syndicate
+	id = /obj/item/card/id/syndicate
+	belt = /obj/item/gun/ballistic/automatic/pistol
+	backpack_contents = list(/obj/item/storage/box/syndie=1)
 
 	var/tc = 25
 
@@ -347,9 +352,9 @@
 		U.hidden_uplink.telecrystals = tc
 		H.equip_to_slot_or_del(U, slot_in_backpack)
 
-	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(H)
+	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)
 	W.implant(H)
-	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(H)
+	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
 	E.implant(H)
 	H.faction |= "syndicate"
 	H.update_icons()
@@ -360,10 +365,10 @@
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
-	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
 	internals_slot = slot_r_store
-	belt = /obj/item/weapon/storage/belt/military
-	r_hand = /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog
-	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1,\
-		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
-		/obj/item/weapon/gun/ballistic/automatic/pistol=1)
+	belt = /obj/item/storage/belt/military
+	r_hand = /obj/item/gun/ballistic/automatic/shotgun/bulldog
+	backpack_contents = list(/obj/item/storage/box/syndie=1,\
+		/obj/item/tank/jetpack/oxygen/harness=1,\
+		/obj/item/gun/ballistic/automatic/pistol=1)

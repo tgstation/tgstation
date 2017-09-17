@@ -1,5 +1,6 @@
 /datum/symptom/heal
 	name = "Basic Healing (does nothing)" //warning for adminspawn viruses
+	desc = "You should not be seeing this."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
@@ -9,6 +10,9 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/hide_healing = FALSE
+	threshold_desc = "<b>Stage Speed 6:</b> Doubles healing speed.<br>\
+					  <b>Stage Speed 11:</b> Triples healing speed.<br>\
+					  <b>Stealth 4:</b> Healing will no longer be visible to onlookers."
 
 /datum/symptom/heal/Start(datum/disease/advance/A)
 	..()
@@ -51,6 +55,7 @@ Bonus
 
 /datum/symptom/heal/toxin
 	name = "Toxic Filter"
+	desc = "The virus synthesizes regenerative chemicals in the bloodstream, repairing damage caused by toxins."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
@@ -87,6 +92,7 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 8
+	desc = "The virus stimulates production of special stem cells in the bloodstream, causing rapid reparation of any damage caused by toxins."
 
 /datum/symptom/heal/toxin/plus/Heal(mob/living/M, datum/disease/advance/A)
 	var/heal_amt = 2 * power
@@ -115,6 +121,7 @@ Bonus
 /datum/symptom/heal/brute
 
 	name = "Regeneration"
+	desc = "The virus stimulates the regenerative process in the host, causing faster wound healing."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
@@ -158,6 +165,7 @@ Bonus
 /datum/symptom/heal/brute/plus
 
 	name = "Flesh Mending"
+	desc = "The virus rapidly mutates into body cells, effectively allowing it to quickly fix the host's wounds."
 	stealth = 0
 	resistance = 0
 	stage_speed = -2
@@ -207,6 +215,7 @@ Bonus
 /datum/symptom/heal/burn
 
 	name = "Tissue Regrowth"
+	desc = "The virus recycles dead and burnt tissues, speeding up the healing of damage caused by burns."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
@@ -248,7 +257,8 @@ Bonus
 
 /datum/symptom/heal/burn/plus
 
-	name = "Heat Resistance"
+	name = "Temperature Adaptation"
+	desc = "The virus quickly balances body heat, while also replacing tissues damaged by external sources."
 	stealth = 0
 	resistance = 0
 	stage_speed = -2
@@ -297,6 +307,7 @@ Bonus
 /datum/symptom/heal/dna
 
 	name = "Deoxyribonucleic Acid Restoration"
+	desc = "The virus repairs the host's genome, purging negative mutations."
 	stealth = -1
 	resistance = -1
 	stage_speed = 0
@@ -304,9 +315,11 @@ Bonus
 	level = 5
 	symptom_delay_min = 3
 	symptom_delay_max = 8
+	threshold_desc = "<b>Stage Speed 6:</b> Additionally heals brain damage.<br>\
+					  <b>Stage Speed 11:</b> Increases brain damage healing."
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/amt_healed = 2 * power
+	var/amt_healed = 2 * (power - 1)
 	M.adjustBrainLoss(-amt_healed)
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
 	var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations) - GLOB.mutations_list[RACEMUT]

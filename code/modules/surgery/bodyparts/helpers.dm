@@ -91,7 +91,7 @@
 /mob/living/carbon/human/get_leg_ignore()
 	if(movement_type & FLYING)
 		return TRUE
-	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
+	var/obj/item/tank/jetpack/J = get_jetpack()
 	if(J && J.on && !has_gravity())
 		return TRUE
 	return FALSE

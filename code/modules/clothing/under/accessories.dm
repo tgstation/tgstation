@@ -283,13 +283,13 @@
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
 	icon_state = "pocketprotector"
 	item_color = "pocketprotector"
-	pockets = /obj/item/weapon/storage/internal/pocket/pocketprotector
+	pockets = /obj/item/storage/internal/pocket/pocketprotector
 
 /obj/item/clothing/accessory/pocketprotector/full
-	pockets = /obj/item/weapon/storage/internal/pocket/pocketprotector/full
+	pockets = /obj/item/storage/internal/pocket/pocketprotector/full
 
 /obj/item/clothing/accessory/pocketprotector/cosmetology
-	pockets = /obj/item/weapon/storage/internal/pocket/pocketprotector/cosmetology
+	pockets = /obj/item/storage/internal/pocket/pocketprotector/cosmetology
 
 
 ////////////////

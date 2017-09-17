@@ -18,6 +18,7 @@ Bonus
 /datum/symptom/oxygen
 
 	name = "Self-Respiration"
+	desc = "The virus rapidly synthesizes oxygen, effectively removing the need for breathing."
 	stealth = 1
 	resistance = -3
 	stage_speed = -3
@@ -27,6 +28,7 @@ Bonus
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/regenerate_blood = FALSE
+	threshold_desc = "<b>Resistance 8:</b>Additionally regenerates lost blood.<br>"
 
 /datum/symptom/oxygen/Start(datum/disease/advance/A)
 	..()

@@ -23,7 +23,7 @@
 /area/ruin/unpowered)
 "f" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/box/cups,
+/obj/item/storage/box/cups,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -56,7 +56,7 @@
 	},
 /area/ruin/unpowered)
 "j" = (
-/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroom,
+/obj/item/reagent_containers/food/snacks/pizzaslice/mushroom,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
@@ -172,7 +172,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "w" = (
-/obj/item/weapon/kitchen/fork,
+/obj/item/kitchen/fork,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
@@ -202,7 +202,7 @@
 "z" = (
 /obj/structure/table/wood,
 /obj/structure/glowshroom/single,
-/obj/item/weapon/a_gift,
+/obj/item/a_gift,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -211,7 +211,7 @@
 "A" = (
 /obj/structure/table/wood,
 /obj/item/trash/plate,
-/obj/item/weapon/kitchen/fork,
+/obj/item/kitchen/fork,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -230,7 +230,7 @@
 /area/ruin/unpowered)
 "D" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/margherita,
+/obj/item/reagent_containers/food/snacks/pizzaslice/margherita,
 /obj/item/trash/plate,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
@@ -239,7 +239,7 @@
 /area/ruin/unpowered)
 "E" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/meat,
+/obj/item/reagent_containers/food/snacks/pizzaslice/meat,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -247,7 +247,7 @@
 /area/ruin/unpowered)
 "F" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/store/cake/birthday,
+/obj/item/reagent_containers/food/snacks/store/cake/birthday,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -268,7 +268,7 @@
 	},
 /area/ruin/unpowered)
 "I" = (
-/obj/item/weapon/kitchen/fork,
+/obj/item/kitchen/fork,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
@@ -305,7 +305,7 @@
 /area/ruin/unpowered)
 "M" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/a_gift,
+/obj/item/a_gift,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -317,7 +317,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "O" = (
-/obj/item/weapon/kitchen/knife,
+/obj/item/kitchen/knife,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;

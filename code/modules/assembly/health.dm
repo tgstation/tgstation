@@ -31,7 +31,7 @@
 	update_icon()
 	return secured
 
-/obj/item/device/assembly/health/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/assembly/health/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/multitool))
 		if(alarm_health == 0)
 			alarm_health = -90

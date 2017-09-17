@@ -22,6 +22,7 @@ Bonus
 /datum/symptom/vomit
 
 	name = "Vomiting"
+	desc = "The virus causes nausea and irritates the stomach, causing occasional vomit."
 	stealth = -2
 	resistance = -1
 	stage_speed = 0
@@ -33,6 +34,9 @@ Bonus
 	symptom_delay_max = 80
 	var/vomit_blood = FALSE
 	var/proj_vomit = 0
+	threshold_desc = "<b>Resistance 7:</b> Host will vomit blood, causing internal damage.<br>\
+					  <b>Transmission 7:</b> Host will projectile vomit, increasing vomiting range.<br>\
+					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/vomit/Start(datum/disease/advance/A)
 	..()

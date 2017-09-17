@@ -5,7 +5,7 @@
 	icon_state = "seed-banana"
 	species = "banana"
 	plantname = "Banana Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
+	product = /obj/item/reagent_containers/food/snacks/grown/banana
 	lifespan = 50
 	endurance = 30
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
@@ -14,18 +14,18 @@
 	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)
 	reagents_add = list("banana" = 0.1, "potassium" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana
+/obj/item/reagent_containers/food/snacks/grown/banana
 	seed = /obj/item/seeds/banana
 	name = "banana"
 	desc = "It's an excellent prop for a clown."
 	icon_state = "banana"
 	item_state = "banana"
-	trash = /obj/item/weapon/grown/bananapeel
+	trash = /obj/item/grown/bananapeel
 	filling_color = "#FFFF00"
 	bitesize = 5
 	foodtype = FRUIT
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
+/obj/item/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
 	sleep(25)
@@ -38,7 +38,7 @@
 	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
 	return (OXYLOSS)
 
-/obj/item/weapon/grown/bananapeel
+/obj/item/grown/bananapeel
 	seed = /obj/item/seeds/banana
 	name = "banana peel"
 	desc = "A peel from a banana."
@@ -49,7 +49,7 @@
 	throw_speed = 3
 	throw_range = 7
 
-/obj/item/weapon/grown/bananapeel/suicide_act(mob/user)
+/obj/item/grown/bananapeel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -1)
 	return (BRUTELOSS)
@@ -62,21 +62,21 @@
 	icon_state = "seed-mimana"
 	species = "mimana"
 	plantname = "Mimana Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/mime
+	product = /obj/item/reagent_containers/food/snacks/grown/banana/mime
 	growthstages = 4
 	mutatelist = list()
 	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, "nutriment" = 0.02)
 	rarity = 15
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana/mime
+/obj/item/reagent_containers/food/snacks/grown/banana/mime
 	seed = /obj/item/seeds/banana/mime
 	name = "mimana"
 	desc = "It's an excellent prop for a mime."
 	icon_state = "mimana"
-	trash = /obj/item/weapon/grown/bananapeel/mimanapeel
+	trash = /obj/item/grown/bananapeel/mimanapeel
 	filling_color = "#FFFFEE"
 
-/obj/item/weapon/grown/bananapeel/mimanapeel
+/obj/item/grown/bananapeel/mimanapeel
 	seed = /obj/item/seeds/banana/mime
 	name = "mimana peel"
 	desc = "A mimana peel."
@@ -90,31 +90,31 @@
 	species = "bluespacebanana"
 	icon_grow = "banana-grow"
 	plantname = "Bluespace Banana Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace
+	product = /obj/item/reagent_containers/food/snacks/grown/banana/bluespace
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list("bluespace" = 0.2, "banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
 	rarity = 30
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace
+/obj/item/reagent_containers/food/snacks/grown/banana/bluespace
 	seed = /obj/item/seeds/banana/bluespace
 	name = "bluespace banana"
 	icon_state = "banana_blue"
-	trash = /obj/item/weapon/grown/bananapeel/bluespace
+	trash = /obj/item/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
 	origin_tech = "biotech=3;bluespace=5"
 
-/obj/item/weapon/grown/bananapeel/bluespace
+/obj/item/grown/bananapeel/bluespace
 	seed = /obj/item/seeds/banana/bluespace
 	name = "bluespace banana peel"
 	desc = "A peel from a bluespace banana."
 	icon_state = "banana_peel_blue"
 
 // Other
-/obj/item/weapon/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
+/obj/item/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
 	name = "synthesized banana peel"
 	desc = "A synthetic banana peel."
 
-/obj/item/weapon/grown/bananapeel/specialpeel/Initialize(AM)
+/obj/item/grown/bananapeel/specialpeel/Initialize(AM)
 	. = ..()
 	AddComponent(/datum/component/slippery, 40)

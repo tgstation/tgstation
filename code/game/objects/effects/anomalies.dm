@@ -18,7 +18,7 @@
 	var/obj/effect/countdown/anomaly/countdown
 
 /obj/effect/anomaly/Initialize(mapload, new_lifespan)
-	..()
+	. = ..()
 	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
@@ -238,7 +238,7 @@
 							blueeffect.icon_state = "shieldsparkles"
 							blueeffect.layer = FLASH_LAYER
 							blueeffect.plane = FULLSCREEN_PLANE
-							blueeffect.mouse_opacity = 0
+							blueeffect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 							M.client.screen += blueeffect
 							sleep(20)
 							M.client.screen -= blueeffect

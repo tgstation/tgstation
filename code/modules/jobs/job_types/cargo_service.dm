@@ -26,7 +26,7 @@ Quartermaster
 	uniform = /obj/item/clothing/under/rank/cargo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
-	l_hand = /obj/item/weapon/clipboard
+	l_hand = /obj/item/clipboard
 
 /*
 Cargo Technician
@@ -84,18 +84,18 @@ Shaft Miner
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/rank/miner/lavaland
-	l_pocket = /obj/item/weapon/reagent_containers/hypospray/medipen/survival
+	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
 	r_pocket = /obj/item/device/flashlight/seclite
 	backpack_contents = list(
-		/obj/item/weapon/storage/bag/ore=1,\
-		/obj/item/weapon/kitchen/knife/combat/survival=1,\
-		/obj/item/weapon/mining_voucher=1,\
+		/obj/item/storage/bag/ore=1,\
+		/obj/item/kitchen/knife/combat/survival=1,\
+		/obj/item/mining_voucher=1,\
 		/obj/item/stack/marker_beacon/ten=1)
 
-	backpack = /obj/item/weapon/storage/backpack/explorer
-	satchel = /obj/item/weapon/storage/backpack/satchel/explorer
-	duffelbag = /obj/item/weapon/storage/backpack/duffelbag
-	box = /obj/item/weapon/storage/box/survival_mining
+	backpack = /obj/item/storage/backpack/explorer
+	satchel = /obj/item/storage/backpack/satchel/explorer
+	duffelbag = /obj/item/storage/backpack/duffelbag
+	box = /obj/item/storage/box/survival_mining
 
 /datum/outfit/job/miner/asteroid
 	name = "Shaft Miner (Asteroid)"
@@ -107,14 +107,14 @@ Shaft Miner
 	suit = /obj/item/clothing/suit/hooded/explorer
 	mask = /obj/item/clothing/mask/gas/explorer
 	glasses = /obj/item/clothing/glasses/meson
-	suit_store = /obj/item/weapon/tank/internals/oxygen
+	suit_store = /obj/item/tank/internals/oxygen
 	internals_slot = slot_s_store
 	backpack_contents = list(
-		/obj/item/weapon/storage/bag/ore=1,
-		/obj/item/weapon/kitchen/knife/combat/survival=1,
-		/obj/item/weapon/mining_voucher=1,
+		/obj/item/storage/bag/ore=1,
+		/obj/item/kitchen/knife/combat/survival=1,
+		/obj/item/mining_voucher=1,
 		/obj/item/device/t_scanner/adv_mining_scanner/lesser=1,
-		/obj/item/weapon/gun/energy/kinetic_accelerator=1,\
+		/obj/item/gun/energy/kinetic_accelerator=1,\
 		/obj/item/stack/marker_beacon/ten=1)
 
 /datum/outfit/job/miner/equipped/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -163,7 +163,7 @@ Bartender
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/bartender
 	suit = /obj/item/clothing/suit/armor/vest
-	backpack_contents = list(/obj/item/weapon/storage/box/beanbag=1)
+	backpack_contents = list(/obj/item/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/laceup
 
 /*
@@ -195,7 +195,7 @@ Cook
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
-	backpack_contents = list(/obj/item/weapon/sharpener = 1)
+	backpack_contents = list(/obj/item/sharpener = 1)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -209,9 +209,9 @@ Cook
 
 /datum/outfit/job/cook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
     ..()
-    var/list/possible_boxes = subtypesof(/obj/item/weapon/storage/box/ingredients)
+    var/list/possible_boxes = subtypesof(/obj/item/storage/box/ingredients)
     var/chosen_box = pick(possible_boxes)
-    var/obj/item/weapon/storage/box/I = new chosen_box(src)
+    var/obj/item/storage/box/I = new chosen_box(src)
     H.equip_to_slot_or_del(I,slot_in_backpack)
 
 /*
@@ -248,8 +248,8 @@ Botanist
 	gloves  =/obj/item/clothing/gloves/botanic_leather
 	suit_store = /obj/item/device/plant_analyzer
 
-	backpack = /obj/item/weapon/storage/backpack/botany
-	satchel = /obj/item/weapon/storage/backpack/satchel/hyd
+	backpack = /obj/item/storage/backpack/botany
+	satchel = /obj/item/storage/backpack/satchel/hyd
 
 
 /*

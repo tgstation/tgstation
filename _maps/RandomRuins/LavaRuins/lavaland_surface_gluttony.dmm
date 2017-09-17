@@ -12,7 +12,7 @@
 /turf/open/lava/smooth,
 /area/ruin/powered/gluttony)
 "f" = (
-/obj/item/weapon/reagent_containers/syringe/gluttony,
+/obj/item/reagent_containers/syringe/gluttony,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 "g" = (
@@ -20,7 +20,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 "h" = (
-/obj/item/weapon/veilrender/vealrender,
+/obj/item/veilrender/vealrender,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 "i" = (

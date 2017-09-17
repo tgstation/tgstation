@@ -112,7 +112,7 @@
 					descmax = sanitizeSQL(descmax)
 				else if(descmax == null)
 					return
-			sql_option_list += list(list("text" = "'[option]'", "minval" = "'[minval]'", "maxval" = "'[maxval]'", "descmin" = "'[descmin]'", "descmid" = "'[descmid]'", "descmax" = "'[descmax]'", "default_display_in_results" = "'[default_percentage_calc]'"))
+			sql_option_list += list(list("text" = "'[option]'", "minval" = "'[minval]'", "maxval" = "'[maxval]'", "descmin" = "'[descmin]'", "descmid" = "'[descmid]'", "descmax" = "'[descmax]'", "default_percentage_calc" = "'[default_percentage_calc]'"))
 			switch(alert(" ",,"Add option","Finish", "Cancel"))
 				if("Add option")
 					add_option = 1

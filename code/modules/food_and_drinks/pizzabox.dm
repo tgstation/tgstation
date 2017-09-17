@@ -1,5 +1,5 @@
-/obj/item/weapon/bombcore/pizza
-	parent_type = /obj/item/weapon/bombcore/miniature
+/obj/item/bombcore/pizza
+	parent_type = /obj/item/bombcore/miniature
 	name = "pizza bomb"
 	desc = "Special delivery!"
 	icon_state = "pizzabomb_inactive"
@@ -21,9 +21,9 @@
 	var/boxtag = ""
 	var/list/boxes = list()
 
-	var/obj/item/weapon/reagent_containers/food/snacks/pizza/pizza
+	var/obj/item/reagent_containers/food/snacks/pizza/pizza
 
-	var/obj/item/weapon/bombcore/pizza/bomb
+	var/obj/item/bombcore/pizza/bomb
 	var/bomb_active = FALSE // If the bomb is counting down.
 	var/bomb_defused = TRUE // If the bomb is inert.
 	var/bomb_timer = 1 // How long before blowing the bomb.
@@ -173,7 +173,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>Close [open ? src : newbox] first!</span>")
-	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizza) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza))
+	else if(istype(I, /obj/item/reagent_containers/food/snacks/pizza) || istype(I, /obj/item/reagent_containers/food/snacks/customizable/pizza))
 		if(open)
 			if(pizza)
 				to_chat(user, "<span class='warning'>[src] already has \a [pizza.name]!</span>")
@@ -185,7 +185,7 @@
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 			update_icon()
 			return
-	else if(istype(I, /obj/item/weapon/bombcore/pizza))
+	else if(istype(I, /obj/item/bombcore/pizza))
 		if(open && !bomb)
 			if(!user.drop_item())
 				return
@@ -197,7 +197,7 @@
 			return
 		else if(bomb)
 			to_chat(user, "<span class='notice'>[src] already has a bomb in it!</span>")
-	else if(istype(I, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/pen))
 		if(!open)
 			var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 			box.boxtag += stripped_input(user, "Write on [box]'s tag:", box, "", 30)
@@ -207,7 +207,7 @@
 	else if(is_wire_tool(I))
 		if(wires && bomb)
 			wires.interact(user)
-	else if(istype(I, /obj/item/weapon/reagent_containers/food))
+	else if(istype(I, /obj/item/reagent_containers/food))
 		to_chat(user, "<span class='warning'>That's not a pizza!</span>")
 	..()
 
@@ -262,28 +262,28 @@
 	update_icon()
 
 /obj/item/pizzabox/bomb/New()
-	var/randompizza = pick(subtypesof(/obj/item/weapon/reagent_containers/food/snacks/pizza))
+	var/randompizza = pick(subtypesof(/obj/item/reagent_containers/food/snacks/pizza))
 	pizza = new randompizza(src)
 	bomb = new(src)
 	wires = new /datum/wires/explosive/pizza(src)
 	..()
 
 /obj/item/pizzabox/margherita/New()
-	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita(src)
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita(src)
 	boxtag = "Margherita Deluxe"
 	..()
 
 /obj/item/pizzabox/vegetable/New()
-	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/vegetable(src)
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/vegetable(src)
 	boxtag = "Gourmet Vegatable"
 	..()
 
 /obj/item/pizzabox/mushroom/New()
-	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/mushroom(src)
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/mushroom(src)
 	boxtag = "Mushroom Special"
 	..()
 
 /obj/item/pizzabox/meat/New()
-	pizza = new /obj/item/weapon/reagent_containers/food/snacks/pizza/meat(src)
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
 	..()

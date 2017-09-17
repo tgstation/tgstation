@@ -33,8 +33,8 @@
 		to_chat(user, "<span class='notice'>It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.</span>")
 
 /obj/item/device/radio/intercom/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		var/obj/item/weapon/screwdriver/S = I
+	if(istype(I, /obj/item/screwdriver))
+		var/obj/item/screwdriver/S = I
 		if(unfastened)
 			user.visible_message("<span class='notice'>[user] starts tightening [src]'s screws...</span>", "<span class='notice'>You start screwing in [src]...</span>")
 			playsound(src, S.usesound, 50, 1)
@@ -52,11 +52,11 @@
 			playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 			unfastened = TRUE
 		return
-	else if(istype(I, /obj/item/weapon/wrench))
+	else if(istype(I, /obj/item/wrench))
 		if(!unfastened)
 			to_chat(user, "<span class='warning'>You need to unscrew [src] from the wall first!</span>")
 			return
-		var/obj/item/weapon/wrench/W = I
+		var/obj/item/wrench/W = I
 		user.visible_message("<span class='notice'>[user] starts unsecuring [src]...</span>", "<span class='notice'>You start unsecuring [src]...</span>")
 		playsound(src, W.usesound, 50, 1)
 		if(!do_after(user, 80 * W.toolspeed, target = src))

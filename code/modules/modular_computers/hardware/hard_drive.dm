@@ -1,4 +1,4 @@
-/obj/item/weapon/computer_hardware/hard_drive
+/obj/item/computer_hardware/hard_drive
 	name = "hard disk drive"
 	desc = "A small HDD, for use in basic computers where power efficiency is desired."
 	power_usage = 25
@@ -11,26 +11,26 @@
 	var/used_capacity = 0
 	var/list/stored_files = list()		// List of stored files on this drive. DO NOT MODIFY DIRECTLY!
 
-/obj/item/weapon/computer_hardware/hard_drive/on_remove(obj/item/device/modular_computer/MC, mob/user)
+/obj/item/computer_hardware/hard_drive/on_remove(obj/item/device/modular_computer/MC, mob/user)
 	MC.shutdown_computer()
 
-/obj/item/weapon/computer_hardware/hard_drive/proc/install_default_programs()
+/obj/item/computer_hardware/hard_drive/proc/install_default_programs()
 	store_file(new/datum/computer_file/program/computerconfig(src)) 	// Computer configuration utility, allows hardware control and displays more info than status bar
 	store_file(new/datum/computer_file/program/ntnetdownload(src))		// NTNet Downloader Utility, allows users to download more software from NTNet repository
 	store_file(new/datum/computer_file/program/filemanager(src))		// File manager, allows text editor functions and basic file manipulation.
 
-/obj/item/weapon/computer_hardware/hard_drive/examine(user)
+/obj/item/computer_hardware/hard_drive/examine(user)
 	..()
 	to_chat(user, "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>")
 
-/obj/item/weapon/computer_hardware/hard_drive/diagnostics(var/mob/user)
+/obj/item/computer_hardware/hard_drive/diagnostics(var/mob/user)
 	..()
 	// 999 is a byond limit that is in place. It's unlikely someone will reach that many files anyway, since you would sooner run out of space.
 	to_chat(user, "NT-NFS File Table Status: [stored_files.len]/999")
 	to_chat(user, "Storage capacity: [used_capacity]/[max_capacity]GQ")
 
 // Use this proc to add file to the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
-/obj/item/weapon/computer_hardware/hard_drive/proc/store_file(var/datum/computer_file/F)
+/obj/item/computer_hardware/hard_drive/proc/store_file(var/datum/computer_file/F)
 	if(!F || !istype(F))
 		return 0
 
@@ -53,7 +53,7 @@
 	return 1
 
 // Use this proc to remove file from the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
-/obj/item/weapon/computer_hardware/hard_drive/proc/remove_file(var/datum/computer_file/F)
+/obj/item/computer_hardware/hard_drive/proc/remove_file(var/datum/computer_file/F)
 	if(!F || !istype(F))
 		return 0
 
@@ -71,7 +71,7 @@
 		return 0
 
 // Loops through all stored files and recalculates used_capacity of this drive
-/obj/item/weapon/computer_hardware/hard_drive/proc/recalculate_size()
+/obj/item/computer_hardware/hard_drive/proc/recalculate_size()
 	var/total_size = 0
 	for(var/datum/computer_file/F in stored_files)
 		total_size += F.size
@@ -79,7 +79,7 @@
 	used_capacity = total_size
 
 // Checks whether file can be stored on the hard drive. We can only store unique files, so this checks whether we wouldn't get a duplicity by adding a file.
-/obj/item/weapon/computer_hardware/hard_drive/proc/can_store_file(var/datum/computer_file/F)
+/obj/item/computer_hardware/hard_drive/proc/can_store_file(var/datum/computer_file/F)
 	if(!F || !istype(F))
 		return 0
 
@@ -102,7 +102,7 @@
 
 
 // Tries to find the file by filename. Returns null on failure
-/obj/item/weapon/computer_hardware/hard_drive/proc/find_file_by_name(var/filename)
+/obj/item/computer_hardware/hard_drive/proc/find_file_by_name(var/filename)
 	if(!check_functionality())
 		return null
 
@@ -117,16 +117,16 @@
 			return F
 	return null
 
-/obj/item/weapon/computer_hardware/hard_drive/Destroy()
+/obj/item/computer_hardware/hard_drive/Destroy()
 	stored_files = null
 	return ..()
 
-/obj/item/weapon/computer_hardware/hard_drive/New()
+/obj/item/computer_hardware/hard_drive/New()
 	install_default_programs()
 	..()
 
 
-/obj/item/weapon/computer_hardware/hard_drive/advanced
+/obj/item/computer_hardware/hard_drive/advanced
 	name = "advanced hard disk drive"
 	desc = "A hybrid HDD, for use in higher grade computers where balance between power efficiency and capacity is desired."
 	max_capacity = 256
@@ -135,7 +135,7 @@
 	icon_state = "harddisk_mini"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/weapon/computer_hardware/hard_drive/super
+/obj/item/computer_hardware/hard_drive/super
 	name = "super hard disk drive"
 	desc = "A high capacity HDD, for use in cluster storage solutions where capacity is more important than power efficiency."
 	max_capacity = 512
@@ -144,7 +144,7 @@
 	icon_state = "harddisk_mini"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/weapon/computer_hardware/hard_drive/cluster
+/obj/item/computer_hardware/hard_drive/cluster
 	name = "cluster hard disk drive"
 	desc = "A large storage cluster consisting of multiple HDDs for usage in dedicated storage systems."
 	power_usage = 500
@@ -154,7 +154,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 // For tablets, etc. - highly power efficient.
-/obj/item/weapon/computer_hardware/hard_drive/small
+/obj/item/computer_hardware/hard_drive/small
 	name = "solid state drive"
 	desc = "An efficient SSD for portable devices."
 	power_usage = 10
@@ -163,7 +163,7 @@
 	icon_state = "ssd_mini"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/weapon/computer_hardware/hard_drive/micro
+/obj/item/computer_hardware/hard_drive/micro
 	name = "micro solid state drive"
 	desc = "A highly efficient SSD chip for portable devices."
 	power_usage = 2

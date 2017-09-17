@@ -4,7 +4,7 @@
 	desc = "A massive stone gateway."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_full"
-	flags = ON_BORDER
+	flags_1 = ON_BORDER_1
 	appearance_flags = 0
 	layer = TABLE_LAYER
 	anchored = TRUE
@@ -72,7 +72,7 @@
 	layer = EDGED_TURF_LAYER
 	pixel_x = -32
 	pixel_y = -32
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	opacity = TRUE
 
 /obj/structure/opacity_blocker/singularity_pull()
@@ -255,6 +255,9 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		. = ..()
 	else
 		return QDEL_HINT_LETMELIVE
+
+/obj/structure/stone_tile/singularity_pull()
+	return
 
 /obj/structure/stone_tile/Crossed(atom/movable/AM)
 	if(falling || fallen)

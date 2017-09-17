@@ -54,7 +54,7 @@
 
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
-	circuit = /obj/item/weapon/circuitboard/machine/pacman
+	circuit = /obj/item/circuitboard/machine/pacman
 	var/sheets = 0
 	var/max_sheets = 100
 	var/sheet_name = ""
@@ -81,10 +81,10 @@
 /obj/machinery/power/port_gen/pacman/RefreshParts()
 	var/temp_rating = 0
 	var/consumption_coeff = 0
-	for(var/obj/item/weapon/stock_parts/SP in component_parts)
-		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
+	for(var/obj/item/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/stock_parts/matter_bin))
 			max_sheets = SP.rating * SP.rating * 50
-		else if(istype(SP, /obj/item/weapon/stock_parts/capacitor))
+		else if(istype(SP, /obj/item/stock_parts/capacitor))
 			temp_rating += SP.rating
 		else
 			consumption_coeff += SP.rating
@@ -168,7 +168,7 @@
 		if(exchange_parts(user, O))
 			return
 
-		if(istype(O, /obj/item/weapon/wrench))
+		if(istype(O, /obj/item/wrench))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -181,7 +181,7 @@
 
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			return
-		else if(istype(O, /obj/item/weapon/screwdriver))
+		else if(istype(O, /obj/item/screwdriver))
 			panel_open = !panel_open
 			playsound(src.loc, O.usesound, 50, 1)
 			if(panel_open)
@@ -230,7 +230,7 @@
 	var/stack_percent = round(sheet_left * 100, 1)
 	dat += text("Current stack: [stack_percent]% <br>")
 	dat += text("Power output: <A href='?src=\ref[src];action=lower_power'>-</A> [power_gen * power_output] <A href='?src=\ref[src];action=higher_power'>+</A><br>")
-	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
+	dat += text("Power current: [(powernet == null ? "Unconnected" : "[DisplayPower(avail())]")]<br>")
 	dat += text("Heat: [current_heat]<br>")
 	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
 	user << browse(dat, "window=port_gen")
@@ -272,7 +272,7 @@
 	name = "\improper S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	icon_state = "portgen1_0"
 	base_icon = "portgen1"
-	circuit = /obj/item/weapon/circuitboard/machine/pacman/super
+	circuit = /obj/item/circuitboard/machine/pacman/super
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 85
@@ -284,7 +284,7 @@
 	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
 	base_icon = "portgen2"
 	icon_state = "portgen2_0"
-	circuit = /obj/item/weapon/circuitboard/machine/pacman/mrs
+	circuit = /obj/item/circuitboard/machine/pacman/mrs
 	sheet_path = /obj/item/stack/sheet/mineral/diamond
 	power_gen = 40000
 	time_per_sheet = 80

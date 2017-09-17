@@ -17,6 +17,7 @@ BONUS
 /datum/symptom/vitiligo
 
 	name = "Vitiligo"
+	desc = "The virus destroys skin pigment cells, causing rapid loss of pigmentation in the host."
 	stealth = -3
 	resistance = -1
 	stage_speed = -1
@@ -61,6 +62,7 @@ BONUS
 /datum/symptom/revitiligo
 
 	name = "Revitiligo"
+	desc = "The virus causes increased production of skin pigment cells, making the host's skin grow darker over time."
 	stealth = -3
 	resistance = -1
 	stage_speed = -1

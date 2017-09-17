@@ -28,21 +28,21 @@ Clown
 	uniform = /obj/item/clothing/under/rank/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
-	l_pocket = /obj/item/weapon/bikehorn
+	l_pocket = /obj/item/bikehorn
 	backpack_contents = list(
-		/obj/item/weapon/stamp/clown = 1,
-		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
+		/obj/item/stamp/clown = 1,
+		/obj/item/reagent_containers/spray/waterflower = 1,
+		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
 		/obj/item/device/instrument/bikehorn = 1,
 		)
 
-	implants = list(/obj/item/weapon/implant/sad_trombone)
+	implants = list(/obj/item/implant/sad_trombone)
 
-	backpack = /obj/item/weapon/storage/backpack/clown
-	satchel = /obj/item/weapon/storage/backpack/clown
-	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/clown //strangely has a duffel
+	backpack = /obj/item/storage/backpack/clown
+	satchel = /obj/item/storage/backpack/clown
+	duffelbag = /obj/item/storage/backpack/duffelbag/clown //strangely has a duffel
 
-	box = /obj/item/weapon/storage/box/hug/survival
+	box = /obj/item/storage/box/hug/survival
 
 
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -91,11 +91,11 @@ Mime
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/beret
 	suit = /obj/item/clothing/suit/suspenders
-	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1)
+	backpack_contents = list(/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing=1)
 
 	accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
-	backpack = /obj/item/weapon/storage/backpack/mime
-	satchel = /obj/item/weapon/storage/backpack/mime
+	backpack = /obj/item/storage/backpack/mime
+	satchel = /obj/item/storage/backpack/mime
 
 
 /datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -134,14 +134,14 @@ Curator
 
 	belt = /obj/item/device/pda/curator
 	uniform = /obj/item/clothing/under/rank/curator
-	l_hand = /obj/item/weapon/storage/bag/books
+	l_hand = /obj/item/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(
-		/obj/item/weapon/melee/curator_whip = 1,
+		/obj/item/melee/curator_whip = 1,
 		/obj/item/soapstone = 1,
-		/obj/item/weapon/barcodescanner = 1
+		/obj/item/barcodescanner = 1
 	)
 
 
@@ -182,7 +182,7 @@ Lawyer
 	uniform = /obj/item/clothing/under/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/laceup
-	l_hand = /obj/item/weapon/storage/briefcase/lawyer
+	l_hand = /obj/item/storage/briefcase/lawyer
 	l_pocket = /obj/item/device/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 

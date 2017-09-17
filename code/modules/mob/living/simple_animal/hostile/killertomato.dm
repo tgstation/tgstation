@@ -10,7 +10,7 @@
 	maxHealth = 30
 	health = 30
 	see_in_dark = 3
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/killertomato = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/killertomato = 2)
 	response_help  = "prods"
 	response_disarm = "pushes aside"
 	response_harm   = "smacks"

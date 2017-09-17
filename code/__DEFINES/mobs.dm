@@ -97,13 +97,11 @@
 #define AI_IDLE		2
 #define AI_OFF		3
 
+//determines if a mob can smash through it
 #define ENVIRONMENT_SMASH_NONE 0
-
-#define ENVIRONMENT_SMASH_STRUCTURES 1
-
-#define ENVIRONMENT_SMASH_WALLS 2
-
-#define ENVIRONMENT_SMASH_RWALLS 3
+#define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
+#define ENVIRONMENT_SMASH_WALLS 2   //walls
+#define ENVIRONMENT_SMASH_RWALLS 4  //rwalls
 
 
 //SNPCs
@@ -156,3 +154,5 @@
 #define JUDGE_IGNOREMONKEYS 16
 
 #define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
+
+#define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2

@@ -12,6 +12,9 @@
 	max_hardware_size = 2
 	w_class = WEIGHT_CLASS_NORMAL
 
+	// No running around with open laptops in hands.
+	flags_2 = SLOWS_WHILE_IN_HAND_2
+
 	screen_on = 0 		// Starts closed
 	var/start_open = TRUE	// unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
@@ -20,9 +23,6 @@
 
 /obj/item/device/modular_computer/laptop/Initialize()
 	. = ..()
-
-	// No running around with open laptops in hands.
-	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 
 	if(start_open && !screen_on)
 		toggle_open()

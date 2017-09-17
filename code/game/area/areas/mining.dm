@@ -16,7 +16,7 @@
 	power_light = FALSE
 	outdoors = TRUE
 	ambientsounds = list('sound/ambience/ambimine.ogg')
-	flags = NONE
+	flags_1 = NONE
 
 /area/mine/unexplored
 	name = "Mine"
@@ -30,7 +30,7 @@
 	power_light = FALSE
 	outdoors = TRUE
 	ambientsounds = list('sound/ambience/ambimine.ogg')
-	flags = NONE
+	flags_1 = NONE
 
 /area/mine/lobby
 	name = "Mining Station"
@@ -86,7 +86,7 @@
 /area/lavaland
 	icon_state = "mining"
 	has_gravity = TRUE
-	flags = NONE
+	flags_1 = NONE
 
 /area/lavaland/surface
 	name = "Lavaland"

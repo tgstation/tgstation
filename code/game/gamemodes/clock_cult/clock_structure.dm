@@ -99,7 +99,7 @@
 		return ..()
 
 /obj/structure/destructible/clockwork/attackby(obj/item/I, mob/user, params)
-	if(is_servant_of_ratvar(user) && istype(I, /obj/item/weapon/wrench) && unanchored_icon)
+	if(is_servant_of_ratvar(user) && istype(I, /obj/item/wrench) && unanchored_icon)
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
 			update_anchored(user)
 		return 1
@@ -160,7 +160,7 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/powered = total_accessable_power()
 		var/sigil_number = LAZYLEN(check_apc_and_sigils())
-		to_chat(user, "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power, \
+		to_chat(user, "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITE</b>":"[DisplayPower(powered)]</b> of"] power, \
 		and <b>[sigil_number]</b> Sigil[sigil_number == 1 ? "":"s"] of Transmission [sigil_number == 1 ? "is":"are"] in range.</span>")
 
 /obj/structure/destructible/clockwork/powered/Destroy()

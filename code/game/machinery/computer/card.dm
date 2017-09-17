@@ -10,16 +10,15 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_screen = "id"
 	icon_keyboard = "id_key"
 	req_one_access = list(ACCESS_HEADS, ACCESS_CHANGE_IDS)
-	circuit = /obj/item/weapon/circuitboard/computer/card
-	var/obj/item/weapon/card/id/scan = null
-	var/obj/item/weapon/card/id/modify = null
+	circuit = /obj/item/circuitboard/computer/card
+	var/obj/item/card/id/scan = null
+	var/obj/item/card/id/modify = null
 	var/authenticated = 0
 	var/mode = 0
 	var/printing = null
 	var/list/region_access = null
 	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
-	var/prioritycount = 0 // we don't want 500 prioritized jobs
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -51,8 +50,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	change_position_cooldown = config.id_console_jobslot_delay
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
-	if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/idcard = O
+	if(istype(O, /obj/item/card/id))
+		var/obj/item/card/id/idcard = O
 		if(check_access(idcard))
 			if(!scan)
 				if(!usr.drop_item())
@@ -209,7 +208,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						if(job in SSjob.prioritized_jobs)
 							dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Deprioritize</a>"
 						else
-							if(prioritycount < 5)
+							if(SSjob.prioritized_jobs.len < 5)
 								dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Prioritize</a>"
 							else
 								dat += "Denied"
@@ -364,7 +363,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				head_subordinates = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
-				if (istype(I, /obj/item/weapon/card/id))
+				if (istype(I, /obj/item/card/id))
 					if(!usr.drop_item())
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
@@ -380,7 +379,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				scan = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
-				if (istype(I, /obj/item/weapon/card/id))
+				if (istype(I, /obj/item/card/id))
 					if(!usr.drop_item())
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
@@ -530,11 +529,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/priority = TRUE
 				if(j in SSjob.prioritized_jobs)
 					SSjob.prioritized_jobs -= j
-					prioritycount--
 					priority = FALSE
+				else if(j.total_positions <= j.current_positions)
+					to_chat(usr, "<span class='notice'>[j.title] has had all positions filled. Open up more slots before prioritizing it.</span>")
+					return
 				else
 					SSjob.prioritized_jobs += j
-					prioritycount++
 				to_chat(usr, "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
@@ -542,7 +542,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if (!( printing ))
 				printing = 1
 				sleep(50)
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
+				var/obj/item/paper/P = new /obj/item/paper( loc )
 				var/t1 = "<B>Crew Manifest:</B><BR>"
 				for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 					t1 += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
@@ -562,18 +562,18 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/centcom
 	name = "\improper CentCom identification console"
-	circuit = /obj/item/weapon/circuitboard/computer/card/centcom
+	circuit = /obj/item/circuitboard/computer/card/centcom
 	req_access = list(ACCESS_CENT_CAPTAIN)
 
 /obj/machinery/computer/card/minor
 	name = "department management console"
 	desc = "You can use this to change ID's for specific departments."
 	icon_screen = "idminor"
-	circuit = /obj/item/weapon/circuitboard/computer/card/minor
+	circuit = /obj/item/circuitboard/computer/card/minor
 
 /obj/machinery/computer/card/minor/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/computer/card/minor/typed_circuit = circuit
+	var/obj/item/circuitboard/computer/card/minor/typed_circuit = circuit
 	if(target_dept)
 		typed_circuit.target_dept = target_dept
 	else

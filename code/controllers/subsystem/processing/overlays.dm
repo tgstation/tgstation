@@ -55,7 +55,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 		overlays = po
 	else
 		overlays.Cut()
-	flags &= ~OVERLAY_QUEUED
+	flags_1 &= ~OVERLAY_QUEUED_1
 
 /proc/iconstate2appearance(icon, iconstate)
 	var/static/image/stringbro = new()
@@ -102,8 +102,8 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 			new_overlays[i] = appearance_bro.appearance
 	return new_overlays
 
-#define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
-#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src;
+#define NOT_QUEUED_ALREADY (!(flags_1 & OVERLAY_QUEUED_1))
+#define QUEUE_FOR_COMPILE flags_1 |= OVERLAY_QUEUED_1; SSoverlays.processing += src;
 /atom/proc/cut_overlays(priority = FALSE)
 	var/list/cached_overlays = our_overlays
 	var/list/cached_priority = priority_overlays

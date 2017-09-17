@@ -9,7 +9,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 50
-	circuit = /obj/item/weapon/circuitboard/machine/monkey_recycler
+	circuit = /obj/item/circuitboard/machine/monkey_recycler
 	var/grinded = 0
 	var/required_grind = 5
 	var/cube_production = 1
@@ -17,9 +17,9 @@
 /obj/machinery/monkey_recycler/RefreshParts()
 	var/req_grind = 5
 	var/cubes_made = 1
-	for(var/obj/item/weapon/stock_parts/manipulator/B in component_parts)
+	for(var/obj/item/stock_parts/manipulator/B in component_parts)
 		req_grind -= B.rating
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		cubes_made = M.rating
 	cube_production = cubes_made
 	required_grind = req_grind
@@ -82,7 +82,7 @@
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= required_grind
 		for(var/i = 0, i < cube_production, i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+			new /obj/item/reagent_containers/food/snacks/monkeycube(src.loc)
 		to_chat(user, "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>")
 	else
 		to_chat(user, "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>")

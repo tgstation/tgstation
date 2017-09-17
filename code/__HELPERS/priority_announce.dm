@@ -39,8 +39,8 @@
 		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg')
 
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)
-		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == ZLEVEL_STATION)
-			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(C.loc)
+		if(!(C.stat & (BROKEN|NOPOWER)) && (C.z in GLOB.station_z_levels))
+			var/obj/item/paper/P = new /obj/item/paper(C.loc)
 			P.name = "paper - '[title]'"
 			P.info = text
 			C.messagetitle.Add("[title]")

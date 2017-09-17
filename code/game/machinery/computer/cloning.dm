@@ -3,7 +3,7 @@
 	desc = "Used to clone people and manage DNA."
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
-	circuit = /obj/item/weapon/circuitboard/computer/cloning
+	circuit = /obj/item/circuitboard/computer/cloning
 	req_access = list(ACCESS_HEADS) //ONLY USED FOR RECORD DELETION RIGHT NOW.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/list/pods //Linked cloning pods
@@ -13,7 +13,7 @@
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
 	var/datum/data/record/active_record = null
-	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
+	var/obj/item/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
 
@@ -115,7 +115,7 @@
 	LAZYREMOVE(pods, pod)
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
+	if(istype(W, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			if(!user.drop_item())
 				return
@@ -232,7 +232,7 @@
 				dat += "<h4>[src.active_record.fields["name"]]</h4>"
 				dat += "Scan ID [src.active_record.fields["id"]] <a href='byond://?src=\ref[src];clone=[active_record.fields["id"]]'>Clone</a><br>"
 
-				var/obj/item/weapon/implant/health/H = locate(src.active_record.fields["imp"])
+				var/obj/item/implant/health/H = locate(src.active_record.fields["imp"])
 
 				if ((H) && (istype(H)))
 					dat += "<b>Health Implant Data:</b><br />[H.sensehealth()]<br><br />"
@@ -339,7 +339,7 @@
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 
 		else if (src.menu == 4)
-			var/obj/item/weapon/card/id/C = usr.get_active_held_item()
+			var/obj/item/card/id/C = usr.get_active_held_item()
 			if (istype(C)||istype(C, /obj/item/device/pda))
 				if(src.check_access(C))
 					src.temp = "[src.active_record.fields["name"]] => Record deleted."
@@ -488,12 +488,12 @@
 		R.fields["mind"] = "\ref[mob_occupant.mind]"
 
    //Add an implant if needed
-	var/obj/item/weapon/implant/health/imp
-	for(var/obj/item/weapon/implant/health/HI in mob_occupant.implants)
+	var/obj/item/implant/health/imp
+	for(var/obj/item/implant/health/HI in mob_occupant.implants)
 		imp = HI
 		break
 	if(!imp)
-		imp = new /obj/item/weapon/implant/health(mob_occupant)
+		imp = new /obj/item/implant/health(mob_occupant)
 		imp.implant(mob_occupant)
 	R.fields["imp"] = "\ref[imp]"
 

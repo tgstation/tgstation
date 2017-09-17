@@ -1,7 +1,7 @@
 
 /obj/item/device/pressure_plate
 	name = "pressure plate"
-	desc = "Useful for autismforts"
+	desc = "An electronic device that triggers when stepped on."
 	item_state = "flash"
 	icon_state = "pressureplate"
 	level = 1
@@ -25,7 +25,7 @@
 	var/post_trigger_delay = 3 //delay between pre_trigger and actual trigger
 
 /obj/item/device/pressure_plate/Initialize()
-	..()
+	. = ..()
 	if(roundstart_signaller)
 		sigdev = new
 		sigdev.code = roundstart_signaller_code
@@ -34,9 +34,10 @@
 			hide(TRUE)
 
 /obj/item/device/pressure_plate/Crossed(atom/movable/AM)
-	if(!active)
+	. = ..()
+	if(!can_trigger || !active)
 		return
-	if(isliving(AM) && trigger_mob)
+	if(trigger_mob && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size < trigger_mob_min_size)
 			return ..()
@@ -96,6 +97,7 @@
 	addtimer(CALLBACK(src, .proc/trigger), post_trigger_delay)
 
 /obj/item/device/pressure_plate/proc/trigger()
+	can_trigger = TRUE
 	if(istype(sigdev))
 		sigdev.signal()
 
@@ -116,7 +118,7 @@
 	if(istype(I, /obj/item/device/assembly/signaler) && !istype(sigdev) && removable_signaller && L.transferItemToLoc(I, src))
 		sigdev = I
 		to_chat(L, "<span class='notice'>You attach [I] to [src]!</span>")
-	. = ..()
+	return ..()
 
 /obj/item/device/pressure_plate/attack_self(mob/living/L)
 	if(removable_signaller && istype(sigdev))
@@ -124,7 +126,7 @@
 		if(!L.put_in_hands(sigdev))
 			sigdev.forceMove(get_turf(src))
 		sigdev = null
-	. = ..()
+	return ..()
 
 /obj/item/device/pressure_plate/hide(yes)
 	if(yes)
@@ -142,7 +144,7 @@
 				loc.overlays += tile_overlay
 	else
 		if(crossed && prob(84)) 
-			trigger()	//16% chanche to safely disarm
+			trigger()	//16% chance to safely disarm
 		invisibility = initial(invisibility)
 		anchored = FALSE
 		icon_state = initial(icon_state)

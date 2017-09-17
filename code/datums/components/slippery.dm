@@ -3,11 +3,10 @@
 	var/lube_flags
 	var/mob/slip_victim
 
-/datum/component/slippery/New(datum/P, _intensity, _lube_flags = NONE)
-	..()
+/datum/component/slippery/Initialize(_intensity, _lube_flags = NONE)
 	intensity = max(_intensity, 0)
 	lube_flags = _lube_flags
-	if(ismovableatom(P))
+	if(ismovableatom(parent))
 		RegisterSignal(COMSIG_MOVABLE_CROSSED, .proc/Slip)
 	else
 		RegisterSignal(COMSIG_ATOM_ENTERED, .proc/Slip)

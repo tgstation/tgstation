@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/energy/taser
+/obj/item/gun/energy/taser
 	name = "taser gun"
 	desc = "A low-capacity, energy-based stun gun used by security teams to subdue targets at range."
 	icon_state = "taser"
@@ -7,7 +7,7 @@
 	origin_tech = "combat=3"
 	ammo_x_offset = 3
 
-/obj/item/weapon/gun/energy/tesla_revolver
+/obj/item/gun/energy/tesla_revolver
 	name = "tesla gun"
 	desc = "An experimental gun based on an experimental engine, it's about as likely to kill its operator as it is the target."
 	icon_state = "tesla"
@@ -18,7 +18,7 @@
 	pin = null
 	shaded_charge = 1
 
-/obj/item/weapon/gun/energy/e_gun/advtaser
+/obj/item/gun/energy/e_gun/advtaser
 	name = "hybrid taser"
 	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
 	icon_state = "advtaser"
@@ -26,14 +26,14 @@
 	origin_tech = "combat=4"
 	ammo_x_offset = 2
 
-/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg
+/obj/item/gun/energy/e_gun/advtaser/cyborg
 	name = "cyborg taser"
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_flashlight = 0
 	can_charge = 0
 	use_cyborg_cell = 1
 
-/obj/item/weapon/gun/energy/disabler
+/obj/item/gun/energy/disabler
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
@@ -42,7 +42,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 3
 
-/obj/item/weapon/gun/energy/disabler/cyborg
+/obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = 0
