@@ -170,14 +170,13 @@
 
 	var/datum/gas_mixture/environment = tile.return_air()
 	var/datum/gas_mixture/air_contents = AIR1
-	var/list/env_gases = environment.gases
 
 	if(scrubbing & SCRUBBING)
 		var/should_we_scrub = FALSE
-		for(var/id in env_gases)
+		for(var/id in environment.gases)
 			if(id == "n2" || id == "o2")
 				continue
-			if(env_gases[id][MOLES])
+			if(environment.gases[id][MOLES])
 				should_we_scrub = TRUE
 				break
 		if(should_we_scrub)
@@ -188,45 +187,44 @@
 			//Nothing left to remove from the tile
 			if(isnull(removed))
 				return FALSE
-			var/list/removed_gases = removed.gases
 
 			//Filter it
 			var/datum/gas_mixture/filtered_out = new
 			filtered_out.temperature = removed.temperature
 
-			if(scrub_Toxins && removed_gases["plasma"])
+			if(scrub_Toxins && removed.gases["plasma"])
 				filtered_out.assert_gas("plasma")
-				filtered_out.gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
+				filtered_out.gases["plasma"][MOLES] = removed.gases["plasma"][MOLES]
 				removed.gases["plasma"][MOLES] = 0
 
-			if(scrub_CO2 && removed_gases["co2"])
+			if(scrub_CO2 && removed.gases["co2"])
 				filtered_out.assert_gas("co2")
-				filtered_out.gases["co2"][MOLES] = removed_gases["co2"][MOLES]
+				filtered_out.gases["co2"][MOLES] = removed.gases["co2"][MOLES]
 				removed.gases["co2"][MOLES] = 0
 
-			if(removed_gases["agent_b"])
+			if(removed.gases["agent_b"])
 				filtered_out.assert_gas("agent_b")
-				filtered_out.gases["agent_b"][MOLES] = removed_gases["agent_b"][MOLES]
+				filtered_out.gases["agent_b"][MOLES] = removed.gases["agent_b"][MOLES]
 				removed.gases["agent_b"][MOLES] = 0
 
-			if(scrub_N2O && removed_gases["n2o"])
+			if(scrub_N2O && removed.gases["n2o"])
 				filtered_out.assert_gas("n2o")
-				filtered_out.gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
+				filtered_out.gases["n2o"][MOLES] = removed.gases["n2o"][MOLES]
 				removed.gases["n2o"][MOLES] = 0
 
-			if(scrub_BZ && removed_gases["bz"])
+			if(scrub_BZ && removed.gases["bz"])
 				filtered_out.assert_gas("bz")
-				filtered_out.gases["bz"][MOLES] = removed_gases["bz"][MOLES]
+				filtered_out.gases["bz"][MOLES] = removed.gases["bz"][MOLES]
 				removed.gases["bz"][MOLES] = 0
 
-			if(scrub_Freon && removed_gases["freon"])
+			if(scrub_Freon && removed.gases["freon"])
 				filtered_out.assert_gas("freon")
-				filtered_out.gases["freon"][MOLES] = removed_gases["freon"][MOLES]
+				filtered_out.gases["freon"][MOLES] = removed.gases["freon"][MOLES]
 				removed.gases["freon"][MOLES] = 0
 
-			if(scrub_WaterVapor && removed_gases["water_vapor"])
+			if(scrub_WaterVapor && removed.gases["water_vapor"])
 				filtered_out.assert_gas("water_vapor")
-				filtered_out.gases["water_vapor"][MOLES] = removed_gases["water_vapor"][MOLES]
+				filtered_out.gases["water_vapor"][MOLES] = removed.gases["water_vapor"][MOLES]
 				removed.gases["water_vapor"][MOLES] = 0
 
 			removed.garbage_collect()
