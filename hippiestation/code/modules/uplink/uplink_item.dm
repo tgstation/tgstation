@@ -233,3 +233,10 @@
 	item = /obj/item/storage/box/syndie_kit/football
 	cost = 16
 	exclude_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/badass/horsecock
+	name = "Horse Dildo"
+	desc = "Why. Just, why the fuck are you buying this? You sick fuck."
+	item = /obj/item/dragon/equine
+	cost = 20
+	exclude_modes = list(/datum/game_mode/nuclear)
