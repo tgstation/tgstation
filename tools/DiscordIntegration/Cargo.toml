@@ -12,3 +12,4 @@ toml = "0.4.5"
 
 [dependencies.discord]
 git = "https://github.com/SpaceManiac/discord-rs"
+default-features = false

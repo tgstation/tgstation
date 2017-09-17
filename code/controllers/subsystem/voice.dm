@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(voice)
 	// list of z-levels which subspace can reach
 	var/list/subspace_zlevels = list(ZLEVEL_STATION_PRIMARY)
 	var/next_subspace_check = 1
+	var/request_id = 100000
 
 	// queue of clients whose state might have changed
 	var/list/client/current_run = list()
@@ -63,12 +64,13 @@ SUBSYSTEM_DEF(voice)
 
 	// Batch every changed client in one shell invocation
 	if (changed.len)
-		var/shell_cmd = "updatevoice.exe"
+		var/output = ""
 		for (var/client/C in changed)
-			shell_cmd += " [C.ckey]=[C.voice.status]"
+			output += "[C.ckey]=[C.voice.status]\n"
 		changed.len = 0
 
-		message_admins(shell_cmd) // TODO: actually shell out
+		text2file(output, "data/voice/request_[request_id].txt")
+		request_id++
 
 /datum/controller/subsystem/voice/proc/update_subspace_zlevels()
 	// Based on telecomms_process(), modified to not require an atom
