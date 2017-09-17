@@ -6,6 +6,10 @@ SUBSYSTEM_DEF(voice)
 	flags = SS_BACKGROUND | SS_NO_INIT
 	wait = 2
 
+	// list of z-levels which subspace can reach
+	var/list/subspace_zlevels = list(ZLEVEL_STATION_PRIMARY)
+	var/next_subspace_check = 1
+
 	// queue of clients whose state might have changed
 	var/list/client/current_run = list()
 	var/list/client/changed = list()
@@ -16,6 +20,11 @@ SUBSYSTEM_DEF(voice)
 		src.current_run = GLOB.clients.Copy()
 	else
 		message_admins("SSvoice: resuming")
+
+	// Update subspace status if necessary
+	if (next_subspace_check && next_subspace_check <= world.time)
+		next_subspace_check = 0 // don't overlap checks
+		spawn update_subspace_zlevels()
 
 	// For clients in current_run, mark them as changed if needed
 	var/list/client/current_run = src.current_run
@@ -61,6 +70,36 @@ SUBSYSTEM_DEF(voice)
 
 		message_admins(shell_cmd) // TODO: actually shell out
 
+/datum/controller/subsystem/voice/proc/update_subspace_zlevels()
+	// Based on telecomms_process(), modified to not require an atom
+	// Construct the signal
+	var/datum/signal/signal = new
+	signal.transmission_method = 2 // subspace
+	signal.data = list(
+		"slow" = 0,
+		"message" = "TEST",
+		"compression" = rand(45, 50),
+		"traffic" = 0,
+		"type" = 4,
+		"reject" = 0,
+		"done" = 0,
+		"level" = ZLEVEL_STATION_PRIMARY
+	)
+	signal.frequency = GLOB.radiochannels["Common"] // Common channel
+
+	// Send the signal to receivers and wait for them to process it
+	for (var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
+		R.receive_signal(signal)
+	sleep(25)
+
+	// Now extract and store the Z-level list
+	if (!signal.data["done"])
+		subspace_zlevels = list()
+	else
+		subspace_zlevels = signal.data["level"]
+	next_subspace_check = world.time + rand(50, 100)
+	// clients will update gradually
+
 // ---------- Definitions and whatnot
 
 #define VOICE_NONE 0
@@ -75,8 +114,6 @@ SUBSYSTEM_DEF(voice)
 
 /datum/voicestuff
 	var/status = VOICE_ALL
-	var/subspace_zlevels = list(ZLEVEL_STATION_PRIMARY)
-	var/next_subspace_check = 1
 
 	var/next_check = 1
 	var/needs_check = TRUE
@@ -120,22 +157,7 @@ SUBSYSTEM_DEF(voice)
 
 	// Subspace checking
 	var/turf/position = get_turf(mob)
-	var/subspace_on = (position.z in voice.subspace_zlevels)
-	if (voice.next_subspace_check && voice.next_subspace_check <= world.time)
-		voice.next_subspace_check = 0 // don't overlap checks
-		spawn // testing takes time for the signal to transfer
-			// store the list of Z-levels so when we move we stay current
-			var/datum/signal/signal = mob.telecomms_process()
-			var/list/previous = list2params(voice.subspace_zlevels)
-			if (!signal.data["done"])
-				voice.subspace_zlevels = list()
-			else
-				voice.subspace_zlevels = signal.data["level"]
-			//to_chat(src, "subspace_ck: [list2params(voice.subspace_zlevels)]")
-			voice.next_subspace_check = world.time + rand(25, 75)
-			if (list2params(voice.subspace_zlevels) != previous)
-				// if it's changed, refresh immediately
-				src.voice.needs_check = TRUE
+	var/subspace_on = (position.z in SSvoice.subspace_zlevels)
 
 	//var/checked = 0
 	// Check ears for a headset (";" prefix)
