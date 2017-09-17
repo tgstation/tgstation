@@ -195,6 +195,7 @@
 		H.blood_volume = max(H.blood_volume - 25, 0)
 		if(ishuman(O))
 			O.nutrition = min(O.nutrition + (blood / 2), NUTRITION_LEVEL_WELL_FED)
+		playsound(O.loc, 'sound/items/eatfood.ogg', 40, 1)
 
 	draining = null
 	to_chat(owner, "<span class='notice'>You stop draining [H.name] of blood.</span>")

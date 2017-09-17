@@ -136,8 +136,8 @@
 		if(do_mob(user, target, 50))
 			to_chat(user, "<span class='warning'>Your piercing gaze knocks out [target].</span>")
 			to_chat(target, "<span class='warning'>You find yourself unable to move and barely able to speak.</span>")
-			target.Knockdown(10)
-			target.Stun(10)
+			target.Knockdown(150)
+			target.Stun(150)
 			target.stuttering = 10
 		else
 			revert_cast(usr)
