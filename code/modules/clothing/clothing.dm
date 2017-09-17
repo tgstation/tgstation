@@ -22,7 +22,6 @@
 	var/cooldown = 0
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
-	var/gang //Is this a gang outfit?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
@@ -162,7 +161,7 @@
 		update_clothes_damaged_state(TRUE)
 	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
 		var/mob/M = loc
-		M.visible_message("<span class='warning'>[M]'s [name] starts to fall apart!", "<span class='warning'>Your [name] starts to fall apart!")
+		M.visible_message("<span class='warning'>[M]'s [name] starts to fall apart!", "<span class='warning'>Your [name] starts to fall apart!</span>")
 
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
 	var/index = "\ref[initial(icon)]-[initial(icon_state)]"
@@ -215,7 +214,7 @@ BLIND     // can't see anything
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
-	siemens_coefficient = 0.50
+	siemens_coefficient = 0.5
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
@@ -273,17 +272,6 @@ BLIND     // can't see anything
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_head()
-
-/obj/item/clothing/head/equipped(mob/user, slot)
-	..()
-	if(dynamic_hair_suffix)
-		user.update_hair()
-
-/obj/item/clothing/head/dropped(mob/user)
-	..()
-	if(dynamic_hair_suffix)
-		user.update_hair()
-
 
 //Neck
 /obj/item/clothing/neck
@@ -373,7 +361,7 @@ BLIND     // can't see anything
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
 
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 	slowdown = SHOES_SLOWDOWN
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
@@ -515,7 +503,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	name = "under"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	permeability_coefficient = 0.90
+	permeability_coefficient = 0.9
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women

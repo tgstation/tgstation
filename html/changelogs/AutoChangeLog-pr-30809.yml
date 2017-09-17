@@ -1,0 +1,4 @@
+author: "Supermichael777"
+delete-after: True
+changes: 
+  - bugfix: "Airlocks now check metal for upgrades using the standard get_amount() proc instead of checking the amount var, this means it is compatible with cyborgs."

@@ -147,7 +147,7 @@
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
-	if(index && dna.species.mutanthands)
+	if(index && !QDELETED(src) && dna.species.mutanthands) //hand freed, fill with claws, skip if we're getting deleted.
 		put_in_hand(new dna.species.mutanthands(), index)
 	if(I == wear_suit)
 		if(s_store && invdrop)
@@ -236,6 +236,10 @@
 /mob/living/carbon/human/head_update(obj/item/I, forced)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
 		update_hair()
+	else
+		var/obj/item/clothing/C = I
+		if(istype(C) && C.dynamic_hair_suffix)
+			update_hair()
 	if(I.flags_inv & HIDEEYES || forced)
 		update_inv_glasses()
 	if(I.flags_inv & HIDEEARS || forced)

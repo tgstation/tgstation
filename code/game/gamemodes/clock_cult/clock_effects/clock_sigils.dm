@@ -193,13 +193,13 @@
 		var/structure_number = 0
 		for(var/obj/structure/destructible/clockwork/powered/P in range(SIGIL_ACCESS_RANGE, src))
 			structure_number++
-		to_chat(user, "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[GLOB.ratvar_awakens ? "INFINITY":"[power_charge]"]W</b> of power, \
+		to_chat(user, "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[GLOB.ratvar_awakens ? "INFINITE</b>":"[DisplayPower(power_charge)]</b> of"] power, \
 		and <b>[structure_number]</b> Clockwork Structure[structure_number == 1 ? " is":"s are"] in range.</span>")
 		to_chat(user, "<span class='brass'>While active, it will gradually drain power from nearby electronics. It is currently [isprocessing ? "active":"disabled"].</span>")
 		if(iscyborg(user))
 			to_chat(user, "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>")
 		else if(!GLOB.ratvar_awakens)
-			to_chat(user, "<span class='brass'>Hitting the [sigil_name] with brass sheets will convert them to power at a rate of <b>1</b> brass sheet to <b>[POWER_FLOOR]W</b> power.</span>")
+			to_chat(user, "<span class='brass'>Hitting the [sigil_name] with brass sheets will convert them to power at a rate of <b>1</b> brass sheet to <b>[DisplayPower(POWER_FLOOR)]</b> power.</span>")
 		if(!GLOB.ratvar_awakens)
 			to_chat(user, "<span class='brass'>You can recharge Replica Fabricators from the [sigil_name].</span>")
 
@@ -207,7 +207,7 @@
 	if(is_servant_of_ratvar(user) && istype(I, /obj/item/stack/tile/brass) && !GLOB.ratvar_awakens)
 		var/obj/item/stack/tile/brass/B = I
 		user.visible_message("<span class='warning'>[user] places [B] on [src], causing it to disintegrate into glowing orange energy!</span>", \
-		"<span class='brass'>You charge the [sigil_name] with [B], providing it with <b>[B.amount * POWER_FLOOR]W</b> of power.</span>")
+		"<span class='brass'>You charge the [sigil_name] with [B], providing it with <b>[DisplayPower(B.amount * POWER_FLOOR)]</b> of power.</span>")
 		modify_charge(-(B.amount * POWER_FLOOR))
 		playsound(src, 'sound/effects/light_flicker.ogg', (B.amount * POWER_FLOOR) * 0.01, 1)
 		qdel(B)

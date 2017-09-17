@@ -5,6 +5,9 @@
 #define SECURITY_HAS_MAINT_ACCESS 2
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
+GLOBAL_VAR_INIT(config_dir, "config/")
+GLOBAL_PROTECT(config_dir)
+
 /datum/configuration/can_vv_get(var_name)
 	var/static/list/banned_gets = list("autoadmin", "autoadmin_rank")
 	if (var_name in banned_gets)
@@ -12,7 +15,7 @@
 	return ..()
 
 /datum/configuration/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("cross_address", "cross_allowed", "autoadmin", "autoadmin_rank")
+	var/static/list/banned_edits = list("cross_address", "cross_allowed", "autoadmin", "autoadmin_rank", "invoke_youtubedl")
 	if(var_name in banned_edits)
 		return FALSE
 	return ..()
@@ -90,6 +93,8 @@
 	var/panic_server_name
 	var/panic_address //Reconnect a player this linked server if this server isn't accepting new players
 
+	var/invoke_youtubedl
+
 	//IP Intel vars
 	var/ipintel_email
 	var/ipintel_rating_bad = 1
@@ -102,6 +107,8 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
+	var/note_fresh_days
+	var/note_stale_days
 
 	var/use_exp_tracking = FALSE
 	var/use_exp_restrictions_heads = FALSE
@@ -121,11 +128,14 @@
 	//game_options.txt configs
 	var/force_random_names = 0
 	var/list/mode_names = list()
+	var/list/mode_reports = list()
+	var/list/mode_false_report_weight = list()
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
 	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
 	var/list/max_pop = list()
+	var/list/repeated_mode_adjust = list() 			// weight adjustments for recent modes
 
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
@@ -175,6 +185,7 @@
 	var/rename_cyborg = 0
 	var/ooc_during_round = 0
 	var/emojis = 0
+	var/no_credits_round_end = FALSE
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -273,6 +284,8 @@
 
 	var/list/policies = list()
 
+	var/debug_admin_hrefs = FALSE	//turns off admin href token protection for debugging purposes
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -286,6 +299,8 @@
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
+				mode_reports[M.config_tag] = M.generate_report()
+				mode_false_report_weight[M.config_tag] = M.false_report_weight
 				if(M.votable)
 					votable_modes += M.config_tag
 		qdel(M)
@@ -294,19 +309,20 @@
 	Reload()
 
 /datum/configuration/proc/Reload()
-	load("config/config.txt")
-	load("config/game_options.txt","game_options")
-	load("config/policies.txt", "policies")
-	loadsql("config/dbconfig.txt")
+	load("config.txt")
+	load("comms.txt", "comms")
+	load("game_options.txt","game_options")
+	load("policies.txt", "policies")
+	loadsql("dbconfig.txt")
 	if (maprotation)
-		loadmaplist("config/maps.txt")
+		loadmaplist("maps.txt")
 
 	// apply some settings from config..
 	GLOB.abandon_allowed = respawn
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
+	filename = "[GLOB.config_dir][filename]"
 	var/list/Lines = world.file2list(filename)
-
 	for(var/t in Lines)
 		if(!t)
 			continue
@@ -462,31 +478,22 @@
 					fps = text2num(value)
 				if("automute_on")
 					automute_on = 1
-				if("comms_key")
-					global.comms_key = value
-					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
-						global.comms_allowed = 1
-				if("cross_server_address")
-					cross_address = value
-					if(value != "byond:\\address:port")
-						cross_allowed = 1
-				if("cross_comms_name")
-					cross_name = value
 				if("panic_server_name")
 					if (value != "\[Put the name here\]")
 						panic_server_name = value
 				if("panic_server_address")
 					if(value != "byond://address:port")
 						panic_address = value
-
-				if("medal_hub_address")
-					global.medal_hub = value
-				if("medal_hub_password")
-					global.medal_pass = value
+				if("invoke_youtubedl")
+					invoke_youtubedl = value
 				if("show_irc_name")
 					showircname = 1
 				if("see_own_notes")
 					see_own_notes = 1
+				if("note_fresh_days")
+					note_fresh_days = text2num(value)
+				if("note_stale_days")
+					note_stale_days = text2num(value)
 				if("soft_popcap")
 					soft_popcap = text2num(value)
 				if("hard_popcap")
@@ -566,9 +573,15 @@
 					error_msg_delay = text2num(value)
 				if("irc_announce_new_game")
 					irc_announce_new_game = TRUE
+				if("debug_admin_hrefs")
+					debug_admin_hrefs = TRUE
 				else
-					WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
-
+#if DM_VERSION > 511
+#error Replace the line below with WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
+#endif
+					HandleCommsConfig(name, value)	//TODO: Deprecate this eventually
+		else if(type == "comms")
+			HandleCommsConfig(name, value)
 		else if(type == "game_options")
 			switch(name)
 				if("damage_multiplier")
@@ -585,6 +598,8 @@
 					ooc_during_round			= 1
 				if("emojis")
 					emojis					= 1
+				if("no_credits_round_end")
+					no_credits_round_end	= TRUE
 				if("run_delay")
 					run_speed				= text2num(value)
 				if("walk_delay")
@@ -699,7 +714,14 @@
 							WRITE_FILE(GLOB.config_error_log, "Unknown game mode probability configuration definition: [prob_name].")
 					else
 						WRITE_FILE(GLOB.config_error_log, "Incorrect probability configuration definition: [prob_name]  [prob_value].")
-
+				if("repeated_mode_adjust")
+					if(value)
+						repeated_mode_adjust.Cut()
+						var/values = splittext(value," ")
+						for(var/v in values)
+							repeated_mode_adjust += text2num(v)
+					else
+						WRITE_FILE(GLOB.config_error_log, "Incorrect round weight adjustment configuration definition for [value].")
 				if("protect_roles_from_antagonist")
 					protect_roles_from_antagonist	= 1
 				if("protect_assistant_from_antagonist")
@@ -808,8 +830,27 @@
 	if(fps <= 0)
 		fps = initial(fps)
 
+/datum/configuration/proc/HandleCommsConfig(name, value)
+	switch(name)
+		if("comms_key")
+			global.comms_key = value
+			if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
+				global.comms_allowed = TRUE
+		if("cross_server_address")
+			cross_address = value
+			if(value != "byond:\\address:port")
+				cross_allowed = TRUE
+		if("cross_comms_name")
+			cross_name = value
+		if("medal_hub_address")
+			global.medal_hub = value
+		if("medal_hub_password")
+			global.medal_pass = value
+		else
+			WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 
 /datum/configuration/proc/loadmaplist(filename)
+	filename = "[GLOB.config_dir][filename]"
 	var/list/Lines = world.file2list(filename)
 
 	var/datum/map_config/currentmap = null
@@ -862,6 +903,7 @@
 
 
 /datum/configuration/proc/loadsql(filename)
+	filename = "[GLOB.config_dir][filename]"
 	var/list/Lines = world.file2list(filename)
 	for(var/t in Lines)
 		if(!t)
@@ -907,11 +949,12 @@
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
+	// ^ This guy didn't try hard enough
 	for(var/T in gamemode_cache)
-		var/datum/game_mode/M = new T()
-		if(M.config_tag && M.config_tag == mode_name)
-			return M
-		qdel(M)
+		var/datum/game_mode/M = T
+		var/ct = initial(M.config_tag)
+		if(ct && ct == mode_name)
+			return new T
 	return new /datum/game_mode/extended()
 
 /datum/configuration/proc/get_runnable_modes()
@@ -930,8 +973,15 @@
 		if(max_pop[M.config_tag])
 			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
-			runnable_modes[M] = probabilities[M.config_tag]
-			//to_chat(world, "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]")
+			var/final_weight = probabilities[M.config_tag]
+			if(SSpersistence.saved_modes.len == 3 && repeated_mode_adjust.len == 3)
+				var/recent_round = min(SSpersistence.saved_modes.Find(M.config_tag),3)
+				var/adjustment = 0
+				while(recent_round)
+					adjustment += repeated_mode_adjust[recent_round]
+					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
+				final_weight *= ((100-adjustment)/100)
+			runnable_modes[M] = final_weight
 	return runnable_modes
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)

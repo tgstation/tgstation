@@ -27,14 +27,14 @@
 	. = list()
 	for(var/V in GLOB.data_core.locked)
 		var/datum/data/record/R = V
-		var/mob/M = R.fields["reference"]
-		if(M && M.mind)
-			. += M.mind
+		var/datum/mind/M = R.fields["mindref"]
+		if(M)
+			. += M
 
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in get_crewmember_minds())
-		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
+		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target))
 			possible_targets += possible_target
 	if(possible_targets.len > 0)
 		target = pick(possible_targets)
@@ -126,7 +126,7 @@
 		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 			return 1
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z > ZLEVEL_STATION) || (target.current.client && target.current.client.is_afk()))			//If they leave the station or go afk they count as dead for this
+		if(T && (!(T.z in GLOB.station_z_levels)) || (target.current.client && target.current.client.is_afk()))			//If they leave the station or go afk they count as dead for this
 			return 2
 		return 0
 	return 1
@@ -592,25 +592,25 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/captured_amount = 0
 	var/area/centcom/holding/A = locate() in GLOB.sortedAreas
 	for(var/mob/living/carbon/human/M in A)//Humans.
-		if(M.stat==2)//Dead folks are worth less.
+		if(M.stat == DEAD)//Dead folks are worth less.
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
 		captured_amount+=0.1
 	for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
-		if(M.stat==2)
+		if(M.stat == DEAD)
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
 		if(istype(M, /mob/living/carbon/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
-			if(M.stat==2)
+			if(M.stat == DEAD)
 				captured_amount+=1.5
 			else
 				captured_amount+=3
 			continue
-		if(M.stat==2)
+		if(M.stat == DEAD)
 			captured_amount+=1
 			continue
 		captured_amount+=2

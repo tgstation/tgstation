@@ -26,8 +26,8 @@
 			to_chat(user, "<span class='inathneq'>An emergency shuttle has arrived and this prism is no longer useful; attempt to activate it to gain a partial refund of components used.</span>")
 		else
 			var/efficiency = get_efficiency_mod(TRUE)
-			to_chat(user, "<span class='inathneq_small'>It requires at least <b>[get_delay_cost()]W</b> of power to attempt to delay the arrival of an emergency shuttle by <b>[2 * efficiency]</b> minutes.</span>")
-			to_chat(user, "<span class='inathneq_small'>This cost increases by <b>[delay_cost_increase]W</b> for every previous activation.</span>")
+			to_chat(user, "<span class='inathneq_small'>It requires at least <b>[DisplayPower(get_delay_cost())]</b> of power to attempt to delay the arrival of an emergency shuttle by <b>[2 * efficiency]</b> minutes.</span>")
+			to_chat(user, "<span class='inathneq_small'>This cost increases by <b>[DisplayPower(delay_cost_increase)]</b> for every previous activation.</span>")
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/forced_disable(bad_effects)
 	if(active)
@@ -48,7 +48,7 @@
 		if(active)
 			return 0
 		var/turf/T = get_turf(src)
-		if(!T || T.z != ZLEVEL_STATION)
+		if(!T || !(T.z in GLOB.station_z_levels))
 			to_chat(user, "<span class='warning'>[src] must be on the station to function!</span>")
 			return 0
 		if(SSshuttle.emergency.mode != SHUTTLE_CALL)
@@ -63,7 +63,7 @@
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/process()
 	var/turf/own_turf = get_turf(src)
-	if(SSshuttle.emergency.mode != SHUTTLE_CALL || delay_remaining <= 0 || !own_turf || own_turf.z != ZLEVEL_STATION)
+	if(SSshuttle.emergency.mode != SHUTTLE_CALL || delay_remaining <= 0 || !own_turf || !(own_turf.z in GLOB.station_z_levels))
 		forced_disable(FALSE)
 		return
 	. = ..()
@@ -97,7 +97,7 @@
 		mean_x = Ceiling(mean_x)
 	else
 		mean_x = Floor(mean_x)
-	var/turf/semi_random_center_turf = locate(mean_x, mean_y, ZLEVEL_STATION)
+	var/turf/semi_random_center_turf = locate(mean_x, mean_y, ZLEVEL_STATION_PRIMARY)
 	for(var/t in getline(src, semi_random_center_turf))
 		prism_turfs[t] = TRUE
 	var/placement_style = prob(50)
@@ -126,7 +126,7 @@
 			if(!hex_combo)
 				hex_combo = mutable_appearance('icons/effects/64x64.dmi', n, RIPPLE_LAYER)
 			else
-				hex_combo.overlays += mutable_appearance('icons/effects/64x64.dmi', n, RIPPLE_LAYER)
+				hex_combo.add_overlay(mutable_appearance('icons/effects/64x64.dmi', n, RIPPLE_LAYER))
 	if(hex_combo) //YOU BUILT A HEXAGON
 		hex_combo.pixel_x = -16
 		hex_combo.pixel_y = -16

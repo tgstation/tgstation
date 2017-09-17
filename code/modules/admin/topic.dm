@@ -1,3 +1,16 @@
+/datum/admins/proc/CheckAdminHref(href, href_list)
+	var/auth = href_list["admin_token"]
+	. = auth && (auth == href_token || auth == GLOB.href_token)
+	if(.)
+		return
+	var/msg = !auth ? "no" : "a bad"
+	message_admins("[key_name_admin(usr)] clicked an href with [msg] authorization key!")
+	if(config.debug_admin_hrefs)
+		message_admins("Debug mode enabled, call not blocked. Please ask your coders to review this round's logs.")
+		log_world("UAH: [href]")
+		return TRUE
+	log_admin_private("[key_name(usr)] clicked an href with [msg] authorization key! [href]")
+
 /datum/admins/Topic(href, href_list)
 	..()
 
@@ -5,6 +18,10 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
+	
+	if(!CheckAdminHref(href, href_list))
+		return
+
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
 			return
@@ -112,13 +129,6 @@
 				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				new/datum/round_event/ghost_role/blob(TRUE, strength)
-			if("gangs")
-				if(src.makeGangsters())
-					message_admins("[key_name(usr)] created gangs.")
-					log_admin("[key_name(usr)] created gangs.")
-				else
-					message_admins("[key_name(usr)] tried to create gangs. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed create gangs.")
 			if("centcom")
 				message_admins("[key_name(usr)] is creating a CentCom response team...")
 				if(src.makeEmergencyresponseteam())
@@ -360,7 +370,7 @@
 		else
 			SSticker.mode.round_ends_with_antag_death = 0
 
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist system to [SSticker.mode.round_ends_with_antag_death ? "end the round" : "continue as extended"] upon failure.")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist system to [SSticker.mode.round_ends_with_antag_death ? "end the round" : "continue as extended"] upon failure.</span>")
 		check_antagonists()
 
 	else if(href_list["delay_round_end"])
@@ -604,15 +614,15 @@
 //Regular jobs
 	//Command (Blue)
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr align='center' bgcolor='ccccff'><th colspan='[length(GLOB.command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"
+		dat += "<tr align='center' bgcolor='ccccff'><th colspan='[length(GLOB.command_positions)]'><a href='?src=\ref[src];[HrefToken()];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in GLOB.command_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
-				dat += "<td width='15%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
+				dat += "<td width='15%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
 				counter++
 			else
-				dat += "<td width='15%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
+				dat += "<td width='15%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
 				counter++
 
 			if(counter >= 6) //So things dont get squiiiiished!
@@ -623,15 +633,15 @@
 	//Security (Red)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='ffddf0'><th colspan='[length(GLOB.security_positions)]'><a href='?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='ffddf0'><th colspan='[length(GLOB.security_positions)]'><a href='?src=\ref[src];[HrefToken()];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in GLOB.security_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
 				counter++
 			else
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -642,15 +652,15 @@
 	//Engineering (Yellow)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='fff5cc'><th colspan='[length(GLOB.engineering_positions)]'><a href='?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='fff5cc'><th colspan='[length(GLOB.engineering_positions)]'><a href='?src=\ref[src];[HrefToken()];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in GLOB.engineering_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
 				counter++
 			else
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -661,15 +671,15 @@
 	//Medical (White)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='ffeef0'><th colspan='[length(GLOB.medical_positions)]'><a href='?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='ffeef0'><th colspan='[length(GLOB.medical_positions)]'><a href='?src=\ref[src];[HrefToken()];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in GLOB.medical_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
 				counter++
 			else
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -680,15 +690,15 @@
 	//Science (Purple)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='e79fff'><th colspan='[length(GLOB.science_positions)]'><a href='?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='e79fff'><th colspan='[length(GLOB.science_positions)]'><a href='?src=\ref[src];[HrefToken()];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in GLOB.science_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
 				counter++
 			else
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -699,15 +709,15 @@
 	//Supply (Brown)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='DDAA55'><th colspan='[length(GLOB.supply_positions)]'><a href='?src=\ref[src];jobban3=supplydept;jobban4=\ref[M]'>Supply Positions</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='DDAA55'><th colspan='[length(GLOB.supply_positions)]'><a href='?src=\ref[src];[HrefToken()];jobban3=supplydept;jobban4=\ref[M]'>Supply Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in GLOB.supply_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
 				counter++
 			else
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get COPYPASTE!
@@ -718,15 +728,15 @@
 	//Civilian (Grey)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='dddddd'><th colspan='[length(GLOB.civilian_positions)]'><a href='?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='dddddd'><th colspan='[length(GLOB.civilian_positions)]'><a href='?src=\ref[src];[HrefToken()];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in GLOB.civilian_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
 				counter++
 			else
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -737,15 +747,15 @@
 	//Non-Human (Green)
 		counter = 0
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='ccffcc'><th colspan='[length(GLOB.nonhuman_positions)]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='ccffcc'><th colspan='[length(GLOB.nonhuman_positions)]'><a href='?src=\ref[src];[HrefToken()];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in GLOB.nonhuman_positions)
 			if(!jobPos)
 				continue
 			if(jobban_isbanned(M, jobPos))
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'><font color=red>[jobPos]</font></a></td>"
 				counter++
 			else
-				dat += "<td width='20%'><a href='?src=\ref[src];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
+				dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=[jobPos];jobban4=\ref[M]'>[jobPos]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -756,109 +766,101 @@
 
 		//Ghost Roles (light light gray)
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='eeeeee'><th colspan='5'><a href='?src=\ref[src];jobban3=ghostroles;jobban4=\ref[M]'>Ghost Roles</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='eeeeee'><th colspan='5'><a href='?src=\ref[src];[HrefToken()];jobban3=ghostroles;jobban4=\ref[M]'>Ghost Roles</a></th></tr><tr align='center'>"
 
 		//pAI
 		if(jobban_isbanned(M, "pAI"))
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'><font color=red>pAI</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=pAI;jobban4=\ref[M]'><font color=red>pAI</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'>pAI</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=pAI;jobban4=\ref[M]'>pAI</a></td>"
 
 
 		//Drones
 		if(jobban_isbanned(M, "drone"))
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=drone;jobban4=\ref[M]'><font color=red>Drone</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=drone;jobban4=\ref[M]'><font color=red>Drone</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=drone;jobban4=\ref[M]'>Drone</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=drone;jobban4=\ref[M]'>Drone</a></td>"
 
 
 		//Positronic Brains
 		if(jobban_isbanned(M, "posibrain"))
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=posibrain;jobban4=\ref[M]'><font color=red>Posibrain</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=posibrain;jobban4=\ref[M]'><font color=red>Posibrain</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=posibrain;jobban4=\ref[M]'>Posibrain</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=posibrain;jobban4=\ref[M]'>Posibrain</a></td>"
 
 
 		//Deathsquad
 		if(jobban_isbanned(M, "deathsquad"))
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>Deathsquad</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>Deathsquad</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>Deathsquad</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=deathsquad;jobban4=\ref[M]'>Deathsquad</a></td>"
 
 		//Lavaland roles
 		if(jobban_isbanned(M, "lavaland"))
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'><font color=red>Lavaland</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=lavaland;jobban4=\ref[M]'><font color=red>Lavaland</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'>Lavaland</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=lavaland;jobban4=\ref[M]'>Lavaland</a></td>"
 
 		dat += "</tr></table>"
 
 	//Antagonist (Orange)
 		var/isbanned_dept = jobban_isbanned(M, "Syndicate")
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=\ref[src];[HrefToken()];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"
 
 		//Traitor
 		if(jobban_isbanned(M, "traitor") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=traitor;jobban4=\ref[M]'><font color=red>Traitor</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=traitor;jobban4=\ref[M]'><font color=red>Traitor</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=traitor;jobban4=\ref[M]'>Traitor</a></td>"
 
 		//Changeling
 		if(jobban_isbanned(M, "changeling") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=changeling;jobban4=\ref[M]'><font color=red>Changeling</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=changeling;jobban4=\ref[M]'><font color=red>Changeling</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=changeling;jobban4=\ref[M]'>Changeling</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=changeling;jobban4=\ref[M]'>Changeling</a></td>"
 
 		//Nuke Operative
 		if(jobban_isbanned(M, "operative") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=operative;jobban4=\ref[M]'><font color=red>Nuke Operative</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=operative;jobban4=\ref[M]'><font color=red>Nuke Operative</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=operative;jobban4=\ref[M]'>Nuke Operative</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=operative;jobban4=\ref[M]'>Nuke Operative</a></td>"
 
 		//Revolutionary
 		if(jobban_isbanned(M, "revolutionary") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=revolutionary;jobban4=\ref[M]'><font color=red>Revolutionary</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=revolutionary;jobban4=\ref[M]'><font color=red>Revolutionary</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=revolutionary;jobban4=\ref[M]'>Revolutionary</a></td>"
-
-		//Gangster
-		if(jobban_isbanned(M, "gangster") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=gangster;jobban4=\ref[M]'><font color=red>Gangster</font></a></td>"
-		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=gangster;jobban4=\ref[M]'>Gangster</a></td>"
-
-		dat += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=revolutionary;jobban4=\ref[M]'>Revolutionary</a></td>"
 
 		//Cultist
 		if(jobban_isbanned(M, "cultist") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=cultist;jobban4=\ref[M]'><font color=red>Cultist</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=cultist;jobban4=\ref[M]'><font color=red>Cultist</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=cultist;jobban4=\ref[M]'>Cultist</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=cultist;jobban4=\ref[M]'>Cultist</a></td>"
 
 		//Servant of Ratvar
 		if(jobban_isbanned(M, "servant of Ratvar") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=servant of Ratvar;jobban4=\ref[M]'><font color=red>Servant</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=servant of Ratvar;jobban4=\ref[M]'><font color=red>Servant</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=servant of Ratvar;jobban4=\ref[M]'>Servant</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=servant of Ratvar;jobban4=\ref[M]'>Servant</a></td>"
 
 		//Wizard
 		if(jobban_isbanned(M, "wizard") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=wizard;jobban4=\ref[M]'><font color=red>Wizard</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=wizard;jobban4=\ref[M]'><font color=red>Wizard</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=wizard;jobban4=\ref[M]'>Wizard</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=wizard;jobban4=\ref[M]'>Wizard</a></td>"
 
 		//Abductor
 		if(jobban_isbanned(M, "abductor") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=abductor;jobban4=\ref[M]'><font color=red>Abductor</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=abductor;jobban4=\ref[M]'><font color=red>Abductor</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=abductor;jobban4=\ref[M]'>Abductor</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=abductor;jobban4=\ref[M]'>Abductor</a></td>"
 
 		//Alien
 		if(jobban_isbanned(M, "alien candidate") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'><font color=red>Alien</font></a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=alien candidate;jobban4=\ref[M]'><font color=red>Alien</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'>Alien</a></td>"
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=alien candidate;jobban4=\ref[M]'>Alien</a></td>"
 
 		dat += "</tr></table>"
 		usr << browse(dat, "window=jobban2;size=800x450")
@@ -1101,7 +1103,10 @@
 
 	else if(href_list["showmessageckey"])
 		var/target = href_list["showmessageckey"]
-		browse_messages(target_ckey = target)
+		var/agegate = TRUE
+		if (href_list["showall"])
+			agegate = FALSE
+		browse_messages(target_ckey = target, agegate = agegate)
 
 	else if(href_list["showmessageckeylinkless"])
 		var/target = href_list["showmessageckeylinkless"]
@@ -1201,9 +1206,9 @@
 			return alert(usr, "The game has already started.", null, null, null, null)
 		var/dat = {"<B>What mode do you wish to play?</B><HR>"}
 		for(var/mode in config.modes)
-			dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
-		dat += {"<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>"}
-		dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
+			dat += {"<A href='?src=\ref[src];[HrefToken()];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
+		dat += {"<A href='?src=\ref[src];[HrefToken()];c_mode2=secret'>Secret</A><br>"}
+		dat += {"<A href='?src=\ref[src];[HrefToken()];c_mode2=random'>Random</A><br>"}
 		dat += {"Now: [GLOB.master_mode]"}
 		usr << browse(dat, "window=c_mode")
 
@@ -1217,8 +1222,8 @@
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
 		var/dat = {"<B>What game mode do you want to force secret to be? Use this if you want to change the game mode, but want the players to believe it's secret. This will only work if the current game mode is secret.</B><HR>"}
 		for(var/mode in config.modes)
-			dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
-		dat += {"<A href='?src=\ref[src];f_secret2=secret'>Random (default)</A><br>"}
+			dat += {"<A href='?src=\ref[src];[HrefToken()];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
+		dat += {"<A href='?src=\ref[src];[HrefToken()];f_secret2=secret'>Random (default)</A><br>"}
 		dat += {"Now: [GLOB.secret_force_mode]"}
 		usr << browse(dat, "window=f_secret")
 
@@ -1609,11 +1614,13 @@
 			var/mob/living/L = M
 			var/status
 			switch (M.stat)
-				if (0)
+				if(CONSCIOUS)
 					status = "Alive"
-				if (1)
-					status = "<font color='orange'><b>Unconscious</b></font>"
-				if (2)
+				if(SOFT_CRIT)
+					status = "<font color='orange'><b>Dying</b></font>"
+				if(UNCONSCIOUS)
+					status = "<font color='orange'><b>[L.InCritical() ? "Unconscious and Dying" : "Unconscious"]</b></font>"
+				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status = [status]"
 			health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()] - Stamina: [L.getStaminaLoss()]"
@@ -2278,4 +2285,3 @@
 		dat += thing_to_check
 
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
-

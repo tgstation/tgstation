@@ -15,5 +15,5 @@
 /datum/round_event/grid_check/start()
 	for(var/P in GLOB.apcs_list)
 		var/obj/machinery/power/apc/C = P
-		if(C.cell && C.z == ZLEVEL_STATION)
+		if(C.cell && (C.z in GLOB.station_z_levels))
 			C.energy_fail(rand(30,120))

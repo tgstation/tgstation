@@ -540,20 +540,13 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "bU" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "bV" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "bW" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "bX" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
@@ -594,9 +587,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "ce" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "cf" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -681,17 +672,13 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "cs" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "ct" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/spacebattle/cruiser)
 "cu" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc2"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "cv" = (
 /obj/machinery/power/smes/magical{
@@ -814,9 +801,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "cR" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "cS" = (
 /obj/effect/mob_spawn/human/engineer{
@@ -857,7 +842,9 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "cY" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "cZ" = (
@@ -880,7 +867,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/cruiser)
 "dd" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -937,16 +926,10 @@
 /turf/open/floor/plasteel/bar,
 /area/awaymission/spacebattle/cruiser)
 "do" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "dp" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "dq" = (
 /turf/open/floor/plasteel{
@@ -973,24 +956,17 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "dt" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "du" = (
 /obj/effect/decal/cleanable/blood,
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "dv" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "dw" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "dx" = (
 /obj/structure/chair,
@@ -1030,7 +1006,9 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "dE" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/northwest,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 9
+	},
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "dF" = (
@@ -1038,11 +1016,15 @@
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "dG" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "dH" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/northeast,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
+	},
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "dI" = (
@@ -1137,7 +1119,9 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "dY" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "dZ" = (
@@ -1158,7 +1142,9 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "eb" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "ec" = (
@@ -1305,10 +1291,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate1)
 "eB" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "eC" = (
 /obj/structure/table/reinforced,
@@ -1327,7 +1310,9 @@
 /turf/open/floor/plasteel/blue,
 /area/awaymission/spacebattle/cruiser)
 "eF" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "eG" = (
@@ -1344,15 +1329,10 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "eI" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "eJ" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "eK" = (
 /turf/open/floor/mineral/plastitanium,
@@ -1381,7 +1361,9 @@
 /turf/open/floor/plasteel/blue,
 /area/awaymission/spacebattle/cruiser)
 "eQ" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "eR" = (
@@ -1494,10 +1476,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "fk" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "fl" = (
 /obj/machinery/door/airlock/external,
@@ -1939,9 +1918,7 @@
 /area/awaymission/spacebattle/cruiser)
 "gE" = (
 /obj/effect/decal/cleanable/blood,
-/turf/closed/wall/shuttle{
-	icon_state = "swall3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "gF" = (
 /obj/effect/mob_spawn/human/doctor{
@@ -2104,7 +2081,9 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "hi" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate7)
 "hj" = (
@@ -2163,7 +2142,9 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/spacebattle/cruiser)
 "hu" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate7)
 "hv" = (
@@ -2228,10 +2209,7 @@
 	},
 /area/awaymission/spacebattle/syndicate7)
 "hH" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "hI" = (
 /obj/structure/table/reinforced,
@@ -2333,18 +2311,14 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/spacebattle/cruiser)
 "ia" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "ib" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/spacebattle/cruiser)
 "ic" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "id" = (
 /obj/item/storage/firstaid/regular,
@@ -2960,7 +2934,9 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/spacebattle/cruiser)
 "ki" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kj" = (
@@ -2989,7 +2965,9 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "ko" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kp" = (
@@ -3006,7 +2984,9 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kr" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "ks" = (
@@ -3031,11 +3011,13 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kw" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/southwest,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 10
+	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kx" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "ky" = (
@@ -3043,7 +3025,9 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kz" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/corner,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 6
+	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kA" = (
@@ -3113,6 +3097,10 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
+"kM" = (
+/obj/effect/mapping_helpers/planet_z,
+/turf/closed/mineral/random,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -3369,7 +3357,7 @@ aa
 aa
 aa
 aa
-aa
+kM
 "}
 (2,1,1) = {"
 aa
@@ -38189,17 +38177,17 @@ bT
 cd
 bT
 bT
-eF
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
-eQ
+cY
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
+eb
 ha
 bT
 bT
@@ -48225,7 +48213,7 @@ jS
 jS
 bT
 kd
-ko
+ki
 ix
 ab
 ab
@@ -48739,7 +48727,7 @@ jS
 jS
 bT
 kd
-ko
+ki
 kr
 kx
 ab
@@ -49253,7 +49241,7 @@ jS
 jS
 bT
 kd
-ko
+ki
 kr
 kx
 ab
@@ -49767,7 +49755,7 @@ jS
 jS
 bT
 kd
-ko
+ki
 kr
 kz
 ab

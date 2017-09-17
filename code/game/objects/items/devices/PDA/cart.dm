@@ -134,7 +134,7 @@
 	access = CART_REAGENT_SCANNER | CART_ATMOS
 
 /obj/item/cartridge/signal/Initialize()
-	..()
+	. = ..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
 
@@ -183,7 +183,7 @@
 	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
 
 /obj/item/cartridge/rd/Initialize()
-	..()
+	. = ..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/cartridge/captain
@@ -302,7 +302,7 @@ Code:
 						var/obj/machinery/power/apc/A = term.master
 						L += A
 
-				menu += "<PRE>Total power: [powmonitor.attached.powernet.viewavail] W<BR>Total load:  [num2text(powmonitor.attached.powernet.viewload,10)] W<BR>"
+				menu += "<PRE>Total power: [DisplayPower(powmonitor.attached.powernet.viewavail)]<BR>Total load:  [DisplayPower(powmonitor.attached.powernet.viewload)]<BR>"
 
 				menu += "<FONT SIZE=-1>"
 
@@ -314,7 +314,7 @@ Code:
 
 					for(var/obj/machinery/power/apc/A in L)
 						menu += copytext(add_tspace(A.area.name, 30), 1, 30)
-						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(DisplayPower(A.lastused_total), 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 				menu += "</FONT></PRE>"
 
@@ -437,14 +437,14 @@ Code:
 			switch(SSshuttle.supply.mode)
 				if(SHUTTLE_CALL)
 					menu += "Moving to "
-					if(SSshuttle.supply.z != ZLEVEL_STATION)
+					if(!(SSshuttle.supply.z in GLOB.station_z_levels))
 						menu += "station"
 					else
 						menu += "centcom"
 					menu += " ([SSshuttle.supply.timeLeft(600)] Mins)"
 				else
 					menu += "At "
-					if(SSshuttle.supply.z != ZLEVEL_STATION)
+					if(!(SSshuttle.supply.z in GLOB.station_z_levels))
 						menu += "centcom"
 					else
 						menu += "station"

@@ -144,8 +144,7 @@
 /area/shuttle/escape)
 "aB" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -198,7 +197,7 @@
 	dir = 8;
 	dwidth = 6;
 	height = 18;
-	port_angle = 90;
+	port_direction = 4;
 	width = 14;
 	timid = 1;
 	name = "Birdboat emergency escape shuttle"

@@ -47,10 +47,13 @@
 		create()
 	else
 		GLOB.poi_list |= src
+		LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/effect/mob_spawn/Destroy()
-	GLOB.poi_list.Remove(src)
-	. = ..()
+	GLOB.poi_list -= src
+	var/list/spawners = GLOB.mob_spawners[name]
+	LAZYREMOVE(spawners, src)
+	return ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return

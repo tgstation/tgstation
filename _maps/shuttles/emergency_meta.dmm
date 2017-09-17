@@ -13,10 +13,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ae" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "af" = (
 /obj/machinery/door/airlock/titanium{
@@ -42,10 +39,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ai" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
 /turf/open/space,
@@ -55,10 +49,7 @@
 	},
 /area/shuttle/escape)
 "ak" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "al" = (
 /obj/structure/table,
@@ -246,9 +237,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aD" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/chair{
@@ -293,9 +282,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aM" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall2"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aN" = (
 /obj/machinery/status_display{
@@ -367,16 +354,10 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aU" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aV" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aW" = (
 /obj/machinery/door/airlock/command{
@@ -387,10 +368,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aX" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/door/airlock/glass_security{
@@ -419,10 +397,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bc" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/chair{
@@ -502,10 +477,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "br" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bs" = (
 /obj/structure/chair{

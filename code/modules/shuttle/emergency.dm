@@ -183,7 +183,7 @@
 	width = 22
 	height = 11
 	dir = EAST
-	port_angle = -90
+	port_direction = WEST
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 
@@ -290,7 +290,7 @@
 		if(SHUTTLE_CALL)
 			if(time_left <= 0)
 				//move emergency shuttle to station
-				if(dock(SSshuttle.getDock("emergency_home")))
+				if(dock(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
 					setTimer(20)
 					return
 				mode = SHUTTLE_DOCKED
@@ -300,15 +300,6 @@
 				if(SSdbcore.Connect())
 					var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shuttle_name = '[name]' WHERE id = [GLOB.round_id]")
 					query_round_shuttle_name.Execute()
-
-				// Gangs only have one attempt left if the shuttle has
-				// docked with the station to prevent suffering from
-				// endless dominator delays
-				for(var/datum/gang/G in SSticker.mode.gangs)
-					if(G.is_dominating)
-						G.dom_attempts = 0
-					else
-						G.dom_attempts = min(1,G.dom_attempts)
 
 
 		if(SHUTTLE_DOCKED)

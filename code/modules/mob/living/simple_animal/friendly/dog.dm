@@ -28,7 +28,6 @@
 	var/shaved = 0
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
-	var/facehugger
 	var/nofur = 0 		//Corgis that have risen past the material plane of existence.
 	gold_core_spawnable = 2
 
@@ -327,32 +326,43 @@
 	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Read_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
-	S["age"] 			>> age
-	S["record_age"]		>> record_age
-	S["saved_head"] 	>> saved_head
-
+	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
+		S["age"] 		>> age
+		S["record_age"]	>> record_age
+		S["saved_head"] >> saved_head
+		fdel("data/npc_saves/Ian.sav")
+	else
+		var/json_file = file("data/npc_saves/Ian.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		age = json["age"]
+		record_age = json["record_age"]
+		saved_head = json["saved_head"]
 	if(isnull(age))
 		age = 0
 	if(isnull(record_age))
 		record_age = 1
-
 	if(saved_head)
 		place_on_head(new saved_head)
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Write_Memory(dead)
-	var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
+	var/json_file = file("data/npc_saves/Ian.json")
+	var/list/file_data = list()
 	if(!dead)
-		WRITE_FILE(S["age"], age + 1)
+		file_data["age"] = age + 1
 		if((age + 1) > record_age)
-			WRITE_FILE(S["record_age"], record_age + 1)
+			file_data["record_age"] = record_age + 1
 		if(inventory_head)
-			WRITE_FILE(S["saved_head"], inventory_head.type)
+			file_data["saved_head"] = inventory_head.type
 	else
-		WRITE_FILE(S["age"], 0)
-		WRITE_FILE(S["saved_head"], null)
+		file_data["age"] = 0
+		file_data["saved_head"] = null
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
 	memory_saved = 1
-
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	..()
@@ -451,13 +461,6 @@
 			back_icon = DF.get_overlay()
 		add_overlay(back_icon)
 
-	if(facehugger)
-		var/mutable_appearance/facehugger_overlay = mutable_appearance('icons/mob/mask.dmi')
-		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))
-			facehugger_overlay.icon_state = "facehugger_corgipuppy"
-		else
-			facehugger_overlay.icon_state = "facehugger_corgi"
-		add_overlay(facehugger_overlay)
 	if(pcollar)
 		add_overlay(collar)
 		add_overlay(pettag)

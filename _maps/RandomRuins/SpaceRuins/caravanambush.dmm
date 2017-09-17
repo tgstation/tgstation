@@ -590,9 +590,9 @@
 "bW" = (
 /obj/structure/closet/crate/secure/gear,
 /obj/item/ammo_box/c10mm,
-/obj/item/ammo_casing/shotgun/meteorshot,
-/obj/item/ammo_casing/shotgun/meteorshot,
-/obj/item/ammo_casing/shotgun/meteorshot,
+/obj/item/ammo_casing/shotgun/meteorslug,
+/obj/item/ammo_casing/shotgun/meteorslug,
+/obj/item/ammo_casing/shotgun/meteorslug,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "bX" = (
@@ -815,8 +815,8 @@
 /area/ruin/unpowered)
 "cC" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cD" = (

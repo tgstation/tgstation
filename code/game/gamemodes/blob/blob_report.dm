@@ -19,7 +19,7 @@
 			var/nukecode = random_nukecode()
 			for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 				if(bomb && bomb.r_code)
-					if(bomb.z == ZLEVEL_STATION)
+					if(bomb.z in GLOB.station_z_levels)
 						bomb.r_code = nukecode
 
 			intercepttext += "<FONT size = 3><b>Nanotrasen Update</b>: Biohazard Alert.</FONT><HR>"
@@ -91,7 +91,7 @@
 	if(count_territories)
 		var/list/valid_territories = list()
 		for(var/area/A in world) //First, collect all area types on the station zlevel
-			if(A.z == ZLEVEL_STATION)
+			if(A.z in GLOB.station_z_levels)
 				if(!(A.type in valid_territories) && A.valid_territory)
 					valid_territories |= A.type
 		if(valid_territories.len)

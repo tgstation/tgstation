@@ -31,7 +31,7 @@
 	during December to Feburary, so we should try to be frugal with the next shipment.<br><br><b>November 20th</b><br>Final shipment from central for the next few months. Going outside
 	for more than 10-15 minutes without losing feeling in your fingers is difficult. We've finally gotten a signal on the radio, it's mostly some weird static though. One of the researchers is trying to decypher it.
 	<br><br><b>December 10th</b><br>Signal has gotten much stronger, it almost seems like it's coming from under us according to what the researcher managed to decypher. We're waiting from the go from central before investigating.<br><br>
-	<i>The rest of the paper seems to be a mixture of scribbles and smudged ink.</i> "}
+	<i>The rest of the paper seems to be a mixture of scribbles and smudged ink.</i>"}
 
 /obj/item/paper/fluff/awaymissions/snowdin/log2
 	name = "Activity Log"
@@ -41,7 +41,7 @@
 	<b>September 20th</b><br>Another shipment arrival, standard shit. Our radios have been picking up a weird signal during the nights recently, we've sent the transcripts over to the northern
 	base to be decyphered. Probably some drunk russians or something equally stupid.<br><br><b>November 24th</b><br>We've lost communications with the northern base after recieving the last
 	shipment of supplies. The snow has really kicked up recently, shits almost like a constant blizzard right now. Maybe it'll drop down soon so we can get a word in.<br><br>
-	<i>The rest of the paper seems to be a mixture of scribbles and smudged ink.</i> "}
+	<i>The rest of the paper seems to be a mixture of scribbles and smudged ink.</i>"}
 
 /obj/item/paper/fluff/awaymissions/snowdin/secnotice
 	name = "Security Notice"

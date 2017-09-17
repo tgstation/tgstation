@@ -350,7 +350,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Mining Drone Bay APC";
 	pixel_y = 24
@@ -848,7 +847,6 @@
 	d2 = 4
 	},
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Bridge APC";
 	pixel_y = 24
@@ -1227,10 +1225,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "dc" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;

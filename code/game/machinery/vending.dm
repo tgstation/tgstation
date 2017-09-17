@@ -869,7 +869,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	products = list(/obj/item/reagent_containers/syringe = 12, /obj/item/reagent_containers/dropper = 3, /obj/item/stack/medical/gauze = 8, /obj/item/reagent_containers/pill/patch/styptic = 5, /obj/item/reagent_containers/pill/insulin = 10,
 				/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/glass/bottle/charcoal = 4, /obj/item/reagent_containers/spray/medical/sterilizer = 1,
 				/obj/item/reagent_containers/glass/bottle/epinephrine = 4, /obj/item/reagent_containers/glass/bottle/morphine = 4, /obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
-				/obj/item/reagent_containers/glass/bottle/toxin = 3, /obj/item/reagent_containers/syringe/antiviral = 6, /obj/item/reagent_containers/pill/salbutamol = 2, /obj/item/device/healthanalyzer = 4, /obj/item/device/sensor_device = 2)
+				/obj/item/reagent_containers/glass/bottle/toxin = 3, /obj/item/reagent_containers/syringe/antiviral = 6, /obj/item/reagent_containers/pill/salbutamol = 2, /obj/item/device/healthanalyzer = 4, /obj/item/device/sensor_device = 2, /obj/item/pinpointer/crew = 2)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3, /obj/item/reagent_containers/pill/morphine = 4, /obj/item/reagent_containers/pill/charcoal = 6)
 	premium = list(/obj/item/storage/box/hug/medical = 1, /obj/item/reagent_containers/hypospray/medipen = 3, /obj/item/storage/belt/medical = 3, /obj/item/wrench/medical = 1)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
@@ -1151,20 +1151,47 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	products = list(/obj/item/gun/ballistic/automatic/toy/unrestricted = 10,
 					/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted = 10,
 					/obj/item/gun/ballistic/shotgun/toy/unrestricted = 10,
-					/obj/item/toy/sword = 10, /obj/item/ammo_box/foambox = 20,
+					/obj/item/toy/sword = 10,
+					/obj/item/ammo_box/foambox = 20,
 					/obj/item/toy/foamblade = 10,
 					/obj/item/toy/syndicateballoon = 10,
 					/obj/item/clothing/suit/syndicatefake = 5,
 					/obj/item/clothing/head/syndicatefake = 5) //OPS IN DORMS oh wait it's just a assistant
 	contraband = list(/obj/item/gun/ballistic/shotgun/toy/crossbow = 10,   //Congrats, you unlocked the +18 setting!
-						/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted = 10,
-						/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted = 10,
+						/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot = 10,
+						/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot = 10,
 						/obj/item/ammo_box/foambox/riot = 20,
 						/obj/item/toy/katana = 10,
 						/obj/item/twohanded/dualsaber/toy = 5,
 						/obj/item/toy/cards/deck/syndicate = 10) //Gambling and it hurts, making it a +18 item
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/vending_refill/donksoft
+
+/obj/machinery/vending/donksofttoyvendor
+	name = "\improper Donksoft Toy Vendor"
+	desc = "Ages 8 and up approved vendor that dispenses toys."
+	icon_state = "syndi"
+	product_slogans = "Get your cool toys today!;Trigger a valid hunter today!;Quality toy weapons for cheap prices!;Give them to HoPs for all access!;Give them to HoS to get perma briged!"
+	product_ads = "Feel robust with your toys!;Express your inner child today!;Toy weapons don't kill people, but valid hunters do!;Who needs responsibilities when you have toy weapons?;Make your next murder FUN!"
+	vend_reply = "Come back for more!"
+	products = list(/obj/item/gun/ballistic/automatic/toy/unrestricted = 10,
+					/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted = 10,
+					/obj/item/gun/ballistic/shotgun/toy/unrestricted = 10,
+					/obj/item/toy/sword = 10,
+					/obj/item/ammo_box/foambox = 20,
+					/obj/item/toy/foamblade = 10,
+					/obj/item/toy/syndicateballoon = 10,
+					/obj/item/clothing/suit/syndicatefake = 5,
+					/obj/item/clothing/head/syndicatefake = 5)
+	contraband = list(/obj/item/gun/ballistic/shotgun/toy/crossbow = 10,
+						/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted = 10,
+						/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted = 10,
+						/obj/item/toy/katana = 10,
+						/obj/item/twohanded/dualsaber/toy = 5)
+	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/vending_refill/donksoft
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE

@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(GLOB.teleportlocs[AR.name])
 			continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
-		if (picked && (picked.z == ZLEVEL_STATION))
+		if (picked && (picked.z in GLOB.station_z_levels))
 			GLOB.teleportlocs[AR.name] = AR
 
 	sortTim(GLOB.teleportlocs, /proc/cmp_text_dsc)
@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
 		dynamic_lighting = config.starlight ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
 
-	..()
+	. = ..()
 
 	power_change()		// all machines set to current power level, also updates icon
 

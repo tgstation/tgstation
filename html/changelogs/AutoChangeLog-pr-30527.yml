@@ -1,0 +1,4 @@
+author: "More Robust Than you"
+delete-after: True
+changes: 
+  - balance: "Blobbernauts are healed quicker by cores and nodes"

@@ -19,16 +19,9 @@
 
 /obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = 0)
 	if(..())
-		if((target.mind in (SSticker.mode.head_revolutionaries | SSticker.mode.get_gang_bosses())))
+		if((target.mind in (SSticker.mode.head_revolutionaries)))
 			if(!silent)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
-			removed(target, 1)
-			qdel(src)
-			return 0
-		if(target.mind in SSticker.mode.get_gangsters())
-			SSticker.mode.remove_gangster(target.mind)
-			if(!silent)
-				target.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
 			removed(target, 1)
 			qdel(src)
 			return 0

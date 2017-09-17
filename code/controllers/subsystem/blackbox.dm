@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(blackbox)
 		if(M.client)
 			playercount += 1
 	var/admincount = GLOB.admins.len
-	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
+	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port, round_id) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]')")
 	query_record_playercount.Execute()
 
 	if(config.use_exp_tracking)
@@ -185,8 +185,7 @@ SUBSYSTEM_DEF(blackbox)
 		return
 	if(!L || !L.key || !L.mind)
 		return
-	var/turf/T = get_turf(L)
-	var/area/placeofdeath = get_area(T.loc)
+	var/area/placeofdeath = get_area(L)
 	var/sqlname = sanitizeSQL(L.real_name)
 	var/sqlkey = sanitizeSQL(L.ckey)
 	var/sqljob = sanitizeSQL(L.mind.assigned_role)
@@ -227,7 +226,7 @@ SUBSYSTEM_DEF(blackbox)
 /datum/feedback_variable
 	var/variable
 	var/value
-	var/details
+	var/list/details
 
 /datum/feedback_variable/New(param_variable, param_value = 0)
 	variable = param_variable
@@ -266,16 +265,16 @@ SUBSYSTEM_DEF(blackbox)
 	return variable
 
 /datum/feedback_variable/proc/set_details(deets)
-	details = "\"[deets]\""
+	details = list("\"[deets]\"")
 
 /datum/feedback_variable/proc/add_details(deets)
 	if (!details)
 		set_details(deets)
 	else
-		details += " | \"[deets]\""
+		details += "\"[deets]\""
 
 /datum/feedback_variable/proc/get_details()
-	return details
+	return details.Join(" | ")
 
 /datum/feedback_variable/proc/get_parsed()
-	return list(variable,value,details)
+	return list(variable,value,details.Join(" | "))

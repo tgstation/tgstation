@@ -40,7 +40,7 @@
 	M.do_attack_animation(src)
 	if(!M.environment_smash)
 		return
-	if(M.environment_smash == 3)
+	if(M.environment_smash & ENVIRONMENT_SMASH_RWALLS)
 		dismantle_wall(1)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 	else
@@ -247,6 +247,7 @@
 		icon_state = "r_wall"
 
 /turf/closed/wall/r_wall/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		if(prob(30))
 			dismantle_wall()

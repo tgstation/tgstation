@@ -67,6 +67,9 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
+	if(music.len > 1)
+		music -= old_login_music
 	login_music = pick(music)
 
 	if(!GLOB.syndicate_code_phrase)
@@ -131,7 +134,8 @@ SUBSYSTEM_DEF(ticker)
 
 			if(!mode.explosion_in_progress && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
-				toggle_ooc(1) // Turn it on
+				toggle_ooc(TRUE) // Turn it on
+				toggle_dooc(TRUE)
 				declare_completion(force_ending)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
@@ -158,6 +162,8 @@ SUBSYSTEM_DEF(ticker)
 				to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 				return 0
 			mode = pickweight(runnable_modes)
+			if(!mode)	//too few roundtypes all run too recently
+				mode = pick(runnable_modes)
 
 	else
 		mode = config.pick_mode(GLOB.master_mode)
@@ -197,7 +203,7 @@ SUBSYSTEM_DEF(ticker)
 		mode.announce()
 
 	if(!config.ooc_during_round)
-		toggle_ooc(0) // Turn it off
+		toggle_ooc(FALSE) // Turn it off
 
 	CHECK_TICK
 	GLOB.start_landmarks_list = shuffle(GLOB.start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
@@ -233,10 +239,10 @@ SUBSYSTEM_DEF(ticker)
 
 	PostSetup()
 
-	return 1
+	return TRUE
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
-	set waitfor = 0
+	set waitfor = FALSE
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count(1)
@@ -309,10 +315,6 @@ SUBSYSTEM_DEF(ticker)
 					sleep(20)
 					flick("station_corrupted",cinematic)
 					SEND_SOUND(world, sound('sound/effects/ghost.ogg'))
-					actually_blew_up = FALSE
-				if("gang war") //Gang Domination (just show the override screen)
-					cinematic.icon_state = "intro_malf_still"
-					flick("intro_malf",cinematic)
 					actually_blew_up = FALSE
 					sleep(70)
 				if("fake") //The round isn't over, we're just freaking people out for fun
@@ -387,7 +389,7 @@ SUBSYSTEM_DEF(ticker)
 		if(bomb && bomb.loc)
 			bombloc = bomb.z
 		else if(!station_missed)
-			bombloc = ZLEVEL_STATION
+			bombloc = ZLEVEL_STATION_PRIMARY
 
 		if(mode)
 			mode.explosion_in_progress = 0
@@ -465,8 +467,9 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
+	var/nocredits = config.no_credits_round_end
 	for(var/client/C in GLOB.clients)
-		if(!C.credits)
+		if(!C.credits && !nocredits)
 			C.RollCredits()
 		C.playtitlemusic(40)
 
@@ -518,7 +521,7 @@ SUBSYSTEM_DEF(ticker)
 
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in GLOB.mob_list)
-		if (aiPlayer.stat != 2 && aiPlayer.mind)
+		if (aiPlayer.stat != DEAD && aiPlayer.mind)
 			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
 			aiPlayer.show_laws(1)
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
@@ -538,7 +541,7 @@ SUBSYSTEM_DEF(ticker)
 
 	for (var/mob/living/silicon/robot/robo in GLOB.mob_list)
 		if (!robo.connected_ai && robo.mind)
-			if (robo.stat != 2)
+			if (robo.stat != DEAD)
 				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
 			else
 				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>")
@@ -724,10 +727,6 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [station_name()] are, in fact, a hoax. Have a secure day!"
 		if(STATION_EVACUATED)
 			news_message = "The crew of [station_name()] has been evacuated amid unconfirmed reports of enemy activity."
-		if(GANG_LOSS)
-			news_message = "Organized crime aboard [station_name()] has been stamped out by members of our ever vigilant security team. Remember to thank your assigned officers today!"
-		if(GANG_TAKEOVER)
-			news_message = "Contact with [station_name()] has been lost after a sophisticated hacking attack by organized criminal elements. Stay vigilant!"
 		if(BLOB_WIN)
 			news_message = "[station_name()] was overcome by an unknown biological outbreak, killing all crew on board. Don't let it happen to you! Remember, a clean work station is a safe work station."
 		if(BLOB_NUKE)
@@ -850,3 +849,4 @@ SUBSYSTEM_DEF(ticker)
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))
+	text2file(login_music, "data/last_round_lobby_music.txt")
