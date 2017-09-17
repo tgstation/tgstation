@@ -27,10 +27,7 @@
 /area/space)
 "aag" = (
 /obj/structure/lattice,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/space,
 /area/space)
 "aah" = (
@@ -235,6 +232,8 @@
 "aaz" = (
 /obj/machinery/computer/card,
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkred/side{
@@ -374,6 +373,8 @@
 "aaL" = (
 /obj/machinery/computer/monitor,
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkyellow/side{
@@ -398,6 +399,8 @@
 	name = "command camera"
 	},
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
@@ -436,7 +439,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -493,6 +495,8 @@
 	name = "command camera"
 	},
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
@@ -524,6 +528,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
@@ -581,6 +587,8 @@
 /area/bridge)
 "abb" = (
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -698,6 +706,8 @@
 	dir = 10
 	},
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
@@ -1911,7 +1921,6 @@
 /area/quartermaster/storage)
 "adp" = (
 /obj/machinery/status_display{
-	density = 0;
 	name = "cargo display";
 	supply_display = 1
 	},
@@ -2806,7 +2815,6 @@
 /area/crew_quarters/heads/hop)
 "aeP" = (
 /obj/machinery/status_display{
-	density = 0;
 	name = "cargo display";
 	pixel_x = -32;
 	supply_display = 1
@@ -3028,8 +3036,7 @@
 /area/crew_quarters/heads/captain/private)
 "afo" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/item/device/radio/intercom{
 	dir = 8;
@@ -4526,9 +4533,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "ahE" = (
-/obj/machinery/computer/security/wooden_tv{
-	density = 0
-	},
+/obj/machinery/computer/security/wooden_tv,
 /obj/structure/table/wood,
 /obj/machinery/button/door{
 	id = "detectivewindows";
@@ -4600,9 +4605,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "ahK" = (
-/obj/machinery/computer/security/wooden_tv{
-	density = 0
-	},
+/obj/machinery/computer/security/wooden_tv,
 /obj/structure/table/wood,
 /obj/machinery/button/door{
 	id = "captainhall";
@@ -5671,8 +5674,7 @@
 	dir = 10
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/machinery/camera{
 	c_tag = "Central Hallway North-East";
@@ -6789,8 +6791,7 @@
 /area/hallway/primary/central)
 "alm" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/machinery/light{
 	dir = 8
@@ -7489,8 +7490,7 @@
 	},
 /obj/machinery/light,
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
@@ -8103,8 +8103,7 @@
 /area/security/brig)
 "anF" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/machinery/door_timer{
 	id = "brig2";
@@ -9990,8 +9989,7 @@
 /area/security/brig)
 "aqP" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -10913,8 +10911,7 @@
 /area/crew_quarters/bar/atrium)
 "ase" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
@@ -12050,7 +12047,6 @@
 	},
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -13084,8 +13080,7 @@
 	pixel_x = 24
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
@@ -13794,8 +13789,7 @@
 	pixel_y = 32
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -15815,7 +15809,6 @@
 "aBl" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -16918,7 +16911,6 @@
 "aDm" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -17035,8 +17027,7 @@
 /area/hallway/primary/central)
 "aDB" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 5
@@ -17683,8 +17674,7 @@
 /area/crew_quarters/dorms)
 "aEL" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/machinery/status_display{
 	pixel_y = -32
@@ -18988,6 +18978,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -19032,8 +19024,7 @@
 	req_access_txt = "10"
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -19605,8 +19596,7 @@
 /area/crew_quarters/bar/atrium)
 "aHU" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/structure/sign/poster/random{
 	pixel_x = 32
@@ -19653,8 +19643,7 @@
 /area/hallway/primary/central)
 "aHZ" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -20303,7 +20292,6 @@
 "aJg" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -21900,8 +21888,7 @@
 	icon_state = "1-4"
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
@@ -22140,8 +22127,7 @@
 /area/hallway/primary/central)
 "aMz" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 8
@@ -23144,8 +23130,7 @@
 /area/hallway/primary/central)
 "aOm" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/redyellow/side{
 	dir = 9
@@ -24270,8 +24255,7 @@
 /area/hallway/primary/central)
 "aPX" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -24545,8 +24529,7 @@
 /area/hallway/primary/central)
 "aQA" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/machinery/newscaster{
 	pixel_y = -32
@@ -25370,8 +25353,7 @@
 	icon_state = "0-2"
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/machinery/camera{
 	c_tag = "Chemistry";
@@ -27606,7 +27588,6 @@
 "aWR" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -27877,8 +27858,7 @@
 /area/medical/medbay/zone3)
 "aXu" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/machinery/button/door{
 	desc = "A remote control switch for the medbay foyer.";
@@ -28401,8 +28381,7 @@
 /area/science/research)
 "aYp" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
@@ -30110,8 +30089,7 @@
 /area/medical/medbay/zone3)
 "bbs" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/medical/medbay/zone3)
@@ -32043,6 +32021,8 @@
 /area/maintenance/port)
 "beX" = (
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -32986,7 +32966,6 @@
 "bgy" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -33653,7 +33632,6 @@
 "bhL" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -33741,7 +33719,6 @@
 "bhU" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -35088,7 +35065,6 @@
 "bkq" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -35109,7 +35085,6 @@
 "bks" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -35199,7 +35174,6 @@
 "bkE" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -35221,7 +35195,6 @@
 "bkH" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -35247,7 +35220,6 @@
 "bkK" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -35521,6 +35493,8 @@
 	network = list("SS13")
 	},
 /obj/structure/cable/white{
+	d1 = 2;
+	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -35764,8 +35738,7 @@
 	dir = 1
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
@@ -35796,8 +35769,7 @@
 /area/hallway/secondary/exit)
 "bmw" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
@@ -37374,6 +37346,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -37441,8 +37415,7 @@
 	dir = 4
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/structure/cable/white{
 	d1 = 4;
@@ -37466,6 +37439,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37475,6 +37450,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37484,6 +37461,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37493,6 +37472,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37517,6 +37498,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37526,6 +37509,8 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37635,6 +37620,8 @@
 /area/hallway/secondary/exit)
 "bsU" = (
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -37650,6 +37637,8 @@
 /area/hallway/secondary/exit)
 "bsW" = (
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,

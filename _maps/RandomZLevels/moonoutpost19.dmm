@@ -1922,11 +1922,7 @@
 	name = "Syndicate Outpost"
 	})
 "cG" = (
-/obj/structure/grille{
-	density = 0;
-	broken = 1;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/stack/rods,
 /obj/item/stack/rods,
 /obj/item/shard,
@@ -4885,11 +4881,7 @@
 	name = "MO19 Research"
 	})
 "gE" = (
-/obj/structure/grille{
-	density = 0;
-	broken = 1;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/stack/rods,
 /obj/item/stack/rods,
 /obj/item/shard,
@@ -5523,11 +5515,7 @@
 	name = "MO19 Research"
 	})
 "hx" = (
-/obj/structure/grille{
-	density = 0;
-	broken = 1;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/stack/rods,
 /obj/item/stack/rods,
 /obj/item/shard{
@@ -6778,7 +6766,6 @@
 "jq" = (
 /obj/item/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
-	layer = 4.1;
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel{
@@ -7787,11 +7774,7 @@
 	})
 "kP" = (
 /obj/item/stack/rods,
-/obj/structure/grille{
-	density = 0;
-	broken = 1;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/stack/rods,
 /obj/item/shard{
 	icon_state = "medium"
@@ -7805,11 +7788,7 @@
 	name = "MO19 Arrivals"
 	})
 "kQ" = (
-/obj/structure/grille{
-	density = 0;
-	broken = 1;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/stack/rods,
 /turf/open/floor/plating{
 	broken = 1;
@@ -9320,11 +9299,7 @@
 	name = "MO19 Arrivals"
 	})
 "ns" = (
-/obj/structure/grille{
-	density = 0;
-	broken = 1;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/stack/rods,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -9470,11 +9445,7 @@
 	poweralm = 0
 	})
 "nD" = (
-/obj/structure/grille{
-	density = 0;
-	broken = 1;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/stack/rods,
 /obj/item/shard,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -9809,7 +9780,6 @@
 "ob" = (
 /obj/item/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
-	layer = 4.1;
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -9933,11 +9903,7 @@
 	poweralm = 0
 	})
 "oj" = (
-/obj/structure/grille{
-	density = 0;
-	broken = 1;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
