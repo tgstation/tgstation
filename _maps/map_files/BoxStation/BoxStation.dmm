@@ -2422,8 +2422,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -3244,9 +3242,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /obj/item/reagent_containers/blood/empty,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 5
@@ -6124,7 +6120,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ank" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
@@ -6898,7 +6894,7 @@
 /area/security/detectives_office)
 "ape" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Vacant Office B";
 	req_access_txt = "32"
 	},
@@ -7054,7 +7050,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "apx" = (
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -8057,8 +8053,6 @@
 /area/lawoffice)
 "asa" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/red/corner{
@@ -8271,7 +8265,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "asy" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -8645,7 +8639,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "atB" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
@@ -9080,7 +9074,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "auG" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
@@ -9270,7 +9264,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "avf" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Chemical Storage";
 	req_access_txt = "12"
 	},
@@ -10052,7 +10046,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Electrical Maintenance";
 	req_access_txt = "11"
 	},
@@ -10228,7 +10222,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "axj" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -14799,8 +14793,6 @@
 /area/shuttle/arrival)
 "aHu" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/white/corner{
@@ -17310,8 +17302,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/bar,
@@ -18091,10 +18081,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aPE" = (
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /turf/closed/wall,
 /area/crew_quarters/locker)
 "aPF" = (
@@ -18206,10 +18193,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -18248,10 +18232,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -19445,8 +19426,6 @@
 "aTr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
@@ -21393,7 +21372,7 @@
 /turf/open/floor/carpet,
 /area/chapel/main)
 "aXX" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Vacant Office A";
 	req_access_txt = "32"
 	},
@@ -23450,8 +23429,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/blue/corner{
@@ -24399,10 +24376,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload)
 "bfw" = (
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload)
 "bfx" = (
@@ -26461,8 +26435,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /obj/machinery/aug_manipulator,
@@ -26546,7 +26518,6 @@
 /area/quartermaster/office)
 "bkx" = (
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = 2;
 	supply_display = 1
 	},
@@ -27431,8 +27402,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/brown/corner{
@@ -29902,7 +29871,7 @@
 	},
 /area/science/explab)
 "brE" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "0";
 	req_one_access_txt = "8;12"
 	},
@@ -30353,8 +30322,6 @@
 /area/medical/medbay/central)
 "bsz" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/white/side{
@@ -31908,7 +31875,6 @@
 	},
 /obj/machinery/light,
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = -30;
 	supply_display = 1
 	},
@@ -34176,7 +34142,6 @@
 	pixel_y = -35
 	},
 /obj/machinery/status_display{
-	density = 0;
 	pixel_x = -32;
 	supply_display = 1
 	},
@@ -36554,7 +36519,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bGo" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -37437,8 +37402,6 @@
 "bIe" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -38891,7 +38854,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bKU" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Construction Area";
 	req_access_txt = "32"
 	},
@@ -40580,7 +40543,6 @@
 "bOP" = (
 /obj/structure/table/glass,
 /obj/structure/reagent_dispensers/virusfood{
-	density = 0;
 	pixel_x = -30
 	},
 /obj/item/book/manual/wiki/infections{
@@ -41444,8 +41406,7 @@
 /area/science/misc_lab)
 "bQV" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -42578,7 +42539,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bTw" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
@@ -44802,7 +44763,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/port/aft)
 "bYy" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Incinerator Access";
 	req_access_txt = "12"
 	},
@@ -46152,7 +46113,7 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "cbv" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Research Delivery access";
 	req_access_txt = "12"
 	},
@@ -46297,7 +46258,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cbO" = (
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -46470,7 +46431,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Construction Area Maintenance";
 	req_access_txt = "32"
 	},
@@ -47843,7 +47804,7 @@
 /turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "cfs" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Air Supply Maintenance";
 	req_access_txt = "12"
 	},
@@ -47868,7 +47829,7 @@
 /turf/closed/wall/r_wall,
 /area/science/misc_lab)
 "cfv" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -50071,7 +50032,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ckm" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Biohazard Disposals";
 	req_access_txt = "12"
 	},
@@ -52694,8 +52655,6 @@
 	dir = 8
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -52745,7 +52704,7 @@
 /turf/open/space,
 /area/maintenance/disposal/incinerator)
 "cpR" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/abandoned{
 	name = "Observatory Access"
 	},
 /turf/open/floor/plating,
@@ -54591,13 +54550,8 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cup" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -54622,13 +54576,8 @@
 	},
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cur" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -54637,13 +54586,8 @@
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
 "cus" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -54680,13 +54624,8 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cuv" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -56052,8 +55991,6 @@
 	dir = 8
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -56607,7 +56544,7 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "cyL" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
@@ -56982,8 +56919,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -57581,13 +57516,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -57597,13 +57527,8 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
 "cAW" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -62595,7 +62520,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cNV" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "0";
 	req_one_access_txt = "8;12"
 	},
@@ -63919,6 +63844,30 @@
 	dir = 4
 	},
 /area/construction/mining/aux_base)
+"cTF" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cTG" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cTH" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cTI" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 
 (1,1,1) = {"
 aaa
@@ -83877,7 +83826,7 @@ bHE
 bYu
 bZk
 bCq
-bTz
+cTG
 bCq
 bCq
 bCq
@@ -85173,7 +85122,7 @@ bCq
 bCq
 bCq
 bCq
-bTz
+cTH
 bCq
 bLv
 bLv
@@ -86182,7 +86131,7 @@ bLv
 bPZ
 bHE
 bHE
-bTz
+cTF
 bHE
 bLv
 aoV
@@ -109849,7 +109798,7 @@ cmq
 ciI
 cnJ
 cri
-bYr
+cTI
 cmn
 cBT
 cBU

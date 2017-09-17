@@ -14,14 +14,17 @@
 	blend_mode       = BLEND_ADD
 
 	var/needs_update = FALSE
+	var/turf/myturf
 
 /atom/movable/lighting_object/Initialize(mapload)
 	. = ..()
 	verbs.Cut()
 
-	var/turf/T         = loc // If this runtimes atleast we'll know what's creating overlays in things that aren't turfs.
-	T.lighting_object = src
-	T.luminosity       = 0
+	myturf = loc
+	if (myturf.lighting_object)
+		qdel(myturf.lighting_object, force = TRUE)
+	myturf.lighting_object = src
+	myturf.luminosity = 0
 
 	for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
@@ -32,24 +35,26 @@
 /atom/movable/lighting_object/Destroy(var/force)
 	if (force)
 		GLOB.lighting_update_objects     -= src
-
-		var/turf/T   = loc
-		if (istype(T))
-			T.lighting_object = null
-			T.luminosity = 1
+		if (loc != myturf)
+			var/turf/oldturf = get_turf(myturf)
+			var/turf/newturf = get_turf(loc)
+			stack_trace("A lighting object was qdeleted with a different loc then it is suppose to have ([COORD(oldturf)] -> [COORD(newturf)])")
+		if (isturf(myturf))
+			myturf.lighting_object = null
+			myturf.luminosity = 1
+		myturf = null
 
 		return ..()
+
 	else
 		return QDEL_HINT_LETMELIVE
 
 /atom/movable/lighting_object/proc/update()
-	var/turf/T = loc
-	if (!istype(T)) // Erm...
+	if (loc != myturf)
 		if (loc)
-			warning("A lighting object realised its loc was NOT a turf (actual loc: [loc], [loc.type]) in update()!")
-
-		else
-			warning("A lighting object realised it was in nullspace in update()!")
+			var/turf/oldturf = get_turf(myturf)
+			var/turf/newturf = get_turf(loc)
+			warning("A lighting object realised it's loc had changed in update() ([myturf]\[[myturf ? myturf.type : "null"]]([COORD(oldturf)]) -> [loc]\[[ loc ? loc.type : "null"]]([COORD(newturf)]))!")
 
 		qdel(src, TRUE)
 		return
@@ -65,7 +70,7 @@
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
-	var/list/corners = T.corners
+	var/list/corners = myturf.corners
 	var/datum/lighting_corner/cr = dummy_lighting_corner
 	var/datum/lighting_corner/cg = dummy_lighting_corner
 	var/datum/lighting_corner/cb = dummy_lighting_corner

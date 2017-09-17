@@ -17,6 +17,12 @@
 	if(evidencebagEquip(I, user))
 		return 1
 
+/obj/item/evidencebag/handle_atom_del(atom/A)
+	cut_overlays()
+	w_class = initial(w_class)
+	icon_state = initial(icon_state)
+	desc = initial(desc)
+
 /obj/item/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
 	if(!istype(I) || I.anchored == 1)
 		return
