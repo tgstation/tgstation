@@ -327,3 +327,46 @@
 	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
 	steam.set_up(10, 0, mobloc)
 	steam.start()
+
+
+/obj/effect/proc_holder/spell/targeted/vampirize
+	name = "Lilith's Pact (500)"
+	desc = "You drain a victim's blood, and fill them with new blood, blessed by Lilith, turning them into a new vampire."
+	gain_desc = "You have gained the ability to force someone, given time, to become a vampire."
+	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
+	blood_used = 500
+	vamp_req = TRUE
+
+/obj/effect/proc_holder/spell/targeted/vampirize/cast(list/targets, mob/user = usr)
+	for(var/mob/living/carbon/target in targets)
+		if(is_vampire(target))
+			to_chat(user, "<span class='warning'>They're already a vampire!.</span>")
+			continue
+		target.visible_message("<span class='warning'>[user] latches onto [target]'s neck, and a pure dread eminates from them.</span>", "<span class='warning'>You latch onto [target]'s neck, preparing to transfer your unholy blood to them.</span>", "<span class='warning'>A dreadful feeling overcomes you</span>")
+		target.reagents.add_reagent("salbutamol", 40) //incase you're choking the victim
+		for(var/progress = 0, progress <= 4, progress++)
+			switch(progress)
+				if(1)
+					to_chat(target, "<span class='warning'>Visions of dread flood your vision...</span>")
+					to_chat(user, "<span class='notice'>We begin to drain [target]'s blood in, so Lilith can bless it.</span>")
+				if(2)
+					to_chat(target, "<span class='danger'>Demonic whispers fill your mind, and they become irressistible...</span>")
+				if(3)
+					to_chat(target, "<span class='danger'>The world blanks out, and you see a demo- no ange- demon- lil- glory- blessing... Lillith.</span>")
+					to_chat(user, "<span class='notice'>Excitement builds up in you as [target] sees the blessing of Lillith.</span>")
+				if(4)
+					to_chat(target, "<span class='italics'>Come to me, child.</span>")
+					sleep(10)
+					to_chat(target, "<span class='italics'>The world hasn't treated you well, has it?</span>")
+					sleep(15)
+					to_chat(target, "<span class='italics'>Strike fear into their hearts...</span>")
+			if(!do_mob(user, target, 70))
+				to_chat(user, "<span class='danger'>The pact has failed! [target] has not became a vampire.</span>")
+				to_chat(target, "<span class='notice'>The visions stop, and you relax.</span>")
+				return
+
+		to_chat(user, "<span class='notice italics bold'>They have signed the pact!</span>")
+		to_chat(target, "<span class='userdanger'>You sign Lilith's Pact.</span>")
+		target.mind.store_memory("<B>[user] showed you the glory of Lillith. <I>You are not required to respect or obey [user] in any way</I></B>")
+		add_vampire(target)

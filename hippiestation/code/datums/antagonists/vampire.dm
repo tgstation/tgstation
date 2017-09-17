@@ -14,15 +14,16 @@
 	var/list/upgrade_tiers = list(
 		/obj/effect/proc_holder/spell/self/rejuvenate = 0,
 		/obj/effect/proc_holder/spell/targeted/hypnotise = 0,
-		/datum/vampire_passive/vision = 200,
-		/obj/effect/proc_holder/spell/self/shapeshift = 200,
-		/obj/effect/proc_holder/spell/self/cloak = 250,
+		/datum/vampire_passive/vision = 175,
+		/obj/effect/proc_holder/spell/self/shapeshift = 175,
+		/obj/effect/proc_holder/spell/self/cloak = 225,
 		/obj/effect/proc_holder/spell/targeted/disease = 275,
 		/obj/effect/proc_holder/spell/bats = 350,
-		/obj/effect/proc_holder/spell/self/screech = 350,
+		/obj/effect/proc_holder/spell/self/screech = 315,
 		/datum/vampire_passive/regen = 425,
 		/obj/effect/proc_holder/spell/targeted/mistform = 500,
-		/datum/vampire_passive/full = 666)
+		/datum/vampire_passive/full = 666,
+		/obj/effect/proc_holder/spell/targeted/vampirize = 700)
 
 /datum/antagonist/vampire/on_gain()
 	give_objectives()
