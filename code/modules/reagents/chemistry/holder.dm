@@ -568,6 +568,8 @@ this has been modified and moved over to the hippie folder to allow for custom r
 			my_atom.on_reagent_change()
 		if(!no_react)
 			handle_reactions()
+		if(isliving(my_atom))
+			R.on_mob_add(my_atom)
 		return TRUE
 
 	else
