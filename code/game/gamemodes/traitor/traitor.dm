@@ -54,10 +54,7 @@
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
 
-
-	if(pre_traitors.len < required_enemies)
-		return 0
-	return 1
+	return pre_traitors.len > 0
 
 
 /datum/game_mode/traitor/post_setup()
