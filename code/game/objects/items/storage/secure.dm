@@ -15,6 +15,7 @@
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_opened = "secure0"
+	var/icon_fried = "securef"
 	var/locked = TRUE
 	var/code = ""
 	var/l_code = null
@@ -38,21 +39,21 @@
 				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
 			return
 		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
-			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
-			src.l_hacking = 1
-			if (do_after(usr, 100*W.toolspeed, target = src))
+			to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
+			l_hacking = TRUE
+			if (do_after(user, 100*W.toolspeed, target = user))
 				if (prob(33))
-					src.l_setshort = 1
-					src.l_set = 0
-					user.show_message("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
+					l_setshort = TRUE
+					l_set = 0
+					to_chat(user, "<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>")
 					sleep(80)
-					src.l_setshort = 0
-					src.l_hacking = 0
+					l_setshort = FALSE
+					l_hacking = FALSE
 				else
 					user.show_message("<span class='danger'>Unable to reset internal memory.</span>", 1)
-					src.l_hacking = 0
+					l_hacking = FALSE
 			else
-				src.l_hacking = 0
+				l_hacking = 0
 			return
 		//At this point you have exhausted all the special things to do when locked
 		// ... but it's still locked.
@@ -60,6 +61,20 @@
 
 	// -> storage/attackby() what with handle insertion, etc
 	return ..()
+
+/obj/item/storage/secure/emag_act(mob/user)
+	to_chat(user, "<span class='danger'>Now attempting to scramble internal memory.</span>")
+	l_hacking = TRUE
+	if (do_after(user, 50, target = user) && !emagged)
+		emagged = TRUE
+		code = null
+		l_set = 0
+		l_setshort = TRUE
+		l_hacking = FALSE
+		locked = FALSE
+		to_chat(user, "<span class='danger'>Internal memory is now fried. The locks have reset to their initial configuration.</span>")
+		cut_overlays()
+		add_overlay(icon_fried)
 
 /obj/item/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
@@ -179,6 +194,7 @@
 	icon_opened = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
+	icon_fried = "safef"
 	force = 8
 	w_class = WEIGHT_CLASS_GIGANTIC
 	max_w_class = 8
