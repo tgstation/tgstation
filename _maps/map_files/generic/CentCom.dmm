@@ -8589,7 +8589,7 @@
 /area/wizard_station)
 "wA" = (
 /obj/structure/destructible/cult/talisman{
-	desc = "A altar dedicated to the Wizard's Federation"
+	desc = "An altar dedicated to the Wizards' Federation"
 	},
 /obj/item/kitchen/knife/ritual,
 /turf/open/floor/engine/cult,
@@ -10415,7 +10415,7 @@
 /area/tdome/tdomeobserve)
 "Bj" = (
 /obj/structure/destructible/cult/forge{
-	desc = "A engine used in powering the wizards ship";
+	desc = "An engine used in powering the wizard's ship";
 	name = "magma engine"
 	},
 /turf/open/floor/engine/cult,
