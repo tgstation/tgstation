@@ -106,6 +106,9 @@
 	consume(A)
 	return
 
+/obj/singularity/Crossed(atom/A)
+	consume(A)
+	return
 
 /obj/singularity/CollidedWith(atom/movable/AM)
 	consume(AM)
