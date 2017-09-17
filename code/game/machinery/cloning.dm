@@ -370,6 +370,7 @@
 	for(var/fl in unattached_flesh)
 		qdel(fl)
 	unattached_flesh.Cut()
+	mob_occupant.update_action_buttons() 
 
 	occupant = null
 
