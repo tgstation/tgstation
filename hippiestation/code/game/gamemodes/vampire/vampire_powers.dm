@@ -345,7 +345,7 @@
 			continue
 		target.visible_message("<span class='warning'>[user] latches onto [target]'s neck, and a pure dread eminates from them.</span>", "<span class='warning'>You latch onto [target]'s neck, preparing to transfer your unholy blood to them.</span>", "<span class='warning'>A dreadful feeling overcomes you</span>")
 		target.reagents.add_reagent("salbutamol", 40) //incase you're choking the victim
-		for(var/progress = 0, progress <= 4, progress++)
+		for(var/progress = 0, progress <= 3, progress++)
 			switch(progress)
 				if(1)
 					to_chat(target, "<span class='warning'>Visions of dread flood your vision...</span>")
@@ -355,17 +355,17 @@
 				if(3)
 					to_chat(target, "<span class='danger'>The world blanks out, and you see a demo- no ange- demon- lil- glory- blessing... Lillith.</span>")
 					to_chat(user, "<span class='notice'>Excitement builds up in you as [target] sees the blessing of Lillith.</span>")
-				if(4)
-					to_chat(target, "<span class='italics'>Come to me, child.</span>")
-					sleep(10)
-					to_chat(target, "<span class='italics'>The world hasn't treated you well, has it?</span>")
-					sleep(15)
-					to_chat(target, "<span class='italics'>Strike fear into their hearts...</span>")
 			if(!do_mob(user, target, 70))
 				to_chat(user, "<span class='danger'>The pact has failed! [target] has not became a vampire.</span>")
 				to_chat(target, "<span class='notice'>The visions stop, and you relax.</span>")
 				return
 
+		to_chat(user, "<span class='notice'>. . .</span>")
+		to_chat(target, "<span class='italics'>Come to me, child.</span>")
+		sleep(10)
+		to_chat(target, "<span class='italics'>The world hasn't treated you well, has it?</span>")
+		sleep(15)
+		to_chat(target, "<span class='italics'>Strike fear into their hearts...</span>")
 		to_chat(user, "<span class='notice italics bold'>They have signed the pact!</span>")
 		to_chat(target, "<span class='userdanger'>You sign Lilith's Pact.</span>")
 		target.mind.store_memory("<B>[user] showed you the glory of Lillith. <I>You are not required to respect or obey [user] in any way</I></B>")
