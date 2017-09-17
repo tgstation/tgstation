@@ -130,7 +130,7 @@
 	loot = list()
 	for(var/path in subtypesof(/obj/effect/spawner/bundle/costume))
 		loot[path] = TRUE
-	..()
+	. = ..()
 
 // Minor lootdrops follow
 
