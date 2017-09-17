@@ -15,8 +15,8 @@
 	var/selected_scripture = SCRIPTURE_DRIVER
 	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
-	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/kindle, \
-	/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/abscond) //quickbound scripture, accessed by index
+	var/list/quickbound = list(/datum/clockwork_scripture/abscond, \
+	/datum/clockwork_scripture/ranged_ability/kindle, /datum/clockwork_scripture/ranged_ability/hateful_manacles) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 	var/recollection_category = "Default"
 
@@ -43,28 +43,28 @@
 	actions_types = list()
 
 /obj/item/clockwork/slab/cyborg/engineer //two scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission)
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission)
 
 /obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
 	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra)
 
 /obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
 
 /obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
 
 /obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
 	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor, /datum/clockwork_scripture/create_object/stargazer)
 
 /obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/stargazer, \
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/stargazer, \
 	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
 /obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	if(!GLOB.ratvar_awakens)

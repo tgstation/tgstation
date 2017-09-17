@@ -287,8 +287,10 @@ Credit where due:
 	<hr>\
 	<h2>Things that have changed:</h2>\
 	<ul>\
-	<li>The <b>tinkerer's cache</b> scripture has been replaced with the <b>stargazer</b>, a cheap but <i>vital</i> generator that produces power \
-	when near starlight.</li>\
+	<li><b><i>Scripture no longer requires components, and instead uses power.</i></b></li>\
+	<li>Added a <b>5-minute grace period</b> for the crew to prepare for the assault when the Ark activates.</li>\
+	<li>Script and Application scriptures can now be unlocked with enough power.</li>\
+	<li><b>Added the Hateful Manacles scripture</b>, which handcuffs targets!</li>\
 	</ul>\
 	<hr>\
 	<b>Good luck!</b>"

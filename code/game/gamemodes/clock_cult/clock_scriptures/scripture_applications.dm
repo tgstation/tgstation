@@ -65,28 +65,6 @@
 	quickbind_desc = "Creates a Mania Motor, which causes minor damage and negative mental effects in non-Servants."
 
 
-//Tinkerer's Daemon: Creates an efficient machine that rapidly produces components at a power cost.
-/datum/clockwork_scripture/create_object/tinkerers_daemon
-	descname = "Powered Structure, Component Generator"
-	name = "Tinkerer's Daemon"
-	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, active daemons are outnumbered by Servants by a ratio of 2:1, \
-	and there is at least one existing cache."
-	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
-	channel_time = 80
-	power_cost = 400
-	object_path = /obj/structure/destructible/clockwork/powered/tinkerers_daemon
-	creator_message = "<span class='brass'>You form a tinkerer's daemon which can rapidly collect components at a power cost.</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "Vital to your success!"
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	primary_component = REPLICANT_ALLOY
-	sort_priority = 3
-	quickbind = TRUE
-	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
-
-
 //Sigil of Transmission: Creates a sigil of transmission that can drain and store power for clockwork structures.
 /datum/clockwork_scripture/create_object/sigil_of_transmission
 	descname = "Structure Power Generator & Battery"
@@ -102,7 +80,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 4
+	sort_priority = 3
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
@@ -124,6 +102,6 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 5
+	sort_priority = 4
 	quickbind = TRUE
 	quickbind_desc = "Creates a Clockwork Obelisk, which can send messages or open Spatial Gateways with power."

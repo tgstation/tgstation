@@ -89,7 +89,7 @@
 
 /obj/structure/destructible/clockwork/heralds_beacon/proc/herald_the_justiciar()
 	priority_announce("A powerful group of fanatical zealots following the cause of Ratvar have brazenly sacrificed stealth for power, and dare anyone \
-	to try and stop them.", title = "The Justiciar Comes", sound = 'sound/ambience/antag/new_clock.ogg')
+	to try and stop them.", title = "The Justiciar Comes", sound = 'sound/magic/clockwork/ark_activation.ogg')
 	GLOB.ratvar_approaches = TRUE
 	available = FALSE
 	STOP_PROCESSING(SSprocessing, src)
@@ -101,3 +101,5 @@
 		C.update_values()
 		to_chat(C, C.empower_string)
 	SSshuttle.registerHostileEnvironment(GLOB.ark_of_the_clockwork_justiciar) //no leaving when we need to purge you, heretics
+	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+	G.grace_period = FALSE //no grace period if we've declared war

@@ -1,3 +1,5 @@
+#define ARK_GRACE_PERIOD 300 //In seconds, how long the crew has before the Ark truly "begins"
+
 //The gateway to Reebe, from which Ratvar emerges.
 /obj/structure/destructible/clockwork/massive/celestial_gateway
 	name = "\improper Ark of the Clockwork Justicar"
@@ -14,6 +16,7 @@
 	immune_to_servant_attacks = TRUE
 	var/active = FALSE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
+	var/grace_period = ARK_GRACE_PERIOD //This exists to allow the crew to gear up and prepare for the invasion
 	var/initial_activation_delay = -1 //How many seconds the Ark will have initially taken to activate
 	var/seconds_until_activation = -1 //How many seconds until the Ark activates; if it should never activate, set this to -1
 	var/purpose_fulfilled = FALSE
@@ -45,11 +48,9 @@
 	active = TRUE
 	priority_announce("Massive [Gibberish("bluespace", 100)] anomaly detected on all frequencies. All crew are directed to \
 	@!$, [text2ratvar("PURGE ALL UNTRUTHS")] <&. the anomalies and destroy their source to prevent further damage to corporate property. This is \
-	not a drill.", \
-	"Central Command Higher Dimensional Affairs", 'sound/ambience/antag/new_clock.ogg')
+	not a drill.[grace_period ? " Estimated time of appearance: [grace_period] seconds. Use this time to prepare." : ""]", \
+	"Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ark_activation.ogg')
 	set_security_level("delta")
-	for(var/V in GLOB.generic_event_spawns)
-		addtimer(CALLBACK(src, .proc/open_portal, get_turf(V)), rand(100, 600))
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
 		if(ishuman(M.current))
@@ -67,7 +68,8 @@
 	if(open_turfs.len)
 		for(var/mob/living/L in T)
 			L.forceMove(pick(open_turfs))
-	hierophant_message("<span class='bold large_brass'>The Ark has activated! Defend it at all costs!</span>", FALSE, src)
+	hierophant_message("<span class='bold large_brass'>The Ark has activated! [grace_period ? "You have [round(grace_period / 60)] minutes until the crew invades! " : ""]Defend it at all costs!</span>", FALSE, src)
+	direct_sound_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 15))
 	seconds_until_activation = 0
 	SSshuttle.registerHostileEnvironment(src)
 
@@ -125,6 +127,8 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
 	if(seconds_until_activation)
 		return "[seconds_until_activation][s_on_time ? "S" : ""]"
+	if(grace_period)
+		return "[grace_period][s_on_time ? "S" : ""]"
 	. = "IMMINENT"
 	if(!obj_integrity)
 		. = "DETONATING"
@@ -139,14 +143,17 @@
 		if(!active)
 			to_chat(user, "<span class='big'><b>Seconds until the Ark's activation:</b> [get_arrival_text(TRUE)]</span>")
 		else
-			to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
-			switch(progress_in_seconds)
-				if(-INFINITY to GATEWAY_REEBE_FOUND)
-					to_chat(user, "<span class='heavy_brass'>The Ark is feeding power into the bluespace field.</span>")
-				if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-					to_chat(user, "<span class='heavy_brass'>The field is ripping open a copy of itself in Ratvar's prison.</span>")
-				if(GATEWAY_RATVAR_COMING to INFINITY)
-					to_chat(user, "<span class='heavy_brass'>With the bluespace field established, Ratvar is preparing to come through!</span>")
+			if(grace_period)
+				to_chat(user, "<span class='big'><b>Crew grace period time remaining:</b> [get_arrival_text(TRUE)]</span>")
+			else
+				to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
+				switch(progress_in_seconds)
+					if(-INFINITY to GATEWAY_REEBE_FOUND)
+						to_chat(user, "<span class='heavy_brass'>The Ark is feeding power into the bluespace field.</span>")
+					if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
+						to_chat(user, "<span class='heavy_brass'>The field is ripping open a copy of itself in Ratvar's prison.</span>")
+					if(GATEWAY_RATVAR_COMING to INFINITY)
+						to_chat(user, "<span class='heavy_brass'>With the bluespace field established, Ratvar is preparing to come through!</span>")
 	else
 		if(!active)
 			to_chat(user, "<span class='warning'>Whatever it is, it doesn't seem to be active.</span>")
@@ -197,10 +204,15 @@
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
 				O.take_damage(50, BURN, "bomb")
 			O.update_icon()
+	if(grace_period)
+		grace_period--
+		return
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
 			if(!second_sound_played)
+				for(var/V in GLOB.generic_event_spawns)
+					addtimer(CALLBACK(src, .proc/open_portal, get_turf(V)), rand(100, 600))
 				direct_sound_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 30))
 				second_sound_played = TRUE
 			make_glow()
