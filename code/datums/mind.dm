@@ -655,21 +655,7 @@
 		sections["cult"] = text
 
 		/** VAMPIRE **/
-		text = "vampire"
-		if(SSticker.mode.config_tag == "vampire")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if(is_vampire(current))
-			text += "<b>VAMPIRE</b> <a href='?src=\ref[src];vampire=clear'>human</a>"
-		else
-			text += "<a href='?src=\ref[src];vampire=vampire'>vampire</a> | <b>HUMAN</b>"
-
-		if(current && current.client && (ROLE_VAMPIRE in current.client.prefs.be_special))
-			text += " | Enabled in Prefs"
-		else
-			text += " | Disabled in Prefs"
-
-		sections["vampire"] = text
+		sections["vampire"] = vampire_hook()
 
 
 	if(ishuman(current) || issilicon(current))
@@ -1173,18 +1159,7 @@
 					traitordatum.forge_traitor_objectives()
 					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 	else if(href_list["vampire"])
-		switch(href_list["vampire"])
-			if("clear")
-				remove_vampire(current)
-				message_admins("[key_name_admin(usr)] has de-vampired [current].")
-				log_admin("[key_name(usr)] has de-vampired [current].")
-			if("vampire")
-				if(!is_vampire(current))
-					message_admins("[key_name_admin(usr)] has vampired [current].")
-					log_admin("[key_name(usr)] has vampired [current].")
-					add_vampire(current)
-				else
-					to_chat(usr, "<span class='warning'>[current] is already a vampire!</span>")
+		vampire_href(href_list["vampire"], usr)
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
 			if("clear")

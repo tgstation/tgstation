@@ -222,11 +222,7 @@
 /obj/effect/proc_holder/spell/self/screech/cast(list/targets, mob/user = usr)
 	user.visible_message("<span class='warning'>[user] lets out an ear piercing shriek!</span>", "<span class='warning'>You let out a loud shriek.</span>", "<span class='warning'>You hear a loud painful shriek!</span>")
 	for(var/mob/living/carbon/C in hearers(4))
-		if(C == user)
-			continue
-		if(ishuman(C) && !C.get_ear_protection())
-			continue
-		if(is_vampire(C))
+		if(C == user || (ishuman(C) && !C.get_ear_protection()) || is_vampire(C))
 			continue
 		to_chat(C, "<span class='warning'><font size='3'><b>You hear a ear piercing shriek and your senses dull!</font></b></span>")
 		C.Knockdown(4)
@@ -320,13 +316,11 @@
 	new jaunt_in_type(mobloc, target.dir)
 	sleep(jaunt_in_time)
 	qdel(holder)
-	if(!QDELETED(target))
-		if(mobloc.density)
-			for(var/direction in GLOB.alldirs)
-				var/turf/T = get_step(mobloc, direction)
-				if(T)
-					if(target.Move(T))
-						break
+	if(!QDELETED(target) && mobloc.density)
+		for(var/direction in GLOB.alldirs)
+			var/turf/T = get_step(mobloc, direction)
+			if(T && target.Move(T))
+				break
 		target.canmove = 1
 
 /obj/effect/proc_holder/spell/targeted/mistform/proc/jaunt_steam(mobloc)
