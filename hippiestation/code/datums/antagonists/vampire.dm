@@ -169,7 +169,7 @@
 		H.LAssailant = null
 	else
 		H.LAssailant = O
-
+	playsound(O.loc, 'sound/weapons/bite.ogg', 50, 1)
 	while(do_mob(O, H, 50))
 		if(!is_vampire(O))
 			to_chat(O, "<span class='warning'>Your fangs have disappeared!</span>")
