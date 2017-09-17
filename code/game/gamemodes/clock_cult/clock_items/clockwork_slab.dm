@@ -1,8 +1,7 @@
 /obj/item/clockwork/slab //Clockwork slab: The most important tool in Ratvar's arsenal. Allows scripture recital, tutorials, and generates components.
 	name = "clockwork slab"
 	desc = "A strange metal tablet. A clock in the center turns around and around."
-	clockwork_desc = "A link between you and the Celestial Derelict. It produces components,  contains information, and is your most vital tool as a Servant.\n\
-	Clockwork slabs will only make components if held or if inside an item held by a human, and when making a component will prevent all other slabs held from making components.\n\
+	clockwork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	icon_state = "dread_ipad"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
@@ -10,13 +9,9 @@
 	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	var/list/stored_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
 	var/busy //If the slab is currently being used by something
-	var/production_time = 0
-	var/target_component_id //the target component ID to create, if any
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/speed_multiplier = 1 //multiples how fast this slab recites scripture
-	var/produces_components = TRUE //if it produces components at all
 	var/selected_scripture = SCRIPTURE_DRIVER
 	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
@@ -25,14 +20,10 @@
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 	var/recollection_category = "Default"
 
-/obj/item/clockwork/slab/starter
-	stored_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
-
 /obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
 	name = "scripture motor"
 	quickbound = list()
 	no_cost = TRUE
-	produces_components = FALSE
 
 /obj/item/clockwork/slab/debug
 	speed_multiplier = 0
@@ -59,10 +50,10 @@
 	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra)
 
 /obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker)
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
 
 /obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker)
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
 
 /obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
@@ -90,7 +81,6 @@
 	. = ..()
 	update_slab_info(src)
 	START_PROCESSING(SSobj, src)
-	production_time = world.time + SLAB_PRODUCTION_TIME
 	if(GLOB.ratvar_approaches)
 		name = "supercharged [name]"
 		speed_multiplier = max(0.1, speed_multiplier - 0.25)
@@ -116,38 +106,12 @@
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
 		slab_ability.remove_ranged_ability()
 
-//Component Generation
+//Power generation
 /obj/item/clockwork/slab/process()
 	if(GLOB.ratvar_approaches && speed_multiplier == initial(speed_multiplier))
 		name = "supercharged [name]"
 		speed_multiplier = max(0.1, speed_multiplier - 0.25)
-	if(!produces_components)
-		STOP_PROCESSING(SSobj, src)
-		return
-	if(production_time > world.time)
-		return
-	var/servants = 0
-	var/production_slowdown = 0
-	for(var/mob/living/M in GLOB.living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-			servants++
-	if(servants > SCRIPT_SERVANT_REQ)
-		servants -= SCRIPT_SERVANT_REQ
-		production_slowdown = min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM) //SLAB_SERVANT_SLOWDOWN additional seconds for each servant above 5, up to SLAB_SLOWDOWN_MAXIMUM
-	production_time = world.time + SLAB_PRODUCTION_TIME + production_slowdown
-	var/mob/living/L
-	L = get_atom_on_turf(src, /mob/living)
-	if(istype(L) && (no_cost || can_recite_scripture(L)))
-		var/component_to_generate = target_component_id
-		if(!component_to_generate)
-			component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
-		stored_components[component_to_generate]++
-		update_slab_info(src)
-		for(var/obj/item/clockwork/slab/S in L.GetAllContents()) //prevent slab abuse today
-			if(S == src)
-				continue
-			S.production_time = production_time + 50 //set it to our next production plus five seconds, so that if you hold the same slabs, the same one will always generate
-		to_chat(L, "<span class='warning'>Your slab cl[pick("ank", "ink", "unk", "ang")]s as it produces a </span><span class='[get_component_span(component_to_generate)]'>component</span><span class='warning'>.</span>")
+	adjust_clockwork_power(0.1) //Slabs serve as very weak power generators on their own (no, not enough to justify spamming them)
 
 /obj/item/clockwork/slab/examine(mob/user)
 	..()
@@ -158,96 +122,13 @@
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
-		if(GLOB.clockwork_caches) //show components on examine
-			to_chat(user, "<b>Stored components (with global cache):</b>")
-			for(var/i in stored_components)
-				to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
-				(<b>[stored_components[i] + GLOB.clockwork_component_cache[i]]</b>)</span>")
-		else
-			to_chat(user, "<b>Stored components:</b>")
-			for(var/i in stored_components)
-				to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b></span>")
-
-//Component Transferal
-/obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
-	if(is_servant_of_ratvar(user) && is_servant_of_ratvar(target))
-		var/obj/item/clockwork/slab/targetslab
-		var/highest_component_amount = 0
-		for(var/obj/item/clockwork/slab/S in target.GetAllContents())
-			if(!istype(S, /obj/item/clockwork/slab/internal))
-				var/totalcomponents = 0
-				for(var/i in S.stored_components)
-					totalcomponents += S.stored_components[i]
-				if(!targetslab || totalcomponents > highest_component_amount)
-					highest_component_amount = totalcomponents
-					targetslab = S
-		if(targetslab)
-			if(targetslab == src)
-				to_chat(user, "<span class='heavy_brass'>\"You can't transfer components into your own slab, idiot.\"</span>")
-			else
-				for(var/i in stored_components)
-					targetslab.stored_components[i] += stored_components[i]
-					stored_components[i] = 0
-				update_slab_info(targetslab)
-				update_slab_info(src)
-				user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
-				"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
-		else
-			to_chat(user, "<span class='warning'>[target] has no slabs to transfer components to.</span>")
-	else
-		return ..()
-
-/obj/item/clockwork/slab/attackby(obj/item/I, mob/user, params)
-	var/ratvarian = is_servant_of_ratvar(user)
-	if(istype(I, /obj/item/clockwork/component) && ratvarian)
-		var/obj/item/clockwork/component/C = I
-		if(!C.component_id)
-			return 0
-		user.visible_message("<span class='notice'>[user] inserts [C] into [src].</span>", "<span class='notice'>You insert [C] into [src]\
-		[GLOB.clockwork_caches ? ", where it is added to the global cache":""].</span>")
-		if(GLOB.clockwork_caches)
-			GLOB.clockwork_component_cache[C.component_id]++
-			update_slab_info()
-		else
-			stored_components[C.component_id]++
-			update_slab_info(src)
-		user.drop_item()
-		qdel(C)
-		return 1
-	else if(istype(I, /obj/item/clockwork/slab) && ratvarian)
-		var/obj/item/clockwork/slab/S = I
-		var/needs_update = FALSE
-		for(var/i in stored_components)
-			stored_components[i] += S.stored_components[i]
-			S.stored_components[i] = 0
-			if(S.stored_components[i])
-				needs_update = TRUE
-		if(needs_update)
-			update_slab_info(src)
-			update_slab_info(S)
-		user.visible_message("<span class='notice'>[user] empties [src] into [S].</span>", "<span class='notice'>You transfer your slab's components into [S].</span>")
-	else
-		return ..()
+		to_chat(user, "<b>Available Power:</b> <span class='bold brass'>[DisplayPower(get_clockwork_power())]</span>")
 
 //Slab actions; Hierophant, Quickbind
 /obj/item/clockwork/slab/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/clock/hierophant))
-		show_hierophant(user)
-	else if(istype(action, /datum/action/item_action/clock/quickbind))
+	if(istype(action, /datum/action/item_action/clock/quickbind))
 		var/datum/action/item_action/clock/quickbind/Q = action
 		recite_scripture(quickbound[Q.scripture_index], user, FALSE)
-
-/obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
-	if(!user.can_speak_vocal())
-		to_chat(user, "<span class='warning'>You cannot speak into the slab!</span>")
-		return FALSE
-	var/message = stripped_input(user, "Enter a message to send to your fellow Servants.", "Hierophant")
-	if(!message || !user || !user.canUseTopic(src) || !user.can_speak_vocal())
-		return FALSE
-	clockwork_say(user, text2ratvar("Servants, hear my words: [html_decode(message)]"), TRUE)
-	log_talk(user,"CLOCK:[key_name(user)] : [message]",LOGSAY)
-	titled_hierophant_message(user, message)
-	return TRUE
 
 //Scripture Recital
 /obj/item/clockwork/slab/attack_self(mob/living/user)
@@ -314,31 +195,6 @@
 			textlist += "HONOR RATVAR "
 		textlist += "</b></font>"
 	else
-		var/servants = 0
-		var/production_time = SLAB_PRODUCTION_TIME
-		for(var/mob/living/M in GLOB.living_mob_list)
-			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-				servants++
-		if(servants > SCRIPT_SERVANT_REQ)
-			servants -= SCRIPT_SERVANT_REQ
-			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
-		var/production_text_addon = ""
-		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-			production_text_addon = ", which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
-		production_time = production_time/600
-		var/list/production_text
-		if(round(production_time))
-			production_text = list("<b>[round(production_time)] minute\s")
-		if(production_time != round(production_time))
-			production_time -= round(production_time)
-			production_time *= 60
-			if(!LAZYLEN(production_text))
-				production_text = list("<b>[round(production_time, 1)] second\s")
-			else
-				production_text += " and [round(production_time, 1)] second\s"
-		production_text += "</b>"
-		production_text += production_text_addon
-		production_text = production_text.Join()
 
 		textlist = list("<font color=#BE8700 size=3><b><center>[text2ratvar("Purge all untruths and honor Engine.")]</center></b></font><br>\
 		\
@@ -435,31 +291,6 @@
 			dat += "<font color=#BE8700><b>Transmission:</b></font> Drains and stores power for clockwork structures. Feeding it brass sheets will create additional power.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Components")
-			var/servants = 0 //Calculate the current production time for slab components
-			var/production_time = SLAB_PRODUCTION_TIME
-			for(var/mob/living/M in GLOB.living_mob_list)
-				if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-					servants++
-			if(servants > SCRIPT_SERVANT_REQ)
-				servants -= SCRIPT_SERVANT_REQ
-				production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
-			var/production_text_addon = ""
-			if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-				production_text_addon = ", which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
-			production_time = production_time/600
-			var/list/production_text
-			if(round(production_time))
-				production_text = list("<b>[round(production_time)] minute\s")
-			if(production_time != round(production_time))
-				production_time -= round(production_time)
-				production_time *= 60
-				if(!LAZYLEN(production_text))
-					production_text = list("<b>[round(production_time, 1)] second\s")
-				else
-					production_text += " and [round(production_time, 1)] second\s"
-			production_text += "</b>"
-			production_text += production_text_addon
-			production_text = production_text.Join()
 			dat += "<font color=#BE8700 size=3>Components & Their Uses</font><br><br>"
 			dat += "<b>Components</b> are your primary resource as a Servant. There are five types of component, with each one being used in different roles:<br><br>"
 			dat += "<font color=#6E001A>[get_component_icon(BELLIGERENT_EYE)]BE</font> Belligerent Eyes are aggressive and judgemental, and are used in offensive scripture;<br>"
@@ -470,7 +301,7 @@
 			dat += "Although this is a good rule of thumb, their effects become much more nuanced when used together. For instance, a turret might have both belligerent eyes and \
 			vanguard cogwheels as construction requirements, because it defends its allies by harming its enemies.<br><br>"
 			dat += "Components' primary use is fueling <b>scripture</b> (covered in its own section), and they can be created through various ways. This clockwork slab, for instance, \
-			will make a random component of every type - or a specific one, if you choose a target component from the interface - every <b>[production_text]</b>. This number will increase \
+			will make a random component of every type - or a specific one, if you choose a target component from the interface - every <b>remove me already</b>. This number will increase \
 			as the amount of Servants in the covenant increase; additionally, slabs can only produce components when held by a Servant, and holding more than one slab will cause both \
 			of them to halt progress until one of them is removed from their person.<br><br>"
 			dat += "Your slab has an internal storage of components, but it isn't meant to be the main one. Instead, there's a <b>global storage</b> of components that can be \
@@ -555,7 +386,7 @@
 			One of the cogscarabs must've misplaced this section, because the game wasn't able to find any info regarding it. Report this to the coders!"
 	return "<br><br>[dat.Join()]<br><br>"
 
-//Gets the quickbound scripture as a text block."
+//Gets the quickbound scripture as a text block.
 /obj/item/clockwork/slab/proc/get_recollection_quickbinds()
 	var/list/dat = list()
 	dat += "<font color=#BE8700 size=3>Quickbound Scripture</font><br>\
@@ -572,24 +403,7 @@
 
 /obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
 	var/list/data = list()
-	data["components"] = stored_components.Copy()
-	var/list/temp_data = list("<font color=#B18B25>")
-	for(var/i in data["components"]) //display the slab's components
-		temp_data += "<font color=[get_component_color_bright(i)]>[get_component_icon(i)] <b>[data["components"][i]]</b></font>"
-		if(i != HIEROPHANT_ANSIBLE)
-			temp_data += " "
-		else
-			temp_data += " ("
-	if(GLOB.clockwork_caches) //if we have caches, display what's in the global cache
-		for(var/i in GLOB.clockwork_component_cache)
-			temp_data += "<font color=[get_component_color_bright(i)]>[get_component_icon(i)] <b>[data["components"][i] + GLOB.clockwork_component_cache[i]]</b></font>"
-			if(i != HIEROPHANT_ANSIBLE)
-				temp_data += " "
-	else
-		temp_data += "<b>NONE</b>"
-	temp_data += ")</font>"
-	temp_data = temp_data.Join()
-	data["components"] = temp_data
+	data["power"] = "<b><font color=#B18B25>[DisplayPower(get_clockwork_power())]</b> power is available for scripture and other consumers.</font>"
 
 	switch(selected_scripture) //display info based on selected scripture tier
 		if(SCRIPTURE_DRIVER)
@@ -598,18 +412,14 @@
 			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures will automatically unlock when the Ark is halfway ready.</i></font>"
+				data["tier_info"] = "<font color=#B18B25><i>These scriptures will automatically unlock when the Ark is halfway ready or if [DisplayPower(SCRIPT_UNLOCK_THRESHOLD)] of power is reached.</i></font>"
 		if(SCRIPTURE_APPLICATION)
 			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 			else
-				data["tier_info"] = "<font color=#B18B25><i>Unlock these optional scriptures by converting another servant.</i></font>"
+				data["tier_info"] = "<font color=#B18B25><i>Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..</i></font>"
 
 	data["selected"] = selected_scripture
-
-	data["target_comp"] = "<font color=#B18B25>NONE</font>"
-	if(target_component_id) //if we have a component to make, display that, too
-		data["target_comp"] = "<font color=[get_component_color_bright(target_component_id)]>[get_component_icon(target_component_id)]</font>"
 
 	generate_all_scripture()
 
@@ -621,7 +431,7 @@
 			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
 			"descname" = "<font color=[scripture_color]>([S.descname])</font>",
 			"tip" = "[S.desc]\n[S.usage_tip]",
-			"required" = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0),
+			"required" = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])",
 			"type" = "[S.type]",
 			"quickbind" = S.quickbind)
 			var/found = quickbound.Find(S.type)
@@ -629,20 +439,6 @@
 				temp_info["bound"] = "<b>[found]</b>"
 			if(S.invokers_required > 1)
 				temp_info["invokers"] = "<font color=#B18B25>Invokers: <b>[S.invokers_required]</b></font>"
-			var/costs_components = FALSE
-			for(var/i in S.consumed_components)
-				if(S.consumed_components[i])
-					temp_info["required"][i] += S.consumed_components[i]
-					costs_components = TRUE
-			if(costs_components) //if we have a component cost, we'll need a : next to the recital button
-				var/list/really_temp_data = list(": ")
-				for(var/i in temp_info["required"])
-					if(temp_info["required"][i])
-						really_temp_data += "<font color=[get_component_color_bright(i)]>[get_component_icon(i)] <b>[temp_info["required"][i]]</b></font> "
-				really_temp_data = really_temp_data.Join()
-				temp_info["required"] = really_temp_data
-			else //and if we don't, we won't.
-				temp_info["required"] = ""
 			data["scripture"] += list(temp_info)
 	data["recollection"] = recollecting
 	if(recollecting)
@@ -668,16 +464,6 @@
 			INVOKE_ASYNC(src, .proc/recite_scripture, text2path(params["category"]), usr, FALSE)
 		if("select")
 			selected_scripture = params["category"]
-		if("component")
-			var/list/components = list("Random Components")
-			for(var/i in GLOB.clockwork_component_cache)
-				var/cache_components = 0
-				if(GLOB.clockwork_caches)
-					cache_components = GLOB.clockwork_component_cache[i]
-				components["[get_component_name(i)] [(cache_components + stored_components[i])]"] = i
-			var/input_component = input("Choose a component type.", "Target Component") as null|anything in components
-			if(input_component && !..())
-				target_component_id = components[input_component]
 		if("bind")
 			var/datum/clockwork_scripture/path = text2path(params["category"]) //we need a path and not a string
 			var/found_index = quickbound.Find(path)
@@ -722,14 +508,7 @@
 			Q.scripture_index = i
 			var/datum/clockwork_scripture/quickbind_slot = GLOB.all_scripture[quickbound[i]]
 			Q.name = "[quickbind_slot.name] ([Q.scripture_index])"
-			var/list/temp_desc = list()
-			for(var/c in quickbind_slot.consumed_components) //show how much the bound scripture costs
-				if(quickbind_slot.consumed_components[c])
-					temp_desc += "<font color=[get_component_color_bright(c)]>[get_component_icon(c)] <b>[quickbind_slot.consumed_components[c]]</b></font> "
-			if(LAZYLEN(temp_desc))
-				temp_desc += "<br>"
-			temp_desc += "[quickbind_slot.quickbind_desc]"
-			Q.desc = temp_desc.Join()
+			Q.desc = quickbind_slot.quickbind_desc
 			Q.button_icon_state = quickbind_slot.name
 			Q.UpdateButtonIcon()
 			if(isliving(loc))

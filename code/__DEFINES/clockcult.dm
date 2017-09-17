@@ -29,12 +29,13 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define SCRIPTURE_PERIPHERAL "Peripheral"
 #define SCRIPTURE_DRIVER "Driver"
 #define SCRIPTURE_SCRIPT "Script"
-#define SCRIPT_SERVANT_REQ 6
-#define SCRIPT_CACHE_REQ 1
 #define SCRIPTURE_APPLICATION "Application"
-#define APPLICATION_SERVANT_REQ 9
-#define APPLICATION_CACHE_REQ 3
-#define APPLICATION_CV_REQ 100
+
+//Various costs related to power.
+#define SCRIPT_UNLOCK_THRESHOLD 50000 //Scripts will unlock if the total power reaches this amount
+#define APPLICATION_UNLOCK_THRESHOLD 100000 //Applications will unlock if the total powre reaches this amount
+
+#define ABSCOND_ABDUCTION_COST 95
 
 //general component/cooldown things
 #define SLAB_PRODUCTION_TIME 450 //how long(deciseconds) slabs require to produce a single component; defaults to 45 seconds

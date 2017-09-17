@@ -13,7 +13,9 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/desc = "Ancient Ratvarian lore. This piece seems particularly mundane."
 	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
-	var/list/consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //Components consumed
+	var/power_cost = 5 //In watts, how much a scripture takes to invoke
+	var/special_power_text //If the scripture can use additional power to have a unique function, use this; put POWERCOST here to display the special power cost.
+	var/special_power_cost //This should be a define in __DEFINES/clockcult.dm, such as ABSCOND_ABDUCTION_COST
 	var/obj/item/clockwork/slab/slab //The parent clockwork slab
 	var/mob/living/invoker //The slab's holder
 	var/whispered = FALSE //If the invocation is whispered rather than spoken aloud
@@ -26,11 +28,6 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/quickbind_desc = "This shouldn't be quickbindable. File a bug report!"
 	var/primary_component
 	var/sort_priority = 1 //what position the scripture should have in a list of scripture. Should be based off of component costs/reqs, but you can't initial() lists.
-
-//components the scripture used from a slab
-	var/list/used_slab_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
-//components the scripture used from the global cache
-	var/list/used_cache_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
 
 //messages for offstation scripture recital, courtesy ratvar's generals(and neovgre)
 	var/static/list/neovgre_penalty = list("Go to the station.", "Useless.", "Don't waste time.", "Pathetic.", "Wasteful.")
@@ -59,27 +56,10 @@ Applications: 8 servants, 3 caches, and 100 CV
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
 		else if(!slab.no_cost)
-			for(var/i in consumed_components)
-				if(consumed_components[i])
-					for(var/j in 1 to consumed_components[i])
-						if(slab.stored_components[i])
-							slab.stored_components[i]--
-							used_slab_components[i]++
-						else
-							GLOB.clockwork_component_cache[i]--
-							used_cache_components[i]++
-			update_slab_info()
+			adjust_clockwork_power(-power_cost)
 		channel_time *= slab.speed_multiplier
 		if(!recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
-			for(var/i in used_slab_components)
-				if(used_slab_components[i])
-					if(slab)
-						slab.stored_components[i] += consumed_components[i]
-					else //if we can't find a slab add to the global cache
-						GLOB.clockwork_component_cache[i] += consumed_components[i]
-			for(var/i in used_cache_components)
-				if(used_cache_components[i])
-					GLOB.clockwork_component_cache[i] += consumed_components[i]
+			adjust_clockwork_power(power_cost)
 			update_slab_info()
 		else
 			successful = TRUE
@@ -99,23 +79,13 @@ Applications: 8 servants, 3 caches, and 100 CV
 		return FALSE
 	return TRUE
 
-/datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
+/datum/clockwork_scripture/proc/has_requirements() //if we have the power and invokers to do it
 	var/checked_penalty = FALSE
 	if(!GLOB.ratvar_awakens && !slab.no_cost)
 		checked_penalty = check_offstation_penalty()
-		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
-		var/failed = FALSE
-		for(var/i in consumed_components)
-			var/cache_components = GLOB.clockwork_caches ? GLOB.clockwork_component_cache[i] : 0
-			var/total_components = slab.stored_components[i] + cache_components
-			if(consumed_components[i] && total_components < consumed_components[i])
-				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[consumed_components[i]]</b> \
-				[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""].</span>"
-				failed = TRUE
-		if(failed)
-			component_printout += "</span>"
-			to_chat(invoker, component_printout)
-			return FALSE
+		if(!get_clockwork_power(power_cost))
+			to_chat(invoker, "<span class='warning'>There isn't enough power to recite this scripture! ([DisplayPower(get_clockwork_power())]/[DisplayPower(power_cost)])</span>")
+			return
 	if(multiple_invokers_used && !multiple_invokers_optional && !GLOB.ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, get_turf(invoker)))
@@ -156,11 +126,8 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/turf/T = get_turf(invoker)
 	if(!T || (!(T.z in GLOB.station_z_levels) && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND && T.z != ZLEVEL_CITYOFCOGS))
 		channel_time *= 2
-		for(var/i in consumed_components)
-			if(consumed_components[i])
-				consumed_components[i] *= 2
+		power_cost *= 2
 		return TRUE
-	return FALSE
 
 /datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked multiple times during invocation
 	return TRUE

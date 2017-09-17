@@ -166,7 +166,7 @@ Credit where due:
 	var/mob/living/carbon/human/L = M
 	L.set_species(/datum/species/human)
 	L.equipOutfit(/datum/outfit/servant_of_ratvar)
-	var/obj/item/clockwork/slab/starter/S = new/obj/item/clockwork/slab/starter(null) //start it off in null
+	var/obj/item/clockwork/slab/S = new
 	var/slot = "At your feet"
 	var/list/slots = list("In your left pocket" = slot_l_store, "In your right pocket" = slot_r_store, "In your backpack" = slot_in_backpack, "On your belt" = slot_belt)
 	if(ishuman(L))

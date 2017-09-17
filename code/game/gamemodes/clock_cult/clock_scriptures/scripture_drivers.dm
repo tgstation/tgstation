@@ -2,27 +2,27 @@
 // DRIVERS //
 /////////////
 
-//Belligerent: Channeled for up to fifteen times over thirty seconds. Forces non-servants that can hear the chant to walk, doing minor damage. Nar-Sian cultists are burned.
-/datum/clockwork_scripture/channeled/belligerent
-	descname = "Channeled, Area Slowdown"
-	name = "Belligerent"
-	desc = "Forces all nearby non-servants to walk rather than run, doing minor damage. Chanted every two seconds for up to thirty seconds."
-	chant_invocations = list("Punish their blindness!", "Take time, make slow!")
-	chant_amount = 15
-	chant_interval = 20
-	channel_time = 20
-	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
+//Hateful Manacles: Applies restraints from melee over several seconds. The restraints function like handcuffs and break on removal.
+/datum/clockwork_scripture/ranged_ability/hateful_manacles
+	descname = "Handcuffs"
+	name = "Hateful Manacles"
+	desc = "Forms replicant manacles around a target's wrists that function like handcuffs."
+	invocations = list("Shackle the heretic!", "Break them in body and spirit!")
+	channel_time = 15
+	power_cost = 25
+	whispered = TRUE
+	usage_tip = "The manacles are about as strong as zipties, and break when removed."
 	tier = SCRIPTURE_DRIVER
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 1
+	ranged_type = /obj/effect/proc_holder/slab/hateful_manacles
+	slab_overlay = "hateful_manacles"
+	ranged_message = "<span class='neovgre_small'><i>You charge the clockwork slab with divine energy.</i>\n\
+	<b>Left-click a target within melee range to shackle!\n\
+	Click your slab to cancel.</b></span>"
+	timeout_time = 200
 	quickbind = TRUE
-	quickbind_desc = "Forces nearby non-Servants to walk, doing minor damage with each chant.<br><b>Maximum 15 chants.</b>"
-
-/datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
-	for(var/mob/living/carbon/C in hearers(7, invoker))
-		C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
-	new /obj/effect/temp_visual/ratvar/belligerent(get_turf(invoker))
-	return TRUE
+	quickbind_desc = "Applies handcuffs to a struck target."
 
 
 //Sigil of Transgression: Creates a sigil of transgression, which briefly stuns and applies Belligerent to the first non-servant to cross it.
@@ -32,7 +32,7 @@
 	desc = "Wards a tile with a sigil, which will briefly stun the next non-Servant to cross it and apply Belligerent to them."
 	invocations = list("Divinity, smite...", "...those who tresspass here!")
 	channel_time = 50
-	consumed_components = list(BELLIGERENT_EYE = 1)
+	power_cost = 50
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transgression
 	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-Servant to cross it will be smitten.</span>"
@@ -53,6 +53,7 @@
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
+	power_cost = 25
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
@@ -84,7 +85,7 @@
 	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute, burn, and oxygen damage to half as much toxin damage."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
-	consumed_components = list(VANGUARD_COGWHEEL = 1)
+	power_cost = 100
 	usage_tip = "The Compromise is very fast to invoke, and will remove holy water from the target Servant."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
@@ -106,6 +107,9 @@
 	invocations = list("As we bid farewell, and return to the stars...", "...we shall find our way home.")
 	whispered = TRUE
 	channel_time = 50
+	power_cost = 5
+	special_power_text = "POWERCOST to bring pulled creature"
+	special_power_cost = ABSCOND_ABDUCTION_COST
 	usage_tip = "This can't be used while on Reebe, for obvious reasons."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
@@ -124,6 +128,7 @@
 	. = ..()
 
 /datum/clockwork_scripture/abscond/scripture_effects()
+	var/take_pulling = invoker.pulling && isliving(invoker.pulling) && get_clockwork_power(ABSCOND_ABDUCTION_COST)
 	var/turf/T = get_turf(pick(GLOB.servant_spawns))
 	invoker.visible_message("<span class='warning'>[invoker] flickers and phases out of existence!</span>", \
 	"<span class='bold sevtug_small'>You feel a dizzying sense of vertigo as you're yanked back to Reebe!</span>")
@@ -132,6 +137,9 @@
 	playsound(T, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	do_sparks(5, TRUE, invoker)
 	do_sparks(5, TRUE, T)
+	if(take_pulling)
+		adjust_clockwork_power(-special_power_cost)
+		invoker.pulling.forceMove(T)
 	invoker.forceMove(T)
 	if(invoker.client)
 		animate(invoker.client, color = initial(invoker.client.color), time = 25)
@@ -149,6 +157,7 @@
 	invocations = list("Divinity, show them your light!")
 	whispered = TRUE
 	channel_time = 30
+	power_cost = 125
 	usage_tip = "The light can be used from up to two tiles away. Damage taken will GREATLY REDUCE the stun's duration."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
@@ -170,7 +179,7 @@
 	desc = "Places a luminous sigil that will convert any non-Servants that remain on it for 8 seconds."
 	invocations = list("Divinity, enlighten...", "...those who trespass here!")
 	channel_time = 60
-	consumed_components = list(GEIS_CAPACITOR = 1)
+	power_cost = 125
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
 	creator_message = "<span class='brass'>A luminous sigil appears below you. Any non-Servants to cross it will be converted after 8 seconds if they do not move.</span>"
@@ -190,6 +199,7 @@
 	desc = "Creates a new clockwork slab."
 	invocations = list("Metal, become greater!")
 	channel_time = 10
+	power_cost = 25
 	whispered = TRUE
 	object_path = /obj/item/clockwork/slab
 	creator_message = "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>"
@@ -209,7 +219,7 @@
 	desc = "Forms a weak structure that generates power every second while within three tiles of starlight."
 	invocations = list("Capture their inferior light for us!")
 	channel_time = 50
-	consumed_components = list(REPLICANT_ALLOY = 1)
+	power_cost = 50
 	object_path = /obj/structure/destructible/clockwork/stargazer
 	creator_message = "<span class='brass'>You form a stargazer, which will generate power near starlight.</span>"
 	observer_message = "<span class='warning'>A large lantern-shaped machine forms!</span>"
@@ -219,7 +229,7 @@
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
 	quickbind = TRUE
-	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
+	quickbind_desc = "Creates a stargazer, which generates power when near starlight."
 
 
 //Integration Cog: Creates an integration cog that can be inserted into APCs to passively siphon power.
@@ -229,6 +239,7 @@
 	desc = "Fabricates an integration cog, which can be used on an open APC to replace its innards and passively siphon its power."
 	invocations = list("Take that which sustains them!")
 	channel_time = 10
+	power_cost = 10
 	whispered = TRUE
 	object_path = /obj/item/clockwork/integration_cog
 	creator_message = "<span class='brass'>You form an integration cog, which can be inserted into an open APC to passively siphon power.</span>"
@@ -248,7 +259,7 @@
 	desc = "Fabricates a pair of glasses which grant true sight but cause gradual vision loss."
 	invocations = list("Show the truth of this world to me!")
 	channel_time = 10
-	consumed_components = list(HIEROPHANT_ANSIBLE = 1)
+	power_cost = 50
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/wraith_spectacles
 	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which grant true sight but cause gradual vision loss.</span>"

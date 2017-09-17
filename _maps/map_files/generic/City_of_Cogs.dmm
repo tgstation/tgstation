@@ -42,7 +42,7 @@
 "aP" = (/obj/machinery/door/airlock/clockwork/brass{name = "Listening Station"},/turf/open/floor/clockwork/reebe,/area/reebe/city_of_cogs)
 "aQ" = (/obj/machinery/door/airlock/clockwork/brass{name = "Observation Room"},/turf/open/floor/clockwork/reebe,/area/reebe/city_of_cogs)
 "aR" = (/turf/closed/wall/clockwork{opacity = 0},/area/reebe/city_of_cogs)
-"aS" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/slab/starter,/turf/open/floor/clockwork/reebe,/area/reebe/city_of_cogs)
+"aS" = (/obj/structure/table/reinforced/brass,/obj/item/clockwork/slab,/turf/open/floor/clockwork/reebe,/area/reebe/city_of_cogs)
 "aT" = (/obj/structure/table/reinforced/brass,/obj/item/screwdriver/brass,/turf/open/floor/clockwork/reebe,/area/reebe/city_of_cogs)
 "aU" = (/obj/structure/table/reinforced/brass,/obj/item/crowbar/brass,/turf/open/floor/clockwork/reebe,/area/reebe/city_of_cogs)
 "aV" = (/obj/structure/table/reinforced/brass,/turf/open/floor/clockwork/reebe,/area/reebe/city_of_cogs)

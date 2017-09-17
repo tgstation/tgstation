@@ -1,5 +1,5 @@
 #define STARGAZER_RANGE 3 //How many tiles the stargazer can see out to
-#define STARGAZER_POWER 35 //How many watts will be produced per second when the stargazer sees starlight
+#define STARGAZER_POWER 20 //How many watts will be produced per second when the stargazer sees starlight
 
 //Stargazer: A very fragile but cheap generator that creates power from starlight.
 /obj/structure/destructible/clockwork/stargazer
@@ -49,7 +49,7 @@
 		if(has_starlight)
 			visible_message("<span class='nzcrentr_small'>[src] clunks and shines brilliantly!</span>")
 			add_overlay("stargazer_light")
-			set_light(5, 1.5)
+			set_light(1.5, 5)
 		else
 			visible_message("<span class='danger'>[src] flickers, and falls dark.</span>")
 			cut_overlays()

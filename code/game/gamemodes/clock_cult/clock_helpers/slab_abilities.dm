@@ -21,6 +21,59 @@
 		remove_ranged_ability()
 		return TRUE
 
+//For the Hateful Manacles scripture; applies replicant handcuffs to the target.
+/obj/effect/proc_holder/slab/hateful_manacles
+
+/obj/effect/proc_holder/slab/hateful_manacles/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return TRUE
+
+	var/turf/T = ranged_ability_user.loc
+	if(!isturf(T))
+		return TRUE
+
+	if(iscarbon(target) && target.Adjacent(ranged_ability_user))
+		var/mob/living/carbon/L = target
+		if(is_servant_of_ratvar(L))
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"They're a servant.\"</span>")
+			return TRUE
+		else if(L.stat)
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"There is use in shackling the dead, but for examples.\"</span>")
+			return TRUE
+		else if(L.handcuffed)
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"They are already helpless, no?\"</span>")
+			return TRUE
+
+		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE)
+		ranged_ability_user.visible_message("<span class='danger'>[ranged_ability_user] begins forming manacles around [L]'s wrists!</span>", \
+		"<span class='neovgre_small'>You begin shaping replicant alloy into manacles around [L]'s wrists...</span>")
+		to_chat(L, "<span class='userdanger'>[ranged_ability_user] begins forming manacles around your wrists!</span>")
+		if(do_mob(ranged_ability_user, L, 30))
+			if(!L.handcuffed)
+				L.handcuffed = new/obj/item/restraints/handcuffs/clockwork(L)
+				L.update_handcuffed()
+				to_chat(ranged_ability_user, "<span class='neovgre_small'>You shackle [L].</span>")
+				add_logs(ranged_ability_user, L, "handcuffed")
+		else
+			to_chat(ranged_ability_user, "<span class='warning'>You fail to shackle [L].</span>")
+
+		successful = TRUE
+
+		remove_ranged_ability()
+
+	return TRUE
+
+/obj/item/restraints/handcuffs/clockwork
+	name = "replicant manacles"
+	desc = "Cold, heavy manacles made out of some strange black metal."
+	origin_tech = "materials=2;magnets=5"
+	flags_1 = DROPDEL_1
+
+/obj/item/restraints/handcuffs/clockwork/dropped(mob/user)
+	user.visible_message("<span class='danger'>[user]'s [name] come apart at the seams!</span>", \
+	"<span class='userdanger'>Your [name] break apart as they're removed!</span>")
+	. = ..()
+
 //For the Sentinel's Compromise scripture; heals a target servant.
 /obj/effect/proc_holder/slab/compromise
 	ranged_mousepointer = 'icons/effects/compromise_target.dmi'

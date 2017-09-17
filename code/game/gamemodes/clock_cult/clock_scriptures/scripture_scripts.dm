@@ -9,7 +9,7 @@
 	desc = "Forms an automatic short-range turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	invocations = list("Guardians of Engine...", "...judge those who would harm us!")
 	channel_time = 100
-	consumed_components = list(BELLIGERENT_EYE = 2, REPLICANT_ALLOY = 1)
+	power_cost = 250
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
 	creator_message = "<span class='brass'>You form an ocular warden, which will automatically attack nearby unrestrained non-Servants that can see it.</span>"
 	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
@@ -36,7 +36,7 @@
 	desc = "Creates a visor that can smite an area, applying Belligerent and briefly stunning. The smote area will explode after 3 seconds."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10
-	consumed_components = list(BELLIGERENT_EYE = 2, HIEROPHANT_ANSIBLE = 1)
+	power_cost = 400
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/judicial_visor
 	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting a small area.</span>"
@@ -57,7 +57,7 @@
 	Dead Servants can be revived by this sigil at a cost of 150 Vitality."
 	invocations = list("Divinity, siphon their essence...", "...for this shell to consume.")
 	channel_time = 60
-	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 2)
+	power_cost = 1000
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/vitality
 	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-Servants and heal Servants that cross it.</span>"
@@ -78,7 +78,7 @@
 	chant_invocations = list("Mend our dents!", "Heal our scratches!", "Repair our gears!")
 	chant_amount = 10
 	chant_interval = 20
-	consumed_components = list(VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 1)
+	power_cost = 1000
 	usage_tip = "This is a very effective way to rapidly reinforce a base after an attack."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
@@ -189,7 +189,7 @@
 	desc = "Forms a device that, when used on certain objects, replaces them with their Ratvarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
-	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
+	power_cost = 250
 	whispered = TRUE
 	object_path = /obj/item/clockwork/replica_fabricator/preloaded
 	creator_message = "<span class='brass'>You form a replica fabricator.</span>"
@@ -209,7 +209,7 @@
 	desc = "Allows the invoker to summon clockwork armor and a Ratvarian spear at will. The spear's attacks will generate Vitality, used for healing."
 	invocations = list("Grant me arnaments...", "...from the forge of Armorer!")
 	channel_time = 20
-	consumed_components = list(REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 1)
+	power_cost = 250
 	whispered = TRUE
 	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear. You will need to wait for 30 seconds before resummoning it."
 	tier = SCRIPTURE_SCRIPT
@@ -307,7 +307,7 @@
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Spatial Gateway...", "...activate!")
 	channel_time = 80
-	consumed_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 2)
+	power_cost = 400
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
