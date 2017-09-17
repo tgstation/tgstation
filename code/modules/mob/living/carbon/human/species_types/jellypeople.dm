@@ -140,6 +140,10 @@
 
 	C.faction |= "slime"
 
+//If you're cloned you get your body pool back
+/datum/species/jelly/slime/copy_properties_from(datum/species/old_species)
+	bodies = old_species.bodies
+
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
