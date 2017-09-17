@@ -13,11 +13,14 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 0
 	var/list/allowed_projectile_typecache = list(/obj/item/projectile/beam)
-	var/rotation_angle = 0
+	var/rotation_angle = -1
 
 /obj/structure/reflector/Initialize()
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
-	rotation_angle = dir2angle(dir)
+	if(rotation_angle == -1)
+		rotation_angle = dir2angle(dir)
+	else
+		setAngle(rotation_angle)
 	return ..()
 
 /obj/structure/reflector/Moved()
@@ -151,9 +154,11 @@
 /obj/structure/reflector/single/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
 	var/incidence = get_angle_of_incidence(rotation_angle, P.Angle)
 	var/incidence_norm = get_angle_of_incidence(rotation_angle, P.Angle, FALSE)
-	var/new_angle_s = rotation_angle + incidence
-	if(incidence_norm > 90 || incidence_norm < -90)
+	if((incidence_norm > -90) && (incidence_norm < 90))
 		return FALSE
+	var/new_angle_s = rotation_angle + incidence
+	if(invert)
+		new_angle_s += 180
 	while(new_angle_s > 180)	// Translate to regular projectile degrees
 		new_angle_s -= 360
 	while(new_angle_s < -180)
@@ -182,8 +187,9 @@
 /obj/structure/reflector/double/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
 	var/incidence = get_angle_of_incidence(rotation_angle, P.Angle)
 	var/incidence_norm = get_angle_of_incidence(rotation_angle, P.Angle, FALSE)
+	var/invert = ((incidence_norm > -90) && (incidence_norm < 90))
 	var/new_angle_s = rotation_angle + incidence
-	if(incidence_norm > 90 || incidence_norm < -90)
+	if(invert)
 		new_angle_s += 180
 	while(new_angle_s > 180)	// Translate to regular projectile degrees
 		new_angle_s -= 360
