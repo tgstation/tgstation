@@ -214,7 +214,7 @@ BLIND     // can't see anything
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
-	siemens_coefficient = 0.50
+	siemens_coefficient = 0.5
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
@@ -372,7 +372,7 @@ BLIND     // can't see anything
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
 
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 	slowdown = SHOES_SLOWDOWN
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
@@ -514,7 +514,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	name = "under"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	permeability_coefficient = 0.90
+	permeability_coefficient = 0.9
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women

@@ -5499,8 +5499,7 @@
 /area/centcom/ferry)
 "oU" = (
 /obj/structure/dresser,
-/obj/structure/sign/goldenplaque{
-	name = "The Most Robust Captain Award for Robustness";
+/obj/structure/sign/goldenplaque/captain{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -10987,9 +10986,7 @@
 /area/tdome/tdomeobserve)
 "CE" = (
 /obj/structure/table/wood,
-/obj/structure/sign/atmosplaque{
-	desc = "This plaque commemorates those who have fallen in glorious combat.  For all the charred, dizzy, and beaten men who have died in its hands.";
-	name = "Thunderdome Plaque";
+/obj/structure/sign/atmosplaque/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal/gold{
@@ -11007,9 +11004,7 @@
 /area/tdome/tdomeobserve)
 "CG" = (
 /obj/structure/table/wood,
-/obj/structure/sign/atmosplaque{
-	desc = "This plaque commemorates those who have fallen in glorious combat.  For all the charred, dizzy, and beaten men who have died in its hands.";
-	name = "Thunderdome Plaque";
+/obj/structure/sign/atmosplaque/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal{
