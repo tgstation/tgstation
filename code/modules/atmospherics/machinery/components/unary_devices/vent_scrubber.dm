@@ -192,12 +192,11 @@
 
 			//Filter it
 			var/datum/gas_mixture/filtered_out = new
-			var/list/filtered_gases = filtered_out.gases
 			filtered_out.temperature = removed.temperature
 
 			if(scrub_Toxins && removed_gases["plasma"])
 				filtered_out.assert_gas("plasma")
-				filtered_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
+				filtered_out.gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
 				removed.gases["plasma"][MOLES] = 0
 
 			if(scrub_CO2 && removed_gases["co2"])
