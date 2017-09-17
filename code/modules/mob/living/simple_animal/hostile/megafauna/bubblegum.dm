@@ -45,7 +45,7 @@ Difficulty: Hard
 	pixel_x = -32
 	del_on_death = 1
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
-	loot = list(/obj/structure/closet/crate/necropolis/bubblegum, /obj/item/clothing/suit/space/hostile_environment, /obj/item/clothing/head/helmet/space/hostile_environment)
+	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = FALSE
 	medal_type = MEDAL_PREFIX
