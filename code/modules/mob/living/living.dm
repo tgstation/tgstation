@@ -719,9 +719,6 @@
 		loc_temp = environment.temperature
 	return loc_temp
 
-
-	return loc_temp
-
 /mob/living/proc/get_standard_pixel_x_offset(lying = 0)
 	return initial(pixel_x)
 
