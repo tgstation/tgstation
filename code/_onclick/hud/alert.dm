@@ -405,6 +405,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		for(var/i in SSticker.scripture_states)
 			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
 				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+		textlist += "<b>[DisplayPower(get_clockwork_power())]</b> power available for use.</b>"
 		desc = textlist.Join()
 	..()
 

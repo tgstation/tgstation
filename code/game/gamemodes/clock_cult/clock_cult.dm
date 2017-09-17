@@ -287,7 +287,8 @@ Credit where due:
 	<hr>\
 	<h2>Things that have changed:</h2>\
 	<ul>\
-	<li><b><i>Conversion has been removed.</i></b></li>\
+	<li>The <b>tinkerer's cache</b> scripture has been replaced with the <b>stargazer</b>, a cheap but <i>vital</i> generator that produces power \
+	when near starlight.</li>\
 	</ul>\
 	<hr>\
 	<b>Good luck!</b>"

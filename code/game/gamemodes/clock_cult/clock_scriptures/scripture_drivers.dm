@@ -163,6 +163,26 @@
 	quickbind_desc = "Stuns and mutes a target from a short range."
 
 
+//Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
+/datum/clockwork_scripture/create_object/sigil_of_submission
+	descname = "Trap, Conversion"
+	name = "Sigil of Submission"
+	desc = "Places a luminous sigil that will convert any non-Servants that remain on it for 8 seconds."
+	invocations = list("Divinity, enlighten...", "...those who trespass here!")
+	channel_time = 60
+	consumed_components = list(GEIS_CAPACITOR = 1)
+	whispered = TRUE
+	object_path = /obj/effect/clockwork/sigil/submission
+	creator_message = "<span class='brass'>A luminous sigil appears below you. Any non-Servants to cross it will be converted after 8 seconds if they do not move.</span>"
+	usage_tip = "This is the primary conversion method, though it will not penetrate mindshield implants."
+	tier = SCRIPTURE_DRIVER
+	one_per_tile = TRUE
+	primary_component = GEIS_CAPACITOR
+	sort_priority = 6
+	quickbind = TRUE
+	quickbind_desc = "Creates a Sigil of Submission, which will convert non-Servants that remain on it."
+
+
 //Replicant: Creates a new clockwork slab.
 /datum/clockwork_scripture/create_object/replicant
 	descname = "New Clockwork Slab"
@@ -182,56 +202,24 @@
 	quickbind_desc = "Creates a new Clockwork Slab."
 
 
-//Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
-/datum/clockwork_scripture/create_object/tinkerers_cache
-	descname = "Necessary Structure, Shares Components"
-	name = "Tinkerer's Cache"
-	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs. \
-	Striking a cache with a slab will transfer that slab's components to the global cache."
-	invocations = list("Constructing...", "...a cache!")
+//Stargazer: Creates a stargazer, a cheap power generator that utilizes starlight.
+/datum/clockwork_scripture/create_object/stargazer
+	descname = "Necessary Structure, Generates Power From Starlight"
+	name = "Stargazer"
+	desc = "Forms a weak structure that generates power every second while within three tiles of starlight."
+	invocations = list("Capture their inferior light for us!")
 	channel_time = 50
-	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
-	object_path = /obj/structure/destructible/clockwork/cache
-	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
-	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
-	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches extremely useful."
+	consumed_components = list(REPLICANT_ALLOY = 1)
+	object_path = /obj/structure/destructible/clockwork/stargazer
+	creator_message = "<span class='brass'>You form a stargazer, which will generate power near starlight.</span>"
+	observer_message = "<span class='warning'>A large lantern-shaped machine forms!</span>"
+	usage_tip = "For obvious reasons, make sure to place this near a window or somewhere else that can see space!"
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
-	var/static/prev_cost = 0
-
-/datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
-	var/cache_cost_increase = min(round(GLOB.clockwork_caches*0.4), 10)
-	if(cache_cost_increase != prev_cost)
-		prev_cost = cache_cost_increase
-		consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
-		for(var/i in consumed_components)
-			if(i != REPLICANT_ALLOY)
-				consumed_components[i] += cache_cost_increase
-		return TRUE
-	return FALSE
-
-
-//Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.
-/datum/clockwork_scripture/create_object/wraith_spectacles
-	descname = "Limited Xray Vision Glasses"
-	name = "Wraith Spectacles"
-	desc = "Fabricates a pair of glasses which grant true sight but cause gradual vision loss."
-	invocations = list("Show the truth of this world to me!")
-	channel_time = 10
-	whispered = TRUE
-	object_path = /obj/item/clothing/glasses/wraith_spectacles
-	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which grant true sight but cause gradual vision loss.</span>"
-	usage_tip = "\"True sight\" means that you are able to see through walls and in darkness."
-	tier = SCRIPTURE_DRIVER
-	space_allowed = TRUE
-	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 10
-	quickbind = TRUE
-	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
 
 
 //Integration Cog: Creates an integration cog that can be inserted into APCs to passively siphon power.
@@ -248,6 +236,26 @@
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 10
+	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Creates an integration cog, which can be used to siphon power from an open APC."
+
+
+//Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.
+/datum/clockwork_scripture/create_object/wraith_spectacles
+	descname = "Limited Xray Vision Glasses"
+	name = "Wraith Spectacles"
+	desc = "Fabricates a pair of glasses which grant true sight but cause gradual vision loss."
+	invocations = list("Show the truth of this world to me!")
+	channel_time = 10
+	consumed_components = list(HIEROPHANT_ANSIBLE = 1)
+	whispered = TRUE
+	object_path = /obj/item/clothing/glasses/wraith_spectacles
+	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which grant true sight but cause gradual vision loss.</span>"
+	usage_tip = "\"True sight\" means that you are able to see through walls and in darkness."
+	tier = SCRIPTURE_DRIVER
+	space_allowed = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 10
+	quickbind = TRUE
+	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."

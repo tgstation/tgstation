@@ -5,7 +5,8 @@
 	name = "integration cog"
 	desc = "A small cogwheel that fits in the palm of your hand."
 	clockwork_desc = "A small cogwheel that can be inserted into an open APC to siphon power from it passively.<br>\
-	<span class='brass'>It can be used on a locked APC to open its cover!</span>"
+	<span class='brass'>It can be used on a locked APC to open its cover!</span><br>\
+	<span class='brass'>Siphons <b>5 W</b> of power per second while in an APC.</span>"
 	icon_state = "wall_gear"
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = NOBLUDGEON_1
@@ -29,7 +30,7 @@
 		var/obj/item/stock_parts/cell/cell = apc.cell
 		if(cell && (cell.charge / cell.maxcharge > COG_MAX_SIPHON_THRESHOLD))
 			cell.use(1)
-			adjust_clockwork_power(0.2) //Power is shared, so only do it once; this runs very quickly so it's about 1W/second
+			adjust_clockwork_power(1) //Power is shared, so only do it once; this runs very quickly so it's about 1W/second
 		if(prob(1))
 			playsound(apc, 'sound/machines/clockcult/steam_whoosh.ogg', 10, TRUE)
 			new/obj/effect/temp_visual/steam(get_turf(apc), pick(GLOB.cardinals))
