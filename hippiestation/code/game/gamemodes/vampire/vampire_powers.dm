@@ -260,7 +260,8 @@
 
 /obj/effect/proc_holder/spell/bats/cast(list/targets, mob/user = usr)
 	for(var/T in targets)
-		new /mob/living/simple_animal/hostile/retaliate/bat(T, user)
+		var/mob/living/simple_animal/hostile/retaliate/bat/B = new /mob/living/simple_animal/hostile/retaliate/bat(T, user)
+		B.factions = list("vampire") //make bats not attack vampires, but attack everyone else
 
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform
