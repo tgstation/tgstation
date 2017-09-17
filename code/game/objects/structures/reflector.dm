@@ -18,14 +18,13 @@
 /obj/structure/reflector/Initialize()
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
 	if(rotation_angle == -1)
-		rotation_angle = dir2angle(dir)
+		setAngle(dir2angle(dir))
 	else
 		setAngle(rotation_angle)
 	return ..()
 
 /obj/structure/reflector/Moved()
-	rotation_angle = dir_map_to_angle(dir)
-	transform = matrix()
+	setAngle(dir_map_to_angle(dir))
 	return ..()
 
 /obj/structure/reflector/proc/dir_map_to_angle(dir)
@@ -157,8 +156,6 @@
 	if((incidence_norm > -90) && (incidence_norm < 90))
 		return FALSE
 	var/new_angle_s = rotation_angle + incidence
-	if(invert)
-		new_angle_s += 180
 	while(new_angle_s > 180)	// Translate to regular projectile degrees
 		new_angle_s -= 360
 	while(new_angle_s < -180)
