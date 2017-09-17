@@ -203,7 +203,7 @@
 
 /obj/machinery/power/emitter/proc/fire_beam(mob/user)
 	var/obj/item/projectile/P = new projectile_type(get_turf(src))
-	playsound(src.loc, projectile_sound, 50, 1)
+	playsound(get_turf(src), projectile_sound, 50, 1)
 	if(prob(35))
 		sparks.start()
 	P.firer = user? user : src

@@ -39,8 +39,6 @@
 	var/pixel_y_offset = 0
 	var/new_x = 0
 	var/new_y = 0
-	var/old_alpha = 0
-	var/firstmove = TRUE
 
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
@@ -235,8 +233,6 @@
 		pixel_move(required_moves)
 
 /obj/item/projectile/proc/fire(setAngle, atom/direct_target)
-	old_alpha = alpha
-	alpha = 0	//Prevents initial visual glitch.
 	if(!log_override && firer && original)
 		add_logs(firer, original, "fired at", src, " [get_area(src)]")
 	if(direct_target)
@@ -246,19 +242,19 @@
 		return
 	if(isnum(setAngle))
 		Angle = setAngle
+	if(!nondirectional_sprite)
+		var/matrix/M = new
+		M.Turn(Angle)
+		transform = M
 	old_pixel_x = pixel_x
 	old_pixel_y = pixel_y
 	last_projectile_move = world.time
-	firstmove = TRUE
 	fired = TRUE
 	START_PROCESSING(SSprojectiles, src)
 
 /obj/item/projectile/proc/pixel_move(moves)
 	if((!( current ) || loc == current))
 		current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-	if(firstmove)
-		firstmove = FALSE
-		alpha = old_alpha
 	if(!Angle)
 		Angle=round(Get_Angle(src,current))
 	if(spread)

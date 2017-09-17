@@ -36,7 +36,9 @@
 	var/ploc = get_turf(P)
 	if(!finished || !allowed_projectile_typecache[P.type] || !(P.dir in GLOB.cardinals))
 		return ..()
-	return auto_reflect(P, pdir, ploc, pangle)
+	if(auto_reflect(P, pdir, ploc, pangle) != -1)
+		return ..()
+	return -1
 
 /obj/structure/reflector/proc/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
 	P.ignore_source_check = TRUE
