@@ -18,10 +18,9 @@
 	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "Angel") && ("wings" in H.dna.species.mutant_bodyparts)))
 		H.dna.features["wings"] = "Angel"
 		H.update_body()
-	if(ishuman(H)&& !fly)
+	if(ishuman(H) && !fly)
 		fly = new
 		fly.Grant(H)
-
 
 /datum/species/angel/on_species_loss(mob/living/carbon/human/H)
 	if(fly)
