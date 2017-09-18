@@ -8049,7 +8049,7 @@
 /area/lawoffice)
 "asa" = (
 /obj/machinery/status_display{
-	step_x = 1;
+	pixel_x = 1;
 	density = 0;
 	layer = 3;
 	pixel_x = 32
@@ -14792,7 +14792,7 @@
 /area/shuttle/arrival)
 "aHu" = (
 /obj/machinery/status_display{
-	step_x = 1;
+	pixel_x = 1;
 	density = 0;
 	layer = 3;
 	pixel_x = 32
@@ -17305,7 +17305,7 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	step_x = 1;
+	pixel_x = 1;
 	density = 0;
 	layer = 3;
 	pixel_x = 32
@@ -26507,7 +26507,7 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	step_x = 1;
+	pixel_x = 1;
 	density = 0;
 	layer = 3;
 	pixel_x = 32
@@ -28947,7 +28947,7 @@
 /area/medical/medbay/central)
 "bpw" = (
 /obj/machinery/status_display{
-	step_x = -31
+	pixel_x = -31
 	},
 /turf/closed/wall,
 /area/medical/medbay/central)
@@ -45158,7 +45158,7 @@
 /area/tcommsat/computer)
 "bZr" = (
 /obj/machinery/status_display{
-	step_x = -31
+	pixel_x = -31
 	},
 /turf/closed/wall,
 /area/tcommsat/computer)
@@ -50984,8 +50984,8 @@
 	},
 /obj/machinery/turretid{
 	name = "Armory turret panel";
-	step_x = 29;
-	step_y = 26;
+	pixel_x = 29;
+	pixel_y = 26;
 	control_area = /area/ai_monitored/security/armory
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -55178,7 +55178,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "cvf" = (
 /obj/machinery/status_display{
-	step_x = -31
+	pixel_x = -31
 	},
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
@@ -55975,7 +55975,7 @@
 /area/space)
 "cwW" = (
 /obj/machinery/status_display{
-	step_x = -31
+	pixel_x = -31
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -59005,7 +59005,7 @@
 /area/engine/supermatter)
 "cEg" = (
 /obj/machinery/status_display{
-	step_x = -31
+	pixel_x = -31
 	},
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
@@ -64063,13 +64063,13 @@
 /area/crew_quarters/bar)
 "cTK" = (
 /obj/machinery/status_display{
-	step_x = -31
+	pixel_x = -31
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "cTL" = (
 /obj/machinery/status_display{
-	step_x = -31
+	pixel_x = -31
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -64102,7 +64102,7 @@
 "cTP" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/status_display{
-	step_x = -31
+	pixel_x = -31
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
