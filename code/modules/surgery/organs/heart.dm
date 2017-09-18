@@ -55,7 +55,7 @@
 
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
 		var/mob/living/carbon/H = owner
-		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW)
+		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW && beating)
 			beat = BEAT_SLOW
 			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
 			to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
@@ -63,7 +63,7 @@
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-		if(H.jitteriness)
+		if(H.jitteriness && beating)
 			if(!beat || beat == BEAT_SLOW)
 				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
 				beat = BEAT_FAST
