@@ -6,12 +6,11 @@
 	icon_state = "clown_prototype_off"
 	var/on = FALSE
 	actions_types = list(/datum/action/item_action/toggle)
-	step_sounds = list('sound/items/bikehorn.ogg'=1)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
 	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_BANANIUM), 200000, TRUE)
-	AddComponent(/datum/component/squeak, step_sounds, 75)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	. = ..()

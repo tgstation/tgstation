@@ -107,23 +107,25 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
-	var/list/honksounds = list('sound/items/bikehorn.ogg'=1)
 
 /obj/item/bikehorn/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, honksounds, 50)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 
 /obj/item/bikehorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, pickweight(honksounds), 50, 1)
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 	return (BRUTELOSS)
 
 /obj/item/bikehorn/airhorn
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	honksounds = list('sound/items/airhorn2.ogg'=1)
 	origin_tech = "materials=4;engineering=4"
+
+/obj/item/bikehorn/airhorn/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50)
 
 /obj/item/bikehorn/golden
 	name = "golden bike horn"

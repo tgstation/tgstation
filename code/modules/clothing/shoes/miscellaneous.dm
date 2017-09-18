@@ -81,11 +81,10 @@
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
 	pockets = /obj/item/storage/internal/pocket/shoes/clown
-	var/list/step_sounds = list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1)
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, step_sounds, 50)
+	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50)
 
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
