@@ -34,7 +34,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 					continue
 			if(I.player_minimum && I.player_minimum > GLOB.joined_player_list.len)
 				continue
-
+			if(uplink_item.SpecialRequirements())
+				continue
+			
 			if(!filtered_uplink_items[category])
 				filtered_uplink_items[category] = list()
 			filtered_uplink_items[category][item] = I
@@ -131,6 +133,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		GLOB.uplink_items -= src	//Take us out instead of leaving a null!
 	return ..()
 
+datum/uplink_item/proc/SpecialRequirements()
+	return TRUE
+ 
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = "Discounted Gear"
@@ -1320,6 +1325,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 16
 	restricted_roles = list("Roboticist", "Research Director")
 	
+	/datum/uplink_item/role_restricted/traitorsec/SpecialRequirement()
+		return !config.forbid_secborg
+			
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
