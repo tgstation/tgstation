@@ -150,7 +150,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 //all of our asset datums, used for referring to these later
 GLOBAL_LIST_EMPTY(asset_datums)
 
-//get a assetdatum or make a new one
+//get an assetdatum or make a new one
 /proc/get_asset_datum(var/type)
 	if (!(type in GLOB.asset_datums))
 		return new type()

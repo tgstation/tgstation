@@ -14,7 +14,6 @@
  *		Cards
  *		Toy nuke
  *		Fake meteor
- *		Carp plushie
  *		Foam armblade
  *		Toy big red button
  *		Beach ball
@@ -986,32 +985,6 @@
 			if(!M.stat && !isAI(M))
 				shake_camera(M, 3, 1)
 		qdel(src)
-
-/*
- * Carp plushie
- */
-
-/obj/item/toy/carpplushie
-	name = "space carp plushie"
-	desc = "An adorable stuffed toy that resembles a space carp."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "carpplushie"
-	item_state = "carp_plushie"
-	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("bitten", "eaten", "fin slapped")
-	resistance_flags = FLAMMABLE
-	var/bitesound = 'sound/weapons/bite.ogg'
-
-//Attack mob
-/obj/item/toy/carpplushie/attack(mob/M, mob/user)
-	playsound(loc, bitesound, 20, 1)	//Play bite sound in local area
-	return ..()
-
-//Attack self
-/obj/item/toy/carpplushie/attack_self(mob/user)
-	playsound(src.loc, bitesound, 20, 1)
-	to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
-	return ..()
 
 /*
  * Toy big red button

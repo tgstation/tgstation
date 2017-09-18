@@ -273,17 +273,6 @@ BLIND     // can't see anything
 		var/mob/M = loc
 		M.update_inv_head()
 
-/obj/item/clothing/head/equipped(mob/user, slot)
-	..()
-	if(dynamic_hair_suffix)
-		user.update_hair()
-
-/obj/item/clothing/head/dropped(mob/user)
-	..()
-	if(dynamic_hair_suffix)
-		user.update_hair()
-
-
 //Neck
 /obj/item/clothing/neck
 	name = "necklace"

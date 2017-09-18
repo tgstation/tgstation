@@ -169,7 +169,7 @@
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
 	set name = "Set AI Core Display"
-	if(stat || aiRestorePowerRoutine)
+	if(incapacitated())
 		return
 
 		//if(icon_state == initial(icon_state))
@@ -308,15 +308,14 @@
 	onclose(src, "airoster")
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
-	if(stat == DEAD)
-		return //won't work if dead
-	if(isAI(usr))
-		var/mob/living/silicon/ai/AI = src
-		if(AI.control_disabled)
-			to_chat(usr, "Wireless control is disabled!")
-			return
+	if(control_disabled)
+		to_chat(usr, "<span class='warning'>Wireless control is disabled!</span>")
+		return
 
 	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
+
+	if(incapacitated())
+		return
 
 	if(trim(reason))
 		SSshuttle.requestEvac(src, reason)
@@ -335,8 +334,8 @@
 	set name = "Toggle Floor Bolts"
 	if(!isturf(loc)) // if their location isn't a turf
 		return // stop
-	if(stat == DEAD)
-		return //won't work if dead
+	if(incapacitated())
+		return
 	anchored = !anchored // Toggles the anchor
 
 	to_chat(src, "<b>You are now [anchored ? "" : "un"]anchored.</b>")
@@ -347,21 +346,16 @@
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
-	if(stat == DEAD)
-		return //won't work if dead
-	if(isAI(usr))
-		var/mob/living/silicon/ai/AI = src
-		if(AI.control_disabled)
-			to_chat(src, "Wireless control is disabled!")
-			return
+	if(control_disabled)
+		to_chat(src, "<span class='warning'>Wireless control is disabled!</span>")
+		return
 	SSshuttle.cancelEvac(src)
-	return
 
 /mob/living/silicon/ai/restrained(ignore_grab)
 	. = 0
 
 /mob/living/silicon/ai/Topic(href, href_list)
-	if(usr != src)
+	if(usr != src || incapacitated())
 		return
 	..()
 	if (href_list["mach_close"])
@@ -385,11 +379,10 @@
 	//Carn: holopad requests
 	if(href_list["jumptoholopad"])
 		var/obj/machinery/holopad/H = locate(href_list["jumptoholopad"])
-		if(stat == CONSCIOUS)
-			if(H)
-				H.attack_ai(src) //may as well recycle
-			else
-				to_chat(src, "<span class='notice'>Unable to locate the holopad.</span>")
+		if(H)
+			H.attack_ai(src) //may as well recycle
+		else
+			to_chat(src, "<span class='notice'>Unable to locate the holopad.</span>")
 	if(href_list["track"])
 		var/string = href_list["track"]
 		trackable_mobs()
@@ -434,9 +427,6 @@
 		if(!GLOB.cameranet.checkCameraVis(M))
 			to_chat(src, "<span class='warning'>Exosuit is no longer near active cameras.</span>")
 			return
-		if(lacks_power())
-			to_chat(src, "<span class='warning'>You're depowered!</span>")
-			return
 		if(!isturf(loc))
 			to_chat(src, "<span class='warning'>You aren't in your core!</span>")
 			return
@@ -449,8 +439,8 @@
 	if(!tracking)
 		cameraFollow = null
 
-	if (!C || stat == DEAD) //C.can_use())
-		return 0
+	if (!C)
+		return FALSE
 
 	if(!src.eyeobj)
 		view_core()
@@ -459,17 +449,17 @@
 	eyeobj.setLoc(get_turf(C))
 	//machine = src
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/ai/proc/botcall()
 	set category = "AI Commands"
 	set name = "Access Robot Control"
 	set desc = "Wirelessly control various automatic robots."
-	if(stat == DEAD)
-		return //won't work if dead
+	if(incapacitated())
+		return
 
 	if(control_disabled)
-		to_chat(src, "Wireless communication is disabled.")
+		to_chat(src, "<span class='warning'>Wireless control is disabled.</span>")
 		return
 	var/turf/ai_current_turf = get_turf(src)
 	var/ai_Zlevel = ai_current_turf.z
@@ -522,8 +512,6 @@
 /mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
 		return
-	if (stat == DEAD)
-		return 1
 	var/list/L = alarms[class]
 	for (var/I in L)
 		if (I == A.name)
@@ -585,8 +573,8 @@
 	cameraFollow = null
 	var/cameralist[0]
 
-	if(stat == DEAD)
-		return //won't work if dead
+	if(incapacitated())
+		return
 
 	var/mob/living/silicon/ai/U = usr
 
@@ -629,8 +617,8 @@
 	set category = "AI Commands"
 	set name = "AI Status"
 
-	if(stat == DEAD)
-		return //won't work if dead
+	if(incapacitated())
+		return
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for (var/M in GLOB.ai_status_displays) //change status of displays
@@ -652,8 +640,8 @@
 	set desc = "Change the default hologram available to AI to something else."
 	set category = "AI Commands"
 
-	if(stat == DEAD)
-		return //won't work if dead
+	if(incapacitated())
+		return
 	var/input
 	switch(alert("Would you like to select a hologram based on a crew member, an animal, or switch to a unique avatar?",,"Crew Member","Unique","Animal"))
 		if("Crew Member")
@@ -729,9 +717,6 @@
 	apc.malfvacate()
 
 /mob/living/silicon/ai/proc/toggle_camera_light()
-	if(stat != CONSCIOUS)
-		return
-
 	camera_light_on = !camera_light_on
 
 	if (!camera_light_on)
@@ -774,8 +759,8 @@
 	set desc = "Allows you to change settings of your radio."
 	set category = "AI Commands"
 
-	if(stat == DEAD)
-		return //won't work if dead
+	if(incapacitated())
+		return
 
 	to_chat(src, "Accessing Subspace Transceiver control...")
 	if (radio)
@@ -790,8 +775,8 @@
 	set desc = "Modify the default radio setting for your automatic announcements."
 	set category = "AI Commands"
 
-	if(stat == DEAD)
-		return //won't work if dead
+	if(incapacitated())
+		return
 	set_autosay()
 
 /mob/living/silicon/ai/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
@@ -818,17 +803,22 @@
 /mob/living/silicon/ai/can_buckle()
 	return 0
 
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
-	if(stat)
-		return
+/mob/living/silicon/ai/incapacitated()
+	if(aiRestorePowerRoutine)
+		return TRUE
+	return ..()
+
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = FALSE)
+	if(control_disabled || incapacitated())
+		return FALSE
 	if(be_close && !in_range(M, src))
-		return
+		return FALSE
 	//stop AIs from leaving windows open and using then after they lose vision
 	//apc_override is needed here because AIs use their own APC when powerless
 	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 	if(M && GLOB.cameranet && !GLOB.cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
-		return
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	raw_message = lang_treat(speaker, message_language, raw_message, spans, message_mode)
@@ -931,8 +921,10 @@
 	set category = "AI Commands"
 	set name = "Deploy to Shell"
 
-	if(stat || lacks_power() || control_disabled)
-		to_chat(src, "<span class='danger'>Wireless networking module is offline.</span>")
+	if(incapacitated())
+		return
+	if(control_disabled)
+		to_chat(src, "<span class='warning'>Wireless networking module is offline.</span>")
 		return
 
 	var/list/possible = list()

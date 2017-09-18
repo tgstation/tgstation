@@ -114,7 +114,7 @@
 	var/obj/item/minigunpack/ammo_pack
 
 /obj/item/gun/ballistic/minigun/Initialize()
-	if(istype(loc, /obj/item/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
+	if(istype(loc, /obj/item/minigunpack)) //We should spawn inside an ammo pack so let's use that one.
 		ammo_pack = loc
 	else
 		return INITIALIZE_HINT_QDEL //No pack, no gun
