@@ -3,10 +3,11 @@ The /tg/ codebase currently requires you to have 11 z-levels of the same size di
 z-level order is important, the order you put them in inside the map config.dm will determine what z level number they are assigned ingame.
 Names of z-level do not matter, but order does greatly, for instances such as checking alive status of revheads on z1
 
-current as of 2016/6/2
+current as of september 17, 2017
 z1 = station
 z2 = centcom
 z5 = mining
+z6 = city of cogs
 Everything else = randomized space
 Last space-z level = empty
 */
