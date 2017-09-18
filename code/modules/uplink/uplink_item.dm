@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 					continue
 			if(I.player_minimum && I.player_minimum > GLOB.joined_player_list.len)
 				continue
-			if(I.uplink_item.SpecialRequirements())
+			if(I.SpecialRequirements())
 				continue
 			
 			if(!filtered_uplink_items[category])
