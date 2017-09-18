@@ -500,6 +500,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/download/check_completion()
 	var/list/current_tech = list()
+	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/owner in owners)
 		if(ismob(owner.current))
 			var/mob/M = owner.current			//Yeah if you get morphed and you eat a quantum tech disk with the RD's latest backup good on you soldier.
@@ -584,7 +585,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	for(var/datum/mind/M in owners)
 		if(!owner || !owner.changeling || !owner.changeling.stored_profiles)
 			continue
-		absorbedcount += M.changeling.absorbedcount 
+		absorbedcount += M.changeling.absorbedcount
 	return absorbedcount >= target_amount
 
 
