@@ -420,7 +420,7 @@
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/narsie_act()
 	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
-	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(get_turf(src))
+	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(loc)
 	N.setDir(dir)
 	gib()
 
