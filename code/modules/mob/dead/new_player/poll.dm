@@ -417,7 +417,7 @@
 		to_chat(src, "<span class='danger'>Invalid vote data</span>")
 		return 0
 
-	//lets add the vote, first we generate a insert statement.
+	//lets add the vote, first we generate an insert statement.
 
 	var/sqlrowlist = ""
 	for (var/vote in numberedvotelist)

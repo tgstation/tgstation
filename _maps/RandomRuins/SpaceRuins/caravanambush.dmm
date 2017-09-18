@@ -815,8 +815,8 @@
 /area/ruin/unpowered)
 "cC" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cD" = (

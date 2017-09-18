@@ -566,6 +566,8 @@
 			my_atom.on_reagent_change()
 		if(!no_react)
 			handle_reactions()
+		if(isliving(my_atom))
+			R.on_mob_add(my_atom)
 		return TRUE
 
 	else

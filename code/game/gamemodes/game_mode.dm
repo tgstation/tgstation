@@ -17,6 +17,7 @@
 	var/config_tag = null
 	var/votable = 1
 	var/probability = 0
+	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
@@ -280,19 +281,19 @@
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
 	likely threats to appear in your sector.</b>"
-	var/list/possible_modes = list()
-	possible_modes.Add("blob", "changeling", "clock_cult", "cult", "extended", "malf", "nuclear", "revolution", "traitor", "wizard")
-	possible_modes -= name //remove the current gamemode to prevent it from being randomly deleted, it will be readded later
+	var/list/report_weights = config.mode_false_report_weight.Copy()
+	report_weights[config_tag] = 0 //Prevent the current mode from being falsely selected.
+	var/list/reports = list()
+	for(var/i in 1 to rand(3,5)) //Between three and five wrong entries on the list.
+		var/false_report_type = pickweightAllowZero(report_weights)
+		report_weights[false_report_type] = 0 //Make it so the same false report won't be selected twice
+		reports += config.mode_reports[false_report_type]
+	reports += config.mode_reports[config_tag]
+	reports = shuffle(reports) //Randomize the order, so the real one is at a random position.
 
-	for(var/i in 1 to 6) //Remove a few modes to leave four
-		possible_modes -= pick(possible_modes)
-
-	possible_modes |= name //Re-add the actual gamemode - the intercept will thus always have the correct mode in its list
-	possible_modes = shuffle(possible_modes) //Meta prevention
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/V in possible_modes)
-		intercepttext += i_text.build(V)
+	for(var/report in reports)
+		intercepttext += "<hr>"
+		intercepttext += report
 
 	if(station_goals.len)
 		intercepttext += "<hr><b>Special Orders for [station_name()]:</b>"
@@ -558,3 +559,6 @@
 	for(var/V in station_goals)
 		var/datum/station_goal/G = V
 		G.print_result()
+
+/datum/game_mode/proc/generate_report() //Generates a small text blurb for the gamemode in centcom report
+	return "Gamemode report for [name] not set.  Contact a coder."

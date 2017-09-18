@@ -150,6 +150,7 @@
 	return 0
 
 /atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	SendSignal(COMSIG_ATOM_HULK_ATTACK, user)
 	if(does_attack_animation)
 		user.changeNext_move(CLICK_CD_MELEE)
 		add_logs(user, src, "punched", "hulk powers")
@@ -222,10 +223,12 @@
 	return
 
 /atom/proc/emp_act(severity)
+	SendSignal(COMSIG_ATOM_EMP_ACT, severity)
 	if(istype(wires) && !(flags_2 & NO_EMP_WIRES_2))
 		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
+	SendSignal(COMSIG_ATOM_BULLET_ACT, P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -308,9 +311,11 @@
 	SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
 
 /atom/proc/blob_act(obj/structure/blob/B)
+	SendSignal(COMSIG_ATOM_BLOB_ACT, B)
 	return
 
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
+	SendSignal(COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 	return
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
@@ -474,21 +479,26 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	SendSignal(COMSIG_ATOM_SING_PULL, S, current_size)
 
 /atom/proc/acid_act(acidpwr, acid_volume)
+	SendSignal(COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
 	return
 
 /atom/proc/emag_act()
+	SendSignal(COMSIG_ATOM_EMAG_ACT)
 	return
 
 /atom/proc/narsie_act()
+	SendSignal(COMSIG_ATOM_NARSIE_ACT)
 	return
 
 /atom/proc/ratvar_act()
+	SendSignal(COMSIG_ATOM_RATVAR_ACT)
 	return
 
 /atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	SendSignal(COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)

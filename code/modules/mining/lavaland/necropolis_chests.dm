@@ -178,7 +178,7 @@
 		SSblackbox.add_details("wisp_lantern","Returned")
 
 /obj/item/device/wisp_lantern/Initialize()
-	..()
+	. = ..()
 	wisp = new(src)
 
 /obj/item/device/wisp_lantern/Destroy()
@@ -247,7 +247,7 @@
 	teleport_color = "#FD3F48"
 
 /obj/item/device/warp_cube/red/Initialize()
-	..()
+	. = ..()
 	if(!linked)
 		var/obj/item/device/warp_cube/blue = new(src.loc)
 		linked = blue
@@ -336,7 +336,7 @@
 	if(cooldown < world.time)
 		SSblackbox.add_details("immortality_talisman","Activated") // usage
 		cooldown = world.time + 600
-		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in [user.p_their()] place!</span>")
+		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a hole in [user.p_their()] place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
 		Z.name = "hole in reality"
 		Z.desc = "It's shaped an awful lot like [user.name]."
@@ -402,7 +402,7 @@
 	desc = "Somehow, it's in two places at once."
 
 /obj/item/device/shared_storage/red/Initialize()
-	..()
+	. = ..()
 	if(!bag)
 		var/obj/item/storage/backpack/shared/S = new(src)
 		var/obj/item/device/shared_storage/blue = new(src.loc)
@@ -582,7 +582,8 @@
 	for(var/i in 1 to world.maxz)
 		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT)
 			continue
-		new /obj/structure/ladder/unbreakable/jacob(ladder_x, ladder_y, i)
+		var/turf/T2 = locate(ladder_x, ladder_y, i)
+		new /obj/structure/ladder/unbreakable/jacob(T2)
 	qdel(src)
 
 /obj/structure/ladder/unbreakable/jacob
@@ -728,7 +729,7 @@
 	var/list/mob/dead/observer/spirits
 
 /obj/item/melee/ghost_sword/Initialize()
-	..()
+	. = ..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src

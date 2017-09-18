@@ -559,7 +559,7 @@
 	reqs = list(/obj/item/stack/sheet/metal = 15)
 	category = CAT_MISC
 
-/datum/crafting_recipe/mummy/
+/datum/crafting_recipe/mummy
 	name = "Mummification Bandages (Mask)"
 	result = /obj/item/clothing/mask/mummy
 	time = 10
