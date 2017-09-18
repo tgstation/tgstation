@@ -12,7 +12,7 @@
 	anchored = TRUE
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE|ACID_PROOF|FIRE_PROOF
-	var/list/gas_mixture = list()
+	var/list/gas_mixture = list()// An associative list of gasses to the relative concentrations of the gas mixture it outputs.  Make sure the values add up to 1.
 	var/spawn_temp = T20C
 	var/spawn_mol = MOLES_CELLSTANDARD * 10
 	var/max_ext_mol = INFINITY
@@ -139,9 +139,9 @@
 		return FALSE
 	var/datum/gas_mixture/merger = new
 	var/moles_spawned = moles_to_spawn(O)
-	for(var/gas in gas_mixture)
+	for(var/gas in gas_mixture) // Iterates over the KEYS of the associative list.
 		merger.assert_gas(gas)
-		merger.gases[gas][MOLES] = moles_spawned * gas_mixture[gas]
+		merger.gases[gas][MOLES] = moles_spawned * gas_mixture[gas] //The VALUE of the associative list is the relative concentrations of each gas.
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
 	SSair.add_to_active(O)
