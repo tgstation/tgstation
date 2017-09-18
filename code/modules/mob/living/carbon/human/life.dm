@@ -313,6 +313,9 @@
 	CHECK_DNA_AND_SPECIES(src)
 	if(NOBLOOD in dna.species.species_traits)
 		return FALSE
+	var/obj/item/organ/heart/heart = getorganslot("heart")
+	if(!heart || heart.synthetic)
+		return FALSE
 	return TRUE
 
 /mob/living/carbon/human/proc/undergoing_cardiac_arrest()
