@@ -97,7 +97,7 @@ FLOOR SAFES
 		return
 	var/mob/living/carbon/human/user = usr
 	
-	if(!Adjacent(user))
+	if(!user.canUseTopic(src))
 		return
 	
 	var/canhear = 0
