@@ -273,7 +273,9 @@
 	var/obj/effect/temp_visual/ratvar/warp_marker/warping
 
 /datum/action/innate/servant_warp/Activate()
-	if(QDELETED(target) || !owner.canUseTopic(target) || warping)
+	if(QDELETED(target) || !(ishuman(owner) || iscyborg(owner)) || !owner.canUseTopic(target) || warping)
+		return
+	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //No leaving unless there's servants from the get-go
 		return
 	var/mob/living/carbon/human/user = owner
 	var/mob/camera/aiEye/remote/remote_eye = user.remote_control

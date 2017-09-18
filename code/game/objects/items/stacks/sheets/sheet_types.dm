@@ -346,8 +346,8 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	pixel_x = 0
 	pixel_y = 0
 
-/obj/item/stack/tile/brass/thirty
-	amount = 30
+/obj/item/stack/tile/brass/fifty
+	amount = 50
 
 /obj/item/stack/sheet/lessergem
 	name = "lesser gems"
