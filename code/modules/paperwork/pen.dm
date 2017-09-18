@@ -186,6 +186,7 @@
 	reagents.add_reagent("chloralhydrate2", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
+	reagents.max_volume = 15 // Refills won't be as potent
 	..()
 
 /*
