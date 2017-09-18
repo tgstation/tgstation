@@ -40,10 +40,11 @@
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
+		user.forceMove(get_turf(src))
 		teleport(user)
 
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc)
-	if(get_turf(oldloc) == get_turf(linked))
+	if(linked && (get_turf(oldloc) == get_turf(linked)))
 		return ..()
 	if(!teleport(AM))
 		return ..()
