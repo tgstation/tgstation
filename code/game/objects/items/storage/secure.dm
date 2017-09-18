@@ -28,7 +28,7 @@
 
 /obj/item/storage/secure/examine(mob/user)
 	..()
-	to_chat(user, text("The service panel is [src.open ? "open" : "closed"]."))
+	to_chat(user, text("The service panel is current <b>[src.open ? "unscrewed" : "screwed shut"]</b>."))
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
 	if(locked)
@@ -37,20 +37,15 @@
 				src.open =! src.open
 				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
 			return
+		if (istype(W, /obj/item/wirecutters))
+			user.show_message("<span class='notice'>These wires are too strong for wirecutters, perhaps a <b>multitool</b> could pulse them instead...</span>", 1)
 		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
 			src.l_hacking = 1
-			if (do_after(usr, 100*W.toolspeed, target = src))
-				if (prob(33))
-					src.l_setshort = 1
-					src.l_set = 0
-					user.show_message("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
-					sleep(80)
-					src.l_setshort = 0
-					src.l_hacking = 0
-				else
-					user.show_message("<span class='danger'>Unable to reset internal memory.</span>", 1)
-					src.l_hacking = 0
+			if (do_after(usr, 400*W.toolspeed, target = src))
+				user.show_message("<span class='danger'>Internal memory reset - lock has been disengaged.</span>", 1)
+				src.l_set = 0
+				src.l_hacking = 0
 			else
 				src.l_hacking = 0
 			return
