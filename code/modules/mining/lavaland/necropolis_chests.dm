@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,28)
+	var/loot = rand(1,27)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -28,7 +28,10 @@
 		if(7)
 			new /obj/item/pickaxe/diamond(src)
 		if(8)
-			new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
+			if(prob(50))
+				new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
+			else
+				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
@@ -38,7 +41,7 @@
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
-			new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
+			new /obj/item/jacobs_ladder(src)
 		if(14)
 			new /obj/item/nullrod/scythe/talking(src)
 		if(15)
@@ -46,7 +49,10 @@
 		if(16)
 			new /obj/item/guardiancreator(src)
 		if(17)
-			new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
+			if(prob(50))
+				new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
+			else
+				new /obj/item/disk/design_disk/modkit_disc/bounty(src)
 		if(18)
 			new /obj/item/device/warp_cube/red(src)
 		if(19)
@@ -69,8 +75,7 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-		if(28)
-			new /obj/item/disk/design_disk/modkit_disc/bounty(src)
+
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -173,7 +178,7 @@
 		SSblackbox.add_details("wisp_lantern","Returned")
 
 /obj/item/device/wisp_lantern/Initialize()
-	..()
+	. = ..()
 	wisp = new(src)
 
 /obj/item/device/wisp_lantern/Destroy()
@@ -242,7 +247,7 @@
 	teleport_color = "#FD3F48"
 
 /obj/item/device/warp_cube/red/Initialize()
-	..()
+	. = ..()
 	if(!linked)
 		var/obj/item/device/warp_cube/blue = new(src.loc)
 		linked = blue
@@ -331,7 +336,7 @@
 	if(cooldown < world.time)
 		SSblackbox.add_details("immortality_talisman","Activated") // usage
 		cooldown = world.time + 600
-		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in [user.p_their()] place!</span>")
+		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a hole in [user.p_their()] place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
 		Z.name = "hole in reality"
 		Z.desc = "It's shaped an awful lot like [user.name]."
@@ -397,7 +402,7 @@
 	desc = "Somehow, it's in two places at once."
 
 /obj/item/device/shared_storage/red/Initialize()
-	..()
+	. = ..()
 	if(!bag)
 		var/obj/item/storage/backpack/shared/S = new(src)
 		var/obj/item/device/shared_storage/blue = new(src.loc)
@@ -481,7 +486,7 @@
 	icon_state = "oar"
 	item_state = "oar"
 	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'	
+	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'
 	desc = "Not to be confused with the kind Research hassles you for."
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
@@ -563,7 +568,28 @@
 	..()
 
 
+/obj/item/jacobs_ladder
+	name = "jacob's ladder"
+	desc = "A celestial ladder that violates the laws of physics."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "ladder00"
 
+/obj/item/jacobs_ladder/attack_self(mob/user)
+	var/turf/T = get_turf(src)
+	var/ladder_x = T.x
+	var/ladder_y = T.y
+	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
+	for(var/i in 1 to world.maxz)
+		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT)
+			continue
+		var/turf/T2 = locate(ladder_x, ladder_y, i)
+		new /obj/structure/ladder/unbreakable/jacob(T2)
+	qdel(src)
+
+/obj/structure/ladder/unbreakable/jacob
+	name = "jacob's ladder"
+	desc = "An indestructible celestial ladder that violates the laws of physics."
+	auto_connect = TRUE
 
 ///Bosses
 
@@ -703,7 +729,7 @@
 	var/list/mob/dead/observer/spirits
 
 /obj/item/melee/ghost_sword/Initialize()
-	..()
+	. = ..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
@@ -802,7 +828,7 @@
 			to_chat(user, "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>")
 			H.set_species(/datum/species/skeleton)
 		if(3)
-			to_chat(user, "<span class='danger'>Power courses through you! You can now shift your form at will.")
+			to_chat(user, "<span class='danger'>Power courses through you! You can now shift your form at will.</span>")
 			if(user.mind)
 				var/obj/effect/proc_holder/spell/targeted/shapeshift/dragon/D = new
 				user.mind.AddSpell(D)
@@ -1012,6 +1038,7 @@
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15
+	attack_verb = list("clubbed", "beat", "pummeled")
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/item_action/toggle_unfriendly_fire)
 	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
@@ -1027,6 +1054,21 @@
 /obj/item/hierophant_club/examine(mob/user)
 	..()
 	to_chat(user, "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>")
+
+/obj/item/hierophant_club/suicide_act(mob/living/user)
+	say("Xverwpsgexmrk...")
+	user.visible_message("<span class='suicide'>[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
+	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
+	user.visible_message("<span class='hierophant_warning'>[user] fades out, leaving their belongings behind!</span>")
+	for(var/obj/item/I in user)
+		if(I != src)
+			user.dropItemToGround(I)
+	for(var/turf/T in RANGE_TURFS(1, user))
+		var/obj/effect/temp_visual/hierophant/blast/B = new(T, user, TRUE)
+		B.damage = 0
+	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
+	qdel(user)
 
 /obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	..()
@@ -1247,3 +1289,5 @@
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
 		B.damage = 15 //keeps monster damage boost due to lower damage
+
+

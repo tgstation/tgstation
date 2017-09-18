@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(persistence)
 
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
-
+	var/list/saved_modes = list(1,2,3)
 	var/list/saved_trophies = list()
 
 /datum/controller/subsystem/persistence/Initialize()
@@ -16,6 +16,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadPoly()
 	LoadChiselMessages()
 	LoadTrophies()
+	LoadRecentModes()
 	..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
@@ -26,7 +27,7 @@ SUBSYSTEM_DEF(persistence)
 		var/savefile/secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
 		var/sav_text
 		secret_satchels[SSmapping.config.map_name] >> sav_text
-		fdel(secret_satchels)
+		fdel("data/npc_saves/SecretSatchels.sav")
 		if(sav_text)
 			old_secret_satchels = splittext(sav_text,"#")
 			if(old_secret_satchels.len >= 20)
@@ -35,7 +36,7 @@ SUBSYSTEM_DEF(persistence)
 				if(chosen_satchel.len == 3)
 					F.x = text2num(chosen_satchel[1])
 					F.y = text2num(chosen_satchel[2])
-					F.z = ZLEVEL_STATION
+					F.z = ZLEVEL_STATION_PRIMARY
 					path = text2path(chosen_satchel[3])
 	else
 		var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
@@ -50,7 +51,7 @@ SUBSYSTEM_DEF(persistence)
 				old_secret_satchels.Cut(pos, pos+1)
 				F.x = old_secret_satchels[pos]["x"]
 				F.y = old_secret_satchels[pos]["y"]
-				F.z = ZLEVEL_STATION
+				F.z = ZLEVEL_STATION_PRIMARY
 				path = text2path(old_secret_satchels[pos]["saved_obj"])
 	if(!ispath(path))
 		return
@@ -59,7 +60,7 @@ SUBSYSTEM_DEF(persistence)
 	new path(F)
 	placed_satchel++
 	var/list/free_satchels = list()
-	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION)))) //Nontrivially expensive but it's roundstart only
+	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY)))) //Nontrivially expensive but it's roundstart only
 		if(isfloorturf(T) && !istype(T, /turf/open/floor/plating/))
 			free_satchels += new /obj/item/storage/backpack/satchel/flat/secret(T)
 			if(!isemptylist(free_satchels) && ((free_satchels.len + placed_satchel) >= (50 - old_secret_satchels.len) * 0.1)) //up to six tiles, more than enough to kill anything that moves
@@ -79,7 +80,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!saved_json)
 			return
 		saved_messages = json_decode(saved_json)
-		fdel(chisel_messages_sav)
+		fdel("data/npc_saves/ChiselMessages.sav")
 	else
 		var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
 		if(!fexists(json_file))
@@ -124,7 +125,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!saved_json)
 			return
 		saved_trophies = json_decode(saved_json)
-		fdel(S)
+		fdel("data/npc_saves/TrophyItems.sav")
 	else
 		var/json_file = file("data/npc_saves/TrophyItems.json")
 		if(!fexists(json_file))
@@ -135,6 +136,17 @@ SUBSYSTEM_DEF(persistence)
 			return
 		saved_trophies = json["data"]
 	SetUpTrophies(saved_trophies.Copy())
+
+/datum/controller/subsystem/persistence/proc/LoadRecentModes()
+	var/json_file = file("data/RecentModes.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = list()
+	json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_modes = json["data"]
+
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
@@ -165,13 +177,14 @@ SUBSYSTEM_DEF(persistence)
 	CollectChiselMessages()
 	CollectSecretSatchels()
 	CollectTrophies()
+	CollectRoundtype()
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	var/list/satchels = list()
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))
 	for(var/A in new_secret_satchels)
 		var/obj/item/storage/backpack/satchel/flat/F = A
-		if(QDELETED(F) || F.z != ZLEVEL_STATION || F.invisibility != INVISIBILITY_MAXIMUM)
+		if(QDELETED(F) || F.z != ZLEVEL_STATION_PRIMARY || F.invisibility != INVISIBILITY_MAXIMUM)
 			continue
 		var/list/savable_obj = list()
 		for(var/obj/O in F)
@@ -224,3 +237,13 @@ SUBSYSTEM_DEF(persistence)
 		data["message"] = T.trophy_message
 		data["placer_key"] = T.placer_key
 		saved_trophies += list(data)
+
+/datum/controller/subsystem/persistence/proc/CollectRoundtype()
+	saved_modes[3] = saved_modes[2]
+	saved_modes[2] = saved_modes[1]
+	saved_modes[1] = SSticker.mode.config_tag
+	var/json_file = file("data/RecentModes.json")
+	var/list/file_data = list()
+	file_data["data"] = saved_modes
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))

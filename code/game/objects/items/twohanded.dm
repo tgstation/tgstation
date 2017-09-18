@@ -487,7 +487,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	flags_1 = CONDUCT_1
 	force = 13
-	var/force_on = 21
+	var/force_on = 24
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 13
 	throw_speed = 2
@@ -499,6 +499,18 @@
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = FALSE
+
+/obj/item/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
+	if(on)
+		user.visible_message("<span class='suicide'>[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		playsound(src, 'sound/weapons/chainsawhit.ogg', 100, 1)
+		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
+		if(myhead)
+			myhead.dismember()
+	else
+		user.visible_message("<span class='suicide'>[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		playsound(src, 'sound/weapons/genhit1.ogg', 100, 1)
+	return(BRUTELOSS)
 
 /obj/item/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on

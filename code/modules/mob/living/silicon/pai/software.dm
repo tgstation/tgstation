@@ -32,7 +32,7 @@
 
 	if(temp)
 		left_part = temp
-	else if(src.stat == 2)						// Show some flavor text if the pAI is dead
+	else if(src.stat == DEAD)						// Show some flavor text if the pAI is dead
 		left_part = "<b><font color=red>�Rr�R �a�� ��Rr����o�</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
@@ -127,11 +127,11 @@
 		if("buy")
 			if(subscreen == 1)
 				var/target = href_list["buy"]
-				if(available_software.Find(target))
+				if(available_software.Find(target) && !software.Find(target))
 					var/cost = src.available_software[target]
 					if(ram >= cost)
-						ram -= cost
 						software.Add(target)
+						ram -= cost
 					else
 						temp = "Insufficient RAM available."
 				else
@@ -248,6 +248,7 @@
 				medHUD = !medHUD
 				if(medHUD)
 					add_med_hud()
+					
 				else
 					var/datum/atom_hud/med = GLOB.huds[med_hud]
 					med.remove_hud_from(src)

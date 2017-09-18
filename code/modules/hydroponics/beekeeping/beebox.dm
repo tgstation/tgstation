@@ -25,7 +25,7 @@
 
 /obj/structure/beebox
 	name = "apiary"
-	desc = "Dr Miles Manners is just your average wasp-themed super hero by day, but by night he becomes DR BEES!"
+	desc = "Dr. Miles Manners is just your average wasp-themed super hero by day, but by night he becomes DR. BEES!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "beebox"
 	anchored = TRUE
@@ -45,9 +45,7 @@
 /obj/structure/beebox/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	bees.Cut()
-	bees = null
 	honeycombs.Cut()
-	honeycombs = null
 	queen_bee = null
 	return ..()
 
@@ -151,6 +149,7 @@
 			honey_frames += HF
 		else
 			to_chat(user, "<span class='warning'>There's no room for any more frames in the apiary!</span>")
+		return
 
 	if(istype(I, /obj/item/wrench))
 		if(default_unfasten_wrench(user, I, time = 20))
@@ -187,6 +186,9 @@
 			to_chat(user, "<span class='warning'>The queen bee disappeared! Disappearing bees have been in the news lately...</span>")
 
 		qdel(qb)
+		return
+
+	..()
 
 
 /obj/structure/beebox/attack_hand(mob/user)
@@ -203,8 +205,10 @@
 			bees = TRUE
 		if(bees)
 			visible_message("<span class='danger'>[user] disturbs the bees!</span>")
+		else
+			visible_message("<span class='danger'>[user] disturbs the [name] to no effect!</span>")
 	else
-		var/option = alert(user, "What action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee")
+		var/option = alert(user, "What action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee", "Cancel")
 		if(!Adjacent(user))
 			return
 		switch(option)
@@ -244,3 +248,13 @@
 					QB.loc = get_turf(src)
 				visible_message("<span class='notice'>[user] removes the queen from the apiary.</span>")
 				queen_bee = null
+
+/obj/structure/beebox/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/mineral/wood (loc, 20)
+	for(var/mob/living/simple_animal/hostile/poison/bees/B in bees)
+		if(B.loc == src)
+			B.loc = get_turf(src)
+	for(var/obj/item/honey_frame/HF in honey_frames)
+		if(HF.loc == src)
+			HF.loc = get_turf(src)
+	qdel(src)

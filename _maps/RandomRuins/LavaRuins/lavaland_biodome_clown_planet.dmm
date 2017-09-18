@@ -378,9 +378,7 @@
 	invisibility = 101
 	},
 /obj/structure/table,
-/obj/item/paper/crumpled/bloody{
-	info = "If you dare not continue down this path of madness, escape can be found through the chute in this room. "
-	},
+/obj/item/paper/crumpled/bloody/ruins/lavaland/clown_planet/escape,
 /obj/item/pen/fourcolor,
 /turf/open/indestructible{
 	icon_state = "white"
@@ -925,9 +923,7 @@
 /turf/open/lava/smooth,
 /area/ruin/powered/clownplanet)
 "CB" = (
-/obj/item/paper/crumpled/bloody{
-	info = "Abandon hope, all ye who enter here."
-	},
+/obj/item/paper/crumpled/bloody/ruins/lavaland/clown_planet/hope,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"

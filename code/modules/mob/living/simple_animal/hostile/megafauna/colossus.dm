@@ -93,7 +93,7 @@ Difficulty: Very Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
-	..()
+	. = ..()
 	internal = new/obj/item/device/gps/internal/colossus(src)
 
 /obj/effect/temp_visual/at_shield
@@ -250,7 +250,7 @@ Difficulty: Very Hard
 	use_power = NO_POWER_USE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
-	var/static/list/blacklist = typecacheof(list(/obj/item/spellbook))
+	var/list/blacklist = list()
 
 /obj/machinery/smartfridge/black_box/update_icon()
 	return
@@ -258,7 +258,8 @@ Difficulty: Very Hard
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))
 		return FALSE
-	if(is_type_in_typecache(O, blacklist))
+	if(blacklist[O])
+		visible_message("<span class='boldwarning'>[src] ripples as it rejects [O]. The device will not accept items that have been removed from it.</span>")
 		return FALSE
 	return TRUE
 
@@ -292,7 +293,7 @@ Difficulty: Very Hard
 	if(fexists("data/npc_saves/Blackbox.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
 		S["stored_items"] >> stored_items
-		fdel(S)
+		fdel("data/npc_saves/Blackbox.sav")
 	else
 		var/json_file = file("data/npc_saves/Blackbox.json")
 		if(!fexists(json_file))
@@ -309,7 +310,8 @@ Difficulty: Very Hard
 //in it's own proc to avoid issues with items that nolonger exist in the code base.
 //try catch doesn't always prevent byond runtimes from halting a proc,
 /obj/machinery/smartfridge/black_box/proc/create_item(item_type)
-	new item_type(src)
+	var/obj/O = new item_type(src)
+	blacklist[O] = TRUE
 
 /obj/machinery/smartfridge/black_box/Destroy(force = FALSE)
 	if(force)

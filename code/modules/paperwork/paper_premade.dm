@@ -46,49 +46,12 @@
 
 /obj/item/paper/fluff/jobs/toxins/chemical_info
 	name = "paper- 'Chemical Information'"
-	info = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in a enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure unconscious and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tit will not cure them or allow them to be cured.<BR>\n\t\tIt can be administered to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tMorphine T#054:<BR>\n\t\t5 units will induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effect are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization"
+	info = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in an enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure unconscious and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tit will not cure them or allow them to be cured.<BR>\n\t\tIt can be administered to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tMorphine T#054:<BR>\n\t\t5 units will induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effect are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization"
 
 
 	/*
 	*	Stations
 	*/
-
-//////////	Cere fluff
-
-/obj/item/paper/fluff/stations/cere/abandoned_dock
-	name = "Disclaimer Notice"
-	info = "This station needs clearing out within the next few weeks as construction is almost complete and NT expects most of the equipment off-site before then. Throw most of the shit in here for now and we'll come back later with a pod to haul the heavier stuff.  Shouldn't be too big of an issue."
-
-/obj/item/paper/fluff/stations/cere/janitor
-	name = "Janitor Notice"
-	info = "You got a big job ahead of you, pal. This is a big station, lots of floors and assholes to dirty said floors without any thought for you. It might not be a bad idea to check on the external waste belts every now and again to make sure some foreign object hasn't clogged the disposal loop, either."
-
-/obj/item/paper/fluff/stations/cere/gateway
-	name = "NOTICE - GATEWAY STATUS"
-	info = "<center><b>Nanotrasen Exploration and Colonization Program</b></center><br><br><center><i>Due to recent shutdowns of the Exploration and Colonization department shortly after this gateway was delivered on-site during station construction, this room has been condemned and an engineering team will be on-site within the next few months to recollect the gate. Thank you for your cooperation.</i>"
-
-/obj/item/paper/fluff/stations/cere/journal/journal
-	name = "Journal Log"
-	info = "<b><center>2XXX - 2nd Trimester</center></b><br><br><center>I hide in here, away from the masses, not like it matters much considering how fucking huge this place is. "
-	
-/obj/item/paper/fluff/stations/cere/journal/journal_2
-	name = "Journal Log 2"
-	info = "<b><center>2XXX - 3rd Trimester</center></b><br><br><center>I hear strange whispers from the halls, longing for blood. Something isn't right here. Why did they transfer us here to work in the first place? "
-
-/obj/item/paper/crumpled/stations/cere/empty_station
-	info = "I can't be here for much longer, this station is too empty for its own good.  Something is wrong..."
-
-/obj/item/paper/crumpled/bloody/hop
-	info = "...THE HOPLINE CALLS...IT THIRSTS FOR BLOOD...I MUST GO..."
-
-/obj/item/paper/crumpled/stations/cere/rocks1
-	info = "...SOMETHING IN THE ROCKS, IT WATCHES US ALL..."
-
-/obj/item/paper/crumpled/stations/cere/rocks2
-	info = "...THEY SENT US HERE FOR A REASON...TERRIBLE..."
-
-/obj/item/paper/crumpled/stations/cere/rocks3
-	info = "...EMPTY HALLS...USELESS SPACE..."
 
 
 ///////////	CentCom

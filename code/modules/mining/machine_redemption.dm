@@ -102,7 +102,7 @@
 		smelt_ore(ore)
 
 /obj/machinery/mineral/ore_redemption/proc/send_console_message()
-	if(z != ZLEVEL_STATION)
+	if(!(z in GLOB.station_z_levels))
 		return
 	message_sent = TRUE
 	var/area/A = get_area(src)

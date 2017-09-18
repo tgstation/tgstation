@@ -186,8 +186,6 @@
 	dir = 1
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /obj/machinery/computer/shuttle/pod{
@@ -208,8 +206,6 @@
 	dir = 1
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /obj/machinery/computer/shuttle/pod{
@@ -319,7 +315,7 @@
 /obj/docking_port/mobile/pod{
 	id = "pod1";
 	name = "escape pod 1";
-	port_angle = 180
+	port_direction = 2
 	},
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plasteel/white,
@@ -335,7 +331,7 @@
 /obj/docking_port/mobile/pod{
 	id = "pod2";
 	name = "escape pod 2";
-	port_angle = 180
+	port_direction = 2
 	},
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plasteel/white,
@@ -863,8 +859,7 @@
 /area/maintenance/solars/starboard/fore)
 "abM" = (
 /obj/structure/cable/white,
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 2;
 	name = "Starboard Bow Solar APC";
 	areastring = "/area/maintenance/solars/starboard/fore";
@@ -2598,7 +2593,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -2671,7 +2666,7 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
-	port_angle = 0;
+	port_direction = 1;
 	roundstart_move = "syndicate_away";
 	width = 18
 	},
@@ -3388,7 +3383,7 @@
 /turf/closed/wall,
 /area/security/vacantoffice)
 "ahx" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/abandoned{
 	name = "Auxiliary Office";
 	req_access_txt = "32"
 	},
@@ -3515,6 +3510,8 @@
 "ahP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4917,7 +4914,7 @@
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "alk" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Office Maintenance";
 	req_access_txt = "32"
 	},
@@ -5121,7 +5118,7 @@
 /area/maintenance/starboard/fore)
 "alA" = (
 /obj/structure/table/wood,
-/obj/item/toy/carpplushie,
+/obj/item/toy/plush/carpplushie,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -6352,6 +6349,8 @@
 	req_access_txt = "12"
 	},
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -7663,7 +7662,7 @@
 /area/maintenance/starboard/fore)
 "aqK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -8008,7 +8007,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "arq" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -8023,7 +8022,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "arr" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -9188,7 +9187,7 @@
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "atE" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -9543,7 +9542,6 @@
 /area/quartermaster/storage)
 "aut" = (
 /obj/machinery/status_display{
-	density = 0;
 	name = "cargo display";
 	supply_display = 1
 	},
@@ -15589,8 +15587,7 @@
 /area/maintenance/solars/port/fore)
 "aGh" = (
 /obj/structure/cable/white,
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 2;
 	name = "Port Bow Solar APC";
 	areastring = "/area/maintenance/solars/port/fore";
@@ -18932,7 +18929,6 @@
 /area/quartermaster/storage)
 "aNe" = (
 /obj/machinery/status_display{
-	density = 0;
 	name = "cargo display";
 	supply_display = 1
 	},
@@ -19937,12 +19933,9 @@
 	},
 /area/security/prison)
 "aOV" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "permacell3";
-	name = "Cell Shutters";
-	opacity = 0
+	name = "Cell Shutters"
 	},
 /obj/machinery/door/airlock/glass{
 	id_tag = "permabolt3";
@@ -19958,12 +19951,9 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aOW" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "permacell2";
-	name = "Cell Shutters";
-	opacity = 0
+	name = "Cell Shutters"
 	},
 /obj/machinery/door/airlock/glass{
 	id_tag = "permabolt2";
@@ -19983,12 +19973,9 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aOX" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "open";
+/obj/machinery/door/poddoor/preopen{
 	id = "permacell1";
-	name = "Cell Shutters";
-	opacity = 0
+	name = "Cell Shutters"
 	},
 /obj/machinery/door/airlock/glass{
 	id_tag = "permabolt1";
@@ -24311,8 +24298,7 @@
 /area/quartermaster/office)
 "aWW" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-18";
-	layer = 4.1
+	icon_state = "plant-18"
 	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/office)
@@ -24570,8 +24556,7 @@
 /area/security/prison)
 "aXv" = (
 /obj/structure/cable/white,
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Prison Wing APC";
 	areastring = "/area/security/prison";
@@ -24696,7 +24681,7 @@
 	dir = 4;
 	id = "pod3";
 	name = "escape pod 3";
-	port_angle = 180;
+	port_direction = 2;
 	preferred_direction = 4
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -24729,8 +24714,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /obj/machinery/computer/shuttle/pod{
@@ -24807,8 +24790,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/fireaxecabinet{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 8
@@ -27292,7 +27274,7 @@
 	height = 5;
 	id = "mining";
 	name = "mining shuttle";
-	port_angle = 90;
+	port_direction = 4;
 	width = 7
 	},
 /obj/docking_port/stationary{
@@ -27406,8 +27388,7 @@
 	},
 /area/engine/atmos)
 "bdr" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Atmospherics APC";
 	areastring = "/area/engine/atmos";
@@ -37439,7 +37420,7 @@
 	height = 5;
 	id = "laborcamp";
 	name = "labor camp shuttle";
-	port_angle = 90;
+	port_direction = 4;
 	width = 9
 	},
 /obj/docking_port/stationary{
@@ -37815,8 +37796,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bwL" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Gravity Generator APC";
 	areastring = "/area/engine/gravity_generator";
@@ -38945,8 +38925,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Engineering Foyer APC";
 	areastring = "/area/engine/break_room";
@@ -43406,8 +43385,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 1;
 	name = "Council Chambers APC";
 	areastring = "/area/bridge/meeting_room/council";
@@ -43982,8 +43960,7 @@
 /turf/closed/wall,
 /area/engine/transit_tube)
 "bHy" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Transit Tube Access APC";
 	areastring = "/area/engine/transit_tube";
@@ -44496,8 +44473,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
 "bIq" = (
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 1;
 	name = "Telecomms Monitoring APC";
 	areastring = "/area/tcommsat/computer";
@@ -44659,8 +44635,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Auxiliary Tool Storage APC";
 	areastring = "/area/storage/tools";
@@ -46594,8 +46569,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bMI" = (
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 2;
 	name = "Captain's Office APC";
 	areastring = "/area/crew_quarters/heads/captain";
@@ -46605,8 +46579,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bMJ" = (
-/obj/structure/sign/goldenplaque{
-	name = "The Most Robust Captain Award for Robustness";
+/obj/structure/sign/goldenplaque/captain{
 	pixel_x = 32
 	},
 /turf/open/floor/wood,
@@ -46760,9 +46733,7 @@
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bMX" = (
-/obj/machinery/computer/security/wooden_tv{
-	density = 0
-	},
+/obj/machinery/computer/security/wooden_tv,
 /obj/structure/table/wood,
 /obj/machinery/button/door{
 	id = "detectivewindows";
@@ -46884,6 +46855,7 @@
 /obj/item/gun/ballistic/shotgun/riot,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/item/gun/ballistic/shotgun/riot,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bNh" = (
@@ -47918,13 +47890,8 @@
 	},
 /area/aisat)
 "bPb" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -47979,13 +47946,8 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bPg" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -48029,13 +47991,8 @@
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bPm" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -48089,13 +48046,8 @@
 /turf/open/floor/plasteel/vault,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bPr" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -50692,13 +50644,8 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bTA" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -50748,13 +50695,8 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bTF" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -50803,13 +50745,8 @@
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bTL" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -54595,8 +54532,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 1;
 	name = "Brig APC";
 	areastring = "/area/security/brig";
@@ -54967,9 +54903,7 @@
 	dir = 8
 	},
 /obj/item/twohanded/required/kirbyplants/random,
-/obj/structure/sign/kiddieplaque{
-	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside.";
-	name = "Library Rules Sign";
+/obj/structure/sign/kiddieplaque/library{
 	pixel_x = -32
 	},
 /turf/open/floor/wood,
@@ -55007,9 +54941,7 @@
 	},
 /area/library)
 "cbD" = (
-/obj/structure/sign/kiddieplaque{
-	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside.";
-	name = "Library Rules Sign";
+/obj/structure/sign/kiddieplaque/library{
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -55181,8 +55113,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 2;
 	name = "Captain's Quarters APC";
 	areastring = "/area/crew_quarters/heads/captain/private";
@@ -57975,7 +57906,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "chF" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -58237,8 +58168,7 @@
 "cig" = (
 /obj/structure/table,
 /obj/item/hand_tele,
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 1;
 	name = "Teleporter APC";
 	areastring = "/area/teleporter";
@@ -58772,9 +58702,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/table/reinforced,
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-07";
-	name = "Photosynthetic Potted plant";
+/obj/item/twohanded/required/kirbyplants/photosynthetic{
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/vault{
@@ -61491,7 +61419,7 @@
 	icon_state = "2-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/glass_security/abandoned{
 	name = "Storage Closet";
 	req_access_txt = "63"
 	},
@@ -63428,8 +63356,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 1;
 	name = "Gateway APC";
 	areastring = "/area/gateway";
@@ -64275,8 +64202,6 @@
 	dir = 1
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -64760,9 +64685,7 @@
 	dir = 8
 	},
 /obj/machinery/disposal/bin,
-/obj/structure/sign/kiddieplaque{
-	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside.";
-	name = "Library Rules Sign";
+/obj/structure/sign/kiddieplaque/library{
 	pixel_x = -32
 	},
 /obj/structure/disposalpipe/trunk{
@@ -65566,12 +65489,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/showcase{
-	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. It is described as the premier unit used to defend corporate interests and employees.";
-	icon = 'icons/mecha/mecha.dmi';
-	icon_state = "marauder";
-	name = "combat mech exhibit"
-	},
+/obj/structure/showcase/mecha/marauder,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/grimy,
 /area/bridge/showroom/corporate)
@@ -65638,12 +65556,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/showcase{
-	desc = "A flimsy model of a standard Nanotrasen automated loyalty implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!";
-	icon = 'icons/obj/machines/implantchair.dmi';
-	icon_state = "implantchair";
+/obj/structure/showcase/machinery/implanter{
 	layer = 2.7;
-	name = "Nanotrasen automated loyalty implanter exhibit";
 	pixel_y = 4
 	},
 /turf/open/floor/plasteel/grimy,
@@ -67174,7 +67088,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "czB" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -68506,8 +68420,7 @@
 /area/crew_quarters/locker)
 "cCc" = (
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-18";
-	layer = 4.1
+	icon_state = "plant-18"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -70040,6 +69953,8 @@
 /area/maintenance/port)
 "cEW" = (
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -70784,7 +70699,7 @@
 "cFS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -71420,9 +71335,7 @@
 "cHm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
 	},
@@ -72959,7 +72872,7 @@
 /area/maintenance/starboard/aft)
 "cKH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -78525,9 +78438,7 @@
 	},
 /area/medical/chemistry)
 "cVO" = (
-/obj/machinery/chem_master{
-	density = 0
-	},
+/obj/machinery/chem_master,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -78919,6 +78830,8 @@
 	dir = 8
 	},
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -79652,9 +79565,7 @@
 /area/medical/abandoned)
 "cYb" = (
 /obj/structure/bed/roller,
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/medical/abandoned)
@@ -79675,9 +79586,7 @@
 /area/medical/abandoned)
 "cYd" = (
 /obj/structure/bed/roller,
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
@@ -80832,7 +80741,7 @@
 /area/maintenance/starboard/aft)
 "daD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -80897,7 +80806,7 @@
 /area/medical/abandoned)
 "daJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -81019,6 +80928,8 @@
 /area/maintenance/port)
 "daZ" = (
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -81042,6 +80953,8 @@
 "dbb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -81063,6 +80976,8 @@
 "dbd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -81626,9 +81541,7 @@
 /turf/open/floor/plating,
 /area/medical/abandoned)
 "dcm" = (
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/medical/abandoned)
@@ -83153,7 +83066,7 @@
 /area/maintenance/starboard/aft)
 "dfA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -83202,7 +83115,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /obj/structure/cable/white{
 	d2 = 4;
 	icon_state = "0-4"
@@ -83231,7 +83146,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/northwest,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 9
+	},
 /obj/structure/cable/white{
 	d1 = 4;
 	d2 = 8;
@@ -83248,7 +83165,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dfJ" = (
@@ -83261,7 +83180,9 @@
 	icon_state = "0-8"
 	},
 /obj/structure/cable/white,
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/northeast,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dfK" = (
@@ -83384,9 +83305,7 @@
 /area/science/explab)
 "dfZ" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	density = 0;
-	dir = 8;
-	req_access = "0"
+	dir = 8
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 1
@@ -83773,7 +83692,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dgT" = (
@@ -83794,7 +83715,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dgW" = (
@@ -84197,8 +84120,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 1;
 	name = "Mech Bay APC";
 	areastring = "/area/science/robotics/mechbay";
@@ -84331,8 +84253,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Cloning Lab APC";
 	areastring = "/area/medical/genetics/cloning";
@@ -86373,7 +86294,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/corner,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dma" = (
@@ -87492,7 +87415,7 @@
 /area/maintenance/starboard/aft)
 "doy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -87547,7 +87470,7 @@
 /area/hallway/secondary/construction)
 "doE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -87572,7 +87495,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/southwest,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 10
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "doH" = (
@@ -87584,7 +87509,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "doI" = (
@@ -87593,7 +87518,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "doJ" = (
@@ -90680,7 +90607,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "duA" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -92088,8 +92015,7 @@
 /area/maintenance/starboard/aft)
 "dxk" = (
 /obj/structure/cable/white,
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 2;
 	name = "Starboard Quarter Solar APC";
 	areastring = "/area/maintenance/solars/starboard/aft";
@@ -92672,7 +92598,7 @@
 /turf/closed/wall,
 /area/security/detectives_office/private_investigators_office)
 "dyt" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -94065,9 +93991,7 @@
 /area/science/mixing)
 "dBf" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	density = 0;
-	dir = 8;
-	req_access = "0"
+	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
@@ -95220,7 +95144,7 @@
 /area/maintenance/starboard/aft)
 "dDr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},
@@ -98159,6 +98083,7 @@
 /area/security/checkpoint/customs)
 "dJd" = (
 /obj/structure/cable/white{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -98743,6 +98668,7 @@
 /area/medical/virology)
 "dKq" = (
 /obj/structure/cable/white{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -98825,9 +98751,7 @@
 /area/maintenance/port/aft)
 "dKD" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	density = 0;
-	dir = 8;
-	req_access = "0"
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral,
@@ -100742,10 +100666,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/sign/atmosplaque{
-	desc = "A plaque commemorating the fallen, may they rest in peace, forever asleep amongst the stars. Someone has drawn a picture of a crying badger at the bottom.";
-	icon_state = "kiddieplaque";
-	name = "Remembrance Plaque";
+/obj/structure/sign/kiddieplaque/badger{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -102792,7 +102713,7 @@
 	name = "Delta emergency shuttle";
 	width = 30;
 	preferred_direction = 2;
-	port_angle = 90
+	port_direction = 4
 	},
 /obj/docking_port/stationary{
 	dheight = 0;
@@ -104595,8 +104516,7 @@
 /area/maintenance/solars/port/aft)
 "dWj" = (
 /obj/structure/cable/white,
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 2;
 	name = "Port Quarter Solar APC";
 	areastring = "/area/maintenance/solars/port/aft";
@@ -105619,10 +105539,7 @@
 /area/shuttle/escape)
 "dYc" = (
 /obj/structure/lattice,
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/space,
 /area/space)
 "dYd" = (
@@ -105951,6 +105868,7 @@
 /area/security/checkpoint/checkpoint2)
 "dYE" = (
 /obj/structure/cable/white{
+	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -107661,7 +107579,7 @@
 	height = 13;
 	id = "ferry";
 	name = "ferry shuttle";
-	port_angle = 0;
+	port_direction = 1;
 	preferred_direction = 4;
 	roundstart_move = "ferry_away";
 	width = 5
@@ -108844,8 +108762,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "egC" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Departure Lounge APC";
 	areastring = "/area/hallway/secondary/exit/departure_lounge";
@@ -109692,24 +109609,32 @@
 /area/hallway/primary/aft)
 "eiL" = (
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
 "eiM" = (
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
 "eiN" = (
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
 "eiO" = (
 /obj/structure/cable/white{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
@@ -109815,6 +109740,8 @@
 /area/crew_quarters/dorms)
 "ejb" = (
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
@@ -109838,6 +109765,8 @@
 /area/crew_quarters/dorms)
 "ejd" = (
 /obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -110542,7 +110471,7 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
-	port_angle = 0;
+	port_direction = 1;
 	roundstart_move = "syndicate_away";
 	width = 18
 	},
@@ -112349,7 +112278,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "eqf" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/abandoned{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
 	},

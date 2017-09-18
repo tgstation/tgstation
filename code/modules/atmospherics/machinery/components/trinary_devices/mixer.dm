@@ -3,7 +3,7 @@
 	density = FALSE
 
 	name = "gas mixer"
-	can_unwrench = 1
+	can_unwrench = TRUE
 
 	var/on = FALSE
 
@@ -15,7 +15,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/flipped
 	icon_state = "mixer_off_f"
-	flipped = 1
+	flipped = TRUE
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon()
 	cut_overlays()
@@ -29,18 +29,15 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
-	if(!(stat & NOPOWER) && on && NODE1 && NODE2 && NODE3)
+	if(on && NODE1 && NODE2 && NODE3 && is_operational())
 		icon_state = "mixer_on[flipped?"_f":""]"
 		return
-
 	icon_state = "mixer_off[flipped?"_f":""]"
 
 /obj/machinery/atmospherics/components/trinary/mixer/power_change()
 	var/old_stat = stat
 	..()
-	if(stat & NOPOWER)
-		on = FALSE
-	if(old_stat != stat)
+	if(stat != old_stat)
 		update_icon()
 
 /obj/machinery/atmospherics/components/trinary/mixer/New()
@@ -51,10 +48,8 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
-	if(!on)
-		return 0
-	if(!(NODE1 && NODE2 && NODE3))
-		return 0
+	if(!on || !(NODE1 && NODE2 && NODE3) && !is_operational())
+		return
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
@@ -64,7 +59,7 @@
 
 	if(output_starting_pressure >= target_pressure)
 		//No need to mix if target is already full!
-		return 1
+		return
 
 	//Calculate necessary moles to transfer using PV=nRT
 
@@ -114,7 +109,7 @@
 	var/datum/pipeline/parent3 = PARENT3
 	parent3.update = TRUE
 
-	return TRUE
+	return
 
 /obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -168,3 +163,11 @@
 			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_icon()
+
+
+/obj/machinery/atmospherics/components/trinary/filter/can_unwrench(mob/user)
+	. = ..()
+	if(. && on && is_operational())
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		return FALSE
+

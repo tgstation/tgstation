@@ -24,7 +24,7 @@
 	return (BRUTELOSS)
 
 /obj/item/device/instrument/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)
 		song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
 

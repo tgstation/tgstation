@@ -12,7 +12,7 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	stat_attack = 1
+	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	maxHealth = 100
@@ -38,7 +38,7 @@
 	minimum_distance = 5
 	icon_state = "stickmanranged"
 	icon_living = "stickmanranged"
-	casingtype = /obj/item/ammo_casing/c45nostamina
+	casingtype = /obj/item/ammo_casing/c45/nostamina
 	projectilesound = 'sound/misc/bang.ogg'
 	loot = list(/obj/item/gun/ballistic/automatic/pistol/stickman)
 

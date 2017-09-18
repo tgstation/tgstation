@@ -616,15 +616,15 @@
 		var/obj/item/stack/sheet/G = W
 		if(G)
 			if(G.get_amount() >= 1)
-				if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
+				if(is_glass_sheet(G))
 					playsound(src.loc, 'sound/items/crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 					if(do_after(user, 40, target = src))
 						if(G.get_amount() < 1 || mineral) return
-						if (G.type == /obj/item/stack/sheet/rglass)
-							to_chat(user, "<span class='notice'>You install reinforced glass windows into the airlock assembly.</span>")
-							heat_proof_finished = 1 //reinforced glass makes the airlock heat-proof
+						if(!istype(G, /obj/item/stack/sheet/glass))
+							to_chat(user, "<span class='notice'>You install [G.name] windows into the airlock assembly.</span>")
+							heat_proof_finished = 1 //plasma & reinforced glass makes the airlock heat-proof
 							name = "near finished heat-proofed window airlock assembly"
 						else
 							to_chat(user, "<span class='notice'>You install regular glass windows into the airlock assembly.</span>")

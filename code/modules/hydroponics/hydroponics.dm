@@ -248,7 +248,7 @@
 		if(istype(src, /obj/machinery/hydroponics/soil))
 			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 		else
-			overlays += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing")
+			add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing"))
 		set_light(3)
 
 	update_icon_hoses()
@@ -622,7 +622,7 @@
 		adjustHealth(round(salt * 0.25))
 		if (myseed)
 			myseed.adjust_production(-round(salt/100)-prob(salt%100))
-			myseed.adjust_potency(round(salt*0.50))
+			myseed.adjust_potency(round(salt*0.5))
 	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 	if(S.has_reagent("ash", 1))
 		adjustHealth(round(S.get_reagent_amount("ash") * 0.25))
@@ -915,9 +915,11 @@
 	name = "soil"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
+	circuit = null
 	density = FALSE
 	use_power = NO_POWER_USE
-	unwrenchable = 0
+	flags_1 = NODECONSTRUCT_1
+	unwrenchable = FALSE
 
 /obj/machinery/hydroponics/soil/update_icon_hoses()
 	return // Has no hoses

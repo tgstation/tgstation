@@ -47,7 +47,7 @@
 	desc = "Used to designate a precise transit location for the syndicate shuttle."
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
-	z_lock = ZLEVEL_STATION
+	z_lock = ZLEVEL_STATION_PRIMARY
 	shuttleId = "syndicate"
 	shuttlePortId = "syndicate_custom"
 	shuttlePortName = "custom location"

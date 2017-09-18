@@ -295,6 +295,12 @@
 	pin = /obj/item/device/firing_pin
 
 
+/obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
+	..()
+	if(cover_open && magazine)
+		to_chat(user, "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>")
+
+
 /obj/item/gun/ballistic/automatic/l6_saw/attack_self(mob/user)
 	cover_open = !cover_open
 	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
@@ -377,11 +383,6 @@
 	desc = "An illegally modified .50 cal sniper rifle with suppression compatibility. Quickscoping still doesn't work."
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	origin_tech = "combat=7;syndicate=6"
-
-/obj/item/gun/ballistic/automatic/sniper_rifle/gang
-	name = "black market sniper rifle"
-	desc = "A long ranged weapon that does significant damage. It is well worn from years of service."
-	mag_type = /obj/item/ammo_box/magazine/sniper_rounds/gang
 
 // Old Semi-Auto Rifle //
 

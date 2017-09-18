@@ -130,7 +130,7 @@
 	var/timer = 0
 
 /mob/living/simple_animal/shade/howling_ghost/Initialize()
-	..()
+	. = ..()
 	icon_state = pick("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
 	icon_living = icon_state
 	status_flags |= GODMODE
@@ -194,7 +194,7 @@
 	var/timer
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/Initialize()
-	..()
+	. = ..()
 	timer = rand(5,15)
 	status_flags = (status_flags | GODMODE)
 	return

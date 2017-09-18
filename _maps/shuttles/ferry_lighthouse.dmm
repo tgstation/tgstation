@@ -46,10 +46,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "am" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "an" = (
@@ -114,10 +111,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "aB" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/window/fulltile,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
@@ -184,7 +178,7 @@
 	name = "The Lighthouse";
 	roundstart_move = "ferry_away";
 	timid = 1;
-	port_angle = 180;
+	port_direction = 2;
 	width = 16
 	},
 /turf/open/floor/mineral/titanium/blue,

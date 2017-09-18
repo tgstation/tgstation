@@ -90,7 +90,7 @@
 		return
 	if(!isnull(target) && !target.toff)
 		charges--
-		var/lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
+		var/lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 		to_chat(U, "<span class='notice'>Virus Sent!  The unlock code to the target is: [lock_code]</span>")
 		if(!target.hidden_uplink)
 			var/obj/item/device/uplink/uplink = new(target)

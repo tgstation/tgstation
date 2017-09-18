@@ -84,8 +84,8 @@
 /area/holodeck/rec_center/firingrange
 	name = "Holodeck - Firing Range"
 
-/area/holodeck/rec_center/rollercoaster
-	name = "Holodeck - Roller Coaster"
+/area/holodeck/rec_center/school
+	name = "Holodeck - Anime School"
 
 /area/holodeck/rec_center/chapelcourt
 	name = "Holodeck - Chapel Courtroom"

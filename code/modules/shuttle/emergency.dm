@@ -183,7 +183,7 @@
 	width = 22
 	height = 11
 	dir = EAST
-	port_angle = -90
+	port_direction = WEST
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 
@@ -262,7 +262,7 @@
 				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
 					var/location = get_turf(player.mind.current)
-					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate" || player.mind.special_role == "blood brother") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return FALSE
 
 	return has_people
@@ -290,7 +290,7 @@
 		if(SHUTTLE_CALL)
 			if(time_left <= 0)
 				//move emergency shuttle to station
-				if(dock(SSshuttle.getDock("emergency_home")))
+				if(dock(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
 					setTimer(20)
 					return
 				mode = SHUTTLE_DOCKED

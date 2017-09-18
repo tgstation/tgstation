@@ -3159,8 +3159,7 @@
 	dir = 1;
 	network = list("UO45")
 	},
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 0;
 	name = "Hydroponics APC";
@@ -6240,8 +6239,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 1;
 	locked = 0;
 	name = "UO45 Bar APC";
@@ -7619,8 +7617,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 0;
 	name = "UO45 Research Division APC";
@@ -8313,8 +8310,7 @@
 	})
 "mE" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 0;
 	name = "UO45 Gateway APC";
@@ -11932,8 +11928,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 8;
 	locked = 1;
 	name = "UO45 Engineering APC";
@@ -12695,8 +12690,7 @@
 	})
 "sj" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 0;
 	name = "UO45 Mining APC";
@@ -14194,8 +14188,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
 	filter_type = "n2";
-	on = 1;
-	req_access = null
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10;
@@ -14244,8 +14237,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
 	filter_type = "o2";
-	on = 1;
-	req_access = null
+	on = 1
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 10;
@@ -17526,11 +17518,7 @@
 	poweralm = 0
 	})
 "yN" = (
-/obj/structure/grille{
-	density = 0;
-	broken = 1;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
