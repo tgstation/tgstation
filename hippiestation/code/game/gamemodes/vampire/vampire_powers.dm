@@ -313,3 +313,64 @@
 			to_chat(target, "<span class='userdanger'>You sign Lilith's Pact.</span>")
 			target.mind.store_memory("<B>[user] showed you the glory of Lilith. <I>You are not required to respect or obey [user] in any way</I></B>")
 			add_vampire(target)
+
+
+/obj/effect/proc_holder/spell/self/revive
+	name = "Revive"
+	gain_desc = "You have gained the ability to revive after death... However you can still be cremated/gibbed, and you will disintergrate if you're in the chapel!"
+	blood_used = 0
+	stat_allowed = TRUE
+	charge_max = 1000
+	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
+	vamp_req = TRUE
+
+/obj/effect/proc_holder/spell/self/revive/cast(list/targets, mob/user = usr)
+	if(!is_vampire(user) || !isliving(user))
+		revert_cast()
+		return
+	if(user.stat != DEAD)
+		to_chat(user, "<span class='notice'>We aren't dead enough to do that yet!</span>")
+		revert_cast()
+		return
+	if(user.reagents.has_reagent("holywater"))
+		to_chat(user, "<span class='danger'>We cannot revive, holy water is in our system!</span>")
+		return
+	var/mob/living/L = user
+	if(istype(get_area(L.loc), /area/chapel))
+		L.visible_message("<span class='warning'>[L] disintergrates into dust!</span>", "<span class='userdanger'>Holy energy seeps into our very being, disintergrating us instantly!</span>", "You hear sizzling.")
+		new /obj/effect/decal/remains/human(L.loc)
+		L.dust()
+	to_chat(L, "<span class='notice'>We begin to reanimate... this will take a minute.</span>")
+	addtimer(CALLBACK(src, .proc/revive, L), rand(600, 750))
+
+/obj/effect/proc_holder/spell/self/revive/proc/revive(mob/living/user)
+	if(user.reagents.has_reagent("holywater"))
+		to_chat(user, "<span class='danger'>We cannot revive, holy water is in our system!</span>")
+		return
+	user.revive()
+	user.visible_message("<span class='warning'>[user] reanimates from death!</span>", "<span class='notice'>We get back up.</span>")
+	user.fully_heal()
+
+
+
+/obj/effect/proc_holder/spell/self/summon_coat
+	name = "Summon Dracula Coat"
+	gain_desc = "You have gained the ability to create a coat out of thin air!"
+	blood_used = 10
+	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
+	vamp_req = TRUE
+
+/obj/effect/proc_holder/spell/self/summon_coat/cast(list/targets, mob/user = usr)
+	if(!is_vampire(user) || !isliving(user))
+		revert_cast()
+		return
+	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	if(!V)
+		return
+	if(QDELETED(V.coat) || !V.coat)
+		V.coat = new /obj/item/clothing/suit/draculacoat(user.loc)
+	else if(get_dist(V.coat, user) > 1 || !(V.coat in user.GetAllContents()))
+		V.coat.loc = user.loc
+	to_chat(user, "<span class='notice'>You summon your dracula coat.</span>")

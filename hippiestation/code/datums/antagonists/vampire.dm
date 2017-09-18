@@ -10,6 +10,8 @@
 
 	var/list/powers = list() // list of current powers
 
+	var/obj/item/clothing/suit/draculacoat/coat
+
 	var/list/upgrade_tiers = list(
 		/obj/effect/proc_holder/spell/self/rejuvenate = 0,
 		/obj/effect/proc_holder/spell/targeted/hypnotise = 0,
@@ -22,7 +24,9 @@
 		/datum/vampire_passive/regen = 425,
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform = 500,
 		/datum/vampire_passive/full = 666,
-		/obj/effect/proc_holder/spell/targeted/vampirize = 700)
+		/obj/effect/proc_holder/spell/targeted/vampirize = 700,
+		/obj/effect/proc_holder/spell/self/summon_coat =  750,
+		/obj/effect/proc_holder/spell/self/revive = 800)
 
 /datum/antagonist/vampire/on_gain()
 	give_objectives()
