@@ -141,7 +141,7 @@
 	C.faction |= "slime"
 
 //If you're cloned you get your body pool back
-/datum/species/jelly/slime/copy_properties_from(datum/species/old_species)
+/datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
 	bodies = old_species.bodies
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
