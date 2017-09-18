@@ -1326,7 +1326,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	player_minimum = 20
 	restricted_roles = list("Roboticist", "Research Director")
 	
-/datum/uplink_item/role_restricted/traitorsec/SpecialRequirement()
+/datum/uplink_item/role_restricted/traitorsec/SpecialRequirements()
 	return !config.forbid_secborg
 			
 // Pointless
