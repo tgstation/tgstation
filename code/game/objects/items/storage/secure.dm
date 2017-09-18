@@ -37,7 +37,7 @@
 				src.open =! src.open
 				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
 			return
-		if (istype(W, /obj/item/wirecutters) || istype(W, /obj/item/card/emag)
+		if (istype(W, /obj/item/wirecutters) || istype(W, /obj/item/card/emag))
 			user.show_message("<span class='danger'>The [src] is protected from this sort of tampering, perhaps a <b>multitool</b> could pulse the wires controlling internal memory instead?</span>", 1)
 		if ((istype(W, /obj/item/device/multitool)) && (!src.l_hacking))
 			if(src.open == 1)
