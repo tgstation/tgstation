@@ -6,6 +6,7 @@
 	max_integrity = 600 //This is THE ratvarian superweaon, its deployment is an investment
 	armor = list(melee = 80, bullet = 70, laser = 25, energy = 25, bomb = 60, bio = 100, rad = 100, fire = 100, acid = 100) //Its similar to the clockwork armour albeit with a few buffs becuase RATVARIAN SUPERWEAPON!!
 	force = 50 //SMASHY SMASHY!!
+	deflect_chance = 40
 	internal_damage_threshold = 0
 	step_in = 3
 	pixel_x = -16
