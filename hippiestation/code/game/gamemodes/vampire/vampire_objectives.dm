@@ -1,5 +1,3 @@
-/datum/objective/blood
-
 /datum/objective/blood/proc/gen_amount_goal(lowbound = 450, highbound = 700)
 	target_amount = rand (lowbound,highbound)
 	explanation_text = "Extract [target_amount] units of blood."
