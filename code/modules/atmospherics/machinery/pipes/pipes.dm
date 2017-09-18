@@ -104,9 +104,9 @@
 		return 0
 	. = ..()
 
-/obj/machinery/atmospherics/pipe/proc/paint(color)
-	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-	pipe_color = color
+/obj/machinery/atmospherics/pipe/proc/paint(paint_color)
+	add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+	pipe_color = paint_color
 	update_node_icon()
 	return TRUE
 

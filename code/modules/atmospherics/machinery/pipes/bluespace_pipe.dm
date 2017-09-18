@@ -19,12 +19,9 @@ GLOBAL_LIST_EMPTY(bluespace_pipes)
 	GLOB.bluespace_pipes -= src
 	for(var/p in GLOB.bluespace_pipes)
 		var/obj/machinery/atmospherics/pipe/bluespace/P = p
-		qdel(P.parent)
-		P.parent = null
-	. = ..()
-	for(var/p in GLOB.bluespace_pipes)
-		var/obj/machinery/atmospherics/pipe/bluespace/P = p
+		QDEL_NULL(P.parent)
 		P.build_network()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/bluespace/SetInitDirections()
 	initialize_directions = dir
