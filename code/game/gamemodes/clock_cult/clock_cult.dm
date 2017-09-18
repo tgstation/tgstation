@@ -239,8 +239,6 @@ Credit where due:
 
 //Servant of Ratvar outfit
 /datum/outfit/servant_of_ratvar
-	name = "Servant of Ratvar"
-
 	uniform = /obj/item/clothing/under/chameleon/ratvar
 	shoes = /obj/item/clothing/shoes/workboots
 	back = /obj/item/storage/backpack

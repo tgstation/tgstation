@@ -585,6 +585,45 @@
 		H.adjustFireLoss(-4)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 
+
+/datum/species/golem/clockwork
+	name = "Clockwork Golem"
+	id = "clockwork golem"
+	say_mod = "clicks"
+	limbs_id = "clockgolem"
+	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>clockwork golem</span><span class='bold alloy'>, you are faster than \
+	other types of golem (being a machine), and are immune to electric shocks.</span>"
+	species_traits = list(NO_UNDERWEAR, NOTRANSSTING, NOBREATH, NOZOMBIE, VIRUSIMMUNE, RADIMMUNE, NOBLOOD, RESISTCOLD, RESISTPRESSURE)
+	armor = 40 //Reinforced, but also slim to allow for fast movement
+	attack_verb = "smash"
+	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
+	sexes = FALSE
+	speedmod = 0
+	siemens_coeff = 0
+	damage_overlay_type = "synth"
+	prefix = "Clockwork"
+
+/datum/species/golem/clockwork/on_species_gain(mob/living/carbon/human/H)
+	. = ..()
+	H.faction |= "ratvar"
+
+/datum/species/golem/clockwork/on_species_loss(mob/living/carbon/human/H)
+	if(!is_servant_of_ratvar(H))
+		H.faction -= "ratvar"
+	. = ..()
+
+/datum/species/golem/clockwork/spec_death(gibbed, mob/living/carbon/human/H)
+	gibbed = FALSE
+	. = ..()
+	var/turf/T = get_turf(H)
+	H.visible_message("<span class='warning'>[H]'s exoskeleton shatters, collapsing into a heap of scrap!</span>")
+	playsound(H, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, TRUE)
+	for(var/i in 1 to rand(3, 5))
+		new/obj/item/clockwork/alloy_shards/small(T)
+	new/obj/item/clockwork/alloy_shards/clockgolem_remains(T)
+	qdel(H)
+
+
 /datum/species/golem/cloth
 	name = "Cloth Golem"
 	id = "cloth golem"

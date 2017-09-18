@@ -182,6 +182,13 @@
 	desc = "A broken shard of some oddly malleable metal. It occasionally moves and seems to glow."
 	clockwork_desc = "A broken shard of replicant alloy."
 
+/obj/item/clockwork/alloy_shards/clockgolem_remains
+	name = "clockwork golem scrap"
+	desc = "A pile of scrap metal. It seems damaged beyond repair."
+	clockwork_desc = "The sad remains of a clockwork golem. It's broken beyond repair."
+	icon_state = "clockgolem_dead"
+	sprite_shift = 0
+
 /obj/item/clockwork/alloy_shards/large
 	w_class = WEIGHT_CLASS_TINY
 	randomsinglesprite = TRUE
