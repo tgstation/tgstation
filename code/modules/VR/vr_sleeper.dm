@@ -60,7 +60,7 @@
 	return ..()
 
 
-/obj/machinery/vr_sleeper/emag_act(mob/user)
+/obj/machinery/vr_sleeper/insanus_act(mob/user)
 	you_die_in_the_game_you_die_for_real = TRUE
 	sparks.start()
 

@@ -75,22 +75,22 @@
 		return
 	A.emag_act(user)
 
-/obj/item/card/lockhacker
-	name = "electromagnetic sequencer"
+/obj/item/card/insanus
+	name = "insanus sequencer"
 	desc = "An ominous black card with a red strip and some circuitry."
-	icon_state = "lockhack"
+	icon_state = "insanus"
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	origin_tech = "magnets=2;syndicate=2"
 	flags_1 = NOBLUDGEON_1
 
-/obj/item/card/lockhacker/attack()
+/obj/item/card/insanus/attack()
 	return
 
-/obj/item/card/lockhacker/afterattack(atom/target, mob/user)
+/obj/item/card/insanus/afterattack(atom/target, mob/user)
 	var/atom/A = target
-	A.lockhack_act(user)
+	A.insanus_act(user)
 
 /obj/item/card/id
 	name = "identification card"

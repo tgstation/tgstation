@@ -688,7 +688,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			to_chat(user, "<span class='notice'>The [name] can't be modified!</span>")
 
 
-/obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
+/obj/item/clothing/mask/vape/insanus_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
 	if(screw)
 		if(!emagged)
 			cut_overlays()

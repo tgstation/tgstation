@@ -174,7 +174,7 @@
 		if(response == "Yes")
 			turn_on(user)
 
-/obj/item/device/modular_computer/emag_act(mob/user)
+/obj/item/device/modular_computer/insanus_act(mob/user)
 	if(emagged)
 		to_chat(user, "<span class='warning'>\The [src] was already emagged.</span>")
 		return 0

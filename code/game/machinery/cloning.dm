@@ -323,7 +323,7 @@
 	else
 		return ..()
 
-/obj/machinery/clonepod/emag_act(mob/user)
+/obj/machinery/clonepod/insanus_act(mob/user)
 	if(!occupant)
 		return
 	to_chat(user, "<span class='warning'>You corrupt the genetic compiler.</span>")

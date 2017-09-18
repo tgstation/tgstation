@@ -409,7 +409,7 @@
 	else if(secure && broken)
 		to_chat(user, "<span class='warning'>\The [src] is broken!</span>")
 
-/obj/structure/closet/lockhack_act(mob/user)
+/obj/structure/closet/emag_act(mob/user)
 	if(secure && !broken)
 		user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
 						"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",

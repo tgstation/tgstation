@@ -518,7 +518,7 @@
 		/obj/item/gun/energy/printer,
 		/obj/item/gun/ballistic/revolver/grenadelauncher/cyborg,
 		/obj/item/card/emag,
-		/obj/item/card/lockhacker,
+		/obj/item/card/insanus,
 		/obj/item/crowbar/cyborg,
 		/obj/item/pinpointer/syndicate_cyborg)
 
@@ -545,7 +545,7 @@
 		/obj/item/melee/transforming/energy/sword/cyborg/saw,
 		/obj/item/roller/robo,
 		/obj/item/card/emag,
-		/obj/item/card/lockhacker,
+		/obj/item/card/insanus,
 		/obj/item/crowbar/cyborg,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze/cyborg,

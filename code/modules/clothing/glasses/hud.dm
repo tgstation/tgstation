@@ -23,7 +23,7 @@
 	emagged = TRUE
 	desc = "[desc] The display is flickering slightly."
 
-/obj/item/clothing/glasses/hud/emag_act(mob/user)
+/obj/item/clothing/glasses/hud/insanus_act(mob/user)
 	if(emagged)
 		return
 	emagged = TRUE

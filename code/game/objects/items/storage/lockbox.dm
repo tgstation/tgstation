@@ -49,7 +49,7 @@
 		return 0
 	..()
 
-/obj/item/storage/lockbox/lockhack_act(mob/user)
+/obj/item/storage/lockbox/emag_act(mob/user)
 	if(!broken)
 		broken = TRUE
 		locked = FALSE

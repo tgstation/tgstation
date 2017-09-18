@@ -50,7 +50,7 @@
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
 	return
 
-/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
+/obj/machinery/power/emitter/energycannon/magical/insanus_act(mob/user)
 	return
 
 /obj/structure/table/abductor/wabbajack
@@ -231,10 +231,10 @@
 /obj/effect/forcefield/luxury_shuttle/CollidedWith(atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
-	
+
 	if(check_times[AM] && check_times[AM] > world.time) //Let's not spam the message
 		return ..()
-	
+
 	check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
 	var/total_cash = 0

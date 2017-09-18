@@ -100,7 +100,7 @@
 	else
 		return ..()
 
-/obj/machinery/computer/slot_machine/emag_act()
+/obj/machinery/computer/slot_machine/insanus_act()
 	if(emagged)
 		return
 	emagged = TRUE

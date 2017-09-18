@@ -397,7 +397,7 @@
 	else
 		return ..()
 
-/obj/machinery/computer/communications/emag_act(mob/user)
+/obj/machinery/computer/communications/insanus_act(mob/user)
 	if(emagged)
 		return
 	emagged = TRUE

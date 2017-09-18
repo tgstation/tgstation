@@ -57,7 +57,7 @@
 	if(botEmagChance)
 		for(var/mob/living/simple_animal/bot/bot in GLOB.living_mob_list)
 			if(prob(botEmagChance))
-				bot.emag_act()
+				bot.insanus_act()
 
 /proc/generate_ion_law(ionMessage)
 	if(ionMessage)

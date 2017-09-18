@@ -102,7 +102,7 @@
 	else
 		return ..()
 
-/obj/machinery/button/lockhack_act(mob/user)
+/obj/machinery/button/emag_act(mob/user)
 	if(emagged)
 		return
 	req_access = list()

@@ -219,7 +219,7 @@
 		dat += "[D.reagents_list["synthflesh"] * prod_coeff] Synthetic flesh "
 	return dat
 
-/obj/machinery/limbgrower/emag_act(mob/user)
+/obj/machinery/limbgrower/insanus_act(mob/user)
 	if(emagged)
 		return
 	for(var/datum/design/D in files.possible_designs)

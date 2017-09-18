@@ -279,7 +279,7 @@
 	icon_state = "megaphone"
 	var/cooldown = 0
 
-/obj/item/device/harmalarm/emag_act(mob/user)
+/obj/item/device/harmalarm/insanus_act(mob/user)
 	emagged = !emagged
 	if(emagged)
 		to_chat(user, "<font color='red'>You short out the safeties on the [src]!</font>")

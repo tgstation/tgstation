@@ -133,7 +133,7 @@
 			[TIME_LEFT] seconds", system_error, alert=TRUE)
 		. = TRUE
 
-/obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
+/obj/machinery/computer/emergency_shuttle/insanus_act(mob/user)
 	// How did you even get on the shuttle before it go to the station?
 	if(!IS_DOCKED)
 		return
@@ -445,7 +445,7 @@
 /obj/machinery/computer/shuttle/pod/update_icon()
 	return
 
-/obj/machinery/computer/shuttle/pod/emag_act(mob/user)
+/obj/machinery/computer/shuttle/pod/insanus_act(mob/user)
 	if(emagged)
 		return
 	emagged = TRUE

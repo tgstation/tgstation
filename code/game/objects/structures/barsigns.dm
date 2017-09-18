@@ -114,7 +114,7 @@
 
 
 
-/obj/structure/sign/barsign/emag_act(mob/user)
+/obj/structure/sign/barsign/insanus_act(mob/user)
 	if(broken || emagged)
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return

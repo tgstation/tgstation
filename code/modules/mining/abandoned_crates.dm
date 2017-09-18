@@ -186,12 +186,13 @@
 		return
 	attack_hand(user)
 
+/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+	if(locked)
+		boom(user)
+
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
-		if(istype(W, /obj/item/card/lockhacker))
-			boom(user)
-			return
-		else if(istype(W, /obj/item/device/multitool))
+		if(istype(W, /obj/item/device/multitool))
 			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if(attempts == 1)
 				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")

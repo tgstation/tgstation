@@ -338,7 +338,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	else
 		return ..()
 
-/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
+/obj/machinery/computer/libraryconsole/bookmanagement/insanus_act(mob/user)
 	if(density && !emagged)
 		emagged = TRUE
 

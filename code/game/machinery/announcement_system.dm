@@ -166,7 +166,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		act_up()
 	..(severity)
 
-/obj/machinery/announcement_system/emag_act()
+/obj/machinery/announcement_system/insanus_act()
 	if(emagged)
 		return
 	emagged = TRUE

@@ -132,7 +132,7 @@ RSF
 /obj/item/cookiesynth/attackby()
 	return
 
-/obj/item/cookiesynth/emag_act(mob/user)
+/obj/item/cookiesynth/insanus_act(mob/user)
 	emagged = !emagged
 	if(emagged)
 		to_chat(user, "<span class='warning'>You short out the [src]'s reagent safety checker!</span>")
