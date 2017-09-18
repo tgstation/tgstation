@@ -62,7 +62,7 @@
 	update_icon()
 
 /obj/structure/closet/crate/internals
-	desc = "A internals crate."
+	desc = "An internals crate."
 	name = "internals crate"
 	icon_state = "o2crate"
 
