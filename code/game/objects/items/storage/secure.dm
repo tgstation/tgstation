@@ -37,17 +37,20 @@
 				src.open =! src.open
 				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
 			return
-		if (istype(W, /obj/item/wirecutters))
-			user.show_message("<span class='notice'>These wires are too strong for wirecutters, perhaps a <b>multitool</b> could pulse them instead...</span>", 1)
-		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
-			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
-			src.l_hacking = 1
-			if (do_after(usr, 400*W.toolspeed, target = src))
-				user.show_message("<span class='danger'>Internal memory reset - lock has been disengaged.</span>", 1)
-				src.l_set = 0
-				src.l_hacking = 0
+		if (istype(W, /obj/item/wirecutters) || istype(W, /obj/item/card/emag)
+			user.show_message("<span class='danger'>The [src] is protected from this sort of tampering, perhaps a <b>multitool</b> could pulse the wires controlling internal memory instead?</span>", 1)
+		if ((istype(W, /obj/item/device/multitool)) && (!src.l_hacking))
+			if(src.open == 1)
+				user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
+				src.l_hacking = 1
+				if (do_after(usr, 400*W.toolspeed, target = src))
+					user.show_message("<span class='danger'>Internal memory reset - lock has been disengaged.</span>", 1)
+					src.l_set = 0
+					src.l_hacking = 0
+				else
+					src.l_hacking = 0
 			else
-				src.l_hacking = 0
+				user.show_message("<span class='notice'>You must <b>unscrew</b> the service panel before you can pulse the wiring.</span>", 1)
 			return
 		//At this point you have exhausted all the special things to do when locked
 		// ... but it's still locked.
