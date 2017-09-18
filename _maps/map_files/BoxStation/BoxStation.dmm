@@ -2422,8 +2422,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -3244,9 +3242,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /obj/item/reagent_containers/blood/empty,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 5
@@ -8057,8 +8053,6 @@
 /area/lawoffice)
 "asa" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/red/corner{
@@ -14799,8 +14793,6 @@
 /area/shuttle/arrival)
 "aHu" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/white/corner{
@@ -17310,8 +17302,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/bar,
@@ -18091,10 +18081,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aPE" = (
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /turf/closed/wall,
 /area/crew_quarters/locker)
 "aPF" = (
@@ -18206,10 +18193,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -18248,10 +18232,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -19445,8 +19426,6 @@
 "aTr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
@@ -23450,8 +23429,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/blue/corner{
@@ -24399,10 +24376,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload)
 "bfw" = (
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload)
 "bfx" = (
@@ -26461,8 +26435,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /obj/machinery/aug_manipulator,
@@ -26546,7 +26518,6 @@
 /area/quartermaster/office)
 "bkx" = (
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = 2;
 	supply_display = 1
 	},
@@ -27431,8 +27402,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/brown/corner{
@@ -30353,8 +30322,6 @@
 /area/medical/medbay/central)
 "bsz" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/white/side{
@@ -31908,7 +31875,6 @@
 	},
 /obj/machinery/light,
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = -30;
 	supply_display = 1
 	},
@@ -34176,7 +34142,6 @@
 	pixel_y = -35
 	},
 /obj/machinery/status_display{
-	density = 0;
 	pixel_x = -32;
 	supply_display = 1
 	},
@@ -37437,8 +37402,6 @@
 "bIe" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -40580,7 +40543,6 @@
 "bOP" = (
 /obj/structure/table/glass,
 /obj/structure/reagent_dispensers/virusfood{
-	density = 0;
 	pixel_x = -30
 	},
 /obj/item/book/manual/wiki/infections{
@@ -41444,8 +41406,7 @@
 /area/science/misc_lab)
 "bQV" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -52694,8 +52655,6 @@
 	dir = 8
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -56032,8 +55991,6 @@
 	dir = 8
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -56962,8 +56919,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
