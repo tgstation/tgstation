@@ -57,6 +57,8 @@
 	return ..()
 
 /datum/proximity_monitor/advanced/timestop/field_turf_crossed(atom/movable/AM)
+	if(AM.throwing)
+		AM.throwing.finalize()
 	freeze_atom(AM)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/A)
@@ -78,7 +80,7 @@
 
 /datum/proximity_monitor/advanced/timestop/process()
 	for(var/i in frozen_mobs)
-		var/mob/m = i
+		var/mob/living/m = i
 		if(get_dist(get_turf(m), get_turf(host)) > current_range)
 			unfreeze_mob(m)
 		else
@@ -107,4 +109,4 @@
 	frozen_mobs -= L
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
-		L.AIStatus = initial(L.AIStatus)
+		H.AIStatus = initial(H.AIStatus)
