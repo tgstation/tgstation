@@ -2200,6 +2200,8 @@
 #include "code\white\jukebox_huli_tracks.dm"
 #include "code\white\multiaccounts.dm"
 #include "code\white\report.dm"
+#include "code\white\telepad.dm"
+#include "code\white\telesci_computer.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
