@@ -225,18 +225,18 @@
 		<br>
 		<b><center>Crayon&Pen commands</center></b><br>
 		<br>
+		# text : Defines a header.<br>
 		|text| : Centers the text.<br>
 		**text** : Makes the text <b>bold</b>.<br>
 		*text* : Makes the text <i>italic</i>.<br>
-		_text_ : Makes the text <u>underlined</u>.<br>
-		+text+ : Increases the <font size = \"4\">size</font> of the text.<br>
+		^text^ : Increases the <font size = \"4\">size</font> of the text.<br>
 		%s : Inserts a signature of your name in a foolproof way.<br>
 		%f : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
 		<br>
 		<b><center>Pen exclusive commands</center></b><br>
-		__text__ : Decreases the <font size = \"1\">size</font> of the text.<br>
+		((text)) : Decreases the <font size = \"1\">size</font> of the text.<br>
 		* item : An unordered list item.<br>
-		&nbsp;&nbsp;* item: An unordered list child item.
+		&nbsp;&nbsp;* item: An unordered list child item.<br>
 		--- : Adds a horizontal rule.
 	</BODY></HTML>"}, "window=paper_help")
 
