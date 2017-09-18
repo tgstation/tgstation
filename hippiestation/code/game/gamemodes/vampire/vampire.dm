@@ -1,5 +1,5 @@
 /datum/game_mode
-	var/list/datum/mind/vampires = LAZYINITLIST()
+	var/list/datum/mind/vampires = list()
 
 /mob/living/carbon/human/Stat()
 	. = ..()

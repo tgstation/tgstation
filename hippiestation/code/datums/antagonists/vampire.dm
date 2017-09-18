@@ -4,11 +4,11 @@
 	var/blood_counted = 0
 	var/fullpower = FALSE
 	var/draining
-	var/list/objectives_given = LAZYINITLIST()
+	var/list/objectives_given = list()
 
 	var/iscloaking = FALSE
 
-	var/list/powers = LAZYINITLIST() // list of current powers
+	var/list/powers = list() // list of current powers
 
 	var/list/upgrade_tiers = list(
 		/obj/effect/proc_holder/spell/self/rejuvenate = 0,
@@ -40,7 +40,7 @@
 
 	for(var/O in objectives_given)
 		owner.objectives -= O
-	objectives_given = LAZYINITLIST()
+	objectives_given = list()
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>Your powers have been quenched! You are no longer a vampire</span>")
 	owner.special_role = null
