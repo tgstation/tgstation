@@ -111,6 +111,7 @@
 		var/oxygen_burn_rate = 0
 		//more plasma released at higher temperatures
 		var/temperature_scale
+		var/super_saturation
 		if(temperature > PLASMA_UPPER_TEMPERATURE)
 			temperature_scale = 1
 		else
@@ -118,15 +119,23 @@
 		if(temperature_scale > 0)
 			air.assert_gas("o2")
 			oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
-			if(cached_gases["o2"][MOLES] > cached_gases["plasma"][MOLES]*PLASMA_OXYGEN_FULLBURN)
+			if(cached_gases["o2"][MOLES] / cached_gases["plasma"][MOLES] > 90 //supersaturation. Form Tritium.
+				super_saturation = TRUE
+			else if(cached_gases["o2"][MOLES] > cached_gases["plasma"][MOLES]*PLASMA_OXYGEN_FULLBURN)
 				plasma_burn_rate = (cached_gases["plasma"][MOLES]*temperature_scale)/PLASMA_BURN_RATE_DELTA
 			else
 				plasma_burn_rate = (temperature_scale*(cached_gases["o2"][MOLES]/PLASMA_OXYGEN_FULLBURN))/PLASMA_BURN_RATE_DELTA
+
 			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
-				air.assert_gas("co2")
+
 				cached_gases["plasma"][MOLES] = QUANTIZE(cached_gases["plasma"][MOLES] - plasma_burn_rate)
 				cached_gases["o2"][MOLES] = QUANTIZE(cached_gases["o2"][MOLES] - (plasma_burn_rate * oxygen_burn_rate))
-				cached_gases["co2"][MOLES] += plasma_burn_rate
+				if (super_saturation)
+					air.assert_gas("tritium")
+					cached_gases["tritium"][MOLES] += plasma_burn_rate
+				else
+					air.assert_gas("co2")
+					cached_gases["co2"][MOLES] += plasma_burn_rate
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
 

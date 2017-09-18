@@ -70,6 +70,7 @@
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
 #define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
+#define GAS_STIM_MINIMUM					0.002
 	//Plasma fusion properties
 #define PLASMA_BINDING_ENERGY				3000000
 #define MAX_CARBON_EFFICENCY				9
