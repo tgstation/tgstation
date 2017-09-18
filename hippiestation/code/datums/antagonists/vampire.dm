@@ -31,12 +31,14 @@
 /datum/antagonist/vampire/on_gain()
 	give_objectives()
 	check_vampire_upgrade()
+	SSticker.mode.vampires += owner
 	owner.current.faction += "vampire"
 	..()
 
 /datum/antagonist/vampire/on_removal()
 	remove_vampire_powers()
 	owner.current.faction -= "vampire"
+	SSticker.mode.vampires -= owner
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		if(owner && H.hud_used && H.hud_used.vamp_blood_display)

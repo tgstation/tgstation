@@ -34,6 +34,8 @@
 	var/vampires_possible = 4 //hard limit on vampires if scaling is turned off
 	var/num_modifier = 0
 
+/datum/game_mode/vampire/declare_completion()
+	..()
 
 /datum/game_mode/vampire/pre_setup()
 	var/vampires_num = 1
