@@ -7,7 +7,7 @@
 	if(!owner)
 		return FALSE
 	var/datum/antagonist/vampire/vamp = owner.has_antag_datum(ANTAG_DATUM_VAMPIRE)
-	if(vamp && target_amount >= vamp.total_blood)
+	if(vamp && target_amount <= vamp.total_blood)
 		return TRUE
 	else
 		return FALSE
