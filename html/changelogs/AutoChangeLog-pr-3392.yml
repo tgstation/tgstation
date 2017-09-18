@@ -1,0 +1,7 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - balance: "Brave Bull now increases your max HP by 10, up from 5."
+  - rscadd: "Tequila Sunrise now makes you radiate dim light while it's in your body."
+  - rscadd: "Dwarves are now very resistant to the intense alcohol content of the Manly Dorf and can freely quaff them without too much worry."
+  - rscadd: "Bloody Mary now restores lost blood."
