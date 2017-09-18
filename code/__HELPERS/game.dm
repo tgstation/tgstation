@@ -561,3 +561,6 @@
 	var/pressure = environment.return_pressure()
 	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
 		return TRUE
+
+/proc/wrap_alert(user, Message, Title, Button1 = "Ok", Button2, Button3)
+	return alert(user, Message, Title, Button1, Button2, Button3)
