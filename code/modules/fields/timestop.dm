@@ -18,7 +18,8 @@
 
 /obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE)	//Immune atoms assoc list atom = TRUE
 	. = ..()
-	immune = immune_atoms.Copy()
+	if(immune_atoms)
+		immune = immune_atoms.Copy()
 	if(!isnull(time))
 		duration = time
 	if(!isnull(radius))
