@@ -258,6 +258,9 @@
 			playsound(L, 'sound/magic/exit_blood.ogg', 50, TRUE)
 			flash_color(L, flash_color = "#C80000", flash_time = 10)
 
+/turf/open/floor/clock_spawn_room/attackby()
+	return
+
 /turf/open/floor/bluespace
 	slowdown = -1
 	icon_state = "bluespace"
