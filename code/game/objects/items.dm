@@ -216,10 +216,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/speechModification(message)		//For speech modification by mask slot items.
 	return message
 
-/obj/item/attack_self(mob/user)
-	. = ..() //Why the hell is this proc defined twice
-	interact(user)
-
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
 	if(hidden_uplink && hidden_uplink.active)

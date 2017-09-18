@@ -115,7 +115,7 @@
 
 /obj/item/bikehorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src.loc, pickweight(honksounds), 50, 1)
+	playsound(src, pickweight(honksounds), 50, 1)
 	return (BRUTELOSS)
 
 /obj/item/bikehorn/airhorn

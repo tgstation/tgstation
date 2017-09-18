@@ -10,7 +10,7 @@
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
 	SendSignal(COMSIG_ITEM_ATTACK_SELF, user)
-	return
+	interact(user)
 
 /obj/item/proc/pre_attackby(atom/A, mob/living/user, params) //do stuff before attackby!
 	return TRUE //return FALSE to avoid calling attackby after this proc does stuff
