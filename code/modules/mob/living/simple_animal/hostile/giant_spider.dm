@@ -60,7 +60,6 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
 	if(lay_web)
-		lay_web.Remove(src)
 		QDEL_NULL(lay_web)
 	return ..()
 
@@ -125,16 +124,12 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/Destroy()
 	if(lay_web)
-		lay_web.Remove(src)
 		QDEL_NULL(lay_web)
 	if(wrap)
-		wrap.Remove(src)
 		QDEL_NULL(wrap)
 	if(lay_eggs)
-		lay_eggs.Remove(src)
 		QDEL_NULL(lay_eggs)
 	if(set_directive)
-		set_directive.Remove(src)
 		QDEL_NULL(set_directive)
 	return ..()
 
