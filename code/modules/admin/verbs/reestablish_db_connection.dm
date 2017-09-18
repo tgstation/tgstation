@@ -7,10 +7,10 @@
 
 	if (SSdbcore.IsConnected())
 		if (!check_rights(R_DEBUG,0))
-			alert(usr, "The database is already connected! (Only those with +debug can force a reconnection)", "The database is already connected!")
+			wrap_alert(usr, "The database is already connected! (Only those with +debug can force a reconnection)", "The database is already connected!")
 			return
 
-		var/reconnect = alert(usr, "The database is already connected! If you *KNOW* that this is incorrect, you can force a reconnection", "The database is already connected!", "Force Reconnect", "Cancel")
+		var/reconnect = wrap_alert(usr, "The database is already connected! If you *KNOW* that this is incorrect, you can force a reconnection", "The database is already connected!", "Force Reconnect", "Cancel")
 		if (reconnect != "Force Reconnect")
 			return
 

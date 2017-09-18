@@ -1,7 +1,7 @@
 GLOBAL_VAR_INIT(highlander, FALSE)
 /client/proc/only_one() //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
 	if(!SSticker.HasRoundStarted())
-		alert(usr, "The game hasn't started yet!")
+		wrap_alert(usr, "The game hasn't started yet!")
 		return
 	GLOB.highlander = TRUE
 

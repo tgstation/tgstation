@@ -123,7 +123,7 @@
 		if("tdomereset")
 			if(!check_rights(R_ADMIN))
 				return
-			var/delete_mobs = alert(usr, "Clear all mobs?","Confirm","Yes","No","Cancel")
+			var/delete_mobs = wrap_alert(usr, "Clear all mobs?","Confirm","Yes","No","Cancel")
 			if(delete_mobs == "Cancel")
 				return
 
@@ -237,10 +237,10 @@
 			if(!check_rights(R_ADMIN))
 				return
 			if(!SSticker.HasRoundStarted())
-				alert(usr, "The game hasn't started yet!")
+				wrap_alert(usr, "The game hasn't started yet!")
 			else if (SSticker.mode)
-				alert(usr, "The game mode is [SSticker.mode.name]")
-			else alert(usr, "For some reason there's a SSticker, but not a game mode")
+				wrap_alert(usr, "The game mode is [SSticker.mode.name]")
+			else wrap_alert(usr, "For some reason there's a SSticker, but not a game mode")
 		if("manifest")
 			if(!check_rights(R_ADMIN))
 				return
@@ -326,7 +326,7 @@
 			if(!check_rights(R_FUN))
 				return
 			if(!SSticker.HasRoundStarted())
-				alert(usr, "The game hasn't started yet!")
+				wrap_alert(usr, "The game hasn't started yet!")
 				return
 			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
 			if(!objective)
@@ -377,11 +377,11 @@
 		if("anime")
 			if(!check_rights(R_FUN))
 				return
-			var/animetype = alert(usr, "Would you like to have the clothes be changed?",,"Yes","No","Cancel")
+			var/animetype = wrap_alert(usr, "Would you like to have the clothes be changed?",,"Yes","No","Cancel")
 
 			var/droptype
 			if(animetype =="Yes")
-				droptype = alert(usr, "Make the uniforms Nodrop?",,"Yes","No","Cancel")
+				droptype = wrap_alert(usr, "Make the uniforms Nodrop?",,"Yes","No","Cancel")
 
 			if(animetype == "Cancel" || droptype == "Cancel")
 				return
@@ -427,7 +427,7 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Virus Outbreak")
-			switch(alert(usr, "Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose"))
+			switch(wrap_alert(usr, "Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose"))
 				if("Make Your Own")
 					AdminCreateVirus(usr.client)
 				if("Random")
@@ -462,7 +462,7 @@
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Summon Guns")
 			var/survivor_probability = 0
-			switch(alert(usr, "Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
+			switch(wrap_alert(usr, "Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
 				if("Some Antags")
 					survivor_probability = 25
 				if("All Antags!")
@@ -475,7 +475,7 @@
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Summon Magic")
 			var/survivor_probability = 0
-			switch(alert(usr, "Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
+			switch(wrap_alert(usr, "Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
 				if("Some Antags")
 					survivor_probability = 25
 				if("All Antags!")
@@ -487,12 +487,12 @@
 			if(!check_rights(R_FUN))
 				return
 			if(!SSevents.wizardmode)
-				if(alert(usr, "Do you want to toggle summon events on?",,"Yes","No") == "Yes")
+				if(wrap_alert(usr, "Do you want to toggle summon events on?",,"Yes","No") == "Yes")
 					summonevents()
 					SSblackbox.add_details("admin_secrets_fun_used","Activate Summon Events")
 
 			else
-				switch(alert(usr, "What would you like to do?",,"Intensify Summon Events","Turn Off Summon Events","Nothing"))
+				switch(wrap_alert(usr, "What would you like to do?",,"Intensify Summon Events","Turn Off Summon Events","Nothing"))
 					if("Intensify Summon Events")
 						summonevents()
 						SSblackbox.add_details("admin_secrets_fun_used","Intensify Summon Events")
@@ -572,7 +572,7 @@
 	if(E)
 		E.processing = FALSE
 		if(E.announceWhen>0)
-			if(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
+			if(wrap_alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
 				E.announceWhen = -1
 		E.processing = TRUE
 	if (usr)

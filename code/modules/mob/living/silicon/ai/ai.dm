@@ -643,7 +643,7 @@
 	if(incapacitated())
 		return
 	var/input
-	switch(alert(usr, "Would you like to select a hologram based on a crew member, an animal, or switch to a unique avatar?",,"Crew Member","Unique","Animal"))
+	switch(wrap_alert(usr, "Would you like to select a hologram based on a crew member, an animal, or switch to a unique avatar?",,"Crew Member","Unique","Animal"))
 		if("Crew Member")
 			var/list/personnel_list = list()
 
@@ -657,7 +657,7 @@
 					qdel(holo_icon)//Clear old icon so we're not storing it in memory.
 					holo_icon = getHologramIcon(icon(character_icon))
 			else
-				alert(usr, "No suitable records found. Aborting.")
+				wrap_alert(usr, "No suitable records found. Aborting.")
 
 		if("Animal")
 			var/list/icon_list = list(

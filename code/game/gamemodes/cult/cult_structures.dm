@@ -74,7 +74,7 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>")
 		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Zealot's Blindfold","Flask of Unholy Water")
+	var/choice = wrap_alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Zealot's Blindfold","Flask of Unholy Water")
 	var/pickedtype
 	switch(choice)
 		if("Eldritch Whetstone")
@@ -107,7 +107,7 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>")
 		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar-Sien Hardsuit")
+	var/choice = wrap_alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar-Sien Hardsuit")
 	var/pickedtype
 	switch(choice)
 		if("Shielded Robe")
@@ -214,7 +214,7 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>")
 		return
-	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Walker Set")
+	var/choice = wrap_alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Walker Set")
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Supply Talisman")

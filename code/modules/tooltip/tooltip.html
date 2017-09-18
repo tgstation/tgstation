@@ -113,7 +113,7 @@
 			updateCallback: function(map) {
 				if (typeof map === 'undefined' || !map) {return false;}
 
-				//alert(tooltip.params+' | '+tooltip.clientView+' | '+tooltip.text+' | '+tooltip.theme); //DEBUG
+				//wrap_alert(tooltip.params+' | '+tooltip.clientView+' | '+tooltip.text+' | '+tooltip.theme); //DEBUG
 
 				//Some reset stuff to avoid fringe issues with sizing
 				window.location = 'byond://winset?id='+tooltip.control+';anchor1=0,0;size=999x999';
@@ -128,7 +128,7 @@
 					leftOffset 		= (map.size.x - mapWidth) / 2,
 					topOffset 		= (map.size.y - mapHeight) / 2;
 
-				//alert(realIconSize + ' | ' +tooltip.tileSize + ' | ' + resizeRatio); //DEBUG
+				//wrap_alert(realIconSize + ' | ' +tooltip.tileSize + ' | ' + resizeRatio); //DEBUG
 
 				//Parse out the tile and cursor locations from params (e.g. "icon-x=32;icon-y=29;screen-loc=3:10,15:29")
 				var paramsA = tooltip.params.cursor.split(';');
@@ -204,7 +204,7 @@
 				var posX = Math.round(((left - 1) * realIconSize) + leftOffset + tooltip.padding); //-1 to position at the left of the target tile
 				var posY = Math.round(((tilesShown - top + 1) * realIconSize) + topOffset + tooltip.padding); //+1 to position at the bottom of the target tile
 
-				//alert(mapWidth+' | '+mapHeight+' | '+tilesShown+' | '+realIconSize+' | '+leftOffset+' | '+topOffset+' | '+left+' | '+top+' | '+posX+' | '+posY); //DEBUG
+				//wrap_alert(mapWidth+' | '+mapHeight+' | '+tilesShown+' | '+realIconSize+' | '+leftOffset+' | '+topOffset+' | '+left+' | '+top+' | '+posX+' | '+posY); //DEBUG
 
 				$('body').attr('class', tooltip.theme);
 

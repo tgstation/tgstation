@@ -500,7 +500,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			if(flash_range == null)
 				return
 			if(devastation_range > GLOB.MAX_EX_DEVESTATION_RANGE || heavy_impact_range > GLOB.MAX_EX_HEAVY_RANGE || light_impact_range > GLOB.MAX_EX_LIGHT_RANGE || flash_range > GLOB.MAX_EX_FLASH_RANGE)
-				if(alert(usr, "Bomb is bigger than the maxcap. Continue?",,"Yes","No") != "Yes")
+				if(wrap_alert(usr, "Bomb is bigger than the maxcap. Continue?",,"Yes","No") != "Yes")
 					return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, TRUE, TRUE)

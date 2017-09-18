@@ -246,7 +246,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 /client/proc/vv_parse_text(O, new_var)
 	if(O && findtext(new_var,"\["))
-		var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
+		var/process_vars = wrap_alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
 		if(process_vars == "Yes")
 			. = string2listofvars(new_var, O)
 
@@ -261,7 +261,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (!subtypes || !subtypes.len)
 		return FALSE
 	if (subtypes && subtypes.len)
-		switch(alert(usr, "Strict object type detection?", "Type detection", "Strictly this type","This type and subtypes", "Cancel"))
+		switch(wrap_alert(usr, "Strict object type detection?", "Type detection", "Strictly this type","This type and subtypes", "Cancel"))
 			if("Strictly this type")
 				return FALSE
 			if("This type and subtypes")
@@ -334,7 +334,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	L += var_value
 
-	switch(alert(usr, "Would you like to associate a value with the list entry?",,"Yes","No"))
+	switch(wrap_alert(usr, "Would you like to associate a value with the list entry?",,"Yes","No"))
 		if("Yes")
 			L[var_value] = mod_list_add_ass(O) //hehe
 	if (O)
@@ -353,7 +353,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		return
 
 	if(L.len > 1000)
-		var/confirm = alert(src, "The list you're trying to edit is very long, continuing may crash the server.", "Warning", "Continue", "Abort")
+		var/confirm = wrap_alert(src, "The list you're trying to edit is very long, continuing may crash the server.", "Warning", "Continue", "Abort")
 		if(confirm != "Continue")
 			return
 
@@ -416,7 +416,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (index == null)
 		return
 	var/assoc = 0
-	var/prompt = alert(src, "Do you want to edit the key or it's assigned value?", "Associated List", "Key", "Assigned Value", "Cancel")
+	var/prompt = wrap_alert(src, "Do you want to edit the key or it's assigned value?", "Associated List", "Key", "Assigned Value", "Cancel")
 	if (prompt == "Cancel")
 		return
 	if (prompt == "Assigned Value")
@@ -547,7 +547,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if(variable in GLOB.VVpixelmovement)
 		if(!check_rights(R_DEBUG))
 			return
-		var/prompt = alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
+		var/prompt = wrap_alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
 		if (prompt != "Continue")
 			return
 

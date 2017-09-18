@@ -397,7 +397,7 @@
 		return
 
 	if(href_list["purge_vines"])
-		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") != "Yes")
+		if(wrap_alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") != "Yes")
 			return
 		DeleteVines()
 

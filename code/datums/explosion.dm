@@ -304,7 +304,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	set name = "Check Bomb Impact"
 	set category = "Debug"
 
-	var/newmode = alert(usr, "Use reactionary explosions?","Check Bomb Impact", "Yes", "No")
+	var/newmode = wrap_alert(usr, "Use reactionary explosions?","Check Bomb Impact", "Yes", "No")
 	var/turf/epicenter = get_turf(mob)
 	if(!epicenter)
 		return

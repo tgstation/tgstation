@@ -32,7 +32,7 @@
 	msg = emoji_parse(msg)
 
 	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
-		if(alert(usr, "Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+		if(wrap_alert(usr, "Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
 			return
 
 	if(!holder)
@@ -145,42 +145,42 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set name = "Fix chat"
 	set category = "OOC"
 	if (!chatOutput || !istype(chatOutput))
-		var/action = alert(src, "Invalid Chat Output data found!\nRecreate data?", "Wot?", "Recreate Chat Output data", "Cancel")
+		var/action = wrap_alert(src, "Invalid Chat Output data found!\nRecreate data?", "Wot?", "Recreate Chat Output data", "Cancel")
 		if (action != "Recreate Chat Output data")
 			return
 		chatOutput = new /datum/chatOutput(src)
 		chatOutput.start()
-		action = alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
+		action = wrap_alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
 		if (action == "Fixed")
 			log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by re-creating the chatOutput datum")
 		else
 			chatOutput.load()
-			action = alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
+			action = wrap_alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
 			if (action == "Yes")
 				log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by re-creating the chatOutput datum and forcing a load()")
 			else
-				action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
+				action = wrap_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
 				if (action == "Switch to old chat")
 					winset(src, "output", "is-visible=true;is-disabled=false")
 					winset(src, "browseroutput", "is-visible=false")
 				log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window after recreating the chatOutput and forcing a load()")
 
 	else if (chatOutput.loaded)
-		var/action = alert(src, "ChatOutput seems to be loaded\nDo you want me to force a reload, wiping the chat log or just refresh the chat window because it broke/went away?", "Hmmm", "Force Reload", "Refresh", "Cancel")
+		var/action = wrap_alert(src, "ChatOutput seems to be loaded\nDo you want me to force a reload, wiping the chat log or just refresh the chat window because it broke/went away?", "Hmmm", "Force Reload", "Refresh", "Cancel")
 		switch (action)
 			if ("Force Reload")
 				chatOutput.loaded = FALSE
 				chatOutput.start() //this is likely to fail since it asks , but we should try it anyways so we know.
-				action = alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
+				action = wrap_alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
 				if (action == "Fixed")
 					log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a start()")
 				else
 					chatOutput.load()
-					action = alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
+					action = wrap_alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
 					if (action == "Yes")
 						log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a load()")
 					else
-						action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
+						action = wrap_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
 						if (action == "Switch to old chat")
 							winset(src, "output", "is-visible=true;is-disabled=false")
 							winset(src, "browseroutput", "is-visible=false")
@@ -188,17 +188,17 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 
 			if ("Refresh")
 				chatOutput.showChat()
-				action = alert(src, "Goon chat refreshing, wait a bit and tell me if it's fixed", "", "Fixed", "Nope, force a reload")
+				action = wrap_alert(src, "Goon chat refreshing, wait a bit and tell me if it's fixed", "", "Fixed", "Nope, force a reload")
 				if (action == "Fixed")
 					log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a show()")
 				else
 					chatOutput.loaded = FALSE
 					chatOutput.load()
-					action = alert(src, "How about now? (give it a moment)", "", "Yes", "No")
+					action = wrap_alert(src, "How about now? (give it a moment)", "", "Yes", "No")
 					if (action == "Yes")
 						log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a load()")
 					else
-						action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
+						action = wrap_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
 						if (action == "Switch to old chat")
 							winset(src, "output", "is-visible=true;is-disabled=false")
 							winset(src, "browseroutput", "is-visible=false")
@@ -207,16 +207,16 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 
 	else
 		chatOutput.start()
-		var/action = alert(src, "Manually loading Chat, wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
+		var/action = wrap_alert(src, "Manually loading Chat, wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
 		if (action == "Fixed")
 			log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by manually calling start()")
 		else
 			chatOutput.load()
-			alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
+			wrap_alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
 			if (action == "Yes")
 				log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by manually calling start() and forcing a load()")
 			else
-				action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
+				action = wrap_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
 				if (action == "Switch to old chat")
 					winset(src, "output", list2params(list("on-show" = "", "is-disabled" = "false", "is-visible" = "true")))
 					winset(src, "browseroutput", "is-disabled=true;is-visible=false")

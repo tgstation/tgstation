@@ -428,7 +428,7 @@
 
 	var/rebootconfirm
 	if(SSticker.admin_delay_notice)
-		if(alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", "Yes", "No") == "Yes")
+		if(wrap_alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", "Yes", "No") == "Yes")
 			rebootconfirm = TRUE
 	else
 		rebootconfirm = TRUE
@@ -454,7 +454,7 @@
 
 	if (!usr.client.holder)
 		return
-	var/confirm = alert(usr, "End the round and  restart the game world?", "End Round", "Yes", "Cancel")
+	var/confirm = wrap_alert(usr, "End the round and  restart the game world?", "End Round", "Yes", "Cancel")
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
@@ -587,7 +587,7 @@
 
 	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.GetTimeLeft()/10)) as num|null
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		return alert(usr, "Too late... The game has already started!")
+		return wrap_alert(usr, "Too late... The game has already started!")
 	if(newtime)
 		SSticker.SetTimeLeft(newtime * 10)
 		if(newtime < 0)
@@ -607,7 +607,7 @@
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
-		alert(usr, "[M.name] is not prisoned.")
+		wrap_alert(usr, "[M.name] is not prisoned.")
 	SSblackbox.add_details("admin_verb","Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
@@ -736,7 +736,7 @@
 	var/count = 0
 
 	if(!SSticker.HasRoundStarted())
-		alert(usr, "You cannot manage jobs before the round starts!")
+		wrap_alert(usr, "You cannot manage jobs before the round starts!")
 		return
 
 	for(var/datum/job/job in SSjob.occupations)
@@ -809,7 +809,7 @@
 		question = "This mob already has a user ([tomob.key]) in control of it! "
 	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
 
-	var/ask = alert(usr, question, "Place ghost in control of mob?", "Yes", "No")
+	var/ask = wrap_alert(usr, question, "Place ghost in control of mob?", "Yes", "No")
 	if (ask != "Yes")
 		return 1
 

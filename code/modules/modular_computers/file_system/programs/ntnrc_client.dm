@@ -87,7 +87,7 @@
 			var/mob/living/user = usr
 			if(can_run(usr, 1, ACCESS_NETWORK))
 				if(channel)
-					var/response = alert(user, "Really engage admin-mode? You will be disconnected from your current channel!", "NTNRC Admin mode", "Yes", "No")
+					var/response = wrap_alert(user, "Really engage admin-mode? You will be disconnected from your current channel!", "NTNRC Admin mode", "Yes", "No")
 					if(response == "Yes")
 						if(channel)
 							channel.remove_client(src)

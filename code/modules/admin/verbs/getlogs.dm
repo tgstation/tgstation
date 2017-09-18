@@ -15,7 +15,7 @@
 	message_admins("[key_name_admin(src)] accessed file: [path]")
 	//this is copypasta because making it a proc would mean locking out adminproccalls,
 	//	and that system is buggy enough with false positives that I don't want to risk locking admins out of legit calls.
-	switch(alert(usr, "View (in game), Open (in your system's text editor), or Download file [path]?", "Log File Opening", "View", "Open", "Download"))
+	switch(wrap_alert(usr, "View (in game), Open (in your system's text editor), or Download file [path]?", "Log File Opening", "View", "Open", "Download"))
 		if ("View")
 			src << browse("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>", list2params(list("window" = "viewfile.[path]")))
 		if ("Open")
@@ -37,7 +37,7 @@
 	set desc = "Shows server log for this round."
 
 	if(fexists("[GLOB.world_game_log]"))
-		switch(alert(usr, "View (in game), Open (in your system's text editor), or Download file [GLOB.world_game_log]?", "Log File Opening", "View", "Open", "Download"))
+		switch(wrap_alert(usr, "View (in game), Open (in your system's text editor), or Download file [GLOB.world_game_log]?", "Log File Opening", "View", "Open", "Download"))
 			if ("View")
 				src << browse("<pre style='word-wrap: break-word;'>[html_encode(file2text(GLOB.world_game_log))]</pre>", list2params(list("window" = "viewfile.[GLOB.world_game_log]")))
 			if ("Open")
@@ -59,7 +59,7 @@
 	set desc = "Shows server attack log for this round."
 
 	if(fexists("[GLOB.world_attack_log]"))
-		switch(alert(usr, "View (in game), Open (in your system's text editor), or Download file [GLOB.world_attack_log]?", "Log File Opening", "View", "Open", "Download"))
+		switch(wrap_alert(usr, "View (in game), Open (in your system's text editor), or Download file [GLOB.world_attack_log]?", "Log File Opening", "View", "Open", "Download"))
 			if ("View")
 				src << browse("<pre style='word-wrap: break-word;'>[html_encode(file2text(GLOB.world_attack_log))]</pre>", list2params(list("window" = "viewfile.[GLOB.world_attack_log]")))
 			if ("Open")

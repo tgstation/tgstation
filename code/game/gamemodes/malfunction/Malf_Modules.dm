@@ -236,7 +236,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(!istype(T) || !(T.z in GLOB.station_z_levels))
 		to_chat(owner, "<span class='warning'>You cannot activate the doomsday device while off-station!</span>")
 		return
-	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
+	if(wrap_alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
 		return
 	active = TRUE
 	set_us_up_the_bomb(owner)
@@ -661,7 +661,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if(!owner_AI.can_place_transformer(src))
 		return
 	active = TRUE
-	if(alert(owner, "Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No") == "No")
+	if(wrap_alert(owner, "Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No") == "No")
 		active = FALSE
 		return
 	if(!owner_AI.can_place_transformer(src))

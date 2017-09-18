@@ -170,7 +170,7 @@
 				objholder = pick_closest_path(target_path)
 				if(!objholder)
 					objholder = /obj/structure/closet
-					alert(usr, "That path is not allowed.")
+					wrap_alert(usr, "That path is not allowed.")
 			else
 				if(ispath(objholder, /mob) && !check_rights(R_DEBUG,0))
 					objholder = /obj/structure/closet

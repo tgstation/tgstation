@@ -412,7 +412,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					if (!SSdbcore.Connect())
-						alert(usr, "Connection to Archive has been severed. Aborting.")
+						wrap_alert(usr, "Connection to Archive has been severed. Aborting.")
 					else
 
 						var/sqltitle = sanitizeSQL(scanner.cache.name)
@@ -421,14 +421,14 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 						var/sqlcategory = sanitizeSQL(upload_category)
 						var/datum/DBQuery/query_library_upload = SSdbcore.NewQuery("INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime, round_id_created) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now(), '[GLOB.round_id]')")
 						if(!query_library_upload.Execute())
-							alert(usr, "Database error encountered uploading to Archive")
+							wrap_alert(usr, "Database error encountered uploading to Archive")
 							return
 						else
 							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
-							alert(usr, "Upload Complete. Uploaded title will be unavailable for printing for a short period")
+							wrap_alert(usr, "Upload Complete. Uploaded title will be unavailable for printing for a short period")
 	if(href_list["newspost"])
 		if(!GLOB.news_network)
-			alert(usr, "No news network found on station. Aborting.")
+			wrap_alert(usr, "No news network found on station. Aborting.")
 		var/channelexists = 0
 		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == "Nanotrasen Book Club")
@@ -437,7 +437,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		if(!channelexists)
 			GLOB.news_network.CreateFeedChannel("Nanotrasen Book Club", "Library", null)
 		GLOB.news_network.SubmitArticle(scanner.cache.dat, "[scanner.cache.name]", "Nanotrasen Book Club", null)
-		alert(usr, "Upload complete. Your uploaded title is now available on station newscasters.")
+		wrap_alert(usr, "Upload complete. Your uploaded title is now available on station newscasters.")
 	if(href_list["orderbyid"])
 		if(cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
@@ -450,7 +450,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])
 		if (!SSdbcore.Connect())
-			alert(usr, "Connection to Archive has been severed. Aborting.")
+			wrap_alert(usr, "Connection to Archive has been severed. Aborting.")
 		if(cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else

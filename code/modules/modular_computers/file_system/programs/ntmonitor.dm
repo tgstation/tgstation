@@ -37,7 +37,7 @@
 			var/mob/user = usr
 			if(!user)
 				return 1
-			var/response = alert(user, "Really disable NTNet wireless? If your computer is connected wirelessly you won't be able to turn it back on! This will affect all connected wireless devices.", "NTNet shutdown", "Yes", "No")
+			var/response = wrap_alert(user, "Really disable NTNet wireless? If your computer is connected wirelessly you won't be able to turn it back on! This will affect all connected wireless devices.", "NTNet shutdown", "Yes", "No")
 			if(response == "Yes")
 				GLOB.ntnet_global.setting_disabled = 1
 			return 1

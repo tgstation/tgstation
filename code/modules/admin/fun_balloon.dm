@@ -34,7 +34,7 @@
 /obj/effect/fun_balloon/attack_ghost(mob/user)
 	if(!user.client || !user.client.holder || popped)
 		return
-	switch(alert(usr, "Pop [src]?","Fun Balloon","Yes","No"))
+	switch(wrap_alert(usr, "Pop [src]?","Fun Balloon","Yes","No"))
 		if("Yes")
 			effect()
 			pop()

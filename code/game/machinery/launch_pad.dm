@@ -345,7 +345,7 @@
 
 		if("remove")
 			. = TRUE
-			if(usr && alert(usr, "Are you sure?", "Unlink Launchpad", "I'm Sure", "Abort") != "Abort")
+			if(usr && wrap_alert(usr, "Are you sure?", "Unlink Launchpad", "I'm Sure", "Abort") != "Abort")
 				pad = null
 
 		if("launch")

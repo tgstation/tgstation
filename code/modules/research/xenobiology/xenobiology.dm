@@ -229,7 +229,7 @@
 		return
 
 	prompted = 1
-	if(alert(usr, "This will permanently transfer your consciousness to [SM]. Are you sure you want to do this?",,"Yes","No")=="No")
+	if(wrap_alert(usr, "This will permanently transfer your consciousness to [SM]. Are you sure you want to do this?",,"Yes","No")=="No")
 		prompted = 0
 		return
 

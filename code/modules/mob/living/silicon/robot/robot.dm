@@ -558,7 +558,7 @@
 	if(stat == DEAD)
 		return //won't work if dead
 	if(locked)
-		switch(alert(usr, "You cannot lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
+		switch(wrap_alert(usr, "You cannot lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
 				locked = FALSE
 				update_icons()

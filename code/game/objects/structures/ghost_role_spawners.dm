@@ -162,7 +162,7 @@
 
 /obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
 	if(isgolem(user) && can_transfer)
-		var/transfer_choice = alert(usr, "Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
+		var/transfer_choice = wrap_alert(usr, "Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
 		if(transfer_choice != "Yes")
 			return
 		if(QDELETED(src) || uses <= 0)

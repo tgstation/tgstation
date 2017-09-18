@@ -176,14 +176,14 @@
 			if(!Adjacent(user))
 				return
 			if(H.gender == "male")
-				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
+				if(wrap_alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "female"
 					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
 				else
 					return
 
 			else
-				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
+				if(wrap_alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "male"
 					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
@@ -193,7 +193,7 @@
 			H.update_mutations_overlay() //(hulk male/female)
 
 		if("hair")
-			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
+			var/hairchoice = wrap_alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
 			if(!Adjacent(user))
 				return
 			if(hairchoice == "Style") //So you just want to use a mirror then?

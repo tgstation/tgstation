@@ -77,7 +77,7 @@
 		return
 	if(!query_add_ban_get_ckey.NextRow())
 		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
-			if(alert(usr, "[ckey] has not been seen before, are you sure you want to create a ban for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
+			if(wrap_alert(usr, "[ckey] has not been seen before, are you sure you want to create a ban for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
 				return
 
 	var/a_ckey
@@ -275,7 +275,7 @@
 				return
 			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s duration from [duration] to [value]",1)
 		if("unban")
-			if(alert(usr, "Unban [pckey]?", "Unban?", "Yes", "No") == "Yes")
+			if(wrap_alert(usr, "Unban [pckey]?", "Unban?", "Yes", "No") == "Yes")
 				DB_ban_unban_by_id(banid)
 				return
 			else

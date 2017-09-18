@@ -432,7 +432,7 @@
 									return
 
 								if(href_list["add_crime"])
-									switch(alert(usr, "What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))
+									switch(wrap_alert(usr, "What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))
 										if("Minor Crime")
 											if(R)
 												var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)

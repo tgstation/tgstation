@@ -41,7 +41,7 @@
 			return
 		endtime = query_validate_time.item[1]
 	var/adminonly
-	switch(alert(usr, "Admin only poll?",,"Yes","No","Cancel"))
+	switch(wrap_alert(usr, "Admin only poll?",,"Yes","No","Cancel"))
 		if("Yes")
 			adminonly = 1
 		if("No")
@@ -49,7 +49,7 @@
 		else
 			return
 	var/dontshow
-	switch(alert(usr, "Hide poll results from tracking until completed?",,"Yes","No","Cancel"))
+	switch(wrap_alert(usr, "Hide poll results from tracking until completed?",,"Yes","No","Cancel"))
 		if("Yes")
 			dontshow = 1
 		if("No")
@@ -71,7 +71,7 @@
 			option = sanitizeSQL(option)
 			var/default_percentage_calc
 			if(polltype != POLLTYPE_IRV)
-				switch(alert(usr, "Should this option be included by default when poll result percentages are generated?",,"Yes","No","Cancel"))
+				switch(wrap_alert(usr, "Should this option be included by default when poll result percentages are generated?",,"Yes","No","Cancel"))
 					if("Yes")
 						default_percentage_calc = 1
 					if("No")
@@ -113,7 +113,7 @@
 				else if(descmax == null)
 					return
 			sql_option_list += list(list("text" = "'[option]'", "minval" = "'[minval]'", "maxval" = "'[maxval]'", "descmin" = "'[descmin]'", "descmid" = "'[descmid]'", "descmax" = "'[descmax]'", "default_percentage_calc" = "'[default_percentage_calc]'"))
-			switch(alert(usr, " ",,"Add option","Finish", "Cancel"))
+			switch(wrap_alert(usr, " ",,"Add option","Finish", "Cancel"))
 				if("Add option")
 					add_option = 1
 				if("Finish")

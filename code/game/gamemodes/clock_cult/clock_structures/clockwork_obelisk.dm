@@ -45,7 +45,7 @@
 	if(!is_servant_of_ratvar(user) || total_accessable_power() < hierophant_cost || !anchored)
 		to_chat(user, "<span class='warning'>You place your hand on [src], but it doesn't react.</span>")
 		return
-	var/choice = alert(user,"You place your hand on [src]...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
+	var/choice = wrap_alert(user,"You place your hand on [src]...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
 	switch(choice)
 		if("Hierophant Broadcast")
 			if(active)

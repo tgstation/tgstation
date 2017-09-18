@@ -71,7 +71,7 @@
 
 /obj/item/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
-		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
+		var/safety = wrap_alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
 			return
 		investigate_log("has become a singularity. Caused by [user.key]", INVESTIGATE_SINGULO)

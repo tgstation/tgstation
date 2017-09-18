@@ -64,7 +64,7 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
 	if(key || !playable_spider)//Someone is in it or the fun police are shutting it down
 		return 0
-	var/spider_ask = alert(usr, "Become a spider?", "Are you australian?", "Yes", "No")
+	var/spider_ask = wrap_alert(usr, "Become a spider?", "Are you australian?", "Yes", "No")
 	if(spider_ask == "No" || !src || QDELETED(src))
 		return 1
 	if(key)

@@ -90,7 +90,7 @@ GLOBAL_DATUM_INIT(debugFileOutput, /datum/debugFileOutput, new)
 	if(!holder)
 		return
 
-	if (alert(usr, "Are you really sure you want to delete every single JS logfile?", "No", "Yes") == "No")
+	if (wrap_alert(usr, "Are you really sure you want to delete every single JS logfile?", "No", "Yes") == "No")
 		return
 
 	var/list/summary = GLOB.debugFileOutput.clearAll()

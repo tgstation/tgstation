@@ -258,7 +258,7 @@
 		ready = PLAYER_NOT_READY
 		return FALSE
 
-	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No")
+	var/this_is_like_playing_right = wrap_alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No")
 
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
@@ -316,18 +316,18 @@
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if(!IsJobAvailable(rank))
-		alert(src, "[rank] is not available. Please try another.")
+		wrap_alert(src, "[rank] is not available. Please try another.")
 		return 0
 
 	if(SSticker.late_join_disabled)
-		alert(src, "An administrator has disabled late join spawning.")
+		wrap_alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up
 		if(SSshuttle.arrivals.damaged && config.arrivals_shuttle_require_safe_latejoin)
-			alert(src, "The arrivals shuttle is currently malfunctioning! You cannot join.")
+			wrap_alert(src, "The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
 		arrivals_docked = SSshuttle.arrivals.mode != SHUTTLE_CALL
 

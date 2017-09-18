@@ -111,7 +111,7 @@
 /datum/round_event/santa/start()
 	for(var/mob/M in GLOB.dead_mob_list)
 		spawn(0)
-			var/response = alert(M, "Santa is coming to town! Do you want to be santa?", "Ho ho ho!", "Yes", "No")
+			var/response = wrap_alert(M, "Santa is coming to town! Do you want to be santa?", "Ho ho ho!", "Yes", "No")
 			if(response == "Yes" && M && M.client && M.stat == DEAD && !santa)
 				santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
 				santa.key = M.key
