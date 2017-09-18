@@ -874,9 +874,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
 	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
-			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
+			in electronic devices, subverts intended functions. Not intended for use on locks."
 	item = /obj/item/card/emag
-	cost = 6
+	cost = 5
+
+/datum/uplink_item/device_tools/lockhacker
+	name = "Electromagnetic Sequencer"
+	desc = "This cards primary function is breaking electronic and digital locks. It may not work on any known physical locks."
+	item = /obj/item/card/lockhacker
+	cost = 5
 
 /datum/uplink_item/device_tools/toolbox
 	name = "Full Syndicate Toolbox"

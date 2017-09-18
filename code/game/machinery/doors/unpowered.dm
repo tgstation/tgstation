@@ -13,7 +13,7 @@
 	else
 		return ..()
 
-/obj/machinery/door/unpowered/emag_act()
+/obj/machinery/door/unpowered/lockhack_act()
 	return
 
 /obj/machinery/door/unpowered/shuttle

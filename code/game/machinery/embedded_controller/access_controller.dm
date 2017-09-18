@@ -26,7 +26,7 @@
 /obj/machinery/doorButtons/LateInitialize()
 	findObjsByTag()
 
-/obj/machinery/doorButtons/emag_act(mob/user)
+/obj/machinery/doorButtons/lockhack_act(mob/user)
 	if(emagged)
 		return
 	emagged = TRUE

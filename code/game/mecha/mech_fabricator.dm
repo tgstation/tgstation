@@ -74,7 +74,7 @@
 			return 0
 	return 1
 
-/obj/machinery/mecha_part_fabricator/emag_act()
+/obj/machinery/mecha_part_fabricator/lockhack_act()
 	if(emagged)
 		return
 	emagged = TRUE

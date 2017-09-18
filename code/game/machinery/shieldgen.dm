@@ -191,7 +191,7 @@
 	else
 		return ..()
 
-/obj/machinery/shieldgen/emag_act(mob/user)
+/obj/machinery/shieldgen/lockhack_act(mob/user)
 	if(emagged)
 		to_chat(user, "<span class='warning'>The access controller is damaged!</span>")
 		return
@@ -380,7 +380,7 @@
 		update_activity()
 	add_fingerprint(user)
 
-/obj/machinery/shieldwallgen/emag_act(mob/user)
+/obj/machinery/shieldwallgen/lockhack_act(mob/user)
 	if(emagged)
 		to_chat(user, "<span class='warning'>The access controller is damaged!</span>")
 		return

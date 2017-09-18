@@ -188,7 +188,7 @@
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
-		if(istype(W, /obj/item/card/emag))
+		if(istype(W, /obj/item/card/lockhacker))
 			boom(user)
 			return
 		else if(istype(W, /obj/item/device/multitool))

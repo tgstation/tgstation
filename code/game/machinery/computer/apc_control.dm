@@ -106,8 +106,8 @@
 				auth_id = "[ID.registered_name] ([ID.assignment])"
 				log_activity("logged in")
 		if(!authenticated) //Check for emags
-			var/obj/item/card/emag/E = usr.get_active_held_item()
-			if(E && istype(E) && usr.Adjacent(src))
+			var/obj/item/card/lockhacker/LH = usr.get_active_held_item()
+			if(LH && istype(LH) && usr.Adjacent(src))
 				to_chat(usr, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 				authenticated = TRUE
 				log_activity("logged in") //Auth ID doesn't change, hinting that it was illicit

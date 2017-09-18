@@ -75,6 +75,23 @@
 		return
 	A.emag_act(user)
 
+/obj/item/card/lockhacker
+	name = "electromagnetic sequencer"
+	desc = "An ominous black card with a red strip and some circuitry."
+	icon_state = "lockhack"
+	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	origin_tech = "magnets=2;syndicate=2"
+	flags_1 = NOBLUDGEON_1
+
+/obj/item/card/lockhacker/attack()
+	return
+
+/obj/item/card/lockhacker/afterattack(atom/target, mob/user)
+	var/atom/A = target
+	A.lockhack_act(user)
+
 /obj/item/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."

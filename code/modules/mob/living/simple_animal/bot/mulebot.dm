@@ -112,12 +112,14 @@
 	update_icon()
 	return
 
-/mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
-	if(emagged < 1)
-		emagged = TRUE
+/mob/living/simple_animal/bot/mulebot/lockhack_act(mob/user)
 	if(!open)
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>")
+
+/mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
+	if(emagged < 1)
+		emagged = TRUE
 	flick("mulebot-emagged", src)
 	playsound(src, "sparks", 100, 0)
 

@@ -707,7 +707,7 @@
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
-/obj/machinery/turretid/emag_act(mob/user)
+/obj/machinery/turretid/lockhack_act(mob/user)
 	if(emagged)
 		return
 	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")

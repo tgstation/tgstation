@@ -204,7 +204,7 @@
 /obj/machinery/door/window/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/door/window/emag_act(mob/user)
+/obj/machinery/door/window/lockhack_act(mob/user)
 	if(!operating && density && !emagged)
 		emagged = TRUE
 		operating = TRUE
