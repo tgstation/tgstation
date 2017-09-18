@@ -1011,7 +1011,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 				return
 
-			if(usr, "Confirm mob type change?",,"Transform","Cancel") != "Transform")
+			if(wrap_alert(usr, "Confirm mob type change?",,"Transform","Cancel") != "Transform")
 				return
 			if(!H)
 				to_chat(usr, "Mob doesn't exist anymore")
