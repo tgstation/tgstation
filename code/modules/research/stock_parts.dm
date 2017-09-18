@@ -84,7 +84,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 
 /obj/item/stock_parts/console_screen
 	name = "console screen"
-	desc = "Used in the construction of computers and other devices with a interactive console."
+	desc = "Used in the construction of computers and other devices with an interactive console."
 	icon_state = "screen"
 	origin_tech = "materials=1"
 	materials = list(MAT_GLASS=200)
