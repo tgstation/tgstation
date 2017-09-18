@@ -419,6 +419,31 @@
 					setDir(i)
 					sleep(1)
 
+/mob/living/simple_animal/pet/dog/corgi/Ian/narsie_act()
+	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
+	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(get_turf(src))
+	N.setDir(dir)
+	gib()
+
+/mob/living/simple_animal/pet/dog/corgi/narsie
+	name = "Nars-Ian"
+	desc = "Ia! Ia!"
+	icon_state = "narsian"
+	icon_living = "narsian"
+	icon_dead = "narsian_dead"
+	gold_core_spawnable = FALSE
+	nofur = TRUE
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/update_corgi_fluff()
+	..()
+	speak = list("Tari'karat-pasnar!", "IA! IA!", "BRRUUURGHGHRHR")
+	speak_emote = list("growls", "barks ominously")
+	emote_hear = list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable.")
+	emote_see = list("communes with the unnameable.", "ponders devouring some souls.", "shakes.")
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/narsie_act()
+	adjustBruteLoss(-maxHealth)
+	return
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()
