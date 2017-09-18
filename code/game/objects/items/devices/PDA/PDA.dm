@@ -29,6 +29,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
 	var/font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;" //The currently selected font.
 	var/background_color = "#808000" //The currently selected background color.
+	
+	#define FONT_VT 0
+	#define FONT_SHARE 1
+	#define FONT_ORBITRON 2
+	#define FONT_MONO 3
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
@@ -323,13 +328,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 				font_index = (font_index + 1) % 4
 
 				switch(font_index)
-					if (0)
+					if (FONT_VT)
 						font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;"
-					if (1)
+					if (FONT_SHARE)
 						font_mode = "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
-					if (2)
+					if (FONT_ORBITRON)
 						font_mode = "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
-					if (3)
+					if (FONT_MONO)
 						font_mode = "font-family:monospace;"
 			if ("Change_Color")
 				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').")as color
