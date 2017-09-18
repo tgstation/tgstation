@@ -93,7 +93,7 @@
 					playsound(user, fartsound, 50, 1, 5)
 			else if(istype(O, /obj/item/bikehorn))
 				for(var/obj/item/bikehorn/Q in theinv.contents)
-					playsound(Q, pick(Q.honksound), 50, 1, 5)
+					playsound(Q, 'sound/items/bikehorn.ogg', 50, 1, 5)
 				message = "<span class='clown'>farts.</span>"
 			else if(istype(O, /obj/item/device/megaphone))
 				message = "<span class='reallybig'>farts.</span>"
