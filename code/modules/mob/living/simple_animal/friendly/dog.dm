@@ -430,8 +430,19 @@
 	icon_state = "narsian"
 	icon_living = "narsian"
 	icon_dead = "narsian_dead"
+	faction = list("dog", "cult")
 	gold_core_spawnable = FALSE
 	nofur = TRUE
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/Life()
+	..()
+	for(var/mob/living/simple_animal/pet/P in range(1, src))
+		if(P != src && prob(5))
+			visible_message("<span class='warning'>[src] devours [P]!</span>", \
+			"<span class='cult big bold'>DELICIOUS SOULS</span>")
+			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+			narsie_act()
+			P.gib()
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/update_corgi_fluff()
 	..()
