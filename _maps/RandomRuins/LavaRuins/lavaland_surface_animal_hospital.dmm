@@ -47,7 +47,7 @@
 /area/ruin/powered/animal_hospital)
 "al" = (
 /obj/structure/table/wood,
-/obj/item/toy/carpplushie,
+/obj/item/toy/plush/carpplushie,
 /turf/open/floor/plasteel/cmo,
 /area/ruin/powered/animal_hospital)
 "am" = (

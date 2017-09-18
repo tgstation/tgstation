@@ -14,14 +14,13 @@
 	..()
 
 /obj/item/bikehorn/golden/retardhorn/proc/retardify(mob/living/carbon/M, mob/user)
-	if(!(next_usable > world.time))
-		var/turf/T = get_turf(src)
-		for(M in ohearers(7, T))
-			if(ishuman(M) && M.can_hear())
-				var/mob/living/carbon/human/H = M
-				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
-					continue
-			M.adjustBrainLoss(HORN_BRAIN_DAMAGE)
-			log_admin("[key_name(user)] dealt brain damage to [key_name(M)] with the Extra annoying bike horn")
+	var/turf/T = get_turf(src)
+	for(M in ohearers(7, T))
+		if(ishuman(M) && M.can_hear())
+			var/mob/living/carbon/human/H = M
+			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+				continue
+		M.adjustBrainLoss(HORN_BRAIN_DAMAGE)
+		log_admin("[key_name(user)] dealt brain damage to [key_name(M)] with the Extra annoying bike horn")
 
 #undef HORN_BRAIN_DAMAGE

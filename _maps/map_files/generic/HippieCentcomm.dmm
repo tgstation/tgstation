@@ -925,7 +925,7 @@
 "rO" = (/obj/structure/table,/obj/item/paper_bin,/obj/item/pen,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/centcom/evac)
 "rP" = (/obj/structure/chair,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/centcom/evac)
 "rQ" = (/obj/structure/chair,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/machinery/light{dir = 1},/turf/open/floor/plasteel,/area/centcom/evac)
-"rR" = (/obj/structure/table,/obj/item/toy/katana,/obj/item/toy/carpplushie,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/centcom/evac)
+"rR" = (/obj/structure/table,/obj/item/toy/katana,/obj/item/toy/plush/carpplushie,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/centcom/evac)
 "rS" = (/obj/effect/turf_decal/stripes/line{dir = 5},/turf/open/floor/plasteel,/area/centcom/evac)
 "rT" = (/obj/effect/turf_decal/delivery,/obj/machinery/light{dir = 1},/turf/open/floor/plasteel,/area/centcom/evac)
 "rU" = (/obj/machinery/door/poddoor/shuttledock,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/centcom/evac)
