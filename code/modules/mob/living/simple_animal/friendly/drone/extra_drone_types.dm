@@ -16,7 +16,6 @@
 	icon_living = "drone_synd"
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
 	health = 30
-	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
 	initial_language_holder = /datum/language_holder/drone/syndicate
 	faction = list("syndicate")
 	speak_emote = list("hisses")
@@ -33,12 +32,12 @@
 	flavortext = null
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
-	..()
+	. = ..()
 	internal_storage.hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
-	to_chat(src, "<span class='notice'>You can kill and eat other drones to increase your health!</span>" )
+	to_chat(src, "<span class='notice'>You can kill, destroy and interfere with as much things as you want!</span>" )
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
@@ -46,7 +45,7 @@
 	default_storage = /obj/item/device/radio/uplink/nuclear
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
-	..()
+	. = ..()
 	internal_storage.hidden_uplink.telecrystals = 30
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src)
@@ -55,7 +54,7 @@
 	default_hatmask = /obj/item/clothing/head/chameleon/drone
 
 /mob/living/simple_animal/drone/snowflake/Initialize()
-	..()
+	. = ..()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
 /obj/item/drone_shell/syndrone
