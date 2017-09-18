@@ -49068,7 +49068,7 @@
 /area/bridge/showroom/corporate)
 "bQl" = (
 /obj/structure/table/wood,
-/obj/item/toy/carpplushie{
+/obj/item/toy/plush/carpplushie{
 	color = "red";
 	name = "Nanotrasen wildlife department space carp plushie"
 	},

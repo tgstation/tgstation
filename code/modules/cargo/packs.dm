@@ -1643,7 +1643,7 @@
 	                /obj/item/toy/talking/griffin,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
-	                /obj/item/toy/carpplushie,
+	                /obj/item/toy/plush/carpplushie,
 	                /obj/item/coin/antagtoken,
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/gun/ballistic/shotgun/toy/crossbow,
