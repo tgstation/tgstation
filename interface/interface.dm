@@ -18,7 +18,7 @@
 	set desc = "Visit the forum."
 	set hidden = 1
 	if(config.forumurl)
-		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")
+		if(alert(usr, "This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")
 			return
 		src << link(config.forumurl)
 	else
@@ -30,7 +30,7 @@
 	set desc = "Show Server Rules."
 	set hidden = 1
 	if(config.rulesurl)
-		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")=="No")
+		if(alert(usr, "This will open the rules in your browser. Are you sure?",,"Yes","No")=="No")
 			return
 		src << link(config.rulesurl)
 	else
@@ -42,7 +42,7 @@
 	set desc = "Visit Github"
 	set hidden = 1
 	if(config.githuburl)
-		if(alert("This will open the Github repository in your browser. Are you sure?",,"Yes","No")=="No")
+		if(alert(usr, "This will open the Github repository in your browser. Are you sure?",,"Yes","No")=="No")
 			return
 		src << link(config.githuburl)
 	else

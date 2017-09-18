@@ -39,7 +39,7 @@
 	if(!SSticker.mode)
 		to_chat(user, "Can't become a drone before the game has started.")
 		return
-	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
+	var/be_drone = alert(usr, "Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_drone == "No" || QDELETED(src) || !isobserver(user))
 		return
 	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))

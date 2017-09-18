@@ -414,7 +414,7 @@
 			return
 
 		var/delmob = 0
-		switch(alert("Delete old mob?","Message","Yes","No","Cancel"))
+		switch(alert(usr, "Delete old mob?","Message","Yes","No","Cancel"))
 			if("Cancel")
 				return
 			if("Yes")
@@ -508,7 +508,7 @@
 
 		var/duration
 
-		switch(alert("Temporary Ban?",,"Yes","No"))
+		switch(alert(usr, "Temporary Ban?",,"Yes","No"))
 			if("Yes")
 				temp = 1
 				var/mins = 0
@@ -557,7 +557,7 @@
 
 
 		if(jobban_isbanned(M, "appearance"))
-			switch(alert("Remove appearance ban?","Please Confirm","Yes","No"))
+			switch(alert(usr, "Remove appearance ban?","Please Confirm","Yes","No"))
 				if("Yes")
 					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
 					log_admin_private("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
@@ -568,7 +568,7 @@
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [key_name_admin(M)]'s appearance ban.</span>")
 					to_chat(M, "<span class='boldannounce'><BIG>[usr.client.ckey] has removed your appearance ban.</BIG></span>")
 
-		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
+		else switch(alert(usr, "Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
 				var/reason = input(usr,"Please State Reason.","Reason") as message|null
 				if(!reason)
@@ -933,7 +933,7 @@
 
 		//Banning comes first
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
-			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
+			switch(alert(usr, "Temporary Ban?",,"Yes","No", "Cancel"))
 				if("Yes")
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(mins <= 0)
@@ -1001,7 +1001,7 @@
 				var/reason = jobban_isbanned(M, job)
 				if(!reason)
 					continue //skip if it isn't jobbanned anyway
-				switch(alert("Job: '[job]' Reason: '[reason]' Un-jobban?","Please Confirm","Yes","No"))
+				switch(alert(usr, "Job: '[job]' Reason: '[reason]' Un-jobban?","Please Confirm","Yes","No"))
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 						log_admin_private("[key_name(usr)] unbanned [key_name(M)] from [job]")
@@ -1132,7 +1132,7 @@
 		if(M.client && M.client.holder)
 			return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
 
-		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
+		switch(alert(usr, "Temporary Ban?",,"Yes","No", "Cancel"))
 			if("Yes")
 				var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 				if(mins <= 0)
@@ -1838,7 +1838,7 @@
 			return
 
 		if(!SSticker.HasRoundStarted())
-			alert("The game hasn't started yet!")
+			alert(usr, "The game hasn't started yet!")
 			return
 
 		var/mob/M = locate(href_list["traitor"])
@@ -1895,10 +1895,10 @@
 			paths += path
 
 		if(!paths)
-			alert("The path list you sent is empty.")
+			alert(usr, "The path list you sent is empty.")
 			return
 		if(length(paths) > 5)
-			alert("Select fewer object types, (max 5).")
+			alert(usr, "Select fewer object types, (max 5).")
 			return
 
 		var/list/offset = splittext(href_list["offset"],",")
@@ -2011,7 +2011,7 @@
 		if(src.admincaster_feed_channel.channel_name == "" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]" || check )
 			src.admincaster_screen=7
 		else
-			var/choice = alert("Please confirm Feed channel creation.","Network Channel Handler","Confirm","Cancel")
+			var/choice = alert(usr, "Please confirm Feed channel creation.","Network Channel Handler","Confirm","Cancel")
 			if(choice=="Confirm")
 				GLOB.news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admin_signature, src.admincaster_feed_channel.locked, 1)
 				SSblackbox.inc("newscaster_channels",1)
@@ -2090,7 +2090,7 @@
 		if(src.admincaster_wanted_message.criminal == "" || src.admincaster_wanted_message.body == "")
 			src.admincaster_screen = 16
 		else
-			var/choice = alert("Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler","Confirm","Cancel")
+			var/choice = alert(usr, "Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler","Confirm","Cancel")
 			if(choice=="Confirm")
 				if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
 					GLOB.news_network.submitWanted(admincaster_wanted_message.criminal, admincaster_wanted_message.body, admin_signature, null, 1, 1)
@@ -2102,7 +2102,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_cancel_wanted"])
-		var/choice = alert("Please confirm Wanted Issue removal.","Network Security Handler","Confirm","Cancel")
+		var/choice = alert(usr, "Please confirm Wanted Issue removal.","Network Security Handler","Confirm","Cancel")
 		if(choice=="Confirm")
 			GLOB.news_network.deleteWanted()
 			src.admincaster_screen=17
@@ -2190,7 +2190,7 @@
 			return
 		if(SSticker.IsRoundInProgress())
 			var/afkonly = text2num(href_list["afkonly"])
-			if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
+			if(alert(usr, "Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
 				to_chat(usr, "Kick clients from lobby aborted")
 				return
 			var/list/listkicked = kick_clients_in_lobby("<span class='danger'>You were kicked from the lobby by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>", afkonly)

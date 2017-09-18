@@ -183,7 +183,7 @@ update_label("John Doe", "Clowny")
 				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
 				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
 					if (t)
-						alert("Invalid name.")
+						alert(usr, "Invalid name.")
 					return
 				registered_name = t
 

@@ -261,7 +261,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (!subtypes || !subtypes.len)
 		return FALSE
 	if (subtypes && subtypes.len)
-		switch(alert("Strict object type detection?", "Type detection", "Strictly this type","This type and subtypes", "Cancel"))
+		switch(alert(usr, "Strict object type detection?", "Type detection", "Strictly this type","This type and subtypes", "Cancel"))
 			if("Strictly this type")
 				return FALSE
 			if("This type and subtypes")
@@ -334,7 +334,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	L += var_value
 
-	switch(alert("Would you like to associate a value with the list entry?",,"Yes","No"))
+	switch(alert(usr, "Would you like to associate a value with the list entry?",,"Yes","No"))
 		if("Yes")
 			L[var_value] = mod_list_add_ass(O) //hehe
 	if (O)

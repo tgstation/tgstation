@@ -73,7 +73,7 @@
 
 /obj/structure/ladder/proc/use(mob/user,is_ghost=0)
 	if(up && down)
-		switch( alert("Go up or down the ladder?", "Ladder", "Up", "Down", "Cancel") )
+		switch( alert(usr, "Go up or down the ladder?", "Ladder", "Up", "Down", "Cancel") )
 			if("Up")
 				travel(TRUE, user, is_ghost, up)
 			if("Down")

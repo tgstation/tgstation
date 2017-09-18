@@ -16,7 +16,7 @@
 	return attack_hand(user)
 
 /obj/structure/signpost/attack_hand(mob/user)
-	switch(alert(question,name,"Yes","No"))
+	switch(alert(usr, question,name,"Yes","No"))
 		if("Yes")
 			var/turf/T = find_safe_turf(zlevels=zlevels)
 

@@ -37,7 +37,7 @@
 			server = config.server_sql_name
 	server = sanitizeSQL(server)
 	if(isnull(secret))
-		switch(alert("Hide note from being viewed by players?", "Secret note?","Yes","No","Cancel"))
+		switch(alert(usr, "Hide note from being viewed by players?", "Secret note?","Yes","No","Cancel"))
 			if("Yes")
 				secret = 1
 			if("No")

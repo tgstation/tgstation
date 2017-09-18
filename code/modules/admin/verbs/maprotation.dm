@@ -1,7 +1,7 @@
 /client/proc/forcerandomrotate()
 	set category = "Server"
 	set name = "Trigger Random Map Rotation"
-	var/rotate = alert("Force a random map rotation to trigger?", "Rotate map?", "Yes", "Cancel")
+	var/rotate = alert(usr, "Force a random map rotation to trigger?", "Rotate map?", "Yes", "Cancel")
 	if (rotate != "Yes")
 		return
 	message_admins("[key_name_admin(usr)] is forcing a random map rotation.")

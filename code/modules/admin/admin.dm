@@ -454,7 +454,7 @@
 
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("End the round and  restart the game world?", "End Round", "Yes", "Cancel")
+	var/confirm = alert(usr, "End the round and  restart the game world?", "End Round", "Yes", "Cancel")
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
@@ -587,7 +587,7 @@
 
 	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.GetTimeLeft()/10)) as num|null
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!")
+		return alert(usr, "Too late... The game has already started!")
 	if(newtime)
 		SSticker.SetTimeLeft(newtime * 10)
 		if(newtime < 0)
@@ -607,7 +607,7 @@
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
-		alert("[M.name] is not prisoned.")
+		alert(usr, "[M.name] is not prisoned.")
 	SSblackbox.add_details("admin_verb","Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
@@ -809,7 +809,7 @@
 		question = "This mob already has a user ([tomob.key]) in control of it! "
 	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
 
-	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	var/ask = alert(usr, question, "Place ghost in control of mob?", "Yes", "No")
 	if (ask != "Yes")
 		return 1
 
