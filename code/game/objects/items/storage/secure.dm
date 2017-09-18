@@ -28,29 +28,29 @@
 
 /obj/item/storage/secure/examine(mob/user)
 	..()
-	to_chat(user, text("The service panel is currently <b>[src.open ? "unscrewed" : "screwed shut"]</b>."))
+	to_chat(user, text("The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."))
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
 	if(locked)
 		if (istype(W, /obj/item/screwdriver))
 			if (do_after(user, 20*W.toolspeed, target = src))
-				src.open =! src.open
-				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
+				open =! open
+				to_chat(user, "<span class='notice'>You [open ? "open" : "close"] the service panel.</span>")
 			return
 		if (istype(W, /obj/item/wirecutters) || istype(W, /obj/item/card/emag))
-			user.show_message("<span class='danger'>The [src] is protected from this sort of tampering, perhaps a <b>multitool</b> could pulse the wires controlling internal memory instead?</span>", 1)
-		if ((istype(W, /obj/item/device/multitool)) && (!src.l_hacking))
+			to_chat(user, "<span class='danger'>The [src] is protected from this sort of tampering, perhaps a <b>multitool</b> could pulse the wires controlling internal memory instead?</span>")
+		if ((istype(W, /obj/item/device/multitool)) && (!l_hacking))
 			if(src.open == 1)
-				user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
+				to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
 				src.l_hacking = 1
 				if (do_after(usr, 400*W.toolspeed, target = src))
-					user.show_message("<span class='danger'>Internal memory reset - lock has been disengaged.</span>", 1)
+					to_chat(user, "<span class='danger'>Internal memory reset - lock has been disengaged.</span>")
 					src.l_set = 0
 					src.l_hacking = 0
 				else
 					src.l_hacking = 0
 			else
-				user.show_message("<span class='notice'>You must <b>unscrew</b> the service panel before you can pulse the wiring.</span>", 1)
+				to_chat(user, "<span class='notice'>You must <b>unscrew</b> the service panel before you can pulse the wiring.</span>")
 			return
 		//At this point you have exhausted all the special things to do when locked
 		// ... but it's still locked.
