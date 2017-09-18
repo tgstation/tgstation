@@ -28,7 +28,7 @@
 
 /obj/item/storage/secure/examine(mob/user)
 	..()
-	to_chat(user, text("The service panel is current <b>[src.open ? "unscrewed" : "screwed shut"]</b>."))
+	to_chat(user, text("The service panel is currently <b>[src.open ? "unscrewed" : "screwed shut"]</b>."))
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
 	if(locked)
