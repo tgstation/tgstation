@@ -39,7 +39,7 @@
 	damage = 60
 
 // 7.62 (Nagant Rifle)
- 
+
 /obj/item/projectile/bullet/a762
 	name = "7.62 bullet"
 	damage = 60
@@ -156,7 +156,7 @@
 
 /obj/item/projectile/bullet/p50
 	name =".50 bullet"
-	speed = 0		//360 alwaysscope.
+	speed = 0.4
 	damage = 70
 	knockdown = 100
 	dismemberment = 50
