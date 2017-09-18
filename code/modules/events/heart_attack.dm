@@ -15,6 +15,8 @@
 		if(!H.can_heartattack())
 			continue
 		var/foundAlready = FALSE
+		if(H.has_status_effect(STATUS_EFFECT_EXERCISED))
+			continue
 		for(var/datum/disease/heart_failure/F in H.viruses)
 			foundAlready = TRUE
 			break
@@ -23,4 +25,5 @@
 
 		var/datum/disease/D = new /datum/disease/heart_failure
 		H.ForceContractDisease(D)
+		notify_ghosts("[H] is beginning to have a heart attack!", enter_link="<a href=?src=\ref[H];orbit=1>(Click to orbit)</a>", source=H, action=NOTIFY_ORBIT)
 		break

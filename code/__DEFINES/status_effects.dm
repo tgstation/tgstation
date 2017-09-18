@@ -28,6 +28,7 @@
 
 #define STATUS_EFFECT_BLOODDRUNK /datum/status_effect/blooddrunk //Stun immunity and greatly reduced damage taken
 
+#define STATUS_EFFECT_EXERCISED /datum/status_effect/exercised //Prevents heart disease
 /////////////
 // DEBUFFS //
 /////////////
