@@ -27,6 +27,7 @@
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg'=1), 100)
 	if(!body_color)
 		body_color = pick( list("brown","gray","white") )
 	icon_state = "mouse_[body_color]"
@@ -57,7 +58,6 @@
 		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeek!</span>")
-			playsound(src, 'sound/effects/mousesqueek.ogg', 100, 1)
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
