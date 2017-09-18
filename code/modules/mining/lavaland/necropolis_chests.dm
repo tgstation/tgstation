@@ -577,12 +577,8 @@
 	for(var/i in 1 to world.maxz)
 		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT)
 			continue
-<<<<<<< HEAD
-		new /obj/structure/ladder/unbreakable/jacob(ladder_x, ladder_y, i)
-=======
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		new /obj/structure/ladder/unbreakable/jacob(T2)
->>>>>>> 1eb9a759a3... Proper use of var names
 	qdel(src)
 
 /obj/structure/ladder/unbreakable/jacob
