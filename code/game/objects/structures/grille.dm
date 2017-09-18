@@ -13,7 +13,7 @@
 	integrity_failure = 20
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
-	var/rods_broken = 1
+	var/rods_broken = TRUE
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
 
@@ -37,7 +37,7 @@
 			if(locate(/obj/structure/window) in loc)
 				return FALSE
 			to_chat(user, "<span class='notice'>You construct the window.</span>")
-			var/obj/structure/window/WD = new the_rcd.window_type(loc)
+			var/obj/structure/window/WD = new the_rcd.window_type(drop_location())
 			WD.anchored = TRUE
 			return TRUE
 	return FALSE
@@ -66,7 +66,7 @@
 	if(user.a_intent == INTENT_HARM)
 		if(!shock(user, 70))
 			..(user, 1)
-		return 1
+		return TRUE
 
 /obj/structure/grille/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -85,7 +85,7 @@
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
-		return 1
+		return TRUE
 	else
 		if(istype(mover, /obj/item/projectile) && density)
 			return prob(30)
@@ -103,11 +103,11 @@
 	add_fingerprint(user)
 	if(istype(W, /obj/item/wirecutters))
 		if(!shock(user, 100))
-			playsound(loc, W.usesound, 100, 1)
+			playsound(src, W.usesound, 100, 1)
 			deconstruct()
 	else if((istype(W, /obj/item/screwdriver)) && (isturf(loc) || anchored))
 		if(!shock(user, 90))
-			playsound(loc, W.usesound, 100, 1)
+			playsound(src, W.usesound, 100, 1)
 			anchored = !anchored
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
 								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
@@ -123,7 +123,7 @@
 			return
 
 //window placing begin
-	else if(istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass))
+	else if(is_glass_sheet(W))
 		if (!broken)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
@@ -143,10 +143,14 @@
 				for(var/obj/structure/window/WINDOW in loc) //Another window already installed on grille
 					return
 				var/obj/structure/window/WD
-				if(istype(W, /obj/item/stack/sheet/rglass))
-					WD = new/obj/structure/window/reinforced/fulltile(loc) //reinforced window
+				if(istype(W, /obj/item/stack/sheet/plasmarglass))
+					WD = new/obj/structure/window/plasma/reinforced/fulltile(drop_location()) //reinforced plasma window
+				else if(istype(W, /obj/item/stack/sheet/plasmaglass))
+					WD = new/obj/structure/window/plasma/fulltile(drop_location()) //plasma window
+				else if(istype(W, /obj/item/stack/sheet/rglass))
+					WD = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
 				else
-					WD = new/obj/structure/window/fulltile(loc) //normal window
+					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
 				WD.setDir(dir_to_set)
 				WD.ini_dir = dir_to_set
 				WD.anchored = FALSE
@@ -163,18 +167,18 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
+				playsound(src, 'sound/effects/grillehit.ogg', 80, 1)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 80, 1)
+			playsound(src, 'sound/items/welder.ogg', 80, 1)
 
 
 /obj/structure/grille/deconstruct(disassembled = TRUE)
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
 	if(!(flags_1&NODECONSTRUCT_1))
-		var/obj/R = new rods_type(src.loc, rods_amount)
+		var/obj/R = new rods_type(drop_location(), rods_amount)
 		transfer_fingerprints_to(R)
 		qdel(src)
 	..()
@@ -182,7 +186,7 @@
 /obj/structure/grille/obj_break()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		new broken_type(src.loc)
-		var/obj/R = new rods_type(src.loc, rods_broken)
+		var/obj/R = new rods_type(drop_location(), rods_broken)
 		transfer_fingerprints_to(R)
 		qdel(src)
 
@@ -192,11 +196,11 @@
 
 /obj/structure/grille/proc/shock(mob/user, prb)
 	if(!anchored || broken)		// anchored/broken grilles are never connected
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(C)
@@ -204,10 +208,10 @@
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-			return 1
+			return TRUE
 		else
-			return 0
-	return 0
+			return FALSE
+	return FALSE
 
 /obj/structure/grille/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!broken)
@@ -221,7 +225,7 @@
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
-				playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
+				playsound(src, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 				tesla_zap(src, 3, C.powernet.avail * 0.01) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
 				C.powernet.load += C.powernet.avail * 0.0375 // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
@@ -233,9 +237,9 @@
 	icon_state = "brokengrille"
 	density = FALSE
 	obj_integrity = 20
-	broken = 1
+	broken = TRUE
 	rods_amount = 1
-	rods_broken = 0
+	rods_broken = FALSE
 	grille_type = /obj/structure/grille
 	broken_type = null
 
@@ -269,8 +273,8 @@
 	icon_state = "brokenratvargrille"
 	density = FALSE
 	obj_integrity = 20
-	broken = 1
+	broken = TRUE
 	rods_amount = 1
-	rods_broken = 0
+	rods_broken = FALSE
 	grille_type = /obj/structure/grille/ratvar
 	broken_type = null

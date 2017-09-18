@@ -158,10 +158,11 @@
 	for (var/I in src)
 		var/atom/movable/O = I
 		if (!QDELETED(O))
-			if (listofitems[O.name])
-				listofitems[O.name]["amount"]++
+			var/md5name = md5(O.name)				// This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
+			if (listofitems[md5name])				// which is fixed in a version we cannot use due to ie8 incompatibility
+				listofitems[md5name]["amount"]++	// The good news is, #30519 made smartfridge UIs non-auto-updating
 			else
-				listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
+				listofitems[md5name] = list("name" = O.name, "type" = O.type, "amount" = 1)
 	sortList(listofitems)
 
 	.["contents"] = listofitems

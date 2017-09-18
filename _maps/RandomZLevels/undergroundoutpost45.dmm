@@ -14188,8 +14188,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
 	filter_type = "n2";
-	on = 1;
-	req_access = null
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10;
@@ -14238,8 +14237,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
 	filter_type = "o2";
-	on = 1;
-	req_access = null
+	on = 1
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 10;
@@ -17520,11 +17518,7 @@
 	poweralm = 0
 	})
 "yN" = (
-/obj/structure/grille{
-	density = 0;
-	broken = 1;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;

@@ -219,6 +219,7 @@
 	R.mmi.brain.name = "[brainopsname]'s brain"
 	R.mmi.brainmob.real_name = brainopsname
 	R.mmi.brainmob.name = brainopsname
+	R.real_name = R.name
 
 	R.key = C.key
 	R.mind.make_Nuke(null, nuke_code = null,leader=0, telecrystals = TRUE)
