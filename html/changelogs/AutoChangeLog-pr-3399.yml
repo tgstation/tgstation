@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Fixed chemfridges being unable to display items with dots in their name"
