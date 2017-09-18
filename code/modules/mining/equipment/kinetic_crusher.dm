@@ -292,7 +292,7 @@
 
 //ash drake
 /obj/item/crusher_trophy/tail_spike
-	desc = "A spike taken from a ash drake's tail. Suitable as a trophy for a kinetic crusher."
+	desc = "A spike taken from an ash drake's tail. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/tail_spike
 	bonus_value = 5
 

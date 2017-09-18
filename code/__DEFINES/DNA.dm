@@ -117,3 +117,4 @@
 #define NO_UNDERWEAR	26
 #define NOLIVER			27
 #define NOSTOMACH		28
+#define NO_DNA_COPY     29

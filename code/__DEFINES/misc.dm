@@ -450,3 +450,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SECURITY_SAFE 1
 #define SECURITY_ULTRASAFE 2
 #define SECURITY_TRUSTED 3
+
+//Dummy mob reserve slots
+#define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
+#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"

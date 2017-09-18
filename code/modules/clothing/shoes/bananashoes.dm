@@ -10,15 +10,11 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
 	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_BANANIUM), 200000, TRUE)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
+	. = ..()
 	if(on)
-		if(footstep > 1)//honks when its on
-			playsound(src, 'sound/items/bikehorn.ogg', 75, 1)
-			footstep = 0
-		else
-			footstep++
-
 		new/obj/item/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180))) //honk
 		GET_COMPONENT(bananium, /datum/component/material_container)
 		bananium.use_amount_type(100, MAT_BANANIUM)
@@ -27,8 +23,6 @@
 			flags_1 &= ~NOSLIP_1
 			update_icon()
 			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
-	else
-		..()
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
 	GET_COMPONENT(bananium, /datum/component/material_container)

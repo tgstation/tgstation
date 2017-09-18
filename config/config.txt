@@ -149,8 +149,8 @@ CHECK_RANDOMIZER
 
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net
-## Rating to warn at: (0.90 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
-#IPINTEL_RATING_BAD 0.90
+## Rating to warn at: (0.9 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
+#IPINTEL_RATING_BAD 0.9
 ## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
 #IPINTEL_EMAIL ch@nge.me
 ## How long to save good matches (ipintel rate limits to 15 per minute and 500 per day. so this shouldn't be too low, getipintel.net suggests 6 hours, time is in hours) (Your ip will get banned if you go over 500 a day too many times)
@@ -327,7 +327,7 @@ CLIENT_ERROR_VERSION 511
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
 
 ## TOPIC RATE LIMITING
-## This allows you to limit how many topic calls (clicking on a interface window) the client can do in any given game second and/or game minute.
+## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.
 ## Admins are exempt from these limits.
 ## Hitting the minute limit notifies admins.
 ## Set to 0 or comment out to disable.
@@ -336,13 +336,13 @@ SECOND_TOPIC_LIMIT 10
 MINUTE_TOPIC_LIMIT 100
 
 ##Error handling related options
-## The "cooldown" time for each occurence of an unique error
+## The "cooldown" time for each occurence of a unique error
 #ERROR_COOLDOWN 600
 ## How many occurences before the next will silence them
 #ERROR_LIMIT 90
-## How long an unique error will be silenced for
+## How long a unique error will be silenced for
 #ERROR_SILENCE_TIME 6000
-##How long to wait between messaging admins about occurences of an unique error
+##How long to wait between messaging admins about occurences of a unique error
 #ERROR_MSG_DELAY 50
 
 ## Send a message to IRC when starting a new game

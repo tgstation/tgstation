@@ -2,8 +2,8 @@
 	icon = 'icons/mob/screen_ai.dmi'
 
 /obj/screen/ai/Click()
-	if(isobserver(usr))
-		return 1
+	if(isobserver(usr) || usr.incapacitated())
+		return TRUE
 
 /obj/screen/ai/aicore
 	name = "AI core"
@@ -20,6 +20,8 @@
 	icon_state = "camera"
 
 /obj/screen/ai/camera_list/Click()
+	if(..())
+		return
 	var/mob/living/silicon/ai/AI = usr
 	var/camera = input(AI, "Choose which camera you want to view", "Cameras") as null|anything in AI.get_camera_list()
 	AI.ai_camera_list(camera)
@@ -130,6 +132,8 @@
 	icon_state = "take_picture"
 
 /obj/screen/ai/image_take/Click()
+	if(..())
+		return
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.aicamera.toggle_camera_mode()
@@ -142,6 +146,8 @@
 	icon_state = "view_images"
 
 /obj/screen/ai/image_view/Click()
+	if(..())
+		return
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.aicamera.viewpictures()
