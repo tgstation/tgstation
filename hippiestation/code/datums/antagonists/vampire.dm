@@ -54,8 +54,9 @@
 
 /datum/antagonist/vampire/greet()
 	to_chat(owner, "<span class='userdanger'>You are a Vampire!</span>")
-	to_chat(owner, "<span class='danger'>You are a creature of the night -- holy water, the chapel, and space will cause you to burn.</span>")
-	to_chat(owner, "<span class='notice'>Hit someone in the head with harm intent to start sucking their blood.</span>")
+	to_chat(owner, "<span class='danger bold'>You are a creature of the night -- holy water, the chapel, and space will cause you to burn.</span>")
+	to_chat(owner, "<span class='notice bold'>Hit someone in the head with harm intent to start sucking their blood. However, only blood from living creatures is usable!</span>")
+	to_chat(owner, "<span class='notice bold'>Coffins will heal you.</span>")
 	if(LAZYLEN(objectives_given))
 		owner.announce_objectives()
 
@@ -171,6 +172,9 @@
 	var/blood = 0
 	var/old_bloodtotal = 0 //used to see if we increased our blood total
 	var/old_bloodusable = 0 //used to see if we increased our blood usable
+	if(!H.ckey)
+		to_chat(O, "<span class='warning'>Their blood is stale and flat.</span>")
+		return FALSE
 	log_attack("[O] ([O.ckey]) bit [H] ([H.ckey]) in the neck")
 	O.visible_message("<span class='danger'>[O] grabs [H]'s neck harshly and sinks in their fangs!</span>", "<span class='danger'>You sink your fangs into [H] and begin to drain their blood.</span>", "<span class='notice'>You hear a soft puncture and a wet sucking noise.</span>")
 	if(!iscarbon(owner))
