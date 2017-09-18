@@ -1914,7 +1914,7 @@
 	},
 /obj/machinery/light_switch{
 	pixel_x = 24;
-	pixel_y = -8
+	pixel_y = -24
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -2323,8 +2323,8 @@
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "afH" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/pod/light,
 /area/shuttle/transport)
 "afI" = (
 /obj/machinery/door/airlock/titanium,
@@ -11741,11 +11741,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aBH" = (
-/obj/machinery/camera{
-	c_tag = "Escape Arm Airlocks";
-	dir = 8;
-	network = list("SS13")
-	},
 /turf/open/floor/plasteel/escape{
 	dir = 4
 	},
@@ -19399,6 +19394,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/structure/extinguisher_cabinet{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aQs" = (
@@ -19639,6 +19638,7 @@
 /area/maintenance/aft)
 "aQV" = (
 /obj/machinery/vending/snack,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aQW" = (
@@ -19646,6 +19646,7 @@
 /obj/machinery/light{
 	light_color = "#c9d3e8"
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aQX" = (
@@ -23456,11 +23457,6 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Arrivals Hallway";
-	dir = 8;
-	network = list("SS13")
-	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aYN" = (
@@ -23674,6 +23670,11 @@
 "aZm" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
+	},
+/obj/machinery/camera{
+	c_tag = "Arrivals Hallway";
+	dir = 8;
+	network = list("SS13")
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -24555,7 +24556,7 @@
 	},
 /obj/machinery/button/door{
 	desc = "A remote control-switch for secure storage.";
-	id = "Secure Storage";
+	id = "securestorage";
 	name = "Engineering Secure Storage";
 	pixel_x = -24;
 	req_access_txt = "11"
@@ -27112,6 +27113,17 @@
 /obj/structure/sign/securearea,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
+"bgm" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Escape Arm Airlocks";
+	dir = 1;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit)
 
 (1,1,1) = {"
 aaa
@@ -48819,7 +48831,7 @@ ayW
 att
 att
 att
-aCF
+bgm
 arE
 aaa
 aaa
@@ -52641,7 +52653,7 @@ aaa
 aaa
 aeG
 afk
-afH
+afk
 agr
 aeG
 aaa
@@ -52898,7 +52910,7 @@ aaa
 aaa
 aeG
 afi
-afH
+afk
 agq
 aeG
 aaa
@@ -64254,7 +64266,7 @@ aDm
 axv
 aDP
 aOa
-aFG
+axv
 azF
 axv
 aDm
