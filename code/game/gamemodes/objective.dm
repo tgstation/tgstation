@@ -500,24 +500,24 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/download/check_completion()
 	var/list/current_tech = list()
-    for(var/datum/mind/owner in owners)
-        if(ismob(owner.current))
-            var/mob/M = owner.current			//Yeah if you get morphed and you eat a quantum tech disk with the RD's latest backup good on you soldier.
-            if(ishuman(M))
-                var/mob/living/carbon/human/H = M
-                if(H && (H.stat != DEAD) && istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
-                    var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
-                    for(var/datum/tech/T in S.stored_research)
-                        current_tech[T.id] = T.level? T.level : 0
-            var/list/otherwise = M.GetAllContents()
-            for(var/obj/item/disk/tech_disk/TD in otherwise)
-                for(var/datum/tech/T in TD.tech_stored)
-                    if(!T.id || !T.level)
-                        continue
-                    else if(!current_tech[T.id])
-                        current_tech[T.id] = T.level
-                    else if(T.level > current_tech[T.id])
-                        current_tech[T.id] = T.level
+	for(var/datum/mind/owner in owners)
+		if(ismob(owner.current))
+			var/mob/M = owner.current			//Yeah if you get morphed and you eat a quantum tech disk with the RD's latest backup good on you soldier.
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H && (H.stat != DEAD) && istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+					var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
+					for(var/datum/tech/T in S.stored_research)
+						current_tech[T.id] = T.level? T.level : 0
+			var/list/otherwise = M.GetAllContents()
+			for(var/obj/item/disk/tech_disk/TD in otherwise)
+				for(var/datum/tech/T in TD.tech_stored)
+					if(!T.id || !T.level)
+						continue
+					else if(!current_tech[T.id])
+						current_tech[T.id] = T.level
+					else if(T.level > current_tech[T.id])
+						current_tech[T.id] = T.level
 	var/total = 0
 	for(var/i in current_tech)
 		total += current_tech[i]
