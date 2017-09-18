@@ -73,7 +73,7 @@
 	if(usedpower)
 		use_power(2500)
 
-/obj/machinery/chem_dispenser/insanus_act(mob/user)
+/obj/machinery/chem_dispenser/emag_act(mob/user)
 	if(emagged)
 		to_chat(user, "<span class='warning'>[src] has no functional safeties to emag.</span>")
 		return

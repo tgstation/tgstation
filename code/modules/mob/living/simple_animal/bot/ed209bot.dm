@@ -189,7 +189,7 @@ Auto Patrol[]"},
 			if(lasercolor)//To make up for the fact that lasertag bots don't hunt
 				shootAt(user)
 
-/mob/living/simple_animal/bot/ed209/insanus_act(mob/user)
+/mob/living/simple_animal/bot/ed209/emag_act(mob/user)
 	..()
 	if(emagged == 2)
 		if(user)

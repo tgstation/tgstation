@@ -144,7 +144,7 @@
 	to_chat(usr, "<span class='notice'>You flush [src]'s radiation counts, resetting it to normal.</span>")
 	update_icon()
 
-/obj/item/device/geiger_counter/insanus_act(mob/user)
+/obj/item/device/geiger_counter/emag_act(mob/user)
 	if(emagged)
 		return
 	if(scanning)

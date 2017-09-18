@@ -166,14 +166,14 @@
 /mob/living/simple_animal/bot/proc/explode()
 	qdel(src)
 
-/mob/living/simple_animal/bot/emag_act(mob/user)
+/mob/living/simple_animal/bot/cmag_act(mob/user)
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = FALSE
 		emagged = 1
 		to_chat(user, "<span class='notice'>You bypass [src]'s controls.</span>")
 		return
 
-/mob/living/simple_animal/bot/insanus_act(mob/user)
+/mob/living/simple_animal/bot/emag_act(mob/user)
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		emagged = 2
 		remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.

@@ -289,7 +289,7 @@
 	return
 
 
-/obj/machinery/computer/arcade/battle/insanus_act(mob/user)
+/obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(emagged)
 		return
 	temp = "If you die in the game, you die for real!"
@@ -1038,7 +1038,7 @@
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
-/obj/machinery/computer/arcade/orion_trail/insanus_act(mob/user)
+/obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
 	if(emagged)
 		return
 	to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")

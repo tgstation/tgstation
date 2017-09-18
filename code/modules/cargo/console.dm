@@ -24,7 +24,7 @@
 	contraband = board.contraband
 	emagged = board.emagged
 
-/obj/machinery/computer/cargo/insanus_act(mob/user)
+/obj/machinery/computer/cargo/emag_act(mob/user)
 	if(emagged)
 		return
 	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",

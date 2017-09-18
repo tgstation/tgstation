@@ -50,7 +50,7 @@
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
 	return
 
-/obj/machinery/power/emitter/energycannon/magical/insanus_act(mob/user)
+/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
 	return
 
 /obj/structure/table/abductor/wabbajack

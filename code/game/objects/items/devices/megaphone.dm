@@ -18,7 +18,7 @@
 		spamcheck = world.time + 50
 		return voicespan
 
-/obj/item/device/megaphone/insanus_act(mob/user)
+/obj/item/device/megaphone/emag_act(mob/user)
 	if(emagged)
 		return
 	to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")

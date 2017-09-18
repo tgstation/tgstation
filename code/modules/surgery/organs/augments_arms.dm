@@ -43,14 +43,14 @@
 		slot = zone + "_device"
 		to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == "r_arm" ? "right" : "left"] arm.</span>")
 		update_icon()
-	else if(istype(W, /obj/item/card/insanus))
-		insanus_act()
+	else if(istype(W, /obj/item/card/emag))
+		emag_act()
 
 /obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
 	Retract()
 	..()
 
-/obj/item/organ/cyberimp/arm/insanus_act()
+/obj/item/organ/cyberimp/arm/emag_act()
 	return 0
 
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
@@ -119,7 +119,7 @@
 		return
 
 	// You can emag the arm-mounted implant by activating it while holding emag in it's hand.
-	if(istype(owner.get_active_held_item(), /obj/item/card/insanus) && insanus_act())
+	if(istype(owner.get_active_held_item(), /obj/item/card/emag) && emag_act())
 		return
 
 	if(!holder || (holder in src))
@@ -181,7 +181,7 @@
 /obj/item/organ/cyberimp/arm/toolset/l
 	zone = "l_arm"
 
-/obj/item/organ/cyberimp/arm/toolset/insanus_act()
+/obj/item/organ/cyberimp/arm/toolset/emag_act()
 	if(!(locate(/obj/item/kitchen/knife/combat/cyborg) in items_list))
 		to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
 		items_list += new /obj/item/kitchen/knife/combat/cyborg(src)

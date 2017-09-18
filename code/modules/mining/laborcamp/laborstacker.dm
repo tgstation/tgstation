@@ -120,7 +120,7 @@
 	else
 		qdel(src)
 
-/obj/machinery/mineral/labor_claim_console/insanus_act(mob/user)
+/obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
 	if(!emagged)
 		emagged = TRUE
 		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")

@@ -620,7 +620,7 @@
 			visible_message("<span class='warning'>The APC cover is knocked down!</span>")
 			update_icon()
 
-/obj/machinery/power/apc/emag_act(mob/user)
+/obj/machinery/power/apc/cmag_act(mob/user)
 	if(!emagged && !malfhack)
 		if(opened)
 			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")

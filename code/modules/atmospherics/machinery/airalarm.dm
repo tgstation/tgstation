@@ -722,7 +722,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/airalarm/insanus_act(mob/user)
+/obj/machinery/airalarm/emag_act(mob/user)
 	if(emagged)
 		return
 	emagged = TRUE

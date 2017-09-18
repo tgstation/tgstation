@@ -63,7 +63,7 @@
 		return
 	return ..()
 
-/obj/machinery/recycler/insanus_act(mob/user)
+/obj/machinery/recycler/emag_act(mob/user)
 	if(emagged)
 		return
 	emagged = TRUE

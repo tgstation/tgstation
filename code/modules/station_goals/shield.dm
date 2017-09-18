@@ -170,7 +170,7 @@
 	if(active && emagged)
 		change_meteor_chance(0.5)
 
-/obj/machinery/satellite/meteor_shield/insanus_act()
+/obj/machinery/satellite/meteor_shield/emag_act()
 	if(emagged)
 		return
 	emagged = TRUE

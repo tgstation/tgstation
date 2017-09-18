@@ -86,7 +86,7 @@
 /obj/machinery/porta_turret_cover/can_be_overridden()
 	. = 0
 
-/obj/machinery/porta_turret_cover/insanus_act(mob/user)
+/obj/machinery/porta_turret_cover/emag_act(mob/user)
 	if(!parent_turret.emagged)
 		to_chat(user, "<span class='notice'>You short out [parent_turret]'s threat assessment circuits.</span>")
 		visible_message("[parent_turret] hums oddly...")

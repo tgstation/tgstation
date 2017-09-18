@@ -85,7 +85,7 @@
 			Stun(60)
 	..()
 
-/mob/living/silicon/robot/emag_act(mob/user)
+/mob/living/silicon/robot/cmag_act(mob/user)
 	if(user == src)
 		return
 	if(!opened)
@@ -98,7 +98,7 @@
 			to_chat(user, "<span class='warning'>The cover is already unlocked!</span>")
 		return
 
-/mob/living/silicon/robot/insanus_act(mob/user)
+/mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves
 		return
 

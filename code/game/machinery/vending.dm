@@ -342,7 +342,7 @@
 					break
 	..()
 
-/obj/machinery/vending/insanus_act(mob/user)
+/obj/machinery/vending/emag_act(mob/user)
 	if(emagged)
 		return
 	emagged = TRUE

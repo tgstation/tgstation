@@ -171,7 +171,7 @@
 				if(scrambled_chems && prob(5))
 					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
 
-/obj/machinery/sleeper/insanus_act(mob/user)
+/obj/machinery/sleeper/emag_act(mob/user)
 	scramble_chem_buttons()
 	to_chat(user, "<span class='warning'>You scramble the sleepers user interface!</span>")
 

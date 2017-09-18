@@ -39,7 +39,7 @@
 	else
 		return ..()
 
-/obj/machinery/computer/message_monitor/insanus_act(mob/user)
+/obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(emagged)
 		return
 	if(!isnull(src.linkedServer))

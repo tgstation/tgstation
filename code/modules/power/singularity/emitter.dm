@@ -343,7 +343,7 @@
 
 	return ..()
 
-/obj/machinery/power/emitter/emag_act(mob/user)
+/obj/machinery/power/emitter/cmag_act(mob/user)
 	if(emagged)
 		return
 	locked = FALSE

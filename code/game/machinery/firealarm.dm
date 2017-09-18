@@ -77,7 +77,7 @@
 		alarm()
 	..()
 
-/obj/machinery/firealarm/insanus_act(mob/user)
+/obj/machinery/firealarm/emag_act(mob/user)
 	if(emagged)
 		return
 	emagged = TRUE

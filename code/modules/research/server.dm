@@ -307,7 +307,7 @@
 	. = ..()
 	src.updateUsrDialog()
 
-/obj/machinery/computer/rdservercontrol/emag_act(mob/user)
+/obj/machinery/computer/rdservercontrol/cmag_act(mob/user)
 	if(emagged)
 		return
 	playsound(src, "sparks", 75, 1)

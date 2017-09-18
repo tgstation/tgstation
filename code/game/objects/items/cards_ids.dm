@@ -48,10 +48,10 @@
 /*
  * ID CARDS
  */
-/obj/item/card/emag
+/obj/item/card/cmag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
-	name = "cryptographic sequencer"
-	icon_state = "emag"
+	name = "electromagnetic sequencer"
+	icon_state = "cmag"
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
@@ -59,38 +59,38 @@
 	flags_1 = NOBLUDGEON_1
 	var/prox_check = TRUE //If the emag requires you to be in range
 
-/obj/item/card/emag/bluespace
+/obj/item/card/cmag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
 	color = rgb(40, 130, 255)
 	origin_tech = "bluespace=4;magnets=4;syndicate=5"
 	prox_check = FALSE
 
-/obj/item/card/emag/attack()
+/obj/item/card/cmag/attack()
 	return
 
-/obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
+/obj/item/card/cmag/afterattack(atom/target, mob/user, proximity)
 	var/atom/A = target
 	if(!proximity && prox_check)
 		return
-	A.emag_act(user)
+	A.cmag_act(user)
 
-/obj/item/card/insanus
-	name = "insanus sequencer"
+/obj/item/card/emag
+	name = "electromagnetic sequencer"
 	desc = "An ominous black card with a red strip and some circuitry."
-	icon_state = "insanus"
+	icon_state = "emag"
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	origin_tech = "magnets=2;syndicate=2"
 	flags_1 = NOBLUDGEON_1
 
-/obj/item/card/insanus/attack()
+/obj/item/card/emag/attack()
 	return
 
-/obj/item/card/insanus/afterattack(atom/target, mob/user)
+/obj/item/card/emag/afterattack(atom/target, mob/user)
 	var/atom/A = target
-	A.insanus_act(user)
+	A.emag_act(user)
 
 /obj/item/card/id
 	name = "identification card"

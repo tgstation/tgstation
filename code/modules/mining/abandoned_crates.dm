@@ -186,7 +186,7 @@
 		return
 	attack_hand(user)
 
-/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+/obj/structure/closet/crate/secure/loot/cmag_act(mob/user)
 	if(locked)
 		boom(user)
 

@@ -149,7 +149,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	..()
 
 
-/obj/machinery/computer/rdconsole/emag_act(mob/user)
+/obj/machinery/computer/rdconsole/cmag_act(mob/user)
 	if(emagged)
 		return
 	playsound(src, "sparks", 75, 1)

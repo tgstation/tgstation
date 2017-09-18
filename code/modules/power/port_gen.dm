@@ -193,7 +193,7 @@
 			return
 	return ..()
 
-/obj/machinery/power/port_gen/pacman/insanus_act(mob/user)
+/obj/machinery/power/port_gen/pacman/emag_act(mob/user)
 	if(emagged)
 		return
 	emagged = TRUE

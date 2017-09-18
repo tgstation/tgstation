@@ -290,7 +290,7 @@
 			new /obj/effect/temp_visual/revenant(bot.loc)
 			bot.locked = FALSE
 			bot.open = TRUE
-			bot.insanus_act()
+			bot.emag_act()
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
@@ -303,7 +303,7 @@
 		if(prob(20))
 			if(prob(50))
 				new /obj/effect/temp_visual/revenant(thing.loc)
-			thing.insanus_act(null)
+			thing.emag_act(null)
 		else
 			if(!istype(thing, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
 				thing.emp_act(EMP_HEAVY)

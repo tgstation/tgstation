@@ -37,7 +37,7 @@
 			else
 				to_chat(user, "<span class ='notice'>This firearm already has a firing pin installed.</span>")
 
-/obj/item/device/firing_pin/insanus_act(mob/user)
+/obj/item/device/firing_pin/emag_act(mob/user)
 	if(emagged)
 		return
 	emagged = TRUE

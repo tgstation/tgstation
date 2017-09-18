@@ -561,7 +561,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	/obj/item/hand_tele, /obj/item/construction/rcd, /obj/item/tank/jetpack,\
 	/obj/item/clothing/under/rank/captain, /obj/item/device/aicard,\
 	/obj/item/clothing/shoes/magboots, /obj/item/areaeditor/blueprints, /obj/item/disk/nuclear,\
-	/obj/item/clothing/suit/space/nasavoid, /obj/item/tank, /obj/item/card/insanus)
+	/obj/item/clothing/suit/space/nasavoid, /obj/item/tank, /obj/item/card/cmag)
 
 	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(get_turf(target),target)
 
