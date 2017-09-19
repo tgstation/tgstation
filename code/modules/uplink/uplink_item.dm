@@ -698,7 +698,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Dehydrated Space Carp"
 	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate in \
 			your hand before use so it knows not to kill you."
-	item = /obj/item/toy/carpplushie/dehy_carp
+	item = /obj/item/toy/plush/carpplushie/dehy_carp
 	cost = 1
 
 /datum/uplink_item/stealthy_weapons/soap_clusterbang

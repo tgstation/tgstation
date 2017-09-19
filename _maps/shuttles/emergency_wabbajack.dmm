@@ -288,7 +288,7 @@
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/destructible/cult/forge{
-	desc = "A engine used in powering the shuttle.";
+	desc = "An engine used in powering the shuttle.";
 	name = "magma engine"
 	},
 /turf/open/floor/plasteel/yellow,
@@ -307,7 +307,7 @@
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/destructible/cult/forge{
-	desc = "A engine used in powering the shuttle.";
+	desc = "An engine used in powering the shuttle.";
 	name = "magma engine"
 	},
 /turf/open/floor/plasteel/whitered,
