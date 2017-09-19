@@ -239,7 +239,7 @@
 
 /mob/living/simple_animal/bot/medbot/emag_act(mob/user)
 	..()
-	if(emagged == 2)
+	if(emagged == 1)
 		declare_crit = 0
 		if(user)
 			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
@@ -347,7 +347,7 @@
 	if(C.suiciding)
 		return 0 //Kevorkian school of robotic medical assistants.
 
-	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
+	if(emagged == 1) //Everyone needs our medicine. (Our medicine is toxins)
 		return 1
 
 	if(declare_crit && C.health <= 0) //Critical condition! Call for help!
@@ -419,7 +419,7 @@
 
 	var/reagent_id = null
 
-	if(emagged == 2) //Emagged! Time to poison everybody.
+	if(emagged == 1) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
 
 	else

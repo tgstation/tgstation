@@ -90,7 +90,7 @@
 		return
 	if(!opened)
 		if(locked)
-			to_chat(user, "<span class='notice'>You emag the cover lock.</span>")
+			to_chat(user, "<span class='notice'>You cmag the cover lock.</span>")
 			locked = FALSE
 			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
 				to_chat(user, "<span class='boldwarning'>[src] seems to be controlled remotely! Emagging the interface may not work as expected.</span>")
