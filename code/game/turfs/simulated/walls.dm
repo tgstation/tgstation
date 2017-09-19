@@ -27,8 +27,6 @@
 
 /turf/closed/wall/examine(mob/user)
 	..()
-	if(istype(src, /turf/closed/wall/r_wall))
-		return
 	deconstruction_hints(user)
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
