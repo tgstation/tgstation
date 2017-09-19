@@ -79,11 +79,11 @@
 
 /mob/living/simple_animal/hostile/gorilla/gib(no_brain)
 	if(!no_brain)
-		var/mob/living/brain = new /mob/living/brain(drop_location())
-		brain.name = real_name
-		brain.real_name = real_name
+		var/mob/living/brain/B = new(drop_location())
+		B.name = real_name
+		B.real_name = real_name
 		if(mind)
-			mind.transfer_to(brain)
+			mind.transfer_to(B)
 	..()
 
 /mob/living/simple_animal/hostile/gorilla/handle_automated_speech(override)
