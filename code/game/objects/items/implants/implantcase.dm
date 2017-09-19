@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /obj/item/implantcase
 	name = "implant case"
 	desc = "A glass case containing an implant."
