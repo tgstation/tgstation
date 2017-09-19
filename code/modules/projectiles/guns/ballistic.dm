@@ -4,10 +4,10 @@
 	icon_state = "pistol"
 	origin_tech = "combat=2;materials=2"
 	w_class = WEIGHT_CLASS_NORMAL
-	var/spawnwithmagazine = 1
+	var/spawnwithmagazine = TRUE
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
-	var/casing_ejector = 1 //whether the gun ejects the chambered casing
+	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -104,7 +104,7 @@
 			user.put_in_hands(suppressed)
 			fire_sound = S.oldsound
 			w_class = S.initial_w_class
-			suppressed = 0
+			suppressed = FALSE
 			update_icon()
 			return
 	..()
