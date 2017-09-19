@@ -71,7 +71,7 @@
 	if(istype(A, /obj/item/suppressor))
 		var/obj/item/suppressor/S = A
 		if(!user.is_holding(src))
-			to_chat(user, "<span class='notice'>You need be holding [src] to do that!</span>")
+			to_chat(user, "<span class='notice'>You need be holding [src] to fit [S] to it!</span>")
 			return
 		else if(can_suppress)
 			if(!suppressed)
