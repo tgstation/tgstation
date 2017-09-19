@@ -465,8 +465,9 @@
 
 	//Cinematic
 	SSticker.mode.OnNukeExplosion(off_station)
+	var/bombz = z
 	Cinematic(get_cinematic_type(off_station),world,CALLBACK(SSticker,/datum/controller/subsystem/ticker/proc/station_explosion_detonation,src))
-	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel,z)
+	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel,bombz)
 	SSticker.roundend_check_paused = FALSE
 
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(off_station)

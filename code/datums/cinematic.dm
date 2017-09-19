@@ -79,7 +79,8 @@ GLOBAL_LIST_EMPTY(cinematics)
 	//Actually play it
 	content()
 	//Cleanup
-	QDEL_IN(src,cleanup_time)
+	sleep(cleanup_time)
+	qdel(src)
 
 //Sound helper
 /datum/cinematic/proc/cinematic_sound(s)
