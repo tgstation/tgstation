@@ -384,3 +384,31 @@
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
+/datum/status_effect/sword_spin
+	id = "Bastard Sword Spin"
+	duration = 50
+	tick_interval = 8
+	alert_type = null
+
+
+/datum/status_effect/sword_spin/on_apply()
+	owner.visible_message("<span class='danger'>[owner] begins swinging the sword with inhuman strength!</span>")
+	var/oldcolor = owner.color
+	owner.color = "#ff0000"
+	owner.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through them!", "You shrug off the stun!", " glowing with a blazing red aura!")
+	owner.spin(duration,1)
+	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
+	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), duration)
+	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	return ..()
+
+
+/datum/status_effect/sword_spin/tick()
+	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	var/obj/item/slashy
+	slashy = owner.get_active_held_item()
+	for(var/mob/living/M in orange(1,owner))
+		slashy.attack(M, owner)
+
+/datum/status_effect/sword_spin/on_remove()
+	owner.visible_message("<span class='warning'>[owner]'s inhuman strength dissipates and the sword's runes grow cold!</span>")
