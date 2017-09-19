@@ -1162,7 +1162,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink that is guaranteed to knock you silly."
 
 /datum/reagent/consumable/ethanol/neurotoxin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	M.Knockdown(reac_volume, 1, 0)
+	M.Knockdown(reac_volume*2, 1, 0)
 	..()
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
