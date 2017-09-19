@@ -603,6 +603,7 @@
 	siemens_coeff = 0
 	damage_overlay_type = "synth"
 	prefix = "Clockwork"
+	var/has_corpse
 
 /datum/species/golem/clockwork/on_species_gain(mob/living/carbon/human/H)
 	. = ..()
@@ -613,16 +614,27 @@
 		H.faction -= "ratvar"
 	. = ..()
 
+/datum/species/golem/clockwork/get_spans()
+	return SPAN_ROBOT //beep
+
 /datum/species/golem/clockwork/spec_death(gibbed, mob/living/carbon/human/H)
-	gibbed = FALSE
+	gibbed = !has_corpse ? FALSE : gibbed
 	. = ..()
-	var/turf/T = get_turf(H)
-	H.visible_message("<span class='warning'>[H]'s exoskeleton shatters, collapsing into a heap of scrap!</span>")
-	playsound(H, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, TRUE)
-	for(var/i in 1 to rand(3, 5))
-		new/obj/item/clockwork/alloy_shards/small(T)
-	new/obj/item/clockwork/alloy_shards/clockgolem_remains(T)
-	qdel(H)
+	if(!has_corpse)
+		var/turf/T = get_turf(H)
+		H.visible_message("<span class='warning'>[H]'s exoskeleton shatters, collapsing into a heap of scrap!</span>")
+		playsound(H, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, TRUE)
+		for(var/i in 1 to rand(3, 5))
+			new/obj/item/clockwork/alloy_shards/small(T)
+		new/obj/item/clockwork/alloy_shards/clockgolem_remains(T)
+		qdel(H)
+
+/datum/species/golem/clockwork/no_scrap //These golems are created through the herald's beacon and leave normal corpses on death.
+	id = "clockwork golem servant"
+	armor = 15 //Balance reasons make this armor weak
+	has_corpse = TRUE
+	blacklisted = TRUE
+	dangerous_existence = TRUE
 
 
 /datum/species/golem/cloth

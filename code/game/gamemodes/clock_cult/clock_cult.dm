@@ -181,6 +181,7 @@ Credit where due:
 		to_chat(L, "<span class='bold large_brass'>There is a paper in your backpack! Read it!</span>")
 		to_chat(L, "<span class='alloy'>[slot] is a <b>clockwork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
 		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
+		to_chat(L, "<span class='alloy italics'>If you want more information, you can find a wiki link here!</span> https://tgstation13.org/wiki/User_talk:Xhuis")
 		return TRUE
 	return FALSE
 

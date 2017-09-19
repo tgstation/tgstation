@@ -399,13 +399,25 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist = list("<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>")
 		else
 			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
-		textlist += "<b>[GLOB.clockwork_caches ? "[GLOB.clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
-		<b>[GLOB.clockwork_construction_value]</b> Construction Value.<br>"
-		textlist += "<b>[Floor(servants * 0.2)]</b> Tinkerer's Daemons can be active at once. <b>[LAZYLEN(GLOB.active_daemons)]</b> are active.<br>"
-		for(var/i in SSticker.scripture_states)
-			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
-				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
-		textlist += "<b>[DisplayPower(get_clockwork_power())]</b> power available for use.</b>"
+			for(var/i in SSticker.scripture_states)
+				if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
+					textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+		if(G)
+			var/time_info
+			var/time_name
+			if(G.seconds_until_activation)
+				time_info = G.seconds_until_activation
+				time_name = "until the Ark activates"
+			else if(G.grace_period)
+				time_info = G.grace_period
+				time_name = "of grace period remaining"
+			else if(G.progress_in_seconds)
+				time_info = GATEWAY_RATVAR_ARRIVAL - G.progress_in_seconds
+				time_name = "until the Ark finishes summoning"
+			if(time_info)
+				textlist += "<b>[time_info / 60] minutes</b> [time_name].<br>"
+		textlist += "<b>[DisplayPower(get_clockwork_power())]</b> power available for use."
 		desc = textlist.Join()
 	..()
 
