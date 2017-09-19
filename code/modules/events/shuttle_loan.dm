@@ -38,14 +38,16 @@
 			bonus_points = 0
 		if(ANTIDOTE_NEEDED)
 			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "CentCom Research Initiatives")
-		if (PIZZA_DELIVERY)
+		if(PIZZA_DELIVERY)
 			priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead", "CentCom Spacepizza Division")
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
 
+	var/datum/credit/C = SSeconomy.getspecial(SPECIAL_CARGO)
+
 	dispatched = 1
-	SSshuttle.points += bonus_points
+	C.balance += bonus_points
 	endWhen = activeFor + 1
 
 	SSshuttle.supply.mode = SHUTTLE_CALL

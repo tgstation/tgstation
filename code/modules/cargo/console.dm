@@ -46,10 +46,13 @@
 		ui.open()
 
 /obj/machinery/computer/cargo/ui_data()
+
+	var/datum/credit/C = SSeconomy.getspecial(SPECIAL_CARGO)
+
 	var/list/data = list()
 	data["requestonly"] = requestonly
 	data["location"] = SSshuttle.supply.getStatusText()
-	data["points"] = SSshuttle.points
+	data["points"] = C.balance ? 0
 	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan

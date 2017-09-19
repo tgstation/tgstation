@@ -77,6 +77,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	if(!SSshuttle.shoppinglist.len)
 		return
 
+	var/datum/credit/C = SSeconomy.getspecial(SPECIAL_CARGO)
+
 	var/list/empty_turfs = list()
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
@@ -90,10 +92,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
-		if(SO.pack.cost > SSshuttle.points)
+		if(SO.pack.cost > C.balance)
 			continue
 
-		SSshuttle.points -= SO.pack.cost
+		C.balance -= SO.pack.cost
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
@@ -106,10 +108,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			message_admins("\A [SO.pack.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 		purchases++
 
-	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)
+	investigate_log("[purchases] orders in this shipment, worth [value] credits. [C.balance] credits left.", INVESTIGATE_CARGO)
 
 /obj/docking_port/mobile/supply/proc/sell()
-	var/presale_points = SSshuttle.points
+	var/datum/credit/C = SSeconomy.getspecial(SPECIAL_CARGO)
+	var/presale_points = C.balance
 
 	if(!GLOB.exports_list.len) // No exports list? Generate it!
 		setupExports()
@@ -134,8 +137,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			continue
 
 		msg += export_text + "\n"
-		SSshuttle.points += E.total_cost
+		C.balance += E.total_cost
 		E.export_end()
 
 	SSshuttle.centcom_message = msg
-	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+	investigate_log("Shuttle contents sold for [C.balance - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
