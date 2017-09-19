@@ -16,6 +16,8 @@
 	icon_living = "drone_synd"
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
 	health = 30
+	maxHealth = 120
+	bruteloss = 90
 	initial_language_holder = /datum/language_holder/drone/syndicate
 	faction = list("syndicate")
 	speak_emote = list("hisses")
