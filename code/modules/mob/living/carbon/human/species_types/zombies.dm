@@ -31,7 +31,7 @@
 	. = ..()
 	if(.)
 		regenerating = FALSE
-		addtimer(CALLBACK(src, .proc/Resume_Regeneration), REGENERATION_DELAY, TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, .proc/Resume_Regeneration), REGENERATION_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/species/zombie/infectious/proc/Resume_Regeneration()
 	regenerating = TRUE
