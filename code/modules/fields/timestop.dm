@@ -52,6 +52,7 @@
 	var/list/immune = list()
 	var/list/mob/living/frozen_mobs = list()
 	var/list/obj/item/projectile/frozen_projectiles = list()
+	var/list/atom/movable/frozen_throws = list()
 
 /datum/proximity_monitor/advanced/timestop/Destroy()
 	unfreeze_all()
