@@ -110,9 +110,6 @@
 		else
 			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
 
-	else if(istype(src, /obj/structure/falsewall/reinforced))
-		if(istype(W, /obj/item/wirecutters))
-			dismantle(user, TRUE)
 	else if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
@@ -126,9 +123,12 @@
 	else
 		return ..()
 
-/obj/structure/falsewall/proc/dismantle(mob/user, disassembled = TRUE)
-	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
-	playsound(src, 'sound/items/welder.ogg', 100, 1)
+/obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
+	user.visible_message("[user] dismantles the false wall.", "<span class='notice'>You dismantle the false wall.</span>")
+	if(tool)
+		playsound(src, tool.usesound, 100, 1)
+	else
+		playsound(src, 'welder.ogg', 100, 1)
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/deconstruct(disassembled = TRUE)
@@ -144,9 +144,6 @@
 	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
-	if(istype(src, /obj/structure/falsewall/reinforced))
-		to_chat(user, "<span class='notice'>The outer <b>grille</b> is fully intact.</span>")
-		return
 	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
 	return null
 
@@ -161,6 +158,15 @@
 	icon_state = "r_wall"
 	walltype = /turf/closed/wall/r_wall
 	mineral = /obj/item/stack/sheet/plasteel
+
+/obj/structure/falsewall/reinforced/examine_status(mob/user)
+	to_chat(user, "<span class='notice'>The outer <b>grille</b> is fully intact.</span>")
+	return null
+
+/obj/structure/falsewall/reinforced/attackby(obj/item/tool, mob/user)
+	..()
+	if(istype(tool, /obj/item/wirecutters))
+		dismantle(user, TRUE, tool)
 
 /*
  * Uranium Falsewalls

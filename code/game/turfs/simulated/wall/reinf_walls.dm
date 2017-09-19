@@ -15,9 +15,9 @@
 
 /turf/closed/wall/r_wall/examine(mob/user)
 	..()
-	deconstruction_hints_rwall(user)
+	deconstruction_hints(user)
 
-/turf/closed/wall/r_wall/proc/deconstruction_hints_rwall(mob/user)
+/turf/closed/wall/r_wall/deconstruction_hints(mob/user)
 	switch(d_state)
 		if(INTACT)
 			to_chat(user, "<span class='notice'>The outer <b>grille</b> is fully intact.</span>")
