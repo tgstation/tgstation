@@ -57,12 +57,11 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 			ExportService(SERVICE_REQUEST_WORLD_REBOOT)	//just let em know
 
 /world/proc/ServiceCommand(list/params)
-	var/sCK = RunningService()
 	var/their_sCK = params[SERVICE_CMD_PARAM_KEY]
-
-	if(!their_sCK)
+	if(!their_sCK || !RunningService(TRUE))
 		return FALSE	//continue world/Topic
 
+	var/sCK = world.params[SERVICE_WORLD_PARAM]
 	if(their_sCK != sCK)
 		return "Invalid comms key!";
 
