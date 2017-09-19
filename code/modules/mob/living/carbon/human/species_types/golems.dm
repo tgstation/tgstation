@@ -17,7 +17,7 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 	// To prevent golem subtypes from overwhelming the odds when random species
 	// changes, only the Random Golem type can be chosen
-	blacklisted = SPECIES_BLACKLIST_SLIME_MUT
+	species_blacklist = list(NO_SLIME_MUT)
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
@@ -42,7 +42,7 @@
 
 /datum/species/golem/random
 	name = "Random Golem"
-	blacklisted = FALSE
+	species_blacklist = list()
 	dangerous_existence = FALSE
 
 /datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)

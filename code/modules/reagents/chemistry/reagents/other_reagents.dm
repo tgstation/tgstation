@@ -548,7 +548,7 @@
 	var/list/possible_morphs = list()
 	for(var/type in subtypesof(/datum/species))
 		var/datum/species/S = type
-		if(initial(S.blacklisted))
+		if(NO_SLIME_MUT in S.species_blacklist)
 			continue
 		possible_morphs += S
 	race = pick(possible_morphs)

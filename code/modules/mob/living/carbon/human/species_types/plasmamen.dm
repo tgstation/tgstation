@@ -4,13 +4,13 @@
 	say_mod = "rattles"
 	sexes = FALSE
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(NOBLOOD,RESISTCOLD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
+	species_traits = list(NOBLOOD,RESISTCOLD,RADIMMUNE,VIRUSIMMUNE,NOHUNGER)
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/liver/plasmaman
 	mutantstomach = /obj/item/organ/stomach/plasmaman
 	dangerous_existence = TRUE //So so much
-	blacklisted = SPECIES_BLACKLIST_MAGIC_MIRROR
+	species_blacklist = list(NO_MAGIC_MIRROR,NO_SLIME_MUT,NO_TRANS_STING)
 	burnmod = 1.5
 	heatmod = 1.5
 	breathid = "tox"

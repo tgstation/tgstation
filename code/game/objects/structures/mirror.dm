@@ -95,7 +95,7 @@
 	if(!choosable_races.len)
 		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
-			if(S.blacklisted == SPECIES_BLACKLIST_MAGIC_MIRROR)
+			if(NO_MAGIC_MIRROR in S.species_blacklist)
 				continue
 			choosable_races += S.id
 	..()
