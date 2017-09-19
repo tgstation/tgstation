@@ -70,7 +70,10 @@
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	if(istype(A, /obj/item/suppressor))
 		var/obj/item/suppressor/S = A
-		if(can_suppress)
+		if(!user.is_holding(src))
+			to_chat(user, "<span class='notice'>You need be holding [src] to do that!</span>")
+			return
+		else if(can_suppress)
 			if(!suppressed)
 				if(!user.transferItemToLoc(A, src))
 					return
@@ -79,7 +82,7 @@
 				S.oldsound = fire_sound
 				S.initial_w_class = w_class
 				fire_sound = 'sound/weapons/gunshot_silenced.ogg'
-				w_class = WEIGHT_CLASS_NORMAL //so pistols do not fit in pockets when suppressed
+				w_class += A.w_class //so pistols do not fit in pockets when suppressed
 				update_icon()
 				return
 			else
@@ -195,7 +198,7 @@
 	desc = "A universal syndicate small-arms suppressor for maximum espionage."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	var/oldsound = null
 	var/initial_w_class = null
 
