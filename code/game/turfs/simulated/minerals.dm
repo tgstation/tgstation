@@ -384,7 +384,7 @@
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
-	scan_state = "rock_Gibtonite"
+	scan_state = "rock_Diamond"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = GIBTONITE_UNSTRUCK //How far into the lifecycle of gibtonite we are
 	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes
