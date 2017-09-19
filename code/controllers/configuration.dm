@@ -147,11 +147,13 @@ GLOBAL_PROTECT(config_dir)
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
+	var/brother_scaling_coeff = 25		//how many players per brother team
 	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
 	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 	var/abductor_scaling_coeff = 15 	//how many players per abductor team
 
 	var/traitor_objectives_amount = 2
+	var/brother_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0 //If security and such can be traitor/cult/other
 	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
 	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
@@ -692,6 +694,8 @@ GLOBAL_PROTECT(config_dir)
 					ghost_interaction		= 1
 				if("traitor_scaling_coeff")
 					traitor_scaling_coeff	= text2num(value)
+				if("brother_scaling_coeff")
+					brother_scaling_coeff	= text2num(value)
 				if("changeling_scaling_coeff")
 					changeling_scaling_coeff	= text2num(value)
 				if("security_scaling_coeff")
@@ -700,6 +704,8 @@ GLOBAL_PROTECT(config_dir)
 					abductor_scaling_coeff	= text2num(value)
 				if("traitor_objectives_amount")
 					traitor_objectives_amount = text2num(value)
+				if("brother_objectives_amount")
+					brother_objectives_amount = text2num(value)
 				if("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
