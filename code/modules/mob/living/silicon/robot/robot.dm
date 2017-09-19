@@ -45,6 +45,7 @@
 
 	var/opened = 0
 	var/emagged = FALSE
+	var/cmagged = FALSE
 	var/emag_cooldown = 0
 	var/wiresexposed = 0
 
@@ -493,7 +494,7 @@
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 
 	else if (istype(W, /obj/item/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
-		if(emagged)//still allow them to open the cover
+		if(cmagged)//still allow them to open the cover
 			to_chat(user, "<span class='notice'>The interface seems slightly damaged.</span>")
 		if(opened)
 			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")

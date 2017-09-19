@@ -150,10 +150,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /obj/machinery/computer/rdconsole/cmag_act(mob/user)
-	if(emagged)
+	if(cmagged)
 		return
 	playsound(src, "sparks", 75, 1)
-	emagged = TRUE
+	cmagged = TRUE
 	to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)

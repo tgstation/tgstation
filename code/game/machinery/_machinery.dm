@@ -102,6 +102,7 @@ Class Procs:
 
 	var/stat = 0
 	var/emagged = FALSE
+	var/cmagged = FALSE
 	var/use_power = IDLE_POWER_USE
 		//0 = dont run the auto
 		//1 = run auto, use idle
