@@ -1327,7 +1327,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	restricted_roles = list("Roboticist", "Research Director")
 	
 /datum/uplink_item/role_restricted/traitorsec/SpecialRequirements()
-	return !config.forbid_secborg
+	return config.forbid_secborg
 			
 // Pointless
 /datum/uplink_item/badass
