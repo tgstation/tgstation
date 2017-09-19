@@ -102,22 +102,22 @@
 	t += "<tr>"
 
 
-	var/lastcolor = "green"
+	var/lastcolor = "white"
 	for(var/i = 10; i <= 100; i += 10)
 		t += "<A href='?src=\ref[src];set_volume=[i]'><font color='[lastcolor]'>[i]</font></A> "
-		if(lastcolor == "green")
-			lastcolor = "purple"
+		if(lastcolor == "white")
+			lastcolor = "white"
 		else
-			lastcolor = "green"
+			lastcolor = "white"
 
 	var/i = 0
 	for(var/datum/turntable_soundtrack/D in turntable_soundtracks)
 		t += "<td height='50' weight='50'><A href='?src=\ref[src];on=\ref[D]'><font color='maroon'>[D.f_name]</font><font color='[lastcolor]'>[D.name]</font></A></td>"
 		i++
 		if(i == 1)
-			lastcolor = pick("lightgreen", "purple")
+			lastcolor = pick("white", "white")
 		else
-			lastcolor = pick("green", "purple")
+			lastcolor = pick("white", "white")
 		if(i == 3)
 			i = 0
 			t += "</tr><tr>"
@@ -129,8 +129,9 @@
 			t += "<td height='50' weight='50'><font color='maroon'>D</font><font color='[lastcolor]'>isk empty</font></td>"
 
 	t += "</table></div></body>"
-	user << browse(t, "window=turntable;size=450x700;can_resize=0")
-	onclose(user, "turntable")
+	var/datum/browser/turntable = new(usr, sanitize_russian("Jukebox"), sanitize_russian("Jukebox"), 450, 700)
+	turntable.set_content(sanitize_russian(t))
+	turntable.open()
 	return
 
 /obj/machinery/party/turntable/power_change()
