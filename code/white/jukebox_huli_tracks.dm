@@ -3,11 +3,6 @@
 	name = "here this flower blooms"
 	path = 'sound/jukebox/flowerblooms.ogg'
 
-/datum/turntable_soundtrack/engineer
-	f_name = "T"
-	name = "rust me, I'm an engineer"
-	path = 'sound/jukebox/trustengineer.ogg'
-
 /datum/turntable_soundtrack/foxontherun
 	f_name = "T"
 	name = "he Sweet - Fox on the Run"
@@ -17,11 +12,6 @@
 	f_name = "S"
 	name = "pace Station 13 - Honking Alive"
 	path = 'sound/jukebox/honkingalive.ogg'
-
-/datum/turntable_soundtrack/roughtrail
-	f_name = "R"
-	name = "imWorld - Rough Trail"
-	path = 'sound/jukebox/roughtrail.ogg'
 
 /datum/turntable_soundtrack/nochancesurvival
 	f_name = "P"
@@ -62,8 +52,3 @@
 	f_name = "C"
 	name = "antina Band Jawa Bar Tatooine Mos Eisly"
 	path = 'sound/jukebox/eisly.ogg'
-
-/datum/turntable_soundtrack/rasputin
-	f_name = "B"
-	name = "oney M - Rasputin"
-	path = 'sound/jukebox/rasputin.ogg'
