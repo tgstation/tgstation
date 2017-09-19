@@ -94,7 +94,7 @@
 	inhand_y_dimension = 64
 	actions_types = list()
 	flags_2 = SLOWS_WHILE_IN_HAND_2
-	var/datum/action/innate/cult/dash/jaunt
+	var/datum/action/innate/dash/cult/jaunt
 	var/datum/action/innate/cult/spin2win/linked_action
 	var/spinning = FALSE
 	var/spin_cooldown = 250
@@ -104,6 +104,8 @@
 /obj/item/twohanded/required/cult_bastard/Initialize()
 	. = ..()
 	set_light(4)
+	jaunt = new(src)
+	linked_action = new(src)
 
 /obj/item/twohanded/required/cult_bastard/can_be_pulled(user)
 	return FALSE
@@ -131,9 +133,7 @@
 			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
 			user.Knockdown(50)
 			return
-	jaunt = new(user)
 	jaunt.Grant(user, src)
-	linked_action = new(user)
 	linked_action.Grant(user, src)
 	user.update_icons()
 
@@ -182,46 +182,23 @@
 			shards.Cut(1,2)
 			qdel(SS)
 
-/datum/action/innate/cult/dash
+/datum/action/innate/dash/cult
 	name = "Rend the Veil"
 	desc = "Use the sword to shear open the flimsy fabric of this reality and teleport to your target."
+	icon_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "phaseshift"
-	var/charged = TRUE
-	var/charge_rate = 250
-	var/mob/living/carbon/human/holder
-	var/obj/item/twohanded/required/cult_bastard/sword
+	dash_sound = 'sound/magic/enter_blood.ogg'
+	recharge_sound = 'sound/magic/exit_blood.ogg'
+	beam_effect = "sendbeam"
+	phasein = /obj/effect/temp_visual/dir_setting/cult/phase
+	phaseout = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
-/datum/action/innate/cult/dash/Grant(mob/user, obj/bastard)
-	. = ..()
-	sword = bastard
-	holder = user
-
-/datum/action/innate/cult/dash/IsAvailable()
+/datum/action/innate/dash/cult/IsAvailable()
 	if(iscultist(holder) && charged)
 		return TRUE
 	else
 		return FALSE
 
-/datum/action/innate/cult/dash/Activate()
-	sword.attack_self(holder)
-
-/datum/action/innate/cult/dash/proc/Teleport(mob/user, atom/target)
-	var/turf/T = get_turf(target)
-	if(target in view(user.client.view, get_turf(user)))
-		var/obj/spot1 = new /obj/effect/temp_visual/dir_setting/cult/phase/out(get_turf(user), user.dir)
-		user.forceMove(T)
-		playsound(T, 'sound/magic/enter_blood.ogg', 25, 1)
-		var/obj/spot2 = new /obj/effect/temp_visual/dir_setting/cult/phase(get_turf(user), user.dir)
-		spot1.Beam(spot2,"sendbeam",time=20)
-		charged = FALSE
-		holder.update_action_buttons_icon()
-		addtimer(CALLBACK(src, .proc/charge), charge_rate)
-
-/datum/action/innate/cult/dash/proc/charge()
-	charged = TRUE
-	holder.update_action_buttons_icon()
-	playsound(sword, 'sound/magic/exit_blood.ogg', 50, 1)
-	to_chat(holder, "<span class='cultitalic'>The sword is ready for another blood jaunt.</span>")
 
 
 /datum/action/innate/cult/spin2win
