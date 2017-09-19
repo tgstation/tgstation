@@ -450,3 +450,7 @@
 
 /obj/structure/closet/AllowDrop()
 	return TRUE
+
+
+/obj/structure/closet/return_temperature()
+	return
