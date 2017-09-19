@@ -322,6 +322,7 @@
 	stat_allowed = TRUE
 	charge_max = 1000
 	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_icon_state = "coffin"
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
 
@@ -359,6 +360,7 @@
 	gain_desc = "You have gained the ability to create a coat out of thin air!"
 	blood_used = 10
 	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_icon_state = "coat"
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
 

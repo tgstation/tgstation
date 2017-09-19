@@ -33,6 +33,7 @@
 	check_vampire_upgrade()
 	SSticker.mode.vampires += owner
 	owner.current.faction += "vampire"
+	SSticker.mode.update_vampire_icons_added(owner)
 	..()
 
 /datum/antagonist/vampire/on_removal()
@@ -43,7 +44,7 @@
 		var/mob/living/carbon/human/H = owner.current
 		if(owner && H.hud_used && H.hud_used.vamp_blood_display)
 			H.hud_used.vamp_blood_display.invisibility = INVISIBILITY_ABSTRACT
-
+	SSticker.mode.update_vampire_icons_removed(owner)
 	for(var/O in objectives_given)
 		owner.objectives -= O
 	objectives_given = list()
