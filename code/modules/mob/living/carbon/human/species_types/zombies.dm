@@ -27,7 +27,6 @@
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
 	C.a_intent = INTENT_HARM // THE SUFFERING MUST FLOW
-	C.heal_overall_damage(4,4)
 	if(prob(4))
 		playsound(C, pick(spooks), 50, TRUE, 10)
 	if(C.InCritical())
