@@ -40,18 +40,18 @@
 	if(trigger_mob && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size < trigger_mob_min_size)
-			return ..()
+			return
 		step_living(L)
 	else if(isitem(AM) && trigger_item)
 		var/obj/item/I = AM
 		if(I.w_class<trigger_item_min_w_class)
-			return ..()
+			return
 		step_item(I)
 	else if(istype(AM, /obj/structure) && trigger_structure)
 		var/obj/structure/S = AM
 		step_struct(S)
 	else
-		return ..()
+		return
 	if(tile_overlay)
 		loc.overlays -= tile_overlay
 		tile_overlay.pixel_y = -1
@@ -61,27 +61,27 @@
 		if(isturf(loc))
 			loc.visible_message("<span class='danger'>Click!</span>")
 			playsound(loc, trigger_sound, 50, 1)
-	. = ..()
 
 /obj/item/device/pressure_plate/Uncrossed(atom/movable/AM)
+	. = ..()
 	if(!active)
 		return
 	if(crossed)
 		if(isliving(AM) && trigger_mob)
 			var/mob/living/L = AM
 			if(L.mob_size < trigger_mob_min_size)
-				return ..()
+				return
 			unstep_living(L)
 		else if(isitem(AM) && trigger_item)
 			var/obj/item/I = AM
 			if(I.w_class<trigger_item_min_w_class)
-				return ..()
+				return
 			unstep_item(I)
 		else if(istype(AM, /obj/structure) && trigger_structure)
 			var/obj/structure/S = AM
 			unstep_struct(S)
 		else
-			return ..()
+			return
 		playsound(loc, trigger_sound, 50, 1)
 		addtimer(CALLBACK(src, .proc/pre_trigger), pre_trigger_delay)
 		if(tile_overlay)
@@ -89,7 +89,6 @@
 			tile_overlay.pixel_y = 1
 			loc.overlays += tile_overlay
 		crossed = FALSE
-	. = ..()
 
 /obj/item/device/pressure_plate/proc/pre_trigger()
 	if(crossed)
