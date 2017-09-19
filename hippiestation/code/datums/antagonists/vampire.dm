@@ -32,6 +32,7 @@
 	give_objectives()
 	check_vampire_upgrade()
 	SSticker.mode.vampires += owner
+	owner.special_role = "vampire"
 	owner.current.faction += "vampire"
 	SSticker.mode.update_vampire_icons_added(owner)
 	..()
@@ -40,6 +41,7 @@
 	remove_vampire_powers()
 	owner.current.faction -= "vampire"
 	SSticker.mode.vampires -= owner
+	owner.special_role = null
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		if(owner && H.hud_used && H.hud_used.vamp_blood_display)
