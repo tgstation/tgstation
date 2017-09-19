@@ -2195,7 +2195,6 @@
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
 #include "code\white\donations.dm"
-#include "code\white\fogmann.dm"
 #include "code\white\give.dm"
 #include "code\white\jukebox_huli.dm"
 #include "code\white\jukebox_huli_tracks.dm"
