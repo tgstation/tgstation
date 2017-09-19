@@ -28,7 +28,7 @@
 	. = min(2, amount)
 
 /datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
-	if(. = ..())
+	if(. == ..())
 		regenerating = FALSE
 		addtimer(CALLBACK(src, .proc/Resume_Regeneration), REGENERATION_DELAY, TIMER_OVERRIDE)
 
