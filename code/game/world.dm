@@ -35,9 +35,6 @@ GLOBAL_PROTECT(security_mode)
 
 	Master.Initialize(10, FALSE)
 
-	if(config.irc_announce_new_game)
-		SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
-
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
