@@ -45,10 +45,12 @@
 	src.visible_message("<span class = 'userdanger'>The reactor has gone critical, its going to blow!</span>")
 	addtimer(CALLBACK(src,.proc/go_critical),breach_time)
 
-
-/obj/mecha/neovgre/proc/go_critical()
+/obj/mecha/neovgre/Destroy()
 	if(GLOB.neovgre_exists)
 		GLOB.neovgre_exists --
+	..()
+
+/obj/mecha/neovgre/proc/go_critical()
 	explosion(get_turf(loc), 0, 5, 10, 0, 15)
 	Destroy(src)
 
