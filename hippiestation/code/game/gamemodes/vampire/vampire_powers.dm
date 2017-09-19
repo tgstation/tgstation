@@ -350,7 +350,7 @@
 		return
 	user.revive()
 	user.visible_message("<span class='warning'>[user] reanimates from death!</span>", "<span class='notice'>We get back up.</span>")
-	user.fully_heal()
+	user.fully_heal(TRUE)
 
 
 
