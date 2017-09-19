@@ -1,3 +1,5 @@
+#define REGENERATION_DELAY 60  // After taking damage, how long it takes for automatic regeneration to begin
+
 /datum/species/zombie
 	// 1spooky
 	name = "High Functioning Zombie"
@@ -11,6 +13,7 @@
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
+	var/regenerating = TRUE
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -24,10 +27,19 @@
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	. = min(2, amount)
 
+/datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+	if(. = ..())
+		regenerating = FALSE
+		addtimer(CALLBACK(src, .proc/Resume_Regeneration), REGENERATION_DELAY, TIMER_UNIQUE)
+
+/datum/species/zombie/infectious/proc/Resume_Regeneration()
+	regenerating = TRUE
+
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
 	C.a_intent = INTENT_HARM // THE SUFFERING MUST FLOW
-	C.heal_overall_damage(4,4)
+	if(regenerating)
+		C.heal_overall_damage(4,4)
 	if(prob(4))
 		playsound(C, pick(spooks), 50, TRUE, 10)
 	if(C.InCritical())
