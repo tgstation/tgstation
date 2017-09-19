@@ -423,7 +423,7 @@
 		return
 
 	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
-	if(world.RunningService())
+	if(SERVER_TOOLS_PRESENT)
 		options += "Service Restart (Force restart DD)";
 
 	var/rebootconfirm
@@ -436,16 +436,19 @@
 		var result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
 		if(result)
 			SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			var/init_by = "Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]."
 			switch(result)
 				if("Regular Restart")
-					SSticker.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
+					SSticker.Reboot(init_by, "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
 				if("Hard Restart (No Delay, No Feeback Reason)")
+					to_chat(world, "World reboot - [init_by]")
 					world.Reboot()
 				if("Hardest Restart (No actions, just reboot)")
+					to_chat(world, "Hard world reboot - [init_by]")
 					world.Reboot(fast_track = TRUE)
-				if("Service Restart (Force restart DD)")
-					GLOB.reboot_mode = REBOOT_MODE_HARD
-					world.ServiceReboot()
+				if("Server Restart (Kill and restart DD)")
+					to_chat(world, "Server restart - [init_by]")
+					SERVER_TOOLS_REBOOT_BYOND
 
 /datum/admins/proc/end_round()
 	set category = "Server"
