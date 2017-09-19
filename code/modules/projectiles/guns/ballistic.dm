@@ -80,7 +80,6 @@
 				to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
 				suppressed = A
 				S.oldsound = fire_sound
-				S.initial_w_class = w_class
 				fire_sound = 'sound/weapons/gunshot_silenced.ogg'
 				w_class += A.w_class //so pistols do not fit in pockets when suppressed
 				update_icon()
@@ -103,7 +102,7 @@
 			to_chat(user, "<span class='notice'>You unscrew [suppressed] from [src].</span>")
 			user.put_in_hands(suppressed)
 			fire_sound = S.oldsound
-			w_class = S.initial_w_class
+			w_class -= S.w_class
 			suppressed = FALSE
 			update_icon()
 			return
@@ -200,7 +199,6 @@
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
 	var/oldsound = null
-	var/initial_w_class = null
 
 
 /obj/item/suppressor/specialoffer
