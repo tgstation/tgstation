@@ -83,12 +83,12 @@
 		unfreeze_throw(i)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_throwing(atom/movable/AM)
-	var/datum/throwing/T = AM.throwing
+	var/datum/thrownthing/T = AM.throwing
 	T.paused = TRUE
 	frozen_throws[AM] = T
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_throw(atom/movable/AM)
-	var/datum/throwing/T = frozen_throws[AM]
+	var/datum/thrownthing/T = frozen_throws[AM]
 	T.paused = FALSE
 	frozen_throws -= AM
 
