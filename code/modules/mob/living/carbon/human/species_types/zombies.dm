@@ -30,7 +30,7 @@
 /datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	if(. = ..())
 		regenerating = FALSE
-		addtimer(CALLBACK(src, .proc/Resume_Regeneration), REGENERATION_DELAY, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, .proc/Resume_Regeneration), REGENERATION_DELAY, TIMER_OVERRIDE)
 
 /datum/species/zombie/infectious/proc/Resume_Regeneration()
 	regenerating = TRUE
