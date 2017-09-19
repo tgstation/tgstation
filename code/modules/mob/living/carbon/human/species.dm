@@ -106,6 +106,9 @@
 
 	return randname
 
+//Called when cloning, copies some vars that should be kept
+/datum/species/proc/copy_properties_from(datum/species/old_species)
+	return
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
 /datum/species/proc/qualifies_for_rank(rank, list/features)
