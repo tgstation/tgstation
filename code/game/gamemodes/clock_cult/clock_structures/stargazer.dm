@@ -36,22 +36,31 @@
 	if(star_light_star_bright)
 		adjust_clockwork_power(STARGAZER_POWER)
 
+/obj/structure/destructible/clockwork/stargazer/update_anchored(mob/living/user, damage)
+	. = ..()
+	star_light_star_bright = check_starlight()
+
 /obj/structure/destructible/clockwork/stargazer/proc/check_starlight()
 	var/old_status = star_light_star_bright
 	var/has_starlight
-	for(var/turf/T in view(3, src))
-		if(isspaceturf(T))
-			has_starlight = TRUE
-			break
 	if(!anchored)
 		has_starlight = FALSE
+	else
+		for(var/turf/T in view(3, src))
+			if(isspaceturf(T))
+				has_starlight = TRUE
+				break
 	if(old_status != has_starlight)
 		if(has_starlight)
-			visible_message("<span class='nzcrentr_small'>[src] clunks and shines brilliantly!</span>")
+			visible_message("<span class='nzcrentr_small'>[src] hums and shines brilliantly!</span>")
+			playsound(src, 'sound/machines/clockcult/stargazer_activate.ogg', 50, TRUE)
 			add_overlay("stargazer_light")
 			set_light(1.5, 5)
 		else
-			visible_message("<span class='danger'>[src] flickers, and falls dark.</span>")
+			if(anchored) //We lost visibility somehow
+				visible_message("<span class='danger'>[src] flickers, and falls dark.</span>")
+			else
+				visible_message("<span class='danger'>[src] whooshes quietly as it slides into a less bulky form.</span>")
 			cut_overlays()
 			set_light(0)
 	return has_starlight

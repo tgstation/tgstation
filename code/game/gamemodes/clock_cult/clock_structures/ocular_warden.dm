@@ -135,9 +135,9 @@
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
 
-/obj/structure/destructible/clockwork/ocular_warden/get_efficiency_mod()
+/obj/structure/destructible/clockwork/ocular_warden/get_efficiency_mod(increasing)
 	if(GLOB.ratvar_awakens)
-		return 2
+		return increasing ? 0.5 : 2
 	. = 1
 	for(var/turf/T in getline(src, target))
 		for(var/obj/structure/O in T)

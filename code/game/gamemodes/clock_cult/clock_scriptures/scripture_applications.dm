@@ -8,7 +8,7 @@
 	descname = "Well-Rounded Combat Construct"
 	name = "Clockwork Marauder"
 	desc = "Creates a shell for a clockwork marauder, a balanced frontline construct."
-	invocations = list("Arise, avatar of Bulwark!", "Defend the Ark with vengeful zeal.")
+	invocations = list("Arise, avatar of Arbiter!", "Defend the Ark with vengeful zeal.")
 	channel_time = 50
 	power_cost = 1000
 	creator_message = "<span class='brass'>Your slab disgorges several chunks of replicant alloy that form into a suit of thrumming armor.</span>"
