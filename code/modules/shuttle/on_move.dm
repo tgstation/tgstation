@@ -64,13 +64,6 @@ All ShuttleMove procs go here
 
 // Called on the new turf after everything has been moved
 /turf/proc/afterShuttleMove(turf/oldT)
-	if(SSlighting.initialized && FALSE)
-		var/atom/movable/lighting_object/old_obj = lighting_object
-		var/atom/movable/lighting_object/new_obj = oldT.lighting_object
-		if(old_obj)
-			old_obj.update()
-		if(new_obj)
-			new_obj.update()
 	return TRUE
 
 /////////////////////////////////////////////////////////////////////////////////////
