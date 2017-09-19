@@ -161,6 +161,12 @@
 		synd_mob.equipOutfit(/datum/outfit/syndicate/no_crystals)
 	return 1
 
+/datum/game_mode/nuclear/OnNukeExplosion(off_station)
+	..()
+	nukes_left--
+	var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
+	syndies_didnt_escape = (Shuttle && (Shuttle.z == ZLEVEL_CENTCOM || Shuttle.z == ZLEVEL_TRANSIT)) ? 0 : 1
+	nuke_off_station = off_station
 
 /datum/game_mode/nuclear/check_win()
 	if (nukes_left == 0)

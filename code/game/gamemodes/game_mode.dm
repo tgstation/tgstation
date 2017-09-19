@@ -19,7 +19,6 @@
 	var/probability = 0
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
-	var/explosion_in_progress = 0 //sit back and relax
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
 	var/list/datum/mind/modePlayer = new
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
@@ -562,3 +561,8 @@
 
 /datum/game_mode/proc/generate_report() //Generates a small text blurb for the gamemode in centcom report
 	return "Gamemode report for [name] not set.  Contact a coder."
+
+//By default nuke just ends the round
+/datum/game_mode/proc/OnNukeExplosion(off_station)
+	if(off_station < 2)
+		station_was_nuked = TRUE //Will end the round on next check.

@@ -1,16 +1,33 @@
 GLOBAL_LIST_EMPTY(cinematics)
 
+#define CINEMATIC_DEFAULT 1
+#define CINEMATIC_SELFDESTRUCT 2
+#define CINEMATIC_SELFDESTRUCT_MISS 3
+#define CINEMATIC_NUKE_WIN 4
+#define CINEMATIC_NUKE_MISS 5
+#define CINEMATIC_ANNIHILATION 6
+#define CINEMATIC_MALF 7
+#define CINEMATIC_CULT 8
+#define CINEMATIC_NUKE_FAKE 9
+#define CINEMATIC_NUKE_NO_CORE 10
+#define CINEMATIC_NUKE_FAR 11
+
 // Use to play cinematics.
 // Watcher can be world,mob, or a list of mobs
 // Blocks until sequence is done.
-/proc/Cinematic(cinematic,watcher)
-	var/cinematic/playing
-	for(var/datum/cinematic/C in subtypesof(/datum/cinematic))
-		if(inital(C.name) == cinematic)
-			playing = new C()
+/proc/Cinematic(id,watcher,datum/callback/special_callback)
+	var/datum/cinematic/playing
+	for(var/V in subtypesof(/datum/cinematic))
+		var/datum/cinematic/C = V
+		if(initial(C.id) == id)
+			playing = new V()
 			break
+	if(!playing)
+		CRASH("Cinematic type not found")
+	if(special_callback)
+		playing.special_callback = special_callback
 	if(watcher == world)
-		playing.global = TRUE
+		playing.is_global = TRUE
 		watcher = GLOB.mob_list
 	playing.play(watcher)
 
@@ -19,21 +36,23 @@ GLOBAL_LIST_EMPTY(cinematics)
 	icon_state = "station_intact"
 	layer = 21
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screen_loc = "1,0"
+	screen_loc = "1,1"
 
 /datum/cinematic
-	name = CINEMATIC_DEFAULT
-	var/list/watching //List of clients watching this
-	var/list/locked //Who had notransform set during the cinematic
-	var/global = FALSE //Global cinematics will override mob-specific ones
-	var/obj/screen/cinematic_screen/screen
+	var/id = CINEMATIC_DEFAULT
+	var/list/watching = list() //List of clients watching this
+	var/list/locked = list() //Who had notransform set during the cinematic
+	var/is_global = FALSE //Global cinematics will override mob-specific ones
+	var/obj/screen/cinematic/screen
+	var/datum/callback/special_callback //For special effects synced with animation (explosions after the countdown etc)
+	var/cleanup_time = 300 //How long for the final screen to remain
 
 /datum/cinematic/New()
-	cinematics += src
+	GLOB.cinematics += src
 	screen = new(src)
 
 /datum/cinematic/Destroy()
-	cinematics -= src
+	GLOB.cinematics -= src
 	qdel(screen)
 	for(var/mob/M in locked)
 		M.notransform = FALSE
@@ -41,31 +60,42 @@ GLOBAL_LIST_EMPTY(cinematics)
 
 /datum/cinematic/proc/play(watchers)
 	//Check if you can actually play it (stop mob cinematics for global ones) and create screen objects
-	for(var/A in cinematics)
+	for(var/A in GLOB.cinematics)
 		var/datum/cinematic/C = A
-		if(C.global || !global)
+		if(C == src)
+			continue 
+		if(C.is_global || !is_global)
 			return //Can't play two global or local cinematics at the same time
+
+	//Close all open windows if global
+	if(is_global)
+		for (var/datum/html_interface/hi in GLOB.html_interfaces)
+			hi.closeAll()
+		SStgui.close_all_uis()
+
 
 	for(var/mob/M in GLOB.mob_list)
 		if(M in watchers)
 			M.notransform = TRUE //Should this be done for non-global cinematics or even at all ?
 			locked += M
+			//Close watcher ui's
+			SStgui.close_user_uis(M)
 			if(M.client)
 				watching += M.client
 				M.client.screen += screen
 		else
-			if(global)
+			if(is_global)
 				M.notransform = TRUE
 				locked += M
 	
 	//Actually play it
 	content()
 	//Cleanup
-	qdel(src)
+	QDEL_IN(src,cleanup_time)
 
 //Sound helper
 /datum/cinematic/proc/cinematic_sound(s)
-	if(global)
+	if(is_global)
 		SEND_SOUND(world,s)
 	else
 		for(var/C in watching)
@@ -73,31 +103,124 @@ GLOBAL_LIST_EMPTY(cinematics)
 
 //Fire up special callback for actual effects synchronized with animation (eg real nuke explosion happens midway)
 /datum/cinematic/proc/special()
-	return
+	if(special_callback)
+		special_callback.Invoke()
 
 //Actual cinematic goes in here
 /datum/cinematic/proc/content()
 	sleep(50)
 
-/datum/cinematic/nuke_station
-	name = CINEMATIC_NUKE_STATION
+/datum/cinematic/nuke_win
+	id = CINEMATIC_NUKE_WIN
 
-/datum/cinematic/nuke_station/content()
+/datum/cinematic/nuke_win/content()
 	flick("intro_nuke",screen)
 	sleep(35)
 	flick("station_explode_fade_red",screen)
-	cinematic_sound('sound/effects/explosion_distant.ogg'))
+	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
 	special()
-	//station_explosion_detonation(bomb)
+	screen.icon_state = "summary_nukewin"
 
-/datum/cinematic/nuke_station/ops/content()
-	..()
-	cinematic.icon_state = "summary_nukewin"
+/datum/cinematic/nuke_miss
+	id = CINEMATIC_NUKE_MISS
 
-/datum/cinematic/nuke_near_miss
-/datum/cinematic/nuke_full_miss
+/datum/cinematic/nuke_miss/content()
+	flick("intro_nuke",screen)
+	sleep(35)
+	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	special()
+	flick("station_intact_fade_red",screen)
+	screen.icon_state = "summary_nukefail"
+
+//Also used for blob
+/datum/cinematic/nuke_selfdestruct
+	id = CINEMATIC_SELFDESTRUCT
+
+/datum/cinematic/nuke_selfdestruct/content()
+	flick("intro_nuke",screen)
+	sleep(35)
+	flick("station_explode_fade_red", screen)
+	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	special()
+	screen.icon_state = "summary_selfdes"
+
+/datum/cinematic/nuke_selfdestruct_miss
+	id = CINEMATIC_SELFDESTRUCT_MISS
+
+/datum/cinematic/nuke_selfdestruct_miss/content()
+	flick("intro_nuke",screen)
+	sleep(35)
+	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	special()
+	screen.icon_state = "station_intact"
+
 /datum/cinematic/malf
+	id = CINEMATIC_MALF
+
+/datum/cinematic/malf/content()
+	flick("intro_malf",screen)
+	sleep(76)
+	flick("station_explode_fade_red",screen)
+	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	special()
+	screen.icon_state = "summary_malf"
+
+/datum/cinematic/cult
+	id = CINEMATIC_CULT
+
+/datum/cinematic/cult/content()
+	screen.icon_state = null
+	flick("intro_cult",screen)
+	sleep(25)
+	cinematic_sound(sound('sound/magic/enter_blood.ogg'))
+	sleep(28)
+	cinematic_sound(sound('sound/machines/terminal_off.ogg'))
+	sleep(20)
+	flick("station_corrupted",screen)
+	cinematic_sound(sound('sound/effects/ghost.ogg'))
+	sleep(70)
+	special()
+
+/datum/cinematic/nuke_annihilation
+	id = CINEMATIC_ANNIHILATION
+
+/datum/cinematic/nuke_annihilation/content()
+	flick("intro_nuke",screen)
+	sleep(35)
+	flick("station_explode_fade_red",screen)
+	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	special()
+	screen.icon_state = "summary_totala"
+
 /datum/cinematic/fake
+	id = CINEMATIC_NUKE_FAKE
+	cleanup_time = 100
+
+/datum/cinematic/fake/content()
+	flick("intro_nuke",screen)
+	sleep(35)
+	cinematic_sound(sound('sound/items/bikehorn.ogg'))
+	flick("summary_selfdes",screen) //???
+	special()
+
+/datum/cinematic/no_core
+	id = CINEMATIC_NUKE_NO_CORE
+	cleanup_time = 100
+
+/datum/cinematic/no_core/content()
+	flick("intro_nuke",screen)
+	sleep(35)
+	flick("station_intact",screen)
+	cinematic_sound(sound('sound/ambience/signal.ogg'))
+	sleep(100)
+
+/datum/cinematic/nuke_far
+	id = CINEMATIC_NUKE_FAR
+	cleanup_time = 0
+
+/datum/cinematic/nuke_far/content()
+	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	special()
 
 /* Intended usage.
 Nuke.Explosion()
