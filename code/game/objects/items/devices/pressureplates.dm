@@ -35,7 +35,7 @@
 
 /obj/item/device/pressure_plate/Crossed(atom/movable/AM)
 	. = ..()
-	if(!can_trigger || !active)
+	if(!active)
 		return
 	if(trigger_mob && isliving(AM))
 		var/mob/living/L = AM
@@ -97,7 +97,6 @@
 	addtimer(CALLBACK(src, .proc/trigger), post_trigger_delay)
 
 /obj/item/device/pressure_plate/proc/trigger()
-	can_trigger = TRUE
 	if(istype(sigdev))
 		sigdev.signal()
 
