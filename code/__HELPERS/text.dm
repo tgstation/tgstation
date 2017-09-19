@@ -541,8 +541,9 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	return t
 
 /proc/parsemarkdown_basic(t, limited=FALSE)
-	parsemarkdown_basic_step1(t, limited)
-	parsemarkdown_basic_step2(t)
+	t = parsemarkdown_basic_step1(t, limited)
+	t = parsemarkdown_basic_step2(t)
+	return t
 
 /proc/parsemarkdown(t, mob/user=null, limited=FALSE)
 	if(length(t) <= 0)
