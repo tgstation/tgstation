@@ -21,16 +21,22 @@
 	icon_state = "intercom_ratvar"
 	freerange = TRUE
 
-/obj/item/device/radio/intercom/ratvar/Initialize()
-	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult))
-		return INITIALIZE_HINT_QDEL //[Common] cogscarab (196) says, "META BOYS"
-	. = ..()
-
 /obj/item/device/radio/intercom/ratvar/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/screwdriver))
 		to_chat(user, "<span class='danger'>[src] is fastened to the wall with [is_servant_of_ratvar(user) ? "replicant alloy" : "some material you've never seen"], and can't be removed.</span>")
 		return //no unfastening!
 	. = ..()
+
+/obj/item/device/radio/intercom/ratvar/process()
+	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult))
+		invisibility = INVISIBILITY_OBSERVER
+		alpha = 125
+		emped = TRUE
+	else
+		invisibility = initial(invisibility)
+		alpha = initial(alpha)
+		emped = FALSE
+	..()
 
 /obj/item/device/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
