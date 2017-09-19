@@ -1,21 +1,15 @@
-#define SUCCESS						0 //yes this is weird i know
-#define ERROR_NOT_ENOUGH_MONEY		1
-#define ERROR_NONEXISTANT_ACC		2
-#define ERROR_INVALID_PIN			3
-#define ERROR_SAME_ACC				4
-#define ERROR_UNKNOWN				5
-
 SUBSYSTEM_DEF(economy)
 	name = "Economy"
 	flags = SS_NO_FIRE
 
 	var/list/datum/credit/accounts = list()
 
+	var/datum/credit/cargo
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	. = ..()
 	//create the cargo account
-	var/datum/credit/cargo = new /datum/credit(SPECIAL_CARGO)
+	cargo = new /datum/credit(SPECIAL_CARGO)
 	cargo.balance = 5000
 
 /datum/controller/subsystem/economy/proc/getaccount(account_number)
@@ -32,7 +26,7 @@ SUBSYSTEM_DEF(economy)
 			return C
 	//there's no special! panic!
 	log_game("Special account [special] didn't exist!! YELL AT MRTY!!!")
-	C = new /datum/credit(special)
+	var/datum/credit/C = new /datum/credit(special)
 	C.balance = 5000
 	return C
 
@@ -40,8 +34,8 @@ SUBSYSTEM_DEF(economy)
 	var/C = getaccount(account)
 	if(!istype(C, /datum/credit))
 		return C //return the error
-	var/datum/credit/account = C
-	C.balance += amount
+	var/datum/credit/acc = C
+	acc.balance += amount
 	return SUCCESS
 
 /datum/controller/subsystem/economy/proc/getbalance(acct)

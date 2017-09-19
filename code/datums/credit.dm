@@ -1,8 +1,3 @@
-#define SPECIAL_CARGO	1
-#define SPECIAL_SCI		2
-#define SPECIAL_MED		3
-#define SPECIAL_SEC		4
-
 /datum/credit
 	var/original_owner_name = "None"
 	var/pin = "0000"
@@ -14,7 +9,7 @@
 	. = ..()
 	pin = "[rand(1000,9999)]"
 	acc_number = "[rand(10000, 99999)]"
-	if(getspecial(special)) //don't allow multiple special accounts!
+	if(SSeconomy.getspecial(special)) //don't allow multiple special accounts!
 		qdel(src)
 		return
 	balance = rand(100, 250)

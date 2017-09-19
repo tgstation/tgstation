@@ -21,14 +21,13 @@
 	. = ..()
 
 /obj/machinery/computer/bank_machine/attackby(obj/item/I, mob/user)
-	var/datum/credit/C = SSeconomy.getspecial(SPECIAL_CARGO)
 	var/value = 0
 	if(istype(I, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/C = I
 		value = C.value * C.amount
 	if(value)
-		C.balance += value
-		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [C.balance] credits.</span>")
+		SSeconomy.cargo.balance += value
+		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [SSeconomy.cargo.balance] credits.</span>")
 		qdel(I)
 		return
 	return ..()

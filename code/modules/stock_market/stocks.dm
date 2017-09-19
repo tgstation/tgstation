@@ -244,10 +244,10 @@
 	borrow_brokers += B
 
 /datum/stock/proc/modifyAccount(whose, by, force=0)
-	if (SSshuttle.points)
-		if (by < 0 && SSshuttle.points + by < 0 && !force)
+	if (SSeconomy.cargo.balance)
+		if (by < 0 && SSeconomy.cargo.balance + by < 0 && !force)
 			return 0
-		SSshuttle.points += by
+		SSeconomy.cargo.balance += by
 		GLOB.stockExchange.balanceLog(whose, by)
 		return 1
 	return 0

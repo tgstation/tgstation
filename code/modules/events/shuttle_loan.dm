@@ -44,10 +44,8 @@
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
 
-	var/datum/credit/C = SSeconomy.getspecial(SPECIAL_CARGO)
-
 	dispatched = 1
-	C.balance += bonus_points
+	SSeconomy.cargo.balance += bonus_points
 	endWhen = activeFor + 1
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
