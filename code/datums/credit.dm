@@ -11,7 +11,7 @@
 	var/unique = FALSE
 	while(!unique)
 		acc_number = "[rand(10000, 99999)]"
-		if(!SSeconomy.get_account(acc_number))
+		if(!SSeconomy.getaccount(acc_number))
 			unique = TRUE
 	if(SSeconomy.getspecial(special)) //don't allow multiple special accounts!
 		qdel(src)
