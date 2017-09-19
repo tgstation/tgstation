@@ -68,3 +68,5 @@
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
+
+#undef REGENERATION_DELAY
