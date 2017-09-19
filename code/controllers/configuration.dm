@@ -967,7 +967,6 @@ GLOBAL_PROTECT(config_dir)
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
-		//to_chat(world, "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
 		if(!(M.config_tag in modes))
 			qdel(M)
 			continue

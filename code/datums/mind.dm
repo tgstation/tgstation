@@ -1269,7 +1269,6 @@
 						src = null
 						M = H.monkeyize()
 						src = M.mind
-						//to_chat(world, "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!")
 					else if (istype(M) && length(M.viruses))
 						for(var/thing in M.viruses)
 							var/datum/disease/D = thing

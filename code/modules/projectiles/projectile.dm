@@ -324,7 +324,6 @@
 
 		//Split Y+Pixel_Y up into list(Y, Pixel_Y)
 		var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
-		// to_chat(world, "X: [screen_loc_X[1]] PixelX: [screen_loc_X[2]] / Y: [screen_loc_Y[1]] PixelY: [screen_loc_Y[2]]")
 		var/x = text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32
 		var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
 
@@ -333,9 +332,7 @@
 
 		var/ox = round(screenview/2) - user.client.pixel_x //"origin" x
 		var/oy = round(screenview/2) - user.client.pixel_y //"origin" y
-		// to_chat(world, "Pixel position: [x] [y]")
 		angle = Atan2(y - oy, x - ox)
-		// to_chat(world, "Angle: [angle]")
 	return list(angle, p_x, p_y)
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
