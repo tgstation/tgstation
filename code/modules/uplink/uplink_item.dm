@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 				continue
 			if(I.SpecialRequirements())
 				continue
-			
+
 			if(!filtered_uplink_items[category])
 				filtered_uplink_items[category] = list()
 			filtered_uplink_items[category][item] = I
