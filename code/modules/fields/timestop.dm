@@ -58,16 +58,16 @@
 	return ..()
 
 /datum/proximity_monitor/advanced/timestop/field_turf_crossed(atom/movable/AM)
-	if(AM.throwing)
-		AM.throwing.finalize()
 	freeze_atom(AM)
 
-/datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/A)
-	if(immune[A])
+/datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
+	if(immune[A] || !istype(A))
 		return FALSE
+	if(A.throwing)
+		freeze_throwing(A)
 	if(isliving(A))
 		freeze_mob(A)
-	if(istype(A, /obj/item/projectile))
+	else if(istype(A, /obj/item/projectile))
 		freeze_projectile(A)
 	else
 		return FALSE
@@ -78,6 +78,18 @@
 		unfreeze_projectile(i)
 	for(var/i in frozen_mobs)
 		unfreeze_mob(i)
+	for(var/i in frozen_throws)
+		unfreeze_throw(i)
+
+/datum/proximity_monitor/advanced/timestop/proc/freeze_throwing(atom/movable/AM)
+	var/datum/throwing/T = AM.throwing
+	T.paused = TRUE
+	frozen_throws[AM] = T
+
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_throw(atom/movable/AM)
+	var/datum/throwing/T = frozen_throws[AM]
+	T.paused = FALSE
+	frozen_throws -= AM
 
 /datum/proximity_monitor/advanced/timestop/process()
 	for(var/i in frozen_mobs)
@@ -86,6 +98,11 @@
 			unfreeze_mob(m)
 		else
 			m.Stun(20, 1, 1)
+
+/datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/T)
+	for(var/i in T.contents)
+		freeze_atom(i)
+	return ..()
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/item/projectile/P)
 	frozen_projectiles -= P

@@ -78,11 +78,13 @@
 
 /datum/proximity_monitor/advanced/proc/process_edge_turf(turf/T)
 
+/datum/proximity_monitor/advanced/New()
+	if(requires_processing)
+		START_PROCESSING(SSfields, src)
+
 /datum/proximity_monitor/advanced/proc/Initialize()
 	setup_field()
 	post_setup_field()
-	if(requires_processing)
-		START_PROCESSING(SSfields, src)
 
 /datum/proximity_monitor/advanced/proc/full_cleanup()	 //Full cleanup for when you change something that would require complete resetting.
 	for(var/turf/T in edge_turfs)
