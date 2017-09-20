@@ -22,13 +22,12 @@
 /datum/radiation_wave/process()
 	master_turf = get_step(master_turf, move_dir)
 	steps++
+	var/list/turfs = get_rad_turfs()
+	check_obstructions(turfs)
 	var/strength = InverseSquareLaw(intensity, (range_modifier*(steps-1))+1, 1) //The full rad amount always applies on the first step
 	if(strength<1)
 		return FALSE
 
-	var/list/turfs = get_rad_turfs()
-
-	strength = check_obstructions(turfs, strength)
 	if(strength<=0.1)
 		return FALSE
 	radiate(turfs, Floor(strength))
@@ -56,14 +55,20 @@
 
 	return turfs
 
-/datum/radiation_wave/proc/check_obstructions(list/turfs, strength)
-	return strength
-/* not sure yet how I'm going to add rad proofing
+/datum/radiation_wave/proc/check_obstructions(list/turfs)
 	for(var/i in 1 to turfs.len)
 		var/turf/place = turfs[i]
-	return strength //This should return the reduced strength
-*/
+		var/datum/component/rad_insulation/insulation = place.GetComponent(/datum/component/rad_insulation)
+		if(insulation)
+			intensity -= insulation.amount
 
+		for(var/k in 1 to place.contents.len)
+			var/atom/thing = place.contents[k]
+			insulation = thing.GetComponent(/datum/component/rad_insulation)
+			//TODO: recursively loop through contents
+			if(!insulation)
+				continue
+			intensity -= insulation.amount
 
 /datum/radiation_wave/proc/radiate(list/turfs, strength)
 	for(var/i in 1 to turfs.len)

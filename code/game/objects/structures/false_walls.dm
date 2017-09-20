@@ -29,9 +29,10 @@
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/falsewall/New(loc)
-	..()
+/obj/structure/falsewall/Initialize()
+	. = ..()
 	air_update_turf(1)
+	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/structure/falsewall/Destroy()
 	density = FALSE

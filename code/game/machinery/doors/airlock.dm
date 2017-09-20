@@ -141,8 +141,9 @@
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
-
 	update_icon()
+
+	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)

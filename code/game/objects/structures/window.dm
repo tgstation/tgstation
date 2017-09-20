@@ -78,6 +78,8 @@
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
 
+	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION)
+
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
@@ -432,6 +434,10 @@
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/rglass
 
+/obj/structure/window/reinforced/Initialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION)
+
 /obj/structure/window/reinforced/spawner/east
 	dir = EAST
 
@@ -455,6 +461,10 @@
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
 
+/obj/structure/window/plasma/Initialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
+
 /obj/structure/window/plasma/spawner/east
 	dir = EAST
 
@@ -477,6 +487,10 @@
 	max_integrity = 500
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/plasmarglass
+
+/obj/structure/window/plasma/reinforced/Initialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION)
 
 /obj/structure/window/plasma/reinforced/spawner/east
 	dir = EAST
