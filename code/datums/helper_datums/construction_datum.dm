@@ -135,6 +135,10 @@
 #define STATE_NEXT "next"
 #define STATE_PREV "prev"
 
+#define DELETE "delete"
+#define SPAWN "spawn
+#define AMOUNT "amount"
+
 
 /datum/construction/reversible2
 	var/index
@@ -194,18 +198,18 @@
 	var/list/state = step[diff==FORWARD ? STATE_NEXT : STATE_PREV]
 	user.visible_message(fixText(state["vis_msg"],user),fixText(state["self_msg"],user))
 
-	if("delete" in state)
+	if(DELETE in state)
 		qdel(used_atom)
-	else if("spawn" in state)
-		var/spawntype=state["spawn"]
+	else if(SPAWN in state)
+		var/spawntype=state[SPAWN]
 		var/atom/A = new spawntype(holder.loc)
-		if("amount" in state)
+		if(AMOUNT in state)
 			if(istype(A,/obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C=A
-				C.amount=state["amount"]
+				C.amount=state[AMOUNT]
 			if(istype(A,/obj/item/stack))
 				var/obj/item/stack/S=A
-				S.amount=state["amount"]
+				S.amount=state[AMOUNT]
 	return TRUE
 
 /datum/construction/reversible2/action(used_atom,user)
