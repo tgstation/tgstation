@@ -188,7 +188,7 @@
 /datum/chemical_reaction/crayonicationmime
 	name = "Mime Crayon"
 	id = "mimecrayonitation"
-	required_reagents = list("lye" =10, "whitecrayonpowder" = 10, "blackcrayonpowder =10)
+	required_reagents = list("lye" =10, "whitecrayonpowder" = 10, "blackcrayonpowder" =10)
 	required_temp = 374
 	mob_react = FALSE
 
