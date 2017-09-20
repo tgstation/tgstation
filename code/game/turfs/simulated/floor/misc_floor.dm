@@ -20,7 +20,7 @@
 /turf/open/floor/circuit/Initialize()
 	SSmapping.nuke_tiles += src
 	update_icon()
-	..()
+	. = ..()
 
 /turf/open/floor/circuit/Destroy()
 	SSmapping.nuke_tiles -= src
@@ -145,7 +145,7 @@
 	var/obj/effect/clockwork/overlay/floor/realappearence
 
 /turf/open/floor/clockwork/Initialize()
-	..()
+	. = ..()
 	new /obj/effect/temp_visual/ratvar/floor(src)
 	new /obj/effect/temp_visual/ratvar/beam(src)
 	realappearence = new /obj/effect/clockwork/overlay/floor(src)

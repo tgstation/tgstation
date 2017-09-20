@@ -59,7 +59,7 @@
 		return ..()
 
 /obj/item/implanter/Initialize(mapload)
-	..()
+	. = ..()
 	if(imp_type)
 		imp = new imp_type(src)
 	update_icon()
