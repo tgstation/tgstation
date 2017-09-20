@@ -40,10 +40,24 @@
 
 /datum/surgery/organ_manipulation/mechanic
 	name = "prosthesis organ manipulation"
-	possible_locs = list("chest", "head", "groin", "eyes", "mouth", "l_arm", "r_arm")
+	possible_locs = list("chest", "head")
 	requires_bodypart_type = BODYPART_ROBOTIC
 	steps = list(
-		/datum/surgery_step/mechanic_incise,
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close
+		)
+
+/datum/surgery/organ_manipulation/mechanic/soft
+	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/prepare_electronics,
 		/datum/surgery_step/manipulate_organs,
 		/datum/surgery_step/mechanic_close
 		)
