@@ -89,122 +89,122 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/soap/homemade(location)
 		
-/datum/chemical_reaction/crayonificationr
-	name = "Red Crayonification"
-	id = "crayonred"
+/datum/chemical_reaction/crayonicationred
+	name = "Red Crayon"
+	id = "redcrayonication"
 	required_reagents = list("lye" =10, "redcrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 	
-/datum/chemical_reaction/crayonificationr/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/crayonicationred/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/toy/crayon/red(location)
 	
-/datum/chemical_reaction/crayonificationo
-	name = "Orange Crayonification"
-	id = "crayonorange"
+/datum/chemical_reaction/crayonicationorange
+	name = "Orange Crayon"
+	id = "orangecrayonication"
 	required_reagents = list("lye" =10, "orangecrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 	
-/datum/chemical_reaction/crayonificationo/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/crayonicationorange/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/toy/crayon/orange(location)
 	
-/datum/chemical_reaction/crayonificationy
-	name = "Yellow Crayonification"
-	id = "crayonyellow"
+/datum/chemical_reaction/crayonicationyellow
+	name = "Yellow Crayon"
+	id = "yellowcrayonication"
 	required_reagents = list("lye" =10, "yellowcrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 	
-/datum/chemical_reaction/crayonificationy/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/crayonicationyellow/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/toy/crayon/yellow(location)
 	
-/datum/chemical_reaction/crayonificationg
-	name = "Green Crayonification"
-	id = "crayongreen"
+/datum/chemical_reaction/crayonicationgreen
+	name = "Green Crayon"
+	id = "greencrayonication"
 	required_reagents = list("lye" =10, "greencrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 	
-/datum/chemical_reaction/crayonificationg/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/crayonicationgreen/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/toy/crayon/green(location)
 	
-/datum/chemical_reaction/crayonificationb
-	name = "Blue Crayonification"
-	id = "crayonblue"
+/datum/chemical_reaction/crayonicationblue
+	name = "Blue Crayon"
+	id = "bluecrayonication"
 	required_reagents = list("lye" =10, "bluecrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 	
-/datum/chemical_reaction/crayonificationb/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/crayonicationblue/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/toy/crayon/blue(location)
 	
-/datum/chemical_reaction/crayonificationp
-	name = "Purple Crayonification"
-	id = "crayonpurple"
+/datum/chemical_reaction/crayonicationpurple
+	name = "Purple Crayon"
+	id = "purplecrayonication"
 	required_reagents = list("lye" =10, "purplecrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 	
-/datum/chemical_reaction/crayonificationp/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/crayonicationpurple/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/toy/crayon/purple(location)
 	
-/datum/chemical_reaction/crayonificationbla
-	name = "Black Crayonification"
-	id = "crayonblack"
+/datum/chemical_reaction/crayonicationblack
+	name = "Black Crayon"
+	id = "blackcrayonication"
 	required_reagents = list("lye" =10, "blackcrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 	
-/datum/chemical_reaction/crayonificationbla/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/crayonicationblack/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/toy/crayon/black(location)
 	
-/datum/chemical_reaction/crayonificationwhi
-	name = "White Crayonification"
-	id = "crayonwhite"
+/datum/chemical_reaction/crayonicationwhite
+	name = "White Crayon"
+	id = "whitecrayonication"
 	required_reagents = list("lye" =10, "whitecrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 	
-/datum/chemical_reaction/crayonificationwhi/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/crayonicationwhite/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/toy/crayon/white(location)
 	
-/datum/chemical_reaction/crayonificationinv
-	name = "Mime Crayonification"
-	id = "crayonwinv"
+/datum/chemical_reaction/crayonicationmime
+	name = "Mime Crayon"
+	id = "mimecrayonitation"
 	required_reagents = list("lye" =10, "whitecrayonpowder" = 10, "blackcrayonpowder =10)
 	required_temp = 374
 	mob_react = FALSE
 	
-/datum/chemical_reaction/crayonificationinv/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/crayonicationmime/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/toy/crayon/mime(location)
 	
-/datum/chemical_reaction/crayonificationrai
-	name = "rainbow Crayonification"
-	id = "crayonwrai"
+/datum/chemical_reaction/crayonicationrainbow
+	name = "rainbow Crayon"
+	id = "rainbowcrayonication"
 	required_reagents = list("lye" =10, "colorful_reagent" = 10)
 	required_temp = 374
 	mob_react = FALSE
 	
-/datum/chemical_reaction/crayonificationrai/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/crayonicationrainbow/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/toy/crayon/rainbow(location)
