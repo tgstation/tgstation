@@ -78433,6 +78433,7 @@
 /obj/structure/table/glass,
 /obj/item/clipboard,
 /obj/item/toy/figure/chemist,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 1
 	},
@@ -136697,7 +136698,7 @@ aae
 aae
 aae
 aaf
-dYc
+aBW
 aae
 aae
 aaa
@@ -136948,7 +136949,7 @@ aaa
 aaa
 aae
 aaf
-dYc
+aBW
 aae
 aae
 aaa
@@ -137474,7 +137475,7 @@ dZB
 eab
 ear
 aaa
-dYc
+aBW
 aaa
 aaa
 aaa
@@ -139530,7 +139531,7 @@ dZB
 eaf
 ear
 aaa
-dYc
+aBW
 aae
 aae
 aae
@@ -140544,7 +140545,7 @@ dVy
 dUl
 aaf
 aaf
-dYc
+aBW
 aaa
 dZB
 eag
@@ -140558,7 +140559,7 @@ dZB
 eag
 ear
 aaa
-dYc
+aBW
 aaa
 aaa
 aaa
@@ -141061,14 +141062,14 @@ aaf
 aae
 aae
 aae
-dYc
+aBW
 aae
 aaa
 aaa
 aaf
 aaa
 aaa
-dYc
+aBW
 aae
 aae
 aaf
@@ -141325,7 +141326,7 @@ aae
 aaf
 aae
 aae
-dYc
+aBW
 aaa
 aaa
 aaa

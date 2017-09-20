@@ -154,6 +154,14 @@
 	build_path = /obj/item/circuitboard/machine/chem_heater
 	category = list ("Medical Machinery")
 
+/datum/design/board/smoke_machine
+	name = "Machine Design (Smoke Machine)"
+	desc = "The circuit board for a smoke machine."
+	id = "smoke_machine"
+	req_tech = list("materials" = 4, "biotech" = 3, "engineering" = 3)
+	build_path = /obj/item/circuitboard/machine/smoke_machine
+	category = list ("Medical Machinery")
+
 /datum/design/board/clonecontrol
 	name = "Computer Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."

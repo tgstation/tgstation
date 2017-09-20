@@ -13789,8 +13789,7 @@
 	pixel_x = -1;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
-	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
 	pixel_x = 7;
 	pixel_y = 2
@@ -34222,6 +34221,7 @@
 /obj/item/hand_labeler,
 /obj/item/device/radio/headset/headset_med,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bwW" = (
