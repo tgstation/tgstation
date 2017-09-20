@@ -80,7 +80,7 @@
 			antag_candidates -= bro
 			team.members += bro
 			bro.restricted_roles = restricted_jobs
-			log_game("[key_name(bro)] has been selected as a Brother")
+			log_game("[bro.key] (ckey) has been selected as a Brother")
 		pre_brother_teams += team
 	return ..()
 
@@ -94,6 +94,9 @@
 			modePlayer += M
 	brother_teams += pre_brother_teams
 	return ..()
+
+/datum/game_mode/traitor/bros/generate_report()
+	return "It's Syndicate recruiting season. Be alert for potential Syndicate infiltrators, but also watch out for disgruntled employees trying to defect. Unlike Nanotrasen, the Syndicate prides itself in teamwork and will only recruit pairs that share a brotherly trust."
 
 /datum/game_mode/proc/auto_declare_completion_brother()
 	if(!LAZYLEN(brother_teams))
