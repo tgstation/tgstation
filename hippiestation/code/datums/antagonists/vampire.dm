@@ -29,7 +29,6 @@
 		/obj/effect/proc_holder/spell/self/revive = 800)
 
 /datum/antagonist/vampire/on_gain()
-	LAZYINITLIST(powers)
 	give_objectives()
 	check_vampire_upgrade()
 	LAZYADD(SSticker.mode.vampires, owner)
@@ -116,16 +115,16 @@
 	if(prob(burn_chance) && L.health >= 50)
 		switch(L.health)
 			if(75 to 100)
-				to_chat(L, "<span class='warning'>Your skin flakes away...</span>")
+				L.visible_message("<span class='warning'>[L]'s skin begins to flake!</span>", "<span class='danger'>Your skin flakes away...</span>")
 			if(50 to 75)
-				to_chat(L, "<span class='warning'>Your skin sizzles!</span>")
+				L.visible_message("<span class='warning'>[L]'s skin sizzles loudly!</span>", "<span class='danger'>Your skin sizzles!</span>", "You hear sizzling.")
 		L.adjustFireLoss(3)
 	else if(L.health < 50)
 		if(!L.on_fire)
-			to_chat(L, "<span class='danger'>Your skin catches fire!</span>")
+			L.visible_message("<span class='warning'>[L] catches fire!</span>", "<span class='danger'>Your skin catches fire!</span>")
 			L.emote("scream")
 		else
-			to_chat(L, "<span class='danger'>You continue to burn!</span>")
+			L.visible_message("<span class='warning'>[L] continues to burn!</span>", "<span class='danger'>Your continue to burn!</span>")
 		L.adjust_fire_stacks(5)
 		L.IgniteMob()
 	return
