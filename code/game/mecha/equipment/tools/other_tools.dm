@@ -489,4 +489,4 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
-		radiation_pulse(get_turf(src), 2, 7, rad_per_cycle, 1)
+		radiation_pulse(get_turf(src), rad_per_cycle)

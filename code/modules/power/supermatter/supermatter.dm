@@ -331,8 +331,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	power = max( (removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0) //Total laser power plus an overload
 
-	//We've generated power, now let's transfer it to the collectors for storing/usage
-	transfer_energy()
+	radiation_pulse(get_turf(src), power * (1 + power_transmission_bonus/10 * freon_transmit_modifier))
 
 	var/device_energy = power * REACTION_POWER_MODIFIER
 
@@ -527,11 +526,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 	Consume(nom)
 
-/obj/machinery/power/supermatter_shard/proc/transfer_energy()
-	for(var/obj/machinery/power/rad_collector/R in GLOB.rad_collectors)
-		if(R.z == z && get_dist(R, src) <= 15) //Better than using orange() every process
-			R.receive_pulse(power * (1 + power_transmission_bonus)/10 * freon_transmit_modifier)
-
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.flags_1 & ABSTRACT_1) || !istype(user))
 		return
@@ -550,7 +544,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		Consume(W)
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
-		radiation_pulse(get_turf(src), 1, 1, 150, 1)
+		radiation_pulse(get_turf(src), 150, 4)
 
 
 /obj/machinery/power/supermatter_shard/CollidedWith(atom/movable/AM)
@@ -584,7 +578,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	matter_power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(get_turf(src), 4, 10, 500, 1)
+	radiation_pulse(get_turf(src), 500, 2, log=TRUE)
 	for(var/mob/living/L in range(10))
 		investigate_log("has irradiated [L] after consuming [AM].", INVESTIGATE_SUPERMATTER)
 		if(L in view())

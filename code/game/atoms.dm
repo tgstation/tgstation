@@ -485,6 +485,10 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	SendSignal(COMSIG_ATOM_EMAG_ACT)
 	return
 
+/atom/proc/rad_act(strength)
+	SendSignal(COMSIG_ATOM_RAD_ACT)
+	return TRUE
+
 /atom/proc/narsie_act()
 	SendSignal(COMSIG_ATOM_NARSIE_ACT)
 	return

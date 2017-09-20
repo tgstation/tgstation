@@ -44,6 +44,8 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 /proc/Inverse(x)
 	return 1 / x
 
+#define InverseSquareLaw(initial_strength,cur_distance,initial_distance) (initial_strength*(cur_distance**2/initial_distance**2))
+
 /proc/IsAboutEqual(a, b, deviation = 0.1)
 	return abs(a - b) <= deviation
 

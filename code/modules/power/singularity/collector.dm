@@ -1,3 +1,4 @@
+#define RAD_COLLECTOR_EFFICIENCY 50 //radiation needs to be over this amount to get power
 
 GLOBAL_LIST_EMPTY(rad_collectors)
 
@@ -137,15 +138,14 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 	else
 		update_icons()
 
-/obj/machinery/power/rad_collector/proc/receive_pulse(pulse_strength)
-	if(loaded_tank && active)
+/obj/machinery/power/rad_collector/rad_act(pulse_strength)
+	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
 		var/power_produced = loaded_tank.air_contents.gases[/datum/gas/plasma] ? loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] : 0
 		power_produced *= pulse_strength*10
 		add_avail(power_produced)
 		last_power = power_produced
 		return
 	return
-
 
 /obj/machinery/power/rad_collector/proc/update_icons()
 	cut_overlays()
@@ -167,3 +167,5 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 		flick("ca_deactive", src)
 	update_icons()
 	return
+
+#undef RAD_COLLECTOR_EFFICIENCY
