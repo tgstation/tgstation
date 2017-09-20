@@ -87,7 +87,7 @@
 	var/datum/action/innate/spacepod/checkseat/list/seat_action = list()
 	var/datum/action/innate/spacepod/airtank/list/tank_action = list()
 
-	var/datum/action/innate/spacepod/cloak/list/cloak_action = list()
+	var/datum/action/innate/spacepod/list/cloak_action = list()
 
 	var/obj/item/device/radio/mech/radio
 	var/obj/item/device/gps/gps

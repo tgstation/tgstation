@@ -29,7 +29,7 @@
 
 /obj/structure/spacepod_frame/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(!construct || !construct.action(W, user))
-		..()
+		return ..()
 	return
 
 /obj/structure/spacepod_frame/attack_hand()
@@ -52,6 +52,7 @@
 		qdel(holder)
 		qdel(src)
 	return
+	SSblackbox.add_details("spacepod_created",1)
 
 
 /datum/construction/reversible2/pod
@@ -241,11 +242,6 @@
 				)
 				// EOF
 			)
-
-	spawn_result(mob/user as mob)
-		..()
-		SSblackbox.add_details("spacepod_created",1)
-		return
 
 /datum/construction/reversible2/pod/custom_action(index, diff, used_atom, var/mob/user)
 	if(index == 10 && istype(used_atom, /obj/item/pod_parts/armor))

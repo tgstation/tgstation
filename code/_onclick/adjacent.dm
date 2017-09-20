@@ -31,7 +31,7 @@
 		var/atom/movable/AM = neighbor
 		if((AM.bound_width != world.icon_size || AM.bound_height != world.icon_size) && (AM.locs && AM.locs.len > 1))
 			for(var/turf/T in AM.locs)
-				if(T.Adjacent(src))
+				if(Adjacent(T, src))
 					return TRUE
 
 	var/turf/T0 = get_turf(neighbor)
@@ -74,7 +74,7 @@
 	Adjacency (to anything else):
 	* Must be on a turf
 */
-/atom/movable/Adjacent(var/atom/neighbor, var/recurse = 1)
+/atom/movable/Adjacent(var/atom/neighbor)
 	if(neighbor == loc)
 		return TRUE
 	if(!isturf(loc))
@@ -85,7 +85,7 @@
 		for(var/turf/T in locs)
 			if(T.Adjacent(neighbor,src))
 				return TRUE
-	if(recurse && istype(neighbor, /atom/movable))
+	if(istype(neighbor, /atom/movable))
 		var/atom/movable/NM = neighbor
 		if(NM.Adjacent(src, FALSE))
 			return TRUE

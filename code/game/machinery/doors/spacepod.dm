@@ -5,7 +5,6 @@
 	icon_state = "n_beam"
 	density = 0
 	anchored = TRUE
-	var/id = 1.0
 
 /obj/structure/spacepoddoor/Initialize()
 	. = ..()

@@ -69,6 +69,7 @@
 	var/occupant_mod = 0	// so any module can modify occupancy
 	var/list/storage_mod = list("slots" = 0, "w_class" = 0)		// so any module can modify storage slots
 	var/slot = "misc"
+	var/action_type
 
 /obj/item/device/spacepod_equipment/proc/removed(mob/user) // So that you can unload cargo when you remove the module
 	my_atom.update_icons()

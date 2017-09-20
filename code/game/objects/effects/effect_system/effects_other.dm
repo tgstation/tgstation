@@ -27,8 +27,6 @@
 /datum/effect_system/trail_follow/steam
 	effect_type = /obj/effect/particle_effect/steam
 
-/datum/effect_system/trail_follow/steam/proc/Iter_Number()
-
 /datum/effect_system/trail_follow/steam/start()
 	if(!on)
 		on = TRUE
@@ -186,7 +184,7 @@
 
 /datum/effect_system/trail_follow/ion/space_trail/start()
 	if(!on)
-		on = FALSE
+		on = TRUE
 		processing = TRUE
 	if(processing)
 		processing = FALSE
