@@ -371,63 +371,63 @@
 	icon_state = "crayonred"
 	paint_color = "#DA0000"
 	item_color = "red"
-	reagent_contents = list("nutriment" = 1, "redcrayonpowder" = 1)
+	reagent_contents = list("nutriment" = 1, "redcrayonpowder" = 5)
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	paint_color = "#FF9300"
 	item_color = "orange"
-	reagent_contents = list("nutriment" = 1, "orangecrayonpowder" = 1)
+	reagent_contents = list("nutriment" = 1, "orangecrayonpowder" = 5)
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	paint_color = "#FFF200"
 	item_color = "yellow"
-	reagent_contents = list("nutriment" = 1, "yellowcrayonpowder" = 1)
+	reagent_contents = list("nutriment" = 1, "yellowcrayonpowder" = 5)
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	paint_color = "#A8E61D"
 	item_color = "green"
-	reagent_contents = list("nutriment" = 1, "greencrayonpowder" = 1)
+	reagent_contents = list("nutriment" = 1, "greencrayonpowder" = 5)
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	paint_color = "#00B7EF"
 	item_color = "blue"
-	reagent_contents = list("nutriment" = 1, "bluecrayonpowder" = 1)
+	reagent_contents = list("nutriment" = 1, "bluecrayonpowder" = 5)
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	paint_color = "#DA00FF"
 	item_color = "purple"
-	reagent_contents = list("nutriment" = 1, "purplecrayonpowder" = 1)
+	reagent_contents = list("nutriment" = 1, "purplecrayonpowder" = 5)
 
 /obj/item/toy/crayon/black
 	icon_state = "crayonblack"
 	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
 	item_color = "black"
-	reagent_contents = list("nutriment" = 1, "blackcrayonpowder" = 1)
+	reagent_contents = list("nutriment" = 1, "blackcrayonpowder" = 5)
 
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
 	item_color = "white"
-	reagent_contents = list("nutriment" = 1, "whitecrayonpowder" = 1)
+	reagent_contents = list("nutriment" = 1, "whitecrayonpowder" = 5)
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	paint_color = "#FFFFFF"
 	item_color = "mime"
-	reagent_contents = list("nutriment" = 1, "invisiblecrayonpowder" = 1)
+	reagent_contents = list("nutriment" = 1, "invisiblecrayonpowder" = 5)
 	charges = -1
 
 /obj/item/toy/crayon/rainbow
 	icon_state = "crayonrainbow"
 	paint_color = "#FFF000"
 	item_color = "rainbow"
-	reagent_contents = list("nutriment" = 1, "colorful_reagent" = 1)
+	reagent_contents = list("nutriment" = 1, "colorful_reagent" = 5)
 	drawtype = RANDOM_ANY // just the default starter.
 
 	charges = -1
@@ -446,7 +446,7 @@
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
-	storage_slots = 7
+	storage_slots = 6
 	can_hold = list(
 		/obj/item/toy/crayon
 	)
@@ -459,7 +459,6 @@
 	new /obj/item/toy/crayon/green(src)
 	new /obj/item/toy/crayon/blue(src)
 	new /obj/item/toy/crayon/purple(src)
-	new /obj/item/toy/crayon/black(src)
 	update_icon()
 
 /obj/item/storage/crayons/update_icon()
