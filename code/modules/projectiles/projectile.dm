@@ -273,7 +273,6 @@
 		START_PROCESSING(SSprojectiles, src)
 
 /obj/item/projectile/proc/setAngle(new_angle)	//wrapper for overrides.
-	to_chat(world, "DEBUG: setAngle [Angle]")
 	Angle = new_angle
 	return TRUE
 
@@ -341,8 +340,6 @@
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(user, params)
 		p_x = calculated[2]
 		p_y = calculated[3]
-
-		to_chat(world, "DEBUG: preparePixelProjectile calculated angle [calculated[1]]")
 
 		if(spread)
 			setAngle(calculated[1] + spread)
