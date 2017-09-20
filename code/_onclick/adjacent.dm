@@ -20,7 +20,7 @@
 
 /*
 	Adjacency (to turf):
-	* If you are in the same turf,	 always true
+	* If you are in the same turf, always true
 	* If you are vertically/horizontally adjacent, ensure there are no border objects
 	* If you are diagonally adjacent, ensure you can pass through at least one of the mutually adjacent square.
 		* Passing through in this case ignores anything with the LETPASSTHROW pass flag, such as tables, racks, and morgue trays.

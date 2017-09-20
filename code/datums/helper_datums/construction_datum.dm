@@ -200,7 +200,7 @@
 
 	if(DELETE in state)
 		qdel(used_atom)
-	else if(SPAWN in state)
+	else if(state[SPAWN])
 		var/spawntype=state[SPAWN]
 		var/atom/A = new spawntype(holder.loc)
 		if(AMOUNT in state)
