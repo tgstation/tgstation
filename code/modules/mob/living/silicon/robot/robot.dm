@@ -781,6 +781,13 @@
 		cell = null
 	qdel(src)
 
+/mob/living/silicon/robot/security
+	var/set_module = /obj/item/robot_module/security
+
+/mob/living/silicon/robot/security/Initialize()
+	. = ..()
+	module.transform_to(set_module)
+
 /mob/living/silicon/robot/syndicate
 	icon_state = "syndie_bloodhound"
 	faction = list("syndicate")
