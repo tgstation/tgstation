@@ -51,7 +51,7 @@
 	if(on && (cooldown < world.time))
 		icon_state = "smoke1"
 		update_icon()
-		cooldown = world.time + 180
+		cooldown = world.time + 200
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
 		smoke.set_up(reagents, setting, efficiency, get_turf(src))
 		smoke.start()
