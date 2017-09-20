@@ -1129,6 +1129,7 @@
 #include "code\modules\awaymissions\signpost.dm"
 #include "code\modules\awaymissions\super_secret_room.dm"
 #include "code\modules\awaymissions\zlevel.dm"
+#include "code\modules\awaymissions\mission_code\prison.dm"
 #include "code\modules\awaymissions\mission_code\Academy.dm"
 #include "code\modules\awaymissions\mission_code\Cabin.dm"
 #include "code\modules\awaymissions\mission_code\caves.dm"
