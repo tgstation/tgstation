@@ -3,7 +3,6 @@
 	var/aggressive=0 // set to 1 using VV for an angry monkey
 	var/frustration=0
 	var/pickupTimer=0
-	var/list/enemies = list()
 	var/mob/living/target
 	var/obj/item/pickupTarget
 	var/mode = MONKEY_IDLE
@@ -119,17 +118,23 @@
 
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
 
-	if(L == src)
-		return 0
+	var/R =  (L)
 
-	if(enemies[L])
-		return 1
+	if(L == src) //dont kill ourselves
+		return FALSE
+
+	if(isnull(R))
+		relationships[L] = MONKEY_RELATION_OK
+		return FALSE
+
+	if(!isnull(R) && (R < MONKEY_RELATION_IFFY) || (R < MONKEY_RELATION_OK && prob(25)))
+		return TRUE
 
 	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
-	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
-		return 1
+	if(aggressive && (!istype(L, /mob/living/carbon/monkey) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
+		return TRUE
 
-	return 0
+	return FALSE
 
 /mob/living/carbon/monkey/proc/handle_combat()
 	// Don't do any AI if inside another mob (devoured)
@@ -235,7 +240,7 @@
 
 			return IsStandingStill()
 
-		if(MONKEY_HUNT)		// hunting for attacker
+		if(MONKEY_HUNT) // hunting for attacker
 			if(health < MONKEY_FLEE_HEALTH)
 				mode = MONKEY_FLEE
 				return TRUE
@@ -305,7 +310,7 @@
 
 			// flee from anyone who attacked us and we didn't beat down
 			for(var/mob/living/L in around)
-				if( enemies[L] && L.stat == CONSCIOUS )
+				if( should_target(L) && L.stat == CONSCIOUS )
 					target = L
 
 			if(target != null)
@@ -389,7 +394,7 @@
 // attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
 /mob/living/carbon/monkey/proc/monkey_attack(mob/living/L)
 	var/obj/item/Weapon = locate(/obj/item) in held_items
-
+	var/R = get_relation(L)
 	// attack with weapon if we have one
 	if(Weapon)
 		L.attackby(Weapon, src)
@@ -401,25 +406,19 @@
 		return
 
 	// if we arn't enemies, we were likely recruited to attack this target, jobs done if we calm down so go back to idle
-	if(!enemies[L])
+	if(isnull(R) || !should_target(target))
 		if( target == L && prob(MONKEY_HATRED_REDUCTION_PROB) )
 			back_to_idle()
 		return // already de-aggroed
 
 	if(prob(MONKEY_HATRED_REDUCTION_PROB))
-		enemies[L] --
-
-	// if we are not angry at our target, go back to idle
-	if(enemies[L] <= 0)
-		enemies.Remove(L)
-		if( target == L )
-			back_to_idle()
+		adjust_relation(L, 0.1)
 
 // get angry are a mob
 /mob/living/carbon/monkey/proc/retaliate(mob/living/L)
 	mode = MONKEY_HUNT
 	target = L
-	enemies[L] += MONKEY_HATRED_AMOUNT
+	adjust_relation(L, -0.75)
 
 	if(a_intent != INTENT_HARM)
 		battle_screech()

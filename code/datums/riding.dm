@@ -387,7 +387,7 @@
 	M.throw_at(target, 14, 5, ridden)
 	M.Knockdown(60)
 
-/datum/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1)
+/datum/riding/proc/equip_buckle_inhands(mob/living/carbon/user, amount_required = 1)
 	var/amount_equipped = 0
 	for(var/amount_needed = amount_required, amount_needed > 0, amount_needed--)
 		var/obj/item/riding_offhand/inhand = new /obj/item/riding_offhand(user)

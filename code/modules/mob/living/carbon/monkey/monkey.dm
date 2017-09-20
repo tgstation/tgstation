@@ -1,3 +1,5 @@
+
+
 /mob/living/carbon/monkey
 	name = "monkey"
 	voice_name = "monkey"
@@ -15,11 +17,15 @@
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
 
+	var/liked_food = JUNKFOOD | FRIED | MEAT | VEGETABLES | FRUIT | GRAIN //monkeys are omnivores
+	var/disliked_food = GROSS | TOXIC
+
 
 
 /mob/living/carbon/monkey/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+	verbs += /mob/living/carbon/monkey/proc/sit_on_shoulder
 
 	if(unique_name) //used to exclude pun pun
 		gender = pick(MALE, FEMALE)
