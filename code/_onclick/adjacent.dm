@@ -31,7 +31,7 @@
 		var/atom/movable/AM = neighbor
 		if((AM.bound_width != world.icon_size || AM.bound_height != world.icon_size) && (AM.locs && AM.locs.len > 1))
 			for(var/turf/T in AM.locs)
-				if(Adjacent(T, src))
+				if(Adjacent(T, target, mover))
 					return TRUE
 
 	var/turf/T0 = get_turf(neighbor)
