@@ -1,4 +1,0 @@
-author: "PopNotes"
-delete-after: True
-changes: 
-  - imageadd: "Airlocks animate faster. This doesn't change the time it takes to pass through an airlock, but it does visually match up much better so you don't just appear to glide through the airlock while it's half-open."
