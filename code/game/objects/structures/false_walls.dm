@@ -128,7 +128,7 @@
 	if(tool)
 		playsound(src, tool.usesound, 100, 1)
 	else
-		playsound(src, 'welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, 1)
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/deconstruct(disassembled = TRUE)
