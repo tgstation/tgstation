@@ -16,7 +16,8 @@
 	icon_living = "drone_synd"
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
 	health = 30
-	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	maxHealth = 120
+	bruteloss = 90
 	initial_language_holder = /datum/language_holder/drone/syndicate
 	faction = list("syndicate")
 	speak_emote = list("hisses")
@@ -38,7 +39,7 @@
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
-	to_chat(src, "<span class='notice'>You can kill and eat other drones to increase your health!</span>" )
+	to_chat(src, "<span class='notice'>You can kill, destroy and interfere with as much things as you want!</span>" )
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"

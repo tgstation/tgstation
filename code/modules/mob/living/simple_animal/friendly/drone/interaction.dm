@@ -79,8 +79,13 @@
 	else
 		to_chat(user, "<span class='warning'>You need to remain still to reactivate [src]!</span>")
 
+/mob/living/simple_animal/drone/attack_self(obj/item/I, mob/user)
+	if(istype(I, /obj/item/screwdriver), hacked)
+		return to_chat(user, "<span class='warning'>You can't seem to repair yourself in your current state!</span>")
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
+	if(hacked)
+		return to_chat(user, "<span class='warning'>You can't seem to repair [src] in it's current state!</span>")
 	if(istype(I, /obj/item/screwdriver) && stat != DEAD)
 		if(health < maxHealth)
 			to_chat(user, "<span class='notice'>You start to tighten loose screws on [src]...</span>")
