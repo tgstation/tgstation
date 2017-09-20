@@ -1350,9 +1350,10 @@
 	sleep(1)
 	set_opacity(0)
 	update_freelook_sight()
-	sleep(5)
+	sleep(4)
 	density = FALSE
 	air_update_turf(1)
+	sleep(1)
 	layer = OPEN_DOOR_LAYER
 	update_icon(AIRLOCK_OPEN, 1)
 	operating = FALSE
@@ -1391,20 +1392,25 @@
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
 	layer = CLOSED_DOOR_LAYER
-	density = TRUE
-	air_update_turf(1)
-	sleep(5)
+	if(air_tight)
+		density = TRUE
+		air_update_turf(1)
+	sleep(1)
+	if(!air_tight)
+		density = TRUE
+		air_update_turf(1)
 	if(visible && !glass)
 		set_opacity(1)
 	update_freelook_sight()
-	sleep(1)
+	sleep(4)
 	if(!safe)
 		crush()
-	else
-		CheckForMobs()
+	sleep(1)
 	update_icon(AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	delayed_close_requested = FALSE
+	if(safe)
+		CheckForMobs()
 	return TRUE
 
 /obj/machinery/door/airlock/proc/prison_open()
