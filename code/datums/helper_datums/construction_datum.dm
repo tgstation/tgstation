@@ -136,7 +136,7 @@
 #define STATE_PREV "prev"
 
 #define DELETE "delete"
-#define SPAWN "spawn
+#define SPAWN "spawn"
 #define AMOUNT "amount"
 
 

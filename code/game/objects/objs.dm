@@ -119,9 +119,6 @@
 						src.attack_hand(usr)
 		in_use = is_in_use
 
-/obj/proc/return_temperature()
-	return
-
 /obj/proc/updateDialog()
 	// Check that people are actually using the machine. If not, don't update anymore.
 	if(in_use)
