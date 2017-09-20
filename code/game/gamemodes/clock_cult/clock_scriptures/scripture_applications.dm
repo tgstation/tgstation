@@ -19,6 +19,7 @@
 	sort_priority = 2
 	quickbind = TRUE
 	quickbind_desc = "Attempts to armor all nearby Servants with powerful Ratvarian armor."
+	cyborg_usable = FALSE
 	var/static/list/ratvarian_armor_typecache = typecacheof(list(
 	/obj/item/clothing/suit/armor/clockwork,
 	/obj/item/clothing/head/helmet/clockwork,
@@ -82,6 +83,7 @@
 	tier = SCRIPTURE_APPLICATION
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 3
+	cyborg_usable = FALSE
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
 	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in GLOB.all_clockwork_mobs)
