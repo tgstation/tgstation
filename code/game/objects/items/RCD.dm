@@ -31,7 +31,7 @@ obj/item/construction
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
 
 /obj/item/construction/Initialize()
-	..()
+	. = ..()
 	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)

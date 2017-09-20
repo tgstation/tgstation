@@ -638,3 +638,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
+
+/atom/proc/return_temperature()
+	return

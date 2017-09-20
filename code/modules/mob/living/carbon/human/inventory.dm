@@ -236,6 +236,10 @@
 /mob/living/carbon/human/head_update(obj/item/I, forced)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
 		update_hair()
+	else
+		var/obj/item/clothing/C = I
+		if(istype(C) && C.dynamic_hair_suffix)
+			update_hair()
 	if(I.flags_inv & HIDEEYES || forced)
 		update_inv_glasses()
 	if(I.flags_inv & HIDEEARS || forced)

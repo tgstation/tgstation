@@ -160,7 +160,7 @@ update_label("John Doe", "Clowny")
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
 /obj/item/card/id/syndicate/Initialize()
-	..()
+	. = ..()
 	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/card/id
 	chameleon_action.chameleon_name = "ID Card"
@@ -220,7 +220,7 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/captains_spare/Initialize()
 	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
-	..()
+	. = ..()
 
 /obj/item/card/id/centcom
 	name = "\improper CentCom ID"
@@ -231,7 +231,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/centcom/Initialize()
 	access = get_all_centcom_access()
-	..()
+	. = ..()
 
 /obj/item/card/id/ert
 	name = "\improper CentCom ID"
@@ -242,7 +242,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/ert/Initialize()
 	access = get_all_accesses()+get_ert_access("commander")-ACCESS_CHANGE_IDS
-	..()
+	. = ..()
 
 /obj/item/card/id/ert/Security
 	registered_name = "Security Response Officer"
@@ -250,7 +250,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/ert/Security/Initialize()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
-	..()
+	. = ..()
 
 /obj/item/card/id/ert/Engineer
 	registered_name = "Engineer Response Officer"
@@ -258,7 +258,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/ert/Engineer/Initialize()
 	access = get_all_accesses()+get_ert_access("eng")-ACCESS_CHANGE_IDS
-	..()
+	. = ..()
 
 /obj/item/card/id/ert/Medical
 	registered_name = "Medical Response Officer"
@@ -266,7 +266,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/ert/Medical/Initialize()
 	access = get_all_accesses()+get_ert_access("med")-ACCESS_CHANGE_IDS
-	..()
+	. = ..()
 
 /obj/item/card/id/prisoner
 	name = "prisoner ID card"
