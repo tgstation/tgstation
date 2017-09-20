@@ -1399,12 +1399,12 @@
 	if(!air_tight)
 		density = TRUE
 		air_update_turf(1)
-	if(visible && !glass)
-		set_opacity(1)
-	update_freelook_sight()
 	sleep(4)
 	if(!safe)
 		crush()
+	if(visible && !glass)
+		set_opacity(1)
+	update_freelook_sight()
 	sleep(1)
 	update_icon(AIRLOCK_CLOSED, 1)
 	operating = FALSE
