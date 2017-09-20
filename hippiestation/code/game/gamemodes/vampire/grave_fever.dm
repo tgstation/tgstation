@@ -16,7 +16,7 @@
 /datum/disease/vampire/stage_act()
 	..()
 	var/toxdamage = stage * 2
-	var/stuntime = stage * 2
+	var/stuntime = (stage * 2) * 10
 
 	if(prob(10))
 		affected_mob.emote(pick("cough","groan", "gasp"))

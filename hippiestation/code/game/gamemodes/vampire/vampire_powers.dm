@@ -76,21 +76,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/mob/living/carbon/update_sight()
-	. = ..()
-	if(mind && ishuman(src))
-		var/datum/antagonist/vampire/V = mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
-		if(V)
-			if(V.get_ability(/datum/vampire_passive/full))
-				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-				see_in_dark = 8
-				see_invisible = SEE_INVISIBLE_MINIMUM
-			else if(V.get_ability(/datum/vampire_passive/vision))
-				sight |= SEE_MOBS
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 /obj/effect/proc_holder/spell/self/rejuvenate
 	name = "Rejuvenate"
 	desc= "Flush your system with spare blood to remove any incapacitating effects."
@@ -260,8 +245,7 @@
 
 /obj/effect/proc_holder/spell/bats/cast(list/targets, mob/user = usr)
 	for(var/T in targets)
-		var/mob/living/simple_animal/hostile/retaliate/bat/B = new /mob/living/simple_animal/hostile/retaliate/bat(T, user)
-		B.faction = list("vampire") //make bats not attack vampires, but attack everyone else
+		new /mob/living/simple_animal/hostile/vampire_bat(T)
 
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform
@@ -271,13 +255,13 @@
 	action_background_icon_state = "bg_demon"
 	vamp_req = TRUE
 
-
 /obj/effect/proc_holder/spell/targeted/vampirize
 	name = "Lilith's Pact (500)"
 	desc = "You drain a victim's blood, and fill them with new blood, blessed by Lilith, turning them into a new vampire."
 	gain_desc = "You have gained the ability to force someone, given time, to become a vampire."
 	action_icon = 'hippiestation/icons/mob/vampire.dmi'
 	action_background_icon_state = "bg_demon"
+	action_icon_state = "oath"
 	blood_used = 500
 	vamp_req = TRUE
 
@@ -318,6 +302,7 @@
 /obj/effect/proc_holder/spell/self/revive
 	name = "Revive"
 	gain_desc = "You have gained the ability to revive after death... However you can still be cremated/gibbed, and you will disintergrate if you're in the chapel!"
+	desc = "Revives you, provided you are not in the chapel!"
 	blood_used = 0
 	stat_allowed = TRUE
 	charge_max = 1000
@@ -357,8 +342,8 @@
 
 /obj/effect/proc_holder/spell/self/summon_coat
 	name = "Summon Dracula Coat"
-	gain_desc = "You have gained the ability to create a coat out of thin air!"
-	blood_used = 10
+	gain_desc = "Now that you have reached full power, you can now pull a vampiric coat out of thin air!"
+	blood_used = 5
 	action_icon = 'hippiestation/icons/mob/vampire.dmi'
 	action_icon_state = "coat"
 	action_background_icon_state = "bg_demon"

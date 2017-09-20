@@ -24,8 +24,8 @@
 		/datum/vampire_passive/regen = 425,
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform = 500,
 		/datum/vampire_passive/full = 666,
+		/obj/effect/proc_holder/spell/self/summon_coat = 666,
 		/obj/effect/proc_holder/spell/targeted/vampirize = 700,
-		/obj/effect/proc_holder/spell/self/summon_coat =  750,
 		/obj/effect/proc_holder/spell/self/revive = 800)
 
 /datum/antagonist/vampire/on_gain()
@@ -249,6 +249,7 @@
 			add_ability(ptype)
 	if(announce)
 		announce_new_power(old_powers)
+	owner.current.update_sight() //deal with sight abilities
 
 /datum/antagonist/vampire/proc/announce_new_power(list/old_powers)
 	for(var/p in powers)
