@@ -159,17 +159,21 @@
 
 /obj/effect/temp_visual/ratvar/sigil/transgression
 	color = "#FAE48C"
+	icon_state = "sigilactiveoverlay"
 	layer = ABOVE_MOB_LAYER
-	duration = 70
+	duration = 30
 	light_range = 5
 	light_power = 2
 	light_color = "#FAE48C"
 
-/obj/effect/temp_visual/ratvar/sigil/transgression/Initialize()
+/obj/effect/temp_visual/ratvar/sigil/transgression/Initialize(mapload, belligerent)
 	. = ..()
-	var/oldtransform = transform
-	animate(src, transform = matrix()*2, time = 5)
-	animate(transform = oldtransform, alpha = 0, time = 65)
+	if(!belligerent)
+		var/oldtransform = transform
+		animate(src, transform = matrix()*2, time = 3)
+		animate(transform = oldtransform, alpha = 0, time = 27)
+	else
+		animate(src, transform = matrix()*2, alpha = 0, time = 15)
 
 /obj/effect/temp_visual/ratvar/sigil/transmission
 	color = "#EC8A2D"
@@ -195,7 +199,7 @@
 
 /obj/effect/temp_visual/ratvar/sigil/submission
 	color = "#AF0AAF"
+	icon_state = "sigilactiveoverlay"
 	layer = ABOVE_MOB_LAYER
 	duration = 80
-	icon_state = "sigilactiveoverlay"
 	alpha = 0

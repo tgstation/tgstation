@@ -22,12 +22,6 @@
 	else
 		for(var/i in GLOB.clockwork_component_cache)
 			.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*GLOB.clockwork_component_cache[i], 1)
-	for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
-		if(G.still_needs_components())
-			for(var/i in G.required_components)
-				if(!G.required_components[i])
-					. -= i
-		break
 	. = pickweight(.)
 
 //returns a component name from a component id

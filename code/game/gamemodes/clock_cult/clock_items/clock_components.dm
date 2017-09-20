@@ -36,13 +36,13 @@
 	servant_of_ratvar_messages = list("\"...\"" = FALSE, "For a moment, your mind is flooded with extremely violent thoughts." = FALSE, "\"...Die.\"" = TRUE)
 	message_span = "neovgre"
 
-/obj/item/clockwork/component/belligerent_eye/blind_eye
-	name = "blind eye"
-	desc = "A heavy brass eye, its red iris fallen dark."
-	clockwork_desc = "A smashed ocular warden covered in dents. <b>Serviceable as a substitute for a belligerent eye.</b>"
-	icon_state = "blind_eye"
-	cultist_message = "The eye flickers at you with intense hate before falling dark."
-	servant_of_ratvar_messages = list("The eye flickers before falling dark." = FALSE, "You feel watched." = FALSE, "\"...\"" = FALSE)
+/obj/item/clockwork/component/belligerent_eye/suppression_lens
+	name = "suppression lens"
+	desc = "A heavy, dented, and cracked lens, its former glow dulled."
+	clockwork_desc = "A dented and cracked lens from an ocular warden. <b>Serviceable as a substitute for a belligerent eye.</b>"
+	icon_state = "suppression_lens"
+	cultist_message = "The lens flickers repeatedly at you before falling dark."
+	servant_of_ratvar_messages = list("The lens flickers before falling dark." = FALSE, "You feel watched." = FALSE, "\"...\"" = FALSE)
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/belligerent_eye/lens_gem

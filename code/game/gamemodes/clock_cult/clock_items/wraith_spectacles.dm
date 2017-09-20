@@ -95,7 +95,7 @@
 /datum/status_effect/wraith_spectacles
 	id = "wraith_spectacles"
 	duration = -1 //remains until eye damage done reaches 0 while the glasses are not worn
-	tick_interval = 20
+	tick_interval = 100
 	alert_type = /obj/screen/alert/status_effect/wraith_spectacles
 	var/eye_damage_done = 0
 	var/nearsight_breakpoint = 30
@@ -146,11 +146,11 @@
 			H.cure_blind()
 			H.adjust_eye_damage(-eye_damage_done)
 			eye_damage_done = 0
-		else if(prob(50) && eye_damage_done)
+		else if(prob(90) && eye_damage_done)
 			H.adjust_eye_damage(-1)
 			eye_damage_done--
-		if(!eye_damage_done)
-			qdel(src)
+			if(!eye_damage_done)
+				qdel(src)
 
 /datum/status_effect/wraith_spectacles/proc/apply_eye_damage(mob/living/carbon/human/H)
 	if(H.disabilities & BLIND)

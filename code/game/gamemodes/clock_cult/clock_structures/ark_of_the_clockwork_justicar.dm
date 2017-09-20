@@ -17,10 +17,8 @@
 	var/first_sound_played = FALSE
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
-	var/fourth_sound_played = FALSE
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
-	var/list/required_components = list(BELLIGERENT_EYE = ARK_CONSUME_COST, VANGUARD_COGWHEEL = ARK_CONSUME_COST, GEIS_CAPACITOR = ARK_CONSUME_COST, REPLICANT_ALLOY = ARK_CONSUME_COST, HIEROPHANT_ANSIBLE = ARK_CONSUME_COST)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize()
 	. = ..()
@@ -104,45 +102,6 @@
 	var/damage = max((obj_integrity * 0.7) / severity, 100) //requires multiple bombs to take down
 	take_damage(damage, BRUTE, "bomb", 0)
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/attackby(obj/item/I, mob/living/user, params) //add components directly to the ark
-	if(!is_servant_of_ratvar(user) || !still_needs_components())
-		return ..()
-	if(istype(I, /obj/item/clockwork/component))
-		var/obj/item/clockwork/component/C = I
-		if(required_components[C.component_id])
-			required_components[C.component_id]--
-			to_chat(user, "<span class='notice'>You add [C] to [src].</span>")
-			user.drop_item()
-			qdel(C)
-		else
-			to_chat(user, "<span class='notice'>[src] has enough [get_component_name(C.component_id)][C.component_id != REPLICANT_ALLOY ? "s":""].</span>")
-		return 1
-	else if(istype(I, /obj/item/clockwork/slab))
-		var/obj/item/clockwork/slab/S = I
-		var/used_components = FALSE
-		var/used_all = TRUE
-		for(var/i in S.stored_components)
-			if(required_components[i])
-				var/to_use = min(S.stored_components[i], required_components[i])
-				required_components[i] -= to_use
-				S.stored_components[i] -= to_use
-				if(to_use)
-					used_components = TRUE
-				if(S.stored_components[i])
-					used_all = FALSE
-		if(used_components)
-			update_slab_info(S)
-			user.visible_message("<span class='notice'>[user][used_all ? "":" partially"] empties [S] into [src].</span>", \
-			"<span class='notice'>You offload [used_all ? "all":"some"] of your slab's components into [src].</span>")
-		return 1
-	else
-		return ..()
-
-/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/still_needs_components()
-	for(var/i in required_components)
-		if(required_components[i])
-			return TRUE
-
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
 	. = "IMMINENT"
 	if(!obj_integrity)
@@ -155,21 +114,14 @@
 	..()
 	icon_state = initial(icon_state)
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		if(still_needs_components())
-			to_chat(user, "<span class='big'><b>Components required until activation:</b></span>")
-			for(var/i in required_components)
-				if(required_components[i])
-					to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
-					<span class='[get_component_span(i)]_large'>[required_components[i]]</span>")
-		else
-			to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
-			switch(progress_in_seconds)
-				if(-INFINITY to GATEWAY_REEBE_FOUND)
-					to_chat(user, "<span class='heavy_brass'>It's still opening.</span>")
-				if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-					to_chat(user, "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>")
-				if(GATEWAY_RATVAR_COMING to INFINITY)
-					to_chat(user, "<span class='heavy_brass'>Ratvar is coming through the gateway!</span>")
+		to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
+		switch(progress_in_seconds)
+			if(-INFINITY to GATEWAY_REEBE_FOUND)
+				to_chat(user, "<span class='heavy_brass'>It's still opening.</span>")
+			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
+				to_chat(user, "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>")
+			if(GATEWAY_RATVAR_COMING to INFINITY)
+				to_chat(user, "<span class='heavy_brass'>Ratvar is coming through the gateway!</span>")
 	else
 		switch(progress_in_seconds)
 			if(-INFINITY to GATEWAY_REEBE_FOUND)
@@ -205,48 +157,29 @@
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
 				O.take_damage(50, BURN, "bomb")
 			O.update_icon()
-	if(still_needs_components())
-		if(!first_sound_played)
-			priority_announce("Massive energy anomaly detected on short-range scanners. Attempting to triangulate location...", "Anomaly Alert")
-			sound_to_playing_players(volume = 10, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', 1))
-			first_sound_played = TRUE
-		make_glow()
-		glow.icon_state = "clockwork_gateway_components"
-		var/used_components = FALSE
-		for(var/i in required_components)
-			if(required_components[i])
-				var/to_use = min(GLOB.clockwork_component_cache[i], required_components[i])
-				required_components[i] -= to_use
-				GLOB.clockwork_component_cache[i] -= to_use
-				if(to_use)
-					used_components = TRUE
-		if(used_components)
-			update_slab_info()
-		if(still_needs_components())
-			return
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
-			if(!second_sound_played)
+			if(!first_sound_played)
 				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
 				sound_to_playing_players(volume = 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', 1))
-				second_sound_played = TRUE
+				first_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-			if(!third_sound_played)
+			if(!second_sound_played)
 				var/area/gate_area = get_area(src)
 				priority_announce("Location of massive energy anomaly has been triangulated. Location: [gate_area.map_name].", "Anomaly Alert")
 				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
 				sound_to_playing_players(volume = 35, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', 1))
-				third_sound_played = TRUE
+				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
-			if(!fourth_sound_played)
+			if(!third_sound_played)
 				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
 				sound_to_playing_players(volume = 40, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', 1))
-				fourth_sound_played = TRUE
+				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
 		if(GATEWAY_RATVAR_ARRIVAL to INFINITY)

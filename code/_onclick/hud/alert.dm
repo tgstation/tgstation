@@ -485,19 +485,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		else
 			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
 		textlist += "<b>[GLOB.clockwork_caches ? "[GLOB.clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
-		<b>[GLOB.clockwork_construction_value]</b> Construction Value.<br>"
-		textlist += "<b>[Floor(servants * 0.2)]</b> Tinkerer's Daemons can be active at once. <b>[LAZYLEN(GLOB.active_daemons)]</b> are active.<br>"
+		<b>[GLOB.clockwork_construction_value]</b> Construction Value.<br>\
+		<b><font color=#1E8CE1>[GLOB.clockwork_vitality]</font></b> Vitality.<br>\
+		<b>[Floor(servants * 0.2)]</b> Tinkerer's Daemons can be active at once. <b>[LAZYLEN(GLOB.active_daemons)]</b> are active.<br>"
 		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			var/area/gate_area = get_area(G)
-			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
-			if(G.still_needs_components())
-				textlist += "Ark Components required:<br>"
-				for(var/i in G.required_components)
-					if(G.required_components[i])
-						textlist += "[get_component_icon(i)] <b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
-				textlist += "<br>"
-			else
-				textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
+			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>\
+			Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
 			break
 		if(unconverted_ais_exist)
 			if(unconverted_ais_exist > 1)

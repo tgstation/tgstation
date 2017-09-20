@@ -6,14 +6,13 @@
 /datum/clockwork_scripture/create_object/ark_of_the_clockwork_justiciar
 	descname = "Structure, Win Condition"
 	name = "Ark of the Clockwork Justiciar"
-	desc = "Tears apart a rift in spacetime to Reebe, the Celestial Derelict, using a massive amount of components.\n\
-	This gateway will, after some time, call forth Ratvar from his exile and massively empower all scriptures and tools."
+	desc = "Tears apart a rift in spacetime to Reebe, the Celestial Derelict. This gateway will, after some time, call forth Ratvar from his exile and massively empower all scriptures and tools."
 	invocations = list("ARMORER! FRIGHT! AMPERAGE! VANGUARD! I CALL UPON YOU!!", \
 	"THE TIME HAS COME FOR OUR MASTER TO BREAK THE CHAINS OF EXILE!!", \
 	"LEND US YOUR AID! ENGINE COMES!!")
 	channel_time = 150
 	consumed_components = list(BELLIGERENT_EYE = ARK_SUMMON_COST, VANGUARD_COGWHEEL = ARK_SUMMON_COST, GEIS_CAPACITOR = ARK_SUMMON_COST, REPLICANT_ALLOY = ARK_SUMMON_COST, HIEROPHANT_ANSIBLE = ARK_SUMMON_COST)
-	invokers_required = 6
+	invokers_required = 4
 	multiple_invokers_used = TRUE
 	object_path = /obj/structure/destructible/clockwork/massive/celestial_gateway
 	creator_message = null

@@ -105,7 +105,7 @@
 		animate(G, transform = matrix()*2, alpha = 0, time = 8, easing = EASE_OUT)
 		animate(T, transform = matrix()*2, alpha = 0, time = 8, easing = EASE_OUT)
 		M.visible_message("<span class='warning'>[src] snaps into glowing pieces and dissipates!</span>")
-		M.AdjustStun(-130 + (apply_time - world.time), 1, 1) //remove exactly as much stun as was applied
+		M.AdjustStun(min(-130 + (apply_time - world.time), 0), 1, 1) //remove exactly as much stun as was applied
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			C.silent = max(C.silent - 7, 0)
