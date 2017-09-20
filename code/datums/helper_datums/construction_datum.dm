@@ -203,7 +203,7 @@
 	else if(state[SPAWN])
 		var/spawntype=state[SPAWN]
 		var/atom/A = new spawntype(holder.loc)
-		if(AMOUNT in state)
+		if(state[AMOUNT])
 			if(istype(A,/obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C=A
 				C.amount=state[AMOUNT]
