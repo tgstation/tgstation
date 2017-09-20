@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(cinematics)
 
 /datum/cinematic/Destroy()
 	GLOB.cinematics -= src
-	qdel(screen)
+	QDEL_NULL(screen)
 	for(var/mob/M in locked)
 		M.notransform = FALSE
 	return ..()
