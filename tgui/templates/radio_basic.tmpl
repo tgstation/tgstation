@@ -1,0 +1,110 @@
+<!-- 
+Title: Basic Radio UI
+Used In File(s): /code/game/objects/item/devices/radio/radio.dm
+-->
+<head>
+	<style type="text/css">
+		.radio					{color: #008000;}
+		.deptradio				{color: #993399;}
+		.comradio				{color: #395A9A;}
+		.syndradio				{color: #6D3F40;}
+		.centradio				{color: #5C5C8A;}
+		.airadio				{color: #FF00FF;}
+		.secradio				{color: #A30000;}
+		.engradio				{color: #A66300;}
+		.medradio				{color: #008160;}
+		.sciradio				{color: #993399;}
+		.supradio				{color: #7F6539;}
+		.srvradio				{color: #6eaa2c;}
+	</style>
+</head>
+
+
+
+{{if data.useSyndMode}}
+	{{:helper.syndicateMode()}}
+{{/if}}
+
+<div class="item">
+	<div class="itemLabelWide">
+		Microphone
+	</div>
+	<div class="itemContentMedium">
+		{{if data.mic_cut}}
+			{{:helper.link('On', null, null, 'disabled')}}
+			{{:helper.link('Off', null, null, 'disabled')}}
+		{{else}}
+			{{:helper.link('On', null, {'talk' : 0}, data.mic_status ? 'selected' : null)}}
+			{{:helper.link('Off', null, {'talk' : 1}, data.mic_status ? null : 'selected')}}
+		{{/if}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabelWide">
+		Speaker
+	</div>
+	<div class="itemContentMedium">
+		{{if data.spk_cut}}
+			{{:helper.link('On', null, null, 'disabled')}}
+			{{:helper.link('Off', null, null, 'disabled')}}
+		{{else}}
+			{{:helper.link('On', null, {'listen' : 0}, data.speaker ? 'selected' : null)}}
+			{{:helper.link('Off', null, {'listen' : 1}, data.speaker ? null : 'selected')}}
+		{{/if}}
+	</div>
+</div>
+
+{{if data.has_subspace}}
+	<div class="item">
+		<div class="itemLabelWide">
+			Subspace Transmission:
+		</div>
+		<div class="itemContentMedium">
+			{{:helper.link('On', null, {'mode' : 1}, data.subspace ? 'selected' : null)}}
+			{{:helper.link('Off', null, {'mode' : 0}, data.subspace ? null : 'selected')}}
+		</div>
+	</div>
+{{/if}}
+		
+{{if data.has_loudspeaker}}
+	<div class="item">
+		<div class="itemLabelWide">
+			Loudspeaker:
+		</div>
+		<div class="itemContentMedium">
+			{{:helper.link('On', null, {'shutup' : 0}, data.loudspeaker ? 'selected' : null)}}
+			{{:helper.link('Off', null, {'shutup' : 1}, data.loudspeaker ? null : 'selected')}}
+		</div>
+	</div>
+{{/if}}
+
+<div class="item">
+	<div class="itemLabelWide">
+		Frequency: {{:data.freq}}
+	</div>
+	<div class="itemContentMedium">
+		{{:helper.link('--', null, {'freq' : -10})}}
+		{{:helper.link('-', null, {'freq' : -2})}}
+		{{:helper.link('+', null, {'freq' : 2})}}
+		{{:helper.link('++', null, {'freq' : 10})}}
+	</div>
+</div>
+
+{{if data.chan_list_len >= 1}}
+	<h3>Channels</h3>
+	<div class="item">
+	{{for data.chan_list}}
+		<div class="itemLabelWide">
+			<span class='{{:value.chan_span}}'>&#9724</span>{{:value.display_name}}
+		</div>
+		<div class="itemContentMedium">
+			{{if value.secure_channel}}
+				{{:helper.link('On', null, {'ch_name' : value.chan, 'listen' : value.sec_channel_listen}, value.sec_channel_listen ? null : 'selected')}}
+				{{:helper.link('Off', null, {'ch_name' : value.chan, 'listen' : value.sec_channel_listen}, value.sec_channel_listen ? 'selected' : null)}}
+			{{else}}
+				{{:helper.link('Switch', null, {'spec_freq' : value.chan}, data.rawfreq == value.chan ? 'selected' : null)}}
+			{{/if}}
+		</div>
+	{{/for}}
+{{/if}}

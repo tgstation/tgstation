@@ -1,0 +1,32 @@
+{{if data.dos_crashed}}
+	<h2>NETWORK BUFFERS OVERLOADED</h2>
+	<h3>Overload Recovery Mode</h3>
+	<i>This system is suffering temporary outage due to overflow of traffic buffers. Until buffered traffic is processed, all further requests will be dropped. Frequent occurences of this error may indicate insufficient hardware capacity of your network. Please contact your network planning department for instructions on how to resolve this issue.</i>
+	<h3>ADMINISTRATIVE OVERRIDE</h3>
+	<b> CAUTION - Data loss may occur </b>
+	{{:helper.link('Purge buffered traffic', null, { 'restart' : 1 })}}
+{{else}}
+<div class="itemLabel">
+	Relay status: 
+</div>
+<div class="itemContent">
+	{{if data.enabled}}
+		{{:helper.link('ENABLED', null, { 'toggle' : 1 })}}
+	{{else}}
+		{{:helper.link('DISABLED', null, { 'toggle' : 1 })}}
+	{{/if}}
+	
+</div>	
+<div class="itemLabel">
+	Network buffer status: 
+</div>
+<div class="itemContent">
+	{{:data.dos_overload}} / {{:data.dos_capacity}} GQ
+</div>
+<div class="itemLabel">
+	Options: 
+</div>
+<div class="itemContent">
+	{{:helper.link('Purge network blacklist', null, { 'purge' : 1 })}}
+</div>
+{{/if}}

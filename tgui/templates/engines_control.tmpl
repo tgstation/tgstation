@@ -1,0 +1,111 @@
+<div class="item">
+    {{:helper.link('Overall info', 'note', {'state' :'status'}, null, data.state == 'status' ? 'selected' : null)}}
+    {{:helper.link('Details', 'note', {'state' : 'engines'}, null, data.state == 'engines' ? 'selected' : null)}}
+</div>
+<div class="item">
+	<div class='item'>
+		<div class="itemLabel">
+			<span class='average'>Global controls:</span>
+		</div>
+		<div class="itemContent">
+			{{:helper.link(data.global_state ? 'Shut all down' : 'Power all up', 'power', {'global_toggle' : 1}, null, data.global_state ? 'selected' : null)}}
+		</div>
+	</div>
+	<div class='item'>
+		<div class="itemLabel">
+			<span class='average'>Thrust limit:</span>
+		</div>
+		<div class="itemContent">
+			{{:helper.link('', 'circle-plus', { 'global_limit' : 0.1}, null, null)}}
+			{{:helper.link(data.global_limit+'%', null, { 'set_global_limit' : 1 }, null, null)}}
+			{{:helper.link('', 'circle-minus', { 'global_limit' : -0.1}, null, null)}}
+		</div>
+	</div>
+	<div class='item'>
+		<div class="itemLabel">
+			<span class='average'>Total thrust:</span>
+		</div>
+		<div class="itemContent">
+			<span class='white'>{{:data.total_thrust}}</span>
+		</div>
+	</div>
+</div>
+{{if data.state == "engines"}}
+	{{if data.engines_info}}
+		{{for data.engines_info}}
+			<div class='item'>
+				<div class="itemLabel">
+					<span class='white'>Engine #{{:(index + 1)}}:</span>
+				</div>
+				<div class="itemContent">
+						{{:helper.link(value.eng_on ? 'Shutdown' : 'Power up', 'power', { 'toggle' : 1, 'engine' : value.eng_reference }, null, value.eng_on ? 'selected' : null)}}
+				</div>
+			</div>
+			<div class='statusDisplay'>
+			  <div class='item'>
+				<div class="itemLabel">
+					<span class='average'>Type:</span>
+				</div>
+				<div class="itemContent">
+					<span class='white'>{{:value.eng_type}}</span>
+				</div>
+			  </div>
+			  <div class='item'>
+				<div class="itemLabel">
+					<span class='average'>Status:</span>
+				</div>
+				<div class="itemContent">
+					<span class='{{:value.eng_on ? 'good' : 'bad'}}'>{{:value.eng_on ? 'Online' : 'Offline'}}</span><br>
+					<span class='white'>{{:value.eng_status}}</span>
+				</div>
+			  </div>
+			  <div class='item'>
+				<div class="itemLabel">
+					<span class='average'>Current thrust:</span>
+				</div>
+				<div class="itemContent">
+					<span class='white'>{{:value.eng_thrust}}</span>
+				</div>
+			  </div>
+			  <div class='item'>
+				<div class="itemLabel">
+					<span class='average'>Thrust limit:</span>
+				</div>
+				<div class="itemContent">
+					{{:helper.link('', 'circle-plus', { 'limit' : 0.1, 'engine' : value.eng_reference }, null, null)}}
+					{{:helper.link(value.eng_thrust_limiter+'%', null, { 'set_limit' : 1, 'engine' : value.eng_reference }, null, null)}}
+					{{:helper.link('', 'circle-minus', { 'limit' : -0.1, 'engine' : value.eng_reference }, null, null)}}
+				</div>
+			  </div>
+		  </div>
+		{{/for}}
+	{{/if}}
+{{/if}}
+{{if data.state == "status"}}
+	{{if data.engines_info}}
+		{{for data.engines_info}}
+			<div class='block'>
+				<div class='item'>
+					<div class="itemLabel">
+						<span class='white'>Engine #{{:(index + 1)}}:</span>
+					</div>
+					<div class="itemContent">
+						{{:helper.link(value.eng_on ? 'Shutdown' : 'Power up', 'power', { 'toggle' : 1, 'engine' : value.eng_reference }, null, value.eng_on ? 'selected' : null)}}
+					</div>
+				</div>
+				<div class='item'>
+					<div class="itemLabel">
+						<span class='average'>Thrust:</span>
+						<br>
+						<span class='average'>Thrust limit:</span>
+					</div>
+					<div class="itemContent">
+						<span class='white'>{{:value.eng_thrust}}</span>
+						<br>
+						<span class='white'>{{:value.eng_thrust_limiter}}%</span>
+					</div>
+				</div>
+			</div>
+		{{/for}}
+	{{/if}}
+{{/if}}

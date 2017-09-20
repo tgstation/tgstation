@@ -1,0 +1,83 @@
+{{if !data.is_ai}}
+	<div class='notice'>
+		<div class="itemContentSmall" style="width: 180px">
+			Emergency Self-Destruct:
+		</div>
+		<div class="itemContentFull">
+			{{if data.safety}}
+				{{:helper.link('ARM', 'unlocked', {'arm' : 1})}}
+				{{:helper.link('DETONATE', 'radiation', {'nuke' : 1}, 'disabled')}}
+			{{else}}
+				{{:helper.link('DISARM', 'locked', {'arm' : 1})}}
+				{{:helper.link('DETONATE', 'radiation', {'nuke' : 1}, null, 'redButton')}}
+			{{/if}}
+		</div>
+		<div class="clearBoth"></div>
+	</div>
+{{/if}}
+{{for data.robots}}
+	<hr>
+	<div class='item'>
+		<h2>{{:value.name}}</h2>
+		<h3>Information</h3>
+		<span class="itemLabel">
+			Status: 
+		</span>
+		<span class="itemContent">
+			{{:value.status}}
+		</span>
+		<span class="itemLabel">
+			Master AI: 
+		</span>
+		<span class="itemContent">
+			{{:value.master_ai}}
+		</span>		
+		<span class="itemLabel">
+			Module: 
+		</span>
+		<span class="itemContent">
+			{{:value.module}}
+		</span>		
+
+		{{if value.hackable}}
+			<span class="itemLabel">
+				Safeties: 
+			</span>
+			<span class="itemContent">
+				ENABLED
+			</span>
+		{{else value.hacked}}
+			<span class="itemLabel">
+				Safeties: 
+			</span>
+			<span class="itemContent">
+				DISABLED
+			</span>
+		{{/if}}
+		<h3>Power Cell</h3>
+		{{if value.cell}}
+			<span class="itemLabel">
+				Rating : 
+			</span>
+			<span class="itemContent">
+				{{:value.cell_capacity}}
+			</span>
+			{{:helper.displayBar(value.cell_percentage, 0, 100, (value.cell_percentage >= 50) ? 'good' : (value.cell_percentage >= 25) ? 'average' : 'bad')}}
+			<b> {{:value.cell_percentage}} %</b>	
+		{{else}}
+			<b><i>Not Installed</i></b>
+			{{:helper.displayBar(100, 0, 100, 'bad')}}
+			<b> N/A %</b>
+		{{/if}}
+		<h3>Actions</h3>
+			{{if value.status == "Operational"}}
+				{{:helper.link('Lockdown', 'locked', {'lockdown' : value.name})}}
+			{{else}}
+				{{:helper.link('Unlock', 'unlocked', {'lockdown' : value.name})}}
+			{{/if}}
+				{{:helper.link('Self-Destruct', 'radiation', {'detonate' : value.name}, null, 'redButton')}}
+			{{if value.hackable}}
+				{{:helper.link('Hack', 'calculator', {'hack' : value.name}, null, 'redButton')}}
+			{{/if}}
+	</div>
+{{/for}}

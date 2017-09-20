@@ -1,0 +1,123 @@
+<div class="item">
+  <div class="itemContent">
+    {{:helper.link('Close', 'gear', {'close' : '1'}, null, 'fixedLeft')}}
+  </div>
+</div>
+
+<div class="item">
+  <h2>Environmental Conditions</h2>
+</div>
+<div class="item">
+  <div class="itemLabel">
+    Power:
+  </div>
+  <div class="itemContent">
+    {{:helper.link('On', 'power', { 'power' : 1 }, !data.dish_inserted ? 'disabled' : data.on ? 'selected' : null)}}{{:helper.link('Off', 'close', { 'power' : 1 }, data.on ? null : 'selected')}}
+  </div>
+</div>
+<div class='item'>
+  {{:helper.link('Add Radiation', 'radiation', {'rad' : 1})}}
+  {{:helper.link('Flush System', 'trash', {'flush' : 1}, data.system_in_use ? null : 'disabled')}}
+</div>
+
+<div class="statusDisplay" style="height: 100px; overflow: auto;">
+  <div class='item'>
+    <div class="itemLabel">
+      <span class='good'>Virus Food:</span>
+    </div>
+    <div class="itemContent">
+      {{:helper.displayBar(data.food_supply, 0, 100, 'good', data.food_supply)}}
+    </div>
+  </div>
+  <div class='item'>
+    <div class="itemLabel">
+      <span class='good'>Radiation Level:</span>
+    </div>
+    <div class="itemContent">
+      {{:helper.displayBar(data.radiation, 0, 100, (data.radiation >= 50) ? 'bad' : (data.growth >= 25) ? 'average' : 'good')}}
+      <br/>
+      {{:helper.formatNumber(data.radiation * 10000)}} <acronym title='In microSieverts'>&micro;Sv</acronym>
+    </div>
+  </div>
+  <div class='item'>
+    <div class="itemLabel">
+      <span class='good'>Toxicity:</span>
+    </div>
+    <div class="itemContent">
+      {{:helper.displayBar(data.toxins, 0, 100, (data.toxins >= 50) ? 'bad' : (data.toxins >= 25) ? 'average' : 'good', data.toxins + '%')}}
+    </div>
+  </div>
+</div>
+
+<div class="item">
+  <h2>Chemicals</h2>
+</div>
+<div class='item'>
+  {{:helper.link('Eject Chemicals', 'eject', { 'ejectchem' : 1 }, data.chemicals_inserted ? null : 'disabled')}}
+  {{:helper.link('Breed Virus', 'circle-arrow-s', { 'virus' : 1 }, data.can_breed_virus ? null : 'disabled')}}
+</div>
+
+{{if data.chemicals_inserted}}
+  <div class='item'>
+    <div class='itemLabel'>
+      Volume:
+    </div>
+    <div class='itemContent'>
+      {{:helper.displayBar(data.chemical_volume, 0, data.max_chemical_volume, 'good', data.chemical_volume + ' / ' + data.max_chemical_volume)}}
+    </div>
+  </div>
+  <div class='item'>
+    <div class='itemLabel'>
+      Breeding Environment:
+    </div>
+    <div class='itemContent'>
+      <span class='{{:data.can_breed_virus ? "good" : "average"}}'>
+        {{:!data.dish_inserted ? 'N/A' : data.can_breed_virus ? 'Suitable' : 'No hemolytic samples detected'}}
+      </span>
+      {{if data.blood_already_infected}}
+        <br/>
+        <span class='bad'><i>CAUTION: Viral infection detected in blood sample.</i></span>
+      {{/if}}
+    </div>
+  </div>
+{{else}}
+  <div class='item'>
+    <span class='average'>No chemicals inserted.</span>
+  </div>
+{{/if}}
+
+<div class="item">
+  <h2>Virus Dish</h2>
+</div>
+<div class='item'>
+  {{:helper.link('Eject Dish', 'eject', {'ejectdish' : 1}, data.dish_inserted ? null : 'disabled')}}
+</div>
+
+{{if data.dish_inserted}}
+  {{if data.virus}}
+  <div class="item">
+    <div class="itemLabel">
+      <b>Growth Density:</b>
+    </div>
+    <div class="itemContent">
+      {{:helper.displayBar(data.growth, 0, 100, (data.growth >= 50) ? 'good' : (data.growth >= 25) ? 'average' : 'bad', data.growth + '%' )}}
+    </div>
+  </div>
+  <div class='item'>
+    <div class='itemLabel'>
+      <b>Infection Rate:</b>
+    </div>
+    <div class='itemContent'>
+      {{:data.analysed ? data.infection_rate : "Unknown"}}
+    </div>
+  </div>
+  {{else}}
+    <div class="item">
+      <span class='average'>No virus detected.</span>
+    </div>
+  {{/if}}
+{{else}}
+  <div class="item">
+    <span class='average'>No dish loaded.</span>
+  </div>
+{{/if}}

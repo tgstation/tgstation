@@ -1,0 +1,100 @@
+<h3>Pump Status</h3>
+<div class="item">
+	<div class="itemLabel">
+		Tank Pressure:
+	</div>
+	<div class="itemContent">
+		{{:data.tankPressure}} kPa
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Port Status:
+	</div>
+	<div class="itemContent">
+		{{:data.portConnected ? '<span class="good">Connected</span>' : '<span class="average">Disconnected</span>'}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Load:
+	</div>
+	<div class="itemContent">
+		{{:data.powerDraw}} W
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Cell Charge:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.cellCharge, 0, data.cellMaxCharge)}}
+	</div>
+</div>
+
+<h3>Holding Tank Status</h3>
+{{if data.hasHoldingTank}}
+	<div class="item">
+		<div class="itemLabel">
+			Tank Label:
+		</div>
+		<div class="itemContent">
+			<div style="float: left; width: 180px;">{{:data.holdingTank.name}}</div> {{:helper.link('Eject', 'eject', {'remove_tank' : 1})}}
+		</div>
+	</div>
+
+	<div class="item">
+		<div class="itemLabel">
+			Tank Pressure:
+		</div>
+		<div class="itemContent">
+			{{:data.holdingTank.tankPressure}} kPa
+		</div>
+	</div>
+{{else}}
+	<div class="item"><span class="average"><i>No holding tank inserted.</i></span></div>
+	<div class="item">&nbsp;</div>
+{{/if}}
+
+
+<h3>Power Regulator Status</h3>
+<div class="item">
+	<div class="itemLabel">
+		Target Pressure:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.targetpressure, data.minpressure, data.maxpressure)}}
+		<div style="clear: both; padding-top: 4px;">
+			{{:helper.link('-', null, {'pressure_adj' : -1000}, (data.targetpressure > data.minpressure) ? null : 'disabled')}}
+			{{:helper.link('-', null, {'pressure_adj' : -100}, (data.targetpressure > data.minpressure) ? null : 'disabled')}}
+			{{:helper.link('-', null, {'pressure_adj' : -10}, (data.targetpressure > data.minpressure) ? null : 'disabled')}}
+			{{:helper.link('-', null, {'pressure_adj' : -1}, (data.targetpressure > data.minpressure) ? null : 'disabled')}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.targetpressure}} kPa&nbsp;</div>
+			{{:helper.link('+', null, {'pressure_adj' : 1}, (data.targetpressure < data.maxpressure) ? null : 'disabled')}}
+			{{:helper.link('+', null, {'pressure_adj' : 10}, (data.targetpressure < data.maxpressure) ? null : 'disabled')}}
+			{{:helper.link('+', null, {'pressure_adj' : 100}, (data.targetpressure < data.maxpressure) ? null : 'disabled')}}
+			{{:helper.link('+', null, {'pressure_adj' : 1000}, (data.targetpressure < data.maxpressure) ? null : 'disabled')}}
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Power Switch:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('On', 'unlocked', {'power' : 1}, data.on ? 'selected' : null)}} {{:helper.link('Off', 'locked', {'power' : 1}, data.on ? null : 'selected')}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Pump Direction:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Out', 'arrowreturn-1-e', {'direction' : 1}, data.pump_dir ? 'selected' : null)}} {{:helper.link('In', 'arrowreturn-1-w', {'direction' : 1}, data.pump_dir ? null : 'selected')}}
+	</div>
+</div>

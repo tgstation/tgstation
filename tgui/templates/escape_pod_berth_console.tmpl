@@ -1,0 +1,42 @@
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemLabel">
+			Escape Pod Status:
+		</div>
+		<div class="itemContent">
+			{{if data.docking_status == "docked"}}
+				{{if data.armed}}
+					<span class="average">ARMED</span>
+				{{else}}
+					<span class="good">SYSTEMS OK</span>
+				{{/if}}
+			{{else data.docking_status == "undocking"}}
+				<span class="average">EJECTING-STAND CLEAR!</span>
+			{{else data.docking_status == "undocked"}}
+				<span class="idle">POD EJECTED</span>
+			{{else data.docking_status == "docking"}}
+				<span class="good">INITIALIZING...</span>
+			{{else}}
+				<span class="bad">ERROR</span>
+			{{/if}}
+		</div>
+	</div>
+</div>
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemContent" style="padding-top: 2px; width: 100%">
+		{{if data.armed}}
+			{{if data.docking_status == "docked"}}
+				{{:helper.link('Force exterior door', 'alert', {'command' : 'force_door'}, data.override_enabled ? null : 'disabled', null)}}
+				{{:helper.link('Override', 'alert', {'command' : 'toggle_override'}, null, data.override_enabled ? 'redButton' : null)}}
+			{{else}}
+				{{:helper.link('Force exterior door', 'alert', {'command' : 'force_door'}, data.override_enabled ? null : 'disabled', data.override_enabled ? 'redButton' : null)}}
+				{{:helper.link('Override', 'alert', {'command' : 'toggle_override'}, null, data.override_enabled ? 'redButton' : 'yellowButton')}}
+			{{/if}}
+		{{else}}
+			{{:helper.link('Force exterior door', 'alert', {'command' : 'force_door'}, 'disabled', null)}}
+			{{:helper.link('Override', 'alert', {'command' : 'toggle_override'}, 'disabled', null)}}
+		{{/if}}
+		</div>
+	</div>
+</div>

@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'/>
-    <meta charset='utf-8'/>
-    <script>
-      window.update = function (dataString) {
-        var data = JSON.parse(dataString);
-        if (window.tgui) {
-          window.tgui.set("config", data.config);
-          if (typeof data.data !== 'undefined') {
-            window.tgui.set("data", data.data);
-            window.tgui.animate("adata", data.data);
-          }
-        }
-      };
-    </script>
-    <link rel='stylesheet' href='tgui.css'/>
-    <script id='data' type='application/json' data-ref='[ref]'>{}</script>
-    <script defer src='tgui.js'></script>
-  </head>
-  <body class='[style]'>
-    <div id='container' class='container'>
-      <div class='notice'>
-        <span>Loading...</span><br/>
-      </div>
-    </div>
-    <noscript>
-      <div class='notice'>
-        <span>Javascript is required in order to use this interface.</span>
-        <span>Please enable Javascript and restart the game.</span>
-      </div>
-    </noscript>
-  </body>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<script type='text/javascript'>
+			function receiveUpdateData(jsonString)
+			{
+				// We need both jQuery and NanoStateManager to be able to recieve data
+				// At the moment any data received before those libraries are loaded will be lost
+				if (typeof NanoStateManager != 'undefined' && typeof jQuery != 'undefined')
+				{
+					NanoStateManager.receiveUpdateData(jsonString);
+				}
+				//else
+				//{
+				//	alert('browser.recieveUpdateData failed due to jQuery or NanoStateManager being unavailiable.');
+				//}
+			}
+		</script>
+		[head_content]
+	</head>
+	<body scroll=auto data-template-data='[template_data_json]' data-url-parameters='[url_parameters_json]' data-initial-data='[initial_data_json]'>
+		<div id='uiLayout'>
+		</div>
+		<noscript>
+			<div id='uiNoScript'>
+				<h2>JAVASCRIPT REQUIRED</h2>
+				<p>Your Internet Explorer's Javascript is disabled (or broken).<br/>
+				Enable Javascript and then open this UI again.</p>
+			</div>
+		</noscript>
+	</body>
 </html>

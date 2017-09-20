@@ -1,0 +1,66 @@
+{{if data.adminmode}}
+	<h1>ADMINISTRATIVE MODE</h1>
+{{/if}}
+
+{{if data.title}}
+	<div class="itemLabel">
+		Current channel: 
+	</div>
+	<div class="itemContent">
+		{{:data.title}}
+	</div>
+	<div class="itemLabel">
+		Operator access: 
+	</div>
+	<div class="itemContent">
+		{{if data.is_operator}}
+			<b>Enabled</b>
+		{{else}}
+			<b>Disabled</b>
+		{{/if}}
+	</div>
+	<div class="itemLabel">
+		Controls: 
+	</div>
+	<div class="itemContent">
+		<table>
+			<tr><td>{{:helper.link("Send message", null, {'PRG_speak' : 1})}}
+			<tr><td>{{:helper.link("Change nickname", null, {'PRG_changename' : 1})}}
+			<tr><td>{{:helper.link("Toggle administration mode", null, {'PRG_toggleadmin' : 1})}}
+			<tr><td>{{:helper.link("Leave channel", null, {'PRG_leavechannel' : 1})}}
+			<tr><td>{{:helper.link("Save log to local drive", null, {'PRG_savelog' : 1})}}
+			{{if data.is_operator}}
+				<tr><td>{{:helper.link("Rename channel", null, {'PRG_renamechannel' : 1})}}
+				<tr><td>{{:helper.link("Set password", null, {'PRG_setpassword' : 1})}}
+				<tr><td>{{:helper.link("Delete channel", null, {'PRG_deletechannel' : 1})}}
+			{{/if}}
+		</table>
+	</div>		
+	<b>Chat Window</b>
+        <div class="statusDisplay" style="overflow: auto;">
+		<div class="item">
+			<div class="itemContent" style="width: 100%;">
+				{{for data.messages}}
+					{{:value.msg}}<br>
+				{{/for}}
+			</div>
+		</div>
+        </div>	
+ 	<b>Connected Users</b><br>
+	{{for data.clients}}
+		{{:value.name}}<br>
+	{{/for}}
+{{else}}
+	<b>Controls:</b>
+	<table>
+		<tr><td>{{:helper.link("Change nickname", null, {'PRG_changename' : 1})}}
+		<tr><td>{{:helper.link("New Channel", null, {'PRG_newchannel' : 1})}}
+		<tr><td>{{:helper.link("Toggle Administration Mode", null, {'PRG_toggleadmin' : 1})}}
+	</table>
+	<b>Available channels:</b>
+	<table>
+	{{for data.all_channels}}		
+		<tr><td>{{:helper.link(value.chan, null, {'PRG_joinchannel' : value.id})}}<br>
+	{{/for}}
+	</table>
+{{/if}}

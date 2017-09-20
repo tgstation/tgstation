@@ -1,0 +1,31 @@
+{{if data.detonating}}
+	<div class="notice" style="color: #000000;">
+		<h2 style="color: #000000;">CRYSTAL DELAMINATING</h2>
+		<h3 style="color: #000000;">Evacuate area immediately</h3>
+		<div class="clearBoth"></div>
+	</div>
+{{else}}
+	<h3>Crystal Integrity</h3>
+	{{:helper.displayBar(data.integrity_percentage, 0, 100, (data.integrity_percentage >= 90) ? 'good' : (data.integrity_percentage >= 25) ? 'average' : 'bad')}}
+	<b>{{:data.integrity_percentage}} %</b>
+	<h3>Environment</h3>
+	<span class="itemLabel">
+		Temperature:
+	</span>
+	<span class="itemContent">
+		{{:helper.displayBar(data.ambient_temp, 0, 10000, (data.ambient_temp >= 5000) ? 'bad' : (data.ambient_temp >= 4000) ? 'average' : 'good')}}
+		{{:data.ambient_temp}} K
+	</span>
+	<span class="itemLabel">
+		Pressure:
+	</span>
+	<span class="itemContent">
+		{{:data.ambient_pressure}} kPa
+	</span>
+	<span class="itemLabel">
+		Relative EER:
+	</span>
+	<span class="itemContent">
+		{{:data.energy}}
+	</span>
+{{/if}}

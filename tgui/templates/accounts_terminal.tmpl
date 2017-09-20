@@ -1,0 +1,167 @@
+<div class="item">
+  <div class="itemLabelNarrow">
+    <b>Machine</b>:
+  </div>
+  <div class="itemContent">
+    <span class="average">{{:data.machine_id}}</span>
+  </div>
+</div>
+<div class="item">
+  <div class="itemLabelNarrow">
+    <b>ID</b>:
+  </div>
+  <div class="itemContent">
+    {{:helper.link(data.id_card, 'eject', {'choice' : "insert_card"}, null, data.id_inserted ? 'fixedLeftWidest' : 'fixedLeft')}}
+  </div>
+</div>
+
+{{if data.access_level > 0}}
+  <div class='item'>
+    <h2>Menu</h2>
+  </div>
+  {{:helper.link('Home', 'home', {'choice' : 'view_accounts_list'}, !data.creating_new_account && !data.detailed_account_view ? 'disabled' : null, 'fixedLeft')}}
+  {{:helper.link('New Account', 'gear', {'choice' : 'create_account'}, data.creating_new_account ? 'disabled' : null, 'fixedLeft')}}
+  {{:helper.link('Print', 'print', {'choice' : 'print'}, data.creating_new_account ? 'disabled' : null, 'fixedLeft')}}
+
+  {{if data.creating_new_account}}
+    <div class='item'>
+      <h2>Create Account</h2>
+    </div>
+
+    <form name='create_account' action='?src={{:data.src}}' method='get'>
+      <input type='hidden' name='src' value='{{:data.src}}'>
+      <input type='hidden' name='choice' value='finalise_create_account'>
+      <div class='item'>
+        <div class='itemLabel'>
+          <b>Account Holder</b>:
+        </div>
+        <div class='itemContent'>
+          <input type='text' id='holder_name' name='holder_name'>
+        </div>
+      </div>
+      <div class='item'>
+        <div class='itemLabel'>
+          <b>Initial Deposit</b>:
+        </div>
+        <div class='itemContent'>
+          <input type='text' id='starting_funds' name='starting_funds'>
+        </div>
+      </div>
+      <div class='item'>
+        <input type='submit' value='Create'>
+      </div>
+    </form>
+  {{else}}
+    {{if data.detailed_account_view}}
+      <div class='item'>
+        <h2>Account Details</h2>
+      </div>
+
+      <div class='item'>
+        <div class="itemLabel">
+          <span class='average'><b>Account Number</b>:</span>
+        </div>
+        <div class="itemContent">
+          #{{:data.account_number}}
+        </div>
+      </div>
+
+      <div class='item'>
+        <div class="itemLabel">
+          <span class='average'><b>Holder</b>:</span>
+        </div>
+        <div class="itemContent">
+          {{:data.owner_name}}
+        </div>
+      </div>
+
+      <div class='item'>
+        <div class="itemLabel">
+          <span class='average'><b>Balance</b>:</span>
+        </div>
+        <div class="itemContent">
+          ${{:helper.formatNumber(data.money)}}
+        </div>
+      </div>
+
+      <div class='item'>
+        <div class="itemLabel">
+          <span class='average'><b>Status</b>:</span>
+        </div>
+        <div class="itemContent">
+          <span class='{{:data.suspended ? "bad" : "good"}}'>
+            {{:data.suspended ? "Suspended" : "Active"}}
+          </span>
+        </div>
+      </div>
+      <div class='item'>
+        {{:helper.link(data.suspended ? "Unsuspend" : "Suspend", 'gear', {'choice' : 'toggle_suspension'})}}
+      </div>
+
+      <div class="statusDisplay" style="overflow: auto;">
+        {{if data.transactions}}
+        <table style='width: 100%'>
+          <thead>
+            <tr>
+              <th><b>Timestamp</b></th>
+              <th><b>Target</b></th>
+              <th><b>Reason</b></th>
+              <th><b>Value</b></th>
+              <th><b>Terminal</b></th>
+            </th>
+          </thead>
+          <tbody>
+              {{for data.transactions}}
+                <tr>
+                    <td>{{:value.date}} {{:value.time}}</td>
+                    <td>{{:value.target_name}}</td>
+                    <td>{{:value.purpose}}</td>
+                    <td>{{:value.amount}}</td>
+                    <td>{{:value.source_terminal}}</td>
+                </tr>
+              {{/for}}
+          </tbody>
+        </table>
+        {{else}}
+          <span class='alert'>This account has no financial transactions on record for today.</span>
+        {{/if}}
+      </div>
+        <div class='item'>
+          <h2>CentCom Administrator</h2>
+        </div>
+        <div class='item'>
+          <div class='fixedLeft'>
+            Payroll:
+          </div>
+          {{:helper.link('Revoke', 'transferthick-e-w', {'choice' : 'revoke_payroll'}, data.account_number == data.station_account_number ? 'disabled' : null, 'linkDanger')}}
+        </div>
+        {{if data.access_level >= 2}}
+        <div class='item'>
+          <div class='fixedLeft'>
+            Silent Fund Adjustment:
+          </div>
+          {{:helper.link('Add', 'plus', {'choice' : 'add_funds'})}}
+          {{:helper.link('Remove', 'minus', {'choice' : 'remove_funds'})}}
+        </div>
+        {{/if}}
+    {{else}}
+
+      <div class='item'>
+        <h2>NanoTrasen Accounts</h2>
+      </div>
+      {{if data.accounts}}
+        <table style="width: 100%">
+          {{for data.accounts}}
+            <tr class='{{:value.suspended ? "bad" : ""}}'>
+              <td><b>{{:helper.link('#' + value.account_number, '', {'choice' : 'view_account_detail', 'account_index' : value.account_index})}}</b></td>
+              <td>{{:value.owner_name}}</td>
+              <td>{{:value.suspended}}</td>
+            </tr>
+          {{/for}}
+        </table>
+      {{else}}
+        <span class='alert'>There are no accounts available.</span>
+      {{/if}}
+    {{/if}}
+  {{/if}}
+{{/if}}

@@ -1,0 +1,77 @@
+<link href="spacemag.css" rel="stylesheet" type="text/css">
+{{if data.message}}
+<div class='item'>
+	{{:data.message}}
+	{{:helper.link('CLEAR', null, { "PRG_clearmessage" : 1 })}}
+</div>
+{{/if}}
+{{if data.article}}
+	Viewing: {{:data.title}}<br>
+	{{:helper.link('CLOSE', null, { "PRG_reset" : 1 })}}
+	{{:helper.link('SAVE', null, { "PRG_savearticle" : 1 })}}
+	<br><br>
+	{{if data.cover}}
+		<img src='{{:data.cover}}' class="cover" />
+	{{/if}}
+	{{:data.article}}
+{{else data.download_running}}
+	Downloading file...<br><br>
+	<div class='item'>
+		<div class='itemLabel'>
+			Progress:
+		</div>
+		<div class='itemContent'>
+			{{:helper.displayBar(data.download_progress, 0, data.download_maxprogress, 'good')}}
+			{{:data.download_progress}} / {{:data.download_maxprogress}} GQ
+		</div>
+		<div class='itemLabel'>
+			Download speed:
+		</div>
+		<div class='itemContent'>
+			{{:data.download_rate}} GQ/s
+		</div>
+		<div class='itemLabel'>
+			Controls:
+		</div>
+		<div class='itemContent'>
+			{{:helper.link('ABORT', null, { "PRG_reset" : 1 })}}
+		</div>
+	</div>
+{{else}}
+	<h3>Listing available files</h3>
+	<div class='item'>
+		<div class='itemLabel'>
+			Show archived files:
+		</div>
+		<div class='itemContent'>
+			{{if data.showing_archived}}
+				{{:helper.link('YES', null, { "PRG_toggle_archived" : 1 })}}
+			{{else}}
+				{{:helper.link('NO', null, { "PRG_toggle_archived" : 1 })}}
+			{{/if}}
+		</div>
+	</div>
+	<br><hr>
+	{{for data.all_articles}}
+		<div class='item'>
+			<div class='itemLabel'>
+				Name:
+			</div>
+			<div class='itemContent'>
+				{{:value.name}}
+			</div>
+			<div class='itemLabel'>
+				Size:
+			</div>
+			<div class='itemContent'>
+				{{:value.size}} GQ
+			</div>
+			<div class='itemLabel'>
+				Actions:
+			</div>
+			<div class='itemContent'>
+				{{:helper.link('OPEN', null, { "PRG_openarticle" : value.uid })}}
+			</div>
+		</div>
+	{{/for}}
+{{/if}}

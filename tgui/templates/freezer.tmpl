@@ -1,0 +1,62 @@
+<div class="item">
+	<div class="itemLabel">
+		Status:
+	</div>
+	<div class="itemContent">		
+		{{:helper.link('On', 'power', {'toggleStatus' : 1}, data.on ? 'selected' : null)}}{{:helper.link('Off', 'close', {'toggleStatus' : 1}, data.on ? null : 'selected')}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Power Level:
+	</div>
+	<div class="itemContent">		
+		{{:helper.link('1', null, {'setPower' :  20}, (data.powerSetting ==  20)? 'selected' : null)}}
+		{{:helper.link('2', null, {'setPower' :  40}, (data.powerSetting ==  40)? 'selected' : null)}}
+		{{:helper.link('3', null, {'setPower' :  60}, (data.powerSetting ==  60)? 'selected' : null)}}
+		{{:helper.link('4', null, {'setPower' :  80}, (data.powerSetting ==  80)? 'selected' : null)}}
+		{{:helper.link('5', null, {'setPower' : 100}, (data.powerSetting == 100)? 'selected' : null)}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Gas Pressure:
+	</div>
+	<div class="itemContent">		
+		{{:data.gasPressure}} kPa
+	</div>
+</div>
+
+<h3>Gas Temperature</h3>
+<div class="item">
+	<div class="itemLabel">
+		Current:
+	</div>
+	<div class="itemContent">		
+		{{:helper.displayBar(data.gasTemperature, data.minGasTemperature, data.maxGasTemperature, data.gasTemperatureClass)}}
+		<div class="statusValue">
+			<span class="{{:data.gasTemperatureClass}}">{{:data.gasTemperature}} K</span>
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Target:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.targetGasTemperature, data.minGasTemperature, data.maxGasTemperature)}}			
+		<div style="clear: both; padding-top: 4px;">
+			{{:helper.link('-', null, {'temp' : -100}, (data.targetGasTemperature > data.minGasTemperature) ? null : 'disabled')}}
+			{{:helper.link('-', null, {'temp' : -10}, (data.targetGasTemperature > data.minGasTemperature) ? null : 'disabled')}}
+			{{:helper.link('-', null, {'temp' : -1}, (data.targetGasTemperature > data.minGasTemperature) ? null : 'disabled')}}				
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.targetGasTemperature}} K&nbsp;</div>
+			{{:helper.link('+', null, {'temp' : 1}, (data.targetGasTemperature < data.maxGasTemperature) ? null : 'disabled')}}
+			{{:helper.link('+', null, {'temp' : 10}, (data.targetGasTemperature < data.maxGasTemperature) ? null : 'disabled')}}
+			{{:helper.link('+', null, {'temp' : 100}, (data.targetGasTemperature < data.maxGasTemperature) ? null : 'disabled')}}	
+		</div>
+	</div>
+</div>
+

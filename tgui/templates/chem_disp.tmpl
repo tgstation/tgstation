@@ -1,0 +1,76 @@
+<!-- 
+Title: Chem Dispenser 5000 UI 
+Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
+ -->
+<div class="item">
+	<div class="itemLabel">
+		Dispense:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('5', 'gear', {'amount' : 5}, (data.amount == 5) ? 'selected' : null)}}
+		{{:helper.link('10', 'gear', {'amount' : 10}, (data.amount == 10) ? 'selected' : null)}}
+		{{:helper.link('20', 'gear', {'amount' : 20}, (data.amount == 20) ? 'selected' : null)}}
+		{{:helper.link('30', 'gear', {'amount' : 30}, (data.amount == 30) ? 'selected' : null)}}
+		{{:helper.link('40', 'gear', {'amount' : 40}, (data.amount == 40) ? 'selected' : null)}}
+		<br/><br/>
+		{{:helper.link('--', '', {'amount' : data.amount-10})}}
+		{{:helper.link('-', '', {'amount' : data.amount-1})}}
+		<div style="float: left; width: 80px; text-align: center;">{{:data.amount}}</div>
+		{{:helper.link('+', '', {'amount' : data.amount+1})}}
+		{{:helper.link('++', '', {'amount' : data.amount+10})}}
+	</div>
+</div>
+<div class="item">&nbsp;</div>
+<div class="item">
+	<div class="itemContentWide" style="width: 100%;">
+		{{if data.chemicals.length}}
+			{{for data.chemicals}}
+				{{:helper.link(value.label + " ("+value.amount+")", 'circle-arrow-s', {"dispense":value.label}, null, 'fixedLeftWide')}}
+			{{/for}}
+		{{else}}
+			<span class='bad'>No cartridges installed!</span>
+		{{/if}}
+	</div>
+</div>
+<div class="item">&nbsp;</div>
+<div class="item">
+	<div class="itemLabel">
+		{{if data.glass}}
+			Glass
+		{{else}}
+			Beaker
+		{{/if}} Contents
+	</div>
+	<div class="itemContent">
+		{{:helper.link(data.glass ? 'Eject Glass' : 'Eject Beaker', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled', 'floatRight')}}
+	</div>
+</div>
+<div class="statusDisplay" style="min-height: 180px;">
+	<div class="item">
+		<div class="itemContent" style="width: 100%;">
+			{{if data.isBeakerLoaded}}
+				<b>Volume:&nbsp;{{:data.beakerCurrentVolume}}&nbsp;/&nbsp;{{:data.beakerMaxVolume}}</b><br>
+				{{for data.beakerContents}}
+					<span class="highlight">{{:value.volume}} units of {{:value.name}}</span><br>
+				{{empty}}
+					<span class="bad">
+						{{if data.glass}}
+							Glass
+						{{else}}
+							Beaker
+						{{/if}} is empty
+					</span>
+				{{/for}}
+			{{else}}
+				<span class="average"><i>
+					No 
+					{{if data.glass}}
+						Glass
+					{{else}}
+						Beaker
+					{{/if}} loaded
+				</i></span>
+			{{/if}}
+		</div>
+	</div>
+</div>

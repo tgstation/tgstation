@@ -1,0 +1,62 @@
+{{if data.error}}
+	<b>ERROR: {{:data.error}}</b>
+{{else}}
+	<h2>System Status</h2>
+	<div class="item">
+		<div class="itemLabel">
+			Current AI:
+		</div>
+		<div class="itemContent">
+			{{:data.ai_name}}
+		</div>
+		<div class="itemLabel">
+			Status:
+		</div>
+		<div class="itemContent">
+			{{if data.ai_isdead}}
+				Nonfunctional
+			{{else}}
+				Functional
+			{{/if}}
+		</div>
+		<div class="itemLabel">
+			System Integrity:
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.ai_integrity, 0, 100, (data.ai_integrity == 100) ? 'good' : (data.ai_integrity >= 50) ? 'average' : 'bad')}} {{:data.ai_integrity}}%
+		</div>
+		<div class="itemLabel">
+			Capacitor Status:
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.ai_capacitor, 0, 100, (data.ai_capacitor == 100) ? 'good' : (data.ai_capacitor >= 50) ? 'average' : 'bad')}} {{:data.ai_capacitor}}%
+		</div>
+		<div class="itemLabel">
+			Active Laws:
+		</div>
+		<div class="itemContent">
+			<table>
+				{{for data.ai_laws}}
+					<tr><td>{{:value.index}}: {{:value.text}}
+				{{/for}}
+			</table>
+		</div>
+	</div>
+	<h2>Operations</h2>
+	<div class="item">
+		<table>
+			<tr>
+			<td>Law Operations
+			<td>System Maintenance
+			<tr>
+			<td>{{:helper.link('Reset', null, {'PRG_resetLaws' : '1'})}}
+			<td>{{:helper.link('Reconstruct', null, {'PRG_beginReconstruction' : '1'}, data.ai_isdamaged ? null : 'disabled')}}
+			<tr>
+			<td>{{:helper.link('Add Freeform Law', null, {'PRG_addCustomSuppliedLaw' : '1'})}}
+			<tr>
+			<td>{{:helper.link('Default', null, {'PRG_uploadDefault' : '1'})}}
+			<tr>
+			<td>{{:helper.link('Purge', null, {'PRG_purgeAiLaws' : '1'}, null, 'redButton')}}
+		</table>
+	</div>
+{{/if}}

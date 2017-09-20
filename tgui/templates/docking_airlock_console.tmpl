@@ -1,0 +1,96 @@
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemLabel">
+			Docking Port Status:
+		</div>
+		{{if data.docking_status == "docked"}}
+			<div class="itemContent" style="float:left">
+				{{if !data.override_enabled}}
+					<span class="good" style="float:left">DOCKED</span>
+				{{else}}
+					<span class="bad" style="float:left">DOCKED-OVERRIDE ENABLED</span>
+				{{/if}}
+				<span style="float:right">
+					{{:helper.link('Override', 'alert', {'command' : 'toggle_override'}, null, data.override_enabled ? 'redButton' : null)}}
+				</span>
+			</div>
+		{{else data.docking_status == "docking"}}
+			<div class="itemContent" style="float:left">
+				{{if !data.override_enabled}}
+					<span class="average" style="float:left">DOCKING</span>
+				{{else}}
+					<span class="bad" style="float:left">DOCKING-OVERRIDE ENABLED</span>
+				{{/if}}
+				<span style="float:right">
+					{{:helper.link('Override', 'alert', {'command' : 'toggle_override'}, null, data.override_enabled ? 'redButton' : null)}}
+				</span>
+			</div>
+		{{else data.docking_status == "undocking"}}
+			<div class="itemContent" style="float:left">
+				{{if !data.override_enabled}}
+					<span class="average" style="float:left">UNDOCKING</span>
+				{{else}}
+					<span class="bad" style="float:left">UNDOCKING-OVERRIDE ENABLED</span>
+				{{/if}}
+				<span style="float:right">
+					{{:helper.link('Override', 'alert', {'command' : 'toggle_override'}, null, data.override_enabled ? 'redButton' : null)}}
+				</span>
+			</div>
+		{{else data.docking_status == "undocked"}}
+			<div class="itemContent" style="float:left">
+				{{if !data.override_enabled}}
+					<span class="idle" style="float:left">NOT IN USE</span>
+				{{else}}
+					<span class="bad" style="float:left">OVERRIDE ENABLED</span>
+				{{/if}}
+				<span style="float:right">
+					{{:helper.link('Override', 'alert', {'command' : 'toggle_override'}, null, data.override_enabled ? 'redButton' : null)}}
+				</span>
+			</div>
+		{{else}}
+			<span class="bad">ERROR</span>
+			{{:helper.link('Override', 'alert', {'command' : 'toggle_override'}, null, data.override_enabled ? 'redButton' : null)}}
+		{{/if}}
+	</div>
+</div>
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemLabel">
+			Chamber Pressure:
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.chamber_pressure, 0, 200, (data.chamber_pressure < 80 || data.chamber_pressure > 120) ? 'bad' : (data.chamber_pressure < 95 || data.chamber_pressure > 110) ? 'average' : 'good')}}
+			<div class="statusValue">
+				{{:data.chamber_pressure}} kPa
+			</div>
+		</div>
+	</div>
+</div>
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemContent" style="width: 100%">
+			{{:helper.link('Cycle to Exterior', 'arrowthickstop-1-w', {'command' : 'cycle_ext'}, (data.processing || data.airlock_disabled) ? 'disabled' : null)}}
+			{{:helper.link('Cycle to Interior', 'arrowthickstop-1-e', {'command' : 'cycle_int'}, (data.processing || data.airlock_disabled) ? 'disabled' : null)}}
+		</div>
+		<div class="itemContent" style="padding-top: 2px; width: 100%">
+		{{if data.airlock_disabled}}
+			{{:helper.link('Force exterior door', 'alert', {'command' : 'force_ext'}, 'disabled', null)}}
+			{{:helper.link('Force interior door', 'alert', {'command' : 'force_int'}, 'disabled', null)}}
+		{{else}}
+			{{if data.interior_status.state == "open"}}
+				{{:helper.link('Force exterior door', 'alert', {'command' : 'force_ext'}, null, 'redButton')}}
+			{{else}}
+				{{:helper.link('Force exterior door', 'alert', {'command' : 'force_ext'}, null, data.processing ? 'yellowButton' : null)}}
+			{{/if}}
+			{{if data.exterior_status.state == "open"}}
+				{{:helper.link('Force interior door', 'alert', {'command' : 'force_int'}, null, 'redButton')}}
+			{{else}}
+				{{:helper.link('Force interior door', 'alert', {'command' : 'force_int'}, null, data.processing ? 'yellowButton' : null)}}
+			{{/if}}
+		{{/if}}
+		</div>
+	</div>
+	<div class="item" style="padding-top: 10px; width: 100%">
+			{{:helper.link('Abort', 'cancel', {'command' : 'abort'}, (data.processing && !data.airlock_disabled) ? null : 'disabled', (data.processing && !data.airlock_disabled) ? 'redButton' : null)}}
+	</div>
+</div>

@@ -1,0 +1,112 @@
+{{if data.authenticated}}
+	{{if data.state === 1}}
+
+		<h4>Command</h4>
+		<div class=itemGroup>
+			<div class=item>{{:helper.link('Make an announcement', null, {'action' : 'announce'}, data.isAI || !data.net_comms ? 'disabled' : null)}} </div>
+			<div class=item>{{:helper.link('Change alert level', null, {'action' : 'sw_menu', 'target' : 5}, data.isAI || !data.net_syscont || !data.net_comms ? 'disabled' : null)}} </div>
+			<div class=item>{{:helper.link('Set status display', null, {'action' : 'sw_menu', 'target' : 4}, !data.net_syscont ? 'disabled' : null)}} </div>
+		</div>
+
+		<h4>Communications</h4>
+		<div class=itemGroup>
+			<div class=item>{{:helper.link('Message list', null, {'action' : 'sw_menu', 'target' : 2}, !data.net_comms ? 'disabled' : null)}} </div>
+			<div class=item>{{if data.emagged}}
+				{{:helper.link('Send an emergency message to [UNKNOWN]', null, {'action' : 'message', 'target' : 'emagged'}, data.isAI || !data.net_comms ? 'disabled' : null)}}
+			{{else}}
+				{{:helper.link('Send an emergency message to ' + data.boss_short, null, {'action' : 'message', 'target' : 'regular'}, data.isAI || !data.net_comms ? 'disabled' : null)}}
+			{{/if}} </div>
+		</div>
+
+		<h4>Additional</h4>
+		<div class=itemGroup>
+			{{for data.evac_options}}
+				<div class="item">
+					{{:helper.link(value.option_text, null, {'action' : 'evac', 'target' : value.option_target}, ((value.needs_syscontrol && !data.net_syscont) || (!value.silicon_allowed && data.isAI)) ? 'disabled' : null, 'redButton')}}
+				</div>
+			{{empty}}
+				<div class=bad>No further options currently available.</div>
+			{{/for}}
+		</div>
+
+	{{else data.state === 2}}
+		Messages:
+		{{for data.messages}}
+			<div class=item>{{:helper.link(value.title, null, {'action' : 'viewmessage', 'target' : value.id})}}</div>
+		{{empty}}
+			<div class=item>There are no messages.</div>
+		{{/for}}
+		<div class=item>{{:helper.link('Back', null, {'action' : 'sw_menu', 'target' : 1})}}</div>
+	{{else data.state === 3}}
+		<div class=item><b>Title:</b> {{:data.message_current.title}}</div>
+		<div class=item><b>Contents:</b> </br>{{:data.message_current.contents}}</div>
+		<div class=item>
+		{{:helper.link('Delete', null, {'action' : 'delmessage'})}}
+		{{if data.have_printer}}
+			{{:helper.link('Print', null, {'action' : 'printmessage'})}}
+		{{/if}}
+		{{:helper.link('Back', null, {'action' : 'sw_menu', 'target' : 2})}}
+		</div>
+	{{else data.state === 4}}
+		<div class="item">
+            <div class="itemLabel">
+                <b>General</b>:
+            </div>
+            <div class="itemContent">
+                {{:helper.link('Clear',       'trash', {'action' : 'setstatus', 'target' : 'blank'})}}
+		        {{:helper.link('Local Time',  'gear', {'action' : 'setstatus', 'target' : 'time'})}}
+		        {{:helper.link('Shuttle ETA', 'gear', {'action' : 'setstatus', 'target' : 'shuttle'})}}
+		        {{:helper.link('Message',     'gear', {'action' : 'setstatus', 'target' : 'message'})}}
+             </div>
+         </div>
+         <div class="item">
+            <div class="itemLabel">
+                <b>Message line 1</b>
+            </div>
+            <div class="itemContent">
+                {{:helper.link(data.message_line1 ? data.message_line1 : '(none)', null, {'action' : 'setstatus', 'target' : 'line1'})}}
+            </div>
+        </div>
+        <div class="item">
+            <div class="itemLabel">
+                <b>Message line 2</b>
+            </div>
+            <div class="itemContent">
+                {{:helper.link(data.message_line2 ? data.message_line2 : '(none)', null, {'action' : 'setstatus', 'target' : 'line2'})}}
+            </div>
+        </div>
+        
+        <div class="item">
+            <div class="itemLabel">
+                <b>Alert:</b>
+            </div>
+            <div class="itemContent">
+                {{:helper.link('None',                   'alert',     {'action' : 'setstatus', 'target' : 'image', 'image' : 'default'})}}
+                {{:helper.link('Current Security Level', 'alert',     {'action' : 'setstatus', 'target' : 'alert'})}}
+                {{:helper.link('Lockdown',               'caution',   {'action' : 'setstatus', 'target' : 'image', 'image' : 'lockdown'})}}
+                {{:helper.link('Biohazard',              'radiation', {'action' : 'setstatus', 'target' : 'image', 'image' : 'biohazard'})}}
+            </div>
+            {{:helper.link('Back',                   null, {'action' : 'sw_menu', 'target' : 1})}}
+        </div>
+	{{else data.state === 5}}
+		Security Level: {{:data.current_security_level_title}}
+		{{if data.cannot_change_security_level}}
+			<div class=item><font color='red'><b>The self-destruct mechanism is active. Find a way to deactivate the mechanism to lower the alert level or evacuate.</b></font></div>
+		{{else}}
+			<div class=item>Set Security Level: </div>
+			<div class=itemGroup>
+			{{for data.security_levels}}
+				<div class="item">
+					<div class=item>{{:helper.link(value.title, null, {'action' : 'setalert', 'target' : value.ref}, data.current_security_level_ref === value.ref || data.isAI ? 'disabled' : null)}} </div>
+				</div>
+			{{/for}}
+		{{/if}}
+		</br>
+		<div class=item>{{:helper.link('Back', null, {'action' : 'sw_menu', 'target' : 1})}} </div>
+	{{else}}
+		Something went wrong. Please reset your console.
+		<div class=item>{{:helper.link('Back', null, {'action' : 'sw_menu', 'target' : 1})}}</div>
+	{{/if}}
+{{else}}
+	<big>You are unauthorised.</big>
+{{/if}}

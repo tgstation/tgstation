@@ -1,0 +1,45 @@
+<h3>Machine Status</h3>
+<div class="item">
+	<div class="itemContent" style="width: 20%;">
+		{{:helper.link(data.scanning ? 'Halt Scan' : 'Begin Scan', 'signal-diag', {'scanItem' : 1}, null)}}
+	</div>
+	<div class="itemContent" style="width: 20%;">
+		{{:helper.link((data.lidstate ? 'Open Lid' : 'Close Lid'), (data.lidstate ? 'unlocked' : 'locked'), {'toggleLid' : 1}, null)}}
+	</div>
+	<div class="itemContent" style="width: 20%;">
+		{{:helper.link('Eject item', 'eject', {'ejectItem' : 1}, (data.bloodsamp && !data.scanning) ? null : 'disabled')}}
+	</div>
+</div>
+<h3>Scanner</h3>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">Scan progress:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.scan_progress, 0, 100, 'good')}}
+		{{:data.scan_progress}} %
+	</div>
+	<div class="itemContent" style="width: 44%;">
+		{{if data.scan_progress >= 100}}
+			<span class="notice" style="width: 100%;">Scan completed successfully.</span>
+		{{/if}}
+	</div>
+</div>
+<div class="statusDisplay">
+	<div class="line">
+		<div class="statusLabel">Item:</div>
+		<div class="statusValue">
+			{{if data.bloodsamp}}
+				<span class="good">{{:data.bloodsamp}}</span>
+			{{else}}
+				<span class="bad">No item inserted</span>
+			{{/if}}
+		</div>
+	</div>
+	<div class="line">
+		<div class="statusLabel">Heuristic analysis:</div>
+		<div class="statusValue">
+			{{if data.bloodsamp_desc}}
+				<span class="average">{{:data.bloodsamp_desc}}</span>
+			{{/if}}
+		</div>
+	</div>
+</div>

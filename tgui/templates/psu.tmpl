@@ -1,0 +1,58 @@
+<div class='item'>
+	<div class='itemLabel'>
+		Current mode:
+	</div>
+	<div class='itemContent'>
+		{{if data.mode == 1}}
+			OUTPUT ONLY
+		{{else data.mode == 2}}
+			INPUT ONLY
+		{{else data.mode == 3}}
+			INPUT AND OUTPUT
+		{{else}}
+			OFFLINE
+		{{/if}}
+	</div>
+	<div class='itemLabel'>
+		Input status:
+	</div>
+	<div class='itemContent'>
+		{{:data.input_load}} / {{:data.transfer_max}} W
+	</div>
+	<div class='itemLabel'>
+		Output status:
+	</div>
+	<div class='itemContent'>
+		{{:data.output_load}} / {{:data.transfer_max}} W
+	</div>
+	<div class='itemLabel'>
+		Control panel:
+	</div>
+	<div class='itemContent'>
+		{{:helper.link('OFF', null, { "disable" : 1 }, (data.mode == 0) ? 'disabled' : null)}}
+		{{:helper.link('OUT', null, { "enable" : 1 }, (data.mode == 1) ? 'disabled' : null)}}
+		{{:helper.link('IN', null, { "enable" : 2 }, (data.mode == 2) ? 'disabled' : null)}}
+		{{:helper.link('IN/OUT', null, { "enable" : 3 }, (data.mode == 3) ? 'disabled' : null)}}
+		{{if data.equalise}}
+			{{:helper.link('EQ', null, { "equaliseoff" : 1 }, null, data.blink_tick ? 'yellowButton' : 'redButton')}}
+		{{else}}
+			{{:helper.link('EQ', null, { "equaliseon" : 1 })}}
+		{{/if}}
+	</div>		
+</div>
+<hr>
+<table>
+	{{for data.cells_list}}
+		<tr>
+		<td>Cell {{:value.slot}}
+		{{if value.used}}
+			<td>{{:helper.displayBar(value.percentage, 0, 100, 'good')}}
+			<td>{{:value.percentage}} %
+			<td>{{:helper.link('E', null, { "ejectcell" : value.id })}}
+		{{else}}
+			<td>{{:helper.displayBar(100, 0, 100, 'bad')}}
+			<td>N/C
+			<td>{{:helper.link('E', null, {}, 'disabled')}}
+		{{/if}}
+	{{/for}}
+</table>

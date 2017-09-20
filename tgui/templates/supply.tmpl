@@ -1,0 +1,149 @@
+<div class='notice'>
+	{{if data.is_admin}}
+		You are authenticated. You may access all functions of this program.
+	{{else}}
+		You are unauthenticated. Some functions may me unavailable.
+	{{/if}}
+</div>
+<div class="item">
+	{{:helper.link('Browse Goods', 'cart', {'set_screen' : 1}, data.screen == 1 ? 'selected' : null)}}
+	{{:helper.link('View Statistics', 'calculator', {'set_screen' : 2}, data.screen == 2 ? 'selected' : null)}}
+	{{:helper.link('Shuttle Control', 'bullet', {'set_screen' : 3}, data.screen == 3 ? 'selected' : null)}}
+	{{:helper.link('Browse Orders', 'check', {'set_screen' : 4}, data.screen == 4 ? 'selected' : null)}}
+</div>
+<hr>
+<span>Current balance: {{:data.credits}} Credits</span>
+<hr>
+{{if data.screen == 1}}
+	{{for data.categories}}
+		{{:helper.link(value, null, {'select_category' : value}, data.category == value ? 'selected' : null)}}
+	{{/for}}
+	{{if data.category}}
+		<table style="width:100%">
+			<tr><th style="width:70%">Item<th style="width:20%">Cost<th style="width:10%">Order
+			{{for data.possible_purchases}}
+				<tr>
+				<td>{{:value.name}}
+				<td>{{:value.cost}} Credits
+				<td>{{:helper.link('Order', null, {'order' : value.ref})}}
+			{{/for}}
+		</table>
+	{{/if}}
+{{else data.screen == 2}}
+	<div class="item">
+		<div class="itemLabel">
+			Total credits generated today:
+		</div>
+		<div class="itemContent">
+			{{:data.total_credits}} Cr.
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Standard allocation:
+		</div>
+		<div class="itemContent">
+			{{:data.credits_passive}} Cr.
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Credits from recycled crates:
+		</div>
+		<div class="itemContent">
+			{{:data.credits_crates}} Cr.
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Credits from phoron exports:
+		</div>
+		<div class="itemContent">
+			{{:data.credits_phoron}} Cr.
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Credits from platinum exports:
+		</div>
+		<div class="itemContent">
+			{{:data.credits_platinum}} Cr.
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Credit bonus for paperwork handling:
+		</div>
+		<div class="itemContent">
+			{{:data.credits_paperwork}} Cr.
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Options:
+		</div>
+		<div class="itemContent">
+			{{:helper.link('Print', 'print', {'print_summary' : 1}, data.can_print ? null : 'disabled')}}
+		</div>
+	</div>
+{{else data.screen == 3}}
+	<div class="item">
+		<div class="itemLabel">
+			Current shuttle location:
+		</div>
+		<div class="itemContent">
+			{{:data.shuttle_location}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Current shuttle status:
+		</div>
+		<div class="itemContent">
+			{{:data.shuttle_status}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Commands:
+		</div>
+		<div class="itemContent">
+			{{:helper.link('Launch', 'check', {'launch_shuttle' : 1}, data.is_admin ? (data.shuttle_can_control ? null : 'disabled') : 'disabled')}}
+		</div>
+	</div>
+{{else data.screen == 4}}
+	{{if data.is_admin}}
+		<div class="item">
+			<center><h3>Pending orders</h3></span>
+			<table style="width:100%">
+				<tr><th style="width:10%">ID<th style="width:25%">Requested item<th style="width:20%">Requested by<th style="width:20%">Reason<th style="width:10%">Cost<th style="width:15%">Options
+				{{for data.requests}}
+					<tr>
+					<td>{{:value.id}}
+					<td>{{:value.object}}
+					<td>{{:value.orderer}}
+					<td>{{:value.reason}}
+					<td>{{:value.cost}} Cr.
+					<td>{{:helper.link('Approve', 'check', {'approve_order' : value.id}, value.cost > data.credits ? 'disabled' : null )}}{{:helper.link('Deny', 'cancel', {'deny_order' : value.id})}}
+				{{/for}}
+			</table>
+		</div>
+		<div class="item">
+			<center><h3>Approved orders</h3></span>
+			<table style="width:100%">
+				<tr><th style="width:10%">ID<th style="width:25%">Requested item<th style="width:20%">Requested by<th style="width:20%">Reason<th style="width:10%">Cost<th style="width:15%">Options
+				{{for data.cart}}
+					<tr>
+					<td>{{:value.id}}
+					<td>{{:value.object}}
+					<td>{{:value.orderer}}
+					<td>{{:value.reason}}
+					<td>{{:value.cost}} Cr.
+					<td>{{:helper.link('Cancel', 'cancel', {'cancel_order' : value.id})}}
+				{{/for}}
+			</table>
+		</div>
+	{{else}}
+		<h3>Access denied: Missing identificaton or insufficient permissions.</h3>
+	{{/if}}
+{{/if}}

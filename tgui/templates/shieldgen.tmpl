@@ -1,0 +1,129 @@
+{{if data.offline_for}}
+	<h1>EMERGENCY SHUTDOWN</h1>
+	<b>An emergency shutdown has been initiated - generator cooling down</b><br>
+	<i>Please wait until the generator cools down before resuming operation. Estimated time left: {{:data.offline_for}} seconds.</i>
+{{else}}
+	<h2>SYSTEM STATUS</h2>
+	<div class="item">
+		<div class="itemLabel">
+			Generator is:
+		</div>
+		<div class="itemContent">
+			{{if data.running == 2}}
+				{{if data.overloaded}}
+					Recovering
+				{{else}}
+					Online
+				{{/if}}
+			{{else data.running == 1}}
+				Shutting Down
+			{{else}}
+				Offline
+			{{/if}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Shield Capacity:
+		</div>
+		<div class="itemContent">
+			{{:data.current_energy}}/{{:data.max_energy}} MJ
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Mitigation:
+		</div>
+		<div class="itemContent">
+			{{:data.mitigation_em}}% EM / {{:data.mitigation_physical}}% PH / {{:data.mitigation_heat}}% HE / {{:data.mitigation_max}}% MAX
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Upkeep Energy Use:
+		</div>
+		<div class="itemContent">
+			{{:data.upkeep_power_usage}} kW
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Total Energy Use:
+		</div>
+		<div class="itemContent">
+			{{if data.input_cap_kw}}
+				{{:data.power_usage}} / {{:data.input_cap_kw}} kW
+			{{else}}
+				{{:data.power_usage}} kW (No Limit)
+			{{/if}}
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Field Size:
+		</div>
+		<div class="itemContent">
+			{{:data.functional_segments}} / {{:data.total_segments}} m2 (Radius {{:data.field_radius}})
+		</div>
+	</div>
+	<h2>CONTROLS</h2>
+		<table>
+			<tr>
+			{{if (data.running == 2)}}
+				<td>{{:helper.link('Turn off', null, {'begin_shutdown' : '1'})}}
+			{{else}}
+				<td>{{:helper.link('Turn on', null, {'start_generator' : '1'})}}
+			{{/if}}
+			{{if data.running}}
+				<td>{{:helper.link('EMERGENCY SHUTDOWN', null, {'emergency_shutdown' : '1'}, null, 'redButton')}}
+			{{else}}
+				<td>{{:helper.link('EMERGENCY SHUTDOWN', null, {'emergency_shutdown' : '1'}, null, 'disabled')}}
+			{{/if}}
+			
+			<tr>
+			<td>{{:helper.link('Set Field Range', null, {'set_range' : '1'})}}
+			<td>{{:helper.link('Set Input Cap', null, {'set_input_cap' : '1'})}}
+		</table>
+	<h2>FIELD CALIBRATION</h2>
+	<hr>
+	{{for data.modes}}
+		<div class="item">
+			<div class="itemLabel">
+				Mode:
+			</div>
+			<div class="itemContent">
+				{{:value.name}}
+			</div>
+		</div>	
+		<div class="item">
+			<div class="itemLabel">
+				Description:
+			</div>
+			<div class="itemContent">
+				{{:value.desc}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Status:
+			</div>
+			<div class="itemContent">
+				{{if value.status}}
+					Enabled
+				{{else}}
+					Disabled
+				{{/if}}
+				{{:helper.link('Toggle', null, {'toggle_mode' : value.flag})}}
+			</div>
+		</div>
+		<div class="item">
+			<div class="itemLabel">
+				Multiplier:
+			</div>
+			<div class="itemContent">
+				{{:value.multiplier}}
+			</div>
+		</div>
+		<hr>
+	{{/for}}
+{{/if}}

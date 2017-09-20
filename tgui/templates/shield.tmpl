@@ -1,0 +1,26 @@
+<div class='item'>
+	<B>Shield Generation Unit v1.02</B>
+	<div class="itemLabel">
+		Shield Generation: 
+	</div>
+	<div class = "itemContent">
+		{{if data.online}}
+			<span class="good">{{:helper.link('ONLINE', 'power', {'toggle' : 1})}}</span>
+		{{else}}
+			<span class="bad">{{:helper.link('OFFLINE', 'power', {'toggle' : 1})}}</span>
+		{{/if}}	
+	<br><br>	
+	<div class='itemLabelWide'><b>Maximum Draw:</b></div>
+	<div class='itemContentNarrow'>{{:data.draw}}w</div><br>
+	<div class='itemLabelWide'><b>Effective Draw:</b></div>
+	<div class='itemContentNarrow'>{{:data.current_draw}}w</div><br>	
+	<br>
+	{{:helper.displayBar(data.power, 0, data.maxpower, 'good')}}
+	<br><span class="good">{{:data.power}}/{{:data.maxpower}}w stored.</span>
+
+<br><hr><br>
+</div>
+	
+			
+	
+	

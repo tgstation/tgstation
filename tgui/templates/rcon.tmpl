@@ -1,0 +1,73 @@
+<table>
+<tr><td>{{:helper.link('Show/Hide SMES readings', 'folder', { 'hide_smes' : 1})}}
+<tr><td>{{:helper.link('Show/Hide SMES controls', 'folder', { 'hide_smes_details' : 1})}}
+<tr><td>{{:helper.link('Show/Hide Breaker readings', 'folder', { 'hide_breakers' : 1})}}
+</table>
+{{if data.hide_smes}}
+	<b>SMES readings hidden.</b><br>
+{{else}}
+	<b>Detected SMES units with RCON support:</b><br>
+	{{for data.smes_info}}
+		<div class = "item">
+			<div class="itemLabel">				
+				{{:value.RCON_tag}}
+			</div>
+			<div class="itemContent">
+				<table>
+					<tr><td colspan=2>
+					{{if value.charge > 50}}
+						{{:helper.displayBar(value.charge, 0, 100, 'good')}}
+					{{else value.charge > 25}}
+						{{:helper.displayBar(value.charge, 0, 100, 'average')}}
+					{{else}}
+						{{:helper.displayBar(value.charge, 0, 100, 'bad')}}
+					{{/if}}
+						<div class="statusValue">
+							{{:value.charge}}%<br>
+						</div>
+					{{if !data.hide_smes_details}}
+						<tr><td>
+						Input: {{:value.input_val}} kW - {{:value.input_set ? "AUTO" : "OFF"}}
+						<td>
+						{{:helper.link('', 'power', { 'smes_in_toggle' : value.RCON_tag})}}
+						{{:helper.link('', 'pencil', { 'smes_in_set' : value.RCON_tag})}}
+						<tr><td>
+						Output: {{:value.output_val}} kW - {{:value.output_set ? "ONLINE" : "OFFLINE"}}
+						<td>
+						{{:helper.link('', 'power', { 'smes_out_toggle' : value.RCON_tag})}}
+						{{:helper.link('', 'pencil', { 'smes_out_set' : value.RCON_tag})}}
+					
+						<tr><td>
+						Output Load: 
+						<td>
+						{{:value.output_load}} kW
+					{{/if}}
+				</table>
+			</div>
+		</div>
+	{{empty}}
+		No connected SMES units detected!<br>
+	{{/for}}
+{{/if}}
+{{if data.hide_breakers}}
+	<b>Breaker readings hidden.</b><br>
+{{else}}
+	<b>Detected Breaker Boxes with RCON support:</b><br>
+	{{for data.breaker_info}}
+		<div class = "item">
+			<div class="itemLabel">				
+				{{:value.RCON_tag}}
+			</div>
+			<div class="itemContent">
+				<table>
+				<tr><td>
+					{{:value.enabled ? "[<span class='good'>ENABLED</span>]" : "[<span class='bad'>DISABLED</span>]"}}
+				<td>
+					{{:helper.link('', 'power', {'toggle_breaker' : value.RCON_tag})}}
+				</table>
+			</div>
+		</div>
+	{{empty}}
+		No connected Breaker Boxes detected!
+	{{/for}}
+{{/if}}

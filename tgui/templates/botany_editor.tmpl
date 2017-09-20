@@ -1,0 +1,56 @@
+<!-- 
+Title: Bioballistic Delivery System UI
+Used In File(s): \code\modules\hydroponics\seed_machines.dm
+ -->
+ 
+{{if data.activity}}
+	Scanning...
+{{else}}
+	<h3>Buffered Genetic Data</h3>
+	{{if data.disk}}
+		<div class="item">
+			<div class="itemLabel">
+				Source:
+			</div>
+			<div class="itemContent">
+				{{:data.sourceName}}
+			</div>
+			<div class="itemLabel">
+				Gene decay:
+			</div>
+			<div class="itemContent">
+				{{if data.degradation <= 100}}
+					{{:data.degradation}}%
+				{{else}}
+					<font = '#FF0000'><b>FURTHER AMENDMENTS NONVIABLE</b></font>
+				{{/if}}
+			</div>
+			<div class="itemLabel">
+				Locus:
+			</div>
+			<div class="itemContent">
+				{{:data.locus}}
+			</div>
+			{{:helper.link('Eject Disk', 'circle-arrow-e', {'eject_disk' : 1}, null)}}
+		</div>
+	{{else}}
+		<div class="notice">No disk loaded.</div>
+	{{/if}}
+	<h3>Loaded Material</h3>
+	{{if data.loaded}}
+		<div class = "item">
+			<div class = "itemLabel">
+				Target:
+			</div>
+			<div class = "itemContent">
+				{{:data.loaded}}
+			</div>
+			{{if data.degradation <= 100}}
+				{{:helper.link('Apply Gene Mods', 'gear', {'apply_gene' : 1}, null)}}
+			{{/if}}
+			{{:helper.link('Eject Target', 'circle-arrow-e', {'eject_packet' : 1}, null)}}
+		</div>
+	{{else}}
+		<div class="notice">No target seed packet loaded</div>
+	{{/if}}
+{{/if}}

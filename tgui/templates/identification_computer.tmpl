@@ -1,0 +1,210 @@
+{{if data.have_id_slot}}{{:helper.link('Access Modification', 'home', {'action' : 'switchm', 'target' : 'mod'}, data.mmode ? 'disabled' : null)}}{{/if}}
+{{:helper.link('Crew Manifest', 'folder-open', {'action' : 'switchm', 'target' : 'manifest'}, !data.mmode ? 'disabled' : null)}}
+{{if data.have_printer}}{{:helper.link('Print', 'print', {'action' : 'print'}, (!data.mmode || data.has_id) ? null : 'disabled')}}{{/if}}
+
+{{if !data.mmode}}
+<div class='item'>
+  <h2>Crew Manifest</h2>
+</div>
+<div class='item'>
+  {{:data.manifest}}
+</div>
+{{else}}
+<div class='item'>
+  <h2>Access Modification</h2>
+</div>
+
+{{if !data.has_id}}
+  <span class='alert'><i>Please insert the ID into the terminal to proceed.</i></span><br>
+{{/if}}
+
+<div class='item'>
+  <div class='itemLabel'>
+	Target Identity:
+  </div>
+  <div class='itemContent'>
+	{{:helper.link(data.id_name, 'eject', {'action' : 'eject'})}}
+  </div>
+</div>
+<hr>
+
+{{if data.authenticated}}
+  {{if data.has_id}}
+	<div class='item'>
+	  <h2>Details</h2>
+	</div>
+
+	<div class='item'>
+	  <div class='itemLabel'>
+		Registered Name:
+	  </div>
+	  <div class='itemContent'>
+		{{:helper.link(data.id_owner, 'pencil', {'action' : 'edit', 'name' : 1})}}
+	  </div>
+	</div>
+
+	<div class='item'>
+	  <div class='itemLabel'>
+		Account Number:
+	  </div>
+	  <div class='itemContent'>
+		{{:helper.link(data.id_account_number, 'pencil', {'action' : 'edit', 'account' : 1})}}
+	  </div>
+	</div>
+	
+
+	<div class='item'>
+	  <div class='itemLabel'>
+		Terminations:
+	  </div>
+	  <div class='itemContent'>
+		{{:helper.link('Terminate ' + data.id_owner, 'gear', {'action' : 'terminate'}, data.id_rank == "Terminated" ? 'disabled' : null, data.id_rank == "Terminated" ? 'disabled' : 'linkDanger')}}
+	  </div>
+	</div>
+
+	<div class='item'>
+	  <h2>Assignment</h2>
+	</div>
+		{{:helper.link(data.assignments ? "Hide assignments" : "Show assignments", 'gear', {'action' : 'togglea'})}}
+	<div class='item'>
+	  <span id='allvalue.jobsslot'>
+		
+	  </span>
+	</div>
+	<div class='item'>
+	  {{if data.assignments}}
+	  <div id="all-value.jobs">
+		<table>
+		  <tr>
+			<th></th><th>Command</th>
+		  </tr>
+		  <tr>
+			<th>Special</th>
+			<td>
+			  {{:helper.link("Custom", '', {'action' : 'assign', 'assign_target' : 'Custom'})}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#800080';">Command</th>
+			<td>
+			  {{for data.command_jobs}}
+				{{:helper.link(value.display_name, '', {'action' : 'assign', 'assign_target' : value.job}, data.id_rank == value.job ? 'disabled' : null)}}
+			  {{/for}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#800080';">Support</th>
+			<td>
+			  {{for data.support_jobs}}
+				{{:helper.link(value.display_name, '', {'action' : 'assign', 'assign_target' : value.job}, data.id_rank == value.job ? 'disabled' : null)}}
+			  {{/for}}
+			</td>
+		  </tr>	  
+		  <tr>
+			<th style="color: '#FFA500';">Engineering</th>
+			<td>
+			  {{for data.engineering_jobs}}
+				{{:helper.link(value.display_name, '', {'action' : 'assign', 'assign_target' : value.job}, data.id_rank == value.job ? 'disabled' : null)}}
+			  {{/for}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#008000';">Medical</th>
+			<td>
+			  {{for data.medical_jobs}}
+				{{:helper.link(value.display_name, '', {'action' : 'assign', 'assign_target' : value.job}, data.id_rank == value.job ? 'disabled' : null)}}
+			  {{/for}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#800080';">Science</th>
+			<td>
+			  {{for data.science_jobs}}
+				{{:helper.link(value.display_name, '', {'action' : 'assign', 'assign_target' : value.job}, data.id_rank == value.job ? 'disabled' : null)}}
+			  {{/for}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#DD0000';">Security</th>
+			<td>
+			  {{for data.security_jobs}}
+			{{:helper.link(value.display_name, '', {'action' : 'assign', 'assign_target' : value.job}, data.id_rank == value.job ? 'disabled' : null)}}
+			  {{/for}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#800080';">Supply</th>
+			<td>
+			  {{for data.supply_jobs}}
+				{{:helper.link(value.display_name, '', {'action' : 'assign', 'assign_target' : value.job}, data.id_rank == value.job ? 'disabled' : null)}}
+			  {{/for}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#800080';">Service</th>
+			<td>
+			  {{for data.service_jobs}}
+				{{:helper.link(value.display_name, '', {'action' : 'assign', 'assign_target' : value.job}, data.id_rank == value.job ? 'disabled' : null)}}
+			  {{/for}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#808080';">Civilian</th>
+			<td>
+			  {{for data.civilian_jobs}}
+				{{if index && index % 6 === 0}}
+				{{/if}}
+				{{:helper.link(value.display_name, '', {'action' : 'assign', 'assign_target' : value.job}, data.id_rank == value.job ? 'disabled' : null)}}
+			  {{/for}}
+			</td>
+		  </tr>
+		  {{if data.centcom_access}}
+			<tr>
+			  <th style="color: '#A52A2A';">CentCom</th>
+			  <td>
+				{{for data.centcom_jobs}}
+				  {{if index % 6 === 0}}
+					</td></tr><tr><th></th><td>
+				  {{/if}}
+
+				  {{:helper.link(value.display_name, '', {'action' : 'assign', 'assign_target' : value.job}, data.id_rank == value.job ? 'disabled' : null)}}
+				{{/for}}
+			  </td>
+			</tr>
+		  {{/if}}
+		</table>
+	  </div>
+	  {{/if}}
+	</div>
+
+	{{if data.centcom_access}}
+	  <div class='item'>
+		<h2>Central Command</h2>
+	  </div>
+	  <div class='item' style='width: 100%'>
+		{{for data.all_centcom_access}}
+		  <div class='itemContentWide'>
+		  {{:helper.link(value.desc, '', {'action' : 'access', 'access_target' : value.ref, 'allowed' : value.allowed}, null, value.allowed ? 'selected' : null)}}
+		  </div>
+		{{/for}}
+	  </div>
+	{{else}}
+	  <div class='item'>
+		<h2>{{:data.station_name}}</h2>
+	  </div>
+	  <div class='item' style='width: 100%'>
+		{{for data.regions}}
+		  <div style='float: left; width: 175px; min-height: 250px'>
+			<div class='average'><b>{{:value.name}}</b></div>
+			{{for value.accesses :accessValue:accessKey}}
+			  <div class='itemContentWide'>
+				{{:helper.link(accessValue.desc, '', {'action' : 'access', 'access_target' : accessValue.ref, 'allowed' : accessValue.allowed}, null, accessValue.allowed ? 'selected' : null)}}
+			  </div>
+			{{/for}}
+		  </div>
+		{{/for}}
+	  </div>
+	{{/if}}
+  {{/if}}
+{{/if}}
+{{/if}}

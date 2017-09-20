@@ -1,0 +1,20 @@
+<!-- 
+Title: Telescience Control UI 
+Used In File(s): \code\modules\telesci\telesci_computer.dm
+ -->
+<div class="item">
+	<div class="itemLabel">Coordinates:</div>
+	<div class="itemContent">
+		{{:helper.link('X: ' + data.coordx, 'gear', {'setx': 1})}}
+		{{:helper.link('Y: ' + data.coordy, 'gear', {'sety': 1})}}
+		{{:helper.link('Z: ' + data.coordz, 'gear', {'setz': 1})}}
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">Controls:</div>
+	<div class="itemContent">
+		{{:helper.link('Send', 'gear', {'send': 1}, null, (data.coordx != null && data.coordy != null && data.coordz != null) ? '' : 'disabled')}}
+		{{:helper.link('Receive', 'gear', {'receive': 1}, null, (data.coordx != null && data.coordy != null && data.coordz != null) ? '' : 'disabled')}}
+		{{:helper.link('Recalibrate', 'gear', {'recal': 1})}}
+	</div>
+</div>

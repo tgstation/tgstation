@@ -1,0 +1,36 @@
+<!-- pAI atmosphere sensor
+code/modules/mob/living/silicon/pai/software_modules.dm
+-->
+
+{{if data.reading}}
+	<div class="item">
+		<div class="itemLabel">
+			Pressure:
+		</div>
+		<div class="itemContent">
+			{{:data.pressure}} kPa
+		</div>
+	</div>
+
+	<div class="item">
+		<div class="itemLabel">
+			Temperature:
+		</div>
+		<div class="itemContent">
+			{{:data.temperature}}K ({{:data.temperatureC}}&deg;C)
+		</div>
+	</div>
+
+	{{for data.gas}}
+		<div class="item">
+			<div class="itemLabel">
+				{{:value.name}}:
+			</div>
+			<div class="itemContent">
+				{{:value.percent}}%
+			</div>
+		</div>
+	{{/for}}
+{{else}}
+	<span class="bad">Unable to obtain air reading!</span>
+{{/if}}

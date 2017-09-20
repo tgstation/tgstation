@@ -1,0 +1,253 @@
+<style type="text/css">
+    table.borders   {
+        width:95%; 
+        margin-left:2.4%; 
+        margin-right:2.4%;
+    }
+
+    table.borders, table.borders tr {
+        border: 1px solid White;
+    }
+    
+    td.law_index {
+        width: 50px;
+    }
+    
+    td.state {
+        width: 63px;
+		text-align:center; 
+    }
+    
+    td.add {
+        width: 36px;
+    }
+    
+    td.edit {
+        width: 36px;
+		text-align:center; 
+    }
+    
+    td.delete {
+        width: 53px;
+		text-align:center; 
+    }
+    
+    td.law_type {
+        width: 65px;
+    }
+    
+    td.position {
+        width: 37px;
+    }
+</style>
+
+{{if data.isSlaved}}
+    <div class='notice'>Law synced to {{:data.isSlaved}}.</div>
+{{/if}}
+
+<div class="item">
+	<div class="itemContentWidest">
+		{{:helper.link('Law Management', null, {'set_view' : 0}, data.view == 0 ? 'selected' : null)}}
+		{{:helper.link('Law Sets', null, {'set_view' : 1}, data.view == 1 ? 'selected' : null)}}
+	</div>
+</div>
+
+{{if data.view == 0}}
+	{{if data.has_ion_laws}}    
+		<table class='borders'>
+		<tr><td class='law_index'>Index</td><td>Law</td><td class='state'>State</td>
+			{{if data.isMalf}}
+				<td class='edit'>Edit</td>
+				<td class='delete'>Delete</td>
+			{{/if}}
+		</tr>
+
+		<div class="itemLabelNarrow">
+			{{:data.ion_law_nr}} Laws:
+		</div>
+		{{for data.ion_laws}}
+			<tr>
+				<td valign="top">{{:value.index}}.</td>
+				<td>{{:value.law}}</td>
+				<td>{{:helper.link('Yes', null, {'ref': value.ref, 'state_law' : 1}, value.state == 1 ? 'selected' : null)}}{{:helper.link('No', null, {'ref': value.ref, 'state_law' : 0}, value.state == 0 ? 'selected' : null)}}</td>
+				{{if data.isMalf}}
+					<td class='edit'>{{:helper.link('Edit', null, {'edit_law': value.ref})}}</td>
+					<td class='delete'>{{:helper.link('Delete', null, {'delete_law': value.ref}, null, 'redButton')}}</td>
+				{{/if}}
+			</tr>
+		{{/for}}
+		</table>
+	{{/if}}
+
+	{{if data.has_inherent_laws || data.has_zeroth_laws}} 
+		<table class='borders'>
+		<tr><td class='law_index'>Index</td><td>Law</td><td class='state'>State</td>
+			{{if data.isMalf}}
+				<td class='edit'>Edit</td>
+				<td class='delete'>Delete</td>
+			{{/if}}
+		</tr>
+
+		<div class="itemLabelNarrow">
+			Inherent Laws:
+		</div>
+		
+		{{for data.zeroth_laws}} 
+			<tr>
+				<td valign="top">{{:value.index}}.</td>
+				<td><span class='bad'>{{:value.law}}</span></td>
+				<td>{{:helper.link('Yes', null, {'ref': value.ref, 'state_law' : 1}, value.state == 1 ? 'selected' : null)}}{{:helper.link('No', null, {'ref': value.ref, 'state_law' : 0}, value.state != 1 ? 'selected' : null)}}</td>
+				{{if data.isMalf}}
+				<td class='edit'>{{:helper.link('Edit', null, {'edit_law': value.ref}, data.isAdmin ? null : 'disabled')}}</td>
+				<td class='delete'>{{:helper.link('Delete', null, {'delete_law': value.ref}, data.isAdmin ? null : 'disabled', data.isAdmin ? 'redButton' : null)}}</td>
+			{{/if}}
+			</tr>
+		{{/for}}
+		
+		{{for data.inherent_laws}}
+			<tr>
+				<td valign="top">{{:value.index}}.</td>
+				<td>{{:value.law}}</td>
+				<td>{{:helper.link('Yes', null, {'ref': value.ref, 'state_law' : 1}, value.state == 1 ? 'selected' : null)}}{{:helper.link('No', null, {'ref': value.ref, 'state_law' : 0}, value.state == 0 ? 'selected' : null)}}</td>
+				{{if data.isMalf}}
+					<td class='edit'>{{:helper.link('Edit', null, {'edit_law': value.ref})}}</td>
+					<td class='delete'>{{:helper.link('Delete', null, {'delete_law': value.ref}, null, 'redButton')}}</td>
+				{{/if}}
+			</tr>
+		{{/for}}
+		</table>
+	{{/if}}
+
+	{{if data.has_supplied_laws}}    
+		<table class='borders'>
+		<tr><td class='law_index'>Index</td><td>Law</td><td class='state'>State</td>
+			{{if data.isMalf}}
+				<td class='edit'>Edit</td>
+				<td class='delete'>Delete</td>
+			{{/if}}
+		</tr>
+
+		<div class="itemLabelNarrow">
+			Supplied Laws:
+		</div>
+		{{for data.supplied_laws}}
+			<tr>
+				<td valign="top">{{:value.index}}.</td>
+				<td>{{:value.law}}</td>
+				<td>{{:helper.link('Yes', null, {'ref': value.ref, 'state_law' : 1}, value.state == 1 ? 'selected' : null)}}{{:helper.link('No', null, {'ref': value.ref, 'state_law' : 0}, value.state == 0 ? 'selected' : null)}}</td>
+				{{if data.isMalf}}
+					<td class='edit'>{{:helper.link('Edit', null, {'edit_law': value.ref})}}</td>
+					<td class='delete'>{{:helper.link('Delete', null, {'delete_law': value.ref}, null, 'redButton')}}</td>
+				{{/if}}
+			</tr>
+		{{/for}}
+		</table>
+	{{/if}}
+
+	<div class="item">
+		<div class="itemLabelNarrow">
+			Statement Channel:
+		</div>
+		<div class="itemContentWide">
+			{{for data.channels}}
+				{{:helper.link(value.channel, null, {'law_channel' : value.channel}, value.channel == data.channel ? 'selected' : null)}}
+			{{/for}}
+		</div>
+	</div>
+
+	<div class="item">
+		<div class="itemLabelNarrow">
+			State Laws:
+		</div>
+		<div class="itemContent">
+			{{:helper.link('State Laws', null, {'state_laws' : 1})}}
+		</div>
+	</div>
+
+	{{if data.isMalf}}
+		<div class="item">
+			<div class="itemLabelNarrow">
+				Add Laws:
+			</div>
+			<div class="itemContent">
+				<table class='borders'>
+					<tr><td class='law_type'>Type</td><td>Law</td><td class='position'>Index</td><td class='edit'>Edit</td><td class='add'>Add</td></tr>
+					{{if data.isAdmin && !data.has_zeroth_laws}}
+						<tr><td class='law_type'>Zero</td><td>{{:data.zeroth_law}}</td><td class='position'>N/A</td><td class='edit'>{{:helper.link('Edit', null, {'change_zeroth_law' : 1})}}</td><td class='add'>{{:helper.link('Add', null, {'add_zeroth_law' : 1})}}</td></tr>
+					{{/if}}
+					<tr><td class='law_type'>Ion</td><td>{{:data.ion_law}}</td><td class='position'>N/A</td><td class='edit'>{{:helper.link('Edit', null, {'change_ion_law' : 1})}}</td><td class='add'>{{:helper.link('Add', null, {'add_ion_law' : 1})}}</td></tr>
+					<tr><td class='law_type'>Inherent</td><td>{{:data.inherent_law}}</td><td class='position'>N/A</td><td class='edit'>{{:helper.link('Edit', null, {'change_inherent_law' : 1})}}</td><td class='add'>{{:helper.link('Add', null, {'add_inherent_law' : 1})}}</td></tr>
+					<tr><td class='law_type'>Supplied</td><td>{{:data.supplied_law}}</td><td class='position'>{{:helper.link(data.supplied_law_position, null, {'change_supplied_law_position' : 1})}}</td><td class='edit'>{{:helper.link('Edit', null, {'change_supplied_law' : 1})}}</td><td class='add'>{{:helper.link('Add', null, {'add_supplied_law' : 1})}}</td></tr>
+				</table>
+			</div>
+		</div>
+	{{/if}}
+
+    {{if data.isAI}}
+        <div class="item">
+            <div class="itemLabelNarrow">
+                Law Notification:
+            </div>
+            <div class="itemContent">
+                {{:helper.link('Notify', null, {'notify_laws' : 1})}}
+            </div>
+        </div>
+    {{/if}}
+{{else data.view == 1}}
+	<div class='notice'>Remember: Stating laws other than those currently loaded may be grounds for decommissioning - NanoTrasen</div>
+
+	{{for data.law_sets}}
+		<div class="item">
+			<div class="itemLabelWide">
+				<H2>{{:value.name}}</H2>{{:value.header}}
+			</div>
+			
+			{{if value.laws.has_ion_laws}}
+				<table class='borders'>
+					<tr><td class='law_index'>Index</td><td>Law</td>
+					{{for value.laws.ion_laws :lawValue:lawindex}}
+						<tr>
+							<td valign="top">{{:lawValue.index}}.</td>
+							<td>{{:lawValue.law}}</td>
+						</tr>
+					{{/for}}
+				</table>
+			{{/if}}
+			
+			{{if value.laws.has_zeroth_laws || value.laws.has_inherent_laws}}
+				<table class='borders'>
+					<tr><td class='law_index'>Index</td><td>Law</td>
+					{{for value.laws.zeroth_laws :lawValue:lawindex}}
+						<tr>
+							<td valign="top">{{:lawValue.index}}.</td>
+							<td><span class='bad'>{{:lawValue.law}}</span></td>
+						</tr>
+					{{/for}}
+					{{for value.laws.inherent_laws :lawValue:lawindex}}
+						<tr>
+							<td valign="top">{{:lawValue.index}}.</td>
+							<td>{{:lawValue.law}}</td>
+						</tr>
+					{{/for}}
+				</table>
+			{{/if}}
+			
+			{{if value.laws.has_supplied_laws}}
+				<table class='borders'>
+					<tr><td class='law_index'>Index</td><td>Law</td>
+					{{for value.laws.supplied_laws :lawValue:lawindex}}
+						<tr>
+							<td valign="top">{{:lawValue.index}}.</td>
+							<td>{{:lawValue.law}}</td>
+						</tr>
+					{{/for}}
+				</table>
+			{{/if}}
+		
+			<div class="itemContent">
+				<br>
+				{{:helper.link('Load Laws', null, {'transfer_laws' : value.ref}, data.isMalf ? null : 'disabled')}}{{:helper.link('State Laws', null, {'state_law_set' : value.ref})}}
+			</div>
+		</div>
+	{{/for}}
+{{/if}}

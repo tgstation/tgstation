@@ -1,0 +1,142 @@
+<div class="item">
+	<div class="itemLabel">
+		Total Output:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.totalOutput, 0, data.maxTotalOutput)}}
+	</div>
+	<div class="itemContent">
+		{{:helper.fixed(data.totalOutput, 1)}} kW
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Thermal Output:
+	</div>
+	<div class="itemContent">		
+		{{:helper.fixed(data.thermalOutput, 1)}} kW
+	</div>
+</div>
+<hr>
+
+{{if data.circConnected}}
+	<table style="width:100%">
+		<tr>
+			<td>
+			<div class="statusDisplay">
+				<center><h2>Primary Circulator ({{:data.primaryDir}})</h2></center>
+				<div class="item">
+					<div class="itemLabel">
+						Turbine Output:
+					</div>
+					<div align='center' class="itemContent">		
+						{{:helper.fixed(data.primaryOutput, 1)}}  kW
+					</div>
+				</div>
+				<div class="item">
+					<div class="itemLabel">
+						Flow Capacity:
+					</div>
+					<div align='center'  class="itemContent">		
+						{{:helper.fixed(data.primaryFlowCapacity, 1)}}  %
+					</div>
+				</div>
+				<br>
+				<div class="item">
+					<div class="itemLabel">
+						Inlet Pressure:
+					</div>
+					<div align='center'  class="itemContent">		
+						{{:helper.fixed(data.primaryInletPressure, 1)}} kPa
+					</div>
+				</div>
+				<div class="item">
+					<div class="itemLabel">
+						Inlet Temperature:
+					</div>
+					<div align='center'  class="itemContent">		
+						{{:helper.fixed(data.primaryInletTemperature, 1)}} K
+					</div>
+				</div>
+				<br>
+				<div class="item">
+					<div class="itemLabel">
+						Outlet Pressure:
+					</div>
+					<div align='center'  class="itemContent">		
+						{{:helper.fixed(data.primaryOutletPressure, 1)}} kPa
+					</div>
+				</div>
+				<div class="item">
+					<div class="itemLabel">
+						Outlet Temperature:
+					</div>
+					<div align='center'  class="itemContent">
+						{{:helper.fixed(data.primaryOutletTemperature, 1)}} K
+					</div>
+				</div>
+			</div>
+			</td>
+			
+			<td>
+			<div class="statusDisplay">
+				<center><h2>Secondary Circulator ({{:data.secondaryDir}})</h2></center>
+				<div class="item">
+					<div class="itemLabel">
+						Turbine Output:
+					</div>
+					<div align='center'  class="itemContent">	
+						{{:helper.fixed(data.secondaryOutput, 1)}} kW
+					</div>
+				</div>
+				<div class="item">
+					<div class="itemLabel">
+						Flow Capacity:
+					</div>
+					<div align='center'  class="itemContent">		
+						{{:helper.fixed(data.secondaryFlowCapacity, 1)}} %
+					</div>
+				</div>
+				<br>
+				<div class="item">
+					<div class="itemLabel">
+						Inlet Pressure:
+					</div>
+					<div align='center'  class="itemContent">		
+						{{:helper.fixed(data.secondaryInletPressure, 1)}} kPa
+					</div>
+				</div>
+				<div class="item">
+					<div class="itemLabel">
+						Inlet Temperature:
+					</div>
+					<div align='center'  class="itemContent">		
+						{{:helper.fixed(data.secondaryInletTemperature, 1)}} K
+					</div>
+				</div>
+				<br>
+				<div class="item">
+					<div class="itemLabel">
+						Outlet Pressure:
+					</div>
+					<div align='center'  class="itemContent">		
+						{{:helper.fixed(data.secondaryOutletPressure, 1)}} kPa
+					</div>
+				</div>
+				<div class="item">
+					<div class="itemLabel">
+						Outlet Temperature:
+					</div>
+					<div align='center'  class="itemContent">		
+						{{:helper.fixed(data.secondaryOutletTemperature, 1)}} K
+					</div>
+				</div>
+			</div>
+			</td>
+		</tr>
+	</table> 
+{{else}}
+	<div class="notice">
+		ERROR: Both circulators must be connected!
+	</div>
+{{/if}}

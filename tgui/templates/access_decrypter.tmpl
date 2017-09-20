@@ -1,0 +1,12 @@
+{{:helper.syndicateMode()}}
+{{if data.message}}
+	##INFO: {{:data.message}}<br><br>{{:helper.link('RESET', null, { 'PRG_reset' : 1 })}}
+{{else data.running}}
+	##Attempting to decrypt network access codes. Please wait. Rate: {{:data.rate}} PHash/s<br>
+	{{for data.dos_strings}}
+		{{:value}}<br>
+	{{/for}}
+	{{:helper.link('ABORT', null, { 'PRG_reset' : 1 })}}
+{{else}}
+	##System ready<br><br>{{:helper.link('EXECUTE', null, { 'PRG_execute' : 1 })}}
+{{/if}}

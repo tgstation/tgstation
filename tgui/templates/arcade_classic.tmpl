@@ -1,0 +1,44 @@
+{{if data.gameover}}
+	<center><h2>Game Over!</h2>
+	<h3>{{:data.information}}</h3>
+	{{:helper.link('New Game', null, { "new_game" : 1 })}}</center>
+{{else}}
+	{{if data.information}}
+		<center><i>{{:data.information}}</i></center>
+	{{/if}}
+<center><h3>Player</h3></center>
+	<div class='item'>
+		<div class='itemLabel'>
+			Health:
+		</div>
+		<div class='itemContent'>
+			{{:data.player_health}}
+		</div>
+		<div class='itemLabel'>
+			Mana:
+		</div>
+		<div class='itemContent'>
+			{{:data.player_mana}}
+		</div>
+	</div>
+<center><h3>Enemy: {{:data.enemy_name}}</h3></center>
+	<div class='item'>
+		<div class='itemLabel'>
+			Health:
+		</div>
+		<div class='itemContent'>
+			{{:data.enemy_health}}
+		</div>
+		<div class='itemLabel'>
+			Mana:
+		</div>
+		<div class='itemContent'>
+			{{:data.enemy_mana}}
+		</div>
+	</div>
+<center><h3>Actions</h3></center>
+	{{:helper.link('Attack', null, { "attack" : 1 })}}
+	{{:helper.link('Heal', null, { "heal" : 1 })}}
+	{{:helper.link('Regain Mana', null, { "regain_mana" : 1 })}}
+	{{:helper.link('New Game', null, { "new_game" : 1 })}}
+{{/if}}

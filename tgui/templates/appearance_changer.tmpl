@@ -1,0 +1,76 @@
+{{if data.change_race}}
+    <div class="item">
+        <div class="itemLabelNarrow">
+            Species:
+        </div>
+        <div class="itemContentWide">
+            {{for data.species}}
+                {{:helper.link(value.specimen, null, { 'race' : value.specimen}, null, data.specimen == value.specimen ? 'selected' : null)}}
+            {{/for}}
+        </div>
+    </div>
+{{/if}}
+
+{{if data.change_gender}}
+    <div class="item">
+        <div class="itemLabelNarrow">
+            Gender:
+        </div>
+        <div class="itemContentWide">
+            {{for data.genders}}
+                {{:helper.link(value.gender_name, null, { 'gender' : value.gender_key}, null, data.gender == value.gender_key ? 'selected' : null)}}
+            {{/for}}
+        </div>
+    </div>
+{{/if}}
+
+{{if data.change_eye_color || data.change_skin_tone || data.change_skin_color || data.change_hair_color || data.change_facial_hair_color}}
+    <div class="item">
+        <div class="itemLabelNarrow">
+            Colors:
+        </div>
+        <div class="itemContentWide">
+            {{if data.change_eye_color}}
+                {{:helper.link('Change eye color', null, { 'eye_color' : 1})}}
+            {{/if}}
+            {{if data.change_skin_tone}}
+                {{:helper.link('Change skin tone', null, { 'skin_tone' : 1})}}
+            {{/if}}
+            {{if data.change_skin_color}}
+                {{:helper.link('Change skin color', null, { 'skin_color' : 1})}}
+            {{/if}}
+            {{if data.change_hair_color}}
+                {{:helper.link('Change hair color', null, { 'hair_color' : 1})}}
+            {{/if}}
+            {{if data.change_facial_hair_color}}
+                {{:helper.link('Change facial hair color', null, { 'facial_hair_color' : 1})}}
+            {{/if}}
+        </div>
+    </div>
+{{/if}}
+
+{{if data.change_hair}}
+    <div class="item">
+        <div class="itemLabelNarrow">
+            Hair styles:
+        </div>
+        <div class="itemContentWide">
+            {{for data.hair_styles}}
+                {{:helper.link(value.hairstyle, null, { 'hair' : value.hairstyle}, null, data.hair_style == value.hairstyle ? 'selected' : null)}}
+            {{/for}}
+        </div>
+    </div>
+{{/if}}
+
+{{if data.change_facial_hair}}
+    <div class="item">
+        <div class="itemLabelNarrow">
+            Facial hair styles:
+        </div>
+        <div class="itemContentWide">
+            {{for data.facial_hair_styles}}
+                {{:helper.link(value.facialhairstyle, null, { 'facial_hair' : value.facialhairstyle}, null, data.facial_hair_style == value.facialhairstyle ? 'selected' : null)}}
+            {{/for}}
+        </div>
+    </div>
+{{/if}}

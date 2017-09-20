@@ -1,0 +1,42 @@
+{{if data.maskConnected}}
+	<div class="noticePlaceholder">This pump is connected to a person.</div>
+{{else}}
+	<div class="notice">This pump is NOT connected to a person.</div>
+{{/if}}	
+
+{{if data.tankInstalled}}
+	<div class="item">
+		<div class="itemLabel">
+			Tank Pressure:
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.tankPressure, 0, 1013, (data.tankPressure > 200) ? 'good' : ((data.tankPressure > 100) ? 'average' : 'bad'))}}
+			<div class="statusValue">
+				{{:data.tankPressure}} kPa
+			</div>
+		</div>
+	</div>
+	
+	<div class="item">&nbsp;</div>
+	
+	<div class="item">
+		<div class="itemLabel">
+			Mask Release Pressure:
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.releasePressure, 0, data.maxReleasePressure, (data.releasePressure >= 23) ? null : ((data.releasePressure >= 17) ? 'average' : 'bad'))}}
+			<div style="clear: both; padding-top: 4px;">
+				{{:helper.link('-', null, {'dist_p' : -10}, (data.releasePressure > 0) ? null : 'disabled')}}
+				{{:helper.link('-', null, {'dist_p' : -1}, (data.releasePressure > 0) ? null : 'disabled')}}
+				<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.releasePressure}} kPa&nbsp;</div>
+				{{:helper.link('+', null, {'dist_p' : 1}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
+				{{:helper.link('+', null, {'dist_p' : 10}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
+				{{:helper.link('Max', null, {'dist_p' : 'max'}, (data.releasePressure < data.maxReleasePressure) ? null : 'disabled')}}
+				{{:helper.link('Reset', null, {'dist_p' : 'reset'}, (data.releasePressure != data.defaultReleasePressure) ? null : 'disabled')}}
+			</div>
+		</div>
+	</div>
+
+{{else}}
+	<div class="notice">This pump has no tank installed.</div>
+{{/if}}

@@ -1,0 +1,33 @@
+<!-- pAI signaller
+code/modules/mob/living/silicon/pai/software_modules.dm
+-->
+
+<div class="item">
+	<div class="itemLabel">
+		Frequency:
+	</div>
+	<div class="itemContent">
+		{{:helper.link("--", '', {"stopic":"signaller", "freq":-10})}}
+		{{:helper.link("-",  '', {"stopic":"signaller", "freq": -2})}}
+		<div style="float: left; width: 80px; text-align: center;">{{:data.frequency}}</div>
+		{{:helper.link("+",  '', {"stopic":"signaller", "freq":  2})}}
+		{{:helper.link("++", '', {"stopic":"signaller", "freq": 10})}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Code:
+	</div>
+	<div class="itemContent">
+		{{:helper.link("--", '', {"stopic":"signaller", "code":-10})}}
+		{{:helper.link("-",  '', {"stopic":"signaller", "code": -1})}}
+		<div style="float: left; width: 80px; text-align: center;">{{:data.code}}</div>
+		{{:helper.link("+",  '', {"stopic":"signaller", "code":  1})}}
+		{{:helper.link("++", '', {"stopic":"signaller", "code": 10})}}
+	</div>
+</div>
+
+<div class="item">
+	{{:helper.link("Send", '', {"stopic":"signaller", "send":1})}}
+</div>

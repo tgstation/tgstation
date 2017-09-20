@@ -1,0 +1,84 @@
+<h3>Shuttle Status</h3>
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		{{:data.shuttle_status}}
+	</div>
+</div>
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemLabel">
+			Bluespace Drive:
+		</div>
+		<div class="itemContent">
+			{{if data.shuttle_state == "idle"}}
+				<span class="idle">IDLE</span>
+			{{else data.shuttle_state == "warmup"}}
+				<span style="font-weight: bold;color: #336699">SPINNING UP</span>
+			{{else data.shuttle_state == "in_transit"}}
+				<span style="font-weight: bold;color: #336699">ENGAGED</span>
+			{{else}}
+				<span class="bad">ERROR</span>
+			{{/if}}
+		</div>
+	</div>
+</div>
+{{if data.has_docking}}
+	<div class="item" style="padding-top: 10px">
+		<div class="item">
+			<div class="itemLabel">
+				Docking Status:
+			</div>
+			<div class="itemContent">
+				{{if data.docking_status == "docked"}}
+					<span class="good">DOCKED</span>
+				{{else data.docking_status == "docking"}}
+					{{if !data.docking_override}}
+						<span class="average">DOCKING</span>
+					{{else}}
+						<span class="average">DOCKING-MANUAL</span>
+					{{/if}}
+				{{else data.docking_status == "undocking"}}
+					{{if !data.docking_override}}
+						<span class="average">UNDOCKING</span>
+					{{else}}
+						<span class="average">UNDOCKING-MANUAL</span>
+					{{/if}}
+				{{else data.docking_status == "undocked"}}
+					<span class="idle">UNDOCKED</span>
+				{{else}}
+					<span class="bad">ERROR</span>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+{{/if}}
+<h3>Shuttle Authorization</h3>
+<div class="item">
+	<div class="item">
+		{{if data.has_auth}}
+			Access Granted. Shuttle controls unlocked.
+		{{else}}
+			Additional authorization required.
+		{{/if}}
+	</div>
+</div>
+<div class="item" style="padding-top: 10px">
+	{{for data.auth_list}}
+		{{if value.auth_hash}}
+			{{:helper.link(value.auth_name, 'eject', {'removeid' : value.auth_hash}, null, 'itemContentWide')}}
+		{{else}}
+			{{:helper.link("", 'eject', {'scanid' : 1}, null, 'itemContentWide')}}
+		{{/if}}
+	{{/for}}
+</div>
+
+<h3>Shuttle Control</h3>
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemContent" style="padding-top: 2px; width: 100%">
+			{{:helper.link('Launch Shuttle', 'arrowthickstop-1-e', {'move' : '1'}, data.can_launch ? null : 'disabled' , null)}}
+			{{:helper.link('Cancel Launch', 'cancel', {'cancel' : '1'}, data.can_cancel ? null : 'disabled' , null)}}
+			{{:helper.link('Force Launch', 'alert', {'force' : '1'}, data.can_force ? null : 'disabled' , data.can_force ? 'redButton' : null)}}
+		</div>
+	</div>
+</div>

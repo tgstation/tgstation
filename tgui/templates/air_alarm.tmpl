@@ -1,0 +1,217 @@
+<!-- 
+Title: Air Alarm
+Used In File(s): \code\game\machinery\alarm.dm
+
+#define AALARM_MODE_SCRUBBING	1
+#define AALARM_MODE_REPLACEMENT	2 //like scrubbing, but faster.
+#define AALARM_MODE_PANIC		3 //constantly sucks all air
+#define AALARM_MODE_CYCLE		4 //sucks off all air, then refill and switches to scrubbing
+#define AALARM_MODE_FILL		5 //emergency fill
+#define AALARM_MODE_OFF			6 //Shuts it all down.
+
+#define AALARM_SCREEN_MAIN		1
+#define AALARM_SCREEN_VENT		2
+#define AALARM_SCREEN_SCRUB		3
+#define AALARM_SCREEN_MODE		4
+#define AALARM_SCREEN_SENSORS	5
+
+ -->
+<H1>Air Status</H1>
+{{if data.has_environment}}
+	{{for data.environment}}
+		{{:value.name}}: 
+		{{if value.danger_level == 2}}
+			<span class='bad'>
+		{{else value.danger_level == 1}}
+			<span class='average'>
+		{{else}}
+			<span class='good'>
+		{{/if}}
+		{{:helper.fixed(value.value, 1)}}
+		</span>{{:value.unit}}<br>
+	{{/for}}
+	Local Status: {{if data.total_danger == 2}}
+			<span class='bad'>DANGER: Internals Required
+		{{else data.total_danger == 1}}
+			<span class='average'>Caution
+		{{else}}
+			<span class='good'>Optimal
+		{{/if}}
+		</span><br>
+    Area Status: {{if data.atmos_alarm}}<span class='bad'>Atmosphere alert in area</span>{{else data.fire_alarm}}<span class='bad'>Fire alarm in area</span>{{else}}No alerts{{/if}}
+{{else}}
+	<span class='bad'>Warning: Cannot obtain air sample for analysis.</span>
+{{/if}}
+<HR>
+    <table width="100%">
+        <tr>
+            <td>
+                <tr>
+                    <td>
+                        <H3>Remote Control</H3>
+                    </td>
+                    <td>
+                        <H3>Thermostat</H3>
+                    </td>
+                </tr>
+            </td>
+            <td>
+                <tr>
+                    <td>
+                        <div class="item">
+                            <div class="itemContent" style="width: 100%;">	
+                                {{:helper.link('Off',	null, { 'rcon' : 1}, data.remote_connection && !data.remote_access ? (data.rcon == 1 ? 'yellowButton' : 'disabled') : null, data.rcon == 1 ? 'selected' : null)}}
+                                {{:helper.link('Auto',	null, { 'rcon' : 2}, data.remote_connection && !data.remote_access ? (data.rcon == 2 ? 'yellowButton' : 'disabled') : null, data.rcon == 2 ? 'selected' : null)}}
+                                {{:helper.link('On',	null, { 'rcon' : 3}, data.remote_connection && !data.remote_access ? (data.rcon == 3 ? 'yellowButton' : 'disabled') : null, data.rcon == 3 ? 'selected' : null)}}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        {{:helper.link(data.target_temperature, null, { 'temperature' : 1})}}
+                    </td>
+                </tr>
+            </td>
+        </tr>
+    </table>
+<HR>
+{{if (data.locked && !data.remote_connection) || (data.remote_connection && ! data.remote_access)}}
+	{{if data.remote_connection}}
+		<span class='noticePlaceholder'>(Current remote control settings and alarm status restricts access.)</span>
+	{{else}}
+		<span class='noticePlaceholder'>(Swipe ID card to unlock interface.)</span>
+	{{/if}}
+{{else}}
+    {{if data.screen != 1}}
+        <div class="item">{{:helper.link('Main Menu', null, { 'screen' : 1})}}</div>
+    {{/if}}
+    {{if data.screen == 1}}
+        <div class="item">
+            {{if data.atmos_alarm}}
+                {{:helper.link('Reset - Area Atmospheric Alarm', null, { 'atmos_reset' : 1})}}
+            {{else}}
+                {{:helper.link('Activate - Area Atmospheric Alarm', null, { 'atmos_alarm' : 1})}}
+            {{/if}}
+        </div>
+        <hr>
+            <div class="item">
+                {{:helper.link('Scrubbers Control', null, { 'screen' : 3})}}
+            </div>
+            <div class="item">
+                {{:helper.link('Vents Control', null, { 'screen' : 2})}}
+            </div>
+            <div class="item">
+                {{:helper.link('Set Environmental Mode', null, { 'screen' : 4})}}
+            </div>
+            <div class="item">
+                {{:helper.link('Sensor Settings', null, { 'screen' : 5})}}
+            </div>
+        <hr>
+            {{if data.mode==3}}
+                {{:helper.link('PANIC SIPHON ACTIVE - Turn siphoning off', null, { 'mode' : 1}, null, 'redButton')}}
+			{{else}}
+                {{:helper.link('ACTIVATE PANIC SIPHON IN AREA', null, { 'mode' : 3}, null, 'yellowButton')}}
+            {{/if}}
+    {{else data.screen == 2}}
+		{{for data.vents}}
+			<div class="item">
+			{{:value.long_name}}</div>
+			<div class="item">
+				<div class="itemLabel">
+					Operating:
+				</div>
+				<div class="itemContent">
+					{{:helper.link(value.power ? 'On' : 'Off', null, { 'id_tag' : value.id_tag, 'command' : 'power', 'val' : value.power ? 0 : 1}, null, value.power ? null : 'redButton')}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					Operation Mode:
+				</div>
+				<div class="itemContent">
+					{{:value.direction == "siphon" ? 'Siphoning' : 'Pressurizing'}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					Pressure Checks:
+				</div>
+				<div class="itemContent">
+					{{:helper.link('External', null, { 'id_tag' : value.id_tag, 'command' : 'checks', 'val' : value.checks^1}, null, value.checks&1 ? 'selected' : null)}}
+					{{:helper.link('Internal', null, { 'id_tag' : value.id_tag, 'command' : 'checks', 'val' : value.checks^2}, null, value.checks&2 ? 'selected' : null)}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					External Pressure Bound:
+				</div>
+				<div class="itemContent">
+					{{:helper.link(helper.fixed(value.external,2), null, { 'id_tag' : value.id_tag, 'command' : 'set_external_pressure'})}}
+					{{:helper.link('Reset', null, { 'id_tag' : value.id_tag, 'command' : 'reset_external_pressure'})}}
+				</div>
+			</div>			
+			<HR>
+		{{empty}}
+			No vents connected.
+		{{/for}}
+    {{else data.screen == 3}}
+		{{for data.scrubbers}}
+			<div class="item">
+			{{:value.long_name}}</div>
+			<div class="item">
+				<div class="itemLabel">
+					Operating:
+				</div>
+				<div class="itemContent">
+					{{:helper.link(value.power ? 'On' : 'Off', null, { 'id_tag' : value.id_tag, 'command' : 'power', 'val' : value.power ? 0 : 1}, null, value.power ? null : 'redButton')}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					Operation Mode:
+				</div>
+				<div class="itemContent">
+					{{:helper.link(value.scrubbing ? 'Scrubbing' : 'Siphoning', null, { 'id_tag' : value.id_tag, 'command' : 'scrubbing', 'val' : value.scrubbing ? 0 : 1}, null, value.scrubbing ? null : 'redButton')}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					Filters:
+				</div>
+				<div class="itemContent">
+					{{for value.filters :filterValue:filterIndex}}
+						{{:helper.link(filterValue.name, null, { 'id_tag' : value.id_tag, 'command' : filterValue.command, 'val' : filterValue.val ? 0 : 1}, null, filterValue.val ? 'selected' : null)}}
+					{{/for}}
+				</div>
+			</div>
+			<HR>
+		{{empty}}
+			No scrubbers connected.
+		{{/for}}
+    {{else data.screen == 4}}
+		<H3>Environmental Modes</H3>
+		{{for data.modes}}
+			<div class="item">
+				{{:helper.link(value.name, null, { 'mode' : value.mode }, null, value.selected ? (value.danger ? 'redButton' : 'selected') : null)}}
+			</div>
+		{{/for}}
+    {{else data.screen == 5}}
+		<H3>Alarm Threshold</H3>
+		Partial pressure for gases.
+		<table class='fixed'>
+		<tr>
+			<td></td><td><span class='bad'>min2</span></td><td><span class='average'>min1</span></td><td><span class='average'>max1</span></td><td><span class='bad'>max2</span></td>
+		</tr>
+		{{for data.thresholds}}
+			<tr>
+				<td>{{:value.name}}</td>
+				{{for value.settings :settingsValue:settingsIndex}}
+					<td>
+						{{:helper.link(settingsValue.selected >= 0 ? helper.fixed(settingsValue.selected, 2) : "Off", null, { 'command' : 'set_threshold', 'env' : settingsValue.env, 'var' : settingsValue.val })}}
+					</td>
+				{{/for}}
+			</tr>			
+		{{/for}}
+		<table>
+    {{/if}}
+{{/if}}
+ 

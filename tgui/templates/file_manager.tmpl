@@ -1,0 +1,58 @@
+{{if data.error}}
+	<h2>An error has occured:</h2>
+	Additional information: {{:data.error}}<br>
+	<i>Please try again. If the problem persists contact your system administrator for assistance.</i>
+	{{:helper.link('Back to menu', null, { "PRG_closefile" : 1 })}}
+{{else}}
+	{{if data.filename}}
+		<h2>Viewing file {{:data.filename}}</h2>
+		<div class='item'>
+		{{:helper.link('CLOSE', null, { "PRG_closefile" : 1 })}}
+		{{:helper.link('EDIT', null, { "PRG_edit" : 1 })}}
+		{{:helper.link('PRINT', null, { "PRG_printfile" : 1 })}}
+		</div><hr>
+		{{:data.filedata}}
+	{{else}}
+		<h2>Available files (local):</h2>
+		<table>
+			<tr><th>File name
+			<th>File type
+			<th>File size (GQ)
+			<th>Operations
+			{{for data.files}}
+				<tr><td>{{:value.name}}
+				<td>.{{:value.type}}
+				<td>{{:value.size}}GQ
+				<td>
+					{{:helper.link('VIEW', null, { "PRG_openfile" : value.name })}}
+					{{:helper.link('DELETE', null, { "PRG_deletefile" : value.name }, value.undeletable ? 'disabled' : null)}}
+					{{:helper.link('RENAME', null, { "PRG_rename" : value.name }, value.undeletable ? 'disabled' : null)}}
+					{{:helper.link('CLONE', null, { "PRG_clone" : value.name }, value.undeletable ? 'disabled' : null)}}
+					{{if data.usbconnected}}
+						{{:helper.link('EXPORT', null, { "PRG_copytousb" : value.name }, value.undeletable ? 'disabled' : null)}}
+					{{/if}}
+			{{/for}}
+		</table>
+		{{if data.usbconnected}}
+		<h2>Available files (portable device):</h2>
+		<table>
+			<tr><th>File name
+			<th>File type
+			<th>File size (GQ)
+			<th>Operations
+			{{for data.usbfiles}}
+				<tr><td>{{:value.name}}
+				<td>.{{:value.type}}
+				<td>{{:value.size}}GQ
+				<td>
+					{{:helper.link('DELETE', null, { "PRG_usbdeletefile" : value.name }, value.undeletable ? 'disabled' : null)}}
+					{{if data.usbconnected}}
+						{{:helper.link('IMPORT', null, { "PRG_copyfromusb" : value.name }, value.undeletable ? 'disabled' : null)}}
+					{{/if}}
+			{{/for}}
+		</table>
+		{{/if}}
+		{{:helper.link('NEW DATA FILE', null, { "PRG_newtextfile" : 1 })}}
+	{{/if}}
+	
+{{/if}}

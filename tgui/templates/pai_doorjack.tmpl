@@ -1,0 +1,44 @@
+<!-- pAI door jack
+code/modules/mob/living/silicon/pai/software_modules.dm
+-->
+
+<div class="item">
+	<div class="itemLabel">
+		Cable:
+	</div>
+	<div class="itemContent">
+		{{if data.machine}}
+			{{:helper.link("Connected", '', {}, 'selected')}}
+		{{else data.cable}}
+			{{:helper.link("Extended", '', {}, 'yellowButton')}}
+		{{else}}
+			{{:helper.link("Retracted", '', {"stopic":"door_jack", "cable":1})}}
+		{{/if}}
+	</div>
+</div>
+
+{{if data.machine}}
+<div class="item">
+	<div class="itemLabel">
+		Hack:
+	</div>
+	<div class="itemContent">
+		{{if data.inprogress}}
+			{{if data.progress_a <= 33}}
+				<div class='bad'>{{:data.progress_a}}.{{:data.progress_b}}%</div>
+			{{else data.progress_a <= 67}}
+				<div class='average'>{{:data.progress_a}}.{{:data.progress_b}}%</div>
+			{{else}}
+				<div class='good'>{{:data.progress_a}}.{{:data.progress_b}}%</div>
+			{{/if}}
+			{{:helper.link("Cancel", '', {"stopic":"door_jack", "cancel":1}, null, 'redButton')}}
+		{{else}}
+			{{:helper.link("Start", '', {"stopic":"door_jack", "jack":1})}}
+		{{/if}}
+	</div>
+</div>
+{{else data.aborted}}
+<div class="item">
+	<div class='bad'>Hack aborted!</div>
+</div>
+{{/if}}

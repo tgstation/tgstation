@@ -1,0 +1,8 @@
+<i>No program loaded. Please select program from list below.</i>
+<table>
+{{for data.programs}}
+	<tr><td>{{:helper.link(value.desc, null, {'PC_runprogram' : value.name})}}
+	<td>{{:helper.link('X', null, {'PC_killprogram' : value.name}, (value.running ? null : 'disabled'))}}
+	<td>{{:helper.link('AR', null, {'PC_setautorun' : value.name}, null, (value.autorun ? 'yellowButton' : null))}}
+{{/for}}
+</table>

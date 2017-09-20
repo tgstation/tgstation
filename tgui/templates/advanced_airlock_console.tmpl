@@ -1,0 +1,60 @@
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemLabel">
+			External Pressure:
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.external_pressure, 0, 200, (data.external_pressure < 80 || data.external_pressure > 120) ? 'bad' : (data.external_pressure < 95 || data.external_pressure > 110) ? 'average' : 'good')}}
+			<div class="statusValue">
+				{{:data.external_pressure}} kPa
+			</div>
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Chamber Pressure:
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.chamber_pressure, 0, 200, (data.chamber_pressure < 80 || data.chamber_pressure > 120) ? 'bad' : (data.chamber_pressure < 95 || data.chamber_pressure > 110) ? 'average' : 'good')}}
+			<div class="statusValue">
+				{{:data.chamber_pressure}} kPa
+			</div>
+		</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">
+			Internal Pressure:
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.internal_pressure, 0, 200, (data.internal_pressure < 80 || data.internal_pressure > 120) ? 'bad' : (data.internal_pressure < 95 || data.internal_pressure > 110) ? 'average' : 'good')}}
+			<div class="statusValue">
+				{{:data.internal_pressure}} kPa
+			</div>
+		</div>
+	</div>
+</div>
+<div class="item" style="padding-top: 10px">
+	<div class="item" style="width: auto; float: left">
+		<div class="itemContent">
+			{{:helper.link('Cycle to Exterior', 'arrowthickstop-1-w', {'command' : 'cycle_ext'}, data.processing ? 'disabled' : null)}}
+			{{:helper.link('Cycle to Interior', 'arrowthickstop-1-e', {'command' : 'cycle_int'}, data.processing ? 'disabled' : null)}}
+		</div>
+		<div class="itemContent" style="padding-top: 2px">
+			{{:helper.link('Force exterior door', 'alert', {'command' : 'force_ext'}, null, data.processing ? 'yellowButton' : null)}}
+			{{:helper.link('Force interior door', 'alert', {'command' : 'force_int'}, null, data.processing ? 'yellowButton' : null)}}
+		</div>
+	</div>
+	<div style="padding-left: 10px; width: 80px; float: left">
+		<div class="item">
+			<div class="itemContent" style="padding-bottom: 2px; width: auto">
+				{{:helper.link('Purge', 'refresh', {'command' : 'purge'}, data.processing ? 'disabled' : null, data.purge ? 'linkOn' : null)}}
+			</div>
+			<div class="itemContent" style="width: auto">
+				{{:helper.link('Secure', data.secure ? 'locked' : 'unlocked', {'command' : 'secure'}, data.processing ? 'disabled' : null, data.secure ? 'linkOn' : null)}}
+			</div>
+		</div>
+	</div>
+	<div class="item" style="padding-top: 10px">
+			{{:helper.link('Abort', 'cancel', {'command' : 'abort'}, data.processing ? null : 'disabled', data.processing ? 'redButton' : null)}}
+	</div>
+</div>

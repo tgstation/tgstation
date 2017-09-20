@@ -1,0 +1,75 @@
+{{:helper.link('Clear Order', 'circle', { "clean_order" : 1 })}}<br><br>
+<i>Your new computer device you always dreamed of is just four steps away...</i><hr>
+{{if data.state == 0}} <!-- Device type selection -->
+<div class='item'>
+	<h2>Step 1: Select your device type</h2>
+	{{:helper.link('Laptop', 'calc', { "pick_device" : 1 })}}
+	{{:helper.link('Tablet', 'calc', { "pick_device" : 2 })}}
+</div>
+{{else data.state == 1}}
+<div class='item'>
+	<h2>Step 2: Personalise your device</h2>
+	<table>
+		<tr>
+			<td><b>Current Price:</b>
+			<td>{{:data.totalprice}}T
+		<tr>
+			<td><b>Battery:</b>
+			<td>{{:helper.link('Standard', null, { "hw_battery" : 1 }, data.hw_battery == 1 ? 'selected' : null)}}
+			<td>{{:helper.link('Upgraded', null, { "hw_battery" : 2 }, data.hw_battery == 2 ? 'selected' : null)}}
+			<td>{{:helper.link('Advanced', null, { "hw_battery" : 3 }, data.hw_battery == 3 ? 'selected' : null)}}
+		<tr>
+			<td><b>Hard Drive:</b>
+			<td>{{:helper.link('Standard', null, { "hw_disk" : 1 }, data.hw_disk == 1 ? 'selected' : null)}}
+			<td>{{:helper.link('Upgraded', null, { "hw_disk" : 2 }, data.hw_disk == 2 ? 'selected' : null)}}
+			<td>{{:helper.link('Advanced', null, { "hw_disk" : 3 }, data.hw_disk == 3 ? 'selected' : null)}}
+		<tr>
+			<td><b>Network Card:</b>
+			<td>{{:helper.link('None', null, { "hw_netcard" : 0 }, data.hw_netcard == 0 ? 'selected' : null)}}
+			<td>{{:helper.link('Standard', null, { "hw_netcard" : 1 }, data.hw_netcard == 1 ? 'selected' : null)}}
+			<td>{{:helper.link('Advanced', null, { "hw_netcard" : 2 }, data.hw_netcard == 2 ? 'selected' : null)}}
+		{{if data.devtype != 2}} <!-- No tablets -->
+		<tr>
+			<td><b>Processor Unit:</b>
+			<td>{{:helper.link('Standard', null, { "hw_cpu" : 1 }, data.hw_cpu == 1 ? 'selected' : null)}}
+			<td>{{:helper.link('Advanced', null, { "hw_cpu" : 2 }, data.hw_cpu == 2 ? 'selected' : null)}}
+		{{/if}}
+		<tr>
+			<td><b>Tesla Relay:</b>
+			<td>{{:helper.link('None', null, { "hw_tesla" : 0 }, data.hw_tesla == 0 ? 'selected' : null)}}
+			<td>{{:helper.link('Standard', null, { "hw_tesla" : 1 }, data.hw_tesla == 1 ? 'selected' : null)}}
+		<tr>
+			<td><b>Nano Printer:</b>
+			<td>{{:helper.link('None', null, { "hw_nanoprint" : 0 }, data.hw_nanoprint == 0 ? 'selected' : null)}}
+			<td>{{:helper.link('Standard', null, { "hw_nanoprint" : 1 }, data.hw_nanoprint == 1 ? 'selected' : null)}}
+		<tr>
+			<td><b>Card Reader:</b>
+			<td>{{:helper.link('None', null, { "hw_card" : 0 }, data.hw_card == 0 ? 'selected' : null)}}
+			<td>{{:helper.link('Standard', null, { "hw_card" : 1 }, data.hw_card == 1 ? 'selected' : null)}}
+		<tr>
+			<td><b>Intellicard Slot</b>
+			<td>{{:helper.link('None', null, { "hw_aislot" : 0 }, data.hw_aislot == 0 ? 'selected' : null)}}
+			<td>{{:helper.link('Standard', null, { "hw_aislot" : 1 }, data.hw_aislot == 1 ? 'selected' : null)}}
+		<tr>
+			<td><b>Confirm Order:</b>
+			<td>{{:helper.link('CONFIRM', null, { "confirm_order" : 1 })}}
+	</table>
+	<hr>
+	<b>Battery</b> allows your device to operate without external utility power source. Advanced batteries increase battery life.<br>
+	<b>Hard Drive</b> stores file on your device. Advanced drives can store more files, but use more power, shortening battery life.<br>
+	<b>Network Card</b> allows your device to wirelessly connect to the local NTNet network. Basic cards are limited to on-station use, while advanced cards can operate anywhere near the uplink, which includes the asteroid outposts. Advanced cards also tend to have better bandwidth.<br>
+	<b>Processor Unit</b> is critical for your device's functionality. It allows you to run programs from your hard drive. Advanced CPUs use more power, but allow you to run more programs on background at once.<br>
+	<b>Tesla Relay</b> is an advanced wireless power relay that allows your device to connect to nearby area power controller to provide alternative power source.<br>
+	<b>Nano Printer</b> is device that allows printing of various documents. This device was certified EcoFriendlyPlus and is capable of recycling existing paper for printing purposes.<br>
+	<b>Card Reader</b> adds a slot that allows you to manipulate RFID cards. Please note that this is not necessary to allow the device to read your identification, it is just necessary to manipulate other cards.<br>
+	<b>Intellicard Slot</b> is a specialised high powered hardware that can hold an intellicard with active AI personality. It is required for some specialised programs to run properly.<br>
+</div>
+{{else data.state == 2}}
+	<h2>Step 3: Payment</h2>
+	<b>Your device is now ready for fabrication..</b><br>
+	<i>Please swipe your identification card to finish purchase.</i><br>
+	<i>Total price: <b>{{:data.totalprice}}T</b></i>
+{{else data.state == 3}}
+	<h2>Step 4: Thank you for your purchase</h2>
+	<b>Should you experience any issues with your new device, contact technical support at support@computerservice.nt</b>
+{{/if}}

@@ -1,0 +1,45 @@
+<!-- pAI interface file
+code/modules/mob/living/silicon/pai/software.dm
+-->
+
+<span class="item">
+	<span class="itemLabel">
+		Emotion:
+	</span>
+	<span class="itemContent">
+		{{for data.emotions}}
+			{{:helper.link(value.name, '', {"image" : value.id}, data.current_emotion == value.id ? 'selected' : null)}}
+		{{/for}}
+	</span>
+</span>
+
+<span class="item">
+	<span class="itemLabel">
+		Installed Software:
+	</span>
+	<span class="itemContent">
+		{{for data.bought}}
+			{{:helper.link(value.name, '', {"software" : value.id}, null, value.on ? 'selected' : null)}}
+		{{/for}}
+	</span>
+</span>
+
+<span class="item">
+	<span class="itemLabel">
+		Available RAM:
+	</span>
+	<span class="itemContent">
+		{{:data.available_ram}}
+	</span>
+</span>
+
+<span class="item">
+	<span class="itemLabel">
+		Downloadable Software:
+	</span>
+	<span class="itemContent">
+		{{for data.not_bought}}
+			{{:helper.link(value.name + " (" + value.ram + ")", '', {"purchase" : value.id}, value.ram <= data.available_ram ? null : 'disabled')}}
+		{{/for}}
+	</span>
+</span>

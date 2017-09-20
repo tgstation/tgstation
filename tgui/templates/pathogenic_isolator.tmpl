@@ -1,0 +1,107 @@
+<div class='item'>
+  <h2>Menu</h2>
+</div>
+<div class="item">
+  {{if !data.isolating}}
+    {{:helper.link('Home', 'home', {'home' : 1}, data.state == 'home' ? 'disabled' : null, 'fixedLeft')}}
+    {{:helper.link('List', 'note', {'list' : 1}, data.state == 'list' ? 'disabled' : null, 'fixedLeft')}}
+    {{:helper.link('Pathogen', 'folder-open', {'entry' : 1}, data.state == 'entry' ? 'disabled' : null, 'fixedLeft')}}
+  {{/if}}
+  <br>
+  {{:helper.link('Close', 'gear', {'close' : 1}, null, 'fixedLeft')}}
+  {{:helper.link('Print', 'print', { 'print' : 1 }, data.can_print ? null : 'disabled', 'fixedLeft')}}
+</div>
+
+{{if data.isolating}}
+  <h5 class='average'>The Isolator is currently busy.</h5>
+  <div class='notice'>
+    <center><span class='bad'>Isolating pathogens...</span></center>
+  </div>
+  <p>
+    Thank you for your patience!
+  </p>
+{{else}}
+  {{if data.state =="home"}}
+    <div class="item">
+      <h2>Blood Sample</h2>
+    </div>
+    <div class='item'>
+      {{:helper.link('Eject Syringe', 'eject', { 'eject' : 1 }, data.syringe_inserted ? null : 'disabled')}}
+    </div>
+
+    {{if data.syringe_inserted}}
+      <div class='statusDisplay'>
+        <span class='good'><b>Pathogens:</b></span>
+          {{if data.pathogen_pool}}
+            {{for data.pathogen_pool}}
+              <div class='item'>
+                <span class='highlight'><b><u>{{:index + 1}}. #{{:value.unique_id}}</u> {{:value.is_in_database ? "(Analysed)" : ""}}</b></span><br>
+                <span class='average'>{{:value.name}}:</span> {{:value.dna}}
+              </div>
+            {{/for}}
+          {{else}}
+            No pathogens detected.
+          {{/if}}
+      </div>
+    {{else}}
+      <div class='item'>
+        <span class='average'>No syringe loaded.</span>
+      </div>
+    {{/if}}
+    {{if data.pathogen_pool}}
+      <div class='item'>
+        <div class='itemLabelWide'>
+          Isolate Pathogens:
+        </div>
+        <div class='itemContent'>
+          {{for data.pathogen_pool}}
+            {{:helper.link('#' + value.unique_id, 'pencil', { 'isolate' : value.reference }, null, 'fixedLeft')}}
+          {{/for}}
+        </div>
+      </div>
+      <div class='item'>
+        <div class='itemLabelWide'>
+          Database Lookup:
+        </div>
+        <div class='itemContent'>
+          {{for data.pathogen_pool}}
+            {{if value.is_in_database}}
+              {{:helper.link('#' + value.unique_id, 'info', { 'entry' : 1, 'view' : value.record }, null, 'fixedLeft')}}
+            {{/if}}
+          {{/for}}
+        </div>
+      </div>
+    {{/if}}
+  {{else}}
+    {{if data.state == "list"}}
+      <div class='item'>
+        <h2>View Database</h2>
+      </div>
+      <div class='item'>
+      {{if data.database}}
+        {{for data.database}}
+          <div class='itemContent'>
+            <div class='highlight fixedLeft'>{{:value.name}}</div>
+            {{:helper.link('Details', 'circle-arrow-s', { 'entry' : 1, 'view' : value.record }, null, 'fixedLeft')}}
+          </div>
+        {{/for}}
+      {{else}}
+        <span class='average'>The viral database is empty.</span>
+      {{/if}}
+      </div>
+    {{else}}
+      {{if data.state == "entry"}}
+        {{if data.entry}}
+          <div class='item'>
+            <h2>{{:data.entry.name}}</h2>
+          </div>
+          <div class='statusDisplay'>
+            {{:data.entry.description}}
+          </div>
+        {{else}}
+          <span class='average'>No virus selected.</span>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+  {{/if}}
+{{/if}}

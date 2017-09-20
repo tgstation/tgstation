@@ -1,0 +1,61 @@
+<h3>Sleeper</h3>
+{{if !data.power}}
+	<div class="item">
+	<div class="itemLabel">
+		NO POWER
+	</div>
+	{{if data.occupant}}
+		<div class="itemContent">
+			{{:helper.link("Eject occupant", null, {'eject' : 0})}}
+		</div>
+	{{/if}}
+{{else}}
+	{{if data.occupant}}
+		<div class="item">
+			<div class="statusDisplay">
+				{{:data.occupant}}
+			</div>
+			<div class="itemContent">
+			{{:helper.link(data.filtering ? "Dialysis active" : "Dialysis inactive", null, {'filter' : !data.filtering})}}
+			</div>
+			<div class="itemContent">
+			{{:helper.link(data.pump ? "Stomach pump active" : "Stomach pump inactive", null, {'pump' : !data.pump})}}
+			</div>
+			<div class="itemContent">
+				{{:helper.link("Eject occupant", null, {'eject' : 0})}}
+			</div>
+		</div>
+	{{else}}
+		<div class="item">
+			No occupant.
+		</div>
+	{{/if}}
+	<div class="item">
+	{{for data.reagents}}
+		<div class="itemLabel">
+		{{:value.name}}
+		</div>
+		<div class="itemContent">
+			{{if data.occupant}}Occupant: {{:value.amount}} units{{/if}}
+			{{:helper.link('Inject 5', null, {'chemical' : value.name, 'amount' : 5}, data.occupant ? null : 'disabled')}}{{:helper.link('Inject 10', null, {'chemical' : value.name, 'amount' : 10}, data.occupant ? null : 'disabled')}}
+		</div>
+	{{/for}}
+	</div>
+	{{if data.beaker != -1}}
+		<div class="item">
+			<div class="itemLabel">
+				Beaker:
+			</div>
+			<div class="itemContent">
+				{{:data.beaker}} units of free space remaining.
+				{{:helper.link("Eject", null, {'beaker' : 0})}}
+			</div>
+		</div>
+	{{else}}
+		<div class="item">
+			<div class="itemLabel">
+				No beaker inserted.
+			</div>
+		</div>
+	{{/if}}
+{{/if}}

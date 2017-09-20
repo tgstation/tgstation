@@ -1,0 +1,19 @@
+<!-- 
+Title: Jukebox UI
+Used In File(s): \code\game\machinery\jukebox.dm
+ -->
+
+<H3><span class="white">Current track:</span> <span class="average">{{:data.current_track}}</span></H3>
+<div>
+    {{:helper.link('Play' , 'play', {'play' : 1}, data.playing == 1 ? 'disabled' : null, null)}}
+    {{:helper.link('Stop' , 'stop', {'stop' : 1}, data.playing == 0 ? 'disabled' : null, null)}}
+</div>
+
+<H3><span class="white">Available tracks:</span></H3>
+<div class="itemContent">
+    {{for data.tracks}}
+        <div class="item">
+            {{:helper.link( value.track, 'gear', {'change_track' : 1, 'title' : value.track}, value.track == data.current_track ? 'disabled' : null, null)}}    
+        </div>
+    {{/for}}
+</div>

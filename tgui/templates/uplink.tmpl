@@ -1,0 +1,105 @@
+
+<!-- 
+Title: Syndicate Uplink, uses some javascript to change nanoUI up a bit.
+Used In File(s): \code\game\objects\items\devices\uplinks.dm
+ -->
+{{:helper.syndicateMode()}}
+<H2><span class="white">{{:data.welcome}}</span></H2>
+<br>
+<div class="item">
+	<div class="itemLabelNarrow">
+		<b>Functions</b>:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Request Items', 'gear', {'menu' : 0}, null, 'fixedLeftWider')}}
+		{{:helper.link('Exploitable Information', 'gear', {'menu' : 2}, null, 'fixedLeftWider')}}
+		{{:helper.link('Return', 'arrowreturn-1-w', {'return' : 1}, null, 'fixedLeft')}}
+		{{:helper.link('Close', 'gear', {'lock' : "1"}, null, 'fixedLeft')}}
+	</div>
+</div>
+<br>
+
+{{if data.menu == 0 || data.menu == 1}}
+	<div class="item">
+		<div class="itemLabel">
+			<b>Tele-Crystals</b>:
+		</div>
+		<div class="itemContent">
+			{{:data.crystals}}
+		</div>
+	</div>
+
+	{{if data.discount_amount < 100}}
+		<div class="item">
+			<div class="itemLabel">
+				<b>Currently discounted</b>:
+			</div>
+			<div class="itemContent">
+				{{:data.discount_category}}<br>{{:data.discount_name}}<br>{{:data.discount_amount}}% off. Offer will expire at: {{:data.offer_expiry}}
+			</div>
+		</div>
+	{{/if}}
+{{/if}}
+
+{{if data.menu == 0}}
+	<H2>Categories:</H2>
+	{{for data.categories}}
+		<div class="item">
+			{{:helper.link(value.name, 'gear', {'menu' : 1, 'category' : value.ref})}}
+		</div>
+	{{/for}}
+{{else data.menu == 1}}
+    <H2><span class="white">Request items:</span></H2>
+    <span class="white"><i>Each item costs a number of tele-crystals as indicated by the number following their name.</i></span>
+	
+	{{for data.items}}
+		<div class="item">
+			{{:helper.link(value.name, 'gear', {'buy_item' : value.ref}, value.can_buy ? null : 'disabled')}} - <span class="white">{{:value.cost}}</span>
+		</div>
+		<div class="item">
+			{{:value.description}}
+		</div>
+    {{/for}}
+{{else data.menu == 2}}
+    <H2><span class="white">Information Record List:</span></H2>
+    <br>
+    <div class="item">
+        Select a Record
+    </div>
+    <br>
+    {{for data.exploit_records}}
+        <div class="item">
+             {{:helper.link(value.Name, 'gear', {'menu' : 21, 'id' : value.id}, null, null)}}
+        </div>
+    {{/for}}
+{{else data.menu == 21}}
+    <H2><span class="white">Information Record:</span></H2>
+    <br>
+    <div class="statusDisplayRecords">
+        <div class="item">
+            <div class="itemContent" style="width: 100%;">
+                {{if data.exploit_exists == 1}}
+                    <span class="good">Name:		</span> <span class="average">{{:data.exploit.name}}		</span><br>
+                    <span class="good">Sex:			</span> <span class="average">{{:data.exploit.sex}}			</span><br>
+                    <span class="good">Species:		</span> <span class="average">{{:data.exploit.species}}		</span><br>
+                    <span class="good">Age:			</span> <span class="average">{{:data.exploit.age}}			</span><br>
+                    <span class="good">Rank:		</span> <span class="average">{{:data.exploit.rank}}		</span><br>
+					<span class="good">Home System:	</span> <span class="average">{{:data.exploit.home_system}}	</span><br>
+					<span class="good">Citizenship:	</span> <span class="average">{{:data.exploit.citizenship}}	</span><br>
+					<span class="good">Faction:		</span> <span class="average">{{:data.exploit.faction}}		</span><br>
+					<span class="good">Religion:	</span> <span class="average">{{:data.exploit.religion}}	</span><br>
+                    <span class="good">Fingerprint:	</span> <span class="average">{{:data.exploit.fingerprint}}	</span><br>
+
+                    <br>Acquired Information:<br>
+                    <span class="good">Notes:<br>	</span> <span class="average">{{:data.exploit.nanoui_exploit_record}}</span><br><br>
+                {{else}}
+                    <span class="bad">
+                        No exploitative information acquired!
+                        <br>
+                        <br>
+                    </span>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+{{/if}}

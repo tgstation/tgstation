@@ -1,0 +1,91 @@
+{{if data.error}}
+	{{:data.error}}<br>
+	{{:helper.link('Return', null, {'back' : 1})}}
+{{else data.msg_title}}
+	<div class="item">
+		<div class="itemLabel">
+			Title: 
+		</div>
+		<div class="itemContent">
+			{{:data.msg_title}}&nbsp
+		</div>
+		<div class="itemLabel">
+			Source:
+		</div>
+		<div class="itemContent">
+			{{:data.msg_source}}&nbsp
+		</div>
+		<div class="itemLabel">
+			Received at:
+		</div>
+		<div class="itemContent">
+			{{:data.msg_timestamp}}&nbsp
+		</div>
+		<div class="itemLabel">
+			Message:
+		</div>
+		<div class="itemContent">
+			{{:data.msg_body}}&nbsp
+		</div>
+		<div class="itemLabel">
+			Options:
+		</div>
+		<div class="itemContent">
+			{{:helper.link('Return', null, {'back' : 1})}}
+		</div>
+	</div>
+{{else data.current_account}}
+	<b>Viewing account {{:data.current_account}} in administrative mode.</b>
+	<div class="item">
+		<div class="itemLabel">
+			Account status: 
+		</div>
+		<div class="itemContent">
+			{{if data.cur_suspended}}
+				<b>Suspended</b>
+			{{else}}
+				<b>Normal</b>
+			{{/if}}
+		</div>
+		<div class="itemLabel">
+			Options:
+		</div>
+		<div class="itemContent">
+			{{:helper.link(data.cur_suspended ? 'Unsuspend' : 'Suspend', null, {'ban' : data.cur_uid})}}
+			{{:helper.link('Set Password', null, {'changepass' : data.cur_uid})}}
+			{{:helper.link('Return', null, {'back' : 1})}}
+		</div>
+	</div>
+	{{if data.messagecount}}
+		<table>
+			<tr>
+				<th>Source</th>
+				<th>Title</th>
+				<th>Received at</th>
+				<th>Actions</th>
+			</tr>
+			{{for data.messages}}
+				<tr>
+					<td>{{:value.source}}&nbsp</td>
+					<td>{{:value.title}}&nbsp</td>
+					<td>{{:value.timestamp}}&nbsp</td>
+					<td>
+						{{:helper.link('View', null, {'viewmail' :  value.uid})}}
+					</td>
+				</tr>
+			{{/for}}
+		</table>
+	{{else}}
+		<b>No messages found in selected account.</b>
+	{{/if}}	
+{{else}}
+	<h2>Welcome to NTNet Email Administration System</h2>
+	<i>SECURE SYSTEM - Have your identification ready</i><br><br>
+	{{:helper.link('Create New Account', null, {'newaccount' : 1})}}<br><br>
+	<b>Select account which you wish to administrate:</b>
+	<table>
+	{{for data.accounts}}
+		<tr><td>{{:helper.link(value.login, null, {'viewaccount' : value.uid})}}
+	{{/for}}
+	</table>
+{{/if}}

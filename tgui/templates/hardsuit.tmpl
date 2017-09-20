@@ -1,0 +1,257 @@
+<!-- 
+Title: Integrated Hardsuit Controller
+Used In File(s): /code/modules/clothing/spacesuits/rig/rig.dm
+ -->
+
+<style type="text/css">
+	.inlineBlock {
+		padding: 2px; 
+		display: inline-block;
+	}
+	.extraTopPadding {
+		padding-top: 10px;
+	}
+	.floatLeft {
+		float: left;
+		margin-left: 5px;
+	}
+	.paddedBorderBlue {
+		border: 1px solid #517087; 
+		padding: 2px;
+	}
+	.redText {
+		color: red;
+	}
+	.orangeText {
+		color: orange;
+	}
+	.greenText {
+		color: green;
+	}
+	.boldText {
+		font-weight: bold;
+	}
+	.textSpanCenter {
+		width: 100%;
+		text-align: center;
+	}
+	<!-- display bar override -->
+	.displayBar {
+		width: 200px;
+	}
+</style>
+
+{{if data.interfacelock || data.malf > 0}}
+	<div class='redText boldText textSpanCenter'>-- HARDSUIT INTERFACE OFFLINE --</div>
+{{else}}
+	{{if data.aicontrol && data.ai != 1}}
+		<div class='redText boldText textSpanCenter'>-- HARDSUIT CONTROL OVERRIDDEN BY AI --</div>
+	{{else}}
+		<div>
+			<div class='inlineBlock extraTopPadding'>
+				<div class='fixedLeft boldText'>
+					Power supply
+				</div>
+				<div>
+					{{:helper.displayBar(data.chargestatus, 0, 50, (data.chargestatus >= 35) ? 'good' : (data.chargestatus >= 15) ? 'average' : 'bad')}} {{:data.charge}}/{{:data.maxcharge}}
+				</div>
+			</div>
+			<div>
+				<div class='inlineBlock extraTopPadding'>
+					<div class='fixedLeft boldText'>
+						AI control:
+					</div>
+					<div class='fixedLeft'>
+						{{if data.aioverride}}
+							<div class='greenText boldText'>ENABLED</div>
+						{{else}}
+							<div class='redText boldText'>DISABLED</div>
+						{{/if}}
+					</div>
+					<div class='fixedLeft'>
+						{{:helper.link('Toggle', 'circle-arrow-s', {'toggle_ai_control' : 1}, null)}}
+					</div>
+				</div>
+				<div class='inlineBlock'>
+					<div class='fixedLeft boldText'>
+						Suit status:
+					</div>
+					<div class='fixedLeft'>
+						{{if data.sealing == 1}}
+							<div class='orangeText boldText'>PROCESSING</div>
+						{{else}}
+							{{if data.seals == 1}}
+								<div class='redText boldText'>INACTIVE</div>
+							{{else}}
+								<div class='greenText boldText'>ACTIVE</div>
+							{{/if}}
+						{{/if}}
+					</div>
+					<div class='fixedLeft'>
+						{{:helper.link('Toggle', 'circle-arrow-s', {'toggle_seals' : 1}, null)}}
+					</div>
+				</div>
+				<div class='inlineBlock'>
+					<div class='fixedLeft boldText'>
+						Cover status:
+					</div>
+					<div class='fixedLeft'>
+						{{if data.emagged || !data.securitycheck}}
+							<div class='orangeText boldText'>ERROR - MAINTENANCE LOCK CONTROL OFFLINE</div>
+						{{else}}
+							{{if data.coverlock}}
+								<div class='redText boldText'>LOCKED</div>
+							{{else}}
+								<div class='greenText boldText'>UNLOCKED</div>
+							{{/if}}
+						{{/if}}
+					</div>
+					<div class='fixedLeft'>
+						{{:helper.link('Toggle', 'circle-arrow-s', {'toggle_suit_lock' : 1}, null)}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<h2>Hardware</h2>
+		<h3>Suit pieces</h3>
+
+		<div>
+			<div class='inlineBlock'>
+				<div class='fixedLeft boldText'>
+					Helmet:
+				</div>
+				<div class='fixedLeftWider'>
+					{{:helper.capitalizeFirstLetter(data.helmet)}}
+				</div>
+				{{if data.sealing != 1}}
+					<div class='fixedLeft'>
+						{{:helper.link('Toggle', 'circle-arrow-s', {'toggle_piece' : 'helmet'}, null)}}
+					</div>
+				{{/if}}
+			</div>
+			<div class='inlineBlock'>
+				<div class='fixedLeft boldText'>
+					Gauntlets:
+				</div>
+				<div class='fixedLeftWider'>
+					{{:helper.capitalizeFirstLetter(data.gauntlets)}}
+				</div>
+				{{if data.sealing != 1}}
+					<div class='fixedLeft'>
+						{{:helper.link('Toggle', 'circle-arrow-s', {'toggle_piece' : 'gauntlets'}, null)}}
+					</div>
+				{{/if}}
+			</div>
+			<div class='inlineBlock'>
+				<div class='fixedLeft boldText'>
+					Boots:
+				</div>
+				<div class='fixedLeftWider'>
+					{{:helper.capitalizeFirstLetter(data.boots)}}
+				</div>
+				{{if data.sealing != 1}}
+					<div class='fixedLeft'>
+						{{:helper.link('Toggle', 'circle-arrow-s', {'toggle_piece' : 'boots'}, null)}}
+					</div>
+				{{/if}}
+			</div>
+			<div class='inlineBlock'>
+				<div class='fixedLeft boldText'>
+					Chestpiece:
+				</div>
+				<div class='fixedLeftWider'>
+					{{:helper.capitalizeFirstLetter(data.chest)}}
+				</div>
+				{{if data.sealing != 1}}
+					<div class='fixedLeft'>
+						{{:helper.link('Toggle', 'circle-arrow-s', {'toggle_piece' : 'chest'}, null)}}
+					</div>
+				{{/if}}
+			</div>
+		</div>
+
+		<h2>System modules</h2>
+		{{if data.seals == 1 || data.sealing == 1}}
+			<h3><div class = 'bad'>HARDSUIT SYSTEMS OFFLINE</div></h3>
+		{{else}}
+			<h3>Selected primary system: 
+				{{if data.primarysystem}}
+					{{:helper.capitalizeFirstLetter(data.primarysystem)}}
+				{{else}}
+					None
+				{{/if}}
+			</h3>
+			{{if data.modules}}
+				<div>
+					{{for data.modules}}
+						<div class='inlineBlock'>
+							<div class='paddedBorderBlue floatLeft' style='width: 420px'>
+								<div class='floatLeft' style='width: 100%'>
+									<div class='average floatLeft'>{{:helper.capitalizeFirstLetter(value.name)}}</div>
+									{{if value.damage > 0}}
+										<div class='floatLeft'>
+											{{if value.damage == 1}}
+												(<div class='orangeText'>damaged</div>)
+											{{else}}
+												(<div class='redText'>destroyed</div>)
+											{{/if}}
+										</div>
+									{{/if}}
+									<div class='floatLeft' style='width: 100%; clear: left'>
+										<div class='caption floatLeft average' style='width: 20%; margin: 0'>
+												Engage: {{:value.engagecost}} 
+												Activate: {{:value.activecost}} 
+												Passive: {{:value.passivecost}} 
+										</div>
+										<div class='caption floatLeft' style='width: 25%; margin: 0'>
+												{{:value.desc}}
+										</div>
+										<div class='floatLeft' style='width: 48%'>
+											{{if value.can_use == 1}}
+												<div class='inlineBlock'>
+													{{:helper.link(value.engagestring, 'circle-arrow-s', {'interact_module' : value.index, 'module_mode' : 'engage'}, null)}}
+												</div>
+											{{/if}}
+											{{if value.can_select == 1}}
+												<div class='inlineBlock'>
+													{{if value.name == data.primarysystem}}
+														<div class ='good boldText'>SELECTED</div>
+													{{else}}
+														{{:helper.link('Select', 'circle-arrow-s', {'interact_module' : value.index, 'module_mode' : 'select'}, null)}}
+													{{/if}}
+												</div>
+											{{/if}}
+											{{if value.can_toggle == 1}}
+												<div class='inlineBlock'>
+													{{if value.is_active == 1}}
+														{{:helper.link(value.deactivatestring, 'circle-arrow-s', {'interact_module' : value.index, 'module_mode' : 'deactivate'}, null)}}
+													{{else}}
+														{{:helper.link(value.activatestring, 'circle-arrow-s', {'interact_module' : value.index, 'module_mode' : 'activate'}, null)}}
+													{{/if}}
+												</div>
+											{{/if}}
+										</div>
+									</div>
+								</div>
+								<div class='floatLeft' style='clear: left; margin-left: 10px; width: 100%'>
+									{{if value.charges}}
+										<div class='average boldText'>Stored charges</div>
+										<div class='boldText'>Selected:</div> {{:helper.capitalizeFirstLetter(value.chargetype)}}
+										{{for value.charges :itemValue:itemIndex}}
+											<div class='floatLeft' style='padding: 2px 0px'>
+												{{:helper.link(helper.capitalizeFirstLetter(itemValue.caption), null, {'interact_module' : value.index, 'module_mode' : 'select_charge_type', 'charge_type' : itemValue.index}, null)}}
+											</div>
+										{{/for}}
+									{{/if}}
+								</div>
+							</div>
+						</div>
+					{{/for}}
+				</div>
+			{{else}}
+				None.
+			{{/if}}
+		{{/if}}
+	{{/if}}
+{{/if}}

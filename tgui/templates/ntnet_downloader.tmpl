@@ -1,0 +1,122 @@
+<i>Welcome to software download utility. Please select which software you wish to download.</i><hr>
+{{if data.error}}
+	<h2>Download Error</h2>
+	<div class="itemLabel">
+		Information: 
+	</div>
+	<div class="itemContent">
+		{{:data.error}}
+	</div>
+	<div class="itemLabel">
+		Reset Program: 
+	</div>
+	<div class="itemContent">
+		{{:helper.link("RESET", null, {'PRG_reseterror' : 1})}}
+	</div>	
+{{else data.downloadname}}
+	<h2>Download Running</h2>
+	<i>Please wait...</i>
+	<div class="item">
+		<div class="itemLabel">
+			File name: 
+		</div>
+		<div class="itemContent">
+			{{:data.downloadname}}
+		</div>
+		<div class="itemLabel">
+			File description: 
+		</div>
+		<div class="itemContent">
+			{{:data.downloaddesc}}
+		</div>
+		<div class="itemLabel">
+			File size: 
+		</div>
+		<div class="itemContent">
+			{{:data.downloadcompletion}}GQ / {{:data.downloadsize}}GQ
+		</div>
+		<div class="itemLabel">
+			Transfer Rate: 
+		</div>
+		<div class="itemContent">
+			{{:data.downloadspeed}} GQ/s
+		</div>
+		<div class="itemLabel">
+			Download progress: 
+		</div>
+		<div class="itemContent">
+			{{:helper.displayBar(data.downloadcompletion, 0, data.downloadsize, 'good')}}
+		</div>
+	</div>
+{{else}}
+	<h2>Primary software repository</h2>
+	<div class="itemLabel">
+		Hard drive: 
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good')}}
+		{{:data.disk_used}}GQ / {{:data.disk_size}}GQ
+	</div>
+	{{for data.downloadable_programs}}
+		<div class = "item">
+			<div class="itemLabel">
+				File name: 
+			</div>
+			<div class="itemContent">
+				{{:value.filename}} ({{:value.size}} GQ)
+			</div>
+			<div class="itemLabel">
+				Program name: 
+			</div>
+			<div class="itemContent">
+				{{:value.filedesc}}
+			</div>		
+			<div class="itemLabel">
+				Description: 
+			</div>
+			<div class="itemContent">
+				{{:value.fileinfo}}
+			</div>	
+			<div class="itemLabel">
+				File controls: 
+			</div>
+			<div class="itemContent">
+				{{:helper.link("DOWNLOAD", null, {'PRG_downloadfile' : value.filename})}}
+			</div>	
+		</div>
+	{{/for}}
+	{{if data.hackedavailable}}
+		<h2>*UNKNOWN* software repository</h2>
+		<i>Please note that NanoTrasen does not recommend download of software from non-official servers.</i>
+		{{for data.hacked_programs}}
+			<div class = "item">
+				<div class="itemLabel">
+					File name: 
+				</div>
+				<div class="itemContent">
+					{{:value.filename}} ({{:value.size}} GQ)
+				</div>
+				<div class="itemLabel">
+					Program name: 
+				</div>
+				<div class="itemContent">
+					{{:value.filedesc}}
+				</div>		
+				<div class="itemLabel">
+					Description: 
+				</div>
+				<div class="itemContent">
+					{{:value.fileinfo}}
+				</div>
+				<div class="itemLabel">
+					File controls: 
+				</div>
+				<div class="itemContent">
+					{{:helper.link("DOWNLOAD", null, {'PRG_downloadfile' : value.filename})}}
+				</div>	
+			</div>
+		{{/for}}
+	{{/if}}
+
+{{/if}}
+<br><br><hr><i>NTOS v2.0.4b Copyright NanoTrasen 2557 - 2559</i>

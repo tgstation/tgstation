@@ -1,0 +1,44 @@
+<div class="item">
+	<div class="itemLabel">
+		Power:
+	</div>
+	<div class="itemContent">
+		{{:helper.link(data.on? 'On' : 'Off', null, {'power' : 1})}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Desirable output pressure:
+	</div>
+	<div class="itemContent">
+		<div style="clear: both; padding-top: 4px;">
+			{{:helper.link('MAX', null, {'set_press' : 'max'}, null)}}
+			{{:helper.link('SET', null, {'set_press' : 'set'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(data.pressure_set/100)}} kPa&nbsp;</div>
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Load:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.last_power_draw, 0, data.max_power_draw, (data.last_power_draw < data.max_power_draw - 5) ? 'good' : 'average')}}
+		<div class="statusValue">
+			{{:data.last_power_draw}} W
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Flow Rate:
+	</div>
+	<div class="itemContent">
+		<div class="statusValue">
+			{{:(data.last_flow_rate/10)}} L/s
+		</div>
+	</div>
+</div>

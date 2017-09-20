@@ -1,0 +1,21 @@
+<!-- 
+Title: Syndicate Uplink, uses some javascript to change nanoUI up a bit.
+Used In File(s): \code\game\objects\items\devices\uplinks.dm
+ -->
+{{:helper.syndicateMode()}}
+<H1>Available Entries</H1>
+<table>
+{{for data.entries}}
+    <tr>
+		<td>{{:helper.link('', 'gear', {'set' : value.name})}}</td><td>{{:value.name}}</td><td>{{:value.value}}</td>
+	</tr>
+{{/for}}
+</table>
+
+<table>
+    <tr>
+        <td>Electronic warfare:</td>
+        <td>{{:helper.link('Enabled', null, {'electronic_warfare' : 1}, data.electronic_warfare ? 'selected' : null)}}</td>
+        <td>{{:helper.link('Disabled',null, {'electronic_warfare' : 0}, data.electronic_warfare ? null : 'selected')}}</td>
+    </tr>
+</table>

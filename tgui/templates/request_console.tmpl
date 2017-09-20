@@ -1,0 +1,122 @@
+<!--
+Title: Request Console
+Used In File(s): \code\game\machinery\requests_console.dm
+
+#define RCS_MAINMENU 0	// Main men
+#define RCS_RQASSIST 1	// Request supplies
+#define RCS_RQSUPPLY 2	// Request assistance
+#define RCS_SENDINFO 3	// Relay information
+#define RCS_SENTPASS 4	// Message sent successfully
+#define RCS_SENTFAIL 5	// Message sent unsuccessfully
+#define RCS_VIEWMSGS 6	// View messages
+#define RCS_MESSAUTH 7	// Authentication before sending
+#define RCS_ANNOUNCE 8	// Send announcementu
+
+ -->
+
+{{if data.screen == 1}}
+	<div class="item"><h3>Request assistance from another department.</h3></div>
+	<table class="block">
+	{{for data.assist_dept}}
+		{{if value != data.department}}
+			<tr>
+				<td><div class="itemLabelWidest" align="right">{{:value}} -</div></td>
+				<td><div class="item">{{:helper.link('Message', null, { 'write' : value , 'priority' : 1 })}}</div></td>
+				<td><div class="item">{{:helper.link('High Priority', null, { 'write' : value , 'priority' : 2 })}}</div></td>
+			</tr>
+		{{/if}}
+	{{empty}}
+		<tr><td><div class="itemLabel">There are no available departments to request assistance from.</div></td></tr>
+	{{/for}}
+	</table><br>
+	<div class="item">{{:helper.link('Back', 'arrowreturnthick-1-w', { 'setScreen' : 0 })}}</div>
+{{else data.screen == 2}}
+	<div class="item"><h3>Request supplies from another department.</h3></div>
+	<table class="block">
+	{{for data.supply_dept}}
+		{{if value != data.department}}
+			<tr>
+				<td><div class="itemLabelWidest" align="right">{{:value}} - </div></td>
+				<td><div class="item">{{:helper.link('Message', null, { 'write' : value , 'priority' : 1 })}}</div></td>
+				<td><div class="item">{{:helper.link('High Priority', null, { 'write' : value , 'priority' : 2 })}}</div></td>
+			</tr>
+		{{/if}}
+	{{empty}}
+		<tr><td><div class="itemLabel">There are no available departments to request supplies from.</div></td></tr>
+	{{/for}}
+	</table><br>
+	<div class="item">{{:helper.link('Back', 'arrowreturnthick-1-w', { 'setScreen' : 0 })}}</div>
+{{else data.screen == 3}}
+	<div class="item"><h3>Relay info to another department.</h3></div>
+	<table class="block">
+	{{for data.info_dept}}
+		{{if value != data.department}}
+			<tr>
+				<td><div class="itemLabelWidest" align="right">{{:value}} -</div></td>
+				<td width=70px><div class="item">{{:helper.link('Message', null, { 'write' : value , 'priority' : 1 })}}</div></td>
+				<td width=90px><div class="item">{{:helper.link('High Priority', null, { 'write' : value , 'priority' : 2 })}}</div></td>
+			</tr>
+		{{/if}}
+	{{empty}}
+		<tr><td><div class="itemLabel">There are no available departments to relay information to.</div></td></tr>
+	{{/for}}
+	</table><br>
+	<div class="item">{{:helper.link('Back', 'arrowreturnthick-1-w', { 'setScreen' : 0 })}}</div>
+{{else data.screen == 4}}
+	<div class="item"><b>Message sent successfully.</b></div>
+	<div class="item">{{:helper.link('Continue', 'arrowthick-1-e', { 'setScreen' : 0 })}}</div>
+{{else data.screen == 5}}
+	<div class="item"><b>An Error occured. Message not sent.</b></div>
+	<div class="item">{{:helper.link('Continue', 'arrowthick-1-e', { 'setScreen' : 0 })}}</div>
+{{else data.screen == 6}}
+	<div class="statusDisplay" style="overflow: auto;">
+		{{for data.message_log}}
+			<div class="item">{{:value}}</div>
+		{{empty}}
+			<div class="item">No messages have been recieved.</div>
+		{{/for}}
+	</div>
+	<div class="item">{{:helper.link('Back', 'arrowreturnthick-1-w', { 'setScreen' : 0 })}}</div>
+{{else data.screen == 7}}
+	<div class="item"><h2>Message Authentication</h2></div><br>
+	<div class="statusDisplay" style="overflow: auto;">
+		<div class="item"><b>Message for {{:data.recipient}}:</b> {{:data.message}}</div>
+		<div class="item"><b>Validated by:</b> {{:data.msgVerified}}</div>
+		<div class="item"><b>Stamped by:</b> {{:data.msgStamped}}</div>
+	</div>
+	<div class="item">
+		{{:helper.link('Send Message', 'arrowthick-1-e', { 'department' : data.recipient })}}
+		{{:helper.link('Back', 'arrowreturnthick-1-w', { 'setScreen' : 0 })}}
+	</div>
+{{else data.screen == 8}}
+	<div class="item"><h2>Announcement</h2></div>
+	<div class="item"><b>Message:</b> {{:data.message}} {{:helper.link('Write Message', 'pencil', { 'writeAnnouncement' : 1 })}}</div>
+	<br>
+	{{if data.announceAuth}}
+		<div class="item"><b>ID verified. Authentication accepted.</b></div>
+	{{else}}
+		<div class="item">Swipe your ID card to authenticate yourself.</div>
+	{{/if}}
+	<br>
+	<div class="item">
+		{{:helper.link('Announce', 'signal-diag', { 'sendAnnouncement' : 1 }, (data.announceAuth && data.message) ? null : 'disabled' )}}
+		{{:helper.link('Back', 'arrowreturnthick-1-w', { 'setScreen' : 0 })}}
+	</div>
+{{else}}
+	{{if data.newmessagepriority == 1}}
+		<div class="item"><font color='red'>There are new messages</font></div>
+	{{else data.newmessagepriority == 2}}
+		<div class="item"><font color='red'><b>NEW PRIORITY MESSAGES</b></font></div>
+	{{/if}}
+	<div class="item">{{:helper.link('View Messages', data.newmessagepriority ? 'mail-closed' : 'mail-open', { 'setScreen' : 6 })}}</div>
+	<br>
+	<div class="item">{{:helper.link('Request Assistance', 'gear', { 'setScreen' : 1 })}}</div>
+	<div class="item">{{:helper.link('Request Supplies', 'gear', { 'setScreen' : 2 })}}</div>
+	<div class="item">{{:helper.link('Relay Anonymous Information', 'gear', { 'setScreen' : 3})}}</div>
+	<br>
+	{{if data.announcementConsole}}
+		<div class="item">{{:helper.link('Send Announcement', 'signal-diag', { 'setScreen' : 8})}}</div>
+		<br>
+	{{/if}}
+	<div class="item">{{:helper.link(data.silent ? 'Speaker OFF' : 'Speaker ON', data.silent ? 'volume-off' : 'volume-on', { 'toggleSilent' : 1})}}</div>
+{{/if}}

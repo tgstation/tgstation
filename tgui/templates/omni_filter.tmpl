@@ -1,0 +1,87 @@
+<div class="item">
+	<div class="itemContent" style="padding: 5px">
+		{{:helper.link(data.power ? 'On' : 'Off', null, {'command' : 'power'}, data.config ? 'disabled' : null)}}
+	</div>
+	<div class="itemContent" style="padding: 5px">
+		{{:helper.link('Configure', null, {'command' : 'configure'}, null, data.config ? 'selected' : null)}}
+	</div>
+</div>
+<div class="item">
+    {{if data.config}}
+
+        <div style="width: 100%; text-align: center">
+            <div style="float: left">
+                <div class="white" style="height: 26px">Port</div>
+                {{for data.ports}}
+                    <div class="average" style="height: 26px">{{:value.dir}} Port</div>
+                {{/for}}
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <div class="white" style="height: 26px">Input</div>
+                {{for data.ports}}
+                    <div style="height: 26px">
+                        {{:helper.link(' ', null, {'command' : 'switch_mode', 'mode' : 'in', 'dir' : value.dir}, null, value.input ? 'selected' : null)}}
+                    </div>
+                {{/for}}
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <div class="white" style="height: 26px">Output</div>
+                {{for data.ports}}
+                    <div style="height: 26px">
+                        {{:helper.link(' ', null, {'command' : 'switch_mode', 'mode' : 'out', 'dir' : value.dir}, null, value.output ? 'selected' : null)}}
+                    </div>
+                {{/for}}
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <div class="white" style="height: 26px">Filter</div>
+                {{for data.ports}}
+                    <div style="height: 26px">
+                        {{:helper.link(value.f_type ? value.f_type : 'None', null, {'command' : 'switch_filter', 'mode' : value.f_type, 'dir' : value.dir}, value.filter ? null : 'disabled', value.f_type ? 'selected' : null)}}
+                    </div>
+                {{/for}}
+            </div>
+        </div>
+
+        <div class="itemContent" style="padding: 5px">
+            Set Flow Rate Limit: {{:(data.set_flow_rate/10)}} L/s
+        </div>
+        <div class="itemContent" style="padding: 5px">
+            {{:helper.link('Set Flow Rate Limit', null, {'command' : 'set_flow_rate'})}}
+        </div>
+
+    {{else}}
+
+        <div style="width: 100%; text-align: center">
+            <div style="float: left">
+                <div class="white" style="height: 26px">Port</div>
+                {{for data.ports}}
+                    <div class="average" style="height: 26px">{{:value.dir}} Port</div>
+                {{/for}}
+            </div>
+            <div style="float: left; margin-left: 10px">
+                <div class="white" style="height: 26px">Mode</div>
+                {{for data.ports}}
+                    <div style="height: 26px">
+                            {{if value.input}}
+                                Input
+                            {{else value.output}}
+                                Output
+                            {{else value.f_type}}
+                                {{:value.f_type}}
+                            {{else}}
+                                Disabled
+                            {{/if}}
+                    </div>
+                {{/for}}
+            </div>
+        </div>
+
+        <div class="itemContent" style="padding: 5px">
+            Set Flow Rate Limit: {{:(data.set_flow_rate/10)}} L/s
+        </div>
+		
+        <div class="itemContent" style="padding: 5px">
+            Flow Rate: {{:(data.last_flow_rate/10)}} L/s
+        </div>
+    {{/if}}
+</div>

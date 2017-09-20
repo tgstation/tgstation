@@ -1,0 +1,65 @@
+<style type="text/css">
+	.fixedCell {
+		width: 78px;
+	}
+
+	.link, .linkOn, .linkOff, .selected, .disabled, .yellowButton, .redButton {
+		min-width: 70px;
+		margin: 0px 2px 0px 0px;
+	}
+</style>
+
+<div class="item">
+	<div class="itemLabelWider">
+		Main power is 
+		{{if data.main_power_loss == 0}}
+			online
+		{{else data.main_power_loss == -1}}
+			offline
+		{{else}}
+			offline for {{:data.main_power_loss}} second{{:data.main_power_loss == 1 ? '' : 's'}}
+		{{/if}}.
+	</div>
+	<div class="itemContentNarrow">
+		{{:helper.link(data.main_power_loss ? 'Disabled' : 'Disable', null, {'command' : 'main_power'}, data.main_power_loss == 0 ? null : 'disabled', data.main_power_loss == 0 ? 'redButton' : null)}}
+	</div>
+</div>	
+
+<div class="item">
+	<div class="itemLabelWider">
+		Backup power is 
+		{{if data.backup_power_loss == 0}}
+			online
+		{{else data.backup_power_loss == -1}}
+			offline
+		{{else}}
+			offline for {{:data.backup_power_loss}} second{{:data.backup_power_loss == 1 ? '' : 's'}}
+		{{/if}}.
+	</div>
+	<div class="itemContentNarrow">
+		{{:helper.link(data.backup_power_loss ? 'Disabled' : 'Disable', null, {'command' : 'backup_power'}, data.backup_power_loss == 0 ? null : 'disabled', data.backup_power_loss == 0 ? 'redButton' : null)}}
+	</div>
+</div>	
+
+<div class="item">
+	<div class="itemLabelWidest">
+		Electrified Status:
+	</div>
+    <div class="itemContentWidest">
+		{{:helper.link('Offline'  , null, {'command' : 'electrify_permanently', 'activate' : "0" }, data.electrified == 0 ? 'selected' : null)}}
+        {{:helper.link(data.electrified <= 0 ? 'Temporary (30s)' : 'Temporary (' + data.electrified +'s)', null, {'command' : 'electrify_temporary',   'activate' : "1"}, data.electrified > 0 ? 'redButton' : null)}}
+        {{:helper.link('Permanent', null, {'command' : 'electrify_permanently', 'activate' : "1"}, data.electrified == -1 ? 'redButton' : null)}}
+	</div>
+</div>	
+
+<br>
+
+<table>
+	{{for data.commands}}
+		<tr>
+			<td class='itemLabel fixedCell'>{{:value.name}}:</td>
+			<td class='fixedCell'>{{:helper.link(value.enabled, null, {'command' : value.command, 'activate' : value.act ? 1 : 0}, value.active ?  'selected' : null)}}</td>
+			<td class='fixedCell'>{{:helper.link(value.disabled,null, {'command' : value.command, 'activate' : value.act ? 0 : 1}, !value.active ? (value.danger ? 'redButton' : 'selected') : null)}}</td>
+		</tr>
+	{{/for}}
+</table>

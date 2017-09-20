@@ -1,0 +1,30 @@
+<div>
+	<div>
+		{{:data.name}}
+	</div>
+	{{if data.bag}}
+		<div>
+			{{:helper.link(data.bag, '', { 'take' : 'garbage' })}}
+		</div>
+	{{/if}}
+	{{if data.mop}}
+		<div>
+			{{:helper.link(data.mop, '', { 'take' : 'mop' })}}
+		</div>
+	{{/if}}
+	{{if data.spray}}
+		<div>
+			{{:helper.link(data.spray, '', { 'take' : 'spray' })}}
+		</div>
+	{{/if}}
+	{{if data.replacer}}
+		<div>
+			{{:helper.link(data.replacer, '', { 'take' : 'replacer' })}}
+		</div>
+	{{/if}}
+	{{if data.signs}}
+		<div>
+			{{:helper.link(data.signs, '', { 'take' : 'sign' })}}
+		</div>
+	{{/if}}
+</div>

@@ -1,0 +1,37 @@
+<!--
+Title: Alarm Monitor Console (Main content)
+Used In File(s): \code\modules\nano\modules\alarm_monitor.dm
+"MD5 checks should be good enough"
+ -->
+{{for data.categories}}
+	<H2><span class="itemLabelWidest">{{:value.category}}</span></H2>
+	{{for value.alarms :alarmValue:alarmIndex}}
+		{{if alarmValue.origin_lost}}
+			{{:alarmValue.name}} <span class='notice'>Alarm Origin Lost</span><br>
+		{{else}}
+			{{:alarmValue.name}}<br>
+		{{/if}}
+		{{if alarmValue.has_cameras || alarmValue.lost_sources != ""}}
+			<div class="item">
+				{{if alarmValue.has_cameras}}
+					<div class="itemContent" style="width: 100%;">	
+						{{for alarmValue.cameras :cameraValue:cameraIndex}}
+							{{if cameraValue.deact}}
+								{{:helper.link(cameraValue.name + " (deactivated)", '', {}, 'inactive')}}
+							{{else}}
+								{{:helper.link(cameraValue.name, '', {'switchTo' : cameraValue.camera})}}
+							{{/if}}
+						{{/for}}
+					</div>		
+				{{/if}}
+				{{if alarmValue.lost_sources != ""}}
+					<div class="itemContent" style="width: 100%;">
+							<H4><span class='notice'>Lost Alarm Sources: {{:alarmValue.lost_sources}}</span></H4>
+					</div>
+				{{/if}}
+			</div>
+		{{/if}}
+	{{empty}}	
+		<span class="white">--All Systems Nominal</span>
+	{{/for}}
+{{/for}}

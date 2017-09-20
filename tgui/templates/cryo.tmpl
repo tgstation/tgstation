@@ -1,0 +1,53 @@
+<!-- 
+Title: Cryo Cell Status UI 
+Used In File(s): \code\game\machinery\cryo.dm
+ -->
+<h3>Cryo Cell Status</h3>
+
+<div class="statusDisplay">
+	{{if !data.hasOccupant}}
+		<div class="line">Cell Unoccupied</div>
+	{{else}}
+		{{:data.occupant}}
+	{{/if}}
+	<hr>
+	<div class="line">
+		<div class="statusLabel">Cell Temperature:</div><div class="statusValue">
+			<span class="{{:data.cellTemperatureStatus}}">{{:data.cellTemperature}} K</span>
+		</div>
+	</div>
+</div>
+
+<h3>Cryo Cell Operation</h3>
+<div class="item">
+	<div class="itemLabel">
+		Cryo Cell Status:
+	</div>
+	<div class="itemContent" style="width: 40%;">
+		{{:helper.link('On', 'power', {'switchOn' : 1}, data.isOperating ? 'selected' : null)}}{{:helper.link('Off', 'close', {'switchOff' : 1}, data.isOperating ? null : 'selected')}}
+	</div>
+	<div class="itemContent" style="width: 26%;">
+		{{:helper.link('Eject Occupant', 'arrowreturnthick-1-s', {'ejectOccupant' : 1}, data.hasOccupant ? null : 'disabled')}}
+	</div>
+</div>
+<div class="item">&nbsp;</div>
+<div class="item">
+	<div class="itemLabel">
+		Beaker:
+	</div>
+	<div class="itemContent" style="width: 40%;">
+		{{if data.isBeakerLoaded}}		
+			{{:data.beakerLabel ? data.beakerLabel : '<span class="average">No label</span>'}}<br>
+			{{if data.beakerVolume}}
+				<span class="highlight">{{:data.beakerVolume}} units remaining</span><br>
+			{{else}}
+				<span class="bad">Beaker is empty</span>
+			{{/if}}
+		{{else}}
+			<span class="average"><i>No beaker loaded</i></span>
+		{{/if}}
+	</div>
+	<div class="itemContent" style="width: 26%;">
+		{{:helper.link('Eject Beaker', 'eject', {'ejectBeaker' : 1}, data.isBeakerLoaded ? null : 'disabled')}}
+	</div>
+</div>

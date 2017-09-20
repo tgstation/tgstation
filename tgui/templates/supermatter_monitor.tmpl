@@ -1,0 +1,125 @@
+{{if data.active}}
+	{{:helper.link('Back to Menu', null, {'clear' : 1})}}<br>
+		<div class="item">
+			<div class="itemLabel">
+				Core Integrity:
+			</div>
+			<div class="itemContent">
+				{{:helper.displayBar(data.SM_integrity, 0, 100, (data.SM_integrity == 100) ? 'good' : (data.SM_integrity >= 50) ? 'average' : 'bad')}} {{:data.SM_integrity}}%
+			</div>
+			<div class="itemLabel">
+				Relative EER:
+			</div>
+			<div class="itemContent">
+				{{if data.SM_power > 300}}
+					<span class='bad'>{{:data.SM_power}} MeV/cm3</span>
+				{{else data.SM_power > 150}}
+					<span class='average'>{{:data.SM_power}} MeV/cm3</span>
+				{{else}}
+					<span class='good'>{{:data.SM_power}} MeV/cm3</span>
+				{{/if}}
+			</div>
+			<div class="itemLabel">
+				Temperature:
+			</div>
+			<div class="itemContent">
+				{{if data.SM_ambienttemp > 5000}}
+					<span class='bad'>{{:data.SM_ambienttemp}} K</span>
+				{{else data.SM_ambienttemp > 4000}}
+					<span class='average'>{{:data.SM_ambienttemp}} K</span>
+				{{else}}
+					<span class='good'>{{:data.SM_ambienttemp}} K</span>
+				{{/if}}
+			</div>		
+			<div class="itemLabel">
+				Pressure:
+			</div>
+			<div class="itemContent">
+				{{if data.SM_ambientpressure > 10000}}
+					<span class='bad'>{{:data.SM_ambientpressure}} kPa</span>
+				{{else data.SM_ambientpressure > 5000}}
+					<span class='average'>{{:data.SM_ambientpressure}} kPa</span>
+				{{else}}
+					<span class='good'>{{:data.SM_ambientpressure}} kPa</span>
+				{{/if}}
+			</div>
+			<div class="itemLabel">
+				Chamber EPR:
+			</div>
+			<div class="itemContent">
+				{{if data.SM_EPR > 4}}
+					<span class='bad'>{{:data.SM_EPR}}</span>
+				{{else data.SM_EPR > 2.5}}
+					<span class='average'>{{:data.SM_EPR}}</span>
+				{{else data.SM_EPR < 1}}
+					<span class='average'>{{:data.SM_EPR}}</span>
+				{{else}}
+					<span class='good'>{{:data.SM_EPR}}</span>
+				{{/if}}
+			</div>		
+		</div>
+		<hr><br
+		<div class="item">
+			<div class="itemLabel">
+				Gas Composition:
+			</div>
+			<div class="itemContent">
+				<div class="item">
+					<div class="itemLabel">
+						O2:
+					</div>
+					<div class="itemContent">
+						{{:data.SM_gas_O2}} %
+					</div>	
+					<div class="itemLabel">
+						CO2:
+					</div>
+					<div class="itemContent">
+						{{:data.SM_gas_CO2}} %
+					</div>
+					<div class="itemLabel">
+						N2:
+					</div>
+					<div class="itemContent">
+						{{:data.SM_gas_N2}} %
+					</div>
+					<div class="itemLabel">
+						PH:
+					</div>
+					<div class="itemContent">
+						{{:data.SM_gas_PH}} %
+					</div>
+					<div class="itemLabel">
+						N2O:
+					</div>
+					<div class="itemContent">
+						{{:data.SM_gas_N2O}} %
+					</div>
+				</div>
+			</div>			
+		</div>
+{{else}}
+	{{:helper.link('Refresh', null, {'refresh' : 1})}}<br>
+	{{for data.supermatters}}
+		<div class="item">
+			<div class="itemLabel">
+				Area:
+			</div>
+			<div class="itemContent">
+				{{:value.area_name}} - (#{{:value.uid}})
+			</div>
+			<div class="itemLabel">
+				Integrity:
+			</div>
+			<div class="itemContent">
+				{{:value.integrity}} %
+			</div>
+			<div class="itemLabel">
+				Options:
+			</div>
+			<div class="itemContent">
+				{{:helper.link('View Details', null, {'set' : value.uid})}}
+			</div>			
+		</div>	
+	{{/for}}
+{{/if}}

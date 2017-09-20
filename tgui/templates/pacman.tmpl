@@ -1,0 +1,113 @@
+<h3>Status</h3>
+<div class='item'>
+	<div class="itemLabel">
+		Generator Status: 
+	</div>
+	<div class = "itemContent">
+		{{if data.active}}
+			<span class="good">Online</span>
+		{{else}}
+			<span class="average">Offline</span>
+		{{/if}}
+	</div>
+	<div class="itemLabel">
+		Generator Control: 
+	</div>
+	<div class = "itemContent">
+		{{if data.active}}
+			{{:helper.link('STOP', 'power', {'action' : "disable"})}}
+		{{else}}
+			{{:helper.link('START', 'power', {'action' : "enable"})}}
+		{{/if}}
+	</div>
+</div>
+<h3>Fuel</h3>
+<div class='item'>
+	<div class="itemLabel">
+		Fuel Type:
+	</div>
+	<div class="itemContent">
+		<span class="good">{{:data.fuel_type}}</span>
+	</div>
+	<div class="itemLabel">
+		Fuel Level:
+	</div>
+	<div class="itemContent">
+		{{if data.fuel_stored >= 5000}}
+			{{:helper.displayBar(data.fuel_stored, 0, data.fuel_capacity, 'good')}}
+			<br><span class="good">{{:data.fuel_stored}}/{{:data.fuel_capacity}} cm3</span>
+		{{else data.fuel_stored >= 1000}}
+			{{:helper.displayBar(data.fuel_stored, 0, data.fuel_capacity, 'average')}}
+			<br><span class="average">{{:data.fuel_stored}}/{{:data.fuel_capacity}} cm3</span>
+		{{else}}
+			{{:helper.displayBar(data.fuel_stored, 0, data.fuel_capacity, 'bad')}}
+			<br><span class="bad">{{:data.fuel_stored}}/{{:data.fuel_capacity}} cm3</span>
+		{{/if}}
+	</div>
+	<div class="itemLabel">
+		Fuel Usage:
+	</div>
+	<div class="itemContent">
+		<span class="good">{{:data.fuel_usage}} cm3/s</span>
+	</div>
+	{{if !data.is_ai}}
+		<div class="itemLabel">
+			Control:
+		</div>
+		<div class="itemContent">
+			{{:helper.link('EJECT FUEL', 'arrowupthick-1-s', {'action' : "eject"}, data.active ? 'disabled' : null)}}
+		</div>
+	{{/if}}
+</div>
+<h3>Output</h3>
+<div class='item'>
+	<div class="itemLabel">
+		Power setting:
+	</div>
+	<div class="itemContent">
+		{{if data.output_set > data.output_safe}}
+			<span class="bad">{{:data.output_set}} / {{:data.output_max}} ({{:data.output_watts}} W)</span>
+		{{else}}
+			<span class="good">{{:data.output_set}} / {{:data.output_max}} ({{:data.output_watts}} W)</span>
+		{{/if}}
+	</div>
+	<div class="itemLabel">
+		Control:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('+', null, {'action' : "higher_power"})}}
+		{{:helper.link('-', null, {'action' : "lower_power"})}}
+	</div>
+</div>
+<h3>Temperature</h3>
+<div class='item'>
+	<div class="itemLabel">
+		Temperature:
+	</div>
+	<div class="itemContent">
+		{{if data.temperature_current < (data.temperature_max * 0.8)}}
+			{{:helper.displayBar(data.temperature_current, 0, (data.temperature_max * 1.5), 'good')}}
+			<br><span class="good">{{:data.temperature_current}} C</span>
+		{{else data.temperature_current < data.temperature_max}}
+			{{:helper.displayBar(data.temperature_current, 0, (data.temperature_max * 1.5), 'average')}}
+			<br><span class="average">{{:data.temperature_current}} C</span>
+		{{else}}
+			{{:helper.displayBar(data.temperature_current, 0, (data.temperature_max * 1.5), 'bad')}}
+			<br><span class="bad">{{:data.temperature_current}} C</span>
+		{{/if}}
+	</div>
+	<div class="itemLabel">
+		Generator Status:
+	</div>
+	<div class="itemContent">
+		{{if data.temperature_overheat > 50}}
+			<span class="bad">DANGER: CRITICAL OVERHEAT! Deactivate generator immediately!</span>
+		{{else data.temperature_overheat > 20}}
+			<span class="average">WARNING: Overheating!</span>
+		{{else data.temperature_overheat > 1}}
+			<span class="average">Temperature High</span>
+		{{else}}
+			<span class="good">Optimal</span>
+		{{/if}}
+	</div>
+</div>

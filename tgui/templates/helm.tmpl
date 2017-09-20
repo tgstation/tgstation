@@ -1,0 +1,114 @@
+
+<div style="float:left;width:50%">
+	<h3>Sector information</h3> 
+	<div class='block'>
+		{{:data.sector}}
+		<br>
+		<span class='average'>Coordinates:</span> {{:data.s_x}} : {{:data.s_y}}
+		<br>
+		<span class='average'>Additional information:</span> {{:data.sector_info}}
+	</div>
+</div>
+
+<div style="float:right;width:50%">
+	<h3>Flight data</h3> 
+	<div class='block'>
+		<div class='item'>
+			<div class="itemLabel">
+				<span class='average'>Speed:</span>
+			</div>
+			<div style="float:right">
+				{{:data.speed}}
+			</div>
+		</div>
+		<div class='item'>
+			<div class="itemLabel">
+				<span class='average'>Acceleration:</span>
+			</div>
+			<div style="float:right">
+				{{:data.accel}}
+			</div>
+		</div>
+		<div class='item'>
+			<div class="itemLabel">
+				<span class='average'>Heading:</span>
+			</div>
+			<div style="float:right">
+				{{:data.heading}}
+			</div>
+		</div> 
+	</div>
+</div>
+
+
+<h3>Manual control</h3>
+<div class='block'>
+	<div class='item'>
+		<div class="itemLabel">
+			<div class='item'>
+				{{:helper.link('', 'triangle-1-nw', { 'move' : 9 }, null, null)}}
+				{{:helper.link('', 'triangle-1-n', { 'move' : 1 }, null, null)}}
+				{{:helper.link('', 'triangle-1-ne', { 'move' : 5 }, null, null)}}
+			</div>
+			<div class='item'>
+				{{:helper.link('', 'triangle-1-w', { 'move' : 8 }, null, null)}}
+				{{:helper.link('', 'circle-close', { 'brake' : 1 }, null, null)}}
+				{{:helper.link('', 'triangle-1-e', { 'move' : 4 }, null, null)}}
+			</div>
+			<div class='item'>
+				{{:helper.link('', 'triangle-1-sw', { 'move' : 10 }, null, null)}}
+				{{:helper.link('', 'triangle-1-s', { 'move' : 2 }, null, null)}}
+				{{:helper.link('', 'triangle-1-se', { 'move' : 6 }, null, null)}}
+			</div>
+		</div>
+
+		<div class="itemContent">
+			<div class='item'>
+				<span class='white'>Direct control</span>
+				{{:helper.link(data.manual_control ? 'Engaged' : 'Disengaged', 'shuffle', { 'manual' : 1 }, null, data.manual_control ? 'selected' : null)}}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class='item'>
+	<div class="itemLabel">
+		<h3>Autopilot</h3>
+	</div>
+	<div class="itemContent" style="padding-top: 10px;">
+		{{:helper.link(data.autopilot ? 'Engaged' : 'Disengaged', 'gear', { 'apilot' : 1 }, data.dest ? null : 'disabled', data.autopilot ? 'selected' : null)}}
+	</div>
+</div> 
+<div class='item'>
+	<div style="float:left;width:45%">
+		<span class='white'>Target coordinates</span>
+	</div>
+	<div style="float:left;width:20%">
+		{{if data.dest}}
+			{{:helper.link(data.d_x, null, { 'setx' : 1 }, null, null)}} {{:helper.link(data.d_y, null, { 'sety' : 1 }, null, null)}}
+		{{else}}
+			{{:helper.link('None', null, { 'sety' : 1, 'setx' : 1 }, null, null)}}
+		{{/if}}
+	</div>
+</div> 
+
+<h3>Navigation data</h3>
+<div class='item'>
+	{{:helper.link('Save current position', 'disk', { 'add' : 'current' }, null)}}
+	{{:helper.link('Add new entry', 'document', { 'add' : 'new' }, null)}}
+</div>
+
+<div class='statusDisplay'>
+	{{if data.locations}}
+		{{for data.locations}}
+		  <div class='item'>
+				<span class='average'>{{:value.name}}:</span>
+				<span class='white'>{{:value.x}} : {{:value.y}}</span>
+		  </div>
+		  <div class='item'>
+			{{:helper.link('Plot course', 'arrowreturnthick-1-e', { 'x' : value.x, 'y' : value.y }, null, null)}}
+			{{:helper.link('Remove entry', 'close', { 'remove' : value.reference }, null, null)}}
+		  </div>
+		{{/for}}
+	{{/if}}
+</div>	

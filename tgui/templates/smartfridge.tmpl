@@ -1,0 +1,36 @@
+<div class='item'>
+  {{:helper.link('Close', 'gear', {'close' : 1}, null, 'fixedLeft')}}
+</div>
+
+<div class="item">
+  <h2>Storage</h2>
+  {{if data.secure}}
+    <span class='notice'>
+      {{:data.locked == -1 ? "Sec.re ACC_** //):securi_nt.diag=>##'or 1=1'%($..." : "Secure Access: Please have your identification ready."}}
+    </span>
+  {{/if}}
+</div>
+<div class='item'>
+  {{if data.contents}}
+    {{for data.contents}}
+      <div class='item'>
+        <span class='highlight'>{{:value.display_name}} ({{:value.quantity}} available)</span>
+        <div style="float: left;">Vend:&nbsp;</div> {{:helper.link('x1', 'circle-arrow-s', { "vend" : value.vend, "amount" : 1 }, null, 'statusValue')}}
+		{{if value.quantity >= 5}}
+			{{:helper.link('x5', 'circle-arrow-s', { "vend" : value.vend, "amount" : 5 }, null, 'statusValue')}}
+		{{/if}}
+		{{if value.quantity >= 10}}
+			{{:helper.link('x10', 'circle-arrow-s', { "vend" : value.vend, "amount" : 10 }, null, 'statusValue')}}
+		{{/if}}
+		{{if value.quantity >= 25}}
+			{{:helper.link('x25', 'circle-arrow-s', { "vend" : value.vend, "amount" : 25 }, null, 'statusValue')}}
+		{{/if}}
+		{{if value.quantity > 1}}
+			{{:helper.link('All', 'circle-arrow-s', { "vend" : value.vend, "amount" : value.quantity }, null, 'statusValue')}}
+		{{/if}}
+      </div>
+    {{/for}}
+  {{else}}
+    <span class='average'>No products loaded.</span>
+  {{/if}}
+</div>

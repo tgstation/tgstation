@@ -1,0 +1,36 @@
+<div class='item'>
+    {{:helper.link('Show Map', 'pin-s', {'showMap' : 1})}}
+    {{:helper.link('Reset', 'refresh', {'reset' : 1})}}
+</div>
+
+<div class='item'>
+    <div class='itemLabel'>Current Camera:</div>
+    {{if data.current_camera}}
+        <div class='itemContentWide'><b>{{:data.current_camera.name}}</b></div>
+    {{else}}
+        <div class='itemContentWide'>None</div>
+    {{/if}}
+</div>
+
+<div class='item'>
+	<div class='itemLabel'>Networks:</div>
+</div>
+{{for data.networks}}
+	{{if value.has_access}}
+		{{:helper.link(value.tag, '', {'switch_network' : value.tag}, null, data.current_network == value.tag ? 'selected' : null)}}
+	{{else}}
+		{{:helper.link(value.tag, '', {}, null, data.current_network == value.tag ? 'selected' : 'redButton')}}
+	{{/if}}
+{{/for}}
+<div class='item'>
+	<div class='itemLabel'>Cameras:</div>
+</div>
+{{for data.cameras}}
+	{{if data.current_camera && value.name == data.current_camera.name}}
+		{{:helper.link(value.name, '', {'switch_camera' : value.camera}, 'selected')}}
+	{{else value.deact}}
+		{{:helper.link(value.name + " (deactivated)", '', {}, 'inactive')}}
+	{{else}}
+		{{:helper.link(value.name, '', {'switch_camera' : value.camera})}}
+	{{/if}}
+{{/for}}

@@ -1,0 +1,86 @@
+<!-- pAI medical records
+code/modules/mob/living/silicon/pai/software_modules.dm
+-->
+
+{{if data.records}}
+	{{for data.records}}
+		<div class="item">
+			{{:helper.link(value.name, '', {"stopic":"med_records", "select":value.ref})}}
+		</div>
+	{{/for}}
+{{/if}}
+<hr/>
+{{if data.general}}
+	<div class="item">
+		<div class="itemLabel">Name</div>
+		<div class="itemContent">{{:data.general.name}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Record ID</div>
+		<div class="itemContent">{{:data.general.id}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Sex</div>
+		<div class="itemContent">{{:data.general.sex}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Species</div>
+		<div class="itemContent">{{:data.general.species}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Age</div>
+		<div class="itemContent">{{:data.general.age}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Rank</div>
+		<div class="itemContent">{{:data.general.rank}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Fingerprint</div>
+		<div class="itemContent">{{:data.general.fingerprint}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Physical Status</div>
+		<div class="itemContent">{{:data.general.p_stat}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Mental Status</div>
+		<div class="itemContent">{{:data.general.m_stat}}</div>
+	</div>
+{{/if}}
+{{if data.medical}}
+	<div class="item">
+		<div class="itemLabel">Blood Type</div>
+		<div class="itemContent">{{:data.medical.b_type}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Minor Disabilities</div>
+		<div class="itemContent">{{:data.medical.mi_dis}}</div>
+		<div class="itemContent">{{:data.medical.mi_dis_d}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Major Disabilities</div>
+		<div class="itemContent">{{:data.medical.ma_dis}}</div>
+		<div class="itemContent">{{:data.medical.ma_dis_d}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Allergies</div>
+		<div class="itemContent">{{:data.medical.alg}}</div>
+		<div class="itemContent">{{:data.medical.alg_d}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Current Diseases</div>
+		<div class="itemContent">{{:data.medical.cdi}}</div>
+		<div class="itemContent">{{:data.medical.cdi_d}}</div>
+	</div>
+	<div class="item">
+		<div class="itemLabel">Important Notes</div>
+		<div class="itemContent">{{:data.medical.notes}}</div>
+	</div>
+{{/if}}
+
+{{if data.could_not_find}}
+	<div class="item">
+		Failed to find some records; the information above may be incomplete or missing.
+	</div>
+{{/if}}

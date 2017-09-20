@@ -1,0 +1,112 @@
+<h1>WIRELESS CONNECTIVITY</h1>
+	<div class="item">
+		<div class="itemLabelWide">
+                	Active NTNet Relays: 
+		</div>
+		<div class="itemContentNarrow">
+                	<b>{{:data.ntnetrelays}}</b>
+		</div>
+		{{if data.ntnetrelays}}
+			<div class="itemLabelWide">
+                		System status: 
+			</div>
+			<div class="itemContentNarrow">
+                		<b>{{:data.ntnetstatus ? "ENABLED" : "DISABLED"}}</b>
+			</div>		
+			<div class="itemLabelWide">
+                		Control: 
+			</div>
+			<div class="itemContentNarrow">
+                		{{:helper.link('TOGGLE', null, {'toggleWireless' : 1})}}
+			</div>
+			</div>
+			<i>Caution - Disabling wireless transmitters when using wireless device may prevent you from re-enabling them again!</i>
+		{{else}}
+			</div>
+			<br><p>Wireless coverage unavailable, no relays are connected.</p>
+		{{/if}}	
+
+<h1>FIREWALL CONFIGURATION</h1>
+<table>
+	<tr>
+		<th>PROTOCOL
+		<th>STATUS
+		<th>CONTROL
+	<tr>
+		<td>Software Downloads
+		<td>{{:data.config_softwaredownload ? 'ENABLED' : 'DISABLED'}}
+		<td>{{:helper.link('TOGGLE', null, {'toggle_function' : 1})}}
+	<tr>
+		<td>Peer to Peer Traffic
+		<td>{{:data.config_peertopeer ? 'ENABLED' : 'DISABLED'}}
+		<td>{{:helper.link('TOGGLE', null, {'toggle_function' : 2})}}
+	<tr>
+		<td>Communication Systems
+		<td>{{:data.config_communication ? 'ENABLED' : 'DISABLED'}}
+		<td>{{:helper.link('TOGGLE', null, {'toggle_function' : 3})}}
+	<tr>
+		<td>Remote System Control
+		<td>{{:data.config_systemcontrol ? 'ENABLED' : 'DISABLED'}}
+		<td>{{:helper.link('TOGGLE', null, {'toggle_function' : 4})}}
+</table>
+
+<h1>SECURITY SYSTEMS</h1>
+	{{if data.idsalarm}}
+    <div class="statusDisplay" style="overflow: auto;">
+		<div class="item">
+			<div class="itemContent" style="width: 100%;">
+				<h1>NETWORK INCURSION DETECTED</h1>
+				<i>An abnormal activity has been detected in the network. Please verify system logs for more information</i>
+			</div>
+		</div>
+    </div>		
+	{{/if}}
+	<div class="item">
+		<div class="itemLabelWide">
+                	Intrusion Detection System: 
+		</div>
+		<div class="itemContentNarrow">
+                	<b>{{:data.idsstatus ? 'ENABLED' : 'DISABLED'}}</b>
+		</div>
+    </div>
+	<div class="item">
+		<div class="itemLabelWide">
+                	Maximal Log Count: 
+		</div>
+		<div class="itemContentNarrow">
+                	<b>{{:data.ntnetmaxlogs}}</b>
+		</div>
+    </div>
+    <div class="item">
+		<div class="itemLabelWide">
+                	Blacklisted NIDs: 
+		</div>
+		<div class="itemContentNarrow">
+					{{:data.banned_nids}}
+		</div>
+    </div>
+	<div class="item">
+		<div class="itemLabelWide">
+                	Controls: 
+		</div>
+		<div class="itemContentNarrow">
+			<table>
+                	<tr><td>{{:helper.link('RESET IDS', null, {'resetIDS' : 1})}}
+			<tr><td>{{:helper.link('TOGGLE IDS', null, {'toggleIDS' : 1})}}
+			<tr><td>{{:helper.link('SET LOG LIMIT', null, {'updatemaxlogs' : 1})}}
+			<tr><td>{{:helper.link('PURGE LOGS', null, {'purgelogs' : 1})}}
+			<tr><td>{{:helper.link('ADD BLACKLIST ENTRY', null, {'ban_nid' : 1})}}
+			<tr><td>{{:helper.link('REMOVE BLACKLIST ENTRY', null, {'unban_nid' : 1})}}
+			</table>
+		</div>
+    </div>
+	<b>System Logs</b>
+    <div class="statusDisplay" style="overflow: auto;">
+		<div class="item">
+			<div class="itemContent" style="width: 100%;">
+				{{for data.ntnetlogs}}
+					{{:value}}<br>
+				{{/for}}
+			</div>
+		</div>
+    </div>

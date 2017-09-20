@@ -1,0 +1,94 @@
+{{if data.error}}
+<div class='item'>
+	<h2>An error has occured during operation...</h2>
+	<b>Additional information: </b>{{:data.error}}<br>
+	{{:helper.link('Clear', null, {'PRG_reset' : 1})}}
+</div>
+{{else data.downloading}}
+	<h2>Download in progress...</h2>
+	<div class="itemLabel">
+		Downloaded file: 
+	</div>
+	<div class="itemContent">
+		{{:data.download_name}}
+	</div>	
+	<div class="itemLabel">
+		Download progress: 
+	</div>
+	<div class="itemContent">
+		{{:data.download_progress}} / {{:data.download_size}} GQ
+	</div>
+	<div class="itemLabel">
+		Transfer speed: 
+	</div>
+	<div class="itemContent">
+		{{:data.download_netspeed}}GQ/s
+	</div>
+	<div class="itemLabel">
+		Controls: 
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Abort download', null, {'PRG_reset' : 1})}}
+	</div>
+{{else data.uploading}}
+	<h2>Server enabled</h2>
+	<div class="itemLabel">
+		Connected clients: 
+	</div>
+	<div class="itemContent">
+		{{:data.upload_clients}}
+	</div>
+	<div class="itemLabel">
+		Provided file: 
+	</div>
+	<div class="itemContent">
+		{{:data.upload_filename}}
+	</div>
+	<div class="itemLabel">
+		Server password: 
+	</div>
+	<div class="itemContent">
+		{{if data.haspassword}}
+			ENABLED
+		{{else}}
+			DISABLED
+		{{/if}}
+	</div>
+	<div class="itemLabel">
+		Commands: 
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Set password', null, {'PRG_setpassword' : 1})}}
+		{{:helper.link('Exit server', null, {'PRG_reset' : 1})}}
+	</div>
+{{else data.upload_filelist}}
+	<h2>File transfer server ready. Select file to upload: </h2>
+	<table>
+	<tr><th>File name<th>File size<th>Controls
+	{{for data.upload_filelist}}
+		<tr><td>{{:value.filename}}
+		<td>{{:value.size}}GQ
+		<td>{{:helper.link('Select', null, {'PRG_uploadfile' : value.uid})}}
+	{{/for}}
+	</table>
+	<hr>
+	{{:helper.link('Set password', null, { "PRG_setpassword" : 1 })}}
+	{{:helper.link('Return', null, { "PRG_reset" : 1 })}}
+{{else}}
+	<h2>Available files:</h2>
+	<table border="1" style="border-collapse: collapse"><tr><th>Server UID<th>File Name<th>File Size<th>Password Protection<th>Operations
+		{{for data.servers}}
+			<tr><td>{{:value.uid}}
+			<td>{{:value.filename}}
+			<td>{{:value.size}}GQ
+			{{if value.haspassword}}
+				<td>Enabled
+			{{else}}
+				<td>Disabled
+			{{/if}}
+			<td>{{:helper.link('Download', null, { "PRG_downloadfile" : value.uid })}}
+		{{/for}}
+	</table>
+	<hr>
+	{{:helper.link('Send file', null, { "PRG_uploadmenu" : 1 })}}
+{{/if}}

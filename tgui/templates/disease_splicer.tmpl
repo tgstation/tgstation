@@ -1,0 +1,125 @@
+<div class="item">
+  <div class="itemContent">
+    {{:helper.link('Close', 'gear', {'close' : 1}, null, 'fixedLeft')}}
+  </div>
+</div>
+
+{{if data.busy}}
+  <h5 class='average'>The Splicer is currently busy.</h5>
+  <div class='notice'>
+    <center><span class='bad'>{{:data.busy}}</span></center>
+  </div>
+  <p>
+    Thank you for your patience!
+  </p>
+{{else}}
+  <div class="item">
+    <h2>Virus Dish</h2>
+  </div>
+  <div class="item">
+    {{:helper.link('Eject Dish', 'eject', { 'eject' : 1 }, data.dish_inserted ? null : 'disabled')}}
+  </div>
+
+  <div class="item">
+    <div class="itemLabel">
+      <b>Growth Density:</b>
+    </div>
+    <div class="itemContent">
+      {{:helper.displayBar(data.growth, 0, 100, (data.growth >= 50) ? 'good' : data.growth >= 25 ? 'average' : 'bad', data.growth + '%' )}}
+    </div>
+  </div>
+
+  <div class="statusDisplay" style="height: 145px; overflow: auto;">
+    <div class='item'>
+      {{if !data.info}}
+        <div class='itemLabel'>
+          <span class='good'>Symptoms:</span>
+        </div>
+      {{/if}}
+      <div class='itemContent' style="width: 100%;">
+        {{if data.info}}
+          <span class='average'>{{:data.info}}</span>
+        {{else}}
+          {{for data.effects}}
+            <div>
+              <div class="highlight">
+                ({{:value.stage}}) {{:value.name}}
+                {{if value.badness > 1}}
+                  <span class='bad'><b>Dangerous</b></span>
+                {{/if}}
+              </div>
+            </div>
+          {{/for}}
+        {{/if}}
+      </div>
+    </div>
+    {{if data.affected_species && !data.info}}
+      <div class='item'>
+        <div class='itemLabelWide'>
+          <span class='good'>Affected Species:</span>
+        </div>
+        <div class='itemContent'>
+          <span class='highlight'>{{:data.affected_species}}</span>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+  {{if data.effects}}
+    <div class='item'>
+      <span class="bad"><i>CAUTION: Reverse engineering will destroy the viral sample.</i></span>
+    </div>
+    <div class='item'>
+      <div class='itemLabelWide'>
+        Reverse Engineering:
+      </div>
+      <div class='itemContent'>
+        {{for data.effects}}
+          {{:helper.link(value.stage, 'transferthick-e-w', { 'grab' : value.reference })}}
+        {{/for}}
+      </div>
+      <div class='itemContent'>
+        {{:helper.link('Species', 'transferthick-e-w', { 'affected_species' : 1 })}}
+      </div>
+    </div>
+  {{/if}}
+
+  <div class="item">
+    <h2>Storage</h2>
+  </div>
+
+  <div class='item'>
+    <div class='itemLabel'>
+      <b>Memory Buffer:</b>
+    </div>
+    <div class='itemContent'>
+      {{if data.buffer}}
+		{{:data.buffer.name}} ({{:data.buffer.stage}})
+      {{else}}
+        {{if data.species_buffer}}
+          {{:data.species_buffer}}
+        {{else}}
+          Empty
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+  {{:helper.link('Save To Disk', 'disk', { 'disk' : 1 }, (data.buffer || data.species_buffer) ? null : 'disabled')}}
+  {{if data.species_buffer}}
+    {{:helper.link('Splice Species', 'pencil', { 'splice' : -1 }, (data.species_buffer && !data.info) ? null : 'disabled')}}
+  {{else data.buffer}}
+	{{:helper.link('Splice #1', 'pencil', { 'splice' : 1 }, data.buffer.stage > 1 ? 'disabled' : null)}}
+	{{:helper.link('Splice #2', 'pencil', { 'splice' : 2 }, data.buffer.stage > 2 ? 'disabled' : null)}}
+	{{:helper.link('Splice #3', 'pencil', { 'splice' : 3 }, data.buffer.stage > 3 ? 'disabled' : null)}}
+	{{:helper.link('Splice #4', 'pencil', { 'splice' : 4 }, data.buffer.stage > 4 ? 'disabled' : null)}}
+  {{/if}}
+{{/if}}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,99 @@
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemLabel">
+			Docking Port Status:
+		</div>
+		<div class="itemContent">
+			{{if data.docking_status == "docked"}}
+				{{if !data.override_enabled}}
+					<span class="good">DOCKED</span>
+				{{else}}
+					<span class="bad">DOCKED-OVERRIDE ENABLED</span>
+				{{/if}}
+			{{else data.docking_status == "docking"}}
+				{{if !data.override_enabled}}
+					<span class="average">DOCKING</span>
+				{{else}}
+					<span class="bad">DOCKING-OVERRIDE ENABLED</span>
+				{{/if}}
+			{{else data.docking_status == "undocking"}}
+				{{if !data.override_enabled}}
+					<span class="average">UNDOCKING</span>
+				{{else}}
+					<span class="bad">UNDOCKING-OVERRIDE ENABLED</span>
+				{{/if}}
+			{{else data.docking_status == "undocked"}}
+				{{if !data.override_enabled}}
+					<span class="idle">NOT IN USE</span>
+				{{else}}
+					<span class="bad" style="float:left">OVERRIDE ENABLED</span>
+				{{/if}}
+			{{else}}
+				<span class="bad">ERROR</span>
+			{{/if}}
+		</div>
+	</div>
+</div>
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemLabel">
+			Docking Hatch:
+		</div>
+		<div class="itemContent">
+			{{if data.docking_status == "docked"}}
+				{{if data.door_state == "open"}}
+					<span class="good">OPEN</span>
+				{{else data.door_state == "closed"}}
+					<span class="good">CLOSED</span>
+				{{else}}
+					<span class="bad">ERROR</span>
+				{{/if}}
+			{{else data.docking_status == "docking"}}
+				{{if data.door_state == "open"}}
+					<span class="good">OPEN</span>
+				{{else data.door_state == "closed" && data.door_lock == "locked"}}
+					<span class="good">SECURED</span>
+				{{else data.door_state == "closed" && data.door_lock == "unlocked"}}
+					<span class="good">UNSECURED</span>
+				{{else}}
+					<span class="bad">ERROR</span>
+				{{/if}}
+			{{else data.docking_status == "undocking"}}
+				{{if data.door_state == "open"}}
+					<span class="average">OPEN</span>
+				{{else data.door_state == "closed" && data.door_lock == "locked"}}
+					<span class="good">SECURED</span>
+				{{else data.door_state == "closed" && data.door_lock == "unlocked"}}
+					<span class="average">UNSECURED</span>
+				{{else}}
+					<span class="bad">ERROR</span>
+				{{/if}}
+			{{else data.docking_status == "undocked"}}
+				{{if data.door_state == "open"}}
+					<span class="bad">OPEN</span>
+				{{else data.door_state == "closed" && data.door_lock == "locked"}}
+					<span class="good">SECURED</span>
+				{{else data.door_state == "closed" && data.door_lock == "unlocked"}}
+					<span class="bad">UNSECURED</span>
+				{{else}}
+					<span class="bad">ERROR</span>
+				{{/if}}
+			{{else}}
+				<span class="bad">ERROR</span>
+			{{/if}}
+		</div>
+	</div>
+</div>
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemContent" style="padding-top: 2px; width: 100%">
+		{{if data.docking_status == "docked"}}
+			{{:helper.link('Force exterior door', 'alert', {'command' : 'force_door'}, data.override_enabled ? null : 'disabled', null)}}
+			{{:helper.link('Override', 'alert', {'command' : 'toggle_override'}, null, data.override_enabled ? 'redButton' : null)}}
+		{{else}}
+			{{:helper.link('Force exterior door', 'alert', {'command' : 'force_door'}, data.override_enabled ? null : 'disabled', data.override_enabled ? 'redButton' : null)}}
+			{{:helper.link('Override', 'alert', {'command' : 'toggle_override'}, null, data.override_enabled ? 'redButton' : 'yellowButton')}}
+		{{/if}}
+		</div>
+	</div>
+</div>
