@@ -816,6 +816,8 @@
 					//drop door bolts
 					if(wires.is_cut(WIRE_BOLTS))
 						to_chat(usr, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
+					else if(iscyborg(usr) && is_servant_of_ratvar(usr))
+						to_chat(usr, "<span class='alloy'>The door refuses your request to bolt itself.</span>")
 					else
 						bolt()
 				if(5)
@@ -891,7 +893,10 @@
 						to_chat(usr, text("The door bolts are already up.<br>\n"))
 					else
 						if(src.hasPower())
-							unbolt()
+							if(iscyborg(usr) && is_servant_of_ratvar(usr))
+								to_chat(usr, "<span class='alloy'>The door refuses your request to unbolt itself.</span>")
+							else
+								unbolt()
 						else
 							to_chat(usr, text("Cannot raise door bolts due to power failure.<br>\n"))
 
