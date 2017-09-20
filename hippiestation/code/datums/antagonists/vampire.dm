@@ -4,11 +4,11 @@
 	var/blood_counted = 0
 	var/fullpower = FALSE
 	var/draining
-	var/list/objectives_given = list()
+	var/list/objectives_given
 
 	var/iscloaking = FALSE
 
-	var/list/powers = list() // list of current powers
+	var/list/powers // list of current powers
 
 	var/obj/item/clothing/suit/draculacoat/coat
 
@@ -29,6 +29,8 @@
 		/obj/effect/proc_holder/spell/self/revive = 800)
 
 /datum/antagonist/vampire/on_gain()
+	LAZYINITLIST(powers)
+	LAZYINITLIST(objectives_given)
 	give_objectives()
 	check_vampire_upgrade()
 	SSticker.mode.vampires += owner

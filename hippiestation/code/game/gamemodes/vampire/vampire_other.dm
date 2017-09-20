@@ -30,7 +30,7 @@
 		user.IgniteMob()
 		user.emote("scream", 1)
 
-/mob/living/carbon/humna/update_sight()
+/mob/living/carbon/human/update_sight()
 	if(mind)
 		var/datum/antagonist/vampire/V = mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
 		if(V)
