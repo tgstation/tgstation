@@ -331,10 +331,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	return
 
 #define BATON_STUN 0
-#define BATON_SLEEP 1
-#define BATON_CUFF 2
-#define BATON_PROBE 3
-#define BATON_MODES 4
+#define BATON_CUFF 1
+#define BATON_PROBE 2
+#define BATON_MODES 3
 
 /obj/item/abductor_baton
 	name = "advanced baton"
@@ -406,8 +405,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	switch (mode)
 		if(BATON_STUN)
 			StunAttack(L,user)
-		if(BATON_SLEEP)
-			SleepAttack(L,user)
 		if(BATON_CUFF)
 			CuffAttack(L,user)
 		if(BATON_PROBE)
@@ -432,19 +429,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		H.forcesay(GLOB.hit_appends)
 
 	add_logs(user, L, "stunned")
-
-/obj/item/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
-	if(L.incapacitated(TRUE, TRUE))
-		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
-							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
-		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
-		L.Sleeping(1200)
-		add_logs(user, L, "put to sleep")
-	else
-		L.drowsyness += 1
-		to_chat(user, "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>")
-		L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src]!</span>", \
-							"<span class='userdanger'>You suddenly feel drowsy!</span>")
 
 /obj/item/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
 	if(!iscarbon(L))
