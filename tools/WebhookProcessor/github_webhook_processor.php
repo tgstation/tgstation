@@ -165,6 +165,17 @@ function get_labels($payload){
 	return $existing;
 }
 
+function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_label_to){
+	$title = $payload['pull_request']['title'];
+	if(stripos($title, $title_tag) !== FALSE){
+		$array_to_add_label_to[] = $label;
+		$title = trim(str_ireplace($title_tag, '', $title));
+		apisend($payload['pull_request']['url'], 'PATCH', array('title' => $title));
+		return true;
+	}
+	return false;
+}
+
 //rip bs-12
 function tag_pr($payload, $opened) {
 	//get the mergeable state
@@ -207,12 +218,9 @@ function tag_pr($payload, $opened) {
 		if(has_tree_been_edited($payload, $tree))
 			$tags[] = $tag;
 
-	//only maintners should be able to remove these
-	if(strpos(strtolower($title), '[dnm]') !== FALSE)
-		$tags[] = 'Do Not Merge';
-
-	if(strpos(strtolower($title), '[wip]') !== FALSE)
-		$tags[] = 'Work In Progress';
+	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
+	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags))
+		check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove);
 
 	$url = $payload['pull_request']['issue_url'] . '/labels';
 
