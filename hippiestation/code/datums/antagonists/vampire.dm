@@ -29,11 +29,10 @@
 		/obj/effect/proc_holder/spell/self/revive = 800)
 
 /datum/antagonist/vampire/on_gain()
-	LAZYINITLIST(powers)
-	LAZYINITLIST(objectives_given)
+		LAZYINITLIST(powers)
 	give_objectives()
 	check_vampire_upgrade()
-	SSticker.mode.vampires += owner
+	LAZYADD(SSticker.mode.vampires, owner)
 	owner.special_role = "vampire"
 	owner.current.faction += "vampire"
 	SSticker.mode.update_vampire_icons_added(owner)
@@ -51,7 +50,7 @@
 	SSticker.mode.update_vampire_icons_removed(owner)
 	for(var/O in objectives_given)
 		owner.objectives -= O
-	objectives_given = list()
+	LAZYCLEARLIST(objectives_given)
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>Your powers have been quenched! You are no longer a vampire</span>")
 	owner.special_role = null
@@ -81,8 +80,8 @@
 		return
 
 /datum/antagonist/vampire/proc/add_objective(var/datum/objective/O)
-	owner.objectives += O
-	objectives_given += O
+	LAZYADD(owner.objectives, O) //fuck this
+	LAZYADD(objectives_given, O)
 
 /datum/antagonist/vampire/proc/forge_single_objective() //Returns how many objectives are added
 	.=1
@@ -218,9 +217,10 @@
 	var/spell = new path(owner)
 	if(istype(spell, /obj/effect/proc_holder/spell))
 		owner.AddSpell(spell)
-	powers += spell
+	LAZYADD(powers, spell)
 
 /datum/antagonist/vampire/proc/get_ability(path)
+	LAZYINITLIST(powers)
 	for(var/P in powers)
 		var/datum/power = P
 		if(power.type == path)
