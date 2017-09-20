@@ -29,7 +29,7 @@
 		/obj/effect/proc_holder/spell/self/revive = 800)
 
 /datum/antagonist/vampire/on_gain()
-		LAZYINITLIST(powers)
+	LAZYINITLIST(powers)
 	give_objectives()
 	check_vampire_upgrade()
 	LAZYADD(SSticker.mode.vampires, owner)
