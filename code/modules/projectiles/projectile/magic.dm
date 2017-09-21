@@ -139,7 +139,10 @@
 					if(prob(70))
 						path = /mob/living/silicon/robot
 					else
-						path = /mob/living/silicon/robot/security
+						if(config.forbid_secborg)
+							path = /mob/living/silicon/robot/security
+						else
+							path = /mob/living/silicon/robot
 					new_mob = new path(M.loc)
 				if("syndiborg")
 					if(prob(50))
