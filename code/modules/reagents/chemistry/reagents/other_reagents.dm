@@ -1659,7 +1659,7 @@
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
 	
 /datum/reagent/wax
-    name = "wax"
+	name = "wax"
 	id = "wax"
 	description = "a wax made by bees"
 	color = "#FFF200"
