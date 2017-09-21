@@ -211,7 +211,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	return ..()
 
 /datum/admin_help/proc/AddInteraction(formatted_message)
-	if(heard_by_no_admins && usr && usr.client != initiator)
+	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
 		heard_by_no_admins = FALSE
 		send2irc(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
 	_interactions += "[gameTimestamp()]: [formatted_message]"
