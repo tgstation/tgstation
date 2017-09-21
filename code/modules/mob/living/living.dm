@@ -548,7 +548,7 @@
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(src) || next_move > world.time || incapacitated(ignore_restraints = 1))
+	if(!isliving(src) || next_move > world.time || incapacitated(ignore_restraints = TRUE)) //make sure /obj/screen/alert/proc/can_do_alert_action() is updated if changed.
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
