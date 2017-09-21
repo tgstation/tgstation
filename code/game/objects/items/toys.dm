@@ -347,9 +347,9 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/toy/katana/suicide_act(mob/user)
+/obj/item/toy/katana/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] slices the air around [user.p_them()] furiously with [src]! It looks like [user.p_theyre()] trying to unleash their final move!</span>")
-	return(BRUTELOSS, FIRELOSS)
+	return(BRUTELOSS|FIRELOSS)
 
 /*
  * Snap pops
