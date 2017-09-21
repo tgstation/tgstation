@@ -133,6 +133,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
 
+/obj/item/scalpel/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] screws up! It looks like [user.p_theyre()] trying to commit medical malpractice!</span>")
+ 	return(BRUTELOSS)
+
 /obj/item/scalpel/augment
 	name = "toolarm scalpel"
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
@@ -176,6 +180,10 @@
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 
+/obj/item/circular_saw/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] saws their ribcage open! It looks like [user.p_theyre()] trying to commit suicide!</span>") //remind me later to make this drop his organs
+ 	return(BRUTELOSS)
+
 /obj/item/circular_saw/augment
 	name = "toolarm circular saw"
 	desc = "A small but very fast spinning saw. Edges dulled to prevent accidental cutting inside of the surgeon."
@@ -203,6 +211,11 @@
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=1"
 	attack_verb = list("slapped")
+
+/obj/item/surgical_drapes/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] drapes [src] over their head and communicates to the spooky ghost god! It looks like [user.p_theyre()] trying to ascend to the next plane!</span>")
+ 	dust()
+	return(BRUTELOSS) //if they somehow don't get dusted i guess
 
 /obj/item/surgical_drapes/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
