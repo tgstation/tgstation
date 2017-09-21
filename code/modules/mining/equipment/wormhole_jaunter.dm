@@ -17,7 +17,7 @@
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
 	SSblackbox.add_details("jaunter", "User") // user activated
-	activate(user)
+	activate(user, TRUE)
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
@@ -46,7 +46,7 @@
 
 	return destinations
 
-/obj/item/device/wormhole_jaunter/proc/activate(mob/user)
+/obj/item/device/wormhole_jaunter/proc/activate(mob/user, adjacent)
 	if(!turf_check(user))
 		return
 
@@ -56,7 +56,8 @@
 		return
 	var/chosen_beacon = pick(L)
 	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
-	try_move_adjacent(J)
+	if(adjacent)
+		try_move_adjacent(J)
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
 	qdel(src)
 
@@ -78,7 +79,7 @@
 	if(user.get_item_by_slot(slot_belt) == src)
 		to_chat(user, "Your [src] activates, saving you from the chasm!</span>")
 		SSblackbox.add_details("jaunter","Chasm") // chasm automatic activation
-		activate(user)
+		activate(user, FALSE)
 	else
 		to_chat(user, "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
 
