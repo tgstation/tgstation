@@ -3489,11 +3489,6 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "ahY" = (
-/obj/machinery/camera{
-	c_tag = "Security Equipment";
-	dir = 1;
-	name = "security camera"
-	},
 /obj/structure/table,
 /obj/effect/landmark/lightsout,
 /obj/machinery/recharger,
@@ -15637,11 +15632,6 @@
 /area/bridge)
 "aJs" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = 0;
-	name = "Bridge Access";
-	req_access_txt = "19"
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -15649,6 +15639,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/airlock/command{
+	name = "Teleport Access";
+	req_access_txt = "17"
 	},
 /turf/open/floor/plasteel,
 /area/teleporter)
@@ -27115,6 +27109,14 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "bgm" = (
+/obj/machinery/camera{
+	c_tag = "Security Equipment";
+	dir = 1;
+	name = "security camera"
+	},
+/turf/open/floor/plasteel/red/side,
+/area/security/main)
+"bgn" = (
 /obj/structure/chair{
 	dir = 1
 	},
@@ -48832,7 +48834,7 @@ ayW
 att
 att
 att
-bgm
+bgn
 arE
 aaa
 aaa
@@ -56257,7 +56259,7 @@ agz
 agZ
 ahr
 ahY
-aiu
+bgm
 aiU
 ajq
 ajK
