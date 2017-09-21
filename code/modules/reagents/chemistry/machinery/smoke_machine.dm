@@ -48,10 +48,13 @@
 		icon_state = "smoke0"
 		update_icon()
 		return
-	if(on && (cooldown < world.time))
+	var/turf/T = get_turf(src)
+	var/smoke_test = FALSE
+	for(var/obj/effect/particle_effect/smoke/search in T.contents)
+		smoke_test = TRUE
+	if(on && (smoke_test == FALSE))
 		icon_state = "smoke1"
 		update_icon()
-		cooldown = world.time + 200
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
 		smoke.set_up(reagents, setting, efficiency, get_turf(src))
 		smoke.start()
