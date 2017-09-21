@@ -98,11 +98,14 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 		break;
 	case 'pull_request_review':
 		if($payload['action'] == 'submitted'){
-			$lower_state = strtolower($payload['review']['state']);
-			if(($lower_state == 'approved' || $lower_state == 'changes_requested') && is_maintainer($payload, $payload['review']['user']['login'])){
+            $lower_state = strtolower($payload['review']['state']);
+            $approved = $lower_state == 'approved';
+			if(($approved || $lower_state == 'changes_requested') && is_maintainer($payload, $payload['review']['user']['login'])){
 				$lower_association = strtolower($payload['review']['author_association']);
 				if($lower_association == 'member' || $lower_association == 'contributor' || $lower_association == 'owner')
-					remove_ready_for_review($payload);
+                    remove_ready_for_review($payload);
+                    if($approved)
+                        apply_ready_for_merge($playload);
 			}
 		}
 		break;
@@ -250,6 +253,12 @@ function remove_ready_for_review($payload, $labels = null){
 	$url = $payload['pull_request']['issue_url'] . '/labels';
 	apisend($url, 'PUT', $labels);
 }
+function apply_ready_for_merge($payload, $labels=null){
+	if($labels == null)
+        $labels = get_labels($payload);
+    $labels[] = 'Approved for Merge';
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	apisend($url, 'PUT', $labels);
 
 function dismiss_review($payload, $id, $reason){
 	$content = array('message' => $reason);
