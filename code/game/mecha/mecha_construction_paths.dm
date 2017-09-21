@@ -906,18 +906,22 @@
 
 /datum/construction/mecha/honker
 	result = "/obj/mecha/combat/honker"
-	steps = list(list("key"=/obj/item/bikehorn), //1
+	steps = list(
+					 list("desc"="You shouldn't be able to see this."), //0, note steps in the construction path are +1 to the ones here
+					 list("key"=/obj/item/bikehorn), //1
 					 list("key"=/obj/item/clothing/shoes/clown_shoes), //2
 					 list("key"=/obj/item/bikehorn), //3
 					 list("key"=/obj/item/clothing/mask/gas/clown_hat), //4
 					 list("key"=/obj/item/bikehorn), //5
-					 list("key"=/obj/item/circuitboard/mecha/honker/targeting), //6
+					 list("key"=/obj/item/stock_parts/cell), //6
 					 list("key"=/obj/item/bikehorn), //7
-					 list("key"=/obj/item/circuitboard/mecha/honker/peripherals), //8
+					 list("key"=/obj/item/circuitboard/mecha/honker/targeting), //8
 					 list("key"=/obj/item/bikehorn), //9
-					 list("key"=/obj/item/circuitboard/mecha/honker/main), //10
+					 list("key"=/obj/item/circuitboard/mecha/honker/peripherals), //10
 					 list("key"=/obj/item/bikehorn), //11
-					 )
+					 list("key"=/obj/item/circuitboard/mecha/honker/main), //12
+					 list("key"=/obj/item/bikehorn), //13
+				)
 
 /datum/construction/mecha/honker/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
@@ -929,27 +933,34 @@
 	if(istype(used_atom, /obj/item/bikehorn))
 		playsound(holder, 'sound/items/bikehorn.ogg', 50, 1)
 		user.visible_message("HONK!")
+		if(step==2)
+			spawn_mecha_result()
+
 
 	//TODO: better messages.
 	switch(step)
-		if(10)
+		if(13)
 			user.visible_message("[user] installs the central control module into the [holder].", "<span class='notice'>You install the central control module into the [holder].</span>")
 			qdel(used_atom)
-		if(8)
+		if(11)
 			user.visible_message("[user] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>")
 			qdel(used_atom)
-		if(6)
+		if(9)
 			user.visible_message("[user] installs the weapon control module into the [holder].", "<span class='notice'>You install the weapon control module into the [holder].</span>")
 			qdel(used_atom)
-		if(4)
+		if(7)
+			user.visible_message("[user] installs the power cell into the [holder].", "<span class='notice'>You install the power cell into the [holder].</span>")
+			var/obj/item/I = used_atom
+			user.transferItemToLoc(I, holder, TRUE)
+		if(5)
 			user.visible_message("[user] puts clown wig and mask on the [holder].", "<span class='notice'>You put clown wig and mask on the [holder].</span>")
 			qdel(used_atom)
-		if(2)
+		if(3)
 			user.visible_message("[user] puts clown boots on the [holder].", "<span class='notice'>You put clown boots on the [holder].</span>")
 			qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/honker/spawn_result()
+/datum/construction/mecha/honker/spawn_mecha_result()
 	..()
 	SSblackbox.inc("mecha_honker_created",1)
 	return
