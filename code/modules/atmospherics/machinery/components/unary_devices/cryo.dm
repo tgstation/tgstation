@@ -376,7 +376,7 @@
 			. = TRUE
 		if("ejectbeaker")
 			if(beaker)
-				if(!usr.put_in_active_hand(beaker))
+				if(!usr.put_in_hands(beaker))
 					beaker.forceMove(loc)
 				beaker = null
 				. = TRUE
