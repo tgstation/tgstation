@@ -8,6 +8,10 @@
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 
+/obj/item/retractor/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] slams [src] into their eye! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+ 	return(BRUTELOSS)
+ 
 
 /obj/item/retractor/augment
 	name = "toolarm retractor"
@@ -20,7 +24,6 @@
 	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 
-
 /obj/item/hemostat
 	name = "hemostat"
 	desc = "You think you have seen this before."
@@ -32,6 +35,9 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 
+/obj/item/hemostat/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] tears [user.p_them()]self apart with a snip, a cut, and a [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+ 	return(BRUTELOSS)
 
 /obj/item/hemostat/augment
 	name = "toolarm hemostat"
@@ -57,6 +63,9 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
 
+/obj/item/cautery/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] cauterizes their breathing holes! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+ 	return(FIRELOSS|OXYLOSS)
 
 /obj/item/cautery/augment
 	name = "toolarm cautery"
@@ -86,6 +95,9 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
+/obj/item/surgicaldrill/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] drills right into their own brain! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+ 	return(BRUTELOSS)
 
 /obj/item/surgicaldrill/augment
 	name = "toolarm surgical drill"
