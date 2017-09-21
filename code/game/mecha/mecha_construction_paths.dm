@@ -104,6 +104,9 @@
 /datum/construction/reversible/mecha/ripley
 	result = "/obj/mecha/working/ripley"
 	steps = list(
+					 //0, dummy step used to stop the steps from finishing and spawn_result() being called automatically.
+					 list("desc"="You shouldn't be able to see this."),
+
 					//1
 					list("key"=/obj/item/weldingtool,
 							"backkey"=/obj/item/wrench,
@@ -127,38 +130,47 @@
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/screwdriver,
-					 		"desc"="Peripherals control module is secured."),
+					 		"desc"="The power cell is secured."),
 					 //7
 					 list("key"=/obj/item/screwdriver,
 					 		"backkey"=/obj/item/crowbar,
-					 		"desc"="Peripherals control module is installed."),
+					 		"desc"="The power cell is installed."),
 					 //8
-					 list("key"=/obj/item/circuitboard/mecha/ripley/peripherals,
+					 list("key"=/obj/item/stock_parts/cell,
 					 		"backkey"=/obj/item/screwdriver,
-					 		"desc"="Central control module is secured."),
+					 		"desc"="Peripherals control module is secured."),
 					 //9
 					 list("key"=/obj/item/screwdriver,
 					 		"backkey"=/obj/item/crowbar,
-					 		"desc"="Central control module is installed."),
+					 		"desc"="Peripherals control module is installed."),
 					 //10
+					 list("key"=/obj/item/circuitboard/mecha/ripley/peripherals,
+					 		"backkey"=/obj/item/screwdriver,
+					 		"desc"="Central control module is secured."),
+					 //11
+					 list("key"=/obj/item/screwdriver,
+					 		"backkey"=/obj/item/crowbar,
+					 		"desc"="Central control module is installed."),
+					 //12
 					 list("key"=/obj/item/circuitboard/mecha/ripley/main,
 					 		"backkey"=/obj/item/screwdriver,
 					 		"desc"="The wiring is adjusted."),
-					 //11
+					 //13
 					 list("key"=/obj/item/wirecutters,
 					 		"backkey"=/obj/item/screwdriver,
 					 		"desc"="The wiring is added."),
-					 //12
+					 //14
 					 list("key"=/obj/item/stack/cable_coil,
 					 		"backkey"=/obj/item/screwdriver,
 					 		"desc"="The hydraulic systems are active."),
-					 //13
+					 //15
 					 list("key"=/obj/item/screwdriver,
 					 		"backkey"=/obj/item/wrench,
 					 		"desc"="The hydraulic systems are connected."),
-					 //14
+					 //16
 					 list("key"=/obj/item/wrench,
 					 		"desc"="The hydraulic systems are disconnected.")
+
 					)
 
 /datum/construction/reversible/mecha/ripley/action(atom/used_atom,mob/user)
@@ -170,24 +182,24 @@
 
 	//TODO: better messages.
 	switch(index)
-		if(14)
+		if(17)
 			user.visible_message("[user] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>")
 			holder.icon_state = "ripley1"
-		if(13)
+		if(16)
 			if(diff==FORWARD)
 				user.visible_message("[user] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>")
 				holder.icon_state = "ripley2"
 			else
 				user.visible_message("[user] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>")
 				holder.icon_state = "ripley0"
-		if(12)
+		if(15)
 			if(diff==FORWARD)
 				user.visible_message("[user] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>")
 				holder.icon_state = "ripley3"
 			else
 				user.visible_message("[user] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>")
 				holder.icon_state = "ripley1"
-		if(11)
+		if(14)
 			if(diff==FORWARD)
 				user.visible_message("[user] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>")
 				holder.icon_state = "ripley4"
@@ -196,7 +208,7 @@
 				var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil(get_turf(holder))
 				coil.amount = 4
 				holder.icon_state = "ripley2"
-		if(10)
+		if(13)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>")
 				qdel(used_atom)
@@ -204,7 +216,7 @@
 			else
 				user.visible_message("[user] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>")
 				holder.icon_state = "ripley3"
-		if(9)
+		if(12)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>")
 				holder.icon_state = "ripley6"
@@ -212,7 +224,7 @@
 				user.visible_message("[user] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>")
 				new /obj/item/circuitboard/mecha/ripley/main(get_turf(holder))
 				holder.icon_state = "ripley4"
-		if(8)
+		if(11)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>")
 				qdel(used_atom)
@@ -220,7 +232,7 @@
 			else
 				user.visible_message("[user] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>")
 				holder.icon_state = "ripley5"
-		if(7)
+		if(10)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>")
 				holder.icon_state = "ripley8"
@@ -228,54 +240,73 @@
 				user.visible_message("[user] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>")
 				new /obj/item/circuitboard/mecha/ripley/peripherals(get_turf(holder))
 				holder.icon_state = "ripley6"
-		if(6)
+		if(9)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] installs the power cell into the [holder].", "<span class='notice'>You install the power cell into the [holder].</span>")
+				var/obj/item/I = used_atom
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "ripley9"
 			else
 				user.visible_message("[user] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>")
 				holder.icon_state = "ripley7"
-		if(5)
+		if(8)
+			if(diff==FORWARD)
+				user.visible_message("[user] secures the power cell.", "<span class='notice'>You secure the power cell.</span>")
+				holder.icon_state = "ripley10"
+			else
+				user.visible_message("[user] prys the power cell from [holder].", "<span class='notice'>You pry the power cell from [holder].</span>")
+				var/obj/item/I = locate(/obj/item/stock_parts/cell) in holder
+				I.loc = get_turf(holder)
+				holder.icon_state = "ripley8"
+		if(7)
+			if(diff==FORWARD)
+				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				holder.icon_state = "ripley11"
+			else
+				user.visible_message("[user] unfastens the power cell.", "<span class='notice'>You unfasten the power cell.</span>")
+				holder.icon_state = "ripley9"
+		if(6)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
-				holder.icon_state = "ripley10"
+				holder.icon_state = "ripley12"
 			else
 				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
 				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 				MS.amount = 5
-				holder.icon_state = "ripley8"
-		if(4)
+				holder.icon_state = "ripley10"
+		if(5)
 			if(diff==FORWARD)
 				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
-				holder.icon_state = "ripley11"
+				holder.icon_state = "ripley13"
 			else
 				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
-				holder.icon_state = "ripley9"
-		if(3)
+				holder.icon_state = "ripley11"
+		if(4)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the external reinforced armor layer to the [holder].", "<span class='notice'>You install the external reinforced armor layer to the [holder].</span>")
-				holder.icon_state = "ripley12"
+				holder.icon_state = "ripley14"
 			else
 				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
-				holder.icon_state = "ripley10"
-		if(2)
+				holder.icon_state = "ripley12"
+		if(3)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the external armor layer.", "<span class='notice'>You secure the external reinforced armor layer.</span>")
-				holder.icon_state = "ripley13"
+				holder.icon_state = "ripley15"
 			else
 				user.visible_message("[user] pries external armor layer from the [holder].", "<span class='notice'>You pry external armor layer from the [holder].</span>")
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
-				holder.icon_state = "ripley11"
-		if(1)
+				holder.icon_state = "ripley13"
+		if(2)
 			if(diff==FORWARD)
 				user.visible_message("[user] welds the external armor layer to the [holder].", "<span class='notice'>You weld the external armor layer to the [holder].</span>")
+				spawn_mecha_result()
 			else
 				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
-				holder.icon_state = "ripley12"
+				holder.icon_state = "ripley14"
 	return 1
 
-/datum/construction/reversible/mecha/ripley/spawn_result()
+/datum/construction/reversible/mecha/ripley/spawn_mecha_result()
 	..()
 	SSblackbox.inc("mecha_ripley_created",1)
 	return
