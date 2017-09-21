@@ -117,9 +117,6 @@ In DM, this is optional, but omitting it makes finding definitions harder.
 ### Do not use text/string based type paths
 It is rarely allowed to put type paths in a text format, as there are no compile errors if the type path no longer exists. Here is an example:
 
-### Use var/name format when declaring variables
-While DM allows other ways of declaring variables, this one should be used for consistency.
-
 ```DM
 //Good
 var/path_type = /obj/item/baseball_bat
@@ -127,6 +124,9 @@ var/path_type = /obj/item/baseball_bat
 //Bad
 var/path_type = "/obj/item/baseball_bat"
 ```
+
+### Use var/name format when declaring variables
+While DM allows other ways of declaring variables, this one should be used for consistency.
 
 ### Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
