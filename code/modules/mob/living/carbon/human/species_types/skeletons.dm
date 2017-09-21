@@ -3,8 +3,8 @@
 	name = "Spooky Scary Skeleton"
 	id = "skeleton"
 	say_mod = "rattles"
-	blacklisted = 1
-	sexes = 0
+	species_blacklist = list(NO_MAGIC_MIRROR,NO_SLIME_MUT,NO_TRANS_STING,NO_DNA_COPY)
+	sexes = FALSE
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)

@@ -156,3 +156,6 @@
 #define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
 
 #define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
+
+#define SPECIES_BLACKLIST_SLIME_MUT 1 //Green slime mutation toxin can not create this species
+#define SPECIES_BLACKLIST_MAGIC_MIRROR 2 //The wizard mirror can't make this species either

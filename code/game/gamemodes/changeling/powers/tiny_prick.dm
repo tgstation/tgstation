@@ -72,7 +72,7 @@
 	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 	if(!selected_dna)
 		return
-	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
+	if(NO_TRANS_STING in selected_dna.dna.species.species_blacklist)
 		to_chat(user, "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!</span>")
 		return
 	..()

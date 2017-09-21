@@ -117,4 +117,9 @@
 #define NO_UNDERWEAR	26
 #define NOLIVER			27
 #define NOSTOMACH		28
-#define NO_DNA_COPY     29
+
+//species blacklist for mutant races
+#define NO_TRANS_STING	1
+#define NO_DNA_COPY 	2
+#define NO_SLIME_MUT	3
+#define NO_MAGIC_MIRROR 4

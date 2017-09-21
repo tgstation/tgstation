@@ -5,9 +5,9 @@
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
-	use_skintones = 1
+	use_skintones = TRUE
 	no_equip = list(slot_back)
-	blacklisted = 1
+	species_blacklist = list(NO_SLIME_MUT)
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 

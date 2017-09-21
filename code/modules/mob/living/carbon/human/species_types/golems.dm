@@ -11,13 +11,13 @@
 	punchdamagehigh = 14
 	punchstunthreshold = 11 //about 40% chance to stun
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
-	nojumpsuit = 1
-	sexes = 1
+	nojumpsuit = TRUE
+	sexes = FALSE
 	damage_overlay_type = ""
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 	// To prevent golem subtypes from overwhelming the odds when random species
 	// changes, only the Random Golem type can be chosen
-	blacklisted = TRUE
+	species_blacklist = list(NO_SLIME_MUT)
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
@@ -42,7 +42,7 @@
 
 /datum/species/golem/random
 	name = "Random Golem"
-	blacklisted = FALSE
+	species_blacklist = list()
 	dangerous_existence = FALSE
 
 /datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
