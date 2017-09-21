@@ -807,6 +807,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	command_staff_only = TRUE
 
 /datum/objective/wizchaos
-	explanation_text = "Wreak havoc upon the station as much you can. Send those wandless Nanotrasen scum a message!"
+	explanation_text = "Cause as much havoc on the station as you can. Send those wandless Nanotrasen scum a message!"
 	completed = TRUE
 
