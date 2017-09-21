@@ -92,7 +92,7 @@
 /datum/chemical_reaction/crayonicationred
 	name = "Red Crayon"
 	id = "redcrayonication"
-	required_reagents = list("lye" = 10, "redcrayonpowder" = 10)
+	required_reagents = list("wax" = 10, "redcrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 
@@ -104,7 +104,7 @@
 /datum/chemical_reaction/crayonicationorange
 	name = "Orange Crayon"
 	id = "orangecrayonication"
-	required_reagents = list("lye" = 10, "orangecrayonpowder" = 10)
+	required_reagents = list("wax" = 10, "orangecrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 
@@ -116,7 +116,7 @@
 /datum/chemical_reaction/crayonicationyellow
 	name = "Yellow Crayon"
 	id = "yellowcrayonication"
-	required_reagents = list("lye" = 10, "yellowcrayonpowder" = 10)
+	required_reagents = list("wax" = 10, "yellowcrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 
@@ -128,7 +128,7 @@
 /datum/chemical_reaction/crayonicationgreen
 	name = "Green Crayon"
 	id = "greencrayonication"
-	required_reagents = list("lye" = 10, "greencrayonpowder" = 10)
+	required_reagents = list("wax" = 10, "greencrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 
@@ -140,7 +140,7 @@
 /datum/chemical_reaction/crayonicationblue
 	name = "Blue Crayon"
 	id = "bluecrayonication"
-	required_reagents = list("lye" = 10, "bluecrayonpowder" = 10)
+	required_reagents = list("wax" = 10, "bluecrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 
@@ -152,7 +152,7 @@
 /datum/chemical_reaction/crayonicationpurple
 	name = "Purple Crayon"
 	id = "purplecrayonication"
-	required_reagents = list("lye" = 10, "purplecrayonpowder" = 10)
+	required_reagents = list("wax" = 10, "purplecrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 
@@ -164,7 +164,7 @@
 /datum/chemical_reaction/crayonicationblack
 	name = "Black Crayon"
 	id = "blackcrayonication"
-	required_reagents = list("lye" = 10, "blackcrayonpowder" = 10)
+	required_reagents = list("wax" = 10, "blackcrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 
@@ -176,7 +176,7 @@
 /datum/chemical_reaction/crayonicationwhite
 	name = "White Crayon"
 	id = "whitecrayonication"
-	required_reagents = list("lye" = 10, "whitecrayonpowder" = 10)
+	required_reagents = list("wax" = 10, "whitecrayonpowder" = 10)
 	required_temp = 374
 	mob_react = FALSE
 
@@ -188,7 +188,7 @@
 /datum/chemical_reaction/crayonicationmime
 	name = "Mime Crayon"
 	id = "mimecrayonitation"
-	required_reagents = list("lye" = 10, "whitecrayonpowder" = 5, "blackcrayonpowder" = 5)
+	required_reagents = list("wax" = 10, "whitecrayonpowder" = 5, "blackcrayonpowder" = 5)
 	required_temp = 374
 	mob_react = FALSE
 
@@ -200,7 +200,7 @@
 /datum/chemical_reaction/crayonicationrainbow
 	name = "rainbow Crayon"
 	id = "rainbowcrayonication"
-	required_reagents = list("lye" = 10, "colorful_reagent" = 10)
+	required_reagents = list("wax" = 10, "colorful_reagent" = 10)
 	required_temp = 374
 	mob_react = FALSE
 
