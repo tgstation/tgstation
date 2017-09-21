@@ -11,7 +11,7 @@
 /obj/item/retractor/suicide_act(mob/living/user)
  	user.visible_message("<span class='suicide'>[user] slams [src] into their eye! It looks like [user.p_theyre()] trying to commit suicide!</span>")
  	return(BRUTELOSS)
- 
+
 
 /obj/item/retractor/augment
 	name = "toolarm retractor"
@@ -214,8 +214,8 @@
 
 /obj/item/surgical_drapes/suicide_act(mob/living/user)
  	user.visible_message("<span class='suicide'>[user] drapes [src] over their head and communicates to the spooky ghost god! It looks like [user.p_theyre()] trying to ascend to the next plane!</span>")
- 	dust(mob/user)
-	return(BRUTELOSS) //if they somehow don't get dusted i guess
+ 	user.dust()
+		return
 
 /obj/item/surgical_drapes/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
