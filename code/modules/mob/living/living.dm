@@ -568,10 +568,10 @@
 		var/obj/C = loc
 		C.container_resist(src)
 
-	else if(has_status_effect(/datum/status_effect/freon))
+	else if(IsFrozen())
 		to_chat(src, "You start breaking out of the ice cube!")
 		if(do_mob(src, src, 40))
-			if(has_status_effect(/datum/status_effect/freon))
+			if(IsFrozen())
 				to_chat(src, "You break out of the ice cube!")
 				remove_status_effect(/datum/status_effect/freon)
 				update_canmove()
@@ -706,30 +706,15 @@
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
-	var/loc_temp = T0C
-	if(istype(loc, /obj/mecha))
-		var/obj/mecha/M = loc
-		loc_temp =  M.return_temperature()
-
-	else if(istype(loc, /obj/structure/transit_tube_pod))
-		loc_temp = environment.temperature
-
+	var/loc_temp = environment ? environment.temperature : T0C
+	if(isobj(loc))
+		var/obj/oloc = loc
+		var/obj_temp = oloc.return_temperature()
+		if(obj_temp != null)
+			loc_temp = obj_temp
 	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
-
-	else if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
-		var/datum/gas_mixture/G = C.AIR1
-
-		if(G.total_moles() < 10)
-			loc_temp = environment.temperature
-		else
-			loc_temp = G.temperature
-
-	else
-		loc_temp = environment.temperature
-
 	return loc_temp
 
 /mob/living/proc/get_standard_pixel_x_offset(lying = 0)
@@ -967,7 +952,7 @@
 			fall()
 		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || has_status_effect(STATUS_EFFECT_STUN) || has_status_effect(/datum/status_effect/freon) || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.

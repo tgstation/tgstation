@@ -128,11 +128,14 @@ GLOBAL_PROTECT(config_dir)
 	//game_options.txt configs
 	var/force_random_names = 0
 	var/list/mode_names = list()
+	var/list/mode_reports = list()
+	var/list/mode_false_report_weight = list()
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
 	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
 	var/list/max_pop = list()
+	var/list/repeated_mode_adjust = list() 			// weight adjustments for recent modes
 
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
@@ -144,11 +147,13 @@ GLOBAL_PROTECT(config_dir)
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
+	var/brother_scaling_coeff = 25		//how many players per brother team
 	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
 	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 	var/abductor_scaling_coeff = 15 	//how many players per abductor team
 
 	var/traitor_objectives_amount = 2
+	var/brother_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0 //If security and such can be traitor/cult/other
 	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
 	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
@@ -273,6 +278,7 @@ GLOBAL_PROTECT(config_dir)
 	var/error_msg_delay = 50 // How long to wait between messaging admins about occurrences of a unique error
 
 	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
+	var/arrivals_shuttle_require_undocked = FALSE	//Require the arrivals shuttle to be undocked before latejoiners can join
 	var/arrivals_shuttle_require_safe_latejoin = FALSE	//Require the arrivals shuttle to be operational in order for latejoiners to join
 
 	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
@@ -296,6 +302,8 @@ GLOBAL_PROTECT(config_dir)
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
+				mode_reports[M.config_tag] = M.generate_report()
+				mode_false_report_weight[M.config_tag] = M.false_report_weight
 				if(M.votable)
 					votable_modes += M.config_tag
 		qdel(M)
@@ -687,6 +695,8 @@ GLOBAL_PROTECT(config_dir)
 					ghost_interaction		= 1
 				if("traitor_scaling_coeff")
 					traitor_scaling_coeff	= text2num(value)
+				if("brother_scaling_coeff")
+					brother_scaling_coeff	= text2num(value)
 				if("changeling_scaling_coeff")
 					changeling_scaling_coeff	= text2num(value)
 				if("security_scaling_coeff")
@@ -695,6 +705,8 @@ GLOBAL_PROTECT(config_dir)
 					abductor_scaling_coeff	= text2num(value)
 				if("traitor_objectives_amount")
 					traitor_objectives_amount = text2num(value)
+				if("brother_objectives_amount")
+					brother_objectives_amount = text2num(value)
 				if("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
@@ -709,7 +721,14 @@ GLOBAL_PROTECT(config_dir)
 							WRITE_FILE(GLOB.config_error_log, "Unknown game mode probability configuration definition: [prob_name].")
 					else
 						WRITE_FILE(GLOB.config_error_log, "Incorrect probability configuration definition: [prob_name]  [prob_value].")
-
+				if("repeated_mode_adjust")
+					if(value)
+						repeated_mode_adjust.Cut()
+						var/values = splittext(value," ")
+						for(var/v in values)
+							repeated_mode_adjust += text2num(v)
+					else
+						WRITE_FILE(GLOB.config_error_log, "Incorrect round weight adjustment configuration definition for [value].")
 				if("protect_roles_from_antagonist")
 					protect_roles_from_antagonist	= 1
 				if("protect_assistant_from_antagonist")
@@ -805,6 +824,8 @@ GLOBAL_PROTECT(config_dir)
 					GLOB.MAX_EX_FLAME_RANGE = BombCap
 				if("arrivals_shuttle_dock_window")
 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
+				if("arrivals_shuttle_require_undocked")
+					arrivals_shuttle_require_undocked = TRUE
 				if("arrivals_shuttle_require_safe_latejoin")
 					arrivals_shuttle_require_safe_latejoin = TRUE
 				if("mice_roundstart")
@@ -937,18 +958,18 @@ GLOBAL_PROTECT(config_dir)
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
+	// ^ This guy didn't try hard enough
 	for(var/T in gamemode_cache)
-		var/datum/game_mode/M = new T()
-		if(M.config_tag && M.config_tag == mode_name)
-			return M
-		qdel(M)
+		var/datum/game_mode/M = T
+		var/ct = initial(M.config_tag)
+		if(ct && ct == mode_name)
+			return new T
 	return new /datum/game_mode/extended()
 
 /datum/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
-		//to_chat(world, "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
 		if(!(M.config_tag in modes))
 			qdel(M)
 			continue
@@ -960,8 +981,15 @@ GLOBAL_PROTECT(config_dir)
 		if(max_pop[M.config_tag])
 			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
-			runnable_modes[M] = probabilities[M.config_tag]
-			//to_chat(world, "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]")
+			var/final_weight = probabilities[M.config_tag]
+			if(SSpersistence.saved_modes.len == 3 && repeated_mode_adjust.len == 3)
+				var/recent_round = min(SSpersistence.saved_modes.Find(M.config_tag),3)
+				var/adjustment = 0
+				while(recent_round)
+					adjustment += repeated_mode_adjust[recent_round]
+					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
+				final_weight *= ((100-adjustment)/100)
+			runnable_modes[M] = final_weight
 	return runnable_modes
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)

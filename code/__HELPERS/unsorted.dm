@@ -812,7 +812,7 @@ GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 
 
 /*
-Checks if that loc and dir has a item on the wall
+Checks if that loc and dir has an item on the wall
 */
 GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,

@@ -1,5 +1,7 @@
 // simple is_type and similar inline helpers
 
+#define isdatum(D) (istype(D, /datum))
+
 #define islist(L) (istype(L, /list))
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
@@ -158,3 +160,11 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 #define issignaler(O) (istype(O, /obj/item/device/assembly/signaler))
 
 #define istimer(O) (istype(O, /obj/item/device/assembly/timer))
+
+GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
+	/obj/item/stack/sheet/glass, 
+	/obj/item/stack/sheet/rglass, 
+	/obj/item/stack/sheet/plasmaglass, 
+	/obj/item/stack/sheet/plasmarglass)))
+
+#define is_glass_sheet(O) (is_type_in_typecache(O, GLOB.glass_sheet_types))

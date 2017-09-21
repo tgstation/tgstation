@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Admin ghosts can no longer unintentionally make a mess of things."

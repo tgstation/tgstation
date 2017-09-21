@@ -33,7 +33,7 @@
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue
-		if(T.z != ZLEVEL_STATION)
+		if(!(T.z in GLOB.station_z_levels))
 			continue
 		if(!H.client)
 			continue

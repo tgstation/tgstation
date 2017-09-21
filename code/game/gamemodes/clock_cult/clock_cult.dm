@@ -94,6 +94,7 @@ Credit where due:
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
+	false_report_weight = 10
 	required_players = 24
 	required_enemies = 3
 	recommended_enemies = 3
@@ -184,6 +185,13 @@ Credit where due:
 /datum/game_mode/clockwork_cult/declare_completion()
 	..()
 	return 0 //Doesn't end until the round does
+
+/datum/game_mode/clockwork_cult/generate_report()
+	return "We have lost contact with multiple stations in your sector. They have gone dark and do not respond to all transmissions, although they appear intact and the crew's life \
+			signs remain uninterrupted. Those that have managed to send a transmission or have had some of their crew escape tell tales of a machine cult creating sapient automatons and seeking \
+			to brainwash the crew to summon their god, Ratvar. If evidence of this cult is dicovered aboard your station, extreme caution and extreme vigilance must be taken going forward, and \
+			all resources should be devoted to stopping this cult. Note that holy water seems to weaken and eventually return the minds of cultists that ingest it, and mindshield implants will \
+			prevent conversion altogether."
 
 /datum/game_mode/proc/auto_declare_completion_clockwork_cult()
 	var/text = ""

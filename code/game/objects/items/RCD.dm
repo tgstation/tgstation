@@ -31,7 +31,7 @@ obj/item/construction
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
 
 /obj/item/construction/Initialize()
-	..()
+	. = ..()
 	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
@@ -74,7 +74,7 @@ obj/item/construction
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into the [src]. </span>")
 		return 1
-	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the [src]!")
+	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the [src]!</span>")
 	return 0
 
 /obj/item/construction/proc/activate()

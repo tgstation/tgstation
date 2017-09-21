@@ -112,7 +112,7 @@
 /datum/reagent/water
 	name = "Water"
 	id = "water"
-	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
+	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
 	var/cooling_temperature = 2
@@ -160,8 +160,8 @@
 		cube.Expand()
 
 	// Dehydrated carp
-	else if(istype(O, /obj/item/toy/carpplushie/dehy_carp))
-		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
+	else if(istype(O, /obj/item/toy/plush/carpplushie/dehy_carp))
+		var/obj/item/toy/plush/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
 	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
@@ -797,7 +797,7 @@
 		var/mob/living/carbon/C = M
 		for(var/s in C.surgeries)
 			var/datum/surgery/S = s
-			S.success_multiplier = max(0.20, S.success_multiplier)
+			S.success_multiplier = max(0.2, S.success_multiplier)
 			// +20% success propability on each step, useful while operating in less-than-perfect conditions
 	..()
 
@@ -1081,7 +1081,7 @@
 /datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
 	name = "Foaming agent"
 	id = "foaming_agent"
-	description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
+	description = "An agent that yields metallic foam when mixed with light metal and a strong acid."
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
 	taste_description = "metal"
@@ -1089,7 +1089,7 @@
 /datum/reagent/smart_foaming_agent //Smart foaming agent. Functions similarly to metal foam, but conforms to walls.
 	name = "Smart foaming agent"
 	id = "smart_foaming_agent"
-	description = "A agent that yields metallic foam which conforms to area boundaries when mixed with light metal and a strong acid."
+	description = "An agent that yields metallic foam which conforms to area boundaries when mixed with light metal and a strong acid."
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
 	taste_description = "metal"
@@ -1576,13 +1576,13 @@
 /datum/reagent/magillitis
 	name = "Magillitis"
 	id = "magillitis"
-	description = "An experimental serum which causes rapid muscular growth in basic primates. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
+	description = "An experimental serum which causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	reagent_state = LIQUID
 	color = "#00f041"
 
 /datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
 	..()
-	if(ismonkey(M) && current_cycle >= 10)
+	if((ismonkey(M) || ishuman(M)) && current_cycle >= 10)
 		return M.gorillize()
 
 /datum/reagent/growthserum

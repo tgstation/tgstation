@@ -33,7 +33,7 @@
 	flavortext = null
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
-	..()
+	. = ..()
 	internal_storage.hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
@@ -46,7 +46,7 @@
 	default_storage = /obj/item/device/radio/uplink/nuclear
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
-	..()
+	. = ..()
 	internal_storage.hidden_uplink.telecrystals = 30
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src)
@@ -55,7 +55,7 @@
 	default_hatmask = /obj/item/clothing/head/chameleon/drone
 
 /mob/living/simple_animal/drone/snowflake/Initialize()
-	..()
+	. = ..()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
 /obj/item/drone_shell/syndrone
