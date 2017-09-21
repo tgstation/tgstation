@@ -182,7 +182,6 @@
 			return
 		var/turf/our_turf = get_turf(src)
 		var/obj/item/projectile/seedling/readied_shot = new /obj/item/projectile/seedling(our_turf)
-		readied_shot.current = our_turf
 		readied_shot.starting = our_turf
 		readied_shot.firer = src
 		readied_shot.original = target

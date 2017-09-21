@@ -444,7 +444,6 @@ Auto Patrol[]"},
 
 	var/obj/item/projectile/A = new projectile (loc)
 	playsound(loc, shoot_sound, 50, 1)
-	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	A.fire()

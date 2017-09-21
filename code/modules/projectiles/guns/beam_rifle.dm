@@ -238,7 +238,7 @@
 		if(!istype(curloc))
 			return
 		targloc = get_turf_in_angle(lastangle, curloc, 10)
-	P.preparePixelProjectile(targloc, targloc, current_user, current_user.client.mouseParams, 0)
+	P.preparePixelProjectile(targloc, current_user, current_user.client.mouseParams, 0)
 	P.fire(lastangle)
 
 /obj/item/gun/energy/beam_rifle/process()
@@ -440,7 +440,7 @@
 		firing_dir = BB.firer.dir
 	if(!BB.suppressed && firing_effect_type)
 		new firing_effect_type(get_turf(src), firing_dir)
-	BB.preparePixelProjectile(target, targloc, user, params, spread)
+	BB.preparePixelProjectile(target, user, params, spread)
 	BB.fire(gun? gun.lastangle : null, null)
 	BB = null
 	return TRUE
@@ -636,10 +636,6 @@
 	while(loc)
 		if(++safety > (range * 3))	//If it's looping for way, way too long...
 			return	//Kill!
-		if((!( current ) || loc == current))
-			current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-		if(!Angle)
-			Angle=round(Get_Angle(src,current))
 		if(spread)
 			Angle += (rand() - 0.5) * spread
 		var/matrix/M = new

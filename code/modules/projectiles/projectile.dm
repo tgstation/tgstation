@@ -19,7 +19,6 @@
 	var/suppressed = 0	//Attack message
 	var/yo = null
 	var/xo = null
-	var/current = null
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
@@ -235,20 +234,8 @@
 	for(var/i in 1 to required_moves)
 		pixel_move(required_moves)
 
-/obj/item/projectile/proc/auto_resolve_angle(qdel_on_fail = TRUE)
-	var/failed = FALSE
-	if(!(current) || loc == current)
-		if(isnull(xo) || isnull(yo))
-			failed = TRUE
-		else
-			current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-	if(isnull(Angle))
-		if(failed && qdel_on_fail)
-			qdel(src)
-			CRASH("Projectile ([type]-[firer]-[COORD(src)]) deleted due to unresolvable null angle!")	//we ded.
-		setAngle(Get_Angle(src,current))
-
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
+	//If no angle needs to resolve it from xo/yo!
 	if(!log_override && firer && original)
 		add_logs(firer, original, "fired at", src, " [get_area(src)]")
 	if(direct_target)
@@ -260,8 +247,10 @@
 		setAngle(angle)
 	if(spread)
 		setAngle(Angle + ((rand() - 0.5) * spread))
-	if(isnull(Angle))		//Shitcode to TRY to replace angle if none is found.
-		auto_resolve_angle()
+	if(isnull(Angle))	//Try to resolve through offsets if there's no angle set.
+		var/turf/starting = get_turf(src)
+		var/turf/target = locate(Clamp(starting + xo, 1, world.maxx), Clamp(starting + yo, 1, world.maxy), starting.z)
+		setAngle(Get_Angle(src, target))
 	if(!nondirectional_sprite)
 		var/matrix/M = new
 		M.Turn(Angle)
@@ -278,8 +267,6 @@
 	return TRUE
 
 /obj/item/projectile/proc/pixel_move(moves)
-	if((!( current ) || loc == current) || isnull(Angle))
-		auto_resolve_angle()
 	if(!nondirectional_sprite)
 		var/matrix/M = new
 		M.Turn(Angle)
@@ -329,16 +316,16 @@
 				return TRUE
 	return FALSE
 
-/obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread = 0)
-	var/turf/curloc = get_turf(user)
-	forceMove(get_turf(user))
-	starting = get_turf(user)
-	current = curloc
+/obj/item/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
+	var/turf/curloc = get_turf(source)
+	var/turf/targloc = get_turf(target)
+	forceMove(get_turf(source))
+	starting = get_turf(source)
 	yo = targloc.y - curloc.y
 	xo = targloc.x - curloc.x
 
-	if(params)
-		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(user, params)
+	if(isliving(source) && params)
+		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
 		p_x = calculated[2]
 		p_y = calculated[3]
 
@@ -347,7 +334,7 @@
 		else
 			setAngle(calculated[1])
 	else
-		setAngle(GetAngle(src, targloc))
+		setAngle(Get_Angle(src, targloc))
 
 /proc/calculate_projectile_angle_and_pixel_offsets(mob/user, params)
 	var/list/mouse_control = params2list(params)

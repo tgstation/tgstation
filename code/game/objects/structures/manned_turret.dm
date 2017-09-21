@@ -150,7 +150,6 @@
 	if(QDELETED(target))
 		target = target_turf
 	var/obj/item/projectile/P = new projectile_type(targets_from)
-	P.current = targets_from
 	P.starting = targets_from
 	P.firer = user
 	P.original = target

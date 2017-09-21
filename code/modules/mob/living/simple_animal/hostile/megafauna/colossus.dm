@@ -164,7 +164,6 @@ Difficulty: Very Hard
 		return
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
-	P.current = startloc
 	P.starting = startloc
 	P.firer = src
 	if(marker)

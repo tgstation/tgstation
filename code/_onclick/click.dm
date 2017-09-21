@@ -397,7 +397,6 @@
 	LE.firer = src
 	LE.def_zone = get_organ_target()
 	LE.original = A
-	LE.current = T
 	LE.yo = U.y - T.y
 	LE.xo = U.x - T.x
 	LE.fire()
