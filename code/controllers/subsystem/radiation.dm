@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(radiation)
 
 	var/list/runcache = currentrun
 	while(runcache.len)
-		var/datum/radiation_wave/thing = runcache[runcache.len]
+		var/datum/thing = runcache[runcache.len]
 		runcache.len--
 
 		if(!thing || QDELETED(thing))

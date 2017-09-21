@@ -80,5 +80,9 @@
 				continue
 			thing.rad_act(strength)
 			if(prob(max(strength-20,0))) // Only stronk rads get to have little baby rads
-				thing.AddComponent(/datum/component/radioactive, (strength-20)*0.5) 
-				// Unless you're the stronkest of the stronk, in which case you get grandkids
+				var/applied_strength = (strength-20)*0.5
+				var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
+				if(insulation)
+					applied_strength /= insulation.amount+1
+				thing.AddComponent(/datum/component/radioactive, applied_strength) 
+				// Unless you're the stronkest of the stronk, in which case you get grandkids (>60 strength)
