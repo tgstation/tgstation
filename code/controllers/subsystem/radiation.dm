@@ -14,8 +14,12 @@ SUBSYSTEM_DEF(radiation)
 		var/datum/radiation_wave/thing = runcache[runcache.len]
 		runcache.len--
 
-		if(!thing || QDELETED(thing) || !thing.process())
+		if(!thing || QDELETED(thing))
 			processing -= thing
-			qdel(thing)
+			if(MC_TICK_CHECK)
+				return
+
+		thing.process()
+		
 		if(MC_TICK_CHECK)
 			return

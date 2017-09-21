@@ -29,13 +29,6 @@
 	return 1
 */
 
-/proc/radiation_pulse(turf/epicenter, intensity, range_modifier, log=0)
-	for(var/dir in GLOB.cardinals)
-		new /datum/radiation_wave(epicenter, dir, intensity, range_modifier)
-	if(log)
-		log_game("Radiation pulse with intensity:[intensity] and range modifier:[range_modifier] in area [epicenter.loc.name] ")
-	return TRUE
-
 /mob/living/rad_act(amount, silent = 0)
 	if(amount)
 		var/blocked = getarmor(null, "rad")

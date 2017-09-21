@@ -3,3 +3,5 @@
 #define RAD_MEDIUM_INSULATION 5 			//What common walls have
 #define RAD_HEAVY_INSULATION 8
 #define RAD_EXTREME_INSULATION 15
+
+#define RAD_HALF_LIFE 600

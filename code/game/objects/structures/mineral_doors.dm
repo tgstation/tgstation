@@ -179,8 +179,7 @@
 
 /obj/structure/mineral_door/uranium/Initialize()
 	. = ..()
-	var/datum/component/kill = GetComponent(/datum/component/rad_insulation)
-	kill.Destroy()
+	qdel(GetComponent(/datum/component/rad_insulation))
 
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"
@@ -261,8 +260,7 @@
 /obj/structure/mineral_door/paperframe/Initialize()
 	. = ..()
 	queue_smooth_neighbors(src)
-	var/datum/component/kill = GetComponent(/datum/component/rad_insulation)
-	kill.Destroy()
+	qdel(GetComponent(/datum/component/rad_insulation))
 
 /obj/structure/mineral_door/paperframe/Destroy()
 	queue_smooth_neighbors(src)
