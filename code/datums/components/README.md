@@ -101,8 +101,5 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * If a previous registration is overwritten by the call, a runtime occurs. Setting `override` to TRUE prevents this
     * These callbacks run asyncronously
     * Returning `TRUE` from these callbacks will trigger a `TRUE` return from the `SendSignal()` that initiated it
-1. `/datum/component/proc/ReceiveSignal(signal, ...)` (virtual)
-    * Called when a component recieves any signal and is enabled
-    * Default implementation looks if the signal is registered and runs the appropriate proc
 
 ### See/Define signals and their arguments in __DEFINES\components.dm
