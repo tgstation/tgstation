@@ -376,7 +376,8 @@
 			. = TRUE
 		if("ejectbeaker")
 			if(beaker)
-				beaker.forceMove(loc)
+				if(!usr.put_in_active_hand(beaker))
+					beaker.forceMove(loc)
 				beaker = null
 				. = TRUE
 	update_icon()
