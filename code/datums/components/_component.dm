@@ -117,6 +117,7 @@
 	return
 
 /datum/component/proc/AfterComponentActivated()
+	set waitfor = FALSE
 	return
 
 /datum/component/proc/_GetInverseTypeList(current_type)
@@ -160,6 +161,7 @@
 				. = TRUE
 
 /datum/proc/ComponentActivated(datum/component/C)
+	set waitfor = FALSE
 	return
 
 /datum/proc/GetComponent(c_type)
