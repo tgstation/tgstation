@@ -201,6 +201,8 @@
 		html = replacetextEx(SStgui.basehtml, "{}", get_json(initial_data))
 	else
 		html = SStgui.basehtml
+	html = replacetextEx(html, "\[template_data_json]", json_encode(list("main" = "[interface].tmpl", "layout" = "layout_default.tmpl")))
+	html = replacetextEx(html, "\[url_parameters_json]", json_encode(list("src" = "\ref[src]")))
 	html = replacetextEx(html, "\[ref]", "\ref[src]")
 	html = replacetextEx(html, "\[style]", style)
 	return html
@@ -325,7 +327,7 @@
 		return // Cannot update UI, we have no visibility.
 
 	// Send the new JSON to the update() Javascript function.
-	user << output(url_encode(get_json(data)), "[custom_browser_id ? window_id : "[window_id].browser"]:update")
+	user << output(url_encode(get_json(data)), "[custom_browser_id ? window_id : "[window_id].browser"]:receiveUpdateData")
 
  /**
   * private

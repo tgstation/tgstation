@@ -206,17 +206,46 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
+
 /datum/asset/simple/tgui
-	assets = list(
-		"tgui.css"	= 'tgui/assets/tgui.css',
-		"tgui.js"	= 'tgui/assets/tgui.js',
-		"font-awesome.min.css" = 'tgui/assets/font-awesome.min.css',
-		"fontawesome-webfont.eot" = 'tgui/assets/fonts/fontawesome-webfont.eot',
-		"fontawesome-webfont.woff2" = 'tgui/assets/fonts/fontawesome-webfont.woff2',
-		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
-		"fontawesome-webfont.ttf" = 'tgui/assets/fonts/fontawesome-webfont.ttf',
-		"fontawesome-webfont.svg" = 'tgui/assets/fonts/fontawesome-webfont.svg'
+	var/list/common = list()
+
+	var/list/common_dirs = list(
+		"tgui/css/",
+		"tgui/images/",
+		"tgui/images/status_icons/",
+		"tgui/images/modular_computers/",
+		"tgui/js/"
 	)
+	var/list/uncommon_dirs = list(
+		"tgui/templates/",
+		"news_articles/images/"
+	)
+
+/datum/asset/simple/tgui/register()
+	// Crawl the directories to find files.
+	for (var/path in common_dirs)
+		var/list/filenames = flist(path)
+		for(var/filename in filenames)
+			if(copytext(filename, length(filename)) != "/") // Ignore directories.
+				if(fexists(path + filename))
+					common[filename] = fcopy_rsc(path + filename)
+					register_asset(filename, common[filename])
+	for (var/path in uncommon_dirs)
+		var/list/filenames = flist(path)
+		for(var/filename in filenames)
+			if(copytext(filename, length(filename)) != "/") // Ignore directories.
+				if(fexists(path + filename))
+					register_asset(filename, fcopy_rsc(path + filename))
+
+
+/datum/asset/simple/tgui/send(client, uncommon)
+	if(!islist(uncommon))
+		uncommon = list(uncommon)
+
+	send_asset_list(client, uncommon, FALSE)
+	send_asset_list(client, common, TRUE)
+
 
 /datum/asset/simple/headers
 	assets = list(

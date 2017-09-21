@@ -90,7 +90,7 @@
 						<span class='bad'>Off</span>
 					{{/if}}				
 				{{else}}
-					{{:helper.link('Auto', 'refresh', {'cmode' : 1}, data.chargeMode ? 'selected' : null)}}{{:helper.link('Off', 'close', {'cmode' : 1}, data.chargeMode ? null : 'selected')}}
+					{{:helper.link('Auto', 'refresh', {'action': 'charge'}, data.chargeMode ? 'selected' : null)}}{{:helper.link('Off', 'close', {'action': 'charge'}, data.chargeMode ? null : 'selected')}}
 				{{/if}}
 				&nbsp;
 				{{if data.chargingStatus > 1}}
