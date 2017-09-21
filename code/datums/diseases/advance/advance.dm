@@ -245,7 +245,6 @@
 /datum/disease/advance/proc/GenerateCure()
 	if(properties && properties.len)
 		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
-		//to_chat(world, "Res = [res]")
 		cures = list(advance_cures[res])
 
 		// Get the cure name from the cure_id
@@ -333,9 +332,6 @@
 
 // Mix a list of advance diseases and return the mixed result.
 /proc/Advance_Mix(var/list/D_list)
-
-	//to_chat(world, "Mixing!!!!")
-
 	var/list/diseases = list()
 
 	for(var/datum/disease/advance/A in D_list)
@@ -359,7 +355,6 @@
 		D2.Mix(D1)
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
-	//to_chat(world, "END MIXING!!!!!")
 	var/datum/disease/advance/to_return = pick(diseases)
 	to_return.Refresh(1)
 	return to_return
