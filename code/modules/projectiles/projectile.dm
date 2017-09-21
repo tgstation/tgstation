@@ -220,8 +220,6 @@
 	if(paused || !isturf(loc))
 		last_projectile_move += world.time - last_process		//Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
 		return
-	if(isnull(Angle))		//Shitcode to TRY to replace angle if none is found.
-		auto_resolve_angle()
 	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
 	time_offset = 0
 	var/required_moves = speed > 0? Floor(elapsed_time_deciseconds / speed) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
@@ -238,15 +236,16 @@
 		pixel_move(required_moves)
 
 /obj/item/projectile/proc/auto_resolve_angle(qdel_on_fail = TRUE)
-	if((!( current ) || loc == current))
+	var/failed = FALSE
+	if(!(current) || loc == current)
 		if(isnull(xo) || isnull(yo))
-			if(qdel_on_fail)
-				qdel(src)
-				CRASH("Projectile ([type]-[firer]-[COORD(src)]) deleted due to unresolvable null angle!")	//we ded.
-		current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-	if(spread)
-		setAngle(Get_Angle(src,current) + (rand() - 0.5) * spread)
-	else
+			failed = TRUE
+		else
+			current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+	if(isnull(Angle))
+		if(failed && qdel_on_fail)
+			qdel(src)
+			CRASH("Projectile ([type]-[firer]-[COORD(src)]) deleted due to unresolvable null angle!")	//we ded.
 		setAngle(Get_Angle(src,current))
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
@@ -259,6 +258,8 @@
 		return
 	if(isnum(angle))
 		setAngle(angle)
+	if(spread)
+		setAngle(Angle + ((rand() - 0.5) * spread))
 	if(isnull(Angle))		//Shitcode to TRY to replace angle if none is found.
 		auto_resolve_angle()
 	if(!nondirectional_sprite)
@@ -346,7 +347,7 @@
 		else
 			setAngle(calculated[1])
 	else
-		auto_resolve_angle()
+		setAngle(GetAngle(src, targloc))
 
 /proc/calculate_projectile_angle_and_pixel_offsets(mob/user, params)
 	var/list/mouse_control = params2list(params)
