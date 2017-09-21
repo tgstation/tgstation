@@ -43,7 +43,7 @@
 		teleport(user)
 
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc)
-	if(get_turf(oldloc) == get_turf(linked))
+	if(oldloc && get_turf(oldloc) == get_turf(linked))
 		return ..()
 	if(!teleport(AM))
 		return ..()

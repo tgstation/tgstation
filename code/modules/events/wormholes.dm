@@ -48,12 +48,6 @@
 	icon_state = "anom"
 	mech_sized = TRUE
 
-/obj/effect/portal/wormhole/attack_hand(mob/user)
-	teleport(user)
-
-/obj/effect/portal/wormhole/attackby(obj/item/I, mob/user, params)
-	teleport(user)
-
 /obj/effect/portal/wormhole/teleport(atom/movable/M)
 	if(istype(M, /obj/effect))	//sparks don't teleport
 		return
