@@ -70,25 +70,22 @@
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	if(istype(A, /obj/item/suppressor))
 		var/obj/item/suppressor/S = A
+		if(!can_suppress)
+			to_chat(user, "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>")
+			return
 		if(!user.is_holding(src))
 			to_chat(user, "<span class='notice'>You need be holding [src] to fit [S] to it!</span>")
 			return
-		else if(can_suppress)
-			if(!suppressed)
-				if(!user.transferItemToLoc(A, src))
-					return
-				to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
-				suppressed = A
-				S.oldsound = fire_sound
-				fire_sound = 'sound/weapons/gunshot_silenced.ogg'
-				w_class += A.w_class //so pistols do not fit in pockets when suppressed
-				update_icon()
-				return
-			else
-				to_chat(user, "<span class='warning'>[src] already has a suppressor!</span>")
-				return
-		else
-			to_chat(user, "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>")
+		if(suppressed)
+			to_chat(user, "<span class='warning'>[src] already has a suppressor!</span>")
+			return
+		if(user.transferItemToLoc(A, src))
+			to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
+			suppressed = A
+			S.oldsound = fire_sound
+			fire_sound = 'sound/weapons/gunshot_silenced.ogg'
+			w_class += A.w_class //so pistols do not fit in pockets when suppressed
+			update_icon()
 			return
 	return 0
 
