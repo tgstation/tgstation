@@ -380,8 +380,6 @@
 		else
 			dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
-	//to_chat(world, "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]")
-	//to_chat(world, "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]")
 	usr << browse(dat, "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
