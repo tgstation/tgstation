@@ -31,6 +31,8 @@
 	var/min_oxy = 0
 	var/max_tox = 0
 
+	var/mob/living/controller
+
 
 	//Space bats need no air to fly in.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -40,3 +42,11 @@
 	. = ..()
 	if(isliving(the_target) && is_vampire(the_target))
 		return FALSE
+
+/mob/living/simple_animal/hostile/vampire_bat/death()
+	if(isliving(controller))
+		controller.loc = loc
+		mind.transfer_to(controller)
+		controller.Knockdown(120)
+		to_chat(controller, "<span class='userdanger'>The force of being exiled from your bat form knocks you down!</span>")
+	. = ..()

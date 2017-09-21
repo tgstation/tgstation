@@ -21,7 +21,7 @@
 	if(vamp_req)
 		clothes_req = FALSE
 		range = 1
-		human_req = TRUE
+		human_req = FALSE //so we can cast stuff while a bat, too
 
 
 /obj/effect/proc_holder/spell/before_cast(list/targets)
@@ -345,7 +345,7 @@
 
 
 /obj/effect/proc_holder/spell/self/summon_coat
-	name = "Summon Dracula Coat"
+	name = "Summon Dracula Coat (5)"
 	gain_desc = "Now that you have reached full power, you can now pull a vampiric coat out of thin air!"
 	blood_used = 5
 	action_icon = 'hippiestation/icons/mob/vampire.dmi'
@@ -365,3 +365,36 @@
 	else if(get_dist(V.coat, user) > 1 || !(V.coat in user.GetAllContents()))
 		V.coat.loc = user.loc
 	to_chat(user, "<span class='notice'>You summon your dracula coat.</span>")
+
+
+/obj/effect/proc_holder/spell/self/batform
+	name = "Bat Form (15)"
+	gain_desc = "You now have the Bat Form ability, which allows you to turn into a bat (and back!)"
+	desc = "Transform into a bat!"
+	action_icon_state = "bat"
+	charge_max = 200
+	blood_used = 0 //this is only 0 so we can do our own custom checks
+	action_icon = 'hippiestation/icons/mob/vampire.dmi'
+	action_background_icon_state = "bg_demon"
+	vamp_req = TRUE
+	var/mob/living/simple_animal/hostile/vampire_bat/bat
+
+/obj/effect/proc_holder/spell/self/batform/cast(list/targets, mob/user = usr)
+	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	if(!V)
+		return FALSE
+	if(!bat)
+		if(V.usable_blood < 15)
+			to_chat(user, "<span class='warning'>You do not have enough blood to cast this!</span>")
+			return FALSE
+		bat = new /mob/living/simple_animal/hostile/vampire_bat(user.loc)
+		user.loc = bat
+		bat.controller = user
+		user.status_flags |= GODMODE
+		user.mind.transfer_to(bat)
+	else
+		bat.controller.loc = bat.loc
+		bat.controller.status_flags &= ~GODMODE
+		bat.mind.transfer_to(bat.controller)
+		bat.controller = null //just so we don't accidently trigger the death() thing
+		qdel(bat)

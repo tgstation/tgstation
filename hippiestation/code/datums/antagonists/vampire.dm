@@ -1,7 +1,6 @@
 /datum/antagonist/vampire
 	var/usable_blood = 0
 	var/total_blood = 0
-	var/blood_counted = 0
 	var/fullpower = FALSE
 	var/draining
 	var/list/objectives_given
@@ -20,6 +19,7 @@
 		/obj/effect/proc_holder/spell/self/cloak = 225,
 		/obj/effect/proc_holder/spell/targeted/disease = 275,
 		/obj/effect/proc_holder/spell/bats = 350,
+		/obj/effect/proc_holder/spell/self/batform = 350,
 		/obj/effect/proc_holder/spell/self/screech = 315,
 		/datum/vampire_passive/regen = 425,
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/mistform = 500,
