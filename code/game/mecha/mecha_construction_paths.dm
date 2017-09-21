@@ -344,6 +344,9 @@
 /datum/construction/reversible/mecha/gygax
 	result = "/obj/mecha/combat/gygax"
 	steps = list(
+					//0, dummy step used to stop the steps from finishing and spawn_result() being called automatically.
+					 list("desc"="You shouldn't be able to see this."),
+
 					//1
 					list("key"=/obj/item/weldingtool,
 							"backkey"=/obj/item/wrench,
@@ -367,60 +370,68 @@
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/screwdriver,
-					 		"desc"="Advanced capacitor is secured."),
+					 		"desc"="The power cell is secured."),
 					 //7
 					 list("key"=/obj/item/screwdriver,
 					 		"backkey"=/obj/item/crowbar,
-					 		"desc"="Advanced capacitor is installed."),
+					 		"desc"="The power cell is installed."),
 					 //8
-					 list("key"=/obj/item/stock_parts/capacitor,
+					 list("key"=/obj/item/stock_parts/cell,
 					 		"backkey"=/obj/item/screwdriver,
-					 		"desc"="Advanced scanner module is secured."),
+					 		"desc"="Advanced capacitor is secured."),
 					 //9
 					 list("key"=/obj/item/screwdriver,
 					 		"backkey"=/obj/item/crowbar,
-					 		"desc"="Advanced scanner module is installed."),
+					 		"desc"="Advanced capacitor is installed."),
 					 //10
-					 list("key"=/obj/item/stock_parts/scanning_module,
+					 list("key"=/obj/item/stock_parts/capacitor,
 					 		"backkey"=/obj/item/screwdriver,
-					 		"desc"="Weapon control module is secured."),
+					 		"desc"="Advanced scanner module is secured."),
 					 //11
 					 list("key"=/obj/item/screwdriver,
 					 		"backkey"=/obj/item/crowbar,
-					 		"desc"="Weapon control module is installed."),
+					 		"desc"="Advanced scanner module is installed."),
 					 //12
-					 list("key"=/obj/item/circuitboard/mecha/gygax/targeting,
+					 list("key"=/obj/item/stock_parts/scanning_module,
 					 		"backkey"=/obj/item/screwdriver,
-					 		"desc"="Peripherals control module is secured."),
+					 		"desc"="Weapon control module is secured."),
 					 //13
 					 list("key"=/obj/item/screwdriver,
 					 		"backkey"=/obj/item/crowbar,
-					 		"desc"="Peripherals control module is installed."),
+					 		"desc"="Weapon control module is installed."),
 					 //14
-					 list("key"=/obj/item/circuitboard/mecha/gygax/peripherals,
+					 list("key"=/obj/item/circuitboard/mecha/gygax/targeting,
 					 		"backkey"=/obj/item/screwdriver,
-					 		"desc"="Central control module is secured."),
+					 		"desc"="Peripherals control module is secured."),
 					 //15
 					 list("key"=/obj/item/screwdriver,
 					 		"backkey"=/obj/item/crowbar,
-					 		"desc"="Central control module is installed."),
+					 		"desc"="Peripherals control module is installed."),
 					 //16
+					 list("key"=/obj/item/circuitboard/mecha/gygax/peripherals,
+					 		"backkey"=/obj/item/screwdriver,
+					 		"desc"="Central control module is secured."),
+					 //17
+					 list("key"=/obj/item/screwdriver,
+					 		"backkey"=/obj/item/crowbar,
+					 		"desc"="Central control module is installed."),
+					 //18
 					 list("key"=/obj/item/circuitboard/mecha/gygax/main,
 					 		"backkey"=/obj/item/screwdriver,
 					 		"desc"="The wiring is adjusted."),
-					 //17
+					 //19
 					 list("key"=/obj/item/wirecutters,
 					 		"backkey"=/obj/item/screwdriver,
 					 		"desc"="The wiring is added."),
-					 //18
+					 //20
 					 list("key"=/obj/item/stack/cable_coil,
 					 		"backkey"=/obj/item/screwdriver,
 					 		"desc"="The hydraulic systems are active."),
-					 //19
+					 //21
 					 list("key"=/obj/item/screwdriver,
 					 		"backkey"=/obj/item/wrench,
 					 		"desc"="The hydraulic systems are connected."),
-					 //20
+					 //22
 					 list("key"=/obj/item/wrench,
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
@@ -434,24 +445,24 @@
 
 	//TODO: better messages.
 	switch(index)
-		if(20)
+		if(23)
 			user.visible_message("[user] connects the [holder] hydraulic systems", "<span class='notice'>You connect the [holder] hydraulic systems.</span>")
 			holder.icon_state = "gygax1"
-		if(19)
+		if(22)
 			if(diff==FORWARD)
 				user.visible_message("[user] activates the [holder] hydraulic systems.", "<span class='notice'>You activate the [holder] hydraulic systems.</span>")
 				holder.icon_state = "gygax2"
 			else
 				user.visible_message("[user] disconnects the [holder] hydraulic systems", "<span class='notice'>You disconnect the [holder] hydraulic systems.</span>")
 				holder.icon_state = "gygax0"
-		if(18)
+		if(21)
 			if(diff==FORWARD)
 				user.visible_message("[user] adds the wiring to the [holder].", "<span class='notice'>You add the wiring to the [holder].</span>")
 				holder.icon_state = "gygax3"
 			else
 				user.visible_message("[user] deactivates the [holder] hydraulic systems.", "<span class='notice'>You deactivate the [holder] hydraulic systems.</span>")
 				holder.icon_state = "gygax1"
-		if(17)
+		if(20)
 			if(diff==FORWARD)
 				user.visible_message("[user] adjusts the wiring of the [holder].", "<span class='notice'>You adjust the wiring of the [holder].</span>")
 				holder.icon_state = "gygax4"
@@ -460,7 +471,7 @@
 				var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil(get_turf(holder))
 				coil.amount = 4
 				holder.icon_state = "gygax2"
-		if(16)
+		if(19)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the central control module into the [holder].", "<span class='notice'>You install the central computer mainboard into the [holder].</span>")
 				qdel(used_atom)
@@ -468,7 +479,7 @@
 			else
 				user.visible_message("[user] disconnects the wiring of the [holder].", "<span class='notice'>You disconnect the wiring of the [holder].</span>")
 				holder.icon_state = "gygax3"
-		if(15)
+		if(18)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the mainboard.", "<span class='notice'>You secure the mainboard.</span>")
 				holder.icon_state = "gygax6"
@@ -476,7 +487,7 @@
 				user.visible_message("[user] removes the central control module from the [holder].", "<span class='notice'>You remove the central computer mainboard from the [holder].</span>")
 				new /obj/item/circuitboard/mecha/gygax/main(get_turf(holder))
 				holder.icon_state = "gygax4"
-		if(14)
+		if(17)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the peripherals control module into the [holder].", "<span class='notice'>You install the peripherals control module into the [holder].</span>")
 				qdel(used_atom)
@@ -484,7 +495,7 @@
 			else
 				user.visible_message("[user] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>")
 				holder.icon_state = "gygax5"
-		if(13)
+		if(16)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the peripherals control module.", "<span class='notice'>You secure the peripherals control module.</span>")
 				holder.icon_state = "gygax8"
@@ -492,7 +503,7 @@
 				user.visible_message("[user] removes the peripherals control module from the [holder].", "<span class='notice'>You remove the peripherals control module from the [holder].</span>")
 				new /obj/item/circuitboard/mecha/gygax/peripherals(get_turf(holder))
 				holder.icon_state = "gygax6"
-		if(12)
+		if(15)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the weapon control module into the [holder].", "<span class='notice'>You install the weapon control module into the [holder].</span>")
 				qdel(used_atom)
@@ -500,7 +511,7 @@
 			else
 				user.visible_message("[user] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>")
 				holder.icon_state = "gygax7"
-		if(11)
+		if(14)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the weapon control module.", "<span class='notice'>You secure the weapon control module.</span>")
 				holder.icon_state = "gygax10"
@@ -508,7 +519,7 @@
 				user.visible_message("[user] removes the weapon control module from the [holder].", "<span class='notice'>You remove the weapon control module from the [holder].</span>")
 				new /obj/item/circuitboard/mecha/gygax/targeting(get_turf(holder))
 				holder.icon_state = "gygax8"
-		if(10)
+		if(13)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
@@ -517,7 +528,7 @@
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
 				holder.icon_state = "gygax9"
-		if(9)
+		if(12)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the advanced scanner module.", "<span class='notice'>You secure the scanner module.</span>")
 				holder.icon_state = "gygax12"
@@ -526,7 +537,7 @@
 				var/obj/item/I = locate(/obj/item/stock_parts/scanning_module) in holder
 				I.loc = get_turf(holder)
 				holder.icon_state = "gygax10"
-		if(8)
+		if(11)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
@@ -535,7 +546,7 @@
 			else
 				user.visible_message("[user] unfastens the  scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
 				holder.icon_state = "gygax11"
-		if(7)
+		if(10)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the  capacitor.", "<span class='notice'>You secure the capacitor.</span>")
 				holder.icon_state = "gygax14"
@@ -544,57 +555,74 @@
 				var/obj/item/I = locate(/obj/item/stock_parts/capacitor) in holder
 				I.loc = get_turf(holder)
 				holder.icon_state = "gygax12"
-		if(6)
+		if(9)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] installs the power cell into the [holder].", "<span class='notice'>You install the power cell into the [holder].</span>")
+				var/obj/item/I = used_atom
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "gygax15"
 			else
 				user.visible_message("[user] unfastens the capacitor.", "<span class='notice'>You unfasten the capacitor.</span>")
 				holder.icon_state = "gygax13"
-		if(5)
+		if(8)
+			if(diff==FORWARD)
+				user.visible_message("[user] secures the power cell.", "<span class='notice'>You secure the power cell.</span>")
+				holder.icon_state = "gygax16"
+			else
+				user.visible_message("[user] prys the power cell from [holder].", "<span class='notice'>You pry the power cell from [holder].</span>")
+				var/obj/item/I = locate(/obj/item/stock_parts/cell) in holder
+				I.loc = get_turf(holder)
+				holder.icon_state = "gygax14"
+		if(7)
+			if(diff==FORWARD)
+				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				holder.icon_state = "gygax17"
+			else
+				user.visible_message("[user] unfastens the power cell.", "<span class='notice'>You unfasten the power cell.</span>")
+				holder.icon_state = "gygax15"
+		if(6)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
-				holder.icon_state = "gygax16"
+				holder.icon_state = "gygax18"
 			else
 				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
 				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 				MS.amount = 5
-				holder.icon_state = "gygax14"
-		if(4)
+				holder.icon_state = "gygax16"
+		if(5)
 			if(diff==FORWARD)
 				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
-				holder.icon_state = "gygax17"
+				holder.icon_state = "gygax19"
 			else
 				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
-				holder.icon_state = "gygax15"
-		if(3)
+				holder.icon_state = "gygax17"
+		if(4)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs Gygax Armor Plates to the [holder].", "<span class='notice'>You install Gygax Armor Plates to the [holder].</span>")
 				qdel(used_atom)
-				holder.icon_state = "gygax18"
+				holder.icon_state = "gygax20"
 			else
 				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
-				holder.icon_state = "gygax16"
-		if(2)
+				holder.icon_state = "gygax18"
+		if(3)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures Gygax Armor Plates.", "<span class='notice'>You secure Gygax Armor Plates.</span>")
-				holder.icon_state = "gygax19"
+				holder.icon_state = "gygax21"
 			else
 				user.visible_message("[user] pries Gygax Armor Plates from the [holder].", "<span class='notice'>You pry Gygax Armor Plates from the [holder].</span>")
 				new /obj/item/mecha_parts/part/gygax_armor(get_turf(holder))
-				holder.icon_state = "gygax17"
-		if(1)
+				holder.icon_state = "gygax19"
+		if(2)
 			if(diff==FORWARD)
 				user.visible_message("[user] welds Gygax Armor Plates to the [holder].", "<span class='notice'>You weld Gygax Armor Plates to the [holder].</span>")
+				spawn_mecha_result()
 			else
 				user.visible_message("[user] unfastens Gygax Armor Plates.", "<span class='notice'>You unfasten Gygax Armor Plates.</span>")
-				holder.icon_state = "gygax18"
+				holder.icon_state = "gygax20"
 	return 1
 
-/datum/construction/reversible/mecha/gygax/spawn_result()
-	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder.contents)
-	qdel(holder)
+/datum/construction/reversible/mecha/gygax/spawn_mecha_result()
+	..()
 	SSblackbox.inc("mecha_gygax_created",1)
 	return
 
