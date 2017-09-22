@@ -290,7 +290,7 @@
 	if((rev_mind in revolutionaries) || remove_head)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
-		rev_mind.current.log_message("<font color='red'>Has been deconverted from the revolution by [deconverter]!</font>", INDIVIDUAL_ATTACK_LOG)
+		log_attack("[rev_mind.current] (Key: [key_name(rev_mind.current)]) has been deconverted from the revolution by [deconverter] (Key: [key_name(deconverter)])!")
 
 		if(beingborged)
 			rev_mind.current.visible_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.", \
