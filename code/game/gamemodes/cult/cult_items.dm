@@ -176,10 +176,9 @@
 			SS.attack(H, user)
 			shards += SS
 		return
-	if(istype(target, /obj/structure/constructshell) && shards.len)
-		var/obj/item/device/soulstone/SS = shards[1]
-		if(SS.transfer_soul("CONSTRUCT",target,user))
-			shards.Cut(1,2)
+	if(istype(target, /obj/structure/constructshell) && contents.len)
+		var/obj/item/device/soulstone/SS = contents[1]
+		if(istype(SS) && SS.transfer_soul("CONSTRUCT",target,user))
 			qdel(SS)
 
 /datum/action/innate/dash/cult
