@@ -28,6 +28,14 @@
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
+/obj/machinery/smoke_machine/update_icon()
+	if((stat & NOPOWER) || (!on) || (reagents.total_volume == 0))
+		icon_state = "smoke0"
+	else
+		icon_state = "smoke1"
+	. = ..()
+
+
 /obj/machinery/smoke_machine/RefreshParts()
 	efficiency = 6
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -39,27 +47,22 @@
 
 /obj/machinery/smoke_machine/process()
 	..()
+	update_icon()
 	if(stat & NOPOWER)
-		icon_state = "smoke0"
-		update_icon()
 		return
 	if(reagents.total_volume == 0)
 		on = FALSE
-		icon_state = "smoke0"
-		update_icon()
 		return
 	var/turf/T = get_turf(src)
-	var/smoke_test = FALSE
-	for(var/obj/effect/particle_effect/smoke/search in T.contents)
-		smoke_test = TRUE
-	if(on && (smoke_test == FALSE))
-		icon_state = "smoke1"
-		update_icon()
+	var/smoke_test
+	smoke_test = locate(/obj/effect/particle_effect/smoke) in T.contents
+	if(on && (!smoke_test))
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
 		smoke.set_up(reagents, setting, efficiency, get_turf(src))
 		smoke.start()
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
+	add_fingerprint(user)
 	if(istype(I, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
@@ -81,8 +84,8 @@
 
 /obj/machinery/smoke_machine/ui_data(mob/user)
 	var/data = list()
-	var TankContents[0]
-	var TankCurrentVolume = 0
+	var/TankContents[0]
+	var/TankCurrentVolume = 0
 	if(reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
 			TankContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
@@ -98,7 +101,7 @@
 	return data
 
 /obj/machinery/smoke_machine/ui_act(action, params)
-	if(..() || (anchored == FALSE))
+	if(..() || !anchored)
 		return
 	switch(action)
 		if("purge")
@@ -126,6 +129,11 @@
 				. = TRUE
 		if("power")
 			on = !on
+			if(on)
+				log_admin("[key_name(usr)] activated a smoke machine that contains the following at [COORD(src)]:")
+				for(var/datum/reagent/R in reagents.reagent_list)
+					var/msg = "[R.name]: [R.volume] units]"
+					log_admin(msg)
 		if("goScreen")
 			screen = params["screen"]
 			. = TRUE
