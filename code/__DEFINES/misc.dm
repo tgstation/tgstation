@@ -24,7 +24,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define DECISECONDS_MINUTE		600
 #define DECISECONDS_HOUR		36000
 #define DECISECONDS_DAY			864000
-#define DECISECONDS_WEEK		6048000
 
 #define JANUARY		1
 #define FEBRUARY	2
