@@ -107,8 +107,7 @@
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
-	var/list/l = get_all_connected_nodes()
-	while(reference in l)
+	while(reference in get_all_connected_nodes())
 		if(reference in nodes)
 			var/I = nodes.Find(reference)
 			NODE_I = null

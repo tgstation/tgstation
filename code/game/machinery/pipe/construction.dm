@@ -19,8 +19,8 @@ Buildable meters
 	item_state = "buildpipe"
 	w_class = WEIGHT_CLASS_NORMAL
 	level = 2
-	var/flipped = 0
-	var/is_bent = 0
+	var/flipped = FALSE
+	var/is_bent = FALSE
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
 	var/static/list/pipe_types = list(
@@ -53,7 +53,7 @@ Buildable meters
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
+/obj/item/pipe/New(loc, _pipe_type, _dir, obj/machinery/atmospherics/make_from)
 	..()
 	if(make_from)
 		setDir(make_from.dir)
@@ -71,14 +71,14 @@ Buildable meters
 
 		var/obj/machinery/atmospherics/components/trinary/triP = make_from
 		if(istype(triP) && triP.flipped)
-			flipped = 1
+			flipped = TRUE
 			setDir(turn(dir, -45))
 	else
-		pipe_type = pipe_type
-		setDir(dir)
+		pipe_type = _pipe_type
+		setDir(_dir)
 
-	if(dir in GLOB.diagonals)
-		is_bent = 1
+	if(_dir in GLOB.diagonals)
+		is_bent = TRUE
 
 	update()
 	pixel_x = rand(-5, 5)
@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	if (!istype(W, /obj/item/wrench))
 		return ..()
 	if (!isturf(loc))
-		return 1
+		return TRUE
 
 	fixdir()
 	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
