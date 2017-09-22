@@ -1,0 +1,4 @@
+author: "AutomaticFrenzy"
+delete-after: True
+changes: 
+  - bugfix: "Mice spawning finds the station z level properly"

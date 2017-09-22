@@ -355,7 +355,7 @@ function check_dismiss_changelog_review($payload){
 	}
 	else
 		//kill previous reviews
-		foreach($reviews as $R){
+		foreach($reviews as $R)
 			if($R['body'] == $review_message && strtolower($R['state']) == 'changes_requested')
 				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
 }
