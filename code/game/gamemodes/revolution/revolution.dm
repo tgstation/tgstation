@@ -297,9 +297,9 @@
 				"<span class='userdanger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>")
 			message_admins("[ADMIN_LOOKUPFLW(rev_mind.current)] has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
 		else
-			rev_mind.current.Unconscious(100)
 			rev_mind.current.visible_message("[rev_mind.current] looks like they just remembered their real allegiance!", \
 				"<span class='userdanger'><FONT size = 3>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
+			rev_mind.current.Unconscious(100)
 		update_rev_icons_removed(rev_mind)
 
 /////////////////////////////////////
