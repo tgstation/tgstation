@@ -71,7 +71,6 @@
 		if(findtext(result,"/obj/mecha/combat/"))
 			m.CheckParts(holder.contents)
 		qdel(holder)
-	return
 
 /datum/construction/proc/set_desc(index as num)
 	var/list/step = steps[index]

@@ -256,7 +256,7 @@
 			else
 				user.visible_message("[user] prys the power cell from [holder].", "<span class='notice'>You pry the power cell from [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/cell) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "ripley8"
 		if(7)
 			if(diff==FORWARD)
@@ -571,7 +571,7 @@
 			else
 				user.visible_message("[user] prys the power cell from [holder].", "<span class='notice'>You pry the power cell from [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/cell) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "gygax14"
 		if(7)
 			if(diff==FORWARD)
@@ -812,7 +812,7 @@
 			else
 				user.visible_message("[user] prys the power cell from [holder].", "<span class='notice'>You pry the power cell from [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/cell) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "fireripley8"
 		if(8)
 			if(diff==FORWARD)
@@ -1223,7 +1223,7 @@
 			else
 				user.visible_message("[user] prys the power cell from [holder].", "<span class='notice'>You pry the power cell from [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/cell) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "durand14"
 		if(7)
 			if(diff==FORWARD)
@@ -1578,7 +1578,7 @@
 			else
 				user.visible_message("[user] prys the power cell from [holder].", "<span class='notice'>You pry the power cell from [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/cell) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "phazon17"
 		if(8)
 			if(diff==FORWARD)
@@ -1821,7 +1821,7 @@
 			else
 				user.visible_message("[user] prys the power cell from [holder].", "<span class='notice'>You pry the power cell from [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/cell) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "odysseus8"
 		if(7)
 			if(diff==FORWARD)
