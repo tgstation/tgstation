@@ -53,7 +53,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.
-/proc/DisplayTimeText(var/time_value)
+/proc/DisplayTimeText(time_value)
 	if(time_value == DECISECONDS_SECOND)
 		return "1 second"
 	else if(time_value <= DECISECONDS_MINUTE)
