@@ -72,6 +72,14 @@
 			else
 				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
 
+	if(getBrainLoss() >= 125 && stat != DEAD)
+		Knockdown(20)
+		losebreath += 0.25
+
+	if(getBrainLoss() >= 195 && stat != DEAD && prob(25))
+		visible_message("<span class='alert'>[src] goes limp, their facial expression utterly blank.</span>")
+		death()
+
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
