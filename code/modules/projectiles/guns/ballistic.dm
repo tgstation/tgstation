@@ -149,8 +149,8 @@
 			process_fire(user, user, 0, zone_override = "head")
 			user.visible_message("<span class='suicide'>[user] blows [user.p_their()] brain[user.p_s()] out with [src]!</span>")
 			var/turf/target = get_ranged_target_turf(user, turn(user.dir, 180), BRAINS_BLOWN_THROW_RANGE)
-			B.forceMove(T)
 			B.Remove(user)
+			B.forceMove(T)
 			var/datum/dna/user_dna
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
