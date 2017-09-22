@@ -864,7 +864,10 @@
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
-		src.set_light(3)
+		var/lightcolor = LIGHT_COLOR_FIRE
+		if(light_color)
+			lightcolor = BlendRGB(LIGHT_COLOR_FIRE, light_color, 0.5)
+		set_light(3, l_color = lightcolor)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		return TRUE
