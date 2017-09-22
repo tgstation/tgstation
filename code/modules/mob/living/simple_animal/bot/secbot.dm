@@ -224,15 +224,15 @@ Auto Patrol: []"},
 	playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 	C.visible_message("<span class='danger'>[src] is trying to put zipties on [C]!</span>",\
 						"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
-	addtimer(CALLBACK(src, .proc/cuff_cancel, C), 60)
+	addtimer(CALLBACK(src, .proc/attempt_handcuff, C), 60)
 
-/mob/living/simple_animal/bot/secbot/proc/cuff_cancel(mob/living/carbon/C)
+/mob/living/simple_animal/bot/secbot/proc/attempt_handcuff(mob/living/carbon/C)
 	if( !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 		return
 	if(!C.handcuffed)
 		C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
 		C.update_handcuffed()
-		playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+		playsound(src, "law", 50, 0)
 		back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/update_onsprite()
