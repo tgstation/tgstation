@@ -58,6 +58,7 @@
 				make_plating(1)
 
 /turf/open/floor/engine/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		if(floor_tile)
 			if(prob(30))
@@ -107,7 +108,7 @@
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearence
 
 /turf/open/floor/engine/cult/Initialize()
-	..()
+	. = ..()
 	new /obj/effect/temp_visual/cult/turf/floor(src)
 	realappearence = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
 	realappearence.linked = src

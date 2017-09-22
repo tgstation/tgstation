@@ -134,7 +134,7 @@
 	access = CART_REAGENT_SCANNER | CART_ATMOS
 
 /obj/item/cartridge/signal/Initialize()
-	..()
+	. = ..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
 
@@ -183,7 +183,7 @@
 	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
 
 /obj/item/cartridge/rd/Initialize()
-	..()
+	. = ..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/cartridge/captain
@@ -437,14 +437,14 @@ Code:
 			switch(SSshuttle.supply.mode)
 				if(SHUTTLE_CALL)
 					menu += "Moving to "
-					if(SSshuttle.supply.z != ZLEVEL_STATION)
+					if(!(SSshuttle.supply.z in GLOB.station_z_levels))
 						menu += "station"
 					else
 						menu += "centcom"
 					menu += " ([SSshuttle.supply.timeLeft(600)] Mins)"
 				else
 					menu += "At "
-					if(SSshuttle.supply.z != ZLEVEL_STATION)
+					if(!(SSshuttle.supply.z in GLOB.station_z_levels))
 						menu += "centcom"
 					else
 						menu += "station"

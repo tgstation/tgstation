@@ -28,17 +28,19 @@
 			<span class="ms" id="pingMs">--ms</span>
 		</div>
 		<div id="options">
-			<a href="#" class="toggle" id="toggleOptions" title="Options"><i class="icon-cog"></i></a>
+			<a href="#" class="optionsCell toggle" id="toggleOptions" title="Options"><i class="icon-cog"></i></a>
 			<div class="sub" id="subOptions">
-				<a href="#" class="decreaseFont" id="decreaseFont"><span>Decrease font size</span> <i class="icon-font">-</i></a>
-				<a href="#" class="increaseFont" id="increaseFont"><span>Increase font size</span> <i class="icon-font">+</i></a>
-				<a href="#" class="togglePing" id="togglePing"><span>Toggle ping display</span> <i class="icon-circle"></i></a>
-				<a href="#" class="highlightTerm" id="highlightTerm"><span>Highlight string</span> <i class="icon-tag"></i></a>
-				<a href="#" class="saveLog" id="saveLog"><span>Save chat log</span> <i class="icon-save"></i></a>
-				<a href="#" class="clearMessages" id="clearMessages"><span>Clear all messages</span> <i class="icon-eraser"></i></a>
+				<a href="#" class="optionsCell decreaseFont" id="decreaseFont"><span>Decrease font size</span> <i class="icon-font">-</i></a>
+				<a href="#" class="optionsCell increaseFont" id="increaseFont"><span>Increase font size</span> <i class="icon-font">+</i></a>
+				<a href="#" class="optionsCell togglePing" id="togglePing"><span>Toggle ping display</span> <i class="icon-circle"></i></a>
+				<a href="#" class="optionsCell highlightTerm" id="highlightTerm"><span>Highlight string</span> <i class="icon-tag"></i></a>
+				<a href="#" class="optionsCell saveLog" id="saveLog"><span>Save chat log</span> <i class="icon-save"></i></a>
+				<a href="#" class="optionsCell clearMessages" id="clearMessages"><span>Clear all messages</span> <i class="icon-eraser"></i></a>
+				<span class="optionsCell" id="musicVolumeSpan"><input type="range" class="hidden" id="musicVolume"><span id="musicVolumeText">Admin music volume</span><i class="icon-music"></i></span>
 			</div>
 		</div>
 	</div>
+	<audio class="hidden" id="adminMusic" autoplay></audio>
 	<script type="text/javascript" src="browserOutput.js"></script>
 </body>
 </html>

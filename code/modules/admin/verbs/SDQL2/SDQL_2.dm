@@ -37,7 +37,6 @@
 	if(!query_text || length(query_text) < 1)
 		return
 
-	//to_chat(world, query_text)
 
 	var/list/query_list = SDQL2_tokenize(query_text)
 
@@ -122,7 +121,7 @@
 
 /proc/SDQL_gen_vv_href(t)
 	var/text = ""
-	text += "<A HREF='?_src_=vars;Vars=\ref[t]'>\ref[t]</A>"
+	text += "<A HREF='?_src_=vars;[HrefToken()];Vars=\ref[t]'>\ref[t]</A>"
 	if(istype(t, /atom))
 		var/atom/a = t
 		var/turf/T = a.loc

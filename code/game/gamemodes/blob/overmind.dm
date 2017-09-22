@@ -50,7 +50,7 @@
 	if(blob_core)
 		blob_core.update_icon()
 
-	..()
+	.= ..()
 
 /mob/camera/blob/Life()
 	if(!blob_core)

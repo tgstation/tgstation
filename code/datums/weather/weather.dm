@@ -30,7 +30,7 @@
 	var/area_type = /area/space //Types of area to affect
 	var/list/impacted_areas = list() //Areas to be affected by the weather, calculated when the weather begins
 	var/list/protected_areas = list()//Areas that are protected and excluded from the affected areas.
-	var/target_z = ZLEVEL_STATION //The z-level to affect
+	var/target_z = ZLEVEL_STATION_PRIMARY //The z-level to affect
 
 	var/overlay_layer = AREA_LAYER //Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/aesthetic = FALSE //If the weather has no purpose other than looks
@@ -42,7 +42,7 @@
 
 /datum/weather/New()
 	..()
-	SSweather.existing_weather |= src
+	SSweather.existing_weather += src
 
 /datum/weather/Destroy()
 	SSweather.existing_weather -= src
@@ -108,7 +108,7 @@
 	stage = END_STAGE
 	update_areas()
 
-/datum/weather/proc/can_impact(mob/living/L) //Can this weather impact a mob?
+/datum/weather/proc/can_weather_act(mob/living/L) //Can this weather impact a mob?
 	var/turf/mob_turf = get_turf(L)
 	if(mob_turf && (mob_turf.z != target_z))
 		return
@@ -118,7 +118,7 @@
 		return
 	return 1
 
-/datum/weather/proc/impact(mob/living/L) //What effect does this weather have on the hapless mob?
+/datum/weather/proc/weather_act(mob/living/L) //What effect does this weather have on the hapless mob?
 	return
 
 /datum/weather/proc/update_areas()

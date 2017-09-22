@@ -285,7 +285,7 @@
 	var/list/mutations = list()
 
 /obj/structure/spacevine/Initialize()
-	..()
+	. = ..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/spacevine/examine(mob/user)
@@ -390,10 +390,10 @@
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Delete Vines"] = "?_src_=\ref[src];purge_vines=1"
+	.["Delete Vines"] = "?_src_=\ref[src];[HrefToken()];purge_vines=1"
 
 /datum/spacevine_controller/Topic(href, href_list)
-	if(..() || !check_rights(R_ADMIN, FALSE))
+	if(..() || !check_rights(R_ADMIN, FALSE) || !usr.client.holder.CheckAdminHref(href, href_list))
 		return
 
 	if(href_list["purge_vines"])

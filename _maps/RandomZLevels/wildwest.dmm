@@ -171,9 +171,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/wwvault)
 "aL" = (
-/obj/item/paper/fluff/awaymissions/wildwest/grinder{
-	info = "meat grinder requires sacri"
-	},
+/obj/item/paper/fluff/awaymissions/wildwest/grinder,
 /turf/open/floor/plasteel/cult{
 	name = "engraved floor"
 	},
@@ -449,7 +447,9 @@
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 8
+	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -551,7 +551,9 @@
 	icon_state = "fwindow";
 	dir = 8
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -872,7 +874,9 @@
 	icon_state = "fwindow";
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -1698,7 +1702,7 @@
 	icon_state = "fwindow";
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/one_side,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/plasteel,
 /area/awaymission/wwrefine)
 "fB" = (
@@ -2143,7 +2147,9 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gX" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},

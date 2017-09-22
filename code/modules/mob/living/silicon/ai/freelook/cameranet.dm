@@ -114,9 +114,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		var/y1 = max(0, T.y - (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		var/x2 = min(world.maxx, T.x + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		var/y2 = min(world.maxy, T.y + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
-
-		//to_chat(world, "X1: [x1] - Y1: [y1] - X2: [x2] - Y2: [y2]")
-
 		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
 				if(chunkGenerated(x, y, T.z))

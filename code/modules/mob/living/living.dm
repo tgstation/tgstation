@@ -450,6 +450,7 @@
 		else
 			return 0
 
+	var/old_direction = dir
 	var/atom/movable/pullee = pulling
 	if(pullee && get_dist(src, pullee) > 1)
 		stop_pulling()
@@ -465,10 +466,6 @@
 
 		var/pull_dir = get_dir(src, pulling)
 		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
-			if(isliving(pulling))
-				var/mob/living/M = pulling
-				if(M.lying && !M.buckled && (prob(M.getBruteLoss()*200/M.maxHealth)))
-					M.makeTrail(T)
 			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
 			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
 				stop_pulling()
@@ -478,6 +475,10 @@
 
 	if (s_active && !(CanReach(s_active,view_only = TRUE)))
 		s_active.close(src)
+
+	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
+
+		makeTrail(newloc, T, old_direction)
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
@@ -495,31 +496,32 @@
 			if(MOVE_INTENT_WALK)
 				. += config.walk_speed
 
-/mob/living/proc/makeTrail(turf/target_turf)
+/mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
 		return
 	var/blood_exists = FALSE
 
-	for(var/obj/effect/decal/cleanable/trail_holder/C in loc) //checks for blood splatter already on the floor
+	for(var/obj/effect/decal/cleanable/trail_holder/C in start) //checks for blood splatter already on the floor
 		blood_exists = TRUE
-	if(isturf(loc))
+	if(isturf(start))
 		var/trail_type = getTrail()
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
 				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
-				var/newdir = get_dir(target_turf, loc)
-				if(newdir != dir)
-					newdir = newdir | dir
+				var/newdir = get_dir(target_turf, start)
+				if(newdir != direction)
+					newdir = newdir | direction
 					if(newdir == 3) //N + S
 						newdir = NORTH
 					else if(newdir == 12) //E + W
 						newdir = EAST
 				if((newdir in GLOB.cardinals) && (prob(50)))
-					newdir = turn(get_dir(target_turf, loc), 180)
+					newdir = turn(get_dir(target_turf, start), 180)
 				if(!blood_exists)
-					new /obj/effect/decal/cleanable/trail_holder(loc)
-				for(var/obj/effect/decal/cleanable/trail_holder/TH in loc)
+					new /obj/effect/decal/cleanable/trail_holder(start)
+
+				for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
 					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 						TH.existing_dirs += newdir
 						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
@@ -587,10 +589,10 @@
 		var/obj/C = loc
 		C.container_resist(src)
 
-	else if(has_status_effect(/datum/status_effect/freon))
+	else if(IsFrozen())
 		to_chat(src, "You start breaking out of the ice cube!")
 		if(do_mob(src, src, 40))
-			if(has_status_effect(/datum/status_effect/freon))
+			if(IsFrozen())
 				to_chat(src, "You break out of the ice cube!")
 				remove_status_effect(/datum/status_effect/freon)
 				update_canmove()
@@ -709,6 +711,7 @@
 						who.equip_to_slot(what, where, TRUE)
 
 /mob/living/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_SIX)
 		throw_at(S,14,3, spin=1)
 	else
@@ -725,30 +728,15 @@
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
-	var/loc_temp = T0C
-	if(istype(loc, /obj/mecha))
-		var/obj/mecha/M = loc
-		loc_temp =  M.return_temperature()
-
-	else if(istype(loc, /obj/structure/transit_tube_pod))
-		loc_temp = environment.temperature
-
+	var/loc_temp = environment ? environment.temperature : T0C
+	if(isobj(loc))
+		var/obj/oloc = loc
+		var/obj_temp = oloc.return_temperature()
+		if(obj_temp != null)
+			loc_temp = obj_temp
 	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
-
-	else if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
-		var/datum/gas_mixture/G = C.AIR1
-
-		if(G.total_moles() < 10)
-			loc_temp = environment.temperature
-		else
-			loc_temp = G.temperature
-
-	else
-		loc_temp = environment.temperature
-
 	return loc_temp
 
 /mob/living/proc/get_standard_pixel_x_offset(lying = 0)
@@ -986,7 +974,7 @@
 			fall()
 		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || has_status_effect(STATUS_EFFECT_STUN) || has_status_effect(/datum/status_effect/freon) || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.

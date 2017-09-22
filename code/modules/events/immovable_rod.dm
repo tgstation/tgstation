@@ -21,8 +21,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /datum/round_event/immovable_rod/start()
 	var/startside = pick(GLOB.cardinals)
-	var/turf/startT = spaceDebrisStartLoc(startside, ZLEVEL_STATION)
-	var/turf/endT = spaceDebrisFinishLoc(startside, ZLEVEL_STATION)
+	var/turf/startT = spaceDebrisStartLoc(startside, ZLEVEL_STATION_PRIMARY)
+	var/turf/endT = spaceDebrisFinishLoc(startside, ZLEVEL_STATION_PRIMARY)
 	new /obj/effect/immovablerod(startT, endT)
 
 /obj/effect/immovablerod

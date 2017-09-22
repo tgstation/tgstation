@@ -95,6 +95,8 @@
 		C.is_empty(user)
 
 /turf/attackby(obj/item/C, mob/user, params)
+	if(..())
+		return TRUE
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
 		for(var/obj/structure/cable/LC in src)
@@ -524,12 +526,12 @@
 
 /turf/proc/photograph(limit=20)
 	var/image/I = new()
-	I.overlays += src
+	I.add_overlay(src)
 	for(var/V in contents)
 		var/atom/A = V
 		if(A.invisibility)
 			continue
-		I.overlays += A
+		I.add_overlay(A)
 		if(limit)
 			limit--
 		else

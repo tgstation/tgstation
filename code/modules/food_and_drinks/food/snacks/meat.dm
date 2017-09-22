@@ -33,7 +33,7 @@
 
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human
-	name = " meat"
+	name = "meat"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/plain/human
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain/human
 	tastes = list("tender meat" = 1)
@@ -109,7 +109,7 @@
 	foodtype = MEAT | RAW | GROSS
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	name = "-bone"
+	name = "bone"
 	icon_state = "skeletonmeat"
 	desc = "There's a point where this needs to stop, and clearly we have passed it."
 	filling_color = "#F0F0F0"
@@ -239,7 +239,7 @@
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#B22222"
 	tastes = list("bacon" = 1)
-	foodtype = RAW | MEAT 
+	foodtype = RAW | MEAT
 
 /obj/item/reagent_containers/food/snacks/meat/bacon
 	name = "piece of bacon"

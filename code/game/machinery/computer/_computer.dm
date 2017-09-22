@@ -19,6 +19,10 @@
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	power_change()
+	if(!QDELETED(C))
+		qdel(circuit)
+		circuit = C
+		C.loc = null
 
 /obj/machinery/computer/Destroy()
 	QDEL_NULL(circuit)
@@ -90,6 +94,7 @@
 			playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 			stat |= BROKEN
 			update_icon()
+			set_light(0)
 
 /obj/machinery/computer/emp_act(severity)
 	switch(severity)

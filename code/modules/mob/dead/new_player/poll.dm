@@ -411,13 +411,13 @@
 			to_chat(src, "<span class='danger'>Error: Invalid (non-numeric) votes in the vote data.</span>")
 			return 0
 		if (!(vote in optionlist))
-			to_chat(src, "<span class='danger'>Votes for choices that do not appear to be in the poll detected<span>")
+			to_chat(src, "<span class='danger'>Votes for choices that do not appear to be in the poll detected.</span>")
 			return 0
 	if (!numberedvotelist.len)
 		to_chat(src, "<span class='danger'>Invalid vote data</span>")
 		return 0
 
-	//lets add the vote, first we generate a insert statement.
+	//lets add the vote, first we generate an insert statement.
 
 	var/sqlrowlist = ""
 	for (var/vote in numberedvotelist)

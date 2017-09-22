@@ -46,7 +46,7 @@
 	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/air_sensor/Initialize()
-	..()
+	. = ..()
 	SSair.atmos_machinery += src
 	set_frequency(frequency)
 
@@ -84,7 +84,7 @@
 	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/atmos_control/Initialize()
-	..()
+	. = ..()
 	set_frequency(frequency)
 
 /obj/machinery/computer/atmos_control/Destroy()

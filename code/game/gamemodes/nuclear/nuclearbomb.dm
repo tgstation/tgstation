@@ -435,12 +435,12 @@
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
 	var/area/A = get_area(bomb_location)
-	if(bomb_location && (bomb_location.z == ZLEVEL_STATION))
+	if(bomb_location && (bomb_location.z in GLOB.station_z_levels))
 		if(istype(A, /area/space))
 			off_station = NUKE_MISS_STATION
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
 			off_station = NUKE_MISS_STATION
-	else if(istype(A, /area/syndicate_mothership) || (istype(A, /area/shuttle/syndicate) && bomb_location.z == ZLEVEL_CENTCOM))
+	else if((istype(A, /area/syndicate_mothership) || (istype(A, /area/shuttle/syndicate)) && bomb_location.z == ZLEVEL_CENTCOM))
 		off_station = NUKE_SYNDICATE_BASE
 	else
 		off_station = NUKE_NEAR_MISS
