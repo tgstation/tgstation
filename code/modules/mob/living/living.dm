@@ -866,7 +866,7 @@
 						"<span class='userdanger'>You're set on fire!</span>")
 		var/lightcolor = LIGHT_COLOR_FIRE
 		if(light_power && light_range && light_color) //make sure the light is actually active!
-			lightcolor = BlendRGB(LIGHT_COLOR_FIRE, light_color, 0.5)
+			lightcolor = BlendRGB(LIGHT_COLOR_FIRE, light_color, 0.6)
 		set_light(3, l_color = lightcolor)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
