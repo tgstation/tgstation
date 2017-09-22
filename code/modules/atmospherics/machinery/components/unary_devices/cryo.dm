@@ -348,7 +348,7 @@
 	data["cellTemperature"] = round(air1.temperature, 1)
 
 	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
-	var beakerContents = list()
+	var/beakerContents = list()
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents += list(list("name" = R.name, "volume" = R.volume))
