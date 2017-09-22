@@ -377,7 +377,7 @@
 		if("ejectbeaker")
 			if(beaker)
 				beaker.forceMove(loc)
-				if(get_dist(src, usr) <= 1 && !issilicon(usr))
+				if(Adjacent(usr) && !issilicon(usr))
 					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE
