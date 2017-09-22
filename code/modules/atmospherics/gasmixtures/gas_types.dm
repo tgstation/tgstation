@@ -61,10 +61,10 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_PLASMA_VISIBLE
 
-/datum/gas/freon
-	id = "freon"
+/datum/gas/hypernoblium
+	id = "nob"
 	specific_heat = 2000
-	name = "Freon"
+	name = "Hyper-noblium"
 	gas_overlay = "freon"
 	moles_visible = MOLES_PLASMA_VISIBLE
 	dangerous = TRUE
@@ -94,6 +94,16 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 	specific_heat = 20
 	name = "BZ"
 	dangerous = TRUE
+
+/datum/gas/stimulum
+	id = "stim"
+	specific_heat = 5
+	name = "Stimulum"
+
+/datum/gas/pluoxium
+	id = "pluox"
+	specific_heat = 80
+	name = "Pluoxium"
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'

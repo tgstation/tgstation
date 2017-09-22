@@ -263,21 +263,21 @@
 
 	//Brown Gas
 		var/brown_pp = breath.get_breath_partial_pressure(breath_gases["browns"][MOLES])
-		if prob(brown_pp)
-			to_chat(H, "<span class='alert'>Your mouth feels like it's burning!</span>"
+		if (prob(brown_pp))
+			to_chat(H, "<span class='alert'>Your mouth feels like it's burning!</span>")
 		if (brown_pp >40)
 			H.emote("gasp")
-			H.adjustBurnLoss(10)
+			H.adjustFireLoss(10)
 			if (prob(brown_pp/2))
-				to_chat(H, "<span class='alert'>Your throat closes up!</span>"
+				to_chat(H, "<span class='alert'>Your throat closes up!</span>")
 				H.silent = max(H.silent, 3)
 		else
-			H.adjustBurnLoss(brown_pp/4)
+			H.adjustFireLoss(brown_pp/4)
 		gas_breathed = breath_gases["browns"][MOLES]
 		if (gas_breathed > GAS_STIM_MINIMUM)
-			M.status_flags |= GOTTAGOFAST
+			H.status_flags |= GOTTAGOFAST
 		else
-			M.status_flags &= ~GOTTAGOFAST
+			H.status_flags &= ~GOTTAGOFAST
 
 		breath_gases["browns"][MOLES]-=gas_breathed
 		gas_breathed = 0

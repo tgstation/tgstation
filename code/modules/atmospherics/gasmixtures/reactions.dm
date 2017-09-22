@@ -36,19 +36,6 @@
 	return NO_REACTION
 
 
-//freon: does a freezy thing?
-/datum/gas_reaction/freon
-	priority = 1
-	name = "Freon"
-	id = "freon"
-
-/datum/gas_reaction/freon/init_reqs()
-	min_requirements = list("freon" = MOLES_PLASMA_VISIBLE)
-
-/datum/gas_reaction/freon/react(datum/gas_mixture/air, turf/open/location)
-	. = NO_REACTION
-	if(location && location.freon_gas_act())
-		. = REACTING
 
 //water vapor: puts out fires?
 /datum/gas_reaction/water_vapor
@@ -61,7 +48,10 @@
 
 /datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, turf/open/location)
 	. = NO_REACTION
-	if(location && location.water_vapor_gas_act())
+	if (air.temperature <= 200)
+		if(location && location.freon_gas_act())
+			. = REACTING
+	else if(location && location.water_vapor_gas_act())
 		air.gases["water_vapor"][MOLES] -= MOLES_PLASMA_VISIBLE
 		. = REACTING
 
@@ -119,7 +109,7 @@
 		if(temperature_scale > 0)
 			air.assert_gas("o2")
 			oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
-			if(cached_gases["o2"][MOLES] / cached_gases["plasma"][MOLES] > 90 //supersaturation. Form Tritium.
+			if(cached_gases["o2"][MOLES] / cached_gases["plasma"][MOLES] > 90) //supersaturation. Form Tritium.
 				super_saturation = TRUE
 			else if(cached_gases["o2"][MOLES] > cached_gases["plasma"][MOLES]*PLASMA_OXYGEN_FULLBURN)
 				plasma_burn_rate = (cached_gases["plasma"][MOLES]*temperature_scale)/PLASMA_BURN_RATE_DELTA
@@ -277,5 +267,6 @@
 			air.temperature = max(((temperature*old_heat_capacity + energy_released)/new_heat_capacity),TCMB)
 		return REACTING
 
+/datum/gas_reaction/
 #undef REACTING
 #undef NO_REACTION
