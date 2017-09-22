@@ -1,0 +1,4 @@
+author: "More Robust Than You"
+delete-after: True
+changes: 
+  - code_imp: "Removed some spawn()s from secbot code"
