@@ -162,7 +162,7 @@
 		"right pocket" = slot_r_store
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	S.Insert(mob, special = 0, drop_if_replaced = FALSE)
+	S.Insert(mob, special = FALSE, drop_if_replaced = FALSE)
 	to_chat(mob, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
 	if (!where)
