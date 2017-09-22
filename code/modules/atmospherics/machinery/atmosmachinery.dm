@@ -95,7 +95,6 @@ Pipelines + Other Objects -> Pipe network
 			if(can_be_node(target, I))
 				NODE_I = target
 				break
-
 	update_icon()
 
 /obj/machinery/atmospherics/proc/setPipingLayer(new_layer)
@@ -149,10 +148,6 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/replacePipenet()
 	return
 
-/obj/machinery/atmospherics/proc/build_network()
-	// Called to build a network from this node
-	return
-
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
@@ -166,6 +161,11 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench))
+	if(istype(W, /obj/item/pipe)) //lets you autodrop
+		var/obj/item/pipe/pipe = W
+		user.drop_item(pipe)
+		pipe.setPipingLayer(piping_layer) //align it with us
+		return 1
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
 			if (level==1 && isturf(T) && T.intact)
