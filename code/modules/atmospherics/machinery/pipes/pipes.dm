@@ -25,12 +25,12 @@
 		oldN.build_network()
 
 /obj/machinery/atmospherics/pipe/destroy_network()
-	if(parent)
+	if(!QDELETED(parent))
 		qdel(parent)
 		return
 
 /obj/machinery/atmospherics/pipe/build_network()
-	if(!parent)
+	if(QDELETED(parent))
 		parent = new /datum/pipeline()
 		parent.build_pipeline(src)
 
@@ -91,8 +91,9 @@
 	. = ..()
 
 	if(parent && !QDELETED(parent))
-		qdel(parent)
-	parent = null
+		QDEL_NULL(parent)
+	else
+		parent = null
 
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
 	for(DEVICE_TYPE_LOOP)

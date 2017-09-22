@@ -291,10 +291,10 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	w_class = WEIGHT_CLASS_BULKY
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
-/obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/pipe_meter/attackby(obj/item/I, mob/user, params)
 	..()
 
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!istype(I, /obj/item/wrench))
 		return ..()
 	var/obj/machinery/atmospherics/pipe/pipe
 	for(var/obj/machinery/atmospherics/pipe/P in loc)
@@ -305,7 +305,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe!</span>")
 		return TRUE
 	new/obj/machinery/meter( loc , pipe)
-	playsound(loc, W.usesound, 50, 1)
+	playsound(src, I.usesound, 50, 1)
 	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")
 	qdel(src)
 

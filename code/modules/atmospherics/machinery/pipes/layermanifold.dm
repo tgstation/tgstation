@@ -46,7 +46,7 @@
 	layer = (initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE))	//This is above everything else.
 	var/invis = invisibility ? "-f" : ""
 	icon_state = "[initial(icon_state)][invis]"
-	underlays.Cut()
+	cut_overlays()
 	for(var/obj/machinery/atmospherics/A in front_nodes)
 		add_attached_image(A)
 	for(var/obj/machinery/atmospherics/A in back_nodes)
@@ -107,7 +107,7 @@
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
-	var/list/l = get_all_connected_notes
+	var/list/l = get_all_connected_nodes()
 	while(reference in l)
 		if(reference in nodes)
 			var/I = nodes.Find(reference)
