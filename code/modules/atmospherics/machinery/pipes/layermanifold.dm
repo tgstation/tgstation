@@ -59,12 +59,12 @@
 			var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_long[invis]", get_dir(src, A))
 			I.pixel_x = (i - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
 			I.pixel_y = (i - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
-			underlays += I
+			add_overlay(I)
 	else
 		var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_long[invis]", get_dir(src, A))
 		I.pixel_x = A.pixel_x
 		I.pixel_y = A.pixel_y
-		underlays += I
+		add_overlay(I)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
 	switch(dir)
@@ -107,7 +107,8 @@
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
-	while(reference in get_all_connected_nodes())
+	var/list/l = get_all_connected_notes
+	while(reference in l)
 		if(reference in nodes)
 			var/I = nodes.Find(reference)
 			NODE_I = null
