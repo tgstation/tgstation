@@ -160,17 +160,17 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
 	if(istype(W, /obj/item/pipe)) //lets you autodrop
 		var/obj/item/pipe/pipe = W
 		user.drop_item(pipe)
 		pipe.setPipingLayer(piping_layer) //align it with us
-		return 1
+		return TRUE
+	if(istype(W, /obj/item/wrench))
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
 			if (level==1 && isturf(T) && T.intact)
 				to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
-				return 1
+				return TRUE
 			var/datum/gas_mixture/int_air = return_air()
 			var/datum/gas_mixture/env_air = loc.return_air()
 			add_fingerprint(user)
