@@ -13,7 +13,7 @@
 		if(!query_find_ckey.warn_execute())
 			return
 		if(!query_find_ckey.NextRow())
-			if(alert(usr, "[new_ckey] has not been seen before, are you sure you want to create a [type] for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
+			if(wrap_alert(usr, "[new_ckey] has not been seen before, are you sure you want to create a [type] for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
 				return
 		target_ckey = new_ckey
 	if(target_ckey)
@@ -37,7 +37,7 @@
 			server = config.server_sql_name
 	server = sanitizeSQL(server)
 	if(isnull(secret))
-		switch(alert("Hide note from being viewed by players?", "Secret note?","Yes","No","Cancel"))
+		switch(wrap_alert(usr, "Hide note from being viewed by players?", "Secret note?","Yes","No","Cancel"))
 			if("Yes")
 				secret = 1
 			if("No")

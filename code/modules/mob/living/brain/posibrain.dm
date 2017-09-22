@@ -87,7 +87,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(is_occupied() || jobban_isbanned(user,"posibrain"))
 		return
 
-	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
+	var/posi_ask = wrap_alert(usr, "Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
 	if(posi_ask == "No" || QDELETED(src))
 		return
 	transfer_personality(user)

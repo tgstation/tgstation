@@ -45,7 +45,7 @@
 			if (!ban)
 				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
 				return
-			if (alert("Are you sure you want to remove the sticky ban on [ckey]?","Are you sure","Yes","No") == "No")
+			if (wrap_alert(usr, "Are you sure you want to remove the sticky ban on [ckey]?","Are you sure","Yes","No") == "No")
 				return
 			if (!get_stickyban_from_ckey(ckey))
 				to_chat(usr, "<span class='adminnotice'>Error: The ban disappeared.</span>")
@@ -78,7 +78,7 @@
 				to_chat(usr, "<span class='adminnotice'>Error: [alt] is not linked to [ckey]'s sticky ban!</span>")
 				return
 
-			if (alert("Are you sure you want to disassociate [alt] from [ckey]'s sticky ban? \nNote: Nothing stops byond from re-linking them","Are you sure","Yes","No") == "No")
+			if (wrap_alert(usr, "Are you sure you want to disassociate [alt] from [ckey]'s sticky ban? \nNote: Nothing stops byond from re-linking them","Are you sure","Yes","No") == "No")
 				return
 
 			//we have to do this again incase something changes
@@ -131,7 +131,7 @@
 			if (!data["ckey"])
 				return
 			var/ckey = data["ckey"]
-			if (alert("Are you sure you want to revert the sticky ban on [ckey] to its state at round start?","Are you sure","Yes","No") == "No")
+			if (wrap_alert(usr, "Are you sure you want to revert the sticky ban on [ckey] to its state at round start?","Are you sure","Yes","No") == "No")
 				return
 			var/ban = get_stickyban_from_ckey(ckey)
 			if (!ban)

@@ -141,7 +141,7 @@
 		pad.display_name = new_name
 
 	if(href_list["remove"])
-		if(usr && alert(usr, "Are you sure?", "Remove Launchpad", "I'm Sure", "Abort") != "Abort")
+		if(usr && wrap_alert(usr, "Are you sure?", "Remove Launchpad", "I'm Sure", "Abort") != "Abort")
 			launchpads -= pad
 
 	if(href_list["launch"])

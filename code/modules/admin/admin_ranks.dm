@@ -303,7 +303,7 @@ GLOBAL_PROTECT(admin_ranks)
 
 	switch(task)
 		if("remove")
-			if(alert("Are you sure you want to remove [adm_ckey]?","Message","Yes","Cancel") == "Yes")
+			if(wrap_alert(usr, "Are you sure you want to remove [adm_ckey]?","Message","Yes","Cancel") == "Yes")
 				if(!D)
 					return
 				if(!check_if_greater_rights_than_holder(D))

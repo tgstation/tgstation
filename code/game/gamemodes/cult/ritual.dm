@@ -58,7 +58,7 @@ This file contains the arcane tome files.
 	open_tome(user)
 
 /obj/item/tome/proc/open_tome(mob/user)
-	var/choice = alert(user,"You open the tome...",,"Scribe Rune","More Information","Cancel")
+	var/choice = wrap_alert(user,"You open the tome...",,"Scribe Rune","More Information","Cancel")
 	switch(choice)
 		if("More Information")
 			read_tome(user)
@@ -209,7 +209,7 @@ This file contains the arcane tome files.
 		if(!(A in GLOB.summon_spots))
 			to_chat(user, "<span class='cultlarge'>The Geometer can only be summoned where the veil is weak - in [english_list(GLOB.summon_spots)]!</span>")
 			return
-		var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie; it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
+		var/confirm_final = wrap_alert(user, "This is the FINAL step to summon Nar-Sie; it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 		if(confirm_final == "No")
 			to_chat(user, "<span class='cult'>You decide to prepare further before scribing the rune.</span>")
 			return

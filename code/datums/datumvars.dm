@@ -558,7 +558,7 @@
 		var/client/C = value["value"]
 		if (!C)
 			return
-		var/prompt = alert("Do you want to grant [C] access to view this VV window? (they will not be able to edit or change anything nor open nested vv windows unless they themselves are an admin)", "Confirm", "Yes", "No")
+		var/prompt = wrap_alert(usr, "Do you want to grant [C] access to view this VV window? (they will not be able to edit or change anything nor open nested vv windows unless they themselves are an admin)", "Confirm", "Yes", "No")
 		if (prompt != "Yes" || !usr.client)
 			return
 		message_admins("[key_name_admin(usr)] Showed [key_name_admin(C)] a <a href='?_src_=vars;[HrefToken(TRUE)];datumrefresh=\ref[thing]'>VV window</a>")
@@ -659,7 +659,7 @@
 				return
 
 			var/variable = L[index]
-			var/prompt = alert("Do you want to remove item number [index] from list?", "Confirm", "Yes", "No")
+			var/prompt = wrap_alert(usr, "Do you want to remove item number [index] from list?", "Confirm", "Yes", "No")
 			if (prompt != "Yes")
 				return
 			L.Cut(index, index+1)
@@ -824,14 +824,14 @@
 				to_chat(usr, "This can only be used on instances of type /obj")
 				return
 
-			var/action_type = alert("Strict type ([O.type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
+			var/action_type = wrap_alert(usr, "Strict type ([O.type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
 			if(action_type == "Cancel" || !action_type)
 				return
 
-			if(alert("Are you really sure you want to delete all objects of type [O.type]?",,"Yes","No") != "Yes")
+			if(wrap_alert(usr, "Are you really sure you want to delete all objects of type [O.type]?",,"Yes","No") != "Yes")
 				return
 
-			if(alert("Second confirmation required. Delete?",,"Yes","No") != "Yes")
+			if(wrap_alert(usr, "Second confirmation required. Delete?",,"Yes","No") != "Yes")
 				return
 
 			var/O_type = O.type
@@ -875,7 +875,7 @@
 			if(A.reagents)
 				var/chosen_id
 				var/list/reagent_options = sortList(GLOB.chemical_reagents_list)
-				switch(alert(usr, "Choose a method.", "Add Reagents", "Enter ID", "Choose ID"))
+				switch(wrap_alert(usr, "Choose a method.", "Add Reagents", "Enter ID", "Choose ID"))
 					if("Enter ID")
 						var/valid_id
 						while(!valid_id)
@@ -979,7 +979,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/monkey")
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+			if(wrap_alert(usr, "Confirm mob type change?",,"Transform","Cancel") != "Transform")
 				return
 			if(!Mo)
 				to_chat(usr, "Mob doesn't exist anymore")
@@ -995,7 +995,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+			if(wrap_alert(usr, "Confirm mob type change?",,"Transform","Cancel") != "Transform")
 				return
 			if(!H)
 				to_chat(usr, "Mob doesn't exist anymore")
@@ -1011,7 +1011,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+			if(wrap_alert(usr, "Confirm mob type change?",,"Transform","Cancel") != "Transform")
 				return
 			if(!H)
 				to_chat(usr, "Mob doesn't exist anymore")
@@ -1027,7 +1027,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+			if(wrap_alert(usr, "Confirm mob type change?",,"Transform","Cancel") != "Transform")
 				return
 			if(!H)
 				to_chat(usr, "Mob doesn't exist anymore")
@@ -1043,7 +1043,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+			if(wrap_alert(usr, "Confirm mob type change?",,"Transform","Cancel") != "Transform")
 				return
 			if(!H)
 				to_chat(usr, "Mob doesn't exist anymore")
@@ -1059,7 +1059,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+			if(wrap_alert(usr, "Confirm mob type change?",,"Transform","Cancel") != "Transform")
 				return
 			if(!H)
 				to_chat(usr, "Mob doesn't exist anymore")

@@ -364,10 +364,10 @@
 
 /datum/mind/proc/edit_memory()
 	if(!SSticker.HasRoundStarted())
-		alert("Not before round-start!", "Alert")
+		wrap_alert(usr, "Not before round-start!", "Alert")
 		return
 	if(QDELETED(src) || QDELETED(current))
-		alert("This mind doesn't have a mob, or is deleted! For some reason!", "Edit Memory")
+		wrap_alert(usr, "This mind doesn't have a mob, or is deleted! For some reason!", "Edit Memory")
 		return
 
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
@@ -1247,7 +1247,7 @@
 					return
 
 				var/mob/living/carbon/human/H = current
-				var/gear = alert("Agent or Scientist Gear","Gear","Agent","Scientist")
+				var/gear = wrap_alert(usr, "Agent or Scientist Gear","Gear","Agent","Scientist")
 				if(gear)
 					if(gear=="Agent")
 						H.equipOutfit(/datum/outfit/abductor/agent)
@@ -1489,9 +1489,9 @@
 
 
 /datum/mind/proc/make_Abductor()
-	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
-	var/team = input("Abductor Team ?","Team ?") in list(1,2,3,4)
-	var/teleport = alert("Teleport to ship ?","Teleport","Yes","No")
+	var/role = wrap_alert(usr, "Abductor Role ?","Role","Agent","Scientist")
+	var/team = input(usr, "Abductor Team ?","Team ?") in list(1,2,3,4)
+	var/teleport = wrap_alert(usr, "Teleport to ship ?","Teleport","Yes","No")
 
 	if(!role || !team || !teleport)
 		return

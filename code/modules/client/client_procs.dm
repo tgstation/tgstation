@@ -233,7 +233,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 	if(alert_mob_dupe_login)
 		set waitfor = FALSE
-		alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+		wrap_alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 
 	connection_time = world.time
 	connection_realtime = world.realtime

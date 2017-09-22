@@ -75,7 +75,7 @@
 		if(servants * 0.2 < 1)
 			to_chat(user, "<span class='nezbere'>\"There are too few servants for daemons to work.\"</span>")
 			return
-		var/choice = alert(user,"Activate Daemon...",,"Specific Component","Random Component","Cancel")
+		var/choice = wrap_alert(user,"Activate Daemon...",,"Specific Component","Random Component","Cancel")
 		switch(choice)
 			if("Specific Component")
 				var/list/components = list()

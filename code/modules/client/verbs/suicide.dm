@@ -5,7 +5,7 @@
 	if(!canSuicide())
 		return
 	var/oldkey = ckey
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = wrap_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(ckey != oldkey)
 		return
 	if(!canSuicide())
@@ -60,7 +60,7 @@
 	set hidden = 1
 	if(!canSuicide())
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = wrap_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
@@ -73,7 +73,7 @@
 	set hidden = 1
 	if(!canSuicide())
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = wrap_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
@@ -87,7 +87,7 @@
 	set hidden = 1
 	if(!canSuicide())
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = wrap_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
@@ -102,7 +102,7 @@
 	set hidden = 1
 	if(!canSuicide())
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = wrap_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
@@ -130,7 +130,7 @@
 	set hidden = 1
 	if(!canSuicide())
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = wrap_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
@@ -146,7 +146,7 @@
 	set hidden = 1
 	if(!canSuicide())
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = wrap_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")

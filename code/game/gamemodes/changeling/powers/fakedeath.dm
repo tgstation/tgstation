@@ -29,7 +29,7 @@
 		to_chat(user, "<span class='warning'>We are already reviving.</span>")
 		return
 	if(!user.stat) //Confirmation for living changelings if they want to fake their death
-		switch(alert("Are we sure we wish to fake our own death?",,"Yes", "No"))
+		switch(wrap_alert(usr, "Are we sure we wish to fake our own death?",,"Yes", "No"))
 			if("No")
 				return
 	return ..()

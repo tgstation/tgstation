@@ -37,7 +37,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/targetselected = 0
 	var/returnval = null
 
-	switch(alert("Proc owned by something?",,"Yes","No"))
+	switch(wrap_alert(usr, "Proc owned by something?",,"Yes","No"))
 		if("Yes")
 			targetselected = 1
 			var/list/value = vv_get_value(default_class = VV_ATOM_REFERENCE, classes = list(VV_ATOM_REFERENCE, VV_DATUM_REFERENCE, VV_MOB_REFERENCE, VV_CLIENT))
@@ -231,7 +231,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set name = "Make Robot"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		wrap_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		log_admin("[key_name(src)] has robotized [M.key].")
@@ -240,14 +240,14 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			H.Robotize()
 
 	else
-		alert("Invalid mob")
+		wrap_alert(usr, "Invalid mob")
 
 /client/proc/cmd_admin_blobize(mob/M in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Make Blob"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		wrap_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		log_admin("[key_name(src)] has blobized [M.key].")
@@ -257,7 +257,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			B.place_blob_core(B.base_point_rate, -1) //place them wherever they are
 
 	else
-		alert("Invalid mob")
+		wrap_alert(usr, "Invalid mob")
 
 
 /client/proc/cmd_admin_animalize(mob/M in GLOB.mob_list)
@@ -265,15 +265,15 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set name = "Make Simple Animal"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		wrap_alert(usr, "Wait until the game starts")
 		return
 
 	if(!M)
-		alert("That mob doesn't seem to exist, close the panel and try again.")
+		wrap_alert(usr, "That mob doesn't seem to exist, close the panel and try again.")
 		return
 
 	if(isnewplayer(M))
-		alert("The mob must not be a new_player.")
+		wrap_alert(usr, "The mob must not be a new_player.")
 		return
 
 	log_admin("[key_name(src)] has animalized [M.key].")
@@ -313,7 +313,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set name = "Make Alien"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		wrap_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/Alienize)
@@ -321,14 +321,14 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into an alien.</span>")
 	else
-		alert("Invalid mob")
+		wrap_alert(usr, "Invalid mob")
 
 /client/proc/cmd_admin_slimeize(mob/M in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Make slime"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		wrap_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/slimeize)
@@ -336,7 +336,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into a slime.</span>")
 	else
-		alert("Invalid mob")
+		wrap_alert(usr, "Invalid mob")
 
 /proc/make_types_fancy(var/list/types)
 	if (ispath(types))
@@ -436,7 +436,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set name = "Grant Full Access"
 
 	if(!SSticker.HasRoundStarted())
-		alert("Wait until the game starts")
+		wrap_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -468,7 +468,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 				H.equip_to_slot(id,slot_wear_id)
 
 	else
-		alert("Invalid mob")
+		wrap_alert(usr, "Invalid mob")
 	SSblackbox.add_details("admin_verb","Grant Full Access") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
@@ -479,7 +479,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set desc = "Direct intervention"
 
 	if(M.ckey)
-		if(alert("This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",,"Yes","No") != "Yes")
+		if(wrap_alert(usr, "This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",,"Yes","No") != "Yes")
 			return
 		else
 			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
@@ -600,7 +600,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set category = "Fun"
 	set name = "Select equipment"
 	if(!ishuman(M))
-		alert("Invalid mob")
+		wrap_alert(usr, "Invalid mob")
 		return
 
 
@@ -667,7 +667,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	set name = "Start Singularity"
 	set desc = "Sets up the singularity and all machines to get power flowing through the station"
 
-	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
+	if(wrap_alert(usr, "Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
 		return
 
 	for(var/obj/machinery/power/emitter/E in GLOB.machines)

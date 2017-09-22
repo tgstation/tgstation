@@ -257,7 +257,7 @@
 		if("delete")
 			if(!is_admin)
 				return
-			var/confirm = alert(user, "Confirm deletion of engraved message?", "Confirm Deletion", "Yes", "No")
+			var/confirm = wrap_alert(user, "Confirm deletion of engraved message?", "Confirm Deletion", "Yes", "No")
 			if(confirm == "Yes")
 				persists = FALSE
 				qdel(src)

@@ -294,7 +294,7 @@
 		if(newname && trim(newname))
 			name = newname
 		else
-			alert(occupant, "nope.avi")
+			wrap_alert(occupant, "nope.avi")
 
 	if (href_list["toggle_id_upload"])
 		add_req_access = !add_req_access

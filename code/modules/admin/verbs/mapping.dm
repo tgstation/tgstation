@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	set name = "Camera Report"
 
 	if(!Master)
-		alert(usr,"Master_controller not found.","Sec Camera Report")
+		wrap_alert(usr,"Master_controller not found.","Sec Camera Report")
 		return 0
 
 	var/list/obj/machinery/camera/CL = list()
