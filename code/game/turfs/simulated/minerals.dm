@@ -30,7 +30,7 @@
 	pixel_y = -4
 	pixel_x = -4
 	icon = smooth_icon
-	..()
+	. = ..()
 	if (mineralType && mineralAmt && spread && spreadChance)
 		for(var/dir in GLOB.cardinals)
 			if(prob(spreadChance))
@@ -153,7 +153,7 @@
 			/turf/closed/mineral/gibtonite = 4, /turf/open/floor/plating/asteroid/airless/cave = 2, /turf/closed/mineral/bscrystal = 1)
 	if (display_icon_state)
 		icon_state = display_icon_state
-	..()
+	. = ..()
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
 		var/turf/T = ChangeTurf(path,FALSE,FALSE,TRUE)
@@ -393,7 +393,7 @@
 
 /turf/closed/mineral/gibtonite/Initialize()
 	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
-	..()
+	. = ..()
 
 /turf/closed/mineral/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && stage == 1)

@@ -29,10 +29,19 @@
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 
+/datum/status_effect/incapacitating/knockdown/tick()
+	if(owner.staminaloss)
+		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
+
+
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
 	needs_update_stat = TRUE
+
+/datum/status_effect/incapacitating/unconscious/tick()
+	if(owner.staminaloss)
+		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
@@ -57,7 +66,7 @@
 
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.staminaloss)
-		owner.adjustStaminaLoss(-0.35) //reduce stamina loss by 0.35 per tick, 7 per 2 seconds
+		owner.adjustStaminaLoss(-0.5) //reduce stamina loss by 0.5 per tick, 10 per 2 seconds
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))

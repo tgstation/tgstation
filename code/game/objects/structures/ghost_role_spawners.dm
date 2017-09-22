@@ -468,7 +468,7 @@
 	random = TRUE
 	mob_species = /datum/species/human
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a security officer working for Nanotrasen, stationed onboard a state of the art research station. You vaguely recall rushing into a \
-	cryogenics pod due to a oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
+	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod."
 	uniform = /obj/item/clothing/under/rank/security
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -483,16 +483,16 @@
 
 /obj/effect/mob_spawn/human/oldeng
 	name = "old cryogenics pod"
-	desc = "A humming cryo pod. You can barely recognise a engineering uniform underneath the built up ice. The machine is attempting to wake up its occupant"
-	mob_name = "a engineer"
+	desc = "A humming cryo pod. You can barely recognise an engineering uniform underneath the built up ice. The machine is attempting to wake up its occupant"
+	mob_name = "an engineer"
 	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
 	random = TRUE
 	mob_species = /datum/species/human
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a engineer working for Nanotrasen, stationed onboard a state of the art research station. You vaguely recall rushing into a \
-	cryogenics pod due to a oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are an engineer working for Nanotrasen, stationed onboard a state of the art research station. You vaguely recall rushing into a \
+	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod."
 	uniform = /obj/item/clothing/under/rank/engineer
 	shoes = /obj/item/clothing/shoes/workboots
@@ -516,7 +516,7 @@
 	random = TRUE
 	mob_species = /datum/species/human
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a scientist working for Nanotrasen, stationed onboard a state of the art research station. You vaguely recall rushing into a \
-	cryogenics pod due to a oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
+	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod."
 	uniform = /obj/item/clothing/under/rank/scientist
 	shoes = /obj/item/clothing/shoes/laceup

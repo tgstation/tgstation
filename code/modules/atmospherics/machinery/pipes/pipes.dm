@@ -42,11 +42,6 @@
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 
-/obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
-	//Return 1 if parent should continue checking other pipes
-	//Return null if parent should stop checking other pipes. Recall: del(src) will by default return null
-	return 1
-
 /obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
 	if(air_temporary)
 		var/turf/T = loc
