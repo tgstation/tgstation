@@ -1,4 +1,0 @@
-author: "xxalpha"
-delete-after: True
-changes: 
-  - tweak: "Opening and closing of donut boxes, etc. is now done with clicking the object with itself."

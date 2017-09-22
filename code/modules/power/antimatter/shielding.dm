@@ -1,7 +1,7 @@
 //like orange but only checks north/south/east/west for one step
 /proc/cardinalrange(var/center)
 	var/list/things = list()
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(center, direction)
 		if(!T) continue
 		things += T.contents
@@ -13,24 +13,24 @@
 
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "shield"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	dir = NORTH
-	use_power = 0//Living things generally dont use power
+	use_power = NO_POWER_USE//Living things generally dont use power
 	idle_power_usage = 0
 	active_power_usage = 0
 
 	var/obj/machinery/power/am_control_unit/control_unit = null
-	var/processing = 0//To track if we are in the update list or not, we need to be when we are damaged and if we ever
+	var/processing = FALSE//To track if we are in the update list or not, we need to be when we are damaged and if we ever
 	var/stability = 100//If this gets low bad things tend to happen
 	var/efficiency = 1//How many cores this core counts for when doing power processing, plasma in the air and stability could affect this
+	var/coredirs = 0
+	var/dirs = 0
 
 
-/obj/machinery/am_shielding/New(loc)
-	..(loc)
-	spawn(10)
-		controllerscan()
-	return
+/obj/machinery/am_shielding/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/controllerscan), 10)
 
 
 /obj/machinery/am_shielding/proc/controllerscan(priorscan = 0)
@@ -50,18 +50,16 @@
 			break
 
 	if(!control_unit)//No other guys nearby look for a control unit
-		for(var/direction in cardinal)
+		for(var/direction in GLOB.cardinals)
 		for(var/obj/machinery/power/am_control_unit/AMC in cardinalrange(src))
 			if(AMC.add_shielding(src))
 				break
 
 	if(!control_unit)
 		if(!priorscan)
-			spawn(20)
-				controllerscan(1)//Last chance
+			addtimer(CALLBACK(src, .proc/controllerscan, 1), 20)
 			return
 		qdel(src)
-	return
 
 
 /obj/machinery/am_shielding/Destroy()
@@ -74,9 +72,7 @@
 	return ..()
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)
-		return 1
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target)
 	return 0
 
 
@@ -105,35 +101,58 @@
 
 
 /obj/machinery/am_shielding/update_icon()
+	dirs = 0
+	coredirs = 0
 	cut_overlays()
-	for(var/direction in alldirs)
-		var/machine = locate(/obj/machinery, get_step(loc, direction))
-		if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit)||(istype(machine, /obj/machinery/power/am_control_unit) && machine == control_unit))
-			add_overlay("shield_[direction]")
+	for(var/direction in GLOB.alldirs)
+		var/turf/T = get_step(loc, direction)
+		for(var/obj/machinery/machine in T)
+			if(istype(machine, /obj/machinery/am_shielding))
+				var/obj/machinery/am_shielding/shield = machine
+				if(shield.control_unit == control_unit)
+					if(shield.processing)
+						coredirs |= direction
+					if(direction in GLOB.cardinals)
+						dirs |= direction
+
+			else
+				if(istype(machine, /obj/machinery/power/am_control_unit) && (direction in GLOB.cardinals))
+					var/obj/machinery/power/am_control_unit/control = machine
+					if(control == control_unit)
+						dirs |= direction
+
+
+	var/prefix = ""
+	var/icondirs=dirs
+
+	if(coredirs)
+		prefix="core"
+
+	icon_state = "[prefix]shield_[icondirs]"
 
 	if(core_check())
-		add_overlay("core")
+		add_overlay("core[control_unit && control_unit.active]")
 		if(!processing)
 			setup_core()
 	else if(processing)
 		shutdown_core()
 
 
-/obj/machinery/am_shielding/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/am_shielding/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
-				if(damage)
+				if(damage_amount)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 				else
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 		else
 			return
-	if(damage >= 10)
-		stability -= damage/2
+	if(damage_amount >= 10)
+		stability -= damage_amount/2
 		check_stability()
 
 
@@ -150,19 +169,24 @@
 
 //Scans cards for shields or the control unit and if all there it
 /obj/machinery/am_shielding/proc/core_check()
-	for(var/direction in alldirs)
-		var/machine = locate(/obj/machinery, get_step(loc, direction))
-		if(!machine)
-			return 0//Need all for a core
-		if(!istype(machine, /obj/machinery/am_shielding) && !istype(machine, /obj/machinery/power/am_control_unit))
+	for(var/direction in GLOB.alldirs)
+		var/found_am_device=0
+		for(var/obj/machinery/machine in get_step(loc, direction))
+		//var/machine = locate(/obj/machinery, get_step(loc, direction))
+			if(!machine)
+				continue//Need all for a core
+			if(istype(machine, /obj/machinery/am_shielding) || istype(machine, /obj/machinery/power/am_control_unit))
+				found_am_device = 1
+				break
+		if(!found_am_device)
 			return 0
 	return 1
 
 
 /obj/machinery/am_shielding/proc/setup_core()
-	processing = 1
-	machines |= src
-	START_PROCESSING(SSmachine, src)
+	processing = TRUE
+	GLOB.machines |= src
+	START_PROCESSING(SSmachines, src)
 	if(!control_unit)
 		return
 	control_unit.linked_cores.Add(src)
@@ -171,7 +195,7 @@
 
 
 /obj/machinery/am_shielding/proc/shutdown_core()
-	processing = 0
+	processing = FALSE
 	if(!control_unit)
 		return
 	control_unit.linked_cores.Remove(src)
@@ -206,15 +230,17 @@
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = 4
-	flags = CONDUCT
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	flags_1 = CONDUCT_1
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
 	materials = list(MAT_METAL=100)
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
+	if(istype(I, /obj/item/device/multitool) && istype(src.loc, /turf))
 		new/obj/machinery/am_shielding(src.loc)
 		qdel(src)
 	else

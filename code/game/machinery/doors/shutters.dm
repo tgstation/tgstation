@@ -4,10 +4,11 @@
 	desc = "Heavy duty metal shutters that opens mechanically."
 	icon = 'icons/obj/doors/shutters.dmi'
 	layer = CLOSED_DOOR_LAYER
+	damage_deflection = 20
 
 /obj/machinery/door/poddoor/shutters/preopen
 	icon_state = "open"
-	density = 0
+	density = FALSE
 	opacity = 0
 
 

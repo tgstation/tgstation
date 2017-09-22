@@ -1,11 +1,14 @@
 /obj/machinery/portable_atmospherics
 	name = "portable_atmospherics"
 	icon = 'icons/obj/atmos.dmi'
-	use_power = 0
+	use_power = NO_POWER_USE
+	max_integrity = 250
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 60, acid = 30)
+
 
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
-	var/obj/item/weapon/tank/holding
+	var/obj/item/tank/holding
 
 	var/volume = 0
 
@@ -18,7 +21,6 @@
 	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-	air_contents.holder = src
 
 	return 1
 
@@ -46,7 +48,7 @@
 		return 0
 
 	//Make sure are close enough for a valid connection
-	if(new_port.loc != loc)
+	if(new_port.loc != get_turf(src))
 		return 0
 
 	//Perform the connection
@@ -55,13 +57,18 @@
 	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
 	connected_port_parent.reconcile_air()
 
-	anchored = 1 //Prevent movement
+	anchored = TRUE //Prevent movement
 	return 1
+
+/obj/machinery/portable_atmospherics/Move()
+	. = ..()
+	if(.)
+		disconnect()
 
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
 		return 0
-	anchored = 0
+	anchored = FALSE
 	connected_port.connected_device = null
 	connected_port = null
 	return 1
@@ -69,20 +76,20 @@
 /obj/machinery/portable_atmospherics/portableConnectorReturnAir()
 	return air_contents
 
-/obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/tank))
+/obj/machinery/portable_atmospherics/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/tank))
 		if(!(stat & BROKEN))
-			var/obj/item/weapon/tank/T = W
+			var/obj/item/tank/T = W
 			if(holding || !user.drop_item())
 				return
 			T.loc = src
 			holding = T
 			update_icon()
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src.loc, W.usesound, 50, 1)
 				user.visible_message( \
 					"[user] disconnects [src].", \
 					"<span class='notice'>You unfasten [src] from the port.</span>", \
@@ -92,12 +99,12 @@
 			else
 				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 				if(!possible_port)
-					user << "<span class='notice'>Nothing happens.</span>"
+					to_chat(user, "<span class='notice'>Nothing happens.</span>")
 					return
 				if(!connect(possible_port))
-					user << "<span class='notice'>[name] failed to connect to the port.</span>"
+					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src.loc, W.usesound, 50, 1)
 				user.visible_message( \
 					"[user] connects [src].", \
 					"<span class='notice'>You fasten [src] to the port.</span>", \
@@ -107,3 +114,11 @@
 		atmosanalyzer_scan(air_contents, user)
 	else
 		return ..()
+
+/obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
+	if(I.force < 10 && !(stat & BROKEN))
+		take_damage(0)
+	else
+		investigate_log("was smacked with \a [I] by [key_name(user)].", INVESTIGATE_ATMOS)
+		add_fingerprint(user)
+		..()

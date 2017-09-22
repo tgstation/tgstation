@@ -1,4 +1,0 @@
-author: "Shadowlight213"
-delete-after: True
-changes: 
-  - bugfix: "Fixed runtime preventing access locked programs from being downloaded"

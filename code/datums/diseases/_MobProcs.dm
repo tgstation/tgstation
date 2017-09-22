@@ -1,6 +1,7 @@
 
 /mob/proc/HasDisease(datum/disease/D)
-	for(var/datum/disease/DD in viruses)
+	for(var/thing in viruses)
+		var/datum/disease/DD = thing
 		if(D.IsSame(DD))
 			return 1
 	return 0
@@ -19,9 +20,6 @@
 	if(!(type in D.viable_mobtypes))
 		return 0
 
-	if(count_by_type(viruses, /datum/disease/advance) >= 3)
-		return 0
-
 	return 1
 
 
@@ -32,23 +30,30 @@
 
 
 /mob/proc/AddDisease(datum/disease/D)
-	var/datum/disease/DD = new D.type(1, D, 0)
-	viruses += DD
-	DD.affected_mob = src
-	DD.holder = src
+	for(var/datum/disease/advance/P in viruses)
+		if(istype(D, /datum/disease/advance))
+			var/datum/disease/advance/DD = D
+			if (P.totalResistance() < DD.totalTransmittable()) //Overwrite virus if the attacker's Transmission is lower than the defender's Resistance. This does not grant immunity to the lost virus.
+				P.remove_virus()
 
-	//Copy properties over. This is so edited diseases persist.
-	var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed")
-	for(var/V in DD.vars)
-		if(V in skipped)
-			continue
-		if(istype(DD.vars[V],/list))
-			var/list/L = D.vars[V]
-			DD.vars[V] = L.Copy()
-		else
-			DD.vars[V] = D.vars[V]
+	if (!viruses.len) //Only add the new virus if it defeated the existing one
+		var/datum/disease/DD = new D.type(1, D, 0)
+		viruses += DD
+		DD.affected_mob = src
+		SSdisease.active_diseases += DD //Add it to the active diseases list, now that it's actually in a mob and being processed.
 
-	DD.affected_mob.med_hud_set_status()
+		//Copy properties over. This is so edited diseases persist.
+		var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed","symptoms")
+		for(var/V in DD.vars)
+			if(V in skipped)
+				continue
+			if(islist(DD.vars[V]))
+				var/list/L = D.vars[V]
+				DD.vars[V] = L.Copy()
+			else
+				DD.vars[V] = D.vars[V]
+
+		DD.affected_mob.med_hud_set_status()
 
 
 /mob/living/carbon/ContractDisease(datum/disease/D)
@@ -82,16 +87,19 @@
 
 	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)
 
-	if(istype(src, /mob/living/carbon/human))
+	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 
 		switch(target_zone)
 			if(1)
-				if(isobj(H.head) && !istype(H.head, /obj/item/weapon/paper))
+				if(isobj(H.head) && !istype(H.head, /obj/item/paper))
 					Cl = H.head
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(H.wear_mask))
 					Cl = H.wear_mask
+					passed = prob((Cl.permeability_coefficient*100) - 1)
+				if(passed && isobj(H.wear_neck))
+					Cl = H.wear_neck
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(2)
 				if(isobj(H.wear_suit))
@@ -117,7 +125,7 @@
 					Cl = H.shoes
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 
-	else if(istype(src, /mob/living/carbon/monkey))
+	else if(ismonkey(src))
 		var/mob/living/carbon/monkey/M = src
 		switch(target_zone)
 			if(1)
@@ -140,6 +148,9 @@
 
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
-	if(dna && (VIRUSIMMUNE in dna.species.specflags))
+	if(dna && (VIRUSIMMUNE in dna.species.species_traits) && !D.bypasses_immunity)
 		return 0
+	for(var/thing in D.required_organs)
+		if(!((locate(thing) in bodyparts) || (locate(thing) in internal_organs)))
+			return 0
 	return ..()

@@ -1,0 +1,4 @@
+author: "YPOQ"
+delete-after: True
+changes: 
+  - bugfix: "The doomsday device will again periodically announce the time until its activation"

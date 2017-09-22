@@ -16,6 +16,7 @@ Construction breaks otherwise
 #define PIPE_CONNECTOR			/obj/machinery/atmospherics/components/unary/portables_connector
 #define PIPE_UVENT				/obj/machinery/atmospherics/components/unary/vent_pump
 #define PIPE_SCRUBBER			/obj/machinery/atmospherics/components/unary/vent_scrubber
+#define PIPE_INJECTOR			/obj/machinery/atmospherics/components/unary/outlet_injector
 #define PIPE_HEAT_EXCHANGE      /obj/machinery/atmospherics/components/unary/heat_exchanger
 //Binary
 #define PIPE_PUMP				/obj/machinery/atmospherics/components/binary/pump
@@ -39,3 +40,20 @@ Construction breaks otherwise
 #define DISP_END_CHUTE			8
 #define DISP_SORTJUNCTION		9
 #define DISP_SORTJUNCTION_FLIP	10
+
+//Transit tubes
+#define TRANSIT_TUBE_STRAIGHT			0
+#define TRANSIT_TUBE_STRAIGHT_CROSSING	1
+#define TRANSIT_TUBE_CURVED				2
+#define TRANSIT_TUBE_DIAGONAL			3
+#define TRANSIT_TUBE_DIAGONAL_CROSSING	4
+#define TRANSIT_TUBE_JUNCTION			5
+#define TRANSIT_TUBE_STATION			6
+#define TRANSIT_TUBE_TERMINUS			7
+#define TRANSIT_TUBE_POD				8
+
+//the open status of the transit tube station
+#define STATION_TUBE_OPEN		0
+#define STATION_TUBE_OPENING	1
+#define STATION_TUBE_CLOSED		2
+#define STATION_TUBE_CLOSING	3

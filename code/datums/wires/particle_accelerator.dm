@@ -1,5 +1,6 @@
 /datum/wires/particle_accelerator/control_box
 	holder_type = /obj/machinery/particle_accelerator/control_box
+	proper_name = "Particle Accelerator"
 
 /datum/wires/particle_accelerator/control_box/New(atom/holder)
 	wires = list(
@@ -24,7 +25,7 @@
 		if(WIRE_INTERFACE)
 			C.interface_control = !C.interface_control
 		if(WIRE_LIMIT)
-			C.visible_message("\icon[C]<b>[C]</b> makes a large whirring noise.")
+			C.visible_message("[icon2html(C, viewers(holder))]<b>[C]</b> makes a large whirring noise.")
 
 /datum/wires/particle_accelerator/control_box/on_cut(wire, mend)
 	var/obj/machinery/particle_accelerator/control_box/C = holder

@@ -6,7 +6,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	item_color="yellow"
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
@@ -16,11 +16,19 @@
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
 	permeability_coefficient = 0.05
 	item_color="yellow"
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/gloves/color/fyellow/New()
 	..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
+
+/obj/item/clothing/gloves/color/fyellow/old
+	desc = "Old and worn out insulated gloves, hopefully they still work."
+	name = "worn out insulated gloves"
+
+/obj/item/clothing/gloves/color/fyellow/old/Initialize()
+	. = ..()
+	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
@@ -32,7 +40,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 	var/can_be_cut = 1
 
 /obj/item/clothing/gloves/color/black/hos
@@ -41,11 +49,11 @@
 /obj/item/clothing/gloves/color/black/ce
 	item_color = "chief"		//Exists for washing machines. Is not different from black gloves in any way.
 
-/obj/item/clothing/gloves/color/black/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/weapon/wirecutters))
+/obj/item/clothing/gloves/color/black/attackby(obj/item/W as obj, mob/user as mob, params)
+	if(istype(W, /obj/item/wirecutters))
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
-			user << "<span class='notice'>You snip the fingertips off of [src].</span>"
-			playsound(user.loc,'sound/items/Wirecutter.ogg', rand(10,50), 1)
+			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
+			playsound(user.loc, W.usesound, rand(10,50), 1)
 			new /obj/item/clothing/gloves/fingerless(user.loc)
 			qdel(src)
 	..()
@@ -70,7 +78,7 @@
 	desc = "These gloves will protect the wearer from electric shock."
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/gloves/color/rainbow
 	name = "rainbow gloves"
@@ -146,17 +154,18 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 60
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 50)
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
 	desc = "Cheap sterile gloves made from latex."
 	icon_state = "latex"
 	item_state = "lgloves"
-	siemens_coefficient = 0.30
+	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
 	item_color="white"
 	transfer_prints = TRUE
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"

@@ -11,7 +11,9 @@
 	var/health_scan
 	var/alarm_health = 0
 
-
+/obj/item/device/assembly/health/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Use a multitool to swap between \"detect death\" mode and \"detect critical state\" mode.</span>")
 
 /obj/item/device/assembly/health/activate()
 	if(!..())
@@ -29,7 +31,7 @@
 	update_icon()
 	return secured
 
-/obj/item/device/assembly/health/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/assembly/health/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/multitool))
 		if(alarm_health == 0)
 			alarm_health = -90
@@ -57,7 +59,7 @@
 		health_scan = M.health
 		if(health_scan <= alarm_health)
 			pulse()
-			audible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
+			audible_message("[icon2html(src, hearers(src))] *beep* *beep*", "*beep* *beep*")
 			toggle_scan()
 		return
 	return

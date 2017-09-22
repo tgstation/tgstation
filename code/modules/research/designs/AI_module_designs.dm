@@ -7,7 +7,7 @@
 	desc = "Allows for the construction of circuit boards used to build new AI cores."
 	id = "aicore"
 	req_tech = list("programming" = 3)
-	build_path = /obj/item/weapon/circuitboard/aicore
+	build_path = /obj/item/circuitboard/aicore
 	category = list("AI Modules")
 
 
@@ -17,7 +17,7 @@
 	id = "safeguard_module"
 	req_tech = list("programming" = 3, "materials" = 3)
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 100)
-	build_path = /obj/item/weapon/aiModule/supplied/safeguard
+	build_path = /obj/item/aiModule/supplied/safeguard
 	category = list("AI Modules")
 
 /datum/design/board/onehuman_module
@@ -26,7 +26,7 @@
 	id = "onehuman_module"
 	req_tech = list("programming" = 6, "materials" = 4)
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/aiModule/zeroth/oneHuman
+	build_path = /obj/item/aiModule/zeroth/oneHuman
 	category = list("AI Modules")
 
 /datum/design/board/protectstation_module
@@ -35,7 +35,7 @@
 	id = "protectstation_module"
 	req_tech = list("programming" = 5, "materials" = 4)
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 100)
-	build_path = /obj/item/weapon/aiModule/supplied/protectStation
+	build_path = /obj/item/aiModule/supplied/protectStation
 	category = list("AI Modules")
 
 /datum/design/board/quarantine_module
@@ -44,7 +44,7 @@
 	id = "quarantine_module"
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 4)
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 100)
-	build_path = /obj/item/weapon/aiModule/supplied/quarantine
+	build_path = /obj/item/aiModule/supplied/quarantine
 	category = list("AI Modules")
 
 
@@ -54,7 +54,7 @@
 	id = "oxygen_module"
 	req_tech = list("programming" = 4, "biotech" = 2, "materials" = 4)
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 100)
-	build_path = /obj/item/weapon/aiModule/supplied/oxygen
+	build_path = /obj/item/aiModule/supplied/oxygen
 	category = list("AI Modules")
 
 /datum/design/board/freeform_module
@@ -63,7 +63,7 @@
 	id = "freeform_module"
 	req_tech = list("programming" = 5, "materials" = 4)
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 100)
-	build_path = /obj/item/weapon/aiModule/supplied/freeform
+	build_path = /obj/item/aiModule/supplied/freeform
 	category = list("AI Modules")
 
 /datum/design/board/reset_module
@@ -72,7 +72,7 @@
 	id = "reset_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 100)
-	build_path = /obj/item/weapon/aiModule/reset
+	build_path = /obj/item/aiModule/reset
 	category = list("AI Modules")
 
 /datum/design/board/purge_module
@@ -81,7 +81,16 @@
 	id = "purge_module"
 	req_tech = list("programming" = 5, "materials" = 6)
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/aiModule/reset/purge
+	build_path = /obj/item/aiModule/reset/purge
+	category = list("AI Modules")
+
+/datum/design/board/remove_module
+	name = "Module Design (Law Removal)"
+	desc = "Allows for the construction of a Law Removal AI Core Module."
+	id = "remove_module"
+	req_tech = list("programming" = 5, "materials" = 5)
+	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)
+	build_path = /obj/item/aiModule/remove
 	category = list("AI Modules")
 
 /datum/design/board/freeformcore_module
@@ -90,7 +99,7 @@
 	id = "freeformcore_module"
 	req_tech = list("programming" = 6, "materials" = 6)
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/aiModule/core/freeformcore
+	build_path = /obj/item/aiModule/core/freeformcore
 	category = list("AI Modules")
 
 /datum/design/board/asimov
@@ -99,7 +108,7 @@
 	id = "asimov_module"
 	req_tech = list("programming" = 3, "materials" = 5)
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/aiModule/core/full/asimov
+	build_path = /obj/item/aiModule/core/full/asimov
 	category = list("AI Modules")
 
 /datum/design/board/paladin_module
@@ -109,7 +118,7 @@
 	req_tech = list("programming" = 5, "materials" = 5)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/aiModule/core/full/paladin
+	build_path = /obj/item/aiModule/core/full/paladin
 	category = list("AI Modules")
 
 /datum/design/board/tyrant_module
@@ -118,7 +127,7 @@
 	id = "tyrant_module"
 	req_tech = list("programming" = 5, "syndicate" = 2, "materials" = 5)
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/aiModule/core/full/tyrant
+	build_path = /obj/item/aiModule/core/full/tyrant
 	category = list("AI Modules")
 
 /datum/design/board/corporate_module
@@ -127,14 +136,16 @@
 	id = "corporate_module"
 	req_tech = list("programming" = 5, "materials" = 5)
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/aiModule/core/full/corp
+	build_path = /obj/item/aiModule/core/full/corp
 	category = list("AI Modules")
 
-/datum/design/board/custom_module
-	name = "Core Module Design (Custom)"
-	desc = "Allows for the construction of a Custom AI Core Module."
-	id = "custom_module"
+/datum/design/board/default_module
+	name = "Core Module Design (Default)"
+	desc = "Allows for the construction of a Default AI Core Module."
+	id = "default_module"
 	req_tech = list("programming" = 5, "materials" = 5)
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/aiModule/core/full/custom
+	build_path = /obj/item/aiModule/core/full/custom
 	category = list("AI Modules")
+
+

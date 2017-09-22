@@ -20,28 +20,28 @@
 			close(1)
 
 		if("unlock")
-			locked = 0
+			locked = FALSE
 			update_icon()
 
 		if("lock")
-			locked = 1
+			locked = TRUE
 			update_icon()
 
 		if("secure_open")
-			locked = 0
+			locked = FALSE
 			update_icon()
 
 			sleep(2)
 			open(1)
 
-			locked = 1
+			locked = TRUE
 			update_icon()
 
 		if("secure_close")
-			locked = 0
+			locked = FALSE
 			close(1)
 
-			locked = 1
+			locked = TRUE
 			sleep(2)
 			update_icon()
 
@@ -58,7 +58,7 @@
 		signal.data["door_status"] = density?("closed"):("open")
 		signal.data["lock_status"] = locked?("locked"):("unlocked")
 
-		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
+		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = GLOB.RADIO_AIRLOCK)
 
 
 /obj/machinery/door/airlock/open(surpress_send)
@@ -75,21 +75,7 @@
 	SSradio.remove_object(src, frequency)
 	if(new_frequency)
 		frequency = new_frequency
-		radio_connection = SSradio.add_object(src, frequency, RADIO_AIRLOCK)
-
-
-/obj/machinery/door/airlock/initialize()
-	if(frequency)
-		set_frequency(frequency)
-
-	update_icon()
-
-
-/obj/machinery/door/airlock/New()
-	..()
-
-	if(SSradio)
-		set_frequency(frequency)
+		radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_AIRLOCK)
 
 /obj/machinery/door/airlock/Destroy()
 	if(frequency && SSradio)
@@ -100,8 +86,9 @@
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_sensor_off"
 	name = "airlock sensor"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	anchored = 1
+	anchored = TRUE
 	power_channel = ENVIRON
 
 	var/id_tag
@@ -110,8 +97,8 @@
 
 	var/datum/radio_frequency/radio_connection
 
-	var/on = 1
-	var/alert = 0
+	var/on = TRUE
+	var/alert = FALSE
 
 
 /obj/machinery/airlock_sensor/update_icon()
@@ -129,7 +116,7 @@
 	signal.data["tag"] = master_tag
 	signal.data["command"] = "cycle"
 
-	radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
+	radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = GLOB.RADIO_AIRLOCK)
 	flick("airlock_sensor_cycle", src)
 
 /obj/machinery/airlock_sensor/process()
@@ -146,25 +133,19 @@
 
 		signal.data["pressure"] = num2text(pressure)
 
-		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
+		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = GLOB.RADIO_AIRLOCK)
 
 	update_icon()
 
 /obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_AIRLOCK)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_AIRLOCK)
 
-/obj/machinery/airlock_sensor/initialize()
+/obj/machinery/airlock_sensor/Initialize()
+	..()
 	set_frequency(frequency)
 
-/obj/machinery/airlock_sensor/New()
-	..()
-
-	if(SSradio)
-		set_frequency(frequency)
-
 /obj/machinery/airlock_sensor/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()

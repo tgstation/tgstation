@@ -1,34 +1,3 @@
-//spooky halloween stuff. only tick on halloween!!!
-
-
-//uses super seekrit double proc definition stuffs. remember to call ..()!
-/*/mob/dead/observer/say(var/message) //this doesn't actually work vOv
-	..()
-	for(var/mob/M in hearers(src, 1))
-		if(!M.stat)
-			if(M.job == "Chaplain")
-				if (prob (49))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-					if(prob(20))
-						playsound(loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
-				else
-					M.show_message("<span class='game'><i>You hear muffled speech... you can almost make out some words...</i></span>", 2)
-//				M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
-					if(prob(30))
-						playsound(loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
-			else
-				if(prob(50))
-					return
-				else if(prob (95))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-					if(prob(20))
-						playsound(loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
-				else
-					M.show_message("<span class='game'><i>You hear muffled speech... you can almost make out some words...</i></span>", 2)
-//				M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
-					playsound(loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)*/
-
-
 ///////////////////////////////////////
 ///////////HALLOWEEN CONTENT///////////
 ///////////////////////////////////////
@@ -39,16 +8,16 @@
 /datum/recipe/sugarcookie/spookyskull
 	reagents = list("flour" = 5, "sugar" = 5, "milk" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/reagent_containers/food/snacks/egg,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull
+	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull
 
 /datum/recipe/sugarcookie/spookycoffin
 	reagents = list("flour" = 5, "sugar" = 5, "coffee" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/reagent_containers/food/snacks/egg,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin
+	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin
 
 //////////////////////////////
 //Spookoween trapped closets//
@@ -102,14 +71,9 @@
 
 	else if(trapped == SPOOKY_SKELETON)
 		visible_message("<span class='userdanger'><font size='5'>BOO!</font></span>")
-		playsound(loc, pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg','sound/spookoween/girlscream.ogg'), 300, 1)
+		playsound(loc, 'sound/spookoween/girlscream.ogg', 300, 1)
 		trapped = 0
-		spawn(90)
-			if(trapped_mob && trapped_mob.loc)
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new()
-				smoke.set_up(1, 0, trapped_mob.loc, 0)
-				smoke.start()
-				qdel(trapped_mob)
+		QDEL_IN(trapped_mob, 90)
 
 	else if(trapped == HOWLING_GHOST)
 		visible_message("<span class='userdanger'><font size='5'>[pick("OooOOooooOOOoOoOOooooOOOOO", "BooOOooOooooOOOO", "BOO!", "WoOOoOoooOooo")]</font></span>")
@@ -130,21 +94,13 @@
 		visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN!!!</font></span>")
 		playsound(loc, 'sound/hallucinations/wail.ogg', 300, 1)
 		var/mob/living/simple_animal/hostile/faithless/F = new(loc)
-		F.stance = HOSTILE_STANCE_ATTACK
-		F.GiveTarget(usr)
 		trapped = 0
-		spawn(120)
-			if(F && F.loc)
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
-				smoke.set_up(1,0, F.loc, 0)
-				smoke.start()
-				qdel(F)
+		QDEL_IN(F, 120)
 
 	else if(trapped == INSANE_CLOWN)
 		visible_message("<span class='userdanger'><font size='5'>...</font></span>")
 		playsound(loc, 'sound/spookoween/scary_clown_appear.ogg', 300, 1)
-		var/mob/living/simple_animal/hostile/retaliate/clown/insane/IC = new (loc)
-		IC.GiveTarget(usr)
+		spawn_atom_to_turf(/mob/living/simple_animal/hostile/retaliate/clown/insane, loc, 1, FALSE)
 		trapped = 0
 
 //don't spawn in crates
@@ -167,14 +123,14 @@
 	health = 1e6
 	speak_emote = list("howls")
 	emote_hear = list("wails","screeches")
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	incorporeal_move = 1
 	layer = 4
 	var/timer = 0
 
-/mob/living/simple_animal/shade/howling_ghost/New()
-	..()
+/mob/living/simple_animal/shade/howling_ghost/Initialize()
+	. = ..()
 	icon_state = pick("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
 	icon_living = icon_state
 	status_flags |= GODMODE
@@ -215,7 +171,7 @@
 /mob/living/simple_animal/shade/howling_ghost/adjustHealth()
 	. = 0
 
-/mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
 	return 1
 
 
@@ -237,8 +193,8 @@
 	unsuitable_atmos_damage = 0
 	var/timer
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/New()
-	..()
+/mob/living/simple_animal/hostile/retaliate/clown/insane/Initialize()
+	. = ..()
 	timer = rand(5,15)
 	status_flags = (status_flags | GODMODE)
 	return
@@ -267,9 +223,9 @@
 			loc = M.loc
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/MoveToTarget()
-	return
+	stalk(target)
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/AttackTarget()
+/mob/living/simple_animal/hostile/retaliate/clown/insane/AttackingTarget()
 	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/adjustHealth()
@@ -278,7 +234,7 @@
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/weapon/nullrod))
+	if(istype(O, /obj/item/nullrod))
 		if(prob(5))
 			visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
 			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
@@ -290,3 +246,21 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/handle_temperature_damage()
 	return
+
+/////////////////////////
+// Spooky Uplink Items //
+/////////////////////////
+
+/datum/uplink_item/dangerous/crossbow/candy
+	name = "Candy Corn Crossbow"
+	desc = "A standard miniature energy crossbow that uses a hard-light projector to transform bolts into candy corn. Happy Halloween!"
+	category = "Holiday"
+	item = /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
+	surplus = 0
+
+/datum/uplink_item/device_tools/emag/hack_o_lantern
+	name = "Hack-o'-Lantern"
+	desc = "An emag fitted to support the Halloween season. Candle not included."
+	category = "Holiday"
+	item = /obj/item/card/emag/halloween
+	surplus = 0

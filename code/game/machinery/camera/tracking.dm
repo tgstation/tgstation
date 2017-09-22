@@ -2,11 +2,11 @@
 
 	track.cameras.Cut()
 
-	if(src.stat == 2)
+	if(src.stat == DEAD)
 		return
 
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in cameranet.cameras)
+	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 		L.Add(C)
 
 	camera_sort(L)
@@ -45,25 +45,25 @@
 	track.humans.Cut()
 	track.others.Cut()
 
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return list()
 
-	for(var/mob/living/M in mob_list)
+	for(var/mob/living/M in GLOB.mob_list)
 		if(!M.can_track(usr))
 			continue
 
 		// Human check
 		var/human = 0
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			human = 1
 
 		var/name = M.name
-		if (name in track.names)
+		while(name in track.names)
 			track.namecounts[name]++
 			name = text("[] ([])", name, track.namecounts[name])
-		else
-			track.names.Add(name)
-			track.namecounts[name] = 1
+		track.names.Add(name)
+		track.namecounts[name] = 1
+
 		if(human)
 			track.humans[name] = M
 		else
@@ -93,11 +93,11 @@
 	U.tracking = 1
 
 	if(!target || !target.can_track(usr))
-		U << "<span class='warning'>Target is not near any active cameras.</span>"
+		to_chat(U, "<span class='warning'>Target is not near any active cameras.</span>")
 		U.cameraFollow = null
 		return
 
-	U << "<span class='notice'>Now tracking [target.get_visible_name()] on camera.</span>"
+	to_chat(U, "<span class='notice'>Now tracking [target.get_visible_name()] on camera.</span>")
 
 	var/cameraticks = 0
 	spawn(0)
@@ -108,11 +108,11 @@
 			if(!target.can_track(usr))
 				U.tracking = 1
 				if(!cameraticks)
-					U << "<span class='warning'>Target is not near any active cameras. Attempting to reacquire...</span>"
+					to_chat(U, "<span class='warning'>Target is not near any active cameras. Attempting to reacquire...</span>")
 				cameraticks++
 				if(cameraticks > 9)
 					U.cameraFollow = null
-					U << "<span class='warning'>Unable to reacquire, cancelling track...</span>"
+					to_chat(U, "<span class='warning'>Unable to reacquire, cancelling track...</span>")
 					tracking = 0
 					return
 				else
@@ -136,11 +136,11 @@
 /proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))
 		return 0
-	if(isrobot(M))
-		var/mob/living/silicon/robot/R = M
-		if(!(R.camera && R.camera.can_use()) && !cameranet.checkCameraVis(M))
+	if(issilicon(M))
+		var/mob/living/silicon/S = M
+		if((!QDELETED(S.builtInCamera) || !S.builtInCamera.can_use()) && !GLOB.cameranet.checkCameraVis(M))
 			return 0
-	else if(!cameranet.checkCameraVis(M))
+	else if(!GLOB.cameranet.checkCameraVis(M))
 		return 0
 	return 1
 

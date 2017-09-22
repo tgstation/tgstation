@@ -1,12 +1,10 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/space,
 /area/space)
 "b" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	tag = "icon-burst_l (EAST)";
-	icon_state = "burst_l";
-	dir = 4
+	dir = 8
 	},
 /turf/open/space,
 /area/ruin/powered{
@@ -14,13 +12,9 @@
 	})
 "c" = (
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (WEST)";
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (EAST)";
-	icon_state = "rwindow";
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -80,7 +74,7 @@
 	})
 "l" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/darkblue,
 /area/ruin/powered{
 	name = "Shuttle"
@@ -131,16 +125,13 @@
 	name = "Shuttle"
 	})
 "u" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "v" = (
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (EAST)";
-	icon_state = "comfychair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkyellow,
@@ -149,9 +140,7 @@
 	})
 "w" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	tag = "icon-burst_r (EAST)";
-	icon_state = "burst_r";
-	dir = 4
+	dir = 8
 	},
 /turf/open/space,
 /area/ruin/powered{

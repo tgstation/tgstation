@@ -3,19 +3,22 @@
 	var/_has_id_slot = 0
 	var/_has_printer = 0
 	var/_has_battery = 0
+	var/_has_ai = 0
 
-/obj/machinery/modular_computer/console/preset/New()
+/obj/machinery/modular_computer/console/preset/Initialize()
 	. = ..()
 	if(!cpu)
 		return
-	cpu.install_component(new /obj/item/weapon/computer_hardware/processor_unit)
+	cpu.install_component(new /obj/item/computer_hardware/processor_unit)
 
 	if(_has_id_slot)
-		cpu.install_component(new /obj/item/weapon/computer_hardware/card_slot)
+		cpu.install_component(new /obj/item/computer_hardware/card_slot)
 	if(_has_printer)
-		cpu.install_component(new /obj/item/weapon/computer_hardware/printer)
+		cpu.install_component(new /obj/item/computer_hardware/printer)
 	if(_has_battery)
-		cpu.install_component(new /obj/item/weapon/computer_hardware/battery(cpu, /obj/item/weapon/stock_parts/cell/computer/super))
+		cpu.install_component(new /obj/item/computer_hardware/battery(cpu, /obj/item/stock_parts/cell/computer/super))
+	if(_has_ai)
+		cpu.install_component(new /obj/item/computer_hardware/ai_slot)
 	install_programs()
 
 // Override in child types to install preset-specific programs.
@@ -30,18 +33,23 @@
 	 desc = "A stationary computer. This one comes preloaded with engineering programs."
 
 /obj/machinery/modular_computer/console/preset/engineering/install_programs()
-	cpu.hard_drive.store_file(new/datum/computer_file/program/power_monitor())
-	cpu.hard_drive.store_file(new/datum/computer_file/program/alarm_monitor())
+	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
+	hard_drive.store_file(new/datum/computer_file/program/power_monitor())
+	hard_drive.store_file(new/datum/computer_file/program/alarm_monitor())
+	hard_drive.store_file(new/datum/computer_file/program/supermatter_monitor())
 
 // ===== RESEARCH CONSOLE =====
 /obj/machinery/modular_computer/console/preset/research
 	 console_department = "Research"
 	 desc = "A stationary computer. This one comes preloaded with research programs."
+	 _has_ai = 1
 
 /obj/machinery/modular_computer/console/preset/research/install_programs()
-	cpu.hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
-	cpu.hard_drive.store_file(new/datum/computer_file/program/nttransfer())
-	cpu.hard_drive.store_file(new/datum/computer_file/program/chatclient())
+	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
+	hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
+	hard_drive.store_file(new/datum/computer_file/program/nttransfer())
+	hard_drive.store_file(new/datum/computer_file/program/chatclient())
+	hard_drive.store_file(new/datum/computer_file/program/aidiag())
 
 
 // ===== COMMAND CONSOLE =====
@@ -52,8 +60,9 @@
 	 _has_printer = 1
 
 /obj/machinery/modular_computer/console/preset/command/install_programs()
-	cpu.hard_drive.store_file(new/datum/computer_file/program/chatclient())
-	cpu.hard_drive.store_file(new/datum/computer_file/program/card_mod())
+	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
+	hard_drive.store_file(new/datum/computer_file/program/chatclient())
+	hard_drive.store_file(new/datum/computer_file/program/card_mod())
 
 // ===== CIVILIAN CONSOLE =====
 /obj/machinery/modular_computer/console/preset/civilian
@@ -61,6 +70,6 @@
 	 desc = "A stationary computer. This one comes preloaded with generic programs."
 
 /obj/machinery/modular_computer/console/preset/civilian/install_programs()
-	cpu.hard_drive.store_file(new/datum/computer_file/program/chatclient())
-	cpu.hard_drive.store_file(new/datum/computer_file/program/nttransfer())
-
+	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
+	hard_drive.store_file(new/datum/computer_file/program/chatclient())
+	hard_drive.store_file(new/datum/computer_file/program/nttransfer())

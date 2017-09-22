@@ -2,7 +2,7 @@
 	name = "fire"
 	icon_state = "explosion_particle"
 	opacity = 1
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/particle_effect/expl_particles/New()
 	..()
@@ -15,7 +15,7 @@
 	for(var/i in 1 to number)
 		spawn(0)
 			var/obj/effect/particle_effect/expl_particles/expl = new /obj/effect/particle_effect/expl_particles(location)
-			var/direct = pick(alldirs)
+			var/direct = pick(GLOB.alldirs)
 			var/steps_amt = pick(1;25,2;50,3,4;200)
 			for(var/j in 1 to steps_amt)
 				sleep(1)
@@ -26,8 +26,8 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
 	opacity = 1
-	anchored = 1
-	mouse_opacity = 0
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_x = -32
 	pixel_y = -32
 

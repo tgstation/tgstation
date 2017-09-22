@@ -1,17 +1,15 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/shuttle/transport)
 "ab" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
+/obj/structure/shuttle/engine/propulsion/left{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "ac" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -82,12 +80,12 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "as" = (
-/obj/machinery/shield,
-/turf/open/space,
+/obj/structure/emergency_shield,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/shuttle/transport)
 "at" = (
 /obj/machinery/door/airlock,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "au" = (
 /turf/open/floor/wood,
@@ -97,15 +95,11 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "aw" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/closed/wall/shuttle/smooth,
+/obj/effect/spawner/structure/window/shuttle,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "ax" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "ay" = (
 /obj/structure/window/shuttle,
@@ -113,15 +107,11 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "az" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "aA" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "aB" = (
 /obj/structure/grille{
@@ -129,7 +119,7 @@
 	icon_state = "brokengrille"
 	},
 /obj/structure/window/fulltile,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aC" = (
 /obj/structure/table/wood,
@@ -160,7 +150,7 @@
 /area/shuttle/transport)
 "aI" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/wiz,
+/obj/item/bedsheet/wiz,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aJ" = (
@@ -185,7 +175,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aO" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 8;
@@ -194,7 +184,7 @@
 	name = "The Lighthouse";
 	roundstart_move = "ferry_away";
 	timid = 1;
-	port_angle = 180;
+	port_direction = 2;
 	width = 16
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -204,9 +194,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aQ" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
-/turf/open/floor/plasteel/shuttle,
+/obj/effect/spawner/structure/window,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aR" = (
 /obj/structure/chair/office/dark{
@@ -221,12 +210,12 @@
 /area/shuttle/transport)
 "aT" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/centcom,
+/obj/item/bedsheet/centcom,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aU" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/rainbow,
+/obj/item/bedsheet/rainbow,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aV" = (
@@ -244,9 +233,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/closed/wall/shuttle/smooth,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "aZ" = (
 /turf/closed/wall/mineral/titanium/overspace,
@@ -271,11 +259,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/vending_refill/snack,
+/obj/item/vending_refill/snack,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bd" = (
-/obj/item/weapon/twohanded/required/kirbyplants/dead{
+/obj/item/twohanded/required/kirbyplants/dead{
 	desc = "It doesn't look very healthy...";
 	name = "potted plant"
 	},
@@ -313,9 +301,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "bj" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 
@@ -376,8 +362,8 @@ aa
 (4,1,1) = {"
 ac
 af
-ah
-ah
+bh
+bh
 an
 aq
 as
@@ -385,9 +371,9 @@ aB
 as
 as
 aX
-ah
-ah
-ah
+bh
+bh
+bh
 bi
 bj
 "}

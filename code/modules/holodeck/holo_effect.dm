@@ -94,3 +94,12 @@
 
 /obj/effect/holodeck_effect/mobspawner/bee
 	mobtype = /mob/living/simple_animal/hostile/poison/bees/toxin
+
+/obj/effect/holodeck_effect/mobspawner/monkey
+	mobtype = /mob/living/simple_animal/holodeck_monkey
+
+/obj/effect/holodeck_effect/mobspawner/penguin
+	mobtype = /mob/living/simple_animal/pet/penguin/emperor
+
+/obj/effect/holodeck_effect/mobspawner/penguin_baby
+	mobtype = /mob/living/simple_animal/pet/penguin/baby

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
 	var/datum/research/files
-	var/health = 100
+	var/heat_health = 100
 	var/list/id_with_upload = list()		//List of R&D consoles with upload to server access.
 	var/list/id_with_download = list()	//List of R&D consoles with download from server access.
 	var/id_with_upload_string = ""		//String versions for easy editing in map editor.
@@ -12,21 +12,12 @@
 	var/heat_gen = 100
 	var/heating_power = 40000
 	var/delay = 10
-	req_access = list(access_rd) //Only the R&D can change server settings.
+	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
 
-/obj/machinery/r_n_d/server/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
+/obj/machinery/r_n_d/server/Initialize()
+	. = ..()
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
-	initialize() //Agouri
-
-/obj/item/weapon/circuitboard/machine/rdserver
-	name = "circuit board (R&D Server)"
-	build_path = /obj/machinery/r_n_d/server
-	origin_tech = "programming=3"
-	req_components = list(
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/scanning_module = 1)
 
 /obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
@@ -34,11 +25,12 @@
 
 /obj/machinery/r_n_d/server/RefreshParts()
 	var/tot_rating = 0
-	for(var/obj/item/weapon/stock_parts/SP in src)
+	for(var/obj/item/stock_parts/SP in src)
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
-/obj/machinery/r_n_d/server/initialize()
+/obj/machinery/r_n_d/server/Initialize(mapload)
+	. = ..()
 	if(!files) files = new /datum/research(src)
 	var/list/temp_list
 	if(!id_with_upload.len)
@@ -56,12 +48,12 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
 		if(0 to T0C)
-			health = min(100, health + 1)
+			heat_health = min(100, heat_health + 1)
 		if(T0C to (T20C + 20))
-			health = Clamp(health, 0, 100)
+			heat_health = Clamp(heat_health, 0, 100)
 		if((T20C + 20) to (T0C + 70))
-			health = max(0, health - 1)
-	if(health <= 0)
+			heat_health = max(0, heat_health - 1)
+	if(heat_health <= 0)
 		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or it's files anwyay.
 							refreshParts and the hasReq procs that get called by this are laggy and do not need to be called by every server on the map every tick */
 		var/updateRD = 0
@@ -84,21 +76,13 @@
 	griefProtection()
 	..()
 
-
 /obj/machinery/r_n_d/server/ex_act(severity, target)
 	griefProtection()
 	..()
 
-
-/obj/machinery/r_n_d/server/blob_act(obj/effect/blob/B)
-	griefProtection()
-	..()
-
-
-
 //Backup files to centcom to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
+	for(var/obj/machinery/r_n_d/server/centcom/C in GLOB.machines)
 		for(var/v in files.known_tech)
 			var/datum/tech/T = files.known_tech[v]
 			C.files.AddTech2Known(T)
@@ -129,7 +113,7 @@
 				air_update_turf()
 
 //called when the server is deconstructed.
-/obj/machinery/r_n_d/server/deconstruction()
+/obj/machinery/r_n_d/server/on_deconstruction()
 	griefProtection()
 	..()
 
@@ -141,14 +125,17 @@
 	return
 
 /obj/machinery/r_n_d/server/centcom
-	name = "Centcom Central R&D Database"
+	name = "CentCom Central R&D Database"
 	server_id = -1
 
-/obj/machinery/r_n_d/server/centcom/initialize()
-	..()
+/obj/machinery/r_n_d/server/centcom/Initialize()
+	. = ..()
+	fix_noid_research_servers()
+
+/proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()
 	var/list/server_ids = list()
-	for(var/obj/machinery/r_n_d/server/S in machines)
+	for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
 		switch(S.server_id)
 			if(-1)
 				continue
@@ -181,7 +168,7 @@
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
-	circuit = /obj/item/weapon/circuitboard/computer/rdservercontrol
+	circuit = /obj/item/circuitboard/computer/rdservercontrol
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())
@@ -190,7 +177,7 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
-		usr << "<span class='danger'>You do not have the required access level.</span>"
+		to_chat(usr, "<span class='danger'>You do not have the required access level.</span>")
 		return
 
 	if(href_list["main"])
@@ -200,20 +187,20 @@
 		temp_server = null
 		consoles = list()
 		servers = list()
-		for(var/obj/machinery/r_n_d/server/S in machines)
+		for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
 			if(S.server_id == text2num(href_list["access"]) || S.server_id == text2num(href_list["data"]) || S.server_id == text2num(href_list["transfer"]))
 				temp_server = S
 				break
 		if(href_list["access"])
 			screen = 1
-			for(var/obj/machinery/computer/rdconsole/C in machines)
+			for(var/obj/machinery/computer/rdconsole/C in GLOB.machines)
 				if(C.sync)
 					consoles += C
 		else if(href_list["data"])
 			screen = 2
 		else if(href_list["transfer"])
 			screen = 3
-			for(var/obj/machinery/r_n_d/server/S in machines)
+			for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
 				if(S == src)
 					continue
 				servers += S
@@ -234,7 +221,7 @@
 
 	else if(href_list["reset_tech"])
 		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			var/datum/tech/T = temp_server.files.known_tech[href_list["reset_tech"]]
 			if(T)
 				T.level = 1
@@ -242,7 +229,7 @@
 
 	else if(href_list["reset_design"])
 		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
+		if(choice == "Continue" && usr.canUseTopic(src))
 			var/datum/design/D = temp_server.files.known_designs[href_list["reset_design"]]
 			if(D)
 				temp_server.files.known_designs -= D.id
@@ -261,7 +248,7 @@
 		if(0) //Main Menu
 			dat += "Connected Servers:<BR><BR>"
 
-			for(var/obj/machinery/r_n_d/server/S in machines)
+			for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
 				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
 					continue
 				dat += "[S.name] || "
@@ -316,15 +303,16 @@
 	onclose(user, "server_control")
 	return
 
-/obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user, params)
+/obj/machinery/computer/rdservercontrol/attackby(obj/item/D, mob/user, params)
 	. = ..()
 	src.updateUsrDialog()
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
-	if(!emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		user << "<span class='notice'>You you disable the security protocols.</span>"
+	if(emagged)
+		return
+	playsound(src, "sparks", 75, 1)
+	emagged = TRUE
+	to_chat(user, "<span class='notice'>You you disable the security protocols.</span>")
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"

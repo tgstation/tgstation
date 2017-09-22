@@ -1,10 +1,8 @@
 /datum/objective/sintouched
-	dangerrating = 5
 	completed = 1
 
 /*  NO ERP OBJECTIVE FOR YOU.
 /datum/objective/sintouched/lust
-	dangerrating = 3 // it's not AS dangerous.
 
 /datum/objective/sintouched/lust/New()
 	var/mob/dead/D = pick(dead_mob_list)

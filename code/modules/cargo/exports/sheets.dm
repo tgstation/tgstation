@@ -26,7 +26,7 @@
 // Human skin. Illegal
 /datum/export/stack/skin/human
 	cost = 2000
-	contraband = 1
+	contraband = TRUE
 	unit_name = "piece"
 	message = "of human skin"
 	export_types = list(/obj/item/stack/sheet/animalhide/human)
@@ -40,14 +40,14 @@
 // Cat hide. Just in case Runtime is catsploding again.
 /datum/export/stack/skin/cat
 	cost = 2000
-	contraband = 1
+	contraband = TRUE
 	unit_name = "cat hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/cat)
 
 // Corgi hide. You monster.
 /datum/export/stack/skin/corgi
 	cost = 2500
-	contraband = 1
+	contraband = TRUE
 	unit_name = "corgi hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/corgi)
 
@@ -57,9 +57,15 @@
 	unit_name = "lizard hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/lizard)
 
+// Gondola hide. Mindbogglingly expensive.
+/datum/export/stack/skin/gondola
+	cost = 10000
+	unit_name = "gondola hide"
+	export_types = list(/obj/item/stack/sheet/animalhide/gondola)
+
 // Alien hide. Extremely expensive.
 /datum/export/stack/skin/xeno
-	cost = 15000
+	cost = 3000
 	unit_name = "alien hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
 
@@ -69,7 +75,7 @@
 
 // Plasteel. Lightweight, strong and contains some plasma too.
 /datum/export/stack/plasteel
-	cost = 85
+	cost = 305 // 2000u of plasma + 2000u of metal.
 	message = "of plasteel"
 	export_types = list(/obj/item/stack/sheet/plasteel)
 
@@ -79,9 +85,15 @@
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
+// Bluespace Polycrystals. Uncommon.
+/datum/export/stack/bscrystal
+	cost = 750
+	message = "of bluespace crystals"
+	export_types = list(/obj/item/stack/sheet/bluespace_crystal)
+
 // Wood. Quite expensive in the grim and dark 26 century.
 /datum/export/stack/wood
-	cost = 25
+	cost = 50
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
 
@@ -104,17 +116,13 @@
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
 
-/datum/export/stack/cable/get_cost(O)
-	return round(..())
-
-
 // Weird Stuff
 
 // Alien Alloy. Like plasteel, but better.
 // Major players would pay a lot to get some, so you can get a lot of money from producing and selling those.
 // Just don't forget to fire all your production staff before the end of month.
 /datum/export/stack/abductor
-	cost = 10000
+	cost = 5000
 	message = "of alien alloy"
 	export_types = list(/obj/item/stack/sheet/mineral/abductor)
 

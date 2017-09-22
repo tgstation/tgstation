@@ -9,43 +9,45 @@ Pipes -> Pipelines
 Pipelines + Other Objects -> Pipe network
 
 */
+#define PIPE_VISIBLE_LEVEL 2
+#define PIPE_HIDDEN_LEVEL 1
+
 /obj/machinery/atmospherics
-	anchored = 1
+	anchored = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
 	on_blueprints = TRUE
-	layer = GAS_PIPE_LAYER //under wires
+	layer = GAS_PIPE_HIDDEN_LAYER //under wires
+	resistance_flags = FIRE_PROOF
+	max_integrity = 200
 	var/nodealert = 0
 	var/can_unwrench = 0
 	var/initialize_directions = 0
 	var/pipe_color
-	var/obj/item/pipe/stored
+
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 
 	var/image/pipe_vision_img = null
 
 	var/device_type = 0
-	var/list/obj/machinery/atmospherics/nodes = list()
+	var/list/obj/machinery/atmospherics/nodes
 
 /obj/machinery/atmospherics/New(loc, process = TRUE)
-	nodes.len = device_type
+	nodes = new(device_type)
+	if (!armor)
+		armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 70)
 	..()
 	if(process)
 		SSair.atmos_machinery += src
 	SetInitDirections()
-	if(can_unwrench)
-		stored = new(src, make_from=src)
 
 /obj/machinery/atmospherics/Destroy()
 	for(DEVICE_TYPE_LOOP)
 		nullifyNode(I)
 
 	SSair.atmos_machinery -= src
-	if(stored)
-		qdel(stored)
-		stored = null
 
 	dropContents()
 	if(pipe_vision_img)
@@ -60,19 +62,24 @@ Pipelines + Other Objects -> Pipe network
 		N.disconnect(src)
 		NODE_I = null
 
+/obj/machinery/atmospherics/proc/getNodeConnects()
+	var/list/node_connects = list()
+	node_connects.len = device_type
+
+	for(DEVICE_TYPE_LOOP)
+		for(var/D in GLOB.cardinals)
+			if(D & GetInitDirections())
+				if(D in node_connects)
+					continue
+				node_connects[I] = D
+				break
+	return node_connects
+
+
 //this is called just after the air controller sets up turfs
 /obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
 	if(!node_connects) //for pipes where order of nodes doesn't matter
-		node_connects = list()
-		node_connects.len = device_type
-
-		for(DEVICE_TYPE_LOOP)
-			for(var/D in cardinal)
-				if(D & GetInitDirections())
-					if(D in node_connects)
-						continue
-					node_connects[I] = D
-					break
+		node_connects = getNodeConnects()
 
 	for(DEVICE_TYPE_LOOP)
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
@@ -122,12 +129,12 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/update_icon()
 	return
 
-/obj/machinery/atmospherics/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+/obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wrench))
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
 			if (level==1 && isturf(T) && T.intact)
-				user << "<span class='warning'>You must remove the plating first!</span>"
+				to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
 				return 1
 			var/datum/gas_mixture/int_air = return_air()
 			var/datum/gas_mixture/env_air = loc.return_air()
@@ -136,26 +143,25 @@ Pipelines + Other Objects -> Pipe network
 			var/unsafe_wrenching = FALSE
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+			playsound(src.loc, W.usesound, 50, 1)
+			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 			if (internal_pressure > 2*ONE_ATMOSPHERE)
-				user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
+				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
 				unsafe_wrenching = TRUE //Oh dear oh dear
 
-			if (do_after(user, 20/W.toolspeed, target = src) && !qdeleted(src))
+			if (do_after(user, 20*W.toolspeed, target = src) && !QDELETED(src))
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
+				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 				if(unsafe_wrenching)
 					unsafe_pressure_release(user, internal_pressure)
-				Deconstruct()
+				deconstruct(TRUE)
 	else
 		return ..()
-
 
 /obj/machinery/atmospherics/proc/can_unwrench(mob/user)
 	return can_unwrench
@@ -171,7 +177,7 @@ Pipelines + Other Objects -> Pipe network
 
 	var/fuck_you_dir = get_dir(src, user) // Because fuck you...
 	if(!fuck_you_dir)
-		fuck_you_dir = pick(cardinal)
+		fuck_you_dir = pick(GLOB.cardinals)
 	var/turf/target = get_edge_target_turf(user, fuck_you_dir)
 	var/range = pressures/250
 	var/speed = range/5
@@ -179,13 +185,14 @@ Pipelines + Other Objects -> Pipe network
 	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
 	user.throw_at(target, range, speed)
 
-/obj/machinery/atmospherics/Deconstruct()
-	if(can_unwrench)
-		stored.loc = src.loc
-		transfer_fingerprints_to(stored)
-		stored = null
-
-	qdel(src)
+/obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(can_unwrench)
+			var/obj/item/pipe/stored = new(loc, make_from=src)
+			if(!disassembled)
+				stored.obj_integrity = stored.max_integrity * 0.5
+			transfer_fingerprints_to(stored)
+	..()
 
 /obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
 
@@ -196,26 +203,16 @@ Pipelines + Other Objects -> Pipe network
 	//Generate a unique identifier for this image combination
 	var/identifier = iconsetids[iconset] + "_[iconstate]_[direction]_[col]"
 
-	var/image/img
-	if(pipeimages[identifier] == null)
-		img = image(iconset, icon_state=iconstate, dir=direction)
-		img.color = col
+	if((!(. = pipeimages[identifier])))
+		var/image/pipe_overlay
+		pipe_overlay = . = pipeimages[identifier] = image(iconset, iconstate, dir = direction)
+		pipe_overlay.color = col
 
-		pipeimages[identifier] = img
-
-	else
-		img = pipeimages[identifier]
-
-	return img
-
-/obj/machinery/atmospherics/construction(pipe_type, obj_color)
+/obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
 	if(can_unwrench)
-		color = obj_color
+		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
-		stored.setDir(src.dir		  )//need to define them here, because the obj directions...
-		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
-		stored.color = obj_color
-	var/turf/T = loc
+	var/turf/T = get_turf(src)
 	level = T.intact ? 2 : 1
 	atmosinit()
 	var/list/nodes = pipeline_expansion()
@@ -225,8 +222,9 @@ Pipelines + Other Objects -> Pipe network
 	build_network()
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct(FALSE)
 
 
 //Find a connecting /obj/machinery/atmospherics in specified direction
@@ -248,7 +246,7 @@ Pipelines + Other Objects -> Pipe network
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction)
 	if(target_move)
 		if(target_move.can_crawl_through())
-			if(is_type_in_list(target_move, ventcrawl_machinery))
+			if(is_type_in_typecache(target_move, GLOB.ventcrawl_machinery))
 				user.forceMove(target_move.loc) //handle entering and so on.
 				user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 			else
@@ -261,7 +259,7 @@ Pipelines + Other Objects -> Pipe network
 					user.last_played_vent = world.time
 					playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
 	else
-		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
+		if((direction & initialize_directions) || is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
 			user.forceMove(src.loc)
 			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 	user.canmove = 0
@@ -270,7 +268,7 @@ Pipelines + Other Objects -> Pipe network
 
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(is_type_in_list(src, ventcrawl_machinery))
+	if(is_type_in_list(src, GLOB.ventcrawl_machinery))
 		L.handle_ventcrawl(src)
 		return
 	..()

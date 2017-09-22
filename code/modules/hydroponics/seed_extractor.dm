@@ -10,8 +10,8 @@
 	if(extractor)
 		seedloc = extractor.loc
 
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
+	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/))
+		var/obj/item/reagent_containers/food/snacks/grown/F = O
 		if(F.seed)
 			if(user && !user.drop_item()) //couldn't drop the item
 				return
@@ -22,8 +22,8 @@
 			qdel(O)
 			return 1
 
-	else if(istype(O, /obj/item/weapon/grown))
-		var/obj/item/weapon/grown/F = O
+	else if(istype(O, /obj/item/grown))
+		var/obj/item/grown/F = O
 		if(F.seed)
 			if(user && !user.drop_item())
 				return
@@ -42,29 +42,17 @@
 	desc = "Extracts and bags seeds from produce."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "sextractor"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
+	circuit = /obj/item/circuitboard/machine/seed_extractor
 	var/piles = list()
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 
-/obj/machinery/seed_extractor/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/seed_extractor(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/seed_extractor
-	name = "circuit board (Seed Extractor)"
-	build_path = /obj/machinery/seed_extractor
-	origin_tech = "programming=1"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
-
 /obj/machinery/seed_extractor/RefreshParts()
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_seeds = 1000 * B.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		seed_multiplier = M.rating
 
 /obj/machinery/seed_extractor/attackby(obj/item/O, mob/user, params)
@@ -84,8 +72,8 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
-	if (istype(O,/obj/item/weapon/storage/bag/plants))
-		var/obj/item/weapon/storage/P = O
+	if (istype(O, /obj/item/storage/bag/plants))
+		var/obj/item/storage/P = O
 		var/loaded = 0
 		for(var/obj/item/seeds/G in P.contents)
 			if(contents.len >= max_seeds)
@@ -93,21 +81,21 @@
 			++loaded
 			add_seed(G)
 		if (loaded)
-			user << "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>"
+			to_chat(user, "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>")
 		else
-			user << "<span class='notice'>There are no seeds in \the [O.name].</span>"
+			to_chat(user, "<span class='notice'>There are no seeds in \the [O.name].</span>")
 		return
 
 	else if(seedify(O,-1, src, user))
-		user << "<span class='notice'>You extract some seeds.</span>"
+		to_chat(user, "<span class='notice'>You extract some seeds.</span>")
 		return
-	else if (istype(O,/obj/item/seeds))
+	else if (istype(O, /obj/item/seeds))
 		if(add_seed(O))
-			user << "<span class='notice'>You add [O] to [src.name].</span>"
+			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
 			updateUsrDialog()
 		return
-	else if(user.a_intent != "harm")
-		user << "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>"
+	else if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>")
 	else
 		return ..()
 
@@ -188,15 +176,15 @@
 
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
-		usr << "<span class='notice'>\The [src] is full.</span>"
+		to_chat(usr, "<span class='notice'>\The [src] is full.</span>")
 		return 0
 
-	if(istype(O.loc,/mob))
+	if(ismob(O.loc))
 		var/mob/M = O.loc
 		if(!M.drop_item())
 			return 0
-	else if(istype(O.loc,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = O.loc
+	else if(istype(O.loc, /obj/item/storage))
+		var/obj/item/storage/S = O.loc
 		S.remove_from_storage(O,src)
 
 	O.loc = src

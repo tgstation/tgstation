@@ -4,7 +4,8 @@
 	icon_state = "chronohelmet"
 	item_state = "chronohelmet"
 	slowdown = 1
-	armor = list(melee = 60, bullet = 30/*bullet through the visor*/, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
+	armor = list(melee = 60, bullet = 30/*bullet through the visor*/, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90, fire = 100, acid = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/clothing/suit/space/chronos/suit = null
 
 /obj/item/clothing/head/helmet/space/chronos/dropped()
@@ -23,12 +24,12 @@
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
 	actions_types = list(/datum/action/item_action/toggle)
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
-	var/list/chronosafe_items = list(/obj/item/weapon/chrono_eraser, /obj/item/weapon/gun/energy/chrono_gun)
-	var/hands_nodrop_states
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90, fire = 100, acid = 1000)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	var/list/chronosafe_items = list(/obj/item/chrono_eraser, /obj/item/gun/energy/chrono_gun)
+	var/list/hands_nodrop = list()
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
-	var/image/phase_underlay = null
 	var/datum/action/innate/chrono_teleport/teleport_now = new
 	var/activating = 0
 	var/activated = 0
@@ -70,8 +71,8 @@
 	switch(severity)
 		if(1)
 			if(activated && user && ishuman(user) && (user.wear_suit == src))
-				user << "<span class='danger'>E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD</span>"
-				user << "<span class='userdanger'>An electromagnetic pulse disrupts your [name] and violently tears you out of time-bluespace!</span>"
+				to_chat(user, "<span class='danger'>E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD</span>")
+				to_chat(user, "<span class='userdanger'>An electromagnetic pulse disrupts your [name] and violently tears you out of time-bluespace!</span>")
 				user.emote("scream")
 			deactivate(1, 1)
 
@@ -84,22 +85,17 @@
 	if(istype(user))
 		if(to_turf)
 			user.forceMove(to_turf)
-		user.SetStunned(0)
+		user.SetStun(0)
 		user.next_move = 1
 		user.alpha = 255
-		user.color = "#ffffff"
+		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
-		user.anchored = 0
+		user.anchored = FALSE
 		teleporting = 0
-		if(user.l_hand && !(hands_nodrop_states & 1))
-			user.l_hand.flags &= ~NODROP
-		if(user.r_hand && !(hands_nodrop_states & 2))
-			user.r_hand.flags &= ~NODROP
-		if(phase_underlay && !qdeleted(phase_underlay))
-			user.underlays -= phase_underlay
-			qdel(phase_underlay)
-			phase_underlay = null
+		for(var/obj/item/I in user.held_items)
+			if(I in hands_nodrop)
+				I.flags_1 &= ~NODROP_1
 		if(camera)
 			camera.remove_target_ui()
 			camera.loc = user
@@ -119,37 +115,37 @@
 
 		teleport_now.UpdateButtonIcon()
 
-		var/list/nonsafe_slots = list(slot_belt, slot_back, slot_l_hand, slot_r_hand)
+		var/list/nonsafe_slots = list(slot_belt, slot_back)
+		var/list/exposed = list()
 		for(var/slot in nonsafe_slots)
 			var/obj/item/slot_item = user.get_item_by_slot(slot)
-			if(slot_item && !(slot_item.type in chronosafe_items) && user.unEquip(slot_item))
-				user << "<span class='notice'>Your [slot_item.name] got left behind.</span>"
+			exposed += slot_item
+		exposed += user.held_items
+		for(var/exposed_item in exposed)
+			var/obj/item/exposed_I = exposed_item
+			if(exposed_I && !(exposed_I.type in chronosafe_items) && user.dropItemToGround(exposed_I))
+				to_chat(user, "<span class='notice'>Your [exposed_I.name] got left behind.</span>")
 
 		user.ExtinguishMob()
 
-		phase_underlay = create_phase_underlay(user)
-
-		hands_nodrop_states = 0
-		if(user.l_hand)
-			hands_nodrop_states |= (user.l_hand.flags & NODROP) ? 1 : 0
-			user.l_hand.flags |= NODROP
-		if(user.r_hand)
-			hands_nodrop_states |= (user.r_hand.flags & NODROP) ? 2 : 0
-			user.r_hand.flags |= NODROP
-
+		hands_nodrop = list()
+		for(var/obj/item/I in user.held_items)
+			if(!(I.flags_1 & NODROP_1))
+				hands_nodrop += I
+				I.flags_1 |= NODROP_1
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
-		user.anchored = 1
+		user.anchored = TRUE
 		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)
-		phase_timer_id = addtimer(src, "phase_2", 3, FALSE, user, to_turf, phase_in_ds)
+		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_2, user, to_turf, phase_in_ds), 3, TIMER_STOPPABLE)
 
 /obj/item/clothing/suit/space/chronos/proc/phase_2(mob/living/carbon/human/user, turf/to_turf, phase_in_ds)
 	if(teleporting && activated && user)
 		animate(user, alpha = 0, time = 2)
-		phase_timer_id = addtimer(src, "phase_3", 2, FALSE, user, to_turf, phase_in_ds)
+		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_3, user, to_turf, phase_in_ds), 2, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
 
@@ -157,25 +153,16 @@
 	if(teleporting && activated && user)
 		user.forceMove(to_turf)
 		animate(user, alpha = 255, time = phase_in_ds)
-		phase_timer_id = addtimer(src, "phase_4", phase_in_ds, FALSE, user, to_turf)
+		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_4, user, to_turf), phase_in_ds, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
 
 /obj/item/clothing/suit/space/chronos/proc/phase_4(mob/living/carbon/human/user, turf/to_turf)
 	if(teleporting && activated && user)
 		animate(user, color = "#ffffff", time = 3)
-		phase_timer_id = addtimer(src, "finish_chronowalk", 3, FALSE, user, to_turf)
+		phase_timer_id = addtimer(CALLBACK(src, .proc/finish_chronowalk, user, to_turf), 3, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
-
-
-/obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(var/mob/user)
-	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "white")
-	user_icon.AddAlphaMask(getFlatIcon(user))
-	var/image/phase = new(user_icon)
-	phase.appearance_flags = RESET_COLOR|RESET_ALPHA
-	user.underlays += phase
-	return phase
 
 /obj/item/clothing/suit/space/chronos/process()
 	if(activated)
@@ -198,24 +185,24 @@
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
 		if(user && ishuman(user) && user.wear_suit == src)
-			user << "\nChronosuitMK4 login: root"
-			user << "Password:\n"
-			user << "root@ChronosuitMK4# chronowalk4 --start\n"
+			to_chat(user, "\nChronosuitMK4 login: root")
+			to_chat(user, "Password:\n")
+			to_chat(user, "root@ChronosuitMK4# chronowalk4 --start\n")
 			if(user.head && istype(user.head, /obj/item/clothing/head/helmet/space/chronos))
-				user << "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helm"
+				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helm")
 				helmet = user.head
-				helmet.flags |= NODROP
+				helmet.flags_1 |= NODROP_1
 				helmet.suit = src
-				src.flags |= NODROP
-				user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner"
-				user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver"
-				user << "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view"
+				src.flags_1 |= NODROP_1
+				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner")
+				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver")
+				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view")
 				new_camera(user)
 				START_PROCESSING(SSobj, src)
 				activated = 1
 			else
-				user << "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helm"
-				user << "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b>"
+				to_chat(user, "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helm")
+				to_chat(user, "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b></span>")
 			teleport_now.Grant(user)
 		cooldown = world.time + cooldowntime
 		activating = 0
@@ -225,7 +212,7 @@
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
 		var/hard_landing = teleporting && force
-		src.flags &= ~NODROP
+		src.flags_1 &= ~NODROP_1
 		cooldown = world.time + cooldowntime * 1.5
 		activated = 0
 		activating = 0
@@ -235,18 +222,18 @@
 			if(user.wear_suit == src)
 				if(hard_landing)
 					user.electrocute_act(35, src, safety = 1)
-					user.Weaken(10)
+					user.Knockdown(200)
 				if(!silent)
-					user << "\nroot@ChronosuitMK4# chronowalk4 --stop\n"
+					to_chat(user, "\nroot@ChronosuitMK4# chronowalk4 --stop\n")
 					if(camera)
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Sending TERM signal to chronowalk4-view"
+						to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Sending TERM signal to chronowalk4-view")
 					if(helmet)
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping ui display driver"
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping brainwave scanner"
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet"
-					user << "logout"
+						to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Stopping ui display driver")
+						to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Stopping brainwave scanner")
+						to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet")
+					to_chat(user, "logout")
 		if(helmet)
-			helmet.flags &= ~NODROP
+			helmet.flags_1 &= ~NODROP_1
 			helmet.suit = null
 			helmet = null
 		if(camera)
@@ -254,11 +241,11 @@
 
 /obj/effect/chronos_cam
 	name = "Chronosuit View"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 	opacity = 0
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/mob/holder = null
 	var/phase_time = 0
 	var/phase_time_length = 3
@@ -333,6 +320,7 @@
 
 /datum/action/innate/chrono_teleport
 	name = "Teleport Now"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "chrono_phase"
 	check_flags = AB_CHECK_CONSCIOUS //|AB_CHECK_INSIDE
 	var/obj/item/clothing/suit/space/chronos/chronosuit = null

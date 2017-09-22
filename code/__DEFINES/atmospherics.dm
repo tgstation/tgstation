@@ -14,8 +14,9 @@
 #define GAS_META		3
 #define META_GAS_SPECIFIC_HEAT	1
 #define META_GAS_NAME			2
-#define META_GAS_OVERLAY		4
 #define META_GAS_MOLES_VISIBLE	3
+#define META_GAS_OVERLAY		4
+#define META_GAS_DANGER			5
 
 //stuff you should probably leave well alone!
 //ATMOS
@@ -66,15 +67,19 @@
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
 #define PLASMA_OXYGEN_FULLBURN				10
-#define MIN_PLASMA_DAMAGE					1
-#define MAX_PLASMA_DAMAGE					10
+#define MIN_TOXIC_GAS_DAMAGE				1
+#define MAX_TOXIC_GAS_DAMAGE				10
 #define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
+#define GAS_STIM_MINIMUM					0.002
 	//Plasma fusion properties
 #define PLASMA_BINDING_ENERGY				3000000
 #define MAX_CARBON_EFFICENCY				9
 #define PLASMA_FUSED_COEFFICENT				0.08
 #define CARBON_CATALYST_COEFFICENT			0.01
 #define FUSION_PURITY_THRESHOLD				0.9
+#define FUSION_HEAT_DROPOFF					20000+T0C
+	//MISC reaction properties
+#define BROWNS_FORMATION_ENERGY				100000
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define WARNING_HIGH_PRESSURE				325		//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
@@ -163,3 +168,13 @@
 #define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
 #define TANK_MIN_RELEASE_PRESSURE 0
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
+
+
+#define ATMOS_PASS_YES 1
+#define ATMOS_PASS_NO 0
+#define ATMOS_PASS_PROC -1 //ask CanAtmosPass()
+#define ATMOS_PASS_DENSITY -2 //just check density
+#define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
+
+#define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
+#define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"

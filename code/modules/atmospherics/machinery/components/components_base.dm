@@ -4,15 +4,15 @@ On top of that, now people can add component-speciic procs/vars if they want!
 */
 
 /obj/machinery/atmospherics/components
-	var/welded = 0 //Used on pumps and scrubbers
-	var/showpipe = 0
+	var/welded = FALSE //Used on pumps and scrubbers
+	var/showpipe = FALSE
 
-	var/list/datum/pipeline/parents = list()
-	var/list/datum/gas_mixture/airs = list()
+	var/list/datum/pipeline/parents
+	var/list/datum/gas_mixture/airs
 
 /obj/machinery/atmospherics/components/New()
-	parents.len = device_type
-	airs.len = device_type
+	parents = new(device_type)
+	airs = new(device_type)
 	..()
 
 	for(DEVICE_TYPE_LOOP)
@@ -29,9 +29,9 @@ Iconnery
 
 	return img.dir
 
-/obj/machinery/atmospherics/components/proc/icon_addbroken(var/connected = 0)
+/obj/machinery/atmospherics/components/proc/icon_addbroken(var/connected = FALSE)
 	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinals)
 		if(unconnected & direction)
 			underlays += getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_exposed", direction)
 
@@ -45,14 +45,14 @@ Iconnery
 
 	var/turf/T = loc
 	if(level == 2 || !T.intact)
-		showpipe = 1
+		showpipe = TRUE
 	else
-		showpipe = 0
+		showpipe = FALSE
 
 	if(!showpipe)
 		return //no need to update the pipes if they aren't showing
 
-	var/connected = 0
+	var/connected = FALSE
 
 	for(DEVICE_TYPE_LOOP) //adds intact pieces
 		if(NODE_I)
@@ -72,7 +72,7 @@ Pipenet stuff; housekeeping
 		qdel(AIR_I)
 		AIR_I = null
 
-/obj/machinery/atmospherics/components/construction()
+/obj/machinery/atmospherics/components/on_construction()
 	..()
 	update_parents()
 
@@ -167,6 +167,6 @@ UI Stuff
 /obj/machinery/atmospherics/components/ui_status(mob/user)
 	if(allowed(user))
 		return ..()
-	user << "<span class='danger'>Access denied.</span>"
+	to_chat(user, "<span class='danger'>Access denied.</span>")
 	return UI_CLOSE
 

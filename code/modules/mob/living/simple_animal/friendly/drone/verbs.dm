@@ -9,20 +9,23 @@
 	set category = "Drone"
 	set name = "Check Laws"
 
-	src << "<b>Drone Laws</b>"
-	src << laws
+	to_chat(src, "<b>Drone Laws</b>")
+	to_chat(src, laws)
 
 /mob/living/simple_animal/drone/verb/toggle_light()
 	set category = "Drone"
 	set name = "Toggle drone light"
+	if(stat == DEAD)
+		to_chat(src, "<span class='warning'>There's no light in your life... by that I mean you're dead.</span>")
+		return
 	if(light_on)
-		AddLuminosity(-8)
+		set_light(0)
 	else
-		AddLuminosity(8)
+		set_light(8)
 
 	light_on = !light_on
 
-	src << "<span class='notice'>Your light is now [light_on ? "on" : "off"].</span>"
+	to_chat(src, "<span class='notice'>Your light is now [light_on ? "on" : "off"].</span>")
 
 /mob/living/simple_animal/drone/verb/drone_ping()
 	set category = "Drone"
@@ -36,14 +39,13 @@
 		var/msg = "<span class='boldnotice'>DRONE PING: [name]: [alert_s] priority alert in [A.name]!</span>"
 		alert_drones(msg)
 
-
 /mob/living/simple_animal/drone/verb/toggle_statics()
 	set name = "Change Vision Filter"
 	set desc = "Change the filter on the system used to remove non drone beings from your viewscreen."
 	set category = "Drone"
 
 	if(!seeStatic)
-		src << "<span class='warning'>You have no vision filter to change!</span>"
+		to_chat(src, "<span class='warning'>You have no vision filter to change!</span>")
 		return
 
 	var/selectedStatic = input("Select a vision filter", "Vision Filter") as null|anything in staticChoices
@@ -51,4 +53,3 @@
 		staticChoice = selectedStatic
 
 	updateSeeStaticMobs()
-

@@ -1,17 +1,17 @@
 /mob/living/carbon/human/movement_delay()
-	. += dna.species.movement_delay(src)
+	. = 0
 	. += ..()
 	. += config.human_delay
+	. += dna.species.movement_delay(src)
 
-
-/mob/living/carbon/human/slip(s_amount, w_amount, obj/O, lube)
-	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
+/mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
+	if(isobj(shoes) && (shoes.flags_1&NOSLIP_1) && !(lube&GALOSHES_DONT_HELP))
 		return 0
 	return ..()
 
 /mob/living/carbon/human/experience_pressure_difference()
 	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
-	if(shoes && shoes.flags&NOSLIP)
+	if(shoes && shoes.flags_1&NOSLIP_1)
 		return 0
 	return ..()
 
@@ -22,12 +22,13 @@
 			. = 1
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return ((shoes && shoes.negates_gravity()) || dna.species.negates_gravity())
+	return ((shoes && shoes.negates_gravity()) || dna.species.negates_gravity(src))
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_move(src, NewLoc)
+
 	if(shoes)
 		if(!lying && !buckled)
 			if(loc == NewLoc)
@@ -55,9 +56,12 @@
 				//End bloody footprints
 
 				S.step_action()
-
+/mob/living/carbon/human/Moved()
+	. = ..()
+	if(buckled_mobs && buckled_mobs.len && riding_datum)
+		riding_datum.on_vehicle_move()
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(..())
 		return 1
-	return dna.species.space_move()
+	return dna.species.space_move(src)

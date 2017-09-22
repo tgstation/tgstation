@@ -26,7 +26,7 @@
 /datum/airlock_maker/New(var/atom/target_loc)
 	linked = new(target_loc)
 	linked.maker = src
-	linked.anchored = 0
+	linked.anchored = FALSE
 	access_used = list()
 
 	interact()
@@ -115,7 +115,7 @@
 		var/final = target_type
 		target_type = text2path(final)
 		if(!target_type)
-			usr << "Didn't work, contact Sayu with this: [final]"
+			to_chat(usr, "Didn't work, contact Sayu with this: [final]")
 			usr << browse(null,"window=airlockmaker")
 			return
 

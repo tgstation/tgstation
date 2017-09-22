@@ -4,7 +4,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler1"
 	item_state = "flight"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/list/modes = list(
 		"grey"		= rgb(255,255,255),
 		"red"			= rgb(255,0,0),
@@ -23,13 +23,12 @@
 	if(!proximity_flag)
 		return
 
-	if(!istype(A,/obj/machinery/atmospherics/pipe))
+	if(!istype(A, /obj/machinery/atmospherics/pipe))
 		return
 
 	var/obj/machinery/atmospherics/pipe/P = A
-	P.color = modes[mode]
+	P.add_atom_colour(modes[mode], FIXED_COLOUR_PRIORITY)
 	P.pipe_color = modes[mode]
-	P.stored.color = modes[mode]
 	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 	P.update_node_icon() //updates the neighbors
 
@@ -38,4 +37,4 @@
 
 /obj/item/device/pipe_painter/examine()
 	..()
-	usr << "It is set to [mode]."
+	to_chat(usr, "It is set to [mode].")

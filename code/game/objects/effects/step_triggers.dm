@@ -3,9 +3,9 @@
 /obj/effect/step_trigger
 	var/affect_ghosts = 0
 	var/stopper = 1 // stops throwers
-	var/mobs_only = 0
+	var/mobs_only = FALSE
 	invisibility = INVISIBILITY_ABSTRACT // nope cant see this shit
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
@@ -14,9 +14,9 @@
 	..()
 	if(!H)
 		return
-	if(istype(H, /mob/dead/observer) && !affect_ghosts)
+	if(isobserver(H) && !affect_ghosts)
 		return
-	if(!istype(H, /mob) && mobs_only)
+	if(!ismob(H) && mobs_only)
 		return
 	Trigger(H)
 
@@ -25,10 +25,11 @@
 /obj/effect/step_trigger/message
 	var/message	//the message to give to the mob
 	var/once = 1
+	mobs_only = TRUE
 
 /obj/effect/step_trigger/message/Trigger(mob/M)
 	if(M.client)
-		M << "<span class='info'>[message]</span>"
+		to_chat(M, "<span class='info'>[message]</span>")
 		if(once)
 			qdel(src)
 
@@ -44,7 +45,7 @@
 	var/list/affecting = list()
 
 /obj/effect/step_trigger/thrower/Trigger(atom/A)
-	if(!A || !istype(A, /atom/movable))
+	if(!A || !ismovableatom(A))
 		return
 	var/atom/movable/AM = A
 	var/curtiles = 0
@@ -182,8 +183,9 @@
 	if(!T)
 		return
 
-	if(triggerer_only)
-		A.playsound_local(T, sound, volume, freq_vary)
+	if(triggerer_only && ismob(A))
+		var/mob/B = A
+		B.playsound_local(T, sound, volume, freq_vary)
 	else
 		playsound(T, sound, volume, freq_vary, extra_range)
 

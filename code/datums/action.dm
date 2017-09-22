@@ -1,22 +1,22 @@
 #define AB_CHECK_RESTRAINED 1
-#define AB_CHECK_STUNNED 2
+#define AB_CHECK_STUN 2
 #define AB_CHECK_LYING 4
 #define AB_CHECK_CONSCIOUS 8
-
 
 /datum/action
 	var/name = "Generic Action"
 	var/desc = null
 	var/obj/target = null
 	var/check_flags = 0
-	var/processing = 0
+	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
-	var/button_icon = 'icons/mob/actions.dmi'
-	var/background_icon_state = "bg_default"
 	var/buttontooltipstyle = ""
 
-	var/icon_icon = 'icons/mob/actions.dmi'
-	var/button_icon_state = "default"
+	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
+	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
+
+	var/icon_icon = 'icons/mob/actions.dmi' //This is the file for the ACTION icon
+	var/button_icon_state = "default" //And this is the state for the action icon
 	var/mob/owner
 
 /datum/action/New(Target)
@@ -37,23 +37,29 @@
 	return ..()
 
 /datum/action/proc/Grant(mob/M)
-	if(owner)
-		if(owner == M)
-			return
+	if(M)
+		if(owner)
+			if(owner == M)
+				return
+			Remove(owner)
+		owner = M
+		M.actions += src
+		if(M.client)
+			M.client.screen += button
+			button.locked = M.client.prefs.buttons_locked
+		M.update_action_buttons()
+	else
 		Remove(owner)
-	owner = M
-	M.actions += src
-	if(M.client)
-		M.client.screen += button
-	M.update_action_buttons()
 
 /datum/action/proc/Remove(mob/M)
-	if(M.client)
-		M.client.screen -= button
-	button.moved = FALSE //so the button appears in its normal position when given to another owner.
-	M.actions -= src
-	M.update_action_buttons()
+	if(M)
+		if(M.client)
+			M.client.screen -= button
+		M.actions -= src
+		M.update_action_buttons()
 	owner = null
+	button.moved = FALSE //so the button appears in its normal position when given to another owner.
+	button.locked = FALSE
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
@@ -69,8 +75,8 @@
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
 			return 0
-	if(check_flags & AB_CHECK_STUNNED)
-		if(owner.stunned || owner.weakened)
+	if(check_flags & AB_CHECK_STUN)
+		if(owner.IsKnockdown() || owner.IsStun())
 			return 0
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying)
@@ -80,12 +86,24 @@
 			return 0
 	return 1
 
-/datum/action/proc/UpdateButtonIcon()
+/datum/action/proc/UpdateButtonIcon(status_only = FALSE)
 	if(button)
-		button.icon = button_icon
-		button.icon_state = background_icon_state
+		if(!status_only)
+			button.name = name
+			button.desc = desc
+			if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+				var/list/settings = owner.hud_used.get_action_buttons_icons()
+				if(button.icon != settings["bg_icon"])
+					button.icon = settings["bg_icon"]
+				if(button.icon_state != settings["bg_state"])
+					button.icon_state = settings["bg_state"]
+			else
+				if(button.icon != button_icon)
+					button.icon = button_icon
+				if(button.icon_state != background_icon_state)
+					button.icon_state = background_icon_state
 
-		ApplyIcon(button)
+			ApplyIcon(button)
 
 		if(!IsAvailable())
 			button.color = rgb(128,0,0,128)
@@ -94,19 +112,15 @@
 			return 1
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.cut_overlays()
-	if(icon_icon && button_icon_state)
-		var/image/img
-		img = image(icon_icon, current_button, button_icon_state)
-		img.pixel_x = 0
-		img.pixel_y = 0
-		current_button.add_overlay(img)
-
+	if(icon_icon && button_icon_state && current_button.button_icon_state != button_icon_state)
+		current_button.cut_overlays(TRUE)
+		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
+		current_button.button_icon_state = button_icon_state
 
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	button_icon_state = null
 	// If you want to override the normal icon being the item
 	// then change this to an icon state
@@ -114,11 +128,13 @@
 /datum/action/item_action/New(Target)
 	..()
 	var/obj/item/I = target
+	LAZYINITLIST(I.actions)
 	I.actions += src
 
 /datum/action/item_action/Destroy()
 	var/obj/item/I = target
 	I.actions -= src
+	UNSETEMPTY(I.actions)
 	return ..()
 
 /datum/action/item_action/Trigger()
@@ -126,22 +142,24 @@
 		return 0
 	if(target)
 		var/obj/item/I = target
-		I.ui_action_click(owner, src.type)
+		I.ui_action_click(owner, src)
 	return 1
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.cut_overlays()
-
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
 		// of the item appearence
 		..(current_button)
-	else if(target)
+	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
 		var/obj/item/I = target
-		var/old = I.layer
+		current_button.appearance_cache = I.appearance
+		var/old_layer = I.layer
+		var/old_plane = I.plane
 		I.layer = FLOAT_LAYER //AAAH
-		current_button.add_overlay(I)
-		I.layer = old
+		I.plane = FLOAT_PLANE //^ what that guy said
+		current_button.overlays = list(I)
+		I.layer = old_layer
+		I.plane = old_plane
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -151,6 +169,11 @@
 
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
+
+/datum/action/item_action/rcl
+	name = "Change Cable Color"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_rainbow"
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
@@ -173,12 +196,15 @@
 /datum/action/item_action/set_internals
 	name = "Set Internals"
 
-/datum/action/item_action/set_internals/UpdateButtonIcon()
+/datum/action/item_action/set_internals/UpdateButtonIcon(status_only = FALSE)
 	if(..()) //button available
 		if(iscarbon(owner))
 			var/mob/living/carbon/C = owner
 			if(target == C.internal)
-				button.icon_state = "bg_default_on"
+				button.icon_state = "template_active"
+
+/datum/action/item_action/pick_color
+	name = "Choose A Color"
 
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"
@@ -189,7 +215,64 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
+/datum/action/item_action/toggle_headphones
+	name = "Toggle Headphones"
+	desc = "UNTZ UNTZ UNTZ"
+
+/datum/action/item_action/toggle_headphones/Trigger()
+	var/obj/item/clothing/ears/headphones/H = target
+	if(istype(H))
+		H.toggle(owner)
+
+/datum/action/item_action/toggle_unfriendly_fire
+	name = "Toggle Friendly Fire \[ON\]"
+	desc = "Toggles if the club's blasts cause friendly fire."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "vortex_ff_on"
+
+/datum/action/item_action/toggle_unfriendly_fire/Trigger()
+	if(..())
+		UpdateButtonIcon()
+
+/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE)
+	if(istype(target, /obj/item/hierophant_club))
+		var/obj/item/hierophant_club/H = target
+		if(H.friendly_fire_check)
+			button_icon_state = "vortex_ff_off"
+			name = "Toggle Friendly Fire \[OFF\]"
+		else
+			button_icon_state = "vortex_ff_on"
+			name = "Toggle Friendly Fire \[ON\]"
+	..()
+
+/datum/action/item_action/synthswitch
+	name = "Change Synthesizer Instrument"
+	desc = "Change the type of instrument your synthesizer is playing as."
+
+/datum/action/item_action/synthswitch/Trigger()
+	if(istype(target, /obj/item/device/instrument/piano_synth))
+		var/obj/item/device/instrument/piano_synth/synth = target
+		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
+		if(!synth.insTypes[chosen])
+			return
+		return synth.changeInstrument(chosen)
+	return ..()
+
+/datum/action/item_action/vortex_recall
+	name = "Vortex Recall"
+	desc = "Recall yourself, and anyone nearby, to an attuned hierophant beacon at any time.<br>If the beacon is still attached, will detach it."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "vortex_recall"
+
+/datum/action/item_action/vortex_recall/IsAvailable()
+	if(istype(target, /obj/item/hierophant_club))
+		var/obj/item/hierophant_club/H = target
+		if(H.teleporting)
+			return 0
+	return ..()
+
 /datum/action/item_action/clock
+	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
 
@@ -198,11 +281,11 @@
 		return 0
 	return ..()
 
-/datum/action/item_action/clock/toggle_flame
-	name = "Summon/Dismiss Ratvar's Flame"
-	desc = "Allows you to summon a flame that can create stunning zones at any range."
+/datum/action/item_action/clock/toggle_visor
+	name = "Create Judicial Marker"
+	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
 
-/datum/action/item_action/clock/toggle_flame/IsAvailable()
+/datum/action/item_action/clock/toggle_visor/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
@@ -213,18 +296,13 @@
 
 /datum/action/item_action/clock/hierophant
 	name = "Hierophant Network"
-	desc = "Allows you to communicate with other Servants."
+	desc = "Lets you discreetly talk with all other servants. Nearby listeners can hear you whispering, so make sure to do this privately."
 	button_icon_state = "hierophant_slab"
 
-/datum/action/item_action/clock/guvax
-	name = "Guvax"
-	desc = "Allows you to convert adjacent nonservants while holding the slab."
-	button_icon_state = "guvax_capacitor"
-
-/datum/action/item_action/clock/vanguard
-	name = "Vanguard"
-	desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
-	button_icon_state = "vanguard_cogwheel"
+/datum/action/item_action/clock/quickbind
+	name = "Quickbind"
+	desc = "If you're seeing this, file a bug report."
+	var/scripture_index = 0 //the index of the scripture we're associated with
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
@@ -274,7 +352,7 @@
 	name = "Toggle Jetpack Stabilization"
 
 /datum/action/item_action/jetpack_stabilization/IsAvailable()
-	var/obj/item/weapon/tank/jetpack/J = target
+	var/obj/item/tank/jetpack/J = target
 	if(!istype(J) || !J.on)
 		return 0
 	return ..()
@@ -285,31 +363,98 @@
 /datum/action/item_action/hands_free/activate
 	name = "Activate"
 
-
 /datum/action/item_action/hands_free/shift_nerves
 	name = "Shift Nerves"
 
+/datum/action/item_action/explosive_implant
+	check_flags = 0
+	name = "Activate Explosive Implant"
 
 /datum/action/item_action/toggle_research_scanner
 	name = "Toggle Research Scanner"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "scan_mode"
+	var/active = FALSE
 
 /datum/action/item_action/toggle_research_scanner/Trigger()
 	if(IsAvailable())
-		owner.research_scanner = !owner.research_scanner
-		owner << "<span class='notice'>Research analyzer is now [owner.research_scanner ? "active" : "deactivated"].</span>"
+		active = !active
+		if(active)
+			owner.research_scanner++
+		else
+			owner.research_scanner--
+		to_chat(owner, "<span class='notice'>[target] research scanner has been [active ? "activated" : "deactivated"].</span>")
 		return 1
 
 /datum/action/item_action/toggle_research_scanner/Remove(mob/M)
-	if(owner)
-		owner.research_scanner = 0
+	if(owner && active)
+		owner.research_scanner--
+		active = FALSE
 	..()
 
-/datum/action/item_action/toggle_research_scanner/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.cut_overlays()
-	if(button_icon && button_icon_state)
-		var/image/img = image(button_icon, current_button, "scan_mode")
-		current_button.add_overlay(img)
+/datum/action/item_action/instrument
+	name = "Use Instrument"
+	desc = "Use the instrument specified"
+
+/datum/action/item_action/instrument/Trigger()
+	if(istype(target, /obj/item/device/instrument))
+		var/obj/item/device/instrument/I = target
+		I.interact(usr)
+		return
+	return ..()
+
+/datum/action/item_action/initialize_ninja_suit
+	name = "Toggle ninja suit"
+
+/datum/action/item_action/ninjasmoke
+	name = "Smoke Bomb"
+	desc = "Blind your enemies momentarily with a well-placed smoke bomb."
+	button_icon_state = "smoke"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+
+/datum/action/item_action/ninjaboost
+	check_flags = NONE
+	name = "Adrenaline Boost"
+	desc = "Inject a secret chemical that will counteract all movement-impairing effect."
+	button_icon_state = "repulse"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+
+/datum/action/item_action/ninjapulse
+	name = "EM Burst (25E)"
+	desc = "Disable any nearby technology with a electro-magnetic pulse."
+	button_icon_state = "emp"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+
+/datum/action/item_action/ninjastar
+	name = "Create Throwing Stars (1E)"
+	desc = "Creates some throwing stars"
+	button_icon_state = "throwingstar"
+	icon_icon = 'icons/obj/items_and_weapons.dmi'
+
+/datum/action/item_action/ninjanet
+	name = "Energy Net (20E)"
+	desc = "Captures a fallen opponent in a net of energy. Will teleport them to a holding facility after 30 seconds."
+	button_icon_state = "energynet"
+	icon_icon = 'icons/effects/effects.dmi'
+
+/datum/action/item_action/ninja_sword_recall
+	name = "Recall Energy Katana (Variable Cost)"
+	desc = "Teleports the Energy Katana linked to this suit to its wearer, cost based on distance."
+	button_icon_state = "energy_katana"
+	icon_icon = 'icons/obj/items_and_weapons.dmi'
+
+/datum/action/item_action/ninja_stealth
+	name = "Toggle Stealth"
+	desc = "Toggles stealth mode on and off."
+	button_icon_state = "ninja_cloak"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+
+/datum/action/item_action/toggle_glove
+	name = "Toggle interaction"
+	desc = "Switch between normal interaction and drain mode."
+	button_icon_state = "s-ninjan"
+	icon_icon = 'icons/obj/clothing/gloves.dmi'
+
 
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS
@@ -343,7 +488,8 @@
 	var/obj/effect/proc_holder/spell/S = target
 	S.action = src
 	name = S.name
-	button_icon = S.action_icon
+	desc = S.desc
+	icon_icon = S.action_icon
 	button_icon_state = S.action_icon_state
 	background_icon_state = S.action_background_icon_state
 	button.name = name
@@ -418,10 +564,26 @@
 /datum/action/item_action/stickmen
 	name = "Summon Stick Minions"
 	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "art_summon"
 
 //surf_ss13
 /datum/action/item_action/bhop
 	name = "Activate Jump Boots"
 	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "jetboot"
+
+/datum/action/language_menu
+	name = "Language Menu"
+	desc = "Open the language menu to review your languages, their keys, and select your default language."
+	button_icon_state = "language_menu"
+	check_flags = 0
+
+/datum/action/language_menu/Trigger()
+	if(!..())
+		return FALSE
+	if(ismob(owner))
+		var/mob/M = owner
+		var/datum/language_holder/H = M.get_language_holder()
+		H.open_language_menu(usr)

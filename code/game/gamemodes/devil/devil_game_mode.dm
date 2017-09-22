@@ -2,7 +2,8 @@
 	name = "devil"
 	config_tag = "devil"
 	antag_flag = ROLE_DEVIL
-	protected_jobs = list("Lawyer", "Librarian", "Chaplain", "Head of Security", "Captain", "AI")
+	false_report_weight = 1
+	protected_jobs = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -19,7 +20,6 @@
 		+	<span class='notice'>Crew</span>: Resist the lure of sin and remain pure!"
 
 /datum/game_mode/devil/pre_setup()
-
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
@@ -50,12 +50,32 @@
 
 /datum/game_mode/devil/post_setup()
 	for(var/datum/mind/devil in devils)
-		spawn(rand(10,100))
-			finalize_devil(devil, objective_count)
-			spawn(100)
-				add_devil_objectives(devil, objective_count) //This has to be in a separate loop, as we need devil names to be generated before we give objectives in devil agent.
-				devil.announceDevilLaws()
-				devil.announce_objectives()
+		post_setup_finalize(devil)
 	modePlayer += devils
 	..()
 	return 1
+
+/datum/game_mode/devil/generate_report()
+	return "Infernal creatures have been seen nearby offering great boons in exchange for souls.  This is considered theft against Nanotrasen, as all employment contracts contain a lien on the \
+			employee's soul.  If anyone sells their soul in error, contact an attorney to overrule the sale.  Be warned that if the devil purchases enough souls, a gateway to hell may open."
+
+/datum/game_mode/devil/proc/post_setup_finalize(datum/mind/devil)
+	add_devil(devil.current, ascendable = TRUE) //Devil gamemode devils are ascendable.
+	add_devil_objectives(devil,2)
+
+/proc/is_devil(mob/living/M)
+	return M && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+
+/proc/add_devil(mob/living/L, ascendable = FALSE)
+	if(!L || !L.mind)
+		return FALSE
+	var/datum/antagonist/devil/devil_datum = L.mind.add_antag_datum(ANTAG_DATUM_DEVIL)
+	devil_datum.ascendable = ascendable
+	return devil_datum
+
+/proc/remove_devil(mob/living/L)
+	if(!L || !L.mind)
+		return FALSE
+	var/datum/antagonist/devil_datum = L.mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	devil_datum.on_removal()
+	return TRUE

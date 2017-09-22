@@ -15,7 +15,7 @@
 
 /obj/item/areaeditor
 	name = "area modification item"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "blueprints"
 	attack_verb = list("attacked", "bapped", "hit")
 	var/fluffnotice = "Nobody's gonna read this stuff!"
@@ -49,11 +49,13 @@
 /obj/item/areaeditor/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of the station. There is a \"Classified\" stamp and several coffee stains on it."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/image/showing = list()
 	var/client/viewing
+	var/legend = FALSE	//Viewing the wire legend
 
 
 /obj/item/areaeditor/blueprints/Destroy()
@@ -63,15 +65,25 @@
 
 /obj/item/areaeditor/blueprints/attack_self(mob/user)
 	. = ..()
-	var/area/A = get_area()
-	if(get_area_type() == AREA_STATION)
-		. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
-		. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
-	if(!viewing)
-		. += "<p><a href='?src=\ref[src];view_blueprints=1'>View structural data</a></p>"
+	if(!legend)
+		var/area/A = get_area()
+		if(get_area_type() == AREA_STATION)
+			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
+			. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
+		. += "<p><a href='?src=\ref[src];view_legend=1'>View wire colour legend</a></p>"
+		if(!viewing)
+			. += "<p><a href='?src=\ref[src];view_blueprints=1'>View structural data</a></p>"
+		else
+			. += "<p><a href='?src=\ref[src];refresh=1'>Refresh structural data</a></p>"
+			. += "<p><a href='?src=\ref[src];hide_blueprints=1'>Hide structural data</a></p>"
 	else
-		. += "<p><a href='?src=\ref[src];refresh=1'>Refresh structural data</a></p>"
-		. += "<p><a href='?src=\ref[src];hide_blueprints=1'>Hide structural data</a></p>"
+		if(legend == TRUE)
+			. += "<a href='?src=\ref[src];exit_legend=1'><< Back</a>"
+			. += view_wire_devices(user);
+		else
+			//legend is a wireset
+			. += "<a href='?src=\ref[src];view_legend=1'><< Back</a>"
+			. += view_wire_set(user, legend)
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
 	popup.open()
@@ -84,6 +96,12 @@
 		if(get_area_type()!=AREA_STATION)
 			return
 		edit_area()
+	if(href_list["exit_legend"])
+		legend = FALSE;
+	if(href_list["view_legend"])
+		legend = TRUE;
+	if(href_list["view_wireset"])
+		legend = href_list["view_wireset"];
 	if(href_list["view_blueprints"])
 		set_viewer(usr, "<span class='notice'>You flip the blueprints over to view the complex information diagram.</span>")
 	if(href_list["hide_blueprints"])
@@ -109,7 +127,7 @@
 		showing = get_images(get_turf(user), viewing.view)
 		viewing.images |= showing
 		if(message)
-			user << message
+			to_chat(user, message)
 
 /obj/item/areaeditor/blueprints/proc/clear_viewer(mob/user, message = "")
 	if(viewing)
@@ -117,19 +135,18 @@
 		viewing = null
 	showing.Cut()
 	if(message)
-		user << message
+		to_chat(user, message)
 
 /obj/item/areaeditor/blueprints/dropped(mob/user)
 	..()
 	clear_viewer()
+	legend = FALSE
 
 
 /obj/item/areaeditor/proc/get_area()
 	var/turf/T = get_turf(usr)
 	var/area/A = T.loc
-	A = A.master
 	return A
-
 
 /obj/item/areaeditor/proc/get_area_type(area/A = get_area())
 	if(A.outdoors)
@@ -149,18 +166,38 @@
 			return AREA_SPECIAL
 	return AREA_STATION
 
+/obj/item/areaeditor/blueprints/proc/view_wire_devices(mob/user)
+	var/message = "<br>You examine the wire legend.<br>"
+	for(var/wireset in GLOB.wire_color_directory)
+		message += "<br><a href='?src=\ref[src];view_wireset=[wireset]'>[GLOB.wire_name_directory[wireset]]</a>"
+	message += "</p>"
+	return message
+
+/obj/item/areaeditor/blueprints/proc/view_wire_set(mob/user, wireset)
+	//for some reason you can't use wireset directly as a derefencer so this is the next best :/
+	for(var/device in GLOB.wire_color_directory)
+		if("[device]" == wireset)	//I know... don't change it...
+			var/message = "<p><b>[GLOB.wire_name_directory[device]]:</b>"
+			for(var/Col in GLOB.wire_color_directory[device])
+				var/wire_name = GLOB.wire_color_directory[device][Col]
+				if(!findtext(wire_name, WIRE_DUD_PREFIX))	//don't show duds
+					message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
+			message += "</p>"
+			return message
+	return ""
+
 /proc/create_area(mob/living/creator)
 	var/res = detect_room(get_turf(creator))
-	if(!istype(res,/list))
+	if(!islist(res))
 		switch(res)
 			if(ROOM_ERR_SPACE)
-				creator << "<span class='warning'>The new area must be completely airtight.</span>"
+				to_chat(creator, "<span class='warning'>The new area must be completely airtight.</span>")
 				return
 			if(ROOM_ERR_TOOLARGE)
-				creator << "<span class='warning'>The new area is too large.</span>"
+				to_chat(creator, "<span class='warning'>The new area is too large.</span>")
 				return
 			else
-				creator << "<span class='warning'>Error! Please notify administration.</span>"
+				to_chat(creator, "<span class='warning'>Error! Please notify administration.</span>")
 				return
 
 	var/list/turfs = res
@@ -168,7 +205,7 @@
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
-		creator << "<span class='warning'>The given name is too long.  The area remains undefined.</span>"
+		to_chat(creator, "<span class='warning'>The given name is too long.  The area remains undefined.</span>")
 		return
 	var/area/old = get_area(get_turf(creator))
 	var/old_gravity = old.has_gravity
@@ -181,17 +218,30 @@
 			turfs -= turfs[key]
 			turfs -= key
 	if(A)
-		A.contents += turfs
-		A.SetDynamicLighting()
+		A.set_dynamic_lighting()
+		for (var/turf/T in turfs)
+			var/area/old_area = T.loc
+			A.contents += T
+			T.change_area(old_area, T)
+
 	else
 		A = new
 		A.setup(str)
-		A.contents += turfs
-		A.SetDynamicLighting()
+		A.set_dynamic_lighting()
+		for (var/turf/T in turfs)
+			var/area/old_area = T.loc
+			A.contents += T
+			T.change_area(old_area, T)
 	A.has_gravity = old_gravity
-	creator << "<span class='notice'>You have created a new area, named [str]. It is now weather proof, and constructing an APC will allow it to be powered.</span>"
-	return 1
 
+	for(var/area/RA in old.related)
+		if(RA.firedoors)
+			for(var/D in RA.firedoors)
+				var/obj/machinery/door/firedoor/FD = D
+				FD.CalculateAffectingAreas()
+
+	to_chat(creator, "<span class='notice'>You have created a new area, named [str]. It is now weather proof, and constructing an APC will allow it to be powered.</span>")
+	return 1
 
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area()
@@ -200,12 +250,16 @@
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
-		usr << "<span class='warning'>The given name is too long.  The area's name is unchanged.</span>"
+		to_chat(usr, "<span class='warning'>The given name is too long.  The area's name is unchanged.</span>")
 		return
 	set_area_machinery_title(A,str,prevname)
 	for(var/area/RA in A.related)
 		RA.name = str
-	usr << "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>"
+		if(RA.firedoors)
+			for(var/D in RA.firedoors)
+				var/obj/machinery/door/firedoor/FD = D
+				FD.CalculateAffectingAreas()
+	to_chat(usr, "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>")
 	interact()
 	return 1
 
@@ -238,7 +292,7 @@
 
 /turf/open/check_tile_is_border()
 	for(var/atom/movable/AM in src)
-		if(!AM.CanAtmosPass(src))
+		if(!CANATMOSPASS(AM, src))
 			return BORDER_2NDTILE
 
 	return BORDER_NONE
@@ -255,7 +309,7 @@
 			return ROOM_ERR_TOOLARGE
 		var/turf/T = pending[1] //why byond havent list::pop()?
 		pending -= T
-		for (var/dir in cardinal)
+		for (var/dir in GLOB.cardinals)
 			var/skip = 0
 			for (var/obj/structure/window/W in T)
 				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
@@ -289,7 +343,7 @@
 
 	for(var/V in border) //lazy but works
 		var/turf/F = V
-		for(var/direction in cardinal)
+		for(var/direction in GLOB.cardinals)
 			if(direction == border[F])
 				continue //don't want to grab turfs from outside the border
 			var/turf/U = get_step(F, direction)
@@ -307,6 +361,6 @@
 /obj/item/areaeditor/blueprints/cyborg
 	name = "station schematics"
 	desc = "A digital copy of the station blueprints stored in your memory."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."

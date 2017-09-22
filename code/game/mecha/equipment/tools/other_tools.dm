@@ -57,18 +57,12 @@
 	var/turf/target_turf = pick(L)
 	if(!target_turf)
 		return
-	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(target))
-	P.target = target_turf
-	P.creator = null
-	P.icon = 'icons/obj/objects.dmi'
-	P.icon_state = "anom"
-	P.name = "wormhole"
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, src, 300, 1, /obj/effect/portal/anom)
 	var/turf/T = get_turf(target)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_COORDJMP(T)]",0,1)
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [COORD(T)]")
 	src = null
-	spawn(rand(150,300))
-		qdel(P)
+	QDEL_LIST_IN(created, rand(150,300))
 	return 1
 
 
@@ -100,10 +94,13 @@
 				send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 			else if(target!=locked)
 				if(locked in view(chassis))
+					var/turf/targ = get_turf(target)
+					var/turf/orig = get_turf(locked)
 					locked.throw_at(target, 14, 1.5)
 					locked = null
 					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
-					return 1
+					log_game("[key_name(chassis.occupant)] used a Gravitational Catapult to throw [locked]([COORD(orig)]) at [target]([COORD(targ)]).")
+					return TRUE
 				else
 					locked = null
 					occupant_message("Lock on [locked] disengaged.")
@@ -122,8 +119,8 @@
 						step_away(A,target)
 						sleep(2)
 			var/turf/T = get_turf(target)
-			log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Gravitational Catapult in ([T.x],[T.y],[T.z])")
-			return 1
+			log_game("[key_name(chassis.occupant)] used a Gravitational Catapult repulse wave on ([COORD(T)])")
+			return TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_equip_info()
@@ -154,8 +151,8 @@
 	var/damage_coeff = 0.8
 	selectable = 0
 
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/attack_react(mob/user as mob)
-	if(action_checks(user))
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/attack_react()
+	if(action_checks(src))
 		start_cooldown()
 		return 1
 
@@ -197,7 +194,7 @@
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	if(chassis)
-		chassis.overlays -= droid_overlay
+		chassis.cut_overlay(droid_overlay)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/mecha/M as obj)
@@ -206,7 +203,7 @@
 	M.add_overlay(droid_overlay)
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/detach()
-	chassis.overlays -= droid_overlay
+	chassis.cut_overlay(droid_overlay)
 	STOP_PROCESSING(SSobj, src)
 	..()
 
@@ -218,7 +215,7 @@
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Topic(href, href_list)
 	..()
 	if(href_list["toggle_repairs"])
-		chassis.overlays -= droid_overlay
+		chassis.cut_overlay(droid_overlay)
 		if(equip_ready)
 			START_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
@@ -248,8 +245,8 @@
 				chassis.clearInternalDamage(int_dam_flag)
 				repaired = 1
 				break
-	if(health_boost<0 || chassis.health < initial(chassis.health))
-		chassis.health += min(health_boost, initial(chassis.health)-chassis.health)
+	if(health_boost<0 || chassis.obj_integrity < chassis.max_integrity)
+		chassis.obj_integrity += min(health_boost, chassis.max_integrity-chassis.obj_integrity)
 		repaired = 1
 	if(repaired)
 		if(!chassis.use_power(energy_drain))
@@ -258,7 +255,7 @@
 	else //no repair needed, we turn off
 		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
-		chassis.overlays -= droid_overlay
+		chassis.cut_overlay(droid_overlay)
 		droid_overlay = new(src.icon, icon_state = "repair_droid")
 		chassis.add_overlay(droid_overlay)
 
@@ -300,7 +297,7 @@
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)
-			if(A.master && A.master.powered(c))
+			if(A.powered(c))
 				pow_chan = c
 				break
 	return pow_chan
@@ -338,13 +335,13 @@
 		if(A)
 			var/pow_chan
 			for(var/c in list(EQUIP,ENVIRON,LIGHT))
-				if(A.master.powered(c))
+				if(A.powered(c))
 					pow_chan = c
 					break
 			if(pow_chan)
 				var/delta = min(20, chassis.cell.maxcharge-cur_charge)
 				chassis.give_power(delta)
-				A.master.use_power(delta*coeff, pow_chan)
+				A.use_power(delta*coeff, pow_chan)
 
 
 

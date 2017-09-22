@@ -1,13 +1,10 @@
-// Global var to track modular computers
-var/list/global_modular_computers = list()
-
 // Modular Computer - device that runs various programs and operates with hardware
 // DO NOT SPAWN THIS TYPE. Use /laptop/ or /console/ instead.
 /obj/machinery/modular_computer
 	name = "modular computer"
 	desc = "An advanced computer."
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	var/hardware_flag = 0								// A flag that describes this device type
 	var/last_power_usage = 0							// Power usage during last tick
@@ -28,21 +25,15 @@ var/list/global_modular_computers = list()
 	var/base_active_power_usage = 100					// Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
 	var/base_idle_power_usage = 10						// Power usage when the computer is idle and screen is off (currently only applies to laptops)
 
-	var/_max_damage = 100
-	var/_break_damage = 50
-
 	var/obj/item/device/modular_computer/processor/cpu = null				// CPU that handles most logic while this type only handles power and other specific things.
 
-/obj/machinery/modular_computer/New()
-	..()
+/obj/machinery/modular_computer/Initialize()
+	. = ..()
 	cpu = new(src)
 	cpu.physical = src
-	global_modular_computers.Add(src)
 
 /obj/machinery/modular_computer/Destroy()
-	if(cpu)
-		qdel(cpu)
-		cpu = null
+	QDEL_NULL(cpu)
 	return ..()
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
@@ -61,35 +52,41 @@ var/list/global_modular_computers = list()
 			add_overlay(screen_icon_screensaver)
 		else
 			icon_state = icon_state_unpowered
-		SetLuminosity(0)
+		set_light(0)
 	else
-		SetLuminosity(light_strength)
+		set_light(light_strength)
 		if(cpu.active_program)
 			add_overlay(cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu)
 		else
-			overlays.Add(screen_icon_state_menu)
+			add_overlay(screen_icon_state_menu)
 
-	if(cpu && cpu.damage > cpu.broken_damage)
+	if(cpu && cpu.obj_integrity <= cpu.integrity_failure)
 		add_overlay("bsod")
 		add_overlay("broken")
 
 // Eject ID card from computer, if it has ID slot with card inside.
-/obj/machinery/modular_computer/verb/eject_id()
+/obj/machinery/modular_computer/proc/eject_id()
 	set name = "Eject ID"
 	set category = "Object"
-	set src in view(1)
 
 	if(cpu)
 		cpu.eject_id()
 
 // Eject ID card from computer, if it has ID slot with card inside.
-/obj/machinery/modular_computer/verb/eject_disk()
+/obj/machinery/modular_computer/proc/eject_disk()
 	set name = "Eject Data Disk"
+	set category = "Object"
+
+	if(cpu)
+		cpu.eject_disk()
+
+/obj/machinery/modular_computer/proc/eject_card()
+	set name = "Eject Intellicard"
 	set category = "Object"
 	set src in view(1)
 
 	if(cpu)
-		cpu.eject_disk()
+		cpu.eject_card()
 
 /obj/machinery/modular_computer/AltClick(mob/user)
 	if(cpu)
@@ -109,8 +106,9 @@ var/list/global_modular_computers = list()
 
 // Used in following function to reduce copypaste
 /obj/machinery/modular_computer/proc/power_failure(malfunction = 0)
+	var/obj/item/computer_hardware/battery/battery_module = cpu.all_components[MC_CELL]
 	if(cpu && cpu.enabled) // Shut down the computer
-		visible_message("<span class='danger'>\The [src]'s screen flickers [cpu.battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")
+		visible_message("<span class='danger'>\The [src]'s screen flickers [battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")
 		if(cpu)
 			cpu.shutdown_computer(0)
 	stat |= NOPOWER
@@ -119,15 +117,15 @@ var/list/global_modular_computers = list()
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
-	if(cpu && cpu.use_power()) // If "CPU" still has a power source, PC wouldn't go offline.
+	if(cpu && cpu.use_power()) // If MC_CPU still has a power source, PC wouldn't go offline.
 		stat &= ~NOPOWER
 		update_icon()
 		return
 	..()
 	update_icon()
 
-/obj/machinery/modular_computer/attackby(var/obj/item/weapon/W as obj, mob/user)
-	if(cpu)
+/obj/machinery/modular_computer/attackby(var/obj/item/W as obj, mob/user)
+	if(cpu && !(flags_1 & NODECONSTRUCT_1))
 		return cpu.attackby(W, user)
 	return ..()
 
@@ -137,6 +135,7 @@ var/list/global_modular_computers = list()
 /obj/machinery/modular_computer/ex_act(severity)
 	if(cpu)
 		cpu.ex_act(severity)
+	..()
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
 /obj/machinery/modular_computer/emp_act(severity)

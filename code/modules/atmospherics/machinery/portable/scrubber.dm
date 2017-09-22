@@ -1,13 +1,13 @@
 /obj/machinery/portable_atmospherics/scrubber
 	name = "portable air scrubber"
 	icon_state = "pscrubber:0"
-	density = 1
+	density = TRUE
 
 	var/on = FALSE
 	var/volume_rate = 1000
 	volume = 1000
 
-	var/list/scrubbing = list("plasma", "co2", "n2o", "agent_b", "bz", "freon")
+	var/list/scrubbing = list("plasma", "co2", "n2o", "agent_b", "bz", "freon", "water_vapor")
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
 	var/turf/T = get_turf(src)
@@ -62,8 +62,8 @@
 		update_icon()
 	..()
 
-/obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-														datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+/obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "portable_scrubber", name, 420, 335, master_ui, state)
@@ -117,7 +117,7 @@
 	if((!anchored && !movable) || !is_operational())
 		on = FALSE
 		update_icon()
-	use_power = 1 + on
+	use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
 	if(!on)
 		return
 
@@ -127,7 +127,7 @@
 		for(var/turf/AT in T.GetAtmosAdjacentTurfs(alldir = TRUE))
 			scrub(AT.return_air())
 
-/obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/W, mob/user)
 	if(default_unfasten_wrench(user, W))
 		if(!movable)
 			on = FALSE

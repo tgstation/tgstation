@@ -6,6 +6,7 @@
 
 /obj/structure/disposalholder
 	invisibility = INVISIBILITY_MAXIMUM
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
@@ -120,8 +121,11 @@
 	T.assume_air(gas)
 	T.air_update_turf()
 
-/obj/structure/disposalholder/allow_drop()
-	return 1
+/obj/structure/disposalholder/AllowDrop()
+	return TRUE
+
+/obj/structure/disposalholder/ex_act(severity, target)
+	return
 
 // Disposal pipes
 
@@ -129,22 +133,23 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	on_blueprints = TRUE
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
 	dir = 0// dir will contain dominant direction for junction pipes
-	var/health = 10 	// health points 0-10
+	max_integrity = 200
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
 	var/obj/structure/disposalconstruct/stored
 
 	// new pipe, set the icon_state as on map
-/obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
-	..()
+/obj/structure/disposalpipe/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
 
-	if(make_from && !qdeleted(make_from))
+	if(make_from && !QDELETED(make_from))
 		base_icon_state = make_from.base_state
 		setDir(make_from.dir)
 		dpdir = make_from.dpdir
@@ -170,7 +175,6 @@
 				stored.ptype = DISP_SORTJUNCTION
 			if("pipe-j2s")
 				stored.ptype = DISP_SORTJUNCTION_FLIP
-	return
 
 
 	// pipe is deleted
@@ -178,22 +182,9 @@
 /obj/structure/disposalpipe/Destroy()
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
-		// holder was present
 		H.active = 0
 		var/turf/T = src.loc
-		if(T.density)
-			// deleting pipe is inside a dense turf (wall)
-			// this is unlikely, but just dump out everything into the turf in case
-
-			for(var/atom/movable/AM in H)
-				AM.forceMove(src.loc)
-				AM.pipe_eject(0)
-			qdel(H)
-			return ..()
-
-		// otherwise, do normal expel from turf
-		else
-			expel(H, T, 0)
+		expel(H, T, 0)
 	return ..()
 
 // returns the direction of the next pipe object, given the entrance dir
@@ -228,7 +219,7 @@
 // update the icon_state to reflect hidden status
 /obj/structure/disposalpipe/proc/update()
 	var/turf/T = src.loc
-	hide(T.intact && !istype(T,/turf/open/space))	// space never hides pipes
+	hide(T.intact && !isspaceturf(T))	// space never hides pipes
 
 // hide called by levelupdate if turf intact status changes
 // change visibility status and force update of icon
@@ -255,103 +246,47 @@
 /obj/structure/disposalpipe/proc/expel(obj/structure/disposalholder/H, turf/T, direction)
 
 	var/turf/target
+	var/eject_range = 5
+	var/turf/open/floor/floorturf
 
-	if(istype(T, /turf/open/floor)) //intact floor, pop the tile
-		var/turf/open/floor/myturf = T
-		if(myturf.floor_tile)
-			PoolOrNew(myturf.floor_tile, T)
-		myturf.make_plating()
+	if(isfloorturf(T)) //intact floor, pop the tile
+		floorturf = T
+		if(floorturf.floor_tile)
+			new floorturf.floor_tile(T)
+		floorturf.make_plating()
 
 	if(direction)		// direction is specified
-		if(istype(T, /turf/open/space)) // if ended in space, then range is unlimited
+		if(isspaceturf(T)) // if ended in space, then range is unlimited
 			target = get_edge_target_turf(T, direction)
 		else						// otherwise limit to 10 tiles
 			target = get_ranged_target_turf(T, direction, 10)
 
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-		if(H)
-			for(var/atom/movable/AM in H)
-				AM.forceMove(src.loc)
-				AM.pipe_eject(direction)
-				AM.throw_at_fast(target, 10, 1)
+		eject_range = 10
 
-	else	// no specified direction, so throw in random direction
+	else if(floorturf)
+		target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-		if(H)
-			for(var/atom/movable/AM in H)
-				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
-				AM.forceMove(src.loc)
-				AM.pipe_eject(0)
-				AM.throw_at_fast(target, 5, 1)
+	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+	for(var/atom/movable/AM in H)
+		AM.forceMove(src.loc)
+		AM.pipe_eject(direction)
+		if(target)
+			AM.throw_at(target, eject_range, 1)
 	H.vent_gas(T)
 	qdel(H)
-	return
-
-// call to break the pipe
-// will expel any holder inside at the time
-// then delete the pipe
-// remains : set to leave broken pipe pieces in place
-/obj/structure/disposalpipe/proc/broken(remains = 0)
-	if(remains)
-		for(var/D in cardinal)
-			if(D & dpdir)
-				var/obj/structure/disposalpipe/broken/P = new(src.loc)
-				P.setDir(D)
-
-	src.invisibility = INVISIBILITY_MAXIMUM	// make invisible (since we won't delete the pipe immediately)
-	var/obj/structure/disposalholder/H = locate() in src
-	if(H)
-		// holder was present
-		H.active = 0
-		var/turf/T = src.loc
-		if(T.density)
-			// broken pipe is inside a dense turf (wall)
-			// this is unlikely, but just dump out everything into the turf in case
-
-			for(var/atom/movable/AM in H)
-				AM.forceMove(src.loc)
-				AM.pipe_eject(0)
-			qdel(H)
-			return
-
-		// otherwise, do normal expel from turf
-		if(H)
-			expel(H, T, 0)
-
-	spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
-		qdel(src)
 
 
 // pipe affected by explosion
-/obj/structure/disposalpipe/ex_act(severity, target)
-
-	//pass on ex_act to our contents before calling it on ourself
+/obj/structure/disposalpipe/contents_explosion(severity, target)
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
 		H.contents_explosion(severity, target)
 
-	switch(severity)
-		if(1)
-			broken(0)
-			return
-		if(2)
-			health -= rand(5,15)
-			healthcheck()
-			return
-		if(3)
-			health -= rand(0,15)
-			healthcheck()
-			return
 
-
-// test health for brokenness
-/obj/structure/disposalpipe/proc/healthcheck()
-	if(health < -2)
-		broken(0)
-	else if(health<1)
-		broken(1)
-	return
+/obj/structure/disposalpipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 10)
+		return 0
+	. = ..()
 
 //attack by item
 //weldingtool: unfasten and convert to obj/disposalconstruct
@@ -361,17 +296,17 @@
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = I
+	if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/W = I
 		if(can_be_deconstructed(user))
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "<span class='notice'>You start slicing the disposal pipe...</span>"
+				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
+				to_chat(user, "<span class='notice'>You start slicing the disposal pipe...</span>")
 				// check if anything changed over 2 seconds
 				if(do_after(user,30, target = src))
 					if(!src || !W.isOn()) return
-					Deconstruct()
-					user << "<span class='notice'>You slice the disposal pipe.</span>"
+					deconstruct()
+					to_chat(user, "<span class='notice'>You slice the disposal pipe.</span>")
 	else
 		return ..()
 
@@ -380,20 +315,39 @@
 	. = 1
 
 // called when pipe is cut with welder
-/obj/structure/disposalpipe/Deconstruct()
-	if(stored)
-		var/turf/T = loc
-		stored.loc = T
-		transfer_fingerprints_to(stored)
-		stored.setDir(dir)
-		stored.density = 0
-		stored.anchored = 1
-		stored.update_icon()
-		..()
+/obj/structure/disposalpipe/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(disassembled)
+			if(stored)
+				var/turf/T = loc
+				stored.loc = T
+				transfer_fingerprints_to(stored)
+				stored.setDir(dir)
+				stored.density = FALSE
+				stored.anchored = TRUE
+				stored.update_icon()
+		else
+			for(var/D in GLOB.cardinals)
+				if(D & dpdir)
+					var/obj/structure/disposalpipe/broken/P = new(src.loc)
+					P.setDir(D)
+	qdel(src)
+
 
 /obj/structure/disposalpipe/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct()
+
+//Fixes dpdir on shuttle rotation
+/obj/structure/disposalpipe/shuttleRotate(rotation)
+	..()
+	var/new_dpdir = 0
+	for(var/D in GLOB.cardinals)
+		if(dpdir & D)
+			new_dpdir = new_dpdir | angle2dir(rotation+dir2angle(D))
+	dpdir = new_dpdir
+
 
 // *** TEST verb
 //client/verb/dispstop()
@@ -404,15 +358,14 @@
 /obj/structure/disposalpipe/segment
 	icon_state = "pipe-s"
 
-/obj/structure/disposalpipe/segment/New()
-	..()
+/obj/structure/disposalpipe/segment/Initialize()
+	. = ..()
 	if(stored.ptype == DISP_PIPE_STRAIGHT)
 		dpdir = dir | turn(dir, 180)
 	else
 		dpdir = dir | turn(dir, -90)
 
 	update()
-	return
 
 
 
@@ -421,8 +374,8 @@
 /obj/structure/disposalpipe/junction
 	icon_state = "pipe-j1"
 
-/obj/structure/disposalpipe/junction/New()
-	..()
+/obj/structure/disposalpipe/junction/Initialize()
+	. = ..()
 	switch(stored.ptype)
 		if(DISP_JUNCTION)
 			dpdir = dir | turn(dir, -90) | turn(dir,180)
@@ -431,7 +384,6 @@
 		if(DISP_YJUNCTION)
 			dpdir = dir | turn(dir,90) | turn(dir, -90)
 	update()
-	return
 
 
 // next direction to move
@@ -478,11 +430,11 @@
 /obj/structure/disposalpipe/sortjunction/examine(mob/user)
 	..()
 	if(sortTypes.len>0)
-		user << "It is tagged with the following tags:"
+		to_chat(user, "It is tagged with the following tags:")
 		for(var/t in sortTypes)
-			user << TAGGERLOCATIONS[t]
+			to_chat(user, GLOB.TAGGERLOCATIONS[t])
 	else
-		user << "It has no sorting tags set."
+		to_chat(user, "It has no sorting tags set.")
 
 
 /obj/structure/disposalpipe/sortjunction/proc/updatedir()
@@ -497,8 +449,8 @@
 
 	dpdir = sortdir | posdir | negdir
 
-/obj/structure/disposalpipe/sortjunction/New()
-	..()
+/obj/structure/disposalpipe/sortjunction/Initialize()
+	. = ..()
 
 	// Generate a list of soring tags.
 	if(sortType)
@@ -513,7 +465,6 @@
 
 	updatedir()
 	update()
-	return
 
 /obj/structure/disposalpipe/sortjunction/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/destTagger))
@@ -522,10 +473,10 @@
 		if(O.currTag > 0)// Tag set
 			if(O.currTag in sortTypes)
 				sortTypes -= O.currTag
-				user << "<span class='notice'>Removed \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>"
+				to_chat(user, "<span class='notice'>Removed \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
 			else
 				sortTypes |= O.currTag
-				user << "<span class='notice'>Added \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>"
+				to_chat(user, "<span class='notice'>Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 	else
 		return ..()
@@ -561,8 +512,8 @@
 	var/negdir = 0
 	var/sortdir = 0
 
-/obj/structure/disposalpipe/wrapsortjunction/New()
-	..()
+/obj/structure/disposalpipe/wrapsortjunction/Initialize()
+	. = ..()
 	posdir = dir
 	if(stored.ptype == DISP_SORTJUNCTION)
 		sortdir = turn(posdir, -90)
@@ -574,7 +525,6 @@
 	dpdir = sortdir | posdir | negdir
 
 	update()
-	return
 
 // next direction to move
 // if coming in from negdir, then next is primary dir or sortdir
@@ -602,14 +552,11 @@
 	icon_state = "pipe-t"
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
-/obj/structure/disposalpipe/trunk/New()
-	..()
+/obj/structure/disposalpipe/trunk/Initialize()
+	. = ..()
 	dpdir = dir
-	spawn(1)
-		getlinked()
-
+	getlinked()
 	update()
-	return
 
 /obj/structure/disposalpipe/trunk/Destroy()
 	if(linked)
@@ -638,7 +585,7 @@
 
 /obj/structure/disposalpipe/trunk/can_be_deconstructed(mob/user)
 	if(linked)
-		user << "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>"
+		to_chat(user, "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>")
 	else
 		. = 1
 
@@ -676,14 +623,13 @@
 					// i.e. will be treated as an empty turf
 	desc = "A broken piece of disposal pipe."
 
-/obj/structure/disposalpipe/broken/New()
-	..()
+/obj/structure/disposalpipe/broken/Initialize()
+	. = ..()
 	update()
-	return
 
 // the disposal outlet machine
 
-/obj/structure/disposalpipe/broken/Deconstruct()
+/obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)
 
 /obj/structure/disposaloutlet
@@ -691,8 +637,8 @@
 	desc = "An outlet for the pneumatic disposal system."
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "outlet"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
@@ -701,9 +647,8 @@
 	var/start_eject = 0
 	var/eject_range = 2
 
-/obj/structure/disposaloutlet/New(loc, var/obj/structure/disposalconstruct/make_from)
-	..()
-
+/obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
 	if(make_from)
 		setDir(make_from.dir)
 		make_from.loc = src
@@ -711,12 +656,11 @@
 	else
 		stored = new (src, DISP_END_OUTLET,dir)
 
-	spawn(1)
-		target = get_ranged_target_turf(src, dir, 10)
+	target = get_ranged_target_turf(src, dir, 10)
 
-		trunk = locate() in src.loc
-		if(trunk)
-			trunk.linked = src	// link the pipe trunk to self
+	trunk = locate() in loc
+	if(trunk)
+		trunk.linked = src	// link the pipe trunk to self
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
@@ -739,7 +683,7 @@
 		for(var/atom/movable/AM in H)
 			AM.forceMove(T)
 			AM.pipe_eject(dir)
-			AM.throw_at_fast(target, eject_range, 1)
+			AM.throw_at(target, eject_range, 1)
 
 		H.vent_gas(T)
 		qdel(H)
@@ -747,29 +691,29 @@
 
 /obj/structure/disposaloutlet/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		if(mode==0)
 			mode=1
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You remove the screws around the power connection.</span>"
+			playsound(src.loc, I.usesound, 50, 1)
+			to_chat(user, "<span class='notice'>You remove the screws around the power connection.</span>")
 		else if(mode==1)
 			mode=0
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You attach the screws around the power connection.</span>"
+			playsound(src.loc, I.usesound, 50, 1)
+			to_chat(user, "<span class='notice'>You attach the screws around the power connection.</span>")
 
-	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
-		var/obj/item/weapon/weldingtool/W = I
+	else if(istype(I, /obj/item/weldingtool) && mode==1)
+		var/obj/item/weldingtool/W = I
 		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
-			if(do_after(user,20/I.toolspeed, target = src))
+			playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
+			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
+			if(do_after(user,20*I.toolspeed, target = src))
 				if(!src || !W.isOn()) return
-				user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
+				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
 				stored.loc = loc
 				src.transfer_fingerprints_to(stored)
 				stored.update_icon()
-				stored.anchored = 0
-				stored.density = 1
+				stored.anchored = FALSE
+				stored.density = TRUE
 				qdel(src)
 	else
 		return ..()
@@ -787,7 +731,7 @@
 	if(direction)
 		dirs = list( direction, turn(direction, -45), turn(direction, 45))
 	else
-		dirs = alldirs.Copy()
+		dirs = GLOB.alldirs.Copy()
 
 	src.streak(dirs)
 
@@ -796,6 +740,6 @@
 	if(direction)
 		dirs = list( direction, turn(direction, -45), turn(direction, 45))
 	else
-		dirs = alldirs.Copy()
+		dirs = GLOB.alldirs.Copy()
 
 	src.streak(dirs)

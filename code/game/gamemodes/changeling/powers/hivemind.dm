@@ -6,21 +6,20 @@
 	dna_cost = 0
 	chemical_cost = -1
 
-/obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(var/mob/user)
+/obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
 	..()
 	var/datum/changeling/changeling=user.mind.changeling
 	changeling.changeling_speak = 1
-	user << "<i><font color=#800080>Use say \":g message\" to communicate with the other changelings.</font></i>"
+	to_chat(user, "<i><font color=#800080>Use say \":g message\" to communicate with the other changelings.</font></i>")
 	var/obj/effect/proc_holder/changeling/hivemind_upload/S1 = new
 	if(!changeling.has_sting(S1))
 		changeling.purchasedpowers+=S1
 	var/obj/effect/proc_holder/changeling/hivemind_download/S2 = new
 	if(!changeling.has_sting(S2))
 		changeling.purchasedpowers+=S2
-	return
 
 // HIVE MIND UPLOAD/DOWNLOAD DNA
-var/list/datum/dna/hivemind_bank = list()
+GLOBAL_LIST_EMPTY(hivemind_bank)
 
 /obj/effect/proc_holder/changeling/hivemind_upload
 	name = "Hive Channel DNA"
@@ -32,11 +31,11 @@ var/list/datum/dna/hivemind_bank = list()
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
 	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
-		if(!(prof in hivemind_bank))
+		if(!(prof in GLOB.hivemind_bank))
 			names += prof.name
 
 	if(names.len <= 0)
-		user << "<span class='notice'>The airwaves already have all of our DNA.</span>"
+		to_chat(user, "<span class='notice'>The airwaves already have all of our DNA.</span>")
 		return
 
 	var/chosen_name = input("Select a DNA to channel: ", "Channel DNA", null) as null|anything in names
@@ -49,10 +48,9 @@ var/list/datum/dna/hivemind_bank = list()
 
 	var/datum/changelingprofile/uploaded_dna = new chosen_dna.type
 	chosen_dna.copy_profile(uploaded_dna)
-	hivemind_bank += uploaded_dna
-	user << "<span class='notice'>We channel the DNA of [chosen_name] to the air.</span>"
-	feedback_add_details("changeling_powers","HU")
-	return 1
+	GLOB.hivemind_bank += uploaded_dna
+	to_chat(user, "<span class='notice'>We channel the DNA of [chosen_name] to the air.</span>")
+	return TRUE
 
 /obj/effect/proc_holder/changeling/hivemind_download
 	name = "Hive Absorb DNA"
@@ -66,19 +64,19 @@ var/list/datum/dna/hivemind_bank = list()
 	var/datum/changeling/changeling = user.mind.changeling
 	var/datum/changelingprofile/first_prof = changeling.stored_profiles[1]
 	if(first_prof.name == user.real_name)//If our current DNA is the stalest, we gotta ditch it.
-		user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
+		to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
 		return
 	return 1
 
 /obj/effect/proc_holder/changeling/hivemind_download/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
-	for(var/datum/changelingprofile/prof in hivemind_bank)
+	for(var/datum/changelingprofile/prof in GLOB.hivemind_bank)
 		if(!(prof in changeling.stored_profiles))
 			names[prof.name] = prof
 
 	if(names.len <= 0)
-		user << "<span class='notice'>There's no new DNA to absorb from the air.</span>"
+		to_chat(user, "<span class='notice'>There's no new DNA to absorb from the air.</span>")
 		return
 
 	var/S = input("Select a DNA absorb from the air: ", "Absorb DNA", null) as null|anything in names
@@ -91,6 +89,5 @@ var/list/datum/dna/hivemind_bank = list()
 	var/datum/changelingprofile/downloaded_prof = new chosen_prof.type
 	chosen_prof.copy_profile(downloaded_prof)
 	changeling.add_profile(downloaded_prof)
-	user << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
-	feedback_add_details("changeling_powers","HD")
-	return 1
+	to_chat(user, "<span class='notice'>We absorb the DNA of [S] from the air.</span>")
+	return TRUE

@@ -84,12 +84,14 @@ research holder datum.
 //Adds a tech to known_tech list. Checks to make sure there aren't duplicates and updates existing tech's levels if needed.
 //Input: datum/tech; Output: Null
 /datum/research/proc/AddTech2Known(datum/tech/T)
+	if(!T)
+		return
 	if(known_tech[T.id])
 		var/datum/tech/known = known_tech[T.id]
 		if(T.level > known.level)
 			known.level = T.level
 		return
-	known_tech[T.id] = T
+	known_tech[T.id] = T.copy()
 
 /datum/research/proc/AddDesign2Known(datum/design/D)
 	if(known_designs[D.id])
@@ -143,6 +145,16 @@ research holder datum.
 		if((D.build_type & AUTOLATHE) && ("initial" in D.category))  //autolathe starts without hacked designs
 			AddDesign2Known(D)
 
+//Limb Grower files
+/datum/research/limbgrower/New()
+	for(var/T in (subtypesof(/datum/tech)))
+		possible_tech += new T(src)
+	for(var/path in subtypesof(/datum/design))
+		var/datum/design/D = new path(src)
+		possible_designs += D
+		if((D.build_type & LIMBGROWER) && ("initial" in D.category))
+			AddDesign2Known(D)
+
 /datum/research/autolathe/AddDesign2Known(datum/design/D)
 	if(!(D.build_type & AUTOLATHE))
 		return
@@ -160,6 +172,21 @@ research holder datum.
 
 /datum/research/biogenerator/AddDesign2Known(datum/design/D)
 	if(!(D.build_type & BIOGENERATOR))
+		return
+	..()
+
+//Smelter files
+/datum/research/smelter/New()
+	for(var/T in (subtypesof(/datum/tech)))
+		possible_tech += new T(src)
+	for(var/path in subtypesof(/datum/design))
+		var/datum/design/D = new path(src)
+		possible_designs += D
+		if((D.build_type & SMELTER) && ("initial" in D.category))
+			AddDesign2Known(D)
+
+/datum/research/smelter/AddDesign2Known(datum/design/D)
+	if(!(D.build_type & SMELTER))
 		return
 	..()
 
@@ -192,13 +219,13 @@ research holder datum.
 
 /datum/tech/plasmatech
 	name = "Plasma Research"
-	desc = "Research into the mysterious substance colloqually known as \"plasma\"."
+	desc = "Research into the mysterious substance colloquially known as \"plasma\"."
 	id = "plasmatech"
 	rare = 3
 
 /datum/tech/powerstorage
 	name = "Power Manipulation Technology"
-	desc = "The various technologies behind the storage and generation of electicity."
+	desc = "The various technologies behind the storage and generation of electricity."
 	id = "powerstorage"
 
 /datum/tech/bluespace
@@ -229,7 +256,7 @@ research holder datum.
 
 /datum/tech/syndicate
 	name = "Illegal Technologies Research"
-	desc = "The study of technologies that violate Nanotrassen regulations."
+	desc = "The study of technologies that violate Nanotrasen regulations."
 	id = "syndicate"
 	rare = 4
 
@@ -288,7 +315,12 @@ research holder datum.
 
 	return cost
 
-/obj/item/weapon/disk/tech_disk
+/datum/tech/proc/copy()
+	var/datum/tech/T = new type()
+	T.level = level
+	return T
+
+/obj/item/disk/tech_disk
 	name = "technology disk"
 	desc = "A disk for storing technology data for further research."
 	icon_state = "datadisk0"
@@ -296,32 +328,34 @@ research holder datum.
 	var/list/tech_stored = list()
 	var/max_tech_stored = 1
 
-/obj/item/weapon/disk/tech_disk/New()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+/obj/item/disk/tech_disk/Initialize()
+	. = ..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 	for(var/i in 1 to max_tech_stored)
 		tech_stored += null
 
-/obj/item/weapon/disk/tech_disk/adv
+
+/obj/item/disk/tech_disk/adv
 	name = "advanced technology disk"
 	desc = "A disk for storing technology data for further research. This one has extra storage space."
 	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=50)
 	max_tech_stored = 5
 
-/obj/item/weapon/disk/tech_disk/super_adv
+/obj/item/disk/tech_disk/super_adv
 	name = "quantum technology disk"
 	desc = "A disk for storing technology data for further research. This one has extremely large storage space."
 	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=100, MAT_GOLD=100)
 	max_tech_stored = 10
 
-/obj/item/weapon/disk/tech_disk/debug
-	name = "centcomm technology disk"
+/obj/item/disk/tech_disk/debug
+	name = "centcom technology disk"
 	desc = "A debug item for research"
 	materials = list()
 	max_tech_stored = 0
 
-/obj/item/weapon/disk/tech_disk/debug/New()
-	..()
+/obj/item/disk/tech_disk/debug/Initialize()
+	. = ..()
 	var/list/techs = subtypesof(/datum/tech)
 	max_tech_stored = techs.len
 	for(var/V in techs)

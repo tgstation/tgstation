@@ -7,7 +7,7 @@
 	icon_gib = "carp_gib"
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/carpmeat = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/carpmeat = 2)
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"
@@ -18,6 +18,7 @@
 	health = 25
 
 	harm_intent_damage = 8
+	obj_damage = 50
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "bites"
@@ -30,7 +31,7 @@
 	maxbodytemp = 1500
 
 	faction = list("carp")
-	flying = 1
+	movement_type = FLYING
 	pressure_resistance = 200
 	gold_core_spawnable = 1
 
@@ -38,8 +39,8 @@
 	return 1	//No drifting in space for space carp!	//original comments do not steal
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
-	..()
-	if(ishuman(target))
+	. = ..()
+	if(. && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.adjustStaminaLoss(8)
 
@@ -63,6 +64,7 @@
 	pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
 
+	obj_damage = 80
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 
@@ -70,6 +72,7 @@
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
+	gender = FEMALE
 	speak_emote = list("squeaks")
 	gold_core_spawnable = 0
 	faction = list("syndicate")

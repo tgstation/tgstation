@@ -11,7 +11,9 @@
 /obj/item/device/assembly/mousetrap/examine(mob/user)
 	..()
 	if(armed)
-		user << "It looks like it's armed."
+		to_chat(user, "The mousetrap is armed!")
+	else
+		to_chat(user, "The mousetrap is not armed.")
 
 /obj/item/device/assembly/mousetrap/activate()
 	if(..())
@@ -20,7 +22,7 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/user = usr
 				if((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY && prob(50))
-					user << "<span class='warning'>Your hand slips, setting off the trigger!</span>"
+					to_chat(user, "<span class='warning'>Your hand slips, setting off the trigger!</span>")
 					pulse(0)
 		update_icon()
 		if(usr)
@@ -43,7 +45,7 @@
 	var/obj/item/bodypart/affecting = null
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(PIERCEIMMUNE in H.dna.species.specflags)
+		if(PIERCEIMMUNE in H.dna.species.species_traits)
 			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 			armed = 0
 			update_icon()
@@ -53,15 +55,14 @@
 			if("feet")
 				if(!H.shoes)
 					affecting = H.get_bodypart(pick("l_leg", "r_leg"))
-					H.Weaken(3)
+					H.Knockdown(60)
 			if("l_hand", "r_hand")
 				if(!H.gloves)
 					affecting = H.get_bodypart(type)
-					H.Stun(3)
+					H.Stun(60)
 		if(affecting)
-			if(affecting.take_damage(1, 0))
-				H.update_damage_overlays(0)
-			H.updatehealth()
+			if(affecting.receive_damage(1, 0))
+				H.update_damage_overlays()
 	else if(ismouse(target))
 		var/mob/living/simple_animal/mouse/M = target
 		visible_message("<span class='boldannounce'>SPLAT!</span>")
@@ -74,17 +75,17 @@
 
 /obj/item/device/assembly/mousetrap/attack_self(mob/living/carbon/human/user)
 	if(!armed)
-		user << "<span class='notice'>You arm [src].</span>"
+		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
 		if(((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
-			if(!user.hand)
+			if(!(user.active_hand_index % 2))
 				which_hand = "r_hand"
 			triggered(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
-		user << "<span class='notice'>You disarm [src].</span>"
+		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
 	playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
@@ -94,7 +95,7 @@
 	if(armed)
 		if(((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
-			if(!user.hand)
+			if(!(user.active_hand_index % 2))
 				which_hand = "r_hand"
 			triggered(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
@@ -105,16 +106,17 @@
 
 /obj/item/device/assembly/mousetrap/Crossed(atom/movable/AM as mob|obj)
 	if(armed)
-		if(ishuman(AM))
-			var/mob/living/carbon/H = AM
-			if(H.m_intent == "run")
-				triggered(H)
-				H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
-								  "<span class='warning'>You accidentally step on [src]</span>")
-		else if(isanimal(AM))
-			var/mob/living/simple_animal/SA = AM
-			if(!SA.flying)
-				triggered(AM)
+		if(ismob(AM))
+			var/mob/MM = AM
+			if(!(MM.movement_type & FLYING))
+				if(ishuman(AM))
+					var/mob/living/carbon/H = AM
+					if(H.m_intent == MOVE_INTENT_RUN)
+						triggered(H)
+						H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
+										  "<span class='warning'>You accidentally step on [src]</span>")
+				else if(ismouse(MM))
+					triggered(MM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
 			triggered(AM)
 	..()
@@ -124,7 +126,7 @@
 	if(armed)
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
-		triggered(finder, finder.hand ? "l_hand" : "r_hand")
+		triggered(finder, (finder.active_hand_index % 2 == 0) ? "r_hand" : "l_hand")
 		return 1	//end the search!
 	return 0
 

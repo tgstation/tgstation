@@ -31,7 +31,7 @@
 	name = "plasma vessel"
 	icon_state = "plasma"
 	origin_tech = "biotech=5;plasmatech=4"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	zone = "chest"
 	slot = "plasmavessel"
 	alien_powers = list(/obj/effect/proc_holder/alien/plant, /obj/effect/proc_holder/alien/transfer)
@@ -49,7 +49,7 @@
 /obj/item/organ/alien/plasmavessel/large
 	name = "large plasma vessel"
 	icon_state = "plasma_large"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	storedPlasma = 200
 	max_plasma = 500
 	plasma_rate = 15
@@ -61,7 +61,7 @@
 /obj/item/organ/alien/plasmavessel/small
 	name = "small plasma vessel"
 	icon_state = "plasma_small"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	storedPlasma = 100
 	max_plasma = 150
 	plasma_rate = 5
@@ -69,7 +69,7 @@
 /obj/item/organ/alien/plasmavessel/small/tiny
 	name = "tiny plasma vessel"
 	icon_state = "plasma_tiny"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	max_plasma = 100
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
@@ -87,6 +87,8 @@
 			owner.adjustFireLoss(-heal_amt)
 			owner.adjustOxyLoss(-heal_amt)
 			owner.adjustCloneLoss(-heal_amt)
+	else
+		owner.adjustPlasma(plasma_rate * 0.1)
 
 /obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -100,6 +102,7 @@
 		var/mob/living/carbon/alien/A = M
 		A.updatePlasmaDisplay()
 
+#define QUEEN_DEATH_DEBUFF_DURATION 2400
 
 /obj/item/organ/alien/hivenode
 	name = "hive node"
@@ -107,7 +110,7 @@
 	zone = "head"
 	slot = "hivenode"
 	origin_tech = "biotech=5;magnets=4;bluespace=3"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	var/recent_queen_death = 0 //Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
 
@@ -124,15 +127,15 @@
 	if(!owner|| owner.stat == DEAD)
 		return
 	if(isalien(owner)) //Different effects for aliens than humans
-		owner << "<span class='userdanger'>Your Queen has been struck down!</span>"
-		owner << "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed."
+		to_chat(owner, "<span class='userdanger'>Your Queen has been struck down!</span>")
+		to_chat(owner, "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed.</span>")
 		owner.emote("roar")
-		owner.Stun(10) //Actually just slows them down a bit.
+		owner.Stun(200) //Actually just slows them down a bit.
 
 	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
-		owner << "<span class='danger'>You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!"
+		to_chat(owner, "<span class='danger'>You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!</span>")
 		owner.emote("scream")
-		owner.Weaken(5)
+		owner.Knockdown(100)
 
 	owner.jitteriness += 30
 	owner.confused += 30
@@ -140,15 +143,19 @@
 
 	recent_queen_death = 1
 	owner.throw_alert("alien_noqueen", /obj/screen/alert/alien_vulnerable)
-	spawn(2400) //four minutes
-		if(qdeleted(src)) //In case the node is deleted
-			return
-		recent_queen_death = 0
-		if(!owner) //In case the xeno is butchered or subjected to surgery after death.
-			return
-		owner << "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>"
-		owner.clear_alert("alien_noqueen")
+	addtimer(CALLBACK(src, .proc/clear_queen_death), QUEEN_DEATH_DEBUFF_DURATION)
 
+
+/obj/item/organ/alien/hivenode/proc/clear_queen_death()
+	if(QDELETED(src)) //In case the node is deleted
+		return
+	recent_queen_death = 0
+	if(!owner) //In case the xeno is butchered or subjected to surgery after death.
+		return
+	to_chat(owner, "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>")
+	owner.clear_alert("alien_noqueen")
+
+#undef QUEEN_DEATH_DEBUFF_DURATION
 
 /obj/item/organ/alien/resinspinner
 	name = "resin spinner"
@@ -182,6 +189,6 @@
 	icon_state = "eggsac"
 	zone = "groin"
 	slot = "eggsac"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	origin_tech = "biotech=6"
 	alien_powers = list(/obj/effect/proc_holder/alien/lay_egg)

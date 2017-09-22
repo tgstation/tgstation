@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Evidence bags will no longer show ghosts of items such as primed flashbangs after the flashbang inside explodes"

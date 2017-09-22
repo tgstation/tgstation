@@ -2,8 +2,8 @@
 	name = "pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/wait = 0
 
 /obj/machinery/pipedispenser/attack_paw(mob/user)
@@ -53,54 +53,50 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
-		if(!wait)
+		if(wait < world.time)
 			var/p_type = text2path(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (src.loc, pipe_type=p_type, dir=p_dir)
 			P.add_fingerprint(usr)
-			wait = 1
-			spawn(10)
-				wait = 0
+			wait = world.time + 10
 	if(href_list["makemeter"])
-		if(!wait)
+		if(wait < world.time )
 			new /obj/item/pipe_meter(src.loc)
-			wait = 1
-			spawn(15)
-				wait = 0
+			wait = world.time + 15
 	return
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		usr << "<span class='notice'>You put [W] back into [src].</span>"
+		to_chat(usr, "<span class='notice'>You put [W] back into [src].</span>")
 		if(!user.drop_item())
 			return
 		qdel(W)
 		return
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (istype(W, /obj/item/wrench))
 		if (!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
-			if (do_after(user, 40/W.toolspeed, target = src))
+			playsound(src.loc, W.usesound, 50, 1)
+			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")
+			if (do_after(user, 40*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] fastens \the [src].", \
 					"<span class='notice'>You fasten \the [src]. Now it can dispense pipes.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 1
+				anchored = TRUE
 				stat &= MAINT
 				if (usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
 		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
-			if (do_after(user, 20/W.toolspeed, target = src))
+			playsound(src.loc, W.usesound, 50, 1)
+			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
+			if (do_after(user, 20*W.toolspeed, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src]. Now it can be pulled somewhere else.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 0
+				anchored = FALSE
 				stat |= ~MAINT
 				power_change()
 	else
@@ -111,8 +107,8 @@
 	name = "disposal pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
@@ -165,20 +161,18 @@ Nah
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
-		if(!wait)
+		if(wait < world.time)
 			var/p_type = text2num(href_list["dmake"])
 			var/obj/structure/disposalconstruct/C = new (src.loc,p_type)
 
 			if(!C.can_place())
-				usr << "<span class='warning'>There's not enough room to build that here!</span>"
+				to_chat(usr, "<span class='warning'>There's not enough room to build that here!</span>")
 				qdel(C)
 				return
 
 			C.add_fingerprint(usr)
 			C.update_icon()
-			wait = 1
-			spawn(15)
-				wait = 0
+			wait = world.time + 15
 	return
 
 //transit tube dispenser
@@ -187,24 +181,24 @@ Nah
 	name = "transit tube dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
 	if(..())
 		return 1
 
 	var/dat = {"<B>Transit Tubes:</B><BR>
-<A href='?src=\ref[src];tube=0'>Straight Tube</A><BR>
-<A href='?src=\ref[src];tube=1'>Straight Tube with Crossing</A><BR>
-<A href='?src=\ref[src];tube=2'>Curved Tube</A><BR>
-<A href='?src=\ref[src];tube=3'>Diagonal Tube</A><BR>
-<A href='?src=\ref[src];tube=4'>Junction</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT_CROSSING]'>Straight Tube with Crossing</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_CURVED]'>Curved Tube</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL]'>Diagonal Tube</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL_CROSSING]'>Diagonal Tube with Crossing</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_JUNCTION]'>Junction</A><BR>
 <b>Station Equipment:</b><BR>
-<A href='?src=\ref[src];tube=5'>Through Tube Station</A><BR>
-<A href='?src=\ref[src];tube=6'>Terminus Tube Station</A><BR>
-<A href='?src=\ref[src];tube=7'>Tube Blocker</A><BR>
-<A href='?src=\ref[src];tube=8'>Transit Tube Pod</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STATION]'>Through Tube Station</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_TERMINUS]'>Terminus Tube Station</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_POD]'>Transit Tube Pod</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
@@ -216,38 +210,30 @@ Nah
 		return 1
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
-	if(!wait)
+	if(wait < world.time)
 		if(href_list["tube"])
 			var/tube_type = text2num(href_list["tube"])
-			if(tube_type <= 4)
-				var/obj/structure/c_transit_tube/C = new/obj/structure/c_transit_tube(src.loc)
-				switch(tube_type)
-					if(0)
-						C.icon_state = "E-W"
-					if(1)
-						C.icon_state = "E-W-Pass"
-					if(2)
-						C.icon_state = "S-NE"
-					if(3)
-						C.icon_state = "NE-SW"
-					if(4)
-						C.icon_state = "W-NE-SE"
+			var/obj/structure/C
+			switch(tube_type)
+				if(TRANSIT_TUBE_STRAIGHT)
+					C = new /obj/structure/c_transit_tube(loc)
+				if(TRANSIT_TUBE_STRAIGHT_CROSSING)
+					C = new /obj/structure/c_transit_tube/crossing(loc)
+				if(TRANSIT_TUBE_CURVED)
+					C = new /obj/structure/c_transit_tube/curved(loc)
+				if(TRANSIT_TUBE_DIAGONAL)
+					C = new /obj/structure/c_transit_tube/diagonal(loc)
+				if(TRANSIT_TUBE_DIAGONAL_CROSSING)
+					C = new /obj/structure/c_transit_tube/diagonal/crossing(loc)
+				if(TRANSIT_TUBE_JUNCTION)
+					C = new /obj/structure/c_transit_tube/junction(loc)
+				if(TRANSIT_TUBE_STATION)
+					C = new /obj/structure/c_transit_tube/station(loc)
+				if(TRANSIT_TUBE_TERMINUS)
+					C = new /obj/structure/c_transit_tube/station/reverse(loc)
+				if(TRANSIT_TUBE_POD)
+					C = new /obj/structure/c_transit_tube_pod(loc)
+			if(C)
 				C.add_fingerprint(usr)
-			else
-				switch(tube_type)
-					if(5)
-						var/obj/structure/c_transit_tube/station/C = new/obj/structure/c_transit_tube/station(src.loc)
-						C.add_fingerprint(usr)
-					if(6)
-						var/obj/structure/c_transit_tube/station/reverse/C = new/obj/structure/c_transit_tube/station/reverse(src.loc)
-						C.add_fingerprint(usr)
-					if(7)
-						var/obj/structure/c_transit_tube/station/block/C = new/obj/structure/c_transit_tube/station/block(src.loc)
-						C.add_fingerprint(usr)
-					if(8)
-						var/obj/structure/c_transit_tube_pod/C = new/obj/structure/c_transit_tube_pod(src.loc)
-						C.add_fingerprint(usr)
-			wait = 1
-			spawn(15)
-				wait = 0
+			wait = world.time + 15
 	return

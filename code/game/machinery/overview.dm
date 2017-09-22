@@ -31,7 +31,7 @@
 		imap += icon('icons/misc/imap.dmi', "blank")
 		imap += icon('icons/misc/imap.dmi', "blank")
 
-	//world << "[icount] images in list"
+	//to_chat(world, "[icount] images in list")
 
 
 	for(var/wx = 1 ; wx <= world.maxx; wx++)
@@ -95,8 +95,9 @@
 								colour = rgb(255,255,0)
 								colour2 = rgb(255,128,0)
 
-						if(istype(AM, /mob))
-							if(AM:client)
+						if(ismob(AM))
+							var/mob/M = AM
+							if(M.client)
 								colour = rgb(255,0,0)
 							else
 								colour = rgb(255,128,128)
@@ -141,12 +142,12 @@
 			var/rx = ((wx*2+xoff)%32) + 1
 			var/ry = ((wy*2+yoff)%32) + 1
 
-			//world << "trying [ix],[iy] : [ix+icx*iy]"
+			//to_chat(world, "trying [ix],[iy] : [ix+icx*iy]")
 			var/icon/I = imap[1+(ix + icx*iy)*2]
 			var/icon/I2 = imap[2+(ix + icx*iy)*2]
 
 
-			//world << "icon: \icon[I]"
+			//to_chat(world, "icon: [icon2html(I, world)]")
 
 			I.DrawBox(colour, rx, ry, rx+1, ry+1)
 
@@ -163,7 +164,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"\icon[I] at [H.screen_loc]"
+		//to_chat(world, "[icon2html(I, world)] at [H.screen_loc]")
 
 		H.name = (i==0)?"maprefresh":"map"
 
@@ -179,6 +180,7 @@
 		qdel(J)
 		H.icon = HI
 		H.layer = ABOVE_HUD_LAYER
+		H.plane = ABOVE_HUD_PLANE
 		usr.mapobjs += H
 #else
 
@@ -240,13 +242,14 @@
 							if(AM.icon_state=="alarm:1")
 								colour = rgb(255,255,0)
 
-						if(istype(AM, /mob))
-							if(AM:client)
+						if(ismob(AM))
+							var/mob/M = AM
+							if(M.client)
 								colour = rgb(255,0,0)
 							else
 								colour = rgb(255,128,128)
 
-						//if(istype(AM, /obj/effect/blob))
+						//if(istype(AM, /obj/structure/blob))
 						//	colour = rgb(255,0,255)
 
 				var/area/A = T.loc
@@ -269,11 +272,11 @@
 			var/rx = ((wx*2+xoff)%32) + 1
 			var/ry = ((wy*2+yoff)%32) + 1
 
-			//world << "trying [ix],[iy] : [ix+icx*iy]"
+			//to_chat(world, "trying [ix],[iy] : [ix+icx*iy]")
 			var/icon/I = imap[1+(ix + icx*iy)]
 
 
-			//world << "icon: \icon[I]"
+			//to_chat(world, "icon: [icon2html(I, world)]")
 
 			I.DrawBox(colour, rx, ry, rx, ry)
 
@@ -288,7 +291,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"\icon[I] at [H.screen_loc]"
+		//to_chat(world, "[icon2html(I, world)] at [H.screen_loc]")
 
 		H.name = (i==0)?"maprefresh":"map"
 
@@ -297,6 +300,7 @@
 		H.icon = I
 		qdel(I)
 		H.layer = ABOVE_HUD_LAYER
+		H.plane = ABOVE_HUD_PLANE
 		usr.mapobjs += H
 
 #endif

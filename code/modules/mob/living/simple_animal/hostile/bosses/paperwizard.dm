@@ -5,16 +5,18 @@
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
 	faction = list("hostile","stickman")
 	del_on_death = TRUE
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "paperwizard"
 	ranged = 1
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	minimum_distance = 3
 	retreat_distance = 3
+	obj_damage = 0
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	health = 1000
 	maxHealth = 1000
-	loot = list(/obj/effect/overlay/temp/paperwiz_dying)
+	loot = list(/obj/effect/temp_visual/paperwiz_dying)
 	projectiletype = /obj/item/projectile/temp
 	projectilesound = 'sound/weapons/emitter.ogg'
 	attack_sound = 'sound/hallucinations/growl1.ogg'
@@ -25,6 +27,7 @@
 //Lets the wizard summon his art to fight for him
 /datum/action/boss/wizard_summon_minions
 	name = "Summon Minions"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "art_summon"
 	usage_probability = 40
 	boss_cost = 30
@@ -39,7 +42,7 @@
 		/mob/living/simple_animal/hostile/stickman,
 		/mob/living/simple_animal/hostile/stickman/ranged,
 		/mob/living/simple_animal/hostile/stickman/dog)
-		var/list/directions = cardinal.Copy()
+		var/list/directions = GLOB.cardinals.Copy()
 		for(var/i in 1 to 3)
 			var/minions_chosen = pick_n_take(minions)
 			new minions_chosen (get_step(boss,pick_n_take(directions)), 1)
@@ -52,6 +55,7 @@
 //Hitting the wizard himself destroys all decoys
 /datum/action/boss/wizard_mimic
 	name = "Craft Mimicry"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "mimic_summon"
 	usage_probability = 30
 	boss_cost = 40
@@ -69,7 +73,7 @@
 				target = pick(threats)
 		if(target)
 			var/mob/living/simple_animal/hostile/boss/paper_wizard/wiz = boss
-			var/directions = cardinal.Copy()
+			var/directions = GLOB.cardinals.Copy()
 			for(var/i in 1 to 3)
 				var/mob/living/simple_animal/hostile/boss/paper_wizard/copy/C = new (get_step(target,pick_n_take(directions)))
 				wiz.copies += C
@@ -97,7 +101,7 @@
 	var/mob/living/simple_animal/hostile/boss/paper_wizard/original
 
 //Hit a fake? eat pain!
-/mob/living/simple_animal/hostile/boss/paper_wizard/copy/adjustHealth(amount)
+/mob/living/simple_animal/hostile/boss/paper_wizard/copy/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0) //damage
 		if(original)
 			original.minimum_distance = 3
@@ -111,23 +115,23 @@
 			L.adjustBruteLoss(50)
 		qdel(src)
 	else
-		..()
+		. = ..()
 
 //Hit the real guy? copies go bai-bai
-/mob/living/simple_animal/hostile/boss/paper_wizard/adjustHealth(amount)
-	if(amount > 0)//damage
+/mob/living/simple_animal/hostile/boss/paper_wizard/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(. > 0)//damage
 		minimum_distance = 3
 		retreat_distance = 3
 		for(var/copy in copies)
 			qdel(copy)
-	. = ..()
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
 	..()
 	qdel(src) //I see through your ruse!
 
 //fancy effects
-/obj/effect/overlay/temp/paper_scatter
+/obj/effect/temp_visual/paper_scatter
 	name = "scattering paper"
 	desc = "Pieces of paper scattering to the wind."
 	layer = ABOVE_OPEN_TURF_LAYER
@@ -137,7 +141,7 @@
 	duration = 5
 	randomdir = FALSE
 
-/obj/effect/overlay/temp/paperwiz_dying
+/obj/effect/temp_visual/paperwiz_dying
 	name = "craft portal"
 	desc = "A wormhole sucking the wizard into the void. Neat."
 	layer = ABOVE_OPEN_TURF_LAYER
@@ -147,18 +151,21 @@
 	duration = 18
 	randomdir = FALSE
 
-/obj/effect/overlay/temp/paperwiz_dying/New()
-	..()
+/obj/effect/temp_visual/paperwiz_dying/Initialize()
+	. = ..()
 	visible_message("<span class='boldannounce'>The wizard cries out in pain as a gate appears behind him, sucking him in!</span>")
-	playsound(get_turf(src),'sound/magic/MandSwap.ogg', 50, 1, 1)
+	playsound(get_turf(src),'sound/magic/mandswap.ogg', 50, 1, 1)
 	playsound(get_turf(src),'sound/hallucinations/wail.ogg', 50, 1, 1)
-	spawn(16)
-		for(var/mob/M in range(7,src))
-			shake_camera(M, 7, 1)
-		playsound(get_turf(src),'sound/magic/Summon_Magic.ogg', 50, 1, 1)
-		new /obj/effect/overlay/temp/paper_scatter(src)
-		new /obj/item/clothing/suit/wizrobe/paper(src)
-		new /obj/item/clothing/head/collectable/paper(src)
+
+/obj/effect/temp_visual/paperwiz_dying/Destroy()
+	for(var/mob/M in range(7,src))
+		shake_camera(M, 7, 1)
+	var/turf/T = get_turf(src)
+	playsound(T,'sound/magic/summon_magic.ogg', 50, 1, 1)
+	new /obj/effect/temp_visual/paper_scatter(T)
+	new /obj/item/clothing/suit/wizrobe/paper(T)
+	new /obj/item/clothing/head/collectable/paper(T)
+	return ..()
 
 
 
