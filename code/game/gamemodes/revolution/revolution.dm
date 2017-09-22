@@ -154,8 +154,7 @@
 
 
 	var/obj/item/device/assembly/flash/T = new(mob)
-	var/obj/item/toy/crayon/spraycan/R = new(mob)
-	var/obj/item/clothing/glasses/hud/security/chameleon/C = new(mob)
+	var/obj/item/clothing/glasses/hud/security/chameleon/rev/C = new(mob)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
