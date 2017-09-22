@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/list/spans = get_spans()
 	if(!language)
 		language = get_default_language()
+	message = replacetext(message, "~", " tilde")
 	send_speech(message, 7, src, , spans, message_language=language)
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
