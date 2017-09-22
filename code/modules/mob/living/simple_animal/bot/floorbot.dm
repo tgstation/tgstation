@@ -125,7 +125,7 @@
 
 /mob/living/simple_animal/bot/floorbot/emag_act(mob/user)
 	..()
-	if(emagged == 2)
+	if(emagged == 1)
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
@@ -184,7 +184,7 @@
 		audible_message("[src] makes an excited booping beeping sound!")
 
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
-	if(!target && emagged < 2)
+	if(!target && emagged < 1)
 		if(targetdirection != null) //The bot is in line mode.
 			var/turf/T = get_step(src, targetdirection)
 			if(isspaceturf(T)) //Check for space
@@ -209,7 +209,7 @@
 			process_type = REPLACE_TILE //The target must be a tile. The floor must already have a floortile.
 			target = scan(/turf/open/floor)
 
-	if(!target && emagged == 2) //We are emagged! Time to rip up the floors!
+	if(!target && emagged == 1) //We are emagged! Time to rip up the floors!
 		process_type = TILE_EMAG
 		target = scan(/turf/open/floor)
 
@@ -248,9 +248,9 @@
 					target = null
 					path = list()
 					return
-			if(isturf(target) && emagged < 2)
+			if(isturf(target) && emagged < 1)
 				repair(target)
-			else if(emagged == 2 && isfloorturf(target))
+			else if(emagged == 1 && isfloorturf(target))
 				var/turf/open/floor/F = target
 				anchored = TRUE
 				mode = BOT_REPAIRING

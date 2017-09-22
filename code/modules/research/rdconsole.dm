@@ -149,11 +149,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	..()
 
 
-/obj/machinery/computer/rdconsole/emag_act(mob/user)
-	if(emagged)
+/obj/machinery/computer/rdconsole/cmag_act(mob/user)
+	if(cmagged)
 		return
 	playsound(src, "sparks", 75, 1)
-	emagged = TRUE
+	cmagged = TRUE
 	to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
@@ -169,12 +169,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
 		var/temp_screen = text2num(href_list["menu"])
 		screen = temp_screen
-	
-	
+
+
 	var/datum/component/material_container/linked_materials
 	if(linked_lathe)
 		linked_materials = linked_lathe.GetComponent(/datum/component/material_container)
-	
+
 	var/datum/component/material_container/imprinter_materials
 	if(linked_imprinter)
 		imprinter_materials = linked_imprinter.GetComponent(/datum/component/material_container)
@@ -643,11 +643,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(linked_imprinter == null)
 				screen = 4.0
 
-	
+
 	var/datum/component/material_container/linked_materials
 	if(linked_lathe)
 		linked_materials = linked_lathe.GetComponent(/datum/component/material_container)
-	
+
 	var/datum/component/material_container/imprinter_materials
 	if(linked_imprinter)
 		imprinter_materials = linked_imprinter.GetComponent(/datum/component/material_container)

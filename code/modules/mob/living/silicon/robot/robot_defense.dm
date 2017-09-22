@@ -85,19 +85,23 @@
 			Stun(60)
 	..()
 
-
-/mob/living/silicon/robot/emag_act(mob/user)
-	if(user == src)//To prevent syndieborgs from emagging themselves
+/mob/living/silicon/robot/cmag_act(mob/user)
+	if(user == src)
 		return
-	if(!opened)//Cover is closed
+	if(!opened)
 		if(locked)
-			to_chat(user, "<span class='notice'>You emag the cover lock.</span>")
+			to_chat(user, "<span class='notice'>You cmag the cover lock.</span>")
 			locked = FALSE
 			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
 				to_chat(user, "<span class='boldwarning'>[src] seems to be controlled remotely! Emagging the interface may not work as expected.</span>")
 		else
 			to_chat(user, "<span class='warning'>The cover is already unlocked!</span>")
 		return
+
+/mob/living/silicon/robot/emag_act(mob/user)
+	if(user == src)//To prevent syndieborgs from emagging themselves
+		return
+
 	if(world.time < emag_cooldown)
 		return
 	if(wiresexposed)

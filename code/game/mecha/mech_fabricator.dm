@@ -74,10 +74,10 @@
 			return 0
 	return 1
 
-/obj/machinery/mecha_part_fabricator/emag_act()
-	if(emagged)
+/obj/machinery/mecha_part_fabricator/cmag_act()
+	if(cmagged)
 		return
-	emagged = TRUE
+	cmagged = TRUE
 	req_access = list()
 	say("DB error \[Code 0x00F1\]")
 	sleep(10)

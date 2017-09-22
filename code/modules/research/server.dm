@@ -176,7 +176,7 @@
 
 	add_fingerprint(usr)
 	usr.set_machine(src)
-	if(!src.allowed(usr) && !emagged)
+	if(!src.allowed(usr) && !cmagged)
 		to_chat(usr, "<span class='danger'>You do not have the required access level.</span>")
 		return
 
@@ -307,11 +307,11 @@
 	. = ..()
 	src.updateUsrDialog()
 
-/obj/machinery/computer/rdservercontrol/emag_act(mob/user)
-	if(emagged)
+/obj/machinery/computer/rdservercontrol/cmag_act(mob/user)
+	if(cmagged)
 		return
 	playsound(src, "sparks", 75, 1)
-	emagged = TRUE
+	cmagged = TRUE
 	to_chat(user, "<span class='notice'>You you disable the security protocols.</span>")
 
 /obj/machinery/r_n_d/server/robotics

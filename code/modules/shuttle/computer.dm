@@ -64,10 +64,10 @@
 			else
 				to_chat(usr, "<span class='notice'>Unable to comply.</span>")
 
-/obj/machinery/computer/shuttle/emag_act(mob/user)
-	if(emagged)
+/obj/machinery/computer/shuttle/cmag_act(mob/user)
+	if(cmagged)
 		return
 	req_access = list()
-	emagged = TRUE
+	cmagged = TRUE
 	to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 

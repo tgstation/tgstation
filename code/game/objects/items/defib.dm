@@ -135,10 +135,10 @@
 /obj/item/defibrillator/emag_act(mob/user)
 	if(safety)
 		safety = 0
-		to_chat(user, "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer.</span>")
+		to_chat(user, "<span class='warning'>You silently disable [src]'s safety protocols with the emag sequencer.</span>")
 	else
 		safety = 1
-		to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer.</span>")
+		to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the emag sequencer.</span>")
 
 /obj/item/defibrillator/emp_act(severity)
 	if(cell)

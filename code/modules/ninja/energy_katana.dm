@@ -84,6 +84,7 @@
 		playsound(user, "sparks", 50, 1)
 		playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
 		target.emag_act(user)
+		target.cmag_act(user)
 
 
 //If we hit the Ninja who owns this Katana, they catch it.

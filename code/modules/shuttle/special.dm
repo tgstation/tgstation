@@ -231,10 +231,10 @@
 /obj/effect/forcefield/luxury_shuttle/CollidedWith(atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
-	
+
 	if(check_times[AM] && check_times[AM] > world.time) //Let's not spam the message
 		return ..()
-	
+
 	check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
 	var/total_cash = 0

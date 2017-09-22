@@ -28,7 +28,7 @@
 	var/list/status = list()
 	status += "The door bolts [A.locked ? "have fallen!" : "look up."]"
 	status += "The test light is [A.hasPower() ? "on" : "off"]."
-	status += "The AI connection light is [A.aiControlDisabled || A.emagged ? "off" : "on"]."
+	status += "The AI connection light is [A.aiControlDisabled || A.cmagged ? "off" : "on"]."
 	status += "The check wiring light is [A.safe ? "off" : "on"]."
 	status += "The timer is powered [A.autoclose ? "on" : "off"]."
 	status += "The speed light is [A.normalspeed ? "on" : "off"]."
@@ -43,8 +43,8 @@
 			A.loseMainPower()
 		if(WIRE_BACKUP1, WIRE_BACKUP2) // Pulse to loose backup power.
 			A.loseBackupPower()
-		if(WIRE_OPEN) // Pulse to open door (only works not emagged and ID wire is cut or no access is required).
-			if(A.emagged)
+		if(WIRE_OPEN) // Pulse to open door (only works not cmagged and ID wire is cut or no access is required).
+			if(A.cmagged)
 				return
 			if(!A.requiresID() || A.check_access(null))
 				if(A.density)
