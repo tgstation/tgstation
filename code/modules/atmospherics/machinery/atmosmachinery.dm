@@ -58,6 +58,13 @@ Pipelines + Other Objects -> Pipe network
 	return ..()
 	//return QDEL_HINT_FINDREFERENCE
 
+/obj/machinery/atmospherics/proc/destroy_network()
+	return
+
+/obj/machinery/atmospherics/proc/build_network()
+	// Called to build a network from this node
+	return
+
 /obj/machinery/atmospherics/proc/nullifyNode(I)
 	if(NODE_I)
 		var/obj/machinery/atmospherics/N = NODE_I
@@ -149,7 +156,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
-		qdel(P.parent)
+		P.destroy_network()
 	var/I = nodes.Find(reference)
 	NODE_I = null
 	update_icon()
