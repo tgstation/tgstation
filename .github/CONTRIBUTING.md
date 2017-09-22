@@ -100,7 +100,14 @@ var/path_type = /obj/item/baseball_bat
 var/path_type = "/obj/item/baseball_bat"
 ```
 
+<<<<<<< HEAD
 ### Tabs not spaces
+=======
+### Use var/name format when declaring variables
+While DM allows other ways of declaring variables, this one should be used for consistency.
+
+### Tabs, not spaces
+>>>>>>> 292638c209... Specifies one format of variable declaration for the codebase. (#30926)
 You must use tabs to indent your code, NOT SPACES.
 
 (You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces)
