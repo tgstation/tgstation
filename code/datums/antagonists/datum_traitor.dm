@@ -180,7 +180,7 @@
 		kill_objective.find_target()
 		add_objective(kill_objective)
 
-	var/datum/objective/exist/exist_objective = new
+	var/datum/objective/survive/exist/exist_objective = new
 	exist_objective.owner = owner
 	add_objective(exist_objective)
 /datum/antagonist/traitor/proc/forge_single_objective()

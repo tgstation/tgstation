@@ -17,13 +17,6 @@
 	if(owner)
 		. += owner
 
-/datum/objective/proc/considered_existing(var/datum/mind/M)
-	if(M && M.current)
-		if(isliving(M.current))
-			var/mob/living/L = M.current
-			return L.stat != DEAD
-	return FALSE
-
 /datum/objective/proc/considered_alive(var/datum/mind/M)
 	if(M && M.current)
 		var/mob/living/carbon/human/H
@@ -355,15 +348,13 @@
 			return FALSE
 	return TRUE
 
-/datum/objective/exist //Like survive, but works for silicons and zombies and such.
-	explanation_text = "Exist until the end."
-
-/datum/objective/exist/check_completion()
-	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/M in owners)
-		if(!considered_existing(M))
-			return FALSE
-	return TRUE
+//Like survive, but works for silicons and zombies and such.
+/datum/objective/survive/exist/considered_alive(var/datum/mind/M)
+	if(M && M.current)
+		if(isliving(M.current))
+			var/mob/living/L = M.current
+			return L.stat != DEAD
+	return FALSE
 
 /datum/objective/martyr
 	explanation_text = "Die a glorious death."
