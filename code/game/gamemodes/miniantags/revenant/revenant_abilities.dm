@@ -83,6 +83,7 @@
 //Toggle night vision: lets the revenant toggle its night vision
 /obj/effect/proc_holder/spell/targeted/night_vision/revenant
 	charge_max = 0
+	human_req = FALSE
 	panel = "Revenant Abilities"
 	message = "<span class='revennotice'>You toggle your night vision.</span>"
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
@@ -95,7 +96,8 @@
 	desc = "Telepathically transmits a message to the target."
 	panel = "Revenant Abilities"
 	charge_max = 0
-	clothes_req = 0
+	clothes_req = FALSE
+	human_req = FALSE
 	range = 7
 	include_user = 0
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
@@ -121,7 +123,8 @@
 
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
-	clothes_req = 0
+	clothes_req = FALSE
+	human_req = FALSE
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
@@ -188,6 +191,8 @@
 	range = 5
 	stun = 30
 	cast_amount = 40
+	clothes_req = FALSE
+	human_req = FALSE
 	var/shock_range = 2
 	var/shock_damage = 15
 	action_icon_state = "overload_lights"
@@ -228,6 +233,8 @@
 	range = 4
 	stun = 20
 	reveal = 40
+	clothes_req = FALSE
+	human_req = FALSE
 	unlock_amount = 75
 	cast_amount = 30
 	action_icon_state = "defile"
@@ -274,6 +281,8 @@
 	desc = "Corrupts and damages nearby machines and mechanical objects."
 	charge_max = 200
 	range = 4
+	clothes_req = FALSE
+	human_req = FALSE
 	cast_amount = 60
 	unlock_amount = 200
 	action_icon_state = "malfunction"
@@ -321,6 +330,8 @@
 	range = 3
 	cast_amount = 50
 	unlock_amount = 200
+	clothes_req = FALSE
+	human_req = FALSE
 	action_icon_state = "blight"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
