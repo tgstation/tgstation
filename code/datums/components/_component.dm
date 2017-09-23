@@ -110,15 +110,6 @@
 	
 	procs[sig_type] = CALLBACK(src, proc_on_self)    
 
-/datum/component/proc/ReceiveSignal(sigtype, ...)
-	var/list/sps = signal_procs
-	var/datum/callback/CB = LAZYACCESS(sps, sigtype)
-	if(!CB)
-		return FALSE
-	var/list/arguments = args.Copy()
-	arguments.Cut(1, 2)
-	return CB.InvokeAsync(arglist(arguments))
-
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
 
@@ -126,6 +117,7 @@
 	return
 
 /datum/component/proc/AfterComponentActivated()
+	set waitfor = FALSE
 	return
 
 /datum/component/proc/_GetInverseTypeList(current_type)
@@ -136,26 +128,40 @@
 
 /datum/proc/SendSignal(sigtype, ...)
 	var/list/comps = datum_components
-	. = FALSE
 	if(!comps)
-		return
+		return FALSE
+	var/list/arguments = args.Copy()
+	arguments.Cut(1, 2)
 	var/target = comps[/datum/component]
 	if(!islist(target))
 		var/datum/component/C = target
-		if(C.enabled && C.ReceiveSignal(arglist(args)))
+		if(!C.enabled)
+			return FALSE
+		var/list/sps = C.signal_procs
+		var/datum/callback/CB = LAZYACCESS(sps, sigtype)
+		if(!CB)
+			return FALSE
+		. = CB.InvokeAsync(arglist(arguments))
+		if(.)
 			ComponentActivated(C)
 			C.AfterComponentActivated()
-			return TRUE
 	else
+		. = FALSE
 		for(var/I in target)
 			var/datum/component/C = I
 			if(!C.enabled)
+				continue			
+			var/list/sps = C.signal_procs
+			var/datum/callback/CB = LAZYACCESS(sps, sigtype)
+			if(!CB)
 				continue
-			if(C.ReceiveSignal(arglist(args)))
+			if(CB.InvokeAsync(arglist(arguments)))
 				ComponentActivated(C)
+				C.AfterComponentActivated()
 				. = TRUE
 
 /datum/proc/ComponentActivated(datum/component/C)
+	set waitfor = FALSE
 	return
 
 /datum/proc/GetComponent(c_type)
