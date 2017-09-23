@@ -1,0 +1,5 @@
+author: "Armhulen"
+delete-after: True
+changes: 
+  - rscadd: "Rare Spider Variants have arrived! Every spiderling has a rare chance of growing up to a rare version of their original spider type!"
+  - rscadd: "Special thanks to Onule for the sprites, you're the best!"
