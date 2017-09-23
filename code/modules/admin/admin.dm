@@ -427,8 +427,8 @@
 		return
 
 	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
-	if(world.RunningService())
-		options += "Service Restart (Force restart DD)";
+	if(SERVER_TOOLS_PRESENT)
+		options += "Server Restart (Kill and restart DD)";
 
 	var/rebootconfirm
 	if(SSticker.admin_delay_notice)
@@ -447,9 +447,9 @@
 					world.Reboot()
 				if("Hardest Restart (No actions, just reboot)")
 					world.Reboot(fast_track = TRUE)
-				if("Service Restart (Force restart DD)")
-					GLOB.reboot_mode = REBOOT_MODE_HARD
-					world.ServiceReboot()
+				if("Server Restart (Kill and restart DD)")
+					to_chat(world, "Server restart - [init_by]")
+					SERVER_TOOLS_REBOOT_BYOND
 
 /datum/admins/proc/end_round()
 	set category = "Server"
