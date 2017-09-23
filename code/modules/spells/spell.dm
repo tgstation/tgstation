@@ -15,7 +15,7 @@
 	var/action_background_icon_state = "bg_spell"
 
 /obj/effect/proc_holder/Initialize()
-	..()
+	. = ..()
 	if(has_action)
 		action = new(src)
 

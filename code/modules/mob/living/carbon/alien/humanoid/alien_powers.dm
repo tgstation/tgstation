@@ -12,13 +12,13 @@ Doesn't work on other aliens/AI.*/
 	var/plasma_cost = 0
 	var/check_turf = FALSE
 	has_action = TRUE
-	datum/action/spell_action/alien/action = null
+	datum/action/spell_action/alien/action
 	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "spell_default"
 	action_background_icon_state = "bg_alien"
 
-/obj/effect/proc_holder/alien/New()
-	..()
+/obj/effect/proc_holder/alien/Initialize()
+	. = ..()
 	action = new(src)
 
 /obj/effect/proc_holder/alien/Click()
