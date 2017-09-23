@@ -139,6 +139,7 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula/Life(mob/living/M)
 	var/turf/T = get_turf(src)
 	if(locate(/obj/structure/spider) in T)
+		speed = 2
 	else
 		speed = 7
 
