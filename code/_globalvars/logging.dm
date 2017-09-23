@@ -16,6 +16,8 @@ GLOBAL_VAR(config_error_log)
 GLOBAL_PROTECT(config_error_log)
 GLOBAL_VAR(sql_error_log)
 GLOBAL_PROTECT(sql_error_log)
+GLOBAL_VAR(world_pda_log)
+GLOBAL_PROTECT(world_pda_log)
 
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)

@@ -18,7 +18,7 @@
 			if(lootspawn)
 				new lootspawn(T)
 			lootcount--
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/lootdrop/armory_contraband
 	name = "armory contraband gun spawner"
@@ -89,7 +89,7 @@
 
 /obj/effect/spawner/lootdrop/maintenance/Initialize(mapload)
 	loot = GLOB.maintenance_loot
-	..()
+	. = ..()
 
 /obj/effect/spawner/lootdrop/crate_spawner
 	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
@@ -130,7 +130,7 @@
 	loot = list()
 	for(var/path in subtypesof(/obj/effect/spawner/bundle/costume))
 		loot[path] = TRUE
-	..()
+	. = ..()
 
 // Minor lootdrops follow
 
