@@ -33,6 +33,10 @@ map omegastation
 endmap
 
 map bozstation
+	maxplayers 35
+endmap
+
+map sbstation
 	default
 	maxplayers 35
 endmap
