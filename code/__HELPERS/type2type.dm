@@ -125,22 +125,39 @@
 /proc/angle2dir(degree)
 
 	degree = SimplifyDegrees(degree)
-
-	if(degree < 45)
-		return NORTH
-	if(degree < 90)
-		return NORTHEAST
-	if(degree < 135)
-		return EAST
-	if(degree < 180)
-		return SOUTHEAST
-	if(degree < 225)
-		return SOUTH
-	if(degree < 270)
-		return SOUTHWEST
-	if(degree < 315)
-		return WEST
-	return NORTH|WEST
+	switch(degree)
+		if(22.5) //if we're right between two possible directions, pick one randomly
+			return pick(NORTH, NORTHEAST)
+		if(67.5) //these have to come first so they trigger instead of any of the single-direction returns
+			return pick(NORTHEAST, EAST)
+		if(112.5)
+			return pick(EAST, SOUTHEAST)
+		if(157.5)
+			return pick(SOUTHEAST, SOUTH)
+		if(202.5)
+			return pick(SOUTH, SOUTHWEST)
+		if(247.5)
+			return pick(SOUTHWEST, WEST)
+		if(292.5)
+			return pick(WEST, NORTHWEST)
+		if(337.5)
+			return pick(NORTHWEST, NORTH)
+		if(337.5 to 360, 0 to 22.5) //north requires two angle ranges
+			return NORTH
+		if(22.5 to 67.5) //each range covers 45 degrees
+			return NORTHEAST
+		if(67.5 to 112.5)
+			return EAST
+		if(112.5 to 157.5)
+			return SOUTHEAST
+		if(157.5 to 202.5)
+			return SOUTH
+		if(202.5 to 247.5)
+			return SOUTHWEST
+		if(247.5 to 292.5)
+			return WEST
+		if(292.5 to 337.5)
+			return NORTHWEST
 
 //returns the north-zero clockwise angle in degrees, given a direction
 
