@@ -220,6 +220,16 @@
 					update_icon()
 					return
 
+				else if(istype(W, /obj/item/device/electroadaptive_pseudocircuit))
+					var/obj/item/device/electroadaptive_pseudocircuit/P = W
+					if(!P.adapt_circuit(user, 15))
+						return
+					user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+					"<span class='notice'>You adapt a fire alarm circuit and slot it into the assembly.</span>")
+					buildstage = 1
+					update_icon()
+					return
+
 				else if(istype(W, /obj/item/wrench))
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")

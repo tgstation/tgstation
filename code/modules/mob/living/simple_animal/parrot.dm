@@ -871,7 +871,7 @@
 	speak = list("Poly wanna cracker!", ":e Check the crystal, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE")
 	gold_core_spawnable = 0
 	speak_chance = 3
-	var/memory_saved = 0
+	var/memory_saved = FALSE
 	var/rounds_survived = 0
 	var/longest_survival = 0
 	var/longest_deathstreak = 0
@@ -902,24 +902,19 @@
 		rounds_survived = max(++rounds_survived,1)
 		if(rounds_survived > longest_survival)
 			longest_survival = rounds_survived
-		Write_Memory()
+		Write_Memory(FALSE)
+		memory_saved = TRUE
 	..()
 
 /mob/living/simple_animal/parrot/Poly/death(gibbed)
 	if(!memory_saved)
-		var/go_ghost = 0
-		if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak || prob(0.666))
-			go_ghost = 1
-		rounds_survived = min(--rounds_survived,0)
-		if(rounds_survived < longest_deathstreak)
-			longest_deathstreak = rounds_survived
-		Write_Memory()
-		if(go_ghost)
-			var/mob/living/simple_animal/parrot/Poly/ghost/G = new(loc)
-			if(mind)
-				mind.transfer_to(G)
-			else
-				G.key = key
+		Write_Memory(TRUE)
+	if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak || prob(0.666))
+		var/mob/living/simple_animal/parrot/Poly/ghost/G = new(loc)
+		if(mind)
+			mind.transfer_to(G)
+		else
+			G.key = key
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
@@ -934,8 +929,7 @@
 		var/json_file = file("data/npc_saves/Poly.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		speech_buffer = json["phrases"]
 		rounds_survived = json["roundssurvived"]
 		longest_survival = json["longestsurvival"]
@@ -943,17 +937,27 @@
 	if(!islist(speech_buffer))
 		speech_buffer = list()
 
-/mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
+/mob/living/simple_animal/parrot/Poly/proc/Write_Memory(dead)
 	var/json_file = file("data/npc_saves/Poly.json")
 	var/list/file_data = list()
 	if(islist(speech_buffer))
 		file_data["phrases"] = speech_buffer
-	file_data["roundssurvived"] = rounds_survived
-	file_data["longestsurvival"] = longest_survival
-	file_data["longestdeathstreak"] = longest_deathstreak
+	if(dead)
+		file_data["roundssurvived"] = min(rounds_survived - 1, 0)
+		file_data["longestsurvival"] = longest_survival
+		if(rounds_survived - 1 < longest_deathstreak)
+			file_data["longestdeathstreak"] = rounds_survived - 1
+		else
+			file_data["longestdeathstreak"] = longest_deathstreak
+	else
+		file_data["roundssurvived"] = rounds_survived + 1
+		if(rounds_survived + 1 > longest_survival)
+			file_data["longestsurvival"] = rounds_survived + 1
+		else
+			file_data["longestsurvival"] = longest_survival
+		file_data["longestdeathstreak"] = longest_deathstreak
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
-	memory_saved = 1
 
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
@@ -965,7 +969,7 @@
 	butcher_results = list(/obj/item/ectoplasm = 1)
 
 /mob/living/simple_animal/parrot/Poly/ghost/Initialize()
-	memory_saved = 1 //At this point nothing is saved
+	memory_saved = TRUE //At this point nothing is saved
 	..()
 
 /mob/living/simple_animal/parrot/Poly/ghost/handle_automated_speech()

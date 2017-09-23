@@ -88,7 +88,7 @@
 	..()
 	if(FESTIVE_SEASON in SSevents.holidays)
 		new tree(get_turf(src))
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/xmastree/rdrod
 	name = "festivus pole spawner"

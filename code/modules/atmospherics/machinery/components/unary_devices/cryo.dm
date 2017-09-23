@@ -348,7 +348,7 @@
 	data["cellTemperature"] = round(air1.temperature, 1)
 
 	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
-	var beakerContents = list()
+	var/beakerContents = list()
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents += list(list("name" = R.name, "volume" = R.volume))
@@ -377,6 +377,8 @@
 		if("ejectbeaker")
 			if(beaker)
 				beaker.forceMove(loc)
+				if(Adjacent(usr) && !issilicon(usr))
+					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE
 	update_icon()
@@ -392,5 +394,12 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return 0 //you can't see the pipe network when inside a cryo cell.
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/return_temperature()
+	var/datum/gas_mixture/G = AIR1
+
+	if(G.total_moles() > 10)
+		return G.temperature
+	return ..()
 
 #undef CRYOMOBS

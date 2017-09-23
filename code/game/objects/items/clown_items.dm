@@ -107,38 +107,25 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
-	var/next_usable = 0
-	var/honksound = 'sound/items/bikehorn.ogg'
-	var/cooldowntime = 20
+
+/obj/item/bikehorn/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 
 /obj/item/bikehorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src.loc, honksound, 50, 1)
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 	return (BRUTELOSS)
-
-/obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!(next_usable > world.time))
-		playsound(loc, honksound, 50, 1, -1) //plays instead of tap.ogg!
-	return ..()
-
-/obj/item/bikehorn/attack_self(mob/user)
-	if(!(next_usable > world.time))
-		next_usable = world.time + cooldowntime
-		playsound(src.loc, honksound, 50, 1)
-		src.add_fingerprint(user)
-
-/obj/item/bikehorn/Crossed(mob/living/L)
-	if(isliving(L))
-		playsound(loc, honksound, 50, 1, -1)
-	..()
 
 /obj/item/bikehorn/airhorn
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	honksound = 'sound/items/airhorn2.ogg'
-	cooldowntime = 50
 	origin_tech = "materials=4;engineering=4"
+
+/obj/item/bikehorn/airhorn/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50)
 
 /obj/item/bikehorn/golden
 	name = "golden bike horn"
@@ -155,14 +142,13 @@
 	..()
 
 /obj/item/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
-	if(!(next_usable > world.time))
-		var/turf/T = get_turf(src)
-		for(M in ohearers(7, T))
-			if(ishuman(M) && M.can_hear())
-				var/mob/living/carbon/human/H = M
-				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
-					continue
-			M.emote("flip")
+	var/turf/T = get_turf(src)
+	for(M in ohearers(7, T))
+		if(ishuman(M) && M.can_hear())
+			var/mob/living/carbon/human/H = M
+			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+				continue
+		M.emote("flip")
 
 /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter
 	name = "Canned Laughter"

@@ -94,7 +94,7 @@
 
 /obj/item/mecha_parts/part/odysseus_right_leg
 	name = "\improper Odysseus right leg"
-	desc = "A Odysseus right leg. Contains complex servodrives and balance maintaining systems to maintain stability for critical patients."
+	desc = "An odysseus right leg. Contains complex servodrives and balance maintaining systems to maintain stability for critical patients."
 	icon_state = "odysseus_r_leg"
 
 ///////// Gygax
