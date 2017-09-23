@@ -844,8 +844,9 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	var/dat = {"
 	<html><head><title>Create Outfit</title></head><body>
-	<form name="outfit" action="byond://?src=\ref[src]" method="get">
+	<form name="outfit" action="byond://?src=\ref[src];[HrefToken()]" method="get">
 	<input type="hidden" name="src" value="\ref[src]">
+	[HrefTokenFormField()]
 	<input type="hidden" name="create_outfit" value="1">
 	<table>
 		<tr>
