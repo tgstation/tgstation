@@ -29,18 +29,18 @@ Orange glasses:/obj/item/clothing/glasses/orange:130
 Heat goggles:/obj/item/clothing/glasses/heat:130
 Cold goggles:/obj/item/clothing/glasses/cold:130
 Cane:/obj/item/weapon/cane:130
-Zippo:/obj/item/weapon/lighter:130
-Cigarette packet:/obj/item/weapon/storage/fancy/cigarettes:20
-DromedaryCo packet:/obj/item/weapon/storage/fancy/cigarettes/dromedaryco:50
+Zippo:/obj/item/lighter:130
+Cigarette packet:/obj/item/storage/fancy/cigarettes:20
+DromedaryCo packet:/obj/item/storage/fancy/cigarettes/dromedaryco:50
 Premium Havanian Cigar:/obj/item/clothing/mask/cigarette/cigar/havana:130
 E-Cigarette:/obj/item/clothing/mask/vape:150
-Beer bottle:/obj/item/weapon/reagent_containers/food/drinks/beer:80
-Captain flask:/obj/item/weapon/reagent_containers/food/drinks/flask:200
-Three Mile Island Ice Tea:/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/threemileisland:100
+Beer bottle:/obj/item/reagent_containers/food/drinks/beer:80
+Captain flask:/obj/item/reagent_containers/food/drinks/flask:200
+Three Mile Island Ice Tea:/obj/item/reagent_containers/food/drinks/drinkingglass/threemileisland:100
 Red glasses:/obj/item/clothing/glasses/red:180
 Waistcoat:/obj/item/clothing/tie/waistcoat:85
 Cloak:/obj/item/clothing/neck/cloak:190
-Donut Box:/obj/item/weapon/storage/fancy/donut_box:450
+Donut Box:/obj/item/storage/fancy/donut_box:450
 Shoes
 Clown Shoes:/obj/item/clothing/shoes/clown_shoes:130
 Cyborg Shoes:/obj/item/clothing/shoes/cyborg:130
@@ -82,19 +82,19 @@ Green Gloves:/obj/item/clothing/gloves/color/green:100
 Latex Gloves:/obj/item/clothing/gloves/color/latex:150
 Fingerless Gloves:/obj/item/clothing/gloves/fingerless:90
 Bedsheets
-Clown Bedsheet:/obj/item/weapon/bedsheet/clown:100
-Mime Bedsheet:/obj/item/weapon/bedsheet/mime:100
-Rainbow Bedsheet:/obj/item/weapon/bedsheet/rainbow:100
-Captain Bedsheet:/obj/item/weapon/bedsheet/captain:120
+Clown Bedsheet:/obj/item/bedsheet/clown:100
+Mime Bedsheet:/obj/item/bedsheet/mime:100
+Rainbow Bedsheet:/obj/item/bedsheet/rainbow:100
+Captain Bedsheet:/obj/item/bedsheet/captain:120
 Toys
-Rubber Duck:/obj/item/weapon/bikehorn/rubberducky:200
-Champion Belt:/obj/item/weapon/storage/belt/champion:200
+Rubber Duck:/obj/item/bikehorn/rubberducky:200
+Champion Belt:/obj/item/storage/belt/champion:200
 Toy pistol:/obj/item/toy/gun:150
-Toy dualsaber:/obj/item/weapon/twohanded/dualsaber/toy:300
+Toy dualsaber:/obj/item/twohanded/dualsaber/toy:300
 Rainbow crayon:/obj/item/toy/crayon/rainbow:250
 Special Stuff
-Santa Bag:/obj/item/weapon/storage/backpack/santabag:600
-Bible:/obj/item/weapon/storage/book/bible:100
+Santa Bag:/obj/item/storage/backpack/santabag:600
+Bible:/obj/item/storage/book/bible:100
 "}
 
 
@@ -205,7 +205,7 @@ proc/load_donator(ckey)
 //		world.log << "Failed to connect to database in load_donator([ckey])."
 		return 0
 
-	var/datum/DBQuery/query_donators = SSdbcore.NewQuery("SELECT round(sum) FROM Z_donators WHERE byond='[ckey]'")
+	var/datum/DBQuery/query_donators = SSdbcore.NewQuery("SELECT round(sum) FROM forum2.Z_donators WHERE byond='[ckey]'")
 	query_donators.Execute()
 	while(query_donators.NextRow())
 		var/money = round(text2num(query_donators.item[1]))
@@ -250,6 +250,6 @@ proc/build_prizes_list()
 
 
 //SPECIAL ITEMS
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/threemileisland/New()
+/obj/item/reagent_containers/food/drinks/drinkingglass/threemileisland/New()
 	..()
 	reagents.add_reagent("threemileisland", 50)
