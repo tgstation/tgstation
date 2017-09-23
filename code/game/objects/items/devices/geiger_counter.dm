@@ -16,6 +16,7 @@
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
 	var/scanning = 0
 	var/radiation_count = 0
+	var/last_tick_amount = 0
 
 /obj/item/device/geiger_counter/New()
 	..()
@@ -33,6 +34,16 @@
 	if(radiation_count > 0)
 		radiation_count--
 		update_icon()
+	if(last_tick_amount && isliving(loc))
+		if(isliving(loc))
+			var/mob/living/M = loc
+			if(!emagged)
+				to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] RADIATION PULSE DETECTED.</span>")
+				to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] Severity: [last_tick_amount]</span>")
+			else
+				to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] !@%$AT!(N P!LS! D/TEC?ED.</span>")
+				to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] &!F2rity: <=[last_tick_amount]#1</span>")
+		last_tick_amount = 0
 
 /obj/item/device/geiger_counter/examine(mob/user)
 	..()
@@ -84,14 +95,7 @@
 	if(emagged)
 		amount = Clamp(amount, 0, 25) //Emagged geiger counters can only accept 25 radiation at a time
 	radiation_count += amount
-	if(isliving(loc))
-		var/mob/living/M = loc
-		if(!emagged)
-			to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] RADIATION PULSE DETECTED.</span>")
-			to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] Severity: [amount]</span>")
-		else
-			to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] !@%$AT!(N P!LS! D/TEC?ED.</span>")
-			to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] &!F2rity: <=[amount]#1</span>")
+	last_tick_amount += amount
 	update_icon()
 
 /obj/item/device/geiger_counter/attack_self(mob/user)
