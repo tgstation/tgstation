@@ -15,8 +15,6 @@
 		if(L.reagents)
 			L.reagents.add_reagent(poison_type, poison_per_bite)
 
-
-
 //basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/poison/giant_spider
 	name = "giant spider"
@@ -132,7 +130,7 @@
 	melee_damage_upper = 40
 	poison_per_bite = 0
 	move_to_delay = 8
-	speed = 7 //changing this to be fast on webs, so don't hate!
+	speed = 7
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
 
@@ -354,8 +352,12 @@
 		stop_automated_movement = FALSE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
-	..()
-	GLOB.spidermobs += src
+	. = ..()
+	GLOB.spidermobs[src] = TRUE
+
+/mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
+	GLOB.spidermobs -= src
+	return ..()
 
 /datum/action/innate/spider/comm
 	name = "Command"

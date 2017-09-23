@@ -184,14 +184,14 @@
 					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider/tarantula, /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife)
 				else
 					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
-				var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
-				S.poison_per_bite = poison_per_bite
-				S.poison_type = poison_type
-				S.faction = faction.Copy()
-				if(player_spiders)
-					S.playable_spider = TRUE
-					notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=\ref[S];activate=1>(Click to play)</a>", source=S, action=NOTIFY_ATTACK)
-				qdel(src)
+			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
+			S.poison_per_bite = poison_per_bite
+			S.poison_type = poison_type
+			S.faction = faction.Copy()
+			if(player_spiders)
+				S.playable_spider = TRUE
+				notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=\ref[S];activate=1>(Click to play)</a>", source=S, action=NOTIFY_ATTACK)
+			qdel(src)
 
 
 
