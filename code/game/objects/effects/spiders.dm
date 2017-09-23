@@ -103,6 +103,15 @@
 /obj/structure/spider/spiderling/nurse
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse
 
+/obj/structure/spider/spiderling/midwife
+	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife
+
+/obj/structure/spider/spiderling/viper
+	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
+
+/obj/structure/spider/spiderling/tarantula
+	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
+
 /obj/structure/spider/spiderling/Collide(atom/user)
 	if(istype(user, /obj/structure/table))
 		src.loc = user.loc
@@ -171,7 +180,10 @@
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
 			if(!grow_as)
-				grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
+				if(prob(3))
+					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider/tarantula, /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife)
+				else
+					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
 			S.poison_per_bite = poison_per_bite
 			S.poison_type = poison_type
