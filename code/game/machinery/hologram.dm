@@ -50,7 +50,7 @@ Possible to do for anyone motivated enough:
 	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
 	var/static/list/holopads = list()
 
-/obj/item/device/radio/headset/examine(mob/user)
+/obj/machinery/holopad/examine(mob/user)
 	..()
 	if(isAI(user))
 		to_chat(user, "<span class='notice'>Alt-click to hang up all calls.</span>")
