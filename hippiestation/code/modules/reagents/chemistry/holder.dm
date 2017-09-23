@@ -18,6 +18,8 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
+	var/list/holder_blacklist_typecache = list(/obj/effect/particle_effect/water, /obj/effect/decal/cleanable, /mob/living)//preventing message spam
+	holder_blacklist_typecache = typecacheof(holder_blacklist_typecache)
 	if(flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
 
@@ -26,6 +28,36 @@
 		reaction_occurred = 0
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
+
+			var/turf/T = get_turf(cached_my_atom)
+			switch(R.reagent_state)//evaluating state of matter
+				if(GAS)
+					if(chem_temp < R.boiling_point)
+						R.reagent_state = LIQUID
+						if(!is_type_in_typecache(cached_my_atom, holder_blacklist_typecache))
+							for(var/mob/M in viewers(4, T))
+								to_chat(M, ("<span class='notice'>[icon2html(cached_my_atom, viewers(cached_my_atom))] The vapour condenses into a liquid!</span>"))
+
+				if(SOLID)
+					if(chem_temp > R.melting_point)
+						R.reagent_state = LIQUID
+						if(!is_type_in_typecache(cached_my_atom, holder_blacklist_typecache))
+							for(var/mob/M in viewers(4, T))
+								to_chat(M, ("<span class='notice'>[icon2html(cached_my_atom, viewers(cached_my_atom))] The solid chemicals melt into a liquid!</span>"))
+
+				if(LIQUID)
+					if(chem_temp > R.boiling_point)
+						R.reagent_state = GAS
+						if(!is_type_in_typecache(cached_my_atom, holder_blacklist_typecache))
+							for(var/mob/M in viewers(4, T))
+								to_chat(M, ("<span class='notice'>[icon2html(cached_my_atom, viewers(cached_my_atom))] The solution rapidly boils into a vapour!</span>"))
+
+					else if(chem_temp < R.melting_point)
+						R.reagent_state = SOLID
+						if(!is_type_in_typecache(cached_my_atom, holder_blacklist_typecache))
+							for(var/mob/M in viewers(4, T))
+								to_chat(M, ("<span class='notice'>[icon2html(cached_my_atom, viewers(cached_my_atom))] The solution solidifies!</span>"))
+
 			for(var/reaction in cached_reactions[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id
 				if(!reaction)
 					continue
@@ -47,7 +79,6 @@
 				var/pressure_required = C.pressure_required
 				var/radioactivity_required = C.radioactivity_required
 				var/bluespace_recipe = C.bluespace_recipe
-
 				var/list/cached_results = C.results
 
 				for(var/B in cached_required_reagents)
@@ -129,3 +160,34 @@
 	while(reaction_occurred)
 	update_total()
 	return 0
+
+/datum/reagents/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
+	var/datum/cached_my_atom = my_atom
+	var/react_type
+	if(isliving(A))
+		react_type = "LIVING"
+		if(method == INGEST)
+			var/mob/living/L = A
+			L.taste(src)
+	else if(isturf(A))
+		react_type = "TURF"
+	else if(isobj(A))
+		react_type = "OBJ"
+	else
+		return
+	var/list/cached_reagents = reagent_list
+	for(var/reagent in cached_reagents)
+		var/datum/reagent/R = reagent
+		switch(react_type)
+			if("LIVING")
+				var/touch_protection = 0
+				if(method == VAPOR)
+					var/mob/living/L = A
+					touch_protection = L.get_permeability_protection()
+				R.reaction_mob(A, method, R.volume * volume_modifier, show_message, touch_protection)
+			if("TURF")
+				R.reaction_turf(A, R.volume * volume_modifier, show_message)
+				R.handle_state_change(A, R.volume, cached_my_atom)
+			if("OBJ")
+				R.reaction_obj(A, R.volume * volume_modifier, show_message)
+				R.handle_state_change(get_turf(A), R.volume, cached_my_atom)

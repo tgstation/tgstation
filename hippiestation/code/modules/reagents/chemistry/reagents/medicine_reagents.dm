@@ -120,16 +120,16 @@ datum/reagent/medicine/superzine/on_mob_life(mob/living/M as mob)
 	M.adjustBruteLoss(-5 * REM)
 	..()
 
-/datum/reagent/medicine/life
+/datum/reagent/medicine/liquid_life
 	name = "Liquid Life"
-	id = "life"
+	id = "liquid_life"
 	description = "The purest form of healing avaliable, unfortunately extremely painful for the user when regenerating"
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	taste_description = "the tastiest taste"
 	overdose_threshold = 40 //gib nuke
 	var/message= TRUE
 
-/datum/reagent/medicine/life/on_mob_life(mob/living/M)//rebalanced to cripple the person being healed essentially acting as a sort of hunker down chem
+/datum/reagent/medicine/liquid_life/on_mob_life(mob/living/M)//rebalanced to cripple the person being healed essentially acting as a sort of hunker down chem
 	if(M.getBruteLoss() != 0 || M.getFireLoss() != 0 || M.getToxLoss() != 0)
 		if(message == TRUE)
 			to_chat(M, "<span class='warning'>You double over in pain as you begin to violently regenerate!</span>")
@@ -143,7 +143,7 @@ datum/reagent/medicine/superzine/on_mob_life(mob/living/M as mob)
 		M.adjustBruteLoss(-10)
 	..()
 
-/datum/reagent/medicine/life/overdose_process(mob/living/M)
+/datum/reagent/medicine/liquid_life/overdose_process(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/turf/T = M.loc

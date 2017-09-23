@@ -38,9 +38,9 @@
 	required_reagents = list("sparky" = 2, "carbonf" = 2,"virogone" = 2)
 	pressure_required = 70
 
-/datum/chemical_reaction/life
+/datum/chemical_reaction/liquid_life
 	name = "Liquid life"
-	id = "life"
-	results = list("life" = 2, "methpos" = 2)
+	id = "liquid_life"
+	results = list("liquid_life" = 2, "methpos" = 2)
 	required_reagents = list("superzine" = 1, "virogone" = 1,"defib" = 1)
 	bluespace_recipe = TRUE
