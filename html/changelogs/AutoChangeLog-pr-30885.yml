@@ -1,4 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - balance: "A zombie's automatic self-healing is stopped for 6 seconds after taking damage."
