@@ -47,7 +47,6 @@
 			antag_candidates -= vamp
 			possible_vamps -= vamp
 			vamp.special_role = "Vampire"
-			vampires += vamp
 			vamp.restricted_roles = restricted_jobs
 		return ..()
 	else
