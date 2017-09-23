@@ -516,10 +516,7 @@
 
 
 	//Shooting Code:
-	A.original = target
-	A.starting = T
-	A.yo = U.y - T.y
-	A.xo = U.x - T.x
+	A.preparePixelProjectile(target, src)
 	A.fire()
 	return A
 

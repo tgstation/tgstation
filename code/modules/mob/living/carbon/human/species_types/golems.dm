@@ -363,12 +363,7 @@
 				var/turf/curloc = get_turf(H)
 
 				// redirect the projectile
-				P.original = locate(new_x, new_y, P.z)
-				P.starting = curloc
-				P.firer = H
-				P.yo = new_y - curloc.y
-				P.xo = new_x - curloc.x
-				P.Angle = null
+				P.preparePixelProjectile(get_turf(P.starting), H)
 			return -1
 	return 0
 
