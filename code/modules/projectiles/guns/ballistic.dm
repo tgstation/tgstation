@@ -144,8 +144,6 @@
 		if(user.is_holding(src))
 			process_fire(user, user, 0, zone_override = "head")
 			user.visible_message("<span class='suicide'>[user] blows [user.p_their()] brain[user.p_s()] out with [src]!</span>")
-<<<<<<< HEAD
-=======
 			var/turf/target = get_ranged_target_turf(user, turn(user.dir, 180), BRAINS_BLOWN_THROW_RANGE)
 			B.Remove(user)
 			B.forceMove(T)
@@ -156,7 +154,6 @@
 				B.add_blood(user_dna)
 			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, /proc/spawn_atom_to_turf, /obj/effect/gibspawner/generic, B, 1, FALSE, list(user_dna))
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
->>>>>>> 69669be0ad... Possibly fixes runtimes with gun suicide
 			return(BRUTELOSS)
 		else
 			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
