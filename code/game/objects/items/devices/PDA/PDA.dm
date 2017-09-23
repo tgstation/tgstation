@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
 	var/fon = 0 //Is the flashlight function on?
-	var/f_lum = 3 //Luminosity for the flashlight function
+	var/f_lum = 2.3 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
@@ -112,6 +112,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return
 
 /obj/item/device/pda/attack_self(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return
+
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
 	assets.send(user)
 
@@ -352,9 +356,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(fon)
 					fon = 0
 					set_light(0)
-				else
+				else if(f_lum)
 					fon = 1
-					set_light(2.3)
+					set_light(f_lum)
 				update_icon()
 			if("Medical Scan")
 				if(scanmode == 1)
@@ -538,7 +542,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			P.show_recieved_message(msg,src)
 			if(!multiple)
 				show_to_ghosts(user,msg)
-				log_talk(user,"[user] (PDA: [name]) sent \"[message]\" to [P.name]",LOGPDA)
+				log_talk(user,"[key_name(user)] (PDA: [name]) sent \"[message]\" to [key_name(P,null,TRUE)]",LOGPDA)
 		else
 			if(!multiple)
 				to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
@@ -856,9 +860,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/list/plist = list()
 	var/list/namecounts = list()
 
-	if(user.stat == DEAD)
-		return //won't work if dead
-
 	if(src.aiPDA.toff)
 		to_chat(user, "Turn on your receiver in order to send messages.")
 		return
@@ -883,6 +884,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(add_photo=="Yes")
 			var/datum/picture/Pic = aicamera.selectpicture(aicamera)
 			src.aiPDA.photo = Pic.fields["img"]
+
+	if(incapacitated())
+		return
+
 	src.aiPDA.create_message(src, selected)
 
 
@@ -910,8 +915,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
 
 /mob/living/silicon/ai/proc/cmd_show_message_log(mob/user)
-	if(user.stat == DEAD)
-		return //won't work if dead
+	if(incapacitated())
+		return
 	if(!isnull(aiPDA))
 		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
 		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")

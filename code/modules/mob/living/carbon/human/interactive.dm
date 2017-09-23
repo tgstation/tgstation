@@ -95,8 +95,7 @@
 		var/json_file = file("data/npc_saves/snpc.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		knownStrings = json["knownStrings"]
 	if(isnull(knownStrings))
 		knownStrings = list()
@@ -375,7 +374,7 @@
 	faction += "hostile"
 
 /mob/living/carbon/human/interactive/Initialize()
-	..()
+	. = ..()
 
 	set_species(/datum/species/synth)
 
@@ -1596,7 +1595,7 @@
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_MEAN
 	faction += "bot_angry"
-	..()
+	. = ..()
 
 /mob/living/carbon/human/interactive/friendly/Initialize()
 	TRAITS |= TRAIT_FRIENDLY
@@ -1604,7 +1603,7 @@
 	faction += "bot_friendly"
 	faction += "neutral"
 	functions -= "combat"
-	..()
+	. = ..()
 
 /mob/living/carbon/human/interactive/greytide/Initialize()
 	TRAITS |= TRAIT_ROBUST
@@ -1615,7 +1614,7 @@
 	targetInterestShift = 2 // likewise
 	faction += "bot_grey"
 	graytide = 1
-	..()
+	. = ..()
 
 //Walk softly and carry a big stick
 /mob/living/carbon/human/interactive/robust/Initialize()
@@ -1623,4 +1622,4 @@
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_SMART
 	faction += "bot_power"
-	..()
+	. = ..()

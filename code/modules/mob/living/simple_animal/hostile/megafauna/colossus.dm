@@ -93,7 +93,7 @@ Difficulty: Very Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
-	..()
+	. = ..()
 	internal = new/obj/item/device/gps/internal/colossus(src)
 
 /obj/effect/temp_visual/at_shield
@@ -250,7 +250,7 @@ Difficulty: Very Hard
 	use_power = NO_POWER_USE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
-	var/static/list/blacklist = typecacheof(list(/obj/item/spellbook))
+	var/list/blacklist = list()
 
 /obj/machinery/smartfridge/black_box/update_icon()
 	return
@@ -258,7 +258,8 @@ Difficulty: Very Hard
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))
 		return FALSE
-	if(is_type_in_typecache(O, blacklist))
+	if(blacklist[O])
+		visible_message("<span class='boldwarning'>[src] ripples as it rejects [O]. The device will not accept items that have been removed from it.</span>")
 		return FALSE
 	return TRUE
 
@@ -275,6 +276,7 @@ Difficulty: Very Hard
 	..()
 	if(!memory_saved && SSticker.current_state == GAME_STATE_FINISHED)
 		WriteMemory()
+		memory_saved = TRUE
 
 /obj/machinery/smartfridge/black_box/proc/WriteMemory()
 	var/json_file = file("data/npc_saves/Blackbox.json")
@@ -286,7 +288,6 @@ Difficulty: Very Hard
 	file_data["data"] = stored_items
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
-	memory_saved = TRUE
 
 /obj/machinery/smartfridge/black_box/proc/ReadMemory()
 	if(fexists("data/npc_saves/Blackbox.sav")) //legacy compatability to convert old format to new
@@ -297,8 +298,7 @@ Difficulty: Very Hard
 		var/json_file = file("data/npc_saves/Blackbox.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		stored_items = json["data"]
 	if(isnull(stored_items))
 		stored_items = list()
@@ -309,7 +309,8 @@ Difficulty: Very Hard
 //in it's own proc to avoid issues with items that nolonger exist in the code base.
 //try catch doesn't always prevent byond runtimes from halting a proc,
 /obj/machinery/smartfridge/black_box/proc/create_item(item_type)
-	new item_type(src)
+	var/obj/O = new item_type(src)
+	blacklist[O] = TRUE
 
 /obj/machinery/smartfridge/black_box/Destroy(force = FALSE)
 	if(force)

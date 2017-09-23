@@ -14,8 +14,8 @@ SUBSYSTEM_DEF(weather)
 		if(W.aesthetic)
 			continue
 		for(var/mob/living/L in GLOB.mob_list)
-			if(W.can_impact(L))
-				W.impact(L)
+			if(W.can_weather_act(L))
+				W.weather_act(L)
 	for(var/Z in eligible_zlevels)
 		var/list/possible_weather_for_this_z = list()
 		for(var/V in existing_weather)
@@ -30,8 +30,7 @@ SUBSYSTEM_DEF(weather)
 /datum/controller/subsystem/weather/Initialize(start_timeofday)
 	..()
 	for(var/V in subtypesof(/datum/weather))
-		var/datum/weather/W = V
-		new W	//weather->New will handle adding itself to the list
+		new V //Weather's New() will handle adding stuff to the list
 
 /datum/controller/subsystem/weather/proc/run_weather(weather_name, Z)
 	if(!weather_name)

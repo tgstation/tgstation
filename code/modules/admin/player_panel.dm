@@ -77,7 +77,7 @@
 
 					body += "<a href='?_src_=holder;[HrefToken()];adminplayeropts="+ref+"'>PP</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];showmessageckey="+ckey+"'>N</a> - "
-					body += "<a href='?_src_=vars;Vars="+ref+"'>VV</a> - "
+					body += "<a href='?_src_=vars;[HrefToken()];Vars="+ref+"'>VV</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];traitor="+ref+"'>TP</a> - "
 					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];subtlemessage="+ref+"'>SM</a> - "
@@ -516,6 +516,21 @@
 					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[traitor]'>[traitor.name]([traitor.key])</a><i>Traitor body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[traitor.key]'>PM</A></td></tr>"
 			dat += "</table>"
+
+		if(SSticker.mode.brother_teams.len > 0)
+			dat += "<br><table cellspacing=5><tr><td><B>Brothers</B></td><td></td><td></td></tr>"
+			for(var/datum/objective_team/brother_team/team in SSticker.mode.brother_teams)
+				for(var/datum/mind/brother in team.members)
+					var/mob/M = brother.current
+					if(M)
+						dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+						dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+						dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td>"
+						dat += "<td><A HREF='?_src_=holder;[HrefToken()];traitor=\ref[M]'>Show Objective</A></td></tr>"
+					else
+						dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[brother]'>[brother.name]([brother.key])</a><i>Brother body destroyed!</i></td>"
+						dat += "<td><A href='?priv_msg=[brother.key]'>PM</A></td></tr>"
+				dat += "</table>"
 
 		if(SSticker.mode.abductors.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Abductors</B></td><td></td><td></td></tr>"

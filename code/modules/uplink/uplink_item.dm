@@ -399,6 +399,12 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/ammo_box/magazine/m10mm/hp
 	cost = 3
 
+/datum/uplink_item/ammo/pistolaps
+	name = "9mm Handgun Magazine"
+	desc = "An additional 15-round 9mm magazine, compatible with the Stetchkin APS pistol, found in the Spetsnaz Pyro bundle."
+	item = /obj/item/ammo_box/magazine/pistolm9mm
+	cost = 2
+
 /datum/uplink_item/ammo/bolt_action
 	name = "Surplus Rifle Clip"
 	desc = "A stripper clip used to quickly load bolt action rifles. Contains 5 rounds."
@@ -626,7 +632,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Sleepy Pen"
 	desc = "A syringe disguised as a functional pen, filled with a potent mix of drugs, including a \
 			strong anesthetic and a chemical that prevents the target from speaking. \
-			The pen holds one dose of the mixture, and cannot be refilled. Note that before the target \
+			The pen holds one dose of the mixture, and can be refilled. Note that before the target \
 			falls asleep, they will be able to move and act."
 	item = /obj/item/pen/sleepy
 	cost = 4
@@ -692,7 +698,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Dehydrated Space Carp"
 	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate in \
 			your hand before use so it knows not to kill you."
-	item = /obj/item/toy/carpplushie/dehy_carp
+	item = /obj/item/toy/plush/carpplushie/dehy_carp
 	cost = 1
 
 /datum/uplink_item/stealthy_weapons/soap_clusterbang
@@ -1294,7 +1300,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
-	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in basic primates."
+	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/magillitis
 	cost = 15
 	restricted_roles = list("Geneticist", "Chief Medical Officer")

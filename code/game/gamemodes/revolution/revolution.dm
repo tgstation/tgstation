@@ -14,6 +14,7 @@
 	name = "revolution"
 	config_tag = "revolution"
 	antag_flag = ROLE_REV
+	false_report_weight = 10
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 1
@@ -280,7 +281,7 @@
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
 //////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind , beingborged)
+/datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind , beingborged, deconverter)
 	var/remove_head = 0
 	if(beingborged && (rev_mind in head_revolutionaries))
 		head_revolutionaries -= rev_mind
@@ -289,17 +290,16 @@
 	if((rev_mind in revolutionaries) || remove_head)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
-		rev_mind.current.log_message("<font color='red'>Has renounced the revolution!</font>", INDIVIDUAL_ATTACK_LOG)
+		log_attack("[rev_mind.current] (Key: [key_name(rev_mind.current)]) has been deconverted from the revolution by [deconverter] (Key: [key_name(deconverter)])!")
 
 		if(beingborged)
-			rev_mind.current.visible_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.",\
-				"<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>")
+			rev_mind.current.visible_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.", \
+				"<span class='userdanger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>")
 			message_admins("[ADMIN_LOOKUPFLW(rev_mind.current)] has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
-
 		else
+			rev_mind.current.visible_message("[rev_mind.current] looks like they just remembered their real allegiance!", \
+				"<span class='userdanger'><FONT size = 3>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
 			rev_mind.current.Unconscious(100)
-			rev_mind.current.visible_message("[rev_mind.current] looks like they just remembered their real allegiance!",\
-				"<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
 		update_rev_icons_removed(rev_mind)
 
 /////////////////////////////////////
@@ -335,7 +335,7 @@
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
-		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != DEAD) && T && (T.z == ZLEVEL_STATION))
+		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != DEAD) && T && (T.z in GLOB.station_z_levels))
 			if(ishuman(rev_mind.current))
 				return 0
 	return 1
@@ -394,3 +394,8 @@
 			text += printplayer(head, 1)
 		text += "<br>"
 		to_chat(world, text)
+
+/datum/game_mode/revolution/generate_report()
+	return "Employee unrest has spiked in recent weeks, with several attempted mutinies on heads of staff. Some crew have been observed using flashbulb devices to blind their colleagues, \
+		who then follow their orders without question and work towards dethroning departmental leaders. Watch for behavior such as this with caution. If the crew attempts a mutiny, you and \
+		your heads of staff are fully authorized to execute them using lethal weaponry - they will be later cloned and interrogated at Central Command."

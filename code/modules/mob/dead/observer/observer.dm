@@ -105,7 +105,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		if(turfs.len)
 			T = pick(turfs)
 		else
-			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION)	//middle of the station
+			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION_PRIMARY)	//middle of the station
 
 	loc = T
 
@@ -710,9 +710,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	update_icon()
 
 /mob/dead/observer/canUseTopic(atom/movable/AM,be_close = FALSE)
-	if(check_rights(R_ADMIN, 0))
-		return 1
-	return
+	return IsAdminGhost(usr)
 
 /mob/dead/observer/is_literate()
 	return 1

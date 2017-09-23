@@ -329,6 +329,9 @@
 		if(SSshuttle.arrivals.damaged && config.arrivals_shuttle_require_safe_latejoin)
 			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
+
+		if(config.arrivals_shuttle_require_undocked)
+			SSshuttle.arrivals.RequireUndocked(src)
 		arrivals_docked = SSshuttle.arrivals.mode != SHUTTLE_CALL
 
 	//Remove the player from the join queue if he was in one and reset the timer
@@ -407,6 +410,11 @@
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			available_job_count++;
+
+
+	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
+		if(prioritized_job.current_positions >= prioritized_job.total_positions)
+			SSjob.prioritized_jobs -= prioritized_job
 
 	if(length(SSjob.prioritized_jobs))
 		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"

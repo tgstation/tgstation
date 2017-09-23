@@ -75,23 +75,23 @@
 		body += "\ <A href='?_src_=holder;[HrefToken()];sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "
-		body += "\[<A href='?_src_=holder[HrefToken()];;mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
-		body += "<A href='?_src_=holder[HrefToken()];;mute=[M.ckey];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
-		body += "<A href='?_src_=holder[HrefToken()];;mute=[M.ckey];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
-		body += "<A href='?_src_=holder[HrefToken()];;mute=[M.ckey];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
-		body += "<A href='?_src_=holder[HrefToken()];;mute=[M.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
-		body += "(<A href='?_src_=holder[HrefToken()];;mute=[M.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
+		body += "\[<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
+		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
+		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
+		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
+		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
+		body += "(<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
 
 	body += "<br><br>"
-	body += "<A href='?_src_=holder[HrefToken()];;jumpto=\ref[M]'><b>Jump to</b></A> | "
-	body += "<A href='?_src_=holder[HrefToken()];;getmob=\ref[M]'>Get</A> | "
-	body += "<A href='?_src_=holder[HrefToken()];;sendmob=\ref[M]'>Send To</A>"
+	body += "<A href='?_src_=holder;[HrefToken()];jumpto=\ref[M]'><b>Jump to</b></A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];getmob=\ref[M]'>Get</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];sendmob=\ref[M]'>Send To</A>"
 
 	body += "<br><br>"
-	body += "<A href='?_src_=holder[HrefToken()];;traitor=\ref[M]'>Traitor panel</A> | "
-	body += "<A href='?_src_=holder[HrefToken()];;narrateto=\ref[M]'>Narrate to</A> | "
-	body += "<A href='?_src_=holder[HrefToken()];;subtlemessage=\ref[M]'>Subtle message</A> | "
-	body += "<A href='?_src_=holder[HrefToken()];;languagemenu=\ref[M]'>Language Menu</A>"
+	body += "<A href='?_src_=holder;[HrefToken()];traitor=\ref[M]'>Traitor panel</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];narrateto=\ref[M]'>Narrate to</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];subtlemessage=\ref[M]'>Subtle message</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];languagemenu=\ref[M]'>Language Menu</A>"
 
 	if (M.client)
 		if(!isnewplayer(M))
@@ -380,8 +380,6 @@
 		else
 			dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
-	//to_chat(world, "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]")
-	//to_chat(world, "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]")
 	usr << browse(dat, "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
@@ -433,7 +431,7 @@
 	else
 		rebootconfirm = TRUE
 	if(rebootconfirm)
-		var result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
+		var/result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
 		if(result)
 			SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 			switch(result)
@@ -513,7 +511,7 @@
 	set category = "Server"
 	set desc="Toggle dis bitch"
 	set name="Toggle Dead OOC"
-	GLOB.dooc_allowed = !( GLOB.dooc_allowed )
+	toggle_dooc()
 
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
@@ -622,7 +620,7 @@
 		if(3)
 			var/count = 0
 			for(var/mob/living/carbon/monkey/Monkey in world)
-				if(Monkey.z == ZLEVEL_STATION)
+				if(Monkey.z in GLOB.station_z_levels)
 					count++
 			return "Kill all [count] of the monkeys on the station"
 		if(4)

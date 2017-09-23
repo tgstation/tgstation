@@ -5,15 +5,6 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 
-/mob/living/carbon/human/dummy
-	real_name = "Test Dummy"
-	status_flags = GODMODE|CANPUSH
-
-INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
-
-/mob/living/carbon/human/dummy/Life()
-	return
-
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
@@ -34,7 +25,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	handcrafting = new()
 
-	..()
+	. = ..()
 
 /mob/living/carbon/human/create_internal_organs()
 	if(!(NOHUNGER in dna.species.species_traits))

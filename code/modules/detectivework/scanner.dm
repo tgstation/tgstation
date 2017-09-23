@@ -41,7 +41,7 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.put_in_hands(P)
-		to_chat(M, "<span class='notice'>Report printed. Log cleared.<span>")
+		to_chat(M, "<span class='notice'>Report printed. Log cleared.</span>")
 
 	// Clear the logs
 	log = list()
