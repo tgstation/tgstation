@@ -431,7 +431,7 @@
 	else
 		rebootconfirm = TRUE
 	if(rebootconfirm)
-		var result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
+		var/result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
 		if(result)
 			SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 			switch(result)
