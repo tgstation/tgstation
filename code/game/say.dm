@@ -23,6 +23,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return
 	if(message == "" || !message)
 		return
+	if(findtext(message, "~"))
+		to_chat(src, "<span class='userdanger'>We do not allow the use of tilde on this server</span>")
+		return
 	var/list/spans = get_spans()
 	if(!language)
 		language = get_default_language()
