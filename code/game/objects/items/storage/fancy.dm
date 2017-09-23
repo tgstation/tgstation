@@ -125,6 +125,10 @@
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 
+/obj/item/storage/fancy/cigarettes/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to extract contents.</span>")
+
 /obj/item/storage/fancy/cigarettes/AltClick(mob/user)
 	if(user.get_active_held_item())
 		return

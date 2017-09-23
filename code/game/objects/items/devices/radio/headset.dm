@@ -1,6 +1,6 @@
 /obj/item/device/radio/headset
 	name = "radio headset"
-	desc = "An updated, modular intercom that fits over the head. Takes encryption keys. \nTo speak on the general radio frequency, use ; before speaking."
+	desc = "An updated, modular intercom that fits over the head. Takes encryption keys."
 	icon_state = "headset"
 	item_state = "headset"
 	materials = list(MAT_METAL=75)
@@ -10,6 +10,12 @@
 	slot_flags = SLOT_EARS
 	var/obj/item/device/encryptionkey/keyslot2 = null
 	dog_fashion = null
+
+/obj/item/device/radio/headset/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>To speak on the general radio frequency, use ; before speaking.</span>")
+	if (command)
+		to_chat(user, "<span class='notice'>Alt-click to toggle the high-volume mode.</span>")
 
 /obj/item/device/radio/headset/Initialize()
 	. = ..()
