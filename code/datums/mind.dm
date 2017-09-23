@@ -680,6 +680,9 @@
 
 		sections["cult"] = text
 
+		/** VAMPIRE **/
+		sections["vampire"] = vampire_hook()
+
 
 	if(ishuman(current) || issilicon(current))
 		/** CLOCKWORK CULT **/
@@ -1181,6 +1184,8 @@
 					log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
 					traitordatum.forge_traitor_objectives()
 					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
+	else if(href_list["vampire"])
+		vampire_href(href_list["vampire"], usr)
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
 			if("clear")

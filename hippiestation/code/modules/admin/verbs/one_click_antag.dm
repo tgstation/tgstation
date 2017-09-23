@@ -6,13 +6,13 @@
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
 	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
+	var/mob/living/carbon/human/H
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_SHADOWLING in applicant.client.prefs.be_special)
 			if(!applicant.stat)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, "shadowling") && !jobban_isbanned(applicant, "Syndicate"))
+						if(!jobban_isbanned(applicant, "shadowling") && !jobban_isbanned(applicant, "Syndicate") && !jobban_isbanned(applicant, CLUWNEBAN) && !jobban_isbanned(applicant, CATBAN))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
 									if(!(is_shadow_or_thrall(applicant)))
@@ -32,3 +32,23 @@
 		candidates.Remove(H)
 		return 1
 	return 0
+
+/datum/admins/proc/makeVampire()
+	var/datum/game_mode/vampire/temp = new
+	if(config.protect_roles_from_antagonist)
+		temp.restricted_jobs += temp.protected_jobs
+	if(config.protect_assistant_from_antagonist)
+		temp.restricted_jobs += "Assistant"
+	var/list/mob/living/carbon/human/candidates = list()
+	var/mob/living/carbon/human/H
+	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
+		if((ROLE_VAMPIRE in applicant.client.prefs.be_special) && !applicant.stat && applicant.mind && !applicant.mind.special_role)
+			if(!jobban_isbanned(applicant, "vampire") && !jobban_isbanned(applicant, "Syndicate") && !jobban_isbanned(applicant, CLUWNEBAN) && !jobban_isbanned(applicant, CATBAN))
+				if(temp.age_check(applicant.client) && !(applicant.job in temp.restricted_jobs) && !is_vampire(applicant))
+					candidates += applicant
+
+	if(LAZYLEN(candidates))
+		H = pick(candidates)
+		add_vampire(H)
+		return TRUE
+	return FALSE
