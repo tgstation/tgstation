@@ -453,7 +453,6 @@
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/narsie_act()
 	adjustBruteLoss(-maxHealth)
-	return
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()
