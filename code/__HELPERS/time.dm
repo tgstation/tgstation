@@ -58,68 +58,74 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	var/minute = null
 	var/hour = null
 	var/day = null
-	if(second)
-		if(second >= 60)
-			minute = round_down(second/60)
-			second = round(second - (minute*60), 0.1)
-		if(second != 1 && second != 0)
-			if(day || hour || minute)
-				second = " and [second] seconds"
-			else
-				second = "[second] seconds"
-		else if(second == 1)
-			if(day || hour || minute)
-				second = " and 1 second"
-			else
-				second = "1 second"
-		else
-			second = null
 
-	if(minute)
-		if(minute >= 60)
-			hour = round_down(minute/60,1)
-			minute = round(minute - (hour*60))
-		if(minute != 1 && minute != 0)
-			if((day || hour) && second)
-				minute = ", [minute] minutes"
-			else if((day || hour) && !second)
-				minute = " and [minute] minutes"
-			else
-				minute = "[minute] minutes"
-		else if(minute == 1)
-			if((day || hour) && second)
-				minute = ", 1 minute"
-			else if((day || hour) && !second)
-				minute = " and 1 minute"
-			else
-				minute = "1 minute"
+	if(!second)
+		return "0 seconds"
+	if(second >= 60)
+		minute = round_down(second/60)
+		second = round(second - (minute*60), 0.1)
+	if(second != 1 && second != 0)
+		if(day || hour || minute)
+			second = " and [second] seconds"
 		else
-			minute = null
+			second = "[second] seconds"
+	else if(second == 1)
+		if(day || hour || minute)
+			second = " and 1 second"
+		else
+			second = "1 second"
+	else
+		second = null
 
-	if(hour)
-		if(hour >= 24)
-			day = round_down(hour/24,1)
-			hour = round(hour - (day*24))
-		if(hour != 1 && hour != 0)
-			if(day && (minute || second))
-				hour = ", [hour] hours"
-			else if(day && (!minute || !second))
-				hour = " and [hour] hours"
-			else
-				hour = "[hour] hours"
-		else if(hour == 1)
-			if(day && (minute || second))
-				hour = ", 1 hour"
-			else if(day && (!minute || !second))
-				hour = " and 1 hour"
-			else
-				hour = "1 hour"
+	if(!minute)
+		return "[second]"
+	if(minute >= 60)
+		hour = round_down(minute/60,1)
+		minute = round(minute - (hour*60))
+	if(minute != 1 && minute != 0)
+		if((day || hour) && second)
+			minute = ", [minute] minutes"
+		else if((day || hour) && !second)
+			minute = " and [minute] minutes"
 		else
-			hour = null
-	if(day)
-		if(day > 1)
-			day = "[day] days"
+			minute = "[minute] minutes"
+	else if(minute == 1)
+		if((day || hour) && second)
+			minute = ", 1 minute"
+		else if((day || hour) && !second)
+			minute = " and 1 minute"
 		else
-			day = "1 day"
+			minute = "1 minute"
+	else
+		minute = null
+
+	if(!hour)
+		return "[minute][second]"
+	if(hour >= 24)
+		day = round_down(hour/24,1)
+		hour = round(hour - (day*24))
+	if(hour != 1 && hour != 0)
+		if(day && (minute || second))
+			hour = ", [hour] hours"
+		else if(day && (!minute || !second))
+			hour = " and [hour] hours"
+		else
+			hour = "[hour] hours"
+	else if(hour == 1)
+		if(day && (minute || second))
+			hour = ", 1 hour"
+		else if(day && (!minute || !second))
+			hour = " and 1 hour"
+		else
+			hour = "1 hour"
+	else
+		hour = null
+
+	if(!day)
+		return "[hour][minute][second]"
+	if(day > 1)
+		day = "[day] days"
+	else
+		day = "1 day"
 
 	return "[day][hour][minute][second]"
