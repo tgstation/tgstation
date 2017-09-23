@@ -198,7 +198,7 @@
 			if(scrub_Toxins && removed_gases["plasma"])
 				filtered_out.add_gas("plasma")
 				filtered_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
-				removed.gases["plasma"][MOLES] = 0
+				removed_gases["plasma"][MOLES] = 0
 
 			if(scrub_CO2 && removed_gases["co2"])
 				filtered_out.add_gas("co2")
