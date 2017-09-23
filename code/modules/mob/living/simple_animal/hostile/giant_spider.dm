@@ -384,6 +384,20 @@
 		to_chat(M, my_message)
 	log_talk(user, "SPIDERCOMMAND: [key_name(user)] : [message]",LOGSAY)
 
+/datum/action/innate/spider/killa
+	name = "Execute"
+	button_icon_state = "cult_comms"
+
+/datum/action/innate/spider/killa/IsAvailable()
+	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife))
+		return FALSE
+	return TRUE
+
+/datum/action/innate/spider/comm/Trigger()
+	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife))
+		return FALSE
+	return TRUE
+
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(20)
