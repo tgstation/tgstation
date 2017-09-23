@@ -1,5 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - bugfix: "Zombies now stay dead if they suicide"
-  - rscadd: "If a zombie suicides, they now rip their head off!"
