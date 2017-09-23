@@ -10,12 +10,12 @@ Doesn't work on other aliens/AI.*/
 	name = "Alien Power"
 	panel = "Alien"
 	var/plasma_cost = 0
-	var/check_turf = 0
-	var/has_action = 1
-	var/datum/action/spell_action/alien/action = null
-	var/action_icon = 'icons/mob/actions/actions_xeno.dmi'
-	var/action_icon_state = "spell_default"
-	var/action_background_icon_state = "bg_alien"
+	var/check_turf = FALSE
+	has_action = TRUE
+	datum/action/spell_action/alien/action = null
+	action_icon = 'icons/mob/actions/actions_xeno.dmi'
+	action_icon_state = "spell_default"
+	action_background_icon_state = "bg_alien"
 
 /obj/effect/proc_holder/alien/New()
 	..()
@@ -30,13 +30,13 @@ Doesn't work on other aliens/AI.*/
 			user.adjustPlasma(-plasma_cost)
 	return 1
 
-/obj/effect/proc_holder/alien/proc/on_gain(mob/living/carbon/user)
+/obj/effect/proc_holder/alien/on_gain(mob/living/carbon/user)
 	return
 
-/obj/effect/proc_holder/alien/proc/on_lose(mob/living/carbon/user)
+/obj/effect/proc_holder/alien/on_lose(mob/living/carbon/user)
 	return
 
-/obj/effect/proc_holder/alien/proc/fire(mob/living/carbon/user)
+/obj/effect/proc_holder/alien/fire(mob/living/carbon/user)
 	return 1
 
 /obj/effect/proc_holder/alien/proc/cost_check(check_turf=0,mob/living/carbon/user,silent = 0)
@@ -168,7 +168,6 @@ Doesn't work on other aliens/AI.*/
 	if(user.getPlasma() > A.plasma_cost && A.corrode(O))
 		user.adjustPlasma(-A.plasma_cost)
 
-
 /obj/effect/proc_holder/alien/neurotoxin
 	name = "Spit Neurotoxin"
 	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
@@ -179,7 +178,7 @@ Doesn't work on other aliens/AI.*/
 	var/message
 	if(active)
 		message = "<span class='notice'>You empty your neurotoxin gland.</span>"
-		remove_ranged_ability(user,message)
+		remove_ranged_ability(message)
 	else
 		message = "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
 		add_ranged_ability(user, message, TRUE)
@@ -193,7 +192,7 @@ Doesn't work on other aliens/AI.*/
 		return
 	var/p_cost = 50
 	if(!iscarbon(ranged_ability_user) || ranged_ability_user.lying || ranged_ability_user.stat)
-		remove_ranged_ability(ranged_ability_user)
+		remove_ranged_ability()
 		return
 
 	var/mob/living/carbon/user = ranged_ability_user
@@ -219,8 +218,7 @@ Doesn't work on other aliens/AI.*/
 	return TRUE
 
 /obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
-	if(user.ranged_ability == src)
-		user.ranged_ability = null
+	remove_ranged_ability()
 
 /obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user, msg)
 	..()
@@ -330,5 +328,5 @@ Doesn't work on other aliens/AI.*/
 	return 0
 
 
-/proc/cmp_abilities_cost(obj/effect/proc_holder/alien/a, obj/effect/proc_holder/alien/b)
+/proc/cmp_alien_abilities_cost(obj/effect/proc_holder/alien/a, obj/effect/proc_holder/alien/b)
 	return b.plasma_cost - a.plasma_cost

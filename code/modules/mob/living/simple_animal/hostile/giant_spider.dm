@@ -106,27 +106,23 @@
 	poison_per_bite = 3
 	var/atom/movable/cocoon_target
 	var/fed = 0
-	var/datum/action/innate/wrap/wrap
+	var/obj/effect/proc_holder/wrap/wrap
 	var/datum/action/innate/lay_eggs/lay_eggs
 	var/datum/action/innate/set_directive/set_directive
 	var/static/list/consumed_mobs = list() //the tags of mobs that have been consumed by nurse spiders to lay eggs
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/Initialize()
 	. = ..()
-	lay_web = new
-	lay_web.Grant(src)
 	wrap = new
-	wrap.Grant(src)
+	AddAbility(wrap)
 	lay_eggs = new
 	lay_eggs.Grant(src)
 	set_directive = new
 	set_directive.Grant(src)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/Destroy()
-	if(lay_web)
-		QDEL_NULL(lay_web)
 	if(wrap)
-		QDEL_NULL(wrap)
+		RemoveAbility(wrap)
 	if(lay_eggs)
 		QDEL_NULL(lay_eggs)
 	if(set_directive)
@@ -230,11 +226,50 @@
 
 		else if(busy == MOVING_TO_TARGET && cocoon_target)
 			if(get_dist(src, cocoon_target) <= 1)
-				wrap.Activate()
+				cocoon()
 
 	else
 		busy = SPIDER_IDLE
 		stop_automated_movement = FALSE
+
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/cocoon()
+	if(stat != DEAD && cocoon_target && !cocoon_target.anchored)
+		if(cocoon_target == src)
+			to_chat(src, "<span class='warning'>You can't wrap yourself!</span>")
+			return
+		if(istype(cocoon_target, /mob/living/simple_animal/hostile/poison/giant_spider))
+			to_chat(src, "<span class='warning'>You can't wrap other spiders!</span>")
+			return
+		if(!Adjacent(cocoon_target))
+			to_chat(src, "<span class='warning'>You can't reach [cocoon_target]!</span>")
+			return
+		if(busy == SPINNING_COCOON)
+			to_chat(src, "<span class='warning'>You're already spinning a cocoon!</span>")
+			return //we're already doing this, don't cancel out or anything
+		busy = SPINNING_COCOON
+		visible_message("<span class='notice'>[src] begins to secrete a sticky substance around [cocoon_target].</span>","<span class='notice'>You begin wrapping [cocoon_target] into a cocoon.</span>")
+		stop_automated_movement = TRUE
+		walk(src,0)
+		if(do_after(src, 50, target = cocoon_target))
+			if(busy == SPINNING_COCOON)
+				var/obj/structure/spider/cocoon/C = new(cocoon_target.loc)
+				if(isliving(cocoon_target))
+					var/mob/living/L = cocoon_target
+					if(L.blood_volume && (L.stat != DEAD || !consumed_mobs[L.tag])) //if they're not dead, you can consume them anyway
+						consumed_mobs[L.tag] = TRUE
+						fed++
+						lay_eggs.UpdateButtonIcon(TRUE)
+						visible_message("<span class='danger'>[src] sticks a proboscis into [L] and sucks a viscous substance out.</span>","<span class='notice'>You suck the nutriment out of [L], feeding you enough to lay a cluster of eggs.</span>")
+						L.death() //you just ate them, they're dead.
+					else
+						to_chat(src, "<span class='warning'>[L] cannot sate your hunger!</span>")
+				cocoon_target.forceMove(C)
+
+				if(cocoon_target.density || ismob(cocoon_target))
+					C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
+	cocoon_target = null
+	busy = SPIDER_IDLE
+	stop_automated_movement = FALSE
 
 /datum/action/innate/lay_web
 	name = "Spin Web"
@@ -270,64 +305,62 @@
 	else
 		to_chat(S, "<span class='warning'>You're already spinning a web!</span>")
 
-/datum/action/innate/wrap
+/obj/effect/proc_holder/wrap
 	name = "Wrap"
+	panel = "Spider"
+	active = FALSE
+	datum/action/spell_action/action = null
 	desc = "Wrap something or someone in a cocoon. If it's a living being, you'll also consume them, allowing you to lay eggs."
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "wrap"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
-	background_icon_state = "bg_alien"
+	ranged_mousepointer = 'icons/effects/wrap_target.dmi'
+	action_icon = 'icons/mob/actions/actions_animal.dmi'
+	action_icon_state = "wrap_0"
+	action_background_icon_state = "bg_alien"
 
-/datum/action/innate/wrap/Activate()
-	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
+/obj/effect/proc_holder/wrap/New()
+	..()
+	action = new(src)
+
+/obj/effect/proc_holder/wrap/update_icon()
+	action.button_icon_state = "wrap_[active]"
+	action.UpdateButtonIcon()
+
+/obj/effect/proc_holder/wrap/Click()
+	if(!istype(usr, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
+		return TRUE
+	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/user = usr
+	activate(user)
+	return TRUE
+
+/obj/effect/proc_holder/wrap/proc/activate(mob/living/user)
+	var/message
+	if(active)
+		message = "<span class='notice'>You no longer prepare to wrap something in a cocoon.</span>"
+		remove_ranged_ability(message)
+	else
+		message = "<span class='notice'>You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B></span>"
+		add_ranged_ability(user, message, TRUE)
+		return 1
+
+/obj/effect/proc_holder/wrap/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
 		return
-	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
+	if(ranged_ability_user.incapacitated() || !istype(ranged_ability_user, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
+		remove_ranged_ability()
+		return
 
-	if(!S.cocoon_target)
-		var/list/choices = list()
-		for(var/mob/living/L in view(1,S))
-			if(L == S || L.anchored)
-				continue
-			if(istype(L, /mob/living/simple_animal/hostile/poison/giant_spider))
-				continue
-			if(S.Adjacent(L))
-				choices += L
-		for(var/obj/O in S.loc)
-			if(O.anchored)
-				continue
-			if(S.Adjacent(O))
-				choices += O
-		var/temp_input = input(S,"What do you wish to cocoon?") in null|choices
-		if(temp_input && !S.cocoon_target)
-			S.cocoon_target = temp_input
+	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/user = ranged_ability_user
 
-	if(S.stat != DEAD && S.cocoon_target && S.Adjacent(S.cocoon_target) && !S.cocoon_target.anchored)
-		if(S.busy == SPINNING_COCOON)
-			return //we're already doing this, don't cancel out or anything
-		S.busy = SPINNING_COCOON
-		S.visible_message("<span class='notice'>[S] begins to secrete a sticky substance around [S.cocoon_target].</span>","<span class='notice'>You begin wrapping [S.cocoon_target] into a cocoon.</span>")
-		S.stop_automated_movement = TRUE
-		walk(S,0)
-		if(do_after(S, 50, target = S.cocoon_target))
-			if(S.busy == SPINNING_COCOON)
-				var/obj/structure/spider/cocoon/C = new(S.cocoon_target.loc)
-				if(isliving(S.cocoon_target))
-					var/mob/living/L = S.cocoon_target
-					if(L.blood_volume && (L.stat != DEAD || !S.consumed_mobs[L.tag])) //if they're not dead, you can consume them anyway
-						S.consumed_mobs[L.tag] = TRUE
-						S.fed++
-						S.lay_eggs.UpdateButtonIcon(TRUE)
-						S.visible_message("<span class='danger'>[src] sticks a proboscis into [L] and sucks a viscous substance out.</span>","<span class='notice'>You suck the nutriment out of [L], feeding you enough to lay a cluster of eggs.</span>")
-						L.death() //you just ate them, they're dead.
-					else
-						to_chat(S, "<span class='warning'>[L] cannot sate your hunger!</span>")
-				S.cocoon_target.forceMove(C)
+	if(user.Adjacent(target) && (ismob(target) || isobj(target)))
+		var/atom/movable/target_atom = target
+		if(target_atom.anchored)
+			return
+		user.cocoon_target = target_atom
+		INVOKE_ASYNC(user, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/.proc/cocoon)
+		remove_ranged_ability()
+		return TRUE
 
-				if(S.cocoon_target.density || ismob(S.cocoon_target))
-					C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
-	S.cocoon_target = null
-	S.busy = SPIDER_IDLE
-	S.stop_automated_movement = FALSE
+/obj/effect/proc_holder/wrap/on_lose(mob/living/carbon/user)
+	remove_ranged_ability()
 
 /datum/action/innate/lay_eggs
 	name = "Lay Eggs"

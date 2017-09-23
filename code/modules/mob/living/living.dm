@@ -979,3 +979,23 @@
 			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
 	return canmove
+
+/mob/living/proc/AddAbility(obj/effect/proc_holder/A)
+	abilities.Add(A)
+	A.on_gain(src)
+	if(A.has_action)
+		A.action.Grant(src)
+
+/mob/living/proc/RemoveAbility(obj/effect/proc_holder/A)
+	abilities.Remove(A)
+	A.on_lose(src)
+	if(A.action)
+		A.action.Remove(src)
+
+/mob/living/proc/add_abilities_to_panel()
+	for(var/obj/effect/proc_holder/A in abilities)
+		if(istype(A, /obj/effect/proc_holder/alien)) //yes this is snowflake, but you should have seen the code before
+			var/obj/effect/proc_holder/alien/AL
+			statpanel("[AL.panel]",AL.plasma_cost > 0?"([AL.plasma_cost])":"",AL)
+		else
+			statpanel("[A.panel]","",A)
