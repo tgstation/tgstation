@@ -20,11 +20,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
-#define DECISECONDS_SECOND		10
-#define DECISECONDS_MINUTE		600
-#define DECISECONDS_HOUR		36000
-#define DECISECONDS_DAY			864000
-
 #define JANUARY		1
 #define FEBRUARY	2
 #define MARCH		3
