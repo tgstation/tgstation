@@ -56,20 +56,21 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	slowdown = 0
-	armor = list(melee = 70, bullet = 40, laser = 10, energy = 10, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 
 /obj/item/clothing/suit/space/hostile_environment/Initialize()
 	. = ..()
+	AddComponent(/datum/component/spraycan_paintable)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/hostile_environment/Destroy()
-	. = ..()
 	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/clothing/suit/space/hostile_environment/process()
-	if(iscarbon(loc))
-		var/mob/living/carbon/C = loc
+	var/mob/living/carbon/C = loc
+	if(istype(C))
 		if(prob(2)) //cursed by bubblegum
 			if(prob(15))
 				new /datum/hallucination/oh_yeah(C)
@@ -100,11 +101,12 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	flags_1 = THICKMATERIAL_1 // no space protection
-	armor = list(melee = 70, bullet = 40, laser = 10,energy = 10, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/item/clothing/head/helmet/space/hostile_environment/Initialize()
 	. = ..()
+	AddComponent(/datum/component/spraycan_paintable)
 	update_icon()
 
 /obj/item/clothing/head/helmet/space/hostile_environment/update_icon()
