@@ -133,11 +133,18 @@
 			new_mob = new /mob/living/carbon/monkey(M.loc)
 		if("robot")
 			var/robot = pick("cyborg","syndiborg","drone")
+			var/path
 			switch(robot)
 				if("cyborg")
-					new_mob = new /mob/living/silicon/robot(M.loc)
+					if(prob(70))
+						path = /mob/living/silicon/robot
+					else
+						if(config.forbid_secborg) // This is correct. It is intended for servers where secborg is disabled. If secborg is enabled, then it defaults to a default borg since they can manually select secborgs.
+							path = /mob/living/silicon/robot/security
+						else
+							path = /mob/living/silicon/robot
+					new_mob = new path(M.loc)
 				if("syndiborg")
-					var/path
 					if(prob(50))
 						path = /mob/living/silicon/robot/syndicate
 					else
