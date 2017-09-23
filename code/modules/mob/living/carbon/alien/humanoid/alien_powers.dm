@@ -326,7 +326,3 @@ Doesn't work on other aliens/AI.*/
 		return 1
 
 	return 0
-
-
-/proc/cmp_alien_abilities_cost(obj/effect/proc_holder/alien/a, obj/effect/proc_holder/alien/b)
-	return b.plasma_cost - a.plasma_cost
