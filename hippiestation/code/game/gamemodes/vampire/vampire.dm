@@ -54,7 +54,6 @@
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/vamp = pick(antag_candidates)
-		vampires += vamp
 		vamp.special_role = traitor_name
 		vamp.restricted_roles = restricted_jobs
 
