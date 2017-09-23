@@ -386,7 +386,7 @@
 	flags_2 = SLOWS_WHILE_IN_HAND_2
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
-	..()
+	. = ..()
 
 /obj/item/nullrod/tribal_knife/New()
 	..()
