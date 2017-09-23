@@ -68,9 +68,9 @@
 		var/obj/item/c = locate(/obj/item/stock_parts/cell) in holder
 		c.forceMove(m)
 		m.cell = c
-		if(findtext(result,"/obj/mecha/combat/"))
+		if(ispath(result, /obj/mecha/combat))
 			m.CheckParts(holder.contents)
-		qdel(holder)
+		QDEL_NULL(holder)
 
 /datum/construction/proc/set_desc(index as num)
 	var/list/step = steps[index]
