@@ -191,7 +191,7 @@
 /obj/item/reagent_containers/food/snacks/spiderling
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
-	icon_state = "spiderleg"
+	icon_state = "spiderling"
 	list_reagents = list("nutrient" = 1, "toxin" = 4)
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "guts" = 2)
