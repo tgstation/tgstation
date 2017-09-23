@@ -369,7 +369,7 @@
 	if(!message)
 		return
 	var/my_message
-	my_message = "<b>COMMAND FROM SPIDER QUEEN:</b> [message]"
+	my_message = "<FONT size = 3><b>COMMAND FROM SPIDER QUEEN:</b> [message]</FONT>"
 	for(var/mob/living/simple_animal/hostile/poison/giant_spider/M in GLOB.spidermobs)
 		to_chat(M, my_message)
 	log_talk(user, "SPIDERCOMMAND: [key_name(user)] : [message]",LOGSAY)
