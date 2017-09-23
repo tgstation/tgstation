@@ -5,7 +5,6 @@
 /obj/structure/closet/secure_closet/freezer/ex_act()
 	if(!jones)
 		jones = TRUE
-		return 0
 	else
 		..()
 
