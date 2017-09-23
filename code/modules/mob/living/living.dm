@@ -643,7 +643,6 @@
 	if(!override)
 		float(!has_gravity)
 
-//TODO: Better floating
 /mob/living/float(on)
 	if(throwing)
 		return
