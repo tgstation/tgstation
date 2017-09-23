@@ -25,10 +25,8 @@
           action='n2o_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_n2o}}}'>N2O</ui-button>
         <ui-button icon='{{filter_toxins ? "check-square-o" : "square-o"}}' style='{{filter_toxins ? "selected" : null}}'
           action='tox_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_toxins}}}'>Plasma</ui-button>
-		<ui-button icon='{{filter_bz ? "check-square-o" : "square-o"}}' style='{{filter_bz ? "selected" : null}}'
-		  action='bz_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_bz}}}'>BZ</ui-button>
-		<ui-button icon='{{filter_freon ? "check-square-o" : "square-o"}}' style='{{filter_freon ? "selected" : null}}'
-		  action='freon_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_freon}}}'>Freon</ui-button>
+		<ui-button icon='{{filter_rare ? "check-square-o" : "square-o"}}' style='{{filter_rare ? "selected" : null}}'
+		  action='rare_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_rare}}}'>Rare Gases</ui-button>
 		<ui-button icon='{{filter_water_vapor ? "check-square-o" : "square-o"}}' style='{{filter_water_vapor ? "selected" : null}}'
 		  action='water_vapor_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_water_vapor}}}'>Water Vapor</ui-button>
       </ui-section>

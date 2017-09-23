@@ -20,8 +20,7 @@
 	var/scrub_CO2 = TRUE
 	var/scrub_Toxins = FALSE
 	var/scrub_N2O = FALSE
-	var/scrub_BZ = FALSE
-	var/scrub_Freon = FALSE
+	var/scrub_Rare = FALSE
 	var/scrub_WaterVapor = FALSE
 
 
@@ -70,9 +69,7 @@
 			amount += idle_power_usage
 		if(scrub_N2O)
 			amount += idle_power_usage
-		if(scrub_BZ)
-			amount += idle_power_usage
-		if(scrub_Freon)
+		if(scrub_Rare)
 			amount += idle_power_usage
 		if(scrub_WaterVapor)
 			amount += idle_power_usage
@@ -125,8 +122,7 @@
 		"filter_co2" = scrub_CO2,
 		"filter_toxins" = scrub_Toxins,
 		"filter_n2o" = scrub_N2O,
-		"filter_bz" = scrub_BZ,
-		"filter_freon" = scrub_Freon,
+		"filter_rare" =scrub_Rare,
 		"filter_water_vapor" = scrub_WaterVapor,
 		"sigtype" = "status"
 	)
@@ -196,39 +192,54 @@
 			filtered_out.temperature = removed.temperature
 
 			if(scrub_Toxins && removed_gases["plasma"])
-				filtered_out.add_gas("plasma")
+				filtered_out.assert_gas("plasma")
 				filtered_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
-				removed_gases["plasma"][MOLES] = 0
+				removed.gases["plasma"][MOLES] = 0
 
 			if(scrub_CO2 && removed_gases["co2"])
-				filtered_out.add_gas("co2")
-				filtered_gases["co2"][MOLES] = removed_gases["co2"][MOLES]
-				removed_gases["co2"][MOLES] = 0
-
-			if(removed_gases["agent_b"])
-				filtered_out.add_gas("agent_b")
-				filtered_gases["agent_b"][MOLES] = removed_gases["agent_b"][MOLES]
-				removed_gases["agent_b"][MOLES] = 0
+				filtered_out.assert_gas("co2")
+				filtered_out.gases["co2"][MOLES] = removed_gases["co2"][MOLES]
+				removed.gases["co2"][MOLES] = 0
 
 			if(scrub_N2O && removed_gases["n2o"])
-				filtered_out.add_gas("n2o")
-				filtered_gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
-				removed_gases["n2o"][MOLES] = 0
+				filtered_out.assert_gas("n2o")
+				filtered_out.gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
+				removed.gases["n2o"][MOLES] = 0
 
-			if(scrub_BZ && removed_gases["bz"])
-				filtered_out.add_gas("bz")
-				filtered_gases["bz"][MOLES] = removed_gases["bz"][MOLES]
-				removed_gases["bz"][MOLES] = 0
+			if(scrub_Rare && removed_gases["bz"])
+				filtered_out.assert_gas("bz")
+				filtered_out.gases["bz"][MOLES] = removed_gases["bz"][MOLES]
+				removed.gases["bz"][MOLES] = 0
 
-			if(scrub_Freon && removed_gases["freon"])
-				filtered_out.add_gas("freon")
-				filtered_gases["freon"][MOLES] = removed_gases["freon"][MOLES]
-				removed_gases["freon"][MOLES] = 0
+			if(scrub_Rare && removed_gases["nob"])
+				filtered_out.assert_gas("nob")
+				filtered_out.gases["nob"][MOLES] = removed_gases["nob"][MOLES]
+				removed.gases["nob"][MOLES] = 0
+
+			if(scrub_Rare && removed_gases["stim"])
+				filtered_out.assert_gas("stim")
+				filtered_out.gases["stim"][MOLES] = removed_gases["stim"][MOLES]
+				removed.gases["stim"][MOLES] = 0
+
+			if(scrub_Rare && removed_gases["pluox"])
+				filtered_out.assert_gas("pluox")
+				filtered_out.gases["pluox"][MOLES] = removed_gases["pluox"][MOLES]
+				removed.gases["pluox"][MOLES] = 0
+
+			if(scrub_Rare && removed_gases["browns"])
+				filtered_out.assert_gas("browns")
+				filtered_out.gases["browns"][MOLES] = removed_gases["browns"][MOLES]
+				removed.gases["browns"][MOLES] = 0
+
+			if(scrub_Rare && removed_gases["tritium"])
+				filtered_out.assert_gas("browns")
+				filtered_out.gases["browns"][MOLES] = removed_gases["browns"][MOLES]
+				removed.gases["browns"][MOLES] = 0
 
 			if(scrub_WaterVapor && removed_gases["water_vapor"])
-				filtered_out.add_gas("water_vapor")
-				filtered_gases["water_vapor"][MOLES] = removed_gases["water_vapor"][MOLES]
-				removed_gases["water_vapor"][MOLES] = 0
+				filtered_out.assert_gas("water_vapor")
+				filtered_out.gases["water_vapor"][MOLES] = removed_gases["water_vapor"][MOLES]
+				removed.gases["water_vapor"][MOLES] = 0
 
 			removed.garbage_collect()
 
@@ -305,15 +316,10 @@
 	if("toggle_n2o_scrub" in signal.data)
 		scrub_N2O = !scrub_N2O
 
-	if("bz_scrub" in signal.data)
-		scrub_BZ = text2num(signal.data["bz_scrub"])
-	if("toggle_bz_scrub" in signal.data)
-		scrub_BZ = !scrub_BZ
-
-	if("freon_scrub" in signal.data)
-		scrub_Freon = text2num(signal.data["freon_scrub"])
-	if("toggle_freon_scrub" in signal.data)
-		scrub_Freon = !scrub_Freon
+	if("rare_scrub" in signal.data)
+		scrub_Rare = text2num(signal.data["rare_scrub"])
+	if("toggle_rare_scrub" in signal.data)
+		scrub_Rare = !scrub_Rare
 
 	if("water_vapor_scrub" in signal.data)
 		scrub_WaterVapor = text2num(signal.data["water_vapor_scrub"])

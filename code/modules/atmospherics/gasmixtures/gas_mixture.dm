@@ -420,9 +420,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	. = 0
 	if(temperature < TCMB) //just for safety
 		temperature = TCMB
+
 	reaction_results = new
 
 	var/list/cached_gases = gases
+	if (cached_gases["nob"][MOLES] > 5)
+		return
 	var/temp = temperature
 	var/ener = thermal_energy()
 
