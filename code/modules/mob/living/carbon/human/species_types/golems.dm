@@ -360,10 +360,9 @@
 			if(P.starting)
 				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
 				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/turf/curloc = get_turf(H)
-
+				var/turf/target = get_turf(P.starting)
 				// redirect the projectile
-				P.preparePixelProjectile(get_turf(P.starting), H)
+				P.preparePixelProjectile(locate(Clamp(target.x + new_x, 1, world.maxx), Clamp(target.y + new_y, 1, world.maxy), z), H)
 			return -1
 	return 0
 

@@ -386,8 +386,6 @@
 
 /mob/living/LaserEyes(atom/A, params)
 	changeNext_move(CLICK_CD_RANGE)
-	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
 
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
 	LE.icon = 'icons/effects/genetics.dmi'
