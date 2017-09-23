@@ -2,3 +2,4 @@
 
 MAP_REMOVE_JOB(curator)
 MAP_REMOVE_JOB(virologist)
+MAP_REMOVE_JOB(warden)

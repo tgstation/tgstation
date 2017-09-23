@@ -1583,6 +1583,11 @@
 /area/crew_quarters/heads/hos)
 "adq" = (
 /obj/structure/sign/electricshock,
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hos)
 "adr" = (
@@ -1601,6 +1606,11 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/cable/white{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -1634,6 +1644,14 @@
 	dir = 8;
 	pixel_x = -26
 	},
+/obj/machinery/power/apc{
+	areastring = "/area/security/main";
+	dir = 1;
+	name = "Security Office APC";
+	pixel_x = 0;
+	pixel_y = 26
+	},
+/obj/structure/cable/white,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -2007,17 +2025,6 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
 "aeq" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/main";
-	dir = 4;
-	name = "Security Office APC";
-	pixel_x = 24;
-	pixel_y = -26
-	},
-/obj/structure/cable/white{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
@@ -2266,9 +2273,6 @@
 /area/security/main)
 "aeR" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable/white{
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
@@ -2298,11 +2302,6 @@
 	req_access_txt = "1"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aeV" = (
@@ -2316,40 +2315,22 @@
 "aeW" = (
 /obj/structure/window/reinforced,
 /obj/machinery/computer/secure_data,
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aeX" = (
 /obj/structure/window/reinforced,
 /obj/machinery/computer/security,
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aeY" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/reinforced,
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aeZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
 	icon_state = "1-2"
-	},
-/obj/structure/cable/white{
-	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
 /area/security/brig)
@@ -11610,7 +11591,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/space)
+/area/crew_quarters/heads/captain)
 "aAG" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -15411,6 +15392,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/computer/arcade,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "aIs" = (
@@ -15418,7 +15400,6 @@
 	icon_state = "warningline";
 	dir = 1
 	},
-/obj/machinery/computer/arcade,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "aIt" = (
@@ -18052,7 +18033,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/science/xenobiology";
-	dir = 8;
+	dir = 2;
 	name = "Xenobiology APC";
 	pixel_x = 0;
 	pixel_y = -26
@@ -18768,7 +18749,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/crew_quarters/heads/hor";
-	dir = 8;
+	dir = 2;
 	name = "RD Office APC";
 	pixel_x = 0;
 	pixel_y = -26
@@ -26577,6 +26558,34 @@
 /turf/open/space/basic,
 /area/space)
 "bgt" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/white{
+	icon_state = "2-8"
+	},
+/turf/closed/wall/r_wall,
+/area/security/main)
+"bgu" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/closed/wall,
+/area/crew_quarters/heads/hos)
+"bgv" = (
+/obj/structure/grille,
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/security/brig)
+"bgw" = (
 /obj/machinery/light{
 	light_color = "#e8eaff"
 	},
@@ -26584,7 +26593,7 @@
 	dir = 4
 	},
 /area/hallway/primary/central)
-"bgu" = (
+"bgx" = (
 /obj/machinery/light{
 	light_color = "#e8eaff"
 	},
@@ -26593,6 +26602,12 @@
 	dir = 8
 	},
 /area/hallway/primary/central)
+"bgy" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/crew_quarters/heads/captain)
 
 (1,1,1) = {"
 aaa
@@ -47521,7 +47536,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -47767,7 +47782,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -48831,7 +48846,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -49557,7 +49572,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -50392,7 +50407,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -50665,7 +50680,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -52693,7 +52708,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -53148,7 +53163,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -54426,7 +54441,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -55039,7 +55054,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -57344,7 +57359,7 @@ abp
 bfV
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -57760,7 +57775,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -59097,7 +59112,7 @@ aBQ
 aDn
 aEy
 aBQ
-aBQ
+bgy
 aHS
 aIN
 aJQ
@@ -59310,7 +59325,7 @@ abI
 abp
 aaa
 aaa
-adf
+bgt
 adw
 adP
 aej
@@ -59605,7 +59620,7 @@ aaa
 aty
 axN
 axN
-bgt
+bgw
 aAC
 aBS
 aDo
@@ -60578,7 +60593,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -61884,7 +61899,7 @@ adm
 adD
 adV
 aer
-aeS
+adD
 afu
 afI
 afV
@@ -62141,7 +62156,7 @@ adn
 adE
 adW
 aes
-aeT
+agj
 afv
 afI
 afW
@@ -62651,11 +62666,11 @@ act
 acF
 acr
 acr
-adp
+adn
 adF
 adY
 aeu
-aeV
+agl
 afw
 afK
 afW
@@ -63165,7 +63180,7 @@ acj
 acj
 acR
 adb
-adb
+bgu
 adH
 adZ
 aew
@@ -63422,7 +63437,7 @@ abp
 abp
 acS
 adc
-adr
+bgv
 adF
 aea
 aex
@@ -64745,7 +64760,7 @@ aaa
 aty
 ayb
 ayb
-bgu
+bgx
 aAR
 aCm
 aDE
@@ -64951,7 +64966,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -67530,7 +67545,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -69594,7 +69609,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -71665,7 +71680,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 abp
@@ -73987,7 +74002,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
@@ -75288,7 +75303,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bgs
 aaa
 aaa
 aaa
