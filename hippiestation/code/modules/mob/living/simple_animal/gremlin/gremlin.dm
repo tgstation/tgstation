@@ -143,7 +143,12 @@ var/list/bad_gremlin_items = list()
 
 	return ..()
 
+/mob/living/simple_animal/hostile/gremlin/death(gibbed)
+	walk(src,0)
+	return ..()
+
 /mob/living/simple_animal/hostile/gremlin/Life()
+	. = ..()
 	//Don't try to path to one target for too long. If it takes longer than a certain amount of time, assume it can't be reached and find a new one
 	if(!client) //don't do this shit if there's a client, they're capable of ventcrawling manually
 		if(in_vent)
