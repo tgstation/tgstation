@@ -192,19 +192,19 @@
 			filtered_out.temperature = removed.temperature
 
 			if(scrub_Toxins && removed_gases["plasma"])
-				filtered_out.add_gas("plasma")
+				filtered_out.assert_gas("plasma")
 				filtered_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
-				removed_gases["plasma"][MOLES] = 0
+				removed.gases["plasma"][MOLES] = 0
 
 			if(scrub_CO2 && removed_gases["co2"])
-				filtered_out.add_gas("co2")
-				filtered_gases["co2"][MOLES] = removed_gases["co2"][MOLES]
-				removed_gases["co2"][MOLES] = 0
+				filtered_out.assert_gas("co2")
+				filtered_out.gases["co2"][MOLES] = removed_gases["co2"][MOLES]
+				removed.gases["co2"][MOLES] = 0
 
 			if(scrub_N2O && removed_gases["n2o"])
-				filtered_out.add_gas("n2o")
-				filtered_gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
-				removed_gases["n2o"][MOLES] = 0
+				filtered_out.assert_gas("n2o")
+				filtered_out.gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
+				removed.gases["n2o"][MOLES] = 0
 
 			if(scrub_Rare && removed_gases["bz"])
 				filtered_out.assert_gas("bz")
@@ -237,9 +237,9 @@
 				removed.gases["browns"][MOLES] = 0
 
 			if(scrub_WaterVapor && removed_gases["water_vapor"])
-				filtered_out.add_gas("water_vapor")
-				filtered_gases["water_vapor"][MOLES] = removed_gases["water_vapor"][MOLES]
-				removed_gases["water_vapor"][MOLES] = 0
+				filtered_out.assert_gas("water_vapor")
+				filtered_out.gases["water_vapor"][MOLES] = removed_gases["water_vapor"][MOLES]
+				removed.gases["water_vapor"][MOLES] = 0
 
 			removed.garbage_collect()
 
