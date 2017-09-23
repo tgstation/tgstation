@@ -25,6 +25,8 @@ Pipelines + Other Objects -> Pipe network
 	var/can_unwrench = 0
 	var/initialize_directions = 0
 	var/pipe_color
+	var/piping_layer = PIPING_LAYER_DEFAULT
+	var/pipe_flags = 0
 
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
@@ -56,6 +58,13 @@ Pipelines + Other Objects -> Pipe network
 	return ..()
 	//return QDEL_HINT_FINDREFERENCE
 
+/obj/machinery/atmospherics/proc/destroy_network()
+	return
+
+/obj/machinery/atmospherics/proc/build_network()
+	// Called to build a network from this node
+	return
+
 /obj/machinery/atmospherics/proc/nullifyNode(I)
 	if(NODE_I)
 		var/obj/machinery/atmospherics/N = NODE_I
@@ -86,12 +95,37 @@ Pipelines + Other Objects -> Pipe network
 			if(can_be_node(target, I))
 				NODE_I = target
 				break
-
 	update_icon()
 
+/obj/machinery/atmospherics/proc/setPipingLayer(new_layer)
+	piping_layer = new_layer
+	pixel_x = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
+	pixel_y = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
+	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
+
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
-	if(target.initialize_directions & get_dir(target,src))
-		return 1
+	if(connection_check(target, piping_layer))
+		return TRUE
+	return FALSE
+
+//Find a connecting /obj/machinery/atmospherics in specified direction
+/obj/machinery/atmospherics/proc/findConnecting(direction, prompted_layer)
+	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
+		if(target.initialize_directions & get_dir(target,src))
+			if(connection_check(target, prompted_layer))
+				return target
+
+/obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
+	if(isConnectable(target, given_layer) && target.isConnectable(src, given_layer) && (target.initialize_directions & get_dir(target,src)))
+		return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target, given_layer)
+	if(isnull(given_layer))
+		given_layer = piping_layer
+	if((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER))
+		return TRUE
+	return FALSE
 
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return nodes
@@ -114,14 +148,10 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/replacePipenet()
 	return
 
-/obj/machinery/atmospherics/proc/build_network()
-	// Called to build a network from this node
-	return
-
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
-		qdel(P.parent)
+		P.destroy_network()
 	var/I = nodes.Find(reference)
 	NODE_I = null
 	update_icon()
@@ -130,12 +160,17 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/pipe)) //lets you autodrop
+		var/obj/item/pipe/pipe = W
+		user.drop_item(pipe)
+		pipe.setPipingLayer(piping_layer) //align it with us
+		return TRUE
 	if(istype(W, /obj/item/wrench))
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
 			if (level==1 && isturf(T) && T.intact)
 				to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
-				return 1
+				return TRUE
 			var/datum/gas_mixture/int_air = return_air()
 			var/datum/gas_mixture/env_air = loc.return_air()
 			add_fingerprint(user)
@@ -143,7 +178,7 @@ Pipelines + Other Objects -> Pipe network
 			var/unsafe_wrenching = FALSE
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
-			playsound(src.loc, W.usesound, 50, 1)
+			playsound(loc, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 			if (internal_pressure > 2*ONE_ATMOSPHERE)
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
@@ -208,10 +243,11 @@ Pipelines + Other Objects -> Pipe network
 		pipe_overlay = . = pipeimages[identifier] = image(iconset, iconstate, dir = direction)
 		pipe_overlay.color = col
 
-/obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
+/obj/machinery/atmospherics/on_construction(pipe_type, obj_color, set_layer = PIPING_LAYER_DEFAULT)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
+	setPipingLayer(set_layer)
 	var/turf/T = get_turf(src)
 	level = T.intact ? 2 : 1
 	atmosinit()
@@ -221,18 +257,15 @@ Pipelines + Other Objects -> Pipe network
 		A.addMember(src)
 	build_network()
 
+/obj/machinery/atmospherics/Entered(atom/movable/Obj)
+	if(istype(Obj, /mob/living))
+		var/mob/living/L = Obj
+		L.ventcrawl_layer = piping_layer
+
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
-
-
-//Find a connecting /obj/machinery/atmospherics in specified direction
-/obj/machinery/atmospherics/proc/findConnecting(direction)
-	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
-		if(target.initialize_directions & get_dir(target,src))
-			return target
-
 
 #define VENT_SOUND_DELAY 30
 
@@ -243,7 +276,7 @@ Pipelines + Other Objects -> Pipe network
 	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
 		return
 
-	var/obj/machinery/atmospherics/target_move = findConnecting(direction)
+	var/obj/machinery/atmospherics/target_move = findConnecting(direction, user.ventcrawl_layer)
 	if(target_move)
 		if(target_move.can_crawl_through())
 			if(is_type_in_typecache(target_move, GLOB.ventcrawl_machinery))
@@ -253,14 +286,14 @@ Pipelines + Other Objects -> Pipe network
 				var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
 				if(pipenetdiff.len)
 					user.update_pipe_vision(target_move)
-				user.loc = target_move
+				user.forceMove(target_move)
 				user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
 				if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
 					user.last_played_vent = world.time
 					playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
 	else
 		if((direction & initialize_directions) || is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
-			user.forceMove(src.loc)
+			user.forceMove(loc)
 			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 	user.canmove = 0
 	spawn(1)
