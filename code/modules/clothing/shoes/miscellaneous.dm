@@ -207,10 +207,12 @@
 
 	var/atom/target = get_edge_target_turf(usr, usr.dir) //gets the user's direction
 
-	jumping = TRUE
-	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
-	usr.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
-	usr.throw_at(target, jumpdistance, jumpspeed, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
+	if (usr.throw_at(target, jumpdistance, jumpspeed, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end)))
+		jumping = TRUE
+		playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
+		usr.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
+	else
+		to_chat(usr, "<span class='warning'>Something prevents you from dashing forward!</span>")
 
 /obj/item/clothing/shoes/bhop/proc/hop_end()
 	jumping = FALSE
