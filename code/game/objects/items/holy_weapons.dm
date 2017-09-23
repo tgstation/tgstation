@@ -387,10 +387,8 @@
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
 	. = ..()
-
-/obj/item/nullrod/tribal_knife/New()
-	..()
 	START_PROCESSING(SSobj, src)
+
 
 /obj/item/nullrod/tribal_knife/Destroy()
 	STOP_PROCESSING(SSobj, src)
