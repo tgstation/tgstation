@@ -6974,7 +6974,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/maintenance/port)
 "aqm" = (
 /obj/structure/cable/white{
@@ -7776,6 +7776,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "asg" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = "GeneticsDoor";
 	name = "Genetics";
@@ -8659,12 +8663,13 @@
 	},
 /area/medical/genetics)
 "aut" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_research{
 	name = "Genetics Research";
 	req_access_txt = "5; 9; 68"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -9287,11 +9292,12 @@
 /turf/open/floor/plating,
 /area/medical/genetics)
 "avO" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Genetics Research Access";
 	req_access_txt = "47"
 	},
-/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 9;
 	icon_state = "whiteblue";
@@ -9299,15 +9305,16 @@
 	},
 /area/medical/genetics)
 "avP" = (
-/obj/machinery/door/airlock/research{
-	name = "Genetics Research Access";
-	req_access_txt = "47"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research{
+	name = "Genetics Research Access";
+	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 5
@@ -10063,13 +10070,14 @@
 /turf/open/floor/plating,
 /area/science/research)
 "axz" = (
-/obj/machinery/door/airlock/research{
-	name = "Genetics Research Access";
-	req_access_txt = "9"
-	},
 /obj/effect/turf_decal/stripes/line{
 	icon_state = "warningline";
 	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research{
+	name = "Genetics Research Access";
+	req_access_txt = "9"
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 10;
@@ -10078,16 +10086,17 @@
 	},
 /area/science/research)
 "axA" = (
-/obj/machinery/door/airlock/research{
-	name = "Genetics Research Access";
-	req_access_txt = "9"
-	},
 /obj/effect/turf_decal/stripes/line{
 	icon_state = "warningline";
 	dir = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research{
+	name = "Genetics Research Access";
+	req_access_txt = "9"
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 6;
@@ -13460,7 +13469,7 @@
 "aEw" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/lights/mixed,
-/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/fyellow,
 /turf/open/floor/plasteel/neutral,
 /area/storage/primary)
 "aEx" = (
@@ -14216,7 +14225,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "aGj" = (
-/obj/machinery/computer/camera_advanced/xenobio,
+/obj/machinery/computer/camera_advanced/xenobio{
+	networks = list("Xeno")
+	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 28
@@ -25797,10 +25808,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "beN" = (
@@ -26569,6 +26576,23 @@
 /obj/effect/landmark/carpspawn,
 /turf/open/space/basic,
 /area/space)
+"bgt" = (
+/obj/machinery/light{
+	light_color = "#e8eaff"
+	},
+/turf/open/floor/plasteel/blue/side{
+	dir = 4
+	},
+/area/hallway/primary/central)
+"bgu" = (
+/obj/machinery/light{
+	light_color = "#e8eaff"
+	},
+/turf/open/floor/plasteel/blue/side{
+	icon_state = "blue";
+	dir = 8
+	},
+/area/hallway/primary/central)
 
 (1,1,1) = {"
 aaa
@@ -59581,7 +59605,7 @@ aaa
 aty
 axN
 axN
-axN
+bgt
 aAC
 aBS
 aDo
@@ -64487,13 +64511,13 @@ aTd
 aTL
 aUn
 aUE
-aVd
+aXW
 aVd
 aWe
 aWe
 aVd
 aXz
-aXW
+aVd
 aYu
 aVf
 aVf
@@ -64721,7 +64745,7 @@ aaa
 aty
 ayb
 ayb
-ayb
+bgu
 aAR
 aCm
 aDE
