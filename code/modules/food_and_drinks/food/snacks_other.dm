@@ -188,6 +188,15 @@
 	tastes = list("cobwebs" = 1)
 	foodtype = MEAT | TOXIC
 
+/obj/item/reagent_containers/food/snacks/spiderling
+	name = "spiderling"
+	desc = "It's slightly twitching in your hand. Ew..."
+	icon_state = "spiderleg"
+	list_reagents = list("nutrient" = 1, "toxin" = 4)
+	filling_color = "#00800"
+	tastes = list("cobwebs" = 1, "guts" = 2)
+	foodtype = MEAT | TOXIC
+
 /obj/item/reagent_containers/food/snacks/chococoin
 	name = "chocolate coin"
 	desc = "A completely edible but nonflippable festive coin."
