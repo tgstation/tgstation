@@ -196,6 +196,13 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = FALSE
 
+/obj/item/pen/edagger/suicide_act(mob/living/user)
+	if(on)
+		user.visible_message("<span class='suicide'>[user] jabs [src] into their neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	else
+		user.visible_message("<span class='suicide'>[user] is scribbling syndicate codes all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
+	return(BRUTELOSS)
+
 /obj/item/pen/edagger/attack_self(mob/living/user)
 	if(on)
 		on = FALSE

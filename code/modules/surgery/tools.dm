@@ -8,6 +8,10 @@
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"
 
+/obj/item/retractor/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] slams [src] into their eye! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+ 	return(BRUTELOSS)
+
 
 /obj/item/retractor/augment
 	name = "toolarm retractor"
@@ -20,7 +24,6 @@
 	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 
-
 /obj/item/hemostat
 	name = "hemostat"
 	desc = "You think you have seen this before."
@@ -32,6 +35,9 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 
+/obj/item/hemostat/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] tears [user.p_them()]self apart with a snip, a cut, and a [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+ 	return(BRUTELOSS)
 
 /obj/item/hemostat/augment
 	name = "toolarm hemostat"
@@ -57,6 +63,9 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
 
+/obj/item/cautery/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] cauterizes their breathing holes! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+ 	return(FIRELOSS|OXYLOSS)
 
 /obj/item/cautery/augment
 	name = "toolarm cautery"
@@ -86,6 +95,9 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
+/obj/item/surgicaldrill/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] drills right into their own brain! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+ 	return(BRUTELOSS)
 
 /obj/item/surgicaldrill/augment
 	name = "toolarm surgical drill"
@@ -120,6 +132,10 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
+
+/obj/item/scalpel/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] screws up! It looks like [user.p_theyre()] trying to commit medical malpractice!</span>")
+ 	return(BRUTELOSS)
 
 /obj/item/scalpel/augment
 	name = "toolarm scalpel"
@@ -164,6 +180,10 @@
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 
+/obj/item/circular_saw/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] saws their ribcage open! It looks like [user.p_theyre()] trying to commit suicide!</span>") //remind me later to make this drop his organs
+ 	return(BRUTELOSS)
+
 /obj/item/circular_saw/augment
 	name = "toolarm circular saw"
 	desc = "A small but very fast spinning saw. Edges dulled to prevent accidental cutting inside of the surgeon."
@@ -191,6 +211,11 @@
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "biotech=1"
 	attack_verb = list("slapped")
+
+/obj/item/surgical_drapes/suicide_act(mob/living/user)
+ 	user.visible_message("<span class='suicide'>[user] drapes [src] over their head and communicates to the spooky ghost god! It looks like [user.p_theyre()] trying to ascend to the next plane!</span>")
+ 	user.dust()
+		return
 
 /obj/item/surgical_drapes/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))
