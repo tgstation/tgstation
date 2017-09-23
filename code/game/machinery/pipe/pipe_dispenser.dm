@@ -59,7 +59,7 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 		if(wait < world.time)
 			var/p_type = text2path(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
-			var/obj/item/pipe/P = new (loc, pipe_type=p_type, dir=p_dir)
+			var/obj/item/pipe/P = new (loc, _pipe_type=p_type, _dir=p_dir)
 			P.setPipingLayer(piping_layer)
 			P.add_fingerprint(usr)
 			wait = world.time + 10

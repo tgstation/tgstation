@@ -580,7 +580,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
-				var/obj/item/pipe/P = new (A, pipe_type=queued_p_type, dir=queued_p_dir)
+				var/obj/item/pipe/P = new (A, _pipe_type=queued_p_type, _dir=queued_p_dir)
 				P.flipped = queued_p_flipped
 				P.update()
 				P.add_fingerprint(usr)
