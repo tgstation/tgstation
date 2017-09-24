@@ -9,8 +9,8 @@
 			var/obj/item/clothing/mask/gas/sechailer/banemask = new(src)
 			equip_to_slot_or_del(banemask, slot_wear_mask)
 			if(banemask)
-				banemask.emag_act(src) /* Unelegant, but null doesn't work here */
-				src.resize = 1.25
+				banemask.emag_act(src) /* Inelegant, but null doesn't work here */
+				resize = 1.25
 		if(7)
 			var/obj/item/reagent_containers/food/drinks/drinkingglass/martini = new(src)
 			martini.reagents.add_reagent("martini", martini.volume)
