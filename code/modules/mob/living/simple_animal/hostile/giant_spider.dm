@@ -48,7 +48,7 @@
 	see_in_dark = 4
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	var/playable_spider = FALSE
-	var/datum/action/innate/lay_web/lay_web
+	var/datum/action/innate/spider/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
@@ -105,8 +105,8 @@
 	var/atom/movable/cocoon_target
 	var/fed = 0
 	var/obj/effect/proc_holder/wrap/wrap
-	var/datum/action/innate/lay_eggs/lay_eggs
-	var/datum/action/innate/set_directive/set_directive
+	var/datum/action/innate/spider/lay_eggs/lay_eggs
+	var/datum/action/innate/spider/set_directive/set_directive
 	var/static/list/consumed_mobs = list() //the tags of mobs that have been consumed by nurse spiders to lay eggs
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/Initialize()
@@ -197,6 +197,9 @@
 	letmetalkpls = new
 	letmetalkpls.Grant(src)
 
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Destroy()
+	QDEL_NULL(letmetalkpls)
+	return ..()
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
 	name = "giant ice spider"
@@ -327,15 +330,17 @@
 	busy = SPIDER_IDLE
 	stop_automated_movement = FALSE
 
-/datum/action/innate/lay_web
+/datum/action/innate/spider
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/spider/lay_web
 	name = "Spin Web"
 	desc = "Spin a web to slow down potential prey."
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "lay_web"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
-	background_icon_state = "bg_alien"
 
-/datum/action/innate/lay_web/Activate()
+/datum/action/innate/spider/lay_web/Activate()
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 		return
 	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
@@ -418,15 +423,13 @@
 /obj/effect/proc_holder/wrap/on_lose(mob/living/carbon/user)
 	remove_ranged_ability()
 
-/datum/action/innate/lay_eggs
+/datum/action/innate/spider/lay_eggs
 	name = "Lay Eggs"
 	desc = "Lay a cluster of eggs, which will soon grow into more spiders. You must wrap a living being to do this."
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "lay_eggs"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
-	background_icon_state = "bg_alien"
 
-/datum/action/innate/lay_eggs/IsAvailable()
+/datum/action/innate/spider/lay_eggs/IsAvailable()
 	if(..())
 		if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 			return 0
@@ -435,7 +438,7 @@
 			return 1
 		return 0
 
-/datum/action/innate/lay_eggs/Activate()
+/datum/action/innate/spider/lay_eggs/Activate()
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 		return
 	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
@@ -465,15 +468,13 @@
 		S.busy = SPIDER_IDLE
 		S.stop_automated_movement = FALSE
 
-/datum/action/innate/set_directive
+/datum/action/innate/spider/set_directive
 	name = "Set Directive"
 	desc = "Set a directive for your children to follow."
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "directive"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
-	background_icon_state = "bg_alien"
 
-/datum/action/innate/set_directive/Activate()
+/datum/action/innate/spider/set_directive/Activate()
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 		return
 	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
@@ -489,6 +490,7 @@
 
 /datum/action/innate/spider/comm
 	name = "Command"
+	desc = "Send a message to all living spiders."
 	button_icon_state = "cult_comms"
 
 /datum/action/innate/spider/comm/IsAvailable()
