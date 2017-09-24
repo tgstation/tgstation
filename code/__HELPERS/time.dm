@@ -64,7 +64,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	if(second >= 60)
 		minute = round_down(second/60)
 		second = round(second - (minute*60), 0.1)
-	if(second != 1 && second != 0)
+	if(second != 1 && second)
 		if(day || hour || minute)
 			second = " and [second] seconds"
 		else
@@ -81,8 +81,8 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 		return "[second]"
 	if(minute >= 60)
 		hour = round_down(minute/60,1)
-		minute = round(minute - (hour*60))
-	if(minute != 1 && minute != 0)
+		minute = (minute - (hour*60))
+	if(minute != 1 && minute)
 		if((day || hour) && second)
 			minute = ", [minute] minutes"
 		else if((day || hour) && !second)
@@ -103,8 +103,8 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 		return "[minute][second]"
 	if(hour >= 24)
 		day = round_down(hour/24,1)
-		hour = round(hour - (day*24))
-	if(hour != 1 && hour != 0)
+		hour = (hour - (day*24))
+	if(hour != 1 && hour)
 		if(day && (minute || second))
 			hour = ", [hour] hours"
 		else if(day && (!minute || !second))
