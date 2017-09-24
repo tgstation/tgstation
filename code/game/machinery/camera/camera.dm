@@ -39,7 +39,7 @@
 	// Upgrades bitflag
 	var/upgrades = 0
 
-	var/internal_light = FALSE //Whether it can light up when an AI views it
+	var/internal_light = TRUE //Whether it can light up when an AI views it
 
 /obj/machinery/camera/Initialize(mapload)
 	. = ..()
