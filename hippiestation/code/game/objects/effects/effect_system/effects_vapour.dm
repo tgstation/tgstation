@@ -37,8 +37,8 @@
 
 /obj/effect/particle_effect/vapour
 	name = "vapour"
-	icon = 'hippiestation/icons/effects/32x32.dmi'
-	icon_state = "chemgas"
+	icon = 'icons/effects/tile_effects.dmi'
+	icon_state = "chem_gas"
 	opacity = 0
 	layer = FLY_LAYER
 	anchored = TRUE
