@@ -68,7 +68,7 @@
 			"breaks wind and a nearby wine glass!",
 			"<b>finally achieves the perfect fart. All downhill from here.</b>")
 	if(LAZYLEN(alternate_farts))
-			fartsound = pick(alternate_farts)
+		fartsound = pick(alternate_farts)
 	else if(istype(user,/mob/living/carbon/alien))
 		fartsound = 'hippiestation/sound/effects/alienfart.ogg'
 		bloodkind = /obj/effect/decal/cleanable/xenoblood
