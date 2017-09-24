@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(server_maint)
 				var/cmob = C.mob
 				if(!(isobserver(cmob) || (isdead(cmob) && C.holder)))
 					log_access("AFK: [key_name(C)]")
-					to_chat(C, "<span class='danger'>You have been inactive for more than [config.afk_period / 600] minutes and have been disconnected.</span>")
+					to_chat(C, "<span class='danger'>You have been inactive for more than [DisplayTimeText(config.afk_period)] and have been disconnected.</span>")
 					qdel(C)
 
 		if (!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
