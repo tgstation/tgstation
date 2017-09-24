@@ -71,7 +71,7 @@
 	..()
 	if(directive)
 		to_chat(src, "<span class='notice'>Your mother left you a directive! Follow it at all costs.</span>")
-		to_chat(src, "<span class='notice'><b>[directive]</b></span>")
+		to_chat(src, "<span class='spider'><b>[directive]</b></span>")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
 	if(!humanize_spider(user))
@@ -499,7 +499,7 @@
 	return TRUE
 
 /datum/action/innate/spider/comm/Trigger()
-	var/input = stripped_input(usr, "Input a message for your legions to follow.", "Command", "")
+	var/input = stripped_input(usr, "Input a command for your legions to follow.", "Command", "")
 	if(QDELETED(src) || !input || !IsAvailable())
 		return FALSE
 	spider_command(usr, input)
@@ -509,7 +509,7 @@
 	if(!message)
 		return
 	var/my_message
-	my_message = "<span class='alien big'><b>COMMAND FROM SPIDER QUEEN:</b> [message]</span>"
+	my_message = "<span class='spider'><b>Command from [user]:</b> [message]</span>"
 	for(var/mob/living/simple_animal/hostile/poison/giant_spider/M in GLOB.spidermobs)
 		to_chat(M, my_message)
 	for(var/M in GLOB.dead_mob_list)
