@@ -11,7 +11,9 @@
 					D.staticOverlays |= staticOverlays["static"]
 					D.client.images |= staticOverlays["static"]
 	if(unique_name)
-		name = "[name] ([rand(1, 1000)])"
+		var/rand_int = rand(1, 1000)
+		name = "[name] ([rand_int])"
+		hippie_equip_mob_with_items(rand_int) /* This equips shit for the mob based on the random int they are given */
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
