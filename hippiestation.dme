@@ -2333,7 +2333,6 @@
 #include "hippiestation\code\modules\clothing\shoes\magboots.dm"
 #include "hippiestation\code\modules\crafting\recipies.dm"
 #include "hippiestation\code\modules\crafts\shield.dm"
-#include "hippiestation\code\modules\crafts\stungloves.dm"
 #include "hippiestation\code\modules\crafts\vest.dm"
 #include "hippiestation\code\modules\crafts\weaponry.dm"
 #include "hippiestation\code\modules\detectivework\scanner.dm"
