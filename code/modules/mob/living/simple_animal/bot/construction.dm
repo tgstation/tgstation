@@ -358,10 +358,9 @@
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 
 /obj/item/clothing/head/helmet/attackby(obj/item/device/assembly/signaler/S, mob/user, params)
-	..()
-	if(!issignaler(S))
-		..()
-		return
+	. = ..()
+	if(!istype(S))
+		return 
 
 	if(type != /obj/item/clothing/head/helmet/sec) //Eh, but we don't want people making secbots out of space helmets.
 		return
@@ -376,8 +375,6 @@
 		user.put_in_hands(A)
 		to_chat(user, "<span class='notice'>You add the signaler to the helmet.</span>")
 		qdel(src)
-	else
-		return
 
 /obj/item/secbot_assembly/attackby(obj/item/I, mob/user, params)
 	..()
