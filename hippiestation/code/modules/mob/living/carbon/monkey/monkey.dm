@@ -49,6 +49,6 @@
 		if(666)
 			fire_stacks = 6
 			IgniteMob()
-		if(777) /* bugged */
+		if(777)
 			put_in_hands_or_del(new /obj/item/storage/bag/money(src))
 			put_in_hands_or_del(new /obj/item/storage/bag/money(src))
