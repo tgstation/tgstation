@@ -42,8 +42,7 @@ SUBSYSTEM_DEF(persistence)
 		var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
 		if(!fexists(json_file))
 			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		old_secret_satchels = json["data"]
 		if(old_secret_satchels.len)
 			if(old_secret_satchels.len >= 20) //guards against low drop pools assuring that one player cannot reliably find his own gear.
@@ -85,8 +84,7 @@ SUBSYSTEM_DEF(persistence)
 		var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
 		if(!fexists(json_file))
 			return
-		var/list/json
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 
 		if(!json)
 			return
@@ -130,8 +128,7 @@ SUBSYSTEM_DEF(persistence)
 		var/json_file = file("data/npc_saves/TrophyItems.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		if(!json)
 			return
 		saved_trophies = json["data"]
@@ -141,8 +138,7 @@ SUBSYSTEM_DEF(persistence)
 	var/json_file = file("data/RecentModes.json")
 	if(!fexists(json_file))
 		return
-	var/list/json = list()
-	json = json_decode(file2text(json_file))
+	var/list/json = json_decode(file2text(json_file))
 	if(!json)
 		return
 	saved_modes = json["data"]

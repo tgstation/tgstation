@@ -274,7 +274,7 @@ SUBSYSTEM_DEF(blackbox)
 		details += "\"[deets]\""
 
 /datum/feedback_variable/proc/get_details()
-	return details.Join(" | ")
+	return details ? details.Join(" | ") : null
 
 /datum/feedback_variable/proc/get_parsed()
 	return list(variable,value,details.Join(" | "))
