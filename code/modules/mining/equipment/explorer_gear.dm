@@ -78,21 +78,6 @@
 			else
 				to_chat(C, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
 
-/obj/item/clothing/suit/space/hostile_environment/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/toy/crayon/spraycan))
-		var/obj/item/toy/crayon/spraycan/spraycan = O
-		if(spraycan.is_capped)
-			to_chat(user, "<span class='warning'>Take the cap off first!</span>")
-			return
-		if(spraycan.check_empty(user))
-			return
-		spraycan.use_charges(2)
-		add_atom_colour(spraycan.paint_color, FIXED_COLOUR_PRIORITY)
-		playsound(get_turf(user), 'sound/effects/spray.ogg', 5, 1, 5)
-		to_chat(user, "<span class='notice'>You sprays [spraycan] on [src], painting it.</span>")
-	else
-		return ..()
-
 /obj/item/clothing/head/helmet/space/hostile_environment
 	name = "H.E.C.K. helmet"
 	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
@@ -122,19 +107,4 @@
 		var/mutable_appearance/M = mutable_appearance('icons/mob/head.dmi', "hostile_env_glass")
 		M.appearance_flags = RESET_COLOR
 		. += M
-
-/obj/item/clothing/head/helmet/space/hostile_environment/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/toy/crayon/spraycan))
-		var/obj/item/toy/crayon/spraycan/spraycan = O
-		if(spraycan.is_capped)
-			to_chat(user, "<span class='warning'>Take the cap off first!</span>")
-			return
-		if(spraycan.check_empty(user))
-			return
-		spraycan.use_charges(2)
-		add_atom_colour(spraycan.paint_color, FIXED_COLOUR_PRIORITY)
-		playsound(get_turf(user), 'sound/effects/spray.ogg', 5, 1, 5)
-		to_chat(user, "<span class='notice'>You sprays [spraycan] on [src], painting it.</span>")
-	else
-		return ..()
 
