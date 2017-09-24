@@ -48,15 +48,15 @@
 
 /obj/effect/particle_effect/vapour/Initialize()
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSreagent_states, src)
 
 
 /obj/effect/particle_effect/vapour/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSreagent_states, src)
 	return ..()
 
 /obj/effect/particle_effect/vapour/proc/kill_vapour()
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSreagent_states, src)
 	qdel(src)
 
 /obj/effect/particle_effect/vapour/process()//attempts to spread and smoke mobs, slowly decays at a fixed rate + the amount of mobs currently being affected
