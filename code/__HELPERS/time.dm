@@ -105,7 +105,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 				minute = " and [minute] minutes"
 			else
 				minute = "[minute] minutes"
-		else if(minute == 1)
+		else
 			if((day || hour) && second)
 				minute = ", 1 minute"
 			else if((day || hour) && !second)
@@ -128,7 +128,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 				hour = " and [hour] hours"
 			else
 				hour = "[hour] hours"
-		else if(hour == 1)
+		else
 			if(day && (minute || second))
 				hour = ", 1 hour"
 			else if(day && (!minute || !second))
