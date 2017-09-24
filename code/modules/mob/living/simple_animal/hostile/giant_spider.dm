@@ -490,8 +490,8 @@
 
 /datum/action/innate/spider/comm
 	name = "Command"
-	desc = "Send a message to all living spiders."
-	button_icon_state = "cult_comms"
+	desc = "Send a command to all living spiders."
+	button_icon_state = "command"
 
 /datum/action/innate/spider/comm/IsAvailable()
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife))
@@ -509,9 +509,12 @@
 	if(!message)
 		return
 	var/my_message
-	my_message = "<FONT size = 3><b>COMMAND FROM SPIDER QUEEN:</b> [message]</FONT>"
+	my_message = "<span class='alien big'><b>COMMAND FROM SPIDER QUEEN:</b> [message]</span>"
 	for(var/mob/living/simple_animal/hostile/poison/giant_spider/M in GLOB.spidermobs)
 		to_chat(M, my_message)
+	for(var/M in GLOB.dead_mob_list)
+		var/link = FOLLOW_LINK(M, user)
+		to_chat(M, "[link] [my_message]")
 	log_talk(user, "SPIDERCOMMAND: [key_name(user)] : [message]",LOGSAY)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
