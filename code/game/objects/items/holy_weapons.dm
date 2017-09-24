@@ -244,6 +244,7 @@
 		S.name = name
 		S.ckey = theghost.ckey
 		S.status_flags |= GODMODE
+		S.language_holder = user.language_holder.copy(S)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)
