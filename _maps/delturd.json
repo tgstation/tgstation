@@ -1,0 +1,8 @@
+{
+	"map_name": "Delturd",
+	"map_path": "map_files/Delturd",
+	"map_file": "DelturdStation.dmm",
+	"minetype": "lavaland",
+	"transition_config": "default",
+	"allow_custom_shuttles": "yes"
+}
