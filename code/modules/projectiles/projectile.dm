@@ -172,13 +172,23 @@
 	else
 		if(A && A.density && !ismob(A) && !(A.flags_1 & ON_BORDER_1)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
 			var/list/mobs_list = list()
+			var/list/machine_list = list()
 			for(var/mob/living/L in target_turf)
 				mobs_list += L
-			if(mobs_list.len)
-				var/mob/living/picked_mob = pick(mobs_list)
-				if(!prehit(picked_mob))
-					return FALSE
-				picked_mob.bullet_act(src, def_zone)
+			for(var/obj/machinery/m in target_turf)
+				if(istype(m,/obj/machinery/power/emitter)==FALSE) // Check for energy cannon spam from CTF, shouldin't really need to process them getting hit.
+					machine_list += m
+			if(mobs_list.len | machine_list.len)
+				if(mobs_list.Find(original) | machine_list.Find(original))
+					original.bullet_act(src, def_zone)
+				else if(mobs_list.len)
+					var/mob/living/picked_mob = pick(mobs_list)
+					if(!prehit(picked_mob))
+						return FALSE
+					picked_mob.bullet_act(src, def_zone)
+				else
+					var/obj/machinery/picked_machine = pick(machine_list)
+					picked_machine.bullet_act(src, def_zone)
 	qdel(src)
 	return TRUE
 
