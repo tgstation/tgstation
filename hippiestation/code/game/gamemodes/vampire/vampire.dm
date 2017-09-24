@@ -67,7 +67,7 @@
 
 /datum/game_mode/vampire/post_setup()
 	for(var/datum/mind/vamp in vampires)
-		add_vampire(vamp)
+		add_vampire(vamp.current)
 	modePlayer += vampires
 	..()
 	return TRUE
@@ -118,13 +118,13 @@
 
 
 /proc/add_vampire(mob/living/L)
-	if(!L || !L.mind)
+	if(!L || !L.mind || is_vampire(L))
 		return FALSE
 	var/datum/antagonist/vampire/vamp = L.mind.add_antag_datum(ANTAG_DATUM_VAMPIRE)
 	return vamp
 
 /proc/remove_vampire(mob/living/L)
-	if(!L || !L.mind)
+	if(!L || !L.mind || !is_vampire(L))
 		return FALSE
 	var/datum/antagonist/vamp = L.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
 	vamp.on_removal()
