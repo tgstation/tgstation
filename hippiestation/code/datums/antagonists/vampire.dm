@@ -29,9 +29,9 @@
 		/obj/effect/proc_holder/spell/self/revive = 800)
 
 /datum/antagonist/vampire/on_gain()
+	SSticker.mode.vampires += owner
 	give_objectives()
 	check_vampire_upgrade()
-	LAZYADD(SSticker.mode.vampires, owner)
 	owner.special_role = "vampire"
 	owner.current.faction += "vampire"
 	SSticker.mode.update_vampire_icons_added(owner)
