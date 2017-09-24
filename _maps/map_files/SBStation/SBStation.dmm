@@ -430,7 +430,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "abc" = (
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
@@ -4438,7 +4437,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/closed/wall,
+/turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "akd" = (
 /obj/structure/cable/white{
@@ -23478,7 +23477,6 @@
 	icon_state = "crossing";
 	tag = ""
 	},
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
@@ -24038,13 +24036,11 @@
 /turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "baD" = (
-/obj/structure/lattice,
 /obj/structure/transit_tube/diagonal/crossing,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
 "baE" = (
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -24052,7 +24048,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "baF" = (
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -24343,7 +24338,6 @@
 /turf/open/space/basic,
 /area/space)
 "bbp" = (
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/space/basic,
@@ -24501,7 +24495,6 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "bbK" = (
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -24895,7 +24888,6 @@
 /turf/closed/wall/r_wall,
 /area/tcommsat/server)
 "bcH" = (
-/obj/structure/lattice,
 /obj/structure/transit_tube/crossing,
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -25088,7 +25080,6 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -25351,7 +25342,6 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
 	},
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -25792,7 +25782,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "beN" = (
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /obj/machinery/camera/motion{
 	c_tag = "Satellite - Airlock";
@@ -25907,7 +25896,6 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -26299,7 +26287,6 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "bfV" = (
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 4;
@@ -59143,9 +59130,9 @@ aYF
 aYF
 baG
 bbq
-bbQ
-bbQ
-bbQ
+bbK
+bbK
+bbK
 bde
 bdB
 bde
@@ -59410,7 +59397,7 @@ bdf
 bdC
 bdC
 bdC
-beK
+bdP
 aaa
 bfV
 bdA
@@ -59657,16 +59644,16 @@ aZD
 aZZ
 baI
 bbs
-bbQ
-bbQ
+bbK
+bbK
 bcJ
-bdg
-bdg
 bdf
-bdg
-bdg
 bdf
-bdg
+bdf
+bdf
+bdf
+bdf
+bdf
 bdB
 aaa
 bfV
@@ -59924,7 +59911,7 @@ bdf
 bdC
 bdC
 bdC
-beK
+bdP
 afR
 bfV
 afR
@@ -60172,16 +60159,16 @@ bab
 baK
 bbu
 bbS
-bbQ
-bbQ
+bbK
+bbK
 bbS
 bcJ
 bdP
 bcJ
-beK
-beY
-beK
-bbQ
+bdP
+bcJ
+bdP
+bbK
 afR
 bfV
 afR
