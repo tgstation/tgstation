@@ -67,6 +67,7 @@
 			"farts so loud it startles them!",
 			"breaks wind and a nearby wine glass!",
 			"<b>finally achieves the perfect fart. All downhill from here.</b>")
+	LAZYINITLIST(user.alternate_farts)
 	if(LAZYLEN(user.alternate_farts))
 		fartsound = pick(user.alternate_farts)
 	else if(istype(user,/mob/living/carbon/alien))
