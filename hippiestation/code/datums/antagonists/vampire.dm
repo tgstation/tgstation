@@ -3,11 +3,11 @@
 	var/total_blood = 0
 	var/fullpower = FALSE
 	var/draining
-	var/list/objectives_given
+	var/list/objectives_given = list()
 
 	var/iscloaking = FALSE
 
-	var/list/powers // list of current powers
+	var/list/powers = list() // list of current powers
 
 	var/obj/item/clothing/suit/draculacoat/coat
 
@@ -79,8 +79,8 @@
 		return
 
 /datum/antagonist/vampire/proc/add_objective(var/datum/objective/O)
-	LAZYADD(owner.objectives, O) //fuck this
-	LAZYADD(objectives_given, O)
+	owner.objectives += O
+	objectives_given += O
 
 /datum/antagonist/vampire/proc/forge_single_objective() //Returns how many objectives are added
 	.=1
@@ -216,10 +216,9 @@
 	var/spell = new path(owner)
 	if(istype(spell, /obj/effect/proc_holder/spell))
 		owner.AddSpell(spell)
-	LAZYADD(powers, spell)
+	powers += spell
 
 /datum/antagonist/vampire/proc/get_ability(path)
-	LAZYINITLIST(powers)
 	for(var/P in powers)
 		var/datum/power = P
 		if(power.type == path)
