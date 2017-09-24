@@ -125,6 +125,9 @@ var/path_type = /obj/item/baseball_bat
 var/path_type = "/obj/item/baseball_bat"
 ```
 
+### Use var/name format when declaring variables
+While DM allows other ways of declaring variables, this one should be used for consistency.
+
 ### Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
 

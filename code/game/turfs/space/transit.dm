@@ -30,6 +30,7 @@
 		throw_atom(AM)
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)
+	set waitfor = FALSE
 	if(!AM || istype(AM, /obj/docking_port))
 		return
 	if(AM.loc != src) 	// Multi-tile objects are "in" multiple locs but its loc is it's true placement.
@@ -64,15 +65,15 @@
 			_y = min
 
 	var/turf/T = locate(_x, _y, _z)
-	AM.loc = T
-	AM.newtonian_move(dir)
+	AM.forceMove(T)
+
 
 /turf/open/space/transit/CanBuildHere()
 	return SSshuttle.is_in_shuttle_bounds(src)
 
 
 /turf/open/space/transit/Initialize()
-	..()
+	. = ..()
 	update_icon()
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)

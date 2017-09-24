@@ -199,7 +199,7 @@
 
 /obj/vv_get_dropdown()
 	. = ..()
-	.["Delete all of type"] = "?_src_=vars;delall=\ref[src]"
+	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=\ref[src]"
 
 /obj/examine(mob/user)
 	..()
@@ -226,6 +226,3 @@
 		current_skin = choice
 		icon_state = unique_reskin[choice]
 		to_chat(M, "[src] is now skinned as '[choice].'")
-
-/obj/proc/gang_contraband_value()
-	return 0

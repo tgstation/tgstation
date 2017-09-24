@@ -61,7 +61,7 @@
 		if(stat & NOPOWER)
 			return
 
-		if(src.z == ZLEVEL_STATION)
+		if(src.z in GLOB.station_z_levels)
 			add_overlay("overlay_[GLOB.security_level]")
 		else
 			//var/green = SEC_LEVEL_GREEN
@@ -121,7 +121,7 @@
 	var/list/data = list()
 	data["emagged"] = emagged
 
-	if(src.z == ZLEVEL_STATION)
+	if(src.z in GLOB.station_z_levels)
 		data["seclevel"] = get_security_level()
 	else
 		data["seclevel"] = "green"
@@ -216,6 +216,16 @@
 				if(istype(W, /obj/item/electronics/firealarm))
 					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
 					qdel(W)
+					buildstage = 1
+					update_icon()
+					return
+
+				else if(istype(W, /obj/item/device/electroadaptive_pseudocircuit))
+					var/obj/item/device/electroadaptive_pseudocircuit/P = W
+					if(!P.adapt_circuit(user, 15))
+						return
+					user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+					"<span class='notice'>You adapt a fire alarm circuit and slot it into the assembly.</span>")
 					buildstage = 1
 					update_icon()
 					return

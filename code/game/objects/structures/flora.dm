@@ -265,8 +265,10 @@
 
 /obj/item/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
+	I.copy_overlays(src)
 	I.override = 1
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
+	I.layer = ABOVE_MOB_LAYER
 	..()
 
 /obj/item/twohanded/required/kirbyplants/dropped(mob/living/user)
@@ -298,6 +300,13 @@
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
+
+/obj/item/twohanded/required/kirbyplants/photosynthetic
+	name = "photosynthetic potted plant"
+	desc = "A bioluminescent plant."
+	icon_state = "plant-09"
+	light_color = "#2cb2e8"
+	light_range = 3
 
 
 //a rock is flora according to where the icon file is

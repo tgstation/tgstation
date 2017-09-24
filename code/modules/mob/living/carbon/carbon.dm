@@ -291,6 +291,10 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
+	if(I.being_removed)
+		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
+		return
+	I.being_removed = TRUE
 	breakouttime = I.breakouttime
 	var/displaytime = breakouttime / 600
 	if(!cuff_break)
@@ -312,6 +316,7 @@
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
+	I.being_removed = FALSE
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -837,7 +842,7 @@
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
-	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
-	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
-	.["Hallucinate"] = "?_src_=vars;hallucinate=\ref[src]"
+	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=\ref[src]"
+	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=\ref[src]"
+	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=\ref[src]"
+	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=\ref[src]"

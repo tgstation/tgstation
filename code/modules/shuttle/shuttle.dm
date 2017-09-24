@@ -410,7 +410,7 @@
 	mode = SHUTTLE_RECALL
 
 /obj/docking_port/mobile/proc/enterTransit()
-	if(SSshuttle.lockdown && z == ZLEVEL_STATION)	//emp went off, no escape
+	if(SSshuttle.lockdown && (z in GLOB.station_z_levels))	//emp went off, no escape
 		return
 	previous = null
 //		if(!destination)
@@ -567,6 +567,8 @@
 
 		for(var/i in 1 to oldT.contents.len)
 			var/atom/movable/moving_atom = oldT.contents[i]
+			if(moving_atom.loc != oldT) //fix for multi-tile objects
+				continue
 			move_mode = moving_atom.beforeShuttleMove(newT, rotation, move_mode)							//atoms
 
 		move_mode = oldT.fromShuttleMove(newT, underlying_turf_type, baseturf_cache, move_mode)	//turfs
@@ -574,7 +576,7 @@
 
 		if(move_mode & MOVE_AREA)
 			areas_to_move[old_area] = TRUE
-		
+
 		old_turfs[place] = move_mode
 
 	/*******************************************All onShuttleMove procs******************************************/
@@ -588,6 +590,8 @@
 		if(move_mode & MOVE_CONTENTS)
 			for(var/thing in oldT)
 				var/atom/movable/moving_atom = thing
+				if(moving_atom.loc != oldT) //fix for multi-tile objects
+					continue
 				moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock)//atoms
 				moved_atoms += moving_atom
 		if(move_mode & MOVE_TURF)
@@ -614,6 +618,14 @@
 	for(var/thing in areas_to_move)
 		var/area/internal_area = thing
 		internal_area.afterShuttleMove()																	//areas
+
+	// Parallax handling
+	var/new_parallax_dir = FALSE
+	if(istype(new_dock, /obj/docking_port/stationary/transit))
+		new_parallax_dir = preferred_direction
+	for(var/i in shuttle_areas)
+		var/area/place = i
+		place.parallax_movedir = new_parallax_dir
 
 	check_poddoors()
 	new_dock.last_dock_time = world.time

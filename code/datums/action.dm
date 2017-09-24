@@ -421,7 +421,7 @@
 
 /datum/action/item_action/ninjapulse
 	name = "EM Burst (25E)"
-	desc = "Disable any nearby technology with a electro-magnetic pulse."
+	desc = "Disable any nearby technology with an electro-magnetic pulse."
 	button_icon_state = "emp"
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 

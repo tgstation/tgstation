@@ -33,7 +33,7 @@ FLOOR SAFES
 
 
 /obj/structure/safe/Initialize(mapload)
-	..()
+	. = ..()
 
 	if(!mapload)
 		return
@@ -96,7 +96,10 @@ FLOOR SAFES
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/user = usr
-
+	
+	if(!user.canUseTopic(src))
+		return
+	
 	var/canhear = 0
 	if(user.is_holding_item_of_type(/obj/item/clothing/neck/stethoscope))
 		canhear = 1
@@ -192,7 +195,7 @@ FLOOR SAFES
 
 
 /obj/structure/safe/floor/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)
 		var/turf/T = loc
 		hide(T.intact)
