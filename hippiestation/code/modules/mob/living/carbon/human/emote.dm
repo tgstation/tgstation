@@ -1,3 +1,6 @@
+/mob/living
+	var/list/alternate_farts
+
 /datum/emote/living/carbon/fart
 	key = "fart"
 	key_third_person = "farts"
@@ -102,6 +105,8 @@
 				playsound(user, fartsound, 50, 1, 5)
 			if(prob(33))
 				theinv.remove_from_storage(O, user.loc)
+		else if(LAZYLEN(alternate_farts))
+			playsound(user, pick(alternate_farts), 50, 1, 5)
 		else
 			playsound(user, fartsound, 50, 1, 5)
 		sleep(1)
