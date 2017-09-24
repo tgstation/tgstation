@@ -1,0 +1,5 @@
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
+	if(findtext(message, "rouge"))
+		to_chat(src, "<span class='userdanger'>You feel like a fucking idiot.</span>")
+		adjustBrainLoss(60)
+	..()
