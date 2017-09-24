@@ -67,7 +67,9 @@
 			"farts so loud it startles them!",
 			"breaks wind and a nearby wine glass!",
 			"<b>finally achieves the perfect fart. All downhill from here.</b>")
-	if(istype(user,/mob/living/carbon/alien))
+	if(LAZYLEN(alternate_farts))
+			fartsound = pick(alternate_farts)
+	else if(istype(user,/mob/living/carbon/alien))
 		fartsound = 'hippiestation/sound/effects/alienfart.ogg'
 		bloodkind = /obj/effect/decal/cleanable/xenoblood
 	var/obj/item/storage/book/bible/Y = locate() in get_turf(user.loc)
@@ -105,8 +107,6 @@
 				playsound(user, fartsound, 50, 1, 5)
 			if(prob(33))
 				theinv.remove_from_storage(O, user.loc)
-		else if(LAZYLEN(alternate_farts))
-			playsound(user, pick(alternate_farts), 50, 1, 5)
 		else
 			playsound(user, fartsound, 50, 1, 5)
 		sleep(1)
