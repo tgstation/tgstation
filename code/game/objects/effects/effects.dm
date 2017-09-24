@@ -6,9 +6,6 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	attackable = FALSE
 
-/obj/effect/attackby(obj/item/I, mob/living/user, params)
-	return ..()
-
 /obj/effect/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	return
 
