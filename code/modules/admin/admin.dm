@@ -440,9 +440,10 @@
 		var/result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
 		if(result)
 			SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			var/init_by = usr.client.holder.fakekey ? "Admin" : usr.key
 			switch(result)
 				if("Regular Restart")
-					SSticker.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
+					SSticker.Reboot("Initiated by [init_by].", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
 				if("Hard Restart (No Delay, No Feeback Reason)")
 					world.Reboot()
 				if("Hardest Restart (No actions, just reboot)")
