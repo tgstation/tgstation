@@ -180,9 +180,9 @@
 		kill_objective.find_target()
 		add_objective(kill_objective)
 
-	var/datum/objective/survive/survive_objective = new
-	survive_objective.owner = owner
-	add_objective(survive_objective)
+	var/datum/objective/survive/exist/exist_objective = new
+	exist_objective.owner = owner
+	add_objective(exist_objective)
 /datum/antagonist/traitor/proc/forge_single_objective()
 	return 0
 /datum/antagonist/traitor/human/forge_single_objective() //Returns how many objectives are added
