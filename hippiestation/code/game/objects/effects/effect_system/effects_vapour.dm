@@ -2,6 +2,8 @@
 /obj/effect/particle_effect/vapour/master//handles redistributing the volume to prevent a ton of duplicate for loops
 	var/volume = 0
 	var/list/newvapes = list()
+	var/spread_delay = 10
+	var/decay_factor = 2//the rate at which it dies
 
 /obj/effect/particle_effect/vapour/master/Initialize()
 	VM = src
@@ -11,18 +13,27 @@
 			if(M.reagent_type == reagent_type)
 				volume += M.volume * 0.05
 				M.kill_vapour()
+		spread_delay = Clamp(100 / (volume * 0.001), 2, 60) //spread delay is inversely proportional to volume
+		decay_factor = min(volume * 0.00005, 10)//decay is proportional to volume so higher volume means faster spread but also a relatively faster death
 	. = ..()
-/obj/effect/particle_effect/vapour/master/spread_vapour()
-	..()
+
+/obj/effect/particle_effect/vapour/master/process()
+	volume -= decay_factor * LAZYLEN(newvapes)
 	var/turf/t_loc = get_turf(src)
 	if(!t_loc)
 		return
-	if(volume <= 0)
-		for(var/I in newvapes)
+	if(volume <= 40 && prob(33))//if it can't spread any more
+		for(var/I in newvapes)//killing vapour
 			var/obj/effect/particle_effect/vapour/V = I
 			V.kill_vapour()
 		kill_vapour()
-	volume -= 2 * LAZYLEN(newvapes)
+
+	for(var/I in newvapes)//scrubbing
+		var/obj/effect/particle_effect/vapour/V = I
+		var/turf/T = get_turf(V)
+		if(!T)
+			return
+	..()
 
 /obj/effect/particle_effect/vapour
 	name = "vapour"
@@ -34,7 +45,6 @@
 	animate_movement = 0
 	var/datum/reagent/reagent_type//much simpler than having it actually store and transfer
 	var/obj/effect/particle_effect/vapour/master/VM
-	var/spread_delay = 10
 
 /obj/effect/particle_effect/vapour/Initialize()
 	. = ..()
@@ -58,27 +68,43 @@
 	if(isspaceturf(t_loc) || isnull(reagent_type) || isnull(VM))
 		kill_vapour()
 
+	if(VM.volume <= 0)//extra check in case the first one fails
+		kill_vapour()
+
+	addtimer(CALLBACK(src, .proc/spread_vapour), VM.spread_delay)
+
 	if(color != reagent_type.color)
 		add_atom_colour(reagent_type.color, FIXED_COLOUR_PRIORITY)
 
-	addtimer(CALLBACK(src, .proc/spread_vapour), spread_delay)
 
 	for(var/mob/living/L in range(0,src))
 		vape_mob(L)
 		VM.volume -= 10
 
 	reagent_type.reaction_turf(t_loc, rand(1, 5))
+	var/obj/machinery/portable_atmospherics/scrubber/PS = locate() in t_loc.contents
+	if(PS && PS.on && !PS.holding)
+		VM.volume -= PS.volume_rate * 0.5
+		kill_vapour()
+
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/S = locate() in view(t_loc, 3)//max range is 3x3 for a unary scrubber
+	if(S && S.on && !S.welded && S.is_operational())
+		if(S.scrubbing == FALSE || S.widenet)//if either panic siphoning or set to contaminated mode /rather than offer you the i
+			VM.volume -= S.volume_rate * 0.5
+			kill_vapour()
 
 	CHECK_TICK
 
 /obj/effect/particle_effect/vapour/proc/spread_vapour()
 	var/turf/t_loc = get_turf(src)
 	var/clear = TRUE
+	var/supply = 0
 	if(!t_loc)
 		return
 
 	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
-		if(isspaceturf(T))
+		if(isspaceturf(T))//space will drain volume
+			VM.volume -= 100
 			continue
 
 		for(var/I in T)
@@ -88,9 +114,12 @@
 					clear = TRUE
 				if(foundvape && foundvape.reagent_type == reagent_type)
 					clear = FALSE
+					supply++
 					break
 			else
 				clear = TRUE
+		if(supply <= 0 && src != VM)//prevents master from dying instantly
+			kill_vapour()//no connecting tiles of same type
 		if(clear)
 			if(VM.volume > 40)
 				var/obj/effect/particle_effect/vapour/V = new(T)

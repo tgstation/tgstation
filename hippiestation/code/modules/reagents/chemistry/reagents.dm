@@ -9,6 +9,7 @@
 	return TRUE
 
 /datum/reagent/proc/handle_state_change(turf/T, volume, atom)
+	var/touch_msg
 	var/list/holder_blacklist_typecache = list(/obj/effect/particle_effect/water, /obj/effect/decal/cleanable, /mob/living)//blacklisted to prevent spam or other unforeseen consequences
 	holder_blacklist_typecache = typecacheof(holder_blacklist_typecache)
 	if(!istype(T))
@@ -23,6 +24,12 @@
 	if(atom)
 		if(is_type_in_typecache(atom, holder_blacklist_typecache))
 			return
+		if(istype(atom, /obj/item))
+			var/obj/item/I = atom
+			touch_msg = I.fingerprintslast
+			if(touch_msg)
+				touch_msg = get_mob_by_key(touch_msg)
+				touch_msg = "[ADMIN_LOOKUPFLW(touch_msg)]"
 
 //vapour
 	var/list/gas_reagent_blacklist = list("plasma", "oxygen", "nitrogen")//blacklisted paradoxical reagents such as plasma gas vapour
@@ -39,6 +46,7 @@
 				var/obj/effect/particle_effect/vapour/master/V = new(O)
 				V.volume = volume*50
 				V.reagent_type = src
+			log_game("Reagent vapour of type [src.name] was released at [COORD(T)] Last Fingerprint: [touch_msg] ")
 //liquid
 	var/list/chempile_reagent_blacklist = list("water", "lube", "bleach", "cleaner", "colorful_reagent", "condensedcapsaicin")//add stuff that doesn't make sense/is too op for turfchems
 	if(src.reagent_state == LIQUID)
