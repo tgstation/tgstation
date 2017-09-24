@@ -29,7 +29,7 @@
 				sound = 'hippiestation/sound/voice/scream_silicon.ogg'
 			if(is_species(user, /datum/species/lizard))
 				sound = 'hippiestation/sound/voice/scream_lizard.ogg'
-			if(is_species(user, get_all_of_type(/datum/species/skeleton)))
+			if(is_species(user, /datum/species/skeleton))
 				sound = 'hippiestation/sound/voice/scream_skeleton.ogg'
 			if (is_species(user, /datum/species/fly) || is_species(user, /datum/species/moth))
 				sound = 'hippiestation/sound/voice/scream_moth.ogg'
@@ -69,13 +69,13 @@
 		playsound(user.loc, coughsound, 50, 1, 5)
 		user.adjustOxyLoss(5)
 	. = ..()
-	
+
 /datum/emote/living/snap
 	key = "snap"
 	key_third_person = "snaps"
 	message = "snaps."
 	emote_type = EMOTE_AUDIBLE
-	
+
 /datum/emote/living/snap/run_emote(mob/living/user, params)
 	if(ishuman(user))
 		if(user.nextsoundemote >= world.time)
@@ -83,13 +83,13 @@
 		user.nextsoundemote = world.time + 7
 		playsound(user, 'hippiestation/sound/voice/snap.ogg', 50, 1, -1)
 	. = ..()
-	
+
 /datum/emote/living/snap2
 	key = "snap2"
 	key_third_person = "snaps twice"
 	message = "snaps twice."
 	emote_type = EMOTE_AUDIBLE
-	
+
 /datum/emote/living/snap2/run_emote(mob/living/user, params)
 	if(ishuman(user))
 		if(user.nextsoundemote >= world.time)
@@ -97,13 +97,13 @@
 		user.nextsoundemote = world.time + 7
 		playsound(user, 'hippiestation/sound/voice/snap2.ogg', 50, 1, -1)
 	. = ..()
-	
+
 /datum/emote/living/snap3
 	key = "snap3"
 	key_third_person = "snaps thrice"
 	message = "snaps thrice."
 	emote_type = EMOTE_AUDIBLE
-	
+
 /datum/emote/living/snap3/run_emote(mob/living/user, params)
 	if(ishuman(user))
 		if(user.nextsoundemote >= world.time)
