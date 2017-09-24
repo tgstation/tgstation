@@ -162,7 +162,7 @@ SUBSYSTEM_DEF(vote)
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)
-				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>")
+				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait [DisplayTimeText(next_allowed_time-world.time)] before a new vote can be started!</span>")
 				return 0
 
 		reset()
@@ -189,7 +189,7 @@ SUBSYSTEM_DEF(vote)
 		if(mode == "custom")
 			text += "\n[question]"
 		log_vote(text)
-		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
+		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [DisplayTimeText(config.vote_period)] to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 		for(var/c in GLOB.clients)
 			var/client/C = c
