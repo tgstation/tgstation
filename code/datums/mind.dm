@@ -586,8 +586,6 @@
 		if(src in SSticker.mode.abductors)
 			text += "<b>Abductor</b> | <a href='?src=\ref[src];abductor=clear'>human</a>"
 			text += " | <a href='?src=\ref[src];common=undress'>undress</a> | <a href='?src=\ref[src];abductor=equip'>equip</a>"
-		else
-			text += "<a href='?src=\ref[src];abductor=abductor'>abductor</a> | <b>human</b>"
 
 		if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_special))
 			text += " | Enabled in Prefs"
@@ -1234,13 +1232,6 @@
 			if("clear")
 				to_chat(usr, "Not implemented yet. Sorry!")
 				//SSticker.mode.update_abductor_icons_removed(src)
-			if("abductor")
-				if(!ishuman(current))
-					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
-					return
-				make_Abductor()
-				log_admin("[key_name(usr)] turned [current] into abductor.")
-				SSticker.mode.update_abductor_icons_added(src)
 			if("equip")
 				if(!ishuman(current))
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
@@ -1486,52 +1477,6 @@
 	take_uplink()
 	var/fail = 0
 	fail |= !SSticker.mode.equip_revolutionary(current)
-
-
-/datum/mind/proc/make_Abductor()
-	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
-	var/team = input("Abductor Team ?","Team ?") in list(1,2,3,4)
-	var/teleport = alert("Teleport to ship ?","Teleport","Yes","No")
-
-	if(!role || !team || !teleport)
-		return
-
-	if(!ishuman(current))
-		return
-
-	SSticker.mode.abductors |= src
-
-	var/datum/objective/experiment/O = new
-	O.owner = src
-	objectives += O
-
-	var/mob/living/carbon/human/H = current
-
-	H.set_species(/datum/species/abductor)
-	var/datum/species/abductor/S = H.dna.species
-
-	if(role == "Scientist")
-		S.scientist = TRUE
-	S.team = team
-
-	var/list/obj/effect/landmark/abductor/agent_landmarks = new
-	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
-	agent_landmarks.len = 4
-	scientist_landmarks.len = 4
-	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
-		if(istype(A, /obj/effect/landmark/abductor/agent))
-			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A, /obj/effect/landmark/abductor/scientist))
-			scientist_landmarks[text2num(A.team)] = A
-
-	var/obj/effect/landmark/L
-	if(teleport=="Yes")
-		switch(role)
-			if("Agent")
-				L = agent_landmarks[team]
-			if("Scientist")
-				L = scientist_landmarks[team]
-		H.forceMove(L.loc)
 
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
