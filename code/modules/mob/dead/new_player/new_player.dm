@@ -391,12 +391,7 @@
 
 
 /mob/dead/new_player/proc/LateChoices()
-	var/mills = world.time - SSticker.round_start_time // 1/10 of a second, not real milliseconds but whatever
-	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
-	var/mins = (mills % 36000) / 600
-	var/hours = mills / 36000
-
-	var/dat = "<div class='notice'>Round Duration: [round(hours)]h [round(mins)]m</div>"
+	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
 
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)

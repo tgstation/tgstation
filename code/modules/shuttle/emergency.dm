@@ -130,7 +130,7 @@
 		SSshuttle.emergency.setTimer(ENGINES_START_TIME)
 		var/system_error = emagged ? "SYSTEM ERROR:" : null
 		minor_announce("The emergency shuttle will launch in \
-			[TIME_LEFT] seconds", system_error, alert=TRUE)
+			[DisplayTimeText(TIME_LEFT)]", system_error, alert=TRUE)
 		. = TRUE
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
@@ -146,9 +146,9 @@
 	message_admins("[key_name_admin(user.client)] \
 	(<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) \
 	(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) \
-	has emagged the emergency shuttle [time] seconds before launch.", 0, 1)
+	has emagged the emergency shuttle [DisplayTimeText(time)] before launch.", 0, 1)
 	log_game("[key_name(user)] has emagged the emergency shuttle in \
-		[COORD(src)] [time] seconds before launch.")
+		[COORD(src)] [DisplayTimeText(time)] before launch.")
 	emagged = TRUE
 	var/datum/species/S = new
 	for(var/i in 1 to 10)
