@@ -17,3 +17,6 @@
 /datum/species/ipc/on_species_loss(mob/living/carbon/human/C)
 	C.draw_hippie_parts(TRUE)
 	. = ..()
+
+/datum/species/ipc/get_spans()
+	return SPAN_ROBOT
