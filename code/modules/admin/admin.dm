@@ -422,7 +422,7 @@
 
 	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
 	if(SERVER_TOOLS_PRESENT)
-		options += "Service Restart (Force restart DD)";
+		options += "Server Restart (Kill and restart DD)";
 
 	var/rebootconfirm
 	if(SSticker.admin_delay_notice)
