@@ -30323,8 +30323,8 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -67257,7 +67257,7 @@
 	pixel_x = -26
 	},
 /obj/structure/table/reinforced,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -108371,8 +108371,8 @@
 	amount = 50
 	},
 /obj/item/crowbar,
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
@@ -136697,7 +136697,7 @@ aae
 aae
 aae
 aaf
-dYc
+aBW
 aae
 aae
 aaa
@@ -136948,7 +136948,7 @@ aaa
 aaa
 aae
 aaf
-dYc
+aBW
 aae
 aae
 aaa
@@ -137474,7 +137474,7 @@ dZB
 eab
 ear
 aaa
-dYc
+aBW
 aaa
 aaa
 aaa
@@ -139530,7 +139530,7 @@ dZB
 eaf
 ear
 aaa
-dYc
+aBW
 aae
 aae
 aae
@@ -140544,7 +140544,7 @@ dVy
 dUl
 aaf
 aaf
-dYc
+aBW
 aaa
 dZB
 eag
@@ -140558,7 +140558,7 @@ dZB
 eag
 ear
 aaa
-dYc
+aBW
 aaa
 aaa
 aaa
@@ -141061,14 +141061,14 @@ aaf
 aae
 aae
 aae
-dYc
+aBW
 aae
 aaa
 aaa
 aaf
 aaa
 aaa
-dYc
+aBW
 aae
 aae
 aaf
@@ -141325,7 +141325,7 @@ aae
 aaf
 aae
 aae
-dYc
+aBW
 aaa
 aaa
 aaa
