@@ -46733,7 +46733,6 @@
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bMX" = (
-/obj/machinery/computer/security/wooden_tv,
 /obj/structure/table/wood,
 /obj/machinery/button/door{
 	id = "detectivewindows";
@@ -46747,15 +46746,16 @@
 	pixel_y = -26
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/device/flashlight/lamp,
+/obj/item/reagent_containers/food/drinks/flask/det,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bMY" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
 /obj/item/storage/secure/safe{
 	pixel_x = 32
 	},
-/obj/item/reagent_containers/food/drinks/flask/det,
+/obj/machinery/computer/security/wooden_tv,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bMZ" = (

@@ -13542,10 +13542,6 @@
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "azU" = (
-/obj/machinery/computer/security/wooden_tv{
-	pixel_x = 3;
-	pixel_y = 2
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -13556,6 +13552,11 @@
 	network = list("Prison");
 	pixel_y = 30
 	},
+/obj/item/device/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/restraints/handcuffs,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "azV" = (
@@ -13563,16 +13564,15 @@
 /obj/item/storage/secure/safe{
 	pixel_x = 32
 	},
-/obj/item/device/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/restraints/handcuffs,
 /obj/machinery/button/door{
 	id = "detective_shutters";
 	name = "detective's office shutters control";
 	pixel_y = 26;
 	req_access_txt = "4"
+	},
+/obj/machinery/computer/security/wooden_tv{
+	pixel_x = 3;
+	pixel_y = 2
 	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
