@@ -758,7 +758,7 @@ CHOCOLATE
     . = ..()
     var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
     new T(get_turf(src))
-    qdel(src)
+    return INITIALIZE_HINT_QDEL
 
 /obj/machinery/vending/snack/blue
 	icon_state = "snackblue"
@@ -870,8 +870,10 @@ SODA
 		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,
 		/obj/item/reagent_containers/food/drinks/soda_cans/starkist = 10,
 		/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 10,
-		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10
-		)
+		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
+		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
+		/obj/item/reagent_containers/glass/beaker/waterbottle = 10
+	)
 
 /obj/machinery/vending/cola/random
 	name = "\improper Random Drinkies"
@@ -881,7 +883,7 @@ SODA
     . = ..()
     var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
     new T(get_turf(src))
-    qdel(src)
+    return INITIALIZE_HINT_QDEL
 
 /obj/machinery/vending/cola/blue
 	icon_state = "Cola_Machine"
