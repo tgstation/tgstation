@@ -3,7 +3,7 @@
 		return FALSE
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
-	playsound(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
+	playsound(A, 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
 	D.Knockdown(20)
 	add_logs(A, D, "leg sweeped")
