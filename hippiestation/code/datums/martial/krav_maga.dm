@@ -7,7 +7,7 @@
 	D.apply_damage(5, BRUTE)
 	D.Knockdown(20)
 	add_logs(A, D, "leg sweeped")
-return TRUE
+	return TRUE
 
 /datum/martial_art/krav_maga/quick_choke(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)//is actually lung punch
 	D.visible_message("<span class='warning'>[A] pounds [D] on the chest!</span>", \
