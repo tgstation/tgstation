@@ -11,9 +11,9 @@
 	if(dna.species.name == "skeleton")
 		to_chat(M, "<span class='warning'>There is no blood in a skeleton!</span>")
 		return FALSE
-	/*if(!ckey)
-		to_chat(M, "<span class='warning'>[src]'s blood is useless.</span>")
-		return FALSE*/
+	if(!ckey)
+		to_chat(M, "<span class='warning'>[src]'s blood is stale and useless.</span>")
+		return FALSE
 	if(V.draining)
 		return FALSE
 	V.handle_bloodsucking(src)
