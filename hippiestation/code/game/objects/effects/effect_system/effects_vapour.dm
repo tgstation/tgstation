@@ -33,6 +33,7 @@
 		var/turf/T = get_turf(V)
 		if(!T)
 			return
+
 	..()
 
 /obj/effect/particle_effect/vapour
@@ -45,9 +46,11 @@
 	animate_movement = 0
 	var/datum/reagent/reagent_type//much simpler than having it actually store and transfer
 	var/obj/effect/particle_effect/vapour/master/VM
+	var/reac_count = 0//running tally of the amount of inter gas reactions that have occured
 
 /obj/effect/particle_effect/vapour/Initialize()
 	. = ..()
+	create_reagents(50)//used just for in air reactions
 	START_PROCESSING(SSreagent_states, src)
 
 
@@ -71,7 +74,8 @@
 	if(VM.volume <= 0)//extra check in case the first one fails
 		kill_vapour()
 
-	addtimer(CALLBACK(src, .proc/spread_vapour), VM.spread_delay)
+	if(!QDELETED(src))
+		addtimer(CALLBACK(src, .proc/spread_vapour), VM.spread_delay)
 
 	if(color != reagent_type.color)
 		add_atom_colour(reagent_type.color, FIXED_COLOUR_PRIORITY)
@@ -112,6 +116,11 @@
 				var/obj/effect/particle_effect/vapour/foundvape = I
 				if(foundvape && foundvape.reagent_type != reagent_type)
 					clear = TRUE
+					if(prob(3) && reac_count < 1 && reagents)//BIG safety check
+						reagents.add_reagent(reagent_type.id, 5)
+						reagents.add_reagent(foundvape.reagent_type.id, 5)
+						reac_count++
+
 				if(foundvape && foundvape.reagent_type == reagent_type)
 					clear = FALSE
 					supply++
@@ -144,3 +153,6 @@
 	C.reagents.add_reagent(reagent_type.id, 1.5)//doesn't actually carry reagents but just adds them to mobs at a slow fixed rate
 	C.reagents.reaction(C, INGEST, 1.5)
 	return FALSE
+
+/obj/effect/particle_effect/vapour/ex_act()//just in case
+	return
