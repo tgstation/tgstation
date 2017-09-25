@@ -170,7 +170,7 @@
 			permutated.Add(A)
 		return FALSE
 	else
-		if(A && A.density && !ismob(A) && !(A.flags_1 & ON_BORDER_1)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
+		if(A && A.density && !ismob(A) && !(A.flags_1 & ON_BORDER_1) && !istype(A,/obj/machinery) && !istype(A,/obj/structure/)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
 			var/list/mobs_list = list()
 			var/list/machine_list = list()
 			for(var/mob/living/L in target_turf)
