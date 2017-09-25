@@ -191,7 +191,7 @@
 	channel_time = 20
 	power_cost = 250
 	whispered = TRUE
-	object_path = /obj/item/clockwork/replica_fabricator/preloaded
+	object_path = /obj/item/clockwork/replica_fabricator
 	creator_message = "<span class='brass'>You form a replica fabricator.</span>"
 	usage_tip = "Clockwork Walls cause nearby Tinkerer's Caches to generate components passively, making this a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_SCRIPT

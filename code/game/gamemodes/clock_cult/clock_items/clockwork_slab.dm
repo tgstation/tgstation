@@ -261,11 +261,6 @@
 			dat += "<font color=#BE8700><b>CV:</b></font> Construction Value. All clockwork structures, floors, and walls increase this number.<br>"
 			dat += "<font color=#BE8700><b>Vitality:</b></font> Used for healing effects, produced by Ratvarian spear attacks and Vitality Matrices.<br>"
 			dat += "<font color=#BE8700><b>Geis:</b></font> An important scripture used to make normal crew and robots into Servants of Ratvar.<br>"
-			dat += "<font color=#6E001A><b>[get_component_icon(BELLIGERENT_EYE)]BE:</b></font> Belligerent Eye, a component type used in offensive scriptures.<br>"
-			dat += "<font color=#1E8CE1><b>[get_component_icon(VANGUARD_COGWHEEL)]VC:</b></font> Vanguard Cogwheel, a component type used in defensive scriptures.<br>"
-			dat += "<font color=#AF0AAF><b>[get_component_icon(GEIS_CAPACITOR)]GC:</b></font> Geis Capacitor, a component type used in mind-related scriptures.<br>"
-			dat += "<font color=#5A6068><b>[get_component_icon(REPLICANT_ALLOY)]RA:</b></font> Replicant Alloy, a component type used in construction scriptures.<br>"
-			dat += "<font color=#DAAA18><b>[get_component_icon(HIEROPHANT_ANSIBLE)]HA:</b></font> Hierophant Ansible, a component type used in energy-related scriptures.<br>"
 			dat += "<font color=#BE8700><b>Ark:</b></font> The cult's win condition, a huge structure that needs to be defended.<br><br>"
 			dat += "<font color=#BE8700 size=3>Items</font><br>"
 			dat += "<font color=#BE8700><b>Slab:</b></font> A clockwork slab, a Servant's most important tool. You're holding one! Keep it safe and hidden.<br>"
@@ -292,11 +287,6 @@
 		if("Components")
 			dat += "<font color=#BE8700 size=3>Components & Their Uses</font><br><br>"
 			dat += "<b>Components</b> are your primary resource as a Servant. There are five types of component, with each one being used in different roles:<br><br>"
-			dat += "<font color=#6E001A>[get_component_icon(BELLIGERENT_EYE)]BE</font> Belligerent Eyes are aggressive and judgemental, and are used in offensive scripture;<br>"
-			dat += "<font color=#1E8CE1>[get_component_icon(VANGUARD_COGWHEEL)]VC</font> Vanguard Cogwheels are defensive and repairing, and are used in defensive scripture;<br>"
-			dat += "<font color=#AF0AAF>[get_component_icon(GEIS_CAPACITOR)]GC</font> Geis Capacitors are for conversion and control, and are used in mind-related scripture;<br>"
-			dat += "<font color=#5A6068>[get_component_icon(REPLICANT_ALLOY)]RA</font> Replicant Alloy is a strong, malleable metal and is used for construction and creation;<br>"
-			dat += "<font color=#DAAA18>[get_component_icon(HIEROPHANT_ANSIBLE)]HA</font> Hierophant Ansibles are for transmission and power, and are used in power and teleportation scripture<br><br>"
 			dat += "Although this is a good rule of thumb, their effects become much more nuanced when used together. For instance, a turret might have both belligerent eyes and \
 			vanguard cogwheels as construction requirements, because it defends its allies by harming its enemies.<br><br>"
 			dat += "Components' primary use is fueling <b>scripture</b> (covered in its own section), and they can be created through various ways. This clockwork slab, for instance, \

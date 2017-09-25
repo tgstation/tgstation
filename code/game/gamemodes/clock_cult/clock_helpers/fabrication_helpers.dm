@@ -9,7 +9,7 @@
 	return FALSE
 
 /atom/proc/consume_visual(obj/item/clockwork/replica_fabricator/fabricator, power_amount)
-	if(fabricator.can_use_power(power_amount))
+	if(get_clockwork_power(power_amount))
 		var/obj/effect/temp_visual/ratvar/beam/itemconsume/B = new /obj/effect/temp_visual/ratvar/beam/itemconsume(get_turf(src))
 		B.pixel_x = pixel_x
 		B.pixel_y = pixel_y
@@ -240,7 +240,7 @@
 			extra_checks = CALLBACK(fabricator, /obj/item/clockwork/replica_fabricator.proc/fabricator_repair_checks, repair_values, src, user, TRUE)))
 			break
 		obj_integrity = Clamp(obj_integrity + repair_values["healing_for_cycle"], 0, max_integrity)
-		fabricator.modify_stored_power(-repair_values["power_required"])
+		adjust_clockwork_power(-repair_values["power_required"])
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
 	if(fabricator)
@@ -262,7 +262,7 @@
 			extra_checks = CALLBACK(fabricator, /obj/item/clockwork/replica_fabricator.proc/fabricator_repair_checks, repair_values, src, user, TRUE)))
 			break
 		fabricator_heal_tick(repair_values["healing_for_cycle"])
-		fabricator.modify_stored_power(-repair_values["power_required"])
+		adjust_clockwork_power(-repair_values["power_required"])
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
 	if(fabricator)
