@@ -6,7 +6,7 @@ GLOBAL_PROTECT(security_mode)
 
 	SetupExternalRSC()
 
-	GLOB.config_error_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	GLOB.config_error_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
 	CheckSecurityMode()
 
@@ -88,10 +88,12 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.world_runtime_log = file("[GLOB.log_directory]/runtime.log")
 	GLOB.world_qdel_log = file("[GLOB.log_directory]/qdel.log")
 	GLOB.world_href_log = file("[GLOB.log_directory]/hrefs.html")
+	GLOB.world_pda_log = file("[GLOB.log_directory]/pda.log")
 	GLOB.sql_error_log = file("[GLOB.log_directory]/sql.log")
 	WRITE_FILE(GLOB.world_game_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_attack_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_runtime_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
+	WRITE_FILE(GLOB.world_pda_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
@@ -106,7 +108,7 @@ GLOBAL_PROTECT(security_mode)
 		GLOB.security_mode = SECURITY_ULTRASAFE
 		warning("/tg/station 13 is not supported in ultrasafe security mode. Everything will break!")
 		return
-	
+
 	//try to shell
 	if(shell("echo \"The world is running in trusted mode\"") != null)
 		GLOB.security_mode = SECURITY_TRUSTED

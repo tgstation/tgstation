@@ -134,7 +134,8 @@ SUBSYSTEM_DEF(ticker)
 
 			if(!mode.explosion_in_progress && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
-				toggle_ooc(1) // Turn it on
+				toggle_ooc(TRUE) // Turn it on
+				toggle_dooc(TRUE)
 				declare_completion(force_ending)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
@@ -202,7 +203,7 @@ SUBSYSTEM_DEF(ticker)
 		mode.announce()
 
 	if(!config.ooc_during_round)
-		toggle_ooc(0) // Turn it off
+		toggle_ooc(FALSE) // Turn it off
 
 	CHECK_TICK
 	GLOB.start_landmarks_list = shuffle(GLOB.start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
@@ -500,7 +501,7 @@ SUBSYSTEM_DEF(ticker)
 	end_state.count()
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 
-	to_chat(world, "<BR>[GLOB.TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
+	to_chat(world, "<BR>[GLOB.TAB]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>")
 	to_chat(world, "<BR>[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
 	if(mode.station_was_nuked)
 		SSticker.news_report = STATION_DESTROYED_NUKE

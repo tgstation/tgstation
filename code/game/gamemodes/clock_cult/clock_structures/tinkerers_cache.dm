@@ -105,7 +105,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(linkedwall)
-			to_chat(user, "<span class='brass'>It is linked to a Clockwork Wall and will generate a component every <b>[round(get_production_time() * 0.1, 0.1)]</b> seconds!</span>")
+			to_chat(user, "<span class='brass'>It is linked to a Clockwork Wall and will generate a component every <b>[DisplayTimeText(get_production_time())]</b>!</span>")
 		else
 			to_chat(user, "<span class='alloy'>It is unlinked! Construct a Clockwork Wall nearby to generate components!</span>")
 		to_chat(user, "<b>Stored components:</b>")
