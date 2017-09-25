@@ -123,7 +123,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
 		return
 	if(world.time < wait)
-		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>")
+		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [DisplayTimeText(wait - world.time)].</span>")
 		return
 
 	for(var/obj/machinery/gateway/G in linked)

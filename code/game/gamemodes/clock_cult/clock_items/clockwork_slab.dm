@@ -195,7 +195,6 @@
 			textlist += "HONOR RATVAR "
 		textlist += "</b></font>"
 	else
-
 		textlist = list("<font color=#BE8700 size=3><b><center>[text2ratvar("Purge all untruths and honor Engine.")]</center></b></font><br>\
 		\
 		These pages serve as the archives of Ratvar, the Clockwork Justiciar. This section of your slab has information on being as a Servant, advice for what to do next, and \

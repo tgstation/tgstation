@@ -121,7 +121,7 @@
 	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes(living_crew.len)
 	var/list/datum/game_mode/usable_modes = list()
 	for(var/datum/game_mode/G in runnable_modes)
-		if(G.reroll_friendly && living_crew >= G.required_players)
+		if(G.reroll_friendly && living_crew.len >= G.required_players)
 			usable_modes += G
 		else
 			qdel(G)
@@ -160,7 +160,7 @@
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
 
-	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
+	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=\ref[usr]'>end the round now</A>.")
 
 	. = 1
 	sleep(rand(600,1800))

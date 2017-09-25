@@ -125,7 +125,7 @@
 
 
 /turf/open/chasm/straight_down/Initialize()
-	..()
+	. = ..()
 	drop_x = x
 	drop_y = y
 	drop_z = z - 1
