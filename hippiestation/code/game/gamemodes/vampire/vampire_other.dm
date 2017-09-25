@@ -19,7 +19,7 @@
 	. = ..()
 	if(mind)
 		var/datum/antagonist/vampire/L = mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
-		if(stat == DEAD && L && !L.get_ability(/datum/vampire_passive/full))
+		if(on_fire && stat == DEAD && L && !L.get_ability(/datum/vampire_passive/full))
 			dust()
 
 /obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
