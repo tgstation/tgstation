@@ -175,9 +175,6 @@
 	var/blood = 0
 	var/old_bloodtotal = 0 //used to see if we increased our blood total
 	var/old_bloodusable = 0 //used to see if we increased our blood usable
-	if(!H.ckey)
-		to_chat(O, "<span class='warning'>Their blood is stale and flat.</span>")
-		return FALSE
 	log_attack("[O] ([O.ckey]) bit [H] ([H.ckey]) in the neck")
 	O.visible_message("<span class='danger'>[O] grabs [H]'s neck harshly and sinks in their fangs!</span>", "<span class='danger'>You sink your fangs into [H] and begin to drain their blood.</span>", "<span class='notice'>You hear a soft puncture and a wet sucking noise.</span>")
 	if(!iscarbon(owner))
