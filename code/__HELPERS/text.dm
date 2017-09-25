@@ -436,7 +436,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	// Escape  single characters that will be used
 
-	t = replacetext(t, "!", "$10")
+	t = replacetext(t, "!", "$a")
 
 	// Parse hr and small
 
@@ -522,7 +522,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	// Restore the single characters used
 
-	t = replacetext(t, "$10", "!")
+	t = replacetext(t, "$a", "!")
 
 	// Redo the escaping
 
