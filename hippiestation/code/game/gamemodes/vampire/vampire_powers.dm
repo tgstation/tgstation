@@ -1,5 +1,4 @@
 /obj/effect/proc_holder/spell
-	human_req = TRUE
 	var/gain_desc
 	var/blood_used = 0
 	var/vamp_req = FALSE

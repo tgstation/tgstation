@@ -12318,19 +12318,19 @@
 /area/abductor_ship)
 "Gh" = (
 /obj/machinery/abductor/experiment{
-	team = 1
+	team_number = 1
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gi" = (
 /obj/machinery/abductor/console{
-	team = 1
+	team_number = 1
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gj" = (
 /obj/machinery/abductor/pad{
-	team = 1
+	team_number = 1
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12346,19 +12346,19 @@
 /area/abductor_ship)
 "Gm" = (
 /obj/machinery/abductor/experiment{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gn" = (
 /obj/machinery/abductor/console{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Go" = (
 /obj/machinery/abductor/pad{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12400,7 +12400,7 @@
 /area/abductor_ship)
 "Gw" = (
 /obj/machinery/computer/camera_advanced/abductor{
-	team = 1
+	team_number = 1
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12418,7 +12418,7 @@
 /area/abductor_ship)
 "GA" = (
 /obj/machinery/computer/camera_advanced/abductor{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12479,13 +12479,13 @@
 /area/abductor_ship)
 "GM" = (
 /obj/effect/landmark/abductor/scientist{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "GN" = (
 /obj/effect/landmark/abductor/agent{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12629,49 +12629,49 @@
 /area/space)
 "Hn" = (
 /obj/machinery/abductor/experiment{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Ho" = (
 /obj/machinery/abductor/console{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hp" = (
 /obj/machinery/abductor/pad{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hq" = (
 /obj/machinery/abductor/experiment{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hr" = (
 /obj/machinery/abductor/console{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hs" = (
 /obj/machinery/abductor/pad{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Ht" = (
 /obj/machinery/computer/camera_advanced/abductor{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hu" = (
 /obj/machinery/computer/camera_advanced/abductor{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12693,25 +12693,25 @@
 /area/centcom/evac)
 "Hy" = (
 /obj/effect/landmark/abductor/scientist{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hz" = (
 /obj/effect/landmark/abductor/agent{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "HA" = (
 /obj/effect/landmark/abductor/scientist{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "HB" = (
 /obj/effect/landmark/abductor/agent{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
