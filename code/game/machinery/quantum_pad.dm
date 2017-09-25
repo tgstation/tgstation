@@ -79,7 +79,7 @@
 			return
 
 	if(world.time < last_teleport + teleport_cooldown)
-		to_chat(user, "<span class='warning'>[src] is recharging power. Please wait [round((last_teleport + teleport_cooldown - world.time) / 10)] seconds.</span>")
+		to_chat(user, "<span class='warning'>[src] is recharging power. Please wait [DisplayTimeText(last_teleport + teleport_cooldown - world.time)].</span>")
 		return
 
 	if(teleporting)

@@ -318,23 +318,10 @@
 		if(servants > SCRIPT_SERVANT_REQ)
 			servants -= SCRIPT_SERVANT_REQ
 			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
-		var/production_text_addon = ""
 		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-			production_text_addon = ", which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
-		production_time = production_time/600
-		var/list/production_text
-		if(round(production_time))
-			production_text = list("<b>[round(production_time)] minute\s")
-		if(production_time != round(production_time))
-			production_time -= round(production_time)
-			production_time *= 60
-			if(!LAZYLEN(production_text))
-				production_text = list("<b>[round(production_time, 1)] second\s")
-			else
-				production_text += " and [round(production_time, 1)] second\s"
-		production_text += "</b>"
-		production_text += production_text_addon
-		production_text = production_text.Join()
+			production_time = "<b>[DisplayTimeText(production_time)]</b>, which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
+		else
+			production_time = "<b>[DisplayTimeText(production_time)]</b>"
 
 		textlist = list("<font color=#BE8700 size=3><b><center>[text2ratvar("Purge all untruths and honor Engine.")]</center></b></font><br>\
 		\
@@ -439,23 +426,10 @@
 			if(servants > SCRIPT_SERVANT_REQ)
 				servants -= SCRIPT_SERVANT_REQ
 				production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
-			var/production_text_addon = ""
 			if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-				production_text_addon = ", which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
-			production_time = production_time/600
-			var/list/production_text
-			if(round(production_time))
-				production_text = list("<b>[round(production_time)] minute\s")
-			if(production_time != round(production_time))
-				production_time -= round(production_time)
-				production_time *= 60
-				if(!LAZYLEN(production_text))
-					production_text = list("<b>[round(production_time, 1)] second\s")
-				else
-					production_text += " and [round(production_time, 1)] second\s"
-			production_text += "</b>"
-			production_text += production_text_addon
-			production_text = production_text.Join()
+				production_time = "<b>[DisplayTimeText(production_time)]</b>, which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
+			else
+				production_time = "<b>[DisplayTimeText(production_time)]</b>"
 			dat += "<font color=#BE8700 size=3>Components & Their Uses</font><br><br>"
 			dat += "<b>Components</b> are your primary resource as a Servant. There are five types of component, with each one being used in different roles:<br><br>"
 			dat += "<font color=#6E001A>[get_component_icon(BELLIGERENT_EYE)]BE</font> Belligerent Eyes are aggressive and judgemental, and are used in offensive scripture;<br>"
@@ -466,7 +440,7 @@
 			dat += "Although this is a good rule of thumb, their effects become much more nuanced when used together. For instance, a turret might have both belligerent eyes and \
 			vanguard cogwheels as construction requirements, because it defends its allies by harming its enemies.<br><br>"
 			dat += "Components' primary use is fueling <b>scripture</b> (covered in its own section), and they can be created through various ways. This clockwork slab, for instance, \
-			will make a random component of every type - or a specific one, if you choose a target component from the interface - every <b>[production_text]</b>. This number will increase \
+			will make a random component of every type - or a specific one, if you choose a target component from the interface - every [production_time]. This number will increase \
 			as the amount of Servants in the covenant increase; additionally, slabs can only produce components when held by a Servant, and holding more than one slab will cause both \
 			of them to halt progress until one of them is removed from their person.<br><br>"
 			dat += "Your slab has an internal storage of components, but it isn't meant to be the main one. Instead, there's a <b>global storage</b> of components that can be \
