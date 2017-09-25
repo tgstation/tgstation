@@ -46,9 +46,13 @@
 			equip_to_slot_or_del(new /obj/item/clothing/head/beanie/green(src), slot_head)
 		if(444)
 			death()
+		if(619)
+			equip_to_slot_or_del(new /obj/item/clothing/mask/luchador/tecnicos(src), slot_wear_mask)
 		if(666)
 			fire_stacks = 6
 			IgniteMob()
 		if(777)
 			put_in_hands_or_del(new /obj/item/storage/bag/money(src))
 			put_in_hands_or_del(new /obj/item/storage/bag/money(src))
+		if(999)
+			equip_to_slot_or_del(new /obj/item/clothing/head/soft/emt(src), slot_head)
