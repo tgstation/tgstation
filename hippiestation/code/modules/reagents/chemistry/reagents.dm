@@ -32,7 +32,7 @@
 				touch_msg = "[ADMIN_LOOKUPFLW(touch_msg)]"
 
 //vapour
-	var/list/gas_reagent_blacklist = list("plasma", "oxygen", "nitrogen")//blacklisted paradoxical reagents such as plasma gas vapour
+	var/list/gas_reagent_blacklist = list("plasma", "oxygen", "nitrogen", "nitrous_oxide")//blacklisted paradoxical reagents such as plasma gas vapour
 	if(src.reagent_state == GAS)
 		if(src.id in gas_reagent_blacklist)
 			return
@@ -48,7 +48,7 @@
 				V.reagent_type = src
 			log_game("Reagent vapour of type [src.name] was released at [COORD(T)] Last Fingerprint: [touch_msg] ")
 //liquid
-	var/list/chempile_reagent_blacklist = list("water", "lube", "bleach", "cleaner", "colorful_reagent", "condensedcapsaicin")//add stuff that doesn't make sense/is too op for turfchems
+	var/list/chempile_reagent_blacklist = list("water", "lube", "bleach", "cleaner", "colorful_reagent", "condensedcapsaicin", "radium", "thermite")//add stuff that doesn't make sense/is too op for turfchems
 	if(src.reagent_state == LIQUID)
 		if(src.id in chempile_reagent_blacklist)
 			return
@@ -66,7 +66,10 @@
 		var/mixcolor = mix_color_from_reagents(C.reagents.reagent_list)
 		C.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY)
 //solid
+	var/list/solid_reagent_blacklist = list("radium")
 	if(src.reagent_state == SOLID)
+		if(src.id in solid_reagent_blacklist)
+			return
 		for(var/obj/item/reagent_containers/food/snacks/solid_reagent/SR in T.contents)
 			if(SR.reagent_type == src.id && SR.reagents.total_volume < 200)
 				SR.reagents.add_reagent("[src.id]", volume)

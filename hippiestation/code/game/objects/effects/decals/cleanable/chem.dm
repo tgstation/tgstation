@@ -7,6 +7,7 @@ GLOBAL_LIST_EMPTY(chempiles)
 	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/chempile/examine(mob/user)
+	..()
 	if(user.research_scanner || isobserver(user))
 		if(LAZYLEN(reagents.reagent_list)) //find a reagent list if there is and check if it has entries
 			to_chat(user, "<span class='notice'>Chemical contents:</span>")
@@ -44,3 +45,15 @@ GLOBAL_LIST_EMPTY(chempiles)
 		reagents.chem_temp += 30
 		reagents.handle_reactions()
 		CHECK_TICK
+
+/obj/effect/decal/cleanable/chempile/attackby(obj/item/I, mob/user, params)
+	var/hotness = I.is_hot()
+	if(hotness)
+		var/added_heat = (hotness / 100) //ishot returns a temperature
+		if(reagents)
+			if(reagents.chem_temp < hotness) //can't be heated to be hotter than the source
+				reagents.chem_temp += added_heat
+				to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
+				reagents.handle_reactions()
+			else
+				to_chat(user, "<span class='warning'>[src] is already hotter than [I]!</span>")
