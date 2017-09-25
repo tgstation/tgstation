@@ -170,16 +170,15 @@
 			permutated.Add(A)
 		return FALSE
 	else
-		if(A && A.density && !ismob(A) && !(A.flags_1 & ON_BORDER_1) && !istype(A,/obj/machinery) && !istype(A,/obj/structure/)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
+		if(A && A.density && !ismob(A) && !istype(A,/obj/machinery) && !istype(A,/obj/structure/) && !(A.flags_1 & ON_BORDER_1)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
 			var/list/mobs_list = list()
 			var/list/machine_list = list()
 			for(var/mob/living/L in target_turf)
 				mobs_list += L
 			for(var/obj/machinery/m in target_turf)
-				if(istype(m,/obj/machinery/power/emitter/energycannon)==FALSE) // Check for energy cannon spam from CTF, shouldn't really need to process them getting hit.
-					machine_list += m
-			if(mobs_list.len | machine_list.len)
-				if(mobs_list.Find(original) | machine_list.Find(original))
+				machine_list += m
+			if(mobs_list.len || machine_list.len)
+				if(mobs_list.Find(original) || machine_list.Find(original))
 					if(!prehit(original))
 						return FALSE
 					original.bullet_act(src, def_zone)
