@@ -544,11 +544,14 @@
 	if(!force_moving)
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
+/mob/living/proc/can_resist()
+	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(src) || next_move > world.time || incapacitated(ignore_restraints = 1))
+	if(!can_resist())
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
