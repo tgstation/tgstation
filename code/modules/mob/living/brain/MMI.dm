@@ -204,7 +204,7 @@
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
 	origin_tech = "biotech=4;programming=4;syndicate=2"
 
-/obj/item/device/mmi/syndie/New()
-	..()
+/obj/item/device/mmi/syndie/Initialize()
+	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	radio.on = 0
