@@ -178,20 +178,16 @@
 			for(var/obj/machinery/m in target_turf)
 				machine_list += m
 			if(mobs_list.len || machine_list.len)
+				var/atom/movable/selected_target
 				if(mobs_list.Find(original) || machine_list.Find(original))
-					if(!prehit(original))
-						return FALSE
-					original.bullet_act(src, def_zone)
+					selected_target = original
 				else if(mobs_list.len)
-					var/mob/living/picked_mob = pick(mobs_list)
-					if(!prehit(picked_mob))
-						return FALSE
-					picked_mob.bullet_act(src, def_zone)
+					selected_target = pick(mobs_list)
 				else
-					var/obj/machinery/picked_machine = pick(machine_list)
-					if(!prehit(picked_machine))
-						return FALSE
-					picked_machine.bullet_act(src, def_zone)
+					selected_target = pick(machine_list)
+				if(!prehit(selected_target))
+					return FALSE
+				selected_target.bullet_act(src, def_zone)
 	qdel(src)
 	return TRUE
 
