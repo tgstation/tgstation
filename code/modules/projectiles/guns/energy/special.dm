@@ -115,7 +115,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=4000)
 	origin_tech = "combat=4;magnets=4;syndicate=2"
-	suppressed = FALSE
+	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
 
