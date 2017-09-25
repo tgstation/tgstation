@@ -26,7 +26,7 @@
 			qdel(src)
 			return 0
 		if(target.mind in SSticker.mode.revolutionaries)
-			SSticker.mode.remove_revolutionary(target.mind)
+			SSticker.mode.remove_revolutionary(target.mind, FALSE, user)
 		if(!silent)
 			if(target.mind in SSticker.mode.cult)
 				to_chat(target, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")

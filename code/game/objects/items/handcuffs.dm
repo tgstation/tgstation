@@ -253,7 +253,7 @@
 	var/trap_damage = 20
 
 /obj/item/restraints/legcuffs/beartrap/Initialize()
-	..()
+	. = ..()
 	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/user)

@@ -18,7 +18,7 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
-	
+
 	if(!CheckAdminHref(href, href_list))
 		return
 
@@ -168,6 +168,8 @@
 					log_admin("[key_name(usr)] failed to create a revenant.")
 			if("shadowling")
 				hippie_makeShadowling(src)
+			if("vampire")
+				hippie_makeVampire(src)
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))

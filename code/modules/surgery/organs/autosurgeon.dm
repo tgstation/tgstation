@@ -38,6 +38,9 @@
 	if(!uses)
 		desc = "[initial(desc)] Looks like it's been used up."
 
+/obj/item/device/autosurgeon/attack_self_tk(mob/user)
+	return //stops TK fuckery
+
 /obj/item/device/autosurgeon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, organ_type))
 		if(storedorgan)

@@ -6,8 +6,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.90
 	strip_delay = 10
-	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
-	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 	var/used = FALSE
 
 /obj/item/clothing/mask/hippie/tape/attack_hand(mob/user as mob)
@@ -48,6 +46,8 @@
 	desc = "It's duct tape. You can use it to tape something... or someone."
 	name = "duct tape"
 	icon = 'hippiestation/icons/obj/bureaucracy.dmi'
+	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 	icon_state = "tape"
 	item_state = "tape"
 	amount = 15
@@ -66,6 +66,17 @@
 	if(!proximity_flag) return //It should only work on adjacent target.
 	if(istype(W, /obj/item/storage/bag/tray))
 		var/obj/item/shield/trayshield/new_item = new(user.loc)
+		to_chat(user, "<span class='notice'>You strap [src] to \the [W].</span>")
+		var/replace = (user.get_inactive_held_item()==W)
+		qdel(W)
+		if(src.use(3) == 0)
+			user.drop_item()
+			qdel(src)
+		if(replace)
+			user.put_in_hands(new_item)
+		playsound(user, 'hippiestation/sound/misc/ducttape1.ogg', 50, 1)
+	if(istype(W, /obj/item/shard) && !istype(W, /obj/item/shard/shank))
+		var/obj/item/shard/shank/new_item = new(user.loc)
 		to_chat(user, "<span class='notice'>You strap [src] to \the [W].</span>")
 		var/replace = (user.get_inactive_held_item()==W)
 		qdel(W)

@@ -77,7 +77,7 @@
 	icon_state = "hydroponics"
 	item_state = "g_suit"
 	item_color = "hydroponics"
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 
 /obj/item/clothing/under/rank/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."

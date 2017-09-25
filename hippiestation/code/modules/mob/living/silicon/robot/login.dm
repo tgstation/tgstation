@@ -3,3 +3,4 @@
 	if(mind)
 		SSticker.mode.remove_thrall(mind,0)
 		SSticker.mode.remove_shadowling(mind)
+		remove_vampire(src)

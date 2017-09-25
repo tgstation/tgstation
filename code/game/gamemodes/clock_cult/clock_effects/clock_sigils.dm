@@ -137,6 +137,7 @@
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return
+	post_channel(L)
 	if(is_eligible_servant(L))
 		to_chat(L, "<span class='heavy_brass'>\"You belong to me now.\"</span>")
 	if(add_servant_of_ratvar(L))

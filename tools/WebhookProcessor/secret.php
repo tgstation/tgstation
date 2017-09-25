@@ -8,6 +8,7 @@
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
 //Api key for pushing changelogs.
+//This requires the public_repo (or repo for private repositories) and read:org permissions
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
 
 //Used to prevent potential RCEs
@@ -47,3 +48,6 @@ $validation = "org";
 
 //how many merged prs must they have under the rules above to have their pr announced to the game servers.
 $validation_count = 1;
+
+//enforce changelogs on PRs
+$require_changelogs = false;

@@ -285,7 +285,7 @@
 	var/list/mutations = list()
 
 /obj/structure/spacevine/Initialize()
-	..()
+	. = ..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/spacevine/examine(mob/user)

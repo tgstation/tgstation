@@ -73,7 +73,7 @@
 	var/datum/radio_frequency/radio_connection
 
 	var/list/TLV = list( // Breathable air.
-		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.80, ONE_ATMOSPHERE*  0.90, ONE_ATMOSPHERE * 1.10, ONE_ATMOSPHERE * 1.20), // kPa
+		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature"	= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
 		"o2"			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		"n2"			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
@@ -101,7 +101,7 @@
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
 	TLV = list(
-		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.80, ONE_ATMOSPHERE*  0.90, ONE_ATMOSPHERE * 1.10, ONE_ATMOSPHERE * 1.20), // kPa
+		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature"	= new/datum/tlv(200,210,273.15,283.15), // K
 		"o2"			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		"n2"			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
@@ -158,7 +158,7 @@
 	return ..()
 
 /obj/machinery/airalarm/Initialize(mapload)
-	..()
+	. = ..()
 	set_frequency(frequency)
 
 /obj/machinery/airalarm/ui_status(mob/user)
@@ -415,7 +415,6 @@
 	signal.data["sigtype"] = "command"
 
 	radio_connection.post_signal(src, signal, GLOB.RADIO_FROM_AIRALARM)
-//			to_chat(world, text("Signal [] Broadcasted to []", command, target))
 
 	return 1
 
@@ -707,6 +706,16 @@
 					buildstage = 1
 					update_icon()
 					qdel(W)
+				return
+
+			if(istype(W, /obj/item/device/electroadaptive_pseudocircuit))
+				var/obj/item/device/electroadaptive_pseudocircuit/P = W
+				if(!P.adapt_circuit(user, 25))
+					return
+				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+				"<span class='notice'>You adapt an air alarm circuit and slot it into the assembly.</span>")
+				buildstage = 1
+				update_icon()
 				return
 
 			if(istype(W, /obj/item/wrench))

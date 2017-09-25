@@ -64,16 +64,6 @@
 	cost = 10
 	surplus = 45
 
-/* Sports */
-/datum/uplink_item/badass/sports
-	name = "Sports bundle"
-	desc = "A hand-selected box of paraphernalia from one of the best sports. \
-			Currently available are hockey, wrestling, football, and bowling kits."
-	item = /obj/item/paper
-	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear)
-	cant_discount = TRUE
-
 /* Holo Parasites */
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
@@ -81,18 +71,7 @@
 	item = /obj/item/storage/box/syndie_kit/guardian
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/badass/sports/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/possible_items = list(
-								"/obj/item/storage/box/syndie_kit/wrestling",
-								"/obj/item/storage/box/syndie_kit/bowling",
-								"/obj/item/storage/box/syndie_kit/hockey",
-								"/obj/item/storage/box/syndie_kit/football"
-								)
-	if(possible_items.len)
-		var/obj/item/I = pick(possible_items)
-		return new I(loc)
-
+	
 /datum/uplink_item/nukeoffer/blastco
 	name = "Unlock the BlastCo(tm) Armory"
 	desc = "Enough gear to fully equip a team with explosive based weaponry."
@@ -176,3 +155,81 @@
 	item = /obj/item/grenade/spawnergrenade/cat
 	surplus = 30
 
+/datum/uplink_item/stealthy_tools/chameleon
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
+	player_minimum = 0
+	
+/datum/uplink_item/stealthy_tools/syndigaloshes
+	item = /obj/item/clothing/shoes/chameleon
+	cost = 2
+	player_minimum = 0
+	
+/datum/uplink_item/stealthy_tools/syndigaloshes/nuke
+	cost = 2
+	player_minimum = 0
+	
+/datum/uplink_item/stealthy_tools/mulligan
+	cost = 2
+	
+/datum/uplink_item/device_tools/syndietome
+	cost = 5
+	
+/datum/uplink_item/device_tools/binary
+	cost = 2
+	
+/datum/uplink_item/device_tools/singularity_beacon
+	cost = 8
+	
+/datum/uplink_item/device_tools/syndicate_bomb
+	cost = 10
+	
+/datum/uplink_item/device_tools/syndicate_detonator
+	cost = 1 //Nuke ops already spawn with one
+	
+/datum/uplink_item/device_tools/jammer
+	cost = 3
+	
+/datum/uplink_item/device_tools/codespeak_manual_deluxe
+	cost = 4
+	
+/datum/uplink_item/device_tools/autosurgeon
+	name = "Autosurgeon"
+	desc = "A surgery device that instantly implants you with whatever implant has been inserted in it. Infinite uses. Use a screwdriver to remove an implant from it."
+	item = /obj/item/device/autosurgeon
+	cost = 4
+	surplus = 60
+	
+/datum/uplink_item/implants/microbomb
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
+
+/datum/uplink_item/implants/macrobomb
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
+	
+/datum/uplink_item/dangerous/hockey
+	name = "Ka-nada Hockey Set"
+	desc = "Become one of the legends of the most brutal game in space. The items cannot be taken off once you wear them."
+	item = /obj/item/storage/box/syndie_kit/hockey
+	cost = 20
+	exclude_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/dangerous/bowling
+	name = "Bowling Set"
+	desc = "Niko, it's me, your cousin! Let's go bowling."
+	item = /obj/item/storage/box/syndie_kit/bowling
+	cost = 12
+	exclude_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/dangerous/wrestling
+	name = "Wrestling Set"
+	desc = "OH YEAH BROTHERRRR!"
+	item = /obj/item/storage/box/syndie_kit/wrestling
+	cost = 8 //The wrestling set is not as powerful as it once was
+	exclude_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/dangerous/football
+	name = "Football Set"
+	desc = "Actually Rugby."
+	item = /obj/item/storage/box/syndie_kit/football
+	cost = 16
+	exclude_modes = list(/datum/game_mode/nuclear)
