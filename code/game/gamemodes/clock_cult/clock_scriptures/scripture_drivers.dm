@@ -97,7 +97,7 @@
 	<b>Left-click a fellow Servant or yourself to heal!\n\
 	Click your slab to cancel.</b></span>"
 
-
+/*
 //Geis: Grants a short-range binding attack that allows you to mute and drag around a target in a very obvious manner.
 /datum/clockwork_scripture/ranged_ability/geis
 	descname = "Melee Mute & Stun"
@@ -130,6 +130,7 @@
 		servants -= SCRIPT_SERVANT_REQ
 		channel_time = min(channel_time + servants*3, 50)
 	return ..()
+*/
 
 
 //Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.

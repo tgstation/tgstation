@@ -129,6 +129,7 @@
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
 		builtInCamera.network = list("SS13")
+		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.status = 0
 	module = new /obj/item/robot_module(src)
@@ -535,6 +536,19 @@
 			toner = tonermax
 			qdel(W)
 			to_chat(user, "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>")
+
+	else if(istype(W, /obj/item/device/flashlight))
+		if(!opened)
+			to_chat(user, "<span class='warning'>You need to open the panel to repair the headlamp!</span>")
+		if(lamp_cooldown <= world.time)
+			to_chat(user, "<span class='warning'>The headlamp is already functional!</span>")
+		else
+			if(!user.temporarilyRemoveItemFromInventory(W))
+				to_chat(user, "<span class='warning'>[W] seems to be stuck to your hand. You'll have to find a different light.</span>")
+				return
+			lamp_cooldown = 0
+			qdel(W)
+			to_chat(user, "<span class='notice'>You replace the headlamp bulbs.</span>")
 	else
 		return ..()
 
@@ -783,7 +797,7 @@
 	var/set_module = /obj/item/robot_module/syndicate
 
 /mob/living/silicon/robot/syndicate/Initialize()
-	..()
+	. = ..()
 	cell.maxcharge = 25000
 	cell.charge = 25000
 	radio = new /obj/item/device/radio/borg/syndicate(src)

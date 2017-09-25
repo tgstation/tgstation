@@ -106,6 +106,9 @@
 
 	return randname
 
+//Called when cloning, copies some vars that should be kept
+/datum/species/proc/copy_properties_from(datum/species/old_species)
+	return
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
 /datum/species/proc/qualifies_for_rank(rank, list/features)
@@ -1038,8 +1041,6 @@
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
-	if(H.stat == SOFT_CRIT)
-		. = max(SOFTCRIT_MIN_SLOWDOWN, . + SOFTCRIT_ADD_SLOWDOWN) //regardless of how fast you are, you move at a maximum of SOFTCRIT_MIN_SLOWDOWN while in softcrit
 	return .
 
 //////////////////
@@ -1270,7 +1271,7 @@
 						H.adjust_blurriness(10)
 
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
-						SSticker.mode.remove_revolutionary(H.mind)
+						SSticker.mode.remove_revolutionary(H.mind, FALSE, user)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)

@@ -85,7 +85,7 @@
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
 		if(traitor_mob&&istype(traitor_mob))
-			if(!silent) 
+			if(!silent)
 				to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			traitor_mob.dna.remove_mutation(CLOWNMUT)
 
@@ -180,9 +180,9 @@
 		kill_objective.find_target()
 		add_objective(kill_objective)
 
-	var/datum/objective/survive/survive_objective = new
-	survive_objective.owner = owner
-	add_objective(survive_objective)
+	var/datum/objective/survive/exist/exist_objective = new
+	exist_objective.owner = owner
+	add_objective(exist_objective)
 /datum/antagonist/traitor/proc/forge_single_objective()
 	return 0
 /datum/antagonist/traitor/human/forge_single_objective() //Returns how many objectives are added

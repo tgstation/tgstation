@@ -39,7 +39,7 @@
 
 	create_internal_organs()
 
-	..()
+	. = ..()
 
 /mob/living/carbon/alien/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain/alien

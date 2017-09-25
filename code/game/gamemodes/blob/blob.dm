@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(blobs_legit) //used for win-score calculations, contains only 
 	name = "blob"
 	config_tag = "blob"
 	antag_flag = ROLE_BLOB
+	false_report_weight = 5
 
 	required_players = 25
 	required_enemies = 1
@@ -102,3 +103,9 @@ GLOBAL_LIST_EMPTY(blobs_legit) //used for win-score calculations, contains only 
 /datum/game_mode/blob/proc/SendSecondIntercept()
 	if(!replacementmode)
 		send_intercept(2) //if the blob has been alive this long, it's time to bomb it
+
+/datum/game_mode/blob/generate_report()
+	return "A CMP scientist by the name of [pick("Griff", "Pasteur", "Chamberland", "Buist", "Rivers", "Stanley")] boasted about his corporation's \"finest creation\" - a macrobiological \
+			virus capable of self-reproduction and hellbent on consuming whatever it touches. He went on to query Cybersun for permission to utilize the virus in biochemical warfare, to which \
+			CMP subsequently gained. Be vigilant for any large organisms rapidly spreading across the station, as they are classified as a level 5 biohazard and critically dangerous. Note that \
+			this organism seems to be weak to extreme heat; concentrated fire (such as welding tools and lasers) will be effective against it."

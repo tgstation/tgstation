@@ -743,21 +743,31 @@ GLOBAL_PROTECT(AdminProcCallCount)
 /client/proc/cmd_display_del_log()
 	set category = "Debug"
 	set name = "Display del() Log"
-	set desc = "Displays a list of things that have failed to GC this round"
+	set desc = "Display del's log of everything that's passed through it."
 
-	var/dat = "<B>List of things that failed to GC this round</B><BR><BR>"
-	for(var/path in SSgarbage.didntgc)
-		dat += "[path] - [SSgarbage.didntgc[path]] times<BR>"
+	var/list/dellog = list("<B>List of things that have gone through qdel this round</B><BR><BR><ol>")
+	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
+	for(var/path in SSgarbage.items)
+		var/datum/qdel_item/I = SSgarbage.items[path]
+		dellog += "<li><u>[path]</u><ul>"
+		if (I.failures)
+			dellog += "<li>Failures: [I.failures]</li>"
+		dellog += "<li>qdel() Count: [I.qdels]</li>"
+		dellog += "<li>Destroy() Cost: [I.destroy_time]ms</li>"
+		if (I.hard_deletes)
+			dellog += "<li>Total Hard Deletes [I.hard_deletes]</li>"
+			dellog += "<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"
+		if (I.slept_destroy)
+			dellog += "<li>Sleeps: [I.slept_destroy]</li>"
+		if (I.no_respect_force)
+			dellog += "<li>Ignored force: [I.no_respect_force]</li>"
+		if (I.no_hint)
+			dellog += "<li>No hint: [I.no_hint]</li>"
+		dellog += "</ul></li>"
 
-	dat += "<B>List of paths that did not return a qdel hint in Destroy()</B><BR><BR>"
-	for(var/path in SSgarbage.noqdelhint)
-		dat += "[path]<BR>"
+	dellog += "</ol>"
 
-	dat += "<B>List of paths that slept in Destroy()</B><BR><BR>"
-	for(var/path in SSgarbage.sleptDestroy)
-		dat += "[path]<BR>"
-
-	usr << browse(dat, "window=dellog")
+	usr << browse(dellog.Join(), "window=dellog")
 
 /client/proc/cmd_display_init_log()
 	set category = "Debug"

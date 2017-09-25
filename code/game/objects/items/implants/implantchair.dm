@@ -85,10 +85,17 @@
 	update_icon()
 
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)
-	var/obj/item/implant/I = new implant_type
-	if(I.implant(M))
-		visible_message("<span class='warning'>[M] has been implanted by the [name].</span>")
-		return 1
+	var/obj/item/I = new implant_type
+	if(istype(I, /obj/item/implant))
+		var/obj/item/implant/P = I
+		if(P.implant(M))
+			visible_message("<span class='warning'>[M] has been implanted by [src].</span>")
+			return TRUE
+	else if(istype(I, /obj/item/organ))
+		var/obj/item/organ/P = I
+		P.Insert(M, drop_if_replaced = FALSE)
+		visible_message("<span class='warning'>[M] has been implanted by [src].</span>")
+		return TRUE
 
 /obj/machinery/implantchair/update_icon()
 	icon_state = initial(icon_state)

@@ -104,7 +104,7 @@
 
 /datum/design/board/asimov
 	name = "Core Module Design (Asimov)"
-	desc = "Allows for the construction of a Asimov AI Core Module."
+	desc = "Allows for the construction of an Asimov AI Core Module."
 	id = "asimov_module"
 	req_tech = list("programming" = 3, "materials" = 5)
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)

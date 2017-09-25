@@ -76,7 +76,7 @@
 		exterminator drones when supplied with metal and glass. \
 		Disgusting. This one seems ominous."
 	dispense_type = /obj/item/drone_shell/syndrone/badass
-	end_create_message = "dispenses a ominous suspicious drone shell."
+	end_create_message = "dispenses an ominous suspicious drone shell."
 
 // I don't need your forgiveness, this is awesome.
 /obj/machinery/droneDispenser/snowflake
