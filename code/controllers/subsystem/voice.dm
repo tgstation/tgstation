@@ -216,6 +216,11 @@ SUBSYSTEM_DEF(voice)
 	if (dist <= canhear_range && frequency == VOICE_FREQ && !wires.is_cut(WIRE_TX) && (ptt || broadcasting))
 		. |= VOICE_SPEAK | (broadcasting ? VOICE_SPEAK_FREELY : 0)
 
+/obj/item/device/radio/headset/voice_check(mob/M, subspace_on, ptt=FALSE)
+	if (!listening)
+		return 0
+	return ..()
+
 /obj/item/device/radio/equipped(mob/user, slot)
 	..()
 	if (user.client)
