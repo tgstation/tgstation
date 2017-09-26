@@ -192,10 +192,6 @@
 		return
 	R.module = RM
 	R.update_module_innate()
-	var/obj/item/clockwork/slab/S = locate(/obj/item/clockwork/slab) in ratvar_modules
-	var/obj/item/clockwork/slab/S2 = locate(/obj/item/clockwork/slab) in RM.ratvar_modules
-	if(S && S2)
-		S.transfer_components_to_slab(S2) //this is kind of a shitty way to handle this but let's not lose components
 	RM.rebuild_modules()
 	INVOKE_ASYNC(RM, .proc/do_transform_animation)
 	qdel(src)
@@ -307,6 +303,7 @@
 		/obj/item/device/analyzer,
 		/obj/item/device/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
+		/obj/item/device/electroadaptive_pseudocircuit,
 		/obj/item/stack/sheet/metal/cyborg,
 		/obj/item/stack/sheet/glass/cyborg,
 		/obj/item/stack/sheet/rglass/cyborg,

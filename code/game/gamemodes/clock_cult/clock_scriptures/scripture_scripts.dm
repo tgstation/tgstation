@@ -47,6 +47,7 @@
 	sort_priority = 2
 	quickbind = TRUE
 	quickbind_desc = "Creates a Judicial Visor, which can smite an area, applying Belligerent and briefly stunning."
+	cyborg_usable = FALSE
 
 
 //Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
@@ -200,6 +201,7 @@
 	sort_priority = 5
 	quickbind = TRUE
 	quickbind_desc = "Creates a Replica Fabricator, which can convert various objects to Ratvarian variants."
+	cyborg_usable = FALSE
 
 
 //Clockwork Arnaments: Grants the invoker the ability to call forth a Ratvarian spear and clockwork armor.
@@ -217,6 +219,7 @@
 	sort_priority = 6
 	quickbind = TRUE
 	quickbind_desc = "Permanently binds clockwork armor and a Ratvarian spear to you."
+	cyborg_usable = FALSE
 
 /datum/clockwork_scripture/clockwork_arnaments/check_special_requirements()
 	for(var/datum/action/innate/clockwork_arnaments/F in invoker.actions)

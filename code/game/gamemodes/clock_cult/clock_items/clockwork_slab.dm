@@ -34,48 +34,12 @@
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
 
-/obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
+/obj/item/clockwork/slab/cyborg
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
-	/datum/clockwork_scripture/create_object/stargazer)
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard)
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
-
-/obj/item/clockwork/slab/cyborg/engineer //two scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission)
-
-/obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra)
-
-/obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
-
-/obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
-
-/obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
-	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor, /datum/clockwork_scripture/create_object/stargazer)
-
-/obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/stargazer, \
-	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
-
-/obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
-
-/obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
-	if(!GLOB.ratvar_awakens)
-		to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
-	else
-		..()
-
-/obj/item/clockwork/slab/cyborg/ratvar_act()
-	..()
-	if(!GLOB.ratvar_awakens)
-		SStgui.close_uis(src)
 
 /obj/item/clockwork/slab/Initialize()
 	. = ..()
@@ -169,7 +133,7 @@
 		ui.open()
 
 /obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user)
-	if(!scripture || !user || !user.canUseTopic(src) || (!no_cost && !can_recite_scripture(user)))
+	if(!scripture || !user || !user.canUseTopic(src) || (!no_cost && !can_recite_scripture(user)) || (!initial(scripture.cyborg_usable) && iscyborg(user)))
 		return FALSE
 	if(user.get_active_held_item() != src)
 		to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
@@ -424,7 +388,8 @@
 			"tip" = "[S.desc]\n[S.usage_tip]",
 			"required" = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])",
 			"type" = "[S.type]",
-			"quickbind" = S.quickbind)
+			"quickbind" = (S.quickbind && (S.cyborg_usable || !iscyborg(user))),
+			"usable" = (SSticker.scripture_states[S.tier] && (S.cyborg_usable || !iscyborg(user)))))
 			var/found = quickbound.Find(S.type)
 			if(found)
 				temp_info["bound"] = "<b>[found]</b>"
@@ -465,6 +430,8 @@
 					quickbound[found_index] = null //otherwise, leave it as a null so the scripture maintains position
 				update_quickbind()
 			else
+				if(!SSticker.scripture_states[path.tier] || (!initial(path.cyborg_usable) && iscyborg(usr)))
+					return 1
 				var/target_index = input("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
 				if(isnum(target_index) && target_index > 0 && target_index <= maximum_quickbound && !..())
 					var/datum/clockwork_scripture/S

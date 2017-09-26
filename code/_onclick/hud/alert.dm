@@ -420,7 +420,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				time_name = "until the Ark finishes summoning"
 			if(time_info)
 				textlist += "<b>[time_info / 60] minutes</b> [time_name].<br>"
-		textlist += "<b>[DisplayPower(get_clockwork_power())]</b> power available for use."
+		textlist += "<b>[DisplayPower(get_clockwork_power())]</b> power available for use.<br>\
+		<b><font color=#1E8CE1>[GLOB.clockwork_vitality]</font></b> Vitality available for use."
 		desc = textlist.Join()
 	..()
 

@@ -49,7 +49,7 @@
 /datum/clockwork_scripture/vanguard
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
-	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
+	desc = "Provides 25 seconds of stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
@@ -60,6 +60,7 @@
 	sort_priority = 3
 	quickbind = TRUE
 	quickbind_desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
+	cyborg_usable = FALSE
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
 	if(!GLOB.ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
@@ -78,11 +79,11 @@
 	return TRUE
 
 
-//Sentinel's Compromise: Allows the invoker to select a nearby servant and convert their brute, burn, and oxygen damage into half as much toxin damage.
+//Sentinel's Compromise: Allows the invoker to select a nearby servant and heal their brute/burn/oxygen damage with Vitality.
 /datum/clockwork_scripture/ranged_ability/sentinels_compromise
-	descname = "Convert Brute/Burn/Oxygen to Half Toxin"
+	descname = "Heal Brute/Burn/Oxygen"
 	name = "Sentinel's Compromise"
-	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute, burn, and oxygen damage to half as much toxin damage."
+	desc = "Charges your slab with healing power, allowing you to heal a target Servant using Vitality. Healing done without Vitality is much less effective."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
 	power_cost = 100
@@ -91,7 +92,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 4
 	quickbind = TRUE
-	quickbind_desc = "Allows you to convert a Servant's brute, burn, and oxygen damage to half toxin damage.<br><b>Click your slab to disable.</b>"
+	quickbind_desc = "Allows you to heal a Servant using Vitality.<br><b>Click your slab to disable.</b>"
 	slab_overlay = "compromise"
 	ranged_type = /obj/effect/proc_holder/slab/compromise
 	ranged_message = "<span class='inathneq_small'><i>You charge the clockwork slab with healing power.</i>\n\
@@ -190,6 +191,7 @@
 	sort_priority = 6
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Submission, which will convert non-Servants that remain on it."
+	cyborg_usable = FALSE
 
 
 //Replicant: Creates a new clockwork slab.
@@ -250,6 +252,7 @@
 	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Creates an integration cog, which can be used to siphon power from an open APC."
+	cyborg_usable = FALSE
 
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.
@@ -270,3 +273,4 @@
 	sort_priority = 10
 	quickbind = TRUE
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
+	cyborg_usable = FALSE
