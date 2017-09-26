@@ -170,7 +170,7 @@
 			permutated.Add(A)
 		return FALSE
 	else
-		if(A && A.density && !ismob(A) && !istype(A,/obj/machinery) && !istype(A,/obj/structure/) && !(A.flags_1 & ON_BORDER_1)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
+		if(A && A.density && !ismob(A) && !istype(A,/obj/structure/) && !(A.flags_1 & ON_BORDER_1)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
 			var/list/mobs_list = list()
 			var/list/machine_list = list()
 			for(var/mob/living/L in target_turf)
@@ -179,15 +179,16 @@
 				machine_list += m
 			if(mobs_list.len || machine_list.len)
 				var/atom/movable/selected_target
-				if(mobs_list.Find(original) || machine_list.Find(original))
+				if((mobs_list.Find(original) || machine_list.Find(original)) && A!=original)
 					selected_target = original
 				else if(mobs_list.len)
 					selected_target = pick(mobs_list)
-				else
+				else if(!istype(A,/obj/machinery))
 					selected_target = pick(machine_list)
 				if(!prehit(selected_target))
 					return FALSE
-				selected_target.bullet_act(src, def_zone)
+				if (selected_target!=null)
+					selected_target.bullet_act(src, def_zone)
 	qdel(src)
 	return TRUE
 
