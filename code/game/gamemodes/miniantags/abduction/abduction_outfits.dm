@@ -5,20 +5,14 @@
 	back = /obj/item/storage/backpack
 	ears = /obj/item/device/radio/headset/abductor
 
-/datum/outfit/abductor/proc/get_team_console(team_number)
-	for(var/obj/machinery/abductor/console/C in GLOB.machines)
-		if(C.team == team_number)
-			return C
-
 /datum/outfit/abductor/proc/link_to_console(mob/living/carbon/human/H, team_number)
-	if(!team_number && isabductor(H))
-		var/datum/species/abductor/S = H.dna.species
-		team_number = S.team
-
+	var/datum/antagonist/abductor/A = H.mind.has_antag_datum(ANTAG_DATUM_ABDUCTOR)
+	if(!team_number && A)
+		team_number = A.team.team_number
 	if(!team_number)
 		team_number = 1
 
-	var/obj/machinery/abductor/console/console = get_team_console(team_number)
+	var/obj/machinery/abductor/console/console = get_abductor_console(team_number)
 	if(console)
 		var/obj/item/clothing/suit/armor/abductor/vest/V = locate() in H
 		if(V)
