@@ -965,10 +965,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("species")
 
-					var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_species
+					var/result = input(user, "Select a species", "Species Selection") as null|anything in CONFIG_GET(keyed_flag_list/roundstart_races)
 
 					if(result)
-						var/newtype = GLOB.roundstart_species[result]
+						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
