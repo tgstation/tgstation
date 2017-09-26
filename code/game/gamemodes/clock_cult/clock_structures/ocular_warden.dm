@@ -138,10 +138,11 @@
 /obj/structure/destructible/clockwork/ocular_warden/get_efficiency_mod(increasing)
 	if(GLOB.ratvar_awakens)
 		return increasing ? 0.5 : 2
-	. = 1
-	for(var/turf/T in getline(src, target))
-		for(var/obj/structure/O in T)
-			if(O.density)
-				. -= 0.15
-	. -= (get_dist(src, target) * 0.05)
-	. = max(., 0.1) //The lowest damage a warden can do is 10% of its normal amount (0.25 by default)
+	. = 1 //Increasing isn't used here since it resets the value to 1 automatically when caluclating target damage
+	if(target)
+		for(var/turf/T in getline(src, target))
+			for(var/obj/structure/O in T)
+				if(O.density)
+					. -= 0.15
+		. -= (get_dist(src, target) * 0.05)
+		. = max(., 0.1) //The lowest damage a warden can do is 10% of its normal amount (0.25 by default)

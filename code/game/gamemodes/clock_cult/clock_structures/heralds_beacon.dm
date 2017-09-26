@@ -4,8 +4,8 @@
 	name = "herald's beacon"
 	desc = "An imposing spire formed of brass, with a thrumming gemstone at its peak."
 	clockwork_desc = "A massively-powerful beacon. If enough servants decide to activate it, it will send an incredibly large energy pulse to the Ark, \
-	permanently empowering slabs, replica fabricators, clockwork armor, and more, as well as giving the Ark an extra ten minutes before activation. \
-	This will alert the crew to your presence, as so much energy is bound to fall under notice."
+	permanently empowering many clockwork objects and reducing all power costs by 50%, but alerting the crew to your presence. It doesn't have enough \
+	energy to sustain itself for long, and if not activated within five minutes, it will permanently shut down."
 	icon_state = "interdiction_lens"
 	break_message = "<span class='warning'>The beacon crackles with power before collapsing into pieces!</span>"
 	max_integrity = 250

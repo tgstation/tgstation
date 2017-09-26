@@ -197,6 +197,8 @@
 	else
 		textlist = list("<font color=#BE8700 size=3><b><center>[text2ratvar("Purge all untruths and honor Engine.")]</center></b></font><br>\
 		\
+		<b><i>NOTICE:</b> This information is out of date. Read the Ark & You primer in your backpack or read the wiki page for current info.</i><br>\
+		<hr><br>\
 		These pages serve as the archives of Ratvar, the Clockwork Justiciar. This section of your slab has information on being as a Servant, advice for what to do next, and \
 		pointers for serving the master well. You should recommended that you check this area for help if you get stuck or need guidance on what to do next.<br><br>\
 		\

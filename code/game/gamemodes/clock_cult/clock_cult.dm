@@ -8,12 +8,9 @@ Imprisoned within a massive construct known as the Celestial Derelict - or Reebe
 Ratvar, unable to act in the mortal plane, seeks to return and forms covenants with mortals in order to bolster his influence.
 Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar-Sie, who can only influence natural life.
 
-This is a team-based gamemode, and the team's objective is shared by all cultists. It can include summoning Ratvar, escaping on the shuttle, or converting the AI and its cyborgs.
+This is a team-based gamemode, and the team's objective is shared by all cultists. Their goal is to defend an object called the Ark on a separate z-level.
 
 The clockwork version of an arcane tome is the clockwork slab.
-While it can perform certain actions, it consumes a resource called components.
-Components, which are fallen fragments of Ratvar's body as he rusts in Reebe, are powerful and have various effects.
-Game-wise, clockwork slabs will generate components over time, with more powerful components being slower.
 
 This file's folder contains:
 	clock_cult.dm: Core gamemode files.
@@ -181,7 +178,7 @@ Credit where due:
 		to_chat(L, "<span class='bold large_brass'>There is a paper in your backpack! Read it!</span>")
 		to_chat(L, "<span class='alloy'>[slot] is a <b>clockwork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
 		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
-		to_chat(L, "<span class='alloy italics'>If you want more information, you can find a wiki link here!</span> https://tgstation13.org/wiki/User_talk:Xhuis")
+		to_chat(L, "<span class='alloy italics'>If you want more information, you can find a wiki link here!</span> https://tgstation13.org/wiki/Clockwork_Cult")
 		return TRUE
 	return FALSE
 

@@ -107,12 +107,13 @@
 			resistance_flags |= INDESTRUCTIBLE
 			countdown.stop()
 			visible_message("<span class='userdanger'>[src] begins to pulse uncontrollably... you might want to run!</span>")
-			direct_sound_to_playing_players(sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = CHANNEL_JUSTICAR_ARK, volume = 50))
+			sound_to_playing_players(volume = 50, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_disrupted.ogg'))
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE
 			sleep(27)
 			explosion(src, 1, 3, 8, 8)
+			sound_to_playing_players('sound/effects/explosion_distant.ogg', volume = 50)
 	qdel(src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/make_glow()
@@ -169,6 +170,7 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(seconds_until_activation == -1) //we never do anything
 		return
+	adjust_clockwork_power(2.5) //Provides weak power generation on its own
 	if(seconds_until_activation)
 		if(!countdown)
 			countdown = new(src)
@@ -189,16 +191,9 @@
 				else
 					to_chat(M, "<span class='boldwarning'>You hear otherworldly sounds from all around you...</span>")
 	if(!obj_integrity)
-		return 0
-	var/convert_dist = 1 + (round(Floor(progress_in_seconds, 15) * 0.067))
-	for(var/t in RANGE_TURFS(convert_dist, loc))
-		var/turf/T = t
-		if(!T)
-			continue
-		if(get_dist(T, src) < 2)
-			if(iswallturf(T))
-				var/turf/closed/wall/W = T
-				W.dismantle_wall()
+		return
+	for(var/turf/closed/wall/W in RANGE_TURFS(2, src))
+		W.dismantle_wall()
 	for(var/obj/O in orange(1, src))
 		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
@@ -213,20 +208,20 @@
 			if(!second_sound_played)
 				for(var/V in GLOB.generic_event_spawns)
 					addtimer(CALLBACK(src, .proc/open_portal, get_turf(V)), rand(100, 600))
-				direct_sound_to_playing_players(sound('sound/magic/clockwork/invoke_general.ogg', FALSE, volume = 30))
-				direct_sound_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 30))
+				sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg', 30, FALSE)
+				sound_to_playing_players(volume = 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
 				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!third_sound_played)
-				direct_sound_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 35))
+				sound_to_playing_players(volume = 35, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', TRUE))
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!fourth_sound_played)
-				direct_sound_to_playing_players(sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 40))
+				sound_to_playing_players(volume = 40, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', TRUE))
 				fourth_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
@@ -237,7 +232,7 @@
 				purpose_fulfilled = TRUE
 				make_glow()
 				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
-				direct_sound_to_playing_players(sound('sound/effects/ratvar_rises.ogg', 0, channel = CHANNEL_JUSTICAR_ARK)) //End the sounds
+				sound_to_playing_players(volume = 100, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg')) //End the sounds
 				sleep(125)
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
