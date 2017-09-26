@@ -1,7 +1,6 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker
 	name = "navigation computer"
 	desc = "Used to designate a precise transit location for a spacecraft."
-	z_lock = list(ZLEVEL_STATION_PRIMARY)
 	jump_action = null
 	var/datum/action/innate/shuttledocker_rotate/rotate_action = new
 	var/datum/action/innate/shuttledocker_place/place_action = new

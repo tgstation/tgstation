@@ -4,6 +4,7 @@
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
 	var/list/z_lock = list() // Lock use to these z levels
+	var/station_lock_override = FALSE
 	var/mob/camera/aiEye/remote/eyeobj
 	var/mob/living/current_user = null
 	var/list/networks = list("SS13")
@@ -12,6 +13,11 @@
 	var/list/actions = list()
 
 	light_color = LIGHT_COLOR_RED
+
+/obj/machinery/computer/camera_advanced/Initialize()
+	. = ..()
+	if(station_lock_override)
+		z_lock = GLOB.station_z_levels.Copy()
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
