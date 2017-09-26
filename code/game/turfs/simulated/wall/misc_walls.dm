@@ -63,15 +63,8 @@
 	new /obj/effect/temp_visual/ratvar/beam(src)
 	realappearence = new /obj/effect/clockwork/overlay/wall(src)
 	realappearence.linked = src
-	change_construction_value(5)
-
-/turf/closed/wall/clockwork/examine(mob/user)
-	..()
-	if((is_servant_of_ratvar(user) || isobserver(user)))
-		to_chat(user, "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>")
 
 /turf/closed/wall/clockwork/Destroy()
-	change_construction_value(-5)
 	if(realappearence)
 		qdel(realappearence)
 		realappearence = null

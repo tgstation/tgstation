@@ -14,6 +14,7 @@
 
 	var/global/datum/gas_mixture/immutable/space/space_gas = new
 	plane = PLANE_SPACE
+	layer = SPACE_LAYER
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 

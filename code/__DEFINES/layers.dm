@@ -7,6 +7,8 @@
 #define PLANE_SPACE_PARALLAX -90
 
 #define GAME_PLANE 0
+#define SPACE_LAYER 1.8
+#define ABOVE_SPACE_LAYER 1.9
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
