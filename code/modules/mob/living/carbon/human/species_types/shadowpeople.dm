@@ -73,12 +73,13 @@
 
 /obj/item/organ/heart/nightmare
 	name = "heart of darkness"
-	desc = "."
+	desc = "An alien organ that twists and writhes when exposed to light."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart-on"
+	color = "#1C1C1C"
 	var/respawn_progress = 0
 	var/obj/item/light_eater/blade
-	color = "#1C1C1C"
+
 
 
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
@@ -105,7 +106,7 @@
 	STOP_PROCESSING(SSobj, src)
 	respawn_progress = 0
 	if(blade)
-		qdel(blade)
+		QDEL_NULL
 		M.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
 	..()
 
@@ -121,7 +122,7 @@
 	return //always beating visually
 
 /obj/item/organ/heart/nightmare/process()
-	if(!owner)
+	if(!owner || owner.stat != DEAD)
 		STOP_PROCESSING(SSobj, src)
 		respawn_progress = 0
 	var/turf/T = get_turf(src)
