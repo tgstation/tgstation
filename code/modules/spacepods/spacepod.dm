@@ -246,7 +246,7 @@
 		add_overlay(pod_overlays[DAMAGE])
 		if(obj_integrity <= round(max_integrity/4))
 			add_overlay(pod_overlays[FIRE])
-	if(equipment_system.weapon_system && equipment_system.weapon_system.overlay_icon)
+	if(equipment_system && equipment_system.weapon_system && equipment_system.weapon_system.overlay_icon)
 		var/mutable_appearance/weapon_overlay = mutable_appearance(icon, icon_state = equipment_system.weapon_system.overlay_icon)
 		add_overlay(weapon_overlay)
 	light_color = icon_light_color[icon_state]
