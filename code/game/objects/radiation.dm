@@ -37,8 +37,6 @@
 			to_chat(src, "Your skin feels warm.")
 
 		apply_effect(amount, IRRADIATE, blocked)
-		for(var/obj/I in src) //Radiation is also applied to items held by the mob
-			I.rad_act(amount)
 
 /mob/living/carbon/rad_act(amount, silent = 0)
 	if(dna && (RADIMMUNE in dna.species.species_traits))

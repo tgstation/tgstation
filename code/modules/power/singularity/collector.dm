@@ -38,6 +38,10 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 		else
 			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= 0.001*drainratio
 			loaded_tank.air_contents.garbage_collect()
+
+			var/power_produced = min(last_power, last_power/10+1000) //Produces at least 1000 watts if it has more than that stored
+			add_avail(power_produced)
+			last_power-=power_produced
 	return
 
 
@@ -77,7 +81,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
-		to_chat(user, "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>")
+		to_chat(user, "<span class='notice'>The [W.name] detects that [last_power]W is being processed.</span>")
 		return TRUE
 	else if(istype(W, /obj/item/device/analyzer) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
@@ -140,12 +144,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
-		var/power_produced = loaded_tank.air_contents.gases[/datum/gas/plasma] ? loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] : 0
-		power_produced *= pulse_strength*10
-		add_avail(power_produced)
-		last_power = power_produced
-		return
-	return
+		last_power += pulse_strength-RAD_COLLECTOR_EFFICIENCY
 
 /obj/machinery/power/rad_collector/proc/update_icons()
 	cut_overlays()
