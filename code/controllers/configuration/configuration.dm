@@ -8,11 +8,21 @@ GLOBAL_PROTECT(config_dir)
 	var/list/entries
 	var/list/entries_by_type
 
+	var/list/maplist
+	var/datum/map_config/defaultmap
+
+	var/list/modes			// allowed modes
 	var/list/gamemode_cache
+	var/list/votable_modes		// votable modes
+	var/list/mode_names
+	var/list/mode_reports
+	var/list/mode_false_report_weight
 
 /datum/controller/configuration/New()
+	var/list/config_files = InitEntries()
 	LoadModes()
-	InitEntries()
+	for(var/I in config_files)
+		LoadEntries(I)
 	if(Get(/datum/config_entry/flag/maprotation))
 		loadmaplist(CONFIG_MAPS_FILE)
 
@@ -22,22 +32,19 @@ GLOBAL_PROTECT(config_dir)
 	var/list/_entries_by_type = list()
 	entries_by_type = _entries_by_type
 
-	var/list/config_files = list()
+	. = list()
 
 	for(var/I in typesof(/datum/config_entry))	//typesof is faster in this case
 		var/datum/config_entry/E = I
-		config_files[initial(E.resident_file)] = TRUE
+		.[initial(E.resident_file)] = TRUE
 		if(initial(E.abstract_type) == I)
 			continue
 		E = new I
 		_entries_by_type[I] = E
 		_entries[E.name] = E
 
-	for(var/I in config_files)
-		LoadEntries(I)
-
 /datum/controller/configuration/proc/LoadEntries(filename)
-	log_world("Loading [filename]...")
+	log_world("Loading config file [filename]...")
 	var/list/lines = world.file2list("[GLOB.config_dir][filename]")
 	var/list/_entries = entries
 	for(var/L in lines)
@@ -62,18 +69,18 @@ GLOBAL_PROTECT(config_dir)
 		
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
-			WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[entry]'")
+			log_world("Unknown setting in configuration: '[entry]'")
 			continue
 		
 		if(filename != E.resident_file)
-			WRITE_FILE(GLOB.config_error_log, "Found [entry] in [filename] when it should have been in [E.resident_file]! Ignoring.")
+			log_world("Found [entry] in [filename] when it should have been in [E.resident_file]! Ignoring.")
 			continue
 
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)
-			WRITE_FILE(GLOB.config_error_log, "Failed to validate setting for [entry]")
+			log_world("Failed to validate setting for [entry]")
 		else if(E.modified)
-			WRITE_FILE(GLOB.config_error_log, "Duplicate setting for [entry] detected! Using latest.")
+			log_world("Duplicate setting for [entry] detected! Using latest.")
 		
 		if(validated)
 			E.modified = TRUE
@@ -83,6 +90,11 @@ GLOBAL_PROTECT(config_dir)
 
 /datum/controller/configuration/vv_edit_var(var_name, var_value)
 	return var_name != "entries_by_type" && ..()
+
+/datum/controller/configuration/stat_entry()
+	if(!statclick)
+		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
+	stat("[name]:", statclick)
 
 /datum/controller/configuration/proc/Get(entry_type)
 	var/datum/config_entry/E = entry_type
@@ -104,139 +116,14 @@ GLOBAL_PROTECT(config_dir)
 		CRASH("Missing config entry for [entry_type]!")
 	return E.ValidateAndSet(new_val)
 
-/datum/configuration
-	var/minimal_access_threshold = 0	//If the number of players is larger than this threshold, minimal access will be turned on.
-	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
-	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above.
-	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
-
-	//game_options.txt configs
-	var/force_random_names = 0
-	var/list/mode_names = list()
-	var/list/mode_reports = list()
-	var/list/mode_false_report_weight = list()
-	var/list/modes = list()				// allowed modes
-	var/list/votable_modes = list()		// votable modes
-	var/list/probabilities = list()		// relative probability of each mode
-	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
-	var/list/max_pop = list()
-	var/list/repeated_mode_adjust = list() 			// weight adjustments for recent modes
-
-	var/humans_need_surnames = 0
-	var/allow_ai = 0					// allow ai job
-	var/forbid_secborg = 0				// disallow secborg module to be chosen.
-	var/forbid_peaceborg = 0
-
-	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
-	var/brother_scaling_coeff = 25		//how many players per brother team
-	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
-	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
-	var/abductor_scaling_coeff = 15 	//how many players per abductor team
-
-	var/traitor_objectives_amount = 2
-	var/brother_objectives_amount = 2
-	var/protect_roles_from_antagonist = 0 //If security and such can be traitor/cult/other
-	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
-	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
-	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
-	var/list/continuous = list()		// which roundtypes continue if all antagonists die
-	var/list/midround_antag = list() 	// which roundtypes use the midround antagonist system
-	var/midround_antag_time_check = 60  // How late (in minutes) you want the midround antag system to stay on, setting this to 0 will disable the system
-	var/midround_antag_life_check = 0.7 // A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
-	var/shuttle_refuel_delay = 12000
-	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
-	var/mutant_races = 0				//players can choose their mutant race before joining the game
-	var/list/roundstart_races = list()	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
-	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
-
-	var/no_summon_guns		//No
-	var/no_summon_magic		//Fun
-	var/no_summon_events	//Allowed
-
-	var/intercept = 1					//Whether or not to send a communications intercept report roundstart. This may be overriden by gamemodes.
-	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
-	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
-	var/alert_desc_blue_downto = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
-	var/alert_desc_red_upto = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
-	var/alert_desc_red_downto = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
-	var/alert_desc_delta = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
-
-	var/revival_pod_plants = FALSE
-	var/revival_cloning = FALSE
-	var/revival_brain_life = -1
-
-	var/rename_cyborg = 0
-	var/ooc_during_round = 0
-	var/emojis = 0
-	var/no_credits_round_end = FALSE
-
-	//Used for modifying movement speed for mobs.
-	//Unversal modifiers
-	var/run_speed = 0
-	var/walk_speed = 0
-
-	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
-	var/human_delay = 0
-	var/robot_delay = 0
-	var/monkey_delay = 0
-	var/alien_delay = 0
-	var/slime_delay = 0
-	var/animal_delay = 0
-
-	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
-	var/ghost_interaction = 0
-
-	var/silent_ai = 0
-	var/silent_borg = 0
-
-	var/damage_multiplier = 1 //Modifier for damage to all mobs. Impacts healing as well.
-
-	var/sandbox_autoclose = FALSE // close the sandbox panel after spawning an item, potentially reducing griff
-
-	var/default_laws = 0 //Controls what laws the AI spawns with.
-	var/silicon_max_law_amount = 12
-	var/list/lawids = list()
-
-	var/list/law_weights = list()
-
-	var/assistant_cap = -1
-
-	var/starlight = 0
-	var/grey_assistants = 0
-
-	var/lavaland_budget = 60
-	var/space_budget = 16
-
-
-	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
-
-	var/list/datum/map_config/maplist = list()
-	var/datum/map_config/defaultmap = null
-
-	// Enables random events mid-round when set to 1
-	var/allow_random_events = 0
-
-	// Multipliers for random events minimal starting time and minimal players amounts
-	var/events_min_time_mul = 1
-	var/events_min_players_mul = 1
-
-	// The object used for the clickable stat() button.
-	var/obj/effect/statclick/statclick
-
-	var/cross_name = "Other server"
-	var/cross_address = "byond://"
-	var/cross_allowed = FALSE
-
-	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
-	var/arrivals_shuttle_require_undocked = FALSE	//Require the arrivals shuttle to be undocked before latejoiners can join
-	var/arrivals_shuttle_require_safe_latejoin = FALSE	//Require the arrivals shuttle to be operational in order for latejoiners to join
-
-	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
-
-	var/list/policies = list()
-
 /datum/controller/configuration/proc/LoadModes()
 	gamemode_cache = typecacheof(/datum/game_mode, TRUE)
+	modes = list()
+	mode_names = list()
+	mode_reports = list()
+	mode_false_report_weight = list()
+	votable_modes = list()
+	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probabilities)
 	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
@@ -244,7 +131,6 @@ GLOBAL_PROTECT(config_dir)
 
 		if(M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
-				WRITE_FILE(GLOB.config_error_log, "Adding game mode [M.name] ([M.config_tag]) to configuration.")
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
@@ -254,317 +140,6 @@ GLOBAL_PROTECT(config_dir)
 					votable_modes += M.config_tag
 		qdel(M)
 	votable_modes += "secret"
-
-/datum/controller/configuration/proc/Reload()
-	load("config.txt")
-	load("comms.txt", "comms")
-	load("game_options.txt","game_options")
-	load("policies.txt", "policies")
-	loadsql("dbconfig.txt")
-	if (maprotation)
-		loadmaplist("maps.txt")
-
-
-/datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
-	filename = "[GLOB.config_dir][filename]"
-	var/list/Lines = world.file2list(filename)
-	for(var/t in Lines)
-		if(!t)
-			continue
-
-		t = trim(t)
-		if(length(t) == 0)
-			continue
-		else if(copytext(t, 1, 2) == "#")
-			continue
-
-		var/pos = findtext(t, " ")
-		var/name = null
-		var/value = null
-
-		if(pos)
-			name = lowertext(copytext(t, 1, pos))
-			value = copytext(t, pos + 1)
-		else
-			name = lowertext(t)
-
-		if(!name)
-			continue
-
-		else if(type == "comms")
-			HandleCommsConfig(name, value)
-		else if(type == "game_options")
-			switch(name)
-				if("damage_multiplier")
-					damage_multiplier		= text2num(value)
-				if("revival_pod_plants")
-					revival_pod_plants		= TRUE
-				if("revival_cloning")
-					revival_cloning			= TRUE
-				if("revival_brain_life")
-					revival_brain_life		= text2num(value)
-				if("rename_cyborg")
-					rename_cyborg			= 1
-				if("ooc_during_round")
-					ooc_during_round			= 1
-				if("emojis")
-					emojis					= 1
-				if("no_credits_round_end")
-					no_credits_round_end	= TRUE
-				if("run_delay")
-					run_speed				= text2num(value)
-				if("walk_delay")
-					walk_speed				= text2num(value)
-				if("human_delay")
-					human_delay				= text2num(value)
-				if("robot_delay")
-					robot_delay				= text2num(value)
-				if("monkey_delay")
-					monkey_delay				= text2num(value)
-				if("alien_delay")
-					alien_delay				= text2num(value)
-				if("slime_delay")
-					slime_delay				= text2num(value)
-				if("animal_delay")
-					animal_delay				= text2num(value)
-				if("alert_red_upto")
-					alert_desc_red_upto		= value
-				if("alert_red_downto")
-					alert_desc_red_downto	= value
-				if("alert_blue_downto")
-					alert_desc_blue_downto	= value
-				if("alert_blue_upto")
-					alert_desc_blue_upto		= value
-				if("alert_green")
-					alert_desc_green			= value
-				if("alert_delta")
-					alert_desc_delta			= value
-				if("no_intercept_report")
-					intercept				= 0
-				if("assistants_have_maint_access")
-					jobs_have_maint_access	|= ASSISTANTS_HAVE_MAINT_ACCESS
-				if("security_has_maint_access")
-					jobs_have_maint_access	|= SECURITY_HAS_MAINT_ACCESS
-				if("everyone_has_maint_access")
-					jobs_have_maint_access	|= EVERYONE_HAS_MAINT_ACCESS
-				if("sec_start_brig")
-					sec_start_brig			= 1
-				if("gateway_delay")
-					gateway_delay			= text2num(value)
-				if("continuous")
-					var/mode_name = lowertext(value)
-					if(mode_name in modes)
-						continuous[mode_name] = 1
-					else
-						WRITE_FILE(GLOB.config_error_log, "Unknown continuous configuration definition: [mode_name].")
-				if("midround_antag")
-					var/mode_name = lowertext(value)
-					if(mode_name in modes)
-						midround_antag[mode_name] = 1
-					else
-						WRITE_FILE(GLOB.config_error_log, "Unknown midround antagonist configuration definition: [mode_name].")
-				if("midround_antag_time_check")
-					midround_antag_time_check = text2num(value)
-				if("midround_antag_life_check")
-					midround_antag_life_check = text2num(value)
-				if("min_pop")
-					var/pop_pos = findtext(value, " ")
-					var/mode_name = null
-					var/mode_value = null
-
-					if(pop_pos)
-						mode_name = lowertext(copytext(value, 1, pop_pos))
-						mode_value = copytext(value, pop_pos + 1)
-						if(mode_name in modes)
-							min_pop[mode_name] = text2num(mode_value)
-						else
-							WRITE_FILE(GLOB.config_error_log, "Unknown minimum population configuration definition: [mode_name].")
-					else
-						WRITE_FILE(GLOB.config_error_log, "Incorrect minimum population configuration definition: [mode_name]  [mode_value].")
-				if("max_pop")
-					var/pop_pos = findtext(value, " ")
-					var/mode_name = null
-					var/mode_value = null
-
-					if(pop_pos)
-						mode_name = lowertext(copytext(value, 1, pop_pos))
-						mode_value = copytext(value, pop_pos + 1)
-						if(mode_name in modes)
-							max_pop[mode_name] = text2num(mode_value)
-						else
-							WRITE_FILE(GLOB.config_error_log, "Unknown maximum population configuration definition: [mode_name].")
-					else
-						WRITE_FILE(GLOB.config_error_log, "Incorrect maximum population configuration definition: [mode_name]  [mode_value].")
-				if("shuttle_refuel_delay")
-					shuttle_refuel_delay     = text2num(value)
-				if("show_game_type_odds")
-					show_game_type_odds		= 1
-				if("ghost_interaction")
-					ghost_interaction		= 1
-				if("traitor_scaling_coeff")
-					traitor_scaling_coeff	= text2num(value)
-				if("brother_scaling_coeff")
-					brother_scaling_coeff	= text2num(value)
-				if("changeling_scaling_coeff")
-					changeling_scaling_coeff	= text2num(value)
-				if("security_scaling_coeff")
-					security_scaling_coeff	= text2num(value)
-				if("abductor_scaling_coeff")
-					abductor_scaling_coeff	= text2num(value)
-				if("traitor_objectives_amount")
-					traitor_objectives_amount = text2num(value)
-				if("brother_objectives_amount")
-					brother_objectives_amount = text2num(value)
-				if("probability")
-					var/prob_pos = findtext(value, " ")
-					var/prob_name = null
-					var/prob_value = null
-
-					if(prob_pos)
-						prob_name = lowertext(copytext(value, 1, prob_pos))
-						prob_value = copytext(value, prob_pos + 1)
-						if(prob_name in modes)
-							probabilities[prob_name] = text2num(prob_value)
-						else
-							WRITE_FILE(GLOB.config_error_log, "Unknown game mode probability configuration definition: [prob_name].")
-					else
-						WRITE_FILE(GLOB.config_error_log, "Incorrect probability configuration definition: [prob_name]  [prob_value].")
-				if("repeated_mode_adjust")
-					if(value)
-						repeated_mode_adjust.Cut()
-						var/values = splittext(value," ")
-						for(var/v in values)
-							repeated_mode_adjust += text2num(v)
-					else
-						WRITE_FILE(GLOB.config_error_log, "Incorrect round weight adjustment configuration definition for [value].")
-				if("protect_roles_from_antagonist")
-					protect_roles_from_antagonist	= 1
-				if("protect_assistant_from_antagonist")
-					protect_assistant_from_antagonist	= 1
-				if("enforce_human_authority")
-					enforce_human_authority	= 1
-				if("allow_latejoin_antagonists")
-					allow_latejoin_antagonists	= 1
-				if("allow_random_events")
-					allow_random_events		= 1
-
-				if("events_min_time_mul")
-					events_min_time_mul		= text2num(value)
-				if("events_min_players_mul")
-					events_min_players_mul	= text2num(value)
-
-				if("minimal_access_threshold")
-					minimal_access_threshold	= text2num(value)
-				if("jobs_have_minimal_access")
-					jobs_have_minimal_access	= 1
-				if("humans_need_surnames")
-					humans_need_surnames			= 1
-				if("force_random_names")
-					force_random_names		= 1
-				if("allow_ai")
-					allow_ai					= 1
-				if("disable_secborg")
-					forbid_secborg			= 1
-				if("disable_peaceborg")
-					forbid_peaceborg			= 1
-				if("silent_ai")
-					silent_ai 				= 1
-				if("silent_borg")
-					silent_borg				= 1
-				if("sandbox_autoclose")
-					sandbox_autoclose		= 1
-				if("default_laws")
-					default_laws				= text2num(value)
-				if("random_laws")
-					var/law_id = lowertext(value)
-					lawids += law_id
-				if("law_weight")
-					// Value is in the form "LAWID,NUMBER"
-					var/list/L = splittext(value, ",")
-					if(L.len != 2)
-						WRITE_FILE(GLOB.config_error_log, "Invalid LAW_WEIGHT: " + t)
-						continue
-					var/lawid = L[1]
-					var/weight = text2num(L[2])
-					law_weights[lawid] = weight
-
-				if("silicon_max_law_amount")
-					silicon_max_law_amount	= text2num(value)
-				if("join_with_mutant_race")
-					mutant_races				= 1
-				if("roundstart_races")
-					var/race_id = lowertext(value)
-					for(var/species_id in GLOB.species_list)
-						if(species_id == race_id)
-							roundstart_races += GLOB.species_list[species_id]
-							GLOB.roundstart_species[species_id] = GLOB.species_list[species_id]
-				if("join_with_mutant_humans")
-					mutant_humans			= 1
-				if("assistant_cap")
-					assistant_cap			= text2num(value)
-				if("starlight")
-					starlight			= 1
-				if("grey_assistants")
-					grey_assistants			= 1
-				if("lavaland_budget")
-					lavaland_budget			= text2num(value)
-				if("space_budget")
-					space_budget			= text2num(value)
-				if("no_summon_guns")
-					no_summon_guns			= 1
-				if("no_summon_magic")
-					no_summon_magic			= 1
-				if("no_summon_events")
-					no_summon_events			= 1
-				if("reactionary_explosions")
-					reactionary_explosions	= 1
-				if("bombcap")
-					var/BombCap = text2num(value)
-					if (!BombCap)
-						continue
-					if (BombCap < 4)
-						BombCap = 4
-
-					GLOB.MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
-					GLOB.MAX_EX_HEAVY_RANGE = round(BombCap/2)
-					GLOB.MAX_EX_LIGHT_RANGE = BombCap
-					GLOB.MAX_EX_FLASH_RANGE = BombCap
-					GLOB.MAX_EX_FLAME_RANGE = BombCap
-				if("arrivals_shuttle_dock_window")
-					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
-				if("arrivals_shuttle_require_undocked")
-					arrivals_shuttle_require_undocked = TRUE
-				if("arrivals_shuttle_require_safe_latejoin")
-					arrivals_shuttle_require_safe_latejoin = TRUE
-				if("mice_roundstart")
-					mice_roundstart = text2num(value)
-				else
-					WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
-		else if(type == "policies")
-			policies[name] = value
-
-	fps = round(fps)
-	if(fps <= 0)
-		fps = initial(fps)
-
-/datum/configuration/proc/HandleCommsConfig(name, value)
-	switch(name)
-		if("comms_key")
-			global.comms_key = value
-			if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
-				global.comms_allowed = TRUE
-		if("cross_server_address")
-			cross_address = value
-			if(value != "byond:\\address:port")
-				cross_allowed = TRUE
-		if("cross_comms_name")
-			cross_name = value
-		if("medal_hub_address")
-			global.medal_hub = value
-		if("medal_hub_password")
-			global.medal_pass = value
-		else
-			WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 
 /datum/controller/configuration/proc/loadmaplist(filename)
 	filename = "[GLOB.config_dir][filename]"
@@ -611,6 +186,7 @@ GLOBAL_PROTECT(config_dir)
 			if ("default","defaultmap")
 				defaultmap = currentmap
 			if ("endmap")
+				LAZYINITLIST(maplist)
 				maplist[currentmap.map_name] = currentmap
 				currentmap = null
 			if ("disabled")
@@ -632,6 +208,10 @@ GLOBAL_PROTECT(config_dir)
 
 /datum/controller/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
+	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probabilities)
+	var/list/min_pop = Get(/datum/config_entry/keyed_number_list/min_pop)
+	var/list/max_pop = Get(/datum/config_entry/keyed_number_list/max_pop)
+	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
@@ -658,6 +238,9 @@ GLOBAL_PROTECT(config_dir)
 
 /datum/controller/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
+	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probabilities)
+	var/list/min_pop = Get(/datum/config_entry/keyed_number_list/min_pop)
+	var/list/max_pop = Get(/datum/config_entry/keyed_number_list/max_pop)
 	for(var/T in (gamemode_cache - SSticker.mode.type))
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
@@ -675,9 +258,3 @@ GLOBAL_PROTECT(config_dir)
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
-
-/datum/controller/configuration/stat_entry()
-	if(!statclick)
-		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
-
-	stat("[name]:", statclick)

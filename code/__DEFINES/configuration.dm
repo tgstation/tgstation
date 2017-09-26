@@ -7,9 +7,4 @@
 
 //flags
 #define CONFIG_ENTRY_LOCKED 1	//can't edit
-#define CONFIG_ENTRY_HIDDEN 3	//can't see value, hidden implies locked
-
-//Used by jobs_have_maint_access
-#define ASSISTANTS_HAVE_MAINT_ACCESS 1
-#define SECURITY_HAS_MAINT_ACCESS 2
-#define EVERYONE_HAS_MAINT_ACCESS 4
+#define CONFIG_ENTRY_HIDDEN 2	//can't see value
