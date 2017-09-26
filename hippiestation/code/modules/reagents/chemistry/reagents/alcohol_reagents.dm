@@ -126,15 +126,21 @@
 		var/mob/living/carbon/human/H = M
 		H.facial_hair_style = "Dwarf Beard"
 		H.update_hair()
+		if(H.dna.check_mutation(DWARFISM))
+			to_chat(H, "<span class='notice'>Now THAT is MANLY!</span>")
+			boozepwr = 5 //We've had worse in the mines
+			dorf_mode = TRUE
 		..()
+		
+/datum/reagent/consumable/ethanol/manly_dorf/on_mob_add(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+
 		
 /datum/reagent/consumable/ethanol/moonshine/on_mob_life(mob/living/M)
 	if(prob(30))
 		M.say(pick("YEE HAW!!","YEEE HAAW!!","YEEEE HAAAW!!","YEEEEE HAAAAW!!","YEEEEEE HAAAAAW!!","YEEEEEEE HAAAAAAW!!","YEEEEEEEE HAAAAAAAW!!"))
 	..()
-	
-/datum/reagent/consumable/ethanol/b52/on_mob_add(mob/living/M)
-	playsound(M, 'sound/effects/explosion_distant.ogg', 100, FALSE)
 	
 /datum/reagent/consumable/ethanol/black_russian/on_mob_life(mob/living/M)
 	var/light_amount = 0
