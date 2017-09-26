@@ -35,12 +35,13 @@
 	canMouseDown = TRUE
 	pin = null
 	var/aiming = FALSE
-	var/aiming_time = 7
-	var/aiming_time_fire_threshold = 2
-	var/aiming_time_left = 7
+	var/aiming_time = 12
+	var/aiming_time_fire_threshold = 5
+	var/aiming_time_left = 12
 	var/aiming_time_increase_user_movement = 3
 	var/scoped_slow = 1
 	var/aiming_time_increase_angle_multiplier = 0.3
+	var/last_process = 0
 
 	var/lastangle = 0
 	var/aiming_lastangle = 0
@@ -202,7 +203,7 @@
 
 /obj/item/gun/energy/beam_rifle/Initialize()
 	. = ..()
-	START_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SSprojectiles, src)
 	zoom_speed_action = new(src)
 	zoom_lock_action = new(src)
 
@@ -246,9 +247,9 @@
 		return
 	check_user()
 	handle_zooming()
-	if(aiming_time_left > 0)
-		aiming_time_left--
-		aiming_beam(TRUE)
+	aiming_time_left = min(0, aiming_time_left - (world.time - last_process))
+	aiming_beam(TRUE)
+	last_process = world.time
 
 /obj/item/gun/energy/beam_rifle/proc/check_user(automatic_cleanup = TRUE)
 	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
