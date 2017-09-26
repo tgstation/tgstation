@@ -69,7 +69,7 @@
 		for(var/mob/living/L in T)
 			L.forceMove(pick(open_turfs))
 	hierophant_message("<span class='bold large_brass'>The Ark has activated! [grace_period ? "You have [round(grace_period / 60)] minutes until the crew invades! " : ""]Defend it at all costs!</span>", FALSE, src)
-	direct_sound_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = CHANNEL_JUSTICAR_ARK, volume = 10))
+	sound_to_playing_players(volume = 10, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
 	seconds_until_activation = 0
 	SSshuttle.registerHostileEnvironment(src)
 
