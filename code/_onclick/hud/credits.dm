@@ -2,17 +2,17 @@
 #define CREDIT_SPAWN_SPEED 10
 #define CREDIT_ANIMATE_HEIGHT (14 * world.icon_size)
 #define CREDIT_EASE_DURATION 22
+#define CREDITS_PATH "[GLOB.config_dir]contributors.dmi"
 
 /client/proc/RollCredits()
 	set waitfor = FALSE
-	var/path = "[GLOB.config_dir]credits.dmi"
-	if(!fexists(path))
+	if(!fexists(CREDITS_PATH))
 		return
-	var/icon/credits_icon = new(path)
+	var/icon/credits_icon = new(CREDITS_PATH)
 	LAZYINITLIST(credits)
 	var/list/_credits = credits
 	verbs += /client/proc/ClearCredits
-	var/static/list/credit_order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states(credits_icon)) - "Thanks for playing!")
+	var/static/list/credit_order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states(new /icon(CREDITS_PATH))) - "Thanks for playing!")
 	for(var/I in credit_order_for_this_round)
 		if(!credits)
 			return
