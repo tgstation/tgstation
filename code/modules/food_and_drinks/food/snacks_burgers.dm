@@ -179,7 +179,7 @@
 	
 /obj/item/reagent_containers/food/snacks/burger/black
 	name = "black burger"
-	desc = "This is overcooked"
+	desc = "This is overcooked."
 	icon_state = "cburger"
 	color = "#1C1C1C"
 	bonus_reagents = list("blackcrayonpowder" = 10, "vitamin" = 5)
@@ -187,7 +187,7 @@
 	
 /obj/item/reagent_containers/food/snacks/burger/white
 	name = "white burger"
-	desc = "How lifeless."
+	desc = "Delicous Titanium!"
 	icon_state = "cburger"
 	color = "#FFFFFF"
 	bonus_reagents = list("whitecrayonpowder" = 10, "vitamin" = 5)
