@@ -36,7 +36,6 @@ SUBSYSTEM_DEF(voice)
 		if (!((voice.next_check < world.time - 100) || (voice.next_check < world.time && voice.needs_check)))
 			continue
 
-		//message_admins("SSvoice: refresh [C]")
 		voice.needs_check = FALSE
 		// Only handle a given person every so often
 		voice.next_check = world.time + 10
@@ -57,7 +56,6 @@ SUBSYSTEM_DEF(voice)
 		voice.screen_hear.update_voice(voice.status)
 
 		if (MC_TICK_CHECK)
-			message_admins("Voice subsystem suspended")
 			return
 
 	// Batch every changed client in one shell invocation
@@ -164,19 +162,16 @@ SUBSYSTEM_DEF(voice)
 	var/turf/position = get_turf(mob)
 	var/subspace_on = (position.z in SSvoice.subspace_zlevels)
 
-	//var/checked = 0
 	// Check ears for a headset (";" prefix)
 	if (istype(mob, /mob/living/carbon))
 		var/mob/living/carbon/M = mob
 		var/obj/item/device/radio/headset/R = M.ears
 		if (istype(M.ears))
-			//checked++
 			. |= R.voice_check(mob, subspace_on, ptt=TRUE)
 
 	// Check hands for a headset or SBR (":l", ":r" prefixes)
 	if (VOICE_SPEAK & mob_can & ~.)
 		for (var/obj/item/device/radio/R in mob.held_items)
-			//checked++
 			. |= R.voice_check(mob, subspace_on, ptt=TRUE)
 
 	// Check surrounding environment for an intercom (":i" prefix)
@@ -184,23 +179,19 @@ SUBSYSTEM_DEF(voice)
 	if (VOICE_SPEAK & mob_can & ~.)
 		// should match MODE_INTERCOM check in mob/living/say.dm
 		for (var/obj/item/device/radio/intercom/R in view(1, mob))
-			//checked++
 			. |= R.voice_check(mob, subspace_on, ptt=TRUE)
 
 	// Check surrounding environment for open mics...
 	if ((VOICE_SPEAK | VOICE_SPEAK_FREELY) & mob_can & ~.)
 		for (var/obj/item/device/radio/R in get_hearers_in_view(VOICE_MAX_RANGE, mob))
-			//checked++
 			. |= R.voice_check(mob, subspace_on)
 
 	// ... and for open speakers
 	if (VOICE_HEAR & mob_can & ~.)
 		for (var/obj/item/device/radio/R in range(VOICE_MAX_RANGE, mob))
-			//checked++
 			. |= R.voice_check(mob, subspace_on)
 
 	// Backup check in case we set a flag incidentally
-	//to_chat(src, "checked = [checked]; result = [.]; mob_can = [mob_can]")
 	. &= mob_can
 
 // ---------- Additions to mobs and radios
@@ -217,7 +208,6 @@ SUBSYSTEM_DEF(voice)
 
 	// receive_range should be checking the frequency and everything else
 	var/dist = get_dist(src, M)
-	//to_chat(M, "[src]: dist=[dist], recv_range=[receive_range(VOICE_FREQ, M.z)], canhear_range=[canhear_range], subspace=[subspace_transmission], listening=[listening], broadcasting=[broadcasting]")
 	var/range = receive_range(VOICE_FREQ, list(position.z))
 	if (range > -1 && dist <= range && M in get_hearers_in_view(range, src))
 		. |= VOICE_HEAR
