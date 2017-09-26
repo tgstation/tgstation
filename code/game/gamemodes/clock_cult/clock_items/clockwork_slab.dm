@@ -433,7 +433,7 @@
 			data["scripture"] += list(temp_info)
 	data["recollection"] = recollecting
 	if(recollecting)
-		data["recollection_categories"] = list(\
+		data["recollection_categories"] = GLOB.ratvar_awakens ? list() : list(\
 		list("name" = "Getting Started", "desc" = "First-time servant? Read this first."), \
 		list("name" = "Basics", "desc" = "A primer on how to play as a servant."), \
 		list("name" = "Terminology", "desc" = "Common acronyms, words, and terms."), \
