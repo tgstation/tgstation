@@ -568,8 +568,8 @@
 	set category = "Server"
 	set desc="Respawn basically"
 	set name="Toggle Respawn"
-	var/new_nores = !config.Get(/datum/config_entry/flag/norespawn)
-	config.Set(/datum/config_entry/flag/norespawn, new_nores)
+	var/new_nores = !CONFIG_GET(flag/norespawn)
+	CONFIG_SET(flag/norespawn, new_nores)
 	if (!new_nores)
 		to_chat(world, "<B>You may now respawn.</B>")
 	else
@@ -684,8 +684,8 @@
 	set category = "Server"
 	set desc="Guests can't enter"
 	set name="Toggle guests"
-	var/new_guest_ban = !config.Get(/datum/config_entry/flag/guest_ban)
-	config.Set(/datum/config_entry/flag/guest_ban, new_guest_ban)
+	var/new_guest_ban = !CONFIG_GET(flag/guest_ban)
+	CONFIG_SET(flag/guest_ban, new_guest_ban)
 	if (new_guest_ban)
 		to_chat(world, "<B>Guests may no longer enter the game.</B>")
 	else

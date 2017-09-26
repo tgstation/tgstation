@@ -258,11 +258,11 @@ GLOBAL_LIST(external_rsc_urls)
 		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
 
 	if (connection == "web" && !holder)
-		if (!config.allowwebclient)
+		if (!CONFIG_GET(flag/allowwebclient))
 			to_chat(src, "Web client is disabled")
 			qdel(src)
 			return 0
-		if (config.webclientmembersonly && !IsByondMember())
+		if (CONFIG_GET(flag/webclient_only_byond_members) && !IsByondMember())
 			to_chat(src, "Sorry, but the web client is restricted to byond members only.")
 			qdel(src)
 			return 0

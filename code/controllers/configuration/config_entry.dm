@@ -15,7 +15,7 @@
 		CRASH("Config entry [type] has no resident_file set")
 	if(type == abstract_type)
 		CRASH("Abstract config entry [type] instatiated!")	
-	name = type2top(type)
+	name = lowertext(type2top(type))
 	default = value
 	config.entries[name] = src
 	config.entries_by_type[type] = src
@@ -63,32 +63,22 @@
 /datum/config_entry/number
 	value = 0
 	abstract_type = /datum/config_entry/number
+	var/integer = TRUE
+	var/max_val = INFINITY
+	var/min_val = -INFINITY
 
 /datum/config_entry/number/ValidateAndSet(str_val)
 	var/temp = text2num(str_val)
 	if(!isnull(temp))
-		value = temp
+		value = Clamp(integer ? round(temp) : temp, min_val, max_val)
+		if(value != temp && !var_edited)
+			WRITE_FILE(GLOB.config_error_log, "Changing [name] from [temp] to [value]!")
 		return TRUE
 	return FALSE
 
-/datum/config_entry/number/clamped
-	var/max_val = INFINITY
-	var/min_val = -INFINITY
-	abstract_type = /datum/config_entry/number/clamped
-
-/datum/config_entry/number/clamped/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("max_val", "min_val")
-	if(var_name in banned_edits)
-		return FALSE
-	return ..()
-
-/datum/config_entry/number/clamped/ValidateAndSet(str_val)
-	. = ..()
-	if(.)
-		var/temp = value
-		value = Clamp(temp, min_val, max_val)
-		if(value != temp && !var_edited)
-			WRITE_FILE(GLOB.config_error_log, "Clamping [name] from [temp] to [value]!")
+/datum/config_entry/number/vv_edit_var(var_name, var_value)
+	var/static/list/banned_edits = list("max_val", "min_val", "integer")
+	return !(var_name in banned_edits) && ..()
 
 /datum/config_entry/flag
 	value = FALSE

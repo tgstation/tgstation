@@ -37,6 +37,7 @@ GLOBAL_PROTECT(config_dir)
 		LoadEntries(I)
 
 /datum/controller/configuration/proc/LoadEntries(filename)
+	log_world("Loading [filename]...")
 	var/list/lines = world.file2list("[GLOB.config_dir][filename]")
 	var/list/_entries = entries
 	for(var/L in lines)
@@ -80,6 +81,9 @@ GLOBAL_PROTECT(config_dir)
 /datum/controller/configuration/can_vv_get(var_name)
 	return (var_name != "entries_by_type" || !hiding_entries_by_type) && ..()
 
+/datum/controller/configuration/vv_edit_var(var_name, var_value)
+	return var_name != "entries_by_type" && ..()
+
 /datum/controller/configuration/proc/Get(entry_type)
 	var/datum/config_entry/E = entry_type
 	var/entry_is_abstract = initial(E.abstract_type) == entry_type
@@ -106,33 +110,6 @@ GLOBAL_PROTECT(config_dir)
 	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above.
 	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
 
-	var/wikiurl = "http://www.tgstation13.org/wiki" // Default wiki link.
-	var/forumurl = "http://tgstation13.org/phpBB/index.php" //default forums
-	var/rulesurl = "http://www.tgstation13.org/wiki/Rules" // default rules
-	var/githuburl = "https://www.github.com/tgstation/-tg-station" //default github
-	var/githubrepoid
-
-	var/check_randomizer = 0
-
-	//IP Intel vars
-	var/ipintel_email
-	var/ipintel_rating_bad = 1
-	var/ipintel_save_good = 12
-	var/ipintel_save_bad = 1
-	var/ipintel_domain = "check.getipintel.net"
-	
-	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
-	var/note_fresh_days
-	var/note_stale_days
-
-	//Population cap vars
-	var/soft_popcap				= 0
-	var/hard_popcap				= 0
-	var/extreme_popcap			= 0
-	var/soft_popcap_message		= "Be warned that the server is currently serving a high number of users, consider using alternative game servers."
-	var/hard_popcap_message		= "The server is currently serving a high number of users, You cannot currently join. You may wait for the number of living crew to decline, observe, or find alternative servers."
-	var/extreme_popcap_message	= "The server is currently serving a high number of users, find alternative servers."
-
 	//game_options.txt configs
 	var/force_random_names = 0
 	var/list/mode_names = list()
@@ -149,10 +126,6 @@ GLOBAL_PROTECT(config_dir)
 	var/allow_ai = 0					// allow ai job
 	var/forbid_secborg = 0				// disallow secborg module to be chosen.
 	var/forbid_peaceborg = 0
-	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
-	var/notify_new_player_age = 0		// how long do we notify admins of a new player
-	var/notify_new_player_account_age = 0		// how long do we notify admins of a new byond account
-	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
 	var/brother_scaling_coeff = 25		//how many players per brother team
@@ -218,9 +191,6 @@ GLOBAL_PROTECT(config_dir)
 
 	var/damage_multiplier = 1 //Modifier for damage to all mobs. Impacts healing as well.
 
-	var/allowwebclient = 0
-	var/webclientmembersonly = 0
-
 	var/sandbox_autoclose = FALSE // close the sandbox panel after spawning an item, potentially reducing griff
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
@@ -232,26 +202,16 @@ GLOBAL_PROTECT(config_dir)
 	var/assistant_cap = -1
 
 	var/starlight = 0
-	var/generate_minimaps = 0
 	var/grey_assistants = 0
 
 	var/lavaland_budget = 60
 	var/space_budget = 16
 
-	var/aggressive_changelog = 0
 
 	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
 
-	var/autoconvert_notes = 0 //if all connecting player's notes should attempt to be converted to the database
-
-	var/announce_admin_logout = 0
-	var/announce_admin_login = 0
-
 	var/list/datum/map_config/maplist = list()
 	var/datum/map_config/defaultmap = null
-	var/maprotation = 1
-	var/maprotatechancedelta = 0.75
-	var/allow_map_voting = TRUE
 
 	// Enables random events mid-round when set to 1
 	var/allow_random_events = 0
@@ -263,23 +223,9 @@ GLOBAL_PROTECT(config_dir)
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
-	var/client_warn_version = 0
-	var/client_warn_message = "Your version of byond may have issues or be blocked from accessing this server in the future."
-	var/client_error_version = 0
-	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
-
 	var/cross_name = "Other server"
 	var/cross_address = "byond://"
 	var/cross_allowed = FALSE
-	var/showircname = 0
-
-	var/minutetopiclimit
-	var/secondtopiclimit
-
-	var/error_cooldown = 600 // The "cooldown" time for each occurrence of a unique error
-	var/error_limit = 50 // How many occurrences before the next will silence them
-	var/error_silence_time = 6000 // How long a unique error will be silenced for
-	var/error_msg_delay = 50 // How long to wait between messaging admins about occurrences of a unique error
 
 	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
 	var/arrivals_shuttle_require_undocked = FALSE	//Require the arrivals shuttle to be undocked before latejoiners can join
@@ -287,11 +233,7 @@ GLOBAL_PROTECT(config_dir)
 
 	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
 
-	var/irc_announce_new_game = FALSE
-
 	var/list/policies = list()
-
-	var/debug_admin_hrefs = FALSE	//turns off admin href token protection for debugging purposes
 
 /datum/controller/configuration/proc/LoadModes()
 	gamemode_cache = typecacheof(/datum/game_mode, TRUE)
@@ -349,102 +291,6 @@ GLOBAL_PROTECT(config_dir)
 		if(!name)
 			continue
 
-		if(type == "config")
-			switch(name)
-				if("show_irc_name")
-					showircname = 1
-				if("see_own_notes")
-					see_own_notes = 1
-				if("note_fresh_days")
-					note_fresh_days = text2num(value)
-				if("note_stale_days")
-					note_stale_days = text2num(value)
-				if("soft_popcap")
-					soft_popcap = text2num(value)
-				if("hard_popcap")
-					hard_popcap = text2num(value)
-				if("extreme_popcap")
-					extreme_popcap = text2num(value)
-				if("soft_popcap_message")
-					soft_popcap_message = value
-				if("hard_popcap_message")
-					hard_popcap_message = value
-				if("extreme_popcap_message")
-					extreme_popcap_message = value
-				if("panic_bunker")
-					panic_bunker = 1
-				if("notify_new_player_age")
-					notify_new_player_age = text2num(value)
-				if("notify_new_player_account_age")
-					notify_new_player_account_age = text2num(value)
-				if("irc_first_connection_alert")
-					irc_first_connection_alert = 1
-				if("check_randomizer")
-					check_randomizer = 1
-				if("ipintel_email")
-					if (value != "ch@nge.me")
-						ipintel_email = value
-				if("ipintel_rating_bad")
-					ipintel_rating_bad = text2num(value)
-				if("ipintel_domain")
-					ipintel_domain = value
-				if("ipintel_save_good")
-					ipintel_save_good = text2num(value)
-				if("ipintel_save_bad")
-					ipintel_save_bad = text2num(value)
-				if("aggressive_changelog")
-					aggressive_changelog = 1
-				if("autoconvert_notes")
-					autoconvert_notes = 1
-				if("allow_webclient")
-					allowwebclient = 1
-				if("webclient_only_byond_members")
-					webclientmembersonly = 1
-				if("announce_admin_logout")
-					announce_admin_logout = 1
-				if("announce_admin_login")
-					announce_admin_login = 1
-				if("maprotation")
-					maprotation = 1
-				if("allow_map_voting")
-					allow_map_voting = text2num(value)
-				if("maprotationchancedelta")
-					maprotatechancedelta = text2num(value)
-				if("autoadmin")
-					autoadmin = 1
-					if(value)
-						autoadmin_rank = ckeyEx(value)
-				if("generate_minimaps")
-					generate_minimaps = 1
-				if("client_warn_version")
-					client_warn_version = text2num(value)
-				if("client_warn_message")
-					client_warn_message = value
-				if("client_error_version")
-					client_error_version = text2num(value)
-				if("client_error_message")
-					client_error_message = value
-				if("minute_topic_limit")
-					minutetopiclimit = text2num(value)
-				if("second_topic_limit")
-					secondtopiclimit = text2num(value)
-				if("error_cooldown")
-					error_cooldown = text2num(value)
-				if("error_limit")
-					error_limit = text2num(value)
-				if("error_silence_time")
-					error_silence_time = text2num(value)
-				if("error_msg_delay")
-					error_msg_delay = text2num(value)
-				if("irc_announce_new_game")
-					irc_announce_new_game = TRUE
-				if("debug_admin_hrefs")
-					debug_admin_hrefs = TRUE
-				else
-#if DM_VERSION > 511
-#error Replace the line below with WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
-#endif
-					HandleCommsConfig(name, value)	//TODO: Deprecate this eventually
 		else if(type == "comms")
 			HandleCommsConfig(name, value)
 		else if(type == "game_options")

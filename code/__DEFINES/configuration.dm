@@ -1,5 +1,7 @@
 //config files
-#define CONFIG_DEF(X) X { resident_file = CURRENT_RESIDENT_FILE }; X
+#define CONFIG_DEF(X) /datum/config_entry/##X { resident_file = CURRENT_RESIDENT_FILE }; /datum/config_entry/##X
+#define CONFIG_GET(X) config.Get(/datum/config_entry/##X)
+#define CONFIG_SET(X, Y) config.Set(/datum/config_entry/##X, ##Y)
 
 #define CONFIG_MAPS_FILE "maps.txt"
 
