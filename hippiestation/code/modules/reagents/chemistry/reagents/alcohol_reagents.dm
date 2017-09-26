@@ -131,12 +131,7 @@
 			boozepwr = 5 //We've had worse in the mines
 			dorf_mode = TRUE
 		..()
-		
-/datum/reagent/consumable/ethanol/manly_dorf/on_mob_add(mob/living/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
 
-		
 /datum/reagent/consumable/ethanol/moonshine/on_mob_life(mob/living/M)
 	if(prob(30))
 		M.say(pick("YEE HAW!!","YEEE HAAW!!","YEEEE HAAAW!!","YEEEEE HAAAAW!!","YEEEEEE HAAAAAW!!","YEEEEEEE HAAAAAAW!!","YEEEEEEEE HAAAAAAAW!!"))
