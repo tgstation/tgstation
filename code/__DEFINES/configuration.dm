@@ -1,9 +1,5 @@
 //config files
-#define CONFIG_GENERAL "config.txt"
-#define CONFIG_GAME_OPTIONS "game_options.txt"
-#define CONFIG_DATABASE "database.txt"
-
-#define CONFIG_ENTRY_FILES list(CONFIG_GENERAL, CONFIG_GAME_OPTIONS, CONFIG_DATABASE)
+#define CONFIG_DEF(X) X { resident_file = CURRENT_RESIDENT_FILE }; X
 
 #define CONFIG_MAPS_FILE "maps.txt"
 

@@ -17,23 +17,29 @@ GLOBAL_PROTECT(config_dir)
 		loadmaplist(CONFIG_MAPS_FILE)
 
 /datum/controller/configuration/proc/InitEntries()
-	var/list/_entries = entries = list()
-	var/list/_entries_by_type = entries_by_type = list()
+	var/list/_entries = list()
+	entries = _entries
+	var/list/_entries_by_type = list()
+	entries_by_type = _entries_by_type
+
+	var/list/config_files = list()
+
 	for(var/I in typesof(/datum/config_entry))	//typesof is faster in this case
 		var/datum/config_entry/E = I
+		config_files[initial(E.resident_file)] = TRUE
 		if(initial(E.abstract_type) == I)
 			continue
 		E = new I
 		_entries_by_type[I] = E
 		_entries[E.name] = E
 
-	for(var/I in CONFIG_ENTRY_FILES)
+	for(var/I in config_files)
 		LoadEntries(I)
 
 /datum/controller/configuration/proc/LoadEntries(filename)
 	var/list/lines = world.file2list("[GLOB.config_dir][filename]")
 	var/list/_entries = entries
-	for(var/L in Lines)
+	for(var/L in lines)
 		if(!L)
 			continue
 
@@ -62,7 +68,7 @@ GLOBAL_PROTECT(config_dir)
 			WRITE_FILE(GLOB.config_error_log, "Found [entry] in [filename] when it should have been in [E.resident_file]! Ignoring.")
 			continue
 
-		var/validated = E.ValidateAndSet(value))
+		var/validated = E.ValidateAndSet(value)
 		if(!validated)
 			WRITE_FILE(GLOB.config_error_log, "Failed to validate setting for [entry]")
 		else if(E.modified)

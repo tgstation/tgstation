@@ -1,3 +1,4 @@
+#undef CURRENT_RESIDENT_FILE
 /datum/config_entry
 	var/name	//read-only, this is determined by the last portion of the derived entry type
 	var/value
