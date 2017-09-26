@@ -32,7 +32,7 @@
 
 	//Guest Checking
 	if(IsGuestKey(key))
-		if (!GLOB.guests_allowed)
+		if (config.Get(/datum/config_entry/flag/guest_ban))
 			log_access("Failed Login: [key] - Guests not allowed")
 			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 		if (config.panic_bunker && SSdbcore && SSdbcore.IsConnected())

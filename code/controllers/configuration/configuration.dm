@@ -90,38 +90,29 @@ GLOBAL_PROTECT(config_dir)
 		CRASH("Missing config entry for [entry_type]!")
 	return E.value
 
+/datum/controller/configuration/proc/Set(entry_type, new_val)
+	var/datum/config_entry/E = entry_type
+	var/entry_is_abstract = initial(E.abstract_type) == entry_type
+	if(entry_is_abstract)
+		CRASH("Tried to retrieve an abstract config_entry: [entry_type]")
+	E = entries_by_type[entry_type]
+	if(!E)
+		CRASH("Missing config entry for [entry_type]!")
+	return E.ValidateAndSet(new_val)
+
 /datum/configuration
-	var/hostedby = null
-	var/respawn = 1
-	var/guest_jobban = 1
-	var/usewhitelist = 0
-	var/inactivity_period = 3000		//time in ds until a player is considered inactive
-	var/afk_period = 6000				//time in ds until a player is considered afk and kickable
-	var/kick_inactive = FALSE			//force disconnect for inactive players
-	var/load_jobs_from_txt = 0
-	var/automute_on = 0					//enables automuting/spam prevention
 	var/minimal_access_threshold = 0	//If the number of players is larger than this threshold, minimal access will be turned on.
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above.
 	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
 
-	var/server
-	var/banappeals
 	var/wikiurl = "http://www.tgstation13.org/wiki" // Default wiki link.
 	var/forumurl = "http://tgstation13.org/phpBB/index.php" //default forums
 	var/rulesurl = "http://www.tgstation13.org/wiki/Rules" // default rules
 	var/githuburl = "https://www.github.com/tgstation/-tg-station" //default github
 	var/githubrepoid
 
-	var/forbid_singulo_possession = 0
-	var/useircbot = 0
-
 	var/check_randomizer = 0
-
-	var/panic_server_name
-	var/panic_address //Reconnect a player this linked server if this server isn't accepting new players
-
-	var/invoke_youtubedl
 
 	//IP Intel vars
 	var/ipintel_email
@@ -129,21 +120,10 @@ GLOBAL_PROTECT(config_dir)
 	var/ipintel_save_good = 12
 	var/ipintel_save_bad = 1
 	var/ipintel_domain = "check.getipintel.net"
-
-	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
-	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
-	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
-	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
+	
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 	var/note_fresh_days
 	var/note_stale_days
-
-	var/use_exp_tracking = FALSE
-	var/use_exp_restrictions_heads = FALSE
-	var/use_exp_restrictions_heads_hours = 0
-	var/use_exp_restrictions_heads_department = FALSE
-	var/use_exp_restrictions_other = FALSE
-	var/use_exp_restrictions_admin_bypass = FALSE
 
 	//Population cap vars
 	var/soft_popcap				= 0
@@ -255,8 +235,6 @@ GLOBAL_PROTECT(config_dir)
 	var/generate_minimaps = 0
 	var/grey_assistants = 0
 
-	var/id_console_jobslot_delay = 30
-
 	var/lavaland_budget = 60
 	var/space_budget = 16
 
@@ -344,8 +322,6 @@ GLOBAL_PROTECT(config_dir)
 	if (maprotation)
 		loadmaplist("maps.txt")
 
-	// apply some settings from config..
-	GLOB.abandon_allowed = respawn
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
 	filename = "[GLOB.config_dir][filename]"
@@ -375,144 +351,6 @@ GLOBAL_PROTECT(config_dir)
 
 		if(type == "config")
 			switch(name)
-				if("hub")
-					hub = 1
-				if("admin_legacy_system")
-					admin_legacy_system = 1
-				if("ban_legacy_system")
-					ban_legacy_system = 1
-				if("use_age_restriction_for_jobs")
-					use_age_restriction_for_jobs = 1
-				if("use_account_age_for_jobs")
-					use_account_age_for_jobs = 1
-				if("use_exp_tracking")
-					use_exp_tracking = TRUE
-				if("use_exp_restrictions_heads")
-					use_exp_restrictions_heads = TRUE
-				if("use_exp_restrictions_heads_hours")
-					use_exp_restrictions_heads_hours = text2num(value)
-				if("use_exp_restrictions_heads_department")
-					use_exp_restrictions_heads_department = TRUE
-				if("use_exp_restrictions_other")
-					use_exp_restrictions_other = TRUE
-				if("use_exp_restrictions_admin_bypass")
-					use_exp_restrictions_admin_bypass = TRUE
-				if("lobby_countdown")
-					lobby_countdown = text2num(value)
-				if("round_end_countdown")
-					round_end_countdown = text2num(value)
-				if("log_ooc")
-					log_ooc = 1
-				if("log_access")
-					log_access = 1
-				if("log_say")
-					log_say = 1
-				if("log_admin")
-					log_admin = 1
-				if("log_prayer")
-					log_prayer = 1
-				if("log_law")
-					log_law = 1
-				if("log_game")
-					log_game = 1
-				if("log_vote")
-					log_vote = 1
-				if("log_whisper")
-					log_whisper = 1
-				if("log_attack")
-					log_attack = 1
-				if("log_emote")
-					log_emote = 1
-				if("log_adminchat")
-					log_adminchat = 1
-				if("log_pda")
-					log_pda = 1
-				if("log_twitter")
-					log_twitter = 1
-				if("log_world_topic")
-					log_world_topic = 1
-				if("allow_admin_ooccolor")
-					allow_admin_ooccolor = 1
-				if("allow_vote_restart")
-					allow_vote_restart = 1
-				if("allow_vote_mode")
-					allow_vote_mode = 1
-				if("no_dead_vote")
-					vote_no_dead = 1
-				if("default_no_vote")
-					vote_no_default = 1
-				if("vote_delay")
-					vote_delay = text2num(value)
-				if("vote_period")
-					vote_period = text2num(value)
-				if("norespawn")
-					respawn = 0
-				if("servername")
-					server_name = value
-				if("serversqlname")
-					server_sql_name = value
-				if("stationname")
-					station_name = value
-				if("hostedby")
-					hostedby = value
-				if("server")
-					server = value
-				if("banappeals")
-					banappeals = value
-				if("wikiurl")
-					wikiurl = value
-				if("forumurl")
-					forumurl = value
-				if("rulesurl")
-					rulesurl = value
-				if("githuburl")
-					githuburl = value
-				if("githubrepoid")
-					githubrepoid = value
-				if("guest_jobban")
-					guest_jobban = 1
-				if("guest_ban")
-					GLOB.guests_allowed = 0
-				if("usewhitelist")
-					usewhitelist = TRUE
-				if("allow_metadata")
-					allow_Metadata = 1
-				if("id_console_jobslot_delay")
-					id_console_jobslot_delay = text2num(value)
-				if("inactivity_period")
-					inactivity_period = text2num(value) * 10 //documented as seconds in config.txt
-				if("afk_period")
-					afk_period = text2num(value) * 10 // ^^^
-				if("kick_inactive")
-					kick_inactive = TRUE
-				if("load_jobs_from_txt")
-					load_jobs_from_txt = 1
-				if("forbid_singulo_possession")
-					forbid_singulo_possession = 1
-				if("popup_admin_pm")
-					popup_admin_pm = 1
-				if("allow_holidays")
-					allow_holidays = 1
-				if("useircbot")	//tgs2 support
-					useircbot = 1
-				if("ticklag")
-					var/ticklag = text2num(value)
-					if(ticklag > 0)
-						fps = 10 / ticklag
-				if("tick_limit_mc_init")
-					tick_limit_mc_init = text2num(value)
-				if("fps")
-					fps = text2num(value)
-				if("automute_on")
-					automute_on = 1
-				if("panic_server_name")
-					if (value != "\[Put the name here\]")
-						panic_server_name = value
-				if("panic_server_address")
-					if(value != "byond://address:port")
-						panic_address = value
-				if("invoke_youtubedl")
-					invoke_youtubedl = value
 				if("show_irc_name")
 					showircname = 1
 				if("see_own_notes")

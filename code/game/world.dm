@@ -157,7 +157,7 @@ GLOBAL_PROTECT(security_mode)
 		var/list/s = list()
 		s["version"] = GLOB.game_version
 		s["mode"] = GLOB.master_mode
-		s["respawn"] = config ? GLOB.abandon_allowed : 0
+		s["respawn"] = config ? !config.Get(/datum/config_entry/flag/norespawn) : FALSE
 		s["enter"] = GLOB.enter_allowed
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
@@ -282,7 +282,7 @@ GLOBAL_PROTECT(security_mode)
 	if (!GLOB.enter_allowed)
 		features += "closed"
 
-	features += GLOB.abandon_allowed ? "respawn" : "no respawn"
+	features += "[config.Get(/datum/config_entry/flag/norespawn) ? "no " : ""]respawn"
 
 	if (config && config.allow_vote_mode)
 		features += "vote"
