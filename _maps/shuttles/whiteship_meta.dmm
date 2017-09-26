@@ -39,6 +39,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ah" = (
@@ -49,6 +50,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ai" = (

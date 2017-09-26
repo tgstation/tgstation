@@ -37,36 +37,36 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//kinda localization -- rastaf0
 	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	// Location
-	"ГЄ" = "right hand",
-	"Г¤" = "left hand",
-	"Гё" = "intercom",
+	"к" = "right hand",
+	"д" = "left hand",
+	"ш" = "intercom",
 
 	// Department
-	"Г°" = "department",
-	"Г±" = "Command",
-	"ГІ" = "Science",
-	"Гј" = "Medical",
-	"Гі" = "Engineering",
-	"Г»" = "Security",
-	"ГЈ" = "Supply",
-	"Г¬" = "Service",
+	"р" = "department",
+	"с" = "Command",
+	"т" = "Science",
+	"ь" = "Medical",
+	"у" = "Engineering",
+	"ы" = "Security",
+	"г" = "Supply",
+	"м" = "Service",
 
 	// Faction
-	"ГҐ" = "Syndicate",
-	"Г­" = "CentCom",
+	"е" = "Syndicate",
+	"н" = "CentCom",
 
 	// Species
-	"ГЁ" = "binary",
-	"ГЇ" = "changeling",
-	"Гґ" = "alientalk",
+	"и" = "binary",
+	"п" = "changeling",
+	"ф" = "alientalk",
 
 	// Admin
-	"Г§" = "admin",
-	"Гў" = "deadmin",
+	"з" = "admin",
+	"в" = "deadmin",
 
 	// Misc
-	"Г№" = "AI Private",
-	"Г·" = "cords"
+	"щ" = "AI Private",
+	"ч" = "cords"
 ))
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
 	if(sanitize)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trim(copytext(sanitize(strip_html_smart(message)), 1, MAX_MESSAGE_LEN)) //не проебите санитайз HTML при мерже, пожалуйста
 	if(!message || message == "")
 		return
 
@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	message = capitalize(message)
 
-	return message
+	return sanitize_russian(message)
 
 /mob/living/proc/radio(message, message_mode, list/spans, language)
 	switch(message_mode)

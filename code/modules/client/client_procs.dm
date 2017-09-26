@@ -1,7 +1,7 @@
 	////////////
 	//SECURITY//
 	////////////
-#define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
+#define UPLOAD_LIMIT		6291456	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 
 #define LIMITER_SIZE	5
 #define CURRENT_SECOND	1
@@ -103,6 +103,10 @@
 			src << link(href_list["link"])
 
 	..()	//redirect to hsrc.Topic()
+
+	if(href_list["deleteDB"])
+		suggestDBDelete(href_list["deleteDB"])
+		return
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)

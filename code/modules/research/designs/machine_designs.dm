@@ -106,6 +106,22 @@
 	build_path = /obj/item/circuitboard/computer/launchpad_console
 	category = list ("Teleportation Machinery")
 
+/datum/design/board/telepad // Telesci boy
+	name = "Machine Design (Telepad Board)"
+	desc = "The circuit board for a telescience telepad."
+	id = "telepad"
+	req_tech = list("programming" = 4, "bluespace" = 5, "plasmatech" = 4, "engineering" = 4)
+	build_path = /obj/item/circuitboard/machine/telesci_pad
+	category = list ("Teleportation Machinery")
+
+/datum/design/board/telesci_console
+	name = "Computer Design (Telepad Control Console Board)"
+	desc = "Allows for the construction of circuit boards used to build a telescience console."
+	id = "telesci_console"
+	req_tech = list("programming" = 3, "bluespace" = 3, "plasmatech" = 4)
+	build_path = /obj/item/circuitboard/computer/telesci_console
+	category = list("Teleportation Machinery")
+
 /datum/design/board/teleconsole
 	name = "Computer Design (Teleporter Console)"
 	desc = "Allows for the construction of circuit boards used to build a teleporter control console."

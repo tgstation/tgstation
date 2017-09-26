@@ -48,7 +48,7 @@
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
 		txt = copytext(txt, 1, 128)
 		if(loc == user && user.stat == CONSCIOUS)
-			scribble = txt
+			scribble = sanitize_russian(txt)
 	..()
 
 
@@ -96,8 +96,6 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
-	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	can_hold = list(/obj/item/photo)
 	resistance_flags = FLAMMABLE
 
@@ -110,8 +108,6 @@
 	desc = "A polaroid camera."
 	icon_state = "camera"
 	item_state = "electropack"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
