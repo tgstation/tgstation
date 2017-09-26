@@ -1932,6 +1932,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/clothing/suit/straight_jacket,
+/obj/item/device/electropack,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aed" = (
@@ -2772,7 +2773,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Security Maintenance";
-	req_access_txt = "63"
+	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -3151,7 +3152,7 @@
 "ahg" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3783,7 +3784,7 @@
 "aiB" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -4019,6 +4020,10 @@
 	dir = 4
 	},
 /obj/machinery/shieldgen,
+/obj/machinery/light/small{
+	dir = 4;
+	light_color = "#fff4bc"
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "ajc" = (
@@ -4826,7 +4831,7 @@
 "akX" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/effect/turf_decal/stripes/line{
 	icon_state = "warningline";
@@ -6976,7 +6981,7 @@
 "aql" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/structure/cable/white{
 	d1 = 4;
@@ -7899,7 +7904,7 @@
 "ast" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Chapel Maintenance";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -9843,7 +9848,7 @@
 "awW" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -9904,7 +9909,7 @@
 "axa" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -9943,7 +9948,7 @@
 "axf" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -11511,7 +11516,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -18244,7 +18249,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -18336,7 +18341,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
@@ -18855,6 +18860,10 @@
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	light_color = "#ffc1c1"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -19928,7 +19937,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /obj/effect/turf_decal/stripes/line{
 	icon_state = "warningline";
@@ -20111,7 +20120,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -20450,7 +20459,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_access_txt = "0"
+	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -20475,6 +20484,10 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	light_color = "#ffc1c1"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -22312,7 +22325,7 @@
 	id = "ceblast";
 	name = "Engineering Lockdown Shutters"
 	},
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "aXb" = (
@@ -22518,7 +22531,7 @@
 	name = "Atmospherics";
 	req_access_txt = "24"
 	},
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aXy" = (
@@ -23727,11 +23740,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 6;
-	icon_state = "intact";
-	tag = ""
-	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aZO" = (
@@ -23979,13 +23987,13 @@
 	icon_state = "warninglinecorner";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 10
-	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -24003,6 +24011,11 @@
 "bap" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+	dir = 9;
+	icon_state = "intact";
+	tag = ""
 	},
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
@@ -24250,7 +24263,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "baX" = (
@@ -24380,12 +24392,12 @@
 /turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bbm" = (
-/obj/machinery/telecomms/processor/preset_three,
 /obj/machinery/camera{
 	c_tag = "Satellite - Telecomms Server Room";
 	dir = 2;
 	network = list("SS13","Satellite")
 	},
+/obj/machinery/telecomms/bus/preset_three,
 /turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bbn" = (
@@ -24576,7 +24588,7 @@
 /turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bbN" = (
-/obj/machinery/telecomms/bus/preset_three,
+/obj/machinery/telecomms/processor/preset_three,
 /turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bbO" = (
@@ -24906,10 +24918,6 @@
 	dir = 8;
 	network = list("SS13")
 	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 9
-	},
-/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "bcA" = (
@@ -26981,7 +26989,7 @@
 /turf/open/floor/plasteel/black,
 /area/hydroponics)
 "bhj" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 6;
 	icon_state = "intact";
 	tag = ""
@@ -27004,7 +27012,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bhm" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "bhn" = (
@@ -27085,9 +27093,8 @@
 /turf/open/floor/plasteel,
 /area/space)
 "bhA" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "bhB" = (
@@ -27160,7 +27167,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Atmos to Loop";
+	on = 0
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "bhK" = (
@@ -27214,11 +27225,87 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
+"bhO" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/light/small,
+/turf/open/space/basic,
+/area/space)
+"bhP" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/rack{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	light_color = "#ffc1c1"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"bhQ" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/light/small,
+/turf/open/space/basic,
+/area/space)
+"bhR" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/light/small,
+/turf/open/space/basic,
+/area/space)
+"bhS" = (
+/obj/machinery/light/small{
+	dir = 1;
+	light_color = "#ffc1c1"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
+"bhT" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
+"bhU" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/light/small{
+	dir = 1;
+	light_color = "#ffc1c1"
+	},
+/turf/open/space/basic,
+/area/space)
+"bhV" = (
+/obj/structure/rack{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/machinery/light/small{
+	dir = 4;
+	light_color = "#fff4bc"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"bhW" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/light/small{
+	dir = 4;
+	light_color = "#fff4bc"
+	},
+/turf/open/space/basic,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -53842,9 +53929,9 @@ abI
 aaa
 aZW
 aZW
-bbl
 bbM
-bch
+bbl
+bci
 bbk
 bcX
 bdv
@@ -54358,7 +54445,7 @@ aZW
 aZW
 bbm
 bbN
-bci
+bch
 bbk
 bcZ
 bdv
@@ -55070,7 +55157,7 @@ aio
 agQ
 aaa
 abp
-abc
+bhO
 akS
 akS
 akS
@@ -56361,7 +56448,7 @@ alx
 amm
 amm
 anN
-amm
+bhT
 amm
 aqi
 ara
@@ -57623,7 +57710,7 @@ abp
 abp
 abp
 abc
-abc
+bhO
 adt
 adt
 adt
@@ -57685,7 +57772,7 @@ aTs
 aRY
 aaa
 aaa
-abc
+bhW
 abc
 abc
 aaa
@@ -58912,7 +58999,7 @@ aaa
 aaa
 abp
 adt
-aeG
+bhP
 aeD
 adt
 afQ
@@ -59483,7 +59570,7 @@ aSP
 aTv
 aTZ
 aUu
-aUu
+bhV
 aVp
 aVQ
 aUa
@@ -64301,7 +64388,7 @@ abI
 aaa
 aaa
 aaa
-bgB
+bgA
 bgE
 agF
 add
@@ -64379,8 +64466,8 @@ aZi
 aZN
 bhJ
 baW
-bhL
-bhM
+bao
+bao
 bcz
 bcO
 bao
@@ -64558,7 +64645,7 @@ abI
 abp
 abp
 abp
-bgC
+bgA
 bgF
 bgI
 bgK
@@ -64566,7 +64653,7 @@ adr
 adJ
 aec
 bgS
-bgV
+bgS
 bgY
 afN
 adK
@@ -64626,13 +64713,13 @@ aUa
 aUa
 bhj
 bhm
-bhn
+bhm
 aXa
 aXx
 aXa
-bhp
-bhq
-bhr
+bhm
+bhm
+bhm
 bhA
 bap
 baX
@@ -64817,18 +64904,18 @@ abI
 abI
 acT
 bgG
-bgJ
-bgL
+bgG
+bgG
 bgM
 bgP
-bgR
-bgT
+bgP
+bgP
 afa
 afx
 bha
 bhf
 bhg
-bhh
+bhg
 ahc
 ahE
 aif
@@ -68167,7 +68254,7 @@ abp
 abp
 abp
 abc
-abc
+bhO
 agq
 agq
 agq
@@ -69467,7 +69554,7 @@ alt
 amf
 amQ
 ajK
-ahh
+bhS
 akd
 apO
 aqL
@@ -69774,7 +69861,7 @@ aaa
 aaa
 aaa
 aaa
-bhK
+aaa
 aaa
 aaa
 aaa
@@ -70029,8 +70116,8 @@ aaa
 aaa
 aaa
 aaa
-bhs
-bhB
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70286,8 +70373,8 @@ aaa
 aaa
 aaa
 aaa
-bht
-bhC
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70543,8 +70630,8 @@ aaa
 aaa
 aaa
 aaa
-bhu
-bhD
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70800,8 +70887,8 @@ aaa
 aaa
 aaa
 aaa
-bhv
-bhE
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71057,8 +71144,8 @@ aaa
 aaa
 aaa
 aaa
-bhw
-bhF
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71314,8 +71401,8 @@ aaa
 aaa
 aaa
 aaa
-bhx
-bhG
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71571,8 +71658,8 @@ aaa
 aaa
 aaa
 aaa
-bhy
-bhH
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71828,8 +71915,8 @@ aaa
 aaa
 aaa
 aaa
-bhz
-bhI
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -73614,7 +73701,7 @@ aQc
 aPr
 aPr
 aPr
-abc
+bhU
 abc
 abc
 abc
