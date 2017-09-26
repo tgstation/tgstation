@@ -153,6 +153,7 @@
 	navbar += "|<a href='?_src_=holder;[HrefToken()];showmemo=1'>\[Memos\]</a>|<a href='?_src_=holder;[HrefToken()];showwatch=1'>\[Watchlist\]</a>"
 	navbar += "<br><form method='GET' name='search' action='?'>\
 	<input type='hidden' name='_src_' value='holder'>\
+	[HrefTokenFormField()]\
 	<input type='text' name='searchmessages' value='[index]'>\
 	<input type='submit' value='Search'></form>"
 	if(!linkless)
