@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(mapping)
 	var/space_zlevels = list()
 	for(var/i in ZLEVEL_SPACEMIN to ZLEVEL_SPACEMAX)
 		switch(i)
-			if(ZLEVEL_MINING, ZLEVEL_LAVALAND, ZLEVEL_EMPTY_SPACE, ZLEVEL_TRANSIT)
+			if(ZLEVEL_MINING, ZLEVEL_LAVALAND, ZLEVEL_EMPTY_SPACE, ZLEVEL_TRANSIT, ZLEVEL_CITYOFCOGS)
 				continue
 			else
 				space_zlevels += i

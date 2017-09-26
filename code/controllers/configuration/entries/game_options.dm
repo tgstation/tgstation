@@ -184,8 +184,6 @@ CONFIG_DEF(flag/ooc_during_round)
 
 CONFIG_DEF(flag/emojis)
 
-CONFIG_DEF(flag/no_credits_round_end)
-
 CONFIG_DEF(number/run_speed)	//Used for modifying movement speed for mobs.
 
 CONFIG_DEF(number/walk_speed)
