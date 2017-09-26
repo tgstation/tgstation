@@ -84,11 +84,6 @@
 	glass_name = "glass of berry juice"
 	glass_desc = "Berry juice. Or maybe it's jam. Who cares?"
 
-/datum/reagent/consumable/berryjuice/on_mob_life(mob/living/M)
-	if(prob(25))
-		M.reagents.add_reagent("vitamin",0.8)
-	..()
-
 /datum/reagent/consumable/applejuice
 	name = "Apple Juice"
 	id = "applejuice"
@@ -120,11 +115,6 @@
 	glass_icon_state = "glass_red"
 	glass_name = "glass of watermelon juice"
 	glass_desc = "A glass of watermelon juice."
-
-/datum/reagent/consumable/watermelonjuice/on_mob_life(mob/living/M)
-	M.adjustCloneLoss(-0.4, 0) //pretty slow, you're really better off using cryox/clonex
-	. = 1
-	..()
 
 /datum/reagent/consumable/lemonjuice
 	name = "Lemon Juice"
@@ -203,10 +193,6 @@
 	glass_icon_state = "glass_brown"
 	glass_name = "glass of potato juice"
 	glass_desc = "Bleh..."
-
-/datum/reagent/consumable/potato_juice/on_mob_life(mob/living/M)
-	M.adjustStaminaLoss(-0.5*REM, 0)
-	..()
 
 /datum/reagent/consumable/grapejuice
 	name = "Grape Juice"
@@ -662,10 +648,6 @@
 	glass_name = "Cherry Shake"
 	glass_desc = "A cherry flavored milkshake."
 
-/datum/reagent/consumable/cherryshake/on_mob_life(mob/living/M)
-	M.reagents.add_reagent("sugar",1.2)
-	..()
-
 /datum/reagent/consumable/bluecherryshake
 	name = "Blue Cherry Shake"
 	id = "bluecherryshake"
@@ -676,9 +658,6 @@
 	glass_icon_state = "bluecherryshake"
 	glass_name = "Blue Cherry Shake"
 	glass_desc = "An exotic blue milkshake."
-
-/datum/reagent/consumable/bluecherryshake/reaction_mob(mob/living/M)
-	M.reagents.add_reagent("sugar",2)
 
 /datum/reagent/consumable/pumpkin_latte
 	name = "Pumpkin Latte"
@@ -701,15 +680,6 @@
 	glass_icon_state = "gibbfloats"
 	glass_name = "Gibbfloat"
 	glass_desc = "Dr. Gibb with ice cream on top."
-
-/datum/reagent/consumable/gibbfloats/on_mob_life(mob/living/M)
-	M.dizziness = max(0,M.dizziness-5)
-	M.drowsyness = max(0,M.drowsyness-3)
-	M.AdjustSleeping(-40, FALSE)
-	if (M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	..()
-	. = 1
 
 /datum/reagent/consumable/pumpkinjuice
 	name = "Pumpkin Juice"
@@ -734,16 +704,6 @@
 	glass_icon_state = "triplecitrus" //needs own sprite mine are trash
 	glass_name = "glass of triple citrus"
 	glass_desc = "A mixture of citrus juices. Tangy, yet smooth."
-
-/datum/reagent/consumable/triple_citrus/on_mob_life(mob/living/M)
-	if(M.getOxyLoss() && prob(75))
-		M.adjustOxyLoss(-1, 0)
-	if(M.getFireLoss() && prob(75))
-		M.adjustFireLoss(-1, 0)
-	if(M.getBruteLoss() && prob(75))
-		M.adjustBruteLoss(-1, 0)
-	. = 1
-	..()
 
 /datum/reagent/consumable/grape_soda
 	name = "Grape soda"
