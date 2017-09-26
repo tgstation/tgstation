@@ -174,7 +174,14 @@
 						SSticker.mode.remove_antag_for_borging(brain.brainmob.mind)
 						if(!istype(brain.laws, /datum/ai_laws/ratvar))
 							remove_servant_of_ratvar(brain.brainmob, TRUE)
-						var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(loc, brain.laws, brain.brainmob)
+
+						var/mob/living/silicon/ai/A = null
+
+						if (brain.overrides_aicore_laws)
+							A = new /mob/living/silicon/ai(loc, brain.laws, brain.brainmob)
+						else
+							A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
+
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
 						SSblackbox.inc("cyborg_ais_created",1)
