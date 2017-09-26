@@ -487,7 +487,7 @@ LAVALAND_BUDGET 60
 Space_Budget 16
 
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
-## Must be at least 30 to not break parallax I recommended at least 55 to be visually/aurally appropriate
+## Must be at least 30. At least 55 recommended to be visually/aurally appropriate
 ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
 ## Uncomment to require the arrivals shuttle to be in flight (if it can fly) before late join players can join

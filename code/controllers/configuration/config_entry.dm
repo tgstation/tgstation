@@ -55,9 +55,9 @@
 /datum/config_entry/proc/ValidateAndSet(str_val)
 	CRASH("Invalid config entry type!")
 
-/datum/config_entry/proc/ValidateKeyedList(str_val, list_mode)
+/datum/config_entry/proc/ValidateKeyedList(str_val, list_mode, splitter)
 	str_val = trim(str_val)
-	var/key_pos = findtext(str_val, " ")
+	var/key_pos = findtext(str_val, splitter)
 	var/key_name = null
 	var/key_value = null
 
@@ -145,21 +145,23 @@
 	value = list()
 
 /datum/config_entry/keyed_flag_list/ValidateAndSet(str_val)
-	return ValidateKeyedList(str_val, LIST_MODE_FLAG)
+	return ValidateKeyedList(str_val, LIST_MODE_FLAG, " ")
 
 /datum/config_entry/keyed_number_list
 	abstract_type = /datum/config_entry/keyed_number_list
 	value = list()
+	var/splitter = " "
 
 /datum/config_entry/keyed_number_list/ValidateAndSet(str_val)
-	return ValidateKeyedList(str_val, LIST_MODE_NUM)
+	return ValidateKeyedList(str_val, LIST_MODE_NUM, splitter)
 
 /datum/config_entry/keyed_string_list
 	abstract_type = /datum/config_entry/keyed_number_list
 	value = list()
+	var/splitter = " "
 
 /datum/config_entry/keyed_string_list/ValidateAndSet(str_val)
-	return ValidateKeyedList(str_val, LIST_MODE_TEXT)
+	return ValidateKeyedList(str_val, LIST_MODE_TEXT, splitter)
 
 #undef LIST_MODE_NUM
 #undef LIST_MODE_TEXT

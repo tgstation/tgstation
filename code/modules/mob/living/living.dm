@@ -464,16 +464,21 @@
 	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
+	var/static/config_run_speed
+	var/static/config_walk_speed
+	if(isnull(config_run_speed))
+		config_run_speed = CONFIG_GET(number/run_speed)
+		config_walk_speed = CONFIG_GET(number/walk_speed)
 	if(ignorewalk)
-		. += config.run_speed
+		. += config_run_speed
 	else
 		switch(m_intent)
 			if(MOVE_INTENT_RUN)
 				if(drowsyness > 0)
 					. += 6
-				. += config.run_speed
+				. += config_run_speed
 			if(MOVE_INTENT_WALK)
-				. += config.walk_speed
+				. += config_walk_speed
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())

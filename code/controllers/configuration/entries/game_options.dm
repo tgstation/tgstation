@@ -142,186 +142,126 @@ CONFIG_DEF(flag/no_summon_magic)	//Fun
 CONFIG_DEF(flag/no_summon_events)	//Allowed
 
 CONFIG_DEF(flag/no_intercept_report)	//Whether or not to send a communications intercept report roundstart. This may be overriden by gamemodes.
-	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
-	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
-	var/alert_desc_blue_downto = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
-	var/alert_desc_red_upto = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
-	var/alert_desc_red_downto = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
-	var/alert_desc_delta = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
-	var/revival_pod_plants = FALSE
-	var/revival_cloning = FALSE
-	var/revival_brain_life = -1
+CONFIG_DEF(arrivals_shuttle_dock_window)	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
+	value = 55
+	min_val = 30
 
-	var/rename_cyborg = 0
-	var/ooc_during_round = 0
-	var/emojis = 0
-	var/no_credits_round_end = FALSE
+CONFIG_DEF(flag/arrivals_shuttle_require_undocked)	//Require the arrivals shuttle to be undocked before latejoiners can join
 
-	//Used for modifying movement speed for mobs.
-	//Unversal modifiers
-	var/run_speed = 0
-	var/walk_speed = 0
+CONFIG_DEF(flag/arrivals_shuttle_require_safe_latejoin)	//Require the arrivals shuttle to be operational in order for latejoiners to join
 
-	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
-	var/human_delay = 0
-	var/robot_delay = 0
-	var/monkey_delay = 0
-	var/alien_delay = 0
-	var/slime_delay = 0
-	var/animal_delay = 0
+CONFIG_DEF(string/alert_green)
+	value = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 
-	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
-	var/ghost_interaction = 0
+CONFIG_DEF(string/alert_blue_upto)
+	value = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
 
-	var/silent_ai = 0
-	var/silent_borg = 0
+CONFIG_DEF(string/alert_blue_downto)
+	value = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
 
-	var/sandbox_autoclose = FALSE // close the sandbox panel after spawning an item, potentially reducing griff
+CONFIG_DEF(string/alert_red_upto)
+	value = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
 
-	var/default_laws = 0 //Controls what laws the AI spawns with.
-	var/silicon_max_law_amount = 12
-	var/list/lawids = list()
+CONFIG_DEF(string/alert_red_downto)
+	value = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
 
-	var/list/law_weights = list()
+CONFIG_DEF(string/alert_delta)
+	value = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
-	var/assistant_cap = -1
+CONFIG_DEF(flag/revival_pod_plants)
 
-	var/starlight = 0
-	var/grey_assistants = 0
+CONFIG_DEF(flag/revival_cloning)
 
-	var/lavaland_budget = 60
-	var/space_budget = 16
+CONFIG_DEF(number/revival_brain_life)
+	value = -1
+	min_val = -1
 
-	// Enables random events mid-round when set to 1
-	var/allow_random_events = 0
+CONFIG_DEF(flag/rename_cyborg)
 
-	// Multipliers for random events minimal starting time and minimal players amounts
-	var/events_min_time_mul = 1
-	var/events_min_players_mul = 1
+CONFIG_DEF(flag/ooc_during_round)
 
-	// The object used for the clickable stat() button.
-	var/obj/effect/statclick/statclick
+CONFIG_DEF(flag/emojis)
 
-	var/cross_name = "Other server"
-	var/cross_address = "byond://"
-	var/cross_allowed = FALSE
+CONFIG_DEF(flag/no_credits_round_end)
 
-	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
-	var/arrivals_shuttle_require_undocked = FALSE	//Require the arrivals shuttle to be undocked before latejoiners can join
-	var/arrivals_shuttle_require_safe_latejoin = FALSE	//Require the arrivals shuttle to be operational in order for latejoiners to join
+CONFIG_DEF(number/run_speed)	//Used for modifying movement speed for mobs.
 
-	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
+CONFIG_DEF(number/walk_speed)
 
-	var/list/policies = list()
-				if("revival_pod_plants")
-					revival_pod_plants		= TRUE
-				if("revival_cloning")
-					revival_cloning			= TRUE
-				if("revival_brain_life")
-					revival_brain_life		= text2num(value)
-				if("rename_cyborg")
-					rename_cyborg			= 1
-				if("ooc_during_round")
-					ooc_during_round			= 1
-				if("emojis")
-					emojis					= 1
-				if("no_credits_round_end")
-					no_credits_round_end	= TRUE
-				if("run_delay")
-					run_speed				= text2num(value)
-				if("walk_delay")
-					walk_speed				= text2num(value)
-				if("human_delay")
-					human_delay				= text2num(value)
-				if("robot_delay")
-					robot_delay				= text2num(value)
-				if("monkey_delay")
-					monkey_delay				= text2num(value)
-				if("alien_delay")
-					alien_delay				= text2num(value)
-				if("slime_delay")
-					slime_delay				= text2num(value)
-				if("animal_delay")
-					animal_delay				= text2num(value)
-				if("alert_red_upto")
-					alert_desc_red_upto		= value
-				if("alert_red_downto")
-					alert_desc_red_downto	= value
-				if("alert_blue_downto")
-					alert_desc_blue_downto	= value
-				if("alert_blue_upto")
-					alert_desc_blue_upto		= value
-				if("alert_green")
-					alert_desc_green			= value
-				if("alert_delta")
-					alert_desc_delta			= value
-				if("gateway_delay")
-					gateway_delay			= text2num(value)
-				if("ghost_interaction")
-					ghost_interaction		= 1
-				if("traitor_objectives_amount")
-					traitor_objectives_amount = text2num(value)
-				if("brother_objectives_amount")
-					brother_objectives_amount = text2num(value)
-				if("allow_random_events")
-					allow_random_events		= 1
+	
+CONFIG_DEF(number/human_delay)	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
+CONFIG_DEF(number/robot_delay)
+CONFIG_DEF(number/monkey_delay)
+CONFIG_DEF(number/alien_delay)
+CONFIG_DEF(number/slime_delay)
+CONFIG_DEF(number/animal_delay)
 
-				if("events_min_time_mul")
-					events_min_time_mul		= text2num(value)
-				if("events_min_players_mul")
-					events_min_players_mul	= text2num(value)
+CONFIG_DEF(number/gateway_delay)	//How long the gateway takes before it activates. Default is half an hour.
+	value = 18000
+	min_val = 0
 
-				if("silent_ai")
-					silent_ai 				= 1
-				if("silent_borg")
-					silent_borg				= 1
-				if("sandbox_autoclose")
-					sandbox_autoclose		= 1
-				if("default_laws")
-					default_laws				= text2num(value)
-				if("random_laws")
-					var/law_id = lowertext(value)
-					lawids += law_id
-				if("law_weight")
-					// Value is in the form "LAWID,NUMBER"
-					var/list/L = splittext(value, ",")
-					if(L.len != 2)
-						WRITE_FILE(GLOB.config_error_log, "Invalid LAW_WEIGHT: " + t)
-						continue
-					var/lawid = L[1]
-					var/weight = text2num(L[2])
-					law_weights[lawid] = weight
+CONFIG_DEF(flag/ghost_interaction)
 
-				if("silicon_max_law_amount")
-					silicon_max_law_amount	= text2num(value)
-				if("assistant_cap")
-					assistant_cap			= text2num(value)
-				if("starlight")
-					starlight			= 1
-				if("grey_assistants")
-					grey_assistants			= 1
-				if("lavaland_budget")
-					lavaland_budget			= text2num(value)
-				if("space_budget")
-					space_budget			= text2num(value)
-				if("bombcap")
-					var/BombCap = text2num(value)
-					if (!BombCap)
-						continue
-					if (BombCap < 4)
-						BombCap = 4
+CONFIG_DEF(flag/silent_ai)
+CONFIG_DEF(flag/silent_borg)
 
-					GLOB.MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
-					GLOB.MAX_EX_HEAVY_RANGE = round(BombCap/2)
-					GLOB.MAX_EX_LIGHT_RANGE = BombCap
-					GLOB.MAX_EX_FLASH_RANGE = BombCap
-					GLOB.MAX_EX_FLAME_RANGE = BombCap
-				if("arrivals_shuttle_dock_window")
-					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
-				if("arrivals_shuttle_require_undocked")
-					arrivals_shuttle_require_undocked = TRUE
-				if("arrivals_shuttle_require_safe_latejoin")
-					arrivals_shuttle_require_safe_latejoin = TRUE
-				if("mice_roundstart")
-					mice_roundstart = text2num(value)
+CONFIG_DEF(flag/sandbox_autoclose)	// close the sandbox panel after spawning an item, potentially reducing griff
+
+CONFIG_DEF(number/default_laws) //Controls what laws the AI spawns with.
+	value = 0
+	min_val = 0
+	max_val = 3
+
+CONFIG_DEF(number/silicon_max_law_amount)
+	value = 12
+	min_val = 0
+
+CONFIG_DEF(keyed_flag_list/random_laws)
+
+CONFIG_DEF(keyed_number_list/law_weight)
+	splitter = ","
+
+CONFIG_DEF(number/assistant_cap)
+	value = -1
+	min_val = -1
+
+CONFIG_DEF(flag/starlight)
+CONFIG_DEF(flag/grey_assistants)
+
+CONFIG_DEF(number/lavaland_budget)
+	value = 60
+	min_val = 0
+
+CONFIG_DEF(number/space_budget)
+	value = 16
+	min_val = 0
+
+CONFIG_DEF(flag/allow_random_events)	// Enables random events mid-round when set
+
+CONFIG_DEF(number/events_min_time_mul)	// Multipliers for random events minimal starting time and minimal players amounts
+	value = 1
+	min_val = 0
+	integer = FALSE
+
+CONFIG_DEF(number/events_min_players_mul)
+	value = 1
+	min_val = 0
+	integer = FALSE
+
+CONFIG_DEF(number/mice_roundstart)
+	value = 10
+	min_val = 0
+
+CONFIG_DEF(number/bombcap)
+	value = 14
+	min_val = 4
+
+/datum/config_entry/number/bombcap/ValidateAndSet(str_val)
+	. = ..()
+	if(.)
+		GLOB.MAX_EX_DEVESTATION_RANGE = round(value / 4)
+		GLOB.MAX_EX_HEAVY_RANGE = round(value / 2)
+		GLOB.MAX_EX_LIGHT_RANGE = value
+		GLOB.MAX_EX_FLASH_RANGE = value
+		GLOB.MAX_EX_FLAME_RANGE = value
