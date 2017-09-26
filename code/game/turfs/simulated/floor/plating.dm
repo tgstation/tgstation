@@ -17,7 +17,7 @@
 		broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	if (!burnt_states)
 		burnt_states = list("panelscorched")
-	..()
+	. = ..()
 	icon_plating = icon_state
 
 /turf/open/floor/plating/update_icon()

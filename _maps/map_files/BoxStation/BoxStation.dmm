@@ -13334,6 +13334,7 @@
 	id = "chapelgun";
 	name = "Chapel Launcher Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "aEo" = (
@@ -27902,6 +27903,7 @@
 	id = "trash";
 	name = "disposal bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bnw" = (
@@ -39042,6 +39044,7 @@
 	id = "toxinsdriver";
 	name = "toxins launcher bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
 "bLm" = (
@@ -83826,7 +83829,7 @@ bHE
 bYu
 bZk
 bCq
-cTG
+cTF
 bCq
 bCq
 bCq
@@ -85122,7 +85125,7 @@ bCq
 bCq
 bCq
 bCq
-cTH
+cTF
 bCq
 bLv
 bLv

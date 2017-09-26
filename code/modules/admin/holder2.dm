@@ -40,7 +40,7 @@ GLOBAL_PROTECT(href_token)
 	for(var/I in 1 to 32)
 		. += "[rand(10)]"
 
-/proc/HrefToken(forceGlobal = FALSE)
+/proc/RawHrefToken(forceGlobal = FALSE)
 	var/tok = GLOB.href_token
 	if(!forceGlobal && usr)
 		var/client/C = usr.client
@@ -49,7 +49,13 @@ GLOBAL_PROTECT(href_token)
 		var/datum/admins/holder = C.holder
 		if(holder)
 			tok = holder.href_token
-	return "admin_token=[tok]"
+	return tok
+
+/proc/HrefToken(forceGlobal = FALSE)
+	return "admin_token=[RawHrefToken(forceGlobal)]"
+
+/proc/HrefTokenFormField(forceGlobal = FALSE)
+	return "<input type='hidden' name='admin_token' value='[RawHrefToken(forceGlobal)]'>"
 
 /datum/admins/proc/associate(client/C)
 	if(IsAdminAdvancedProcCall())
