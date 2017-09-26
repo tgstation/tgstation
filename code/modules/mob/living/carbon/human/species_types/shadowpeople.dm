@@ -32,6 +32,7 @@
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR,NOHUNGER,NO_DNA_COPY,NOTRANSSTING)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
+	mutant_organs = list(/obj/item/organ/heart/nightmare)
 	var/obj/effect/proc_holder/spell/targeted/shadowwalk/shadowwalk
 
 	var/info_text = "You are a <span class='danger'>Nightmare</span>. The ability <span class='warning'>shadow walk</span> allows unlimited, unrestricted movement in the dark using. \
@@ -42,8 +43,6 @@
 	var/obj/effect/proc_holder/spell/targeted/shadowwalk/SW = new
 	C.AddSpell(SW)
 	shadowwalk = SW
-	var/obj/item/light_eater/blade = new
-	C.put_in_hands(blade)
 
 	to_chat(C, "[info_text]")
 
@@ -67,6 +66,75 @@
 			playsound(T, "bullet_miss", 75, 1)
 			return -1
 	return 0
+
+
+
+//Organ
+
+/obj/item/organ/heart/nightmare
+	name = "heart of darkness"
+	desc = "."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "demon_heart-on"
+	var/respawn_progress = 0
+	var/obj/item/light_eater/blade
+	color = "#1C1C1C"
+
+
+/obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
+	if(M != user)
+		return ..()
+	user.visible_message("<span class='warning'>[user] raises [src] to their mouth and tears into it with their teeth!</span>", \
+						 "<span class='danger'>[src] feels unnaturally cold in your hands. You raise [src] your mouth and devour it!</span>")
+	playsound(user, 'sound/magic/demon_consume.ogg', 50, 1)
+
+
+	user.visible_message("<span class='warning'>Blood erupts from [user]'s arm as it reforms into a weapon!</span>", \
+						 "<span class='userdanger'>Icy blood pumps through your veins as your arm reforms itself!</span>")
+	user.drop_item()
+	src.Insert(user)
+
+/obj/item/organ/heart/nightmare/Insert(mob/living/carbon/M, special = 0)
+	..()
+	blade = new/obj/item/light_eater
+	M.put_in_hands(blade)
+	if(M.stat == DEAD)
+		START_PROCESSING(SSobj, src)
+
+/obj/item/organ/heart/nightmare/Remove(mob/living/carbon/M, special = 0)
+	STOP_PROCESSING(SSobj, src)
+	respawn_progress = 0
+	if(blade)
+		qdel(blade)
+		M.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
+	..()
+
+/obj/item/organ/heart/nightmare/Stop()
+	START_PROCESSING(SSobj, src)
+	return 1
+
+/obj/item/organ/heart/nightmare/Restart()
+	STOP_PROCESSING(SSobj, src)
+	return 1
+
+/obj/item/organ/heart/nightmare/update_icon()
+	return //always beating visually
+
+/obj/item/organ/heart/nightmare/process()
+	if(!owner)
+		STOP_PROCESSING(SSobj, src)
+		respawn_progress = 0
+	var/turf/T = get_turf(src)
+	if(istype(T))
+		var/light_amount = T.get_lumcount()
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+			respawn_progress++
+	if(respawn_progress >= 60)
+		owner.revive(full_heal = TRUE)
+		owner.visible_message("<span class='warning'>[owner] staggers to their feet!</span>")
+		respawn_progress = 0
+
+//Weapon
 
 /obj/item/light_eater
 	name = "light eater"
