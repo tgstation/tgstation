@@ -135,10 +135,10 @@
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
 
-/obj/structure/destructible/clockwork/ocular_warden/get_efficiency_mod(increasing)
+/obj/structure/destructible/clockwork/ocular_warden/get_efficiency_mod()
 	if(GLOB.ratvar_awakens)
-		return increasing ? 0.5 : 2
-	. = 1 //Increasing isn't used here since it resets the value to 1 automatically when caluclating target damage
+		return 2
+	. = 1
 	if(target)
 		for(var/turf/T in getline(src, target))
 			for(var/obj/structure/O in T)

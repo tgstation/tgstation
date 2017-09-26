@@ -77,14 +77,10 @@
 		return FALSE
 	return ..()
 
-/obj/structure/destructible/clockwork/proc/get_efficiency_mod(increasing)
+/obj/structure/destructible/clockwork/proc/get_efficiency_mod()
 	if(GLOB.ratvar_awakens)
-		if(increasing)
-			return 0.5
 		return 2
 	. = max(sqrt(obj_integrity/max(max_integrity, 1)), 0.5)
-	if(increasing)
-		. *= min(max_integrity/max(obj_integrity, 1), 4)
 	. = round(., 0.01)
 
 /obj/structure/destructible/clockwork/attack_ai(mob/user)
@@ -116,7 +112,7 @@
 	else
 		icon_state = unanchored_icon
 		if(do_damage)
-			playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
+			playsound(src, break_sound, 10 * (40 * (1 - get_efficiency_mod())), 1)
 			take_damage(round(max_integrity * 0.25, 1), BRUTE)
 			to_chat(user, "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>")
 
