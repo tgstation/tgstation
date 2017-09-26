@@ -1643,12 +1643,17 @@
 	                /obj/item/toy/talking/griffin,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
-	                /obj/item/toy/carpplushie,
+	                /obj/item/toy/plush/carpplushie,
+	                /obj/item/toy/plush/lizardplushie,
+	                /obj/item/toy/plush/snakeplushie,
+	                /obj/item/toy/plush/nukeplushie,
+	                /obj/item/toy/plush/slimeplushie,
 	                /obj/item/coin/antagtoken,
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/gun/ballistic/shotgun/toy/crossbow,
 	                /obj/item/toy/redbutton,
-					/obj/item/toy/eightball)
+					/obj/item/toy/eightball,
+					/obj/item/vending_refill/donksoft)
 	crate_name = "toy crate"
 
 /datum/supply_pack/misc/autodrobe

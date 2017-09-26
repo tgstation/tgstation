@@ -56,7 +56,7 @@
 
 			var/loc_display = "Unknown"
 			var/mob/living/M = T.imp_in
-			if(Tr.z == ZLEVEL_STATION && !isspaceturf(M.loc))
+			if((Tr.z in GLOB.station_z_levels) && !isspaceturf(M.loc))
 				var/turf/mob_loc = get_turf(M)
 				loc_display = mob_loc.loc
 

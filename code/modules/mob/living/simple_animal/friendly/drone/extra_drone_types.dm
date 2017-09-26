@@ -33,7 +33,7 @@
 	flavortext = null
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
-	..()
+	. = ..()
 	internal_storage.hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
@@ -46,7 +46,7 @@
 	default_storage = /obj/item/device/radio/uplink/nuclear
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
-	..()
+	. = ..()
 	internal_storage.hidden_uplink.telecrystals = 30
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src)
@@ -55,7 +55,7 @@
 	default_hatmask = /obj/item/clothing/head/chameleon/drone
 
 /mob/living/simple_animal/drone/snowflake/Initialize()
-	..()
+	. = ..()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
 /obj/item/drone_shell/syndrone
@@ -130,9 +130,9 @@
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 	can_be_held = FALSE
-	flavortext = "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt fabricator that can convert brass \
-	to power, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
-	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create.</b>"
+	flavortext = "<b><span class='nezbere'>You are a cogscarab,</span> a tiny building construct of Ratvar. While you're weak and can't recite scripture, \
+	you have a set of quick tools, as well as a replica fabricator that can create brass and convert objects.<br><br>Work with the servants of Ratvar \
+	to construct and maintain defenses at the City of Cogs. If there are no servants, use this time to experiment with base designs!"
 
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal fabricator
 	default_storage = /obj/item/storage/toolbox/brass/prefilled/ratvar

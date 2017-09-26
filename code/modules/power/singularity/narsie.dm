@@ -54,7 +54,7 @@
 			var/mob/living/L = cult_mind.current
 			L.narsie_act()
 	for(var/mob/living/player in GLOB.player_list)
-		if(player.stat != DEAD && player.loc.z == ZLEVEL_STATION && !iscultist(player))
+		if(player.stat != DEAD && (player.loc.z in GLOB.station_z_levels) && !iscultist(player))
 			souls_needed[player] = TRUE
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.6)
 	INVOKE_ASYNC(src, .proc/begin_the_end)
@@ -73,7 +73,6 @@
 		resolved = TRUE
 		sound_to_playing_players('sound/machines/alarm.ogg')
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 220)
 
 /obj/singularity/narsie/large/cult/Destroy()
 	GLOB.cult_narsie = null
@@ -83,7 +82,7 @@
 	SSticker.force_ending = 1
 
 /proc/cult_ending_helper(var/no_explosion = 0)
-	SSticker.station_explosion_cinematic(no_explosion, "cult", null)
+	Cinematic(CINEMATIC_CULT,world,CALLBACK(GLOBAL_PROC,.ending_helper))
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)

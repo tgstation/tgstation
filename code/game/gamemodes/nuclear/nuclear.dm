@@ -5,6 +5,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
+	false_report_weight = 10
 	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
 	required_enemies = 2
 	recommended_enemies = 5
@@ -160,6 +161,12 @@
 		synd_mob.equipOutfit(/datum/outfit/syndicate/no_crystals)
 	return 1
 
+/datum/game_mode/nuclear/OnNukeExplosion(off_station)
+	..()
+	nukes_left--
+	var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
+	syndies_didnt_escape = (Shuttle && (Shuttle.z == ZLEVEL_CENTCOM || Shuttle.z == ZLEVEL_TRANSIT)) ? 0 : 1
+	nuke_off_station = off_station
 
 /datum/game_mode/nuclear/check_win()
 	if (nukes_left == 0)
@@ -273,6 +280,10 @@
 	..()
 	return
 
+/datum/game_mode/nuclear/generate_report()
+	return "One of Central Command's trading routes was recently disrupted by a raid carried out by the Gorlex Marauders. They seemed to only be after one ship - a highly-sensitive \
+			transport containing a nuclear fission explosive, although it is useless without the proper code and authorization disk. While the code was likely found in minutes, the only disk that \
+			can activate this explosive is on your station. Ensure that it is protected at all times, and remain alert for possible intruders."
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	if( syndicates.len || (SSticker && istype(SSticker.mode, /datum/game_mode/nuclear)) )

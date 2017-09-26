@@ -85,7 +85,7 @@
 
 /proc/log_pda(text)
 	if (config.log_pda)
-		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]PDA: [text]")
+		WRITE_FILE(GLOB.world_pda_log, "\[[time_stamp()]]PDA: [text]")
 
 /proc/log_comment(text)
 	if (config.log_pda)
@@ -95,6 +95,9 @@
 /proc/log_chat(text)
 	if (config.log_pda)
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]CHAT: [text]")
+
+/proc/log_qdel(text)
+	WRITE_FILE(GLOB.world_qdel_log, "\[[time_stamp()]]QDEL: [text]")
 
 /proc/log_sql(text)
 	WRITE_FILE(GLOB.sql_error_log, "\[[time_stamp()]]SQL: [text]")

@@ -196,6 +196,7 @@
 
 
 /datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
+	set waitfor = FALSE
 	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
 		if(H.mind.assigned_role)
@@ -284,4 +285,4 @@
 		C = H.client
 	if(C)
 		P = C.prefs
-	return get_flat_human_icon(null, J, P)
+	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST)

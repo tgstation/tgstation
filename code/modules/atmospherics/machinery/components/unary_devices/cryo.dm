@@ -33,7 +33,7 @@
 
 	var/escape_in_progress = FALSE
 	var/message_cooldown
-	var/breakout_time = 0.5
+	var/breakout_time = 300
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -115,7 +115,7 @@
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 22
 
-		if(on && is_operational() && !running_bob_anim)
+		if(on && !running_bob_anim && is_operational())
 			icon_state = "pod-on"
 			running_bob_anim = TRUE
 			run_bob_anim(TRUE, occupant_overlay)
@@ -246,9 +246,9 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the glass of [src]!</span>", \
-		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
+		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a thump from [src].</span>")
-	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
+	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
@@ -286,7 +286,7 @@
 		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
 		return
 	if(!on && !occupant && !state_open)
-		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
+		if(default_deconstruction_screwdriver(user, "pod-off", "pod-off", I))
 			return
 		if(exchange_parts(user, I))
 			return
@@ -348,7 +348,7 @@
 	data["cellTemperature"] = round(air1.temperature, 1)
 
 	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
-	var beakerContents = list()
+	var/beakerContents = list()
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents += list(list("name" = R.name, "volume" = R.volume))
@@ -377,6 +377,8 @@
 		if("ejectbeaker")
 			if(beaker)
 				beaker.forceMove(loc)
+				if(Adjacent(usr) && !issilicon(usr))
+					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE
 	update_icon()
@@ -392,5 +394,12 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return 0 //you can't see the pipe network when inside a cryo cell.
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/return_temperature()
+	var/datum/gas_mixture/G = AIR1
+
+	if(G.total_moles() > 10)
+		return G.temperature
+	return ..()
 
 #undef CRYOMOBS

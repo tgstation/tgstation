@@ -336,20 +336,18 @@
 			eject()
 			. = TRUE
 
-/obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target)
-	if (isitem(mover) && mover.throwing)
-		var/obj/item/I = mover
-		if(istype(I, /obj/item/projectile))
-			return
+
+/obj/machinery/disposal/bin/hitby(atom/movable/AM)
+	if(isitem(AM) && AM.CanEnterDisposals())
 		if(prob(75))
-			I.forceMove(src)
-			visible_message("<span class='notice'>[I] lands in [src].</span>")
+			AM.forceMove(src)
+			visible_message("<span class='notice'>[AM] lands in [src].</span>")
 			update_icon()
 		else
-			visible_message("<span class='notice'>[I] bounces off of [src]'s rim!</span>")
-		return 0
+			visible_message("<span class='notice'>[AM] bounces off of [src]'s rim!</span>")
+			return ..()
 	else
-		return ..(mover, target)
+		return ..()
 
 /obj/machinery/disposal/bin/flush()
 	..()
@@ -458,12 +456,12 @@
 		trunk.linked = src	// link the pipe trunk to self
 
 /obj/machinery/disposal/deliveryChute/place_item_in_disposal(obj/item/I, mob/user)
-	if(I.disposalEnterTry())
+	if(I.CanEnterDisposals())
 		..()
 		flush()
 
 /obj/machinery/disposal/deliveryChute/CollidedWith(atom/movable/AM) //Go straight into the chute
-	if(!AM.disposalEnterTry())
+	if(!AM.CanEnterDisposals())
 		return
 	switch(dir)
 		if(NORTH)
@@ -486,16 +484,16 @@
 		M.forceMove(src)
 	flush()
 
-/atom/movable/proc/disposalEnterTry()
+/atom/movable/proc/CanEnterDisposals()
 	return 1
 
-/obj/item/projectile/disposalEnterTry()
+/obj/item/projectile/CanEnterDisposals()
 	return
 
-/obj/effect/disposalEnterTry()
+/obj/effect/CanEnterDisposals()
 	return
 
-/obj/mecha/disposalEnterTry()
+/obj/mecha/CanEnterDisposals()
 	return
 
 /obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)

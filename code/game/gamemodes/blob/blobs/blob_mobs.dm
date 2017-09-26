@@ -106,7 +106,7 @@
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
@@ -223,19 +223,35 @@
 	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
-	..()
+	. = ..()
 	if(!independent) //no pulling people deep into the blob
 		verbs -= /mob/living/verb/pulled
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
+		var/list/blobs_in_area = range(2, src)
 		if(independent)
 			return // strong independent blobbernaut that don't need no blob
 		var/damagesources = 0
-		if(!(locate(/obj/structure/blob) in range(2, src)))
+		if(!(locate(/obj/structure/blob) in blobs_in_area))
 			damagesources++
 		if(!factory)
 			damagesources++
+		else
+			if(locate(/obj/structure/blob/core) in blobs_in_area)
+				adjustHealth(-maxHealth*0.1)
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
+				if(overmind)
+					H.color = overmind.blob_reagent_datum.complementary_color
+				else
+					H.color = "#000000"
+			if(locate(/obj/structure/blob/node) in blobs_in_area)
+				adjustHealth(-maxHealth*0.05)
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
+				if(overmind)
+					H.color = overmind.blob_reagent_datum.complementary_color
+				else
+					H.color = "#000000"
 		if(damagesources)
 			for(var/i in 1 to damagesources)
 				adjustHealth(maxHealth*0.025) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both

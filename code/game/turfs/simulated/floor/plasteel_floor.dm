@@ -361,6 +361,7 @@
 	name = "Mainframe Floor"
 /turf/open/floor/plasteel/vault/killroom
 	name = "Killroom Floor"
+	initial_gas_mix = "n2=500;TEMP=80"
 
 /turf/open/floor/plasteel/cult
 	icon_state = "cult"

@@ -9,7 +9,7 @@
 	return FALSE
 
 /atom/proc/consume_visual(obj/item/clockwork/replica_fabricator/fabricator, power_amount)
-	if(fabricator.can_use_power(power_amount))
+	if(get_clockwork_power(power_amount))
 		var/obj/effect/temp_visual/ratvar/beam/itemconsume/B = new /obj/effect/temp_visual/ratvar/beam/itemconsume(get_turf(src))
 		B.pixel_x = pixel_x
 		B.pixel_y = pixel_y
@@ -240,7 +240,7 @@
 			extra_checks = CALLBACK(fabricator, /obj/item/clockwork/replica_fabricator.proc/fabricator_repair_checks, repair_values, src, user, TRUE)))
 			break
 		obj_integrity = Clamp(obj_integrity + repair_values["healing_for_cycle"], 0, max_integrity)
-		fabricator.modify_stored_power(-repair_values["power_required"])
+		adjust_clockwork_power(-repair_values["power_required"])
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
 	if(fabricator)
@@ -248,28 +248,6 @@
 		if(user)
 			user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops covering [src] with glowing orange energy.</span>", \
 			"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
-
-//Hitting a sigil of transmission will try to charge from it.
-/obj/effect/clockwork/sigil/transmission/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
-	. = TRUE
-	var/list/charge_values = list()
-	if(!fabricator.sigil_charge_checks(charge_values, src, user))
-		return
-	user.visible_message("<span class='notice'>[user]'s [fabricator.name] starts draining glowing orange energy from [src]...</span>", \
-	"<span class='alloy'>You start recharging your [fabricator.name]...</span>")
-	fabricator.recharging = src
-	while(fabricator && user && src)
-		if(!do_after(user, 10, target = src, extra_checks = CALLBACK(fabricator, /obj/item/clockwork/replica_fabricator.proc/sigil_charge_checks, charge_values, src, user, TRUE)))
-			break
-		modify_charge(charge_values["power_gain"])
-		fabricator.modify_stored_power(charge_values["power_gain"])
-		playsound(src, 'sound/effects/light_flicker.ogg', charge_values["power_gain"] * 0.1, 1)
-
-	if(fabricator)
-		fabricator.recharging = null
-		if(user)
-			user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops draining glowing orange energy from [src].</span>", \
-			"<span class='alloy'>You finish recharging your [fabricator.name]. It now contains <b>[DisplayPower(fabricator.get_power())]/[DisplayPower(fabricator.get_max_power())]</b> power.</span>")
 
 //Fabricator mob heal proc, to avoid as much copypaste as possible.
 /mob/living/proc/fabricator_heal(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator)
@@ -284,7 +262,7 @@
 			extra_checks = CALLBACK(fabricator, /obj/item/clockwork/replica_fabricator.proc/fabricator_repair_checks, repair_values, src, user, TRUE)))
 			break
 		fabricator_heal_tick(repair_values["healing_for_cycle"])
-		fabricator.modify_stored_power(-repair_values["power_required"])
+		adjust_clockwork_power(-repair_values["power_required"])
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
 	if(fabricator)

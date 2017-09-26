@@ -147,12 +147,13 @@
 		return
 	var/output
 	var/ruler = "<hr style='background:#000000; border:0; height:3px'>"
-	var/navbar = "<a href='?_src_=holder;[HrefToken()];nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;nonalpha=2'>\[#\]</a>"
+	var/navbar = "<a href='?_src_=holder;[HrefToken()];nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;[HrefToken()];nonalpha=2'>\[#\]</a>"
 	for(var/letter in GLOB.alphabet)
 		navbar += "|<a href='?_src_=holder;[HrefToken()];showmessages=[letter]'>\[[letter]\]</a>"
-	navbar += "|<a href='?_src_=holder;[HrefToken()];showmemo=1'>\[Memos\]</a>|<a href='?_src_=holder;showwatch=1'>\[Watchlist\]</a>"
+	navbar += "|<a href='?_src_=holder;[HrefToken()];showmemo=1'>\[Memos\]</a>|<a href='?_src_=holder;[HrefToken()];showwatch=1'>\[Watchlist\]</a>"
 	navbar += "<br><form method='GET' name='search' action='?'>\
 	<input type='hidden' name='_src_' value='holder'>\
+	[HrefTokenFormField()]\
 	<input type='text' name='searchmessages' value='[index]'>\
 	<input type='submit' value='Search'></form>"
 	if(!linkless)
@@ -271,12 +272,12 @@
 			if(!linkless)
 				if (agegate)
 					if (skipped) //the first skipped message is still shown so that we can put this link over it.
-						output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1' style='position: relative; top: -3em;'>\[Show [skipped] hidden messages\]</center>"
+						output += " <center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey];showall=1' style='position: relative; top: -3em;'>\[Show [skipped] hidden messages\]</center>"
 					else
-						output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1'>\[Show All\]</center>"
+						output += " <center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey];showall=1'>\[Show All\]</center>"
 
 				else
-					output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey]'>\[Hide Old\]</center>"
+					output += " <center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey]'>\[Hide Old\]</center>"
 	if(index)
 		var/index_ckey
 		var/search

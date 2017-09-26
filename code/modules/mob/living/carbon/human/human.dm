@@ -5,15 +5,6 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 
-/mob/living/carbon/human/dummy
-	real_name = "Test Dummy"
-	status_flags = GODMODE|CANPUSH
-
-INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
-
-/mob/living/carbon/human/dummy/Life()
-	return
-
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
@@ -34,7 +25,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	handcrafting = new()
 
-	..()
+	. = ..()
 
 /mob/living/carbon/human/create_internal_organs()
 	if(!(NOHUNGER in dna.species.species_traits))
@@ -240,7 +231,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
-			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [time_taken/10] seconds.)</span>")
+			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
 			if(do_after(usr, time_taken, needhand = 1, target = src))
 				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 					return

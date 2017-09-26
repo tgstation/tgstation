@@ -43,7 +43,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		configured_error_silence_time = config.error_silence_time
 
 
-	//Each occurence of an unique error adds to its cooldown time...
+	//Each occurence of a unique error adds to its cooldown time...
 	cooldown = max(0, cooldown - (world.time - last_seen)) + configured_error_cooldown
 	// ... which is used to silence an error if it occurs too often, too fast
 	if(cooldown > configured_error_cooldown * configured_error_limit)
@@ -88,7 +88,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(usrinfo) //If this info isn't null, it hasn't been added yet
 		desclines.Add(usrinfo)
 	if(silencing)
-		desclines += "  (This error will now be silenced for [configured_error_silence_time / 600] minutes)"
+		desclines += "  (This error will now be silenced for [DisplayTimeText(configured_error_silence_time)])"
 	if(GLOB.error_cache)
 		GLOB.error_cache.log_error(E, desclines)
 

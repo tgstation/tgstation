@@ -19,7 +19,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/list/region_access = null
 	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
-	var/prioritycount = 0 // we don't want 500 prioritized jobs
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -209,7 +208,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						if(job in SSjob.prioritized_jobs)
 							dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Deprioritize</a>"
 						else
-							if(prioritycount < 5)
+							if(SSjob.prioritized_jobs.len < 5)
 								dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Prioritize</a>"
 							else
 								dat += "Denied"
@@ -530,11 +529,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/priority = TRUE
 				if(j in SSjob.prioritized_jobs)
 					SSjob.prioritized_jobs -= j
-					prioritycount--
 					priority = FALSE
+				else if(j.total_positions <= j.current_positions)
+					to_chat(usr, "<span class='notice'>[j.title] has had all positions filled. Open up more slots before prioritizing it.</span>")
+					return
 				else
 					SSjob.prioritized_jobs += j
-					prioritycount++
 				to_chat(usr, "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 

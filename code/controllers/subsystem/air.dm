@@ -164,6 +164,7 @@ SUBSYSTEM_DEF(air)
 		currentrun.len--
 		if(!M || (M.process_atmos(seconds) == PROCESS_KILL))
 			atmos_machinery.Remove(M)
+		M.SendSignal(COMSIG_MACHINE_PROCESS_ATMOS)
 		if(MC_TICK_CHECK)
 			return
 
@@ -321,7 +322,7 @@ SUBSYSTEM_DEF(air)
 			EG.dismantle()
 			CHECK_TICK
 
-		var/msg = "HEY! LISTEN! [(world.timeofday - timer)/10] Seconds were wasted processing [starting_ats] turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
+		var/msg = "HEY! LISTEN! [DisplayTimeText(world.timeofday - timer)] were wasted processing [starting_ats] turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
 		to_chat(world, "<span class='boldannounce'>[msg]</span>")
 		warning(msg)
 

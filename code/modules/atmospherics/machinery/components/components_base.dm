@@ -23,18 +23,6 @@ On top of that, now people can add component-speciic procs/vars if they want!
 Iconnery
 */
 
-/obj/machinery/atmospherics/components/proc/icon_addintact(var/obj/machinery/atmospherics/node)
-	var/image/img = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_intact", get_dir(src,node), node.pipe_color)
-	underlays += img
-
-	return img.dir
-
-/obj/machinery/atmospherics/components/proc/icon_addbroken(var/connected = FALSE)
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in GLOB.cardinals)
-		if(unconnected & direction)
-			underlays += getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_exposed", direction)
-
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
 
@@ -52,7 +40,7 @@ Iconnery
 	if(!showpipe)
 		return //no need to update the pipes if they aren't showing
 
-	var/connected = FALSE
+	var/connected = 0 //Direction bitset
 
 	for(DEVICE_TYPE_LOOP) //adds intact pieces
 		if(NODE_I)

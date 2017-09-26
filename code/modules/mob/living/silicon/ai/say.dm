@@ -18,9 +18,11 @@
 	return !config.silent_ai
 
 /mob/living/silicon/ai/radio(message, message_mode, list/spans, language)
-	if(!radio_enabled || aiRestorePowerRoutine || stat) //AI cannot speak if radio is disabled (via intellicard) or depowered.
+	if(incapacitated())
+		return FALSE
+	if(!radio_enabled) //AI cannot speak if radio is disabled (via intellicard) or depowered.
 		to_chat(src, "<span class='danger'>Your radio transmitter is offline!</span>")
-		return 0
+		return FALSE
 	..()
 
 /mob/living/silicon/ai/get_message_mode(message)
@@ -71,8 +73,8 @@
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
 
-	if(usr.stat == DEAD)
-		return //won't work if dead
+	if(incapacitated())
+		return
 
 	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
 	<UL><LI>You can also click on the word to preview it.</LI>\
@@ -95,7 +97,7 @@
 /mob/living/silicon/ai/proc/announcement()
 	var/static/announcing_vox = 0 // Stores the time of the last announcement
 	if(announcing_vox > world.time)
-		to_chat(src, "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>")
+		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
 
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
@@ -105,11 +107,11 @@
 	if(!message || announcing_vox > world.time)
 		return
 
-	if(stat != CONSCIOUS)
+	if(incapacitated())
 		return
 
 	if(control_disabled)
-		to_chat(src, "<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>")
+		to_chat(src, "<span class='warning'>Wireless interface disabled, unable to interact with announcement PA.</span>")
 		return
 
 	var/list/words = splittext(trim(message), " ")

@@ -91,6 +91,10 @@
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
+/obj/structure/spider/spiderling/Destroy()
+	new/obj/item/reagent_containers/food/snacks/spiderling(get_turf(src))
+	. = ..()
+
 /obj/structure/spider/spiderling/Initialize()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
@@ -102,6 +106,15 @@
 
 /obj/structure/spider/spiderling/nurse
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse
+
+/obj/structure/spider/spiderling/midwife
+	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife
+
+/obj/structure/spider/spiderling/viper
+	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
+
+/obj/structure/spider/spiderling/tarantula
+	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
 
 /obj/structure/spider/spiderling/Collide(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -171,7 +184,10 @@
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
 			if(!grow_as)
-				grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
+				if(prob(3))
+					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider/tarantula, /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife)
+				else
+					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
 			S.poison_per_bite = poison_per_bite
 			S.poison_type = poison_type
@@ -194,12 +210,12 @@
 	. = ..()
 
 /obj/structure/spider/cocoon/container_resist(mob/living/user)
-	var/breakout_time = 1
+	var/breakout_time = 600
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [breakout_time] minutes.)</span>")
+	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)</span>")
 	visible_message("You see something struggling and writhing in \the [src]!")
-	if(do_after(user,(breakout_time*60*10), target = src))
+	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return
 		qdel(src)

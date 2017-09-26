@@ -111,7 +111,6 @@ effective or pretty fucking useless.
 /obj/item/device/healthanalyzer/rad_laser/interact(mob/user)
 	user.set_machine(src)
 
-	var/cooldown = GetCooldown()
 	var/dat = "Irradiation: <A href='?src=\ref[src];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
 	dat += "Stealth Mode (NOTE: Deactivates automatically while Irradiation is off): <A href='?src=\ref[src];stealthy=[TRUE]'>[stealth ? "On" : "Off"]</A><br>"
 	dat += "Scan Mode: <a href='?src=\ref[src];mode=1'>"
@@ -133,7 +132,7 @@ effective or pretty fucking useless.
 	<A href='?src=\ref[src];radwav=-5'>-</A><A href='?src=\ref[src];radwav=-1'>-</A>
 	[(wavelength+(intensity*4))]
 	<A href='?src=\ref[src];radwav=1'>+</A><A href='?src=\ref[src];radwav=5'>+</A><BR>
-	Laser Cooldown: [cooldown] Seconds<BR>
+	Laser Cooldown: [DisplayTimeText(GetCooldown())]<BR>
 	"}
 
 	var/datum/browser/popup = new(user, "radlaser", "Radioactive Microlaser Interface", 400, 240)
@@ -147,7 +146,7 @@ effective or pretty fucking useless.
 	usr.set_machine(src)
 	if(href_list["rad"])
 		irradiate = !irradiate
-	
+
 	else if(href_list["stealthy"])
 		stealth = !stealth
 
@@ -242,11 +241,10 @@ effective or pretty fucking useless.
 	var/range = 12
 
 /obj/item/device/jammer/attack_self(mob/user)
-	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] the [src]<span>")
+	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] the [src].</span>")
 	active = !active
 	if(active)
 		GLOB.active_jammers |= src
 	else
 		GLOB.active_jammers -= src
 	update_icon()
-
