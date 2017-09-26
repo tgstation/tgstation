@@ -72,7 +72,7 @@
 				temp = text2num(key_value)
 			if(LIST_MODE_TEXT)
 				temp = key_value
-		if((list_mode == LIST_MODE_NUM ? !isnull(temp) : temp) && ValidateName(key_name))
+		if((list_mode == LIST_MODE_NUM ? !isnull(temp) : temp) && ValidateKeyName(key_name))
 			if(!(key_name in value))
 				modified = FALSE
 			value[key_name] = temp

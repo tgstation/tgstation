@@ -41,7 +41,13 @@ GLOBAL_PROTECT(config_dir)
 			continue
 		E = new I
 		_entries_by_type[I] = E
-		_entries[E.name] = E
+		var/esname = E.name
+		var/datum/config_entry/test = _entries[esname]
+		if(test)
+			log_world("Error: [test.type] has the same name as [E.type]: [esname]! Not initializing [E.type]!")
+			qdel(E)
+			continue
+		_entries[esname] = E
 
 /datum/controller/configuration/proc/LoadEntries(filename)
 	log_world("Loading config file [filename]...")
@@ -123,7 +129,7 @@ GLOBAL_PROTECT(config_dir)
 	mode_reports = list()
 	mode_false_report_weight = list()
 	votable_modes = list()
-	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probabilities)
+	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probability)
 	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
@@ -208,7 +214,7 @@ GLOBAL_PROTECT(config_dir)
 
 /datum/controller/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probabilities)
+	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probability)
 	var/list/min_pop = Get(/datum/config_entry/keyed_number_list/min_pop)
 	var/list/max_pop = Get(/datum/config_entry/keyed_number_list/max_pop)
 	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
@@ -238,7 +244,7 @@ GLOBAL_PROTECT(config_dir)
 
 /datum/controller/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probabilities)
+	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probability)
 	var/list/min_pop = Get(/datum/config_entry/keyed_number_list/min_pop)
 	var/list/max_pop = Get(/datum/config_entry/keyed_number_list/max_pop)
 	for(var/T in (gamemode_cache - SSticker.mode.type))

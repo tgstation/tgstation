@@ -77,7 +77,8 @@ GLOBAL_PROTECT(reboot_mode)
 			if(rtod - last_irc_status < IRC_STATUS_THROTTLE)
 				return
 			last_irc_status = rtod
-			return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name], Mode: [GLOB.master_mode]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [config.server ? config.server : "[world.internet_address]:[world.port]"]" 
+			var/config_server = CONFIG_GET(string/server)
+			return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name], Mode: [GLOB.master_mode]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [config_server ? config_server : "[world.internet_address]:[world.port]"]" 
 		if(SERVICE_CMD_ADMIN_MSG)
 			return IrcPm(params[SERVICE_CMD_PARAM_TARGET], params[SERVICE_CMD_PARAM_MESSAGE], params[SERVICE_CMD_PARAM_SENDER])
 

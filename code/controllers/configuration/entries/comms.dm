@@ -14,6 +14,8 @@ CONFIG_DEF(string/cross_server_address)
 
 CONFIG_DEF(string/cross_comms_name)
 
+GLOBAL_VAR_INIT(medals_enabled, TRUE)	//will be auto set to false if the game fails contacting the medal hub to prevent unneeded calls.
+
 CONFIG_DEF(string/medal_hub_address)
 
 CONFIG_DEF(string/medal_hub_password)

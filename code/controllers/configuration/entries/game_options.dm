@@ -143,7 +143,7 @@ CONFIG_DEF(flag/no_summon_events)	//Allowed
 
 CONFIG_DEF(flag/no_intercept_report)	//Whether or not to send a communications intercept report roundstart. This may be overriden by gamemodes.
 
-CONFIG_DEF(arrivals_shuttle_dock_window)	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
+CONFIG_DEF(number/arrivals_shuttle_dock_window)	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
 	value = 55
 	min_val = 30
 
