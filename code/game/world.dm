@@ -275,7 +275,7 @@ GLOBAL_PROTECT(security_mode)
 	var/s = ""
 	var/hostedby
 	if(config)
-		var/server_name = CONFIG_GET(string/server_name)
+		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			s += "<b>[server_name]</b> &#8212; "
 		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"

@@ -31,7 +31,7 @@
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
 		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=rank;ckey=[M.ckey]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
-		if(config.use_exp_tracking)
+		if(CONFIG_GET(flag/use_exp_tracking))
 			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=\ref[M]'>" + M.client.get_exp_living() + "</a>\]"
 
 	if(isnewplayer(M))
@@ -555,8 +555,9 @@
 	set category = "Server"
 	set desc="People can't be AI"
 	set name="Toggle AI"
-	config.allow_ai = !( config.allow_ai )
-	if (!( config.allow_ai ))
+	var/alai = CONFIG_GET(flag/allow_ai)
+	CONFIG_SET(flag/allow_ai, !alai)
+	if (alai)
 		to_chat(world, "<B>The AI job is no longer chooseable.</B>")
 	else
 		to_chat(world, "<B>The AI job is chooseable now.</B>")

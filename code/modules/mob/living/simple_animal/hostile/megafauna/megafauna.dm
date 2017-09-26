@@ -147,7 +147,7 @@
 		spawn()
 			var/result = world.SetMedal(medal, player, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
 			if(isnull(result))
-				global.medals_enabled = FALSE
+				GLOB.medals_enabled = FALSE
 				log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
 				message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
 			else if (result)

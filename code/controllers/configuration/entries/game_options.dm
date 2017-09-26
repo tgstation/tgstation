@@ -125,7 +125,8 @@ CONFIG_DEF(keyed_flag_list/roundstart_races)	//races you can play as from the ge
 /datum/config_entry/keyed_flag_list/roundstart_races/ValidateAndSet(str_val)
 	var/list/old_val
 	if(first_edit)
-		old_val = value.Copy()
+		old_val = value
+		old_val = old_val.Copy()
 	. = ..()
 	if(first_edit)
 		if(!.)

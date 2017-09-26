@@ -37,16 +37,16 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	var/configured_error_limit
 	var/configured_error_silence_time
 	if(config)
-		configured_error_cooldown = config.error_cooldown
-		configured_error_limit = config.error_limit
-		configured_error_silence_time = config.error_silence_time
+		configured_error_cooldown = CONFIG_GET(number/error_cooldown)
+		configured_error_limit = CONFIG_GET(number/error_limit)
+		configured_error_silence_time = CONFIG_GET(number/error_silence_time)
 	else
-		var/datum/config_entry/E = /datum/config_entry/number/error_cooldown
-		configured_error_cooldown = initial(E.value)
-		E = /datum/config_entry/number/error_limit
-		configured_error_limit = initial(E.value)
-		E = /datum/config_entry/number/error_silence_time
-		configured_error_silence_time = initial(E.value)
+		var/datum/config_entry/CE = /datum/config_entry/number/error_cooldown
+		configured_error_cooldown = initial(CE.value)
+		CE = /datum/config_entry/number/error_limit
+		configured_error_limit = initial(CE.value)
+		CE = /datum/config_entry/number/error_silence_time
+		configured_error_silence_time = initial(CE.value)
 
 
 	//Each occurence of a unique error adds to its cooldown time...

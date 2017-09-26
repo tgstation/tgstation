@@ -497,7 +497,7 @@
 			missiondesc += "<BR><B>Your Mission</B>: [mission]"
 			to_chat(ERTOperative, missiondesc)
 
-			if(config.enforce_human_authority)
+			if(CONFIG_GET(flag/enforce_human_authority))
 				ERTOperative.set_species(/datum/species/human)
 
 			//Logging and cleanup
