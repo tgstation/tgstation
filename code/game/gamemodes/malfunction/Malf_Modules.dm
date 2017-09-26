@@ -377,7 +377,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	sleep(100)
 	for(var/mob/living/L in GLOB.mob_list)
 		var/turf/T = get_turf(L)
-		if(!T || !(T.z in GLOB.station_z_levelsl))
+		if(!T || !(T.z in GLOB.station_z_levels))
 			continue
 		if(issilicon(L))
 			continue
