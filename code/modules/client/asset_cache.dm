@@ -317,6 +317,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"chevron.png" = 'html/chevron.png',
 		"chevron-expand.png" = 'html/chevron-expand.png',
 		"scales.png" = 'html/scales.png',
+		"coding.png" = 'html/coding.png',
+		"ban.png" = 'html/ban.png',
+		"chrome-wrench.png" = 'html/chrome-wrench.png',
 		"changelog.css" = 'html/changelog.css'
 	)
 

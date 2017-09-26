@@ -71,7 +71,7 @@
 	var/turfverb = "uproot"
 
 /turf/open/floor/grass/Initialize()
-	..()
+	. = ..()
 	update_icon()
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
@@ -109,7 +109,7 @@
 	slowdown = 0
 
 /turf/open/floor/grass/snow/basalt/Initialize()
-	..()
+	. = ..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -126,7 +126,7 @@
 	slowdown = 0
 
 /turf/open/floor/grass/fakebasalt/Initialize()
-	..()
+	. = ..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -144,7 +144,7 @@
 	flags_1 = NONE
 
 /turf/open/floor/carpet/Initialize()
-	..()
+	. = ..()
 	update_icon()
 
 /turf/open/floor/carpet/update_icon()
@@ -205,7 +205,7 @@
 	plane = PLANE_SPACE
 
 /turf/open/floor/fakespace/Initialize()
-	..()
+	. = ..()
 	icon_state = SPACE_ICON_STATE
 
 /turf/open/floor/fakespace/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)

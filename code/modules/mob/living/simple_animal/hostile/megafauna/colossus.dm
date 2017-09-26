@@ -276,6 +276,7 @@ Difficulty: Very Hard
 	..()
 	if(!memory_saved && SSticker.current_state == GAME_STATE_FINISHED)
 		WriteMemory()
+		memory_saved = TRUE
 
 /obj/machinery/smartfridge/black_box/proc/WriteMemory()
 	var/json_file = file("data/npc_saves/Blackbox.json")
@@ -287,7 +288,6 @@ Difficulty: Very Hard
 	file_data["data"] = stored_items
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
-	memory_saved = TRUE
 
 /obj/machinery/smartfridge/black_box/proc/ReadMemory()
 	if(fexists("data/npc_saves/Blackbox.sav")) //legacy compatability to convert old format to new
@@ -298,8 +298,7 @@ Difficulty: Very Hard
 		var/json_file = file("data/npc_saves/Blackbox.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		stored_items = json["data"]
 	if(isnull(stored_items))
 		stored_items = list()
