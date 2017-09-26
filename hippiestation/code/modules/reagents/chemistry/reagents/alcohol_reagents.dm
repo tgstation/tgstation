@@ -32,7 +32,7 @@
 				if(prob(30))
 					M.vomit(20, 0, 8)
 					if(prob(10))
-						M.spew_organ()	
+						M.spew_organ()
 	..()
 
 /datum/reagent/consumable/ethanol/isopropyl
@@ -192,7 +192,7 @@
 	
 /datum/reagent/consumable/ethanol/irishcarbomb/on_mob_life(mob/living/M)
 	if(prob(5))
-		playsound_local(get_turf(M), 'sound/effects/explosionfar.ogg', 100, 1)
+		src.playsound_local(get_turf(M), 'sound/effects/explosionfar.ogg', 100, 1)
 	return ..()
 	
 /datum/reagent/consumable/ethanol/driestmartini/reaction_turf(turf/open/T, reac_volume)
