@@ -106,7 +106,7 @@
 	STOP_PROCESSING(SSobj, src)
 	respawn_progress = 0
 	if(blade)
-		QDEL_NULL
+		QDEL_NULL(blade)
 		M.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
 	..()
 
