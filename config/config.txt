@@ -1,11 +1,11 @@
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
-SERVERNAME SuperBox
+SERVERNAME SS13
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 # SERVERSQLNAME tgstation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME Station
+STATIONNAME Superbox Station 13
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
 #HUB
