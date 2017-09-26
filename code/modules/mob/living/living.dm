@@ -984,8 +984,4 @@
 
 /mob/living/proc/add_abilities_to_panel()
 	for(var/obj/effect/proc_holder/A in abilities)
-		if(istype(A, /obj/effect/proc_holder/alien)) //yes this is snowflake, but you should have seen the code before
-			var/obj/effect/proc_holder/alien/AL
-			statpanel("[AL.panel]",AL.plasma_cost > 0?"([AL.plasma_cost])":"",AL)
-		else
-			statpanel("[A.panel]","",A)
+		statpanel("[A.panel]","",A)

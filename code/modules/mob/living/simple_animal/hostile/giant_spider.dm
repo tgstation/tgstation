@@ -57,8 +57,7 @@
 	lay_web.Grant(src)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
-	if(lay_web)
-		QDEL_NULL(lay_web)
+	QDEL_NULL(lay_web)
 	return ..()
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
@@ -119,12 +118,9 @@
 	set_directive.Grant(src)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/Destroy()
-	if(wrap)
-		RemoveAbility(wrap)
-	if(lay_eggs)
-		QDEL_NULL(lay_eggs)
-	if(set_directive)
-		QDEL_NULL(set_directive)
+	RemoveAbility(wrap)
+	QDEL_NULL(lay_eggs)
+	QDEL_NULL(set_directive)
 	return ..()
 
 //hunters have the most poison and move the fastest, so they can find prey
@@ -499,10 +495,10 @@
 	return TRUE
 
 /datum/action/innate/spider/comm/Trigger()
-	var/input = stripped_input(usr, "Input a command for your legions to follow.", "Command", "")
+	var/input = stripped_input(owner, "Input a command for your legions to follow.", "Command", "")
 	if(QDELETED(src) || !input || !IsAvailable())
 		return FALSE
-	spider_command(usr, input)
+	spider_command(owner, input)
 	return TRUE
 
 /datum/action/innate/spider/comm/proc/spider_command(mob/living/user, message)
