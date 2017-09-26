@@ -12,7 +12,7 @@
 	var/list/emag_modules = list() //ditto
 	var/list/ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg,
-		/obj/item/clockwork/ratvarian_spear/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
 		/obj/item/clockwork/replica_fabricator/cyborg) //ditto ditto
 	var/list/modules = list() //holds all the usable modules
 	var/list/added_modules = list() //modules not inherient to the robot module, are kept when the module changes
