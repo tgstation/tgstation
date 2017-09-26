@@ -67,11 +67,7 @@
 		var/obj/mecha/m = new result(get_turf(holder))
 		var/obj/item/oldcell = locate (/obj/item/stock_parts/cell) in m
 		QDEL_NULL(oldcell)
-		var/obj/item/c = locate(/obj/item/stock_parts/cell) in holder
-		c.forceMove(m)
-		m.cell = c
-		if(ispath(result, /obj/mecha/combat))
-			m.CheckParts(holder.contents)
+		m.CheckParts(holder.contents)
 		QDEL_NULL(holder)
 
 /datum/construction/proc/set_desc(index as num)
