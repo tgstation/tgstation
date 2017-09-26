@@ -32,7 +32,7 @@
 				if(prob(30))
 					M.vomit(20, 0, 8)
 					if(prob(10))
-						M.spew_organ()
+						M.spew_organ()	
 	..()
 
 /datum/reagent/consumable/ethanol/isopropyl
@@ -60,8 +60,7 @@
 	..()
 	
 /datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/M)
-	if(M.radiation > 0)
-		M.radiation -= 4
+	M.radiation = max(M.radiation-4,0)
 	M.set_drugginess(50)
 	return ..()
 	
@@ -150,7 +149,7 @@
 		
 /datum/reagent/consumable/ethanol/manhattan/on_mob_life(mob/living/M)
 	if(prob(25)) //may cause involuntary brawls
-		M.say(pick("FUCK!!","SHIT!!","DICKS!!","AAASSSSSS!!","FUCKER!!","SHITBIRD!!","FUCK YOURSELF!!","GET OFF THE FUCKIN' ROAD!!","EAT SHIT!!","EAT A DICK, PAL!!","GET FUCKED!!","TRY ME, COCKSUCKER!!","JUMP UP YOUR OWN ASS!!","BADA BING!!","YOU TALKIN' TO ME?!!","FUCK OUTTA HERE!!"))
+		M.say(pick("FUCKIN' SHIT!!","JESUS CHRIST!!","AAASSSSSS!!","FUCKER!!","SHITBIRD!!","FUCK YOURSELF!!","GET OFF THE FUCKIN' ROAD!!","EAT SHIT!!","EAT A DICK, PAL!!","GET FUCKED!!","TRY ME, COCKSUCKER!!","JUMP UP YOUR OWN ASS!!","BADA BING!!","YOU TALKIN' TO ME?!!","FUCK OUTTA HERE!!","EY, I'M WALKIN' HERE!!"))
 	..()
 	
 /datum/reagent/consumable/ethanol/whiskeysoda/on_mob_life(mob/living/M)
@@ -193,7 +192,7 @@
 	
 /datum/reagent/consumable/ethanol/irishcarbomb/on_mob_life(mob/living/M)
 	if(prob(5))
-		playsound(get_turf(M), 'sound/effects/explosionfar.ogg', 100, 1)
+		playsound_local(get_turf(M), 'sound/effects/explosionfar.ogg', 100, 1)
 	return ..()
 	
 /datum/reagent/consumable/ethanol/driestmartini/reaction_turf(turf/open/T, reac_volume)
