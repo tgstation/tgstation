@@ -6,8 +6,9 @@
 
 /obj/spacepod/proc/Delete(mob/living/user, list/thing, type)
 	var/datum/action/innate/spacepod/crap = thing[user]
-	crap.Remove(user)
-	QDEL_NULL(thing[user])
+	if(crap)
+		crap.Remove(user)
+		QDEL_NULL(thing[user])
 	return thing
 
 /obj/spacepod/proc/Grant_Actions(mob/living/user)

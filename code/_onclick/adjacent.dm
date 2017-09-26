@@ -26,8 +26,10 @@
 		* Passing through in this case ignores anything with the LETPASSTHROW pass flag, such as tables, racks, and morgue trays.
 */
 /turf/Adjacent(atom/neighbor, atom/target = null, atom/movable/mover = null)
+	if(neighbor == src)
+		return TRUE //don't be retarded!!
 
-	if(istype(neighbor, /atom/movable))
+	if(istype(neighbor, /atom/movable)) //fml
 		var/atom/movable/AM = neighbor
 		if((AM.bound_width != world.icon_size || AM.bound_height != world.icon_size) && (AM.locs && AM.locs.len > 1))
 			for(var/turf/T in AM.locs)
@@ -83,7 +85,7 @@
 		return TRUE
 	if((bound_width != world.icon_size || bound_height != world.icon_size) && (locs && locs.len > 1))
 		for(var/turf/T in locs)
-			if(T.Adjacent(neighbor,src))
+			if(T.Adjacent(neighbor, src, src))
 				return TRUE
 	if(istype(neighbor, /atom/movable))
 		var/atom/movable/NM = neighbor
