@@ -75,11 +75,10 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
-	if(!purpose_fulfilled)
+	if(!purpose_fulfilled && istype(SSticker.mode, /datum/game_mode/clockwork_cult))
 		hierophant_message("<span class='bold large_brass'>The Ark has fallen!</span>")
-		direct_sound_to_playing_players(sound(null, 0, channel = CHANNEL_JUSTICAR_ARK))
-	SSshuttle.clearHostileEnvironment(src)
-	if(!purpose_fulfilled)
+		sound_to_playing_players(null, channel = CHANNEL_JUSTICAR_ARK)
+		SSshuttle.clearHostileEnvironment(src)
 		SSticker.force_ending = TRUE //rip
 	if(glow)
 		qdel(glow)
@@ -232,7 +231,7 @@
 				purpose_fulfilled = TRUE
 				make_glow()
 				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
-				sound_to_playing_players(volume = 100, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg')) //End the sounds
+				sound_to_playing_players(volume = 100, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/ratvar_rises.ogg')) //End the sounds
 				sleep(125)
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
