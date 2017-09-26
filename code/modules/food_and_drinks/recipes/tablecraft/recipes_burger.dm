@@ -176,6 +176,26 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/purple
 	subcategory = CAT_BURGER
+	
+/datum/crafting_recipe/food/blackburger
+	name = "Black burger"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 1,
+		/obj/item/toy/crayon/black = 1,
+		/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/black
+	subcategory = CAT_BURGER
+	
+/datum/crafting_recipe/food/whiteburger
+	name = "White burger"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 1,
+		/obj/item/toy/crayon/white = 1,
+		/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/white
+	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/spellburger
 	name = "Spell burger"
