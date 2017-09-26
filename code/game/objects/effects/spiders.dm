@@ -91,6 +91,10 @@
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
+/obj/structure/spider/spiderling/Destroy()
+	new/obj/item/reagent_containers/food/snacks/spiderling(get_turf(src))
+	. = ..()
+
 /obj/structure/spider/spiderling/Initialize()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
