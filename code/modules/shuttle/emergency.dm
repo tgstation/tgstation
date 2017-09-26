@@ -144,8 +144,8 @@
 
 	var/time = TIME_LEFT
 	message_admins("[key_name_admin(user.client)] \
-	(<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) \
-	(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) \
+	(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[user]'>?</A>) \
+	(<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[user]'>FLW</A>) \
 	has emagged the emergency shuttle [time] seconds before launch.", 0, 1)
 	log_game("[key_name(user)] has emagged the emergency shuttle in \
 		[COORD(src)] [time] seconds before launch.")
@@ -262,7 +262,7 @@
 				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
 					var/location = get_turf(player.mind.current)
-					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate" || player.mind.special_role == "blood brother") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return FALSE
 
 	return has_people

@@ -242,9 +242,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "fire"
 
 /obj/screen/alert/fire/Click()
-	if(isliving(usr))
-		var/mob/living/L = usr
-		return L.resist()
+	var/mob/living/L = usr
+	if(!L.can_resist())
+		return
+	L.changeNext_move(CLICK_CD_RESIST)
+	if(L.canmove)
+		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
 
 //ALIENS
@@ -644,9 +647,20 @@ so as to remain in compliance with the most up-to-date laws."
 	desc = "You're legcuffed, which slows you down considerably. Click the alert to free yourself."
 
 /obj/screen/alert/restrained/Click()
-	if(isliving(usr))
-		var/mob/living/L = usr
-		return L.resist()
+	var/mob/living/L = usr
+	if(!L.can_resist())
+		return
+	L.changeNext_move(CLICK_CD_RESIST)
+	if((L.canmove) && (L.last_special <= world.time))
+		return L.resist_restraints()
+
+/obj/screen/alert/restrained/buckled/Click()
+	var/mob/living/L = usr
+	if(!L.can_resist())
+		return
+	L.changeNext_move(CLICK_CD_RESIST)
+	if(L.last_special <= world.time)
+		return L.resist_buckle()
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 

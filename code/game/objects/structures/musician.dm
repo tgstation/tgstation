@@ -97,19 +97,15 @@
 			cur_acc[i] = "n"
 
 		for(var/line in lines)
-			//to_chat(world, line)
 			for(var/beat in splittext(lowertext(line), ","))
-				//to_chat(world, "beat: [beat]")
 				var/list/notes = splittext(beat, "/")
 				for(var/note in splittext(notes[1], "-"))
-					//to_chat(world, "note: [note]")
 					if(!playing || shouldStopPlaying(user))//If the instrument is playing, or special case
 						playing = FALSE
 						hearing_mobs = null
 						return
 					if(!lentext(note))
 						continue
-					//to_chat(world, "Parse: [copytext(note,1,2)]")
 					var/cur_note = text2ascii(note) - 96
 					if(cur_note < 1 || cur_note > 7)
 						continue

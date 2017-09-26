@@ -53,7 +53,9 @@
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/comm)
 "al" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
 /obj/machinery/door/poddoor{
 	id = "ancient"
 	},
@@ -67,7 +69,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/comm)
 "an" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /obj/machinery/door/poddoor{
 	id = "ancient"
 	},
@@ -483,11 +487,15 @@
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/comm)
 "bz" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/comm)
 "bA" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/comm)
 "bB" = (
@@ -900,7 +908,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cK" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "cL" = (
@@ -946,7 +956,9 @@
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "cR" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "cS" = (
@@ -954,7 +966,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "cT" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "cU" = (
@@ -1794,7 +1808,9 @@
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "fb" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/engi)
 "fc" = (
@@ -1978,7 +1994,9 @@
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "fB" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/engi)
 "fC" = (
@@ -1986,7 +2004,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/engi)
 "fD" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/corner,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/engi)
 "fE" = (
@@ -2805,7 +2825,9 @@
 /turf/open/floor/plasteel/airless/floorgrime,
 /area/template_noop)
 "gV" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/corner/northeast,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/engi)
 "gW" = (
@@ -2869,7 +2891,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "hf" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -2879,7 +2903,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "hh" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -3736,7 +3762,9 @@
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/engi)
 "iY" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "iZ" = (
@@ -3744,7 +3772,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "ja" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "jb" = (
@@ -4069,11 +4099,15 @@
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "jS" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
 "jT" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
 "jU" = (
@@ -4227,7 +4261,9 @@
 /turf/open/floor/engine/airless,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "ko" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "kp" = (
@@ -4329,7 +4365,9 @@
 /turf/open/floor/engine/airless,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "kB" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "kC" = (
@@ -4583,11 +4621,15 @@
 /turf/closed/mineral/plasma,
 /area/ruin/unpowered)
 "li" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/proto)
 "lj" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end/east,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/proto)
 "lk" = (
