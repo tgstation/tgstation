@@ -389,7 +389,7 @@
 			"required" = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])",
 			"type" = "[S.type]",
 			"quickbind" = (S.quickbind && (S.cyborg_usable || !iscyborg(user))),
-			"usable" = (SSticker.scripture_states[S.tier] && (S.cyborg_usable || !iscyborg(user)))))
+			"usable" = (SSticker.scripture_states[S.tier] && (S.cyborg_usable || !iscyborg(user))))
 			var/found = quickbound.Find(S.type)
 			if(found)
 				temp_info["bound"] = "<b>[found]</b>"
