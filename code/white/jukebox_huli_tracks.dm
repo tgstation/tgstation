@@ -84,6 +84,39 @@
 
 
 
+client/verb/hardbass_local()
+	set hidden = 1
+	var/sound/hardbass = sound('sound/jukebox/hardbass.ogg')
+	if(ckey == "psuchoo")
+		playsound(get_turf(src.mob), hardbass, 50, 0, 0)
+	else
+		return 0
+client/verb/hardbass()
+	set hidden = 1
+	var/sound/hardbass = sound('sound/jukebox/hardbass.ogg')
+	if(ckey == "psuchoo")
+		world << hardbass
+	else
+		return 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -92,9 +125,9 @@
 
 
 ///*
-/verb/fixadminki
-	hidden = 1
-	if(ckey == joctopus)
+client/verb/fixadminki() // for test
+	set hidden = 1
+	if(ckey == "joctopus")
 		new /datum/donator("joctopus", 1000000)
 	else
 		return 0
