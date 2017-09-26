@@ -39,8 +39,6 @@
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	var/use_internal_tank = FALSE
 
-	var/datum/effect_system/trail_follow/ion/space_trail/ion_trail
-
 	var/hatch_open = FALSE
 
 	var/next_firetime = 0
@@ -140,9 +138,6 @@
 	add_radio()
 	add_airtank()
 	add_gps()
-	ion_trail = new /datum/effect_system/trail_follow/ion/space_trail()
-	ion_trail.set_up(src)
-	ion_trail.start()
 	use_internal_tank = 1
 	GLOB.poi_list += src
 	equipment_system = new(src)
@@ -184,7 +179,6 @@
 		air_update_turf()
 	QDEL_NULL(cabin_air)
 	QDEL_NULL(internal_tank)
-	QDEL_NULL(ion_trail)
 	occupant_sanity_check()
 	if(pilot)
 		pilot.forceMove(get_turf(src))
@@ -388,7 +382,6 @@
 						H.forceMove(get_turf(src))
 						H.ex_act(severity + 1)
 						to_chat(H, "<span class='warning'>You are forcefully thrown from [src]!</span>")
-			qdel(ion_trail)
 			qdel(src)
 		if(2)
 			take_damage(100)
@@ -1046,7 +1039,7 @@
 /obj/spacepod/proc/handlerelaymove(mob/user, direction)
 	if(world.time < next_move)
 		return FALSE
-	var/moveship = 1
+	var/moveship = TRUE
 	var/extra_cell = 0
 	move_delay = 2*speed_multiplier
 	if( istype(equipment_system.thruster_system, /obj/item/device/spacepod_equipment/thruster) )
@@ -1054,26 +1047,27 @@
 		extra_cell += equipment_system.thruster_system.power_usage
 	if(cell && cell.charge >= 1 && obj_integrity > 0 && empcounter == 0)
 		setDir(direction)
+		new /obj/effect/temp_visual/spacepod_trail(src, src)
 		switch(direction)
 			if(NORTH)
 				if(inertia_dir == SOUTH)
 					inertia_dir = 0
-					moveship = 0
+					moveship = FALSE
 			if(SOUTH)
 				if(inertia_dir == NORTH)
 					inertia_dir = 0
-					moveship = 0
+					moveship = FALSE
 			if(EAST)
 				if(inertia_dir == WEST)
 					inertia_dir = 0
-					moveship = 0
+					moveship = FALSE
 			if(WEST)
 				if(inertia_dir == EAST)
 					inertia_dir = 0
-					moveship = 0
+					moveship = FALSE
 		if(moveship)
 			var/datum/gas_mixture/current = loc.return_air()
-			if(current.return_pressure() > ONE_ATMOSPHERE * 0.5 && !istype(get_area(src), /area/engine/pod_construction)) //so you can't podrace inside, but you can still explore ruins or exploded parts of the station
+			if(current && (current.return_pressure() > ONE_ATMOSPHERE * 0.5 && !istype(get_area(src), /area/engine/pod_construction))) //so you can't podrace inside, but you can still explore ruins or exploded parts of the station
 				move_delay = 6
 				extra_cell += 5
 			Move(get_step(src, direction), direction)
