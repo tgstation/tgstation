@@ -62,7 +62,7 @@
 	if(istype(W, /obj/item/organ/heart/gland))
 		if(!user.drop_item())
 			return
-		W.loc = src
+		W.forceMove(src)
 		for(var/i=1,i<=gland_colors.len,i++)
 			if(gland_types[i] == W.type)
 				amounts[i]++

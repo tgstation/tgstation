@@ -22,6 +22,6 @@
 
 /datum/disease/parrot_possession/cure()
 	if(parrot && parrot.loc == affected_mob)
-		parrot.loc = affected_mob.loc
+		parrot.forceMove(affected_mob.loc)
 		affected_mob.visible_message("<span class='danger'>[parrot] is violently driven out of [affected_mob]!</span>", "<span class='userdanger'>[parrot] bursts out of your chest!</span>")
 	..()

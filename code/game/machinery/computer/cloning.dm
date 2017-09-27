@@ -117,9 +117,8 @@
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			if(!user.drop_item())
+			if (!user.transferItemToLoc(W,src))
 				return
-			W.loc = src
 			src.diskette = W
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
@@ -373,7 +372,7 @@
 
 			if("eject")
 				if(src.diskette)
-					src.diskette.loc = src.loc
+					src.diskette.forceMove(drop_location())
 					src.diskette = null
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			if("save")

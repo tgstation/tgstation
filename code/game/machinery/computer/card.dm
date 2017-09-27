@@ -54,22 +54,19 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		var/obj/item/card/id/idcard = O
 		if(check_access(idcard))
 			if(!scan)
-				if(!usr.drop_item())
+				if (!usr.transferItemToLoc(idcard,src))
 					return
-				idcard.loc = src
 				scan = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else if(!modify)
-				if(!usr.drop_item())
+				if (!usr.transferItemToLoc(idcard,src))
 					return
-				idcard.loc = src
 				modify = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		else
 			if(!modify)
-				if(!usr.drop_item())
+				if (!usr.transferItemToLoc(idcard,src))
 					return
-				idcard.loc = src
 				modify = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else
@@ -355,7 +352,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if (modify)
 				GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.update_label()
-				modify.loc = loc
+				modify.forceMove(loc)
 				modify.verb_pickup()
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				modify = null
@@ -364,26 +361,24 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			else
 				var/obj/item/I = usr.get_active_held_item()
 				if (istype(I, /obj/item/card/id))
-					if(!usr.drop_item())
+					if (!usr.transferItemToLoc(I,src))
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-					I.loc = src
 					modify = I
 			authenticated = 0
 
 		if ("scan")
 			if (scan)
-				scan.loc = src.loc
+				scan.forceMove(src.loc)
 				scan.verb_pickup()
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				scan = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
 				if (istype(I, /obj/item/card/id))
-					if(!usr.drop_item())
+					if (!usr.transferItemToLoc(I,src))
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-					I.loc = src
 					scan = I
 			authenticated = 0
 		if ("auth")
