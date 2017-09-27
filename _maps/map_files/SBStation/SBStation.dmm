@@ -1489,7 +1489,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/turf/open/space/basic,
+/turf/open/floor/plasteel,
 /area/security/main)
 "adi" = (
 /obj/effect/spawner/structure/window/reinforced,
