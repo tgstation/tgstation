@@ -2,7 +2,7 @@
 	name = "Brainrot"
 	max_stages = 4
 	spread_text = "On contact"
-	spread_flags = CONTACT_GENERAL
+	spread_flags = BLOOD | CONTACT_SKIN | CONTACT_FLUIDS
 	cure_text = "Mannitol"
 	cures = list("mannitol")
 	agent = "Cryptococcus Cosmosis"

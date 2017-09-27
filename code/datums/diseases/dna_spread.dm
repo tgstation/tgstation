@@ -2,7 +2,7 @@
 	name = "Space Retrovirus"
 	max_stages = 4
 	spread_text = "On contact"
-	spread_flags = CONTACT_GENERAL
+	spread_flags = BLOOD | CONTACT_SKIN | CONTACT_FLUIDS
 	cure_text = "Mutadone"
 	cures = list("mutadone")
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE

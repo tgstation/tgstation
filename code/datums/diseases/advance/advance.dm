@@ -190,12 +190,11 @@
 /datum/disease/advance/proc/AssignProperties()
 
 	if(properties && properties.len)
-		switch(properties["stealth"])
-			if(2 to INFINITY)
-				visibility_flags = HIDDEN_SCANNER
+		if(properties["stealth"] >= 2)
+			visibility_flags = HIDDEN_SCANNER
 
-		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
 		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), BLOOD, AIRBORNE))
+
 		permeability_mod = max(Ceiling(0.4 * properties["transmittable"]), 1)
 		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
@@ -209,17 +208,23 @@
 /datum/disease/advance/proc/SetSpread(spread_id)
 	switch(spread_id)
 		if(NON_CONTAGIOUS)
+			spread_flags = NON_CONTAGIOUS
 			spread_text = "None"
 		if(SPECIAL)
+			spread_flags = SPECIAL
 			spread_text = "None"
-		if(CONTACT_GENERAL, CONTACT_HANDS, CONTACT_FEET)
+		if(BLOOD)
+			spread_flags = BLOOD
+			spread_text = "Blood"
+		if(CONTACT_FLUIDS)
+			spread_flags = BLOOD | CONTACT_FLUIDS
+			spread_text = "Fluids"
+		if(CONTACT_SKIN)
+			spread_flags = BLOOD | CONTACT_FLUIDS | CONTACT_SKIN
 			spread_text = "On contact"
 		if(AIRBORNE)
+			spread_flags = BLOOD | CONTACT_FLUIDS | CONTACT_SKIN | AIRBORNE
 			spread_text = "Airborne"
-		if(BLOOD)
-			spread_text = "Blood"
-
-	spread_flags = spread_id
 
 /datum/disease/advance/proc/SetSeverity(level_sev)
 

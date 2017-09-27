@@ -112,12 +112,12 @@
 
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
+		if(D.spread_flags & CONTACT_SKIN)
 			user.ContractDisease(D)
 
 	for(var/thing in user.viruses)
 		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
+		if(D.spread_flags & CONTACT_SKIN)
 			ContractDisease(D)
 
 	if(lying && surgeries.len)
@@ -131,12 +131,12 @@
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
+		if(D.spread_flags & CONTACT_SKIN)
 			M.ContractDisease(D)
 
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
+		if(D.spread_flags & CONTACT_SKIN)
 			ContractDisease(D)
 
 	if(M.a_intent == INTENT_HELP)

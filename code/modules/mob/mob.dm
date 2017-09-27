@@ -939,6 +939,16 @@
 /mob/proc/get_idcard()
 	return
 
+/mob/proc/get_static_viruses() //used when creating blood and other infective objects
+	if(!LAZYLEN(viruses))
+		return
+	var/list/datum/disease/diseases = list()
+	for(var/datum/disease/D in viruses)
+		var/static_virus = D.Copy()
+		diseases += static_virus
+	return diseases
+
+
 /mob/vv_get_dropdown()
 	. = ..()
 	. += "---"

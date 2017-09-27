@@ -2,7 +2,7 @@
 	name = "GBS"
 	max_stages = 5
 	spread_text = "On contact"
-	spread_flags = CONTACT_GENERAL
+	spread_flags = BLOOD | CONTACT_SKIN | CONTACT_FLUIDS
 	cure_text = "Synaptizine & Sulfur"
 	cures = list("synaptizine","sulfur")
 	agent = "Gravitokinetic Bipotential SADS-"

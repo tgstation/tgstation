@@ -8,6 +8,16 @@
 	blood_state = BLOOD_STATE_HUMAN
 	bloodiness = MAX_SHOE_BLOODINESS
 
+/obj/effect/decal/cleanable/blood/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	if(LAZYLEN(diseases))
+		var/list/datum/disease/diseases_to_add = list()
+		for(var/datum/disease/D in diseases)
+			if(D.spread_flags & CONTACT_FLUIDS)
+				diseases_to_add += D
+		if(LAZYLEN(diseases_to_add))
+			AddComponent(/datum/component/infective_floor, diseases_to_add)
+
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if (C.blood_DNA)
 		blood_DNA |= C.blood_DNA.Copy()
@@ -18,7 +28,7 @@
 	desc = "Looks like it's been here a while.  Eew."
 	bloodiness = 0
 
-/obj/effect/decal/cleanable/blood/old/Initialize()
+/obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
 	blood_DNA["Non-human DNA"] = "A+"
@@ -39,6 +49,15 @@
 	var/list/existing_dirs = list()
 	blood_DNA = list()
 
+/obj/effect/decal/cleanable/trail_holder/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	if(LAZYLEN(diseases))
+		var/list/datum/disease/diseases_to_add = list()
+		for(var/datum/disease/D in diseases)
+			if(D.spread_flags & CONTACT_FLUIDS)
+				diseases_to_add += D
+		if(LAZYLEN(diseases_to_add))
+			AddComponent(/datum/component/infective_floor, diseases_to_add)
 
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
 	return 1
@@ -53,7 +72,7 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = 0
 
-/obj/effect/decal/cleanable/blood/gibs/Initialize()
+/obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent("liquidgibs", 5)
 
@@ -66,7 +85,11 @@
 	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
 		sleep(2)
 		if(i > 0)
-			new /obj/effect/decal/cleanable/blood/splatter(loc)
+			var/list/datum/disease/diseases
+			GET_COMPONENT(infective, /datum/component/infective_floor)
+			if(infective)
+				diseases = infective.diseases
+			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -93,7 +116,7 @@
 	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
 	bloodiness = 0
 
-/obj/effect/decal/cleanable/blood/gibs/old/Initialize()
+/obj/effect/decal/cleanable/blood/gibs/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	setDir(pick(1,2,4,8))
 	icon_state += "-old"
@@ -126,6 +149,7 @@
 	var/list/shoe_types = list()
 
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
+	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
@@ -136,6 +160,7 @@
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
+	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes

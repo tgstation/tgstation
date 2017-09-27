@@ -1,36 +1,8 @@
-
-//Visibility Flags
-#define HIDDEN_SCANNER	1
-#define HIDDEN_PANDEMIC	2
-
-//Disease Flags
-#define CURABLE		1
-#define CAN_CARRY	2
-#define CAN_RESIST	4
-
-//Spread Flags
-#define SPECIAL 1
-#define NON_CONTAGIOUS 2
-#define BLOOD 4
-#define CONTACT_FEET 8
-#define CONTACT_HANDS 16
-#define CONTACT_GENERAL 32
-#define AIRBORNE 64
-
-
-//Severity Defines
-#define NONTHREAT	"No threat"
-#define MINOR		"Minor"
-#define MEDIUM		"Medium"
-#define HARMFUL		"Harmful"
-#define DANGEROUS 	"Dangerous!"
-#define BIOHAZARD	"BIOHAZARD THREAT!"
-
 /datum/disease
 	//Flags
 	var/visibility_flags = 0
 	var/disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
-	var/spread_flags = AIRBORNE
+	var/spread_flags = AIRBORNE | CONTACT_FLUIDS | CONTACT_SKIN
 
 	//Fluff
 	var/form = "Virus"
@@ -100,19 +72,16 @@
 	if(!affected_mob)
 		return
 
-	if((spread_flags & SPECIAL || spread_flags & NON_CONTAGIOUS || spread_flags & BLOOD) && !force_spread)
+	if(!(spread_flags & AIRBORNE) && !force_spread)
 		return
 
 	if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
 		return
 
-	var/spread_range = 1
+	var/spread_range = 2
 
 	if(force_spread)
 		spread_range = force_spread
-
-	if(spread_flags & AIRBORNE)
-		spread_range++
 
 	var/turf/T = affected_mob.loc
 	if(istype(T))
@@ -151,12 +120,6 @@
 
 /datum/disease/proc/GetDiseaseID()
 	return type
-
-
-/datum/disease/proc/IsSpreadByTouch()
-	if(spread_flags & CONTACT_FEET || spread_flags & CONTACT_HANDS || spread_flags & CONTACT_GENERAL)
-		return 1
-	return 0
 
 //don't use this proc directly. this should only ever be called by cure()
 /datum/disease/proc/remove_virus()

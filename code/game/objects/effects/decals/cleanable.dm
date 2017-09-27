@@ -16,8 +16,6 @@
 				replace_decal(C)
 	. = ..()
 
-
-
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
 	if(mergeable_decal)
 		qdel(C)
@@ -65,6 +63,7 @@
 //Add "bloodiness" of this blood's type, to the human's shoes
 //This is on /cleanable because fuck this ancient mess
 /obj/effect/decal/cleanable/Crossed(atom/movable/O)
+	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		if(H.shoes && blood_state && bloodiness)

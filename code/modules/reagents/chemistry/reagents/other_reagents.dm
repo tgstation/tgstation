@@ -19,7 +19,7 @@
 			if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
 				continue
 
-			if(method == TOUCH || method == VAPOR)
+			if((method == TOUCH || method == VAPOR) && (D.spread_flags & CONTACT_FLUIDS))
 				M.ContractDisease(D)
 			else //ingest, patch or inject
 				M.ForceContractDisease(D)
