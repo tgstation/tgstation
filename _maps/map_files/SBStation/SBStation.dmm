@@ -12539,6 +12539,7 @@
 	dir = 2;
 	network = list("SS13","RD")
 	},
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "aCv" = (
@@ -16987,7 +16988,6 @@
 "aLE" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/science,
 /obj/item/wrench,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
