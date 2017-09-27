@@ -632,6 +632,8 @@
 /datum/species/golem/clockwork/no_scrap //These golems are created through the herald's beacon and leave normal corpses on death.
 	id = "clockwork golem servant"
 	armor = 15 //Balance reasons make this armor weak
+	no_equip = list()
+	nojumpsuit = FALSE
 	has_corpse = TRUE
 	blacklisted = TRUE
 	dangerous_existence = TRUE

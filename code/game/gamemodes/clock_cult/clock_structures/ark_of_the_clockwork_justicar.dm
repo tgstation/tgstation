@@ -75,10 +75,10 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
+	SSshuttle.clearHostileEnvironment(src)
 	if(!purpose_fulfilled && istype(SSticker.mode, /datum/game_mode/clockwork_cult))
 		hierophant_message("<span class='bold large_brass'>The Ark has fallen!</span>")
 		sound_to_playing_players(null, channel = CHANNEL_JUSTICAR_ARK)
-		SSshuttle.clearHostileEnvironment(src)
 		SSticker.force_ending = TRUE //rip
 	if(glow)
 		qdel(glow)
