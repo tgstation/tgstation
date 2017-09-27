@@ -302,8 +302,8 @@
 		var/turf/target = get_turf(loc)
 		if(target)
 			var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(target)
-			P.name = "Ian"
-			P.real_name = "Ian"
+			P.name = name
+			P.real_name = real_name
 			P.gender = MALE
 			P.desc = "It's the HoP's beloved corgi puppy."
 			Write_Memory(FALSE)
@@ -312,7 +312,7 @@
 		icon_state = "old_corgi"
 		icon_living = "old_corgi"
 		icon_dead = "old_corgi_dead"
-		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
+		desc = "At a ripe old age of [record_age] [name]'s not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
