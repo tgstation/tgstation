@@ -224,6 +224,7 @@ Pipelines + Other Objects -> Pipe network
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(can_unwrench)
 			var/obj/item/pipe/stored = new(loc, make_from=src)
+			stored.setPipingLayer(piping_layer)
 			if(!disassembled)
 				stored.obj_integrity = stored.max_integrity * 0.5
 			transfer_fingerprints_to(stored)
@@ -254,7 +255,7 @@ Pipelines + Other Objects -> Pipe network
 		if(unconnected & direction)
 			underlays += getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_exposed", direction)
 
-/obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
+/obj/machinery/atmospherics/on_construction(pipe_type, obj_color, set_layer)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
