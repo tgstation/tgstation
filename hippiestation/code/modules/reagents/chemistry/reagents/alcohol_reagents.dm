@@ -114,7 +114,7 @@
 		..()
 		
 /datum/reagent/consumable/ethanol/booger/on_mob_life(mob/living/M)
-	if(prob(50))
+	if(prob(30))
 		M.emote("sneeze")
 		M.say(pick("ACHOO!!","ACHNK!!","ASNRK!!","CHU!","ACHOOEY!!","ACHSK!!"))
 		. = 1
@@ -132,7 +132,7 @@
 		..()
 
 /datum/reagent/consumable/ethanol/moonshine/on_mob_life(mob/living/M)
-	if(prob(30))
+	if(prob(20))
 		M.say(pick("YEE HAW!!","YEEE HAAW!!","YEEEE HAAAW!!","YEEEEE HAAAAW!!","YEEEEEE HAAAAAW!!","YEEEEEEE HAAAAAAW!!","YEEEEEEEE HAAAAAAAW!!"))
 	..()
 	
@@ -148,7 +148,7 @@
 		..()
 		
 /datum/reagent/consumable/ethanol/manhattan/on_mob_life(mob/living/M)
-	if(prob(25)) //may cause involuntary brawls
+	if(prob(20)) //may cause involuntary brawls
 		M.say(pick("FUCKIN' SHIT!!","JESUS CHRIST!!","AAASSSSSS!!","FUCKER!!","SHITBIRD!!","FUCK YOURSELF!!","GET OFF THE FUCKIN' ROAD!!","EAT SHIT!!","EAT A DICK, PAL!!","GET FUCKED!!","TRY ME, COCKSUCKER!!","JUMP UP YOUR OWN ASS!!","BADA BING!!","YOU TALKIN' TO ME?!!","FUCK OUTTA HERE!!","EY, I'M WALKIN' HERE!!"))
 	..()
 	
@@ -190,7 +190,7 @@
 	M.overeatduration = 0
 	return ..()
 	
-/datum/reagent/consumable/ethanol/irishcarbomb/on_mob_life(mob/living/M)
+/datum/reagent/consumable/ethanol/irishcarbomb/on_mob_life(mob/living/M) //sorry, irish
 	if(prob(5))
 		playsound(get_turf(M), 'sound/effects/explosionfar.ogg', 100, 1)
 	return ..()
