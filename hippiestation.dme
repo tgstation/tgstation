@@ -2436,6 +2436,7 @@
 #include "hippiestation\code\modules\reagents\chemistry\machinery\lcasschem.dm"
 #include "hippiestation\code\modules\reagents\chemistry\machinery\reagentgrinder.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents\alcohol_reagents.dm"
+#include "hippiestation\code\modules\reagents\chemistry\reagents\drink_reagents.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents\drug_reagents.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents\food_reagents.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents\medicine_reagents.dm"
