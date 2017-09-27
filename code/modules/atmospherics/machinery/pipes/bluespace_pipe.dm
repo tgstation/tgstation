@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(bluespace_pipes)
 /obj/machinery/atmospherics/pipe/bluespace/pipeline_expansion()
 	return ..() + GLOB.bluespace_pipes - src
 
-/obj/machinery/atmospherics/components/pipe/bluespace/hide()
+/obj/machinery/atmospherics/pipe/bluespace/hide()
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/bluespace/update_icon(showpipe)

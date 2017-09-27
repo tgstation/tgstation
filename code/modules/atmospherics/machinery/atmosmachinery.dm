@@ -223,7 +223,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(can_unwrench)
-			var/obj/item/pipe/stored = new(loc, make_from=src)
+			var/obj/item/pipe/stored = new(loc, piping_layer, dir, src)
 			stored.setPipingLayer(piping_layer)
 			if(!disassembled)
 				stored.obj_integrity = stored.max_integrity * 0.5

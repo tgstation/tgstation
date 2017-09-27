@@ -12,6 +12,9 @@
 	var/list/front_nodes
 	var/list/back_nodes
 
+/obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer()
+	return ..(PIPING_LAYER_DEFAULT)
+
 /obj/machinery/atmospherics/pipe/layer_manifold/Initialize()
 	front_nodes = list()
 	back_nodes = list()

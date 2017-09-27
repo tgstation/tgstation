@@ -91,6 +91,10 @@ Buildable meters
 	return ..()
 
 /obj/item/pipe/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
+	var/obj/machinery/atmospherics/fakeA = get_pipe_cache(pipe_type)
+	var/nolayer = (fakeA.pipe_flags & PIPING_ALL_LAYER)
+	if(nolayer)
+		new_layer = PIPING_LAYER_DEFAULT
 	piping_layer = new_layer
 	if(pipe_type != PIPE_LAYER_MANIFOLD)
 		pixel_x = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
@@ -225,24 +229,25 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
+/obj/item/pipe/proc/get_pipe_cache(type)
+	var/static/list/obj/machinery/atmospherics/check_cache
+	if(!islist(check_cache))
+		check_cache = list()
+	if(!check_cache[type])
+		check_cache[type] = new type
+	return check_cache[type]
+
 /obj/item/pipe/attackby(obj/item/W, mob/user, params)
 	if (!istype(W, /obj/item/wrench))
 		return ..()
 	if (!isturf(loc))
 		return TRUE
 
-	var/static/list/obj/machinery/atmospherics/check_cache
-	if(!islist(check_cache))
-		check_cache = list()
-
 	fixdir()
 	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
 		setDir(unflip(dir))
 
-	if(!check_cache[pipe_type])
-		check_cache[pipe_type] = new pipe_type
-
-	var/obj/machinery/atmospherics/fakeA = check_cache[pipe_type]
+	var/obj/machinery/atmospherics/fakeA = get_pipe_cache(pipe_type)
 
 	for(var/obj/machinery/atmospherics/M in loc)
 		if((M.pipe_flags & PIPING_ONE_PER_TURF) && (fakeA.pipe_flags & PIPING_ONE_PER_TURF))	//Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
