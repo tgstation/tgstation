@@ -83,7 +83,7 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 		return
 	else if (istype(W, /obj/item/wrench))
 		if (!anchored && !isinspace())
-			playsound(loc, W.usesound, 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")
 			if (do_after(user, 40*W.toolspeed, target = src))
 				add_fingerprint(user)
@@ -96,7 +96,7 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 				if (usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
 		else if(anchored)
-			playsound(loc, W.usesound, 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
 			if (do_after(user, 20*W.toolspeed, target = src))
 				add_fingerprint(user)

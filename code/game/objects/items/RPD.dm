@@ -601,7 +601,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 					PM.setAttachLayer(piping_layer)
 
 		if(DISPOSALS_MODE) //Making disposals pipes
-			if(is_anchored_dense_turf(A))
+			if(isclosedturf(A))
 				to_chat(user, "<span class='warning'>The [src]'s error light flickers; there's something in the way!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")

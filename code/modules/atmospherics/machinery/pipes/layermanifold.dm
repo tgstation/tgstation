@@ -6,14 +6,20 @@
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH
 	pipe_flags = PIPING_ALL_LAYER
-	var/list/front_nodes = list()
-	var/list/back_nodes = list()
 	piping_layer = PIPING_LAYER_DEFAULT
 	device_type = 0
-
-/obj/machinery/atmospherics/pipe/layer_manifold/New()
-	..()
 	volume = 260
+	var/list/front_nodes
+	var/list/back_nodes
+
+/obj/machinery/atmospherics/pipe/layer_manifold/Initialize()
+	front_nodes = list()
+	back_nodes = list()
+	return ..()
+
+/obj/machinery/atmospherics/pipe/layer_manifold/Destroy()
+	nullifyAllNodes()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/nullifyAllNodes()
 	var/list/obj/machinery/atmospherics/needs_nullifying = get_all_connected_nodes()
@@ -22,8 +28,7 @@
 	nodes = list()
 	for(var/obj/machinery/atmospherics/A in needs_nullifying)
 		A.disconnect(src)
-		if(A)
-			A.build_network()
+		A.build_network()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
 	var/list/obj/machinery/atmospherics/all_connected = list()
@@ -37,10 +42,6 @@
 	for(var/obj/machinery/atmospherics/A in all_connected)
 		returnlist += all_connected[A]
 	return returnlist
-
-/obj/machinery/atmospherics/pipe/layer_manifold/Destroy()
-	nullifyAllNodes()
-	..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
 	layer = (initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE))	//This is above everything else.

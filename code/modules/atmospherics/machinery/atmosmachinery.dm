@@ -26,7 +26,7 @@ Pipelines + Other Objects -> Pipe network
 	var/initialize_directions = 0
 	var/pipe_color
 	var/piping_layer = PIPING_LAYER_DEFAULT
-	var/pipe_flags = 0
+	var/pipe_flags = NONE
 
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
@@ -162,9 +162,9 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pipe)) //lets you autodrop
 		var/obj/item/pipe/pipe = W
-		user.drop_item(pipe)
-		pipe.setPipingLayer(piping_layer) //align it with us
-		return TRUE
+		if(user.dropItemToGround(pipe))
+			pipe.setPipingLayer(piping_layer) //align it with us
+			return TRUE
 	if(istype(W, /obj/item/wrench))
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
@@ -178,7 +178,7 @@ Pipelines + Other Objects -> Pipe network
 			var/unsafe_wrenching = FALSE
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
-			playsound(loc, W.usesound, 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 			if (internal_pressure > 2*ONE_ATMOSPHERE)
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
@@ -257,15 +257,16 @@ Pipelines + Other Objects -> Pipe network
 		A.addMember(src)
 	build_network()
 
-/obj/machinery/atmospherics/Entered(atom/movable/Obj)
-	if(istype(Obj, /mob/living))
-		var/mob/living/L = Obj
+/obj/machinery/atmospherics/Entered(atom/movable/AM)
+	if(istype(AM, /mob/living))
+		var/mob/living/L = AM
 		L.ventcrawl_layer = piping_layer
+	return ..()
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
-	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
+	return ..()
 
 #define VENT_SOUND_DELAY 30
 

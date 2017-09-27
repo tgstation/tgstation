@@ -53,8 +53,7 @@ Buildable meters
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/item/pipe/New(loc, _pipe_type, _dir, obj/machinery/atmospherics/make_from)
-	..()
+/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from)
 	if(make_from)
 		setDir(make_from.dir)
 		pipename = make_from.name
@@ -83,6 +82,7 @@ Buildable meters
 	update()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+	return ..()
 
 /obj/item/pipe/dropped()
 	if(loc)
@@ -228,28 +228,33 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	if (!isturf(loc))
 		return TRUE
 
+	var/static/list/obj/machinery/atmospherics/check_cache
+	if(!islist(check_cache))
+		check_cache = list()
+
 	fixdir()
 	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
 		setDir(unflip(dir))
 
-	var/obj/machinery/atmospherics/A = new pipe_type(loc)
-	A.setDir(dir)
-	A.SetInitDirections()
+	if(!check_cache[pipe_type])
+		check_cache[pipe_type] = new pipe_type
+
+	var/obj/machinery/atmospherics/fakeA = check_cache[pipe_type]
 
 	for(var/obj/machinery/atmospherics/M in loc)
-		if(M == A) //we don't want to check to see if it interferes with itself
-			continue
-		if((M.pipe_flags & PIPING_ONE_PER_TURF) && (A.pipe_flags & PIPING_ONE_PER_TURF))	//Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
+		if((M.pipe_flags & PIPING_ONE_PER_TURF) && (fakeA.pipe_flags & PIPING_ONE_PER_TURF))	//Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
 			to_chat(user, "<span class='warning'>Something is hogging the tile!</span>")
-			qdel(A)
 			return TRUE
 		if((M.piping_layer != piping_layer) && !((M.pipe_flags & PIPING_ALL_LAYER) || (pipe_type == PIPE_LAYER_MANIFOLD)))
 			continue
-		if(M.GetInitDirections() & A.GetInitDirections())	// matches at least one direction on either type of pipe
+		if(M.GetInitDirections() & fakeA.GetInitDirections())	// matches at least one direction on either type of pipe
 			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
-			qdel(A)
-			return 1
+			return TRUE
 	// no conflicts found
+
+	var/obj/machinery/atmospherics/A = new pipe_type(loc)
+	A.setDir(dir)
+	A.SetInitDirections()
 
 	if(pipename)
 		A.name = pipename
@@ -259,7 +264,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		T.flipped = flipped
 	A.on_construction(pipe_type, color, piping_layer)
 
-	playsound(loc, W.usesound, 50, 1)
+	playsound(src, W.usesound, 50, 1)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
@@ -310,7 +315,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	qdel(src)
 
 /obj/item/pipe_meter/dropped()
-	..()
+	. = ..()
 	if(loc)
 		setAttachLayer(piping_layer)
 

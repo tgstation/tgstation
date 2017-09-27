@@ -25,13 +25,11 @@
 		oldN.build_network()
 
 /obj/machinery/atmospherics/pipe/destroy_network()
-	if(!QDELETED(parent))
-		qdel(parent)
-		return
+	QDEL_NULL(parent)
 
 /obj/machinery/atmospherics/pipe/build_network()
 	if(QDELETED(parent))
-		parent = new /datum/pipeline()
+		parent = new
 		parent.build_pipeline(src)
 
 /obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
@@ -90,10 +88,7 @@
 			qdel(meter)
 	. = ..()
 
-	if(parent && !QDELETED(parent))
-		QDEL_NULL(parent)
-	else
-		parent = null
+	QDEL_NULL(parent)
 
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
 	for(DEVICE_TYPE_LOOP)
