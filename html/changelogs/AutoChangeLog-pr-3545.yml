@@ -1,0 +1,5 @@
+author: "GLA Coding"
+delete-after: True
+changes: 
+  - tweak: "Cells must now be installed in mechs when being constructed, this step is always before the application of internal armor."
+  - bugfix: "Combat mechs now get stats upgrades from their scanning modules and capacitors"
