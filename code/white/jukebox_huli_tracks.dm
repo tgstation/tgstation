@@ -72,12 +72,12 @@
 	f_name = "W"
 	name = "izards Assistant"
 	path = 'sound/jukebox/wizardsassistant.ogg'
-
+/*
 /datum/turntable_soundtrack/pistoletov
 	f_name = "А"
 	name = "лександр Пистолетов - Из России в Украину!"
 	path = 'sound/jukebox/izrossiivukrainu.ogg'
-
+*/
 
 
 
