@@ -19,7 +19,7 @@ CONFIG_DEF(number/lobby_countdown)	// In between round countdown.
 	value = 120
 	min_val = 0
 
-CONFIG_DEF(number/lobby_countdown)	// Post round murder death kill countdown
+CONFIG_DEF(number/round_end_countdown)	// Post round murder death kill countdown
 	value = 25
 	min_val = 0
 

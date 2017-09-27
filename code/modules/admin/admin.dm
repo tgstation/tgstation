@@ -563,7 +563,7 @@
 		to_chat(world, "<B>The AI job is chooseable now.</B>")
 	log_admin("[key_name(usr)] toggled AI allowed.")
 	world.update_status()
-	SSblackbox.add_details("admin_toggle","Toggle AI|[config.allow_ai]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle AI|[!alai]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleaban()
 	set category = "Server"

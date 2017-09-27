@@ -58,16 +58,17 @@
 	var/meeting_areas = list("The Bar", "Dorms", "Escape Dock", "Arrivals", "Holodeck", "Primary Tool Storage", "Recreation Area", "Chapel", "Library")
 
 /datum/game_mode/traitor/bros/pre_setup()
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	var/list/datum/mind/possible_brothers = get_players_for_role(ROLE_BROTHER)
 
 	var/num_teams = team_amount
-	if(config.brother_scaling_coeff)
-		num_teams = max(1, round(num_players()/config.brother_scaling_coeff))
+	var/bsc = CONFIG_GET(number/brother_scaling_coeff)
+	if(bsc)
+		num_teams = max(1, round(num_players() / bsc))
 
 	for(var/j = 1 to num_teams)
 		if(possible_brothers.len < min_team_size || antag_candidates.len <= required_enemies) 

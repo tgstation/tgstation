@@ -7,7 +7,7 @@
 			if(B.blob_core || !B.placed)
 				return 0
 	if(!GLOB.blob_cores.len) //blob is dead
-		if(config.continuous["blob"])
+		if(CONFIG_GET(keyed_flag_list/continuous)["blob"])
 			message_sent = FALSE //disable the win count at this point
 			continuous_sanity_checked = 1 //Nonstandard definition of "alive" gets past the check otherwise
 			SSshuttle.clearHostileEnvironment(src)

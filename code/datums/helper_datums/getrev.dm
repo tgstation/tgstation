@@ -47,19 +47,17 @@
 	else
 		log_world(originmastercommit)
 /datum/getrev/proc/DownloadPRDetails()
-	if(!config.githubrepoid)
+	var/repo_id = CONFIG_GET(number/githubrepoid)
+	if(!repo_id)
 		if(testmerge.len)
 			log_world("PR details download failed: No github repo config set")
-		return
-	if(!isnum(text2num(config.githubrepoid)))
-		log_world("PR details download failed: Invalid github repo id: [config.githubrepoid]")
 		return
 	for(var/line in testmerge)
 		if(!isnum(text2num(line)))
 			log_world("PR details download failed: Invalid PR number: [line]")
 			return
 
-		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
+		var/url = "https://api.github.com/repositories/[repo_id]/pulls/[line].json"
 		GLOB.valid_HTTPSGet = TRUE
 		var/json = HTTPSGet(url)
 		if(!json)
@@ -87,7 +85,7 @@
 			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
 		if(details && findtext(details, "\[s\]") && (!usr || !usr.client.holder))
 			continue
-		. += "<a href=\"[config.githuburl]/pull/[line]\">#[line][details]</a><br>"
+		. += "<a href=\"[CONFIG_GET(string/githuburl)]/pull/[line]\">#[line][details]</a><br>"
 
 /client/verb/showrevinfo()
 	set category = "OOC"

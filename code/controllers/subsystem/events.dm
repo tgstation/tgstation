@@ -171,7 +171,7 @@ SUBSYSTEM_DEF(events)
 
 //sets up the holidays and holidays list
 /datum/controller/subsystem/events/proc/getHoliday()
-	if(!CONFIG_GET(flag/config.allow_holidays))
+	if(!CONFIG_GET(flag/allow_holidays))
 		return		// Holiday stuff was not enabled in the config!
 
 	var/YY = text2num(time2text(world.timeofday, "YY")) 	// get the current year
