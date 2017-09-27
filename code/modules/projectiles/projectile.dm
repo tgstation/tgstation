@@ -13,7 +13,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
-	var/suppressed = 0	//Attack message
+	var/suppressed = FALSE	//Attack message
 	var/yo = null
 	var/xo = null
 	var/current = null

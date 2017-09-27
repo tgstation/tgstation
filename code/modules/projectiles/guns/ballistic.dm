@@ -4,10 +4,10 @@
 	icon_state = "pistol"
 	origin_tech = "combat=2;materials=2"
 	w_class = WEIGHT_CLASS_NORMAL
-	var/spawnwithmagazine = 1
+	var/spawnwithmagazine = TRUE
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
-	var/casing_ejector = 1 //whether the gun ejects the chambered casing
+	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -70,23 +70,22 @@
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	if(istype(A, /obj/item/suppressor))
 		var/obj/item/suppressor/S = A
-		if(can_suppress)
-			if(!suppressed)
-				if(!user.transferItemToLoc(A, src))
-					return
-				to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
-				suppressed = A
-				S.oldsound = fire_sound
-				S.initial_w_class = w_class
-				fire_sound = 'sound/weapons/gunshot_silenced.ogg'
-				w_class = WEIGHT_CLASS_NORMAL //so pistols do not fit in pockets when suppressed
-				update_icon()
-				return
-			else
-				to_chat(user, "<span class='warning'>[src] already has a suppressor!</span>")
-				return
-		else
+		if(!can_suppress)
 			to_chat(user, "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>")
+			return
+		if(!user.is_holding(src))
+			to_chat(user, "<span class='notice'>You need be holding [src] to fit [S] to it!</span>")
+			return
+		if(suppressed)
+			to_chat(user, "<span class='warning'>[src] already has a suppressor!</span>")
+			return
+		if(user.transferItemToLoc(A, src))
+			to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
+			suppressed = A
+			S.oldsound = fire_sound
+			fire_sound = 'sound/weapons/gunshot_silenced.ogg'
+			w_class += A.w_class //so pistols do not fit in pockets when suppressed
+			update_icon()
 			return
 	return 0
 
@@ -100,8 +99,8 @@
 			to_chat(user, "<span class='notice'>You unscrew [suppressed] from [src].</span>")
 			user.put_in_hands(suppressed)
 			fire_sound = S.oldsound
-			w_class = S.initial_w_class
-			suppressed = 0
+			w_class -= S.w_class
+			suppressed = null
 			update_icon()
 			return
 	..()
@@ -211,9 +210,8 @@
 	desc = "A universal syndicate small-arms suppressor for maximum espionage."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	var/oldsound = null
-	var/initial_w_class = null
 
 
 /obj/item/suppressor/specialoffer

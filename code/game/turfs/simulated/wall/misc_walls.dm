@@ -56,7 +56,6 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
 	var/obj/effect/clockwork/overlay/wall/realappearence
-	var/obj/structure/destructible/clockwork/cache/linkedcache
 
 /turf/closed/wall/clockwork/Initialize()
 	..()
@@ -68,13 +67,10 @@
 
 /turf/closed/wall/clockwork/examine(mob/user)
 	..()
-	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
+	if((is_servant_of_ratvar(user) || isobserver(user)))
 		to_chat(user, "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>")
 
 /turf/closed/wall/clockwork/Destroy()
-	if(linkedcache)
-		linkedcache.linkedwall = null
-		linkedcache = null
 	change_construction_value(-5)
 	if(realappearence)
 		qdel(realappearence)

@@ -188,6 +188,24 @@
 	tastes = list("cobwebs" = 1)
 	foodtype = MEAT | TOXIC
 
+/obj/item/reagent_containers/food/snacks/spiderling
+	name = "spiderling"
+	desc = "It's slightly twitching in your hand. Ew..."
+	icon_state = "spiderling"
+	list_reagents = list("nutrient" = 1, "toxin" = 4)
+	filling_color = "#00800"
+	tastes = list("cobwebs" = 1, "guts" = 2)
+	foodtype = MEAT | TOXIC
+
+/obj/item/reagent_containers/food/snacks/spiderlollipop
+	name = "spider lollipop"
+	desc = "Still gross, but at least it has a mountain of sugar on it."
+	icon_state = "spiderlollipop"
+	list_reagents = list("nutriment" = 1, "toxin" = 1, "iron" = 10, "sugar" = 5, "omnizine" = 2) //lollipop, but vitamins = toxins
+	filling_color = "#00800"
+	tastes = list("cobwebs" = 1, "sugar" = 2)
+	foodtype = JUNKFOOD | SUGAR
+
 /obj/item/reagent_containers/food/snacks/chococoin
 	name = "chocolate coin"
 	desc = "A completely edible but nonflippable festive coin."
