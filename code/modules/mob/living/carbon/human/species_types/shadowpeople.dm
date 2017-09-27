@@ -36,7 +36,7 @@
 	var/obj/effect/proc_holder/spell/targeted/shadowwalk/shadowwalk
 
 	var/info_text = "You are a <span class='danger'>Nightmare</span>. The ability <span class='warning'>shadow walk</span> allows unlimited, unrestricted movement in the dark using. \
-					Your <span class='warning'>light eater</span> will destroy any light producing objects you attack, as well as destroy any lights a living creature may be holding. You will automatically dodge gunfire and melee attacks when on a dark tile."
+					Your <span class='warning'>light eater</span> will destroy any light producing objects you attack, as well as destroy any lights a living creature may be holding. You will automatically dodge gunfire and melee attacks when on a dark tile. If killed, you willl eventually revive if left in darkness."
 
 /datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -124,9 +124,11 @@
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			respawn_progress++
-	if(respawn_progress >= 60)
+			playsound(owner,'sound/effects/singlebeat.ogg',40,1)
+	if(respawn_progress >= 40)
 		owner.revive(full_heal = TRUE)
 		owner.visible_message("<span class='warning'>[owner] staggers to their feet!</span>")
+		playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 		respawn_progress = 0
 
 //Weapon
