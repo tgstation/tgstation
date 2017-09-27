@@ -13,6 +13,7 @@
 	var/obj/item/organ/brain/brain = null //The actual brain
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
+	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
@@ -203,8 +204,9 @@
 	name = "Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
 	origin_tech = "biotech=4;programming=4;syndicate=2"
+	overrides_aicore_laws = TRUE
 
-/obj/item/device/mmi/syndie/New()
-	..()
+/obj/item/device/mmi/syndie/Initialize()
+	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	radio.on = 0

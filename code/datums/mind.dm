@@ -668,7 +668,7 @@
 		text = "<i><b>[text]</b></i>: "
 		if(is_servant_of_ratvar(current))
 			text += "not mindshielded | <a href='?src=\ref[src];clockcult=clear'>employee</a> | <b>SERVANT</b>"
-			text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
+			text += "<br><a href='?src=\ref[src];clockcult=slab'>Equip</a>"
 		else if(is_eligible_servant(current))
 			text += "not mindshielded | <b>EMPLOYEE</b> | <a href='?src=\ref[src];clockcult=servant'>servant</a>"
 		else
@@ -1025,9 +1025,9 @@
 					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
 			if("slab")
 				if(!SSticker.mode.equip_servant(current))
-					to_chat(usr, "<span class='warning'>Failed to outfit [current] with a slab!</span>")
+					to_chat(usr, "<span class='warning'>Failed to outfit [current]!</span>")
 				else
-					to_chat(usr, "<span class='notice'>Successfully gave [current] a clockwork slab!</span>")
+					to_chat(usr, "<span class='notice'>Successfully gave [current] servant equipment!</span>")
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
