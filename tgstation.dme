@@ -1840,6 +1840,7 @@
 #include "code\modules\ninja\energy_katana.dm"
 #include "code\modules\ninja\ninja_event.dm"
 #include "code\modules\ninja\Ninja_Readme.dm"
+#include "code\modules\ninja\outfit.dm"
 #include "code\modules\ninja\suit\gloves.dm"
 #include "code\modules\ninja\suit\head.dm"
 #include "code\modules\ninja\suit\mask.dm"
