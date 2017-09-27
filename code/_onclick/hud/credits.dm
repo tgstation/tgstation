@@ -12,7 +12,9 @@
 	LAZYINITLIST(credits)
 	var/list/_credits = credits
 	verbs += /client/proc/ClearCredits
-	var/static/list/credit_order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states(new /icon(CREDITS_PATH))) - "Thanks for playing!")
+	var/static/list/credit_order_for_this_round
+	if(isnull(credit_order_for_this_round))
+		credit_order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states(credits_icon)) - "Thanks for playing!")
 	for(var/I in credit_order_for_this_round)
 		if(!credits)
 			return
