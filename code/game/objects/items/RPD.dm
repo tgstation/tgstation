@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 
 //find these defines in code\game\machinery\pipe\consruction.dm
 GLOBAL_LIST_INIT(RPD_recipes, list(
-	"Regular Pipes" = list(
+	"Pipes" = list(
 		"Pipe"           = new /datum/pipe_info(PIPE_SIMPLE,			1, PIPE_BENDABLE),
 		//"Bent Pipe"      = new /datum/pipe_info(PIPE_SIMPLE,	 		5, PIPE_BENT),
 		"Manifold"       = new /datum/pipe_info(PIPE_MANIFOLD, 			1, PIPE_TRINARY),
@@ -87,6 +87,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		"Digital Valve"  = new /datum/pipe_info(PIPE_DVALVE,			1, PIPE_BINARY),
 		"4-Way Manifold" = new /datum/pipe_info(PIPE_4WAYMANIFOLD,		1, PIPE_QUAD),
 		"Layer Manifold" = new /datum/pipe_info(PIPE_LAYER_MANIFOLD,	2, PIPE_UNARY),
+		"Bluespace Pipe" = new /datum/pipe_info(PIPE_BLUESPACE,			1, PIPE_UNARY),
 	),
 	"Devices"=list(
 		"Connector"      = new /datum/pipe_info(PIPE_CONNECTOR,			1, PIPE_UNARY),

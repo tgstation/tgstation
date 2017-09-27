@@ -317,7 +317,8 @@
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
+	. = FALSE
 	if (!target || (flags_1 & NODROP_1) || speed <= 0)
 		return
 
@@ -346,7 +347,9 @@
 			//then lets add it to speed
 			speed += user_momentum
 			if (speed <= 0)
-				return //no throw speed, the user was moving too fast.
+				return//no throw speed, the user was moving too fast.
+
+	. = TRUE // No failure conditions past this point.
 
 	var/datum/thrownthing/TT = new()
 	TT.thrownthing = src

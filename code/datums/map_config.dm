@@ -12,6 +12,7 @@
 	var/minetype = "lavaland"
 
 	var/list/transition_config = list(CENTCOM = SELFLOOPING,
+									CITY_OF_COGS = SELFLOOPING,
 									MAIN_STATION = CROSSLINKED,
 									EMPTY_AREA_1 = CROSSLINKED,
 									EMPTY_AREA_2 = CROSSLINKED,
@@ -119,6 +120,8 @@
 			return MAIN_STATION
 		if("CENTCOM")
 			return CENTCOM
+		if("CITY_OF_COGS")
+			return CITY_OF_COGS
 		if("MINING")
 			return MINING
 		if("EMPTY_AREA_1")

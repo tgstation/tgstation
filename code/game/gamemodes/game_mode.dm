@@ -19,7 +19,6 @@
 	var/probability = 0
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
-	var/explosion_in_progress = 0 //sit back and relax
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
 	var/list/datum/mind/modePlayer = new
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
@@ -160,7 +159,7 @@
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
 
-	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
+	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=\ref[usr]'>end the round now</A>.")
 
 	. = 1
 	sleep(rand(600,1800))
@@ -562,3 +561,8 @@
 
 /datum/game_mode/proc/generate_report() //Generates a small text blurb for the gamemode in centcom report
 	return "Gamemode report for [name] not set.  Contact a coder."
+
+//By default nuke just ends the round
+/datum/game_mode/proc/OnNukeExplosion(off_station)
+	if(off_station < 2)
+		station_was_nuked = TRUE //Will end the round on next check.
