@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -17325,19 +17325,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aND" = (
-/obj/structure/closet/gmcloset,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/cable_coil,
-/obj/item/device/flashlight/lamp,
-/obj/item/device/flashlight/lamp/green,
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
 "aNE" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -62210,6 +62197,20 @@
 /obj/item/book/manual/barman_recipes,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"Unp" = (
+/obj/structure/closet/gmcloset,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/obj/item/stack/cable_coil,
+/obj/item/device/flashlight/lamp,
+/obj/item/device/flashlight/lamp/green,
+/obj/item/screwdriver,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "UZd" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/wood,
@@ -99338,7 +99339,7 @@ aHM
 aJm
 aKz
 aKR
-aND
+Unp
 aJC
 ftJ
 NnN
