@@ -173,6 +173,7 @@
 		/obj/item/reagent_containers/food/snacks/soup,
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/reagent_containers/food/snacks/deepfryholder
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
