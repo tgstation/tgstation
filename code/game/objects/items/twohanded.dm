@@ -429,7 +429,8 @@
 
 /obj/item/twohanded/spear/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Alt-click to set war cry.</span>")
+	if(explosive)
+		to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
 
 /obj/item/twohanded/spear/update_icon()
 	if(explosive)
