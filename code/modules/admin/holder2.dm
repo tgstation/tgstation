@@ -34,6 +34,8 @@ GLOBAL_PROTECT(href_token)
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	href_token = GenerateToken()
 	GLOB.admin_datums[ckey] = src
+	if(R.rights & R_DEBUG) //grant profile access
+		world.SetConfig("APP/admin", ckey, "role=admin")
 
 /proc/GenerateToken()
 	. = ""
