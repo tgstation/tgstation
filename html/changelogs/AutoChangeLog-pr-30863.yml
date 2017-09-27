@@ -1,4 +1,0 @@
-author: "Pubby"
-delete-after: True
-changes: 
-  - rscadd: "Bluespace pipes to atmospherics, which create a single pipenet with all bluespace pipes in existence."
