@@ -199,6 +199,8 @@
 		else
 			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
 
+/obj/item/device/mmi/relaymove()
+	return
 
 /obj/item/device/mmi/syndie
 	name = "Syndicate Man-Machine Interface"
