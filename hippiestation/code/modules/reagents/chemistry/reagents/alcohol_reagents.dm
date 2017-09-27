@@ -190,7 +190,7 @@
 	M.overeatduration = 0
 	return ..()
 	
-/datum/reagent/consumable/ethanol/irishcarbomb/on_mob_life(mob/living/M)
+/datum/reagent/consumable/ethanol/irishcarbomb/on_mob_life(mob/living/carbon/M)
     if(prob(5))
         mob/living/carbon/C = M
         C.playsound_local(get_turf(M), 'sound/effects/explosionfar.ogg', 100, 1)
