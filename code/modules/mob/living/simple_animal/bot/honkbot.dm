@@ -1,23 +1,25 @@
 /mob/living/simple_animal/bot/honkbot
 	name = "\improper Honkbot"
 	desc = "A little robot. It looks happy with its bike horn."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "honkbot0"
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	health = 20
 	maxHealth = 20
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB
 
-	radio_key = /obj/item/device/encryptionkey/headset_service
+	radio_key = /obj/item/device/encryptionkey/headset_service //doesn't have security key
 	radio_channel = "Service" //Service
 	bot_type = SEC_BOT
 	model = "Honkbot"
-	bot_core_type = /obj/machinery/bot_core/honkbot
+	bot_core_type = /obj/machinery/bot_core/secbot
 	window_id = "autosec"
 	window_name = "Honkomatic Bike Horn Unit v1.0"
 	allow_pai = 1 //Damn right we'll pAI these
+	data_hud_type = DATA_HUD_SECURITY_ADVANCED
+
 
 	var/honksound = 'sound/items/bikehorn.ogg'
 	var/spam_flag = 0
@@ -28,7 +30,7 @@
 	var/target_lastloc //Loc of target when arrested.
 	var/last_found //There's a delay
 	var/threatlevel
-	var/declare_arrests = 0
+	var/declare_arrests = 0 // speak, you shall not
 	var/idcheck = 1 //Chases unknowns
 	var/fcheck = 1 //And armed people
 	var/check_records = 0 //Doesn't care about criminals
@@ -366,4 +368,4 @@ Auto Patrol: []"},
 	..()
 
 /obj/machinery/bot_core/honkbot
-	req_access = list(access_theatre)
+	req_access = list(ACCESS_THEATRE)
