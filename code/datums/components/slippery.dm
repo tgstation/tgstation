@@ -8,8 +8,7 @@
 	lube_flags = _lube_flags
 	if(ismovableatom(parent))
 		RegisterSignal(COMSIG_MOVABLE_CROSSED, .proc/Slip)
-	else
-		RegisterSignal(COMSIG_ATOM_ENTERED, .proc/Slip)
+	RegisterSignal(COMSIG_ATOM_ENTERED, .proc/Slip)
 
 /datum/component/slippery/proc/Slip(atom/movable/AM)
 	var/mob/victim = AM

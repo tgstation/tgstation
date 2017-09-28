@@ -3,9 +3,9 @@
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	var/dupe_type
 	var/list/signal_procs
-	var/datum/parent
+	var/atom/parent
 
-/datum/component/New(datum/P, ...)
+/datum/component/New(atom/P, ...)
 	parent = P
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
@@ -34,9 +34,9 @@
 	P.SendSignal(COMSIG_COMPONENT_ADDED, src)
 	
 	//lazy init the parent's dc list
-	var/list/dc = P.datum_components
+	var/list/dc = P.atom_components
 	if(!dc)
-		P.datum_components = dc = list()
+		P.atom_components = dc = list()
 	
 	//set up the typecache
 	var/our_type = type
@@ -69,7 +69,7 @@
 
 /datum/component/Destroy()
 	enabled = FALSE
-	var/datum/P = parent
+	var/atom/P = parent
 	if(P)
 		_RemoveNoSignal()
 		P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
@@ -77,9 +77,9 @@
 	return ..()
 
 /datum/component/proc/_RemoveNoSignal()
-	var/datum/P = parent
+	var/atom/P = parent
 	if(P)
-		var/list/dc = P.datum_components
+		var/list/dc = P.atom_components
 		var/our_type = type
 		for(var/I in _GetInverseTypeList(our_type))
 			var/list/components_of_type = dc[I]
@@ -92,7 +92,7 @@
 			else	//just us
 				dc -= I
 		if(!dc.len)
-			P.datum_components = null
+			P.atom_components = null
 		parent = null
 
 /datum/component/proc/RegisterSignal(sig_type, proc_on_self, override = FALSE)
@@ -126,8 +126,8 @@
 		current_type = type2parent(current_type)
 		. += current_type
 
-/datum/proc/SendSignal(sigtype, ...)
-	var/list/comps = datum_components
+/atom/proc/SendSignal(sigtype, ...)
+	var/list/comps = atom_components
 	if(!comps)
 		return FALSE
 	var/list/arguments = args.Copy()
@@ -160,20 +160,20 @@
 				C.AfterComponentActivated()
 				. = TRUE
 
-/datum/proc/ComponentActivated(datum/component/C)
+/atom/proc/ComponentActivated(datum/component/C)
 	set waitfor = FALSE
 	return
 
-/datum/proc/GetComponent(c_type)
-	var/list/dc = datum_components
+/atom/proc/GetComponent(c_type)
+	var/list/dc = atom_components
 	if(!dc)
 		return null
 	. = dc[c_type]
 	if(islist(.))
 		return .[1]
 
-/datum/proc/GetExactComponent(c_type)
-	var/list/dc = datum_components
+/atom/proc/GetExactComponent(c_type)
+	var/list/dc = atom_components
 	if(!dc)
 		return null
 	var/datum/component/C = dc[c_type]
@@ -184,29 +184,29 @@
 			return C
 	return null
 
-/datum/proc/GetComponents(c_type)
-	var/list/dc = datum_components
+/atom/proc/GetComponents(c_type)
+	var/list/dc = atom_components
 	if(!dc)
 		return null
 	. = dc[c_type]
 	if(!islist(.))
 		return list(.)
 
-/datum/proc/AddComponent(new_type, ...)
+/atom/proc/AddComponent(new_type, ...)
 	var/nt = new_type
 	args[1] = src
 	var/datum/component/C = new nt(arglist(args))
 	return QDELING(C) ? GetComponent(new_type) : C
 
-/datum/proc/LoadComponent(component_type, ...)
+/atom/proc/LoadComponent(component_type, ...)
 	. = GetComponent(component_type)
 	if(!.)
 		return AddComponent(arglist(args))
 
-/datum/proc/TakeComponent(datum/component/C)
+/atom/proc/TakeComponent(datum/component/C)
 	if(!C)
 		return
-	var/datum/helicopter = C.parent
+	var/atom/helicopter = C.parent
 	if(helicopter == src)
 		//wat
 		return

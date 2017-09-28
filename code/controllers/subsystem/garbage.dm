@@ -274,7 +274,6 @@ SUBSYSTEM_DEF(garbage)
 
 
 	if(isnull(D.gc_destroyed))
-		D.SendSignal(COMSIG_PARENT_QDELETED)
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/start_tick = world.tick_usage
