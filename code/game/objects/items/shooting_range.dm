@@ -41,7 +41,7 @@
 
 /obj/item/target/syndicate
 	icon_state = "target_s"
-	desc = "A shooting target that looks like a syndicate scum."
+	desc = "A shooting target that looks like syndicate scum."
 	hp = 2600
 
 /obj/item/target/alien

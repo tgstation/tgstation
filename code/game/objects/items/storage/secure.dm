@@ -25,6 +25,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_w_class = WEIGHT_CLASS_SMALL
 	max_combined_w_class = 14
+	desc = "This shouldn't exist. If it does, create an issue report."
 
 /obj/item/storage/secure/examine(mob/user)
 	..()
@@ -179,6 +180,7 @@
 	icon_opened = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
+	desc = "Excellent for securing things away from grubby hands."
 	force = 8
 	w_class = WEIGHT_CLASS_GIGANTIC
 	max_w_class = 8
