@@ -304,6 +304,25 @@
 	GLOB.tdomeadmin += loc
 	return INITIALIZE_HINT_QDEL
 
+//Servant spawn locations
+/obj/effect/landmark/servant_of_ratvar
+	name = "servant of ratvar spawn"
+
+/obj/effect/landmark/servant_of_ratvar/Initialize(mapload)
+	..()
+	GLOB.servant_spawns += loc
+	qdel(src)
+
+//City of Cogs entrances
+/obj/effect/landmark/city_of_cogs
+	name = "city of cogs entrance"
+	icon_state = "x4"
+
+/obj/effect/landmark/city_of_cogs/Initialize(mapload)
+	..()
+	GLOB.city_of_cogs_spawns += loc
+	qdel(src)
+
 //generic event spawns
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"
