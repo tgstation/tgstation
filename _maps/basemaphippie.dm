@@ -12,6 +12,7 @@
 #include "map_files\OmegaStation\OmegaStation.dmm"
 #include "map_files\PubbyStation\PubbyStation.dmm"
 #include "map_files\BoxStation\BoxStation.dmm"
+#include "map_files\Delturd\DelturdStation.dmm"
 
 #ifdef TRAVISBUILDING
 #include "templates.dm"
