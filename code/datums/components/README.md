@@ -1,4 +1,4 @@
-# Datum Component System (DCS)
+# Entity Component System (ECS)
 
 ## Concept
 
@@ -26,7 +26,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 
 ### Vars
 
-1. `/datum/var/list/datum_components` (private)
+1. `/atom/var/list/atom_components` (private)
     * Lazy associated list of type -> component/list of components.
 1. `/datum/component/var/enabled` (protected, boolean)
     * If the component is enabled. If not, it will not react to signals
@@ -42,46 +42,47 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
         * Any other type means that and all subtypes
 1. `/datum/component/var/list/signal_procs` (private)
     * Associated lazy list of signals -> `/datum/callback`s that will be run when the parent datum recieves that signal
-1. `/datum/component/var/datum/parent` (protected, read-only)
-    * The datum this component belongs to
+1. `/datum/component/var/atom/parent` (protected, read-only)
+    * The atom this component belongs to
 
 ### Procs
 
-1. `/datum/proc/GetComponent(component_type(type)) -> datum/component?` (public, final)
-    * Returns a reference to a component of component_type if it exists in the datum, null otherwise
-1. `/datum/proc/GetComponents(component_type(type)) -> list` (public, final)
-    * Returns a list of references to all components of component_type that exist in the datum
-1. `/datum/proc/GetExactComponent(component_type(type)) -> datum/component?` (public, final)
-    * Returns a reference to a component whose type MATCHES component_type if that component exists in the datum, null otherwise
+1. `/atom/proc/GetComponent(component_type(type)) -> datum/component?` (public, final)
+    * Returns a reference to a component of component_type if it exists in the atom's component list, null otherwise
+1. `/atom/proc/GetComponents(component_type(type)) -> list` (public, final)
+    * Returns a list of references to all components of component_type that exist in the atom's component list
+1. `/atom/proc/GetExactComponent(component_type(type)) -> datum/component?` (public, final)
+    * Returns a reference to a component whose type MATCHES component_type if that component exists in the atom's component list, null otherwise
 1. `GET_COMPONENT(varname, component_type)` OR `GET_COMPONENT_FROM(varname, component_type, src)`
     * Shorthand for `var/component_type/varname = src.GetComponent(component_type)`
-1. `/datum/proc/AddComponent(component_type(type), ...) -> datum/component`  (public, final)
-    * Creates an instance of `component_type` in the datum and passes `...` to its `Initialize()` call
-    * Sends the `COMSIG_COMPONENT_ADDED` signal to the datum
-    * All components a datum owns are deleted with the datum
+1. `/atom/proc/AddComponent(component_type(type), ...) -> datum/component`  (public, final)
+    * Creates an instance of `component_type` on the atom and passes `...` to its `Initialize()` call
+    * Sends the `COMSIG_COMPONENT_ADDED` signal to the atom
+    * All components an atom owns are deleted with the atom
     * Returns the component that was created. Or the old component in a dupe situation where `COMPONENT_DUPE_UNIQUE` was set
-1. `/datum/proc/LoadComponent(component_type(type), ...) -> datum/component` (public, final)
+1. `/atom/proc/LoadComponent(component_type(type), ...) -> datum/component` (public, final)
     * Equivalent to calling `GetComponent(component_type)` where, if the result would be `null`, returns `AddComponent(component_type, ...)` instead
-1. `/datum/proc/ComponentActivated(datum/component/C)` (abstract, async)
+1. `/atom/proc/ComponentActivated(datum/component/C)` (abstract, async)
     * Called on a component's `parent` after a signal recieved causes it to activate. `src` is the parameter
     * Will only be called if a component's callback returns `TRUE`
-1. `/datum/proc/TakeComponent(datum/component/C)` (public, final)
-    * Properly transfers ownership of a component from one datum to another
+1. `/atom/proc/TakeComponent(datum/component/C)` (public, final)
+    * Properly transfers ownership of a component from one atom to another
     * Singals `COMSIG_COMPONENT_REMOVING` on the parent
-    * Called on the datum you want to own the component with another datum's component
-1. `/datum/proc/SendSignal(signal, ...)` (public, final)
+    * Called on the atom you want to own the component with another atom's component
+1. `/atom/proc/SendSignal(signal, ...)` (public, final)
     * Call to send a signal to the components of the target datum
     * Extra arguments are to be specified in the signal definition
 1. `/datum/component/New(datum/parent, ...)` (private, final)
     * Runs internal setup for the component
     * Extra arguments are passed to `Initialize()`
+    * Must not delete the component
 1. `/datum/component/Initialize(...)` (abstract, no-sleep)
     * Called by `New()` with the same argments excluding `parent`
-    * Component does not exist in `parent`'s `datum_components` list yet, although `parent` is set and may be used
+    * Component does not exist in `parent`'s `atom_components` list yet, although `parent` is set and may be used
     * Signals will not be recieved while this function is running
     * Component may be deleted after this function completes without being attached
 1. `/datum/component/Destroy()` (virtual, no-sleep)
-    * Sends the `COMSIG_COMPONENT_REMOVING` signal to the parent datum if the `parent` isn't being qdeleted
+    * Sends the `COMSIG_COMPONENT_REMOVING` signal to the parent atom if the `parent` isn't being `Destroy()`'d
     * Properly removes the component from `parent` and cleans up references
 1. `/datum/component/proc/InheritComponent(datum/component/C, i_am_original(boolean))` (abstract, no-sleep)
     * Called on a component when a component of the same type was added to the same parent
@@ -94,12 +95,12 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Allows the component to react to ownership transfers
 1. `/datum/component/proc/_RemoveNoSignal()` (private, final)
     * Internal, clears the parent var and removes the component from the parents component list
-1. `/datum/component/proc/RegisterSignal(signal(string), proc_ref(type), override(boolean))` (protected, final) (Consider removing for performance gainz)
+1. `/datum/component/proc/RegisterSignal(signal(string), proc_ref(type), override(boolean))` (protected, final)
     * Makes a component listen for the specified `signal` on it's `parent` datum.
     * When that signal is recieved `proc_ref` will be called on the component, along with associated arguments
     * Example proc ref: `.proc/OnEvent`
     * If a previous registration is overwritten by the call, a runtime occurs. Setting `override` to TRUE prevents this
     * These callbacks run asyncronously
-    * Returning `TRUE` from these callbacks will trigger a `TRUE` return from the `SendSignal()` that initiated it
+    * Returning `TRUE` from these callbacks before blocking will trigger a `TRUE` return from the `SendSignal()` that initiated it
 
 ### See/Define signals and their arguments in __DEFINES\components.dm

@@ -31,6 +31,8 @@
 	var/datum/proximity_monitor/proximity_monitor
 	var/buckle_message_cooldown = 0
 
+	var/list/atom_components	//for /datum/components
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -97,6 +99,21 @@
 	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
 
 	QDEL_NULL(light)
+
+	SendSignal(COMSIG_PARENT_QDELETED)
+	var/list/dc = atom_components
+	if(dc)
+		var/all_components = dc[/datum/component]
+		if(islist(all_components))
+			for(var/I in all_components)
+				var/datum/component/C = I
+				C._RemoveNoSignal()
+				qdel(C)
+		else
+			var/datum/component/C = all_components
+			C._RemoveNoSignal()
+			qdel(C)
+		dc.Cut()
 
 	return ..()
 

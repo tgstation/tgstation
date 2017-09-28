@@ -1,7 +1,6 @@
 /datum
     var/gc_destroyed //Time when this object was destroyed.
     var/list/active_timers  //for SStimer
-    var/list/datum_components //for /datum/components
     var/ui_screen = "home"  //for tgui
 
 #ifdef TESTING
@@ -21,17 +20,4 @@
 		if (timer.spent)
 			continue
 		qdel(timer)
-	var/list/dc = datum_components
-	if(dc)
-		var/all_components = dc[/datum/component]
-		if(islist(all_components))
-			for(var/I in all_components)
-				var/datum/component/C = I
-				C._RemoveNoSignal()
-				qdel(C)
-		else
-			var/datum/component/C = all_components
-			C._RemoveNoSignal()
-			qdel(C)
-		dc.Cut()
 	return QDEL_HINT_QUEUE
