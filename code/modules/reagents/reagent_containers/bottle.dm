@@ -121,7 +121,7 @@
 
 /obj/item/reagent_containers/glass/bottle/facid
 	name = "Fluorosulfuric Acid Bottle"
-	desc = "A small bottle. Contains a small amount of Fluorosulfuric Acid"
+	desc = "A small bottle. Contains a small amount of fluorosulfuric acid."
 	icon_state = "bottle17"
 	list_reagents = list("facid" = 30)
 

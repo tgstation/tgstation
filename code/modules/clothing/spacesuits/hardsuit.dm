@@ -474,7 +474,7 @@
 	//Head of Security hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 	name = "head of security's hardsuit helmet"
-	desc = "a special bulky helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
+	desc = "A special bulky helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "hardsuit0-hos"
 	item_color = "hos"
 	armor = list(melee = 45, bullet = 25, laser = 30,energy = 10, bomb = 25, bio = 100, rad = 50, fire = 95, acid = 95)
@@ -719,7 +719,7 @@
 ///SWAT version
 /obj/item/clothing/suit/space/hardsuit/shielded/swat
 	name = "death commando spacesuit"
-	desc = "an advanced hardsuit favored by commandos for use in special operations."
+	desc = "An advanced hardsuit favored by commandos for use in special operations."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	item_color = "syndi"

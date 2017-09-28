@@ -6,7 +6,7 @@
 	icon_state = "manifold"
 
 	name = "pipe manifold"
-	desc = "A manifold composed of regular pipes"
+	desc = "A manifold composed of regular pipes."
 
 	dir = SOUTH
 	initialize_directions = EAST|NORTH|WEST

@@ -3,7 +3,7 @@
 
 /obj/item/implant/exile
 	name = "exile implant"
-	desc = "Prevents you from returning from away missions"
+	desc = "Prevents you from returning from away missions."
 	origin_tech = "materials=2;biotech=3;magnets=2;bluespace=3"
 	activated = 0
 

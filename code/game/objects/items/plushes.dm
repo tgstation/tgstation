@@ -1,6 +1,6 @@
 /obj/item/toy/plush
 	name = "plush"
-	desc = "this is the special coder plush, do not steal"
+	desc = "This is the special coder plush, do not steal."
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "debug"
 	attack_verb = list("thumped", "whomped", "bumped")

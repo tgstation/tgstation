@@ -173,7 +173,7 @@
 
 /obj/screen/alert/verygross
 	name = "Very grossed out."
-	desc = "I'm not feeling very well.."
+	desc = "You're not feeling very well..."
 	icon_state = "gross2"
 
 /obj/screen/alert/disgusted

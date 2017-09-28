@@ -191,7 +191,7 @@
 
 /obj/item/ore/slag
 	name = "slag"
-	desc = "Completely useless"
+	desc = "Completely useless."
 	icon_state = "slag"
 
 /obj/item/twohanded/required/gibtonite

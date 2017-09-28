@@ -47,7 +47,7 @@
 
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"
-	desc = "A pair of sandals imbued with magic"
+	desc = "A pair of sandals imbued with magic."
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
 
 /obj/item/clothing/shoes/galoshes

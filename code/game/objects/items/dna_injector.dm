@@ -171,7 +171,7 @@
 
 /obj/item/dnainjector/stuttmut
 	name = "\improper DNA injector (Stutt.)"
-	desc = "Makes you s-s-stuttterrr"
+	desc = "Makes you s-s-stuttterrr."
 	add_mutations_static = list(NERVOUS)
 
 /obj/item/dnainjector/antistutt

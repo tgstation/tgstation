@@ -8,14 +8,14 @@
 //TOS
 /obj/item/clothing/under/trek/command
 	name = "command uniform"
-	desc = "The uniform worn by command officers"
+	desc = "The uniform worn by command officers."
 	icon_state = "trek_command"
 	item_color = "trek_command"
 	item_state = "y_suit"
 
 /obj/item/clothing/under/trek/engsec
 	name = "engsec uniform"
-	desc = "The uniform worn by engineering/security officers"
+	desc = "The uniform worn by engineering/security officers."
 	icon_state = "trek_engsec"
 	item_color = "trek_engsec"
 	item_state = "r_suit"
@@ -24,7 +24,7 @@
 
 /obj/item/clothing/under/trek/medsci
 	name = "medsci uniform"
-	desc = "The uniform worn by medical/science officers"
+	desc = "The uniform worn by medical/science officers."
 	icon_state = "trek_medsci"
 	item_color = "trek_medsci"
 	item_state = "b_suit"
@@ -66,7 +66,7 @@
 //Q
 /obj/item/clothing/under/trek/Q
 	name = "french marshall's uniform"
-	desc = "something about it feels off..."
+	desc = "Something about it feels off..."
 	icon_state = "trek_Q"
 	item_color = "trek_Q"
 	item_state = "r_suit"

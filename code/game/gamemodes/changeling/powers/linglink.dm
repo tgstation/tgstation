@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/linglink
 	name = "Hivemind Link"
-	desc = "Link your victim's mind into the hivemind for personal interrogation"
+	desc = "Link your victim's mind into the hivemind for personal interrogation."
 	chemical_cost = 0
 	dna_cost = 0
 	req_human = 1

@@ -1,7 +1,7 @@
 
 /obj/vehicle/atv
 	name = "all-terrain vehicle"
-	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-earth technologies that are still relevant on most planet-bound outposts."
+	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "atv"
 	var/static/mutable_appearance/atvcover
 

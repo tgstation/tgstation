@@ -89,7 +89,7 @@
 	name = "Easter Bunny Head"
 	icon_state = "bunnyhead"
 	item_state = "bunnyhead"
-	desc = "Considerably more cute than 'Frank'"
+	desc = "Considerably more cute than 'Frank'."
 	slowdown = -1
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 

@@ -275,7 +275,7 @@
 
 /obj/item/device/harmalarm
 	name = "Sonic Harm Prevention Tool"
-	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH"
+	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH."
 	icon_state = "megaphone"
 	var/cooldown = 0
 

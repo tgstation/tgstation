@@ -5,7 +5,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 	desc = "An official document entrusting the governance of the station \
-		and surrounding space to the Captain. "
+		and surrounding space to the Captain."
 	var/used = FALSE
 	var/name_type = "station"
 

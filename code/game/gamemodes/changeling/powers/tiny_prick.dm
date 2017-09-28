@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/sting
 	name = "Tiny Prick"
-	desc = "Stabby stabby"
+	desc = "Stabby stabby."
 	var/sting_icon = null
 
 /obj/effect/proc_holder/changeling/sting/Click()

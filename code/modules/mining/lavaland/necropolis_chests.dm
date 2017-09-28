@@ -275,7 +275,7 @@
 
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
-	desc = "a hook."
+	desc = "A hook."
 	projectile_type = /obj/item/projectile/hook
 	caliber = "hook"
 	icon_state = "hook"
@@ -967,7 +967,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 	color = "#FF0000"
-	desc = "Mark your target for death. "
+	desc = "Mark your target for death."
 	var/used = FALSE
 
 /obj/item/blood_contract/attack_self(mob/user)

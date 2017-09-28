@@ -1,5 +1,5 @@
 /obj/item/banhammer
-	desc = "A banhammer"
+	desc = "A banhammer."
 	name = "banhammer"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "toyhammer"
@@ -192,7 +192,7 @@
 
 /obj/item/katana
 	name = "katana"
-	desc = "Woefully underpowered in D20"
+	desc = "Woefully underpowered in D20."
 	icon_state = "katana"
 	item_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -257,7 +257,7 @@
 
 /obj/item/throwing_star
 	name = "throwing star"
-	desc = "An ancient weapon still used to this day due to it's ease of lodging itself into victim's body parts"
+	desc = "An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts."
 	icon_state = "throwingstar"
 	item_state = "eshield0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -390,7 +390,7 @@
 
 /obj/item/ectoplasm
 	name = "ectoplasm"
-	desc = "spooky"
+	desc = "Spooky."
 	gender = PLURAL
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"

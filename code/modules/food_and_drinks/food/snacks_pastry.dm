@@ -303,7 +303,7 @@
 
 /obj/item/reagent_containers/food/snacks/oatmealcookie
 	name = "oatmeal cookie"
-	desc = "The best of both cookie and oat"
+	desc = "The best of both cookie and oat."
 	icon_state = "oatmealcookie"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
@@ -333,7 +333,7 @@
 
 /obj/item/reagent_containers/food/snacks/bluecherrycupcake
 	name = "blue cherry cupcake"
-	desc = "Blue cherries inside a delicious cupcake"
+	desc = "Blue cherries inside a delicious cupcake."
 	icon_state = "bluecherrycupcake"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)

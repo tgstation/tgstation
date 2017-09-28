@@ -13,7 +13,7 @@
 	name = "cloak hood"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "golhood"
-	desc = "A hood for a cloak"
+	desc = "A hood for a cloak."
 	body_parts_covered = HEAD
 	flags_1 = NODROP_1
 	flags_inv = HIDEHAIR|HIDEEARS
@@ -75,7 +75,7 @@
 /obj/item/clothing/suit/hooded/cloak/drake
 	name = "drake armour"
 	icon_state = "dragon"
-	desc = "A suit of armour fashioned from the remains of an ash drake. "
+	desc = "A suit of armour fashioned from the remains of an ash drake."
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe, /obj/item/twohanded/spear)
 	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50, fire = 100, acid = 100)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/drake

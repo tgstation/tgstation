@@ -416,7 +416,7 @@
 
 /obj/item/clothing/suit/dracula
 	name = "dracula coat"
-	desc = "Looks like this belongs in a very old movie set"
+	desc = "Looks like this belongs in a very old movie set."
 	icon_state = "draculacoat"
 	item_state = "draculacoat"
 
@@ -568,7 +568,7 @@
 
 /obj/item/clothing/suit/spookyghost
 	name = "spooky ghost"
-	desc = "this is obviously just a bedsheet, but maybe try it on?"
+	desc = "This is obviously just a bedsheet, but maybe try it on?"
 	icon_state = "bedsheet"
 	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = INCORPOREAL_MOVE_BASIC, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire

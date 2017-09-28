@@ -32,7 +32,7 @@
 
 /obj/machinery/bsa/back
 	name = "Bluespace Artillery Generator"
-	desc = "Generates cannon pulse. Needs to be linked with a fusor. "
+	desc = "Generates cannon pulse. Needs to be linked with a fusor."
 	icon_state = "power_box"
 
 /obj/machinery/bsa/back/attackby(obj/item/W, mob/user, params)

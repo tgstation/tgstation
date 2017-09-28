@@ -55,7 +55,7 @@
 
 /obj/item/projectile/bullet/srmrocket
 	name ="SRM-8 Rocket"
-	desc = "Boom"
+	desc = "Boom."
 	icon_state = "missile"
 	damage = 30
 	ricochets_max = 0 //it's a MISSILE

@@ -1,6 +1,6 @@
 /obj/structure/sign/barsign // All Signs are 64 by 32 pixels, they take two tiles
 	name = "Bar Sign"
-	desc = "A bar sign with no writing on it"
+	desc = "A bar sign with no writing on it."
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
 	req_access = list(ACCESS_BAR)

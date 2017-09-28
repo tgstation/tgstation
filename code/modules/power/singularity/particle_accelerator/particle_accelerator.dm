@@ -187,13 +187,13 @@
 
 /obj/structure/particle_accelerator/end_cap
 	name = "Alpha Particle Generation Array"
-	desc = "This is where Alpha particles are generated from \[REDACTED\]"
+	desc = "This is where Alpha particles are generated from \[REDACTED\]."
 	icon_state = "end_cap"
 	reference = "end_cap"
 
 /obj/structure/particle_accelerator/power_box
 	name = "Particle Focusing EM Lens"
-	desc = "This uses electromagnetic waves to focus the Alpha-Particles."
+	desc = "This uses electromagnetic waves to focus the Alpha particles."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "power_box"
 	reference = "power_box"

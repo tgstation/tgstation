@@ -40,7 +40,7 @@
 /obj/item/reagent_containers/food/snacks/grown/poppy/lily
 	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
-	desc = "A beautiful orange flower"
+	desc = "A beautiful orange flower."
 	icon_state = "lily"
 	filling_color = "#FFA500"
 
@@ -57,7 +57,7 @@
 /obj/item/reagent_containers/food/snacks/grown/poppy/geranium
 	seed = /obj/item/seeds/poppy/geranium
 	name = "geranium"
-	desc = "A beautiful blue flower"
+	desc = "A beautiful blue flower."
 	icon_state = "geranium"
 	filling_color = "#008B8B"
 

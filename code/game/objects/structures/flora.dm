@@ -314,7 +314,7 @@
 
 /obj/structure/flora/rock
 	icon_state = "basalt"
-	desc = "A volcanic rock"
+	desc = "A volcanic rock."
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
 	density = TRUE
@@ -325,7 +325,7 @@
 
 /obj/structure/flora/rock/pile
 	icon_state = "lavarocks"
-	desc = "A pile of rocks"
+	desc = "A pile of rocks."
 
 /obj/structure/flora/rock/pile/Initialize()
 	. = ..()

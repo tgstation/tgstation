@@ -259,8 +259,8 @@
 
 //Atmos Backpack Resin, transparent, prevents atmos and filters the air
 /obj/structure/foamedmetal/resin
-	name = "ATMOS Resin"
-	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature"
+	name = "\improper ATMOS Resin"
+	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature."
 	opacity = FALSE
 	icon_state = "atmos_resin"
 	alpha = 120

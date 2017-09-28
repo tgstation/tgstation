@@ -104,7 +104,7 @@
 
 /obj/effect/shuttle_build
 	name = "shuttle_build"
-	desc = "Some assembly required"
+	desc = "Some assembly required."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE

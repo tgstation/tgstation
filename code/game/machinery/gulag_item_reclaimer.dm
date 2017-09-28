@@ -1,6 +1,6 @@
 /obj/machinery/gulag_item_reclaimer
 	name = "equipment reclaimer station"
-	desc = "Used to reclaim your items after you finish your sentence at the labor camp"
+	desc = "Used to reclaim your items after you finish your sentence at the labor camp."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_taken"
 	req_access = list(ACCESS_SECURITY) //REQACCESS TO ACCESS ALL STORED ITEMS

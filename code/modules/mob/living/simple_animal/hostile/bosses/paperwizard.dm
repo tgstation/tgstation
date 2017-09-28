@@ -87,7 +87,7 @@
 			boss.atb.refund(boss_cost)
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy
-	desc = "tis a ruse!"
+	desc = "'Tis a ruse!"
 	health = 1
 	maxHealth = 1
 	alpha = 200
