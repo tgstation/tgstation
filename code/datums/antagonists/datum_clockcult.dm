@@ -103,23 +103,22 @@
 		S.laws.associate(S)
 		S.update_icons()
 		S.show_laws()
-		hierophant_network.Grant(S)
 		hierophant_network.title = "Silicon"
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
 	else if(isbrain(current))
-		hierophant_network.Grant(current)
 		hierophant_network.title = "Vessel"
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "alloy"
 	else if(isclockmob(current))
-		hierophant_network.Grant(current)
 		hierophant_network.title = "Construct"
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
+	hierophant_network.Grant(current)
 	current.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
-	if(!GLOB.clockwork_gateway_activated)
-		current.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
+	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+	if(G.active && ishuman(current))
+		current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 
 /datum/antagonist/clockcult/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/current = owner.current
@@ -129,9 +128,10 @@
 	current.faction -= "ratvar"
 	current.remove_language(/datum/language/ratvar)
 	current.clear_alert("clockinfo")
-	current.clear_alert("scripturereq")
-	for(var/datum/action/innate/function_call/F in owner.current.actions) //Removes any bound Ratvarian spears
-		qdel(F)
+	for(var/datum/action/innate/clockwork_arnaments/C in owner.current.actions) //Removes any bound clockwork armor
+		qdel(C)
+	for(var/datum/action/innate/call_weapon/W in owner.current.actions) //and weapons too
+		qdel(W)
 	if(issilicon(current))
 		var/mob/living/silicon/S = current
 		if(isAI(S))
@@ -149,6 +149,8 @@
 		R.module.rebuild_modules()
 	if(temp_owner)
 		temp_owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
+	temp_owner.cut_overlays()
+	temp_owner.regenerate_icons()
 
 /datum/antagonist/clockcult/on_removal()
 	SSticker.mode.servants_of_ratvar -= owner

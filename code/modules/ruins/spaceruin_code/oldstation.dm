@@ -11,14 +11,14 @@
 /obj/item/paper/fluff/ruins/oldstation/protosuit
 	name = "B01-RIG Hardsuit Report"
 	info = "<b>*Prototype Hardsuit*</b><br><br>The B01-RIG Hardsuit is a prototype powered exoskeleton. Based off of a recovered pre-void war era united earth government powered military \
-	exosuit, the RIG Hardsuit is a breakthrough in Hardsuit technology, and is the first post-void war era Hardsuit that can be safely used by a operator.<br><br>The B01 however suffers \
+	exosuit, the RIG Hardsuit is a breakthrough in Hardsuit technology, and is the first post-void war era Hardsuit that can be safely used by an operator.<br><br>The B01 however suffers \
 	a myriad of constraints. It is slow and bulky to move around, it lacks any significant armor plating against direct attacks and its internal heads up display is unfinished,  \
 	resulting in the user being unable to see long distances.<br><br>The B01 is unlikely to see any form of mass production, but will serve as a base for future Hardsuit developments."
 
 /obj/item/paper/fluff/ruins/oldstation/protohealth
 	name = "Health Analyser Report"
 	info = "<b>*Health Analyser*</b><br><br>The portable Health Analyser is essentially a handheld variant of a health analyser. Years of research have concluded with this device which is \
-	capable of diagnosing even the most critical, obscure or technical injuries any humanoid entity is suffering in a easy to understand format that even a non-trained health professional \
+	capable of diagnosing even the most critical, obscure or technical injuries any humanoid entity is suffering in an easy to understand format that even a non-trained health professional \
 	can understand.<br><br>The health analyser is expected to go into full production as standard issue medical kit."
 
 /obj/item/paper/fluff/ruins/oldstation/protogun
@@ -27,7 +27,7 @@
 	than other gun models, but is capable of swapping between different energy projectile types on command with no incidents.<br><br>The weapon still suffers several drawbacks, its alternative, \
 	non laser fire mode, can only fire one round before exhausting the energy cell, the weapon also remains prohibitively expensive, nonetheless NT Market Research fully believe this weapon \
 	will form the backbone of our Energy weapon catalogue.<br><br>The K14 is expected to undergo revision to fix the ammo issues, the K15 is expected to replace the 'stun' setting with a \
-	'disable' setting in a attempt to bypass the ammo issues."
+	'disable' setting in an attempt to bypass the ammo issues."
 
 /obj/item/paper/fluff/ruins/oldstation/protosing
 	name = "Singularity Generator"

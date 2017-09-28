@@ -485,7 +485,6 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 				begin_day += 31
 				begin_month-- //begins in march, ends in april
 
-//	to_chat(world, "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]")
 	return ..()
 
 /datum/holiday/easter/celebrate()
