@@ -1,6 +1,6 @@
 /obj/structure/toilet
 	name = "toilet"
-	desc = "Nanotrasen am play god."
+	desc = "Nanotrasen am play gods."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "toilet00"
 	density = FALSE
