@@ -154,8 +154,7 @@
 
 
 	var/obj/item/device/assembly/flash/T = new(mob)
-	var/obj/item/toy/crayon/spraycan/R = new(mob)
-	var/obj/item/clothing/glasses/hud/security/chameleon/C = new(mob)
+	var/obj/item/organ/cyberimp/eyes/hud/security/S = new(mob)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -163,13 +162,8 @@
 		"right pocket" = slot_r_store
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	var/where2 = mob.equip_in_one_of_slots(C, slots)
-	mob.equip_in_one_of_slots(R,slots)
-
-	if (!where2)
-		to_chat(mob, "The Syndicate were unfortunately unable to get you a chameleon security HUD.")
-	else
-		to_chat(mob, "The chameleon security HUD in your [where2] will help you keep track of who is mindshield-implanted, and unable to be recruited.")
+	S.Insert(mob, special = FALSE, drop_if_replaced = FALSE)
+	to_chat(mob, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
 	if (!where)
 		to_chat(mob, "The Syndicate were unfortunately unable to get you a flash.")

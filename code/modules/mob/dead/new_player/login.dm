@@ -32,10 +32,10 @@
 	new_player_panel()
 	client.playtitlemusic()
 	if(SSticker.current_state < GAME_STATE_SETTING_UP)
-		var/tl = round(SSticker.GetTimeLeft(), 1)/10
+		var/tl = SSticker.GetTimeLeft()
 		var/postfix
-		if(tl >= 0)
-			postfix = "in about [tl] seconds"
+		if(tl > 0)
+			postfix = "in about [DisplayTimeText(tl)]"
 		else
 			postfix = "soon"
 		to_chat(src, "Please set up your character and select \"Ready\". The game will start [postfix].")

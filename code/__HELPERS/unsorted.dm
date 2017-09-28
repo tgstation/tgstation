@@ -502,28 +502,12 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-/atom/proc/GetAllContents(list/ignore_typecache)
-	var/list/processing_list = list(src)
-	var/list/assembled = list()
-	if(ignore_typecache)		//If there's a typecache, use it.
-		while(processing_list.len)
-			var/atom/A = processing_list[1]
-			processing_list -= A
-			if(ignore_typecache[A.type])
-				continue
-			processing_list |= (A.contents - assembled)
-			assembled |= A
-
-	else		//If there's none, only make this check once for performance.
-		while(processing_list.len)
-			var/atom/A = processing_list[1]
-			processing_list -= A
-
-			processing_list |= (A.contents - assembled)
-
-			assembled |= A
-
-	return assembled
+/atom/proc/GetAllContents(list/output=list())
+	. = output
+	output += src 
+	for(var/i in 1 to contents.len) 
+		var/atom/thing = contents[i] 
+		thing.GetAllContents(output) 
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
