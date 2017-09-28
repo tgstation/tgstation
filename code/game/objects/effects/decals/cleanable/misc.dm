@@ -81,16 +81,6 @@
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 
-/obj/effect/decal/cleanable/vomit/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	if(LAZYLEN(diseases))
-		var/list/datum/disease/diseases_to_add = list()
-		for(var/datum/disease/D in diseases)
-			if(D.spread_flags & CONTACT_FLUIDS)
-				diseases_to_add += D
-		if(LAZYLEN(diseases_to_add))
-			AddComponent(/datum/component/infective_floor, diseases_to_add)
-
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -111,7 +101,7 @@
 	name = "crusty dried vomit"
 	desc = "You try not to look at the chunks, and fail."
 
-/obj/effect/decal/cleanable/vomit/old/Initialize()
+/obj/effect/decal/cleanable/vomit/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	icon_state += "-old"
 

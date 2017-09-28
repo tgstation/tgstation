@@ -123,14 +123,18 @@
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 
 	if(!passed && (D.spread_flags & AIRBORNE) && !internal)
-		passed = (prob((50*D.permeability_mod) - 1))
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			if(H.dna && (NOBREATH in dna.species.species_traits))
-				passed = FALSE
+		passed = AirborneInfection(D)
 
 	if(passed)
 		AddDisease(D)
+
+/mob/proc/AirborneInfection(datum/disease/D)
+	return prob((50*D.permeability_mod) - 1)
+
+/mob/living/carbon/human/AirborneInfection(datum/disease/D)
+	. = ..()
+	if(dna && (NOBREATH in dna.species.species_traits))
+		return FALSE
 
 
 //Same as ContractDisease, except never overidden clothes checks
