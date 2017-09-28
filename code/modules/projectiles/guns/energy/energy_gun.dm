@@ -75,7 +75,7 @@
 
 /obj/item/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"
-	desc = "Fires an energy snare that slows the target down"
+	desc = "Fires an energy snare that slows the target down."
 	ammo_type = list(/obj/item/ammo_casing/energy/trap)
 
 /obj/item/gun/energy/e_gun/turret

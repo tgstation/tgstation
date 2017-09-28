@@ -225,7 +225,7 @@
 
 /obj/item/reagent_containers/food/condiment/pack
 	name = "condiment pack"
-	desc = "A small plastic pack with condiments to put on your food"
+	desc = "A small plastic pack with condiments to put on your food."
 	icon_state = "condi_empty"
 	volume = 10
 	amount_per_transfer_from_this = 10

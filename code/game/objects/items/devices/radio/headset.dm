@@ -84,7 +84,7 @@
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
-	desc = "When the engineers wish to chat like girls. \nTo access the engineering channel, use :e. "
+	desc = "When the engineers wish to chat like girls. \nTo access the engineering channel, use :e."
 	icon_state = "eng_headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_eng
 
@@ -191,7 +191,7 @@
 
 /obj/item/device/radio/headset/headset_cent
 	name = "\improper CentCom headset"
-	desc = "A headset used by the upper echelons of Nanotrasen. \nTo access the centcom channel, use :y."
+	desc = "A headset used by the upper echelons of Nanotrasen. \nTo access the CentCom channel, use :y."
 	icon_state = "cent_headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_com
 	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
@@ -201,7 +201,7 @@
 
 /obj/item/device/radio/headset/headset_cent/alt
 	name = "\improper CentCom bowman headset"
-	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs. \nTo access the centcom channel, use :y."
+	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs. \nTo access the CentCom channel, use :y."
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
 	keyslot = null

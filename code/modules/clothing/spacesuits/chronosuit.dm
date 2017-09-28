@@ -20,7 +20,7 @@
 
 /obj/item/clothing/suit/space/chronos
 	name = "Chronosuit"
-	desc = "An advanced spacesuit equipped with time-bluespace teleportation and anti-compression technology"
+	desc = "An advanced spacesuit equipped with time-bluespace teleportation and anti-compression technology."
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
 	actions_types = list(/datum/action/item_action/toggle)

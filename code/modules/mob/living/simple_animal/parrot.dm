@@ -965,7 +965,7 @@
 
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
-	desc = "Doomed to squawk the earth."
+	desc = "Doomed to squawk the Earth."
 	color = "#FFFFFF77"
 	speak_chance = 20
 	status_flags = GODMODE
