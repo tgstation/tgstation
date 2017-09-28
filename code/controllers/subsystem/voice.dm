@@ -136,7 +136,8 @@ SUBSYSTEM_DEF(voice)
 	// Dead men tell no tales. Includes ghosts and late-joins.
 	var/mob/living/mob = src.mob
 	if (istype(mob, /mob/dead))
-		return VOICE_HEAR
+		// Aghosts are allowed to speak
+		return (holder ? VOICE_ALL : VOICE_HEAR)
 	// Neither living nor dead... err on the side of nope.
 	if (!istype(mob))
 		return VOICE_NONE
