@@ -291,11 +291,14 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
+	if(I.being_removed)
+		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
+		return
+	I.being_removed = TRUE
 	breakouttime = I.breakouttime
-	var/displaytime = breakouttime / 600
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
-		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>")
+		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
 		if(do_after(src, breakouttime, 0, target = src))
 			clear_cuffs(I, cuff_break)
 		else
@@ -312,6 +315,7 @@
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
+	I.being_removed = FALSE
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)

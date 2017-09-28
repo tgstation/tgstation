@@ -85,7 +85,7 @@
 
 /proc/log_pda(text)
 	if (config.log_pda)
-		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]PDA: [text]")
+		WRITE_FILE(GLOB.world_pda_log, "\[[time_stamp()]]PDA: [text]")
 
 /proc/log_comment(text)
 	if (config.log_pda)

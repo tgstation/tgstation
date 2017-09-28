@@ -415,7 +415,6 @@
 	signal.data["sigtype"] = "command"
 
 	radio_connection.post_signal(src, signal, GLOB.RADIO_FROM_AIRALARM)
-//			to_chat(world, text("Signal [] Broadcasted to []", command, target))
 
 	return 1
 
@@ -707,6 +706,16 @@
 					buildstage = 1
 					update_icon()
 					qdel(W)
+				return
+
+			if(istype(W, /obj/item/device/electroadaptive_pseudocircuit))
+				var/obj/item/device/electroadaptive_pseudocircuit/P = W
+				if(!P.adapt_circuit(user, 25))
+					return
+				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+				"<span class='notice'>You adapt an air alarm circuit and slot it into the assembly.</span>")
+				buildstage = 1
+				update_icon()
 				return
 
 			if(istype(W, /obj/item/wrench))

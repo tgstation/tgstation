@@ -147,11 +147,13 @@ GLOBAL_PROTECT(config_dir)
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
+	var/brother_scaling_coeff = 25		//how many players per brother team
 	var/changeling_scaling_coeff = 6	//how much does the amount of players get divided by to determine changelings
 	var/security_scaling_coeff = 8		//how much does the amount of players get divided by to determine open security officer positions
 	var/abductor_scaling_coeff = 15 	//how many players per abductor team
 
 	var/traitor_objectives_amount = 2
+	var/brother_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0 //If security and such can be traitor/cult/other
 	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
 	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
@@ -185,7 +187,6 @@ GLOBAL_PROTECT(config_dir)
 	var/rename_cyborg = 0
 	var/ooc_during_round = 0
 	var/emojis = 0
-	var/no_credits_round_end = FALSE
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
@@ -276,6 +277,7 @@ GLOBAL_PROTECT(config_dir)
 	var/error_msg_delay = 50 // How long to wait between messaging admins about occurrences of a unique error
 
 	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
+	var/arrivals_shuttle_require_undocked = FALSE	//Require the arrivals shuttle to be undocked before latejoiners can join
 	var/arrivals_shuttle_require_safe_latejoin = FALSE	//Require the arrivals shuttle to be operational in order for latejoiners to join
 
 	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
@@ -598,8 +600,6 @@ GLOBAL_PROTECT(config_dir)
 					ooc_during_round			= 1
 				if("emojis")
 					emojis					= 1
-				if("no_credits_round_end")
-					no_credits_round_end	= TRUE
 				if("run_delay")
 					run_speed				= text2num(value)
 				if("walk_delay")
@@ -692,6 +692,8 @@ GLOBAL_PROTECT(config_dir)
 					ghost_interaction		= 1
 				if("traitor_scaling_coeff")
 					traitor_scaling_coeff	= text2num(value)
+				if("brother_scaling_coeff")
+					brother_scaling_coeff	= text2num(value)
 				if("changeling_scaling_coeff")
 					changeling_scaling_coeff	= text2num(value)
 				if("security_scaling_coeff")
@@ -700,6 +702,8 @@ GLOBAL_PROTECT(config_dir)
 					abductor_scaling_coeff	= text2num(value)
 				if("traitor_objectives_amount")
 					traitor_objectives_amount = text2num(value)
+				if("brother_objectives_amount")
+					brother_objectives_amount = text2num(value)
 				if("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
@@ -817,6 +821,8 @@ GLOBAL_PROTECT(config_dir)
 					GLOB.MAX_EX_FLAME_RANGE = BombCap
 				if("arrivals_shuttle_dock_window")
 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
+				if("arrivals_shuttle_require_undocked")
+					arrivals_shuttle_require_undocked = TRUE
 				if("arrivals_shuttle_require_safe_latejoin")
 					arrivals_shuttle_require_safe_latejoin = TRUE
 				if("mice_roundstart")
@@ -961,7 +967,6 @@ GLOBAL_PROTECT(config_dir)
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
-		//to_chat(world, "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
 		if(!(M.config_tag in modes))
 			qdel(M)
 			continue

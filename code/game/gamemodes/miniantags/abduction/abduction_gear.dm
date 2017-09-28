@@ -532,7 +532,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	flags_2 = BANG_PROTECT_2
 
 /obj/item/device/radio/headset/abductor/Initialize(mapload)
-	..()
+	. = ..()
 	make_syndie()
 
 /obj/item/device/radio/headset/abductor/attackby(obj/item/W, mob/user, params)

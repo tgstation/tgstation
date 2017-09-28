@@ -30,6 +30,7 @@ Buildable meters
 		PIPE_HE_MANIFOLD, \
 		PIPE_HE_4WAYMANIFOLD, \
 		PIPE_JUNCTION, \
+		PIPE_BLUESPACE, \
 		\
 		PIPE_CONNECTOR, \
 		PIPE_UVENT, \
@@ -90,6 +91,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	"[PIPE_HE_MANIFOLD]"	 = "he_manifold", \
 	"[PIPE_HE_4WAYMANIFOLD]" = "he_manifold4w", \
 	"[PIPE_JUNCTION]"		 = "junction", \
+	"[PIPE_BLUESPACE]"		 = "bluespace", \
 	\
 	"[PIPE_CONNECTOR]"		 = "connector", \
 	"[PIPE_UVENT]"			 = "uvent", \
@@ -118,6 +120,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		"[PIPE_HE_MANIFOLD]"	= "h/e manifold", \
 		"[PIPE_HE_4WAYMANIFOLD]"= "h/e 4-way manifold", \
 		"[PIPE_JUNCTION]" 		= "junction", \
+		"[PIPE_BLUESPACE]" 		= "bluespace pipe", \
 		\
 		"[PIPE_CONNECTOR]" 		= "connector", \
 		"[PIPE_UVENT]" 			= "vent", \

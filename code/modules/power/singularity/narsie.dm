@@ -73,7 +73,6 @@
 		resolved = TRUE
 		sound_to_playing_players('sound/machines/alarm.ogg')
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 220)
 
 /obj/singularity/narsie/large/cult/Destroy()
 	GLOB.cult_narsie = null
@@ -83,7 +82,7 @@
 	SSticker.force_ending = 1
 
 /proc/cult_ending_helper(var/no_explosion = 0)
-	SSticker.station_explosion_cinematic(no_explosion, "cult", null)
+	Cinematic(CINEMATIC_CULT,world,CALLBACK(GLOBAL_PROC,.ending_helper))
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
