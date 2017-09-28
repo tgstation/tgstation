@@ -2,8 +2,11 @@
 	var/thermite = 0
 	layer = CLOSED_TURF_LAYER
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
+
+/turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
 
 /turf/closed/indestructible
 	name = "wall"
@@ -23,9 +26,6 @@
 
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
-
-
-
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
@@ -75,7 +75,7 @@
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
 
 /turf/closed/indestructible/fakedoor
-	name = "Centcom Access"
+	name = "CentCom Access"
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	icon_state = "fake_door"
 
@@ -110,6 +110,28 @@
 	icon_state = "necro"
 	explosion_block = 50
 	baseturf = /turf/closed/indestructible/necropolis
+
+/turf/closed/indestructible/necropolis/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "necro1"
+	return TRUE
+
+/turf/closed/indestructible/riveted/boss
+	name = "necropolis wall"
+	desc = "A thick, seemingly indestructible stone wall."
+	icon = 'icons/turf/walls/boss_wall.dmi'
+	icon_state = "wall"
+	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
+	explosion_block = 50
+	baseturf = /turf/closed/indestructible/riveted/boss
+
+/turf/closed/indestructible/riveted/boss/see_through
+	opacity = FALSE
+
+/turf/closed/indestructible/riveted/boss/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "basalt"
+	return TRUE
 
 /turf/closed/indestructible/riveted/hierophant
 	name = "wall"

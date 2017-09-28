@@ -46,8 +46,18 @@
 /turf/open/floor/circuit/airless
 	initial_gas_mix = "TEMP=2.7"
 
+/turf/open/floor/circuit/killroom
+	name = "Killroom Floor"
+	initial_gas_mix = "n2=500;TEMP=80"
+
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
+
+/turf/open/floor/circuit/telecomms/mainframe
+	name = "Mainframe Base"
+
+/turf/open/floor/circuit/telecomms/server
+	name = "Server Base"
 
 /turf/open/floor/circuit/green
 	icon_state = "gcircuit"
@@ -69,6 +79,9 @@
 
 /turf/open/floor/circuit/green/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
+
+/turf/open/floor/circuit/green/telecomms/mainframe
+	name = "Mainframe Base"
 
 /turf/open/floor/circuit/red
 	icon_state = "rcircuit"
@@ -181,7 +194,7 @@
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/crowbar))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
 		playsound(src, I.usesound, 20, 1)
 		if(!do_after(user, 70*I.toolspeed, target = src))
@@ -217,52 +230,3 @@
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles"
 	floor_tile = /obj/item/stack/tile/sepia
-
-
-
-// VINE FLOOR
-
-/turf/open/floor/vines
-	color = "#aa77aa"
-	icon_state = "vinefloor"
-	broken_states = list()
-
-
-//All of this shit is useless for vines
-
-/turf/open/floor/vines/attackby()
-	return
-
-/turf/open/floor/vines/burn_tile()
-	return
-
-/turf/open/floor/vines/break_tile()
-	return
-
-/turf/open/floor/vines/make_plating()
-	return
-
-/turf/open/floor/vines/break_tile_to_plating()
-	return
-
-/turf/open/floor/vines/ex_act(severity, target)
-	..()
-	if(severity < 3 || target == src)
-		ChangeTurf(src.baseturf)
-
-/turf/open/floor/vines/narsie_act(force, ignore_mobs, probability = 20)
-	if(prob(probability) || force)
-		ChangeTurf(baseturf) //nar sie eats this shit
-		narsie_act(force, ignore_mobs, probability)
-
-/turf/open/floor/vines/singularity_pull(S, current_size)
-	if(current_size >= STAGE_FIVE)
-		if(prob(50))
-			ChangeTurf(src.baseturf)
-
-/turf/open/floor/vines/ChangeTurf(turf/open/floor/T)
-	. = ..()
-	//Do this *after* the turf has changed as qdel in spacevines will call changeturf again if it hasn't
-	for(var/obj/structure/spacevine/SV in src)
-		if(!QDESTROYING(SV))//Helps avoid recursive loops
-			qdel(SV)

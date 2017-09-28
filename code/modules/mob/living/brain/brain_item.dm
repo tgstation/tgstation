@@ -46,10 +46,6 @@
 
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0)
 	..()
-	if(!special)
-		if(C.has_brain_worms())
-			var/mob/living/simple_animal/borer/B = C.has_brain_worms()
-			B.leave_victim() //Should remove borer if the brain is removed - RR
 	if(!gc_destroyed || (owner && !owner.gc_destroyed))
 		transfer_identity(C)
 	C.update_hair()
@@ -72,6 +68,11 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
+		if(L.disabilities & NOCLONE)
+			brainmob.disabilities |= NOCLONE	//This is so you can't just decapitate a husked guy and clone them without needing to get a new body
+		var/obj/item/organ/zombie_infection/ZI = L.getorganslot("zombie_infection")
+		if(ZI)
+			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
 	if(L.mind && L.mind.current)
 		L.mind.transfer_to(brainmob)
 	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
@@ -107,7 +108,7 @@
 	if(user.zone_selected != "head")
 		return ..()
 
-	if((C.head && (C.head.flags_cover & HEADCOVERSEYES)) || (C.wear_mask && (C.wear_mask.flags_cover & MASKCOVERSEYES)) || (C.glasses && (C.glasses.flags & GLASSESCOVERSEYES)))
+	if((C.head && (C.head.flags_cover & HEADCOVERSEYES)) || (C.wear_mask && (C.wear_mask.flags_cover & MASKCOVERSEYES)) || (C.glasses && (C.glasses.flags_1 & GLASSESCOVERSEYES)))
 		to_chat(user, "<span class='warning'>You're going to need to remove their head cover first!</span>")
 		return
 

@@ -8,6 +8,7 @@
 	use_power = TRUE
 	idle_power_usage = 200
 	active_power_usage = 2500
+	circuit = /obj/item/circuitboard/machine/launchpad
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
 	var/display_name = "Launchpad"
 	var/teleport_speed = 35
@@ -17,23 +18,9 @@
 	var/x_offset = 0
 	var/y_offset = 0
 
-/obj/machinery/launchpad/Initialize()
-	. = ..()
-	var/obj/item/weapon/circuitboard/machine/launchpad/B = new
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/launchpad
-	name = "Bluespace Launchpad (Machine Board)"
-	build_path = /obj/machinery/launchpad
-	origin_tech = "programming=3;engineering=3;plasmatech=2;bluespace=3"
-	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
-
 /obj/machinery/launchpad/RefreshParts()
 	var/E = -1 //to make default parts have the base value
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	range = initial(range)
 	range += E
@@ -143,7 +130,7 @@
 	else
 		log_msg += "nothing"
 	log_msg += " [sending ? "to" : "from"] [target_x], [target_y], [z] ([A ? A.name : "null area"])"
-	investigate_log(log_msg.Join(), "telesci")
+	investigate_log(log_msg.Join(), INVESTIGATE_TELESCI)
 	updateDialog()
 
 //Starts in the briefcase. Don't spawn this directly, or it will runtime when closing.
@@ -171,9 +158,7 @@
 		qdel(src)
 
 /obj/machinery/launchpad/briefcase/Destroy()
-	if(!QDELETED(briefcase))
-		qdel(briefcase)
-	briefcase = null
+	QDEL_NULL(briefcase)
 	return ..()
 
 /obj/machinery/launchpad/briefcase/isAvailable()
@@ -209,7 +194,9 @@
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "briefcase"
-	flags = CONDUCT
+	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
+	flags_1 = CONDUCT_1
 	force = 8
 	hitsound = "swing_hit"
 	throw_speed = 2
@@ -217,7 +204,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	resistance_flags = FLAMMABLE
-	obj_integrity = 150
 	max_integrity = 150
 	var/obj/machinery/launchpad/briefcase/pad
 
@@ -235,7 +221,7 @@
 	if(!isturf(user.loc)) //no setting up in a locker
 		return
 	add_fingerprint(user)
-	user.visible_message("<span class='notice'>[user] starts setting down [src]...", "You start setting up [pad]...")
+	user.visible_message("<span class='notice'>[user] starts setting down [src]...", "You start setting up [pad]...</span>")
 	if(do_after(user, 30, target = user))
 		pad.forceMove(get_turf(src))
 		pad.closed = FALSE
@@ -260,7 +246,7 @@
 	var/sending = TRUE
 	var/obj/machinery/launchpad/briefcase/pad
 
-/obj/item/device/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/item/device/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 550, 400, master_ui, state) //width, height

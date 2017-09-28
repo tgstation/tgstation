@@ -3,14 +3,13 @@
 	name = "ark of the Clockwork Justicar"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
-	obj_integrity = 500
 	max_integrity = 500
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
 	density = FALSE
 	invisibility = INVISIBILITY_MAXIMUM
-	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE | FREEZE_PROOF
 	can_be_repaired = FALSE
 	immune_to_servant_attacks = TRUE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
@@ -69,7 +68,7 @@
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has fallen at [gate_area.map_name]!</b></span>")
-		send_to_playing_players(sound(null, 0, channel = 8))
+		sound_to_playing_players(channel = CHANNEL_JUSTICAR_ARK, S = sound(null, 0))
 	var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
 	SSshuttle.clearHostileEnvironment(src)
 	if(!was_stranded && !purpose_fulfilled)
@@ -83,12 +82,12 @@
 	. = ..()
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
 			resistance_flags |= INDESTRUCTIBLE
 			countdown.stop()
 			visible_message("<span class='userdanger'>[src] begins to pulse uncontrollably... you might want to run!</span>")
-			send_to_playing_players(sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50))
+			sound_to_playing_players(volume = 50, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_disrupted.ogg', 0))
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE
@@ -102,7 +101,7 @@
 		glow.linked = src
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)
-	var/damage = max((obj_integrity * 0.70) / severity, 100) //requires multiple bombs to take down
+	var/damage = max((obj_integrity * 0.7) / severity, 100) //requires multiple bombs to take down
 	take_damage(damage, BRUTE, "bomb", 0)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/attackby(obj/item/I, mob/living/user, params) //add components directly to the ark
@@ -160,7 +159,7 @@
 			to_chat(user, "<span class='big'><b>Components required until activation:</b></span>")
 			for(var/i in required_components)
 				if(required_components[i])
-					to_chat(user, "<span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
+					to_chat(user, "[get_component_icon(i)] <span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
 					<span class='[get_component_span(i)]_large'>[required_components[i]]</span>")
 		else
 			to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
@@ -201,10 +200,15 @@
 		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
 		if(dist < convert_dist)
 			T.ratvar_act(FALSE, TRUE, 3)
+	for(var/obj/O in orange(1, src))
+		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
+			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
+				O.take_damage(50, BURN, "bomb")
+			O.update_icon()
 	if(still_needs_components())
 		if(!first_sound_played)
 			priority_announce("Massive energy anomaly detected on short-range scanners. Attempting to triangulate location...", "Anomaly Alert")
-			send_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 10))
+			sound_to_playing_players(volume = 10, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', 1))
 			first_sound_played = TRUE
 		make_glow()
 		glow.icon_state = "clockwork_gateway_components"
@@ -220,16 +224,12 @@
 			update_slab_info()
 		if(still_needs_components())
 			return
-	for(var/obj/O in orange(1, src))
-		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
-			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
-				O.take_damage(50, BURN, "bomb")
-			O.update_icon()
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
 			if(!second_sound_played)
-				send_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 30))
+				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
+				sound_to_playing_players(volume = 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', 1))
 				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
@@ -237,13 +237,15 @@
 			if(!third_sound_played)
 				var/area/gate_area = get_area(src)
 				priority_announce("Location of massive energy anomaly has been triangulated. Location: [gate_area.map_name].", "Anomaly Alert")
-				send_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 35))
+				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
+				sound_to_playing_players(volume = 35, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', 1))
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!fourth_sound_played)
-				send_to_playing_players(sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = 8, volume = 40))
+				new /obj/effect/temp_visual/decoy/fading/threesecond(loc, glow)
+				sound_to_playing_players(volume = 40, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', 1))
 				fourth_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
@@ -253,20 +255,20 @@
 				resistance_flags |= INDESTRUCTIBLE
 				purpose_fulfilled = TRUE
 				make_glow()
-				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
-				send_to_playing_players(sound('sound/effects/ratvar_rises.ogg', 0, channel = 8)) //End the sounds
+				animate(glow, transform = matrix() * 3, time = 125)
+				sound_to_playing_players('sound/effects/ratvar_rises.ogg', channel = CHANNEL_JUSTICAR_ARK) //End the sounds
 				sleep(125)
-				make_glow()
-				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
 				var/turf/startpoint = get_turf(src)
-				QDEL_IN(src, 3)
-				sleep(3)
+				make_glow()
+				glow.transform = matrix() * 4.5
+				animate(glow, transform = matrix() * 0.1, time = 10)
+				QDEL_IN(src, 10)
 				GLOB.clockwork_gateway_activated = TRUE
 				new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				send_to_playing_players("<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
 				<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")].\"</span>")
-				send_to_playing_players('sound/magic/clockwork/invoke_general.ogg')
+				sound_to_playing_players('sound/effects/empulse.ogg')
 				var/x0 = startpoint.x
 				var/y0 = startpoint.y
 				for(var/I in spiral_range_turfs(255, startpoint))

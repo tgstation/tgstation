@@ -226,7 +226,7 @@
 		return 0
 
 	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
-	var/obj/effect/landmark/spawn_here = GLOB.xeno_spawn.len ? pick(GLOB.xeno_spawn) : pick(GLOB.latejoin)
+	var/obj/effect/landmark/spawn_here = GLOB.xeno_spawn.len ? pick(GLOB.xeno_spawn) : null
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
 		if("Queen")
@@ -243,6 +243,8 @@
 			new_xeno = new /mob/living/carbon/alien/larva(spawn_here)
 		else
 			return 0
+	if(!spawn_here)
+		SSjob.SendToLateJoin(new_xeno, FALSE)
 
 	new_xeno.ckey = ckey
 	var/msg = "<span class='notice'>[key_name_admin(usr)] has spawned [ckey] as a filthy xeno [alien_caste].</span>"
@@ -283,8 +285,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				var/turf/T
 				if(GLOB.xeno_spawn.len)
 					T = pick(GLOB.xeno_spawn)
-				else
-					T = pick(GLOB.latejoin)
 
 				var/mob/living/carbon/alien/new_xeno
 				switch(G_found.mind.special_role)//If they have a mind, we can determine which caste they were.
@@ -302,6 +302,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 						create_xeno(G_found.ckey)
 						return
 
+				if(!T)
+					SSjob.SendToLateJoin(new_xeno, FALSE)
+
 				//Now to give them their mind back.
 				G_found.mind.transfer_to(new_xeno)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_xeno.key = G_found.key
@@ -314,7 +317,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		//check if they were a monkey
 		else if(findtext(G_found.real_name,"monkey"))
 			if(alert("This character appears to have been a monkey. Would you like to respawn them as such?",,"Yes","No")=="Yes")
-				var/mob/living/carbon/monkey/new_monkey = new(pick(GLOB.latejoin))
+				var/mob/living/carbon/monkey/new_monkey = new
+				SSjob.SendToLateJoin(new_monkey)
 				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_monkey.key = G_found.key
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.")
@@ -325,7 +329,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 
 	//Ok, it's not a xeno or a monkey. So, spawn a human.
-	var/mob/living/carbon/human/new_character = new(pick(GLOB.latejoin))//The mob being spawned.
+	var/mob/living/carbon/human/new_character = new//The mob being spawned.
+	SSjob.SendToLateJoin(new_character)
 
 	var/datum/data/record/record_found			//Referenced to later to either randomize or not randomize the character.
 	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
@@ -368,10 +373,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/player_key = G_found.key
 
 	//Now for special roles and equipment.
+	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(ANTAG_DATUM_TRAITOR)
+	if(traitordatum)
+		SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
+		traitordatum.equip()
+
+
 	switch(new_character.mind.special_role)
-		if("traitor")
-			SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
-			SSticker.mode.equip_traitor(new_character)
 		if("Wizard")
 			new_character.loc = pick(GLOB.wizardstart)
 			//SSticker.mode.learn_basic_spells(new_character)
@@ -396,12 +404,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			switch(new_character.mind.assigned_role)
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
 					new_character = new_character.Robotize()
-					if(new_character.mind.special_role=="traitor")
-						SSticker.mode.add_law_zero(new_character)
 				if("AI")
 					new_character = new_character.AIize()
-					if(new_character.mind.special_role=="traitor")
-						SSticker.mode.add_law_zero(new_character)
 				else
 					SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.
 
@@ -479,7 +483,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/announce_command_report = TRUE
 	switch(confirm)
 		if("Yes")
-			priority_announce(input, null, 'sound/AI/commandreport.ogg')
+			priority_announce(input, null, 'sound/ai/commandreport.ogg')
 			announce_command_report = FALSE
 		if("Cancel")
 			return
@@ -611,7 +615,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]")
 
 	if(isobserver(M))
-		new /obj/effect/gibspawner/generic(M.loc, M.viruses)
+		new /obj/effect/gibspawner/generic(get_turf(M))
 		return
 	if(confirm == "Yes")
 		M.gib()
@@ -645,9 +649,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set desc = "switches between 1x and custom views"
 
 	if(view == world.view)
-		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
+		change_view(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
 	else
-		view = world.view
+		change_view(world.view)
 
 	log_admin("[key_name(usr)] changed their view range to [view].")
 	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].")	//why? removed by order of XSI
@@ -796,7 +800,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/list/headwear = typesof(/obj/item/clothing/head)
 	var/list/glasses = typesof(/obj/item/clothing/glasses)
 	var/list/masks = typesof(/obj/item/clothing/mask)
-	var/list/ids = typesof(/obj/item/weapon/card/id)
+	var/list/ids = typesof(/obj/item/card/id)
 
 	var/uniform_select = "<select name=\"outfit_uniform\"><option value=\"\">None</option>"
 	for(var/path in uniforms)
@@ -966,10 +970,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		if(istype(H, /datum/atom_hud/antag))
 			(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
-	for(var/datum/gang/G in SSticker.mode.gangs)
-		var/datum/atom_hud/antag/H = G.ganghud
-		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
-
 	to_chat(usr, "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
@@ -1051,7 +1051,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			continue
 
 		M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
-		playsound(M.loc, 'sound/magic/Staff_Change.ogg', 50, 1, -1)
+		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, 1, -1)
 
 		wabbajack(M)
 
@@ -1144,8 +1144,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /datum/admins/proc/modify_goals()
 	var/dat = ""
 	for(var/datum/station_goal/S in SSticker.mode.station_goals)
-		dat += "[S.name] - <a href='?src=\ref[S];announce=1'>Announce</a> | <a href='?src=\ref[S];remove=1'>Remove</a><br>"
-	dat += "<br><a href='?src=\ref[src];add_station_goal=1'>Add New Goal</a>"
+		dat += "[S.name] - <a href='?src=\ref[S];[HrefToken()];announce=1'>Announce</a> | <a href='?src=\ref[S];[HrefToken()];remove=1'>Remove</a><br>"
+	dat += "<br><a href='?src=\ref[src];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 
 
@@ -1153,14 +1153,14 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set category = "Server"
 	set name = "Toggle Hub"
 
-	world.visibility = (!world.visibility)
+	world.update_hub_visibility(!GLOB.hub_visibility)
 
-	log_admin("[key_name(usr)] has toggled the server's hub status for the round, it is now [(world.visibility?"on":"off")] the hub.")
-	message_admins("[key_name_admin(usr)] has toggled the server's hub status for the round, it is now [(world.visibility?"on":"off")] the hub.")
-	if (world.visibility && !world.reachable)
+	log_admin("[key_name(usr)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")
+	message_admins("[key_name_admin(usr)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")
+	if (GLOB.hub_visibility && !world.reachable)
 		message_admins("WARNING: The server will not show up on the hub because byond is detecting that a filewall is blocking incoming connections.")
 
-	SSblackbox.add_details("admin_toggle","Toggled Hub Visibility|[world.visibility]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggled Hub Visibility|[GLOB.hub_visibility]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
@@ -1193,3 +1193,66 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	message_admins(msg)
 	admin_ticket_log(target, msg)
 	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")
+
+
+/client/proc/trigger_centcom_recall()
+	if(!holder)
+		return
+	var/message = pick(GLOB.admiral_messages)
+	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as text|null
+
+	if(!message)
+		return
+
+	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
+	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
+	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
+
+/client/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
+	set category = "Admin"
+	set name = "Player Playtime"
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/list/msg = list()
+	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
+	for(var/client/C in GLOB.clients)
+		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
+	msg += "</UL></BODY></HTML>"
+	src << browse(msg.Join(), "window=Player_playtime_check")
+
+/datum/admins/proc/cmd_show_exp_panel(client/C)
+	if(!check_rights(R_ADMIN))
+		return
+	if(!C)
+		to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+		return
+
+	var/list/body = list()
+	body += "<html><head><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
+	body += C.get_exp_report()
+	body += "<A href='?_src_=holder;[HrefToken()];toggleexempt=\ref[C]'>Toggle Exempt status</a>"
+	body += "</BODY></HTML>"
+	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
+
+/datum/admins/proc/toggle_exempt_status(client/C)
+	if(!check_rights(R_ADMIN))
+		return
+	if(!C)
+		to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+		return
+
+	if(!C.set_db_player_flags())
+		to_chat(usr, "<span class='danger'>ERROR: Unable read player flags from database. Please check logs.</span>")
+	var/dbflags = C.prefs.db_flags
+	var/newstate = FALSE
+	if(dbflags & DB_FLAG_EXEMPT)
+		newstate = FALSE
+	else
+		newstate = TRUE
+
+	if(C.update_flag_db(DB_FLAG_EXEMPT, newstate))
+		to_chat(usr, "<span class='danger'>ERROR: Unable to update player flags. Please check logs.</span>")
+	else
+		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
+		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")

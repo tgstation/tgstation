@@ -99,14 +99,14 @@
 		devastate_wall()
 		ChangeTurf(/turf/open/floor/plating)
 	else
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we want a gear!
 			transfer_fingerprints_to(newgirder)
 		ChangeTurf(/turf/open/floor/clockwork)
 
 	for(var/obj/O in src) //Eject contents!
-		if(istype(O,/obj/structure/sign/poster))
+		if(istype(O, /obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 		else

@@ -2,16 +2,15 @@
 /obj/structure/destructible/clockwork/taunting_trail
 	name = "strange smoke"
 	desc = "A cloud of purple smoke."
-	clockwork_desc = "A cloud of purple smoke that confuses and weakens non-Servants that enter it."
+	clockwork_desc = "A cloud of purple smoke that confuses and knocks down non-Servants that enter it."
 	gender = PLURAL
 	max_integrity = 5
-	obj_integrity = 5
-	density = 1
+	density = TRUE
 	color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
 	break_message = null
-	break_sound = 'sound/magic/Teleport_app.ogg'
+	break_sound = 'sound/magic/teleport_app.ogg'
 	debris = list()
 	var/timerid
 
@@ -26,7 +25,7 @@
 			for(var/obj/structure/destructible/clockwork/taunting_trail/TT in loc)
 				if(TT != src)
 					qdel(TT)
-	setDir(pick(GLOB.cardinal))
+	setDir(pick(GLOB.cardinals))
 	transform = matrix()*1.3
 	animate(src, alpha = 100, time = 15)
 
@@ -35,20 +34,20 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/taunting_trail/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/items/Welder.ogg', 50, 1)
+	playsound(src, 'sound/items/welder.ogg', 50, 1)
 
-/obj/structure/destructible/clockwork/taunting_trail/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/destructible/clockwork/taunting_trail/CanPass(atom/movable/mover, turf/target)
 	return TRUE
 
 /obj/structure/destructible/clockwork/taunting_trail/Crossed(atom/movable/AM)
 	affect_mob(AM)
 	return ..()
 
-/obj/structure/destructible/clockwork/taunting_trail/Bumped(atom/movable/AM)
+/obj/structure/destructible/clockwork/taunting_trail/CollidedWith(atom/movable/AM)
 	affect_mob(AM)
 	return ..()
 
-/obj/structure/destructible/clockwork/taunting_trail/Bump(atom/movable/AM)
+/obj/structure/destructible/clockwork/taunting_trail/Collide(atom/movable/AM)
 	affect_mob(AM)
 	return ..()
 
@@ -58,5 +57,5 @@
 			L.confused = min(L.confused + 15, 50)
 			L.dizziness = min(L.dizziness + 15, 50)
 			if(L.confused >= 25)
-				L.Weaken(Floor(L.confused * 0.04))
+				L.Knockdown(Floor(L.confused * 0.8))
 		take_damage(max_integrity)

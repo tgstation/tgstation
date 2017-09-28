@@ -8,7 +8,7 @@
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = FALSE // only one form of shackles removed per use
-	if(!user.restrained() && istype(user.loc, /turf/open))
+	if(!user.restrained() && isopenturf(user.loc))
 		to_chat(user, "<span class='warning'>We are already free!</span>")
 		return 0
 

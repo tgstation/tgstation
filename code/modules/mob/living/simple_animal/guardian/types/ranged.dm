@@ -37,7 +37,7 @@
 			environment_smash = initial(environment_smash)
 			alpha = 255
 			range = initial(range)
-			incorporeal_move = 0
+			incorporeal_move = FALSE
 			to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
 			toggle = FALSE
 		else
@@ -45,10 +45,10 @@
 			melee_damage_lower = 0
 			melee_damage_upper = 0
 			obj_damage = 0
-			environment_smash = 0
+			environment_smash = ENVIRONMENT_SMASH_NONE
 			alpha = 45
 			range = 255
-			incorporeal_move = 1
+			incorporeal_move = INCORPOREAL_MOVE_BASIC
 			to_chat(src, "<span class='danger'><B>You switch to scout mode.</span></B>")
 			toggle = TRUE
 	else

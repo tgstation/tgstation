@@ -15,14 +15,15 @@ SUBSYSTEM_DEF(lighting)
 
 
 /datum/controller/subsystem/lighting/Initialize(timeofday)
-	if (config.starlight)
-		for(var/I in GLOB.sortedAreas)
-			var/area/A = I
-			if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
-				A.luminosity = 0
+	if(!initialized)
+		if (config.starlight)
+			for(var/I in GLOB.sortedAreas)
+				var/area/A = I
+				if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+					A.luminosity = 0
 
-	create_all_lighting_objects()
-	initialized = TRUE
+		create_all_lighting_objects()
+		initialized = TRUE
 	
 	fire(FALSE, TRUE)
 

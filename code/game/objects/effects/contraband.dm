@@ -3,7 +3,7 @@
 
 // The poster item
 
-/obj/item/weapon/poster
+/obj/item/poster
 	name = "poorly coded poster"
 	desc = "You probably shouldn't be holding this."
 	icon = 'icons/obj/contraband.dmi'
@@ -12,8 +12,8 @@
 	var/poster_type
 	var/obj/structure/sign/poster/poster_structure
 
-/obj/item/weapon/poster/New(loc, obj/structure/sign/poster/new_poster_structure)
-	..()
+/obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
+	. = ..()
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
 		poster_structure = new poster_type(src)
@@ -27,17 +27,17 @@
 
 		name = "[name] - [poster_structure.original_name]"
 
-/obj/item/weapon/poster/Destroy()
+/obj/item/poster/Destroy()
 	poster_structure = null
 	. = ..()
 
 // These icon_states may be overriden, but are for mapper's convinence
-/obj/item/weapon/poster/random_contraband
+/obj/item/poster/random_contraband
 	name = "random contraband poster"
 	poster_type = /obj/structure/sign/poster/contraband/random
 	icon_state = "rolled_poster"
 
-/obj/item/weapon/poster/random_official
+/obj/item/poster/random_official
 	name = "random official poster"
 	poster_type = /obj/structure/sign/poster/official/random
 	icon_state = "rolled_legit"
@@ -49,7 +49,7 @@
 	var/original_name
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
-	anchored = 1
+	anchored = TRUE
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
@@ -58,8 +58,8 @@
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
 	var/poster_item_icon_state = "rolled_poster"
 
-/obj/structure/sign/poster/New()
-	..()
+/obj/structure/sign/poster/Initialize()
+	. = ..()
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -87,7 +87,7 @@
 
 
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wirecutters))
+	if(istype(I, /obj/item/wirecutters))
 		playsound(loc, I.usesound, 100, 1)
 		if(ruined)
 			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")
@@ -111,19 +111,19 @@
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0
 	pixel_y = 0
-	var/obj/item/weapon/poster/P = new(loc, src)
+	var/obj/item/poster/P = new(loc, src)
 	forceMove(P)
 	return P
 
-//seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
-/turf/closed/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
+//separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
+/turf/closed/wall/proc/place_poster(obj/item/poster/P, mob/user)
 	if(!P.poster_structure)
 		to_chat(user, "<span class='warning'>[P] has no poster... inside it? Inform a coder!</span>")
 		return
 
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
-		if(istype(O,/obj/structure/sign/poster))
+		if(istype(O, /obj/structure/sign/poster))
 			to_chat(user, "<span class='warning'>The wall is far too cluttered to place a poster!</span>")
 			return
 		stuff_on_wall++
@@ -249,7 +249,7 @@
 
 /obj/structure/sign/poster/contraband/tools
 	name = "Tools"
-	desc = "This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentComm."
+	desc = "This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentCom."
 	icon_state = "poster15"
 
 /obj/structure/sign/poster/contraband/power
@@ -284,7 +284,7 @@
 
 /obj/structure/sign/poster/contraband/kss13
 	name = "Kosmicheskaya Stantsiya 13 Does Not Exist"
-	desc = "A poster mocking CentComm's denial of the existence of the derelict station near Space Station 13."
+	desc = "A poster mocking CentCom's denial of the existence of the derelict station near Space Station 13."
 	icon_state = "poster22"
 
 /obj/structure/sign/poster/contraband/rebels_unite
@@ -350,7 +350,7 @@
 
 /obj/structure/sign/poster/contraband/free_drone
 	name = "Free Drone"
-	desc = "This poster commemorates the bravery of the rogue drone banned by CentComm."
+	desc = "This poster commemorates the bravery of the rogue drone; once exiled, and then ultimately destroyed by CentCom."
 	icon_state = "poster35"
 
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6

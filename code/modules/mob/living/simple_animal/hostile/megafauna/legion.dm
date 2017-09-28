@@ -45,14 +45,25 @@ Difficulty: Medium
 	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
+	wander = FALSE
 	elimination = 1
 	idle_vision_range = 13
 	appearance_flags = 0
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
 	. = ..()
 	internal = new/obj/item/device/gps/internal/legion(src)
+
+/mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
+	. = ..()
+	if(target)
+		wander = TRUE
+
+/mob/living/simple_animal/hostile/megafauna/legion/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(GLOB.necropolis_gate)
+		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //very clever.
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
 	. = ..()
@@ -122,7 +133,7 @@ Difficulty: Medium
 				last_legion = FALSE
 				break
 		if(last_legion)
-			loot = list(/obj/item/weapon/staff/storm)
+			loot = list(/obj/item/staff/storm)
 			elimination = 0
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
@@ -140,7 +151,7 @@ Difficulty: Medium
 
 //Loot
 
-/obj/item/weapon/staff/storm
+/obj/item/staff/storm
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
@@ -154,7 +165,7 @@ Difficulty: Medium
 	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
 
-/obj/item/weapon/staff/storm/attack_self(mob/user)
+/obj/item/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
 		to_chat(user, "<span class='warning'>The staff is still recharging!</span>")
 		return
@@ -174,7 +185,7 @@ Difficulty: Medium
 				return
 			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
 			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
-			playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+			playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 			A.wind_down()
 			return
 	else
@@ -187,7 +198,7 @@ Difficulty: Medium
 
 	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
 	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
-	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+	playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 	A.telegraph()
 	storm_cooldown = world.time + 200
 

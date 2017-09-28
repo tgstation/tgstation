@@ -16,6 +16,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	name = "changeling"
 	config_tag = "changeling"
 	antag_flag = ROLE_CHANGELING
+	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
@@ -194,13 +195,18 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	else
 		..(changeling,0)
 
+/datum/game_mode/changeling/generate_report()
+	return "The Gorlex Marauders have announced the successful raid and destruction of Central Command containment ship #S-[rand(1111, 9999)]. This ship housed only a single prisoner - \
+			codenamed \"Thing\", and it was highly adaptive and extremely dangerous. We have reason to believe that the Thing has allied with the Syndicate, and you should note that likelihood \
+			of the Thing being sent to a station in this sector is highly likely. It may be in the guise of any crew member. Trust nobody - suspect everybody. Do not announce this to the crew, \
+			as paranoia may spread and inhibit workplace efficiency."
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
 		to_chat(changeling.current, "<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>")
 	to_chat(changeling.current, "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>")
 	to_chat(changeling.current, "<b>You must complete the following tasks:</b>")
-	changeling.current.playsound_local('sound/ambience/antag/ling_aler.ogg',100,0)
+	changeling.current.playsound_local(get_turf(changeling.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE)
 
 	if (changeling.current.mind)
 		var/mob/living/carbon/human/H = changeling.current
@@ -213,28 +219,6 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 		to_chat(changeling.current, "<b>Objective #[obj_count]</b>: [objective.explanation_text]")
 		obj_count++
 	return
-
-/*/datum/game_mode/changeling/check_finished()
-	var/changelings_alive = 0
-	for(var/datum/mind/changeling in changelings)
-		if(!istype(changeling.current,/mob/living/carbon))
-			continue
-		if(changeling.current.stat==2)
-			continue
-		changelings_alive++
-
-	if (changelings_alive)
-		changelingdeath = 0
-		return ..()
-	else
-		if (!changelingdeath)
-			changelingdeathtime = world.time
-			changelingdeath = 1
-		if(world.time-changelingdeathtime > TIME_TO_GET_REVIVED)
-			return 1
-		else
-			return ..()
-	return 0*/
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
 	if(changelings.len)
@@ -355,6 +339,10 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 				to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
 			return
 	if(!target)
+		return
+	if(NO_DNA_COPY in target.dna.species.species_traits)
+		if(verbose)
+			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
 	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
 		if(verbose)

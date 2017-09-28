@@ -9,10 +9,10 @@
 #define CULT_POLL_WAIT 2400
 
 /proc/get_area(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isarea(A), A=A.loc); //semicolon is for the empty statement
-	return A
+	if(isarea(A))
+		return A
+	var/turf/T = get_turf(A)
+	return T ? T.loc : null
 
 /proc/get_area_name(atom/X)
 	var/area/Y = get_area(X)
@@ -164,7 +164,7 @@
 	. = list()
 	while(processing_list.len)
 		var/atom/A = processing_list[1]
-		if(A.flags & HEAR)
+		if(A.flags_1 & HEAR_1)
 			. += A
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
@@ -302,7 +302,7 @@
 
 /proc/try_move_adjacent(atom/movable/AM)
 	var/turf/T = get_turf(AM)
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		if(AM.Move(get_step(T, direction)))
 			break
 
@@ -418,7 +418,7 @@
 /proc/showCandidatePollWindow(mob/M, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
 	set waitfor = 0
 
-	M << 'sound/misc/notice2.ogg' //Alerting them to their consideration
+	SEND_SOUND(M, 'sound/misc/notice2.ogg') //Alerting them to their consideration
 	if(flashwindow)
 		window_flash(M.client)
 	switch(ignore_category ? askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
@@ -426,7 +426,7 @@
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 			if(time_passed + poll_time <= world.time)
 				to_chat(M, "<span class='danger'>Sorry, you answered too late to be considered!</span>")
-				M << 'sound/machines/buzz-sigh.ogg'
+				SEND_SOUND(M, 'sound/machines/buzz-sigh.ogg')
 				candidates -= M
 			else
 				candidates += M
@@ -506,7 +506,8 @@
 		return
 
 	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(GLOB.latejoin))//The mob being spawned.
+	var/mob/living/carbon/human/new_character = new//The mob being spawned.
+	SSjob.SendToLateJoin(new_character)
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()
@@ -552,3 +553,11 @@
 
 /proc/GetBluePart(const/hexa)
 	return hex2num(copytext(hexa, 6, 8))
+
+/proc/lavaland_equipment_pressure_check(turf/T)
+	if(!istype(T))
+		return
+	var/datum/gas_mixture/environment = T.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
+		return TRUE

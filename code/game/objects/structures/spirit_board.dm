@@ -3,8 +3,8 @@
 	desc = "A wooden board with letters etched into it, used in seances."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "spirit_board"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	var/virgin = 1
 	var/next_use = 0
 	var/planchette = "A"

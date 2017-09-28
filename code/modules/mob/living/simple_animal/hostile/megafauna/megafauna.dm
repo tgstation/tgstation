@@ -8,7 +8,7 @@
 	maxHealth = 1000
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
-	environment_smash = 3
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
@@ -16,7 +16,7 @@
 	movement_type = FLYING
 	robust_searching = 1
 	ranged_ignores_vision = TRUE
-	stat_attack = 2
+	stat_attack = DEAD
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	minbodytemp = 0
@@ -34,15 +34,21 @@
 	/obj/structure/barricade,
 	/obj/machinery/field,
 	/obj/machinery/power/emitter)
+	var/list/crusher_loot
 	var/medal_type = MEDAL_PREFIX
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
+	var/recovery_time = 0
 	anchored = TRUE
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
-	mouse_opacity = 2 // Easier to click on in melee, they're giant targets anyway
+	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
+
+/mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
+	. = ..()
+	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
@@ -52,11 +58,18 @@
 	if(health > 0)
 		return
 	else
+		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+		if(C && crusher_loot)
+			if(C.total_damage >= maxHealth * 0.6) //if you do at least 60% of its health with the crusher, you'll get the item
+				spawn_crusher_loot()
 		if(!admin_spawned)
 			SSblackbox.set_details("megafauna_kills","[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type,score_type)
 		..()
+
+/mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
+	loot = crusher_loot
 
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)
@@ -71,6 +84,8 @@
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/AttackingTarget()
+	if(recovery_time >= world.time)
+		return
 	. = ..()
 	if(. && isliving(target))
 		var/mob/living/L = target
@@ -80,21 +95,13 @@
 		else
 			devour(L)
 
-/mob/living/simple_animal/hostile/megafauna/onShuttleMove()
-	var/turf/oldloc = loc
-	. = ..()
-	if(!.)
-		return
-	var/turf/newloc = loc
-	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldloc)] to [ADMIN_COORDJMP(newloc)]")
-
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
 		return
 	visible_message(
 		"<span class='danger'>[src] devours [L]!</span>",
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-	if(z != ZLEVEL_STATION && !client) //NPC monsters won't heal while on station
+	if(!(z in GLOB.station_z_levels) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
 
@@ -109,7 +116,8 @@
 		if(3)
 			adjustBruteLoss(50)
 
-
+/mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
+	recovery_time = world.time + buffer_time
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype,scoretype)
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set

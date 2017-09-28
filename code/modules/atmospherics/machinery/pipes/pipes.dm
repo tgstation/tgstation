@@ -4,7 +4,7 @@
 
 	level = 1
 
-	use_power = 0
+	use_power = NO_POWER_USE
 	can_unwrench = 1
 	var/datum/pipeline/parent = null
 
@@ -61,7 +61,7 @@
 		parent = new /datum/pipeline()
 		parent.build_pipeline(src)
 
-/obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/atmospherics/pipe/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/analyzer))
 		atmosanalyzer_scan(parent.air, user)
 	else

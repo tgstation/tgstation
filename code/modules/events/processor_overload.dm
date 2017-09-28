@@ -35,6 +35,6 @@
 				explosion(get_turf(P), 0, 0, 2)
 				// Only a level 1 explosion actually damages the machine
 				// at all
-				P.ex_act(1)
+				P.ex_act(EXPLODE_DEVASTATE)
 			else
-				P.emp_act(1)
+				P.emp_act(EMP_HEAVY)

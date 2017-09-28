@@ -74,7 +74,7 @@
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
-				C.Weaken(2)
+				C.Knockdown(40)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
 	..()
@@ -144,6 +144,7 @@
 	required_reagents = list("methamphetamine" = 1)
 	strengthdiv = 6
 	modifier = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -154,7 +155,7 @@
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
 	required_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
-	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
+	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion 
 	results = list("methboom1" = 4) // this is ugly. Sorry goof.
 
 /datum/chemical_reaction/sorium
@@ -221,9 +222,9 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Weaken(5)
+				C.Knockdown(60)
 			else
-				C.Stun(5)
+				C.Stun(100)
 	holder.remove_reagent("flash_powder", created_volume*3)
 
 /datum/chemical_reaction/flash_powder_flash
@@ -238,9 +239,9 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Weaken(5)
+				C.Knockdown(60)
 			else
-				C.Stun(5)
+				C.Stun(100)
 
 /datum/chemical_reaction/smoke_powder
 	name = "smoke_powder"
@@ -269,7 +270,7 @@
 	required_reagents = list("smoke_powder" = 1)
 	required_temp = 374
 	secondary = 1
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -296,7 +297,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		C.soundbang_act(1, 5, rand(0, 5))
+		C.soundbang_act(1, 100, rand(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	name = "sonic_powder_deafen"
@@ -308,7 +309,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		C.soundbang_act(1, 5, rand(0, 5))
+		C.soundbang_act(1, 100, rand(0, 5))
 
 /datum/chemical_reaction/phlogiston
 	name = "phlogiston"

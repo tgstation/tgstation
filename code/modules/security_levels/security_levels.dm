@@ -29,7 +29,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 						SSshuttle.emergency.modTimer(2)
 				GLOB.security_level = SEC_LEVEL_GREEN
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z == ZLEVEL_STATION)
+					if(FA.z in GLOB.station_z_levels)
 						FA.update_icon()
 			if(SEC_LEVEL_BLUE)
 				if(GLOB.security_level < SEC_LEVEL_BLUE)
@@ -42,7 +42,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 						SSshuttle.emergency.modTimer(2)
 				GLOB.security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z == ZLEVEL_STATION)
+					if(FA.z in GLOB.station_z_levels)
 						FA.update_icon()
 			if(SEC_LEVEL_RED)
 				if(GLOB.security_level < SEC_LEVEL_RED)
@@ -62,7 +62,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 					CC.post_status("alert", "redalert")*/
 
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z == ZLEVEL_STATION)
+					if(FA.z in GLOB.station_z_levels)
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0
@@ -75,7 +75,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 						SSshuttle.emergency.modTimer(0.5)
 				GLOB.security_level = SEC_LEVEL_DELTA
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z == ZLEVEL_STATION)
+					if(FA.z in GLOB.station_z_levels)
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0

@@ -13,7 +13,7 @@ Doesn't work on other aliens/AI.*/
 	var/check_turf = 0
 	var/has_action = 1
 	var/datum/action/spell_action/alien/action = null
-	var/action_icon = 'icons/mob/actions.dmi'
+	var/action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_alien"
 
@@ -22,7 +22,7 @@ Doesn't work on other aliens/AI.*/
 	action = new(src)
 
 /obj/effect/proc_holder/alien/Click()
-	if(!istype(usr,/mob/living/carbon))
+	if(!iscarbon(usr))
 		return 1
 	var/mob/living/carbon/user = usr
 	if(cost_check(check_turf,user))
@@ -84,7 +84,7 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
-		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
+		log_talk(user,"AlienWhisper: [key_name(user)]->[M.key] : [msg]",LOGSAY)
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
 		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
 		for(var/ded in GLOB.dead_mob_list)

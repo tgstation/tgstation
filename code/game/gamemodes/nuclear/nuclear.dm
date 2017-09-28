@@ -5,6 +5,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
+	false_report_weight = 10
 	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
 	required_enemies = 2
 	recommended_enemies = 5
@@ -93,7 +94,7 @@
 			agent_number++
 		spawnpos++
 		update_synd_icons_added(synd_mind)
-		synd_mind.current.playsound_local('sound/ambience/antag/ops.ogg',100,0)
+		synd_mind.current.playsound_local(get_turf(synd_mind.current), 'sound/ambience/antag/ops.ogg',100,0)
 	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
 
 	if(nuke)
@@ -114,11 +115,11 @@
 	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
 	synd_mind.current.put_in_hands_or_del(challenge)
 
-	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
+	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/card/id)
 	if(foundIDs.len)
-		for(var/obj/item/weapon/card/id/ID in foundIDs)
+		for(var/obj/item/card/id/ID in foundIDs)
 			ID.name = "lead agent card"
-			ID.access += GLOB.access_syndicate_leader
+			ID.access += ACCESS_SYNDICATE_LEADER
 	else
 		message_admins("Warning: Nuke Ops spawned without access to leave their spawn area!")
 
@@ -127,7 +128,7 @@
 		A.command = TRUE
 
 	if(nuke_code)
-		var/obj/item/weapon/paper/P = new
+		var/obj/item/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
 		var/mob/living/carbon/human/H = synd_mind.current
@@ -186,8 +187,8 @@
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
-	for(var/obj/item/weapon/disk/nuclear/D in GLOB.poi_list)
-		if(!D.onCentcom())
+	for(var/obj/item/disk/nuclear/D in GLOB.poi_list)
+		if(!D.onCentCom())
 			disk_rescued = 0
 			break
 	var/crew_evacuated = (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
@@ -201,70 +202,70 @@
 
 
 	if(nuke_off_station == NUKE_SYNDICATE_BASE)
-		SSblackbox.set_details("round_end_result","loss - syndicate nuked - disk secured")
+		SSticker.mode_result = "loss - syndicate nuked - disk secured"
 		to_chat(world, "<FONT size = 3><B>Humiliating Syndicate Defeat</B></FONT>")
 		to_chat(world, "<B>The crew of [station_name()] gave [syndicate_name()] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!")
 
 		SSticker.news_report = NUKE_SYNDICATE_BASE
 
 	else if(!disk_rescued &&  station_was_nuked && !syndies_didnt_escape)
-		SSblackbox.set_details("round_end_result","win - syndicate nuke")
+		SSticker.mode_result = "win - syndicate nuke"
 		to_chat(world, "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>")
 		to_chat(world, "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>")
 
 		SSticker.news_report = STATION_NUKED
 
 	else if (!disk_rescued &&  station_was_nuked && syndies_didnt_escape)
-		SSblackbox.set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
+		SSticker.mode_result = "halfwin - syndicate nuke - did not evacuate in time"
 		to_chat(world, "<FONT size = 3><B>Total Annihilation</B></FONT>")
 		to_chat(world, "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!")
 
 		SSticker.news_report = STATION_NUKED
 
 	else if (!disk_rescued && !station_was_nuked && nuke_off_station && !syndies_didnt_escape)
-		SSblackbox.set_details("round_end_result","halfwin - blew wrong station")
+		SSticker.mode_result = "halfwin - blew wrong station"
 		to_chat(world, "<FONT size = 3><B>Crew Minor Victory</B></FONT>")
 		to_chat(world, "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!")
 
 		SSticker.news_report = NUKE_MISS
 
 	else if (!disk_rescued && !station_was_nuked && nuke_off_station && syndies_didnt_escape)
-		SSblackbox.set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
+		SSticker.mode_result = "halfwin - blew wrong station - did not evacuate in time"
 		to_chat(world, "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>")
 		to_chat(world, "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!")
 
 		SSticker.news_report = NUKE_MISS
 
 	else if ((disk_rescued || SSshuttle.emergency.mode != SHUTTLE_ENDGAME) && are_operatives_dead())
-		SSblackbox.set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
+		SSticker.mode_result = "loss - evacuation - disk secured - syndi team dead"
 		to_chat(world, "<FONT size = 3><B>Crew Major Victory!</B></FONT>")
 		to_chat(world, "<B>The Research Staff has saved the disk and killed the [syndicate_name()] Operatives</B>")
 
 		SSticker.news_report = OPERATIVES_KILLED
 
 	else if (disk_rescued)
-		SSblackbox.set_details("round_end_result","loss - evacuation - disk secured")
+		SSticker.mode_result = "loss - evacuation - disk secured"
 		to_chat(world, "<FONT size = 3><B>Crew Major Victory</B></FONT>")
 		to_chat(world, "<B>The Research Staff has saved the disk and stopped the [syndicate_name()] Operatives!</B>")
 
 		SSticker.news_report = OPERATIVES_KILLED
 
 	else if (!disk_rescued && are_operatives_dead())
-		SSblackbox.set_details("round_end_result","halfwin - evacuation - disk not secured")
+		SSticker.mode_result = "halfwin - evacuation - disk not secured"
 		to_chat(world, "<FONT size = 3><B>Neutral Victory!</B></FONT>")
 		to_chat(world, "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>")
 
 		SSticker.news_report = OPERATIVE_SKIRMISH
 
 	else if (!disk_rescued &&  crew_evacuated)
-		SSblackbox.set_details("round_end_result","halfwin - detonation averted")
+		SSticker.mode_result = "halfwin - detonation averted"
 		to_chat(world, "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>")
 		to_chat(world, "<B>[syndicate_name()] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!")
 
 		SSticker.news_report = OPERATIVE_SKIRMISH
 
 	else if (!disk_rescued && !crew_evacuated)
-		SSblackbox.set_details("round_end_result","halfwin - interrupted")
+		SSticker.mode_result = "halfwin - interrupted"
 		to_chat(world, "<FONT size = 3><B>Neutral Victory</B></FONT>")
 		to_chat(world, "<B>Round was mysteriously interrupted!</B>")
 
@@ -273,9 +274,13 @@
 	..()
 	return
 
+/datum/game_mode/nuclear/generate_report()
+	return "One of Central Command's trading routes was recently disrupted by a raid carried out by the Gorlex Marauders. They seemed to only be after one ship - a highly-sensitive \
+			transport containing a nuclear fission explosive, although it is useless without the proper code and authorization disk. While the code was likely found in minutes, the only disk that \
+			can activate this explosive is on your station. Ensure that it is protected at all times, and remain alert for possible intruders."
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
-	if( syndicates.len || (SSticker && istype(SSticker.mode,/datum/game_mode/nuclear)) )
+	if( syndicates.len || (SSticker && istype(SSticker.mode, /datum/game_mode/nuclear)) )
 		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
 		var/purchases = ""
 		var/TC_uses = 0
@@ -288,7 +293,7 @@
 		text += "<br>"
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
-			text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
+			text += "<BIG>[icon2html('icons/badass.dmi', world, "badass")]</BIG>"
 		to_chat(world, text)
 	return 1
 
@@ -323,12 +328,12 @@
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	back = /obj/item/weapon/storage/backpack
+	back = /obj/item/storage/backpack
 	ears = /obj/item/device/radio/headset/syndicate/alt
-	l_pocket = /obj/item/weapon/pinpointer/syndicate
-	id = /obj/item/weapon/card/id/syndicate
-	belt = /obj/item/weapon/gun/ballistic/automatic/pistol
-	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1)
+	l_pocket = /obj/item/pinpointer/nuke/syndicate
+	id = /obj/item/card/id/syndicate
+	belt = /obj/item/gun/ballistic/automatic/pistol
+	backpack_contents = list(/obj/item/storage/box/syndie=1)
 
 	var/tc = 25
 
@@ -347,9 +352,9 @@
 		U.hidden_uplink.telecrystals = tc
 		H.equip_to_slot_or_del(U, slot_in_backpack)
 
-	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(H)
+	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)
 	W.implant(H)
-	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(H)
+	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
 	E.implant(H)
 	H.faction |= "syndicate"
 	H.update_icons()
@@ -360,10 +365,10 @@
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
-	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
 	internals_slot = slot_r_store
-	belt = /obj/item/weapon/storage/belt/military
-	r_hand = /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog
-	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1,\
-		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
-		/obj/item/weapon/gun/ballistic/automatic/pistol=1)
+	belt = /obj/item/storage/belt/military
+	r_hand = /obj/item/gun/ballistic/automatic/shotgun/bulldog
+	backpack_contents = list(/obj/item/storage/box/syndie=1,\
+		/obj/item/tank/jetpack/oxygen/harness=1,\
+		/obj/item/gun/ballistic/automatic/pistol=1)

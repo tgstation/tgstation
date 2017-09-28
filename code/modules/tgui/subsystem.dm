@@ -17,7 +17,7 @@
   *
   * return datum/tgui The found UI.
  **/
-/datum/controller/subsystem/tgui/proc/try_update_ui(mob/user, datum/src_object, ui_key, datum/tgui/ui, force_open = 0)
+/datum/controller/subsystem/tgui/proc/try_update_ui(mob/user, datum/src_object, ui_key, datum/tgui/ui, force_open = FALSE)
 	if(isnull(ui)) // No UI was passed, so look for one.
 		ui = get_open_ui(user, src_object, ui_key)
 
@@ -225,7 +225,7 @@
  /**
   * private
   *
-  * Handle clients switching mobs, by transfering their UIs.
+  * Handle clients switching mobs, by transferring their UIs.
   *
   * required user source The client's original mob.
   * required user target The client's new mob.

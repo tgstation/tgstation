@@ -24,7 +24,7 @@
 		var/obj/item/device/pda/P = card.loc
 		P.pai = null
 		P.visible_message("<span class='notice'>[src] ejects itself from [P]!</span>")
-	if(istype(card.loc, /mob/living))
+	if(isliving(card.loc))
 		var/mob/living/L = card.loc
 		if(!L.temporarilyRemoveItemFromInventory(card))
 			to_chat(src, "<span class='warning'>Error: Unable to expand to mobile form. Chassis is restrained by some device or person.</span>")
@@ -93,7 +93,7 @@
 	return FALSE
 
 /mob/living/silicon/pai/proc/toggle_integrated_light()
-	if(!luminosity)
+	if(!light_range)
 		set_light(brightness_power)
 		to_chat(src, "<span class='notice'>You enable your integrated light.</span>")
 	else

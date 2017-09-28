@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
+	var/status = CANSTUN | CANKNOCKDOWN | CANUNCONSCIOUS | CANPUSH
 	owner.status_flags &= ~status
 	owner.update_body_parts()
 
@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
+	owner.status_flags |= CANSTUN | CANKNOCKDOWN | CANUNCONSCIOUS | CANPUSH
 	owner.update_body_parts()
 
 /datum/mutation/human/hulk/say_mod(message)
@@ -233,9 +233,9 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
-	if(prob(1) && !owner.paralysis)
+	if(prob(1) && owner.stat == CONSCIOUS)
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
-		owner.Paralyse(10)
+		owner.Unconscious(200)
 		owner.Jitter(1000)
 		addtimer(CALLBACK(src, .proc/jitter_less, owner), 90)
 
@@ -269,7 +269,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
 
 /datum/mutation/human/cough/on_life(mob/living/carbon/human/owner)
-	if((prob(5) && owner.paralysis <= 1))
+	if(prob(5) && owner.stat == CONSCIOUS)
 		owner.drop_item()
 		owner.emote("cough")
 
@@ -317,8 +317,8 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
-	if((prob(10) && owner.paralysis <= 1))
-		owner.Stun(10)
+	if(prob(10) && owner.stat == CONSCIOUS)
+		owner.Stun(200)
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
@@ -377,9 +377,6 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	time_coeff = 2
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
-	if(owner.has_brain_worms())
-		to_chat(owner, "<span class='warning'>You feel something strongly clinging to your humanity!</span>")
-		return
 	if(..())
 		return
 	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
@@ -407,6 +404,11 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/chameleon/on_move(mob/living/carbon/human/owner)
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
+
+/datum/mutation/human/chameleon/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
+	if(proximity) //stops tk from breaking chameleon
+		owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
+		return
 
 /datum/mutation/human/chameleon/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -607,6 +609,23 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		message = replacetext(message," faggot "," square ")
 		message = replacetext(message," muh valids "," getting my kicks ")
 	return trim(message)
+
+/datum/mutation/human/stoner
+	name = "Stoner"
+	quality = NEGATIVE
+	dna_block = NON_SCANNABLE
+	text_gain_indication = "<span class='notice'>You feel...totally chill, man!</span>"
+	text_lose_indication = "<span class='notice'>You feel like you have a better sense of time.</span>"
+
+/datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
+	..()
+	owner.grant_language(/datum/language/beachbum)
+	owner.remove_language(/datum/language/common)
+
+/datum/mutation/human/stoner/on_losing(mob/living/carbon/human/owner)
+	..()
+	owner.grant_language(/datum/language/common)
+	owner.remove_language(/datum/language/beachbum)
 
 /datum/mutation/human/laser_eyes
 	name = "Laser Eyes"

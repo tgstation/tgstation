@@ -17,7 +17,7 @@
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	var/feast_sound = 'sound/magic/Demon_consume.ogg'
+	var/feast_sound = 'sound/magic/demon_consume.ogg'
 	death_sound = 'sound/magic/demon_dies.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -27,7 +27,7 @@
 	maxHealth = 200
 	health = 200
 	healable = 0
-	environment_smash = 1
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 50
 	melee_damage_lower = 30
 	melee_damage_upper = 30
@@ -89,7 +89,7 @@
 		return ..()
 	user.visible_message("<span class='warning'>[user] raises [src] to their mouth and tears into it with their teeth!</span>", \
 						 "<span class='danger'>An unnatural hunger consumes you. You raise [src] your mouth and devour it!</span>")
-	playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
+	playsound(user, 'sound/magic/demon_consume.ogg', 50, 1)
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == /obj/effect/proc_holder/spell/bloodcrawl)
 			to_chat(user, "<span class='warning'>...and you don't feel any different.</span>")

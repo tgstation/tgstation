@@ -26,7 +26,7 @@
 /proc/gather_false_events(players_amt, gamemode)
 	. = list()
 	for(var/datum/round_event_control/E in SSevents.control)
-		if(istype(E,/datum/round_event_control/falsealarm))
+		if(istype(E, /datum/round_event_control/falsealarm))
 			continue
 		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue

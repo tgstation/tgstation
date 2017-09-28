@@ -13,7 +13,7 @@
 	changeling = null
 	. = ..()
 
-/datum/cellular_emporium/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
+/datum/cellular_emporium/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "cellular_emporium", name, 900, 480, master_ui, state)
@@ -68,7 +68,8 @@
 
 /datum/action/innate/cellular_emporium
 	name = "Cellular Emporium"
-	button_icon_state = "cellular_emporium"
+	icon_icon = 'icons/obj/drinks.dmi'
+	button_icon_state = "changelingsting"
 	background_icon_state = "bg_alien"
 	var/datum/cellular_emporium/cellular_emporium
 

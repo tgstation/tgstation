@@ -12,6 +12,7 @@
 	origin_tech = "materials=1"
 	var/turf_type = null
 	var/mineralType = null
+	novariants = TRUE
 
 /obj/item/stack/tile/Initialize(mapload, amount)
 	. = ..()
@@ -20,8 +21,8 @@
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
-	if (istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if (istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 
 		if(get_amount() < 4)
 			to_chat(user, "<span class='warning'>You need at least four tiles to do this!</span>")
@@ -106,6 +107,13 @@
 	turf_type = /turf/open/floor/carpet
 	resistance_flags = FLAMMABLE
 
+/obj/item/stack/tile/carpet/black
+	name = "black carpet"
+	icon_state = "tile-carpet-black"
+	turf_type = /turf/open/floor/carpet/black
+
+/obj/item/stack/tile/carpet/black/fifty
+	amount = 50
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
@@ -203,7 +211,7 @@
 	force = 6
 	materials = list(MAT_METAL=500)
 	throwforce = 10
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)

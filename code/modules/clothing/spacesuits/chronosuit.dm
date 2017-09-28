@@ -26,7 +26,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90, fire = 100, acid = 1000)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/list/chronosafe_items = list(/obj/item/weapon/chrono_eraser, /obj/item/weapon/gun/energy/chrono_gun)
+	var/list/chronosafe_items = list(/obj/item/chrono_eraser, /obj/item/gun/energy/chrono_gun)
 	var/list/hands_nodrop = list()
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
@@ -85,17 +85,17 @@
 	if(istype(user))
 		if(to_turf)
 			user.forceMove(to_turf)
-		user.SetStunned(0)
+		user.SetStun(0)
 		user.next_move = 1
 		user.alpha = 255
 		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
-		user.anchored = 0
+		user.anchored = FALSE
 		teleporting = 0
 		for(var/obj/item/I in user.held_items)
 			if(I in hands_nodrop)
-				I.flags &= ~NODROP
+				I.flags_1 &= ~NODROP_1
 		if(camera)
 			camera.remove_target_ui()
 			camera.loc = user
@@ -130,13 +130,13 @@
 
 		hands_nodrop = list()
 		for(var/obj/item/I in user.held_items)
-			if(!(I.flags & NODROP))
+			if(!(I.flags_1 & NODROP_1))
 				hands_nodrop += I
-				I.flags |= NODROP
+				I.flags_1 |= NODROP_1
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
-		user.anchored = 1
+		user.anchored = TRUE
 		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)
@@ -191,9 +191,9 @@
 			if(user.head && istype(user.head, /obj/item/clothing/head/helmet/space/chronos))
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helm")
 				helmet = user.head
-				helmet.flags |= NODROP
+				helmet.flags_1 |= NODROP_1
 				helmet.suit = src
-				src.flags |= NODROP
+				src.flags_1 |= NODROP_1
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner")
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver")
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view")
@@ -202,7 +202,7 @@
 				activated = 1
 			else
 				to_chat(user, "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helm")
-				to_chat(user, "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b>")
+				to_chat(user, "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b></span>")
 			teleport_now.Grant(user)
 		cooldown = world.time + cooldowntime
 		activating = 0
@@ -212,7 +212,7 @@
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
 		var/hard_landing = teleporting && force
-		src.flags &= ~NODROP
+		src.flags_1 &= ~NODROP_1
 		cooldown = world.time + cooldowntime * 1.5
 		activated = 0
 		activating = 0
@@ -222,7 +222,7 @@
 			if(user.wear_suit == src)
 				if(hard_landing)
 					user.electrocute_act(35, src, safety = 1)
-					user.Weaken(10)
+					user.Knockdown(200)
 				if(!silent)
 					to_chat(user, "\nroot@ChronosuitMK4# chronowalk4 --stop\n")
 					if(camera)
@@ -233,7 +233,7 @@
 						to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet")
 					to_chat(user, "logout")
 		if(helmet)
-			helmet.flags &= ~NODROP
+			helmet.flags_1 &= ~NODROP_1
 			helmet.suit = null
 			helmet = null
 		if(camera)
@@ -241,11 +241,11 @@
 
 /obj/effect/chronos_cam
 	name = "Chronosuit View"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 	opacity = 0
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/mob/holder = null
 	var/phase_time = 0
 	var/phase_time_length = 3
@@ -320,6 +320,7 @@
 
 /datum/action/innate/chrono_teleport
 	name = "Teleport Now"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "chrono_phase"
 	check_flags = AB_CHECK_CONSCIOUS //|AB_CHECK_INSIDE
 	var/obj/item/clothing/suit/space/chronos/chronosuit = null

@@ -2,9 +2,8 @@
 	desc = "A secure crate."
 	name = "secure crate"
 	icon_state = "securecrate"
-	secure = 1
-	locked = 1
-	obj_integrity = 500
+	secure = TRUE
+	locked = TRUE
 	max_integrity = 500
 	armor = list(melee = 30, bullet = 50, laser = 50, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 	var/tamperproof = 0

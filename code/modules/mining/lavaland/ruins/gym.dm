@@ -3,7 +3,7 @@
 	desc = "A punching bag. Can you get to speed level 4???"
 	icon = 'goon/icons/obj/fitness.dmi'
 	icon_state = "punchingbag"
-	anchored = 1
+	anchored = TRUE
 	layer = WALL_OBJ_LAYER
 	var/list/hit_sounds = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg',\
 	'sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
@@ -17,10 +17,10 @@
 	desc = "Just looking at this thing makes you feel tired."
 	icon = 'goon/icons/obj/fitness.dmi'
 	icon_state = "fitnesslifter"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
-/obj/structure/stacklifter/attack_hand(mob/user as mob)
+/obj/structure/stacklifter/attack_hand(mob/living/user)
 	if(in_use)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
@@ -28,7 +28,7 @@
 		in_use = 1
 		icon_state = "fitnesslifter2"
 		user.setDir(SOUTH)
-		user.Stun(4)
+		user.Stun(80)
 		user.loc = src.loc
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
@@ -55,10 +55,10 @@
 	desc = "Just looking at this thing makes you feel tired."
 	icon = 'goon/icons/obj/fitness.dmi'
 	icon_state = "fitnessweight"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
-/obj/structure/weightlifter/attack_hand(mob/user as mob)
+/obj/structure/weightlifter/attack_hand(mob/living/user)
 	if(in_use)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
@@ -66,7 +66,7 @@
 		in_use = 1
 		icon_state = "fitnessweight-c"
 		user.setDir(SOUTH)
-		user.Stun(4)
+		user.Stun(80)
 		user.loc = src.loc
 		var/mutable_appearance/swole_overlay = mutable_appearance(icon, "fitnessweight-w", WALL_OBJ_LAYER)
 		add_overlay(swole_overlay)

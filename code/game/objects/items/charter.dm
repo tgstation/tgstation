@@ -16,21 +16,15 @@
 
 	var/static/regex/standard_station_regex
 
-/obj/item/station_charter/New()
+/obj/item/station_charter/Initialize()
 	. = ..()
 	if(!standard_station_regex)
 		var/prefixes = jointext(GLOB.station_prefixes, "|")
 		var/names = jointext(GLOB.station_names, "|")
 		var/suffixes = jointext(GLOB.station_suffixes, "|")
 		var/numerals = jointext(GLOB.station_numerals, "|")
-		var/regexstr = "(([prefixes]) )?(([names]) ?)([suffixes]) ([numerals])"
+		var/regexstr = "^(([prefixes]) )?(([names]) ?)([suffixes]) ([numerals])$"
 		standard_station_regex = new(regexstr)
-
-/obj/item/station_charter/Destroy()
-	if(response_timer_id)
-		deltimer(response_timer_id)
-	response_timer_id = null
-	. = ..()
 
 /obj/item/station_charter/attack_self(mob/living/user)
 	if(used)
@@ -48,6 +42,10 @@
 		rejected by your employers, while names using the standard format, \
 		will automatically be accepted.", max_length=MAX_CHARTER_LEN)
 
+	if(response_timer_id)
+		to_chat(user, "You're still waiting for approval from your employers about your proposed name change, it'd be best to wait for now.")
+		return
+		
 	if(!new_name)
 		return
 	log_game("[key_name(user)] has proposed to name the station as \
@@ -61,7 +59,7 @@
 	to_chat(user, "Your name has been sent to your employers for approval.")
 	// Autoapproves after a certain time
 	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
-	to_chat(GLOB.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the [name_type] to [new_name] (will autoapprove in [approval_time / 10] seconds). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]</span>")
+	to_chat(GLOB.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the [name_type] to [new_name] (will autoapprove in [approval_time / 10] seconds). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;[HrefToken(TRUE)];reject_custom_name=\ref[src]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]</span>")
 
 /obj/item/station_charter/proc/reject_proposed(user)
 	if(!user)
@@ -96,12 +94,14 @@
 	ignores_timeout = TRUE
 
 
-/obj/item/weapon/station_charter/flag
+/obj/item/station_charter/flag
 	name = "nanotrasen banner"
-	icon = 'icons/obj/items.dmi'
-	var/name_type = "planet"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	name_type = "planet"
 	icon_state = "banner"
 	item_state = "banner"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A cunning device used to claim ownership of planets."
 	w_class = 5
 	force = 15
@@ -115,7 +115,5 @@
 	SSblackbox.set_details("station_renames","[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE
-
-
 
 #undef STATION_RENAME_TIME_LIMIT

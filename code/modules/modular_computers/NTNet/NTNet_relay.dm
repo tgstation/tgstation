@@ -2,13 +2,14 @@
 /obj/machinery/ntnet_relay
 	name = "NTNet Quantum Relay"
 	desc = "A very complex router and transmitter capable of connecting electronic devices together. Looks fragile."
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	active_power_usage = 10000 //10kW, apropriate for machine that keeps massive cross-Zlevel wireless network operational. Used to be 20 but that actually drained the smes one round
 	idle_power_usage = 100
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "bus"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
+	circuit = /obj/item/circuitboard/machine/ntnet_relay
 	var/datum/ntnet/NTNet = null // This is mostly for backwards reference and to allow varedit modifications from ingame.
 	var/enabled = 1				// Set to 0 if the relay was turned off
 	var/dos_failure = 0			// Set to 1 if the relay failed due to (D)DoS attack
@@ -38,9 +39,9 @@
 
 /obj/machinery/ntnet_relay/process()
 	if(is_operational())
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 	else
-		use_power = 1
+		use_power = IDLE_POWER_USE
 
 	update_icon()
 
@@ -59,7 +60,7 @@
 		GLOB.ntnet_global.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
 	..()
 
-/obj/machinery/ntnet_relay/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/ntnet_relay/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
@@ -95,18 +96,16 @@
 /obj/machinery/ntnet_relay/attack_hand(mob/living/user)
 	ui_interact(user)
 
-/obj/machinery/ntnet_relay/New()
+/obj/machinery/ntnet_relay/Initialize()
 	uid = gl_uid
 	gl_uid++
 	component_parts = list()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/ntnet_relay(null)
-	B.apply_default_parts(src)
 
 	if(GLOB.ntnet_global)
 		GLOB.ntnet_global.relays.Add(src)
 		NTNet = GLOB.ntnet_global
 		GLOB.ntnet_global.add_log("New quantum relay activated. Current amount of linked relays: [NTNet.relays.len]")
-	..()
+	. = ..()
 
 /obj/machinery/ntnet_relay/Destroy()
 	if(GLOB.ntnet_global)
@@ -119,11 +118,3 @@
 		D.error = "Connection to quantum relay severed"
 
 	return ..()
-
-/obj/item/weapon/circuitboard/machine/ntnet_relay
-	name = "NTNet Relay (Machine Board)"
-	build_path = /obj/machinery/ntnet_relay
-	origin_tech = "programming=3;bluespace=3;magnets=2"
-	req_components = list(
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/subspace/filter = 1)

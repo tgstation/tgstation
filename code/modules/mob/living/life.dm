@@ -19,14 +19,15 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(stat != DEAD)
-		//Breathing, if applicable
-		handle_breathing(times_fired)
-	if(stat != DEAD)
 		//Mutations and radiation
 		handle_mutations_and_radiation()
+
 	if(stat != DEAD)
-		//Chemicals in the body
-		handle_chemicals_in_body()
+		//Breathing, if applicable
+		handle_breathing(times_fired)
+
+	handle_diseases() // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
 	if(stat != DEAD)
 		//Random events (vomiting etc)
 		handle_random_events()
@@ -48,7 +49,7 @@
 	if(stat != DEAD)
 		handle_disabilities() // eye, ear, brain damages
 	if(stat != DEAD)
-		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
+		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	if(stat != DEAD)
 		return 1
@@ -60,7 +61,7 @@
 	radiation = 0 //so radiation don't accumulate in simple animals
 	return
 
-/mob/living/proc/handle_chemicals_in_body()
+/mob/living/proc/handle_diseases()
 	return
 
 /mob/living/proc/handle_diginvis()
@@ -97,14 +98,8 @@
 /mob/living/proc/handle_stomach()
 	return
 
-//this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
+//this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
-	if(paralysis)
-		AdjustParalysis(-1, 1, 1)
-	if(stunned)
-		AdjustStunned(-1, 1, 1)
-	if(weakened)
-		AdjustWeakened(-1, 1, 1)
 	if(confused)
 		confused = max(0, confused - 1)
 

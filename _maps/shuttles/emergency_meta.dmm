@@ -6,18 +6,14 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ae" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "af" = (
 /obj/machinery/door/airlock/titanium{
@@ -43,10 +39,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ai" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
 /turf/open/space,
@@ -56,18 +49,15 @@
 	},
 /area/shuttle/escape)
 "ak" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "al" = (
 /obj/structure/table,
-/obj/item/weapon/phone{
+/obj/item/phone{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/cigbutt/cigarbutt{
+/obj/item/cigbutt/cigarbutt{
 	pixel_x = 5;
 	pixel_y = -1
 	},
@@ -83,7 +73,7 @@
 /area/shuttle/escape)
 "ao" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ap" = (
@@ -101,7 +91,6 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = 27
 	},
 /obj/structure/chair,
@@ -131,19 +120,19 @@
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
 	name = "emergency lifejacket"
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
 /obj/item/clothing/mask/breath{
@@ -208,7 +197,7 @@
 /area/shuttle/escape)
 "aw" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ax" = (
@@ -219,7 +208,7 @@
 /area/shuttle/escape)
 "ay" = (
 /obj/structure/table,
-/obj/item/weapon/restraints/handcuffs{
+/obj/item/restraints/handcuffs{
 	pixel_y = 3
 	},
 /obj/machinery/light{
@@ -248,9 +237,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aD" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/chair{
@@ -278,8 +265,6 @@
 "aI" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 0;
-	pixel_y = 0;
 	req_access_txt = "0";
 	use_power = 0
 	},
@@ -297,22 +282,19 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aM" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall2"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aN" = (
 /obj/machinery/status_display{
 	dir = 8;
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/holopad,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aO" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/emergency{
+/obj/item/storage/toolbox/emergency{
 	pixel_y = 3
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -329,24 +311,22 @@
 /area/shuttle/escape)
 "aQ" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 8
 	},
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -31
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aR" = (
 /obj/structure/table,
-/obj/item/weapon/folder/blue,
+/obj/item/folder/blue,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 0;
 	pixel_y = -27
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -355,7 +335,6 @@
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -31
 	},
 /obj/structure/chair{
@@ -375,16 +354,10 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aU" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aV" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aW" = (
 /obj/machinery/door/airlock/command{
@@ -395,10 +368,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aX" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/door/airlock/glass_security{
@@ -427,10 +397,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bc" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/chair{
@@ -462,7 +429,7 @@
 /area/shuttle/escape)
 "bj" = (
 /obj/structure/table,
-/obj/item/weapon/defibrillator/loaded,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bk" = (
@@ -477,10 +444,10 @@
 /area/shuttle/escape)
 "bm" = (
 /obj/structure/rack,
-/obj/item/weapon/crowbar,
-/obj/item/weapon/wrench,
-/obj/item/weapon/weldingtool,
-/obj/item/weapon/wirecutters,
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/item/weldingtool,
+/obj/item/wirecutters,
 /obj/item/stack/cable_coil,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -510,10 +477,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "br" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bs" = (
 /obj/structure/chair{
@@ -527,34 +491,33 @@
 /area/shuttle/escape)
 "bu" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
-	pixel_y = 0
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 4;
 	pixel_y = 1
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 2;
 	pixel_y = 8
 	},
@@ -562,15 +525,14 @@
 /area/shuttle/escape)
 "bv" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/toolbox/electrical{
+/obj/item/storage/toolbox/electrical{
 	pixel_x = -3;
 	pixel_y = 1
 	},
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 0;
+/obj/item/storage/toolbox/mechanical{
 	pixel_y = -1
 	},
-/obj/item/weapon/storage/toolbox/emergency{
+/obj/item/storage/toolbox/emergency{
 	pixel_x = 3;
 	pixel_y = -5
 	},
@@ -580,7 +542,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bw" = (
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "bx" = (
@@ -592,9 +554,8 @@
 /area/shuttle/escape)
 "bz" = (
 /obj/structure/table/optable,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -617,20 +578,19 @@
 /area/shuttle/escape)
 "bD" = (
 /obj/structure/table,
-/obj/item/weapon/folder/red{
+/obj/item/folder/red{
 	pixel_x = 3
 	},
-/obj/item/weapon/folder/white{
+/obj/item/folder/white{
 	pixel_x = -4;
 	pixel_y = 2
 	},
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -31
 	},
-/obj/item/weapon/book/manual/wiki/security_space_law{
+/obj/item/book/manual/wiki/security_space_law{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -638,7 +598,7 @@
 /area/shuttle/escape)
 "bE" = (
 /obj/structure/table,
-/obj/item/weapon/restraints/handcuffs{
+/obj/item/restraints/handcuffs{
 	pixel_y = 3
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -654,7 +614,7 @@
 /area/shuttle/escape)
 "bG" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/handcuffs{
+/obj/item/storage/box/handcuffs{
 	pixel_x = 2;
 	pixel_y = 2
 	},
@@ -662,14 +622,14 @@
 /area/shuttle/escape)
 "bH" = (
 /obj/structure/table,
-/obj/item/weapon/scalpel{
+/obj/item/scalpel{
 	pixel_y = 12
 	},
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/retractor{
+/obj/item/circular_saw,
+/obj/item/retractor{
 	pixel_x = 4
 	},
-/obj/item/weapon/hemostat{
+/obj/item/hemostat{
 	pixel_x = -4
 	},
 /obj/item/clothing/gloves/color/latex,
@@ -677,8 +637,7 @@
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = -27;
-	pixel_y = 0
+	pixel_x = -27
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -688,8 +647,8 @@
 /area/shuttle/escape)
 "bJ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -697,8 +656,8 @@
 /area/shuttle/escape)
 "bK" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/firstaid/o2{
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -712,7 +671,7 @@
 /obj/structure/rack{
 	dir = 1
 	},
-/obj/item/weapon/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
@@ -725,7 +684,6 @@
 /obj/machinery/space_heater,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 0;
 	pixel_y = -27
 	},
 /obj/effect/turf_decal/bot,
@@ -735,8 +693,8 @@
 /obj/structure/closet/crate{
 	name = "emergency supplies crate"
 	},
-/obj/item/weapon/storage/toolbox/emergency,
-/obj/item/weapon/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
 /obj/item/device/flashlight/flare{
 	pixel_x = 3;
 	pixel_y = 3
@@ -745,8 +703,8 @@
 	pixel_x = -6;
 	pixel_y = -2
 	},
-/obj/item/weapon/crowbar,
-/obj/item/weapon/wrench,
+/obj/item/crowbar,
+/obj/item/wrench,
 /obj/item/device/radio,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -755,12 +713,12 @@
 /obj/structure/closet/crate/medical{
 	name = "medical crate"
 	},
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/o2{
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = -4;
 	pixel_y = 3
 	},
@@ -768,7 +726,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/lazarus_injector,
+/obj/item/lazarus_injector,
 /obj/effect/turf_decal/bot,
 /mob/living/simple_animal/bot/medbot{
 	name = "\improper emergency medibot";
@@ -781,7 +739,6 @@
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -31
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -790,9 +747,9 @@
 /area/shuttle/escape)
 "bR" = (
 /obj/structure/table,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/pen,
+/obj/item/clipboard,
+/obj/item/folder/yellow,
+/obj/item/pen,
 /obj/item/hand_labeler_refill,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -800,8 +757,6 @@
 "bS" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 0;
-	pixel_y = 0;
 	req_access_txt = "0";
 	use_power = 0
 	},
@@ -841,19 +796,19 @@
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
 	name = "emergency lifejacket"
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
 /obj/item/clothing/mask/breath{
@@ -906,7 +861,6 @@
 /area/shuttle/escape)
 "bX" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -919,7 +873,6 @@
 /area/shuttle/escape)
 "bZ" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,

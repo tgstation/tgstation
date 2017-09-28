@@ -43,6 +43,11 @@
 
 	var/outfit = null
 
+	var/exp_requirements = 0
+
+	var/exp_type = ""
+	var/exp_type_department = ""
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M)
@@ -87,7 +92,7 @@
 		. = src.access.Copy()
 
 	if(config.jobs_have_maint_access & EVERYONE_HAS_MAINT_ACCESS) //Config has global maint access set
-		. |= list(GLOB.access_maint_tunnels)
+		. |= list(ACCESS_MAINT_TUNNELS)
 
 /datum/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(H && GLOB.announcement_systems.len)
@@ -126,39 +131,39 @@
 	var/jobtype = null
 
 	uniform = /obj/item/clothing/under/color/grey
-	id = /obj/item/weapon/card/id
+	id = /obj/item/card/id
 	ears = /obj/item/device/radio/headset
 	belt = /obj/item/device/pda
-	back = /obj/item/weapon/storage/backpack
+	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
-	var/list/implants = null
-
-	var/backpack = /obj/item/weapon/storage/backpack
-	var/satchel  = /obj/item/weapon/storage/backpack/satchel
-	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
-	var/box = /obj/item/weapon/storage/box/survival
+	var/backpack = /obj/item/storage/backpack
+	var/satchel  = /obj/item/storage/backpack/satchel
+	var/duffelbag = /obj/item/storage/backpack/duffelbag
+	var/box = /obj/item/storage/box/survival
 
 	var/pda_slot = slot_belt
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backbag)
 		if(GBACKPACK)
-			back = /obj/item/weapon/storage/backpack //Grey backpack
+			back = /obj/item/storage/backpack //Grey backpack
 		if(GSATCHEL)
-			back = /obj/item/weapon/storage/backpack/satchel //Grey satchel
-		if(GDUFFLEBAG)
-			back = /obj/item/weapon/storage/backpack/dufflebag //Grey Dufflebag
+			back = /obj/item/storage/backpack/satchel //Grey satchel
+		if(GDUFFELBAG)
+			back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
 		if(LSATCHEL)
-			back = /obj/item/weapon/storage/backpack/satchel/leather //Leather Satchel
+			back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
 		if(DSATCHEL)
 			back = satchel //Department satchel
-		if(DDUFFLEBAG)
-			back = dufflebag //Department dufflebag
+		if(DDUFFELBAG)
+			back = duffelbag //Department duffel bag
 		else
 			back = backpack //Department backpack
 
 	if(box)
+		if(!backpack_contents)
+			backpack_contents = list()
 		backpack_contents.Insert(1, box) // Box always takes a first slot in backpack
 		backpack_contents[box] = 1
 
@@ -170,7 +175,7 @@
 	if(!J)
 		J = SSjob.GetJob(H.job)
 
-	var/obj/item/weapon/card/id/C = H.wear_id
+	var/obj/item/card/id/C = H.wear_id
 	if(istype(C))
 		C.access = J.get_access()
 		C.registered_name = H.real_name
@@ -183,8 +188,3 @@
 		PDA.owner = H.real_name
 		PDA.ownjob = J.title
 		PDA.update_label()
-
-	if(implants)
-		for(var/implant_type in implants)
-			var/obj/item/weapon/implant/I = new implant_type(H)
-			I.implant(H, null, silent=TRUE)

@@ -40,3 +40,13 @@
 #define FOLLOW_LINK(alice, bob) "<a href=?src=\ref[alice];follow=\ref[bob]>(F)</a>"
 #define TURF_LINK(alice, turfy) "<a href=?src=\ref[alice];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
 #define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=\ref[alice];follow=\ref[bob];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
+
+#define LOGSAY "say"
+#define LOGWHISPER "whisper"
+#define LOGEMOTE "emote"
+#define LOGDSAY "dsay"
+#define LOGPDA "pda"
+#define LOGCHAT "chat"
+#define LOGASAY "adminsay"
+#define LOGCOMMENT "comment"
+#define LOGOOC "ooc"

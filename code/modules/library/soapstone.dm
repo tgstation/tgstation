@@ -1,7 +1,7 @@
 /obj/item/soapstone
 	name = "soapstone"
-	desc = "Leave informative messages for the crew, including the crew of future shifts!\nEven if out of uses, it can still be used to remove messages.\n(Not suitable for engraving on shuttles, off station or on cats. Side effects may include beatings, bannings and orbital bombardment.)"
-	icon = 'icons/obj/items.dmi'
+	desc = "Leave informative messages for the crew, including the crew of future shifts!\nEven if out of uses, it can still be used to remove messages.\n(Not suitable for engraving on shuttles, off station or on cats. Side effects may include prompt beatings, psychotic clown incursions, and/or orbital bombardment.)"
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "soapstone"
 	throw_speed = 3
 	throw_range = 5
@@ -114,8 +114,8 @@
 	layer = HIGH_OBJ_LAYER
 	density = FALSE
 	anchored = TRUE
-	obj_integrity = 30
 	max_integrity = 30
+	layer = LATTICE_LAYER
 
 	var/hidden_message
 	var/creator_key
@@ -201,7 +201,7 @@
 	SSpersistence.chisel_messages -= src
 	. = ..()
 
-/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
+/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

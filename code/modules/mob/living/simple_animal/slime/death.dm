@@ -26,7 +26,7 @@
 
 	update_canmove()
 
-	if(SSticker && SSticker.mode)
+	if(SSticker.mode)
 		SSticker.mode.check_win()
 
 	return ..(gibbed)

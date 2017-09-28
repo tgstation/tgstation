@@ -75,7 +75,7 @@
 		if(computer_id)
 			cidquery = " OR computerid = '[computer_id]' "
 
-		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
+		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype, id FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_ban_check.Execute())
 			return
 		while(query_ban_check.NextRow())
@@ -86,6 +86,7 @@
 			var/duration = query_ban_check.item[5]
 			var/bantime = query_ban_check.item[6]
 			var/bantype = query_ban_check.item[7]
+			var/banid = query_ban_check.item[8]
 			if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
 				//admin bans MUST match on ckey to prevent cid-spoofing attacks
 				//	as well as dynamic ip abuse
@@ -93,12 +94,12 @@
 					continue
 			if (admin)
 				if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
-					log_admin("The admin [key] is admin banned, and has been disallowed access")
-					message_admins("<span class='adminnotice'>The admin [key] is admin banned, and has been disallowed access</span>")
+					log_admin("The admin [key] is admin banned (#[banid]), and has been disallowed access")
+					message_admins("<span class='adminnotice'>The admin [key] is admin banned (#[banid]), and has been disallowed access</span>")
 				else
-					log_admin("The admin [key] has been allowed to bypass a matching ban on [pckey]")
-					message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching ban on [pckey]</span>")
-					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pckey]</span>")
+					log_admin("The admin [key] has been allowed to bypass a matching ban on [pckey] (#[banid])")
+					message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching ban on [pckey] (#[banid])</span>")
+					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pckey] (#[banid])</span>")
 					continue
 			var/expires = ""
 			if(text2num(duration) > 0)
@@ -106,12 +107,12 @@
 			else
 				expires = " The is a permanent ban."
 
-			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime], [expires]"
+			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [ackey] on [bantime], [expires]"
 
 			. = list("reason"="[bantype]", "desc"="[desc]")
 
 
-			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
+			log_access("Failed Login: [key] [computer_id] [address] - Banned (#[banid]) [.["reason"]]")
 			return .
 
 	var/list/ban = ..()	//default pager ban stuff

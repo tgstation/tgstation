@@ -11,7 +11,7 @@
 	var/mob_type = /mob/living/simple_animal/hostile/carp
 	var/spawn_text = "emerges from"
 	status_flags = 0
-	anchored = 1
+	anchored = TRUE
 	AIStatus = AI_OFF
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -30,10 +30,9 @@
 	spawned_mobs = null
 	return ..()
 
-/mob/living/simple_animal/hostile/spawner/Life()
-	..()
-	if(!stat)
-		spawn_mob()
+/mob/living/simple_animal/hostile/spawner/handle_automated_action()
+	. = ..()
+	spawn_mob()
 
 /mob/living/simple_animal/hostile/spawner/proc/spawn_mob()
 	if(spawned_mobs.len >= max_mobs)

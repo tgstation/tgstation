@@ -313,7 +313,7 @@
 /datum/reagent/blob/explosive_lattice/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_flag == "bomb")
 		return 0
-	else if(damage_flag != "melee" || damage_flag != "bullet" || damage_flag != "laser")
+	else if(damage_flag != "melee" && damage_flag != "bullet" && damage_flag != "laser")
 		return damage * 1.5
 	return ..()
 
@@ -361,7 +361,7 @@
 /datum/reagent/blob/electromagnetic_web/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	if(prob(reac_volume*2))
-		M.emp_act(2)
+		M.emp_act(EMP_LIGHT)
 	if(M)
 		M.apply_damage(reac_volume, BURN)
 

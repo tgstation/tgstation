@@ -3,7 +3,7 @@
 #define Z_SOUTH 3
 #define Z_WEST 4
 
-GLOBAL_LIST_INIT(cardinal, list( NORTH, SOUTH, EAST, WEST ))
+GLOBAL_LIST_INIT(cardinals, list(NORTH, SOUTH, EAST, WEST))
 GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 
@@ -13,6 +13,8 @@ GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 //Spacing should be a reliable method of getting rid of a body -- Urist.
 //Go away Urist, I'm restoring this to the longer list. ~Errorage
 GLOBAL_LIST_INIT(accessable_z_levels, list(1,3,4,5,6,7)) //Keep this to six maps, repeating z-levels is ok if needed
+
+GLOBAL_LIST_INIT(station_z_levels, list(ZLEVEL_STATION_PRIMARY))
 
 GLOBAL_LIST(global_map)
 	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
@@ -32,7 +34,6 @@ GLOBAL_LIST_EMPTY(generic_event_spawns)			//list of all spawns for events
 
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(newplayer_start)
-GLOBAL_LIST_EMPTY(latejoin)
 GLOBAL_LIST_EMPTY(prisonwarp)	//prisoners go to these
 GLOBAL_LIST_EMPTY(holdingfacility)	//captured people go here
 GLOBAL_LIST_EMPTY(xeno_spawn)//Aliens spawn at these.
@@ -53,5 +54,4 @@ GLOBAL_LIST_EMPTY(awaydestinations)	//a list of landmarks that the warpgate can 
 	//used by jump-to-area etc. Updated by area/updateName()
 GLOBAL_LIST_EMPTY(sortedAreas)
 
-GLOBAL_LIST_EMPTY(transit_markers)
 GLOBAL_LIST_EMPTY(all_abstract_markers)

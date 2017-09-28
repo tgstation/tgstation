@@ -22,6 +22,14 @@
 	..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
+/obj/item/clothing/gloves/color/fyellow/old
+	desc = "Old and worn out insulated gloves, hopefully they still work."
+	name = "worn out insulated gloves"
+
+/obj/item/clothing/gloves/color/fyellow/old/Initialize()
+	. = ..()
+	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
+
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
 	name = "black gloves"
@@ -41,8 +49,8 @@
 /obj/item/clothing/gloves/color/black/ce
 	item_color = "chief"		//Exists for washing machines. Is not different from black gloves in any way.
 
-/obj/item/clothing/gloves/color/black/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/weapon/wirecutters))
+/obj/item/clothing/gloves/color/black/attackby(obj/item/W as obj, mob/user as mob, params)
+	if(istype(W, /obj/item/wirecutters))
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
 			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
 			playsound(user.loc, W.usesound, rand(10,50), 1)
@@ -153,7 +161,7 @@
 	desc = "Cheap sterile gloves made from latex."
 	icon_state = "latex"
 	item_state = "lgloves"
-	siemens_coefficient = 0.30
+	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
 	item_color="white"
 	transfer_prints = TRUE

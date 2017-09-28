@@ -16,7 +16,7 @@
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
-		if(istype(brain,/obj/item/organ/brain/alien))
+		if(istype(brain, /obj/item/organ/brain/alien))
 			if(brainmob && brainmob.stat == DEAD)
 				icon_state = "mmi_alien_dead"
 			else
@@ -39,7 +39,7 @@
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
+	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
 		if(brain)
 			to_chat(user, "<span class='warning'>There's already a brain in the MMI!</span>")

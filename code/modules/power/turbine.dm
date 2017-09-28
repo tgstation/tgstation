@@ -27,10 +27,11 @@
 	desc = "The compressor stage of a gas turbine generator."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "compressor"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	circuit = /obj/item/circuitboard/machine/power_compressor
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/inturf
@@ -47,10 +48,11 @@
 	desc = "A gas turbine used for backup power generation."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "turbine"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	circuit = /obj/item/circuitboard/machine/power_turbine
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
 	var/turf/outturf
@@ -62,31 +64,18 @@
 	desc = "A computer to remotely control a gas turbine."
 	icon_screen = "turbinecomp"
 	icon_keyboard = "tech_key"
-	circuit = /obj/item/weapon/circuitboard/computer/turbine_computer
+	circuit = /obj/item/circuitboard/computer/turbine_computer
 	var/obj/machinery/power/compressor/compressor
 	var/id = 0
 
 // the inlet stage of the gas turbine electricity generator
 
-/obj/machinery/power/compressor/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/power_compressor(null)
-	B.apply_default_parts(src)
-// The inlet of the compressor is the direction it faces
-
+/obj/machinery/power/compressor/Initialize()
+	. = ..()
+	// The inlet of the compressor is the direction it faces
 	gas_contained = new
 	inturf = get_step(src, dir)
 
-/obj/item/weapon/circuitboard/machine/power_compressor
-	name = "Power Compressor (Machine Board)"
-	build_path = /obj/machinery/power/compressor
-	origin_tech = "programming=4;powerstorage=4;engineering=4"
-	req_components = list(
-							/obj/item/stack/cable_coil = 5,
-							/obj/item/weapon/stock_parts/manipulator = 6)
-
-/obj/machinery/power/compressor/Initialize()
-	. = ..()
 	locate_machinery()
 	if(!turbine)
 		stat |= BROKEN
@@ -98,7 +87,7 @@
 
 // Crucial to make things work!!!!
 // OLD FIX - explanation given down below.
-// /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target, height=0)
+// /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target)
 // 		return !density
 
 /obj/machinery/power/compressor/locate_machinery()
@@ -110,7 +99,7 @@
 
 /obj/machinery/power/compressor/RefreshParts()
 	var/E = 0
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	efficiency = E / 6
 
@@ -186,30 +175,17 @@
 #define TURBGENQ 100000
 #define TURBGENG 0.5
 
-/obj/machinery/power/turbine/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/power_turbine(null)
-	B.apply_default_parts(src)
-// The outlet is pointed at the direction of the turbine component
-	outturf = get_step(src, dir)
-
-/obj/item/weapon/circuitboard/machine/power_turbine
-	name = "Power Turbine (Machine Board)"
-	build_path = /obj/machinery/power/turbine
-	origin_tech = "programming=4;powerstorage=4;engineering=4"
-	req_components = list(
-							/obj/item/stack/cable_coil = 5,
-							/obj/item/weapon/stock_parts/capacitor = 6)
-
 /obj/machinery/power/turbine/Initialize()
 	. = ..()
+// The outlet is pointed at the direction of the turbine component
+	outturf = get_step(src, dir)
 	locate_machinery()
 	if(!compressor)
 		stat |= BROKEN
 
 /obj/machinery/power/turbine/RefreshParts()
 	var/P = 0
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		P += C.rating
 	productivity = P / 6
 
@@ -296,7 +272,7 @@
 
 	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
-	t += "Generated power : [round(lastgen)] W<BR><BR>"
+	t += "Generated power : [DisplayPower(lastgen)]<BR><BR>"
 
 	t += "Turbine: [round(compressor.rpm)] RPM<BR>"
 
@@ -361,7 +337,7 @@
 			dat += {"Turbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
 			\n<BR>
 			\nTurbine speed: [src.compressor.rpm]rpm<BR>
-			\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
+			\nPower currently being generated: [DisplayPower(src.compressor.turbine.lastgen)]<BR>
 			\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
 			\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
 			\n<BR>

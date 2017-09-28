@@ -101,6 +101,7 @@
 	stored = null
 	for(var/button in buttons)
 		qdel(button)
+	return ..()
 
 /datum/buildmode/proc/create_buttons()
 	buttons += new /obj/screen/buildmode/mode(src)
@@ -114,47 +115,49 @@
 	return
 
 /datum/buildmode/proc/show_help(mob/user)
+	var/list/dat = list()
 	switch(mode)
 		if(BASIC_BUILDMODE)
-			to_chat(user, "\blue ***********************************************************")
-			to_chat(user, "\blue Left Mouse Button        = Construct / Upgrade")
-			to_chat(user, "\blue Right Mouse Button       = Deconstruct / Delete / Downgrade")
-			to_chat(user, "\blue Left Mouse Button + ctrl = R-Window")
-			to_chat(user, "\blue Left Mouse Button + alt  = Airlock")
-			to_chat(user, "")
-			to_chat(user, "\blue Use the button in the upper left corner to")
-			to_chat(user, "\blue change the direction of built objects.")
-			to_chat(user, "\blue ***********************************************************")
+			dat += "***********************************************************"
+			dat += "Left Mouse Button        = Construct / Upgrade"
+			dat += "Right Mouse Button       = Deconstruct / Delete / Downgrade"
+			dat += "Left Mouse Button + ctrl = R-Window"
+			dat += "Left Mouse Button + alt  = Airlock"
+			dat += ""
+			dat += "Use the button in the upper left corner to"
+			dat += "change the direction of built objects."
+			dat += "***********************************************************"
 		if(ADV_BUILDMODE)
-			to_chat(user, "\blue ***********************************************************")
-			to_chat(user, "\blue Right Mouse Button on buildmode button = Set object type")
-			to_chat(user, "\blue Left Mouse Button on turf/obj          = Place objects")
-			to_chat(user, "\blue Right Mouse Button                     = Delete objects")
-			to_chat(user, "")
-			to_chat(user, "\blue Use the button in the upper left corner to")
-			to_chat(user, "\blue change the direction of built objects.")
-			to_chat(user, "\blue ***********************************************************")
+			dat += "***********************************************************"
+			dat += "Right Mouse Button on buildmode button = Set object type"
+			dat += "Left Mouse Button on turf/obj          = Place objects"
+			dat += "Right Mouse Button                     = Delete objects"
+			dat += ""
+			dat += "Use the button in the upper left corner to"
+			dat += "change the direction of built objects."
+			dat += "***********************************************************"
 		if(VAR_BUILDMODE)
-			to_chat(user, "\blue ***********************************************************")
-			to_chat(user, "\blue Right Mouse Button on buildmode button = Select var(type) & value")
-			to_chat(user, "\blue Left Mouse Button on turf/obj/mob      = Set var(type) & value")
-			to_chat(user, "\blue Right Mouse Button on turf/obj/mob     = Reset var's value")
-			to_chat(user, "\blue ***********************************************************")
+			dat += "***********************************************************"
+			dat += "Right Mouse Button on buildmode button = Select var(type) & value"
+			dat += "Left Mouse Button on turf/obj/mob      = Set var(type) & value"
+			dat += "Right Mouse Button on turf/obj/mob     = Reset var's value"
+			dat += "***********************************************************"
 		if(THROW_BUILDMODE)
-			to_chat(user, "\blue ***********************************************************")
-			to_chat(user, "\blue Left Mouse Button on turf/obj/mob      = Select")
-			to_chat(user, "\blue Right Mouse Button on turf/obj/mob     = Throw")
-			to_chat(user, "\blue ***********************************************************")
+			dat += "***********************************************************"
+			dat += "Left Mouse Button on turf/obj/mob      = Select"
+			dat += "Right Mouse Button on turf/obj/mob     = Throw"
+			dat += "***********************************************************"
 		if(AREA_BUILDMODE)
-			to_chat(user, "\blue ***********************************************************")
-			to_chat(user, "\blue Left Mouse Button on turf/obj/mob      = Select corner")
-			to_chat(user, "\blue Right Mouse Button on buildmode button = Select generator")
-			to_chat(user, "\blue ***********************************************************")
+			dat += "***********************************************************"
+			dat += "Left Mouse Button on turf/obj/mob      = Select corner"
+			dat += "Right Mouse Button on buildmode button = Select generator"
+			dat += "***********************************************************"
 		if(COPY_BUILDMODE)
-			to_chat(user, "\blue ***********************************************************")
-			to_chat(user, "\blue Left Mouse Button on obj/turf/mob   = Spawn a Copy of selected target")
-			to_chat(user, "\blue Right Mouse Button on obj/mob = Select target to copy")
-			to_chat(user, "\blue ***********************************************************")
+			dat += "***********************************************************"
+			dat += "Left Mouse Button on obj/turf/mob   = Spawn a Copy of selected target"
+			dat += "Right Mouse Button on obj/mob = Select target to copy"
+			dat += "***********************************************************"
+	to_chat(user, "<font color='blue'>[dat.Join("\n")]</font>")
 
 /datum/buildmode/proc/change_settings(mob/user)
 	switch(mode)
@@ -169,7 +172,7 @@
 					objholder = /obj/structure/closet
 					alert("That path is not allowed.")
 			else
-				if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
+				if(ispath(objholder, /mob) && !check_rights(R_DEBUG,0))
 					objholder = /obj/structure/closet
 		if(VAR_BUILDMODE)
 			var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
@@ -192,11 +195,14 @@
 					valueholder = input(user,"Enter variable value:" ,"Value") as turf in world
 		if(AREA_BUILDMODE)
 			var/list/gen_paths = subtypesof(/datum/mapGenerator)
-
-			var/type = input(user,"Select Generator Type","Type") as null|anything in gen_paths
+			var/list/options = list()
+			for(var/path in gen_paths)
+				var/datum/mapGenerator/MP = path
+				options[initial(MP.buildmode_name)] = path
+			var/type = input(user,"Select Generator Type","Type") as null|anything in options
 			if(!type) return
 
-			generator_path = type
+			generator_path = options[type]
 			cornerA = null
 			cornerB = null
 
@@ -222,7 +228,7 @@
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
 	if(M.client)
-		if(istype(M.client.click_intercept,/datum/buildmode))
+		if(istype(M.client.click_intercept, /datum/buildmode))
 			var/datum/buildmode/B = M.client.click_intercept
 			B.quit()
 			log_admin("[key_name(usr)] has left build mode.")
@@ -260,7 +266,7 @@
 				else if(isfloorturf(object))
 					var/turf/T = object
 					T.ChangeTurf(/turf/open/space)
-				else if(istype(object,/turf/closed/wall/r_wall))
+				else if(istype(object, /turf/closed/wall/r_wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/closed/wall)
 				else if(isobj(object))
@@ -289,7 +295,7 @@
 				log_admin("Build Mode: [key_name(user)] built a window at ([object.x],[object.y],[object.z])")
 		if(ADV_BUILDMODE)
 			if(left_click)
-				if(ispath(objholder,/turf))
+				if(ispath(objholder, /turf))
 					var/turf/T = get_turf(object)
 					log_admin("Build Mode: [key_name(user)] modified [T] ([T.x],[T.y],[T.z]) to [objholder]")
 					T.ChangeTurf(objholder)
@@ -340,7 +346,12 @@
 				if(cornerA && cornerB)
 					if(!generator_path)
 						to_chat(user, "<span class='warning'>Select generator type first.</span>")
+						return
 					var/datum/mapGenerator/G = new generator_path
+					if(istype(G, /datum/mapGenerator/repair/reload_station_map))
+						if(GLOB.reloading_map)
+							to_chat(user, "<span class='boldwarning'>You are already reloading an area! Please wait for it to fully finish loading before trying to load another!</span>")
+							return
 					G.defineRegion(cornerA,cornerB,1)
 					G.generate()
 					cornerA = null

@@ -15,7 +15,6 @@
 	var/soundout //soundfile to play after teleportation
 	var/force_teleport = 1 //if false, teleport will use Move() proc (dense objects will prevent teleportation)
 
-
 /datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
 	if(!initTeleport(arglist(args)))
 		return 0
@@ -100,21 +99,7 @@
 
 	var/turf/destturf
 	var/turf/curturf = get_turf(teleatom)
-	if(precision)
-		var/list/posturfs = list()
-		var/center = get_turf(destination)
-		if(!center)
-			center = destination
-		for(var/turf/T in range(precision,center))
-			if(T.is_transition_turf())
-				continue // Avoid picking these.
-			var/area/A = T.loc
-			if(!A.noteleport)
-				posturfs.Add(T)
-
-		destturf = safepick(posturfs)
-	else
-		destturf = get_turf(destination)
+	destturf = get_teleport_turf(get_turf(destination), precision)
 
 	if(!destturf || !curturf || destturf.is_transition_turf())
 		return 0
@@ -124,13 +109,16 @@
 		return 0
 
 	playSpecials(curturf,effectin,soundin)
-
 	if(force_teleport)
 		teleatom.forceMove(destturf)
+		if(ismegafauna(teleatom))
+			message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_COORDJMP(curturf)] to [ADMIN_COORDJMP(destturf)].")
 		playSpecials(destturf,effectout,soundout)
 	else
 		if(teleatom.Move(destturf))
 			playSpecials(destturf,effectout,soundout)
+			if(ismegafauna(teleatom))
+				message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_COORDJMP(curturf)] to [ADMIN_COORDJMP(destturf)].")
 	return 1
 
 /datum/teleport/proc/teleport()
@@ -161,10 +149,10 @@
 
 /datum/teleport/instant/science/setPrecision(aprecision)
 	..()
-	if(istype(teleatom, /obj/item/weapon/storage/backpack/holding))
+	if(istype(teleatom, /obj/item/storage/backpack/holding))
 		precision = rand(1,100)
 
-	var/list/bagholding = teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)
+	var/list/bagholding = teleatom.search_contents_for(/obj/item/storage/backpack/holding)
 	if(bagholding.len)
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(isliving(teleatom))
@@ -174,7 +162,7 @@
 
 // Safe location finder
 
-/proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels, extended_safety_checks = FALSE)
+/proc/find_safe_turf(zlevel = ZLEVEL_STATION_PRIMARY, list/zlevels, extended_safety_checks = FALSE)
 	if(!zlevels)
 		zlevels = list(zlevel)
 	var/cycles = 1000
@@ -218,10 +206,25 @@
 			continue
 
 		if(extended_safety_checks)
-			if(istype(F, /turf/open/floor/plating/lava)) //chasms aren't /floor, and so are pre-filtered
-				var/turf/open/floor/plating/lava/L = F
+			if(istype(F, /turf/open/lava)) //chasms aren't /floor, and so are pre-filtered
+				var/turf/open/lava/L = F
 				if(!L.is_safe())
 					continue
 
 		// DING! You have passed the gauntlet, and are "probably" safe.
 		return F
+
+/proc/get_teleport_turfs(turf/center, precision = 0)
+	if(!precision)
+		return list(center)
+	var/list/posturfs = list()
+	for(var/turf/T in range(precision,center))
+		if(T.is_transition_turf())
+			continue // Avoid picking these.
+		var/area/A = T.loc
+		if(!A.noteleport)
+			posturfs.Add(T)
+	return posturfs
+
+/proc/get_teleport_turf(turf/center, precision = 0)
+	return safepick(get_teleport_turfs(center, precision))

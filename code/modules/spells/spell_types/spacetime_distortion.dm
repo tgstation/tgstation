@@ -62,7 +62,7 @@
 /obj/effect/cross_action
 	name = "cross me"
 	desc = "for crossing"
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/cross_action/spacetime_dist
 	name = "spacetime distortion"
@@ -76,7 +76,7 @@
 /obj/effect/cross_action/spacetime_dist/Initialize(mapload)
 	. = ..()
 	sound = "sound/guitar/[safepick(GLOB.guitar_notes)]"
-	dir = pick(GLOB.cardinal)
+	dir = pick(GLOB.cardinals)
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(linked_dist && walks_left > 0)

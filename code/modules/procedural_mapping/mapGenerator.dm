@@ -17,7 +17,6 @@
 //All
 #define CLUSTER_CHECK_ALL				30 //Don't let anything cluster, like, at all
 
-
 /datum/mapGenerator
 
 	//Map information
@@ -26,8 +25,12 @@
 	//mapGeneratorModule information
 	var/list/modules = list()
 
+	var/buildmode_name = "Undocumented"
+
 /datum/mapGenerator/New()
 	..()
+	if(buildmode_name == "Undocumented")
+		buildmode_name = copytext("[type]", 20)	// / d a t u m / m a p g e n e r a t o r / = 20 characters.
 	initialiseModules()
 
 //Defines the region the map represents, sets map

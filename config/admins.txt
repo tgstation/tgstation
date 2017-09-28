@@ -8,6 +8,8 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 Optimumtact = Host
+NewSta = Game Master
+Expletives = Game Master
 kingofkosmos = Game Master
 MrStonedOne = Game Master
 microscopics = Game Master

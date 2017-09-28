@@ -62,7 +62,7 @@
 
 /datum/ntnet_conversation/proc/change_title(newtitle, datum/computer_file/program/chatclient/client)
 	if(operator != client)
-		return 0 // Not Authorised
+		return FALSE // Not Authorised
 
 	add_status_message("[client.username] has changed channel title from [title] to [newtitle]")
 	title = newtitle

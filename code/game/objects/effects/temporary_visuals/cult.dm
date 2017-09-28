@@ -18,11 +18,13 @@
 	icon_state = "bloodout"
 
 /obj/effect/temp_visual/dir_setting/cult/phase  // The veil shifter teleport
+	icon = 'icons/effects/cult_effects.dmi'
 	name = "phase glow"
 	duration = 7
 	icon_state = "cultin"
 
 /obj/effect/temp_visual/dir_setting/cult/phase/out
+	icon = 'icons/effects/cult_effects.dmi'
 	icon_state = "cultout"
 
 /obj/effect/temp_visual/cult/sac

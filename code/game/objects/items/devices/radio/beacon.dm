@@ -3,6 +3,8 @@
 	desc = "A beacon used by a teleporter."
 	icon_state = "beacon"
 	item_state = "beacon"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/code = "electronic"
 	origin_tech = "bluespace=1"
 	dog_fashion = null

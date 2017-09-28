@@ -5,7 +5,7 @@
 	icon_state = "pointer"
 	item_state = "pen"
 	var/pointer_icon_state
-	flags = CONDUCT | NOBLUDGEON
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 	w_class = WEIGHT_CLASS_SMALL
@@ -15,8 +15,8 @@
 	var/max_energy = 5
 	var/effectchance = 33
 	var/recharging = 0
-	var/recharge_locked = 0
-	var/obj/item/weapon/stock_parts/micro_laser/diode //used for upgrading!
+	var/recharge_locked = FALSE
+	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
 
 
 /obj/item/device/laser_pointer/red
@@ -36,10 +36,10 @@
 
 /obj/item/device/laser_pointer/upgraded/New()
 	..()
-	diode = new /obj/item/weapon/stock_parts/micro_laser/ultra
+	diode = new /obj/item/stock_parts/micro_laser/ultra
 
 /obj/item/device/laser_pointer/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
+	if(istype(W, /obj/item/stock_parts/micro_laser))
 		if(!diode)
 			if(!user.transferItemToLoc(W, src))
 				return
@@ -48,7 +48,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a diode installed.</span>")
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/screwdriver))
 		if(diode)
 			to_chat(user, "<span class='notice'>You remove the [diode.name] from \the [src].</span>")
 			diode.loc = get_turf(src.loc)
@@ -108,7 +108,7 @@
 		//20% chance to actually hit the sensors
 		if(prob(effectchance * diode.rating))
 			S.flash_act(affect_silicon = 1)
-			S.Weaken(rand(5,10))
+			S.Knockdown(rand(100,200))
 			to_chat(S, "<span class='danger'>Your sensors were overloaded by a laser!</span>")
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
 			add_logs(user, S, "shone in the sensors", src)
@@ -119,7 +119,7 @@
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/C = target
 		if(prob(effectchance * diode.rating))
-			C.emp_act(1)
+			C.emp_act(EMP_HEAVY)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
 			add_logs(user, C, "EMPed", src)
 		else
@@ -150,7 +150,7 @@
 			START_PROCESSING(SSobj, src)
 		if(energy <= 0)
 			to_chat(user, "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>")
-			recharge_locked = 1
+			recharge_locked = TRUE
 
 	flick_overlay_view(I, targloc, 10)
 	icon_state = "pointer"
@@ -161,5 +161,5 @@
 		if(energy >= max_energy)
 			energy = max_energy
 			recharging = 0
-			recharge_locked = 0
+			recharge_locked = FALSE
 			..()

@@ -25,7 +25,7 @@
 	if(job_engsec_high)
 		switch(job_engsec_high)
 			if(AI_JF)
-				preview_icon = icon('icons/mob/AI.dmi', "AI", SOUTH)
+				preview_icon = icon('icons/mob/ai.dmi', "AI", SOUTH)
 				preview_icon.Scale(64, 64)
 				return
 			if(CYBORG)
@@ -34,7 +34,7 @@
 				return
 
 	// Set up the dummy for its photoshoot
-	var/mob/living/carbon/human/dummy/mannequin = new()
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 	copy_to(mannequin)
 
 	// Determine what job is marked as 'High' priority, and dress them up as such.
@@ -82,4 +82,4 @@
 	CHECK_TICK
 	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
 	CHECK_TICK
-	qdel(mannequin)
+	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)

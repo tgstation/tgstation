@@ -3,8 +3,8 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	var/canmove = 1
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	invisibility = 60
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -30,8 +30,8 @@
 			// literally only an option for carbons though
 			to_chat(C, "<span class='warning'>You may not hold items while blood crawling!</span>")
 			return 0
-		var/obj/item/weapon/bloodcrawl/B1 = new(C)
-		var/obj/item/weapon/bloodcrawl/B2 = new(C)
+		var/obj/item/bloodcrawl/B1 = new(C)
+		var/obj/item/bloodcrawl/B2 = new(C)
 		B1.icon_state = "bloodhand_left"
 		B2.icon_state = "bloodhand_right"
 		C.put_in_hands(B1)
@@ -95,7 +95,7 @@
 		var/mob/living/simple_animal/slaughter/SD = src
 		sound = SD.feast_sound
 	else
-		sound = 'sound/magic/Demon_consume.ogg'
+		sound = 'sound/magic/demon_consume.ogg'
 
 	for(var/i in 1 to 3)
 		playsound(get_turf(src),sound, 100, 1)
@@ -134,11 +134,11 @@
 /mob/living/proc/bloodcrawl_swallow(var/mob/living/victim)
 	qdel(victim)
 
-/obj/item/weapon/bloodcrawl
+/obj/item/bloodcrawl
 	name = "blood crawl"
 	desc = "You are unable to hold anything while in this form."
 	icon = 'icons/effects/blood.dmi'
-	flags = NODROP|ABSTRACT
+	flags_1 = NODROP_1|ABSTRACT_1
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
@@ -162,12 +162,12 @@
 		return
 	src.loc = B.loc
 	src.client.eye = src
-	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B>")
+	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B></span>")
 	exit_blood_effect(B)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
-		for(var/obj/item/weapon/bloodcrawl/BC in C)
-			BC.flags = null
+		for(var/obj/item/bloodcrawl/BC in C)
+			BC.flags_1 = null
 			qdel(BC)
 	qdel(src.holder)
 	src.holder = null

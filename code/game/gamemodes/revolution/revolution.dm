@@ -14,6 +14,7 @@
 	name = "revolution"
 	config_tag = "revolution"
 	antag_flag = ROLE_REV
+	false_report_weight = 10
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 1
@@ -70,7 +71,7 @@
 
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.
-		if(istype(rev_mind.current,/mob/dead/new_player))
+		if(isnewplayer(rev_mind.current))
 			head_revolutionaries -= rev_mind
 			var/list/newcandidates = shuffle(antag_candidates)
 			if(newcandidates.len == 0)
@@ -79,7 +80,7 @@
 				var/datum/mind/lenin = M
 				antag_candidates -= lenin
 				newcandidates -= lenin
-				if(istype(lenin.current,/mob/dead/new_player)) //We don't want to make the same mistake again
+				if(isnewplayer(lenin.current)) //We don't want to make the same mistake again
 					continue
 				else
 					var/mob/Nm = lenin.current
@@ -269,7 +270,7 @@
 		var/mob/living/carbon/carbon_mob = rev_mind.current
 		carbon_mob.silent = max(carbon_mob.silent, 5)
 		carbon_mob.flash_act(1, 1)
-	rev_mind.current.Stun(5)
+	rev_mind.current.Stun(100)
 	to_chat(rev_mind.current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
 	rev_mind.current.log_message("<font color='red'>Has been converted to the revolution!</font>", INDIVIDUAL_ATTACK_LOG)
 	rev_mind.special_role = "Revolutionary"
@@ -297,7 +298,7 @@
 			message_admins("[ADMIN_LOOKUPFLW(rev_mind.current)] has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
 
 		else
-			rev_mind.current.Paralyse(5)
+			rev_mind.current.Unconscious(100)
 			rev_mind.current.visible_message("[rev_mind.current] looks like they just remembered their real allegiance!",\
 				"<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
 		update_rev_icons_removed(rev_mind)
@@ -335,7 +336,7 @@
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
-		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != 2) && T && (T.z == ZLEVEL_STATION))
+		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != DEAD) && T && (T.z in GLOB.station_z_levels))
 			if(ishuman(rev_mind.current))
 				return 0
 	return 1
@@ -345,13 +346,13 @@
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
-		SSblackbox.set_details("round_end_result","win - heads killed")
+		SSticker.mode_result = "win - heads killed"
 		to_chat(world, "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>")
 
 		SSticker.news_report = REVS_WIN
 
 	else if(finished == 2)
-		SSblackbox.set_details("round_end_result","loss - rev heads killed")
+		SSticker.mode_result = "loss - rev heads killed"
 		to_chat(world, "<span class='redtext'>The heads of staff managed to stop the revolution!</span>")
 
 		SSticker.news_report = REVS_LOSE
@@ -360,7 +361,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
 	var/list/targets = list()
-	if(head_revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
+	if(head_revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution))
 		var/num_revs = 0
 		var/num_survivors = 0
 		for(var/mob/living/carbon/survivor in GLOB.living_mob_list)
@@ -377,14 +378,14 @@
 		text += "<br>"
 		to_chat(world, text)
 
-	if(revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution))
+	if(revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution))
 		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
 		for(var/datum/mind/rev in revolutionaries)
 			text += printplayer(rev, 1)
 		text += "<br>"
 		to_chat(world, text)
 
-	if( head_revolutionaries.len || revolutionaries.len || istype(SSticker.mode,/datum/game_mode/revolution) )
+	if( head_revolutionaries.len || revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution) )
 		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
 		var/list/heads = get_all_heads()
 		for(var/datum/mind/head in heads)
@@ -394,3 +395,8 @@
 			text += printplayer(head, 1)
 		text += "<br>"
 		to_chat(world, text)
+
+/datum/game_mode/revolution/generate_report()
+	return "Employee unrest has spiked in recent weeks, with several attempted mutinies on heads of staff. Some crew have been observed using flashbulb devices to blind their colleagues, \
+		who then follow their orders without question and work towards dethroning departmental leaders. Watch for behavior such as this with caution. If the crew attempts a mutiny, you and \
+		your heads of staff are fully authorized to execute them using lethal weaponry - they will be later cloned and interrogated at Central Command."

@@ -141,8 +141,8 @@
 	afterDraw()
 
 /obj/effect/ebeam
-	mouse_opacity = 0
-	anchored = 1
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
 	var/datum/beam/owner
 
 /obj/effect/ebeam/Destroy()

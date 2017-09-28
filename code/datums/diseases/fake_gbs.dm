@@ -6,7 +6,7 @@
 	cure_text = "Synaptizine & Sulfur"
 	cures = list("synaptizine","sulfur")
 	agent = "Gravitokinetic Bipotential SADS-"
-	viable_mobtypes = list(/mob/living/carbon/human,/mob/living/carbon/monkey)
+	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	desc = "If left untreated death will occur."
 	severity = BIOHAZARD
 

@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
 	flags = SS_NO_INIT|SS_NO_FIRE
-
+	init_order = INIT_ORDER_DBCORE
 	var/const/FAILED_DB_CONNECTION_CUTOFF = 5
 
 	var/const/Default_Cursor = 0
@@ -23,12 +23,18 @@ SUBSYSTEM_DEF(dbcore)
 	var/failed_connections = 0
 
 /datum/controller/subsystem/dbcore/PreInit()
-	_db_con = _dm_db_new_con()
+	if(!_db_con)
+		_db_con = _dm_db_new_con()
 
 /datum/controller/subsystem/dbcore/Recover()
 	_db_con = SSdbcore._db_con
 
 /datum/controller/subsystem/dbcore/Shutdown()
+	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
+	if(SSdbcore.Connect())
+		var/sql_station_name = sanitizeSQL(station_name())
+		var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[SSticker.mode_result]', end_state = '[SSticker.end_state]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
+		query_round_end.Execute()
 	if(IsConnected())
 		Disconnect()
 
@@ -47,7 +53,7 @@ SUBSYSTEM_DEF(dbcore)
 
 	if(failed_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
 		return FALSE
-	
+
 	if(!config.sql_enabled)
 		return FALSE
 
@@ -170,16 +176,16 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/_db_query
 
 /datum/DBQuery/New(sql_query, datum/controller/subsystem/dbcore/connection_handler, cursor_handler)
-	if(sql_query) 
+	if(sql_query)
 		sql = sql_query
-	if(connection_handler) 
+	if(connection_handler)
 		db_connection = connection_handler
-	if(cursor_handler) 
+	if(cursor_handler)
 		default_cursor = cursor_handler
 	item = list()
 	_db_query = _dm_db_new_query()
 
-/datum/DBQuery/proc/Connect(datum/controller/subsystem/dbcore/connection_handler) 
+/datum/DBQuery/proc/Connect(datum/controller/subsystem/dbcore/connection_handler)
 	db_connection = connection_handler
 
 /datum/DBQuery/proc/warn_execute()
@@ -193,16 +199,16 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	if(!. && log_error)
 		log_sql("[ErrorMsg()] | Query used: [sql]")
 
-/datum/DBQuery/proc/NextRow() 
+/datum/DBQuery/proc/NextRow()
 	return _dm_db_next_row(_db_query,item,conversions)
 
 /datum/DBQuery/proc/RowsAffected()
 	return _dm_db_rows_affected(_db_query)
 
-/datum/DBQuery/proc/RowCount() 
+/datum/DBQuery/proc/RowCount()
 	return _dm_db_row_count(_db_query)
 
-/datum/DBQuery/proc/ErrorMsg() 
+/datum/DBQuery/proc/ErrorMsg()
 	return _dm_db_error_msg(_db_query)
 
 /datum/DBQuery/proc/Columns()
@@ -231,11 +237,11 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	return db_connection.Quote(str)
 
 /datum/DBQuery/proc/SetConversion(column,conversion)
-	if(istext(column)) 
+	if(istext(column))
 		column = columns.Find(column)
-	if(!conversions) 
+	if(!conversions)
 		conversions = list(column)
-	else if(conversions.len < column) 
+	else if(conversions.len < column)
 		conversions.len = column
 	conversions[column] = conversion
 

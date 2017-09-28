@@ -4,7 +4,7 @@
 	var/intercepttext = ""
 	switch(report)
 		if(1)
-			intercepttext += "<FONT size = 3><b>NanoTrasen Update</b>: Biohazard Alert.</FONT><HR>"
+			intercepttext += "<FONT size = 3><b>Nanotrasen Update</b>: Biohazard Alert.</FONT><HR>"
 			intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>"
 			intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. The origin of the biohazard is unknown.<BR>"
 			intercepttext += "<b>Biohazard Response Procedure 5-6</b> has been issued for [station_name()].<BR>"
@@ -14,15 +14,15 @@
 			intercepttext += " 3. Avoid damage to the capital infrastructure of the station.<BR>"
 			intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, <b>Biohazard Response Procedure 5-12</b> may be issued.<BR>"
 			print_command_report(text=intercepttext,title="Level 5-6 Biohazard Response Procedures",announce=FALSE)
-			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
+			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
 		if(2)
 			var/nukecode = random_nukecode()
 			for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 				if(bomb && bomb.r_code)
-					if(bomb.z == ZLEVEL_STATION)
+					if(bomb.z in GLOB.station_z_levels)
 						bomb.r_code = nukecode
 
-			intercepttext += "<FONT size = 3><b>NanoTrasen Update</b>: Biohazard Alert.</FONT><HR>"
+			intercepttext += "<FONT size = 3><b>Nanotrasen Update</b>: Biohazard Alert.</FONT><HR>"
 			intercepttext += "Reports indicate that the biohazard has grown out of control and will soon reach critical mass.<BR>"
 			intercepttext += "<b>Biohazard Response Procedure 5-12</b> has been issued for [station_name()].<BR>"
 			intercepttext += "Orders for all [station_name()] personnel are as follows:<BR>"
@@ -91,7 +91,7 @@
 	if(count_territories)
 		var/list/valid_territories = list()
 		for(var/area/A in world) //First, collect all area types on the station zlevel
-			if(A.z == ZLEVEL_STATION)
+			if(A.z in GLOB.station_z_levels)
 				if(!(A.type in valid_territories) && A.valid_territory)
 					valid_territories |= A.type
 		if(valid_territories.len)
