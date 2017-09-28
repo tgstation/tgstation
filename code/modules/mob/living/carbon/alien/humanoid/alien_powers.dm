@@ -40,7 +40,8 @@ Doesn't work on other aliens/AI.*/
 	return 1
 
 /obj/effect/proc_holder/alien/add_to_panel(mob/living/user)
-	user.statpanel("[panel]", plasma_cost > 0 ? "([plasma_cost])":"", src)
+	if(user.client)
+		user.client.statpanel("[panel]", plasma_cost > 0 ? "([plasma_cost])":"", src)
 
 /obj/effect/proc_holder/alien/proc/cost_check(check_turf=0,mob/living/carbon/user,silent = 0)
 	if(user.stat)

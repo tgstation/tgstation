@@ -29,7 +29,8 @@
 	return TRUE
 
 /obj/effect/proc_holder/proc/add_to_panel(mob/living/user)
-	user.statpanel("[panel]", "", src)
+	if(user.client)
+		user.client.statpanel("[panel]", "", src)
 
 GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
 
