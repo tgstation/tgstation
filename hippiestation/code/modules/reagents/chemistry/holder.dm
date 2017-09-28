@@ -35,14 +35,14 @@
 					if(chem_temp < R.boiling_point)
 						R.reagent_state = LIQUID
 						if(!is_type_in_typecache(cached_my_atom, holder_blacklist_typecache))
-							for(var/mob/M in viewers(4, T))
+							for(var/mob/M in viewers(3, T))
 								to_chat(M, ("<span class='notice'>[icon2html(cached_my_atom, viewers(cached_my_atom))] The vapour condenses into a liquid!</span>"))
 
 				if(SOLID)
 					if(chem_temp > R.melting_point)
 						R.reagent_state = LIQUID
 						if(!is_type_in_typecache(cached_my_atom, holder_blacklist_typecache))
-							for(var/mob/M in viewers(4, T))
+							for(var/mob/M in viewers(3, T))
 								to_chat(M, ("<span class='notice'>[icon2html(cached_my_atom, viewers(cached_my_atom))] The solid chemicals melt into a liquid!</span>"))
 
 				if(LIQUID)
@@ -55,7 +55,7 @@
 					else if(chem_temp < R.melting_point)
 						R.reagent_state = SOLID
 						if(!is_type_in_typecache(cached_my_atom, holder_blacklist_typecache))
-							for(var/mob/M in viewers(4, T))
+							for(var/mob/M in viewers(3, T))
 								to_chat(M, ("<span class='notice'>[icon2html(cached_my_atom, viewers(cached_my_atom))] The solution solidifies!</span>"))
 
 			for(var/reaction in cached_reactions[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id

@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(chempiles)
 	if(isliving(mover))
 		var/mob/living/M = mover
 		if(reagents)
-			reagents.trans_to(M, rand(1,5)* M.get_permeability_protection())
+			reagents.trans_to(M, 2 * M.get_permeability_protection())
 			CHECK_TICK
 
 /obj/effect/decal/cleanable/chempile/fire_act(exposed_temperature, exposed_volume)
