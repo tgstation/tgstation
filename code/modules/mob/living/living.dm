@@ -108,6 +108,12 @@
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
+	//Also diseases
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(D.spread_flags & CONTACT_SKIN)
+			M.ContractDisease(D)
+
 	if(now_pushing)
 		return 1
 
