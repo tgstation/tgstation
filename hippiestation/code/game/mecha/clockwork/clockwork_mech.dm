@@ -68,9 +68,9 @@
 	else if(cell.charge < cell.maxcharge)
 		for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
 			var/delta = min(recharge_rate, cell.maxcharge - cell.charge)
-			if (!T.power_charge <= delta)
+			if (!T.get_clockwork_power() <= delta)
 				cell.charge += delta
-				T.power_charge -= delta
+				T.adjust_clockwork_power(-delta)
 			CHECK_TICK
 	if(obj_integrity < max_integrity)
 		var/turf/T = get_turf(src)
