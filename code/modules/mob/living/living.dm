@@ -970,9 +970,6 @@
 		if(client)
 			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
-<<<<<<< HEAD
-	return canmove
-=======
 	return canmove
 
 /mob/living/proc/AddAbility(obj/effect/proc_holder/A)
@@ -990,4 +987,3 @@
 /mob/living/proc/add_abilities_to_panel()
 	for(var/obj/effect/proc_holder/A in abilities)
 		statpanel("[A.panel]",A.get_panel_text(),A)
->>>>>>> 152c8901db... Adds action buttons for spiders, refactors action code, nurse spiders can set a hereditary directive for their children to follow (#30572)
