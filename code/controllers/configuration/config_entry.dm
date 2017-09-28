@@ -15,6 +15,8 @@
 	var/protection = NONE
 	var/abstract_type = /datum/config_entry	//do not instantiate if type matches this
 
+	var/dupes_allowed = FALSE
+
 /datum/config_entry/New()
 	if(!resident_file)
 		CRASH("Config entry [type] has no resident_file set")
@@ -26,12 +28,9 @@
 		default = L.Copy()
 	else
 		default = value
-	config.entries[name] = src
-	config.entries_by_type[type] = src
 
 /datum/config_entry/Destroy()
-	config.entries -= name
-	config.entries_by_type -= type
+	config.RemoveEntry(src)
 	return ..()
 
 /datum/config_entry/can_vv_get(var_name)
@@ -40,7 +39,7 @@
 		. &= !(protection & CONFIG_ENTRY_HIDDEN)
 
 /datum/config_entry/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("name", "default", "resident_file", "protection", "abstract_type", "modified")
+	var/static/list/banned_edits = list("name", "default", "resident_file", "protection", "abstract_type", "modified", "dupes_allowed")
 	if(var_name == "value")
 		if(protection & CONFIG_ENTRY_LOCKED)
 			return FALSE
@@ -61,20 +60,22 @@
 	var/key_name = null
 	var/key_value = null
 
-	if(key_pos)
+	if(key_pos || list_mode == LIST_MODE_FLAG)
 		key_name = lowertext(copytext(str_val, 1, key_pos))
 		key_value = copytext(str_val, key_pos + 1)
 		var/temp
+		var/continue_check
 		switch(list_mode)
 			if(LIST_MODE_FLAG)
 				temp = TRUE
+				continue_check = TRUE
 			if(LIST_MODE_NUM)
 				temp = text2num(key_value)
+				continue_check = !isnull(temp)
 			if(LIST_MODE_TEXT)
 				temp = key_value
-		if((list_mode == LIST_MODE_NUM ? !isnull(temp) : temp) && ValidateKeyName(key_name))
-			if(!(key_name in value))
-				modified = FALSE
+				continue_check = temp
+		if(continue_check && ValidateKeyName(key_name))
 			value[key_name] = temp
 			return TRUE
 	return FALSE
@@ -88,7 +89,7 @@
 	var/auto_trim = TRUE
 
 /datum/config_entry/string/vv_edit_var(var_name, var_value)
-	return var_name == "auto_trim" ? FALSE : ..()
+	return var_name != "auto_trim" && ..()
 
 /datum/config_entry/string/ValidateAndSet(str_val)
 	value = auto_trim ? trim(str_val) : str_val
@@ -106,7 +107,7 @@
 	if(!isnull(temp))
 		value = Clamp(integer ? round(temp) : temp, min_val, max_val)
 		if(value != temp && !var_edited)
-			WRITE_FILE(GLOB.config_error_log, "Changing [name] from [temp] to [value]!")
+			log_config("Changing [name] from [temp] to [value]!")
 		return TRUE
 	return FALSE
 
@@ -141,8 +142,9 @@
 	return TRUE
 
 /datum/config_entry/keyed_flag_list
-	abstract_type = /datum/config_entry/keyed_number_list
+	abstract_type = /datum/config_entry/keyed_flag_list
 	value = list()
+	dupes_allowed = TRUE
 
 /datum/config_entry/keyed_flag_list/ValidateAndSet(str_val)
 	return ValidateKeyedList(str_val, LIST_MODE_FLAG, " ")
@@ -150,15 +152,23 @@
 /datum/config_entry/keyed_number_list
 	abstract_type = /datum/config_entry/keyed_number_list
 	value = list()
+	dupes_allowed = TRUE
 	var/splitter = " "
+
+/datum/config_entry/keyed_number_list/vv_edit_var(var_name, var_value)
+	return var_name != "splitter" && ..()
 
 /datum/config_entry/keyed_number_list/ValidateAndSet(str_val)
 	return ValidateKeyedList(str_val, LIST_MODE_NUM, splitter)
 
 /datum/config_entry/keyed_string_list
-	abstract_type = /datum/config_entry/keyed_number_list
+	abstract_type = /datum/config_entry/keyed_string_list
 	value = list()
+	dupes_allowed = TRUE
 	var/splitter = " "
+
+/datum/config_entry/keyed_string_list/vv_edit_var(var_name, var_value)
+	return var_name != "splitter" && ..()
 
 /datum/config_entry/keyed_string_list/ValidateAndSet(str_val)
 	return ValidateKeyedList(str_val, LIST_MODE_TEXT, splitter)

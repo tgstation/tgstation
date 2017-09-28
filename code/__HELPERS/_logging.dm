@@ -102,6 +102,10 @@
 /proc/log_sql(text)
 	WRITE_FILE(GLOB.sql_error_log, "\[[time_stamp()]]SQL: [text]")
 
+/proc/log_config(text)
+	WRITE_FILE(GLOB.config_error_log, text)
+	SEND_TEXT(world.log, text)
+
 //This replaces world.log so it displays both in DD and the file
 /proc/log_world(text)
 	WRITE_FILE(GLOB.world_runtime_log, text)

@@ -184,9 +184,9 @@ CONFIG_DEF(flag/ooc_during_round)
 
 CONFIG_DEF(flag/emojis)
 
-CONFIG_DEF(number/run_speed)	//Used for modifying movement speed for mobs.
+CONFIG_DEF(number/run_delay)	//Used for modifying movement speed for mobs.
 
-CONFIG_DEF(number/walk_speed)
+CONFIG_DEF(number/walk_delay)
 
 	
 CONFIG_DEF(number/human_delay)	//Mob specific modifiers. NOTE: These will affect different mob types in different ways

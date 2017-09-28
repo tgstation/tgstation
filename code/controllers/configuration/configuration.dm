@@ -19,12 +19,23 @@ GLOBAL_PROTECT(config_dir)
 	var/list/mode_false_report_weight
 
 /datum/controller/configuration/New()
+	config = src
 	var/list/config_files = InitEntries()
 	LoadModes()
 	for(var/I in config_files)
 		LoadEntries(I)
 	if(Get(/datum/config_entry/flag/maprotation))
 		loadmaplist(CONFIG_MAPS_FILE)
+
+/datum/controller/configuration/Destroy()
+	entries_by_type.Cut()
+	QDEL_LIST_ASSOC_VAL(entries)
+	QDEL_LIST_ASSOC_VAL(maplist)
+	QDEL_NULL(defaultmap)
+
+	config = null
+
+	return ..()
 
 /datum/controller/configuration/proc/InitEntries()
 	var/list/_entries = list()
@@ -36,7 +47,6 @@ GLOBAL_PROTECT(config_dir)
 
 	for(var/I in typesof(/datum/config_entry))	//typesof is faster in this case
 		var/datum/config_entry/E = I
-		.[initial(E.resident_file)] = TRUE
 		if(initial(E.abstract_type) == I)
 			continue
 		E = new I
@@ -44,13 +54,18 @@ GLOBAL_PROTECT(config_dir)
 		var/esname = E.name
 		var/datum/config_entry/test = _entries[esname]
 		if(test)
-			log_world("Error: [test.type] has the same name as [E.type]: [esname]! Not initializing [E.type]!")
+			log_config("Error: [test.type] has the same name as [E.type]: [esname]! Not initializing [E.type]!")
 			qdel(E)
 			continue
 		_entries[esname] = E
+		.[E.resident_file] = TRUE
+
+/datum/controller/configuration/proc/RemoveEntry(datum/config_entry/CE)
+	entries -= CE.name
+	entries_by_type -= CE.type
 
 /datum/controller/configuration/proc/LoadEntries(filename)
-	log_world("Loading config file [filename]...")
+	log_config("Loading config file [filename]...")
 	var/list/lines = world.file2list("[GLOB.config_dir][filename]")
 	var/list/_entries = entries
 	for(var/L in lines)
@@ -75,18 +90,18 @@ GLOBAL_PROTECT(config_dir)
 		
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
-			log_world("Unknown setting in configuration: '[entry]'")
+			log_config("Unknown setting in configuration: '[entry]'")
 			continue
 		
 		if(filename != E.resident_file)
-			log_world("Found [entry] in [filename] when it should have been in [E.resident_file]! Ignoring.")
+			log_config("Found [entry] in [filename] when it should have been in [E.resident_file]! Ignoring.")
 			continue
 
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)
-			log_world("Failed to validate setting for [entry]")
-		else if(E.modified)
-			log_world("Duplicate setting for [entry] detected! Using latest.")
+			log_config("Failed to validate setting \"[value]\" for [entry]")
+		else if(E.modified && !E.dupes_allowed)
+			log_config("Duplicate setting for [entry] ([value]) detected! Using latest.")
 		
 		if(validated)
 			E.modified = TRUE
@@ -95,7 +110,7 @@ GLOBAL_PROTECT(config_dir)
 	return (var_name != "entries_by_type" || !hiding_entries_by_type) && ..()
 
 /datum/controller/configuration/vv_edit_var(var_name, var_value)
-	return var_name != "entries_by_type" && ..()
+	return !(var_name in list("entries_by_type", "entries")) && ..()
 
 /datum/controller/configuration/stat_entry()
 	if(!statclick)
@@ -182,7 +197,7 @@ GLOBAL_PROTECT(config_dir)
 			if ("map")
 				currentmap = new ("_maps/[data].json")
 				if(currentmap.defaulted)
-					log_world("Failed to load map config for [data]!")
+					log_config("Failed to load map config for [data]!")
 			if ("minplayers","minplayer")
 				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")

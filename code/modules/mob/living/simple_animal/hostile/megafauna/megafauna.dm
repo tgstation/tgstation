@@ -159,12 +159,9 @@
 		return
 	if(MedalsAvailable())
 		var/list/oldscore = GetScore(score,player,1)
-
 		if(increment)
 			if(!oldscore[score])
 				oldscore[score] = 1
-			else
-				oldscore[score] = (text2num(oldscore[score]) + 1)
 			else
 				oldscore[score] = (text2num(oldscore[score]) + 1)
 		else

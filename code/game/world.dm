@@ -12,7 +12,7 @@ GLOBAL_PROTECT(security_mode)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	config = new
+	new /datum/controller/configuration
 
 	CheckSchemaVersion()
 	SetRoundID()
