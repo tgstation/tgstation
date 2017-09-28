@@ -277,7 +277,7 @@
 		return "Error: Ticket could not be found"
 
 	var/static/stealthkey
-	var/adminname = config.showircname ? irc_tagged : "Administrator"
+	var/adminname = CONFIG_GET(flag/showircname) ? irc_tagged : "Administrator"
 
 	if(!C)
 		return "Error: No client"

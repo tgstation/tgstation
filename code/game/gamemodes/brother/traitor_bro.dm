@@ -17,7 +17,7 @@
 /datum/objective_team/brother_team/proc/forge_brother_objectives()
 	objectives = list()
 	var/is_hijacker = prob(10)
-	for(var/i = 1 to max(1, config.brother_objectives_amount + (members.len > 2) - is_hijacker))
+	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (members.len > 2) - is_hijacker))
 		forge_single_objective()
 	if(is_hijacker)
 		if(!locate(/datum/objective/hijack) in objectives)

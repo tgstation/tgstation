@@ -1178,8 +1178,9 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
 				to_chat(M, "<span class='danger'>This is a permanent ban.</span>")
-				if(config.banappeals)
-					to_chat(M, "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>")
+				var/bran = CONFIG_GET(string/banappeals)
+				if(bran)
+					to_chat(M, "<span class='danger'>To try to resolve this matter head to [bran]</span>")
 				else
 					to_chat(M, "<span class='danger'>No ban appeals URL has been set.</span>")
 				if(!DB_ban_record(BANTYPE_PERMA, M, -1, reason))

@@ -75,7 +75,7 @@
 	if(!visualsOnly && announce)
 		announce(H)
 
-	if(config.enforce_human_authority && (title in GLOB.command_positions))
+	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
 		H.dna.features["tail_human"] = "None"
 		H.dna.features["ears"] = "None"
 		H.regenerate_icons()
@@ -86,7 +86,7 @@
 
 	. = list()
 
-	if(config.jobs_have_minimal_access)
+	if(CONFIG_GET(flag/jobs_have_minimal_access))
 		. = src.minimal_access.Copy()
 	else
 		. = src.access.Copy()
@@ -109,7 +109,7 @@
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
 		return 0
-	if(!config.use_age_restriction_for_jobs)
+	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
 		return 0
 	if(!isnum(C.player_age))
 		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced

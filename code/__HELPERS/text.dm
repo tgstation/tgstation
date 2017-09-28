@@ -469,7 +469,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 //in the json file and have it be reflected in the in game item/mob it came from.
 //(That's what things like savefiles are for) Note that this list is not shuffled.
 /proc/twitterize(list/proposed, filename, cullshort = 1, storemax = 1000)
-	if(!islist(proposed) || !filename || !config.log_twitter)
+	if(!islist(proposed) || !filename || !CONFIG_GET(flag/log_twitter))
 		return
 
 	//Regular expressions are, as usual, absolute magic

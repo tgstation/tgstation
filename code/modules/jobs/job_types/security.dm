@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	W.access |= dep_access
 
 	var/teleport = 0
-	if(!config.sec_start_brig)
+	if(!CONFIG_GET(flag/sec_start_brig))
 		if(destination || spawn_point)
 			teleport = 1
 	if(teleport)

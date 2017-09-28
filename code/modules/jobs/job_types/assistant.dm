@@ -23,9 +23,10 @@ Assistant
 		return ..()
 
 /datum/job/assistant/config_check()
-	if(config && !(config.assistant_cap == 0))
-		total_positions = config.assistant_cap
-		spawn_positions = config.assistant_cap
+	var/ac = CONFIG_GET(number/assistant_cap)
+	if(ac != 0)
+		total_positions = ac
+		spawn_positions = ac
 		return 1
 	return 0
 
