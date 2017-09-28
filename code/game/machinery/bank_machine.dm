@@ -26,8 +26,8 @@
 		var/obj/item/stack/spacecash/C = I
 		value = C.value * C.amount
 	if(value)
-		SSshuttle.points += value
-		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [SSshuttle.points] credits.</span>")
+		SSeconomy.cargo.balance += value
+		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [SSeconomy.cargo.balance] credits.</span>")
 		qdel(I)
 		return
 	return ..()
@@ -35,17 +35,18 @@
 
 /obj/machinery/computer/bank_machine/process()
 	..()
+	var/datum/credit/C = SSeconomy.getspecial(SPECIAL_CARGO)
 	if(siphoning)
 		if (stat & (BROKEN|NOPOWER))
 			say("Insufficient power. Halting siphon.")
 			siphoning =	FALSE
-		if(SSshuttle.points < 200)
+		if(C.balance < 200)
 			say("Station funds depleted. Halting siphon.")
 			siphoning = FALSE
 		else
 			new /obj/item/stack/spacecash/c200(get_turf(src)) // will autostack
 			playsound(src.loc, 'sound/items/poster_being_created.ogg', 100, 1)
-			SSshuttle.points -= 200
+			C.balance -= 200
 			if(next_warning < world.time && prob(15))
 				var/area/A = get_area(loc)
 				var/message = "Unauthorized credit withdrawal underway in [A.map_name]!!"
@@ -59,8 +60,9 @@
 	if(..())
 		return
 	src.add_fingerprint(usr)
+	var/datum/credit/C = SSeconomy.getspecial(SPECIAL_CARGO)
 	var/dat = "[world.name] secure vault. Authorized personnel only.<br>"
-	dat += "Current Balance: [SSshuttle.points] credits.<br>"
+	dat += "Current Balance: [C.balance] credits.<br>"
 	if(!siphoning)
 		dat += "<A href='?src=\ref[src];siphon=1'>Siphon Credits</A><br>"
 	else
