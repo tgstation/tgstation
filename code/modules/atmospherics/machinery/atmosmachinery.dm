@@ -47,6 +47,7 @@ Pipelines + Other Objects -> Pipe network
 	if(process)
 		SSair.atmos_machinery += src
 	SetInitDirections()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION) //This would be a bad idea
 
 /obj/machinery/atmospherics/Destroy()
 	for(DEVICE_TYPE_LOOP)

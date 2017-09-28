@@ -41,6 +41,8 @@
 /datum/component/radioactive/InheritComponent(datum/component/C, i_am_original)
 	if(!i_am_original)
 		return ..()
+	if(!hl3_release_date) // Permanently radioactive things don't get to grow stronger
+		return ..()
 	var/datum/component/radioactive/other = C
 	strength = max(strength, other.strength)
 	return ..()
@@ -63,18 +65,3 @@
 /datum/component/radioactive/proc/rad_attack(atom/movable/target, mob/living/user)
 	radiation_pulse(get_turf(target), strength/20)
 	target.rad_act(strength/2)
-
-/proc/radiation_pulse(turf/epicenter, intensity, range_modifier, log=0, can_contaminate=TRUE)
-	for(var/dir in GLOB.cardinals)
-		new /datum/radiation_wave(epicenter, dir, intensity, range_modifier, can_contaminate)
-
-	var/list/things = epicenter.GetAllContents() //copypasta because I don't want to put special code in waves to handle their origin
-	for(var/k in 1 to things.len)
-		var/atom/thing = things[k]
-		if(!thing)
-			continue
-		thing.rad_act(intensity, TRUE)
-
-	if(log)
-		log_game("Radiation pulse with intensity:[intensity] and range modifier:[range_modifier] in area [epicenter.loc.name] ")
-	return TRUE

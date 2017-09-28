@@ -95,6 +95,7 @@
 #include "code\__HELPERS\names.dm"
 #include "code\__HELPERS\priority_announce.dm"
 #include "code\__HELPERS\pronouns.dm"
+#include "code\__HELPERS\radiation.dm"
 #include "code\__HELPERS\radio.dm"
 #include "code\__HELPERS\sanitize_values.dm"
 #include "code\__HELPERS\shell.dm"

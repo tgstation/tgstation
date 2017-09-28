@@ -63,7 +63,7 @@
 		if(insulation)
 			intensity *= insulation.amount
 
-		var/list/things = place.GetAllContents()
+		var/list/things = get_rad_contents(place)
 		for(var/k in 1 to things.len)
 			var/atom/thing = things[k]
 			if(!thing)
@@ -79,13 +79,13 @@
 		if(!place)
 			continue
 
-		var/list/things = place.GetAllContents()
+		var/list/things = get_rad_contents(place)
 		for(var/k in 1 to things.len)
 			var/atom/thing = things[k]
 			if(!thing)
 				continue
 			thing.rad_act(strength, TRUE)
-			if(can_contaminate && prob(Clamp((strength-RAD_MINIMUM_CONTAMINATION)/1000,0,1))) // Only stronk rads get to have little baby rads
+			if(can_contaminate && prob(Clamp((strength-RAD_MINIMUM_CONTAMINATION)/10000,0,1))) // Only stronk rads get to have little baby rads
 				var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
 				if(insulation)
 					continue

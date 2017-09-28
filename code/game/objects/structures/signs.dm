@@ -8,6 +8,10 @@
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	var/buildable_sign = 1 //unwrenchable and modifiable
 
+/obj/structure/sign/Initialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION) // Since this is on a wall if it becomes irradiated it will smuggle the radiation past the wall
+
 /obj/structure/sign/basic
 	name = "blank sign"
 	desc = "How can signs be real if our eyes aren't real?"
