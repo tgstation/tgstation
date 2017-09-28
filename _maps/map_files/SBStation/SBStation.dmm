@@ -2893,7 +2893,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "agw" = (
-/obj/structure/closet/crate/internals,
+/obj/structure/closet/emcloset,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "agx" = (
@@ -12185,6 +12185,10 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -14640,10 +14644,6 @@
 "aGK" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/yellow/side,
 /area/storage/primary)
@@ -16072,11 +16072,6 @@
 /area/quartermaster/storage)
 "aJM" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kanyewest";
-	layer = 2.9;
-	name = "privacy shutters"
-	},
 /obj/machinery/status_display,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -47230,8 +47225,8 @@ aEb
 aCK
 azo
 azo
-azn
 aPs
+azn
 aaa
 aaa
 aaa
@@ -47487,9 +47482,9 @@ aEa
 aEa
 aEa
 aNM
+aPs
+aPs
 azn
-aPs
-aPs
 aaa
 aaa
 aaa
@@ -48254,7 +48249,7 @@ aEa
 aEa
 aEa
 aEa
-aKB
+aEa
 azn
 azn
 azn
@@ -48511,7 +48506,7 @@ aGn
 aGn
 aGn
 aGn
-aEa
+aKB
 azn
 aMI
 aNP
@@ -49029,9 +49024,9 @@ aEa
 azn
 aMJ
 aNQ
+aPs
+aPs
 azn
-aPs
-aPs
 aaa
 aaa
 aaa
@@ -49286,8 +49281,8 @@ aEb
 aCK
 azn
 azn
-azn
 aPs
+azn
 aaa
 aaa
 aaa
@@ -58789,11 +58784,11 @@ aEx
 aAy
 aAy
 aAy
-aIL
+aNS
 aJP
 aKQ
 aJP
-aIL
+aNS
 aNZ
 aOJ
 aPI
