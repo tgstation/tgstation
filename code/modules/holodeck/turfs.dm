@@ -22,15 +22,18 @@
 	icon_state = "grass"
 
 /turf/open/floor/holofloor/beach
+	gender = PLURAL
 	name = "sand"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "sand"
 
 /turf/open/floor/holofloor/beach/coast_t
+	gender = NEUTER
 	name = "coastline"
 	icon_state = "sandwater_t"
 
 /turf/open/floor/holofloor/beach/coast_b
+	gender = NEUTER
 	name = "coastline"
 	icon_state = "sandwater_b"
 
@@ -47,6 +50,7 @@
 	. = ..()
 
 /turf/open/floor/holofloor/basalt
+	gender = PLURAL
 	name = "basalt"
 	icon_state = "basalt0"
 
@@ -57,7 +61,7 @@
 		set_basalt_light(src)
 
 /turf/open/floor/holofloor/space
-	name = "Space"
+	name = "\proper space"
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 
@@ -66,7 +70,7 @@
 	. = ..()
 
 /turf/open/floor/holofloor/hyperspace
-	name = "hyperspace"
+	name = "\proper hyperspace"
 	icon = 'icons/turf/space.dmi'
 	icon_state = "speedspace_ns_1"
 
@@ -99,6 +103,7 @@
 		queue_smooth(src)
 
 /turf/open/floor/holofloor/snow
+	gender = PLURAL
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
@@ -109,6 +114,7 @@
 	initial_gas_mix = "freon=7500;TEMP=0"
 
 /turf/open/floor/holofloor/asteroid
+	gender = PLURAL
 	name = "asteroid sand"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"

@@ -32,6 +32,7 @@
 
 /turf/open/floor/plating/ashplanet
 	icon = 'icons/turf/mining.dmi'
+	gender = PLURAL
 	name = "ash"
 	icon_state = "ash"
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
@@ -60,6 +61,7 @@
 	slowdown = 1
 
 /turf/open/floor/plating/ashplanet/rocky
+	gender = PLURAL
 	name = "rocky ground"
 	icon_state = "rockyash"
 	smooth_icon = 'icons/turf/floors/rocky_ash.dmi'
@@ -67,6 +69,7 @@
 	canSmoothWith = list(/turf/open/floor/plating/ashplanet/rocky, /turf/closed)
 
 /turf/open/floor/plating/ashplanet/wateryrock
+	gender = PLURAL
 	name = "wet rocky ground"
 	smooth = null
 	icon_state = "wateryrock"
@@ -86,6 +89,7 @@
 	contents_explosion(severity, target)
 
 /turf/open/floor/plating/beach/sand
+	gender = PLURAL
 	name = "sand"
 	desc = "Surf's up."
 	icon_state = "sand"
@@ -103,6 +107,7 @@
 	baseturf = /turf/open/floor/plating/beach/coastline_b
 
 /turf/open/floor/plating/beach/water
+	gender = PLURAL
 	name = "water"
 	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
 	icon_state = "water"
@@ -110,6 +115,7 @@
 
 
 /turf/open/floor/plating/ironsand
+	gender = PLURAL
 	name = "iron sand"
 	desc = "Like sand, but more <i>metal</i>."
 

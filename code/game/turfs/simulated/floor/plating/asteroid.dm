@@ -4,6 +4,7 @@
 /**********************Asteroid**************************/
 
 /turf/open/floor/plating/asteroid //floor piece
+	gender = PLURAL
 	name = "asteroid sand"
 	baseturf = /turf/open/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
@@ -280,6 +281,7 @@
 
 
 /turf/open/floor/plating/asteroid/snow
+	gender = PLURAL
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'

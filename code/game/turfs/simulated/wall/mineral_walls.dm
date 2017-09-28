@@ -59,6 +59,7 @@
 	canSmoothWith = list(/turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/sandstone)
 
 /turf/closed/wall/mineral/uranium
+	gender = PLURAL // avoid "an uranium wall"
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
 	icon = 'icons/turf/walls/uranium_wall.dmi'
