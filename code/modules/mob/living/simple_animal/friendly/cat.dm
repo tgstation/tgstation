@@ -78,7 +78,7 @@
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
-	gender = FEMALE
+	gender = NEUTER
 	gold_core_spawnable = 0
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
