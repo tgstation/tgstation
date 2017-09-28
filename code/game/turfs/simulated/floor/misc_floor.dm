@@ -142,22 +142,25 @@
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
 	icon_state = "plating"
+	var/uses_overlay = TRUE
 	var/obj/effect/clockwork/overlay/floor/realappearence
 
 /turf/open/floor/clockwork/Initialize()
 	. = ..()
-	new /obj/effect/temp_visual/ratvar/floor(src)
-	new /obj/effect/temp_visual/ratvar/beam(src)
-	realappearence = new /obj/effect/clockwork/overlay/floor(src)
-	realappearence.linked = src
-	change_construction_value(1)
+	if(uses_overlay)
+		new /obj/effect/temp_visual/ratvar/floor(src)
+		new /obj/effect/temp_visual/ratvar/beam(src)
+		realappearence = new /obj/effect/clockwork/overlay/floor(src)
+		realappearence.linked = src
+		change_construction_value(1)
 
 /turf/open/floor/clockwork/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	change_construction_value(-1)
-	if(realappearence)
-		qdel(realappearence)
-		realappearence = null
+	if(uses_overlay)
+		change_construction_value(-1)
+		if(realappearence)
+			qdel(realappearence)
+			realappearence = null
 	return ..()
 
 /turf/open/floor/clockwork/ReplaceWithLattice()
@@ -217,6 +220,12 @@
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
+/turf/open/floor/clockwork/reebe
+	name = "cogplate"
+	desc = "Warm brass plating. You can feel it gently vibrating, as if machinery is on the other side."
+	icon_state = "reebe"
+	baseturf = /turf/open/floor/clockwork/reebe
+	uses_overlay = FALSE
 
 /turf/open/floor/bluespace
 	slowdown = -1

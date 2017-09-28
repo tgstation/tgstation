@@ -62,6 +62,14 @@
 		qdel(holder)
 	return
 
+/datum/construction/proc/spawn_mecha_result()
+	if(result)
+		var/obj/mecha/m = new result(get_turf(holder))
+		var/obj/item/oldcell = locate (/obj/item/stock_parts/cell) in m
+		QDEL_NULL(oldcell)
+		m.CheckParts(holder.contents)
+		QDEL_NULL(holder)
+
 /datum/construction/proc/set_desc(index as num)
 	var/list/step = steps[index]
 	holder.desc = step["desc"]

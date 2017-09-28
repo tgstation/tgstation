@@ -91,7 +91,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
 	if(target.initialize_directions & get_dir(target,src))
-		return 1
+		return TRUE
 
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return nodes
@@ -208,6 +208,17 @@ Pipelines + Other Objects -> Pipe network
 		pipe_overlay = . = pipeimages[identifier] = image(iconset, iconstate, dir = direction)
 		pipe_overlay.color = col
 
+/obj/machinery/atmospherics/proc/icon_addintact(var/obj/machinery/atmospherics/node)
+	var/image/img = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_intact", get_dir(src,node), node.pipe_color)
+	underlays += img
+	return img.dir
+
+/obj/machinery/atmospherics/proc/icon_addbroken(var/connected = FALSE)
+	var/unconnected = (~connected) & initialize_directions
+	for(var/direction in GLOB.cardinals)
+		if(unconnected & direction)
+			underlays += getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_exposed", direction)
+
 /obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
@@ -275,7 +286,7 @@ Pipelines + Other Objects -> Pipe network
 
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/proc/returnPipenets()
 	return list()
@@ -285,4 +296,5 @@ Pipelines + Other Objects -> Pipe network
 
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
-	return 1
+	return TRUE
+
