@@ -153,7 +153,7 @@
 	if(S && istype(S))
 		assemblies -= color
 		S.connected = null
-		S.forceMove(holder.loc)
+		S.forceMove(holder.drop_location())
 		return S
 
 /datum/wires/proc/emp_pulse()

@@ -54,18 +54,18 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		var/obj/item/card/id/idcard = O
 		if(check_access(idcard))
 			if(!scan)
-				if (!usr.transferItemToLoc(idcard,src))
+				if (!user.transferItemToLoc(idcard,src))
 					return
 				scan = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else if(!modify)
-				if (!usr.transferItemToLoc(idcard,src))
+				if (!user.transferItemToLoc(idcard,src))
 					return
 				modify = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		else
 			if(!modify)
-				if (!usr.transferItemToLoc(idcard,src))
+				if (!user.transferItemToLoc(idcard,src))
 					return
 				modify = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
@@ -92,10 +92,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/on_deconstruction()
 	if(scan)
-		scan.forceMove(loc)
+		scan.forceMove(drop_location())
 		scan = null
 	if(modify)
-		modify.forceMove(loc)
+		modify.forceMove(drop_location())
 		modify = null
 
 //Check if you can't open a new position for a certain job
@@ -352,7 +352,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if (modify)
 				GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.update_label()
-				modify.forceMove(loc)
+				modify.forceMove(drop_location())
 				modify.verb_pickup()
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				modify = null
