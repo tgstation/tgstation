@@ -143,7 +143,7 @@ GLOBAL_PROTECT(admin_ranks)
 		if(!SSdbcore.Connect())
 			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
 			WRITE_FILE(GLOB.world_game_log, "Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
-			CONFIG_GET(flag/admin_legacy_system, TRUE)
+			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			load_admin_ranks()
 			return
 
@@ -221,7 +221,7 @@ GLOBAL_PROTECT(admin_ranks)
 		if(!SSdbcore.Connect())
 			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
 			WRITE_FILE(GLOB.world_game_log, "Failed to connect to database in load_admins(). Reverting to legacy system.")
-			CONFIG_GET(flag/admin_legacy_system, TRUE)
+			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			load_admins()
 			return
 

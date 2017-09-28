@@ -42,7 +42,8 @@
 			to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
 			src << browse("...", "window=asset_cache_browser")
 
-	if (!holder && config.minutetopiclimit)
+	var/mtl = CONFIG_GET(number/minutetopiclimit)
+	if (!holder && mtl)
 		var/minute = round(world.time, 600)
 		if (!topiclimiter)
 			topiclimiter = new(LIMITER_SIZE)
@@ -50,17 +51,18 @@
 			topiclimiter[CURRENT_MINUTE] = minute
 			topiclimiter[MINUTE_COUNT] = 0
 		topiclimiter[MINUTE_COUNT] += 1
-		if (topiclimiter[MINUTE_COUNT] > config.minutetopiclimit)
+		if (topiclimiter[MINUTE_COUNT] > mtl)
 			var/msg = "Your previous action was ignored because you've done too many in a minute."
 			if (minute != topiclimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
 				topiclimiter[ADMINSWARNED_AT] = minute
 				msg += " Administrators have been informed."
-				log_game("[key_name(src)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
-				message_admins("[key_name_admin(src)] [ADMIN_FLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute")
+				log_game("[key_name(src)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
+				message_admins("[key_name_admin(src)] [ADMIN_FLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
 			return
 
-	if (!holder && config.secondtopiclimit)
+	var/stl = CONFIG_GET(number/secondtopiclimit)
+	if (!holder && stl)
 		var/second = round(world.time, 10)
 		if (!topiclimiter)
 			topiclimiter = new(LIMITER_SIZE)
@@ -68,7 +70,7 @@
 			topiclimiter[CURRENT_SECOND] = second
 			topiclimiter[SECOND_COUNT] = 0
 		topiclimiter[SECOND_COUNT] += 1
-		if (topiclimiter[SECOND_COUNT] > config.secondtopiclimit)
+		if (topiclimiter[SECOND_COUNT] > stl)
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
 
@@ -111,7 +113,7 @@
 	return 1
 
 /client/proc/handle_spam_prevention(message, mute_type)
-	if(config.automute_on && !holder && src.last_message == message)
+	if(CONFIG_GET(flag/automute_on) && !holder && last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			to_chat(src, "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
@@ -175,11 +177,11 @@ GLOBAL_LIST(external_rsc_urls)
 		if(localhost_rank)
 			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
 			localhost_holder.associate(src)
-	if(config.autoadmin)
+	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
 			var/datum/admin_rank/autorank
 			for(var/datum/admin_rank/R in GLOB.admin_ranks)
-				if(R.name == config.autoadmin_rank)
+				if(R.name == CONFIG_GET(string/autoadmin_rank))
 					autorank = R
 					break
 			if(!autorank)
@@ -205,7 +207,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE
-	if(config.log_access)
+	if(CONFIG_GET(flag/log_access))
 		for(var/I in GLOB.clients)
 			if(!I || I == src)
 				continue
@@ -239,9 +241,9 @@ GLOBAL_LIST(external_rsc_urls)
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
 	winset(src, null, "command=\".configure graphics-hwmode on\"")
-	if (byond_version < config.client_error_version)		//Out of date client.
+	if (byond_version < CONFIG_GET(number/client_error_version))		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of byond is too old:</b></span>")
-		to_chat(src, config.client_error_message)
+		to_chat(src, CONFIG_GET(string/client_error_message))
 		to_chat(src, "Your version: [byond_version]")
 		to_chat(src, "Required version: [config.client_error_version] or later")
 		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
@@ -417,15 +419,17 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!query_client_in_db.Execute())
 		return
 	if(!query_client_in_db.NextRow())
-		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
+		if (CONFIG_GET(flag/panic_bunker) && !holder && !(ckey in GLOB.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
 			var/list/connectiontopic_a = params2list(connectiontopic)
-			if(config.panic_address && !connectiontopic_a["redirect"])
-				to_chat(src, "<span class='notice'>Sending you to [config.panic_server_name ? config.panic_server_name : config.panic_address].</span>")
+			var/list/panic_addr = CONFIG_GET(string/panic_address)
+			if(panic_addr && !connectiontopic_a["redirect"])
+				var/panic_name = CONFIG_GET(string/panic_server_name)
+				to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
 				winset(src, null, "command=.options")
-				src << link("[config.panic_address]?redirect=1")
+				src << link("[panic_addr]?redirect=1")
 			qdel(src)
 			return
 
@@ -486,7 +490,7 @@ GLOBAL_LIST(external_rsc_urls)
 	if (connection != "seeker")
 		return
 	topic = params2list(topic)
-	if (!config.check_randomizer)
+	if (!CONFIG_GET(flag/check_randomizer))
 		return
 	var/static/cidcheck = list()
 	var/static/tokens = list()
@@ -579,15 +583,15 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/proc/check_ip_intel()
 	set waitfor = 0 //we sleep when getting the intel, no need to hold up the client connection while we sleep
-	if (config.ipintel_email)
+	if (CONFIG_GET(string/ipintel_email))
 		var/datum/ipintel/res = get_ip_intel(address)
-		if (res.intel >= config.ipintel_rating_bad)
+		if (res.intel >= CONFIG_GET(number/ipintel_rating_bad))
 			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
 		ip_intel = res.intel
 
 
 /client/proc/add_verbs_from_config()
-	if(config.see_own_notes)
+	if(CONFIG_GET(flag/see_own_notes))
 		verbs += /client/proc/self_notes
 
 
@@ -597,7 +601,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 //checks if a client is afk
 //3000 frames = 5 minutes
-/client/proc/is_afk(duration = config.inactivity_period)
+/client/proc/is_afk(duration = CONFIG_GET(number/inactivity_period))
 	if(inactivity > duration)
 		return inactivity
 	return FALSE

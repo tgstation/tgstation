@@ -72,7 +72,7 @@ CONFIG_DEF(number/security_scaling_coeff)	//how much does the amount of players 
 	value = 8
 	min_val = 1
 
-CONFIG_DEF(number/security_scaling_coeff)	//how many players per abductor team
+CONFIG_DEF(number/abductor_scaling_coeff)	//how many players per abductor team
 	value = 15
 	min_val = 1
 
