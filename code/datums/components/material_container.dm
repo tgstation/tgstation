@@ -59,6 +59,9 @@
 	var/datum/callback/pc = precondition
 	if(pc && !pc.Invoke())
 		return
+	if(I.flags_2 & NO_MAT_REDEMPTION_2)
+		to_chat(user, "<span class='warning'>[parent] won't accept \the [I]!</span>")
+		return
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient amounts of metal or glass to be accepted by [parent].</span>")
