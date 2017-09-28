@@ -56,41 +56,27 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	slowdown = 0
-	armor = list(melee = 70, bullet = 40, laser = 10, energy = 10, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 
 /obj/item/clothing/suit/space/hostile_environment/Initialize()
 	. = ..()
+	AddComponent(/datum/component/spraycan_paintable)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/hostile_environment/Destroy()
-	. = ..()
 	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/clothing/suit/space/hostile_environment/process()
-	if(iscarbon(loc))
-		var/mob/living/carbon/C = loc
+	var/mob/living/carbon/C = loc
+	if(istype(C))
 		if(prob(2)) //cursed by bubblegum
 			if(prob(15))
 				new /datum/hallucination/oh_yeah(C)
 				to_chat(C, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b></span>")
 			else
 				to_chat(C, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
-
-/obj/item/clothing/suit/space/hostile_environment/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/toy/crayon/spraycan))
-		var/obj/item/toy/crayon/spraycan/spraycan = O
-		if(spraycan.is_capped)
-			to_chat(user, "<span class='warning'>Take the cap off first!</span>")
-			return
-		if(spraycan.check_empty(user))
-			return
-		spraycan.use_charges(2)
-		add_atom_colour(spraycan.paint_color, FIXED_COLOUR_PRIORITY)
-		playsound(get_turf(user), 'sound/effects/spray.ogg', 5, 1, 5)
-		to_chat(user, "<span class='notice'>You sprays [spraycan] on [src], painting it.</span>")
-	else
-		return ..()
 
 /obj/item/clothing/head/helmet/space/hostile_environment
 	name = "H.E.C.K. helmet"
@@ -100,11 +86,12 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	flags_1 = THICKMATERIAL_1 // no space protection
-	armor = list(melee = 70, bullet = 40, laser = 10,energy = 10, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/item/clothing/head/helmet/space/hostile_environment/Initialize()
 	. = ..()
+	AddComponent(/datum/component/spraycan_paintable)
 	update_icon()
 
 /obj/item/clothing/head/helmet/space/hostile_environment/update_icon()
@@ -120,19 +107,4 @@
 		var/mutable_appearance/M = mutable_appearance('icons/mob/head.dmi', "hostile_env_glass")
 		M.appearance_flags = RESET_COLOR
 		. += M
-
-/obj/item/clothing/head/helmet/space/hostile_environment/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/toy/crayon/spraycan))
-		var/obj/item/toy/crayon/spraycan/spraycan = O
-		if(spraycan.is_capped)
-			to_chat(user, "<span class='warning'>Take the cap off first!</span>")
-			return
-		if(spraycan.check_empty(user))
-			return
-		spraycan.use_charges(2)
-		add_atom_colour(spraycan.paint_color, FIXED_COLOUR_PRIORITY)
-		playsound(get_turf(user), 'sound/effects/spray.ogg', 5, 1, 5)
-		to_chat(user, "<span class='notice'>You sprays [spraycan] on [src], painting it.</span>")
-	else
-		return ..()
 
