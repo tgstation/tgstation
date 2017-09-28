@@ -330,7 +330,6 @@ SUBSYSTEM_DEF(ticker)
 	var/num_shuttle_escapees = 0
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
-	send2irc("Notice", GLOB.chat_round_end_notifiees.Join(", "))
 
 	for(var/client/C in GLOB.clients)
 		if(!C.credits)

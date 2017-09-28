@@ -1,4 +1,3 @@
-GLOBAL_LIST_EMPTY(chat_round_end_notifiees)
 #define IRC_STATUS_THROTTLE 5
 
 /datum/server_tools_command/ircstatus
@@ -61,13 +60,3 @@ GLOBAL_LIST_EMPTY(chat_round_end_notifiees)
 
 /datum/server_tools_command/adminwho/Run(sender, params)
 	return ircadminwho()
-
-/datum/server_tools_command/notify
-	name = "notify"
-	help_text = "Pings the invoker when the running round ends"
-	admin_only = TRUE
-
-/datum/server_tools_command/notify/Run(sender, params)
-	if(SSticker.HasRoundStarted() && !SSticker.IsRoundInProgress())
-		return "The round has already ended"
-	GLOB.chat_round_end_notifiees[sender] = TRUE
