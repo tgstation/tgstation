@@ -53,7 +53,7 @@
 
 /mob/living/carbon/Move(atom/newloc, direct)
 	. = ..(newloc, direct)
-	if(lying && !pulledby)
+	if(lying && !pulledby && !buckled && (stat == SOFT_CRIT || get_num_legs() == 0))
 		if(stat == SOFT_CRIT)
 			visible_message("<span class='danger'>[src] painfully crawls forward!</span>", "<span class='userdanger'>You crawl forward at the expense of some of your strength.</span>")
 			apply_damage(1, OXY)
