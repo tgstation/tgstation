@@ -154,11 +154,3 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/can_hold_items()
 	return has_fine_manipulation
-
-/mob/living/carbon/alien/add_abilities_to_panel()
-	for(var/obj/effect/proc_holder/A in abilities)
-		if(istype(A, /obj/effect/proc_holder/alien))
-			var/obj/effect/proc_holder/alien/AL
-			statpanel("[AL.panel]",AL.plasma_cost > 0 ? "([AL.plasma_cost])":"",AL)
-		else
-			statpanel("[A.panel]","",A)

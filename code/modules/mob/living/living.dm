@@ -984,4 +984,4 @@
 
 /mob/living/proc/add_abilities_to_panel()
 	for(var/obj/effect/proc_holder/A in abilities)
-		statpanel("[A.panel]","",A)
+		A.add_to_panel(src)
