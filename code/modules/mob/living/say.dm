@@ -427,6 +427,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		. = verb_whisper
 	else if(message_mode == MODE_WHISPER_CRIT)
 		. = "painfully [verb_whisper]"
+		apply_damage(1, OXY)
 	else if(stuttering)
 		. = "stammers"
 	else if(getBrainLoss() >= 60)

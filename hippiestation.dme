@@ -2382,7 +2382,6 @@
 #include "hippiestation\code\modules\mob\mob_defines.dm"
 #include "hippiestation\code\modules\mob\mob_helpers.dm"
 #include "hippiestation\code\modules\mob\mob_movement.dm"
-#include "hippiestation\code\modules\mob\nearcrit.dm"
 #include "hippiestation\code\modules\mob\dead\new_player\sprite_accessories.dm"
 #include "hippiestation\code\modules\mob\dead\observer\say.dm"
 #include "hippiestation\code\modules\mob\living\emote.dm"
