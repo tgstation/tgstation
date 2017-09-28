@@ -52,15 +52,12 @@
 
 /datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
-	if(user.a_intent == INTENT_HARM || (I.flags_2 & HOLOGRAM_2) || (tc && !is_type_in_typecache(I, tc)))
+	if(user.a_intent == INTENT_HARM || (I.flags_2 & HOLOGRAM_2 | NO_MAT_REDEMPTION_2) || (tc && !is_type_in_typecache(I, tc)))
 		return FALSE
 	. = TRUE
 	last_insert_success = FALSE
 	var/datum/callback/pc = precondition
 	if(pc && !pc.Invoke())
-		return
-	if(I.flags_2 & NO_MAT_REDEMPTION_2)
-		to_chat(user, "<span class='warning'>[parent] won't accept \the [I]!</span>")
 		return
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
