@@ -90,7 +90,7 @@
 /obj/structure/shuttle/engine/platform
 	name = "engine platform"
 	icon_state = "platform"
-	desc = "A platform for engine components, or something."
+	desc = "A platform for engine components."
 	engine_power = 0
 
 /obj/structure/shuttle/engine/propulsion
