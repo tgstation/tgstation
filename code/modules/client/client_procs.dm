@@ -42,7 +42,7 @@
 			to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
 			src << browse("...", "window=asset_cache_browser")
 
-	var/mtl = CONFIG_GET(number/minutetopiclimit)
+	var/mtl = CONFIG_GET(number/minute_topic_limit)
 	if (!holder && mtl)
 		var/minute = round(world.time, 600)
 		if (!topiclimiter)
@@ -61,7 +61,7 @@
 			to_chat(src, "<span class='danger'>[msg]</span>")
 			return
 
-	var/stl = CONFIG_GET(number/secondtopiclimit)
+	var/stl = CONFIG_GET(number/second_topic_limit)
 	if (!holder && stl)
 		var/second = round(world.time, 10)
 		if (!topiclimiter)
@@ -241,22 +241,24 @@ GLOBAL_LIST(external_rsc_urls)
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
 	winset(src, null, "command=\".configure graphics-hwmode on\"")
-	if (byond_version < CONFIG_GET(number/client_error_version))		//Out of date client.
+	var/cev = CONFIG_GET(number/client_error_version)
+	var/cwv = CONFIG_GET(number/client_warn_version)
+	if (byond_version < cev)		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of byond is too old:</b></span>")
 		to_chat(src, CONFIG_GET(string/client_error_message))
 		to_chat(src, "Your version: [byond_version]")
-		to_chat(src, "Required version: [config.client_error_version] or later")
+		to_chat(src, "Required version: [cev] or later")
 		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
 		if (holder)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else
 			qdel(src)
 			return 0
-	else if (byond_version < config.client_warn_version)	//We have words for this client.
+	else if (byond_version < cwv)	//We have words for this client.
 		to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
-		to_chat(src, config.client_warn_message)
+		to_chat(src, CONFIG_GET(string/client_warn_message))
 		to_chat(src, "Your version: [byond_version]")
-		to_chat(src, "Required version to remove this message: [config.client_warn_version] or later")
+		to_chat(src, "Required version to remove this message: [cwv] or later")
 		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
 
 	if (connection == "web" && !holder)
@@ -282,18 +284,19 @@ GLOBAL_LIST(external_rsc_urls)
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		player_age = 0
+	var/nnpa = CONFIG_GET(number/notify_new_player_age)
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
-		if (config.notify_new_player_age >= 0)
+		if (nnpa >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
-			if (config.irc_first_connection_alert)
+			if (CONFIG_GET(flag/irc_first_connection_alert))
 				send2irc_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
-	else if (isnum(cached_player_age) && cached_player_age < config.notify_new_player_age)
+	else if (isnum(cached_player_age) && cached_player_age < nnpa)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age==1?"":"s")]")
-	if(config.use_account_age_for_jobs && account_age >= 0)
+	if(CONFIG_GET(flag/use_account_age_for_jobs) && account_age >= 0)
 		player_age = account_age
-	if(account_age >= 0 && account_age < config.notify_new_player_account_age)
+	if(account_age >= 0 && account_age < nnpa)
 		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
-		if (config.irc_first_connection_alert)
+		if (CONFIG_GET(flag/irc_first_connection_alert))
 			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
@@ -305,7 +308,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
-		if(config.aggressive_changelog)
+		if(CONFIG_GET(flag/aggressive_changelog))
 			changelog()
 		else
 			winset(src, "infowindow.changelog", "font-style=bold")
@@ -315,7 +318,7 @@ GLOBAL_LIST(external_rsc_urls)
 			to_chat(src, message)
 		GLOB.clientmessages.Remove(ckey)
 
-	if(config && config.autoconvert_notes)
+	if(CONFIG_GET(flag/autoconvert_notes))
 		convert_notes_sql(ckey)
 	to_chat(src, get_message_output("message", ckey))
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
