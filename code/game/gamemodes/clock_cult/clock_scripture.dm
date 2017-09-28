@@ -5,8 +5,6 @@ Pieces of scripture require certain follower counts, contruction value, and acti
 Drivers: Unlocked by default
 Scripts: 5 servants and a cache
 Applications: 8 servants, 3 caches, and 100 CV
-Revenant: 10 servants, 4 caches, and 200 CV
-Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or destroyed
 */
 
 /datum/clockwork_scripture
@@ -15,7 +13,9 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/desc = "Ancient Ratvarian lore. This piece seems particularly mundane."
 	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
-	var/list/consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //Components consumed
+	var/power_cost = 5 //In watts, how much a scripture takes to invoke
+	var/special_power_text //If the scripture can use additional power to have a unique function, use this; put POWERCOST here to display the special power cost.
+	var/special_power_cost //This should be a define in __DEFINES/clockcult.dm, such as ABSCOND_ABDUCTION_COST
 	var/obj/item/clockwork/slab/slab //The parent clockwork slab
 	var/mob/living/invoker //The slab's holder
 	var/whispered = FALSE //If the invocation is whispered rather than spoken aloud
@@ -28,11 +28,6 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/quickbind_desc = "This shouldn't be quickbindable. File a bug report!"
 	var/primary_component
 	var/sort_priority = 1 //what position the scripture should have in a list of scripture. Should be based off of component costs/reqs, but you can't initial() lists.
-
-//components the scripture used from a slab
-	var/list/used_slab_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
-//components the scripture used from the global cache
-	var/list/used_cache_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
 
 //messages for offstation scripture recital, courtesy ratvar's generals(and neovgre)
 	var/static/list/neovgre_penalty = list("Go to the station.", "Useless.", "Don't waste time.", "Pathetic.", "Wasteful.")
@@ -57,34 +52,14 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		if(slab.busy)
 			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>")
 			return FALSE
-		if(invoker.has_status_effect(STATUS_EFFECT_GEISTRACKER))
-			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"Sustaining Geis!\"</span>")
-			return FALSE
 		slab.busy = "Invocation ([name]) in progress"
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
 		else if(!slab.no_cost)
-			for(var/i in consumed_components)
-				if(consumed_components[i])
-					for(var/j in 1 to consumed_components[i])
-						if(slab.stored_components[i])
-							slab.stored_components[i]--
-							used_slab_components[i]++
-						else
-							GLOB.clockwork_component_cache[i]--
-							used_cache_components[i]++
-			update_slab_info()
+			adjust_clockwork_power(-power_cost)
 		channel_time *= slab.speed_multiplier
 		if(!recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
-			for(var/i in used_slab_components)
-				if(used_slab_components[i])
-					if(slab)
-						slab.stored_components[i] += consumed_components[i]
-					else //if we can't find a slab add to the global cache
-						GLOB.clockwork_component_cache[i] += consumed_components[i]
-			for(var/i in used_cache_components)
-				if(used_cache_components[i])
-					GLOB.clockwork_component_cache[i] += consumed_components[i]
+			adjust_clockwork_power(power_cost)
 			update_slab_info()
 		else
 			successful = TRUE
@@ -92,6 +67,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 				SSblackbox.add_details("clockcult_scripture_recited", name)
 	if(slab)
 		slab.busy = null
+	post_recital()
 	qdel(src)
 	return successful
 
@@ -103,23 +79,13 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		return FALSE
 	return TRUE
 
-/datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
+/datum/clockwork_scripture/proc/has_requirements() //if we have the power and invokers to do it
 	var/checked_penalty = FALSE
 	if(!GLOB.ratvar_awakens && !slab.no_cost)
 		checked_penalty = check_offstation_penalty()
-		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
-		var/failed = FALSE
-		for(var/i in consumed_components)
-			var/cache_components = GLOB.clockwork_caches ? GLOB.clockwork_component_cache[i] : 0
-			var/total_components = slab.stored_components[i] + cache_components
-			if(consumed_components[i] && total_components < consumed_components[i])
-				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[consumed_components[i]]</b> \
-				[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""].</span>"
-				failed = TRUE
-		if(failed)
-			component_printout += "</span>"
-			to_chat(invoker, component_printout)
-			return FALSE
+		if(!get_clockwork_power(power_cost))
+			to_chat(invoker, "<span class='warning'>There isn't enough power to recite this scripture! ([DisplayPower(get_clockwork_power())]/[DisplayPower(power_cost)])</span>")
+			return
 	if(multiple_invokers_used && !multiple_invokers_optional && !GLOB.ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, get_turf(invoker)))
@@ -158,13 +124,10 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()
 	var/turf/T = get_turf(invoker)
-	if(!T || (!(T.z in GLOB.station_z_levels) && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND))
+	if(!T || (!(T.z in GLOB.station_z_levels) && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND && T.z != ZLEVEL_CITYOFCOGS))
 		channel_time *= 2
-		for(var/i in consumed_components)
-			if(consumed_components[i])
-				consumed_components[i] *= 2
+		power_cost *= 2
 		return TRUE
-	return FALSE
 
 /datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked multiple times during invocation
 	return TRUE
@@ -185,6 +148,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	for(var/invocation in invocations)
 		if(!do_after(invoker, channel_time / invocations.len, target = invoker, extra_checks = CALLBACK(src, .proc/check_special_requirements)))
 			slab.busy = null
+			scripture_fail()
 			return FALSE
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, get_turf(invoker)))
@@ -196,6 +160,11 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 /datum/clockwork_scripture/proc/scripture_effects() //The actual effects of the recital after its conclusion
 
+
+/datum/clockwork_scripture/proc/scripture_fail() //Called if the scripture fails to invoke.
+
+
+/datum/clockwork_scripture/proc/post_recital() //Called after the scripture is recited
 
 //Channeled scripture begins instantly but runs constantly
 /datum/clockwork_scripture/channeled
@@ -228,6 +197,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 //Creates an object at the invoker's feet
 /datum/clockwork_scripture/create_object
 	var/object_path = /obj/item/clockwork //The path of the object created
+	var/put_object_in_hands = TRUE
 	var/creator_message = "<span class='brass'>You create a meme.</span>" //Shown to the invoker
 	var/observer_message
 	var/one_per_tile = FALSE
@@ -256,9 +226,50 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		to_chat(invoker, creator_message)
 	var/obj/O = new object_path (get_turf(invoker))
 	O.ratvar_act() //update the new object so it gets buffed if ratvar is alive
-	if(isitem(O))
+	if(isitem(O) && put_object_in_hands)
 		invoker.put_in_hands(O)
 	return TRUE
+
+
+//Used specifically to create construct shells.
+/datum/clockwork_scripture/create_object/construct
+	put_object_in_hands = FALSE
+	var/construct_type //The type of construct that the scripture is made to create, even if not directly
+	var/construct_limit = 1 //How many constructs of this type can exist
+	var/combat_construct = FALSE //If this construct is meant for fighting and shouldn't be at the base before the assault phase
+	var/confirmed = FALSE //If we've confirmed that we want to make this construct outside of the station Z
+
+/datum/clockwork_scripture/create_object/construct/check_special_requirements()
+	update_construct_limit()
+	var/constructs = get_constructs()
+	if(constructs >= construct_limit)
+		to_chat(invoker, "<span class='warning'>There are too many constructs of this type ([constructs])! You may only have [round(construct_limit)] at once.</span>")
+		return
+	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+	if(G && !G.active && combat_construct && invoker.z == ZLEVEL_CITYOFCOGS && !confirmed) //Putting marauders on the base during the prep phase is a bad idea mmkay
+		if(alert(invoker, "This is a combat construct, and you cannot easily get it to the station. Are you sure you want to make one here?", "Construct Alert", "Yes", "Cancel") == "Cancel")
+			return
+		if(!is_servant_of_ratvar(invoker) || !invoker.canUseTopic(slab))
+			return
+		confirmed = TRUE
+	return TRUE
+
+/datum/clockwork_scripture/create_object/construct/post_recital()
+	creation_update()
+	confirmed = FALSE
+
+/datum/clockwork_scripture/create_object/construct/proc/get_constructs()
+	var/constructs = 0
+	for(var/V in GLOB.all_clockwork_mobs)
+		if(istype(V, construct_type))
+			constructs++
+	for(var/V in GLOB.all_clockwork_objects)
+		if(istype(V, object_path)) //nice try
+			constructs++
+	return constructs
+
+/datum/clockwork_scripture/create_object/construct/proc/update_construct_limit() //Change this on a per-scripture basis, for dynamic limits
+
 
 //Uses a ranged slab ability, returning only when the ability no longer exists(ie, when interrupted) or finishes.
 /datum/clockwork_scripture/ranged_ability

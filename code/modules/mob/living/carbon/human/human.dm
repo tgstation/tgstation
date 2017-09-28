@@ -1073,4 +1073,12 @@
 
 /mob/living/carbon/human/species/tarajan
 	race = /datum/species/tarajan
-	
+
+/mob/living/carbon/human/species/moth
+	race = /datum/species/moth
+
+/mob/living/carbon/human/species/ipc
+	race = /datum/species/ipc
+
+/mob/living/carbon/human/species/bird
+	race = /datum/species/bird

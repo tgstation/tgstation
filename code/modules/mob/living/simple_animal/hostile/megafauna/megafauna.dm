@@ -140,44 +140,42 @@
 	return TRUE
 
 /proc/UnlockMedal(medal,client/player)
-
+	set waitfor = FALSE
 	if(!player || !medal)
 		return
 	if(global.medal_hub && global.medal_pass && global.medals_enabled)
-		spawn()
-			var/result = world.SetMedal(medal, player, global.medal_hub, global.medal_pass)
-			if(isnull(result))
-				global.medals_enabled = FALSE
-				log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
-				message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
-			else if (result)
-				to_chat(player, "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>")
+		var/result = world.SetMedal(medal, player, global.medal_hub, global.medal_pass)
+		if(isnull(result))
+			global.medals_enabled = FALSE
+			log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
+			message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
+		else if (result)
+			to_chat(player, "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>")
 
 
 /proc/SetScore(score,client/player,increment,force)
-
+	set waitfor = FALSE
 	if(!score || !player)
 		return
 	if(global.medal_hub && global.medal_pass && global.medals_enabled)
-		spawn()
-			var/list/oldscore = GetScore(score,player,1)
+		var/list/oldscore = GetScore(score,player,1)
 
-			if(increment)
-				if(!oldscore[score])
-					oldscore[score] = 1
-				else
-					oldscore[score] = (text2num(oldscore[score]) + 1)
+		if(increment)
+			if(!oldscore[score])
+				oldscore[score] = 1
 			else
-				oldscore[score] = force
+				oldscore[score] = (text2num(oldscore[score]) + 1)
+		else
+			oldscore[score] = force
 
-			var/newscoreparam = list2params(oldscore)
+		var/newscoreparam = list2params(oldscore)
 
-			var/result = world.SetScores(player.ckey, newscoreparam, global.medal_hub, global.medal_pass)
+		var/result = world.SetScores(player.ckey, newscoreparam, global.medal_hub, global.medal_pass)
 
-			if(isnull(result))
-				global.medals_enabled = FALSE
-				log_game("SCORE ERROR: Could not contact hub to set score. Score:[score] player:[player.ckey]")
-				message_admins("Error! Failed to contact hub to set [score] score for [player.ckey]!")
+		if(isnull(result))
+			global.medals_enabled = FALSE
+			log_game("SCORE ERROR: Could not contact hub to set score. Score:[score] player:[player.ckey]")
+			message_admins("Error! Failed to contact hub to set [score] score for [player.ckey]!")
 
 
 /proc/GetScore(score,client/player,returnlist)
