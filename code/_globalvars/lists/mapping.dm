@@ -33,6 +33,8 @@ GLOBAL_LIST_EMPTY(department_security_spawns)	//list of all department security 
 GLOBAL_LIST_EMPTY(generic_event_spawns)			//list of all spawns for events
 
 GLOBAL_LIST_EMPTY(wizardstart)
+GLOBAL_LIST_EMPTY(nukeop_start)
+GLOBAL_LIST_EMPTY(nukeop_leader_start)
 GLOBAL_LIST_EMPTY(newplayer_start)
 GLOBAL_LIST_EMPTY(prisonwarp)	//prisoners go to these
 GLOBAL_LIST_EMPTY(holdingfacility)	//captured people go here

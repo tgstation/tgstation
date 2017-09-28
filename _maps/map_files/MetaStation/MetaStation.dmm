@@ -178,7 +178,6 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port/fore)
 "aav" = (
-/obj/effect/landmark/marauder_entry,
 /turf/open/space,
 /area/space)
 "aaw" = (
@@ -129060,7 +129059,7 @@ aaa
 aaa
 bii
 aaa
-aeD
+aeC
 afD
 afD
 afD

@@ -14777,7 +14777,6 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "aHr" = (
-/obj/effect/landmark/marauder_entry,
 /turf/open/space,
 /area/space)
 "aHs" = (
@@ -100719,7 +100718,7 @@ aaa
 aaa
 aaa
 aaa
-aqt
+aqs
 aro
 aro
 aro
