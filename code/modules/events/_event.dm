@@ -28,7 +28,6 @@
 	var/triggering	//admin cancellation
 
 /datum/round_event_control/New()
-	..()
 	if(config && !wizardevent) // Magic is unaffected by configs
 		earliest_start = Ceiling(earliest_start * CONFIG_GET(number/events_min_time_mul))
 		min_players = Ceiling(min_players * CONFIG_GET(number/events_min_players_mul))
