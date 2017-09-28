@@ -11,12 +11,13 @@
 
 	var/minetype = "lavaland"
 
+	//Order matters here.
 	var/list/transition_config = list(CENTCOM = SELFLOOPING,
-									CITY_OF_COGS = SELFLOOPING,
 									MAIN_STATION = CROSSLINKED,
 									EMPTY_AREA_1 = CROSSLINKED,
 									EMPTY_AREA_2 = CROSSLINKED,
 									MINING = SELFLOOPING,
+									CITY_OF_COGS = SELFLOOPING,
 									EMPTY_AREA_3 = CROSSLINKED,
 									EMPTY_AREA_4 = CROSSLINKED,
 									EMPTY_AREA_5 = CROSSLINKED,
@@ -29,6 +30,7 @@
 	var/config_min_users = 0
 	var/voteweight = 1
 	var/allow_custom_shuttles = "yes"
+
 /datum/map_config/New(filename = "data/next_map.json", default_to_box, delete_after)
 	if(default_to_box)
 		return
