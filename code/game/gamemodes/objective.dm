@@ -17,14 +17,6 @@
 	if(owner)
 		. += owner
 
-/datum/objective/proc/considered_alive(var/datum/mind/M)
-	if(M && M.current)
-		var/mob/living/carbon/human/H
-		if(ishuman(M.current))
-			H = M.current
-		return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
-	return FALSE
-
 /datum/objective/proc/considered_escaped(datum/mind/M)
 	if(!considered_alive(M))
 		return FALSE
@@ -36,9 +28,6 @@
 	if(!location || istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails if they are in the shuttle brig
 		return FALSE
 	return location.onCentCom() || location.onSyndieBase()
-
-/datum/objective/proc/considered_afk(datum/mind/M)
-	return !M || !M.current || !M.current.client || M.current.client.is_afk()
 
 /datum/objective/proc/check_completion()
 	return completed
