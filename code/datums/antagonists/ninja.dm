@@ -1,6 +1,5 @@
 /datum/antagonist/ninja
 	name = "Ninja"
-	var/team
 	var/helping_station = 0
 	var/give_objectives = TRUE
 
