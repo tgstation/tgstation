@@ -85,6 +85,7 @@
 		return
 
 /turf/open/floor/grass/snow
+	gender = PLURAL
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	desc = "Looks cold."
