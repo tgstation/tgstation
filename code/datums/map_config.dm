@@ -11,6 +11,7 @@
 
 	var/minetype = "lavaland"
 
+	//Order matters here.
 	var/list/transition_config = list(CENTCOM = SELFLOOPING,
 									MAIN_STATION = CROSSLINKED,
 									EMPTY_AREA_1 = CROSSLINKED,
