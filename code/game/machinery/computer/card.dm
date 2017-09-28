@@ -369,7 +369,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		if ("scan")
 			if (scan)
-				scan.forceMove(src.loc)
+				scan.forceMove(drop_location())
 				scan.verb_pickup()
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				scan = null
