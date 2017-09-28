@@ -224,42 +224,56 @@
 				return
 		A.CollidedWith(src)
 
-/atom/movable/proc/forceMove(atom/destination)
+//modified to not call movement procs if it's deemed unnecessary, set forceop to TRUE to override and call regardless.
+//may need different forceops for same loc/turf/area checks in the future.
+/atom/movable/proc/forceMove(atom/destination, forceop = FALSE)
 	if(destination)
+		//store information
+		var/atom/oldloc = loc
+		var/area/oldarea = get_area(oldloc)
+		var/area/destarea = get_area(destination)
+		var/same_loc = oldloc == destination
+		var/same_turf = get_turf(oldloc) == get_turf(destination)
+		var/same_area = oldarea == destarea
+		//check if we need to move
+		if(same_loc && !forceop)
+			return TRUE
+		//check if we're being pulled and interrupt pull if so
 		if(pulledby)
 			pulledby.stop_pulling()
-		var/atom/oldloc = loc
-		var/same_loc = oldloc == destination
-		var/area/old_area = get_area(oldloc)
-		var/area/destarea = get_area(destination)
-
-		if(oldloc && !same_loc)
-			oldloc.Exited(src, destination)
-			if(old_area)
-				old_area.Exited(src, destination)
-
+		//exit the old location
+		if(oldloc)
+			//if we're still going to be on the same tile, don't call exited.
+			if(!same_turf || forceop)
+				oldloc.Exited(src, destination)
+			//if we're going to be in the same area don't call exited.
+			if(!same_area || forceop)
+				oldarea.Exited(src, destination)
+		//set location to new location
 		loc = destination
-
-		if(!same_loc)
+		//enter the new location
+		//if we're going to be on the same tile, don't call exited or cross anything.
+		if(!same_turf || forceop)
 			destination.Entered(src, oldloc)
-			if(destarea && old_area != destarea)
-				destarea.Entered(src, oldloc)
-
 			for(var/atom/movable/AM in destination)
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
+			Moved(oldloc, 0)
+		//if we're going to be in the same area, don't call exited.
+		if(!same_area || forceop)
+			destarea.Entered(src, oldloc)
+		return TRUE
+	return FALSE
 
-		Moved(oldloc, 0)
-		return 1
-	return 0
-
-/mob/living/forceMove(atom/destination)
-	stop_pulling()
-	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
-	if(has_buckled_mobs())
-		unbuckle_all_mobs(force=1)
+/mob/living/forceMove(atom/destination, forceop = FALSE)
+	if(!((loc == destination) && isturf(loc) && isturf(destination))||forceop)
+		if(pulling)
+			stop_pulling()
+		if(has_buckled_mobs())
+			unbuckle_all_mobs(force=TRUE)
+		if(buckled)
+			buckled.unbuckle_mob(src,force=TRUE)
 	. = ..()
 	if(client)
 		reset_perspective(destination)
