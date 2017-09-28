@@ -3,7 +3,8 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
-	var/z_lock = null // Lock use to this zlevel
+	var/list/z_lock = list() // Lock use to these z levels
+	var/station_lock_override = FALSE
 	var/mob/camera/aiEye/remote/eyeobj
 	var/mob/living/current_user = null
 	var/list/networks = list("SS13")
@@ -12,6 +13,11 @@
 	var/list/actions = list()
 
 	light_color = LIGHT_COLOR_RED
+
+/obj/machinery/computer/camera_advanced/Initialize()
+	. = ..()
+	if(station_lock_override)
+		z_lock = GLOB.station_z_levels.Copy()
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
@@ -76,7 +82,7 @@
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-			if(!C.can_use() || z_lock && C.z != z_lock)
+			if(!C.can_use() || z_lock.len && !(C.z in z_lock))
 				continue
 			if(C.network & networks)
 				camera_location = get_turf(C)
@@ -201,7 +207,7 @@
 	var/list/L = list()
 
 	for (var/obj/machinery/camera/cam in GLOB.cameranet.cameras)
-		if(origin.z_lock && cam.z != origin.z_lock)
+		if(origin.z_lock.len && !(cam.z in origin.z_lock))
 			continue
 		L.Add(cam)
 

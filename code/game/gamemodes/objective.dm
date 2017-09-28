@@ -121,7 +121,7 @@
 	return target
 
 /datum/objective/assassinate/check_completion()
-	return !target || !considered_alive(target)
+	return !considered_alive(target) || considered_afk(target)
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
