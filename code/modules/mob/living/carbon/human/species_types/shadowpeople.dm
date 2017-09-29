@@ -1,3 +1,5 @@
+#define HEART_RESPAWN_THRESHHOLD 40
+
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "???"
@@ -137,7 +139,7 @@
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			respawn_progress++
 			playsound(owner,'sound/effects/singlebeat.ogg',40,1)
-	if(respawn_progress >= 40)
+	if(respawn_progress >= HEART_RESPAWN_THRESHHOLD)
 		owner.revive(full_heal = TRUE)
 		owner.visible_message("<span class='warning'>[owner] staggers to their feet!</span>")
 		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, 1)
@@ -192,3 +194,5 @@
 		visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
 		O.burn()
 	playsound(src, 'sound/items/welder.ogg', 50, 1)
+
+#undef HEART_RESPAWN_THRESHHOLD
