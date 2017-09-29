@@ -178,7 +178,6 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port/fore)
 "aav" = (
-/obj/effect/landmark/marauder_entry,
 /turf/open/space,
 /area/space)
 "aaw" = (
@@ -2220,14 +2219,6 @@
 /area/crew_quarters/fitness/recreation)
 "aeC" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/fitness/recreation)
-"aeD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/landmark/syndicate_breach_area,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -129060,7 +129051,7 @@ aaa
 aaa
 bii
 aaa
-aeD
+aeC
 afD
 afD
 afD
