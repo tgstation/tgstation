@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - tweak: "The mining vendor will now provide more verbose feedback about your interactions."

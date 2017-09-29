@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "You now have to be holding a weapon to affix a suppressor to it."
-  - balance: "Attaching a suppressor to a weapon will now make it slightly larger, as is logical."

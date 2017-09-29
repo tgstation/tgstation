@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Nurse spiders can now set a directive that will be seen by their spiderlings, when they get controlled by a player."
-  - rscadd: "Spiders' actions are now action buttons instead of verbs."
-  - rscadd: "Wrapping stuff in a cocoon is now a targeted action!"

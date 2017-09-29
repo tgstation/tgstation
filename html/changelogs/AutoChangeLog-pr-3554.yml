@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - tweak: "Wizard cannot cast spoken or whispered spells while mute"
