@@ -20,10 +20,10 @@
 	allow_pai = 1 //Damn right we'll pAI these
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED // show jobs
 
-	var/honksound = 'sound/items/bikehorn.ogg' //customizable
+	var/honksound = 'sound/items/bikehorn.ogg' //customizable sound
 	var/goldenbikehorn = 0 //placeholder
 	var/spam_flag = 0
-	var/cooldowntime = 30
+	var/cooldowntime = 40
 	var/cooldowntimehorn = 10
 	var/cooldowntimeEmag = 5
 	var/mob/living/carbon/target
@@ -133,7 +133,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 				retaliate(Proj.firer)
 	..()
 
-
 /mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A)
 	if(!on)
 		return
@@ -191,8 +190,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	if (ckey == null) //check if a player is controlling
 		playsound(loc, honksound, 50, 1, -1)
 	else
-		playsound(loc, honksound, 50, 1, -1)
-		spam_flag = 1 // prevent spam
+		if(spam_flag == 0)
+			playsound(loc, honksound, 50, 1, -1)
+			spam_flag = 1 // prevent spam
 	icon_state = "honkbot-c"
 	spawn(5)
 		icon_state = "honkbot[on]"
@@ -200,27 +200,34 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		spam_flag = 0
 
 /mob/living/simple_animal/bot/honkbot/proc/stun_attack(mob/living/carbon/C) // airhorn stun
-	playsound(loc, 'sound/items/AirHorn.ogg', 100, 1, -1) //HOOOOOOOOOOOOONK!!
+	if (ckey == null)
+		playsound(loc, 'sound/items/AirHorn.ogg', 100, 1, -1) //HOOOOOOOOOOOOONK!!
+	else
+		if(spam_flag == 0)
+			playsound(loc, 'sound/items/AirHorn.ogg', 100, 1, -1) //HEEEEEEEEEEEENK!!
 	icon_state = "honkbot-c"
 	spawn(5)
 		icon_state = "honkbot[on]"
-
-	if(ishuman(C))
-		C.stuttering = 20
-		C.Jitter(50)
-		C.Knockdown(80)
-		var/mob/living/carbon/human/H = C
-
-		if (!emagged) //HONK once, then leave
-			threatlevel = H.assess_threat(src)
-			threatlevel -= 6
-			//target = old_target
-		else // you really don't want to hit an emagged honkbot
-			threatlevel = H.assess_threat(src)
-			threatlevel = 6 // will never let you go
-	else
-		C.stuttering = 20
-		C.Knockdown(80)
+	if(spam_flag == 0)
+		if(ishuman(C))
+			C.stuttering = 20
+			C.Jitter(50)
+			C.Knockdown(80)
+			var/mob/living/carbon/human/H = C
+			if (ckey != null) //don't alter AI behavior
+				spam_flag = 1
+			if (!emagged) //HONK once, then leave
+				threatlevel = H.assess_threat(src)
+				threatlevel -= 6
+				//target = old_target
+			else // you really don't want to hit an emagged honkbot
+				threatlevel = H.assess_threat(src)
+				threatlevel = 6 // will never let you go
+			spawn(cooldowntime)
+				spam_flag = 0
+		else
+			C.stuttering = 20
+			C.Knockdown(80)
 
 	add_logs(src,C,"honked")
 	spawn(cooldowntime)

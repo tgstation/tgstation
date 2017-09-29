@@ -609,12 +609,42 @@
 	playsound(loc, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 
+/////clown box & honkbot assembly
 obj/item/storage/box/clown
 	name = "clown box"
 	desc = "A colorful cardboard box for the clown"
 	icon_state = "clownbox"
 	illustration = null
 	//foldable = null
+
+/obj/item/stack/sheet/cardboard/attackby(obj/item/stamp/clown/I, mob/user, params)
+	if(!istype(I, /obj/item/stamp/clown))
+		..()
+		return
+	to_chat(user, "<span class='notice'>You stamp the cardboard! Its a clown box! Honk!</span>")
+	var/turf/T = get_turf(src)
+	var/obj/item/storage/box/clown/A = new /obj/item/storage/box/clown(T)
+	user.put_in_hands(A)
+	qdel(src)
+
+/obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
+	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
+		if(contents.len >= 1) //prevent accidently deleting contents
+			to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
+			return
+		if(!user.temporarilyRemoveItemFromInventory(I))
+			return
+		qdel(I)
+		to_chat(user, "<span class='notice'>You add some wheels to the [src]! You've got an honkbot assembly now! Honk!</span>")
+		var/turf/T = get_turf(src)
+		var/obj/item/honkbot_assembly/A = new /obj/item/honkbot_assembly(T)
+		user.put_in_hands(A)
+		qdel(src)
+	else
+		..()
+		return
+
+//////
 
 /obj/item/storage/box/hug/medical/PopulateContents()
 	new /obj/item/stack/medical/bruise_pack(src)

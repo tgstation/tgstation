@@ -350,15 +350,7 @@
 
 //Honkbot Assembly
 
-/obj/item/storage/box/clown/attackby(obj/item/bodypart/l_arm/robot/I, mob/user, params)
-	if(!user.temporarilyRemoveItemFromInventory(I))
-		return
-	qdel(I)
-	to_chat(user, "<span class='notice'>You add some wheels to the [src]! You've got an honkbot assembly now! Honk!</span>")
-	var/turf/T = get_turf(src)
-	var/obj/item/honkbot_assembly/A = new /obj/item/honkbot_assembly(T)
-	user.put_in_hands(A)
-	qdel(src)
+
 
 /obj/item/honkbot_assembly
 	name = "incomplete honkbot assembly"
