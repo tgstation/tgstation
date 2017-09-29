@@ -1309,6 +1309,7 @@
 #include "code\modules\events\wizard\summons.dm"
 #include "code\modules\fields\fields.dm"
 #include "code\modules\fields\peaceborg_dampener.dm"
+#include "code\modules\fields\timestop.dm"
 #include "code\modules\fields\turf_objects.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
