@@ -521,7 +521,7 @@ F
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_guns)
+	return (SSticker.mode.name != "ragin' mages" && !CONFIG_GET(flag/no_summon_guns))
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)
@@ -538,7 +538,7 @@ F
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_magic)
+	return (SSticker.mode.name != "ragin' mages" && !CONFIG_GET(flag/no_summon_magic))
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)
@@ -556,7 +556,7 @@ F
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_events)
+	return (SSticker.mode.name != "ragin' mages" && !CONFIG_GET(flag/no_summon_events))
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)

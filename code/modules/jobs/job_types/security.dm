@@ -1,6 +1,6 @@
 //Warden and regular officers add this result to their get_access()
 /datum/job/proc/check_config_for_sec_maint()
-	if(config.jobs_have_maint_access & SECURITY_HAS_MAINT_ACCESS)
+	if(CONFIG_GET(flag/security_has_maint_access))
 		return list(ACCESS_MAINT_TUNNELS)
 	return list()
 
@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	W.access |= dep_access
 
 	var/teleport = 0
-	if(!config.sec_start_brig)
+	if(!CONFIG_GET(flag/sec_start_brig))
 		if(destination || spawn_point)
 			teleport = 1
 	if(teleport)
