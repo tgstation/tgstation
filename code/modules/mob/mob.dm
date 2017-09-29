@@ -161,7 +161,7 @@
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
 
-/mob/proc/movement_delay()
+/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
 	return 0
 
 /mob/proc/Life()
