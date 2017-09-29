@@ -104,25 +104,7 @@
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
-/mob/living/simple_animal/hostile/proc/ListTargetsNonSO()
-	. = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
-
-	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden))
-
-	for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
-		if(can_see(targets_from, HM, vision_range))
-			. += HM
-
-/mob/living/simple_animal/hostile/proc/ListTargetsSO()
-	. = oview(vision_range, targets_from)
-
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
-	if(!search_objects)
-		. = ListTargetsNonSO()
-	else
-		. = ListTargetsSO()
-
-/mob/living/simple_animal/hostile/proc/OldListTargets()//Step 1, find out what we can see
 	if(!search_objects)
 		. = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 
@@ -181,27 +163,12 @@
 	var/chosen_target = pick(Targets)//Pick the remaining targets (if any) at random
 	return chosen_target
 
-GLOBAL_LIST_INIT(canattackpaths, list(lighting = 0, turf = 0, thetarget = 0, invis = 0, rstat = 0, rfact1 = 0, rfact2 = 0, rfriends = 0, lstat = 0, lfact = 0, livingelse = 0, mecha = 0, ptfact = 0, ptcover = 0, pstat = 0, ptelse = 0, owtarget = 0, owelse = 0, isobj = 0, else = 0))
-GLOBAL_LIST_INIT(canattacktypes, list())
-
-/mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(prob(50))
-		return OldCanAttack(the_target)
-	return NewCanAttack(the_target)
-
-
-/mob/living/simple_animal/hostile/proc/NewCanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(istype(the_target, /atom/movable/lighting_object))
-		GLOB.canattackpaths["lighting"] += 1
+// Please do not add one-off mob AIs here, but override this function for your mob
+/mob/living/simple_animal/hostile/proc/CanAttack(atom/the_target)//Can we actually attack a possible target? 
+	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
 		return FALSE
-	if(istype(the_target, /turf))
-		GLOB.canattackpaths["turf"] += 1
-		return FALSE
-	if(!the_target)
-		GLOB.canattackpaths["thetarget"] += 1
-		return FALSE
+
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		GLOB.canattackpaths["invis"] += 1
 		return FALSE
 	if(search_objects < 2)
 		if(isliving(the_target))
@@ -209,117 +176,42 @@ GLOBAL_LIST_INIT(canattacktypes, list())
 			var/faction_check = faction_check_mob(L)
 			if(robust_searching)
 				if(faction_check && !attack_same)
-					GLOB.canattackpaths["rfact1"] += 1
 					return FALSE
-				if (!faction_check && attack_same == 2)
-					GLOB.canattackpaths["rfact2"] += 1
-					return FALSE
-				if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive)
-					GLOB.canattackpaths["rstat"] += 1
+				if(L.stat > stat_attack)
 					return FALSE
 				if(L in friends)
-					GLOB.canattackpaths["rfriends"] += 1
 					return FALSE
 			else
-				if(faction_check && !attack_same)
-					GLOB.canattackpaths["lfact"] += 1
+				if((faction_check && !attack_same) || L.stat)
 					return FALSE
-				if(L.stat)
-					GLOB.canattackpaths["lstat"] += 1
-					return FALSE
-			GLOB.canattackpaths["livingelse"] += 1
 			return TRUE
 
 		if(istype(the_target, /obj/mecha))
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
 				if(CanAttack(M.occupant))
-					GLOB.canattackpaths["mecha"] += 1
 					return TRUE
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
 			if(P.faction in faction)
-				GLOB.canattackpaths["ptfact"] += 1
 				return FALSE
 			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
-				GLOB.canattackpaths["ptcover"] += 1
 				return FALSE
 			if(P.stat & BROKEN) //Or turrets that are already broken
-				GLOB.canattackpaths["pstat"] += 1
 				return FALSE
-			GLOB.canattackpaths["ptelse"] += 1
 			return TRUE
 
 		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
 			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
 			if(OW.target != src)
-				GLOB.canattackpaths["owtarget"] += 1
 				return FALSE
-			GLOB.canattackpaths["owelse"] += 1
 			return TRUE
 	if(isobj(the_target))
 		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
-			GLOB.canattackpaths["isobj"] += 1
 			return TRUE
-	GLOB.canattackpaths["else"] += 1
-	if (istype(the_target))
-		if (GLOB.canattacktypes["[the_target.type]"])
-			GLOB.canattacktypes["[the_target.type]"] += 1
-		else
-			GLOB.canattacktypes["[the_target.type]"] = 1
+
 	return FALSE
-
-/mob/living/simple_animal/hostile/proc/OldCanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(!the_target)
-		return 0
-	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return 0
-	if(search_objects < 2)
-		if(isliving(the_target))
-			var/mob/living/L = the_target
-			var/faction_check = faction_check_mob(L)
-			if(robust_searching)
-				if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive)
-					return 0
-				if(faction_check && !attack_same || !faction_check && attack_same == 2)
-					return 0
-				if(L in friends)
-					return 0
-			else
-				if(L.stat)
-					return 0
-				if(faction_check && !attack_same)
-					return 0
-			return 1
-
-		if(istype(the_target, /obj/mecha))
-			var/obj/mecha/M = the_target
-			if(M.occupant)//Just so we don't attack empty mechs
-				if(CanAttack(M.occupant))
-					return 1
-
-		if(istype(the_target, /obj/machinery/porta_turret))
-			var/obj/machinery/porta_turret/P = the_target
-			if(P.faction in faction)
-				return 0
-			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
-				return 0
-			if(P.stat & BROKEN) //Or turrets that are already broken
-				return 0
-			return 1
-
-		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
-			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
-			if(OW.target != src)
-				return FALSE
-			return TRUE
-
-
-	if(isobj(the_target))
-		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
-			return 1
-	return 0
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	target = new_target
