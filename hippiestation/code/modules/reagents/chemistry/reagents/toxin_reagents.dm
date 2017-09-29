@@ -395,7 +395,7 @@
 		M.adjustStaminaLoss(5*REM, 0)
 	..()
 
-/datum/reagent/toxin/screech/
+/datum/reagent/toxin/screech
 	name = "Screechisol"
 	id = "screech"
 	description = "Stimulates the vocal cords heavily, inducing involuntary yelling."
