@@ -587,10 +587,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 
 /proc/send2irc(msg,msg2)
-	if(world.RunningService())
-		world.ExportService("[SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE] [msg] | [msg2]")
-	else if(CONFIG_GET(flag/useircbot))
-		shell("python nudge.py [msg] [msg2]")
+	if(SERVER_TOOLS_PRESENT)
+		SERVER_TOOLS_RELAY_BROADCAST("[msg] | [msg2]")
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
 	var/comms_key = CONFIG_GET(string/comms_key)

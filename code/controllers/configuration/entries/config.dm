@@ -227,9 +227,6 @@ CONFIG_DEF(flag/load_jobs_from_txt)
 
 CONFIG_DEF(flag/forbid_singulo_possession)
 
-CONFIG_DEF(flag/useircbot)	//tgs2 support
-	protection = CONFIG_ENTRY_LOCKED
-
 CONFIG_DEF(flag/automute_on)	//enables automuting/spam prevention
 
 CONFIG_DEF(string/panic_server_name)
