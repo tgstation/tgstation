@@ -180,3 +180,11 @@
 /obj/item/storage/lockbox/medal/sci/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+
+/obj/item/storage/lockbox/medal/cargo
+	name = "cargo award box"
+	desc = "A locked box used to store awards to be given to members of the cargo department."
+	req_access = list(ACCESS_QM)
+
+/obj/item/storage/lockbox/medal/cargo/PopulateContents()
+		new /obj/item/clothing/accessory/medal/ribbon/cargo(src)
