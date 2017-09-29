@@ -394,3 +394,34 @@
 		M.Dizzy(10)
 		M.adjustStaminaLoss(5*REM, 0)
 	..()
+
+/datum/reagent/toxin/screech/
+	name = "Screechisol"
+	id = "screech"
+	description = "Stimulates the vocal cords heavily, inducing involuntary yelling."
+	reagent_state = LIQUID
+	color = "#853358"
+	taste_description = "sour"
+	
+/datum/reagent/toxin/screech/on_mob_life(mob/living/M)
+	switch(current_cycle)
+		if(1 to 10)
+			if(prob(10))
+			M.emote("scream")
+		if(10 to 20)
+			if(prob(25))
+			M.emote("scream")
+			. = 1
+		if(20 to 30)
+			if(prob(40))
+			M.emote("scream")
+			. = 1
+		if(30 to 40)
+			if(prob(55))
+			M.emote("scream")
+			. = 1
+		if(40 to INFINITY)
+			if(prob(80))
+			M.emote("scream")
+			. = 1
+	..()
