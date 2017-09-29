@@ -7751,7 +7751,6 @@
 /area/hippie/pool)
 "aqt" = (
 /obj/structure/grille,
-/obj/effect/landmark/syndicate_breach_area,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -15271,7 +15270,6 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "aHr" = (
-/obj/effect/landmark/marauder_entry,
 /turf/open/space,
 /area/space)
 "aHs" = (
@@ -16254,11 +16252,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aJE" = (
-/obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/gun/ballistic/revolver/doublebarrel,
 /obj/structure/table/wood,
-/obj/item/stack/spacecash/c10,
-/obj/item/stack/spacecash/c100,
+/obj/item/gun/ballistic/revolver/doublebarrel{
+	desc = "The barkeeper's trusty double-barrel. Works beautifully, despite its age.";
+	name = "Ol' Faithful"
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aJF" = (
@@ -17272,7 +17270,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aLV" = (
@@ -17802,9 +17799,8 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "aNu" = (
-/obj/structure/closet/secure_closet/bar{
-	req_access_txt = "25"
-	},
+/obj/structure/closet/secure_closet/bar,
+/obj/item/book/manual/barman_recipes,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aNv" = (
@@ -17876,6 +17872,7 @@
 /obj/item/stack/cable_coil,
 /obj/item/device/flashlight/lamp,
 /obj/item/device/flashlight/lamp/green,
+/obj/item/screwdriver,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aNE" = (
@@ -18667,7 +18664,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aPw" = (
-/obj/machinery/disposal/bin,
 /obj/structure/sign/securearea{
 	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
 	icon_state = "monkey_painting";
@@ -18675,16 +18671,14 @@
 	pixel_x = -28;
 	pixel_y = -4
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
 /obj/machinery/button/door{
 	id = "barShutters";
 	name = "bar shutters";
 	pixel_x = 4;
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/bar,
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aPx" = (
 /obj/structure/chair/comfy/beige{
@@ -18791,12 +18785,12 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/structure/table,
 /obj/machinery/chem_dispenser/drinks/beer,
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
-/turf/open/floor/plasteel/bar,
+/obj/structure/table/reinforced,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aPQ" = (
 /turf/closed/wall,
@@ -18940,7 +18934,12 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "aQc" = (
-/turf/open/floor/plasteel/bar,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/obj/structure/reagent_dispensers/chemical,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aQd" = (
 /obj/structure/chair,
@@ -18974,11 +18973,8 @@
 	},
 /area/hydroponics)
 "aQi" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/open/floor/plasteel/bar,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aQj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -19291,8 +19287,9 @@
 /turf/open/floor/plasteel,
 /area/storage/tools)
 "aRg" = (
-/obj/machinery/vending/boozeomat,
-/turf/open/floor/plasteel/bar,
+/obj/machinery/chem_dispenser/drinks,
+/obj/structure/table/reinforced,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aRh" = (
 /obj/machinery/light{
@@ -19850,8 +19847,9 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aSF" = (
+/obj/structure/disposalpipe/segment,
 /mob/living/carbon/monkey/punpun,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aSG" = (
 /obj/structure/table/wood/poker,
@@ -19996,11 +19994,11 @@
 /obj/item/clothing/head/that{
 	throwforce = 1
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aSZ" = (
 /obj/effect/landmark/start/bartender,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aTa" = (
 /obj/machinery/requests_console{
@@ -21011,7 +21009,8 @@
 /area/crew_quarters/bar)
 "aVy" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/bar,
+/obj/item/reagent_containers/food/drinks/shaker,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aVz" = (
 /turf/open/floor/plasteel/cafeteria,
@@ -21894,16 +21893,19 @@
 "aXj" = (
 /obj/structure/table/reinforced,
 /obj/item/lighter,
-/turf/open/floor/plasteel/bar,
+/obj/machinery/camera{
+	c_tag = "Bar";
+	dir = 2;
+	network = list("SS13")
+	},
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aXk" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 32
 	},
-/obj/item/book/manual/barman_recipes,
-/obj/item/reagent_containers/glass/rag,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aXl" = (
 /obj/machinery/door/window/southright{
@@ -21911,7 +21913,7 @@
 	req_access_txt = "0";
 	req_one_access_txt = "25;28"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aXm" = (
 /obj/effect/landmark/start/cook,
@@ -69283,6 +69285,57 @@
 /obj/machinery/mech_bay_recharge_port,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"dcB" = (
+/obj/machinery/door/window/eastleft{
+	dir = 8;
+	icon_state = "right";
+	name = "Kitchen Window";
+	req_access_txt = "0"
+	},
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"dcC" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+"dcD" = (
+/obj/structure/disposalpipe/segment{
+	base_icon_state = null;
+	dir = 1;
+	dpdir = 0;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+"dcE" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/requests_console{
+	department = "Bar";
+	departmentType = 2;
+	pixel_x = 30;
+	pixel_y = 0;
+	receive_ore_updates = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+"dcF" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c100,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+"dcG" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/glass/rag,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 
 (1,1,1) = {"
 aaa
@@ -105642,8 +105695,8 @@ aJC
 aXj
 aVy
 aSY
-aVy
-aVy
+dcC
+dcF
 aYI
 bah
 aJC
@@ -105896,11 +105949,11 @@ aLU
 aNu
 aJC
 aPw
-aQc
-aQc
+aKR
+aKR
 aSZ
-aQc
-aVy
+aKR
+dcG
 czP
 bag
 aJC
@@ -106153,10 +106206,10 @@ aMi
 aNE
 aOO
 aQi
-aRz
+aQi
 aSF
-aQc
-aQc
+aQi
+dcD
 aXl
 aKR
 bai
@@ -106412,8 +106465,8 @@ aJC
 aPP
 aRg
 aQc
-aTa
-aQc
+aKR
+dcE
 aXk
 aKR
 aKR
@@ -106668,9 +106721,9 @@ aJC
 aJC
 aJI
 aJI
-aSI
 aJI
-aVA
+dcB
+aJI
 aJI
 aYK
 aJI
@@ -106902,7 +106955,7 @@ aaa
 aaa
 aaa
 aaa
-aqt
+aqs
 aro
 aro
 aro
@@ -130824,7 +130877,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+cEl
 aaa
 aaa
 aaa
@@ -131096,7 +131149,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+cEl
 aaa
 aaa
 aaa
@@ -131386,7 +131439,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+cEl
 aaa
 aaa
 aaa
@@ -132616,7 +132669,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+cEl
 aaa
 aaa
 aaa
@@ -132649,7 +132702,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+cEl
 aaa
 aaa
 aaa
@@ -132941,7 +132994,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+cEl
 aaa
 aaa
 aaa

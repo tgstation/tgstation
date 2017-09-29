@@ -38,11 +38,11 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
-	if(pounce_cooldown > world.time)
-		to_chat(src, "<span class='alertalien'>You are too fatigued to pounce right now!</span>")
+	if(!canmove || leaping)
 		return
 
-	if(leaping || stat || buckled || lying)
+	if(pounce_cooldown > world.time)
+		to_chat(src, "<span class='alertalien'>You are too fatigued to pounce right now!</span>")
 		return
 
 	if(!has_gravity() || !A.has_gravity())
@@ -66,6 +66,7 @@
 	if(!leaping)
 		return ..()
 
+	pounce_cooldown = world.time + pounce_cooldown_time
 	if(A)
 		if(isliving(A))
 			var/mob/living/L = A
@@ -83,7 +84,6 @@
 				Knockdown(40, 1, 1)
 
 			toggle_leap(0)
-			pounce_cooldown = world.time + pounce_cooldown_time
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
 			Knockdown(40, 1, 1)

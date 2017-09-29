@@ -33,6 +33,7 @@
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
 	icon_dead = "parrot_dead"
+	var/icon_sit = "parrot_sit"
 	density = FALSE
 	health = 80
 	maxHealth = 80
@@ -282,7 +283,7 @@
 		return
 	if(!stat && M.a_intent == INTENT_HARM)
 
-		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
+		icon_state = icon_living //It is going to be flying regardless of whether it flees or attacks
 
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -318,7 +319,7 @@
 	if(M.melee_damage_upper > 0 && !stat)
 		parrot_interest = M
 		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
-		icon_state = "parrot_fly"
+		icon_state = icon_living
 
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/living/user, params)
@@ -333,7 +334,7 @@
 				parrot_state |= PARROT_ATTACK
 			else
 				parrot_state |= PARROT_FLEE
-			icon_state = "parrot_fly"
+			icon_state = icon_living
 			drop_held_item(0)
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
 		qdel(O)
@@ -356,7 +357,7 @@
 		parrot_interest = null
 		parrot_state = PARROT_WANDER | PARROT_FLEE //Been shot and survived! RUN LIKE HELL!
 		//parrot_been_shot += 5
-		icon_state = "parrot_fly"
+		icon_state = icon_living
 		drop_held_item(0)
 	return
 
@@ -369,7 +370,7 @@
 
 	//Sprite update for when a parrot gets pulled
 	if(pulledby && stat == CONSCIOUS)
-		icon_state = "parrot_fly"
+		icon_state = icon_living
 		if(!client)
 			parrot_state = PARROT_WANDER
 		return
@@ -398,11 +399,11 @@
 		if(parrot_perch && parrot_perch.loc != src.loc) //Make sure someone hasnt moved our perch on us
 			if(parrot_perch in view(src))
 				parrot_state = PARROT_SWOOP | PARROT_RETURN
-				icon_state = "parrot_fly"
+				icon_state = icon_living
 				return
 			else
 				parrot_state = PARROT_WANDER
-				icon_state = "parrot_fly"
+				icon_state = icon_living
 				return
 
 		if(--parrot_sleep_dur) //Zzz
@@ -443,7 +444,7 @@
 			if(parrot_interest)
 				emote("me", 1, "looks in [parrot_interest]'s direction and takes flight.")
 				parrot_state = PARROT_SWOOP | PARROT_STEAL
-				icon_state = "parrot_fly"
+				icon_state = icon_living
 			return
 
 //-----WANDERING - This is basically a 'I dont know what to do yet' state
@@ -528,7 +529,7 @@
 			src.loc = parrot_perch.loc
 			drop_held_item()
 			parrot_state = PARROT_PERCH
-			icon_state = "parrot_sit"
+			icon_state = icon_sit
 			return
 
 		walk_to(src, parrot_perch, 1, parrot_speed)
@@ -601,8 +602,8 @@
  */
 
 /mob/living/simple_animal/parrot/movement_delay()
-	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
-		icon_state = "parrot_fly"
+	if(client && stat == CONSCIOUS && parrot_state != icon_living)
+		icon_state = icon_living
 		//Because the most appropriate place to set icon_state is movement_delay(), clearly
 	return ..()
 
@@ -795,12 +796,12 @@
 	if(stat || !client)
 		return
 
-	if(icon_state == "parrot_fly")
+	if(icon_state == icon_living)
 		for(var/atom/movable/AM in view(src,1))
 			for(var/perch_path in desired_perches)
 				if(istype(AM, perch_path))
 					src.loc = AM.loc
-					icon_state = "parrot_sit"
+					icon_state = icon_sit
 					return
 	to_chat(src, "<span class='warning'>There is no perch nearby to sit on!</span>")
 	return
@@ -814,7 +815,7 @@
 	if(stat || !client)
 		return
 
-	if(icon_state == "parrot_fly")
+	if(icon_state == icon_living)
 		for(var/mob/living/carbon/human/H in view(src,1))
 			if(H.has_buckled_mobs() && H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
 				continue
@@ -822,7 +823,7 @@
 			return
 		to_chat(src, "<span class='warning'>There is nobody nearby that you can sit on!</span>")
 	else
-		icon_state = "parrot_fly"
+		icon_state = icon_living
 		parrot_state = PARROT_WANDER
 		if(buckled)
 			to_chat(src, "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>")
@@ -840,7 +841,7 @@
 	H.buckle_mob(src, force=1)
 	pixel_y = 9
 	pixel_x = pick(-8,8) //pick left or right shoulder
-	icon_state = "parrot_sit"
+	icon_state = icon_sit
 	parrot_state = PARROT_PERCH
 	to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
 
@@ -899,9 +900,6 @@
 
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		rounds_survived = max(++rounds_survived,1)
-		if(rounds_survived > longest_survival)
-			longest_survival = rounds_survived
 		Write_Memory(FALSE)
 		memory_saved = TRUE
 	..()
@@ -959,6 +957,12 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
+/mob/living/simple_animal/parrot/Poly/ratvar_act()
+	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 75, TRUE)
+	var/mob/living/simple_animal/parrot/clock_hawk/H = new(loc)
+	H.setDir(dir)
+	dust()
+
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
 	desc = "Doomed to squawk the earth."
@@ -995,3 +999,22 @@
 	H.ContractDisease(P)
 	parrot_interest = null
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
+
+
+/mob/living/simple_animal/parrot/clock_hawk
+	name = "clock hawk"
+	desc = "Cbyl jnaan penpxre! Fdhnnnjx!"
+	icon_state = "clock_hawk_fly"
+	icon_living = "clock_hawk_fly"
+	icon_sit = "clock_hawk_sit"
+	speak = list("Penpxre!", "Ratvar vf n qhzo anzr naljnl!")
+	speak_emote = list("squawks rustily", "says crassly", "yells brassly")
+	emote_hear = list("squawks rustily.", "bawks metallically!")
+	emote_see = list("flutters its metal wings.")
+	faction = list("ratvar")
+	gold_core_spawnable = FALSE
+	del_on_death = TRUE
+	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
+
+/mob/living/simple_animal/parrot/clock_hawk/ratvar_act()
+	return

@@ -10,7 +10,7 @@
 	var/active = FALSE //If the visor is online
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/effect/proc_holder/judicial_visor/blaster
-	var/recharge_cooldown = 100 //divided by 10 if ratvar is alive
+	var/recharge_cooldown = 300 //divided by 10 if ratvar is alive
 	actions_types = list(/datum/action/item_action/clock/toggle_visor)
 
 /obj/item/clothing/glasses/judicial_visor/Initialize()
@@ -170,7 +170,7 @@
 		if(!QDELETED(B))
 			B.duration = world.time + 30
 			C.Knockdown(5) //knocks down for half a second if affected
-	sleep(16)
+	sleep(!GLOB.ratvar_approaches ? 16 : 10)
 	name = "judicial blast"
 	layer = ABOVE_ALL_MOB_LAYER
 	flick("judicial_explosion", src)

@@ -6,13 +6,13 @@ GLOBAL_PROTECT(exp_to_update)
 /datum/job/proc/required_playtime_remaining(client/C)
 	if(!C)
 		return 0
-	if(!config.use_exp_tracking)
+	if(!CONFIG_GET(flag/use_exp_tracking))
 		return 0
 	if(!exp_requirements || !exp_type)
 		return 0
 	if(!job_is_xp_locked(src.title))
 		return 0
-	if(config.use_exp_restrictions_admin_bypass && check_rights(R_ADMIN, FALSE, C.mob))
+	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights(R_ADMIN, FALSE, C.mob))
 		return 0
 	var/isexempt = C.prefs.db_flags & DB_FLAG_EXEMPT
 	if(isexempt)
@@ -26,20 +26,21 @@ GLOBAL_PROTECT(exp_to_update)
 
 /datum/job/proc/get_exp_req_amount()
 	if(title in GLOB.command_positions)
-		if(config.use_exp_restrictions_heads_hours)
-			return config.use_exp_restrictions_heads_hours * 60
+		var/uerhh = CONFIG_GET(number/use_exp_restrictions_heads_hours)
+		if(uerhh)
+			return uerhh * 60
 	return exp_requirements
 
 /datum/job/proc/get_exp_req_type()
 	if(title in GLOB.command_positions)
-		if(config.use_exp_restrictions_heads_department && exp_type_department)
+		if(CONFIG_GET(flag/use_exp_restrictions_heads_department) && exp_type_department)
 			return exp_type_department
 	return exp_type
 
 /proc/job_is_xp_locked(jobtitle)
-	if(!config.use_exp_restrictions_heads && jobtitle in GLOB.command_positions)
+	if(!CONFIG_GET(flag/use_exp_restrictions_heads) && jobtitle in GLOB.command_positions)
 		return FALSE
-	if(!config.use_exp_restrictions_other && !(jobtitle in GLOB.command_positions))
+	if(!CONFIG_GET(flag/use_exp_restrictions_other) && !(jobtitle in GLOB.command_positions))
 		return FALSE
 	return TRUE
 
@@ -55,7 +56,7 @@ GLOBAL_PROTECT(exp_to_update)
 	return amount
 
 /client/proc/get_exp_report()
-	if(!config.use_exp_tracking)
+	if(!CONFIG_GET(flag/use_exp_tracking))
 		return "Tracking is disabled in the server configuration file."
 	var/list/play_records = prefs.exp
 	if(!play_records.len)
@@ -86,7 +87,7 @@ GLOBAL_PROTECT(exp_to_update)
 				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] ([percentage]%)</LI>"
 			else
 				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] </LI>"
-	if(config.use_exp_restrictions_admin_bypass && check_rights(R_ADMIN, 0, mob))
+	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights(R_ADMIN, 0, mob))
 		return_text += "<LI>Admin (all jobs auto-unlocked)</LI>"
 	return_text += "</UL>"
 	var/list/jobs_locked = list()
@@ -139,7 +140,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 //resets a client's exp to what was in the db.
 /client/proc/set_exp_from_db()
-	if(!config.use_exp_tracking)
+	if(!CONFIG_GET(flag/use_exp_tracking))
 		return -1
 	if(!SSdbcore.Connect())
 		return -1
@@ -181,7 +182,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 
 /client/proc/update_exp_list(minutes, announce_changes = FALSE)
-	if(!config.use_exp_tracking)
+	if(!CONFIG_GET(flag/use_exp_tracking))
 		return -1
 	if(!SSdbcore.Connect())
 		return -1

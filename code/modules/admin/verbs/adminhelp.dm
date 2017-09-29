@@ -401,9 +401,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	dat += "</b>[GLOB.TAB][TicketHref("Refresh", ref_src)][GLOB.TAB][TicketHref("Re-Title", ref_src, "retitle")]"
 	if(state != AHELP_ACTIVE)
 		dat += "[GLOB.TAB][TicketHref("Reopen", ref_src, "reopen")]"
-	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)] (Approx [(world.time - opened_at) / 600] minutes ago)"
+	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
 	if(closed_at)
-		dat += "<br>Closed at: [gameTimestamp(wtime = closed_at)] (Approx [(world.time - closed_at) / 600] minutes ago)"
+		dat += "<br>Closed at: [gameTimestamp(wtime = closed_at)] (Approx [DisplayTimeText(world.time - closed_at)] ago)"
 	dat += "<br><br>"
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
@@ -589,21 +589,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 
 /proc/send2irc(msg,msg2)
-	if(world.RunningService())
-		world.ExportService("[SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE] [msg] | [msg2]")
-	else if(config.useircbot)
-		shell("python nudge.py [msg] [msg2]")
+	if(SERVER_TOOLS_PRESENT)
+		SERVER_TOOLS_RELAY_BROADCAST("[msg] | [msg2]")
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
-	if(config.cross_allowed)
+	var/comms_key = CONFIG_GET(string/comms_key)
+	if(comms_key)
 		var/list/message = list()
 		message["message_sender"] = source
 		message["message"] = msg
-		message["source"] = "([config.cross_name])"
-		message["key"] = global.comms_key
+		message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
+		message["key"] = comms_key
 		message["crossmessage"] = type
 
-		world.Export("[config.cross_address]?[list2params(message)]")
+		world.Export("[CONFIG_GET(string/cross_server_address)]?[list2params(message)]")
 
 
 /proc/ircadminwho()
