@@ -1,5 +1,8 @@
 /*ALL MOB-RELATED DEFINES THAT DON'T BELONG IN ANOTHER FILE GO HERE*/
 
+
+#define CATPERSON_MAXHEALTH_RATIO 0.25
+
 //Misc mob defines
 
 //Ready states at roundstart for mob/dead/new_player
