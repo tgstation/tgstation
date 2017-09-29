@@ -21,6 +21,7 @@
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED // show jobs
 
 	var/honksound = 'sound/items/bikehorn.ogg' //customizable
+	var/goldenbikehorn = false //placeholder
 	var/spam_flag = 0
 	var/cooldowntime = 30
 	var/cooldowntimehorn = 10

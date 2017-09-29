@@ -347,6 +347,52 @@
 					S.name = created_name
 					qdel(src)
 
+
+//Honkbot Assembly
+
+/obj/item/storage/box/clown/attackby(obj/item/bodypart/l_arm/robot/I, mob/user, params)
+	if(!user.temporarilyRemoveItemFromInventory(I))
+		return
+	qdel(I)
+	to_chat(user, "<span class='notice'>You add some wheels to the [src]! You've got an honkbot assembly now! Honk!</span>")
+	var/turf/T = get_turf(src)
+	var/obj/item/honkbot_assembly/A = new /obj/item/honkbot_assembly(T)
+	user.put_in_hands(A)
+	qdel(src)
+
+/obj/item/honkbot_assembly
+	name = "incomplete honkbot assembly"
+	desc = "The clown's up to no good once more"
+	icon = 'icons/mob/aibots.dmi'
+	icon_state = "honkbot_arm"
+	item_state = "honkbot_arm"
+	var/build_step = 0
+	var/created_name = "lil' Honkie"
+
+
+/obj/item/honkbot_assembly/attackby(obj/item/I, mob/user, params)
+
+	if(isprox(I) && (build_step == 0))
+		if(!user.temporarilyRemoveItemFromInventory(I))
+			return
+		build_step++
+		to_chat(user, "<span class='notice'>You add the prox sensor to [src]!</span>")
+		icon_state = "honkbot_proxy"
+		item_state = "honkbot_proxy"
+		name = "Incomplete Honkbot Assembly"
+		qdel(I)
+
+	else if((istype(I, /obj/item/bikehorn)) && (build_step == 1))
+		if(!user.temporarilyRemoveItemFromInventory(I))
+			return
+		to_chat(user, "<span class='notice'>You add the bike horn to [src]! Honk!</span>")
+		var/turf/T = get_turf(src)
+		var/mob/living/simple_animal/bot/honkbot/S = new /mob/living/simple_animal/bot/honkbot(T)
+		S.name = created_name
+		qdel(I)
+		qdel(src)
+
+
 //Secbot Assembly
 /obj/item/secbot_assembly
 	name = "incomplete securitron assembly"

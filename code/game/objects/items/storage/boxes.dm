@@ -609,6 +609,13 @@
 	playsound(loc, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 
+obj/item/storage/box/clown
+	name = "clown box"
+	desc = "A colorful cardboard box for the clown"
+	icon_state = "clownbox"
+	illustration = null
+	//foldable = null
+
 /obj/item/storage/box/hug/medical/PopulateContents()
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
@@ -732,7 +739,7 @@
 /obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "fruit"
-	var/theme_name 
+	var/theme_name
 
 /obj/item/storage/box/ingredients/Initialize()
 	. = ..()
