@@ -375,7 +375,7 @@
 	taste_mult = 2.0
 	
 /datum/reagent/toxin/impgluco/on_mob_life(mob/living/M)
-	M.reagents.add_reagent("sugar",0.8)
+	M.reagents.add_reagent("sugar",0.8*REM)
 	..()
 
 /datum/reagent/toxin/gluco
