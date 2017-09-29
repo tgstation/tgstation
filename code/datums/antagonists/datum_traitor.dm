@@ -85,7 +85,7 @@
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
 		if(traitor_mob&&istype(traitor_mob))
-			if(!silent) 
+			if(!silent)
 				to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			traitor_mob.dna.remove_mutation(CLOWNMUT)
 
@@ -206,10 +206,16 @@
 			kill_objective.find_target()
 			add_objective(kill_objective)
 	else
-		var/datum/objective/steal/steal_objective = new
-		steal_objective.owner = owner
-		steal_objective.find_target()
-		add_objective(steal_objective)
+		if(prob(15) && !(locate(/datum/objective/download in owner.objectives)))
+			var/datum/objective/download/download_objective = new
+			download_objective.owner = owner
+			download_objective.gen_amount_goal()
+			add_objective(download_objective)
+		else
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = owner
+			steal_objective.find_target()
+			add_objective(steal_objective)
 
 /datum/antagonist/traitor/AI/forge_single_objective()
 	.=1

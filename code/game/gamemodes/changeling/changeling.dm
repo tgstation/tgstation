@@ -133,10 +133,16 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	changeling.objectives += absorb_objective
 
 	if(prob(60))
-		var/datum/objective/steal/steal_objective = new
-		steal_objective.owner = changeling
-		steal_objective.find_target()
-		changeling.objectives += steal_objective
+		if(prob(85))
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = changeling
+			steal_objective.find_target()
+			changeling.objectives += steal_objective
+		else
+			var/datum/objective/download/download_objective = new
+			download_objective.owner = changeling
+			download_objective.gen_amount_goal()
+			changeling.objectives += download_objective
 
 	var/list/active_ais = active_ais()
 	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
