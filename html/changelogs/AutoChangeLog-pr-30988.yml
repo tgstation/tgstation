@@ -1,0 +1,4 @@
+author: "kingofkosmos"
+delete-after: True
+changes: 
+  - spellcheck: "You can now find out if an item uses alt-clicking by examining it."
