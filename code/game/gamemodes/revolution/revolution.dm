@@ -154,7 +154,7 @@
 
 
 	var/obj/item/device/assembly/flash/T = new(mob)
-	var/obj/item/organ/cyberimp/eyes/hud/security/S = new(mob)
+	var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = new(mob)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
