@@ -414,7 +414,7 @@
 			chance = 55
 		if(41 to INFINITY)
 			chance = 80
-		prob(chance)
+	if(prob(chance))
 		M.emote("scream")
 		. = 1
 	..()
