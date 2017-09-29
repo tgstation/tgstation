@@ -10,6 +10,9 @@
 			if("sandbox")
 				CanBuild()
 
+	if(key == "Kevinz000")
+		setMaxHealth(getMaxHealth()*CATPERSON_MAXHEALTH_RATIO)
+
 	update_damage_hud()
 	update_health_hud()
 
