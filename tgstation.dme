@@ -992,6 +992,7 @@
 #include "code\game\turfs\simulated\floor.dm"
 #include "code\game\turfs\simulated\lava.dm"
 #include "code\game\turfs\simulated\minerals.dm"
+#include "code\game\turfs\simulated\reebe_void.dm"
 #include "code\game\turfs\simulated\river.dm"
 #include "code\game\turfs\simulated\walls.dm"
 #include "code\game\turfs\simulated\water.dm"
