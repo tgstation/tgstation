@@ -16,7 +16,7 @@
 	model = "Honkbot"
 	bot_core_type = /obj/machinery/bot_core/honkbot
 	window_id = "autosec"
-	window_name = "Honkomatic Bike Horn Unit v1.0"
+	window_name = "Honkomatic Bike Horn Unit v1.0.1"
 	allow_pai = 1 //Damn right we'll pAI these
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED // show jobs
 
@@ -37,6 +37,9 @@
 	var/check_records = 1 //Doesn't care about criminals
 	var/arrest_type = 0
 	var/weaponscheck = 1
+
+/mob/living/simple_animal/bot/honkbot/Initialize()
+	. = ..()
 
 /mob/living/simple_animal/bot/honkbot/New()
 	..()
