@@ -33,17 +33,13 @@
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR,NOHUNGER,NO_DNA_COPY,NOTRANSSTING)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
 	mutant_organs = list(/obj/item/organ/heart/nightmare)
-	var/obj/effect/proc_holder/spell/targeted/shadowwalk/shadowwalk
+	mutant_brain = /obj/item/organ/brain/nightmare
 
 	var/info_text = "You are a <span class='danger'>Nightmare</span>. The ability <span class='warning'>shadow walk</span> allows unlimited, unrestricted movement in the dark using. \
-					Your <span class='warning'>light eater</span> will destroy any light producing objects you attack, as well as destroy any lights a living creature may be holding. You will automatically dodge gunfire and melee attacks when on a dark tile. If killed, you willl eventually revive if left in darkness."
+					Your <span class='warning'>light eater</span> will destroy any light producing objects you attack, as well as destroy any lights a living creature may be holding. You will automatically dodge gunfire and melee attacks when on a dark tile. If killed, you will eventually revive if left in darkness."
 
 /datum/species/shadow/nightmare/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	var/obj/effect/proc_holder/spell/targeted/shadowwalk/SW = new
-	C.AddSpell(SW)
-	shadowwalk = SW
-
 	to_chat(C, "[info_text]")
 
 	C.real_name = "Nightmare"
@@ -51,11 +47,6 @@
 	if(C.mind)
 		C.mind.name = "Nightmare"
 	C.dna.real_name = "Nightmare"
-
-/datum/species/shadow/nightmare/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	if(shadowwalk)
-		C.RemoveSpell(shadowwalk)
 
 /datum/species/shadow/nightmare/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	var/turf/T = H.loc
@@ -69,7 +60,29 @@
 
 
 
-//Organ
+//Organs
+
+/obj/item/organ/brain/nightmare
+	name = "tumorous mass"
+	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
+	icon_state = "brain-x-d"
+	var/obj/effect/proc_holder/spell/targeted/shadowwalk/shadowwalk
+
+/obj/item/organ/brain/nightmare/Insert(mob/living/carbon/M, special = 0)
+	..()
+	if(M.dna.species.id != "nightmare")
+		M.set_species(/datum/species/shadow/nightmare)
+		visible_message("<span class='warning'>[M] thrashes as [src] takes root in their body!</span>")
+	var/obj/effect/proc_holder/spell/targeted/shadowwalk/SW = new
+	M.AddSpell(SW)
+	shadowwalk = SW
+
+
+/obj/item/organ/brain/nightmare/Remove(mob/living/carbon/M, special = 0)
+	if(shadowwalk)
+		M.RemoveSpell(shadowwalk)
+	..()
+
 
 /obj/item/organ/heart/nightmare
 	name = "heart of darkness"
@@ -79,7 +92,6 @@
 	color = "#1C1C1C"
 	var/respawn_progress = 0
 	var/obj/item/light_eater/blade
-
 
 
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
@@ -92,8 +104,8 @@
 
 	user.visible_message("<span class='warning'>Blood erupts from [user]'s arm as it reforms into a weapon!</span>", \
 						 "<span class='userdanger'>Icy blood pumps through your veins as your arm reforms itself!</span>")
-	user.drop_item()
-	src.Insert(user)
+	user.temporarilyRemoveItemFromInventory(src, TRUE)
+	Insert(user)
 
 /obj/item/organ/heart/nightmare/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -116,7 +128,7 @@
 	return //always beating visually
 
 /obj/item/organ/heart/nightmare/process()
-	if(!owner || owner.stat != DEAD)
+	if(QDELETED(owner) || owner.stat != DEAD)
 		respawn_progress = 0
 		return
 	var/turf/T = get_turf(owner)
@@ -128,7 +140,7 @@
 	if(respawn_progress >= 40)
 		owner.revive(full_heal = TRUE)
 		owner.visible_message("<span class='warning'>[owner] staggers to their feet!</span>")
-		playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
+		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, 1)
 		respawn_progress = 0
 
 //Weapon

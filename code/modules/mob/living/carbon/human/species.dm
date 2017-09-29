@@ -69,6 +69,7 @@
 	//Flight and floating
 	var/override_float = 0
 
+	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 	var/obj/item/mutanthands
@@ -131,6 +132,7 @@
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
 
+	var/obj/item/organ/brain/brain = C.getorganslot("brain")
 	var/obj/item/organ/heart/heart = C.getorganslot("heart")
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
@@ -173,6 +175,13 @@
 			qdel(tongue)
 			tongue = new mutanttongue
 			tongue.Insert(C)
+
+		if(brain && brain.type != mutant_brain && !brain.decoy_override)
+			var/mob/dead/observer/ghost = C.ghostize(0)
+			qdel(brain)
+			brain = new mutant_brain()
+			brain.Insert(C)
+			ghost.mind.transfer_to(C)
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
