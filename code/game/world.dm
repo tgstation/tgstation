@@ -1,6 +1,3 @@
-#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
-									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
-
 GLOBAL_VAR(security_mode)
 GLOBAL_PROTECT(security_mode)
 
@@ -23,7 +20,8 @@ GLOBAL_PROTECT(security_mode)
 
 	SetupLogs()
 
-	SERVER_TOOLS_ON_NEW
+	if(!RunningService())	//tgs2 support
+		GLOB.revdata.DownloadPRDetails()
 
 	load_motd()
 	load_admins()
@@ -35,6 +33,9 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	Master.Initialize(10, FALSE)
+
+	if(config.irc_announce_new_game)
+		IRCBroadcast("New round starting on [SSmapping.config.map_name]!")
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
@@ -125,7 +126,8 @@ GLOBAL_PROTECT(security_mode)
 	if(!pinging && !playing && config && config.log_world_topic)
 		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
-	SERVER_TOOLS_ON_TOPIC
+	if(input[SERVICE_CMD_PARAM_KEY])
+		return ServiceCommand(input)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
 
 	if(pinging)
@@ -140,6 +142,17 @@ GLOBAL_PROTECT(security_mode)
 			if(M.client)
 				n++
 		return n
+
+	else if("ircstatus" in input)	//tgs2 support
+		var/static/last_irc_status = 0
+		if(world.time - last_irc_status < 50)
+			return
+		var/list/adm = get_admin_counts()
+		var/list/allmins = adm["total"]
+		var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
+		status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [SSticker.mode.name]."
+		send2irc("Status", status)
+		last_irc_status = world.time
 
 	else if("status" in input)
 		var/list/s = list()
@@ -198,6 +211,24 @@ GLOBAL_PROTECT(security_mode)
 			if(input["crossmessage"] == "News_Report")
 				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
 
+	else if("adminmsg" in input)	//tgs2 support
+		if(!key_valid)
+			return "Bad Key"
+		else
+			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
+
+	else if("namecheck" in input)	//tgs2 support
+		if(!key_valid)
+			return "Bad Key"
+		else
+			log_admin("IRC Name Check: [input["sender"]] on [input["namecheck"]]")
+			message_admins("IRC name checking on [input["namecheck"]] from [input["sender"]]")
+			return keywords_lookup(input["namecheck"],1)
+	else if("adminwho" in input)	//tgs2 support
+		if(!key_valid)
+			return "Bad Key"
+		else
+			return ircadminwho()
 	else if("server_hop" in input)
 		show_server_hop_transfer_screen(input["server_hop"])
 
