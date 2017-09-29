@@ -123,3 +123,20 @@
 	results = list("tabun" = 1, "goop" = 9)
 	required_reagents = list("tabunc" = 3)
 	centrifuge_recipe = TRUE
+
+/datum/chemical_reaction/impgluco
+	name = "Impure Glucosaryl"
+	id = "impgluco"
+	results = list("impgluco" = 1)
+	required_temp = 170
+	pressure_required = 45
+	required_reagents = list("sugar" = 3,"isopropyl" = 1,"sodiumchloride" = 1)
+	
+/datum/chemical_reaction/gluco
+	name = "Glucosaryl"
+	id = "gluco"
+	results = list("gluco" = 1)
+	required_temp = 120
+	pressure_required = 85
+	required_reagents = list("impgluco" = 2,"cryogenic_fluid" = 1)
+	centrifuge_recipe = TRUE
