@@ -1,5 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "Timestop fields will now stop thrown objects
-experimental: Timestops will now be much quicker to react."

@@ -1,4 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - tweak: "Hacking a secure container with a multitool now takes longer, but no longer has a chance to fail."
