@@ -2120,6 +2120,7 @@
 #include "code\modules\stock_market\stockmarket.dm"
 #include "code\modules\stock_market\stocks.dm"
 #include "code\modules\superbox\geoscape.dm"
+#include "code\modules\superbox\voice.dm"
 #include "code\modules\surgery\amputation.dm"
 #include "code\modules\surgery\cavity_implant.dm"
 #include "code\modules\surgery\core_removal.dm"
