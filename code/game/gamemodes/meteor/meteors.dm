@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/Me = pickweight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
+	M.z_original = M.z
 	spawn(0)
 		walk_towards(M, M.dest, 1)
 
