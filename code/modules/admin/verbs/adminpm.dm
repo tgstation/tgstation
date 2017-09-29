@@ -94,11 +94,6 @@
 
 		if(!msg)
 			return
-		if(holder)
-			to_chat(src, "<font color='red'>Error: Use the admin IRC channel, nerd.</font>")
-			return
-
-
 	else
 		if(!recipient)
 			if(holder)
