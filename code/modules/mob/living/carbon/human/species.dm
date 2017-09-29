@@ -182,6 +182,8 @@
 			brain = new mutant_brain()
 			brain.Insert(C)
 			ghost.mind.transfer_to(C)
+			if(ghost.key)
+				C.key = ghost.key
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
