@@ -48,7 +48,7 @@
 /mob/living/simple_animal/hostile/asteroid/gutlunch/CanAttack(atom/the_target) // Gutlunch-specific version of CanAttack to handle stupid stat_exclusive = true crap so we don't have to do it for literally every single simple_animal/hostile except the two that spawn in lavaland
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
 		return FALSE
-		
+
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return FALSE
 
@@ -65,28 +65,6 @@
 		else
 			if(L.stat)
 				return FALSE
-		return TRUE
-
-	if(istype(the_target, /obj/mecha))
-		var/obj/mecha/M = the_target
-		if(M.occupant)//Just so we don't attack empty mechs
-			if(CanAttack(M.occupant))
-				return TRUE
-
-	if(istype(the_target, /obj/machinery/porta_turret))
-		var/obj/machinery/porta_turret/P = the_target
-		if(P.faction in faction)
-			return FALSE
-		if(P.has_cover &&!P.raised) //Don't attack invincible turrets
-			return FALSE
-		if(P.stat & BROKEN) //Or turrets that are already broken
-			return FALSE
-		return TRUE
-
-	if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
-		var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
-		if(OW.target != src)
-			return FALSE
 		return TRUE
 
 	return FALSE
