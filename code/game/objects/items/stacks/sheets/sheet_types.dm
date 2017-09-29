@@ -396,7 +396,6 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"
 	throwforce = 7
-	origin_tech = "materials=1"
 	origin_tech = "materials=1;biotech=1"
 	merge_type = /obj/item/stack/sheet/plastic
 

@@ -64,6 +64,8 @@
 
 /obj/item/paper/examine(mob/user)
 	..()
+	to_chat(user, "<span class='notice'>Alt-click to fold it.</span>")
+
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
 	assets.send(user)
 
@@ -79,7 +81,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
-		to_chat(user, "<span class='notice'>It is too far away.</span>")
+		to_chat(user, "<span class='warning'>You're too far away to read it!</span>")
 
 
 /obj/item/paper/verb/rename()
@@ -101,9 +103,11 @@
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
+
 /obj/item/paper/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return (BRUTELOSS)
+
 
 /obj/item/paper/attack_self(mob/user)
 	user.examinate(src)
@@ -400,4 +404,3 @@
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
-

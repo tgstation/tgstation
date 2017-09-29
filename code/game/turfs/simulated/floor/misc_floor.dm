@@ -142,6 +142,7 @@
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
 	icon_state = "plating"
+	baseturf = /turf/open/floor/clockwork
 	var/uses_overlay = TRUE
 	var/obj/effect/clockwork/overlay/floor/realappearence
 
@@ -152,18 +153,16 @@
 		new /obj/effect/temp_visual/ratvar/beam(src)
 		realappearence = new /obj/effect/clockwork/overlay/floor(src)
 		realappearence.linked = src
-		change_construction_value(1)
 
 /turf/open/floor/clockwork/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	if(uses_overlay)
-		change_construction_value(-1)
-		if(realappearence)
-			qdel(realappearence)
-			realappearence = null
+	if(uses_overlay && realappearence)
+		QDEL_NULL(realappearence)
 	return ..()
 
 /turf/open/floor/clockwork/ReplaceWithLattice()
+	if(baseturf == type)
+		return
 	..()
 	for(var/obj/structure/lattice/L in src)
 		L.ratvar_act()
@@ -197,6 +196,8 @@
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
+	if(baseturf == type)
+		return
 	if(istype(I, /obj/item/crowbar))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
 		playsound(src, I.usesound, 20, 1)
