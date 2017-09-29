@@ -67,7 +67,7 @@
 	name = ".38 bullet"
 	damage = 15
 	knockdown = 30
-	stamina = 50
+	stamina = 60
 
 // 10mm (Stechkin)
 
