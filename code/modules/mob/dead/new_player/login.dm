@@ -1,5 +1,5 @@
 /mob/dead/new_player/Login()
-	if(config.use_exp_tracking)
+	if(CONFIG_GET(flag/use_exp_tracking))
 		client.set_exp_from_db()
 		client.set_db_player_flags()
 	if(!mind)
@@ -15,8 +15,9 @@
 	if(GLOB.admin_notice)
 		to_chat(src, "<span class='notice'><b>Admin Notice:</b>\n \t [GLOB.admin_notice]</span>")
 
-	if(config.soft_popcap && living_player_count() >= config.soft_popcap)
-		to_chat(src, "<span class='notice'><b>Server Notice:</b>\n \t [config.soft_popcap_message]</span>")
+	var/spc = CONFIG_GET(number/soft_popcap)
+	if(spc && living_player_count() >= spc)
+		to_chat(src, "<span class='notice'><b>Server Notice:</b>\n \t [CONFIG_GET(string/soft_popcap_message)]</span>")
 
 	sight |= SEE_TURFS
 

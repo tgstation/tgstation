@@ -270,7 +270,10 @@
 
 	. = speed
 
-	. += config.animal_delay
+	var/static/config_animal_delay
+	if(isnull(config_animal_delay))
+		config_animal_delay = CONFIG_GET(number/animal_delay)
+	. += config_animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()

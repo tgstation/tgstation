@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/list/exploded_this_tick = list()	//open turfs that need to be blocked off while we sleep
 	var/list/affected_turfs = GatherSpiralTurfs(max_range, epicenter)
 
-	var/reactionary = config.reactionary_explosions
+	var/reactionary = CONFIG_GET(flag/reactionary_explosions)
 	var/list/cached_exp_block
 
 	if(reactionary)

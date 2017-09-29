@@ -30,8 +30,8 @@
 /datum/round_event_control/New()
 	..()
 	if(config && !wizardevent) // Magic is unaffected by configs
-		earliest_start = Ceiling(earliest_start * config.events_min_time_mul)
-		min_players = Ceiling(min_players * config.events_min_players_mul)
+		earliest_start = Ceiling(earliest_start * CONFIG_GET(number/events_min_time_mul))
+		min_players = Ceiling(min_players * CONFIG_GET(number/events_min_players_mul))
 
 /datum/round_event_control/wizard
 	wizardevent = 1
