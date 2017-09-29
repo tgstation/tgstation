@@ -409,19 +409,19 @@
 			if(prob(10))
 				M.emote("scream")
 				. = 1
-		if(10 to 20)
+		if(11 to 20)
 			if(prob(25))
 				M.emote("scream")
 				. = 1
-		if(20 to 30)
+		if(21 to 30)
 			if(prob(40))
 				M.emote("scream")
 				. = 1
-		if(30 to 40)
+		if(31 to 40)
 			if(prob(55))
 				M.emote("scream")
 				. = 1
-		if(40 to INFINITY)
+		if(41 to INFINITY)
 			if(prob(80))
 				M.emote("scream")
 				. = 1
