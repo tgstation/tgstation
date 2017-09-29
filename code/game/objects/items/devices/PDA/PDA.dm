@@ -66,6 +66,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
+/obj/item/device/pda/examine(mob/user)
+	..()
+	if(!id && !inserted_item)
+		return
+	else
+		to_chat(user, "<span class='notice'>Alt-click to remove contents.</span>")
+
 /obj/item/device/pda/Initialize()
 	. = ..()
 	if(fon)
