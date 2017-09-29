@@ -330,15 +330,20 @@
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
 
-/datum/proc/considered_alive(datum/mind/M)
+/proc/considered_alive(datum/mind/M, enforce_human = TRUE)
 	if(M && M.current)
-		var/mob/living/carbon/human/H
-		if(ishuman(M.current))
-			H = M.current
-		return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
+		switch(enforce_human)
+			if(TRUE)
+				var/mob/living/carbon/human/H
+				if(ishuman(M.current))
+					H = M.current
+				return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
+			if(FALSE)
+				if(isliving(M.current))
+					return M.current.stat != DEAD
 	return FALSE
 
-/datum/proc/considered_afk(datum/mind/M)
+/proc/considered_afk(datum/mind/M)
 	return !M || !M.current || !M.current.client || M.current.client.is_afk()
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)

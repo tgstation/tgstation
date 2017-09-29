@@ -337,13 +337,14 @@
 			return FALSE
 	return TRUE
 
-//Like survive, but works for silicons and zombies and such.
-/datum/objective/survive/exist/considered_alive(var/datum/mind/M)
-	if(M && M.current)
-		if(isliving(M.current))
-			var/mob/living/L = M.current
-			return L.stat != DEAD
-	return FALSE
+/datum/objective/survive/exist //Like survive, but works for silicons and zombies and such.
+
+/datum/objective/survive/exist/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!considered_alive(M, FALSE))
+			return FALSE
+	return TRUE
 
 /datum/objective/martyr
 	explanation_text = "Die a glorious death."
