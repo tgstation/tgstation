@@ -185,7 +185,7 @@ Nah
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = TRUE
-	desc = "Dispenses pipes that will move humans and/or trash around."
+	desc = "Dispenses pipes that will move beings around."
 	anchored = TRUE
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
