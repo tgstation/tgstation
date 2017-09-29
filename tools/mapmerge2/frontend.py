@@ -76,7 +76,11 @@ def prompt_maps(settings, verb):
 
     return MapsToRun(list_of_files, valid_indices)
 
-def process(settings, verb, backup=False):
+def process(settings, verb, *, modify=True, backup=None):
+    if backup is None:
+        backup = modify  # by default, backup when we modify
+    assert modify or not backup  # doesn't make sense to backup when not modifying
+
     if len(sys.argv) > 1:
         maps = sys.argv[1:]
     else:
@@ -88,7 +92,12 @@ def process(settings, verb, backup=False):
         print("No maps selected.")
         return
 
-    print(f"Maps WILL{'' if settings.tgm else ' NOT'} be converted to tgm.")
+    if modify:
+        print(f"Maps WILL{'' if settings.tgm else ' NOT'} be converted to tgm.")
+        if backup:
+            print("Backups will be created with a \".before\" extension.")
+        else:
+            print("Warning: backups are NOT being taken.")
 
     print(f"\nWill {verb} these maps:")
     for path_str in maps:
