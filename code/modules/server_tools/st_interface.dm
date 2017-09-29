@@ -26,6 +26,7 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 
 /world/proc/ExportService(command, skip_compat_check = FALSE)
 	. = FALSE
+	return
 	if(!RunningService(skip_compat_check))
 		return
 	if(skip_compat_check && !fexists(SERVICE_INTERFACE_DLL))
