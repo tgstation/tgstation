@@ -8454,6 +8454,7 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "atN" = (
