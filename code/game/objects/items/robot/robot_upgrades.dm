@@ -410,7 +410,7 @@
 
 /obj/item/borg/upgrade/traitorsec/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
-		return
+		return FALSE
 
 	R.module.transform_to(/obj/item/robot_module/security/traitorsec)
 	R.emag_act(user)
