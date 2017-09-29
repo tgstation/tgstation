@@ -26,6 +26,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/obj/item/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
 	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
+	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
+	var/font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;" //The currently selected font.
+	var/background_color = "#808000" //The currently selected background color.
+	
+	#define FONT_VT 0
+	#define FONT_SHARE 1
+	#define FONT_ORBITRON 2
+	#define FONT_MONO 3
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
@@ -125,7 +133,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		hidden_uplink.interact(user)
 		return
 
-	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
+	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}</style>"
+
 
 	dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
 
@@ -133,6 +142,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 		dat += " | <a href='byond://?src=\ref[src];choice=Eject'><img src=pda_eject.png> Eject [cartridge]</a>"
 	if (mode)
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=pda_menu.png> Return</a>"
+
+	if (mode == 0)
+		dat += "<div align=\"center\">"
+		dat += "<br><a href='byond://?src=\ref[src];choice=Toggle_Font'>Toggle Font</a>"
+		dat += " | <a href='byond://?src=\ref[src];choice=Change_Color'>Change Color</a>"
+		dat += "</div>"
 
 	dat += "<br>"
 
@@ -311,6 +326,24 @@ GLOBAL_LIST_EMPTY(PDAs)
 //BASIC FUNCTIONS===================================
 
 			if("Refresh")//Refresh, goes to the end of the proc.
+			
+			if ("Toggle_Font")
+				//CODE REVISION 2
+				font_index = (font_index + 1) % 4
+
+				switch(font_index)
+					if (FONT_VT)
+						font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;"
+					if (FONT_SHARE)
+						font_mode = "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
+					if (FONT_ORBITRON)
+						font_mode = "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
+					if (FONT_MONO)
+						font_mode = "font-family:monospace;"
+			if ("Change_Color")
+				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').")as color
+				background_color = new_color
+
 			if("Return")//Return
 				if(mode<=9)
 					mode = 0
