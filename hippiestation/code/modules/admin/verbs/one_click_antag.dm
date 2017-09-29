@@ -1,9 +1,9 @@
 //Shadowling
 /datum/admins/proc/makeShadowling()
 	var/datum/game_mode/shadowling/temp = new
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		temp.restricted_jobs += temp.protected_jobs
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		temp.restricted_jobs += "Assistant"
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H
@@ -35,9 +35,9 @@
 
 /datum/admins/proc/makeVampire()
 	var/datum/game_mode/vampire/temp = new
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		temp.restricted_jobs += temp.protected_jobs
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		temp.restricted_jobs += "Assistant"
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H

@@ -69,7 +69,7 @@
 	blood_objective.gen_amount_goal()
 	add_objective(blood_objective)
 
-	for(var/i = 1, i < config.traitor_objectives_amount, i++)
+	for(var/i = 1, i < CONFIG_GET(number/traitor_objectives_amount), i++)
 		forge_single_objective()
 
 	if(!(locate(/datum/objective/escape) in owner.objectives))

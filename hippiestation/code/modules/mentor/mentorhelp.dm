@@ -13,7 +13,7 @@
 	if(!msg)	return
 	if(!mob)	return						//this doesn't happen
 
-	var/show_char = config.mentors_mobname_only
+	var/show_char = CONFIG_GET(flag/mentors_mobname_only)
 	var/mentor_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 1, show_char)]</b>: [msg]</font></span>"
 	log_mentor("MENTORHELP: [key_name_mentor(src, 0, 0, 0, 0)]: [msg]")
 
@@ -70,14 +70,14 @@
 
 	if(key)
 		if(include_link)
-			if(config.mentors_mobname_only)
+			if(CONFIG_GET(flag/mentors_mobname_only))
 				. += "<a href='?mentor_msg=\ref[M]'>"
 			else
 				. += "<a href='?mentor_msg=[ckey]'>"
 
 		if(C && C.holder && C.holder.fakekey)
 			. += "Administrator"
-		else if (char_name_only && config.mentors_mobname_only)
+		else if (char_name_only && CONFIG_GET(flag/mentors_mobname_only))
 			if(istype(C.mob,/mob/dead/new_player) || istype(C.mob, /mob/dead/observer)) //If they're in the lobby or observing, display their ckey
 				. += key
 			else if(C && C.mob) //If they're playing/in the round, only show the mob name
