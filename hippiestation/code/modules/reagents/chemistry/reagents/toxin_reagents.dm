@@ -407,21 +407,22 @@
 	switch(current_cycle)
 		if(1 to 10)
 			if(prob(10))
-			M.emote("scream")
+				M.emote("scream")
+				. = 1
 		if(10 to 20)
 			if(prob(25))
-			M.emote("scream")
-			. = 1
+				M.emote("scream")
+				. = 1
 		if(20 to 30)
 			if(prob(40))
-			M.emote("scream")
-			. = 1
+				M.emote("scream")
+				. = 1
 		if(30 to 40)
 			if(prob(55))
-			M.emote("scream")
-			. = 1
+				M.emote("scream")
+				. = 1
 		if(40 to INFINITY)
 			if(prob(80))
-			M.emote("scream")
-			. = 1
+				M.emote("scream")
+				. = 1
 	..()
