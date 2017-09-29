@@ -47,7 +47,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/Initialize()
 	. = ..()
-	change_position_cooldown = config.id_console_jobslot_delay
+	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/card/id))
