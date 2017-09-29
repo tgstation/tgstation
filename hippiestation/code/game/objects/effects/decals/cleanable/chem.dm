@@ -36,8 +36,12 @@ GLOBAL_LIST_EMPTY(chempiles)
 /obj/effect/decal/cleanable/chempile/Crossed(mob/mover)
 	if(isliving(mover))
 		var/mob/living/M = mover
+		var/protection = 1
+		for(var/obj/item/I in M.get_equipped_items())
+			if(I.body_parts_covered & FEET)
+				protection = I.permeability_coefficient
 		if(reagents)
-			reagents.trans_to(M, 2 * M.get_permeability_protection())
+			reagents.trans_to(M, 2, protection)
 			CHECK_TICK
 
 /obj/effect/decal/cleanable/chempile/fire_act(exposed_temperature, exposed_volume)
