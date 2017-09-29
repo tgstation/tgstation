@@ -186,16 +186,16 @@
 
 				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
 				if(CONFIG_GET(flag/popup_admin_pm))
-					spawn()	//so we don't hold the caller proc up
-						var/sender = src
-						var/sendername = key
-						var/reply = input(recipient, msg,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
-						if(recipient && reply)
-							if(sender)
-								recipient.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
-							else
-								adminhelp(reply)													//sender has left, adminhelp instead
-						return
+					set waitfor = FALSE	//so we don't hold the caller proc up
+					var/sender = src
+					var/sendername = key
+					var/reply = input(recipient, msg,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
+					if(recipient && reply)
+						if(sender)
+							recipient.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
+						else
+							adminhelp(reply)													//sender has left, adminhelp instead
+					return
 
 			else		//neither are admins
 				to_chat(src, "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>")
