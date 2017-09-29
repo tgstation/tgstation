@@ -31,7 +31,7 @@
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
 		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=rank;ckey=[M.ckey]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
-		if(config.use_exp_tracking)
+		if(CONFIG_GET(flag/use_exp_tracking))
 			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=\ref[M]'>" + M.client.get_exp_living() + "</a>\]"
 
 	if(isnewplayer(M))
@@ -555,28 +555,30 @@
 	set category = "Server"
 	set desc="People can't be AI"
 	set name="Toggle AI"
-	config.allow_ai = !( config.allow_ai )
-	if (!( config.allow_ai ))
+	var/alai = CONFIG_GET(flag/allow_ai)
+	CONFIG_SET(flag/allow_ai, !alai)
+	if (alai)
 		to_chat(world, "<B>The AI job is no longer chooseable.</B>")
 	else
 		to_chat(world, "<B>The AI job is chooseable now.</B>")
 	log_admin("[key_name(usr)] toggled AI allowed.")
 	world.update_status()
-	SSblackbox.add_details("admin_toggle","Toggle AI|[config.allow_ai]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle AI|[!alai]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleaban()
 	set category = "Server"
 	set desc="Respawn basically"
 	set name="Toggle Respawn"
-	GLOB.abandon_allowed = !( GLOB.abandon_allowed )
-	if (GLOB.abandon_allowed)
+	var/new_nores = !CONFIG_GET(flag/norespawn)
+	CONFIG_SET(flag/norespawn, new_nores)
+	if (!new_nores)
 		to_chat(world, "<B>You may now respawn.</B>")
 	else
 		to_chat(world, "<B>You may no longer respawn :(</B>")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [GLOB.abandon_allowed ? "On" : "Off"].</span>")
-	log_admin("[key_name(usr)] toggled respawn to [GLOB.abandon_allowed ? "On" : "Off"].")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [!new_nores ? "On" : "Off"].</span>")
+	log_admin("[key_name(usr)] toggled respawn to [!new_nores ? "On" : "Off"].")
 	world.update_status()
-	SSblackbox.add_details("admin_toggle","Toggle Respawn|[GLOB.abandon_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Respawn|[!new_nores]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/delay()
 	set category = "Server"
@@ -683,14 +685,15 @@
 	set category = "Server"
 	set desc="Guests can't enter"
 	set name="Toggle guests"
-	GLOB.guests_allowed = !( GLOB.guests_allowed )
-	if (!( GLOB.guests_allowed ))
+	var/new_guest_ban = !CONFIG_GET(flag/guest_ban)
+	CONFIG_SET(flag/guest_ban, new_guest_ban)
+	if (new_guest_ban)
 		to_chat(world, "<B>Guests may no longer enter the game.</B>")
 	else
 		to_chat(world, "<B>Guests may now enter the game.</B>")
-	log_admin("[key_name(usr)] toggled guests game entering [GLOB.guests_allowed?"":"dis"]allowed.")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [GLOB.guests_allowed?"":"dis"]allowed.</span>")
-	SSblackbox.add_details("admin_toggle","Toggle Guests|[GLOB.guests_allowed]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed.")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed.</span>")
+	SSblackbox.add_details("admin_toggle","Toggle Guests|[!new_guest_ban]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
@@ -828,10 +831,10 @@
 /client/proc/adminGreet(logout)
 	if(SSticker.HasRoundStarted())
 		var/string
-		if(logout && config && config.announce_admin_logout)
+		if(logout && CONFIG_GET(flag/announce_admin_logout))
 			string = pick(
 				"Admin logout: [key_name(src)]")
-		else if(!logout && config && config.announce_admin_login && (prefs.toggles & ANNOUNCE_LOGIN))
+		else if(!logout && CONFIG_GET(flag/announce_admin_login) && (prefs.toggles & ANNOUNCE_LOGIN))
 			string = pick(
 				"Admin login: [key_name(src)]")
 		if(string)

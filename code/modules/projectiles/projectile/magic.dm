@@ -276,7 +276,9 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
-	to_chat(new_mob, config.policies["polymorph"])
+	var/poly_msg = CONFIG_GET(keyed_string_list/policy)["polymorph"]
+	if(poly_msg)
+		to_chat(new_mob, poly_msg)
 
 	qdel(M)
 	return new_mob
