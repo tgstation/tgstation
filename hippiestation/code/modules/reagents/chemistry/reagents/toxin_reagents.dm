@@ -364,3 +364,33 @@
 	if(T && T.color != initial(T.color))
 		T.color = initial(T.color)
 	..()
+
+/datum/reagent/toxin/impgluco
+	name = "Impure Glucosaryll"
+	id = "impgluco"
+	description = "The incredibly sweet precursor to a frighteningly dangerous substance that Nanotrasen once used to cut costs on soft drink sweetener before it was quietly recalled."
+	reagent_state = LIQUID
+	color = "#EFD6D0"
+	taste_description = "dizzying sweetness"
+	taste_mult = 2.0
+	
+/datum/reagent/toxin/impgluco/on_mob_life(mob/living/M)
+	M.reagents.add_reagent("sugar",0.8*REM)
+	..()
+
+/datum/reagent/toxin/gluco
+	name = "Glucosaryll"
+	id = "gluco"
+	description = "This revolting sludge smells like the inside of the pillsbury doughboy's ascending colon."
+	reagent_state = LIQUID
+	color = "#F6F1D2"
+	taste_description = "ungodly sweetness"
+	taste_mult = 5.0
+	
+/datum/reagent/toxin/gluco/on_mob_life(mob/living/M)
+	M.reagents.add_reagent("sugar", 4*REM)
+	if(prob(15))
+		to_chat(M, "<span class='danger'>[pick("Your left leg is numb.","You feel tingly.","Everything seems airy.")]</span>")
+		M.Dizzy(10)
+		M.adjustStaminaLoss(5*REM, 0)
+	..()
