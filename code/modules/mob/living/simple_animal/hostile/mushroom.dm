@@ -71,39 +71,14 @@
 
 	if(isliving(the_target))
 		var/mob/living/L = the_target
-		var/faction_check = faction_check_mob(L)
 		if(robust_searching)
-			if (!faction_check && attack_same == 2)
+			if (!faction_check_mob(L) && attack_same == 2)
 				return FALSE
-			if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive)
-				return FALSE
-			if(L in friends)
+			if(L.stat > stat_attack)
 				return FALSE
 		else
 			if(L.stat)
 				return FALSE
-		return TRUE
-
-	if(istype(the_target, /obj/mecha))
-		var/obj/mecha/M = the_target
-		if(M.occupant)//Just so we don't attack empty mechs
-			if(CanAttack(M.occupant))
-				return TRUE
-
-	if(istype(the_target, /obj/machinery/porta_turret))
-		var/obj/machinery/porta_turret/P = the_target
-		if(P.faction in faction)
-			return FALSE
-		if(P.has_cover &&!P.raised) //Don't attack invincible turrets
-			return FALSE
-		if(P.stat & BROKEN) //Or turrets that are already broken
-			return FALSE
-		return TRUE
-
-	if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
-		var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
-		if(OW.target != src)
-			return FALSE
 		return TRUE
 
 	return FALSE

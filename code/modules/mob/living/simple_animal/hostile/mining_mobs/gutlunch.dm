@@ -60,8 +60,6 @@
 				return FALSE
 			if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive)
 				return FALSE
-			if(L in friends)
-				return FALSE
 		else
 			if(L.stat)
 				return FALSE
