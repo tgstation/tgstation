@@ -404,25 +404,17 @@
 	taste_description = "sour"
 	
 /datum/reagent/toxin/screech/on_mob_life(mob/living/M)
+	var/chance = 10
 	switch(current_cycle)
-		if(1 to 10)
-			if(prob(10))
-				M.emote("scream")
-				. = 1
 		if(11 to 20)
-			if(prob(25))
-				M.emote("scream")
-				. = 1
+			chance = 25
 		if(21 to 30)
-			if(prob(40))
-				M.emote("scream")
-				. = 1
+			chance = 40
 		if(31 to 40)
-			if(prob(55))
-				M.emote("scream")
-				. = 1
+			chance = 55
 		if(41 to INFINITY)
-			if(prob(80))
-				M.emote("scream")
-				. = 1
+			chance = 80
+	if(chance)
+		M.emote("scream")
+		. = 1
 	..()
