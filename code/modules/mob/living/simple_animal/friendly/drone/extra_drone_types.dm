@@ -237,3 +237,9 @@
 	. = ..()
 	if(.)
 		update_icons()
+
+
+/mob/living/simple_animal/drone/cogscarab/Life()
+	. = ..()
+	if(.)
+		update_icons()
