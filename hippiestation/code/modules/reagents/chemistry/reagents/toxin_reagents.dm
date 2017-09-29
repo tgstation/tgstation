@@ -388,7 +388,7 @@
 	taste_mult = 5.0
 	
 /datum/reagent/toxin/gluco/on_mob_life(mob/living/M)
-	M.reagents.add_reagent("sugar",4)
+	M.reagents.add_reagent("sugar", 4*REM)
 	if(prob(15))
 		to_chat(M, "<span class='danger'>[pick("Your left leg is numb.","You feel tingly.","Everything seems airy.")]</span>")
 		M.Dizzy(10)
