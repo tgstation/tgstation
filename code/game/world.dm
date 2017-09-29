@@ -12,7 +12,7 @@ GLOBAL_PROTECT(security_mode)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	config = new
+	new /datum/controller/configuration
 
 	CheckSchemaVersion()
 	SetRoundID()
@@ -25,7 +25,7 @@ GLOBAL_PROTECT(security_mode)
 	load_motd()
 	load_admins()
 	LoadVerbs(/datum/verbs/menu)
-	if(config.usewhitelist)
+	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
 	LoadBans()
 
@@ -33,7 +33,7 @@ GLOBAL_PROTECT(security_mode)
 
 	Master.Initialize(10, FALSE)
 
-	if(config.irc_announce_new_game)
+	if(CONFIG_GET(flag/irc_announce_new_game))
 		IRCBroadcast("New round starting on [SSmapping.config.map_name]!")
 
 /world/proc/SetupExternalRSC()
@@ -48,7 +48,7 @@ GLOBAL_PROTECT(security_mode)
 #endif
 
 /world/proc/CheckSchemaVersion()
-	if(config.sql_enabled)
+	if(CONFIG_GET(flag/sql_enabled))
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
 			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
@@ -68,7 +68,7 @@ GLOBAL_PROTECT(security_mode)
 			log_world("Your server failed to establish a connection with the database.")
 
 /world/proc/SetRoundID()
-	if(config.sql_enabled)
+	if(CONFIG_GET(flag/sql_enabled))
 		if(SSdbcore.Connect())
 			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
 			query_round_start.Execute()
@@ -122,12 +122,13 @@ GLOBAL_PROTECT(security_mode)
 	var/pinging = ("ping" in input)
 	var/playing = ("players" in input)
 
-	if(!pinging && !playing && config && config.log_world_topic)
+	if(!pinging && !playing && config && CONFIG_GET(flag/log_world_topic))
 		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 	if(input[SERVICE_CMD_PARAM_KEY])
 		return ServiceCommand(input)
-	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
+	var/comms_key = CONFIG_GET(string/comms_key)
+	var/key_valid = (comms_key && input["key"] == comms_key)
 
 	if(pinging)
 		var/x = 1
@@ -157,10 +158,10 @@ GLOBAL_PROTECT(security_mode)
 		var/list/s = list()
 		s["version"] = GLOB.game_version
 		s["mode"] = GLOB.master_mode
-		s["respawn"] = config ? GLOB.abandon_allowed : 0
+		s["respawn"] = config ? !CONFIG_GET(flag/norespawn) : FALSE
 		s["enter"] = GLOB.enter_allowed
-		s["vote"] = config.allow_vote_mode
-		s["ai"] = config.allow_ai
+		s["vote"] = CONFIG_GET(flag/allow_vote_mode)
+		s["ai"] = CONFIG_GET(flag/allow_ai)
 		s["host"] = host ? host : null
 		s["active_players"] = get_active_player_count()
 		s["players"] = GLOB.clients.len
@@ -262,17 +263,6 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
 
 /world/proc/update_status()
-	var/s = ""
-
-	if (config && config.server_name)
-		s += "<b>[config.server_name]</b> &#8212; "
-
-	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
 
 	var/list/features = list()
 
@@ -282,13 +272,25 @@ GLOBAL_PROTECT(security_mode)
 	if (!GLOB.enter_allowed)
 		features += "closed"
 
-	features += GLOB.abandon_allowed ? "respawn" : "no respawn"
+	var/s = ""
+	var/hostedby
+	if(config)
+		var/server_name = CONFIG_GET(string/servername)
+		if (server_name)
+			s += "<b>[server_name]</b> &#8212; "
+		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
+		if(CONFIG_GET(flag/allow_vote_mode))
+			features += "vote"
+		if(CONFIG_GET(flag/allow_ai))
+			features += "AI allowed"
+		hostedby = CONFIG_GET(string/hostedby)
 
-	if (config && config.allow_vote_mode)
-		features += "vote"
-
-	if (config && config.allow_ai)
-		features += "AI allowed"
+	s += "<b>[station_name()]</b>";
+	s += " ("
+	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
+	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "</a>"
+	s += ")"
 
 	var/n = 0
 	for (var/mob/M in GLOB.player_list)
@@ -300,8 +302,8 @@ GLOBAL_PROTECT(security_mode)
 	else if (n > 0)
 		features += "~[n] player"
 
-	if (!host && config && config.hostedby)
-		features += "hosted by <b>[config.hostedby]</b>"
+	if (!host && hostedby)
+		features += "hosted by <b>[hostedby]</b>"
 
 	if (features)
 		s += ": [jointext(features, ", ")]"

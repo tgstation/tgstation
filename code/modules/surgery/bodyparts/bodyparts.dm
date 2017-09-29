@@ -108,8 +108,9 @@
 /obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1)
 	if(owner && (owner.status_flags & GODMODE))
 		return 0	//godmode
-	brute	= max(brute * config.damage_multiplier,0)
-	burn	= max(burn * config.damage_multiplier,0)
+	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
+	brute = max(brute * dmg_mlt, 0)
+	burn = max(burn * dmg_mlt, 0)
 
 
 	if(status == BODYPART_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger

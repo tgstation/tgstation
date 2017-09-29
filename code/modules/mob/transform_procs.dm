@@ -383,7 +383,7 @@
 	else if(transfer_after)
 		R.key = key
 
-	if (config.rename_cyborg)
+	if (CONFIG_GET(flag/rename_cyborg))
 		R.rename_self("cyborg")
 
 	if(R.mmi)
