@@ -6,6 +6,7 @@
 	status = ORGAN_ROBOTIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
+	var/syndicate_implant = FALSE
 
 /obj/item/organ/cyberimp/New(var/mob/M = null)
 	if(iscarbon(M))
