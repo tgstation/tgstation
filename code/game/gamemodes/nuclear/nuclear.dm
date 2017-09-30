@@ -110,7 +110,7 @@
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
 		var/mob/living/carbon/human/H = synd_mind.current
-		P.loc = H.loc
+		P.forceMove(H.drop_location())
 		H.put_in_hands_or_del(P)
 		H.update_icons()
 	else

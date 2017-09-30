@@ -45,14 +45,13 @@
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
+				to_chat(user, "<span class='warning'>The [src] blinks red as you try to insert the cell!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(W,src))
 				return
 
-			W.loc = src
 			charging = W
-			user.visible_message("[user] inserts a cell into the charger.", "<span class='notice'>You insert a cell into the charger.</span>")
+			user.visible_message("[user] inserts a cell into [src].", "<span class='notice'>You insert a cell into [src].</span>")
 			chargelevel = -1
 			updateicon()
 	else if(istype(W, /obj/item/wrench))
@@ -61,7 +60,7 @@
 			return
 
 		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground</span>")
+		to_chat(user, "<span class='notice'>You [anchored ? "attach" : "detach"] [src] [anchored ? "to" : "from"] the ground</span>")
 		playsound(src.loc, W.usesound, 75, 1)
 	else
 		return ..()
@@ -80,7 +79,7 @@
 	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
 
-	user.visible_message("[user] removes the cell from the charger.", "<span class='notice'>You remove the cell from the charger.</span>")
+	user.visible_message("[user] removes [charging] from [src].", "<span class='notice'>You remove [charging] from [src].</span>")
 
 	removecell()
 

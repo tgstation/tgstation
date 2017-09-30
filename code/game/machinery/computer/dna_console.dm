@@ -43,9 +43,8 @@
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			if(!user.drop_item())
+			if (!user.transferItemToLoc(I,src))
 				return
-			I.loc = src
 			src.diskette = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			src.updateUsrDialog()
@@ -448,7 +447,7 @@
 					diskette.fields = buffer_slot.Copy()
 		if("ejectdisk")
 			if(diskette)
-				diskette.loc = get_turf(src)
+				diskette.forceMove(drop_location())
 				diskette = null
 		if("setdelayed")
 			if(num)
