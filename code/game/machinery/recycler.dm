@@ -119,7 +119,7 @@
 			items_recycled++
 		else
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
-			AM.forceMove(src.loc)
+			AM.forceMove(loc)
 
 	if(items_recycled && sound)
 		playsound(src, item_recycle_sound, 50, 1)
