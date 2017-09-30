@@ -108,8 +108,8 @@
 		var/obj/item/device/mmi/as_mmi = AM
 		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain)
 		if(brain_holder)
-			emergency_stop(brain_holder)
-		if(isliving(AM))
+			emergency_stop(AM)
+		else if(isliving(AM))
 			if(emagged)
 				crush_living(AM)
 			else
