@@ -125,7 +125,7 @@
 		playsound(src, item_recycle_sound, 50, 1)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
-	I.forceMove(src.loc)
+	I.forceMove(loc)
 
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(I)
@@ -141,7 +141,7 @@
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	safety_mode = TRUE
 	update_icon()
-	L.forceMove(src.loc)
+	L.forceMove(loc)
 	addtimer(CALLBACK(src, .proc/reboot), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
@@ -151,7 +151,7 @@
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
 
-	L.loc = src
+	L.forceMove(loc)
 
 	if(issilicon(L))
 		playsound(src, 'sound/items/welder.ogg', 50, 1)
