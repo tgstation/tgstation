@@ -117,8 +117,9 @@
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			if (!user.transferItemToLoc(W,src))
+			if(!user.drop_item())
 				return
+			W.loc = src
 			src.diskette = W
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
@@ -372,7 +373,7 @@
 
 			if("eject")
 				if(src.diskette)
-					src.diskette.forceMove(drop_location())
+					src.diskette.loc = src.loc
 					src.diskette = null
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			if("save")
@@ -403,7 +404,7 @@
 			else if(!pod)
 				temp = "<font class='bad'>No Clonepods available.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(!CONFIG_GET(flag/revival_cloning))
+			else if(!config.revival_cloning)
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(pod.occupant)
@@ -470,7 +471,7 @@
 		// species datums
 		R.fields["mrace"] = dna.species
 	else
-		var/datum/species/rando_race = pick(CONFIG_GET(keyed_flag_list/roundstart_races))
+		var/datum/species/rando_race = pick(config.roundstart_races)
 		R.fields["mrace"] = rando_race.type
 
 	R.fields["ckey"] = mob_occupant.ckey

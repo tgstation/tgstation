@@ -454,7 +454,7 @@
 				if (src.authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
-					if(CONFIG_GET(string/cross_server_address))
+					if(config.cross_allowed)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crossserver'>Send a message to an allied station</A> \]"
 					if(SSmapping.config.allow_custom_shuttles == "yes")
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"

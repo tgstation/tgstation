@@ -14,7 +14,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	prepare_huds()
 
-	if(CONFIG_GET(string/cross_server_address))
+	if(config.cross_allowed)
 		verbs += /mob/dead/proc/server_hop
 	return INITIALIZE_HINT_NORMAL
 
@@ -35,20 +35,19 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set desc= "Jump to the other server"
 	if(notransform)
 		return
-	var/csa = CONFIG_GET(string/cross_server_address)
-	if(csa)
+	if(!config.cross_allowed)
 		verbs -= /mob/dead/proc/server_hop
 		to_chat(src, "<span class='notice'>Server Hop has been disabled.</span>")
 		return
-	if (alert(src, "Jump to server running at [csa]?", "Server Hop", "Yes", "No") != "Yes")
+	if (alert(src, "Jump to server running at [config.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
 		return 0
-	if (client && csa)
-		to_chat(src, "<span class='notice'>Sending you to [csa].</span>")
+	if (client && config.cross_allowed)
+		to_chat(src, "<span class='notice'>Sending you to [config.cross_address].</span>")
 		new /obj/screen/splash(client)
 		notransform = TRUE
 		sleep(29)	//let the animation play
 		notransform = FALSE
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
-		client << link(csa + "?server_hop=[key]")
+		client << link(config.cross_address + "?server_hop=[key]")
 	else
 		to_chat(src, "<span class='error'>There is no other server configured!</span>")

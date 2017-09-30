@@ -125,10 +125,11 @@
 
 
 /turf/open/chasm/straight_down/Initialize()
-	. = ..()
+	..()
 	drop_x = x
 	drop_y = y
-	drop_z = z - 1
+	if(z+1 <= world.maxz)
+		drop_z = z+1
 	var/turf/T = locate(drop_x, drop_y, drop_z)
 	T.visible_message("<span class='boldwarning'>The ceiling gives way!</span>")
 	playsound(T, 'sound/effects/break_stone.ogg', 50, 1)

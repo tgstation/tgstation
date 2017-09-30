@@ -10502,7 +10502,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/closet/l3closet/security,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -13900,8 +13899,8 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
-/obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/metalfoam,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
@@ -20539,8 +20538,8 @@
 	amount = 50
 	},
 /obj/item/crowbar,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/metalfoam,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -27151,7 +27150,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/obj/structure/closet/l3closet,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -34634,7 +34632,6 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "bjG" = (
-/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 6
 	},
@@ -35681,7 +35678,6 @@
 	id = "chapelmassdoor";
 	name = "Chapel Launcher Door"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "blJ" = (
@@ -38904,7 +38900,7 @@
 	volume_rate = 200
 	},
 /turf/open/space/basic,
-/area/engine/engineering)
+/area/space)
 "bxd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -80685,13 +80681,13 @@ aDc
 aYc
 aYW
 byo
-byo
+byt
 bbx
 bcm
 bdd
 beb
-byo
-bys
+byy
+byA
 bfK
 aQd
 bgT
@@ -80941,14 +80937,14 @@ aWQ
 abt
 aYc
 aYW
-byo
+byp
 baI
 bby
 bcn
 bde
 bec
 beH
-byo
+byB
 bfK
 aQd
 bgU
@@ -81455,14 +81451,14 @@ aWS
 abt
 aYe
 aYW
-byo
+byr
 baK
 bbA
 bcp
 bdg
 bee
 beJ
-byo
+byC
 bfK
 avV
 bgU
@@ -81713,13 +81709,13 @@ aIZ
 aYc
 aYW
 bys
-byo
-byo
-byo
+byu
+byv
+byw
 bdh
-byo
-byo
-byo
+byx
+byz
+byD
 bfM
 avV
 bgV

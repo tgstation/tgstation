@@ -90,7 +90,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=2000)
 	origin_tech = "combat=4;magnets=4;syndicate=5"
-	suppressed = TRUE
+	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
 	unique_rename = 0
@@ -115,7 +115,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=4000)
 	origin_tech = "combat=4;magnets=4;syndicate=2"
-	suppressed = null
+	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
 

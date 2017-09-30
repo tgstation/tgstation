@@ -7,9 +7,9 @@
 	descname = "Structure, Turret"
 	name = "Ocular Warden"
 	desc = "Forms an automatic short-range turret which will automatically attack nearby unrestrained non-Servants that can see it."
-	invocations = list("Guardians of Engine...", "...judge those who would harm us!")
-	channel_time = 100
-	power_cost = 250
+	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
+	channel_time = 120
+	consumed_components = list(BELLIGERENT_EYE = 2, REPLICANT_ALLOY = 1)
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
 	creator_message = "<span class='brass'>You form an ocular warden, which will automatically attack nearby unrestrained non-Servants that can see it.</span>"
 	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
@@ -29,35 +29,15 @@
 	return ..()
 
 
-//Judicial Visor: Creates a judicial visor, which can smite an area.
-/datum/clockwork_scripture/create_object/judicial_visor
-	descname = "Delayed Area Knockdown Glasses"
-	name = "Judicial Visor"
-	desc = "Creates a visor that can smite an area, applying Belligerent and briefly stunning. The smote area will explode after 3 seconds."
-	invocations = list("Grant me the flames of Engine!")
-	channel_time = 10
-	power_cost = 400
-	whispered = TRUE
-	object_path = /obj/item/clothing/glasses/judicial_visor
-	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting a small area.</span>"
-	usage_tip = "The visor has a thirty-second cooldown once used."
-	tier = SCRIPTURE_SCRIPT
-	space_allowed = TRUE
-	primary_component = BELLIGERENT_EYE
-	sort_priority = 2
-	quickbind = TRUE
-	quickbind_desc = "Creates a Judicial Visor, which can smite an area, applying Belligerent and briefly stunning."
-
-
 //Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
 /datum/clockwork_scripture/create_object/vitality_matrix
 	descname = "Trap, Damage to Healing"
 	name = "Vitality Matrix"
 	desc = "Places a sigil that drains life from any living non-Servants that cross it, producing Vitality. Servants that cross it, however, will be healed using existing Vitality. \
 	Dead Servants can be revived by this sigil at a cost of 150 Vitality."
-	invocations = list("Divinity, siphon their essence...", "...for this shell to consume.")
+	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 60
-	power_cost = 1000
+	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 2)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/vitality
 	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-Servants and heal Servants that cross it.</span>"
@@ -78,7 +58,7 @@
 	chant_invocations = list("Mend our dents!", "Heal our scratches!", "Repair our gears!")
 	chant_amount = 10
 	chant_interval = 20
-	power_cost = 1000
+	consumed_components = list(VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 1)
 	usage_tip = "This is a very effective way to rapidly reinforce a base after an attack."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
@@ -189,114 +169,75 @@
 	desc = "Forms a device that, when used on certain objects, replaces them with their Ratvarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
-	power_cost = 250
+	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
 	whispered = TRUE
-	object_path = /obj/item/clockwork/replica_fabricator
+	object_path = /obj/item/clockwork/replica_fabricator/preloaded
 	creator_message = "<span class='brass'>You form a replica fabricator.</span>"
 	usage_tip = "Clockwork Walls cause nearby Tinkerer's Caches to generate components passively, making this a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	primary_component = REPLICANT_ALLOY
-	sort_priority = 5
+	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Creates a Replica Fabricator, which can convert various objects to Ratvarian variants."
 
 
-//Clockwork Arnaments: Grants the invoker the ability to call forth a Ratvarian spear and clockwork armor.
-/datum/clockwork_scripture/clockwork_arnaments
-	descname = "Summonable Armor and Weapons"
-	name = "Clockwork Arnaments"
-	desc = "Allows the invoker to summon clockwork armor and a Ratvarian spear at will. The spear's attacks will generate Vitality, used for healing."
-	invocations = list("Grant me arnaments...", "...from the forge of Armorer!")
+//Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
+/datum/clockwork_scripture/function_call
+	descname = "Permanent Summonable Spear"
+	name = "Function Call"
+	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every 3 minutes, with it lasting 3 minutes. The spear's attacks will generate Vitality, used for healing."
+	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
-	power_cost = 250
+	consumed_components = list(REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
-	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear. You will need to wait for 30 seconds before resummoning it."
+	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = REPLICANT_ALLOY
-	sort_priority = 6
-	quickbind = TRUE
-	quickbind_desc = "Permanently binds clockwork armor and a Ratvarian spear to you."
+	sort_priority = 8
 
-/datum/clockwork_scripture/clockwork_arnaments/check_special_requirements()
-	for(var/datum/action/innate/clockwork_arnaments/F in invoker.actions)
+/datum/clockwork_scripture/function_call/check_special_requirements()
+	for(var/datum/action/innate/function_call/F in invoker.actions)
 		to_chat(invoker, "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>")
 		return FALSE
 	return invoker.can_hold_items()
 
-/datum/clockwork_scripture/clockwork_arnaments/scripture_effects()
+/datum/clockwork_scripture/function_call/scripture_effects()
 	invoker.visible_message("<span class='warning'>A shimmer of yellow light infuses [invoker]!</span>", \
-	"<span class='brass'>You bind clockwork equipment to yourself. Use Clockwork Arnaments and Call Spear to summon them.</span>")
-	var/datum/action/innate/call_weapon/ratvarian_spear/S = new()
-	S.Grant(invoker)
-	var/datum/action/innate/clockwork_arnaments/A = new()
-	A.Grant(invoker)
+	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" action button to call it forth.</span>")
+	var/datum/action/innate/function_call/F = new()
+	F.Grant(invoker)
 	return TRUE
 
-//Clockwork Arnaments: Equips a set of clockwork armor. Three-minute cooldown.
-/datum/action/innate/clockwork_arnaments
-	name = "Clockwork Arnaments"
-	desc = "Outfits you in a full set of Ratvarian armor."
-	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
-	button_icon_state = "clockwork_armor"
+//Function Call action: Calls forth a Ratvarian spear once every 3 minutes.
+/datum/action/innate/function_call
+	name = "Function Call"
+	desc = "Allows you to summon a Ratvarian spear to fight enemies."
+	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 	buttontooltipstyle = "clockcult"
 	var/cooldown = 0
-	var/static/list/ratvarian_armor_typecache = typecacheof(list(
-	/obj/item/clothing/suit/armor/clockwork,
-	/obj/item/clothing/head/helmet/clockwork,
-	/obj/item/clothing/gloves/clockwork,
-	/obj/item/clothing/shoes/clockwork)) //don't replace this ever
-	var/static/list/better_armor_typecache = typecacheof(list(
-	/obj/item/clothing/suit/space,
-	/obj/item/clothing/head/helmet/space,
-	/obj/item/clothing/shoes/magboots)) //replace this only if ratvar is up
+	var/base_cooldown = RATVARIAN_SPEAR_DURATION
 
-/datum/action/innate/clockwork_arnaments/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
-		qdel(src)
-		return
-	if(cooldown > world.time)
-		return
+/datum/action/innate/function_call/IsAvailable()
+	if(!is_servant_of_ratvar(owner) || cooldown > world.time)
+		return FALSE
 	return ..()
 
-/datum/action/innate/clockwork_arnaments/Activate()
-	var/do_message = 0
-	var/obj/item/I = owner.get_item_by_slot(slot_wear_suit)
-	if(remove_item_if_better(I, owner))
-		do_message += owner.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/clockwork(null), slot_wear_suit)
-	I = owner.get_item_by_slot(slot_head)
-	if(remove_item_if_better(I, owner))
-		do_message += owner.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork(null), slot_head)
-	I = owner.get_item_by_slot(slot_gloves)
-	if(remove_item_if_better(I, owner))
-		do_message += owner.equip_to_slot_or_del(new/obj/item/clothing/gloves/clockwork(null), slot_gloves)
-	I = owner.get_item_by_slot(slot_shoes)
-	if(remove_item_if_better(I, owner))
-		do_message += owner.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes)
-	if(do_message)
-		owner.visible_message("<span class='warning'>Strange armor appears on [owner]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
-		playsound(owner, 'sound/magic/clockwork/fellowship_armory.ogg', 15 * do_message, TRUE) //get sound loudness based on how much we equipped
-	cooldown = CLOCKWORK_ARMOR_COOLDOWN + world.time
+/datum/action/innate/function_call/Activate()
+	if(!owner.get_empty_held_indexes())
+		to_chat(usr, "<span class='warning'>You need an empty hand to call forth your spear!</span>")
+		return FALSE
+	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
+	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
+	owner.put_in_hands(R)
+	if(!GLOB.ratvar_awakens)
+		to_chat(owner, "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>")
+	cooldown = base_cooldown + world.time
 	owner.update_action_buttons_icon()
-	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), CLOCKWORK_ARMOR_COOLDOWN)
+	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
 	return TRUE
-
-/datum/action/innate/clockwork_arnaments/proc/remove_item_if_better(obj/item/I, mob/user)
-	if(!I)
-		return TRUE
-	if(is_type_in_typecache(I, ratvarian_armor_typecache))
-		return FALSE
-	if(!GLOB.ratvar_awakens && is_type_in_typecache(I, better_armor_typecache))
-		return FALSE
-	return user.dropItemToGround(I)
-
-//Call Spear: Calls forth a powerful Ratvarian spear.
-/datum/action/innate/call_weapon/ratvarian_spear
-	name = "Call Spear"
-	desc = "Calls a Ratvarian spear into your hands to fight your enemies."
-	weapon_type = /obj/item/clockwork/weapon/ratvarian_spear
 
 
 //Spatial Gateway: Allows the invoker to teleport themselves and any nearby allies to a conscious servant or clockwork obelisk.
@@ -307,7 +248,7 @@
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Spatial Gateway...", "...activate!")
 	channel_time = 80
-	power_cost = 400
+	consumed_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 2)
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
@@ -344,4 +285,3 @@
 		portal_uses = max(portal_uses, 100) //Very powerful if Ratvar has been summoned
 		duration = max(duration, 100)
 	return slab.procure_gateway(invoker, duration, portal_uses)
-

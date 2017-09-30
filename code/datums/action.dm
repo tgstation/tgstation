@@ -485,7 +485,7 @@
 
 /datum/action/spell_action/New(Target)
 	..()
-	var/obj/effect/proc_holder/S = target
+	var/obj/effect/proc_holder/spell/S = target
 	S.action = src
 	name = S.name
 	desc = S.desc
@@ -495,40 +495,36 @@
 	button.name = name
 
 /datum/action/spell_action/Destroy()
-	var/obj/effect/proc_holder/S = target
+	var/obj/effect/proc_holder/spell/S = target
 	S.action = null
 	return ..()
 
 /datum/action/spell_action/Trigger()
 	if(!..())
-		return FALSE
+		return 0
 	if(target)
-		var/obj/effect/proc_holder/S = target
-		S.Click()
-		return TRUE
+		var/obj/effect/proc_holder/spell = target
+		spell.Click()
+		return 1
 
 /datum/action/spell_action/IsAvailable()
 	if(!target)
-		return FALSE
-	return TRUE
-
-/datum/action/spell_action/spell/IsAvailable()
-	if(!target)
-		return FALSE
-	var/obj/effect/proc_holder/spell/S = target
+		return 0
+	var/obj/effect/proc_holder/spell/spell = target
 	if(owner)
-		return S.can_cast(owner)
-	return FALSE
+		return spell.can_cast(owner)
+	return 0
+
 
 /datum/action/spell_action/alien
 
 /datum/action/spell_action/alien/IsAvailable()
 	if(!target)
-		return FALSE
+		return 0
 	var/obj/effect/proc_holder/alien/ab = target
 	if(owner)
 		return ab.cost_check(ab.check_turf,owner,1)
-	return FALSE
+	return 0
 
 
 

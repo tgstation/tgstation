@@ -29,7 +29,9 @@ AI
 
 
 /datum/job/ai/config_check()
-	return CONFIG_GET(flag/allow_ai)
+	if(config && config.allow_ai)
+		return 1
+	return 0
 
 /*
 Cyborg
@@ -51,5 +53,5 @@ Cyborg
 	return H.Robotize(FALSE, FALSE)
 
 /datum/job/cyborg/after_spawn(mob/living/silicon/robot/R, mob/M)
-	if(CONFIG_GET(flag/rename_cyborg))	//name can't be set in robot/New without the client
+	if(config.rename_cyborg)	//name can't be set in robot/New without the client
 		R.rename_self("cyborg", M.client)

@@ -96,16 +96,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		to_chat(usr, .)
 	SSblackbox.add_details("admin_verb","Advanced ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-GLOBAL_VAR(AdminProcCaller)
+GLOBAL_VAR_INIT(AdminProcCaller, null)
 GLOBAL_PROTECT(AdminProcCaller)
 GLOBAL_VAR_INIT(AdminProcCallCount, 0)
 GLOBAL_PROTECT(AdminProcCallCount)
-GLOBAL_VAR(LastAdminCalledTargetRef)
-GLOBAL_PROTECT(LastAdminCalledTargetRef)
-GLOBAL_VAR(LastAdminCalledTarget)
-GLOBAL_PROTECT(LastAdminCalledTarget)
-GLOBAL_VAR(LastAdminCalledProc)
-GLOBAL_PROTECT(LastAdminCalledProc)
 
 /proc/WrapAdminProcCall(target, procname, list/arguments)
 	var/current_caller = GLOB.AdminProcCaller
@@ -114,9 +108,6 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		to_chat(usr, "<span class='adminnotice'>Another set of admin called procs are still running, your proc will be run after theirs finish.</span>")
 		UNTIL(!GLOB.AdminProcCaller)
 		to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
-	GLOB.LastAdminCalledProc = procname
-	if(target != GLOBAL_PROC)
-		GLOB.LastAdminCalledTargetRef = "\ref[target]"
 	GLOB.AdminProcCaller = ckey	//if this runtimes, too bad for you
 	++GLOB.AdminProcCallCount
 	. = world.WrapAdminProcCall(target, procname, arguments)
@@ -845,11 +836,11 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	if(!holder)
 		return
 
-	GLOB.medals_enabled = !GLOB.medals_enabled
+	global.medals_enabled = !global.medals_enabled
 
-	message_admins("<span class='adminnotice'>[key_name_admin(src)] [GLOB.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
 	SSblackbox.add_details("admin_verb","Toggle Medal Disable") // If...
-	log_admin("[key_name(src)] [GLOB.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")
+	log_admin("[key_name(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")
 
 /client/proc/view_runtimes()
 	set category = "Debug"

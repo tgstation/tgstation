@@ -1347,19 +1347,19 @@
 		return TRUE
 	operating = TRUE
 	update_icon(AIRLOCK_OPENING, 1)
-	sleep(1)
-	set_opacity(0)
-	update_freelook_sight()
-	sleep(4)
+	src.set_opacity(0)
+	sleep(5)
 	density = FALSE
-	air_update_turf(1)
-	sleep(1)
-	layer = OPEN_DOOR_LAYER
+	sleep(9)
+	src.layer = OPEN_DOOR_LAYER
 	update_icon(AIRLOCK_OPEN, 1)
+	set_opacity(0)
 	operating = FALSE
+	air_update_turf(1)
+	update_freelook_sight()
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
-		addtimer(CALLBACK(src, .proc/close), 1)
+		addtimer(CALLBACK(src, .proc/close), 2)
 	return TRUE
 
 
@@ -1391,24 +1391,21 @@
 		return TRUE
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
-	layer = CLOSED_DOOR_LAYER
+	src.layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		density = TRUE
-		air_update_turf(1)
-	sleep(1)
-	if(!air_tight)
-		density = TRUE
-		air_update_turf(1)
-	sleep(4)
+	sleep(5)
+	density = TRUE
 	if(!safe)
 		crush()
+	sleep(9)
+	update_icon(AIRLOCK_CLOSED, 1)
 	if(visible && !glass)
 		set_opacity(1)
-	update_freelook_sight()
-	sleep(1)
-	update_icon(AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	delayed_close_requested = FALSE
+	air_update_turf(1)
+	update_freelook_sight()
 	if(safe)
 		CheckForMobs()
 	return TRUE

@@ -34,15 +34,13 @@ GLOBAL_PROTECT(href_token)
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	href_token = GenerateToken()
 	GLOB.admin_datums[ckey] = src
-	if(R.rights & R_DEBUG) //grant profile access
-		world.SetConfig("APP/admin", ckey, "role=admin")
 
 /proc/GenerateToken()
 	. = ""
 	for(var/I in 1 to 32)
 		. += "[rand(10)]"
 
-/proc/RawHrefToken(forceGlobal = FALSE)
+/proc/HrefToken(forceGlobal = FALSE)
 	var/tok = GLOB.href_token
 	if(!forceGlobal && usr)
 		var/client/C = usr.client
@@ -51,13 +49,7 @@ GLOBAL_PROTECT(href_token)
 		var/datum/admins/holder = C.holder
 		if(holder)
 			tok = holder.href_token
-	return tok
-
-/proc/HrefToken(forceGlobal = FALSE)
-	return "admin_token=[RawHrefToken(forceGlobal)]"
-
-/proc/HrefTokenFormField(forceGlobal = FALSE)
-	return "<input type='hidden' name='admin_token' value='[RawHrefToken(forceGlobal)]'>"
+	return "admin_token=[tok]"
 
 /datum/admins/proc/associate(client/C)
 	if(IsAdminAdvancedProcCall())

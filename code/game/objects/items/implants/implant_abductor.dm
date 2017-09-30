@@ -26,15 +26,21 @@
 	if(..())
 		var/obj/machinery/abductor/console/console
 		if(ishuman(target))
-			var/datum/antagonist/abductor/A = target.mind.has_antag_datum(ANTAG_DATUM_ABDUCTOR)
-			if(A)
-				console = get_abductor_console(A.team.team_number)
+			var/mob/living/carbon/human/H = target
+			if(H.dna.species.id == "abductor")
+				var/datum/species/abductor/S = H.dna.species
+				console = get_team_console(S.team)
 				home = console.pad
 
 		if(!home)
-			var/list/consoles = list()
-			for(var/obj/machinery/abductor/console/C in GLOB.machines)
-				consoles += C
-			console = pick(consoles)
+			console = get_team_console(pick(1, 2, 3, 4))
 			home = console.pad
-		return TRUE
+		return 1
+
+/obj/item/implant/abductor/proc/get_team_console(var/team)
+	var/obj/machinery/abductor/console/console
+	for(var/obj/machinery/abductor/console/c in GLOB.machines)
+		if(c.team == team)
+			console = c
+			break
+	return console

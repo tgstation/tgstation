@@ -7,5 +7,4 @@
 
 /datum/round_event/wizard/fake_explosion/start()
 	sound_to_playing_players('sound/machines/alarm.ogg')
-	sleep(100)
-	Cinematic(CINEMATIC_NUKE_FAKE,world)
+	addtimer(CALLBACK(SSticker, /datum/controller/subsystem/ticker/.proc/station_explosion_cinematic, 1, "fake"), 100) //:o)

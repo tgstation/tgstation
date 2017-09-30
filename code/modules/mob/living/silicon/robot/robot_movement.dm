@@ -5,10 +5,8 @@
 
 /mob/living/silicon/robot/movement_delay()
 	. = ..()
-	var/static/config_robot_delay
-	if(isnull(config_robot_delay))
-		config_robot_delay = CONFIG_GET(number/robot_delay)
-	. += speed + config_robot_delay
+	. += speed
+	. += config.robot_delay
 
 /mob/living/silicon/robot/mob_negates_gravity()
 	return magpulse

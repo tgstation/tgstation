@@ -34,11 +34,6 @@ Pipelines + Other Objects -> Pipe network
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes
 
-/obj/machinery/atmospherics/examine(mob/living/user)
-	..()
-	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && user.ventcrawler)
-		to_chat(user, "<span class='notice'>Alt-click to crawl through it.</span>")
-
 /obj/machinery/atmospherics/New(loc, process = TRUE)
 	nodes = new(device_type)
 	if (!armor)
@@ -96,7 +91,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
 	if(target.initialize_directions & get_dir(target,src))
-		return TRUE
+		return 1
 
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return nodes
@@ -213,17 +208,6 @@ Pipelines + Other Objects -> Pipe network
 		pipe_overlay = . = pipeimages[identifier] = image(iconset, iconstate, dir = direction)
 		pipe_overlay.color = col
 
-/obj/machinery/atmospherics/proc/icon_addintact(var/obj/machinery/atmospherics/node)
-	var/image/img = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_intact", get_dir(src,node), node.pipe_color)
-	underlays += img
-	return img.dir
-
-/obj/machinery/atmospherics/proc/icon_addbroken(var/connected = FALSE)
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in GLOB.cardinals)
-		if(unconnected & direction)
-			underlays += getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_exposed", direction)
-
 /obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
@@ -291,7 +275,7 @@ Pipelines + Other Objects -> Pipe network
 
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
-	return TRUE
+	return 1
 
 /obj/machinery/atmospherics/proc/returnPipenets()
 	return list()
@@ -301,4 +285,4 @@ Pipelines + Other Objects -> Pipe network
 
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
-	return TRUE
+	return 1

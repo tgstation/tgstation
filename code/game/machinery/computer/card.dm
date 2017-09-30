@@ -47,26 +47,29 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/Initialize()
 	. = ..()
-	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
+	change_position_cooldown = config.id_console_jobslot_delay
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/card/id))
 		var/obj/item/card/id/idcard = O
 		if(check_access(idcard))
 			if(!scan)
-				if (!user.transferItemToLoc(idcard,src))
+				if(!usr.drop_item())
 					return
+				idcard.loc = src
 				scan = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else if(!modify)
-				if (!user.transferItemToLoc(idcard,src))
+				if(!usr.drop_item())
 					return
+				idcard.loc = src
 				modify = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		else
 			if(!modify)
-				if (!user.transferItemToLoc(idcard,src))
+				if(!usr.drop_item())
 					return
+				idcard.loc = src
 				modify = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else
@@ -92,10 +95,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/on_deconstruction()
 	if(scan)
-		scan.forceMove(drop_location())
+		scan.forceMove(loc)
 		scan = null
 	if(modify)
-		modify.forceMove(drop_location())
+		modify.forceMove(loc)
 		modify = null
 
 //Check if you can't open a new position for a certain job
@@ -352,7 +355,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if (modify)
 				GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.update_label()
-				modify.forceMove(drop_location())
+				modify.loc = loc
 				modify.verb_pickup()
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				modify = null
@@ -361,24 +364,26 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			else
 				var/obj/item/I = usr.get_active_held_item()
 				if (istype(I, /obj/item/card/id))
-					if (!usr.transferItemToLoc(I,src))
+					if(!usr.drop_item())
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+					I.loc = src
 					modify = I
 			authenticated = 0
 
 		if ("scan")
 			if (scan)
-				scan.forceMove(drop_location())
+				scan.loc = src.loc
 				scan.verb_pickup()
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				scan = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
 				if (istype(I, /obj/item/card/id))
-					if (!usr.transferItemToLoc(I,src))
+					if(!usr.drop_item())
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+					I.loc = src
 					scan = I
 			authenticated = 0
 		if ("auth")

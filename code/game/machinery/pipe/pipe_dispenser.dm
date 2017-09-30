@@ -13,14 +13,13 @@
 	if(..())
 		return 1
 	var/dat = {"
-<b>Pipes:</b><BR>
+<b>Regular pipes:</b><BR>
 <A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=[PIPE_MANIFOLD];dir=1'>Manifold</A><BR>
 <A href='?src=\ref[src];make=[PIPE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=[PIPE_MVALVE];dir=1'>Manual Valve</A><BR>
 <A href='?src=\ref[src];make=[PIPE_DVALVE];dir=1'>Digital Valve</A><BR>
-<A href='?src=\ref[src];make=[PIPE_BLUESPACE];dir=1'>Bluespace Pipe</A><BR>
 <b>Devices:</b><BR>
 <A href='?src=\ref[src];make=[PIPE_CONNECTOR];dir=1'>Connector</A><BR>
 <A href='?src=\ref[src];make=[PIPE_UVENT];dir=1'>Vent</A><BR>

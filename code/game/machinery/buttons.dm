@@ -127,10 +127,10 @@
 	if(panel_open)
 		if(device || board)
 			if(device)
-				device.forceMove(drop_location())
+				device.loc = get_turf(src)
 				device = null
 			if(board)
-				board.forceMove(drop_location())
+				board.loc = get_turf(src)
 				req_access = list()
 				req_one_access = list()
 				board = null

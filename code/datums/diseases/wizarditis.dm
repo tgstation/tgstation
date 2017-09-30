@@ -110,6 +110,6 @@ STI KALY - blind
 		return
 
 	affected_mob.say("SCYAR NILA [uppertext(thearea.name)]!")
-	affected_mob.forceMove(pick(L))
+	affected_mob.loc = pick(L)
 
 	return
