@@ -1118,7 +1118,7 @@
 	if(!(M in buckled_mobs) && isliving(M))
 		buckle_mob(M)
 
-/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_forceMove(T)RUE)
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
 		return
