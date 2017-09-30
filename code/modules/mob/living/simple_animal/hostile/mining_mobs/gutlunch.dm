@@ -54,15 +54,12 @@
 
 	if(isliving(the_target))
 		var/mob/living/L = the_target
-		var/faction_check = faction_check_mob(L)
-		if(robust_searching)
-			if(faction_check && !attack_same)
-				return FALSE
-			if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive)
-				return FALSE
-		else
-			if(L.stat)
-				return FALSE
+
+		if(faction_check_mob(L) && !attack_same)
+			return FALSE
+		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive)
+			return FALSE
+
 		return TRUE
 
 	return FALSE
