@@ -32,7 +32,6 @@
 				meat_counter += 20
 			else
 				meat_counter++
-			H.regenerate_icons()	//Just incase it fails to gib
 			H.gib()
 			adjustHealth(-maxHealth * 0.05)//restores 5% hp of tendril
 
