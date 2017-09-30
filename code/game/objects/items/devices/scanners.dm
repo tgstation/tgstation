@@ -154,6 +154,59 @@ MASS SPECTROMETER
 		to_chat(user, "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>")
 	if(advanced)
 		to_chat(user, "\t<span class='info'>Brain Activity Level: [100 - M.getBrainLoss()]%.</span>")
+	if (M.radiation)
+		to_chat(user, "\t<span class='alert'>Subject is irradiated.</span>")
+		if(advanced)
+			to_chat(user, "\t<span class='info'>Radiation Level: [M.radiation]%.</span>")
+
+	if(advanced && M.hallucinating())
+		to_chat(user, "\t<span class='info'>Subject is hallucinating.</span>")
+
+	//Eyes and ears
+	if(advanced)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			var/obj/item/organ/ears/ears = C.getorganslot("ears")
+			to_chat(user, "\t<span class='info'><b>==EAR STATUS==</b>.</span>")
+			if(istype(ears))
+				var/healthy = TRUE
+				if(C.disabilities & DEAF)
+					healthy = FALSE
+					to_chat(user, "\t<span class='alert'>Subject is genetically deaf.</span>")
+				else
+					if(ears.ear_damage)
+						to_chat(user, "\t<span class='alert'>Subject has [ears.ear_damage > UNHEALING_EAR_DAMAGE? "permanent ": "temporary "]hearing damage.</span>")
+						healthy = FALSE
+					if(ears.deaf)
+						to_chat(user, "\t<span class='alert'>Subject is [ears.ear_damage > UNHEALING_EAR_DAMAGE ? "permanently ": "temporarily "] deaf.</span>")
+						healthy = FALSE
+				if(healthy)
+					to_chat(user, "\t<span class='info'>Healthy.</span>")
+			else
+				to_chat(user, "\t<span class='alert'>Subject does not have ears.</span>")
+			var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
+			to_chat(user, "\t<span class='info'><b>==EYE STATUS==</b>.</span>")
+			if(istype(eyes))
+				var/healthy = TRUE
+				if(C.disabilities & BLIND)
+					to_chat(user, "\t<span class='alert'>Subject is blind.</span>")
+					healthy = FALSE
+				if(C.disabilities & NEARSIGHT)
+					to_chat(user, "\t<span class='alert'>Subject is nearsighted.</span>")
+					healthy = FALSE
+				if(eyes.eye_damage > 30)
+					to_chat(user, "\t<span class='alert'>Subject has severe eye damage.</span>")
+					healthy = FALSE
+				else if(eyes.eye_damage > 20)
+					to_chat(user, "\t<span class='alert'>Subject has significant eye damage.</span>")
+					healthy = FALSE
+				else if(eyes.eye_damage)
+					to_chat(user, "\t<span class='alert'>Subject has minor eye damage.</span>")
+					healthy = FALSE
+				if(healthy)
+					to_chat(user, "\t<span class='info'>Healthy.</span>")
+			else
+				to_chat(user, "\t<span class='alert'>Subject does not have eyes.</span>")
 
 
 	if(ishuman(M))
