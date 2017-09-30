@@ -139,9 +139,9 @@
 				if("syndiborg")
 					var/path
 					if(prob(50))
-						path = /mob/living/silicon/robot/syndicate
+						path = /mob/living/silicon/robot/modules/syndicate
 					else
-						path = /mob/living/silicon/robot/syndicate/medical
+						path = /mob/living/silicon/robot/modules/syndicate/medical
 					new_mob = new path(M.loc)
 				if("drone")
 					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
@@ -276,7 +276,9 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
-	to_chat(new_mob, config.policies["polymorph"])
+	var/poly_msg = CONFIG_GET(keyed_string_list/policy)["polymorph"]
+	if(poly_msg)
+		to_chat(new_mob, poly_msg)
 
 	qdel(M)
 	return new_mob

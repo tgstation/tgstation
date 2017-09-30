@@ -85,7 +85,7 @@
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
 		if(traitor_mob&&istype(traitor_mob))
-			if(!silent) 
+			if(!silent)
 				to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			traitor_mob.dna.remove_mutation(CLOWNMUT)
 
@@ -138,10 +138,11 @@
 			assign_exchange_role(SSticker.mode.exchange_red)
 			assign_exchange_role(SSticker.mode.exchange_blue)
 		objective_count += 1					//Exchange counts towards number of objectives
-	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
+	var/toa = CONFIG_GET(number/traitor_objectives_amount)
+	for(var/i = objective_count, i < toa, i++)
 		forge_single_objective()
 
-	if(is_hijacker && objective_count <= config.traitor_objectives_amount) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
+	if(is_hijacker && objective_count <= toa) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
 		if (!(locate(/datum/objective/hijack) in owner.objectives))
 			var/datum/objective/hijack/hijack_objective = new
 			hijack_objective.owner = owner
@@ -174,15 +175,15 @@
 	if(prob(30))
 		objective_count += forge_single_objective()
 
-	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
+	for(var/i = objective_count, i < CONFIG_GET(number/traitor_objectives_amount), i++)
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = owner
 		kill_objective.find_target()
 		add_objective(kill_objective)
 
-	var/datum/objective/survive/survive_objective = new
-	survive_objective.owner = owner
-	add_objective(survive_objective)
+	var/datum/objective/survive/exist/exist_objective = new
+	exist_objective.owner = owner
+	add_objective(exist_objective)
 /datum/antagonist/traitor/proc/forge_single_objective()
 	return 0
 /datum/antagonist/traitor/human/forge_single_objective() //Returns how many objectives are added
@@ -205,10 +206,16 @@
 			kill_objective.find_target()
 			add_objective(kill_objective)
 	else
-		var/datum/objective/steal/steal_objective = new
-		steal_objective.owner = owner
-		steal_objective.find_target()
-		add_objective(steal_objective)
+		if(prob(15) && !(locate(/datum/objective/download in owner.objectives)))
+			var/datum/objective/download/download_objective = new
+			download_objective.owner = owner
+			download_objective.gen_amount_goal()
+			add_objective(download_objective)
+		else
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = owner
+			steal_objective.find_target()
+			add_objective(steal_objective)
 
 /datum/antagonist/traitor/AI/forge_single_objective()
 	.=1
