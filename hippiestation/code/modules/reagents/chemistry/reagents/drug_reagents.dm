@@ -243,6 +243,8 @@
 		
 /datum/reagent/drug/yespowder/on_mob_life(mob/living/M)
 	var/high_message = pick("Agreement fills your mind.", "'No' is so last year. 'Yes' is in.", "Yes.")
+	if(prob(5))
+		to_chat(M, "<span class='notice'>[high_message]</span>")
 	if(prob(20))
 		M.say("Yes.")
 	..()
