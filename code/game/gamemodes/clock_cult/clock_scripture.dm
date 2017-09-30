@@ -26,6 +26,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/tier = SCRIPTURE_PERIPHERAL //The scripture's tier
 	var/quickbind = FALSE //if this scripture can be quickbound to a clockwork slab
 	var/quickbind_desc = "This shouldn't be quickbindable. File a bug report!"
+	var/cyborg_usable = TRUE //if cyborgs can use this scripture
 	var/primary_component
 	var/sort_priority = 1 //what position the scripture should have in a list of scripture. Should be based off of component costs/reqs, but you can't initial() lists.
 
