@@ -62,7 +62,11 @@
 
 	if (bodytemperature < 283.222)
 		. += (283.222 - bodytemperature) / 10 * 1.75
-	return . + config.monkey_delay
+		
+	var/static/config_monkey_delay
+	if(isnull(config_monkey_delay))
+		config_monkey_delay = CONFIG_GET(number/monkey_delay)
+	. += config_monkey_delay
 
 /mob/living/carbon/monkey/Stat()
 	..()
@@ -147,7 +151,7 @@
 	aggressive = TRUE
 
 /mob/living/carbon/monkey/angry/Initialize()
-	..()
+	. = ..()
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
 		equip_to_slot_or_del(helmet,slot_head)

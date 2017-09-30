@@ -33,8 +33,9 @@
 	if(!timestamp)
 		timestamp = SQLtime()
 	if(!server)
-		if (config && config.server_sql_name)
-			server = config.server_sql_name
+		var/ssqlname = CONFIG_GET(string/serversqlname)
+		if (ssqlname)
+			server = ssqlname
 	server = sanitizeSQL(server)
 	if(isnull(secret))
 		switch(alert("Hide note from being viewed by players?", "Secret note?","Yes","No","Cancel"))
@@ -147,12 +148,13 @@
 		return
 	var/output
 	var/ruler = "<hr style='background:#000000; border:0; height:3px'>"
-	var/navbar = "<a href='?_src_=holder;nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;nonalpha=2'>\[#\]</a>"
+	var/navbar = "<a href='?_src_=holder;[HrefToken()];nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;[HrefToken()];nonalpha=2'>\[#\]</a>"
 	for(var/letter in GLOB.alphabet)
-		navbar += "|<a href='?_src_=holder;showmessages=[letter]'>\[[letter]\]</a>"
-	navbar += "|<a href='?_src_=holder;showmemo=1'>\[Memos\]</a>|<a href='?_src_=holder;showwatch=1'>\[Watchlist\]</a>"
+		navbar += "|<a href='?_src_=holder;[HrefToken()];showmessages=[letter]'>\[[letter]\]</a>"
+	navbar += "|<a href='?_src_=holder;[HrefToken()];showmemo=1'>\[Memos\]</a>|<a href='?_src_=holder;[HrefToken()];showwatch=1'>\[Watchlist\]</a>"
 	navbar += "<br><form method='GET' name='search' action='?'>\
 	<input type='hidden' name='_src_' value='holder'>\
+	[HrefTokenFormField()]\
 	<input type='text' name='searchmessages' value='[index]'>\
 	<input type='submit' value='Search'></form>"
 	if(!linkless)
@@ -160,14 +162,14 @@
 	if(type == "memo" || type == "watchlist entry")
 		if(type == "memo")
 			output += "<h2><center>Admin memos</h2>"
-			output += "<a href='?_src_=holder;addmemo=1'>\[Add memo\]</a></center>"
+			output += "<a href='?_src_=holder;[HrefToken()];addmemo=1'>\[Add memo\]</a></center>"
 		else if(type == "watchlist entry")
 			output += "<h2><center>Watchlist entries</h2>"
-			output += "<a href='?_src_=holder;addwatchempty=1'>\[Add watchlist entry\]</a>"
+			output += "<a href='?_src_=holder;[HrefToken()];addwatchempty=1'>\[Add watchlist entry\]</a>"
 			if(filter)
-				output += "|<a href='?_src_=holder;showwatch=1'>\[Unfilter clients\]</a></center>"
+				output += "|<a href='?_src_=holder;[HrefToken()];showwatch=1'>\[Unfilter clients\]</a></center>"
 			else
-				output += "|<a href='?_src_=holder;showwatchfilter=1'>\[Filter offline clients\]</a></center>"
+				output += "|<a href='?_src_=holder;[HrefToken()];showwatchfilter=1'>\[Filter offline clients\]</a></center>"
 		output += ruler
 		var/datum/DBQuery/query_get_type_messages = SSdbcore.NewQuery("SELECT id, targetckey, adminckey, text, timestamp, server, lasteditor FROM [format_table_name("messages")] WHERE type = '[type]' AND deleted = 0")
 		if(!query_get_type_messages.warn_execute())
@@ -186,10 +188,10 @@
 			if(type == "watchlist entry")
 				output += "[t_ckey] | "
 			output += "[timestamp] | [server] | [admin_ckey]</b>"
-			output += " <a href='?_src_=holder;deletemessageempty=[id]'>\[Delete\]</a>"
-			output += " <a href='?_src_=holder;editmessageempty=[id]'>\[Edit\]</a>"
+			output += " <a href='?_src_=holder;[HrefToken()];deletemessageempty=[id]'>\[Delete\]</a>"
+			output += " <a href='?_src_=holder;[HrefToken()];editmessageempty=[id]'>\[Edit\]</a>"
 			if(editor_ckey)
-				output += " <font size='2'>Last edit by [editor_ckey] <a href='?_src_=holder;messageedits=[id]'>(Click here to see edit log)</a></font>"
+				output += " <font size='2'>Last edit by [editor_ckey] <a href='?_src_=holder;[HrefToken()];messageedits=[id]'>(Click here to see edit log)</a></font>"
 			output += "<br>[text]<hr style='background:#000000; border:0; height:1px'>"
 	if(target_ckey)
 		target_ckey = sanitizeSQL(target_ckey)
@@ -215,8 +217,10 @@
 			var/editor_ckey = query_get_messages.item[8]
 			var/age = text2num(query_get_messages.item[9])
 			var/alphatext = ""
-			if (agegate && type == "note" && isnum(config.note_stale_days) && isnum(config.note_fresh_days) && config.note_stale_days > config.note_fresh_days)
-				var/alpha = Clamp(100 - (age - config.note_fresh_days) * (85 / (config.note_stale_days - config.note_fresh_days)), 15, 100)
+			var/nsd = CONFIG_GET(number/note_stale_days)
+			var/nfd = CONFIG_GET(number/note_fresh_days)
+			if (agegate && type == "note" && isnum(nsd) && isnum(nfd) && nsd > nfd)
+				var/alpha = Clamp(100 - (age - nfd) * (85 / (nsd - nfd)), 15, 100)
 				if (alpha < 100)
 					if (alpha <= 15)
 						if (skipped)
@@ -229,17 +233,17 @@
 			var/data
 			data += "<p style='margin:0px;[alphatext]'> <b>[timestamp] | [server] | [admin_ckey]</b>"
 			if(!linkless)
-				data += " <a href='?_src_=holder;deletemessage=[id]'>\[Delete\]</a>"
+				data += " <a href='?_src_=holder;[HrefToken()];deletemessage=[id]'>\[Delete\]</a>"
 				if(type == "note")
-					data += " <a href='?_src_=holder;secretmessage=[id]'>[secret ? "<b>\[Secret\]</b>" : "\[Not secret\]"]</a>"
+					data += " <a href='?_src_=holder;[HrefToken()];secretmessage=[id]'>[secret ? "<b>\[Secret\]</b>" : "\[Not secret\]"]</a>"
 				if(type == "message sent")
 					data += " <font size='2'>Message has been sent</font>"
 					if(editor_ckey)
 						data += "|"
 				else
-					data += " <a href='?_src_=holder;editmessage=[id]'>\[Edit\]</a>"
+					data += " <a href='?_src_=holder;[HrefToken()];editmessage=[id]'>\[Edit\]</a>"
 				if(editor_ckey)
-					data += " <font size='2'>Last edit by [editor_ckey] <a href='?_src_=holder;messageedits=[id]'>(Click here to see edit log)</a></font>"
+					data += " <font size='2'>Last edit by [editor_ckey] <a href='?_src_=holder;[HrefToken()];messageedits=[id]'>(Click here to see edit log)</a></font>"
 			data += "<br>[text]</p><hr style='background:#000000; border:0; height:1px; [alphatext]'>"
 			switch(type)
 				if("message")
@@ -252,12 +256,12 @@
 					notedata += data
 		output += "<h2><center>[target_ckey]</center></h2><center>"
 		if(!linkless)
-			output += "<a href='?_src_=holder;addnote=[target_ckey]'>\[Add note\]</a>"
-			output += " <a href='?_src_=holder;addmessage=[target_ckey]'>\[Add message\]</a>"
-			output += " <a href='?_src_=holder;addwatch=[target_ckey]'>\[Add to watchlist\]</a>"
-			output += " <a href='?_src_=holder;showmessageckey=[target_ckey]'>\[Refresh page\]</a></center>"
+			output += "<a href='?_src_=holder;[HrefToken()];addnote=[target_ckey]'>\[Add note\]</a>"
+			output += " <a href='?_src_=holder;[HrefToken()];addmessage=[target_ckey]'>\[Add message\]</a>"
+			output += " <a href='?_src_=holder;[HrefToken()];addwatch=[target_ckey]'>\[Add to watchlist\]</a>"
+			output += " <a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey]'>\[Refresh page\]</a></center>"
 		else
-			output += " <a href='?_src_=holder;showmessageckeylinkless=[target_ckey]'>\[Refresh page\]</a></center>"
+			output += " <a href='?_src_=holder;[HrefToken()];showmessageckeylinkless=[target_ckey]'>\[Refresh page\]</a></center>"
 		output += ruler
 		if(messagedata)
 			output += "<h4>Messages</h4>"
@@ -271,16 +275,16 @@
 			if(!linkless)
 				if (agegate)
 					if (skipped) //the first skipped message is still shown so that we can put this link over it.
-						output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1' style='position: relative; top: -3em;'>\[Show [skipped] hidden messages\]</center>"
+						output += " <center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey];showall=1' style='position: relative; top: -3em;'>\[Show [skipped] hidden messages\]</center>"
 					else
-						output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey];showall=1'>\[Show All\]</center>"
+						output += " <center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey];showall=1'>\[Show All\]</center>"
 
 				else
-					output += " <center><a href='?_src_=holder;showmessageckey=[target_ckey]'>\[Hide Old\]</center>"
+					output += " <center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey]'>\[Hide Old\]</center>"
 	if(index)
 		var/index_ckey
 		var/search
-		output += "<center><a href='?_src_=holder;addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;addnoteempty=1'>\[Add note\]</a></center>"
+		output += "<center><a href='?_src_=holder;[HrefToken()];addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>\[Add note\]</a></center>"
 		output += ruler
 		if(!isnum(index))
 			index = sanitizeSQL(index)
@@ -296,9 +300,9 @@
 			return
 		while(query_list_messages.NextRow())
 			index_ckey = query_list_messages.item[1]
-			output += "<a href='?_src_=holder;showmessageckey=[index_ckey]'>[index_ckey]</a><br>"
+			output += "<a href='?_src_=holder;[HrefToken()];showmessageckey=[index_ckey]'>[index_ckey]</a><br>"
 	else if(!type && !target_ckey && !index)
-		output += "<center></a> <a href='?_src_=holder;addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;addnoteempty=1'>\[Add note\]</a></center>"
+		output += "<center></a> <a href='?_src_=holder;[HrefToken()];addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>\[Add note\]</a></center>"
 		output += ruler
 	usr << browse({"<!DOCTYPE html><html><head><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /></head><body>[output]</body></html>"}, "window=browse_messages;size=900x500")
 
@@ -336,7 +340,7 @@ proc/get_message_output(type, target_ckey)
 			if("memo")
 				output += "<span class='memo'>Memo by <span class='prefix'>[admin_ckey]</span> on [timestamp]"
 				if(editor_ckey)
-					output += "<br><span class='memoedit'>Last edit by [editor_ckey] <A href='?_src_=holder;messageedits=[message_id]'>(Click here to see edit log)</A></span>"
+					output += "<br><span class='memoedit'>Last edit by [editor_ckey] <A href='?_src_=holder;[HrefToken()];messageedits=[message_id]'>(Click here to see edit log)</A></span>"
 				output += "<br>[text]</span><br>"
 	return output
 
@@ -352,8 +356,9 @@ proc/get_message_output(type, target_ckey)
 		var/notetext
 		notesfile >> notetext
 		var/server
-		if(config && config.server_sql_name)
-			server = config.server_sql_name
+		var/ssqlname = CONFIG_GET(string/serversqlname)
+		if (ssqlname)
+			server = ssqlname
 		var/regex/note = new("^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$", "i")
 		note.Find(notetext)
 		var/timestamp = note.group[1]

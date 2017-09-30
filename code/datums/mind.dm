@@ -127,10 +127,10 @@
 	memory = null
 
 // Datum antag mind procs
-/datum/mind/proc/add_antag_datum(datum_type)
+/datum/mind/proc/add_antag_datum(datum_type, team)
 	if(!datum_type)
 		return
-	var/datum/antagonist/A = new datum_type(src)
+	var/datum/antagonist/A = new datum_type(src, team)
 	if(!A.can_be_owned(src))
 		qdel(A)
 		return
@@ -189,6 +189,11 @@
 	if(src in SSticker.mode.traitors)
 		src.remove_antag_datum(ANTAG_DATUM_TRAITOR)
 	SSticker.mode.update_traitor_icons_removed(src)
+
+/datum/mind/proc/remove_brother()
+	if(src in SSticker.mode.brothers)
+		src.remove_antag_datum(ANTAG_DATUM_BROTHER)
+	SSticker.mode.update_brother_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
 	if(src in SSticker.mode.syndicates)
@@ -299,7 +304,7 @@
 			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name]).")
 
 		else if(uplink_loc == PDA)
-			PDA.lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
+			PDA.lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 
 			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name]).")
@@ -345,6 +350,12 @@
 		var/obj_count = 1
 		for(var/datum/objective/objective in objectives)
 			output += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
+			var/list/datum/mind/other_owners = objective.get_owners() - src
+			if(other_owners.len)
+				output += "<ul>"
+				for(var/datum/mind/M in other_owners)
+					output += "<li>Conspirator: [M.name]</li>"
+				output += "</ul>"
 
 	if(window)
 		recipient << browse(output,"window=memory")
@@ -381,7 +392,7 @@
 
 	/** TRAITOR ***/
 	text = "traitor"
-	if (SSticker.mode.config_tag=="traitor" || SSticker.mode.config_tag=="traitorchan")
+	if (SSticker.mode.config_tag=="traitor" || SSticker.mode.config_tag=="traitorchan" || SSticker.mode.config_tag=="traitorbro")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
 	if (src in SSticker.mode.traitors)
@@ -400,6 +411,21 @@
 
 
 	if(ishuman(current) || ismonkey(current))
+
+		/** BROTHER **/
+		text = "brother"
+		if(SSticker.mode.config_tag == "traitorbro")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if(src in SSticker.mode.brothers)
+			text += "<b>Brother</b> | <a href='?src=\ref[src];brother=clear'>no</a>"
+
+		if(current && current.client && (ROLE_BROTHER in current.client.prefs.be_special))
+			text += " | Enabled in Prefs"
+		else
+			text += " | Disabled in Prefs"
+
+		sections["brother"] = text
 
 		/** CHANGELING ***/
 		text = "changeling"
@@ -519,7 +545,7 @@
 				if(I == src)
 					continue
 				var/mob/M = I
-				if(M.z == ZLEVEL_STATION && !M.stat)
+				if((M.z in GLOB.station_z_levels) && !M.stat)
 					last_healthy_headrev = FALSE
 					break
 			text += "head | not mindshielded | <a href='?src=\ref[src];revolution=clear'>employee</a> | <b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b> | <a href='?src=\ref[src];revolution=rev'>rev</a>"
@@ -560,8 +586,6 @@
 		if(src in SSticker.mode.abductors)
 			text += "<b>Abductor</b> | <a href='?src=\ref[src];abductor=clear'>human</a>"
 			text += " | <a href='?src=\ref[src];common=undress'>undress</a> | <a href='?src=\ref[src];abductor=equip'>equip</a>"
-		else
-			text += "<a href='?src=\ref[src];abductor=abductor'>abductor</a> | <b>human</b>"
 
 		if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_special))
 			text += " | Enabled in Prefs"
@@ -644,7 +668,7 @@
 		text = "<i><b>[text]</b></i>: "
 		if(is_servant_of_ratvar(current))
 			text += "not mindshielded | <a href='?src=\ref[src];clockcult=clear'>employee</a> | <b>SERVANT</b>"
-			text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
+			text += "<br><a href='?src=\ref[src];clockcult=slab'>Equip</a>"
 		else if(is_eligible_servant(current))
 			text += "not mindshielded | <b>EMPLOYEE</b> | <a href='?src=\ref[src];clockcult=servant'>servant</a>"
 		else
@@ -1001,9 +1025,9 @@
 					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
 			if("slab")
 				if(!SSticker.mode.equip_servant(current))
-					to_chat(usr, "<span class='warning'>Failed to outfit [current] with a slab!</span>")
+					to_chat(usr, "<span class='warning'>Failed to outfit [current]!</span>")
 				else
-					to_chat(usr, "<span class='notice'>Successfully gave [current] a clockwork slab!</span>")
+					to_chat(usr, "<span class='notice'>Successfully gave [current] servant equipment!</span>")
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
@@ -1022,7 +1046,7 @@
 					log_admin("[key_name(usr)] has wizard'ed [current].")
 					SSticker.mode.update_wiz_icons_added(src)
 			if("lair")
-				current.loc = pick(GLOB.wizardstart)
+				current.forceMove(pick(GLOB.wizardstart))
 			if("dressup")
 				SSticker.mode.equip_wizard(current)
 			if("name")
@@ -1084,7 +1108,7 @@
 					message_admins("[key_name_admin(usr)] has nuke op'ed [current].")
 					log_admin("[key_name(usr)] has nuke op'ed [current].")
 			if("lair")
-				current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
+				current.forceMove(get_turf(locate("landmark*Syndicate-Spawn")))
 			if("dressup")
 				var/mob/living/carbon/human/H = current
 				qdel(H.belt)
@@ -1208,13 +1232,6 @@
 			if("clear")
 				to_chat(usr, "Not implemented yet. Sorry!")
 				//SSticker.mode.update_abductor_icons_removed(src)
-			if("abductor")
-				if(!ishuman(current))
-					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
-					return
-				make_Abductor()
-				log_admin("[key_name(usr)] turned [current] into abductor.")
-				SSticker.mode.update_abductor_icons_added(src)
 			if("equip")
 				if(!ishuman(current))
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
@@ -1243,7 +1260,6 @@
 						src = null
 						M = H.monkeyize()
 						src = M.mind
-						//to_chat(world, "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!")
 					else if (istype(M) && length(M.viruses))
 						for(var/thing in M.viruses)
 							var/datum/disease/D = thing
@@ -1274,6 +1290,13 @@
 						H = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
 						if(H)
 							src = H.mind
+
+	else if (href_list["brother"])
+		switch(href_list["brother"])
+			if("clear")
+				remove_brother()
+				log_admin("[key_name(usr)] has de-brother'ed [current].")
+				SSticker.mode.update_brother_icons_removed(src)
 
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
@@ -1359,7 +1382,7 @@
 		current.faction |= "syndicate"
 
 		if(spawnloc)
-			current.loc = spawnloc
+			current.forceMove(spawnloc)
 
 		if(ishuman(current))
 			var/mob/living/carbon/human/H = current
@@ -1409,7 +1432,7 @@
 			SSjob.SendToLateJoin(current)
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
-			current.loc = pick(GLOB.wizardstart)
+			current.forceMove(pick(GLOB.wizardstart))
 
 		SSticker.mode.equip_wizard(current)
 		SSticker.mode.name_wizard(current)
@@ -1454,52 +1477,6 @@
 	take_uplink()
 	var/fail = 0
 	fail |= !SSticker.mode.equip_revolutionary(current)
-
-
-/datum/mind/proc/make_Abductor()
-	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
-	var/team = input("Abductor Team ?","Team ?") in list(1,2,3,4)
-	var/teleport = alert("Teleport to ship ?","Teleport","Yes","No")
-
-	if(!role || !team || !teleport)
-		return
-
-	if(!ishuman(current))
-		return
-
-	SSticker.mode.abductors |= src
-
-	var/datum/objective/experiment/O = new
-	O.owner = src
-	objectives += O
-
-	var/mob/living/carbon/human/H = current
-
-	H.set_species(/datum/species/abductor)
-	var/datum/species/abductor/S = H.dna.species
-
-	if(role == "Scientist")
-		S.scientist = TRUE
-	S.team = team
-
-	var/list/obj/effect/landmark/abductor/agent_landmarks = new
-	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
-	agent_landmarks.len = 4
-	scientist_landmarks.len = 4
-	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
-		if(istype(A, /obj/effect/landmark/abductor/agent))
-			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A, /obj/effect/landmark/abductor/scientist))
-			scientist_landmarks[text2num(A.team)] = A
-
-	var/obj/effect/landmark/L
-	if(teleport=="Yes")
-		switch(role)
-			if("Agent")
-				L = agent_landmarks[team]
-			if("Scientist")
-				L = scientist_landmarks[team]
-		H.forceMove(L.loc)
 
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S

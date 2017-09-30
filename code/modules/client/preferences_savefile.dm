@@ -48,8 +48,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/B_monkey = 2048
 		var/B_gang = 4096
 		var/B_abductor = 16384
+		var/B_brother = 32768
 
-		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_abductor)
+		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_abductor,B_brother)
 
 		be_special = list()
 
@@ -83,6 +84,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						be_special += ROLE_MONKEY
 					if(16384)
 						be_special += ROLE_ABDUCTOR
+					if(32768)
+						be_special += ROLE_BROTHER
 
 
 /datum/preferences/proc/update_preferences(current_version, savefile/S)
@@ -246,11 +249,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	S["species"]			>> species_id
-	if(config.mutant_races && species_id && (species_id in GLOB.roundstart_species))
-		var/newtype = GLOB.roundstart_species[species_id]
+	var/list/roundstart_races = CONFIG_GET(keyed_flag_list/roundstart_races)
+	if(species_id && (species_id in roundstart_races) && CONFIG_GET(flag/join_with_mutant_race))
+		var/newtype = GLOB.species_list[species_id]
 		pref_species = new newtype()
-	else if (config.roundstart_races.len)
-		var/rando_race = pick(config.roundstart_races)
+	else if (roundstart_races.len)
+		var/rando_race = pick(roundstart_races)
 		if (rando_race)
 			pref_species = new rando_race()
 
@@ -283,7 +287,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
 	S["feature_lizard_legs"]			>> features["legs"]
-	if(!config.mutant_humans)
+	if(!CONFIG_GET(flag/join_with_mutant_humans))
 		features["tail_human"] = "none"
 		features["ears"] = "none"
 	else

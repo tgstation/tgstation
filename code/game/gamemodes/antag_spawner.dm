@@ -203,9 +203,9 @@
 	var/mob/living/silicon/robot/R
 	switch(borg_to_spawn)
 		if("Medical")
-			R = new /mob/living/silicon/robot/syndicate/medical(T)
+			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
 		else
-			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
+			R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
 
 	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
@@ -219,6 +219,7 @@
 	R.mmi.brain.name = "[brainopsname]'s brain"
 	R.mmi.brainmob.real_name = brainopsname
 	R.mmi.brainmob.name = brainopsname
+	R.real_name = R.name
 
 	R.key = C.key
 	R.mind.make_Nuke(null, nuke_code = null,leader=0, telecrystals = TRUE)
@@ -238,7 +239,7 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
-	if(user.z != ZLEVEL_STATION)
+	if(!(user.z in GLOB.station_z_levels))
 		to_chat(user, "<span class='notice'>You should probably wait until you reach the station.</span>")
 		return
 	if(used)
@@ -260,7 +261,7 @@
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
 
-	var /obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
+	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
 	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
 	S.holder = holder
 	S.key = C.key

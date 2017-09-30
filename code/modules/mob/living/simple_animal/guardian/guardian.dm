@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	GLOB.parasites += src
 	setthemename(theme)
 
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
 	if(summoner)
@@ -159,7 +159,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 				resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
 			stat(null, "Summoner Health: [resulthealth]%")
 		if(cooldown >= world.time)
-			stat(null, "Manifest/Recall Cooldown Remaining: [max(round((cooldown - world.time)*0.1, 0.1), 0)] seconds")
+			stat(null, "Manifest/Recall Cooldown Remaining: [DisplayTimeText(cooldown - world.time)]")
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	. = ..()
@@ -655,7 +655,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	name = "holoparasite injector kit"
 
 /obj/item/storage/box/syndie_kit/guardian/Initialize()
-	..()
+	. = ..()
 	new /obj/item/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/paper/guides/antag/guardian(src)
 	return

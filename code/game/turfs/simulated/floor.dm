@@ -21,7 +21,7 @@
 		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	if (!burnt_states)
 		burnt_states = list()
-	..()
+	. = ..()
 	//This is so damaged or burnt tiles or platings don't get remembered as the default tile
 	var/static/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
 					"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2", "foam_plating",
@@ -170,6 +170,7 @@
 	return make_plating()
 
 /turf/open/floor/singularity_pull(S, current_size)
+	..()
 	if(current_size == STAGE_THREE)
 		if(prob(30))
 			if(floor_tile)

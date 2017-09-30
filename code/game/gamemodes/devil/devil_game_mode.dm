@@ -2,6 +2,7 @@
 	name = "devil"
 	config_tag = "devil"
 	antag_flag = ROLE_DEVIL
+	false_report_weight = 1
 	protected_jobs = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
 	required_players = 0
 	required_enemies = 1
@@ -19,15 +20,16 @@
 		+	<span class='notice'>Crew</span>: Resist the lure of sin and remain pure!"
 
 /datum/game_mode/devil/pre_setup()
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	var/num_devils = 1
 
-	if(config.traitor_scaling_coeff)
-		num_devils = max(minimum_devils, min( round(num_players()/(config.traitor_scaling_coeff*3))+ 2 + num_modifier, round(num_players()/(config.traitor_scaling_coeff*1.5)) + num_modifier ))
+	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
+	if(tsc)
+		num_devils = max(minimum_devils, min( round(num_players() / (tsc * 3))+ 2 + num_modifier, round(num_players() / (tsc * 1.5)) + num_modifier))
 	else
 		num_devils = max(minimum_devils, min(num_players(), traitors_possible))
 
@@ -53,6 +55,10 @@
 	modePlayer += devils
 	..()
 	return 1
+
+/datum/game_mode/devil/generate_report()
+	return "Infernal creatures have been seen nearby offering great boons in exchange for souls.  This is considered theft against Nanotrasen, as all employment contracts contain a lien on the \
+			employee's soul.  If anyone sells their soul in error, contact an attorney to overrule the sale.  Be warned that if the devil purchases enough souls, a gateway to hell may open."
 
 /datum/game_mode/devil/proc/post_setup_finalize(datum/mind/devil)
 	add_devil(devil.current, ascendable = TRUE) //Devil gamemode devils are ascendable.

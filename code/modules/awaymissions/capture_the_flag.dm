@@ -152,7 +152,7 @@
 	var/static/arena_reset = FALSE
 
 /obj/machinery/capture_the_flag/Initialize()
-	..()
+	. = ..()
 	if(!ctf_object_typecache)
 		ctf_object_typecache = typecacheof(list(
 			/turf,
@@ -210,7 +210,7 @@
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
-			to_chat(user, "It must be more than [respawn_cooldown/10] seconds from your last death to respawn!")
+			to_chat(user, "It must be more than [DisplayTimeText(respawn_cooldown)] from your last death to respawn!")
 			return
 		var/client/new_team_member = user.client
 		if(user.mind && user.mind.current)
@@ -613,7 +613,7 @@
 	icon_state = "barrier0"
 
 /obj/effect/ctf/dead_barricade/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		CTF.dead_barricades += src
 

@@ -121,7 +121,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return (TOXLOSS|OXYLOSS)
 
 /obj/item/clothing/mask/cigarette/Initialize()
-	..()
+	. = ..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	if(list_reagents)
@@ -234,6 +234,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
+	if(M.on_fire && !lit)
+		light("<span class='notice'>[user] lights [src] with [M]'s burning body. What a cold-blooded badass.</span>")
+		return
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
 	if(lit && cig && user.a_intent == INTENT_HELP)
 		if(cig.lit)
@@ -378,7 +381,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/packeditem = 0
 
 /obj/item/clothing/mask/cigarette/pipe/Initialize()
-	..()
+	. = ..()
 	name = "empty [initial(name)]"
 
 /obj/item/clothing/mask/cigarette/pipe/Destroy()
@@ -534,7 +537,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			if(fancy)
 				user.visible_message("You hear a quiet click, as [user] shuts off [src] without even looking at what [user.p_theyre()] doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>")
 			else
-				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
+				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].</span>")
 	else
 		. = ..()
 
@@ -632,7 +635,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/super = 0 //for the fattest vapes dude.
 
 /obj/item/clothing/mask/vape/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!")//it doesn't give you cancer, it is cancer
+	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!</span>")//it doesn't give you cancer, it is cancer
 	return (TOXLOSS|OXYLOSS)
 
 

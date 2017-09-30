@@ -555,7 +555,7 @@
 	flags_2 = NO_EMP_WIRES_2
 
 /obj/item/device/radio/borg/Initialize(mapload)
-	..()
+	. = ..()
 
 /obj/item/device/radio/borg/syndicate
 	syndie = 1

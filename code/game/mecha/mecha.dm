@@ -202,6 +202,19 @@
 	GLOB.mechas_list -= src //global mech list
 	return ..()
 
+/obj/mecha/CheckParts(list/parts_list)
+	..()
+	var/obj/item/C = locate(/obj/item/stock_parts/cell) in contents
+	cell = C
+	var/obj/item/stock_parts/scanning_module/SM = locate() in contents
+	var/obj/item/stock_parts/capacitor/CP = locate() in contents
+	if(SM)
+		step_energy_drain = 20 - (5 * SM.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+		qdel(SM)
+	if(CP)
+		armor["energy"] += (CP.rating * 10) //Each level of capacitor protects the mech against emp by 10%
+		qdel(CP)
+
 ////////////////////////
 ////// Helpers /////////
 ////////////////////////
@@ -289,7 +302,7 @@
 		if(internal_damage & MECHA_INT_TANK_BREACH) //remove some air from internal tank
 			if(internal_tank)
 				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
-				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.10)
+				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.1)
 				if(loc)
 					loc.assume_air(leaked_gas)
 					air_update_turf()
@@ -451,6 +464,9 @@
 	. = ..()
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
+	if (internal_tank.disconnect()) // Something moved us and broke connection
+		occupant_message("<span class='warning'>Air port connection teared off!</span>")
+		log_message("Lost connection to gas port.")
 
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
 	. = ..()
@@ -474,7 +490,7 @@
 		user.forceMove(get_turf(src))
 		to_chat(user, "<span class='notice'>You climb out from [src].</span>")
 		return 0
-	if(connected_port)
+	if(internal_tank.connected_port)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
@@ -623,7 +639,7 @@
 	if(user.can_dominate_mechs)
 		examine(user) //Get diagnostic information!
 		for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)
-			to_chat(user, "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:")
+			to_chat(user, "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:</span>")
 			to_chat(user, "[B.get_mecha_info()]")
 			break
 		//Nothing like a big, red link to make the player feel powerful!
@@ -675,7 +691,7 @@
 			AI.linked_core = new /obj/structure/AIcore/deactivated(AI.loc)
 			if(AI.can_dominate_mechs)
 				if(occupant) //Oh, I am sorry, were you using that?
-					to_chat(AI, "<span class='warning'>Pilot detected! Forced ejection initiated!")
+					to_chat(AI, "<span class='warning'>Pilot detected! Forced ejection initiated!</span>")
 					to_chat(occupant, "<span class='danger'>You have been forcibly ejected!</span>")
 					go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
 			ai_enter_mech(AI, interaction)
@@ -691,7 +707,7 @@
 				to_chat(user, "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>")
 				return
 			if(occupant || dna_lock) //Normal AIs cannot steal mechs!
-				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].")
+				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].</span>")
 				return
 			AI.control_disabled = 0
 			AI.radio_enabled = 1
@@ -763,39 +779,11 @@
 		. = t_air.return_pressure()
 	return
 
-
-/obj/mecha/proc/return_temperature()
+/obj/mecha/return_temperature()
 	var/datum/gas_mixture/t_air = return_air()
 	if(t_air)
 		. = t_air.return_temperature()
 	return
-
-/obj/mecha/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
-	//Make sure not already connected to something else
-	if(connected_port || !new_port || new_port.connected_device)
-		return 0
-
-	//Make sure are close enough for a valid connection
-	if(new_port.loc != loc)
-		return 0
-
-	//Perform the connection
-	connected_port = new_port
-	connected_port.connected_device = src
-	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
-	connected_port_parent.reconcile_air()
-
-	log_message("Connected to gas port.")
-	return 1
-
-/obj/mecha/proc/disconnect()
-	if(!connected_port)
-		return 0
-
-	connected_port.connected_device = null
-	connected_port = null
-	log_message("Disconnected from gas port.")
-	return 1
 
 /obj/mecha/portableConnectorReturnAir()
 	return internal_tank.return_air()

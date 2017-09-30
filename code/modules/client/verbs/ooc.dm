@@ -62,7 +62,7 @@
 			if(holder)
 				if(!holder.fakekey || C.holder)
 					if(check_rights_for(src, R_ADMIN))
-						to_chat(C, "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>")
+						to_chat(C, "<span class='adminooc'>[CONFIG_GET(flag/allow_admin_ooccolor) && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>")
 					else
 						to_chat(C, "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>")
 				else
@@ -79,6 +79,15 @@
 	else //otherwise just toggle it
 		GLOB.ooc_allowed = !GLOB.ooc_allowed
 	to_chat(world, "<B>The OOC channel has been globally [GLOB.ooc_allowed ? "enabled" : "disabled"].</B>")
+
+/proc/toggle_dooc(toggle = null)
+	if(toggle != null)
+		if(toggle != GLOB.dooc_allowed)
+			GLOB.dooc_allowed = toggle
+		else
+			return
+	else
+		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
 GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 
@@ -230,7 +239,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "OOC"
 	set desc = "View the notes that admins have written about you"
 
-	if(!config.see_own_notes)
+	if(!CONFIG_GET(flag/see_own_notes))
 		to_chat(usr, "<span class='notice'>Sorry, that function is not enabled on this server.</span>")
 		return
 

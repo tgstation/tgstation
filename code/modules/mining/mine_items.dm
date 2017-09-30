@@ -69,7 +69,7 @@
 	var/global/list/dumb_rev_heads = list()
 
 /obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
-	if(user.z == ZLEVEL_STATION && user.mind && (user.mind in SSticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
+	if((user.z in GLOB.station_z_levels) && user.mind && (user.mind in SSticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
 		to_chat(user, "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>")
 		dumb_rev_heads += user.mind
 		return

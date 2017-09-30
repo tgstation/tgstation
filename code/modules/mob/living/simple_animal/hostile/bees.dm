@@ -56,7 +56,7 @@
 
 
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
-	..()
+	. = ..()
 	generate_bee_visuals()
 
 
@@ -128,11 +128,12 @@
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/Hydro = target
 		pollinate(Hydro)
-	else if(target == beehome)
-		var/obj/structure/beebox/BB = target
-		loc = BB
-		target = null
-		wanted_objects -= typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
+	else if(istype(target, /obj/structure/beebox))
+		if(target == beehome)
+			var/obj/structure/beebox/BB = target
+			forceMove(BB)
+			target = null
+			wanted_objects -= typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
 		return //no don't attack the goddamm box
 	else
 		. = ..()
@@ -186,7 +187,7 @@
 		if(loc == beehome)
 			idle = min(100, ++idle)
 			if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
-				loc = get_turf(beehome)
+				forceMove(get_turf(beehome))
 		else
 			idle = max(0, --idle)
 			if(idle <= BEE_IDLE_GOHOME && prob(BEE_PROB_GOHOME))
@@ -275,7 +276,7 @@
 
 
 /obj/item/queen_bee/bought/Initialize()
-	..()
+	. = ..()
 	queen = new(src)
 
 

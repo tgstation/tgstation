@@ -8,6 +8,28 @@
 	var/ranged_mousepointer
 	var/mob/living/ranged_ability_user
 	var/ranged_clickcd_override = -1
+	var/has_action = TRUE
+	var/datum/action/spell_action/action = null
+	var/action_icon = 'icons/mob/actions/actions_spells.dmi'
+	var/action_icon_state = "spell_default"
+	var/action_background_icon_state = "bg_spell"
+
+/obj/effect/proc_holder/Initialize()
+	. = ..()
+	if(has_action)
+		action = new(src)
+
+/obj/effect/proc_holder/proc/on_gain(mob/living/user)
+	return
+
+/obj/effect/proc_holder/proc/on_lose(mob/living/user)
+	return
+
+/obj/effect/proc_holder/proc/fire(mob/living/user)
+	return TRUE
+
+/obj/effect/proc_holder/proc/get_panel_text()
+	return ""
 
 GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
 
@@ -18,7 +40,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/proc/InterceptClickOn(mob/living/caller, params, atom/A)
 	if(caller.ranged_ability != src || ranged_ability_user != caller) //I'm not actually sure how these would trigger, but, uh, safety, I guess?
-		to_chat(caller, "<span class='warning'><b>[caller.ranged_ability.name]</b> has been disabled.")
+		to_chat(caller, "<span class='warning'><b>[caller.ranged_ability.name]</b> has been disabled.</span>")
 		caller.ranged_ability.remove_ranged_ability()
 		return TRUE //TRUE for failed, FALSE for passed.
 	if(ranged_clickcd_override >= 0)
@@ -33,7 +55,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return
 	if(user.ranged_ability && user.ranged_ability != src)
 		if(forced)
-			to_chat(user, "<span class='warning'><b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>.")
+			to_chat(user, "<span class='warning'><b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>.</span>")
 			user.ranged_ability.remove_ranged_ability()
 		else
 			return
@@ -118,10 +140,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/critfailchance = 0
 	var/centcom_cancast = 1 //Whether or not the spell should be allowed on z2
 
-	var/action_icon = 'icons/mob/actions/actions_spells.dmi'
-	var/action_icon_state = "spell_default"
-	var/action_background_icon_state = "bg_spell"
-	var/datum/action/spell_action/action
+	action_icon = 'icons/mob/actions/actions_spells.dmi'
+	action_icon_state = "spell_default"
+	action_background_icon_state = "bg_spell"
+	datum/action/spell_action/spell/action
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
@@ -161,7 +183,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 		var/mob/living/carbon/human/H = user
 
-		if((invocation_type == "whisper" || invocation_type == "shout") && H.is_muzzled())
+		if((invocation_type == "whisper" || invocation_type == "shout") && !H.can_speak_vocal())
 			to_chat(user, "<span class='notice'>You can't get the words out!</span>")
 			return 0
 

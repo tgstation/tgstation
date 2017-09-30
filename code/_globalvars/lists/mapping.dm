@@ -14,6 +14,8 @@ GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 //Go away Urist, I'm restoring this to the longer list. ~Errorage
 GLOBAL_LIST_INIT(accessable_z_levels, list(1,3,4,5,6,7)) //Keep this to six maps, repeating z-levels is ok if needed
 
+GLOBAL_LIST_INIT(station_z_levels, list(ZLEVEL_STATION_PRIMARY))
+
 GLOBAL_LIST(global_map)
 	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
 	//Resulting sector map looks like
@@ -31,6 +33,8 @@ GLOBAL_LIST_EMPTY(department_security_spawns)	//list of all department security 
 GLOBAL_LIST_EMPTY(generic_event_spawns)			//list of all spawns for events
 
 GLOBAL_LIST_EMPTY(wizardstart)
+GLOBAL_LIST_EMPTY(nukeop_start)
+GLOBAL_LIST_EMPTY(nukeop_leader_start)
 GLOBAL_LIST_EMPTY(newplayer_start)
 GLOBAL_LIST_EMPTY(prisonwarp)	//prisoners go to these
 GLOBAL_LIST_EMPTY(holdingfacility)	//captured people go here
@@ -44,6 +48,8 @@ GLOBAL_LIST_EMPTY(blobstart)
 GLOBAL_LIST_EMPTY(secequipment)
 GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
+GLOBAL_LIST_EMPTY(servant_spawns) //Servants of Ratvar spawn here
+GLOBAL_LIST_EMPTY(city_of_cogs_spawns) //Anyone entering the City of Cogs spawns here
 GLOBAL_LIST_EMPTY(ruin_landmarks)
 
 	//away missions

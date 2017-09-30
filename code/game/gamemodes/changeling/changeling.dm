@@ -16,6 +16,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	name = "changeling"
 	config_tag = "changeling"
 	antag_flag = ROLE_CHANGELING
+	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
@@ -51,16 +52,17 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 
 /datum/game_mode/changeling/pre_setup()
 
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	var/num_changelings = 1
 
-	if(config.changeling_scaling_coeff)
-		num_changelings = max(1, min( round(num_players()/(config.changeling_scaling_coeff*2))+2, round(num_players()/config.changeling_scaling_coeff) ))
+	var/csc = CONFIG_GET(number/changeling_scaling_coeff)
+	if(csc)
+		num_changelings = max(1, min(round(num_players() / (csc * 2)) + 2, round(num_players() / csc)))
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
 
@@ -101,10 +103,11 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	..()
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
-	var/changelingcap = min( round(GLOB.joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(GLOB.joined_player_list.len/config.changeling_scaling_coeff) )
+	var/csc = CONFIG_GET(number/changeling_scaling_coeff)
+	var/changelingcap = min(round(GLOB.joined_player_list.len / (csc * 2)) + 2, round(GLOB.joined_player_list.len / csc))
 	if(SSticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
-	if(SSticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
+	if(SSticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (csc * 2)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
 			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))
@@ -130,10 +133,16 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	changeling.objectives += absorb_objective
 
 	if(prob(60))
-		var/datum/objective/steal/steal_objective = new
-		steal_objective.owner = changeling
-		steal_objective.find_target()
-		changeling.objectives += steal_objective
+		if(prob(85))
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = changeling
+			steal_objective.find_target()
+			changeling.objectives += steal_objective
+		else
+			var/datum/objective/download/download_objective = new
+			download_objective.owner = changeling
+			download_objective.gen_amount_goal()
+			changeling.objectives += download_objective
 
 	var/list/active_ais = active_ais()
 	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
@@ -194,6 +203,11 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 	else
 		..(changeling,0)
 
+/datum/game_mode/changeling/generate_report()
+	return "The Gorlex Marauders have announced the successful raid and destruction of Central Command containment ship #S-[rand(1111, 9999)]. This ship housed only a single prisoner - \
+			codenamed \"Thing\", and it was highly adaptive and extremely dangerous. We have reason to believe that the Thing has allied with the Syndicate, and you should note that likelihood \
+			of the Thing being sent to a station in this sector is highly likely. It may be in the guise of any crew member. Trust nobody - suspect everybody. Do not announce this to the crew, \
+			as paranoia may spread and inhibit workplace efficiency."
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
@@ -333,6 +347,10 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 				to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
 			return
 	if(!target)
+		return
+	if(NO_DNA_COPY in target.dna.species.species_traits)
+		if(verbose)
+			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
 	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
 		if(verbose)

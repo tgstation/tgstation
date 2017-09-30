@@ -97,7 +97,7 @@
 	return null
 
 // merge two holder objects
-// used when a a holder meets a stuck holder
+// used when a holder meets a stuck holder
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
 	for(var/atom/movable/AM in other)
 		AM.loc = src		// move everything in other holder to this one
@@ -335,6 +335,7 @@
 
 
 /obj/structure/disposalpipe/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 

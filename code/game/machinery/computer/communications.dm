@@ -54,7 +54,7 @@
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	if (z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM) //Can only use on centcom and SS13
+	if(!(z in GLOB.station_z_levels) && z != ZLEVEL_CENTCOM) //Can only use on centcom and SS13
 		to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 	usr.set_machine(src)
@@ -454,7 +454,7 @@
 				if (src.authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
-					if(config.cross_allowed)
+					if(CONFIG_GET(string/cross_server_address))
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crossserver'>Send a message to an allied station</A> \]"
 					if(SSmapping.config.allow_custom_shuttles == "yes")
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"

@@ -126,12 +126,12 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			//
 			if("hsbtac")
 				if(!admin) return
-				if(config.sandbox_autoclose)
+				var/sbac = CONFIG_GET(flag/sandbox_autoclose)
+				if(sbac)
 					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
-					config.sandbox_autoclose = FALSE
 				else
 					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
-					config.sandbox_autoclose = TRUE
+				CONFIG_SET(flag/sandbox_autoclose, !sbac)
 				return
 			//
 			// Spacesuit with full air jetpack set as internals
@@ -287,7 +287,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 					return
 				new typepath(usr.loc)
 
-				if(config.sandbox_autoclose)
+				if(CONFIG_GET(flag/sandbox_autoclose))
 					usr << browse(null,"window=sandbox")
 			//
 			// For everything else in the href list
@@ -299,5 +299,5 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 					return
 				new typepath(usr.loc)
 
-				if(config.sandbox_autoclose)
+				if(CONFIG_GET(flag/sandbox_autoclose))
 					usr << browse(null,"window=sandbox")

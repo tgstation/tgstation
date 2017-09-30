@@ -19,7 +19,7 @@
 	var/has_latches = TRUE
 
 /obj/item/storage/toolbox/Initialize()
-	..()
+	. = ..()
 	if(has_latches)
 		if(prob(10))
 			latches = "double_latch"
@@ -151,6 +151,10 @@
 	new /obj/item/wrench/brass(src)
 	new /obj/item/crowbar/brass(src)
 	new /obj/item/weldingtool/experimental/brass(src)
+
+/obj/item/storage/toolbox/brass/prefilled/servant
+	slot_flags = SLOT_BELT
+	fabricator_type = null
 
 /obj/item/storage/toolbox/brass/prefilled/ratvar
 	var/slab_type = /obj/item/clockwork/slab

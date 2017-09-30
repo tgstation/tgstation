@@ -174,7 +174,7 @@
 		return
 
 	if(automute)
-		if(!config.automute_on)
+		if(!CONFIG_GET(flag/automute_on))
 			return
 	else
 		if(!check_rights())
@@ -707,8 +707,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "Nope you can't do this, the game's already started. This only works before rounds!")
 		return
 
-	if(config.force_random_names)
-		config.force_random_names = 0
+	var/frn = CONFIG_GET(flag/force_random_names)
+	if(frn)
+		CONFIG_SET(flag/force_random_names, FALSE)
 		message_admins("Admin [key_name_admin(usr)] has disabled \"Everyone is Special\" mode.")
 		to_chat(usr, "Disabled.")
 		return
@@ -726,7 +727,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.")
 
-	config.force_random_names = 1
+	CONFIG_SET(flag/force_random_names, TRUE)
 	SSblackbox.add_details("admin_verb","Make Everyone Random") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -734,15 +735,15 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Server"
 	set name = "Toggle random events on/off"
 	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off"
-	if(!config.allow_random_events)
-		config.allow_random_events = 1
+	var/new_are = !CONFIG_GET(flag/allow_random_events)
+	CONFIG_SET(flag/allow_random_events, new_are)
+	if(new_are)
 		to_chat(usr, "Random events enabled")
 		message_admins("Admin [key_name_admin(usr)] has enabled random events.")
 	else
-		config.allow_random_events = 0
 		to_chat(usr, "Random events disabled")
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
-	SSblackbox.add_details("admin_toggle","Toggle Random Events|[config.allow_random_events]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Random Events|[new_are]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/admin_change_sec_level()
@@ -844,8 +845,9 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	var/dat = {"
 	<html><head><title>Create Outfit</title></head><body>
-	<form name="outfit" action="byond://?src=\ref[src]" method="get">
+	<form name="outfit" action="byond://?src=\ref[src];[HrefToken()]" method="get">
 	<input type="hidden" name="src" value="\ref[src]">
+	[HrefTokenFormField()]
 	<input type="hidden" name="create_outfit" value="1">
 	<table>
 		<tr>
@@ -1144,8 +1146,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /datum/admins/proc/modify_goals()
 	var/dat = ""
 	for(var/datum/station_goal/S in SSticker.mode.station_goals)
-		dat += "[S.name] - <a href='?src=\ref[S];announce=1'>Announce</a> | <a href='?src=\ref[S];remove=1'>Remove</a><br>"
-	dat += "<br><a href='?src=\ref[src];add_station_goal=1'>Add New Goal</a>"
+		dat += "[S.name] - <a href='?src=\ref[S];[HrefToken()];announce=1'>Announce</a> | <a href='?src=\ref[S];[HrefToken()];remove=1'>Remove</a><br>"
+	dat += "<br><a href='?src=\ref[src];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 
 
@@ -1217,7 +1219,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/list/msg = list()
 	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	for(var/client/C in GLOB.clients)
-		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
+		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
 
@@ -1231,7 +1233,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/list/body = list()
 	body += "<html><head><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
 	body += C.get_exp_report()
-	body += "<A href='?_src_=holder;toggleexempt=\ref[C]'>Toggle Exempt status</a>"
+	body += "<A href='?_src_=holder;[HrefToken()];toggleexempt=\ref[C]'>Toggle Exempt status</a>"
 	body += "</BODY></HTML>"
 	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
 

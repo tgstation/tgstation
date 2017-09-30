@@ -9,9 +9,9 @@
 	var/datum/gas_mixture/air_contents = new()
 
 
-/obj/structure/transit_tube_pod/New(loc)
-	..()
-	air_contents.assert_gases("o2", "n2")
+/obj/structure/transit_tube_pod/Initialize()
+	. = ..()
+	air_contents.add_gases("o2", "n2")
 	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD
 	air_contents.gases["n2"][MOLES] = MOLES_N2STANDARD
 	air_contents.temperature = T20C
@@ -62,10 +62,14 @@
 		AM.ex_act(severity, target)
 
 /obj/structure/transit_tube_pod/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
 /obj/structure/transit_tube_pod/container_resist(mob/living/user)
+	if(!user.incapacitated())
+		empty_pod()
+		return
 	if(!moving)
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
@@ -176,3 +180,6 @@
 					if(TT.has_exit(direction))
 						setDir(direction)
 						return
+
+/obj/structure/transit_tube_pod/return_temperature()
+	return air_contents.temperature
