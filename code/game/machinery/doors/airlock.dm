@@ -73,6 +73,7 @@
 	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
 	var/obj/item/note //Any papers pinned to the airlock
 	var/detonated = 0
+	var/abandoned = FALSE
 	var/doorOpen = 'sound/machines/airlock.ogg'
 	var/doorClose = 'sound/machines/airlockclose.ogg'
 	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
@@ -117,6 +118,25 @@
 		max_integrity = normal_integrity
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
+	if(abandoned)
+		var/outcome = rand(1,100)
+		switch(outcome)
+			if(1 to 9)
+				var/turf/here = get_turf(src)
+				for(var/turf/closed/T in range(2, src))
+					here.ChangeTurf(T.type)
+					return INITIALIZE_HINT_QDEL
+				here.ChangeTurf(/turf/closed/wall)
+				return INITIALIZE_HINT_QDEL
+			if(9 to 11)
+				lights = FALSE
+				locked = TRUE
+			if(12 to 15)
+				locked = TRUE
+			if(16 to 23)
+				welded = TRUE
+			if(24 to 30)
+				panel_open = TRUE
 	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
@@ -991,7 +1011,7 @@
 			if(AIRLOCK_SECURITY_NONE)
 				if(istype(C, /obj/item/stack/sheet/metal))
 					var/obj/item/stack/sheet/metal/S = C
-					if(S.amount < 2)
+					if(S.get_amount() < 2)
 						to_chat(user, "<span class='warning'>You need at least 2 metal sheets to reinforce [src].</span>")
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing [src]</span>")
@@ -1005,7 +1025,7 @@
 					return
 				else if(istype(C, /obj/item/stack/sheet/plasteel))
 					var/obj/item/stack/sheet/plasteel/S = C
-					if(S.amount < 2)
+					if(S.get_amount() < 2)
 						to_chat(user, "<span class='warning'>You need at least 2 plasteel sheets to reinforce [src].</span>")
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing [src].</span>")
@@ -1327,19 +1347,19 @@
 		return TRUE
 	operating = TRUE
 	update_icon(AIRLOCK_OPENING, 1)
-	src.set_opacity(0)
-	sleep(5)
-	density = FALSE
-	sleep(9)
-	src.layer = OPEN_DOOR_LAYER
-	update_icon(AIRLOCK_OPEN, 1)
+	sleep(1)
 	set_opacity(0)
-	operating = FALSE
-	air_update_turf(1)
 	update_freelook_sight()
+	sleep(4)
+	density = FALSE
+	air_update_turf(1)
+	sleep(1)
+	layer = OPEN_DOOR_LAYER
+	update_icon(AIRLOCK_OPEN, 1)
+	operating = FALSE
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
-		addtimer(CALLBACK(src, .proc/close), 2)
+		addtimer(CALLBACK(src, .proc/close), 1)
 	return TRUE
 
 
@@ -1371,21 +1391,24 @@
 		return TRUE
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
-	src.layer = CLOSED_DOOR_LAYER
+	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		density = TRUE
-	sleep(5)
-	density = TRUE
+		air_update_turf(1)
+	sleep(1)
+	if(!air_tight)
+		density = TRUE
+		air_update_turf(1)
+	sleep(4)
 	if(!safe)
 		crush()
-	sleep(9)
-	update_icon(AIRLOCK_CLOSED, 1)
 	if(visible && !glass)
 		set_opacity(1)
+	update_freelook_sight()
+	sleep(1)
+	update_icon(AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	delayed_close_requested = FALSE
-	air_update_turf(1)
-	update_freelook_sight()
 	if(safe)
 		CheckForMobs()
 	return TRUE

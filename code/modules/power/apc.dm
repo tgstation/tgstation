@@ -84,6 +84,7 @@
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
 	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
+	var/obj/item/clockwork/integration_cog/integration_cog //Is there a cog siphoning power?
 	var/longtermpower = 10
 	var/auto_name = 0
 	var/failure_timer = 0
@@ -215,6 +216,8 @@
 		else
 			to_chat(user, "It's [ !terminal ? "not" : "" ] wired up.")
 			to_chat(user, "The electronics are[!has_electronics?"n't":""] installed.")
+		if(user.Adjacent(src) && integration_cog)
+			to_chat(user, "<span class='warning'>[src]'s innards have been replaced by strange brass machinery!</span>")
 
 	else
 		if (stat & MAINT)
@@ -224,6 +227,8 @@
 		else
 			to_chat(user, "The cover is closed.")
 
+	if(integration_cog && is_servant_of_ratvar(user))
+		to_chat(user, "<span class='brass'>There is an integration cog installed!</span>")
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
@@ -408,6 +413,17 @@
 								"<span class='notice'>You remove the power control board.</span>")
 							new /obj/item/electronics/apc(loc)
 							return
+			else if(integration_cog)
+				user.visible_message("<span class='notice'>[user] starts prying [integration_cog] from [src]...</span>", \
+				"<span class='notice'>You painstakingly start tearing [integration_cog] out of [src]'s guts...</span>")
+				playsound(src, W.usesound, 50, TRUE)
+				if(!do_after(user, 100 * W.toolspeed, target = src))
+					return
+				user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
+				"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+				QDEL_NULL(integration_cog)
+				return
 			else if (opened!=2) //cover isn't removed
 				opened = 0
 				coverlocked = TRUE //closing cover relocks it
@@ -546,6 +562,35 @@
 				to_chat(user, "<span class='notice'>You place the power control board inside the frame.</span>")
 				qdel(W)
 
+	else if(istype(W, /obj/item/device/electroadaptive_pseudocircuit) && opened)
+		var/obj/item/device/electroadaptive_pseudocircuit/P = W
+		if(!has_electronics)
+			if(stat & BROKEN)
+				to_chat(user, "<span class='warning'>[src]'s frame is too damaged to support a circuit.</span>")
+				return
+			if(!P.adapt_circuit(user, 50))
+				return
+			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+			"<span class='notice'>You adapt a power control board and click it into place in [src]'s guts.</span>")
+			has_electronics = TRUE
+			locked = TRUE
+		else if(!cell)
+			if(stat & MAINT)
+				to_chat(user, "<span class='warning'>There's no connector for a power cell.</span>")
+				return
+			if(!P.adapt_circuit(user, 500))
+				return
+			var/obj/item/stock_parts/cell/crap/empty/C = new(src)
+			C.forceMove(src)
+			cell = C
+			chargecount = 0
+			user.visible_message("<span class='notice'>[user] fabricates a weak power cell and places it into [src].</span>", \
+			"<span class='warning'>Your [P.name] whirrs with strain as you create a weak power cell and place it into [src]!</span>")
+			update_icon()
+		else
+			to_chat(user, "<span class='warning'>[src] has both electronics and a cell.</span>")
+			return
+
 	else if (istype(W, /obj/item/weldingtool) && opened && has_electronics==0 && !terminal)
 		var/obj/item/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
@@ -596,6 +641,33 @@
 			if (opened==2)
 				opened = 1
 			update_icon()
+	else if(istype(W, /obj/item/clockwork/integration_cog) && is_servant_of_ratvar(user))
+		if(integration_cog)
+			to_chat(user, "<span class='warning'>This APC already has a cog.</span>")
+			return
+		if(!opened)
+			user.visible_message("<span class='warning'>[user] slices [src]'s cover lock, and it swings wide open!</span>", \
+			"<span class='alloy'>You slice [src]'s cover lock apart with [W], and the cover swings open.</span>")
+			opened = TRUE
+			update_icon()
+		else
+			user.visible_message("<span class='warning'>[user] presses [W] into [src]!</span>", \
+			"<span class='alloy'>You hold [W] in place within [src], and it slowly begins to warm up...</span>")
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			if(!do_after(user, 70, target = src))
+				return
+			user.visible_message("<span class='warning'>[user] installs [W] in [src]!</span>", \
+			"<span class='alloy'>Replicant alloy rapidly covers the APC's innards, replacing the machinery.</span><br>\
+			<span class='brass'>This APC will now passively provide power for the cult!</span>")
+			playsound(user, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
+			user.transferItemToLoc(W, src)
+			integration_cog = W
+			START_PROCESSING(SSfastprocess, W)
+			playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 50, FALSE)
+			opened = FALSE
+			locked = FALSE
+			update_icon()
+		return
 	else if(panel_open && !opened && is_wire_tool(W))
 		wires.interact(user)
 	else
@@ -666,7 +738,7 @@
 
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(
-		"locked" = locked,
+		"locked" = integration_cog ? !is_servant_of_ratvar(user) : locked,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,

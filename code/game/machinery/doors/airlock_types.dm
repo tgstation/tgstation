@@ -1,6 +1,9 @@
 /*
 	Station Airlocks Regular
 */
+/obj/machinery/door/airlock/abandoned
+	abandoned = TRUE
+
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
@@ -14,6 +17,9 @@
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
+	
+/obj/machinery/door/airlock/engineering/abandoned
+	abandoned = TRUE
 
 /obj/machinery/door/airlock/medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
@@ -24,6 +30,9 @@
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
 	normal_integrity = 250
+
+/obj/machinery/door/airlock/maintenance/abandoned
+	abandoned = TRUE
 
 /obj/machinery/door/airlock/maintenance/external
 	name = "external airlock access"
@@ -40,6 +49,9 @@
 	name = "atmospherics airlock"
 	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_atmo
+
+/obj/machinery/door/airlock/atmos/abandoned
+	abandoned = TRUE
 
 /obj/machinery/door/airlock/research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
@@ -82,6 +94,9 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec/glass
 	glass = TRUE
 	normal_integrity = 400
+
+/obj/machinery/door/airlock/glass_security/abandoned
+	abandoned = TRUE
 
 /obj/machinery/door/airlock/glass_medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
@@ -279,6 +294,9 @@
 	security_level = 6
 	explosion_block = 2
 
+/obj/machinery/door/airlock/centcom/abandoned
+	abandoned = TRUE
+
 //////////////////////////////////
 /*
 	Vault Airlocks
@@ -315,6 +333,9 @@
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
+
+/obj/machinery/door/airlock/maintenance_hatch/abandoned
+	abandoned = TRUE
 
 //////////////////////////////////
 /*

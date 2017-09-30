@@ -10,7 +10,7 @@
 
 
 /obj/machinery/computer/pod/Initialize()
-	..()
+	. = ..()
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			connected = M
@@ -51,9 +51,7 @@
 			d2 = "<A href='?src=\ref[src];time=0'>Stop Time Launch</A>"
 		else
 			d2 = "<A href='?src=\ref[src];time=1'>Initiate Time Launch</A>"
-		var/second = time % 60
-		var/minute = (time - second) / 60
-		dat += "<HR>\nTimer System: [d2]\nTime Left: [minute ? "[minute]:" : null][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>"
+		dat += "<HR>\nTimer System: [d2]\nTime Left: [DisplayTimeText(time)] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>"
 		var/temp = ""
 		var/list/L = list( 0.25, 0.5, 1, 2, 4, 8, 16 )
 		for(var/t in L)

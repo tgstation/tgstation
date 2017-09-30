@@ -534,7 +534,7 @@
 	var/list/new_turfs = return_ordered_turfs(new_dock.x, new_dock.y, new_dock.z, new_dock.dir)
 	/**************************************************************************************************************/
 
-	var/area/underlying_old_area = locate("[underlying_area_type]")
+	var/area/underlying_old_area = locate(underlying_area_type) in GLOB.sortedAreas
 	if(!underlying_old_area)
 		underlying_old_area = new underlying_area_type(null)
 
@@ -618,6 +618,14 @@
 	for(var/thing in areas_to_move)
 		var/area/internal_area = thing
 		internal_area.afterShuttleMove()																	//areas
+
+	// Parallax handling
+	var/new_parallax_dir = FALSE
+	if(istype(new_dock, /obj/docking_port/stationary/transit))
+		new_parallax_dir = preferred_direction
+	for(var/i in shuttle_areas)
+		var/area/place = i
+		place.parallax_movedir = new_parallax_dir
 
 	check_poddoors()
 	new_dock.last_dock_time = world.time

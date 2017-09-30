@@ -20,7 +20,7 @@
 		admin = 1
 
 	//Whitelist
-	if(config.usewhitelist)
+	if(CONFIG_GET(flag/usewhitelist))
 		if(!check_whitelist(ckey(key)))
 			if (admin)
 				log_admin("The admin [key] has been allowed to bypass the whitelist")
@@ -32,19 +32,20 @@
 
 	//Guest Checking
 	if(IsGuestKey(key))
-		if (!GLOB.guests_allowed)
+		if (CONFIG_GET(flag/guest_ban))
 			log_access("Failed Login: [key] - Guests not allowed")
 			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
-		if (config.panic_bunker && SSdbcore && SSdbcore.IsConnected())
+		if (CONFIG_GET(flag/panic_bunker) && SSdbcore.Connect())
 			log_access("Failed Login: [key] - Guests not allowed during panic bunker")
 			return list("reason"="guest", "desc"="\nReason: Sorry but the server is currently not accepting connections from never before seen players or guests. If you have played on this server with a byond account before, please log in to the byond account you have played from.")
 
 	//Population Cap Checking
-	if(config.extreme_popcap && living_player_count() >= config.extreme_popcap && !admin)
+	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
+	if(extreme_popcap && living_player_count() >= extreme_popcap && !admin)
 		log_access("Failed Login: [key] - Population cap reached")
-		return list("reason"="popcap", "desc"= "\nReason: [config.extreme_popcap_message]")
+		return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
 
-	if(config.ban_legacy_system)
+	if(CONFIG_GET(flag/ban_legacy_system))
 
 		//Ban Checking
 		. = CheckBan( ckey(key), computer_id, address )

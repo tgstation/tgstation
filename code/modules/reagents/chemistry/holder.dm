@@ -566,6 +566,8 @@
 			my_atom.on_reagent_change()
 		if(!no_react)
 			handle_reactions()
+		if(isliving(my_atom))
+			R.on_mob_add(my_atom)
 		return TRUE
 
 	else
@@ -669,7 +671,6 @@
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
-			//to_chat(world, "proffering a data-carrying reagent ([reagent_id])")
 			return R.data
 
 /datum/reagents/proc/set_data(reagent_id, new_data)
@@ -677,7 +678,6 @@
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
-			//to_chat(world, "reagent data set ([reagent_id])")
 			R.data = new_data
 
 /datum/reagents/proc/copy_data(datum/reagent/current_reagent)

@@ -1,4 +1,5 @@
 /obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
+	SendSignal(COMSIG_SHOES_STEP_ACTION)
 
 /obj/item/clothing/shoes/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?</span>")
@@ -79,15 +80,11 @@
 	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
-	var/footstep = 1	//used for squeeks whilst walking
 	pockets = /obj/item/storage/internal/pocket/shoes/clown
 
-/obj/item/clothing/shoes/clown_shoes/step_action()
-	if(footstep > 1)
-		playsound(src, "clownstep", 50, 1)
-		footstep = 0
-	else
-		footstep++
+/obj/item/clothing/shoes/clown_shoes/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50)
 
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
@@ -198,22 +195,24 @@
 	var/jumping = FALSE //are we mid-jump?
 
 /obj/item/clothing/shoes/bhop/ui_action_click(mob/user, action)
-	if(!isliving(usr))
+	if(!isliving(user))
 		return
 
 	if(jumping)
 		return
 
 	if(recharging_time > world.time)
-		to_chat(usr, "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>")
+		to_chat(user, "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>")
 		return
 
-	var/atom/target = get_edge_target_turf(usr, usr.dir) //gets the user's direction
+	var/atom/target = get_edge_target_turf(user, user.dir) //gets the user's direction
 
-	jumping = TRUE
-	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
-	usr.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
-	usr.throw_at(target, jumpdistance, jumpspeed, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
+	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .proc/hop_end)))
+		jumping = TRUE
+		playsound(src, 'sound/effects/stealthoff.ogg', 50, 1, 1)
+		user.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
+	else
+		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
 
 /obj/item/clothing/shoes/bhop/proc/hop_end()
 	jumping = FALSE

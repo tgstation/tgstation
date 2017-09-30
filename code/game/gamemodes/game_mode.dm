@@ -19,7 +19,6 @@
 	var/probability = 0
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
-	var/explosion_in_progress = 0 //sit back and relax
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
 	var/list/datum/mind/modePlayer = new
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
@@ -79,7 +78,7 @@
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
 	if(!report)
-		report = config.intercept
+		report = !CONFIG_GET(flag/no_intercept_report)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
 	if(SSdbcore.Connect())
@@ -114,14 +113,15 @@
 	for(var/mob/Player in GLOB.mob_list)
 		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client)
 			living_crew += Player
-	if(living_crew.len / GLOB.joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
-		message_admins("Convert_roundtype failed due to too many dead people. Limit is [config.midround_antag_life_check * 100]% living crew")
+	var/malc = CONFIG_GET(number/midround_antag_life_check)
+	if(living_crew.len / GLOB.joined_player_list.len <= malc) //If a lot of the player base died, we start fresh
+		message_admins("Convert_roundtype failed due to too many dead people. Limit is [malc * 100]% living crew")
 		return null
 
 	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes(living_crew.len)
 	var/list/datum/game_mode/usable_modes = list()
 	for(var/datum/game_mode/G in runnable_modes)
-		if(G.reroll_friendly && living_crew >= G.required_players)
+		if(G.reroll_friendly && living_crew.len >= G.required_players)
 			usable_modes += G
 		else
 			qdel(G)
@@ -139,8 +139,9 @@
 			if(SSshuttle.emergency.timeLeft(1) < initial(SSshuttle.emergencyCallTime)*0.5)
 				return 1
 
-	if(world.time >= (config.midround_antag_time_check * 600))
-		message_admins("Convert_roundtype failed due to round length. Limit is [config.midround_antag_time_check] minutes.")
+	var/matc = CONFIG_GET(number/midround_antag_time_check)
+	if(world.time >= (matc * 600))
+		message_admins("Convert_roundtype failed due to round length. Limit is [matc] minutes.")
 		return null
 
 	var/list/antag_candidates = list()
@@ -155,12 +156,12 @@
 
 	antag_candidates = shuffle(antag_candidates)
 
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		replacementmode.restricted_jobs += replacementmode.protected_jobs
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		replacementmode.restricted_jobs += "Assistant"
 
-	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
+	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=\ref[usr]'>end the round now</A>.")
 
 	. = 1
 	sleep(rand(600,1800))
@@ -169,7 +170,7 @@
 		round_converted = 0
 		return
 	 //somewhere between 1 and 3 minutes from now
-	if(!config.midround_antag[SSticker.mode.config_tag])
+	if(!CONFIG_GET(keyed_flag_list/midround_antag)[SSticker.mode.config_tag])
 		round_converted = 0
 		return 1
 	for(var/mob/living/carbon/human/H in antag_candidates)
@@ -190,7 +191,9 @@
 		return TRUE
 	if(station_was_nuked)
 		return TRUE
-	if(!round_converted && (!config.continuous[config_tag] || (config.continuous[config_tag] && config.midround_antag[config_tag]))) //Non-continuous or continous with replacement antags
+	var/list/continuous = CONFIG_GET(keyed_flag_list/continuous)
+	var/list/midround_antag = CONFIG_GET(keyed_flag_list/midround_antag)
+	if(!round_converted && (!continuous[config_tag] || (continuous[config_tag] && midround_antag[config_tag]))) //Non-continuous or continous with replacement antags
 		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
 			for(var/mob/Player in GLOB.mob_list)
 				if(Player.mind)
@@ -199,8 +202,8 @@
 						return 0
 			if(!continuous_sanity_checked)
 				message_admins("The roundtype ([config_tag]) has no antagonists, continuous round has been defaulted to on and midround_antag has been defaulted to off.")
-				config.continuous[config_tag] = 1
-				config.midround_antag[config_tag] = 0
+				continuous[config_tag] = TRUE
+				midround_antag[config_tag] = FALSE
 				SSshuttle.clearHostileEnvironment(src)
 				return 0
 
@@ -214,7 +217,7 @@
 					living_antag_player = Player
 					return 0
 
-		if(!config.continuous[config_tag] || force_ending)
+		if(!continuous[config_tag] || force_ending)
 			return 1
 
 		else
@@ -223,7 +226,7 @@
 				if(round_ends_with_antag_death)
 					return 1
 				else
-					config.midround_antag[config_tag] = 0
+					midround_antag[config_tag] = 0
 					return 0
 
 	return 0
@@ -518,7 +521,7 @@
 /datum/game_mode/proc/get_remaining_days(client/C)
 	if(!C)
 		return 0
-	if(!config.use_age_restriction_for_jobs)
+	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
 		return 0
 	if(!isnum(C.player_age))
 		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
@@ -562,3 +565,8 @@
 
 /datum/game_mode/proc/generate_report() //Generates a small text blurb for the gamemode in centcom report
 	return "Gamemode report for [name] not set.  Contact a coder."
+
+//By default nuke just ends the round
+/datum/game_mode/proc/OnNukeExplosion(off_station)
+	if(off_station < 2)
+		station_was_nuked = TRUE //Will end the round on next check.

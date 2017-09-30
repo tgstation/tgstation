@@ -230,7 +230,9 @@
 		dna.features = newfeatures
 
 	if(mrace)
-		set_species(mrace, icon_update=0)
+		var/datum/species/newrace = new mrace.type
+		newrace.copy_properties_from(mrace)
+		set_species(newrace, icon_update=0)
 
 	if(newreal_name)
 		real_name = newreal_name
@@ -257,7 +259,7 @@
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
 	if(!dna.species)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = pick(CONFIG_GET(keyed_flag_list/roundstart_races))
 		dna.species = new rando_race()
 
 //proc used to update the mob's appearance after its dna UI has been changed

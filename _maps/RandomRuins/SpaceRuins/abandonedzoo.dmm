@@ -743,10 +743,7 @@
 /turf/open/floor/plasteel/darkgreen,
 /area/ruin/space/has_grav/abandonedzoo)
 "bN" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/item/shard{
 	icon_state = "small"
 	},
@@ -799,10 +796,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bU" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bV" = (

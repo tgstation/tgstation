@@ -113,7 +113,7 @@
 
 /obj/item/borg/upgrade/thrusters
 	name = "ion thruster upgrade"
-	desc = "A energy-operated thruster system for cyborgs."
+	desc = "An energy-operated thruster system for cyborgs."
 	icon_state = "cyborg_upgrade3"
 	origin_tech = "engineering=4;powerstorage=4"
 
