@@ -90,6 +90,7 @@
 	item_state = "glasses"
 	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
 	darkness_view = 8
+	vision_flags = SEE_BLACKNESS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
