@@ -238,3 +238,4 @@
 	var/high_message = pick("Agreement fills your mind.", "'No' is so last year. 'Yes' is in.", "Yes.")
 	if(prob(20))
 		M.say("Yes.")
+..()
