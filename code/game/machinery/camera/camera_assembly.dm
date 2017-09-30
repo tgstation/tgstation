@@ -91,7 +91,7 @@
 
 				state = 4
 				var/obj/machinery/camera/C = new(src.loc)
-				forceMove(C)
+				src.loc = C
 				C.assembly = src
 				C.setDir(src.dir)
 
@@ -122,7 +122,7 @@
 		if(U)
 			to_chat(user, "<span class='notice'>You unattach an upgrade from the assembly.</span>")
 			playsound(src.loc, W.usesound, 50, 1)
-			U.forceMove(drop_location())
+			U.loc = get_turf(src)
 			upgrades -= U
 		return
 

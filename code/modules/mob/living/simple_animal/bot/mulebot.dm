@@ -432,6 +432,7 @@
 		return
 	if(on)
 		var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
+		//to_chat(world, "speed: [speed]")
 		var/num_steps = 0
 		switch(speed)
 			if(0)
@@ -473,6 +474,8 @@
 					path -= next
 					return
 				if(isturf(next))
+					//to_chat(world, "at ([x],[y]) moving to ([next.x],[next.y])")
+
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
 						if(blood_DNA && blood_DNA.len)
@@ -494,6 +497,7 @@
 					var/moved = step_towards(src, next)	// attempt to move
 					if(cell) cell.use(1)
 					if(moved && oldloc!=loc)	// successful move
+						//to_chat(world, "Successful move.")
 						blockcount = 0
 						path -= loc
 
@@ -504,6 +508,7 @@
 
 					else		// failed to move
 
+						//to_chat(world, "Unable to move.")
 						blockcount++
 						mode = BOT_BLOCKED
 						if(blockcount == 3)
@@ -523,13 +528,16 @@
 						return
 				else
 					buzz(ANNOYED)
+					//to_chat(world, "Bad turf.")
 					mode = BOT_NAV
 					return
 			else
+				//to_chat(world, "No path.")
 				mode = BOT_NAV
 				return
 
 		if(BOT_NAV)	// calculate new path
+			//to_chat(world, "Calc new path.")
 			mode = BOT_WAIT_FOR_NAV
 			spawn(0)
 				calc_path()

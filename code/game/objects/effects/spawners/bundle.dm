@@ -12,7 +12,7 @@
 		var/turf/T = get_turf(src)
 		for(var/path in items)
 			new path(T)
-	return INITIALIZE_HINT_QDEL
+	qdel(src)
 
 /obj/effect/spawner/bundle/costume/chicken
 	name = "chicken costume spawner"

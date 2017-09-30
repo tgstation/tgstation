@@ -54,27 +54,32 @@ SUBSYSTEM_DEF(dbcore)
 	if(failed_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
 		return FALSE
 
-	if(!CONFIG_GET(flag/sql_enabled))
+	if(!config.sql_enabled)
 		return FALSE
 
-	var/user = CONFIG_GET(string/feedback_login)
-	var/pass = CONFIG_GET(string/feedback_password)
-	var/db = CONFIG_GET(string/feedback_database)
-	var/address = CONFIG_GET(string/address)
-	var/port = CONFIG_GET(number/port)
+	var/user = global.sqlfdbklogin
+	var/pass = global.sqlfdbkpass
+	var/db = global.sqlfdbkdb
+	var/address = global.sqladdress
+	var/port = global.sqlport
 
-	_dm_db_connect(_db_con, "dbi:mysql:[db]:[address]:[port]", user, pass, Default_Cursor, null)
+	doConnect("dbi:mysql:[db]:[address]:[port]", user, pass)
 	. = IsConnected()
 	if (!.)
 		log_sql("Connect() failed | [ErrorMsg()]")
 		++failed_connections
+
+/datum/controller/subsystem/dbcore/proc/doConnect(dbi_handler, user_handler, password_handler)
+	if(!config.sql_enabled)
+		return FALSE
+	return _dm_db_connect(_db_con, dbi_handler, user_handler, password_handler, Default_Cursor, null)
 
 /datum/controller/subsystem/dbcore/proc/Disconnect()
 	failed_connections = 0
 	return _dm_db_close(_db_con)
 
 /datum/controller/subsystem/dbcore/proc/IsConnected()
-	if(!CONFIG_GET(flag/sql_enabled))
+	if(!config.sql_enabled)
 		return FALSE
 	return _dm_db_is_connected(_db_con)
 
@@ -82,7 +87,7 @@ SUBSYSTEM_DEF(dbcore)
 	return _dm_db_quote(_db_con, str)
 
 /datum/controller/subsystem/dbcore/proc/ErrorMsg()
-	if(!CONFIG_GET(flag/sql_enabled))
+	if(!config.sql_enabled)
 		return "Database disabled by configuration"
 	return _dm_db_error_msg(_db_con)
 

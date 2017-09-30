@@ -412,7 +412,7 @@
 	set category = "OOC"
 	set src in view()
 
-	if(CONFIG_GET(flag/allow_metadata))
+	if(config.allow_Metadata)
 		if(client)
 			to_chat(src, "[src]'s Metainfo:<br>[client.prefs.metadata]")
 		else
@@ -460,25 +460,20 @@
 		makeTrail(newloc, T, old_direction)
 
 /mob/living/movement_delay(ignorewalk = 0)
-	. = 0
+	. = ..()
 	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
-	var/static/config_run_delay
-	var/static/config_walk_delay
-	if(isnull(config_run_delay))
-		config_run_delay = CONFIG_GET(number/run_delay)
-		config_walk_delay = CONFIG_GET(number/walk_delay)
 	if(ignorewalk)
-		. += config_run_delay
+		. += config.run_speed
 	else
 		switch(m_intent)
 			if(MOVE_INTENT_RUN)
 				if(drowsyness > 0)
 					. += 6
-				. += config_run_delay
+				. += config.run_speed
 			if(MOVE_INTENT_WALK)
-				. += config_walk_delay
+				. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
@@ -549,14 +544,11 @@
 	if(!force_moving)
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
-/mob/living/proc/can_resist()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
-
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"
 
-	if(!can_resist())
+	if(!isliving(src) || next_move > world.time || incapacitated(ignore_restraints = 1))
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
@@ -974,19 +966,3 @@
 			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
 	return canmove
-
-/mob/living/proc/AddAbility(obj/effect/proc_holder/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		A.action.Grant(src)
-
-/mob/living/proc/RemoveAbility(obj/effect/proc_holder/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/proc/add_abilities_to_panel()
-	for(var/obj/effect/proc_holder/A in abilities)
-		statpanel("[A.panel]",A.get_panel_text(),A)

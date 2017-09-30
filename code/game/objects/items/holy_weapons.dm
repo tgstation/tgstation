@@ -244,7 +244,6 @@
 		S.name = name
 		S.ckey = theghost.ckey
 		S.status_flags |= GODMODE
-		S.language_holder = user.language_holder.copy(S)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)
@@ -387,9 +386,11 @@
 	flags_2 = SLOWS_WHILE_IN_HAND_2
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSobj, src)
+	..()
 
+/obj/item/nullrod/tribal_knife/New()
+	..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/nullrod/tribal_knife/Destroy()
 	STOP_PROCESSING(SSobj, src)

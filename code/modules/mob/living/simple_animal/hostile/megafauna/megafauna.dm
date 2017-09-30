@@ -126,7 +126,7 @@
 	if(admin_spawned)
 		return FALSE
 
-	if(MedalsAvailable())
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 		for(var/mob/living/L in view(7,src))
 			if(L.stat)
 				continue
@@ -140,52 +140,55 @@
 	return TRUE
 
 /proc/UnlockMedal(medal,client/player)
-	set waitfor = FALSE
+
 	if(!player || !medal)
 		return
-	if(MedalsAvailable())
-		var/result = world.SetMedal(medal, player, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
-		if(isnull(result))
-			GLOB.medals_enabled = FALSE
-			log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
-			message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
-		else if (result)
-			to_chat(player, "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>")
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
+		spawn()
+			var/result = world.SetMedal(medal, player, global.medal_hub, global.medal_pass)
+			if(isnull(result))
+				global.medals_enabled = FALSE
+				log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
+				message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
+			else if (result)
+				to_chat(player, "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>")
 
 
 /proc/SetScore(score,client/player,increment,force)
-	set waitfor = FALSE
+
 	if(!score || !player)
 		return
-	if(MedalsAvailable())
-		var/list/oldscore = GetScore(score,player,1)
-		if(increment)
-			if(!oldscore[score])
-				oldscore[score] = 1
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
+		spawn()
+			var/list/oldscore = GetScore(score,player,1)
+
+			if(increment)
+				if(!oldscore[score])
+					oldscore[score] = 1
+				else
+					oldscore[score] = (text2num(oldscore[score]) + 1)
 			else
-				oldscore[score] = (text2num(oldscore[score]) + 1)
-		else
-			oldscore[score] = force
+				oldscore[score] = force
 
-		var/newscoreparam = list2params(oldscore)
+			var/newscoreparam = list2params(oldscore)
 
-		var/result = world.SetScores(player.ckey, newscoreparam, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
+			var/result = world.SetScores(player.ckey, newscoreparam, global.medal_hub, global.medal_pass)
 
-		if(isnull(result))
-			GLOB.medals_enabled = FALSE
-			log_game("SCORE ERROR: Could not contact hub to set score. Score:[score] player:[player.ckey]")
-			message_admins("Error! Failed to contact hub to set [score] score for [player.ckey]!")
+			if(isnull(result))
+				global.medals_enabled = FALSE
+				log_game("SCORE ERROR: Could not contact hub to set score. Score:[score] player:[player.ckey]")
+				message_admins("Error! Failed to contact hub to set [score] score for [player.ckey]!")
 
 
 /proc/GetScore(score,client/player,returnlist)
 
 	if(!score || !player)
 		return
-	if(MedalsAvailable())
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 
-		var/scoreget = world.GetScores(player.ckey, score, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
+		var/scoreget = world.GetScores(player.ckey, score, global.medal_hub, global.medal_pass)
 		if(isnull(scoreget))
-			GLOB.medals_enabled = FALSE
+			global.medals_enabled = FALSE
 			log_game("SCORE ERROR: Could not contact hub to get score. Score:[score] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to get score: [score] for [player.ckey]!")
 			return
@@ -202,12 +205,12 @@
 
 	if(!player || !medal)
 		return
-	if(MedalsAvailable())
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 
-		var/result = world.GetMedal(medal, player, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
+		var/result = world.GetMedal(medal, player, global.medal_hub, global.medal_pass)
 
 		if(isnull(result))
-			GLOB.medals_enabled = FALSE
+			global.medals_enabled = FALSE
 			log_game("MEDAL ERROR: Could not contact hub to get medal:[medal] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to get [medal] medal for [player.ckey]!")
 		else if (result)
@@ -217,12 +220,12 @@
 
 	if(!player || !medal)
 		return
-	if(MedalsAvailable())
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 
-		var/result = world.ClearMedal(medal, player, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
+		var/result = world.ClearMedal(medal, player, global.medal_hub, global.medal_pass)
 
 		if(isnull(result))
-			GLOB.medals_enabled = FALSE
+			global.medals_enabled = FALSE
 			log_game("MEDAL ERROR: Could not contact hub to clear medal:[medal] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to clear [medal] medal for [player.ckey]!")
 		else if (result)
@@ -232,9 +235,6 @@
 
 
 /proc/ClearScore(client/player)
-	world.SetScores(player.ckey, "", CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
-
-/proc/MedalsAvailable()
-	return CONFIG_GET(string/medal_hub_address) && CONFIG_GET(string/medal_hub_password) && GLOB.medals_enabled
+	world.SetScores(player.ckey, "", global.medal_hub, global.medal_pass)
 
 #undef MEDAL_PREFIX

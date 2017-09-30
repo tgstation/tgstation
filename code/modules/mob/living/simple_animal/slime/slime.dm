@@ -146,10 +146,7 @@
 	if(health <= 0) // if damaged, the slime moves twice as slow
 		. *= 2
 
-	var/static/config_slime_delay
-	if(isnull(config_slime_delay))
-		config_slime_delay = CONFIG_GET(number/slime_delay)
-	. += config_slime_delay
+	. += config.slime_delay
 
 /mob/living/simple_animal/slime/ObjCollide(obj/O)
 	if(!client && powerlevel > 0)

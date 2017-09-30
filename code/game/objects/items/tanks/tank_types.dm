@@ -60,8 +60,7 @@
 /obj/item/tank/internals/air
 	name = "air tank"
 	desc = "Mixed anyone?"
-	icon_state = "air"
-	item_state = "air"
+	icon_state = "oxygen"
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
 

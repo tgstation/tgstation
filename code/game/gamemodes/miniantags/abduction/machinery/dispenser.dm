@@ -60,8 +60,9 @@
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/organ/heart/gland))
-		if(!user.transferItemToLoc(W, src))
+		if(!user.drop_item())
 			return
+		W.loc = src
 		for(var/i=1,i<=gland_colors.len,i++)
 			if(gland_types[i] == W.type)
 				amounts[i]++

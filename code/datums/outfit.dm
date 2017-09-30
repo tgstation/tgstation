@@ -102,10 +102,10 @@
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/implant/I = new implant_type(H)
-				I.implant(H, null, TRUE)
+				I.implant(H, null, silent=TRUE)
 
 	H.update_body()
-	return TRUE
+	return 1
 
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))

@@ -228,6 +228,7 @@
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
+			//to_chat(world, "changed from [bodytemperature] by [diff] to [bodytemperature + diff]")
 			bodytemperature += diff
 
 	if(!environment_is_safe(environment))
@@ -266,11 +267,11 @@
 
 
 /mob/living/simple_animal/movement_delay()
-	var/static/config_animal_delay
-	if(isnull(config_animal_delay))
-		config_animal_delay = CONFIG_GET(number/animal_delay)
-	. += config_animal_delay
-	return ..() + speed + config_animal_delay
+	. = ..()
+
+	. = speed
+
+	. += config.animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()

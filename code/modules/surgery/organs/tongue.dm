@@ -85,9 +85,10 @@
 		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
 		if(!T || T.type != type)
 			continue
-		if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
-			var/datum/antagonist/abductor/A = user.mind.has_antag_datum(ANTAG_DATUM_ABDUCTOR)
-			if(!A || !(H.mind in A.team.members))
+		else if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
+			var/datum/species/abductor/Ayy = user.dna.species
+			var/datum/species/abductor/Byy = H.dna.species
+			if(Ayy.team != Byy.team)
 				continue
 		to_chat(H, rendered)
 	for(var/mob/M in GLOB.dead_mob_list)

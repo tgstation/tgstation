@@ -5,7 +5,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = SLOT_EARS
-	resistance_flags = NONE
+	resistance_flags = 0
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"

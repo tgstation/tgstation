@@ -43,8 +43,9 @@
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			if (!user.transferItemToLoc(I,src))
+			if(!user.drop_item())
 				return
+			I.loc = src
 			src.diskette = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			src.updateUsrDialog()
@@ -168,7 +169,7 @@
 		if("working")
 			temp_html += status
 			temp_html += "<h1>System Busy</h1>"
-			temp_html += "Working ... Please wait ([DisplayTimeText(radduration)])"
+			temp_html += "Working ... Please wait ([radduration] Seconds)"
 		if("buffer")
 			temp_html += status
 			temp_html += buttons
@@ -447,7 +448,7 @@
 					diskette.fields = buffer_slot.Copy()
 		if("ejectdisk")
 			if(diskette)
-				diskette.forceMove(drop_location())
+				diskette.loc = get_turf(src)
 				diskette = null
 		if("setdelayed")
 			if(num)

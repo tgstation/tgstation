@@ -16,17 +16,16 @@ Assistant
 
 
 /datum/job/assistant/get_access()
-	if(CONFIG_GET(flag/assistants_have_maint_access) || !CONFIG_GET(flag/jobs_have_minimal_access)) //Config has assistant maint access set
+	if((config.jobs_have_maint_access & ASSISTANTS_HAVE_MAINT_ACCESS) || !config.jobs_have_minimal_access) //Config has assistant maint access set
 		. = ..()
 		. |= list(ACCESS_MAINT_TUNNELS)
 	else
 		return ..()
 
 /datum/job/assistant/config_check()
-	var/ac = CONFIG_GET(number/assistant_cap)
-	if(ac != 0)
-		total_positions = ac
-		spawn_positions = ac
+	if(config && !(config.assistant_cap == 0))
+		total_positions = config.assistant_cap
+		spawn_positions = config.assistant_cap
 		return 1
 	return 0
 
@@ -37,7 +36,7 @@ Assistant
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()
-	if (CONFIG_GET(flag/grey_assistants))
+	if (config.grey_assistants)
 		uniform = /obj/item/clothing/under/color/grey
 	else
 		uniform = /obj/item/clothing/under/color/random

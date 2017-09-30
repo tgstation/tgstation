@@ -55,7 +55,7 @@
 			last_tendril = FALSE
 			break
 	if(last_tendril && !admin_spawned)
-		if(MedalsAvailable())
+		if(global.medal_hub && global.medal_pass && global.medals_enabled)
 			for(var/mob/living/L in view(7,src))
 				if(L.stat)
 					continue
