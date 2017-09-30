@@ -234,11 +234,10 @@
 
 	if(!link)
 		if(I.loc == user && istype(I) && I.w_class <= WEIGHT_CLASS_SMALL)
-			user.drop_item()
-			I.loc = src
-			link = I
-			to_chat(user, "You attach [I] to the doll.")
-			update_targets()
+			if (user.transferItemToLoc(I,src))
+				link = I
+				to_chat(user, "You attach [I] to the doll.")
+				update_targets()
 
 /obj/item/voodoo/check_eye(mob/user)
 	if(loc != user)

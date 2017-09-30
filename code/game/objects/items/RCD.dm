@@ -123,6 +123,7 @@ obj/item/construction
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_matter = 160
+	flags_2 = NO_MAT_REDEMPTION_2
 	var/mode = 1
 	var/canRturf = 0
 	var/ranged = FALSE
