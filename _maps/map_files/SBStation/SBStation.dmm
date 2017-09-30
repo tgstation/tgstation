@@ -3601,14 +3601,18 @@
 	},
 /area/hallway/primary/fore)
 "aid" = (
-/obj/machinery/light{
-	dir = 1;
-	light_color = "#e8eaff"
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_s";
+	name = "south of station";
+	turf_type = /turf/open/space;
+	width = 18
 	},
-/turf/open/floor/plasteel/red/side{
-	dir = 1
-	},
-/area/hallway/primary/fore)
+/turf/open/space/basic,
+/area/space)
 "aie" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/red/side{
@@ -27307,6 +27311,58 @@
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
+"Yhb" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_n";
+	name = "north of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
+/turf/open/space/basic,
+/area/space)
+"chY" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_ne";
+	name = "northeast of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
+/turf/open/space/basic,
+/area/space)
+"Zhc" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_sw";
+	name = "southwest of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
+/turf/open/space/basic,
+/area/space)
+"dhZ" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_se";
+	name = "southeast of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
+/turf/open/space/basic,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -40299,7 +40355,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zhc
 aaa
 aaa
 aaa
@@ -60392,7 +60448,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aid
 aaa
 aaa
 aaa
@@ -63328,7 +63384,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Yhb
 aaa
 aaa
 aaa
@@ -73236,7 +73292,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+dhZ
 aaa
 aaa
 aaa
@@ -76966,7 +77022,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+chY
 aaa
 aaa
 aaa
