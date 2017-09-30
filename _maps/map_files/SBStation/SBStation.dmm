@@ -25058,7 +25058,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/engine/atmos)
 "bcQ" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1;
@@ -27311,19 +27311,6 @@
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
-"Yhb" = (
-/obj/docking_port/stationary{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate_n";
-	name = "north of station";
-	turf_type = /turf/open/space;
-	width = 18
-	},
-/turf/open/space/basic,
-/area/space)
 "chY" = (
 /obj/docking_port/stationary{
 	dheight = 9;
@@ -27337,19 +27324,6 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"Zhc" = (
-/obj/docking_port/stationary{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate_sw";
-	name = "southwest of station";
-	turf_type = /turf/open/space;
-	width = 18
-	},
-/turf/open/space/basic,
-/area/space)
 "dhZ" = (
 /obj/docking_port/stationary{
 	dheight = 9;
@@ -27358,6 +27332,32 @@
 	height = 24;
 	id = "syndicate_se";
 	name = "southeast of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
+/turf/open/space/basic,
+/area/space)
+"Yhb" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_n";
+	name = "north of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
+/turf/open/space/basic,
+/area/space)
+"Zhc" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_sw";
+	name = "southwest of station";
 	turf_type = /turf/open/space;
 	width = 18
 	},
