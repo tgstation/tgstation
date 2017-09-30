@@ -234,7 +234,16 @@
 	if(istype(O,/obj))
 		O.SpinAnimation(16,40)
 		
-/datum/reagent/drug/flipout/on_mob_life(mob/living/M)
+/datum/reagent/drug/yespowder
+	name = "Yes Powder"
+	id = "yespowder"
+	description = "Powder that makes you say yes."
+	color = "#fffae0"
+	reagent_state = SOLID
+	overdose_threshold = 40
+	addiction_threshold = 30
+		
+/datum/reagent/drug/yespowder/on_mob_life(mob/living/M)
 	var/high_message = pick("Agreement fills your mind.", "'No' is so last year. 'Yes' is in.", "Yes.")
 	if(prob(20))
 		M.say("Yes.")
