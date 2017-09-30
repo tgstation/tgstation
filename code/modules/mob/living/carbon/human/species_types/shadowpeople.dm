@@ -47,9 +47,7 @@
 
 	to_chat(C, "[info_text]")
 
-	var/list/nightmarename = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")
-
-	C.real_name = pick(nightmarename)
+	C.real_name = "[pick(GLOB.nightmare_names)]"
 	C.name = C.real_name
 	if(C.mind)
 		C.mind.name = C.real_name
