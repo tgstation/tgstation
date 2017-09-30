@@ -13,7 +13,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
-	var/suppressed = 0	//Attack message
+	var/suppressed = FALSE	//Attack message
 	var/yo = null
 	var/xo = null
 	var/current = null
@@ -280,7 +280,7 @@
 				if(can_hit_target(original, permutated))
 					Collide(original)
 				Range()
-			sleep(config.run_speed * 0.9)
+			sleep(CONFIG_GET(number/run_delay) * 0.9)
 
 //Returns true if the target atom is on our current turf and above the right layer
 /obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)

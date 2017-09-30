@@ -1,13 +1,10 @@
 //Ratvarian spear: A relatively fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long when summoned.
-/obj/item/clockwork/ratvarian_spear
+/obj/item/clockwork/weapon/ratvarian_spear
 	name = "ratvarian spear"
 	desc = "A razor-sharp spear made of brass. It thrums with barely-contained energy."
 	clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons."
-	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "ratvarian_spear"
 	item_state = "ratvarian_spear"
-	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	force = 15 //Extra damage is dealt to targets in attack()
 	throwforce = 25
 	armour_penetration = 10
@@ -16,42 +13,27 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	var/bonus_burn = 5
-	var/timerid
 
-/obj/item/clockwork/ratvarian_spear/Destroy()
-	deltimer(timerid)
-	return ..()
-
-/obj/item/clockwork/ratvarian_spear/ratvar_act()
+/obj/item/clockwork/weapon/ratvarian_spear/ratvar_act()
 	if(GLOB.ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
 		force = 20
 		bonus_burn = 10
 		throwforce = 40
 		armour_penetration = 50
-		clockwork_desc = initial(clockwork_desc)
-		deltimer(timerid)
 	else
 		force = initial(force)
 		bonus_burn = initial(bonus_burn)
 		throwforce = initial(throwforce)
 		armour_penetration = initial(armour_penetration)
-		clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
-		deltimer(timerid)
-		timerid = addtimer(CALLBACK(src, .proc/break_spear), RATVARIAN_SPEAR_DURATION, TIMER_STOPPABLE)
 
-/obj/item/clockwork/ratvarian_spear/cyborg/ratvar_act() //doesn't break!
-	..()
-	clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons."
-	deltimer(timerid)
-
-/obj/item/clockwork/ratvarian_spear/examine(mob/user)
+/obj/item/clockwork/weapon/ratvarian_spear/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		to_chat(user, "<span class='inathneq_small'>Attacks on living non-Servants will generate <b>[bonus_burn]</b> units of vitality.</span>")
 		if(!iscyborg(user))
 			to_chat(user, "<span class='brass'>Throwing the spear will do massive damage, break the spear, and knock down the target.</span>")
 
-/obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/clockwork/weapon/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	. = ..()
 	if(!QDELETED(target) && target.stat != DEAD && !target.null_rod_check() && !is_servant_of_ratvar(target)) //we do bonus damage on attacks unless they're a servant, have a null rod, or are dead
 		var/bonus_damage = bonus_burn //normally a total of 20 damage, 30 with ratvar
@@ -63,7 +45,7 @@
 			bonus_damage *= 3 //total 30 damage on cultists, 50 with ratvar
 		GLOB.clockwork_vitality += target.adjustFireLoss(bonus_damage) //adds the damage done to existing vitality
 
-/obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
+/obj/item/clockwork/weapon/ratvarian_spear/throw_impact(atom/target)
 	var/turf/T = get_turf(target)
 	if(isliving(target))
 		var/mob/living/L = target
@@ -83,11 +65,12 @@
 	else
 		..()
 
-/obj/item/clockwork/ratvarian_spear/proc/break_spear(turf/T)
+/obj/item/clockwork/weapon/ratvarian_spear/proc/break_spear(turf/T)
 	if(src)
 		if(!T)
 			T = get_turf(src)
 		if(T) //make sure we're not in null or something
 			T.visible_message("<span class='warning'>[src] [pick("cracks in two and fades away", "snaps in two and dematerializes")]!</span>")
 			new /obj/effect/temp_visual/ratvar/spearbreak(T)
-		qdel(src)
+		action.weapon_reset(RATVARIAN_SPEAR_COOLDOWN)
+
