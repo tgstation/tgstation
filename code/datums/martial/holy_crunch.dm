@@ -1,9 +1,3 @@
-#define WRIST_WRENCH_COMBO "DD"
-#define BACK_KICK_COMBO "HG"
-#define STOMACH_KNEE_COMBO "GH"
-#define HEAD_KICK_COMBO "DHH"
-#define ELBOW_DROP_COMBO "HDHDH"
-
 /datum/martial_art/holy_crunch
 	name = "Holy Crunch"
 	deflection_chance = 5
