@@ -9,33 +9,33 @@
 
 /mob/living/simple_animal/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(forced)
-		. = adjustHealth(amount * config.damage_multiplier, updating_health, forced)
+		. = adjustHealth(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[BRUTE])
-		. = adjustHealth(amount * damage_coeff[BRUTE] * config.damage_multiplier, updating_health, forced)
+		. = adjustHealth(amount * damage_coeff[BRUTE] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
 /mob/living/simple_animal/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(forced)
-		. = adjustHealth(amount * config.damage_multiplier, updating_health, forced)
+		. = adjustHealth(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[BURN])
-		. = adjustHealth(amount * damage_coeff[BURN] * config.damage_multiplier, updating_health, forced)
+		. = adjustHealth(amount * damage_coeff[BURN] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
 /mob/living/simple_animal/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(forced)
-		. = adjustHealth(amount * config.damage_multiplier, updating_health, forced)
+		. = adjustHealth(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[OXY])
-		. = adjustHealth(amount * damage_coeff[OXY] * config.damage_multiplier, updating_health, forced)
+		. = adjustHealth(amount * damage_coeff[OXY] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
 /mob/living/simple_animal/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(forced)
-		. = adjustHealth(amount * config.damage_multiplier, updating_health, forced)
+		. = adjustHealth(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[TOX])
-		. = adjustHealth(amount * damage_coeff[TOX] * config.damage_multiplier, updating_health, forced)
+		. = adjustHealth(amount * damage_coeff[TOX] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
 /mob/living/simple_animal/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(forced)
-		. = adjustHealth(amount * config.damage_multiplier, updating_health, forced)
+		. = adjustHealth(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[CLONE])
-		. = adjustHealth(amount * damage_coeff[CLONE] * config.damage_multiplier, updating_health, forced)
+		. = adjustHealth(amount * damage_coeff[CLONE] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
 	return

@@ -169,7 +169,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	var/start_timeofday = REALTIMEOFDAY
 	// Initialize subsystems.
-	current_ticklimit = config.tick_limit_mc_init
+	current_ticklimit = CONFIG_GET(number/tick_limit_mc_init)
 	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
@@ -189,7 +189,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	sortTim(subsystems, /proc/cmp_subsystem_display)
 	// Set world options.
 	world.sleep_offline = 1
-	world.fps = config.fps
+	world.fps = CONFIG_GET(number/fps)
 	var/initialized_tod = REALTIMEOFDAY
 	sleep(1)
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10

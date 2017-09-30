@@ -31,16 +31,17 @@
 
 /datum/game_mode/traitor/pre_setup()
 
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	var/num_traitors = 1
 
-	if(config.traitor_scaling_coeff)
-		num_traitors = max(1, min( round(num_players()/(config.traitor_scaling_coeff*2))+ 2 + num_modifier, round(num_players()/(config.traitor_scaling_coeff)) + num_modifier ))
+	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
+	if(tsc)
+		num_traitors = max(1, min(round(num_players() / (tsc * 2)) + 2 + num_modifier, round(num_players() / tsc) + num_modifier))
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
@@ -68,10 +69,11 @@
 	return 1
 
 /datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
-	var/traitorcap = min(round(GLOB.joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(GLOB.joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
+	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
+	var/traitorcap = min(round(GLOB.joined_player_list.len / (tsc * 2)) + 2 + num_modifier, round(GLOB.joined_player_list.len / tsc) + num_modifier)
 	if((SSticker.mode.traitors.len + pre_traitors.len) >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
-	if((SSticker.mode.traitors.len + pre_traitors.len) <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
+	if((SSticker.mode.traitors.len + pre_traitors.len) <= (traitorcap - 2) || prob(100 / (tsc * 2)))
 		if(ROLE_TRAITOR in character.client.prefs.be_special)
 			if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))

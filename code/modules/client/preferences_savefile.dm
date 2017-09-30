@@ -249,11 +249,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	S["species"]			>> species_id
-	if(config.mutant_races && species_id && (species_id in GLOB.roundstart_species))
-		var/newtype = GLOB.roundstart_species[species_id]
+	var/list/roundstart_races = CONFIG_GET(keyed_flag_list/roundstart_races)
+	if(species_id && (species_id in roundstart_races) && CONFIG_GET(flag/join_with_mutant_race))
+		var/newtype = GLOB.species_list[species_id]
 		pref_species = new newtype()
-	else if (config.roundstart_races.len)
-		var/rando_race = pick(config.roundstart_races)
+	else if (roundstart_races.len)
+		var/rando_race = pick(roundstart_races)
 		if (rando_race)
 			pref_species = new rando_race()
 
@@ -286,7 +287,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
 	S["feature_lizard_legs"]			>> features["legs"]
-	if(!config.mutant_humans)
+	if(!CONFIG_GET(flag/join_with_mutant_humans))
 		features["tail_human"] = "none"
 		features["ears"] = "none"
 	else

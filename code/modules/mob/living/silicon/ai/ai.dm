@@ -740,7 +740,7 @@
 	var/list/obj/machinery/camera/visible = list()
 	for (var/datum/camerachunk/CC in eyeobj.visibleCameraChunks)
 		for (var/obj/machinery/camera/C in CC.cameras)
-			if (!C.can_use() || get_dist(C, eyeobj) > 7)
+			if (!C.can_use() || get_dist(C, eyeobj) > 7 || !C.internal_light)
 				continue
 			visible |= C
 
