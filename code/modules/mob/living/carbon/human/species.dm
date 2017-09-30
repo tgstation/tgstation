@@ -177,13 +177,10 @@
 			tongue.Insert(C)
 
 		if(brain && brain.type != mutant_brain && !brain.decoy_override)
-			var/mob/dead/observer/ghost = C.ghostize(0)
+			brain.Remove(C, TRUE, TRUE)
 			qdel(brain)
 			brain = new mutant_brain()
-			brain.Insert(C)
-			ghost.mind.transfer_to(C)
-			if(ghost.key)
-				C.key = ghost.key
+			brain.Insert(C, TRUE, TRUE)
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
