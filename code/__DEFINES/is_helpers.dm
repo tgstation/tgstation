@@ -9,6 +9,8 @@
 #define ismovableatom(A) (istype(A, /atom/movable))
 
 //Turfs
+//#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
+
 #define isopenturf(A) (istype(A, /turf/open))
 
 #define isindestructiblefloor(A) (istype(A, /turf/open/indestructible))
