@@ -492,7 +492,7 @@
 					beakers += S
 					S.forceMove(src)
 				else
-					S.forceMove(get_turf(src)
+					S.forceMove(get_turf(src))
 
 		if(istype(G, /obj/item/grenade/chem_grenade/cryo))
 			spread_range -= 1 // Reduced range, but increased density.
