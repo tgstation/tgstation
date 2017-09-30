@@ -47,11 +47,13 @@
 
 	to_chat(C, "[info_text]")
 
-	C.real_name = "Nightmare"
-	C.name = "Nightmare"
+	var/list/nightmarename = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")
+
+	C.real_name = pick(nightmarename)
+	C.name = C.real_name
 	if(C.mind)
-		C.mind.name = "Nightmare"
-	C.dna.real_name = "Nightmare"
+		C.mind.name = C.real_name
+	C.dna.real_name = C.real_name
 
 /datum/species/shadow/nightmare/on_species_loss(mob/living/carbon/C)
 	. = ..()
