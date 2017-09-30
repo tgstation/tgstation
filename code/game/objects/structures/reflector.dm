@@ -23,6 +23,10 @@
 		setAngle(rotation_angle)
 	return ..()
 
+/obj/structure/reflector/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to adjust its direction.</span>")
+
 /obj/structure/reflector/Moved()
 	setAngle(dir_map_to_angle(dir))
 	return ..()

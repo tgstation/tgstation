@@ -78,7 +78,7 @@
 
 
 /obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(datum/hud/owner_hud)
-	var settings = owner_hud.get_action_buttons_icons()
+	var/settings = owner_hud.get_action_buttons_icons()
 	icon = settings["bg_icon"]
 	icon_state = settings["bg_state"]
 	hide_icon = settings["toggle_icon"]
