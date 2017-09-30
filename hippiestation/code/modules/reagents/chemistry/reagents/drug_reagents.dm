@@ -233,3 +233,8 @@
 /datum/reagent/drug/flipout/reaction_obj(obj/O, reac_volume)
 	if(istype(O,/obj))
 		O.SpinAnimation(16,40)
+		
+/datum/reagent/drug/flipout/on_mob_life(mob/living/M)
+	var/high_message = pick("Agreement fills your mind.", "'No' is so last year. 'Yes' is in.", "Yes.")
+	if(prob(20))
+		M.say("Yes.")
