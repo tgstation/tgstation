@@ -230,7 +230,7 @@
 				"ref"   = "\ref[user]"
 			),
 			"srcObject" = list(
-				"name" = "[src_object]",
+				"name" = sanitize("[src_object]"),
 				"ref"  = "\ref[src_object]"
 			),
 			"titlebar" = titlebar
@@ -275,6 +275,7 @@
 
 	switch(action)
 		if("tgui:initialize")
+			warning("tgui:initialize called")
 			user << output(url_encode(get_json(initial_data)), "[custom_browser_id ? window_id : "[window_id].browser"]:initialize")
 			initialized = TRUE
 		if("tgui:view")

@@ -10,6 +10,20 @@ var NanoUtility = function ()
 
 			_urlParameters = body.data('urlParameters');
         },
+        href: function(params, url) {
+          params = (typeof params !== 'undefined') ?  params : {};
+          url = (typeof url !== 'undefined') ?  url : {};
+          return 'byond://'+url+'?' + NanoUtility.generateHref(params); //Object.keys(params).map(key => encode(key)+'='+encode(params[key])).join('&')
+        },
+        act: function(src, action, params) {
+          params = (typeof params !== 'undefined') ?  params : {};
+          window.location.href = NanoUtility.href(Object.assign({ src: src, action: action }, params));
+        },
+        winset: function(win, key, value) {
+          var par = {};
+          par[win+key] = value;
+          window.location.href = NanoUtility.href(par, 'winset');
+        },
 		// generate a Byond href, combines _urlParameters with parameters
 		generateHref: function (parameters)
 		{

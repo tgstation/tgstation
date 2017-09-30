@@ -41,6 +41,7 @@ NanoStateManager = function ()
 			doUpdate(_data);
 			
 			_isInitialised = true;
+			NanoUtility.act($('body').data('url-parameters')['src'], "tgui:initialize");
 		});
 	};
 	
