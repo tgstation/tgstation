@@ -41,6 +41,7 @@
 		else if(istype(A, /obj/structure/blob))
 			var/obj/structure/blob/B = A
 			B.take_damage(energy*0.6)
+			movement_range = 0
 
 /obj/effect/accelerated_particle/Crossed(atom/A)
 	if(isliving(A))
