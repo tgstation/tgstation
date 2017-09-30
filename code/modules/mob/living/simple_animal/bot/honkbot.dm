@@ -16,9 +16,9 @@
 	model = "Honkbot"
 	bot_core_type = /obj/machinery/bot_core/honkbot
 	window_id = "autohonk"
-	window_name = "Honkomatic Bike Horn Unit v1.0.2"
+	window_name = "Honkomatic Bike Horn Unit v1.0.3"
 	//allow_pai = 1 //Damn right we'll pAI these
-	data_hud_type = DATA_HUD_SECURITY_ADVANCED // show jobs
+	data_hud_type = DATA_HUD_SECURITY_BASIC // show jobs
 
 	var/honksound = 'sound/items/bikehorn.ogg' //customizable sound
 	var/goldenbikehorn = 0 //placeholder
@@ -75,7 +75,7 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-<TT><B>Honkomatic Bike Horn Unit v1.0.2 controls</B></TT><BR><BR>
+<TT><B>Honkomatic Bike Horn Unit v1.0.3 controls</B></TT><BR><BR>
 Status: []<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"},
@@ -121,10 +121,10 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'>You short out [src]'s sound control system.</span>"
+			user << "<span class='danger'>You short out [src]'s sound control system. It gives out an evil laugh!!</span>"
 			oldtarget_name = user.name
-		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
-		playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 1, -1)
+		audible_message("<span class='danger'>[src] gives out an evil laugh!</span>")
+		playsound(loc, 'sound/machines/honkbot_evil_laugh.ogg', 75, 1, -1) // evil laughter
 		icon_state = "honkbot[on]"
 
 /mob/living/simple_animal/bot/honkbot/bullet_act(obj/item/projectile/Proj)
@@ -139,7 +139,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if (!emagged)
+		if (emagged <= 1)
 			honk_attack(A)
 		else
 			if(!C.IsStun() || arrest_type)
@@ -159,8 +159,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	..()
 
 /mob/living/simple_animal/bot/honkbot/proc/bike_horn() //use bike_horn
-	if (!emagged)
-		if(ckey == null) //check if a player is controlling
+	if (emagged <= 1)
+		if(!client) //check if a player is controlling
 			playsound(loc, honksound, 50, 1, -1)
 		else
 			if (!spam_flag)
@@ -172,14 +172,14 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		spawn(cooldowntimehorn)
 			spam_flag = 0
 
-	else //emagged honkbots will spam short and memorable sounds.
+	else if (emagged == 2) //emagged honkbots will spam short and memorable sounds.
 
-		if (ckey == null)
-			playsound(loc, pick('sound/items/bikehorn.ogg', 'sound/items/AirHorn2.ogg', 'sound/misc/sadtrombone.ogg', 'sound/items/AirHorn.ogg', 'sound/effects/reee.ogg', 'sound/effects/adminhelp.ogg', 'sound/items/WEEOO1.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bcreep.ogg','sound/magic/Fireball.ogg' ,'sound/effects/pray.ogg', 'sound/voice/hiss1.ogg','sound/machines/buzz-sigh.ogg', 'sound/machines/ping.ogg', 'sound/weapons/flashbang.ogg', 'sound/weapons/bladeslice.ogg'), 50, 0)
+		if (!client)
+			playsound(loc, pick('sound/items/bikehorn.ogg', 'sound/items/AirHorn2.ogg', 'sound/misc/sadtrombone.ogg', 'sound/items/AirHorn.ogg', 'sound/effects/reee.ogg',  'sound/items/WEEOO1.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bcreep.ogg','sound/magic/Fireball.ogg' ,'sound/effects/pray.ogg', 'sound/voice/hiss1.ogg','sound/machines/buzz-sigh.ogg', 'sound/machines/ping.ogg', 'sound/weapons/flashbang.ogg', 'sound/weapons/bladeslice.ogg'), 50, 0)
 			// to be put at 100 volume: (Weeoo1, bcreep, blaw, hiss, flashbang )
 		else
 			if (!spam_flag)
-				playsound(loc, pick('sound/items/bikehorn.ogg', 'sound/items/AirHorn2.ogg', 'sound/misc/sadtrombone.ogg', 'sound/items/AirHorn.ogg', 'sound/effects/reee.ogg', 'sound/effects/adminhelp.ogg', 'sound/items/WEEOO1.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bcreep.ogg','sound/magic/Fireball.ogg' ,'sound/effects/pray.ogg', 'sound/voice/hiss1.ogg','sound/machines/buzz-sigh.ogg', 'sound/machines/ping.ogg', 'sound/weapons/flashbang.ogg', 'sound/weapons/bladeslice.ogg'), 50, 0)
+				playsound(loc, pick('sound/items/bikehorn.ogg', 'sound/items/AirHorn2.ogg', 'sound/misc/sadtrombone.ogg', 'sound/items/AirHorn.ogg', 'sound/effects/reee.ogg', 'sound/items/WEEOO1.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bcreep.ogg','sound/magic/Fireball.ogg' ,'sound/effects/pray.ogg', 'sound/voice/hiss1.ogg','sound/machines/buzz-sigh.ogg', 'sound/machines/ping.ogg', 'sound/weapons/flashbang.ogg', 'sound/weapons/bladeslice.ogg'), 50, 0)
 				spam_flag = 1 // prevent spam
 		icon_state = "honkbot-e"
 		spawn(30) // keep flashing
@@ -188,7 +188,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			spam_flag = 0
 
 /mob/living/simple_animal/bot/honkbot/proc/honk_attack(mob/living/carbon/C) // horn attack
-	if (ckey == null) //check if a player is controlling
+	if (!client) //check if a player is controlling
 		playsound(loc, honksound, 50, 1, -1)
 	else
 		if(spam_flag == 0)
@@ -201,7 +201,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		spam_flag = 0
 
 /mob/living/simple_animal/bot/honkbot/proc/stun_attack(mob/living/carbon/C) // airhorn stun
-	if (ckey == null)
+	if (!client)
 		playsound(loc, 'sound/items/AirHorn.ogg', 100, 1, -1) //HOOOOOOOOOOOOONK!!
 	else
 		if(spam_flag == 0)
@@ -217,12 +217,11 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			var/mob/living/carbon/human/H = C
 			if (ckey != null) //don't alter AI behavior
 				spam_flag = 1
-			if (!emagged) //HONK once, then leave
+			if (emagged <= 1) //HONK once, then leave
 				threatlevel = H.assess_threat(src)
 				threatlevel -= 6
 				//target = old_target
 			else // you really don't want to hit an emagged honkbot
-				threatlevel = H.assess_threat(src)
 				threatlevel = 6 // will never let you go
 			spawn(cooldowntime)
 				spam_flag = 0
@@ -354,10 +353,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
-	var/obj/item/honkbot_assembly/Sa = new /obj/item/honkbot_assembly(Tsec)
-	Sa.build_step = 0
-	Sa.created_name = name
+	//doesn't drop cardboard nor its assembly, since its a very frail material.
 
+	new /obj/item/bodypart/l_arm/robot/(Tsec)
 	new /obj/item/bikehorn(Tsec)
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 

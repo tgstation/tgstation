@@ -615,14 +615,19 @@ obj/item/storage/box/clown
 	desc = "A colorful cardboard box for the clown"
 	icon_state = "clownbox"
 	illustration = null
-	//foldable = null
 
-/obj/item/stack/sheet/cardboard/attackby(obj/item/stamp/clown/I, mob/user, params)
+/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/stamp/clown))
 		return ..()
+	if (src.amount >= 2)
+		to_chat(user, "<span class ='notice'>You only need one cardboard sheet for this.</span>")
+		return
+	if(!user.temporarilyRemoveItemFromInventory(src))
+		return
 	to_chat(user, "<span class='notice'>You stamp the cardboard! Its a clown box! Honk!</span>")
-	var/obj/item/storage/box/clown/A = new
-	user.put_in_hands(A)
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
+	var/turf/T = get_turf(src)
+	new/obj/item/storage/box/clown(T)
 	qdel(src)
 
 /obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
@@ -641,7 +646,6 @@ obj/item/storage/box/clown
 		return ..()
 
 //////
-
 /obj/item/storage/box/hug/medical/PopulateContents()
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
