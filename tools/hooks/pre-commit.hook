@@ -1,9 +1,2 @@
-#!/bin/sh
-set -e
-cd tools/mapmerge2
-if which python3 >/dev/null 2>/dev/null; then
-	PY=python3
-else
-	PY=python
-fi
-$PY precommit.py
+#!/bin/bash
+exec tools/hooks/python.sh -m precommit
