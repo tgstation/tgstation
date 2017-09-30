@@ -305,7 +305,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				dat+="Creating new Feed Message..."
 				dat+="<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [channel_name]<BR>"
 				dat+="<B>Message Author:</B> <FONT COLOR='green'>[scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> <BR><font face=\"[PEN_FONT]\">[parsepencode(msg, user, SIGNFONT)]</font><BR>"
+				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> <BR><font face=\"[PEN_FONT]\">[parsemarkdown(msg, user)]</font><BR>"
 				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>:</B>  [(photo ? "Photo Attached" : "No Photo")]</BR>"
 				dat+="<B><A href='?src=\ref[src];set_comment=1'>Comments [allow_comments ? "Enabled" : "Disabled"]</A></B><BR>"
 				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A><BR>"
@@ -555,7 +555,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			if(msg =="" || msg=="\[REDACTED\]" || scanned_user == "Unknown" || channel_name == "" )
 				screen=6
 			else
-				GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsepencode(msg, usr, SIGNFONT)]</font>", scanned_user, channel_name, photo, 0, allow_comments)
+				GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(msg, usr)]</font>", scanned_user, channel_name, photo, 0, allow_comments)
 				SSblackbox.inc("newscaster_stories",1)
 				screen=4
 				msg = ""

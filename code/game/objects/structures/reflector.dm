@@ -13,6 +13,10 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 0
 
+/obj/structure/reflector/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to adjust its direction.</span>")
+
 /obj/structure/reflector/bullet_act(obj/item/projectile/P)
 	var/turf/reflector_turf = get_turf(src)
 	var/turf/reflect_turf

@@ -219,3 +219,8 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	new_x = Clamp(new_x, 0, world.maxx)
 	new_y = Clamp(new_y, 0, world.maxy)
 	return locate(new_x, new_y, starting.z)
+
+/proc/round_down(num)
+	if(round(num) != num)
+		return round(num--)
+	else return num

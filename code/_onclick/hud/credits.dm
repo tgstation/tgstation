@@ -2,20 +2,27 @@
 #define CREDIT_SPAWN_SPEED 10
 #define CREDIT_ANIMATE_HEIGHT (14 * world.icon_size)
 #define CREDIT_EASE_DURATION 22
+#define CREDITS_PATH "[GLOB.config_dir]contributors.dmi"
 
 /client/proc/RollCredits()
 	set waitfor = FALSE
+	if(!fexists(CREDITS_PATH))
+		return
+	var/icon/credits_icon = new(CREDITS_PATH)
 	LAZYINITLIST(credits)
 	var/list/_credits = credits
 	verbs += /client/proc/ClearCredits
-	var/static/list/credit_order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states('icons/credits.dmi')) - "Thanks for playing!")
+	var/static/list/credit_order_for_this_round
+	if(isnull(credit_order_for_this_round))
+		credit_order_for_this_round = list("Thanks for playing!") + (shuffle(icon_states(credits_icon)) - "Thanks for playing!")
 	for(var/I in credit_order_for_this_round)
 		if(!credits)
 			return
-		_credits += new /obj/screen/credit(null, I, src)
+		_credits += new /obj/screen/credit(null, I, src, credits_icon)
 		sleep(CREDIT_SPAWN_SPEED)
 	sleep(CREDIT_ROLL_SPEED - CREDIT_SPAWN_SPEED)
 	verbs -= /client/proc/ClearCredits
+	qdel(credits_icon)
 
 /client/proc/ClearCredits()
 	set name = "Hide Credits"
@@ -25,7 +32,6 @@
 	credits = null
 
 /obj/screen/credit
-	icon = 'icons/credits.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 0
 	screen_loc = "12,1"
@@ -33,8 +39,9 @@
 	var/client/parent
 	var/matrix/target
 
-/obj/screen/credit/Initialize(mapload, credited, client/P)
+/obj/screen/credit/Initialize(mapload, credited, client/P, icon/I)
 	. = ..()
+	icon = I
 	parent = P
 	icon_state = credited
 	maptext = credited
@@ -53,6 +60,7 @@
 /obj/screen/credit/Destroy()
 	var/client/P = parent
 	P.screen -= src
+	icon = null
 	LAZYREMOVE(P.credits, src)
 	parent = null
 	return ..()

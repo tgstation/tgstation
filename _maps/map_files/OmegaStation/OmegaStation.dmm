@@ -13900,8 +13900,8 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
@@ -20539,8 +20539,8 @@
 	amount = 50
 	},
 /obj/item/crowbar,
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -35681,6 +35681,7 @@
 	id = "chapelmassdoor";
 	name = "Chapel Launcher Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "blJ" = (
@@ -38903,7 +38904,7 @@
 	volume_rate = 200
 	},
 /turf/open/space/basic,
-/area/space)
+/area/engine/engineering)
 "bxd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4

@@ -136,7 +136,7 @@
 		if(occupier && !active)
 			to_chat(occupier, "You have been downloaded to a mobile storage device. Still no remote access.")
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
-			occupier.loc = card
+			occupier.forceMove(card)
 			card.AI = occupier
 			occupier = null
 			update_icon()

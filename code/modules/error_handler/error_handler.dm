@@ -33,14 +33,20 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	// We can runtime before config is initialized because BYOND initialize objs/map before a bunch of other stuff happens.
 	// This is a bunch of workaround code for that. Hooray!
-
-	var/configured_error_cooldown = initial(config.error_cooldown)
-	var/configured_error_limit = initial(config.error_limit)
-	var/configured_error_silence_time = initial(config.error_silence_time)
+	var/configured_error_cooldown
+	var/configured_error_limit
+	var/configured_error_silence_time
 	if(config)
-		configured_error_cooldown = config.error_cooldown
-		configured_error_limit = config.error_limit
-		configured_error_silence_time = config.error_silence_time
+		configured_error_cooldown = CONFIG_GET(number/error_cooldown)
+		configured_error_limit = CONFIG_GET(number/error_limit)
+		configured_error_silence_time = CONFIG_GET(number/error_silence_time)
+	else
+		var/datum/config_entry/CE = /datum/config_entry/number/error_cooldown
+		configured_error_cooldown = initial(CE.value)
+		CE = /datum/config_entry/number/error_limit
+		configured_error_limit = initial(CE.value)
+		CE = /datum/config_entry/number/error_silence_time
+		configured_error_silence_time = initial(CE.value)
 
 
 	//Each occurence of a unique error adds to its cooldown time...
@@ -88,7 +94,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(usrinfo) //If this info isn't null, it hasn't been added yet
 		desclines.Add(usrinfo)
 	if(silencing)
-		desclines += "  (This error will now be silenced for [configured_error_silence_time / 600] minutes)"
+		desclines += "  (This error will now be silenced for [DisplayTimeText(configured_error_silence_time)])"
 	if(GLOB.error_cache)
 		GLOB.error_cache.log_error(E, desclines)
 
