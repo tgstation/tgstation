@@ -619,7 +619,7 @@ obj/item/storage/box/clown
 /obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/stamp/clown))
 		return ..()
-	if (src.amount >= 2)
+	if(get_amount() >= 2)
 		to_chat(user, "<span class ='notice'>You only need one cardboard sheet for this.</span>")
 		return
 	if(!user.temporarilyRemoveItemFromInventory(src))
