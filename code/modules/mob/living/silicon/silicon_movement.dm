@@ -4,7 +4,9 @@
 
 /mob/living/silicon/forceMove(atom/destination)
 	. = ..()
-	update_camera_location(destination)
+	//Only bother updating the camera if we actually managed to move
+	if(.)
+		update_camera_location(destination)
 
 /mob/living/silicon/proc/do_camera_update(oldLoc)
 	if(!QDELETED(builtInCamera) && oldLoc != get_turf(src))
