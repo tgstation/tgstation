@@ -36,6 +36,9 @@ Contents:
 	var/obj/item/clothing/head/helmet/space/space_ninja/n_hood
 	var/obj/item/clothing/shoes/space_ninja/n_shoes
 	var/obj/item/clothing/gloves/space_ninja/n_gloves
+	var/stored_undershirt = null
+	var/stored_underwear = null
+	var/stored_socks = null
 
 		//Main function variables.
 	var/s_initialized = 0//Suit starts off.
@@ -93,6 +96,24 @@ Contents:
 	s_bombs = rand(5,20)
 	a_boost = rand(1,7)
 
+//Hides the ninja's underclothing to prevent seeing union jack pantyhose when they enter stealth mode.
+/obj/item/clothing/suit/space/space_ninja/proc/update_underclothing(mob/living/carbon/human/H, suit_locked)
+	switch(suit_locked)
+		if(TRUE)
+			stored_underwear = H.underwear
+			stored_undershirt = H.undershirt
+			stored_socks = H.socks
+			H.underwear = "Nude"
+			H.undershirt = "Nude"
+			H.socks = "Nude"
+		if(FALSE)
+			H.underwear = stored_underwear
+			H.undershirt = stored_undershirt
+			H.socks = stored_socks
+			stored_underwear = null
+			stored_undershirt = null
+			stored_socks = null
+	H.update_body()
 
 //This proc prevents the suit from being taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/H)
@@ -121,6 +142,7 @@ Contents:
 	n_shoes.slowdown--
 	n_gloves = H.gloves
 	n_gloves.flags_1 |= NODROP_1
+	update_underclothing(H, TRUE)
 	return TRUE
 
 /obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/H)
@@ -130,7 +152,7 @@ Contents:
 
 
 //This proc allows the suit to be taken off.
-/obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
+/obj/item/clothing/suit/space/space_ninja/proc/unlock_suit(mob/living/carbon/human/H)
 	affecting = null
 	flags_1 &= ~NODROP_1
 	slowdown = 1
@@ -146,6 +168,7 @@ Contents:
 		n_gloves.flags_1 &= ~NODROP_1
 		n_gloves.candrain=0
 		n_gloves.draining=0
+	update_underclothing(H, FALSE)
 
 
 /obj/item/clothing/suit/space/space_ninja/examine(mob/user)
