@@ -54,7 +54,7 @@
 	var/list/tc = allowed_typecache
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
-	if((I.flags_2 & HOLOGRAM_2 | NO_MAT_REDEMPTION_2) || (tc && !is_type_in_typecache(I, tc)))
+	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
 		return FALSE
 	. = TRUE
