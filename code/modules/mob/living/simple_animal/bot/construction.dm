@@ -1,3 +1,4 @@
+#define isbuild_step(A) (build_step == A)
 //Bot Construction
 
 //Cleanbot assembly
@@ -349,8 +350,7 @@
 
 
 //Honkbot Assembly
-
-
+//#define build_step 0
 
 /obj/item/honkbot_assembly
 	name = "incomplete honkbot assembly"
@@ -359,12 +359,11 @@
 	icon_state = "honkbot_arm"
 	item_state = "honkbot_arm"
 	var/build_step = 0
-	var/created_name = "lil' Honkie"
-
+	var/created_name = "lil' honkie"
 
 /obj/item/honkbot_assembly/attackby(obj/item/I, mob/user, params)
 
-	if(isprox(I) && (build_step == 0))
+	if(isprox(I) && isbuild_step(0))
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		build_step++
@@ -374,7 +373,7 @@
 		name = "Incomplete Honkbot Assembly"
 		qdel(I)
 
-	else if((istype(I, /obj/item/bikehorn)) && (build_step == 1))
+	else if(istype(I, /obj/item/bikehorn) && isbuild_step(1))
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		to_chat(user, "<span class='notice'>You add the bike horn to [src]! Honk!</span>")
@@ -383,7 +382,6 @@
 		S.name = created_name
 		qdel(I)
 		qdel(src)
-
 
 //Secbot Assembly
 /obj/item/secbot_assembly
@@ -488,3 +486,5 @@
 			new /obj/item/bodypart/l_arm/robot(get_turf(src))
 			to_chat(user, "<span class='notice'>You remove the robot arm from [src].</span>")
 			build_step--
+
+#undef isbuild_step

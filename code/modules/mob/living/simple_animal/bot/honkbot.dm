@@ -5,19 +5,19 @@
 	icon_state = "honkbot0"
 	density = FALSE
 	anchored = FALSE
-	health = 20
-	maxHealth = 20
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	health = 25
+	maxHealth = 25
+	damage_coeff = list(BRUTE = 0.9, BURN = 1.0, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB
 
 	radio_key = /obj/item/device/encryptionkey/headset_service //doesn't have security key
 	radio_channel = "Service" //Service
-	bot_type = SEC_BOT
+	bot_type = HONK_BOT
 	model = "Honkbot"
 	bot_core_type = /obj/machinery/bot_core/honkbot
-	window_id = "autosec"
-	window_name = "Honkomatic Bike Horn Unit v1.0.1"
-	allow_pai = 1 //Damn right we'll pAI these
+	window_id = "autohonk"
+	window_name = "Honkomatic Bike Horn Unit v1.0.2"
+	//allow_pai = 1 //Damn right we'll pAI these
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED // show jobs
 
 	var/honksound = 'sound/items/bikehorn.ogg' //customizable sound
@@ -28,9 +28,9 @@
 	var/cooldowntimeEmag = 5
 	var/mob/living/carbon/target
 	var/oldtarget_name
-	var/target_lastloc //Loc of target when arrested.
-	var/last_found //There's a delay
-	var/threatlevel
+	var/target_lastloc = FALSE	//Loc of target when arrested.
+	var/last_found = FALSE	//There's a delay
+	var/threatlevel = FALSE
 	var/declare_arrests = 0 // speak, you shall not, unless to Honk
 	var/idcheck = 1 //Chases unknowns
 	var/fcheck = 1 //And armed people
@@ -40,15 +40,13 @@
 
 /mob/living/simple_animal/bot/honkbot/Initialize()
 	. = ..()
-
-/mob/living/simple_animal/bot/honkbot/New()
-	..()
 	icon_state = "honkbot[on]"
 	auto_patrol = 1
 	spawn(3)
 		var/datum/job/clown/J = new/datum/job/clown
 		access_card.access += J.get_access()
 		prev_access = access_card.access
+
 
 /mob/living/simple_animal/bot/honkbot/turn_on()
 	..()
@@ -77,7 +75,7 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-<TT><B>Honkomatic Bike Horn Unit v1.0 controls</B></TT><BR><BR>
+<TT><B>Honkomatic Bike Horn Unit v1.0.2 controls</B></TT><BR><BR>
 Status: []<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"},
@@ -357,13 +355,11 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/honkbot_assembly/Sa = new /obj/item/honkbot_assembly(Tsec)
-	Sa.build_step = 1
+	Sa.build_step = 0
 	Sa.created_name = name
 
 	new /obj/item/bikehorn(Tsec)
 	new /obj/item/device/assembly/prox_sensor(Tsec)
-	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot(Tsec)
 
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
@@ -401,4 +397,4 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	..()
 
 /obj/machinery/bot_core/honkbot
-	req_access = list(ACCESS_THEATRE)
+	req_access = list(ACCESS_THEATRE, ACCESS_ROBOTICS)
