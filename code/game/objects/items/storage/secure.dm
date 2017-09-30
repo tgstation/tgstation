@@ -25,34 +25,33 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_w_class = WEIGHT_CLASS_SMALL
 	max_combined_w_class = 14
+	desc = "This shouldn't exist. If it does, create an issue report."
 
 /obj/item/storage/secure/examine(mob/user)
 	..()
-	to_chat(user, text("The service panel is [src.open ? "open" : "closed"]."))
+	to_chat(user, text("The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."))
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
 	if(locked)
 		if (istype(W, /obj/item/screwdriver))
-			if (do_after(user, 20*W.toolspeed, target = src))
-				src.open =! src.open
-				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
+			if (do_after(user, 20*W.toolspeed, target = user))
+				open =! open
+				to_chat(user, "<span class='notice'>You [open ? "open" : "close"] the service panel.</span>")
 			return
-		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
-			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
-			src.l_hacking = 1
-			if (do_after(usr, 100*W.toolspeed, target = src))
-				if (prob(33))
-					src.l_setshort = 1
+		if (istype(W, /obj/item/wirecutters) || istype(W, /obj/item/card/emag))
+			to_chat(user, "<span class='danger'>[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>.</span>")
+		if ((istype(W, /obj/item/device/multitool)) && (!l_hacking))
+			if(src.open == 1)
+				to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
+				src.l_hacking = 1
+				if (do_after(usr, 400*W.toolspeed, target = user))
+					to_chat(user, "<span class='danger'>Internal memory reset - lock has been disengaged.</span>")
 					src.l_set = 0
-					user.show_message("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
-					sleep(80)
-					src.l_setshort = 0
 					src.l_hacking = 0
 				else
-					user.show_message("<span class='danger'>Unable to reset internal memory.</span>", 1)
 					src.l_hacking = 0
 			else
-				src.l_hacking = 0
+				to_chat(user, "<span class='notice'>You must <b>unscrew</b> the service panel before you can pulse the wiring.</span>")
 			return
 		//At this point you have exhausted all the special things to do when locked
 		// ... but it's still locked.
@@ -179,6 +178,7 @@
 	icon_opened = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
+	desc = "Excellent for securing things away from grubby hands."
 	force = 8
 	w_class = WEIGHT_CLASS_GIGANTIC
 	max_w_class = 8

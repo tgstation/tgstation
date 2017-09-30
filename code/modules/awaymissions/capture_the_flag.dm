@@ -210,7 +210,7 @@
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
-			to_chat(user, "It must be more than [respawn_cooldown/10] seconds from your last death to respawn!")
+			to_chat(user, "It must be more than [DisplayTimeText(respawn_cooldown)] from your last death to respawn!")
 			return
 		var/client/new_team_member = user.client
 		if(user.mind && user.mind.current)
@@ -320,7 +320,7 @@
 	for(var/atm in A)
 		if(!is_type_in_typecache(atm, ctf_object_typecache))
 			qdel(atm)
-		if(istype(atm, /obj/structure))
+		if(isstructure(atm))
 			var/obj/structure/S = atm
 			S.obj_integrity = S.max_integrity
 

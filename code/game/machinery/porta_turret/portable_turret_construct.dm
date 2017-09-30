@@ -12,6 +12,7 @@
 	name = "turret frame"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turret_frame"
+	desc = "An unfinished covered turret frame."
 	density = TRUE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret"	//the name applied to the product turret
