@@ -157,9 +157,25 @@
 /obj/effect/landmark/start/wizard
 	name = "wizard"
 
-/obj/effect/landmark/start/wizard/Initialize(mapload)
+/obj/effect/landmark/start/wizard/Initialize()
 	..()
 	GLOB.wizardstart += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/nukeop
+	name = "nukeop"
+
+/obj/effect/landmark/start/nukeop/Initialize()
+	..()
+	GLOB.nukeop_start += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/nukeop_leader
+	name = "nukeop leader"
+
+/obj/effect/landmark/start/nukeop_leader/Initialize()
+	..()
+	GLOB.nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/start/new_player
@@ -204,23 +220,6 @@
 // triple ais.
 /obj/effect/landmark/tripai
 	name = "tripai"
-
-// marauder entry (XXX WTF IS MAURADER ENTRY???)
-
-/obj/effect/landmark/marauder_entry
-	name = "Marauder Entry"
-
-// syndicate breach area (XXX I DON'T KNOW WHAT THIS IS EITHER)
-
-/obj/effect/landmark/syndicate_breach_area
-	name = "Syndicate Breach Area"
-
-// teleport scroll landmark, XXX DOES THIS DO ANYTHING?
-/obj/effect/landmark/teleport_scroll
-	name = "Teleport-Scroll"
-
-/obj/effect/landmark/syndicate_spawn
-	name = "Syndicate-Spawn"
 
 // xenos.
 /obj/effect/landmark/xeno_spawn

@@ -52,6 +52,7 @@
 	icon_state = "eggs"
 	var/amount_grown = 0
 	var/player_spiders = 0
+	var/directive = "" //Message from the mother
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
@@ -71,6 +72,7 @@
 			S.poison_type = poison_type
 			S.poison_per_bite = poison_per_bite
 			S.faction = faction.Copy()
+			S.directive = directive
 			if(player_spiders)
 				S.player_spiders = 1
 		qdel(src)
@@ -87,6 +89,7 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	var/player_spiders = 0
+	var/directive = "" //Message from the mother
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
@@ -192,6 +195,7 @@
 			S.poison_per_bite = poison_per_bite
 			S.poison_type = poison_type
 			S.faction = faction.Copy()
+			S.directive = directive
 			if(player_spiders)
 				S.playable_spider = TRUE
 				notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=\ref[S];activate=1>(Click to play)</a>", source=S, action=NOTIFY_ATTACK)

@@ -242,6 +242,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		return ..()
 	if (!isturf(loc))
 		return TRUE
+	add_fingerprint(user)
 
 	fixdir()
 	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
