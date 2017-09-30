@@ -632,7 +632,7 @@ obj/item/storage/box/clown
 
 /obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
 	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
-		if(contents.len >= 1) //prevent accidently deleting contents
+		if(contents.len) //prevent accidently deleting contents
 			to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
 			return
 		if(!user.temporarilyRemoveItemFromInventory(I))
