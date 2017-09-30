@@ -1,4 +1,9 @@
 
+#define FLIGHTPACK_SPRITE_ON_APPEND "_on"
+#define FLIGHTPACK_SPRITE_BOOST_APPEND "_boost"
+#define FLIGHTPACK_SPRITE_OFF_APPEND "_off"
+#define FLIGHTPACK_SPRITE_BASE "flightpack"
+
 //So how this is planned to work is it is an item that allows you to fly with some interesting movement mechanics.
 //You will still move instantly like usual, but when you move in a direction you gain "momentum" towards that direction
 //Momentum will have a maximum value that it will be capped to, and will go down over time
@@ -11,18 +16,13 @@
 /obj/item/device/flightpack
 	name = "flight pack"
 	desc = "An advanced back-worn system that has dual ion engines powerful enough to grant a humanoid flight. Contains an internal self-recharging high-current capacitor for short, powerful boosts."
-	icon_state = "flightpack_off"
-	item_state = "flightpack_off"
+	icon_state = FLIGHTPACK_SPRITE_BASE
+	item_state = FLIGHTPACK_SPRITE_BASE
 	actions_types = list(/datum/action/item_action/flightpack/toggle_flight, /datum/action/item_action/flightpack/engage_boosters, /datum/action/item_action/flightpack/toggle_stabilizers, /datum/action/item_action/flightpack/change_power, /datum/action/item_action/flightpack/toggle_airbrake)
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 75)
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	resistance_flags = FIRE_PROOF
-
-	var/icon_state_active = "flightpack_on"
-	var/item_state_active = "flightpack_on"
-	var/icon_state_boost = "flightpack_boost"
-	var/item_state_boost = "flightpack_boost"
 
 	var/processing_mode = FLIGHTSUIT_PROCESSING_FULL
 	var/obj/item/clothing/suit/space/hardsuit/flightsuit/suit = null
@@ -114,6 +114,7 @@
 	START_PROCESSING(SSflightpacks, src)
 	update_parts()
 	sync_processing(SSflightpacks)
+	update_icon()
 	..()
 
 /obj/item/device/flightpack/full/Initialize()
@@ -331,14 +332,15 @@
 
 /obj/item/device/flightpack/update_icon()
 	if(!flight)
-		icon_state = initial(icon_state)
-		item_state = initial(item_state)
+		icon_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_OFF_APPEND]"
+		item_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_OFF_APPEND]"
 	if(flight)
-		icon_state = icon_state_active
-		item_state = item_state_active
-		if(boost)
-			icon_state = icon_state_boost
-			item_state = item_state_boost
+		if(!boost)
+			icon_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_ON_APPEND]"
+			item_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_ON_APPEND]"
+		else
+			icon_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_BOOST_APPEND]"
+			item_state = "[FLIGHTPACK_SPRITE_BASE][FLIGHTPACK_SPRITE_BOOST_APPEND]"
 	if(wearer)
 		wearer.update_inv_wear_suit()
 		wearer.update_inv_back()
