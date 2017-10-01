@@ -162,7 +162,7 @@
 	return chosen_target
 
 // Please do not add one-off mob AIs here, but override this function for your mob
-/mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target? 
+/mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
 		return FALSE
 
@@ -184,7 +184,7 @@
 					return FALSE
 			return TRUE
 
-		if(istype(the_target, /obj/mecha))
+		if(ismecha(the_target))
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
 				if(CanAttack(M.occupant))

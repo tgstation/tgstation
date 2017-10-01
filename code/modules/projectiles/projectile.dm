@@ -144,7 +144,7 @@
 			ignore_source_check = TRUE
 			return FALSE
 	if(firer && !ignore_source_check)
-		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
+		if(A == firer || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
 			loc = A.loc
 			return FALSE
 
