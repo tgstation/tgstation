@@ -2226,7 +2226,6 @@
 /area/crew_quarters/fitness/recreation)
 "aeD" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/effect/landmark/syndicate_breach_area,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
