@@ -320,7 +320,7 @@
 	for(var/atm in A)
 		if(!is_type_in_typecache(atm, ctf_object_typecache))
 			qdel(atm)
-		if(istype(atm, /obj/structure))
+		if(isstructure(atm))
 			var/obj/structure/S = atm
 			S.obj_integrity = S.max_integrity
 

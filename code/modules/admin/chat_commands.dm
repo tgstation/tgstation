@@ -20,7 +20,6 @@
 /datum/server_tools_command/irccheck
 	name = "check"
 	help_text = "Gets the playercount, gamemode, and address of the server"
-	admin_only = TRUE
 	var/static/last_irc_check = 0
 
 /datum/server_tools_command/irccheck/Run(sender, params)

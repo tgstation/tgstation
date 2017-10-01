@@ -34,17 +34,13 @@
 
 	var/list/spawn_locs = list()
 
-	for(var/obj/effect/landmark/L in GLOB.landmarks_list)
+	for(var/obj/effect/landmark/revenantspawn/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
-			switch(L.name)
-				if("revenantspawn")
-					spawn_locs += L.loc
+			spawn_locs += L.loc
 	if(!spawn_locs.len) //If we can't find any revenant spawns, try the carp spawns
-		for(var/obj/effect/landmark/L in GLOB.landmarks_list)
+		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
-				switch(L.name)
-					if("carpspawn")
-						spawn_locs += L.loc
+				spawn_locs += L.loc
 	if(!spawn_locs.len) //If we can't find either, just spawn the revenant at the player's location
 		spawn_locs += get_turf(selected)
 	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry
