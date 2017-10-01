@@ -285,7 +285,7 @@
 
 /obj/item/clothing/head/crown/fancy
 	name = "magnificent crown"
-	desc = "A crown worn by only the highest emperors of the land."
+	desc = "A crown worn by only the highest emperors of the <s>land</s> space."
 	icon_state = "fancycrown"
 
 /obj/item/clothing/head/scarecrow_hat
