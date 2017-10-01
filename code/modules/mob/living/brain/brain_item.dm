@@ -18,12 +18,12 @@
 	vital = FALSE
 	decoy_override = TRUE
 
-/obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0)
+/obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
 	..()
 
 	name = "brain"
 
-	if(C.mind && C.mind.changeling)	//congrats, you're trapped in a body you don't control
+	if(C.mind && C.mind.changeling && !no_id_transfer)	//congrats, you're trapped in a body you don't control
 		if(brainmob && !(C.stat == DEAD || (C.status_flags & FAKEDEATH)))
 			to_chat(brainmob, "<span class = danger>You can't feel your body! You're still just a brain!</span>")
 		loc = C
@@ -44,9 +44,9 @@
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
-/obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0)
+/obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
 	..()
-	if(!gc_destroyed || (owner && !owner.gc_destroyed))
+	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
 		transfer_identity(C)
 	C.update_hair()
 
