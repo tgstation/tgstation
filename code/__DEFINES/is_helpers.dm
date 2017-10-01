@@ -134,6 +134,8 @@
 
 #define isitem(A) (istype(A, /obj/item))
 
+#define isstructure(A) (istype(A, /obj/structure))
+
 #define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
 
 #define isorgan(A) (istype(A, /obj/item/organ))
@@ -162,9 +164,9 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 #define istimer(O) (istype(O, /obj/item/device/assembly/timer))
 
 GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
-	/obj/item/stack/sheet/glass, 
-	/obj/item/stack/sheet/rglass, 
-	/obj/item/stack/sheet/plasmaglass, 
+	/obj/item/stack/sheet/glass,
+	/obj/item/stack/sheet/rglass,
+	/obj/item/stack/sheet/plasmaglass,
 	/obj/item/stack/sheet/plasmarglass)))
 
 #define is_glass_sheet(O) (is_type_in_typecache(O, GLOB.glass_sheet_types))
