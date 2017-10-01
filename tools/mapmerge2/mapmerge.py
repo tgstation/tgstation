@@ -3,7 +3,7 @@ import frontend
 import shutil
 from dmm import *
 
-def merge_map(new_map, old_map):
+def merge_map(new_map, old_map, delete_unused=False):
     if new_map.key_length != old_map.key_length:
         print("Warning: Key lengths differ, taking new map")
         print(f"  Old: {old_map.key_length}")
@@ -25,7 +25,7 @@ def merge_map(new_map, old_map):
 
     merged_grid = dict()
     known_keys = dict()
-    unused_keys = list(old_map.dictionary.keys())
+    unused_keys = list(old_dict.keys())
 
     # both old and new dictionary in lists, for faster key lookup by tile tuple
     old_dict_keys = list(old_dict.keys())
@@ -64,10 +64,9 @@ def merge_map(new_map, old_map):
                     merged_grid[x, y, z] = newold_key
                     known_keys[new_key] = newold_key
                     try:
-                        unused_keys.remove(old_key)
+                        unused_keys.remove(newold_key)
                     except ValueError:
                         print(f"Notice: Correcting duplicate dictionary entry. ({new_key})")
-                    continue
 
                 # the tile is brand new and it needs a new key, but if the old key isn't being used any longer it can be used instead
                 elif get_key(new_dict_keys, new_dict_values, old_tile) is None:
@@ -87,7 +86,7 @@ def merge_map(new_map, old_map):
     output_map.dictionary = old_dict
     output_map.grid = merged_grid
 
-    if len(unused_keys) > min(1600, len(old_dict) * 0.5):
+    if len(unused_keys) > min(1600, len(old_dict) * 0.5) or delete_unused:
         print("Notice: Trimming the dictionary.")
         output_map = trim_dictionary(output_map)
         print(f"Notice: Trimmed out {len(unused_keys)} unused dictionary keys.")
