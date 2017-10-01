@@ -107,6 +107,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				else
 					font_index = 0
 					font_mode = "font-family:monospace;"
+		equiped = 1
 
 /obj/item/device/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
