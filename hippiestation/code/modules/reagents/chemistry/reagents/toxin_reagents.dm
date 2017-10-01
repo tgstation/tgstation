@@ -401,7 +401,7 @@
 	description = "Stimulates the vocal cords heavily, inducing involuntary yelling."
 	reagent_state = LIQUID
 	color = "#853358"
-	taste_description = "sour"
+	taste_description = "salty and sour"
 	
 /datum/reagent/toxin/screech/on_mob_life(mob/living/M)
 	var/chance = 10
