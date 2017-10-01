@@ -112,7 +112,7 @@
 				pickedtype = /obj/item/twohanded/required/cult_bastard
 			else
 				cooldowntime = 12000 - (world.time - SSticker.round_start_time)
-				to_chat(user, "<span class='cultitalic'>The forge fires are not yet hot enough for this weapon, give it another [getETA()].</span>")
+				to_chat(user, "<span class='cultitalic'>The forge fires are not yet hot enough for this weapon, give it another [DisplayTimeText(cooldowntime)].</span>")
 				cooldowntime = 0
 				return
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
