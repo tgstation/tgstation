@@ -29,6 +29,8 @@
 	popup.open()
 
 /datum/admins/proc/isReadytoRumble(mob/living/carbon/human/applicant, targetrole, onstation = TRUE, conscious = TRUE)
+	if(applicant.mind.special_role)
+		return FALSE
 	if(!(targetrole in applicant.client.prefs.be_special))
 		return FALSE
 	if(onstation)
@@ -38,8 +40,6 @@
 	if(conscious && applicant.stat) //incase you don't care about a certain antag being unconcious when made, ie if they have selfhealing abilities.
 		return FALSE
 	if(!considered_alive(applicant.mind) || considered_afk(applicant.mind)) //makes sure the player isn't a zombie, brain, or just afk all together
-		return FALSE
-	if(applicant.mind.special_role)
 		return FALSE
 	return (!jobban_isbanned(applicant, targetrole) && !jobban_isbanned(applicant, "Syndicate"))
 
