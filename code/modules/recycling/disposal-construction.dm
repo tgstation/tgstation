@@ -49,6 +49,9 @@
 		if(DISP_YJUNCTION)
 			base_state = "pipe-y"
 			dpdir = dir | left | right
+		if(DISP_4JUNCTION)
+			base_state = "pipe-4"
+			dpdir = dir | left | right | flip
 		if(DISP_END_TRUNK)
 			base_state = "pipe-t"
 			dpdir = dir
@@ -146,7 +149,7 @@
 	switch(ptype)
 		if(DISP_PIPE_STRAIGHT,DISP_PIPE_BENT)
 			return /obj/structure/disposalpipe/segment
-		if(DISP_JUNCTION, DISP_JUNCTION_FLIP, DISP_YJUNCTION)
+		if(DISP_JUNCTION, DISP_JUNCTION_FLIP, DISP_YJUNCTION, DISP_4JUNCTION)
 			return /obj/structure/disposalpipe/junction
 		if(DISP_END_TRUNK)
 			return /obj/structure/disposalpipe/trunk
