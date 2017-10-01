@@ -126,23 +126,7 @@
 
 	degree = SimplifyDegrees(degree)
 	switch(degree)
-		if(22.5) //if we're right between two possible directions, pick one randomly
-			return pick(NORTH, NORTHEAST)
-		if(67.5) //these have to come first so they trigger instead of any of the single-direction returns
-			return pick(NORTHEAST, EAST)
-		if(112.5)
-			return pick(EAST, SOUTHEAST)
-		if(157.5)
-			return pick(SOUTHEAST, SOUTH)
-		if(202.5)
-			return pick(SOUTH, SOUTHWEST)
-		if(247.5)
-			return pick(SOUTHWEST, WEST)
-		if(292.5)
-			return pick(WEST, NORTHWEST)
-		if(337.5)
-			return pick(NORTHWEST, NORTH)
-		if(337.5 to 360, 0 to 22.5) //north requires two angle ranges
+		if(0 to 22.5) //north requires two angle ranges
 			return NORTH
 		if(22.5 to 67.5) //each range covers 45 degrees
 			return NORTHEAST
@@ -158,6 +142,8 @@
 			return WEST
 		if(292.5 to 337.5)
 			return NORTHWEST
+		if(337.5 to 360)
+			return NORTH
 
 //returns the north-zero clockwise angle in degrees, given a direction
 
