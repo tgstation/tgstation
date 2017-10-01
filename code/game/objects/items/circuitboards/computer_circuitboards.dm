@@ -193,6 +193,10 @@
 	name = "Exosuit Control Console (Computer Board)"
 	build_path = /obj/machinery/computer/mecha
 
+/obj/item/circuitboard/computer/pod_tracking
+	name = "Spacepod Tracking Console (Computer Board)"
+	build_path = /obj/machinery/computer/podtracker
+
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control (Computer Board)"
 	build_path = /obj/machinery/computer/rdservercontrol

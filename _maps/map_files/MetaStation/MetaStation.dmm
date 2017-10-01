@@ -3081,6 +3081,8 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
+/obj/item/pod_parts/armor/security,
+/obj/item/pod_parts/armor/security,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory)
 "afY" = (
@@ -3108,6 +3110,8 @@
 	pixel_x = 6;
 	pixel_y = -2
 	},
+/obj/item/device/lock_buster,
+/obj/item/device/lock_buster,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -12587,11 +12591,12 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "aye" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
+	dir = 4
 	},
-/obj/structure/lattice/catwalk,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ayf" = (
 /obj/structure/closet/crate,
@@ -13056,12 +13061,11 @@
 	},
 /area/security/brig)
 "azd" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
+	dir = 5
 	},
-/obj/structure/lattice/catwalk,
-/turf/open/space,
+/obj/structure/lattice,
+/turf/open/space/basic,
 /area/space)
 "aze" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -25024,11 +25028,20 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aWu" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+/obj/machinery/power/apc{
+	areastring = "/area/engine/pod_construction";
+	dir = 8;
+	name = "Pod Construction APC";
+	pixel_x = -24
 	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
+/obj/structure/cable/yellow{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel/darkyellow/side{
+	dir = 8
+	},
+/area/engine/pod_construction)
 "aWv" = (
 /turf/closed/wall,
 /area/storage/tech)
@@ -25124,9 +25137,10 @@
 /area/maintenance/starboard)
 "aWK" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
+	dir = 6
 	},
-/turf/open/space,
+/obj/structure/lattice,
+/turf/open/space/basic,
 /area/space)
 "aWL" = (
 /obj/machinery/ai_status_display{
@@ -26107,11 +26121,11 @@
 /turf/closed/wall,
 /area/security/checkpoint/engineering)
 "aYx" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
-/obj/structure/lattice,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "aYy" = (
 /obj/machinery/camera{
@@ -30175,24 +30189,52 @@
 /turf/open/floor/plating,
 /area/security/checkpoint/engineering)
 "bfY" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/plating,
-/area/engine/break_room)
+/obj/structure/rack,
+/obj/item/stack/sheet/plasteel{
+	amount = 10
+	},
+/obj/item/stack/rods{
+	amount = 50
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/clothing/under/rank/mechanic{
+	desc = "It's a pair of dusty overalls that kinda look like what a mechanic would wear."
+	},
+/obj/item/pod_paint_bucket,
+/turf/open/floor/plasteel/darkyellow/side,
+/area/engine/pod_construction)
 "bfZ" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/engine/break_room)
+/turf/open/floor/plasteel,
+/area/engine/pod_construction)
 "bga" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 8
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 50
 	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_4)
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/pod_parts/core,
+/turf/open/floor/plasteel/darkyellow/side,
+/area/engine/pod_construction)
 "bgb" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_4)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/darkyellow/side{
+	tag = "icon-darkyellow (EAST)";
+	icon_state = "darkyellow";
+	dir = 4
+	},
+/area/engine/pod_construction)
 "bgc" = (
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Space Access Airlock";
@@ -31334,21 +31376,41 @@
 /turf/open/floor/plating,
 /area/engine/break_room)
 "bif" = (
-/turf/open/floor/plating,
-/area/engine/break_room)
-"big" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -3;
+	pixel_y = 3
 	},
-/obj/docking_port/mobile/pod{
+/obj/item/storage/toolbox/electrical,
+/obj/item/screwdriver{
+	pixel_y = 5
+	},
+/obj/item/device/multitool,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering - Pod Construction Area";
 	dir = 4;
-	id = "pod4";
-	name = "escape pod 4";
-	port_direction = 2;
-	preferred_direction = 4
+	network = list("SS13")
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_4)
+/obj/item/stack/cable_coil,
+/obj/item/clothing/head/welding,
+/turf/open/floor/plasteel/darkyellow/side{
+	dir = 8
+	},
+/area/engine/pod_construction)
+"big" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/pod_construction)
 "bih" = (
 /obj/structure/chair{
 	dir = 4
@@ -31372,9 +31434,14 @@
 /turf/open/space,
 /area/space)
 "bij" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plating,
-/area/shuttle/pod_4)
+/area/engine/pod_construction)
 "bik" = (
 /obj/machinery/light/small,
 /obj/machinery/camera{
@@ -32199,10 +32266,18 @@
 /area/engine/break_room)
 "bjM" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	name = "Escape Pod Four";
-	req_access = null;
-	req_access_txt = "32"
+/obj/machinery/door/airlock/glass_engineering{
+	name = "Pod Construction Area";
+	req_access_txt = "0";
+	req_one_access_txt = "0"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
@@ -35956,6 +36031,8 @@
 /area/crew_quarters/heads/hop)
 "bqF" = (
 /obj/machinery/status_display{
+	density = 0;
+	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/darkblue/corner{
@@ -77983,19 +78060,12 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "cTi" = (
-/obj/structure/chair{
-	dir = 4
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
 	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/obj/machinery/computer/shuttle/pod{
-	pixel_y = -32;
-	possible_destinations = "pod_lavaland4";
-	shuttleId = "pod4"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_4)
+/turf/open/floor/plating,
+/area/engine/pod_construction)
 "cTj" = (
 /obj/item/crowbar/red,
 /obj/item/wrench,
@@ -78158,19 +78228,15 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTu" = (
-/obj/structure/chair{
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	pixel_y = 25
+/turf/open/floor/plasteel/darkyellow/side{
+	tag = "icon-darkyellow (EAST)";
+	icon_state = "darkyellow";
+	dir = 4
 	},
-/obj/item/storage/pod{
-	pixel_x = 6;
-	pixel_y = -32
-	},
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_4)
+/area/engine/pod_construction)
 "cTv" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -80239,9 +80305,11 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cXI" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/starboard)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/engine/pod_construction)
 "cXJ" = (
 /obj/structure/table,
 /obj/item/device/radio/off{
@@ -80403,13 +80471,11 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cXZ" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/darkyellow/side{
+	dir = 1
 	},
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/starboard)
+/area/engine/pod_construction)
 "cYa" = (
 /obj/machinery/sleeper{
 	dir = 4;
@@ -84173,19 +84239,26 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "dgd" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/space,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/turf/open/floor/plating,
 /area/space)
 "dge" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/structure/lattice/catwalk,
-/turf/open/space,
+/obj/structure/lattice,
+/turf/open/space/basic,
 /area/space)
 "dgf" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
+	dir = 10
 	},
-/turf/open/space,
+/obj/structure/lattice,
+/turf/open/space/basic,
 /area/space)
 "dgg" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -84206,11 +84279,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "dgj" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 5
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
 	},
-/obj/structure/lattice,
-/turf/open/space,
+/turf/open/floor/plating,
 /area/space)
 "dgk" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
@@ -84218,16 +84291,11 @@
 	dir = 4
 	},
 /obj/structure/lattice,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "dgm" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/closed/wall,
+/area/engine/pod_construction)
 "dgo" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
@@ -84243,17 +84311,14 @@
 /area/maintenance/starboard)
 "dgr" = (
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 10
-	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "dgt" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
+	dir = 9
 	},
-/turf/open/space,
+/obj/structure/lattice,
+/turf/open/space/basic,
 /area/space)
 "dgu" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -84263,11 +84328,9 @@
 /turf/open/space,
 /area/space)
 "dgv" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 9
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space,
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/space/basic,
 /area/space)
 "dgw" = (
 /obj/structure/lattice,
@@ -84281,42 +84344,42 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "dgA" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
-/turf/open/space,
-/area/space)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/engine/pod_construction)
 "dgB" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 5
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/space)
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/turf/closed/wall,
+/area/engine/pod_construction)
 "dgI" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 5
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
 	},
-/turf/open/space,
-/area/space)
+/turf/open/floor/plating,
+/area/engine/pod_construction)
 "dgJ" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/structure/closet/emcloset/anchored,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/space,
-/area/space)
+/turf/open/floor/plating,
+/area/engine/pod_construction)
 "dgK" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/space,
-/area/space)
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
 "dgM" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 10
-	},
-/turf/open/space,
-/area/space)
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
 "dgN" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -90386,6 +90449,573 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"dDN" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dDO" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dDP" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/turf/open/space/basic,
+/area/space)
+"dDQ" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/turf/open/space/basic,
+/area/space)
+"dDR" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
+"dDS" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space)
+"dDT" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/space/basic,
+/area/space)
+"dDU" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/space/basic,
+/area/space)
+"dDV" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
+"dDW" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/turf/open/space/basic,
+/area/space)
+"dDX" = (
+/turf/closed/wall/r_wall,
+/area/engine/pod_construction)
+"dDY" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dDZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/closed/wall/r_wall,
+/area/engine/pod_construction)
+"dEa" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 5
+	},
+/turf/open/space/basic,
+/area/space)
+"dEb" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 10
+	},
+/turf/closed/wall,
+/area/engine/pod_construction)
+"dEc" = (
+/turf/closed/wall,
+/area/engine/pod_construction)
+"dEd" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEe" = (
+/turf/closed/wall,
+/area/engine/pod_construction)
+"dEf" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEg" = (
+/turf/closed/wall,
+/area/engine/pod_construction)
+"dEh" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/turf/open/space/basic,
+/area/space)
+"dEi" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/turf/open/space,
+/area/space)
+"dEj" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/turf/open/space/basic,
+/area/space)
+"dEk" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/turf/open/space,
+/area/space)
+"dEl" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/turf/open/space/basic,
+/area/space)
+"dEm" = (
+/obj/machinery/computer/podtracker,
+/turf/open/floor/plasteel/darkyellow/side{
+	dir = 9
+	},
+/area/engine/pod_construction)
+"dEn" = (
+/obj/machinery/mecha_part_fabricator/spacepod,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/darkyellow/side{
+	dir = 1
+	},
+/area/engine/pod_construction)
+"dEo" = (
+/obj/machinery/computer/rdconsole/robotics{
+	name = "Spacepod R&D Console"
+	},
+/obj/item/device/radio/intercom{
+	freerange = 0;
+	frequency = 1459;
+	name = "Station Intercom (General)";
+	pixel_y = 21
+	},
+/turf/open/floor/plasteel/darkyellow/side{
+	dir = 5
+	},
+/area/engine/pod_construction)
+"dEp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dEq" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dEr" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/button/door{
+	id = "podblastr";
+	name = "Blast Door Control";
+	pixel_x = 7;
+	pixel_y = 26;
+	req_access_txt = "0";
+	req_one_access_txt = "0"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/machinery/button/door{
+	id = "podblastl";
+	name = "Blast Door Control";
+	pixel_x = -6;
+	pixel_y = 26;
+	req_access_txt = "0";
+	req_one_access_txt = "0"
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dEs" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dEt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dEu" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEv" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEw" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEx" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEy" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEz" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEA" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/pod_construction)
+"dEB" = (
+/turf/open/floor/plasteel,
+/area/engine/pod_construction)
+"dEC" = (
+/turf/open/floor/plasteel/darkyellow/side{
+	tag = "icon-darkyellow (EAST)";
+	icon_state = "darkyellow";
+	dir = 4
+	},
+/area/engine/pod_construction)
+"dED" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dEE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dEF" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEG" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEH" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEI" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEJ" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEK" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEL" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "Space Pod Dock";
+	req_access = null;
+	req_access_txt = "0";
+	req_one_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEN" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "Space Pod Dock";
+	req_access = null;
+	req_access_txt = "0";
+	req_one_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dEP" = (
+/obj/effect/turf_decal/bot,
+/obj/item/clothing/under/rank/mechanic{
+	desc = "It's a pair of dusty overalls that kinda look like what a mechanic would wear."
+	},
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEQ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dER" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dES" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dET" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEU" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEV" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEW" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dEX" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/darkyellow/side{
+	dir = 8
+	},
+/area/engine/pod_construction)
+"dEY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dEZ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dFa" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/multi_tile/three_tile_ver{
+	id = "podblastl"
+	},
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFb" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFc" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFd" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFe" = (
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFf" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/multi_tile/three_tile_ver{
+	id = "podblastr"
+	},
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFg" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkyellow/side{
+	dir = 10
+	},
+/area/engine/pod_construction)
+"dFh" = (
+/obj/structure/closet/toolcloset,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/darkyellow/side{
+	dir = 6
+	},
+/area/engine/pod_construction)
+"dFi" = (
+/turf/closed/wall/r_wall,
+/area/engine/pod_construction)
+"dFj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dFk" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dFl" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering - Pod Construction Dock";
+	dir = 1;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dFm" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dFn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/pod_construction)
+"dFo" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFp" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFq" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFs" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFt" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFu" = (
+/turf/closed/wall/r_wall,
+/area/engine/pod_construction)
+"dFv" = (
+/turf/closed/wall/r_wall,
+/area/engine/pod_construction)
+"dFw" = (
+/turf/closed/wall/r_wall,
+/area/engine/pod_construction)
+"dFx" = (
+/turf/closed/wall/r_wall,
+/area/engine/pod_construction)
+"dFy" = (
+/turf/closed/wall/r_wall,
+/area/engine/pod_construction)
+"dFz" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 5
+	},
+/turf/closed/wall,
+/area/engine/pod_construction)
+"dFA" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/engine/pod_construction)
+"dFB" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/engine/pod_construction)
+"dFC" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/pod_construction)
 
 (1,1,1) = {"
 aaa
@@ -133160,15 +133790,15 @@ dfF
 aTN
 aVe
 aWH
-dgi
 dgc
-aqq
-aqr
+dDV
+dDX
+dEm
 aWu
 bif
-bif
-bif
-bhT
+dEX
+dFg
+dDX
 bhT
 brK
 bhT
@@ -133416,16 +134046,16 @@ djt
 dfG
 dfQ
 dfZ
-apc
-apc
-dgo
-apc
+bTh
+dDR
+bTh
+dDY
 cXZ
-atm
-bfZ
-bif
+dEA
+dEB
+dEB
 bfY
-bhT
+dDX
 bqF
 bpp
 btF
@@ -133673,16 +134303,16 @@ djx
 dfG
 cXz
 aVe
-atm
 alr
-dgp
-cXI
+dgo
 cYj
-atm
-bga
+cXI
+dEn
+dEB
+dEB
 big
 bga
-bhT
+dDX
 bpv
 brL
 btE
@@ -133932,14 +134562,14 @@ dfR
 dga
 dgd
 dgj
-dgp
-alr
 atm
-atm
+cXI
+dEo
+dEC
 bgb
 cTu
-bgb
-bhT
+dFh
+dDX
 brJ
 brN
 btG
@@ -134187,16 +134817,16 @@ deD
 dfI
 dfS
 aVh
-aaf
+dDN
 aYx
 dgr
-dgw
+dDZ
 dgA
 dgI
-bgb
+dEL
 cTi
-bgb
-bpu
+dDX
+dDX
 aNC
 brM
 aNC
@@ -134444,15 +135074,15 @@ dBB
 dbh
 dfT
 aVh
-aaa
-aYx
-dgf
-dgj
-ack
+dDN
+dDS
+dDW
+dEa
+dEc
 dgJ
-bgb
+dEM
 bij
-bgb
+dEc
 aaa
 aaf
 bpw
@@ -134703,14 +135333,14 @@ dfU
 dga
 dge
 azd
-azd
-azd
+dgr
+dEb
 dgB
 dgK
-aaa
-cUL
-aaa
-aaf
+dEN
+dgK
+dgB
+dFz
 aaf
 bpw
 aaa
@@ -134960,14 +135590,14 @@ aCZ
 aVe
 dgf
 dgk
-dgt
-dgk
-dgv
-dgJ
-anT
-aaf
-aaf
-aaf
+azd
+dEc
+dEp
+dED
+dEO
+dEY
+dFj
+dFA
 aaa
 bpw
 aaa
@@ -135216,15 +135846,15 @@ dex
 ddZ
 aVe
 aWK
-dgk
+dge
 dgt
-dgk
-dgB
+dEd
+dEq
 dgM
-dgN
-dgO
-dgO
-dgw
+dgM
+dgM
+dFk
+dFB
 dgO
 dgS
 dgO
@@ -135472,16 +136102,16 @@ dfA
 dfM
 dfV
 dgb
-dgg
+dgf
+dgk
 azd
-azd
-azd
-dgv
-aaf
-anT
-aaa
-aaa
-aaf
+dEc
+dEr
+dgM
+dEP
+dgM
+dFl
+dEc
 aaf
 bpx
 aaf
@@ -135730,15 +136360,15 @@ dfM
 dfW
 axY
 aWK
-dgk
+dge
 dgt
-dgk
-dgB
-aaa
-anT
-aaa
-aaa
-aaf
+dEd
+dEs
+dgM
+dgM
+dgM
+dFm
+dEd
 aaa
 bpw
 aaa
@@ -135986,16 +136616,16 @@ dfC
 dfO
 ddZ
 axY
-dgh
+dgf
 dgk
-dgk
-dgk
-dgv
-aaf
-anT
-aaa
-aaa
-aaf
+azd
+dEc
+dEt
+dEE
+dEE
+dEE
+dFn
+dEc
 aaa
 bpw
 aaa
@@ -136244,15 +136874,15 @@ axY
 axY
 axY
 aWK
-dgm
-dgu
-dgm
-dgB
-aaa
-anT
-aaa
-aaa
-aaf
+dge
+dgt
+dEc
+dEd
+dEF
+dEF
+dFa
+dEd
+dEc
 aaf
 bpx
 aaf
@@ -136500,15 +137130,15 @@ aaa
 aaf
 aaf
 ack
-ack
+dgf
 aye
 dgv
-aye
-dgv
-aaf
-anT
-aaf
-aaf
+dEh
+dEd
+dEG
+dEG
+dEG
+dEd
 aaf
 aaa
 bpw
@@ -136757,15 +137387,15 @@ aaa
 aaa
 aaf
 aaf
-aaf
-aaa
-aaa
-aaf
-aaa
-aaa
-aaf
-aaa
-aaa
+dDP
+dDT
+dgv
+dEi
+dEd
+dEG
+dEG
+dEG
+dEd
 aaf
 aaa
 bpw
@@ -137014,15 +137644,15 @@ anT
 anT
 anT
 anT
-aaf
-aaa
-aaa
-aaf
-aaa
-aaa
-aaf
-aaa
-aaa
+dgf
+aye
+dgv
+dEh
+dEd
+dEG
+dEG
+dEG
+dEd
 aaf
 aaa
 bpw
@@ -137271,15 +137901,15 @@ bpu
 aaa
 aaa
 aaa
-aaf
-aaf
-aaf
-aaf
-aaa
-aaa
-aaa
-aaa
-aaa
+dDP
+dDT
+dgv
+dEi
+dEd
+dEG
+dEG
+dEG
+dEd
 aaf
 aaa
 bpw
@@ -137528,15 +138158,15 @@ aqB
 aaf
 aaf
 aaf
-aaf
-aaa
-aaf
-aaf
-aaa
-aaa
-aaa
-aaa
-aaa
+dgf
+aye
+dgv
+dEh
+dEd
+dEF
+dEF
+dFf
+dEd
 aaf
 aaa
 bpw

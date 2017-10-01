@@ -36,6 +36,14 @@
 	build_path = /obj/item/circuitboard/computer/xenobiology
 	category = list("Computer Boards")
 
+/datum/design/board/podcontrol
+	name = "Computer Design (Spacepod Tracking Console)"
+	desc = "Allows for the construction of circuit boards used to build an spacpeod tracking console."
+	id = "podcontrol"
+	req_tech = list("programming" = 3)
+	build_path = /obj/item/circuitboard/computer/pod_tracking
+	category = list("Computer Boards")
+
 /datum/design/board/aiupload
 	name = "Computer Design (AI Upload)"
 	desc = "Allows for the construction of circuit boards used to build an AI Upload Console."

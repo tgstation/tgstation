@@ -82,11 +82,14 @@
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
-
 		if(mind)
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
+		if(istype(loc, /obj/spacepod)) //SPESSPODS!
+			var/obj/spacepod/S = loc
+			stat("Spacepod Charge", "[istype(S.cell) ? "[(S.cell.charge / S.cell.maxcharge) * 100]%" : "No cell detected"]")
+			stat("Spacepod Integrity", "[!S.obj_integrity ? "0" : "[(S.obj_integrity / S.max_integrity) * 100]"]%")
 
 
 	//NINJACODE

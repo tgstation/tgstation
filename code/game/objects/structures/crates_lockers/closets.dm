@@ -50,6 +50,10 @@
 	dump_contents()
 	return ..()
 
+
+/obj/structure/closet/return_temperature()
+	return
+
 /obj/structure/closet/update_icon()
 	cut_overlays()
 	if(!opened)

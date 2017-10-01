@@ -356,7 +356,7 @@
 		return
 
 	var/list/targets = list()
-	var/static/things_to_scan = typecacheof(list(/mob/living, /obj/mecha))
+	var/static/things_to_scan = typecacheof(list(/mob/living, /obj/mecha, /obj/spacepod))
 
 	for(var/A in typecache_filter_list(view(scan_range, base), things_to_scan))
 		var/atom/AA = A
@@ -382,24 +382,25 @@
 				continue
 
 			//if the target is a human and not in our faction, analyze threat level
-			if(ishuman(C) && !in_faction(C))
-				if(assess_perp(C) >= 4)
-					targets += C
+			if(ishuman(C) && !in_faction(C) && assess_perp(C) >= 4)
+				targets += C
 
-			else if(check_anomalies) //non humans who are not simple animals (xenos etc)
-				if(!in_faction(C))
-					targets += C
+			else if(check_anomalies && !in_faction(C)) //non humans who are not simple animals (xenos etc)
+				targets += C
 
 		if(istype(A, /obj/mecha))
 			var/obj/mecha/M = A
 			//If there is a user and they're not in our faction
-			if(M.occupant && !in_faction(M.occupant))
-				if(assess_perp(M.occupant) >= 4)
-					targets += M
+			if(M.occupant && !in_faction(M.occupant) && assess_perp(M.occupant) >= 4)
+				targets += M
 
-	if(!tryToShootAt(targets))
-		if(!always_up)
-			popDown() // no valid targets, close the cover
+		if(istype(A, /obj/spacepod))
+			var/obj/spacepod/SP = A
+			if(SP.pilot && !in_faction(SP.pilot) && assess_perp(SP.pilot) >= 4)
+				targets += SP
+
+	if(!tryToShootAt(targets) && !always_up)
+		popDown() // no valid targets, close the cover
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)

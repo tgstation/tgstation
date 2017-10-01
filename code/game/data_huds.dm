@@ -410,3 +410,23 @@
 		holder.icon_state = "electrified"
 	else
 		holder.icon_state = ""
+
+/*~~~~~~~~~~~~
+   Spesspods!
+~~~~~~~~~~~~~*/
+
+/obj/spacepod/proc/diag_hud_set_podhealth()
+	var/image/holder = hud_list[DIAG_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"
+
+/obj/spacepod/proc/diag_hud_set_podcharge()
+	var/image/holder = hud_list[DIAG_BATT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(cell)
+		var/chargelvl = cell.charge/cell.maxcharge
+		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
+	else
+		holder.icon_state = "hudnobatt"

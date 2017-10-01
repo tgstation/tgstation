@@ -538,3 +538,11 @@
 
 /obj/item/borg/upgrade/modkit/tracer/adjustable/attack_self(mob/user)
 	bolt_color = input(user,"Choose Color") as color
+
+
+/obj/item/projectile/kinetic/pod
+	range = 4
+
+/obj/item/projectile/kinetic/pod/regular
+	damage = 50
+	pressure_decrease = 0.5
