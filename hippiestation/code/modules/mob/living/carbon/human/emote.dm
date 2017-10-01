@@ -70,10 +70,9 @@
 	LAZYINITLIST(user.alternate_farts)
 	if(LAZYLEN(user.alternate_farts))
 		fartsound = pick(user.alternate_farts)
-		if(istype(user,/mob/living/carbon/alien))
-			bloodkind = /obj/effect/decal/cleanable/xenoblood
 	if(istype(user,/mob/living/carbon/alien))
-		fartsound = 'hippiestation/sound/effects/alienfart.ogg'
+		if(!LAZYLEN(user.alternate_farts))
+			fartsound = 'hippiestation/sound/effects/alienfart.ogg'
 		bloodkind = /obj/effect/decal/cleanable/xenoblood
 	var/obj/item/storage/book/bible/Y = locate() in get_turf(user.loc)
 	if(istype(Y))
