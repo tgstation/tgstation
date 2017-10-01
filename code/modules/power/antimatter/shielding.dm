@@ -59,7 +59,7 @@
 		if(!priorscan)
 			addtimer(CALLBACK(src, .proc/controllerscan, 1), 20)
 			return
-		visible_message("<span class='notice'>The [name] collapes back into a container!</span>")
+		visible_message("<span class='notice'>The [name] collapses back into a container!</span>")
 		new /obj/item/device/am_shielding_container(loc)
 		qdel(src)
 
