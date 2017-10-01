@@ -865,6 +865,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/rack,
+/obj/item/pod_parts/armor/security,
+/obj/item/pod_parts/armor/security,
+/obj/item/device/lock_buster,
+/obj/item/device/lock_buster,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "acn" = (
@@ -71245,7 +71250,7 @@ aaa
 aaa
 asF
 cUd
-cUx
+cUd
 cUQ
 asF
 cVt
@@ -71502,8 +71507,8 @@ aaa
 aaa
 asF
 cUe
-cUy
-cUR
+cUe
+cUe
 asF
 aaa
 aaa
@@ -71758,9 +71763,9 @@ aaa
 aaa
 aaa
 asF
-cUf
-cUz
-cUS
+cUe
+cUe
+cUe
 asF
 aaa
 aaa
@@ -72015,9 +72020,9 @@ aaa
 aaa
 aaa
 asF
-cUg
-cUA
-cUT
+cUe
+cUe
+cUe
 asF
 aaa
 aqH
@@ -72272,9 +72277,9 @@ aaa
 aaa
 aaa
 asF
-cUh
-cUB
-cUU
+cUe
+cUe
+cUe
 asF
 aaa
 aqH
@@ -72529,8 +72534,8 @@ aaa
 aaa
 apJ
 asF
-cUi
-cUC
+cUd
+cUd
 cUV
 asF
 apJ
@@ -72787,8 +72792,8 @@ aaa
 apJ
 cTU
 cUj
-cUD
-cUW
+cUj
+cUj
 cVj
 apJ
 ckq
@@ -73044,8 +73049,8 @@ aaa
 asF
 cTV
 cUk
-cUE
-cUX
+cUk
+cUk
 cVk
 apJ
 asE
@@ -73300,9 +73305,9 @@ aaa
 aaa
 apJ
 cTW
-cUl
-cUF
-cUY
+cUk
+cUk
+cUk
 cVl
 apJ
 auO
@@ -73557,9 +73562,9 @@ aaa
 aaa
 asF
 cTX
-cUm
-cUG
-cUZ
+cUk
+cUk
+cUk
 cVm
 apJ
 avP
@@ -74073,7 +74078,7 @@ apJ
 apJ
 cUo
 cUI
-cVb
+cUo
 apJ
 apJ
 awZ
@@ -74325,7 +74330,7 @@ aaa
 aaa
 aaa
 cTR
-cTS
+cTR
 apJ
 apJ
 cUp
@@ -74585,9 +74590,9 @@ apJ
 apJ
 apJ
 apJ
-cUq
+cUo
 cUK
-cVd
+cUo
 apJ
 apJ
 awZ
@@ -75357,7 +75362,7 @@ auN
 asF
 cUb
 cUt
-cUN
+cUM
 cVg
 cVq
 cVu
@@ -75616,8 +75621,8 @@ cCt
 cUu
 cUO
 cVh
-cVr
-cVv
+cVq
+cVu
 awZ
 crz
 awW
