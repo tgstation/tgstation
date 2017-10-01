@@ -71,8 +71,6 @@
 	if(LAZYLEN(user.alternate_farts))
 		fartsound = pick(user.alternate_farts)
 	if(istype(user,/mob/living/carbon/alien))
-		if(!LAZYLEN(user.alternate_farts))
-			fartsound = 'hippiestation/sound/effects/alienfart.ogg'
 		bloodkind = /obj/effect/decal/cleanable/xenoblood
 	var/obj/item/storage/book/bible/Y = locate() in get_turf(user.loc)
 	if(istype(Y))
