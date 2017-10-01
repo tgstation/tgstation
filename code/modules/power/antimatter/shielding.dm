@@ -35,7 +35,7 @@
 
 /obj/machinery/am_shielding/proc/controllerscan(priorscan = 0)
 	//Make sure we are the only one here
-	if(!istype(loc, /turf))
+	if(!isturf(loc))
 		qdel(src)
 		return
 	for(var/obj/machinery/am_shielding/AMS in loc.contents)
