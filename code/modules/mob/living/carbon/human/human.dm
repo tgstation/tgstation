@@ -21,7 +21,7 @@
 		set_species(dna.species.type)
 
 	//initialise organs
-	create_internal_organs()
+	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 
 	handcrafting = new()
 
@@ -29,6 +29,7 @@
 	update_teeth()
 	. = ..()
 
+<<<<<<< HEAD
 /mob/living/carbon/human/create_internal_organs()
 	if(!(NOHUNGER in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/appendix
@@ -59,6 +60,8 @@
 	internal_organs += new /obj/item/organ/butt
 	..()
 
+=======
+>>>>>>> 85cd9e60d9... Organ initialization cleanup
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
 
