@@ -35,7 +35,7 @@
 		var/turf/T = get_turf(applicant)
 		if(!(T.z in GLOB.station_z_levels))
 			return FALSE
-	if((!conscious && applicant.stat != DEAD) || (conscious && applicant.stat)) //incase you don't care about a certain antag being unconcious when made, ie if they have selfhealing abilities.
+	if(conscious && applicant.stat) //incase you don't care about a certain antag being unconcious when made, ie if they have selfhealing abilities.
 		return FALSE
 	if(!considered_alive(applicant.mind) || considered_afk(applicant.mind)) //makes sure the player isn't a zombie, brain, or just afk all together
 		return FALSE
