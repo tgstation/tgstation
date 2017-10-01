@@ -43,8 +43,7 @@
 	else if(next_summon < world.time)
 		next_summon = world.time + MEESEEKS_BOX_COOLDOWN
 		user.visible_message("<span class='notice'>[user] presses the button on [src]!</span>")
-		var/list/candidates = pollCandidates("Would you like to become a Mr. Meeseeks and fulfill a task?", CATBAN, poll_time = 50)
-		shuffle(candidates)
+		var/list/candidates = pollGhostCandidates("Would you like to become a Mr. Meeseeks and fulfill a task?", poll_time=150)
 		if(LAZYLEN(candidates))
 			var/mob/dead/observer/Z = pick(candidates)
 			var/mob/living/carbon/human/M = new
