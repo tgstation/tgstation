@@ -820,7 +820,7 @@
 	if(!istype(user))
 		return FALSE
 
-	var/fukkendisk = locate(/obj/item/disk/nuclear) in GetAllContents(user)
+	var/fukkendisk = locate(/obj/item/disk/nuclear) in user.GetAllContents()
 
 	if(user.incapacitated()) //are you cuffed, dying, lying, stunned or other
 		return FALSE
