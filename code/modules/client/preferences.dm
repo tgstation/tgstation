@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
 	var/preferred_map = null
-	var/pda_font = MONO
+	var/pda_style = MONO
 	
 	var/uses_glasses_colour = 0
 
