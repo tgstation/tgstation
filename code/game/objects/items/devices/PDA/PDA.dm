@@ -27,13 +27,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
 	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
 	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
-	var/font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;" //The currently selected font.
+	font_mode = "font-family:monospace;" //The currently selected font.
 	var/background_color = "#808000" //The currently selected background color.
 	
-	#define FONT_VT 0
+	#define FONT_MONO 0
 	#define FONT_SHARE 1
 	#define FONT_ORBITRON 2
-	#define FONT_MONO 3
+	#define FONT_VT 3
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
