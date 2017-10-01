@@ -51,6 +51,20 @@ GLOBAL_LIST_EMPTY(chempiles)
 		CHECK_TICK
 
 /obj/effect/decal/cleanable/chempile/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/reagent_containers/glass) || istype(I, /obj/item/reagent_containers/food/drinks))//copypaste scoop code so I can nerf it to halve effectiveness
+		if(src.reagents && I.reagents)
+			. = 1 //so the containers don't splash their content on the src while scooping.
+			if(!src.reagents.total_volume)
+				to_chat(user, "<span class='notice'>[src] isn't thick enough to scoop up!</span>")
+				return
+			if(I.reagents.total_volume >= I.reagents.maximum_volume)
+				to_chat(user, "<span class='notice'>[I] is full!</span>")
+				return
+			to_chat(user, "<span class='notice'>You attempt to scoop up what you can from the [src] into [I]!</span>")
+			reagents.trans_to(I, reagents.total_volume* 0.5)//nerfed to half and deletes after a single scoop
+			qdel(src)
+			return
+
 	var/hotness = I.is_hot()
 	if(hotness)
 		var/added_heat = (hotness / 100) //ishot returns a temperature
