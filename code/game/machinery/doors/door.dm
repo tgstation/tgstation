@@ -33,6 +33,10 @@
 	var/damage_deflection = 10
 	var/real_explosion_block	//ignore this, just use explosion_block
 
+/obj/machinery/door/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
+
 /obj/machinery/door/New()
 	..()
 	if(density)
