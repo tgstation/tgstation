@@ -443,8 +443,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	if(!limited)
 		t = replacetext(t, "((", "<font size=\"1\">")
 		t = replacetext(t, "))", "</font>")
-		t = replacetext(t, regex("^-{3,}$", "gm"), "<hr>")
-		t = replacetext(t, regex("^\\(-{3,})$", "gm"), "$1")
+		t = replacetext(t, regex("(-){3,}", "gm"), "<hr>")
+		t = replacetext(t, regex("^\\((-){3,}\\)$", "gm"), "$1")
 
 		// Parse lists
 
