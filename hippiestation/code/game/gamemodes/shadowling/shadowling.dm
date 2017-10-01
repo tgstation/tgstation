@@ -237,7 +237,7 @@ Made by Xhuis
 
 
 /datum/game_mode/shadowling/declare_completion()
-	if(check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
+	if(check_shadow_victory()) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
 		to_chat(world, "<span class='greentext'>The shadowlings have ascended and taken over the station!</span>")
 	else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
 		to_chat(world, "<span class='redtext'>The shadowlings have been killed by the crew!</span>")
@@ -247,6 +247,19 @@ Made by Xhuis
 		to_chat(world, "<span class='redtext'>The shadowlings have failed!</span>")
 	..()
 	return 1
+
+/datum/game_mode/shadowling/proc/check_shadow_death()
+	for(var/datum/mind/shadow_mind in shadows)
+		var/turf/T = get_turf(shadow_mind.current)
+		if((shadow_mind) && (shadow_mind.current) && (shadow_mind.current.stat != DEAD) && T && (T.z in GLOB.station_z_levels))
+			if(ishuman(shadow_mind.current))
+				return FALSE
+	return TRUE
+	
+/datum/game_mode/shadowling/check_finished()
+	. = ..()
+	if(check_shadow_death())
+		return TRUE
 
 
 /datum/game_mode/proc/auto_declare_completion_shadowling()
