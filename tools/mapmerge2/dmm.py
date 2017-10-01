@@ -44,6 +44,23 @@ class DMM:
             f.flush()
             return bio.getvalue()
 
+    @property
+    def coords_zyx(self):
+        for z in range(1, self.size.z + 1):
+            for y in range(1, self.size.y + 1):
+                for x in range(1, self.size.x + 1):
+                    yield (z, y, x)
+
+    @property
+    def coords_z(self):
+        return range(1, self.size.z + 1)
+
+    @property
+    def coords_yx(self):
+        for y in range(1, self.size.y + 1):
+            for x in range(1, self.size.x + 1):
+                yield (y, x)
+
     def generate_new_key(self):
         return generate_new_key(self.dictionary, self.key_length)
 

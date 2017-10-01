@@ -34,52 +34,50 @@ def merge_map(new_map, old_map, delete_unused=False):
     new_dict_values = list(new_dict.values())
 
     # step one: parse the new version, compare it to the old version, merge both
-    for z in range(1, size.z + 1):
-        for y in range(1, size.y + 1):
-            for x in range(1, size.x + 1):
-                new_key = new_grid[x, y, z]
-                # if this key has been processed before, it can immediately be merged
-                known_value = known_keys.get(new_key)
-                if known_value:
-                    merged_grid[x, y, z] = known_value
-                    continue
+    for z, y, x in new_map.coords_zyx:
+        new_key = new_grid[x, y, z]
+        # if this key has been processed before, it can immediately be merged
+        known_value = known_keys.get(new_key)
+        if known_value:
+            merged_grid[x, y, z] = known_value
+            continue
 
-                old_key = old_grid[x, y, z]
-                old_tile = old_dict[old_key]
-                new_tile = new_dict[new_key]
+        old_key = old_grid[x, y, z]
+        old_tile = old_dict[old_key]
+        new_tile = new_dict[new_key]
 
-                # this tile is the exact same as before, so the old key is used
-                if new_tile == old_tile:
-                    merged_grid[x, y, z] = old_key
-                    known_keys[new_key] = old_key
-                    try:
-                        unused_keys.remove(old_key)
-                    except ValueError:
-                        print(f"Notice: Correcting duplicate dictionary entry. ({new_key})")
-                    continue
+        # this tile is the exact same as before, so the old key is used
+        if new_tile == old_tile:
+            merged_grid[x, y, z] = old_key
+            known_keys[new_key] = old_key
+            try:
+                unused_keys.remove(old_key)
+            except ValueError:
+                print(f"Notice: Correcting duplicate dictionary entry. ({new_key})")
+            continue
 
-                # the tile is different here, but if it exists in the old dictionary, its old key can be used
-                newold_key = get_key(old_dict_keys, old_dict_values, new_tile)
-                if newold_key is not None:
-                    merged_grid[x, y, z] = newold_key
-                    known_keys[new_key] = newold_key
-                    try:
-                        unused_keys.remove(newold_key)
-                    except ValueError:
-                        print(f"Notice: Correcting duplicate dictionary entry. ({new_key})")
+        # the tile is different here, but if it exists in the old dictionary, its old key can be used
+        newold_key = get_key(old_dict_keys, old_dict_values, new_tile)
+        if newold_key is not None:
+            merged_grid[x, y, z] = newold_key
+            known_keys[new_key] = newold_key
+            try:
+                unused_keys.remove(newold_key)
+            except ValueError:
+                print(f"Notice: Correcting duplicate dictionary entry. ({new_key})")
 
-                # the tile is brand new and it needs a new key, but if the old key isn't being used any longer it can be used instead
-                elif get_key(new_dict_keys, new_dict_values, old_tile) is None:
-                    merged_grid[x, y, z] = old_key
-                    old_dict[old_key] = new_tile
-                    known_keys[new_key] = old_key
-                    unused_keys.remove(old_key)
+        # the tile is brand new and it needs a new key, but if the old key isn't being used any longer it can be used instead
+        elif get_key(new_dict_keys, new_dict_values, old_tile) is None:
+            merged_grid[x, y, z] = old_key
+            old_dict[old_key] = new_tile
+            known_keys[new_key] = old_key
+            unused_keys.remove(old_key)
 
-                # all other options ruled out, a brand new key is generated for the brand new tile
-                else:
-                    fresh_key = generate_new_key(old_dict)
-                    old_dict[fresh_key] = new_tile
-                    merged_grid[x, y, z] = fresh_key
+        # all other options ruled out, a brand new key is generated for the brand new tile
+        else:
+            fresh_key = generate_new_key(old_dict)
+            old_dict[fresh_key] = new_tile
+            merged_grid[x, y, z] = fresh_key
 
     # step two: clean the dictionary if it has too many unused keys
     output_map = DMM(key_length, size)
