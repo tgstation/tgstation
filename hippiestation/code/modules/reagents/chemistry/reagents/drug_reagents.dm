@@ -233,3 +233,18 @@
 /datum/reagent/drug/flipout/reaction_obj(obj/O, reac_volume)
 	if(istype(O,/obj))
 		O.SpinAnimation(16,40)
+		
+/datum/reagent/drug/yespowder
+	name = "Yes Powder"
+	id = "yespowder"
+	description = "Powder that makes you say yes."
+	color = "#fffae0"
+	reagent_state = LIQUID
+		
+/datum/reagent/drug/yespowder/on_mob_life(mob/living/M)
+	var/high_message = pick("Agreement fills your mind.", "'No' is so last year. 'Yes' is in.", "Yes.")
+	if(prob(5))
+		to_chat(M, "<span class='notice'>[high_message]</span>")
+	if(prob(20))
+		M.say("Yes.")
+	..()
