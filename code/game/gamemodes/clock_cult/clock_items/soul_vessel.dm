@@ -23,6 +23,7 @@
 	autoping = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_replace_ai_name = TRUE
+	overrides_aicore_laws = TRUE
 
 /obj/item/device/mmi/posibrain/soul_vessel/Initialize()
 	. = ..()

@@ -80,10 +80,10 @@ Made by Xhuis
 	to_chat(world, "<b>There are alien <span class='shadowling'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>")
 
 /datum/game_mode/shadowling/pre_setup()
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	var/shadowlings = max(3, round(num_players()/14))

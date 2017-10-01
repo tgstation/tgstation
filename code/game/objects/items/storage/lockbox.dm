@@ -123,6 +123,11 @@
 	icon_broken = "medalbox+b"
 	can_hold = list(/obj/item/clothing/accessory/medal)
 
+/obj/item/storage/lockbox/medal/examine(mob/user)
+	..()
+	if(!locked)
+		to_chat(user, "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>")
+
 /obj/item/storage/lockbox/medal/AltClick()
 	if(!locked)
 		open = (open ? FALSE : TRUE)

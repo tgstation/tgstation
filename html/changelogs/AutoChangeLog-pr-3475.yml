@@ -1,5 +1,0 @@
-author: "Thefastfoodguy"
-delete-after: True
-changes: 
-  - rscadd: "Shanks"
-  - code_imp: "Reorganized makeshift armor and trayshield code"

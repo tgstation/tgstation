@@ -404,7 +404,7 @@
 			else if(!pod)
 				temp = "<font class='bad'>No Clonepods available.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(!config.revival_cloning)
+			else if(!CONFIG_GET(flag/revival_cloning))
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(pod.occupant)
@@ -471,7 +471,7 @@
 		// species datums
 		R.fields["mrace"] = dna.species
 	else
-		var/datum/species/rando_race = pick(config.roundstart_races)
+		var/datum/species/rando_race = pick(CONFIG_GET(keyed_flag_list/roundstart_races))
 		R.fields["mrace"] = rando_race.type
 
 	R.fields["ckey"] = mob_occupant.ckey

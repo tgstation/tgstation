@@ -3,6 +3,11 @@
 	materials = list(MAT_GLASS = 250)
 	var/glass_colour_type = null //colors your vision when worn
 
+/obj/item/clothing/glasses/examine(mob/user)
+	..()
+	if(glass_colour_type && ishuman(user))
+		to_chat(user, "<span class='notice'>Alt-click to toggle its colors.</span>")
+
 /obj/item/clothing/glasses/visor_toggling()
 	..()
 	if(visor_vars_to_toggle & VISOR_VISIONFLAGS)

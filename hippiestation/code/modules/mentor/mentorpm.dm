@@ -48,7 +48,7 @@
 
 	msg = emoji_parse(msg)
 	C << 'sound/items/bikehorn.ogg'
-	var/show_char = config.mentors_mobname_only
+	var/show_char = CONFIG_GET(flag/mentors_mobname_only)
 	if(check_rights_for(C, R_MENTOR))
 		if(check_rights_for(src, R_MENTOR))//both are mentors
 			to_chat(C, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</font>")
@@ -64,8 +64,8 @@
 			to_chat(src, "<font color='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, show_char)]</b>: [msg]</font>")
 
 	//we don't use message_Mentors here because the sender/receiver might get it too
-	var/show_char_sender = !check_rights_for(src, R_MENTOR) && config.mentors_mobname_only
-	var/show_char_recip = !check_rights_for(C, R_MENTOR) && config.mentors_mobname_only
+	var/show_char_sender = !check_rights_for(src, R_MENTOR) && CONFIG_GET(flag/mentors_mobname_only)
+	var/show_char_recip = !check_rights_for(C, R_MENTOR) && CONFIG_GET(flag/mentors_mobname_only)
 	for(var/client/X in GLOB.admins)
 		if(X.key!=key && X.key!=C.key)	//check client/X is an Mentor and isn't the sender or recipient
 			to_chat(X, "<B><font color='green'>Mentor PM: [key_name_mentor(src, X, 0, 0, show_char_sender)]-&gt;[key_name_mentor(C, X, 0, 0, show_char_recip)]:</B> <font color ='blue'> [msg]</font>") //inform X

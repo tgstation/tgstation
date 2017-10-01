@@ -47,6 +47,15 @@
 	for(var/mob/living/simple_animal/hostile/gremlin/G in src)
 		G.divide()
 
+/datum/reagent/water/on_mob_life(mob/living/M)
+	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1*REM, 0, 1)
+	M.adjustToxLoss(-0.2*REM, 0)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.drunkenness = max(H.drunkenness - 2, 0)
+	..()
+	. = 1
+
 /datum/reagent/holywater/on_mob_life(mob/living/M)
 	. = ..()
 	if(ishuman(M) && is_vampire(M) && prob(80))

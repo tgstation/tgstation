@@ -208,7 +208,8 @@
 /* General ai_law functions */
 
 /datum/ai_laws/proc/set_laws_config()
-	switch(config.default_laws)
+	var/list/law_ids = CONFIG_GET(keyed_flag_list/random_laws)
+	switch(CONFIG_GET(number/default_laws))
 		if(0)
 			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
@@ -220,7 +221,7 @@
 			var/list/randlaws = list()
 			for(var/lpath in subtypesof(/datum/ai_laws))
 				var/datum/ai_laws/L = lpath
-				if(initial(L.id) in config.lawids)
+				if(initial(L.id) in law_ids)
 					randlaws += lpath
 			var/datum/ai_laws/lawtype
 			if(randlaws.len)
@@ -234,21 +235,14 @@
 		if(3)
 			pick_weighted_lawset()
 
-		else:
-			log_law("Invalid law config. Please check silicon_laws.txt")
-			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-			WARNING("Invalid custom AI laws, check silicon_laws.txt")
-
 /datum/ai_laws/proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
-
-	while(!lawtype && config.law_weights.len)
-		var/possible_id = pickweight(config.law_weights)
+	var/list/law_weights = CONFIG_GET(keyed_number_list/law_weight)
+	while(!lawtype && law_weights)
+		var/possible_id = pickweight(law_weights)
 		lawtype = lawid_to_type(possible_id)
 		if(!lawtype)
-			config.law_weights -= possible_id
+			law_weights -= possible_id
 			WARNING("Bad lawid in game_options.txt: [possible_id]")
 
 	if(!lawtype)

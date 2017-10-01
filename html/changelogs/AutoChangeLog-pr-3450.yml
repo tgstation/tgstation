@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - rscdel: "flashbangs no longer hurt blobs"
