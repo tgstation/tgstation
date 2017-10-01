@@ -62,6 +62,8 @@
 /client/verb/delete_key_pressed()
 	set hidden = 1
 
+	if(!isliving(usr))
+		return
 	if(!usr.pulling)
 		to_chat(usr, "<span class='notice'>You are not pulling anything.</span>")
 		return
