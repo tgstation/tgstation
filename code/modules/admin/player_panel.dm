@@ -530,7 +530,7 @@
 					else
 						dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[brother]'>[brother.name]([brother.key])</a><i>Brother body destroyed!</i></td>"
 						dat += "<td><A href='?priv_msg=[brother.key]'>PM</A></td></tr>"
-				dat += "</table>"
+			dat += "</table>"
 
 		if(SSticker.mode.abductors.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Abductors</B></td><td></td><td></td></tr>"
