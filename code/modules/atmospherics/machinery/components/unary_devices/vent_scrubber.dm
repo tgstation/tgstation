@@ -212,7 +212,7 @@
 				removed_gases["bz"][MOLES] = 0
 
 			if(scrub_Rare && removed_gases["nob"])
-				filtered_out.addt=_gas("nob")
+				filtered_out.add_gas("nob")
 				filtered_gases["nob"][MOLES] = removed_gases["nob"][MOLES]
 				removed_gases["nob"][MOLES] = 0
 
