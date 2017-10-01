@@ -6,6 +6,7 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 200
+	desc = "The mechanical framework for an airlock."
 	var/state = 0
 	var/mineral = null
 	var/typetext = ""

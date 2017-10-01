@@ -67,6 +67,7 @@ GLOBAL_LIST_INIT(message_servers, list())
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
 	name = "Messaging Server"
+	desc = "A machine that attempts to gather the secret knowledge of the universe."
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
