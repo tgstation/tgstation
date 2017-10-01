@@ -325,6 +325,8 @@
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
 	icon_state = "lungs-c"
 	origin_tech = "biotech=4"
+	synthetic = TRUE
+
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	owner.losebreath = 20

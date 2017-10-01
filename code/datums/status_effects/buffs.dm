@@ -384,3 +384,11 @@
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
+/datum/status_effect/exercised
+	id = "Exercised"
+	duration = 1200
+	alert_type = null
+
+
+
+
