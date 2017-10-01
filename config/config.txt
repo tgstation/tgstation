@@ -296,7 +296,7 @@ ANNOUNCE_ADMIN_LOGOUT
 
 ## Map rotation
 ## You should edit maps.txt to match your configuration when you enable this.
-#MAPROTATION
+MAPROTATION
 
 ## Map voting
 ## Allows players to vote for their preffered map
