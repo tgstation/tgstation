@@ -54,6 +54,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/detonatable = TRUE // Can the PDA be blown up?
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
 	var/emped = 0
+	var/equiped = 0 //is this the first time it has been equiped?
 
 	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
@@ -86,6 +87,26 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else
 		inserted_item =	new /obj/item/pen(src)
 	update_icon()
+
+/obj/item/device/pda/equipped(mob/user, slot)
+	if(!equiped)
+		if(user.client)
+			switch(user.client.prefs.pda_style)
+				if(MONO)
+					font_index = 0
+					font_mode = "font-family:monospace;"
+				if(SHARE)
+					font_index = 1
+					font_mode = "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
+				if(ORBITRON)
+					font_index = 2
+					font_mode = "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
+				if(VT)
+					font_index = 3
+					font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;"
+				else
+					font_index = 0
+					font_mode = "font-family:monospace;"
 
 /obj/item/device/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
