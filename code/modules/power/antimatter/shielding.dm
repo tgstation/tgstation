@@ -35,7 +35,7 @@
 
 /obj/machinery/am_shielding/proc/controllerscan(priorscan = 0)
 	//Make sure we are the only one here
-	if(!istype(src.loc, /turf))
+	if(!istype(loc, /turf))
 		qdel(src)
 		return
 	for(var/obj/machinery/am_shielding/AMS in loc.contents)
@@ -59,6 +59,8 @@
 		if(!priorscan)
 			addtimer(CALLBACK(src, .proc/controllerscan, 1), 20)
 			return
+		new /obj/item/device/am_shielding_container(loc)
+		qdel(src)
 
 
 /obj/machinery/am_shielding/Destroy()
@@ -66,7 +68,6 @@
 		control_unit.remove_shielding(src)
 	if(processing)
 		shutdown_core()
-	visible_message("<span class='danger'>The [src.name] melts!</span>")
 	//Might want to have it leave a mess on the floor but no sprites for now
 	return ..()
 
@@ -208,6 +209,7 @@
 	if(injecting_fuel && control_unit)
 		control_unit.exploding = 1
 	if(src)
+		visible_message("<span class='danger'>The [src.name] melts!</span>")
 		qdel(src)
 	return
 
