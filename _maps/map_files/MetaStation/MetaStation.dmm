@@ -4354,13 +4354,6 @@
 /obj/structure/closet{
 	name = "Evidence Closet 1"
 	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 1"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -4387,11 +4380,6 @@
 /area/security/warden)
 "aiz" = (
 /obj/structure/closet/secure_closet/evidence,
-/obj/item/storage/secure/briefcase{
-	name = "Secure Evidence Briefcase";
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -4758,16 +4746,9 @@
 /obj/structure/closet{
 	name = "Evidence Closet 2"
 	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 2"
-	},
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 1
@@ -4791,13 +4772,6 @@
 "ajt" = (
 /obj/structure/closet{
 	name = "Evidence Closet 5"
-	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 5"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -5362,13 +5336,6 @@
 "akB" = (
 /obj/structure/closet{
 	name = "Evidence Closet 4"
-	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 4"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
@@ -20484,13 +20451,6 @@
 "aNA" = (
 /obj/structure/closet{
 	name = "Evidence Closet 3"
-	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 3"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
