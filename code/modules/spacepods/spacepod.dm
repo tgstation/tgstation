@@ -287,6 +287,7 @@
 
 /obj/spacepod/examine(mob/user)
 	. = ..()
+	to_chat(user, "<span class='notice'>The maintenance hatch is [hatch_open ? "opened" : "closed"].</span>")
 	var/integrity = obj_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
@@ -310,6 +311,7 @@
 	if(LAZYLEN(passengers) && isobserver(user))
 		for(var/mob/living/M in passengers)
 			to_chat(user, "[M] is a a passenger.")
+
 /obj/spacepod/proc/armorDesc()
 	switch(pod_armor.name)
 		if("civ")

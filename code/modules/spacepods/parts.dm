@@ -110,28 +110,28 @@
 /obj/item/pod_parts/pod_frame/fore_port
 	name = "fore port pod frame"
 	icon_state = "pod_fp"
-	desc = "A space pod frame component. This is the fore port component."
+	desc = "A space pod frame component. This is the fore port component. Align, wrench, and add rods."
 	link_to = /obj/item/pod_parts/pod_frame/fore_starboard
 	link_angle = 90
 
 /obj/item/pod_parts/pod_frame/fore_starboard
 	name = "fore starboard pod frame"
 	icon_state = "pod_fs"
-	desc = "A space pod frame component. This is the fore starboard component."
+	desc = "A space pod frame component. This is the fore starboard component. Align, wrench, and add rods."
 	link_to = /obj/item/pod_parts/pod_frame/aft_starboard
 	link_angle = 180
 
 /obj/item/pod_parts/pod_frame/aft_port
 	name = "aft port pod frame"
 	icon_state = "pod_ap"
-	desc = "A space pod frame component. This is the aft port component."
+	desc = "A space pod frame component. This is the aft port component. Align, wrench, and add rods."
 	link_to = /obj/item/pod_parts/pod_frame/fore_port
 	link_angle = 0
 
 /obj/item/pod_parts/pod_frame/aft_starboard
 	name = "aft starboard pod frame"
 	icon_state = "pod_as"
-	desc = "A space pod frame component. This is the aft starboard component."
+	desc = "A space pod frame component. This is the aft starboard component. Align, wrench, and add rods."
 	link_to = /obj/item/pod_parts/pod_frame/aft_port
 	link_angle = 270
 
