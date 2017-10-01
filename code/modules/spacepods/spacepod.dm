@@ -248,9 +248,9 @@
 	bound_height = 64
 
 /obj/spacepod/bullet_act(obj/item/projectile/P)
+	. = ..(P)
 	if(P.damage_type == BRUTE || P.damage_type == BURN)
 		take_damage(P.damage)
-	P.on_hit(src)
 
 /obj/spacepod/blob_act()
 	take_damage(30)
