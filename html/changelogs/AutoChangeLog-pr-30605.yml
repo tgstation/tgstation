@@ -1,0 +1,4 @@
+author: "kingofkosmos"
+delete-after: True
+changes: 
+  - rscadd: "You can now see construction/deconstruction hints when examining airlocks."
