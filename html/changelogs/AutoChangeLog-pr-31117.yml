@@ -1,0 +1,4 @@
+author: "Antur"
+delete-after: True
+changes: 
+  - bugfix: "Liches will no longer lose their spells when reviving."

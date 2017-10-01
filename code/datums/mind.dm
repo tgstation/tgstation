@@ -206,7 +206,7 @@
 /datum/mind/proc/remove_wizard()
 	if(src in SSticker.mode.wizards)
 		SSticker.mode.wizards -= src
-		current.spellremove(current)
+		RemoveAllSpells()
 	special_role = null
 	remove_antag_equip()
 
@@ -1494,6 +1494,10 @@
 		if(istype(S, spell))
 			spell_list -= S
 			qdel(S)
+
+/datum/mind/proc/RemoveAllSpells()
+	for(var/obj/effect/proc_holder/S in spell_list)
+		RemoveSpell(S)
 
 /datum/mind/proc/transfer_martial_arts(mob/living/new_character)
 	if(!ishuman(new_character))

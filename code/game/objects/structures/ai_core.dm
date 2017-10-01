@@ -134,7 +134,7 @@
 						to_chat(user, "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>")
 						return
 
-					if((config) && (!config.allow_ai) || jobban_isbanned(M.brainmob, "AI"))
+					if(!CONFIG_GET(flag/allow_ai) || jobban_isbanned(M.brainmob, "AI"))
 						to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 						return
 

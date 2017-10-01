@@ -58,7 +58,7 @@
 	U.hidden_uplink.owner = "[user.key]"
 	U.hidden_uplink.telecrystals = CHALLENGE_TELECRYSTALS
 	U.hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
-	config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
+	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.set_val("nuclear_challenge_mode",1)
 	qdel(src)
 

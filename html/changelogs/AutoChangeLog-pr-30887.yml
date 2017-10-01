@@ -1,0 +1,5 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - rscadd: "Blood cultists can now create a unique bastard sword at their forge"
+  - rscdel: "Blood cultists can no longer obtain a hardsuit from the forge"

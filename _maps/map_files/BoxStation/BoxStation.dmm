@@ -7441,14 +7441,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness)
-"aqt" = (
-/obj/effect/landmark/syndicate_breach_area,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/crew_quarters/fitness)
 "aqu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -14777,7 +14769,6 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "aHr" = (
-/obj/effect/landmark/marauder_entry,
 /turf/open/space,
 /area/space)
 "aHs" = (
@@ -100719,7 +100710,7 @@ aaa
 aaa
 aaa
 aaa
-aqt
+aqs
 aro
 aro
 aro
@@ -115155,7 +115146,7 @@ aaa
 aaa
 aaa
 bky
-btq
+btp
 brH
 bvQ
 bxt
@@ -115669,7 +115660,7 @@ aaa
 aaa
 aaa
 bZi
-btp
+btq
 brI
 bvR
 cNS

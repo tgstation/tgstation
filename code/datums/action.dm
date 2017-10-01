@@ -485,7 +485,7 @@
 
 /datum/action/spell_action/New(Target)
 	..()
-	var/obj/effect/proc_holder/spell/S = target
+	var/obj/effect/proc_holder/S = target
 	S.action = src
 	name = S.name
 	desc = S.desc
@@ -495,36 +495,40 @@
 	button.name = name
 
 /datum/action/spell_action/Destroy()
-	var/obj/effect/proc_holder/spell/S = target
+	var/obj/effect/proc_holder/S = target
 	S.action = null
 	return ..()
 
 /datum/action/spell_action/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	if(target)
-		var/obj/effect/proc_holder/spell = target
-		spell.Click()
-		return 1
+		var/obj/effect/proc_holder/S = target
+		S.Click()
+		return TRUE
 
 /datum/action/spell_action/IsAvailable()
 	if(!target)
-		return 0
-	var/obj/effect/proc_holder/spell/spell = target
-	if(owner)
-		return spell.can_cast(owner)
-	return 0
+		return FALSE
+	return TRUE
 
+/datum/action/spell_action/spell/IsAvailable()
+	if(!target)
+		return FALSE
+	var/obj/effect/proc_holder/spell/S = target
+	if(owner)
+		return S.can_cast(owner)
+	return FALSE
 
 /datum/action/spell_action/alien
 
 /datum/action/spell_action/alien/IsAvailable()
 	if(!target)
-		return 0
+		return FALSE
 	var/obj/effect/proc_holder/alien/ab = target
 	if(owner)
 		return ab.cost_check(ab.check_turf,owner,1)
-	return 0
+	return FALSE
 
 
 
@@ -587,3 +591,50 @@
 		var/mob/M = owner
 		var/datum/language_holder/H = M.get_language_holder()
 		H.open_language_menu(usr)
+
+/datum/action/innate/dash
+	name = "Dash"
+	desc = "Teleport to the targeted location."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "jetboot"
+	var/charged = TRUE
+	var/charge_rate = 250
+	var/mob/living/carbon/human/holder
+	var/obj/item/dashing_item
+	var/dash_sound = 'sound/magic/blink.ogg'
+	var/recharge_sound = 'sound/magic/charge.ogg'
+	var/beam_effect = "blur"
+	var/phasein = /obj/effect/temp_visual/dir_setting/ninja/phase
+	var/phaseout = /obj/effect/temp_visual/dir_setting/ninja/phase/out
+
+/datum/action/innate/dash/Grant(mob/user, obj/dasher)
+	. = ..()
+	dashing_item = dasher
+	holder = user
+
+/datum/action/innate/dash/IsAvailable()
+	if(charged)
+		return TRUE
+	else
+		return FALSE
+
+/datum/action/innate/dash/Activate()
+	dashing_item.attack_self(holder) //Used to toggle dash behavior in the dashing item
+
+/datum/action/innate/dash/proc/Teleport(mob/user, atom/target)
+	var/turf/T = get_turf(target)
+	if(target in view(user.client.view, get_turf(user)))
+		var/obj/spot1 = new phaseout(get_turf(user), user.dir)
+		user.forceMove(T)
+		playsound(T, dash_sound, 25, 1)
+		var/obj/spot2 = new phasein(get_turf(user), user.dir)
+		spot1.Beam(spot2,beam_effect,time=20)
+		charged = FALSE
+		holder.update_action_buttons_icon()
+		addtimer(CALLBACK(src, .proc/charge), charge_rate)
+
+/datum/action/innate/dash/proc/charge()
+	charged = TRUE
+	holder.update_action_buttons_icon()
+	playsound(dashing_item, recharge_sound, 50, 1)
+	to_chat(holder, "<span class='warning'>[dashing_item] is ready for another jaunt.</span>")

@@ -164,7 +164,7 @@
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
 			else
-				T.loc = src //put shade in stone
+				T.forceMove(src) //put shade in stone
 				T.status_flags |= GODMODE
 				T.canmove = 0
 				T.health = T.maxHealth
@@ -199,7 +199,6 @@
 						SSticker.mode.cult -= A.mind
 						SSticker.mode.update_cult_icons_removed(A.mind)
 				qdel(T)
-				user.drop_item()
 				qdel(src)
 			else
 				to_chat(user, "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!")
