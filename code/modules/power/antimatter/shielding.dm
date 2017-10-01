@@ -59,7 +59,7 @@
 		if(!priorscan)
 			addtimer(CALLBACK(src, .proc/controllerscan, 1), 20)
 			return
-		visible_message("<span class='notice'>The [name] collapses back into a container!</span>")
+		visible_message("<span class='notice'>[src] collapses back into a container!</span>")
 		new /obj/item/device/am_shielding_container(loc)
 		qdel(src)
 
@@ -210,7 +210,7 @@
 	if(injecting_fuel && control_unit)
 		control_unit.exploding = 1
 	if(src)
-		visible_message("<span class='danger'>The [name] melts!</span>")
+		visible_message("<span class='danger'>[src] melts!</span>")
 		qdel(src)
 	return
 
