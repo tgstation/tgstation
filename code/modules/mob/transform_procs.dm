@@ -329,16 +329,14 @@
 			continue
 		loc_landmark = sloc.loc
 	if(!loc_landmark)
-		for(var/obj/effect/landmark/tripai in GLOB.landmarks_list)
-			if(tripai.name == "tripai")
-				if(locate(/mob/living/silicon/ai) in tripai.loc)
-					continue
-				loc_landmark = tripai.loc
+		for(var/obj/effect/landmark/tripai/L in GLOB.landmarks_list)
+			if(locate(/mob/living/silicon/ai) in L.loc)
+				continue
+			loc_landmark = L.loc
 	if(!loc_landmark)
 		to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
-		for(var/obj/effect/landmark/start/sloc in GLOB.landmarks_list)
-			if (sloc.name == "AI")
-				loc_landmark = sloc.loc
+		for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
+			loc_landmark = sloc.loc
 
 	if(!transfer_after)
 		mind.active = FALSE
@@ -383,7 +381,7 @@
 	else if(transfer_after)
 		R.key = key
 
-	if (config.rename_cyborg)
+	if (CONFIG_GET(flag/rename_cyborg))
 		R.rename_self("cyborg")
 
 	if(R.mmi)

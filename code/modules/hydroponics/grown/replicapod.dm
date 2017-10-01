@@ -55,7 +55,7 @@
 	var/obj/machinery/hydroponics/parent = loc
 	var/make_podman = 0
 	var/ckey_holder = null
-	if(config.revival_pod_plants)
+	if(CONFIG_GET(flag/revival_pod_plants))
 		if(ckey)
 			for(var/mob/M in GLOB.player_list)
 				if(isobserver(M))
@@ -99,7 +99,7 @@
 		podman.faction |= factions
 		if(!features["mcolor"])
 			features["mcolor"] = "#59CE00"
-		podman.hardset_dna(null,null,podman.real_name,blood_type, /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

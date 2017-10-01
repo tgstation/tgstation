@@ -95,6 +95,7 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+	desc = "Some kind of machine."
 	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 15
@@ -429,7 +430,7 @@ Class Procs:
 							W.handle_item_insertion(A, 1)
 							component_parts -= A
 							component_parts += B
-							B.loc = null
+							B.moveToNullspace()
 							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break

@@ -211,6 +211,13 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+/obj/item/clothing/under/chameleon/ratvar
+	name = "ratvarian engineer's jumpsuit"
+	desc = "A tough jumpsuit woven from alloy threads. It can take on the appearance of other jumpsuits."
+	icon_state = "engine"
+	item_state = "engi_suit"
+	item_color = "engine"
+
 /obj/item/clothing/under/chameleon/New()
 	..()
 	chameleon_action = new(src)

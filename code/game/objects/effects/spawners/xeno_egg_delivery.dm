@@ -17,4 +17,4 @@
 	log_game("An alien egg has been delivered to [A] at [COORD(T)]")
 	var/message = "Attention [station_name()], we have entrusted you with a research specimen in [A]. Remember to follow all safety precautions when dealing with the specimen."
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/addtimer, CALLBACK(GLOBAL_PROC, /.proc/print_command_report, message), announcement_time))
-	qdel(src)
+	return INITIALIZE_HINT_QDEL

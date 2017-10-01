@@ -27,7 +27,7 @@
 	del_on_death = 1
 
 /mob/living/simple_animal/cockroach/death(gibbed)
-	if(SSticker.cinematic) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
+	if(SSticker.mode && SSticker.mode.station_was_nuked) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
 		return
 	..()
 
@@ -42,7 +42,7 @@
 				else
 					visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 	else
-		if(istype(AM, /obj/structure))
+		if(isstructure(AM))
 			if(prob(squish_chance))
 				AM.visible_message("<span class='notice'>[src] was crushed under [AM].</span>")
 				adjustBruteLoss(1)

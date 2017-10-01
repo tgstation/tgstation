@@ -13,7 +13,7 @@
 
 /obj/machinery/computer/stockexchange/Initialize()
 	. = ..()
-	logged_in = "[station_name()] Cargo Department"
+	logged_in = "SS13 Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
@@ -63,7 +63,7 @@ a.updated {
 </style>"}
 	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body>"
 
-	dat += "<span class='user'>Welcome, <b>[logged_in]</b></span><br><span class='balance'><b>Credits:</b> [balance()] </span><br>"
+	dat += "<span class='user'>Welcome, <b>[station_name()] Cargo Department</b></span><br><span class='balance'><b>Credits:</b> [balance()] </span><br>"
 	for (var/datum/stock/S in GLOB.stockExchange.last_read)
 		var/list/LR = GLOB.stockExchange.last_read[S]
 		if (!(logged_in in LR))
@@ -82,7 +82,7 @@ a.updated {
 				mystocks = S.shareholders[logged_in]
 			dat += "<hr /><div class='stock'><span class='company'>[S.name]</span> <span class='s_company'>([S.short_name])</span>[S.bankrupt ? " <b style='color:red'>BANKRUPT</b>" : null]<br>"
 			if (S.last_unification)
-				dat += "<b>Unified shares</b> [(world.time - S.last_unification) / 600] minutes ago.<br>"
+				dat += "<b>Unified shares</b> [DisplayTimeText(world.time - S.last_unification)] ago.<br>"
 			dat += "<b>Current value per share:</b> [S.current_value] | <a href='?src=\ref[src];viewhistory=\ref[S]'>View history</a><br><br>"
 			dat += "You currently own <b>[mystocks]</b> shares in this company. There are [S.available_shares] purchasable shares on the market currently.<br>"
 			if (S.bankrupt)
