@@ -16,7 +16,7 @@
 	desc = "A space pod meant for space travel."
 	icon = 'goon/icons/48x48/pods.dmi'
 	density = TRUE //Dense. To raise the heat.
-	opacity = 0
+	opacity = FALSE
 
 	anchored = TRUE
 
@@ -118,7 +118,7 @@
 	var/coloradd = input(user, "Choose a color", "Color") as color
 	colors[part_type] = coloradd
 	if(!has_paint)
-		has_paint = 1
+		has_paint = TRUE
 	update_icons()
 
 /obj/spacepod/proc/get_intergrity()
@@ -138,7 +138,7 @@
 	add_radio()
 	add_airtank()
 	add_gps()
-	use_internal_tank = 1
+	use_internal_tank = TRUE
 	GLOB.poi_list += src
 	equipment_system = new(src)
 	equipment_system.installed_modules += cell
@@ -248,6 +248,7 @@
 	bound_height = 64
 
 /obj/spacepod/bullet_act(obj/item/projectile/P)
+	. = ..(P)
 	if(P.damage_type == BRUTE || P.damage_type == BURN)
 		take_damage(P.damage)
 	P.on_hit(src)
@@ -428,7 +429,7 @@
 
 /obj/spacepod/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(user.a_intent == INTENT_HARM)
-		..()
+		return ..()
 		take_damage(W.force)
 	else
 		if(istype(W, /obj/item/pod_paint_bucket))
@@ -1096,7 +1097,7 @@
 	invisibility = 101
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x"
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/landmark/spacepod/random/Initialize()
 	. = ..()
@@ -1188,7 +1189,7 @@
 	set desc = "Rename your spacepod"
 	set category = "Spacepod"
 	set src = usr.loc
-	set popup_menu = 0
+	set popup_menu = FALSE
 
 	if(usr.incapacitated())
 		return
@@ -1202,7 +1203,7 @@
 	set name = "Configure Radio"
 	set category = "Spacepod"
 	set src = usr.loc
-	set popup_menu = 0
+	set popup_menu = FALSE
 
 	if(usr.incapacitated())
 		return
@@ -1217,7 +1218,7 @@
 	set name = "View GPS"
 	set category = "Spacepod"
 	set src = usr.loc
-	set popup_menu = 0
+	set popup_menu = FALSE
 
 	if(usr.incapacitated())
 		return

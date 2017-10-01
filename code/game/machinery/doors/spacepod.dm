@@ -3,7 +3,7 @@
 	desc = "An air-tight holodoor that only lets spacepods through."
 	icon = 'icons/effects/beam.dmi'
 	icon_state = "n_beam"
-	density = 0
+	density = FALSE
 	anchored = TRUE
 
 /obj/structure/spacepoddoor/Initialize()

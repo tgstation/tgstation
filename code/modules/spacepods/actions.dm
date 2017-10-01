@@ -44,7 +44,7 @@
 /datum/action/innate/spacepod/Grant(mob/living/L, obj/spacepod/M)
 	if(M)
 		S = M
-	..()
+	return ..()
 
 /datum/action/innate/spacepod/exit
 	name = "Exit Spacepod"

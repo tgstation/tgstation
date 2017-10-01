@@ -1,8 +1,8 @@
 /obj/structure/spacepod_frame
-	density = 1
-	opacity = 0
+	density = TRUE
+	opacity = FALSE
 
-	anchored = 1
+	anchored = TRUE
 	layer = SPACEPOD_LAYER
 
 	name = "\improper spacepod frame"
@@ -96,7 +96,7 @@
 						"key"      = /obj/item/circuitboard/mecha/pod,
 						"vis_msg"  = "{USER} inserts the mainboard into the {HOLDER}.",
 						"self_msg" = "You insert the mainboard into the {HOLDER}.",
-						"delete"   = 1
+						"delete"   = TRUE
 					)
 				),
 				// 4. Circuit added
@@ -129,7 +129,7 @@
 						,
 						"vis_msg"  = "{USER} inserts the core into the {HOLDER}.",
 						"self_msg" = "You carefully insert the core into the {HOLDER}.",
-						"delete"   = 1
+						"delete"   = TRUE
 					)
 				),
 				// 6. Core inserted
@@ -207,7 +207,7 @@
 						"key"      = /obj/item/pod_parts/armor,
 						"vis_msg"  = "{USER} installs the {HOLDER}'s armor plating.",
 						"self_msg" = "You install the {HOLDER}'s armor plating.",
-						"delete"   = 1
+						"delete"   = TRUE
 					)
 				),
 				// 11. Loose armor
