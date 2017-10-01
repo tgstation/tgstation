@@ -45,7 +45,7 @@
 	U.hidden_uplink.owner = "[user.key]"
 	U.hidden_uplink.telecrystals = (n_players * 6) //by default is 280 for 50 players, 280 / 50 = 5.6, I rounded it up because nukeops need a little love these days...
 	U.hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
-	config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
+	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.set_val("nuclear_challenge_mode",1)
 	qdel(src)
 
