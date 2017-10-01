@@ -1,4 +1,4 @@
-/datum/species/human/klingoff
+/datum/species/klingoff
 	name = "Klingoff"
 	id = "klingoff"
 	default_color = "FFFFFF"
@@ -6,7 +6,7 @@
 	mutant_bodyparts = list()
 	default_features = list()
 
-/datum/species/human/space_elf
+/datum/species/space_elf
 	name = "Space Elf"
 	id = "space_elf"
 	default_color = "FFFFFF"
