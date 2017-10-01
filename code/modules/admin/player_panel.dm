@@ -656,7 +656,7 @@
 			dat += "</table>"
 
 		if(SSticker.mode.thralls.len)
-			dat += "<br><table cellspacing=5><tr><td><B>Shadowlings</B></td><td></td><td></td></tr>"
+			dat += "<br><table cellspacing=5><tr><td><B>Thralls</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/thrall in SSticker.mode.thralls)
 				var/mob/M = thrall.current
 				if(M)
