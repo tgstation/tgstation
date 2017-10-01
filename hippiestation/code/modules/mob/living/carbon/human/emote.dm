@@ -1,3 +1,6 @@
+/mob/living
+	var/list/alternate_farts
+
 /datum/emote/living/carbon/fart
 	key = "fart"
 	key_third_person = "farts"
@@ -64,8 +67,10 @@
 			"farts so loud it startles them!",
 			"breaks wind and a nearby wine glass!",
 			"<b>finally achieves the perfect fart. All downhill from here.</b>")
+	LAZYINITLIST(user.alternate_farts)
+	if(LAZYLEN(user.alternate_farts))
+		fartsound = pick(user.alternate_farts)
 	if(istype(user,/mob/living/carbon/alien))
-		fartsound = 'hippiestation/sound/effects/alienfart.ogg'
 		bloodkind = /obj/effect/decal/cleanable/xenoblood
 	var/obj/item/storage/book/bible/Y = locate() in get_turf(user.loc)
 	if(istype(Y))
