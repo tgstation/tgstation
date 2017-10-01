@@ -51,13 +51,18 @@
 	cell = new cell_type
 
 /obj/exosuit/proc/canmove()
-	if(features & NO_POWER)
-		return TRUE
 	if(!obj_integrity)
 		return FALSE
+	if(features & NO_POWER)
+		return TRUE
 	if(cell && cell.use(move_power))
 		return TRUE
 	return FALSE
+
+/obj/exosuit/Process_Spacemove(direction)
+	. = ..(direction)
+	if((movement & MULTIMOVE) || (movement & SPACEMOVE_ONLY))
+		. = TRUE
 
 /obj/exosuit/proc/move_override(mob/user, direction)
 	return FALSE
