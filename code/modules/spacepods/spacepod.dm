@@ -287,7 +287,7 @@
 	gps.gpstag = "SPOD"
 
 /obj/spacepod/examine(mob/user)
-	..()
+	. = ..()
 	var/integrity = obj_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
@@ -659,7 +659,7 @@
 				speech_bubble_recipients.Add(M.client)
 		INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",SPACEPOD_LAYER+1), speech_bubble_recipients, 30)
 	cargo_hold.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
-	..()
+	return ..()
 
 
 /obj/spacepod/proc/return_inv()
