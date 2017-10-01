@@ -245,7 +245,9 @@
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume, var/log=TRUE)//added much needed sanity check
 	var/turf/T = get_turf(holder.my_atom)
-	if(istype(holder.my_atom, /obj/effect/decal/cleanable/chempile))//anti spam
+	var/list/log_blacklist_typecache = list(/obj/effect/decal/cleanable/chempile, /obj/effect/particle_effect/vapour)
+	log_blacklist_typecache = typecacheof(log_blacklist_typecache)
+	if(is_type_in_typecache(holder.my_atom, log_blacklist_typecache))//anti spam
 		log = FALSE
 	if(isnull(T))
 		return FALSE

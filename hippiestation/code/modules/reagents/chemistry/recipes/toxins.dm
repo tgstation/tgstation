@@ -58,7 +58,7 @@
 	name = "Bearium"
 	id = "bear"
 	results = list("bear" = 3, "radgoop" = 2)
-	required_reagents = list("life" = 2, "volt" = 3,"ephedrine" = 1)
+	required_reagents = list("liquid_life" = 2, "volt" = 3,"ephedrine" = 1)
 	required_temp = 460
 	bluespace_recipe = TRUE
 	can_overheat = TRUE
