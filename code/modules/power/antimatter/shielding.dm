@@ -59,7 +59,6 @@
 		if(!priorscan)
 			addtimer(CALLBACK(src, .proc/controllerscan, 1), 20)
 			return
-		qdel(src)
 
 
 /obj/machinery/am_shielding/Destroy()
