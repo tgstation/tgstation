@@ -1,0 +1,4 @@
+author: "GuyonBroadway"
+delete-after: True
+changes: 
+  - tweak: "Nuke ops can now declare war despite the population and gain an amount of bonus tc based on how many players are on the server."
