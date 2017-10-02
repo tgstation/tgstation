@@ -13880,11 +13880,6 @@
 /area/crew_quarters/dorms)
 "aFr" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kanyewest";
-	layer = 2.9;
-	name = "privacy shutters"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -18476,11 +18471,6 @@
 /area/shuttle/supply)
 "aOz" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kanyewest";
-	layer = 2.9;
-	name = "privacy shutters"
-	},
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "aOA" = (
