@@ -247,7 +247,7 @@
 		return
 	check_user()
 	handle_zooming()
-	aiming_time_left = min(0, aiming_time_left - (world.time - last_process))
+	aiming_time_left = max(0, aiming_time_left - (world.time - last_process))
 	aiming_beam(TRUE)
 	last_process = world.time
 
