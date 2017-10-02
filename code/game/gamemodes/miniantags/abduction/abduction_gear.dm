@@ -328,7 +328,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	return
 
 /obj/item/paper/guides/antag/abductor/AltClick()
-	return
+	return //otherwise it would fold into a paperplane.
 
 #define BATON_STUN 0
 #define BATON_SLEEP 1
@@ -532,7 +532,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	flags_2 = BANG_PROTECT_2
 
 /obj/item/device/radio/headset/abductor/Initialize(mapload)
-	..()
+	. = ..()
 	make_syndie()
 
 /obj/item/device/radio/headset/abductor/attackby(obj/item/W, mob/user, params)

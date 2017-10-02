@@ -24,11 +24,11 @@
 	..()
 	if(statpanel("Status"))
 		if(beacon_cooldown >= world.time)
-			stat(null, "Beacon Cooldown Remaining: [max(round((beacon_cooldown - world.time)*0.1, 0.1), 0)] seconds")
+			stat(null, "Beacon Cooldown Remaining: [DisplayTimeText(beacon_cooldown - world.time)]")
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	. = ..()
-	if(toggle && iscarbon(target))
+	if(. && toggle && iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.adjustBruteLoss(-5)
 		C.adjustFireLoss(-5)

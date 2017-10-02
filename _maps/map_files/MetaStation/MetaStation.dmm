@@ -178,7 +178,6 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port/fore)
 "aav" = (
-/obj/effect/landmark/marauder_entry,
 /turf/open/space,
 /area/space)
 "aaw" = (
@@ -2225,14 +2224,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
-"aeD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/landmark/syndicate_breach_area,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/fitness/recreation)
 "aeE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4182,6 +4173,7 @@
 	id = "trash";
 	name = "disposal bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aig" = (
@@ -4362,13 +4354,6 @@
 /obj/structure/closet{
 	name = "Evidence Closet 1"
 	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 1"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -4395,11 +4380,6 @@
 /area/security/warden)
 "aiz" = (
 /obj/structure/closet/secure_closet/evidence,
-/obj/item/storage/secure/briefcase{
-	name = "Secure Evidence Briefcase";
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -4766,16 +4746,9 @@
 /obj/structure/closet{
 	name = "Evidence Closet 2"
 	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 2"
-	},
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 1
@@ -4799,13 +4772,6 @@
 "ajt" = (
 /obj/structure/closet{
 	name = "Evidence Closet 5"
-	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 5"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -5370,13 +5336,6 @@
 "akB" = (
 /obj/structure/closet{
 	name = "Evidence Closet 4"
-	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 4"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
@@ -13541,10 +13500,6 @@
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "azU" = (
-/obj/machinery/computer/security/wooden_tv{
-	pixel_x = 3;
-	pixel_y = 2
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -13555,6 +13510,11 @@
 	network = list("Prison");
 	pixel_y = 30
 	},
+/obj/item/device/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/restraints/handcuffs,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "azV" = (
@@ -13562,16 +13522,15 @@
 /obj/item/storage/secure/safe{
 	pixel_x = 32
 	},
-/obj/item/device/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/restraints/handcuffs,
 /obj/machinery/button/door{
 	id = "detective_shutters";
 	name = "detective's office shutters control";
 	pixel_y = 26;
 	req_access_txt = "4"
+	},
+/obj/machinery/computer/security/wooden_tv{
+	pixel_x = 3;
+	pixel_y = 2
 	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
@@ -17389,8 +17348,8 @@
 	amount = 50
 	},
 /obj/item/crowbar,
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -20493,13 +20452,6 @@
 /obj/structure/closet{
 	name = "Evidence Closet 3"
 	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 3"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -23436,6 +23388,7 @@
 /turf/open/floor/plating,
 /area/storage/primary)
 "aTi" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
 	locked = 0;
 	name = "AI Upload";
@@ -24856,6 +24809,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "aVY" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Network Access";
 	req_access_txt = "19"
@@ -36260,6 +36214,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/paper_bin,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
@@ -36280,6 +36235,7 @@
 /area/storage/art)
 "brf" = (
 /obj/structure/table,
+/obj/item/paper_bin/construction,
 /obj/item/airlock_painter,
 /obj/machinery/airalarm{
 	dir = 8;
@@ -41266,8 +41222,8 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /turf/open/floor/plasteel/caution{
 	dir = 8
 	},
@@ -69604,6 +69560,7 @@
 	id = "toxinsdriver";
 	name = "Toxins Launcher Bay Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
 "cDu" = (
@@ -77241,6 +77198,7 @@
 	id = "chapelgun";
 	name = "Chapel Launcher Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "cRQ" = (
@@ -128536,7 +128494,7 @@ aaa
 aaa
 aaf
 aaa
-aaX
+blx
 adl
 aQf
 adl
@@ -129054,7 +129012,7 @@ aaa
 aaa
 bii
 aaa
-aeD
+aeC
 afD
 afD
 afD

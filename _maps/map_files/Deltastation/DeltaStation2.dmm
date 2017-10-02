@@ -30323,8 +30323,8 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -46733,7 +46733,6 @@
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bMX" = (
-/obj/machinery/computer/security/wooden_tv,
 /obj/structure/table/wood,
 /obj/machinery/button/door{
 	id = "detectivewindows";
@@ -46747,15 +46746,16 @@
 	pixel_y = -26
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/device/flashlight/lamp,
+/obj/item/reagent_containers/food/drinks/flask/det,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bMY" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
 /obj/item/storage/secure/safe{
 	pixel_x = 32
 	},
-/obj/item/reagent_containers/food/drinks/flask/det,
+/obj/machinery/computer/security/wooden_tv,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bMZ" = (
@@ -67257,7 +67257,7 @@
 	pixel_x = -26
 	},
 /obj/structure/table/reinforced,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -108372,8 +108372,8 @@
 	amount = 50
 	},
 /obj/item/crowbar,
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32

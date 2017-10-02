@@ -39,7 +39,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
 	item_state = "balloon-empty"
-	
+
 
 /obj/item/toy/balloon/New()
 	create_reagents(10)

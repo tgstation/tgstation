@@ -9,17 +9,9 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	flags_1 = NOBLUDGEON_1
-	var/stored_power = 0 //Requires power to function
-	var/max_power = CLOCKCULT_POWER_UNIT * 10
+	var/speed_multiplier = 1 //The speed ratio the fabricator operates at
 	var/uses_power = TRUE
 	var/repairing = null //what we're currently repairing, if anything
-	var/obj/effect/clockwork/sigil/transmission/recharging = null //the sigil we're charging from, if any
-	var/speed_multiplier = 1 //how fast this fabricator works
-	var/charge_rate = MIN_CLOCKCULT_POWER //how much power we gain every two seconds
-	var/charge_delay = 2 //how many proccess ticks remain before we can start to charge
-
-/obj/item/clockwork/replica_fabricator/preloaded
-	stored_power = POWER_WALL_MINUS_FLOOR+POWER_WALL_TOTAL
 
 /obj/item/clockwork/replica_fabricator/scarab
 	name = "scarab fabricator"
@@ -27,7 +19,6 @@
 	item_state = "nothing"
 	w_class = WEIGHT_CLASS_TINY
 	speed_multiplier = 0.5
-	charge_rate = MIN_CLOCKCULT_POWER * 2
 	var/debug = FALSE
 
 /obj/item/clockwork/replica_fabricator/scarab/fabricate(atom/target, mob/living/user)
@@ -42,75 +33,7 @@
 
 /obj/item/clockwork/replica_fabricator/cyborg
 	name = "cyborg fabricator"
-	clockwork_desc = "A cyborg's internal fabricator. It is capable of using the cyborg's power in addition to stored power."
-
-/obj/item/clockwork/replica_fabricator/cyborg/get_power() //returns power and cyborg's power
-	var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
-	var/borg_power = 0
-	var/current_charge = 0
-	if(istype(R) && R.cell)
-		current_charge = R.cell.charge
-		while(current_charge > MIN_CLOCKCULT_POWER)
-			current_charge -= MIN_CLOCKCULT_POWER
-			borg_power += MIN_CLOCKCULT_POWER
-	return ..() + borg_power
-
-/obj/item/clockwork/replica_fabricator/cyborg/get_max_power()
-	var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
-	var/cell_maxcharge = 0
-	if(istype(R) && R.cell)
-		cell_maxcharge = R.cell.maxcharge
-	return ..() + cell_maxcharge
-
-/obj/item/clockwork/replica_fabricator/cyborg/can_use_power(amount)
-	if(amount != RATVAR_POWER_CHECK)
-		var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
-		var/current_charge = 0
-		if(istype(R) && R.cell)
-			current_charge = R.cell.charge
-			while(amount > 0 && stored_power - amount < 0) //amount is greater than 0 and stored power minus the amount is still less than 0
-				current_charge -= MIN_CLOCKCULT_POWER
-				amount -= MIN_CLOCKCULT_POWER
-		if(current_charge < 0)
-			return FALSE
-	. = ..()
-
-/obj/item/clockwork/replica_fabricator/cyborg/modify_stored_power(amount)
-	var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
-	if(istype(R) && R.cell && amount)
-		if(amount < 0)
-			while(amount < 0 && stored_power + amount < 0) //amount is less than 0 and stored alloy plus the amount is less than 0
-				R.cell.use(MIN_CLOCKCULT_POWER)
-				amount += MIN_CLOCKCULT_POWER
-		else
-			while(amount > 0 && R.cell.charge + MIN_CLOCKCULT_POWER < R.cell.maxcharge) //amount is greater than 0 and cell charge plus MIN_CLOCKCULT_POWER is less than maximum cell charge
-				R.cell.give(MIN_CLOCKCULT_POWER)
-				amount -= MIN_CLOCKCULT_POWER
-	. = ..()
-
-/obj/item/clockwork/replica_fabricator/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clockwork/replica_fabricator/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/clockwork/replica_fabricator/process()
-	if(!charge_rate)
-		return
-	var/mob/living/L = get_atom_on_turf(src, /mob/living)
-	if(istype(L) && is_servant_of_ratvar(L))
-		if(charge_delay)
-			charge_delay--
-			return
-		modify_stored_power(charge_rate)
-		for(var/obj/item/clockwork/replica_fabricator/S in L.GetAllContents()) //no multiple fabricators
-			if(S == src)
-				continue
-			S.charge_delay = 2
-	else
-		charge_delay = 2
+	clockwork_desc = "A cyborg's internal fabricator."
 
 /obj/item/clockwork/replica_fabricator/ratvar_act()
 	if(GLOB.ratvar_awakens)
@@ -129,45 +52,24 @@
 			to_chat(user, "<span class='alloy'>It can consume floor tiles, rods, metal, and plasteel for power at rates of <b>2:[DisplayPower(POWER_ROD)]</b>, <b>1:[DisplayPower(POWER_ROD)]</b>, <b>1:[DisplayPower(POWER_METAL)]</b>, \
 			and <b>1:[DisplayPower(POWER_PLASTEEL)]</b>, respectively.</span>")
 			to_chat(user, "<span class='alloy'>It can also consume brass sheets for power at a rate of <b>1:[DisplayPower(POWER_FLOOR)]</b>.</span>")
-			to_chat(user, "<span class='alloy'>It is storing <b>[DisplayPower(get_power())]/[DisplayPower(get_max_power())]</b> of power[charge_rate ? ", and is gaining <b>[DisplayPower(charge_rate*0.5)]</b> of power per second":""].</span>")
 			to_chat(user, "<span class='alloy'>Use it in-hand to produce <b>5</b> brass sheets at a cost of <b>[DisplayPower(POWER_WALL_TOTAL)]</b> power.</span>")
+			to_chat(user, "<span class='alloy'>It has access to <b>[DisplayPower(get_clockwork_power())]</b> of power.</span>")
 
 /obj/item/clockwork/replica_fabricator/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user))
 		if(uses_power)
-			if(!can_use_power(POWER_WALL_TOTAL))
+			if(!get_clockwork_power(POWER_WALL_TOTAL))
 				to_chat(user, "<span class='warning'>[src] requires <b>[DisplayPower(POWER_WALL_TOTAL)]</b> of power to produce brass sheets!</span>")
 				return
-			modify_stored_power(-POWER_WALL_TOTAL)
+			adjust_clockwork_power(-POWER_WALL_TOTAL)
 		playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 		new/obj/item/stack/tile/brass(user.loc, 5)
-		to_chat(user, "<span class='brass'>You use [stored_power ? "some":"all"] of [src]'s power to produce <b>5</b> brass sheets. It now stores <b>[DisplayPower(get_power())]/[DisplayPower(get_max_power())]</b> of power.</span>")
+		to_chat(user, "<span class='brass'>You use [get_clockwork_power() ? "some":"all"] of [src]'s power to produce <b>5</b> brass sheets. It now has access to <b>[DisplayPower(get_clockwork_power())]</b> of power.</span>")
 
 /obj/item/clockwork/replica_fabricator/pre_attackby(atom/target, mob/living/user, params)
 	if(!target || !user || !is_servant_of_ratvar(user) || istype(target, /obj/item/storage))
 		return TRUE
 	return fabricate(target, user)
-
-/obj/item/clockwork/replica_fabricator/proc/get_power()
-	return stored_power
-
-/obj/item/clockwork/replica_fabricator/proc/get_max_power()
-	return max_power
-
-/obj/item/clockwork/replica_fabricator/proc/modify_stored_power(amount)
-	stored_power = Clamp(stored_power + amount, 0, max_power)
-	return TRUE
-
-/obj/item/clockwork/replica_fabricator/proc/can_use_power(amount)
-	if(amount == RATVAR_POWER_CHECK)
-		if(GLOB.ratvar_awakens || !uses_power)
-			return TRUE
-		else
-			return FALSE
-	if(stored_power - amount < 0)
-		return FALSE
-	if(stored_power - amount > max_power)
-		return FALSE
 	return TRUE
 
 //A note here; return values are for if we CAN BE PUT ON A TABLE, not IF WE ARE SUCCESSFUL, unless no_table_check is TRUE
@@ -177,10 +79,6 @@
 	if(repairing)
 		if(!silent)
 			to_chat(user, "<span class='warning'>You are currently repairing [repairing] with [src]!</span>")
-		return FALSE
-	if(recharging)
-		if(!silent)
-			to_chat(user, "<span class='warning'>You are currently recharging [src] from the [recharging.sigil_name]!</span>")
 		return FALSE
 	var/list/fabrication_values = target.fabrication_vals(user, src, silent) //relevant values for fabricating stuff, given as an associated list
 	if(!islist(fabrication_values))
@@ -192,7 +90,7 @@
 			if(!no_table_check)
 				return TRUE
 		return FALSE
-	if(can_use_power(RATVAR_POWER_CHECK))
+	if(get_clockwork_power(RATVAR_POWER_CHECK))
 		fabrication_values["power_cost"] = 0
 
 	var/turf/Y = get_turf(user)
@@ -252,7 +150,7 @@
 				A.setDir(fabrication_values["spawn_dir"])
 		if(!fabrication_values["no_target_deletion"]) //for some cases where fabrication_vals() modifies the object but doesn't want it deleted
 			qdel(target)
-	modify_stored_power(-fabrication_values["power_cost"])
+	adjust_clockwork_power(-fabrication_values["power_cost"])
 	if(no_table_check)
 		return TRUE
 	return FALSE
@@ -265,25 +163,18 @@
 /obj/item/clockwork/replica_fabricator/proc/fabricate_checks(list/fabrication_values, atom/target, expected_type, mob/user, silent) //checked constantly while fabricating
 	if(!islist(fabrication_values) || QDELETED(target) || QDELETED(user))
 		return FALSE
-	if(repairing || recharging)
+	if(repairing)
 		return FALSE
 	if(target.type != expected_type)
 		return FALSE
-	if(can_use_power(RATVAR_POWER_CHECK))
+	if(get_clockwork_power(RATVAR_POWER_CHECK))
 		fabrication_values["power_cost"] = 0
-	if(!can_use_power(fabrication_values["power_cost"]))
-		if(stored_power - fabrication_values["power_cost"] < 0)
+	if(!get_clockwork_power(fabrication_values["power_cost"]))
+		if(get_clockwork_power() - fabrication_values["power_cost"] < 0)
 			if(!silent)
 				var/atom/A = fabrication_values["new_obj_type"]
 				if(A)
 					to_chat(user, "<span class='warning'>You need <b>[DisplayPower(fabrication_values["power_cost"])]</b> power to fabricate \a [initial(A.name)] from [target]!</span>")
-		else if(stored_power - fabrication_values["power_cost"] > max_power)
-			if(!silent)
-				var/atom/A = fabrication_values["new_obj_type"]
-				if(A)
-					to_chat(user, "<span class='warning'>Your [name] contains too much power to fabricate \a [initial(A.name)] from [target]!</span>")
-				else
-					to_chat(user, "<span class='warning'>Your [name] contains too much power to consume [target]!</span>")
 		return FALSE
 	return TRUE
 
@@ -321,26 +212,9 @@
 		return FALSE
 	repair_values["healing_for_cycle"] = min(repair_values["amount_to_heal"], FABRICATOR_REPAIR_PER_TICK) //modify the healing for this cycle
 	repair_values["power_required"] = round(repair_values["healing_for_cycle"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER) //and get the power cost from that
-	if(!can_use_power(RATVAR_POWER_CHECK) && !can_use_power(repair_values["power_required"]))
+	if(!get_clockwork_power(RATVAR_POWER_CHECK) && !get_clockwork_power(repair_values["power_required"]))
 		if(!silent)
 			to_chat(user, "<span class='warning'>You need at least <b>[DisplayPower(repair_values["power_required"])]</b> power to start repairin[target == user ? "g yourself" : "g [target]"], and at least \
 			<b>[DisplayPower(repair_values["amount_to_heal"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)]</b> to fully repair [target == user ? "yourself" : "[target.p_them()]"]!</span>")
-		return FALSE
-	return TRUE
-
-//The sigil charge check proc.
-/obj/item/clockwork/replica_fabricator/proc/sigil_charge_checks(list/charge_values, obj/effect/clockwork/sigil/transmission/sigil, mob/user, silent)
-	if(!islist(charge_values) || QDELETED(sigil) || QDELETED(user))
-		return FALSE
-	if(can_use_power(RATVAR_POWER_CHECK))
-		return FALSE
-	charge_values["power_gain"] = Clamp(sigil.power_charge, 0, POWER_WALL_MINUS_FLOOR)
-	if(!charge_values["power_gain"])
-		if(!silent)
-			to_chat(user, "<span class='warning'>The [sigil.sigil_name] contains no power!</span>")
-		return FALSE
-	if(stored_power + charge_values["power_gain"] > max_power)
-		if(!silent)
-			to_chat(user, "<span class='warning'>Your [name] contains too much power to charge from the [sigil.sigil_name]!</span>")
 		return FALSE
 	return TRUE

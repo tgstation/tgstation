@@ -15,7 +15,7 @@
 	facial_hair_color = hair_color
 	eye_color = random_eye_color()
 	if(!pref_species)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = pick(CONFIG_GET(keyed_flag_list/roundstart_races))
 		pref_species = new rando_race()
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)

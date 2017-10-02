@@ -88,6 +88,16 @@
 	new /obj/item/device/t_scanner(src)
 	new /obj/item/extinguisher/mini(src)
 
+/obj/item/storage/belt/utility/servant/PopulateContents()
+	new /obj/item/screwdriver/brass(src)
+	new /obj/item/wirecutters/brass(src)
+	new /obj/item/wrench/brass(src)
+	new /obj/item/crowbar/brass(src)
+	new /obj/item/weldingtool/experimental/brass(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src, 30, "yellow")
+
+
 
 
 /obj/item/storage/belt/medical

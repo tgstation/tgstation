@@ -27,9 +27,8 @@
 /obj/machinery/computer/gulag_teleporter_computer/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/card/id/prisoner))
 		if(!id)
-			if(!user.drop_item())
+			if (!user.transferItemToLoc(W,src))
 				return
-			W.forceMove(src)
 			id = W
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			return

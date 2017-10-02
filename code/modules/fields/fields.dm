@@ -30,6 +30,7 @@
 	//Processing
 	var/process_inner_turfs = FALSE	//Don't do this unless it's absolutely necessary
 	var/process_edge_turfs = FALSE	//Don't do this either unless it's absolutely necessary, you can just track what things are inside manually or on the initial setup.
+	var/requires_processing = FALSE
 	var/setup_edge_turfs = FALSE	//Setup edge turfs/all field turfs. Set either or both to ON when you need it, it's defaulting to off unless you do to save CPU.
 	var/setup_field_turfs = FALSE
 	var/use_host_turf = FALSE		//For fields from items carried on mobs to check turf instead of loc...
@@ -41,6 +42,7 @@
 
 /datum/proximity_monitor/advanced/Destroy()
 	full_cleanup()
+	STOP_PROCESSING(SSfields, src)
 	return ..()
 
 /datum/proximity_monitor/advanced/proc/assume_params(list/field_params)
@@ -75,6 +77,10 @@
 /datum/proximity_monitor/advanced/proc/process_inner_turf(turf/T)
 
 /datum/proximity_monitor/advanced/proc/process_edge_turf(turf/T)
+
+/datum/proximity_monitor/advanced/New()
+	if(requires_processing)
+		START_PROCESSING(SSfields, src)
 
 /datum/proximity_monitor/advanced/proc/Initialize()
 	setup_field()
@@ -250,11 +256,6 @@
 	setup_field_turfs = TRUE
 	setup_edge_turfs = TRUE
 
-/datum/proximity_monitor/advanced/debug/recalculate_field()
-	..()
-
-/datum/proximity_monitor/advanced/debug/post_setup_field()
-	..()
 
 /datum/proximity_monitor/advanced/debug/setup_edge_turf(turf/T)
 	T.color = set_edgeturf_color

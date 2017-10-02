@@ -7441,14 +7441,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness)
-"aqt" = (
-/obj/effect/landmark/syndicate_breach_area,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/crew_quarters/fitness)
 "aqu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -13334,6 +13326,7 @@
 	id = "chapelgun";
 	name = "Chapel Launcher Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "aEo" = (
@@ -14776,7 +14769,6 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "aHr" = (
-/obj/effect/landmark/marauder_entry,
 /turf/open/space,
 /area/space)
 "aHs" = (
@@ -27902,6 +27894,7 @@
 	id = "trash";
 	name = "disposal bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bnw" = (
@@ -39043,6 +39036,7 @@
 	id = "toxinsdriver";
 	name = "toxins launcher bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
 "bLm" = (
@@ -100717,7 +100711,7 @@ aaa
 aaa
 aaa
 aaa
-aqt
+aqs
 aro
 aro
 aro
@@ -115153,7 +115147,7 @@ aaa
 aaa
 aaa
 bky
-btq
+btp
 brH
 bvQ
 bxt
@@ -115667,7 +115661,7 @@ aaa
 aaa
 aaa
 bZi
-btp
+btq
 brI
 bvR
 cNS

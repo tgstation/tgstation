@@ -62,6 +62,25 @@
 	health = maxHealth
 	. = ..()
 
+/mob/living/simple_animal/hostile/mushroom/CanAttack(atom/the_target) // Mushroom-specific version of CanAttack to handle stupid attack_same = 2 crap so we don't have to do it for literally every single simple_animal/hostile because this shit never gets spawned
+	if(!the_target || isturf(the_target) || istype(the_target, /atom/movable/lighting_object)) 
+		return FALSE
+
+	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
+		return FALSE
+
+	if(isliving(the_target))
+		var/mob/living/L = the_target
+
+		if (!faction_check_mob(L) && attack_same == 2)
+			return FALSE
+		if(L.stat > stat_attack)
+			return FALSE
+
+		return TRUE
+
+	return FALSE
+
 /mob/living/simple_animal/hostile/mushroom/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5

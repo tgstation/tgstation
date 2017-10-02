@@ -1,6 +1,5 @@
 /datum/antagonist/ninja
 	name = "Ninja"
-	var/team
 	var/helping_station = 0
 	var/give_objectives = TRUE
 
@@ -19,36 +18,8 @@
 	..(new_owner)
 	helping_station = rand(0,1)
 
-/datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current, safety=0)//Safety in case you need to unequip stuff for existing characters.
-	if(safety)
-		qdel(H.w_uniform)
-		qdel(H.wear_suit)
-		qdel(H.wear_mask)
-		qdel(H.head)
-		qdel(H.shoes)
-		qdel(H.gloves)
-
-	var/obj/item/clothing/suit/space/space_ninja/theSuit = new(H)
-	var/obj/item/dash/energy_katana/EK = new(H)
-	theSuit.energyKatana = EK
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/space_ninja(H), slot_shoes)
-	H.equip_to_slot_or_del(theSuit, slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/space_ninja(H), slot_wear_mask)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night(H), slot_glasses)
-	H.equip_to_slot_or_del(EK, slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/grenade/plastic/x4(H), slot_l_store)
-	H.equip_to_slot_or_del(new /obj/item/tank/internals/emergency_oxygen(H), slot_s_store)
-	H.equip_to_slot_or_del(new /obj/item/tank/jetpack/carbondioxide(H), slot_back)
-	theSuit.randomize_param()
-
-	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
-	E.implant(H)
-	return 1
+/datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current)
+	return H.equipOutfit(/datum/outfit/ninja)
 
 /datum/antagonist/ninja/proc/addMemories()
 	owner.store_memory("I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")

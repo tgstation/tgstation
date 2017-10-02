@@ -412,8 +412,9 @@
 			liver_failure()
 		else
 			liver.failing = FALSE
-
-	if(((!(NOLIVER in dna.species.species_traits)) && (!liver)))
+	else
+		if((dna && dna.species && (NOLIVER in dna.species.species_traits)))
+			return
 		liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()

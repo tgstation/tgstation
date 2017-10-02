@@ -6,6 +6,7 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 200
+	desc = "The mechanical framework for an airlock."
 	var/state = 0
 	var/mineral = null
 	var/typetext = ""
@@ -362,6 +363,23 @@
 	airlock_type = /obj/machinery/door/airlock/centcom
 	anchored = TRUE
 	state = 1
+
+/obj/structure/door_assembly/examine(mob/user)
+	..()
+	switch(state)
+		if(0)
+			if(anchored)
+				to_chat(user, "<span class='notice'>The anchoring bolts are <b>wrenched</b> in place, but the maintenance panel lacks <i>wiring</i>.</span>")
+			else
+				to_chat(user, "<span class='notice'>The assembly is <b>welded together</b>, but the anchoring bolts are <i>unwrenched</i>.</span>")
+		if(1)
+			to_chat(user, "<span class='notice'>The maintenance panel is <b>wired</b>, but the circuit slot is <i>empty</i>.</span>")
+		if(2)
+			to_chat(user, "<span class='notice'>The circuit is <b>connected loosely</b> to its slot, but the maintenance panel is <i>unscrewed and open</i>.</span>")
+	if(!mineral || !material)
+		to_chat(user, "<span class='notice'>There is a small <i>paper</i> placard on the assembly. There are <i>empty</i> slots for glass windows or mineral covers.</span>")
+	else
+		to_chat(user, "<span class='notice'>There is a small <i>paper</i> placard on the assembly.</span>")
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
