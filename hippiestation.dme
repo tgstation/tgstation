@@ -2247,6 +2247,7 @@
 #include "hippiestation\code\game\gamemodes\messiah\MakeJesus.dm"
 #include "hippiestation\code\game\gamemodes\messiah\miracles.dm"
 #include "hippiestation\code\game\gamemodes\messiah\outfit.dm"
+#include "hippiestation\code\game\gamemodes\nuclear\nuclear_challenge.dm"
 #include "hippiestation\code\game\gamemodes\shadowling\ascendant_shadowling.dm"
 #include "hippiestation\code\game\gamemodes\shadowling\shadowling.dm"
 #include "hippiestation\code\game\gamemodes\shadowling\shadowling_abilities.dm"
