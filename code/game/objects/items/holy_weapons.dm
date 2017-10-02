@@ -339,7 +339,7 @@
 /obj/item/nullrod/holy_crunch_scroll
 	name = "holy deed"
 	desc = "Orders from the powers above."
- 	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll3"
 
 /obj/item/nullrod/holy_crunch_scroll/attack_self(mob/living/carbon/human/user)
@@ -348,11 +348,11 @@
 	var/resolve = "<span class='danger'>A phantom force punches your gut!</b></span>"
 	if(is_servant_of_ratvar(user))
 		to_chat(user, "<span class='redtext'>\"RATVAR IS HERESY, AND YOU ARE TOAST!!\"</span>")
-		gib(user) //who knows if this works webeditor hahaha
+		user.gib_animation()
 		return 1
 	if(iscultist(user))
 		to_chat(user, "<span class='redtext'>\"BACK TO WHENCE YOU CAME, BLOOD WENCH!!\"</span>")
-		gib(user)
+		user.gib_animation()
 		return 1
 	to_chat(user, resolve)
 	user.Knockdown(80)
