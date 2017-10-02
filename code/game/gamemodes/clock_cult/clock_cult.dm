@@ -246,6 +246,7 @@ Credit where due:
 	backpack_contents = list(/obj/item/storage/box/engineer = 1, \
 	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1)
 	id = /obj/item/card/id
+	var/plasmaman //We use this to determine if we should activate internals in post_equip()
 
 /datum/outfit/servant_of_ratvar/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(H.dna.species.id == "plasmaman") //Plasmamen get additional equipment because of how they work
@@ -253,6 +254,7 @@ Credit where due:
 		uniform = /obj/item/clothing/under/plasmaman //Plasmamen generally shouldn't need chameleon suits anyways, since everyone expects them to wear their fire suit
 		r_hand = /obj/item/tank/internals/plasmaman/belt/full
 		mask = /obj/item/clothing/mask/breath
+		plasmaman = TRUE
 
 /datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/card/id/W = H.wear_id
@@ -260,6 +262,9 @@ Credit where due:
 	W.access += ACCESS_MAINT_TUNNELS
 	W.registered_name = H.real_name
 	W.update_label()
+	if(plasmaman) //If we need to breathe from the plasma tank, we should probably start doing that
+		H.internal = H.get_item_for_held_index(2)
+		H.update_internals_hud_icon(1)
 
 /obj/item/paper/servant_primer
 	name = "The Ark And You: A Primer On Servitude"
