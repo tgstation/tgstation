@@ -6,10 +6,7 @@
 /datum/component/slippery/Initialize(_intensity, _lube_flags = NONE)
 	intensity = max(_intensity, 0)
 	lube_flags = _lube_flags
-	if(ismovableatom(parent))
-		RegisterSignal(COMSIG_MOVABLE_CROSSED, .proc/Slip)
-	else
-		RegisterSignal(COMSIG_ATOM_ENTERED, .proc/Slip)
+	RegisterSignal(list(COMSIG_MOVABLE_CROSSED, COMSIG_ATOM_ENTERED), .proc/Slip)
 
 /datum/component/slippery/proc/Slip(atom/movable/AM)
 	var/mob/victim = AM

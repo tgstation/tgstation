@@ -107,24 +107,25 @@
 		var/obj/item/bodypart/head/as_head = AM
 		var/obj/item/device/mmi/as_mmi = AM
 		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain)
-		if(isliving(AM) || brain_holder)
+		if(brain_holder)
+			emergency_stop(AM)
+		else if(isliving(AM))
 			if(emagged)
-				if(!brain_holder)
-					crush_living(AM)
+				crush_living(AM)
 			else
 				emergency_stop(AM)
 		else if(istype(AM, /obj/item))
 			recycle_item(AM)
 			items_recycled++
 		else
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
-			AM.loc = src.loc
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			AM.forceMove(loc)
 
 	if(items_recycled && sound)
-		playsound(src.loc, item_recycle_sound, 50, 1)
+		playsound(src, item_recycle_sound, 50, 1)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
-	I.loc = src.loc
+	I.forceMove(loc)
 
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(I)
@@ -137,25 +138,25 @@
 
 
 /obj/machinery/recycler/proc/emergency_stop(mob/living/L)
-	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	safety_mode = TRUE
 	update_icon()
-	L.loc = src.loc
+	L.forceMove(loc)
 	addtimer(CALLBACK(src, .proc/reboot), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
-	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+	playsound(src, 'sound/machines/ping.ogg', 50, 0)
 	safety_mode = FALSE
 	update_icon()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
 
-	L.loc = src.loc
+	L.forceMove(loc)
 
 	if(issilicon(L))
-		playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+		playsound(src, 'sound/items/welder.ogg', 50, 1)
 	else
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(src, 'sound/effects/splat.ogg', 50, 1)
 
 	var/gib = TRUE
 	// By default, the emagged recycler will gib all non-carbons. (human simple animal mobs don't count)

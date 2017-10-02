@@ -144,7 +144,7 @@
 			ignore_source_check = TRUE
 			return FALSE
 	if(firer && !ignore_source_check)
-		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
+		if(A == firer || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
 			loc = A.loc
 			return FALSE
 
@@ -280,7 +280,7 @@
 				if(can_hit_target(original, permutated))
 					Collide(original)
 				Range()
-			sleep(config.run_speed * 0.9)
+			sleep(CONFIG_GET(number/run_delay) * 0.9)
 
 //Returns true if the target atom is on our current turf and above the right layer
 /obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)

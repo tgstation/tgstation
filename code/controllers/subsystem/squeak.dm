@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(squeak)
 	var/list/exposed_wires = list()
 
 /datum/controller/subsystem/squeak/Initialize(timeofday)
-	trigger_migration(config.mice_roundstart)
+	trigger_migration(CONFIG_GET(number/mice_roundstart))
 	return ..()
 
 /datum/controller/subsystem/squeak/proc/trigger_migration(num_mice=10)

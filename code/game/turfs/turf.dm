@@ -510,7 +510,7 @@
 		return
 	if(has_gravity(src))
 		playsound(src, "bodyfall", 50, 1)
-
+	faller.drop_all_held_items()
 
 /turf/proc/add_decal(decal,group)
 	LAZYINITLIST(decals)

@@ -199,6 +199,8 @@
 		else
 			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
 
+/obj/item/device/mmi/relaymove()
+	return //so that the MMI won't get a warning about not being able to move if it tries to move
 
 /obj/item/device/mmi/syndie
 	name = "Syndicate Man-Machine Interface"

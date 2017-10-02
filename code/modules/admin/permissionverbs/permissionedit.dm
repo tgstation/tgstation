@@ -51,7 +51,7 @@
 	usr << browse(output,"window=editrights;size=900x650")
 
 /datum/admins/proc/log_admin_rank_modification(adm_ckey, new_rank)
-	if(config.admin_legacy_system)
+	if(CONFIG_GET(flag/admin_legacy_system))
 		return
 
 	if(!usr.client)
@@ -105,7 +105,7 @@
 
 
 /datum/admins/proc/log_admin_permission_modification(adm_ckey, new_permission)
-	if(config.admin_legacy_system)
+	if(CONFIG_GET(flag/admin_legacy_system))
 		return
 	if(!usr.client)
 		return
