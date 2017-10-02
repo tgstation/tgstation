@@ -20,6 +20,7 @@
 		D.visible_message("<span class='danger'>[A] uses [atk_verb] on [D]!</span>", \
 					  "<span class='userdanger'>[A] uses [atk_verb] on you!</span>")
 		D.apply_damage(10, BURN)
+		playsound(get_turf(D), 'sound/magic/teleport_app.ogg', 25, 1, -1)
 		add_logs(A, D, " used [atk_verb] (Hand of God) on")
 		return 1
 	if(attack_type == "toxin")
@@ -27,6 +28,7 @@
 		D.visible_message("<span class='danger'>[A] uses [atk_verb] on [D]!</span>", \
 					  "<span class='userdanger'>[A] uses [atk_verb] on you!</span>")
 		D.apply_damage(10, TOX)
+		playsound(get_turf(D), 'sound/effects/bamf.ogg', 25, 1, -1)
 		add_logs(A, D, " used [atk_verb] (Hand of God) on")
 		return 1
 	if(attack_type == "knockdown")
