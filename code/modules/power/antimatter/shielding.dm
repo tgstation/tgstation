@@ -39,9 +39,8 @@
 
 /obj/machinery/am_shielding/proc/collapse()
 	visible_message("<span class='notice'>[src] collapses back into a container!</span>")
-	new /obj/item/device/am_shielding_container(loc)
+	new /obj/item/device/am_shielding_container(drop_location())
 	qdel(src)
-	return
 
 /obj/machinery/am_shielding/proc/controllerscan(priorscan = 0)
 	//Make sure we are the only one here
