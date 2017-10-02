@@ -179,8 +179,6 @@
 		var/obj/item/device/soulstone/SS = contents[1]
 		if(istype(SS))
 			SS.transfer_soul("CONSTRUCT",target,user)
-
-
 			qdel(SS)
 
 /datum/action/innate/dash/cult
