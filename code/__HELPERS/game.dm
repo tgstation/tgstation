@@ -332,15 +332,13 @@
 
 /proc/considered_alive(datum/mind/M, enforce_human = TRUE)
 	if(M && M.current)
-		switch(enforce_human)
-			if(TRUE)
-				var/mob/living/carbon/human/H
-				if(ishuman(M.current))
-					H = M.current
-				return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
-			if(FALSE)
-				if(isliving(M.current))
-					return M.current.stat != DEAD
+		if(enforce_human)
+			var/mob/living/carbon/human/H
+			if(ishuman(M.current))
+				H = M.current
+			return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
+		else if(isliving(M.current))
+			return M.current.stat != DEAD
 	return FALSE
 
 /proc/considered_afk(datum/mind/M)
