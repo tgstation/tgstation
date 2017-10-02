@@ -23,6 +23,7 @@
 		playsound(get_turf(D), 'sound/magic/clockwork/ratvar_attack.ogg', 25, 1, -1)
 		add_logs(A, D, " used [atk_verb] (Holy Crunch) on")
 		return 1
+	if(attack_type == "toxin")
 		var/atk_verb = pick("power word: impair", "power word: afflict", "power word: debilitate", "power word: hurt", "power word: diminish", )
 		D.visible_message("<span class='danger'>[A] uses [atk_verb] on [D]!</span>", \
 					  "<span class='userdanger'>[A] uses [atk_verb] on you!</span>")
