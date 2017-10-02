@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(human_dummy_list)
 		return new /mob/living/carbon/human/dummy
 	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotkey]
 	if(istype(D))
-		UNTIL(!D.in_use)
+		UNTIL(!D.in_use && !(D.flags_1 & OVERLAY_QUEUED_1))
 	else
 		pass()
 	if(QDELETED(D))
