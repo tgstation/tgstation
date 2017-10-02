@@ -21,6 +21,13 @@
 	var/datum/action/innate/dash/ninja/jaunt
 	var/dash_toggled = TRUE
 
+/obj/item/energy_katana/Initialize()
+	. = ..()
+	jaunt = new(src)
+	spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+
 /obj/item/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(dash_toggled)
 		jaunt.Teleport(user, target)
@@ -30,6 +37,17 @@
 		playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
 		target.emag_act(user)
 
+/obj/item/energy_katana/pickup(mob/living/user)
+	. = ..()
+	jaunt.Grant(user, src)
+	linked_action.Grant(user, src)
+	user.update_icons()
+
+/obj/item/energy_katana/dropped(mob/user)
+	. = ..()
+	linked_action.Remove(user)
+	jaunt.Remove(user)
+	user.update_icons()
 
 //If we hit the Ninja who owns this Katana, they catch it.
 //Works for if the Ninja throws it or it throws itself or someone tries
@@ -72,20 +90,15 @@
 	if(msg)
 		to_chat(user, "<span class='notice'>[msg]</span>")
 
-/obj/item/energy_katana/Initialize()
-	. = ..()
-	jaunt = new(src)
-	spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(5, 0, src)
-	spark_system.attach(src)
 
 /obj/item/energy_katana/Destroy()
 	QDEL_NULL(spark_system)
 	return ..()
-
 
 /datum/action/innate/dash/ninja
 	current_charges = 3
 	max_charges = 3
 	charge_rate = 30
 	recharge_sound = null
+
+
