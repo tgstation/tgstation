@@ -217,7 +217,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			C.Jitter(50)
 			C.Knockdown(60)
 			var/mob/living/carbon/human/H = C
-			if(ckey != null) //used over (!ckey) to restore botAI when ghosting.
+			if(client) //used over (!ckey) to restore botAI when ghosting.
 				spam_flag = TRUE
 			if (emagged <= 1) //HONK once, then leave
 				threatlevel = H.assess_threat(src)

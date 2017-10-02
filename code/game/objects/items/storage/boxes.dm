@@ -626,9 +626,8 @@ obj/item/storage/box/clown
 		return
 	to_chat(user, "<span class='notice'>You stamp the cardboard! Its a clown box! Honk!</span>")
 	playsound(src, 'sound/items/bikehorn.ogg', 50, 1, -1)
-	//var/turf/T = get_turf(src)
 	new/obj/item/storage/box/clown(drop_location())
-	qdel(src)
+	use(1)
 
 /obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
 	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
