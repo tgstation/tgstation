@@ -29,6 +29,7 @@
 	key_third_person = "bows"
 	message = "bows."
 	message_param = "bows to %t."
+	restraint_check = TRUE
 
 /datum/emote/living/burp
 	key = "burp"
@@ -120,6 +121,7 @@
 	key_third_person = "flaps"
 	message = "flaps their wings."
 	var/wing_time = 20
+	restraint_check = TRUE
 
 /datum/emote/living/flap/run_emote(mob/user, params)
 	. = ..()
@@ -139,6 +141,7 @@
 	key_third_person = "aflaps"
 	message = "flaps their wings ANGRILY!"
 	wing_time = 10
+	restraint_check = TRUE
 
 /datum/emote/living/flip
 	key = "flip"
@@ -465,8 +468,10 @@
 /datum/emote/living/spin
 	key = "spin"
 	key_third_person = "spins"
+	restraint_check = TRUE
 
 /datum/emote/living/spin/run_emote(mob/user)
+	. = ..()
 	user.spin(20, 1)
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
@@ -476,7 +481,7 @@
 					R.riding_datum.force_dismount(M)
 				else
 					R.unbuckle_all_mobs()
-	..()
+	
 
 /datum/emote/living/circle
 	key = "circle"
