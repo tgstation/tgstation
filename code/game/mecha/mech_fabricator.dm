@@ -426,7 +426,7 @@
 			stack_name = "bluespace"
 		else
 			var/obj/item/stack/S = lit
-			stack_name = material2name(initial(S.materials)[1])
+			stack_name = material2name(S.materials[1])
 		add_overlay("fab-load-[stack_name]")
 		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[stack_name]"), 10)
 		updateUsrDialog()
