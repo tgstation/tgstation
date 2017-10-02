@@ -52,11 +52,11 @@
 	if(get_dist(parent, user) <= 1)
 		out += "The air around [parent] feels warm"
 	switch(strength)
-		if(20 to 50)
+		if(50 to 200)
 			out += "[out ? " and it " : "[parent] "]feels weird to look at."
-		if(51 to 100)
+		if(201 to 500)
 			out += "[out ? " and it " : "[parent] "]seems to be glowing a bit."
-		if(101 to INFINITY)
+		if(501 to INFINITY) //At this level the object can contaminate other objects
 			out += "[out ? " and it " : "[parent] "]hurts to look at."
 		else
 			out += "."

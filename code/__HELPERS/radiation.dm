@@ -3,10 +3,13 @@
 	. = output
 	if(!location || location.GetComponent(/datum/component/rad_insulation))
 		return
-	if(!ignored_things[location.type])
-		output += location
+
+	output += location
+	
 	for(var/i in 1 to location.contents.len)
 		var/atom/thing = location.contents[i]
+		if(ignored_things[thing.type])
+			continue
 		get_rad_contents(thing, output)
 
 /proc/radiation_pulse(turf/epicenter, intensity, range_modifier, log=0, can_contaminate=TRUE)
@@ -20,6 +23,6 @@
 			continue
 		thing.rad_act(intensity, TRUE)
 
-	if(log)
+	if(log || intensity > 500)
 		log_game("Radiation pulse with intensity:[intensity] and range modifier:[range_modifier] in area [epicenter.loc.name] ")
 	return TRUE

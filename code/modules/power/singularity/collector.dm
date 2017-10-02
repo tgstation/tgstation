@@ -1,4 +1,4 @@
-#define RAD_COLLECTOR_EFFICIENCY 50 //radiation needs to be over this amount to get power
+#define RAD_COLLECTOR_EFFICIENCY 100 //radiation needs to be over this amount to get power
 
 GLOBAL_LIST_EMPTY(rad_collectors)
 
@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
-		last_power += pulse_strength-RAD_COLLECTOR_EFFICIENCY
+		last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*10
 
 /obj/machinery/power/rad_collector/proc/update_icons()
 	cut_overlays()

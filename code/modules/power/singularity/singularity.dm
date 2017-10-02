@@ -114,7 +114,7 @@
 /obj/singularity/process()
 	if(current_size >= STAGE_TWO)
 		move()
-		pulse()
+		radiation_pulse(get_turf(src), energy, 0.5)
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	eat()
@@ -423,10 +423,6 @@
 /obj/singularity/proc/emp_area()
 	empulse(src, 8, 10)
 	return
-
-
-/obj/singularity/proc/pulse()
-	radiation_pulse(get_turf(src), energy, 0.5)
 
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)

@@ -436,7 +436,7 @@
 
 /obj/structure/window/reinforced/Initialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION)
+	AddComponent(/datum/component/rad_insulation, RAD_HEAVY_INSULATION)
 
 /obj/structure/window/reinforced/spawner/east
 	dir = EAST
@@ -463,7 +463,7 @@
 
 /obj/structure/window/plasma/Initialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
+	qdel(GetComponent(/datum/component/rad_insulation))
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST
@@ -487,10 +487,6 @@
 	max_integrity = 500
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/plasmarglass
-
-/obj/structure/window/plasma/reinforced/Initialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION)
 
 /obj/structure/window/plasma/reinforced/spawner/east
 	dir = EAST

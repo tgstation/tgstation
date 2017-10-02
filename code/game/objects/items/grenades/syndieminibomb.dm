@@ -35,7 +35,7 @@
 	icon_state = "bluefrag"
 	item_state = "flashbang"
 	var/freeze_range = 4
-	var/rad_damage = 35
+	var/rad_damage = 350
 	var/stamina_damage = 30
 
 /obj/item/grenade/gluon/prime()
