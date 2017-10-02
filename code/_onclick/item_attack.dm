@@ -20,7 +20,7 @@
 	return SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params)
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return ..() || (attackable && I.attack_obj(src, user))
+	return ..() || (can_be_hit && I.attack_obj(src, user))
 
 /mob/living/attackby(obj/item/I, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)

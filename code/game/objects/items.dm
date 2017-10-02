@@ -26,7 +26,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	max_integrity = 200
 
-	attackable = FALSE
+	can_be_hit = FALSE
 
 	var/hitsound = null
 	var/usesound = null
