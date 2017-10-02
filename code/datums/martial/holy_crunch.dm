@@ -14,5 +14,5 @@
 	if(prob(D.getBruteLoss()) && !D.lying)
 		D.visible_message("<span class='warning'>[A] sends [D] to the ground with holy energies!</span>", "<span class='userdanger'>An unseen force sends swipes you off your feet!</span>")
 		D.Knockdown(80)
-	add_logs(A, D, "[atk_verb] (Holy Crunch)")
+	add_logs(A, D, " used [atk_verb] (Holy Crunch) on")
 	return 1
