@@ -336,7 +336,7 @@
 	icon_state = "tentacle"
 	item_state = "tentacle"
 
-/obj/item/nullrod/holy_crunch_scroll
+/obj/item/nullrod/hand_of_god
 	name = "holy deed"
 	desc = "Orders from the powers above."
 	force = 1
@@ -344,14 +344,14 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll3"
 
-/obj/item/nullrod/holy_crunch_scroll/attack_self(mob/living/carbon/human/user)
+/obj/item/nullrod/hand_of_god/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
 	var/resolve = "<span class='danger'>A phantom force punches your gut!</b></span>"
 	to_chat(user, resolve)
 	if(is_servant_of_ratvar(user) || iscultist(user))
-		to_chat(user, "<span class='redtext'>\"You are deemed UNWORTHY, cultist scum!\"</span>")
-		user.dropItemToGround(/obj/item/nullrod/holy_crunch_scroll)
+		to_chat(user, "<span class='redtext'><b>\"YOU HAVE BEEN DEEMED UNWORTHY, CULTIST SCUM!\"</b></span>")
+		user.dropItemToGround(/obj/item/nullrod/hand_of_god)
 		user.status_flags |= DISFIGURED
 		user.bleed_rate = 5
 		user.gib_animation()
@@ -362,10 +362,10 @@
 		user.spread_bodyparts()
 		return 1
 	user.Knockdown(80)
-	var/message = "<span class='sciradio'>You have been deemed worthy by the holy crunch, and now may control it! You do not get any special moves, but your attacks now deal a considerable amount of damage. <b>Deus Vult!</b></span>"
+	var/message = "<span class='sciradio'>You have been deemed worthy by the powers above, and now may control a fraction of it's power! Your attacks will switch between brute, burn, toxin, and a knockdown! <b>Deus Vult!</b></span>"
 	to_chat(user, message)
-	var/datum/martial_art/holy_crunch/holycrunch = new(null)
-	holycrunch.teach(user)
+	var/datum/martial_art/hand_of_god/handofgod = new(null)
+	handofgod.teach(user)
 	user.drop_item()
 	visible_message("<span class='warning'>[src] lights up in fire and quickly burns to ash.</span>")
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
