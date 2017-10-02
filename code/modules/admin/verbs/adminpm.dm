@@ -217,6 +217,7 @@
 
 #define IRC_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
 /proc/IrcPm(target,msg,sender)
+	return "target:[target];msg:[msg];sender:[sender]"
 	target = ckey(target)
 	var/client/C = GLOB.directory[target]
 
