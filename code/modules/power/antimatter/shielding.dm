@@ -32,18 +32,25 @@
 	. = ..()
 	addtimer(CALLBACK(src, .proc/controllerscan), 10)
 
+/obj/machinery/am_shielding/proc/overheat()
+	visible_message("<span class='danger'>[src] melts!</span>")
+	new /obj/effect/hotspot(loc)
+	qdel(src)
+
+/obj/machinery/am_shielding/proc/collapse()
+	visible_message("<span class='notice'>[src] collapses back into a container!</span>")
+	new /obj/item/device/am_shielding_container(loc)
+	qdel(src)
+	return
 
 /obj/machinery/am_shielding/proc/controllerscan(priorscan = 0)
 	//Make sure we are the only one here
 	if(!isturf(loc))
-		visible_message("<span class='notice'>[src] collapses back into a container!</span>")
-		new /obj/item/device/am_shielding_container(loc)
-		qdel(src)
-		return
+		collapse()
 	for(var/obj/machinery/am_shielding/AMS in loc.contents)
 		if(AMS == src)
 			continue
-		qdel(src)
+		collapse()
 		return
 
 	//Search for shielding first
@@ -61,9 +68,7 @@
 		if(!priorscan)
 			addtimer(CALLBACK(src, .proc/controllerscan, 1), 20)
 			return
-		visible_message("<span class='notice'>[src] collapses back into a container!</span>")
-		new /obj/item/device/am_shielding_container(loc)
-		qdel(src)
+		collapse()
 
 
 /obj/machinery/am_shielding/Destroy()
@@ -212,8 +217,7 @@
 	if(injecting_fuel && control_unit)
 		control_unit.exploding = 1
 	if(src)
-		visible_message("<span class='danger'>[src] melts!</span>")
-		qdel(src)
+		overheat()
 	return
 
 
