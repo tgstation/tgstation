@@ -2295,6 +2295,7 @@
 #include "hippiestation\code\game\objects\items\meat.dm"
 #include "hippiestation\code\game\objects\items\staples.dm"
 #include "hippiestation\code\game\objects\items\twohanded.dm"
+#include "hippiestation\code\game\objects\items\weaponry.dm"
 #include "hippiestation\code\game\objects\items\circuitboards\machine_circuitboards.dm"
 #include "hippiestation\code\game\objects\items\devices\meeseeks_box.dm"
 #include "hippiestation\code\game\objects\items\devices\multitool.dm"
