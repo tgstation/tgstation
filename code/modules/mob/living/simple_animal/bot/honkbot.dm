@@ -28,7 +28,7 @@
 	var/target_lastloc = FALSE	//Loc of target when arrested.
 	var/last_found = FALSE	//There's a delay
 	var/threatlevel = FALSE
-	var/declare_arrests = 0 // speak, you shall not, unless to Honk
+	var/declare_arrests = FALSE // speak, you shall not, unless to Honk
 	var/idcheck = TRUE //Chases unknowns
 	var/fcheck = TRUE //And armed people
 	var/check_records = TRUE //Doesn't care about criminals
