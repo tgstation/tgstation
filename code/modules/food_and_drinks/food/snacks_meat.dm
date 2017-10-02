@@ -187,7 +187,6 @@
 	visible_message("<span class='notice'>[src] expands!</span>")
 	var/mob/spammer = get_mob_by_key(src.fingerprintslast)
 	var/msg = "[src] has expanded! Last attached Mob: [spammer.real_name]"
-	log_attack(msg)
 	message_admins(msg + "[ADMIN_FLW(spammer)]")
 	new /mob/living/carbon/monkey(get_turf(src))
 	qdel(src)
