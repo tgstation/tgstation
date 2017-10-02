@@ -12,7 +12,7 @@
 	l_pocket = /obj/item/grenade/plastic/x4
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
 	internals_slot = slot_r_store
-	belt = /obj/item/dash/energy_katana
+	belt = /obj/item/energy_katana
 	implants = list(/obj/item/implant/explosive)
 
 

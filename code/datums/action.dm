@@ -597,7 +597,8 @@
 	desc = "Teleport to the targeted location."
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "jetboot"
-	var/charged = TRUE
+	var/current_charges = 1
+	var/max_charges = 1
 	var/charge_rate = 250
 	var/mob/living/carbon/human/holder
 	var/obj/item/dashing_item
@@ -613,7 +614,7 @@
 	holder = user
 
 /datum/action/innate/dash/IsAvailable()
-	if(charged)
+	if(current_charges > 0)
 		return TRUE
 	else
 		return FALSE
@@ -622,6 +623,8 @@
 	dashing_item.attack_self(holder) //Used to toggle dash behavior in the dashing item
 
 /datum/action/innate/dash/proc/Teleport(mob/user, atom/target)
+	if(!IsAvailable())
+		return
 	var/turf/T = get_turf(target)
 	if(target in view(user.client.view, get_turf(user)))
 		var/obj/spot1 = new phaseout(get_turf(user), user.dir)
@@ -629,12 +632,13 @@
 		playsound(T, dash_sound, 25, 1)
 		var/obj/spot2 = new phasein(get_turf(user), user.dir)
 		spot1.Beam(spot2,beam_effect,time=20)
-		charged = FALSE
+		current_charges--
 		holder.update_action_buttons_icon()
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)
 
 /datum/action/innate/dash/proc/charge()
-	charged = TRUE
+	current_charges = Clamp(current_charges + 1, 0, max_charges)
 	holder.update_action_buttons_icon()
-	playsound(dashing_item, recharge_sound, 50, 1)
-	to_chat(holder, "<span class='warning'>[dashing_item] is ready for another jaunt.</span>")
+	if(recharge_sound)
+		playsound(dashing_item, recharge_sound, 50, 1)
+	to_chat(holder, "<span class='notice'>[src] now has [current_charges]/[max_charges] charges.</span>")
