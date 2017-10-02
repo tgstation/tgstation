@@ -40,12 +40,10 @@
 /obj/item/energy_katana/pickup(mob/living/user)
 	. = ..()
 	jaunt.Grant(user, src)
-	linked_action.Grant(user, src)
 	user.update_icons()
 
 /obj/item/energy_katana/dropped(mob/user)
 	. = ..()
-	linked_action.Remove(user)
 	jaunt.Remove(user)
 	user.update_icons()
 
