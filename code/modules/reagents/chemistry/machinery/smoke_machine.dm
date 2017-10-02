@@ -68,6 +68,8 @@
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
 		if(units)
 			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
+			for(var/datum/reagent/R in RC.reagents.reagent_list)
+				add_logs(usr, src, "has added [R.name] to [src]")
 			return
 	if(default_unfasten_wrench(user, I))
 		return
