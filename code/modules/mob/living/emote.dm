@@ -438,7 +438,7 @@
 		if(e in keys)
 			continue
 		E = emote_list[e]
-		if(E.can_run_emote(user, TRUE))
+		if(E.can_run_emote(user))
 			keys += E.key
 
 	keys = sortList(keys)
