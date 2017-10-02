@@ -30,6 +30,22 @@
 	popup.set_content(dat)
 	popup.open()
 
+/datum/admins/proc/isReadytoRumble(mob/living/carbon/human/applicant, targetrole, onstation = TRUE, conscious = TRUE)
+	if(applicant.mind.special_role)
+		return FALSE
+	if(!(targetrole in applicant.client.prefs.be_special))
+		return FALSE
+	if(onstation)
+		var/turf/T = get_turf(applicant)
+		if(!(T.z in GLOB.station_z_levels))
+			return FALSE
+	if(conscious && applicant.stat) //incase you don't care about a certain antag being unconcious when made, ie if they have selfhealing abilities.
+		return FALSE
+	if(!considered_alive(applicant.mind) || considered_afk(applicant.mind)) //makes sure the player isn't a zombie, brain, or just afk all together
+		return FALSE
+	return (!jobban_isbanned(applicant, targetrole) && !jobban_isbanned(applicant, "Syndicate"))
+
+
 /datum/admins/proc/makeTraitors()
 	var/datum/game_mode/traitor/temp = new
 
@@ -43,14 +59,10 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(ROLE_TRAITOR in applicant.client.prefs.be_special)
-			if(!applicant.stat)
-				if(applicant.mind)
-					if (!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_TRAITOR) && !jobban_isbanned(applicant, "Syndicate"))
-							if(temp.age_check(applicant.client))
-								if(!(applicant.job in temp.restricted_jobs))
-									candidates += applicant
+		if(isReadytoRumble(applicant, ROLE_TRAITOR, FALSE))
+			if(temp.age_check(applicant.client))
+				if(!(applicant.job in temp.restricted_jobs))
+					candidates += applicant
 
 	if(candidates.len)
 		var/numTraitors = min(candidates.len, 3)
@@ -79,13 +91,10 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(ROLE_CHANGELING in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && (T.z in GLOB.station_z_levels))
-				if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
+		if(isReadytoRumble(applicant, ROLE_CHANGELING))
+			if(temp.age_check(applicant.client))
+				if(!(applicant.job in temp.restricted_jobs))
+					candidates += applicant
 
 	if(candidates.len)
 		var/numChanglings = min(candidates.len, 3)
@@ -112,13 +121,10 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(ROLE_REV in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && (T.z in GLOB.station_z_levels))
-				if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
+		if(isReadytoRumble(applicant, ROLE_REV))
+			if(temp.age_check(applicant.client))
+				if(!(applicant.job in temp.restricted_jobs))
+					candidates += applicant
 
 	if(candidates.len)
 		var/numRevs = min(candidates.len, 3)
@@ -154,13 +160,10 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(ROLE_CULTIST in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && (T.z in GLOB.station_z_levels))
-				if(!jobban_isbanned(applicant, ROLE_CULTIST) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
+		if(isReadytoRumble(applicant, ROLE_CULTIST))
+			if(temp.age_check(applicant.client))
+				if(!(applicant.job in temp.restricted_jobs))
+					candidates += applicant
 
 	if(candidates.len)
 		var/numCultists = min(candidates.len, 4)
@@ -187,13 +190,10 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(ROLE_SERVANT_OF_RATVAR in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && (T.z in GLOB.station_z_levels))
-				if(!jobban_isbanned(applicant, ROLE_SERVANT_OF_RATVAR) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
+		if(isReadytoRumble(applicant, ROLE_SERVANT_OF_RATVAR))
+			if(temp.age_check(applicant.client))
+				if(!(applicant.job in temp.restricted_jobs))
+					candidates += applicant
 
 	if(candidates.len)
 		var/numCultists = min(candidates.len, 4)

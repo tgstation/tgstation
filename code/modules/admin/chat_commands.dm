@@ -60,3 +60,17 @@
 
 /datum/server_tools_command/adminwho/Run(sender, params)
 	return ircadminwho()
+
+GLOBAL_LIST(round_end_notifiees)
+
+/datum/server_tools_command/notify
+	name = "notify"
+	help_text = "Pings the invoker when the round ends"
+	admin_only = TRUE
+
+/datum/server_tools_command/notify/Run(sender, params)
+	if(!SSticker.IsRoundInProgress() && SSticker.HasRoundStarted())
+		return "[sender], the round has already ended!"
+	LAZYINITLIST(GLOB.round_end_notifiees)
+	GLOB.round_end_notifiees[sender] = TRUE
+	return "I will notify [sender] when the round ends."
