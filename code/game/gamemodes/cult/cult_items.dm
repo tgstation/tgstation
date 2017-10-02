@@ -98,7 +98,6 @@
 	var/datum/action/innate/cult/spin2win/linked_action
 	var/spinning = FALSE
 	var/spin_cooldown = 250
-	var/list/shards = list()
 	var/dash_toggled = TRUE
 
 /obj/item/twohanded/required/cult_bastard/Initialize()
@@ -174,11 +173,14 @@
 		if(H.stat != CONSCIOUS)
 			var/obj/item/device/soulstone/SS = new /obj/item/device/soulstone(src)
 			SS.attack(H, user)
-			shards += SS
-		return
+			if(!LAZYLEN(SS.contents))
+				qdel(SS)
 	if(istype(target, /obj/structure/constructshell) && contents.len)
 		var/obj/item/device/soulstone/SS = contents[1]
-		if(istype(SS) && SS.transfer_soul("CONSTRUCT",target,user))
+		if(istype(SS))
+			SS.transfer_soul("CONSTRUCT",target,user)
+
+
 			qdel(SS)
 
 /datum/action/innate/dash/cult
