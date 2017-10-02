@@ -62,9 +62,8 @@
 
 		return TRUE
 
-	if(isobj(the_target))
-		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
-			return TRUE
+	if(isobj(the_target) && is_type_in_typecache(the_target, wanted_objects))
+		return TRUE
 
 	return FALSE
 
