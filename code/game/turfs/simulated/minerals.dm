@@ -111,12 +111,6 @@
 		if(istype(R.module_active, /obj/item/pickaxe))
 			src.attackby(R.module_active,R)
 			return
-/*	else if(istype(AM, /obj/mecha))
-		var/obj/mecha/M = AM
-		if(istype(M.selected, /obj/item/mecha_parts/mecha_equipment/drill))
-			src.attackby(M.selected,M)
-			return*/
-//Aparantly mechs are just TOO COOL to call Collide())
 	else
 		return
 
