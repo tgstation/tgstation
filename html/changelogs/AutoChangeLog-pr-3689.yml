@@ -1,0 +1,4 @@
+author: "PopNotes"
+delete-after: True
+changes: 
+  - rscadd: "SORD now has a chance to crit for massive damage."
