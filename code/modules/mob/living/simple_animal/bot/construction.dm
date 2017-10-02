@@ -350,7 +350,6 @@
 
 
 //Honkbot Assembly
-//#define build_step 0
 
 /obj/item/honkbot_assembly
 	name = "incomplete honkbot assembly"
@@ -359,7 +358,7 @@
 	icon_state = "honkbot_arm"
 	item_state = "honkbot_arm"
 	var/build_step = 0
-	var/created_name = "lil' honkie"
+	var/created_name = "honkbot"
 
 /obj/item/honkbot_assembly/attackby(obj/item/I, mob/user, params)
 
@@ -377,9 +376,10 @@
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		to_chat(user, "<span class='notice'>You add the bike horn to [src]! Honk!</span>")
-		var/turf/T = get_turf(src)
-		var/mob/living/simple_animal/bot/honkbot/S = new /mob/living/simple_animal/bot/honkbot(T)
+		var/mob/living/simple_animal/bot/honkbot/S = new(drop_location())
 		S.name = created_name
+		S.spam_flag = TRUE // only long enough to hear the first ping.
+		addtimer(CALLBACK (S, .mob/living/simple_animal/bot/honkbot/proc/react_ping), 5)
 		qdel(I)
 		qdel(src)
 
