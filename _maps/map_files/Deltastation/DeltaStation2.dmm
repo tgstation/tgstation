@@ -113119,7 +113119,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Morgue Maitenance APC";
+	name = "Morgue Maintenance APC";
 	areastring = "/area/maintenance/department/medical/morgue";
 	pixel_y = -26
 	},
