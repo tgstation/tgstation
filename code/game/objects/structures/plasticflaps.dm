@@ -76,7 +76,7 @@
 		if(C.move_delay)
 			return 0
 
-	if(istype(A, /obj/mecha))
+	if(ismecha(A))
 		return 0
 
 

@@ -390,7 +390,7 @@
 				if(!in_faction(C))
 					targets += C
 
-		if(istype(A, /obj/mecha))
+		if(ismecha(A))
 			var/obj/mecha/M = A
 			//If there is a user and they're not in our faction
 			if(M.occupant && !in_faction(M.occupant))
