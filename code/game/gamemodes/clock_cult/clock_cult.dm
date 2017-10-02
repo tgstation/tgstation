@@ -161,8 +161,10 @@ Credit where due:
 	if(!M || !ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/L = M
-	L.set_species(/datum/species/human)
-	L.equipOutfit(/datum/outfit/servant_of_ratvar)
+	if(L.dna.species.id == "plasmaman")
+		L.equipOutfit(/datum/outfit/servant_of_ratvar/plasmaman)
+	else
+		L.equipOutfit(/datum/outfit/servant_of_ratvar)
 	var/obj/item/clockwork/slab/S = new
 	var/slot = "At your feet"
 	var/list/slots = list("In your left pocket" = slot_l_store, "In your right pocket" = slot_r_store, "In your backpack" = slot_in_backpack, "On your belt" = slot_belt)
@@ -253,6 +255,17 @@ Credit where due:
 	W.access += ACCESS_MAINT_TUNNELS
 	W.registered_name = H.real_name
 	W.update_label()
+
+/datum/outfit/servant_of_ratvar/plasmaman
+	head = /obj/item/clothing/head/helmet/space/plasmaman
+	uniform = /obj/item/clothing/under/plasmaman
+	r_hand= /obj/item/tank/internals/plasmaman/belt/full
+	mask = /obj/item/clothing/mask/breath
+
+/datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	H.internal = H.get_item_for_held_index(2)
+	H.update_internals_hud_icon(1)
+	..()
 
 /obj/item/paper/servant_primer
 	name = "The Ark And You: A Primer On Servitude"
