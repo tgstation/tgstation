@@ -4,13 +4,13 @@
 	no_guns = TRUE
 	allow_temp_override = FALSE
 
-/datum/martial_art/chaplain_snap/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/holy_crunch/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("power word: grail", "power word: justice", "power word: purge", "power word: judicator", "power word: banish")
 	D.visible_message("<span class='danger'>[A] uses [atk_verb] on [D]!</span>", \
 					  "<span class='userdanger'>[A] uses [atk_verb] on you!</span>")
 	D.apply_damage(10, BRUTE)
-	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, 1, -1)
+	playsound(get_turf(D), 'sound/magic/clockwork/ratvar_attack.ogg', 25, 1, -1)
 	if(prob(D.getBruteLoss()) && !D.lying)
 		D.visible_message("<span class='warning'>[A] sends [D] to the ground with holy energies!</span>", "<span class='userdanger'>An unseen force sends swipes you off your feet!</span>")
 		D.Knockdown(80)
@@ -21,16 +21,15 @@
 	name = "holy deed"
 	desc = "Orders from the powers above."
 	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll2"
+	icon_state = "scroll3"
 
 /obj/item/holy_crunch_scroll/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
-	var/resolve = "<span class='danger'>You feel an immense pressure pushing on you at all sides!</span>"
+	var/resolve = "<span class='danger'>cA phantom force punches your gut!</b></span>"
 	to_chat(user, resolve)
 	user.Knockdown(80)
-	//remind me to add a sleep or timer or whatever
-	var/message = "<span class='sciradio'>You have overcome the holy crunch, and now may control it! You do not get any special moves, but your attacks now deal a considerable amount of damage. Deus Vult!</span>"
+	var/message = "<span class='sciradio'>You have overcome the holy crunch, and now may control it! You do not get any special moves, but your attacks now deal a considerable amount of damage. <b>Deus Vult!</b></span>"
 	to_chat(user, message)
 	var/datum/martial_art/holy_crunch/holycrunch = new(null)
 	holycrunch.teach(user)
