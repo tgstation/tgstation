@@ -88,6 +88,8 @@
 /obj/machinery/construction_nuke/Topic(href, href_list)
 	if(..())
 		return
+	if(!usr || !usr.canUseTopic(src) || usr.incapacitated() || stat || QDELETED(src))
+		return
 	switch(href_list["action"])
 		if ("payload")
 			set_payload(usr)
