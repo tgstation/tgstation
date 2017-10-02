@@ -15,7 +15,7 @@
 	// if module is reset
 	var/one_use = FALSE
 
-/obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R,mob/living/user)
 	if(R.stat == DEAD)
 		to_chat(usr, "<span class='notice'>[src] will not function on a deceased cyborg.</span>")
 		return 1
@@ -54,7 +54,7 @@
 	icon_state = "cyborg_upgrade1"
 	one_use = TRUE
 
-/obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R,mob/living/user)
 	if(R.health < 0)
 		to_chat(usr, "<span class='warning'>You have to repair the cyborg before using this module!</span>")
 		return 0
@@ -74,7 +74,7 @@
 	require_module = 1
 	origin_tech = "engineering=4;materials=5;programming=4"
 
-/obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return
 	if(R.speed < 0)
@@ -94,7 +94,7 @@
 	module_type = /obj/item/robot_module/security
 	origin_tech = "engineering=4;powerstorage=4;combat=4"
 
-/obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return
 
@@ -117,7 +117,7 @@
 	icon_state = "cyborg_upgrade3"
 	origin_tech = "engineering=4;powerstorage=4"
 
-/obj/item/borg/upgrade/thrusters/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/thrusters/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return
 
@@ -136,7 +136,7 @@
 	module_type = /obj/item/robot_module/miner
 	origin_tech = "engineering=4;materials=5"
 
-/obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return
 
@@ -158,7 +158,7 @@
 	module_type = /obj/item/robot_module/miner
 	origin_tech = "engineering=4;materials=4;bluespace=4"
 
-/obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return
 
@@ -177,7 +177,7 @@
 	require_module = 1
 	origin_tech = "combat=4;syndicate=1"
 
-/obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return
 
@@ -197,7 +197,7 @@
 	module_type = /obj/item/robot_module/miner
 	origin_tech = "engineering=4;materials=4;plasmatech=4"
 
-/obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return
 	R.weather_immunities += "lava"
@@ -216,7 +216,7 @@
 	var/mob/living/silicon/robot/cyborg
 	var/datum/action/toggle_action
 
-/obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return
 
@@ -317,7 +317,7 @@
 	origin_tech = null
 	var/list/additional_reagents = list()
 
-/obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return
 	for(var/obj/item/reagent_containers/borghypo/H in R.module)
@@ -350,7 +350,7 @@
 	origin_tech = "materials=5;engineering=7;combat=3"
 	icon_state = "cyborg_upgrade3"
 
-/obj/item/borg/upgrade/piercing_hypospray/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/piercing_hypospray/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return
 
@@ -373,7 +373,7 @@
 	module_type = /obj/item/robot_module/medical
 	origin_tech = "programming=4;engineering=6;materials=5;powerstorage=5;biotech=5"
 
-/obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R,mob/living/user)
 	if(..())
 		return
 
@@ -400,4 +400,18 @@
 		return
 
 	R.make_shell(src)
+	return TRUE
+
+/obj/item/borg/upgrade/traitorsec
+	name = "Oppressor upgrade module"
+	desc = "Illegal upgrade board that unlocks the banned security module."
+	icon_state = "cyborg_upgrade3"
+	origin_tech = "data=4;combat=4;syndicate=3"
+
+/obj/item/borg/upgrade/traitorsec/action(mob/living/silicon/robot/R,mob/living/user)
+	if(..())
+		return FALSE
+
+	R.module.transform_to(/obj/item/robot_module/security/traitorsec)
+	R.emag_act(user)
 	return TRUE

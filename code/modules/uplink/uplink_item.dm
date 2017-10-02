@@ -34,6 +34,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 					continue
 			if(I.player_minimum && I.player_minimum > GLOB.joined_player_list.len)
 				continue
+			if(I.SpecialRequirements())
+				continue
 
 			if(!filtered_uplink_items[category])
 				filtered_uplink_items[category] = list()
@@ -131,6 +133,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		GLOB.uplink_items -= src	//Take us out instead of leaving a null!
 	return ..()
 
+/datum/uplink_item/proc/SpecialRequirements()
+	return TRUE
+ 
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = "Discounted Gear"
@@ -1312,6 +1317,17 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
+
+/datum/uplink_item/role_restricted/traitorsec
+	name = "Oppressor Upgrade Module"
+	desc = "A box containing an cyborg upgrade module that instantly hacks a cyborg and unlocks the outlawed security module (in a inconspicuous black-and-red paintjob)"
+	item = /obj/item/storage/box/syndie_kit/traitorsec_boards
+	cost = 16
+	player_minimum = 20
+	restricted_roles = list("Roboticist", "Research Director")
+
+/datum/uplink_item/role_restricted/traitorsec/SpecialRequirements()
+	return config.forbid_secborg
 
 // Pointless
 /datum/uplink_item/badass
