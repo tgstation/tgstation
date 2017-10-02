@@ -91,19 +91,18 @@
 /datum/emote/proc/select_param(mob/user, params)
 	return replacetext(message_param, "%t", params)
 
-/datum/emote/proc/can_run_emote(mob/user, help_check)
+/datum/emote/proc/can_run_emote(mob/user)
 	. = TRUE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
-	if(!help_check)
-		if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
-			return FALSE
-		if(restraint_check && user.restrained())
-			return FALSE
-		if(user.reagents && user.reagents.has_reagent("mimesbane"))
-			return FALSE
+	if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
+		return FALSE
+	if(restraint_check && user.restrained())
+		return FALSE
+	if(user.reagents && user.reagents.has_reagent("mimesbane"))
+		return FALSE
 
 
 /datum/emote/sound
