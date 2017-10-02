@@ -616,19 +616,6 @@ obj/item/storage/box/clown
 	icon_state = "clownbox"
 	illustration = null
 
-/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/stamp/clown))
-		return ..()
-	if(get_amount() >= 2)
-		to_chat(user, "<span class ='notice'>You only need one cardboard sheet for this.</span>")
-		return
-	if(!user.temporarilyRemoveItemFromInventory(src))
-		return
-	to_chat(user, "<span class='notice'>You stamp the cardboard! Its a clown box! Honk!</span>")
-	playsound(src, 'sound/items/bikehorn.ogg', 50, 1, -1)
-	new/obj/item/storage/box/clown(drop_location())
-	use(1)
-
 /obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
 	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
 		if(contents.len) //prevent accidently deleting contents

@@ -252,6 +252,19 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
 
+/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/stamp/clown))
+		return ..()
+	if(get_amount() >= 2)
+		to_chat(user, "<span class ='notice'>You only need one cardboard sheet for this.</span>")
+		return
+	if(!user.temporarilyRemoveItemFromInventory(src))
+		return
+	to_chat(user, "<span class='notice'>You stamp the cardboard! Its a clown box! Honk!</span>")
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1, -1)
+	new/obj/item/storage/box/clown(drop_location())
+	use(1)
+
 /*
  * Runed Metal
  */
