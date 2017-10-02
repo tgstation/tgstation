@@ -66,7 +66,8 @@
 		if(tgalert(src, message, "Report Issue","Yes","No")=="No")
 			return
 		var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
-		src << link("[githuburl]/issues/new[GLOB.round_id ? "?body=[url_encode("Issue reported from Round ID: [GLOB.round_id][url_encode("\n\n")][issue_template]")]" : ""]")
+		var/servername = CONFIG_GET(servername)
+		src << link("[githuburl]/issues/new[GLOB.round_id ? "?body=[url_encode("Issue reported from Round ID: [GLOB.round_id][servername ? " ([servername])" : ""]\n\n][issue_template]")]" : ""]")
 	else
 		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
