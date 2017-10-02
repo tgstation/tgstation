@@ -22,8 +22,9 @@
 	location = loc
 
 /obj/machinery/smoke_machine/Initialize()
-	create_reagents(volume)
 	. = ..()
+	create_reagents(volume)
+
 /obj/machinery/smoke_machine/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
@@ -34,7 +35,6 @@
 	else
 		icon_state = "smoke1"
 	. = ..()
-
 
 /obj/machinery/smoke_machine/RefreshParts()
 	efficiency = 6
@@ -71,8 +71,7 @@
 			return
 	if(default_unfasten_wrench(user, I))
 		return
-	.=..()
-
+	return ..()
 
 /obj/machinery/smoke_machine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -80,7 +79,6 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "smoke_machine", name, 450, 350, master_ui, state)
 		ui.open()
-
 
 /obj/machinery/smoke_machine/ui_data(mob/user)
 	var/data = list()
@@ -118,9 +116,7 @@
 					state = "Liquid"
 				else if(initial(R.reagent_state) == 3)
 					state = "Gas"
-				var/const/P = 3 //The number of seconds between life ticks
-				var/T = initial(R.metabolization_rate) * (60 / P)
-				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
 				screen = "analyze"
 		if("setting")
 			var/amount = text2num(params["amount"])
@@ -134,6 +130,7 @@
 				for(var/datum/reagent/R in reagents.reagent_list)
 					var/msg = "[R.name]: [R.volume] units]"
 					log_admin(msg)
+					add_logs(usr, src, "has created [msg] smoke from")
 		if("goScreen")
 			screen = params["screen"]
 			. = TRUE

@@ -11,7 +11,6 @@
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
 	var/reagent_id = "water" //The ID of the reagent that the dispenser uses
 
-
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(. && obj_integrity > 0)
