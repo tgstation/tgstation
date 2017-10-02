@@ -346,6 +346,14 @@
 	if(!istype(user) || !user)
 		return
 	var/resolve = "<span class='danger'>A phantom force punches your gut!</b></span>"
+	if(is_servant_of_ratvar(user))
+		to_chat(user, "<span class='redtext'>\"RATVAR IS HERESY, AND YOU ARE TOAST!!\"</span>")
+		gib(user) //who knows if this works webeditor hahaha
+		return 1
+	if(iscultist(user))
+		to_chat(user, "<span class='redtext'>\"BACK TO WHENCE YOU CAME, BLOOD WENCH!!\"</span>")
+		gib(user)
+		return 1
 	to_chat(user, resolve)
 	user.Knockdown(80)
 	var/message = "<span class='sciradio'>You have overcome the holy crunch, and now may control it! You do not get any special moves, but your attacks now deal a considerable amount of damage. <b>Deus Vult!</b></span>"
