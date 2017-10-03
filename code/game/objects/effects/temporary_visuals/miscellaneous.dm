@@ -213,7 +213,7 @@
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "3"
-	light_range = 3
+	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10
 
