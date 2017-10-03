@@ -247,6 +247,9 @@
 		return
 
 	if(health >= 0 && !(status_flags & FAKEDEATH))
+		if(buckled && lying)
+			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
+			return
 
 		if(lying)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
