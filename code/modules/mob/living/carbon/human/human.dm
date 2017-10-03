@@ -29,39 +29,6 @@
 	update_teeth()
 	. = ..()
 
-<<<<<<< HEAD
-/mob/living/carbon/human/create_internal_organs()
-	if(!(NOHUNGER in dna.species.species_traits))
-		internal_organs += new /obj/item/organ/appendix
-	if(!(NOBREATH in dna.species.species_traits))
-		if(dna.species.mutantlungs)
-			internal_organs += new dna.species.mutantlungs()
-		else
-			internal_organs += new /obj/item/organ/lungs()
-	if(!(NOBLOOD in dna.species.species_traits))
-		internal_organs += new /obj/item/organ/heart
-
-	if(!(NOLIVER in dna.species.species_traits))
-		if(dna.species.mutantliver)
-			internal_organs += new dna.species.mutantliver()
-		else
-			internal_organs += new /obj/item/organ/liver()
-
-	if(!(NOSTOMACH in dna.species.species_traits))
-		if(dna.species.mutantstomach)
-			internal_organs += new dna.species.mutantstomach()
-		else
-			internal_organs += new /obj/item/organ/stomach()
-
-	internal_organs += new dna.species.mutanteyes
-	internal_organs += new dna.species.mutantears
-	internal_organs += new dna.species.mutanttongue
-	internal_organs += new /obj/item/organ/brain
-	internal_organs += new /obj/item/organ/butt
-	..()
-
-=======
->>>>>>> 85cd9e60d9... Organ initialization cleanup
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
 
