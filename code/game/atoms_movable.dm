@@ -288,7 +288,7 @@
 
 /mob/living/brain/forceMove(atom/destination, var/hard_override)
 	if(hard_override)
-		return ..(destination)
+		return ..()
 	if(container)
 		return container.forceMove(destination)
 	else //something went very wrong.
