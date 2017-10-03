@@ -334,7 +334,6 @@
 /obj/item/nullrod/crystal/attack_self(/mob/living/carbon/human/user)
 	var/crush = "<span class='danger'>you crush the crystal in your hand and a torrent of energy rushes into you!</span>"
 	to_chat(user, crush)
-		if(user.reagents)
 		user.add_reagent(reagent_type, reagent_amount)
 		return TRUE
 	var/fail = "<span class='danger'>I guess the energy didn't work?</span>"
