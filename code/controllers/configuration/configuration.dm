@@ -74,10 +74,9 @@ GLOBAL_PROTECT(config_dir)
 		if(copytext(L, 1, 2) == "#")
 			continue
 
-		var/lockthis = FALSE
-		if(copytext(L, 1, 2) == "@")
+		var/lockthis = copytext(L, 1, 2) == "@"
+		if(lockthis)
 			L = copytext(L, 2)
-			lockthis = TRUE
 
 		var/pos = findtext(L, " ")
 		var/entry = null
