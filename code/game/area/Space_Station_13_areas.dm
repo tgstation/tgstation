@@ -151,7 +151,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance/department/medical
 	name = "Medbay Maintenance"
-	icon_state = "asmaint"
+	icon_state = "medbay_maint"
+
+/area/maintenance/department/medical/morgue
+	name = "Morgue Maintenance"
+	icon_state = "morgue_maint"
 
 /area/maintenance/department/science
 	name = "Science Maintenance"
