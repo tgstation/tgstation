@@ -319,6 +319,25 @@
 	throwforce = 30
 	sharpness = IS_SHARP
 	attack_verb = list("enlightened", "redpilled")
+	
+/obj/item/nullrod/crystal
+	name = "magic crystal"
+	desc = "you're not quite sure what this is!"
+	//icons soon
+	force = 0
+	throwforce = 4
+	
+/obj/item/nullrod/crystal/magicshit
+	var/reagent_amount = 1
+	var/reagent_type = "unstablemutationtoxin"
+
+/obj/item/nullrod/crystal/attack_self(/mob/living/carbon/human/user)
+	var/crush = "<span class='danger'>you crush the crystal in your hand and a torrent of energy rushes into you!</span>"
+	to_chat(user, crush)
+		user.add_reagent(reagent_type, reagent_amount)
+		return TRUE
+	var/fail = "<span class='danger'>I guess the energy didn't work?</span>"
+	return FALSE
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"
