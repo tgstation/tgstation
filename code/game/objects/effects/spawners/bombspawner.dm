@@ -8,7 +8,7 @@
 
 /obj/effect/spawner/newbomb/Initialize()
 	. = ..()
-	var/obj/item/device/transfer_valve/V = new(src.loc)
+	var/obj/item/device/transfer_valve/V = new(loc)
 	var/obj/item/tank/internals/plasma/full/PT = new(V)
 	var/obj/item/tank/internals/oxygen/OT = new(V)
 
@@ -17,9 +17,7 @@
 
 	V.tank_one = PT
 	V.tank_two = OT
-	PT.master = V
-	OT.master = V
-	
+
 	if(assembly_type)
 		var/obj/item/device/assembly/A = new assembly_type(V)
 		V.attached_device = A
