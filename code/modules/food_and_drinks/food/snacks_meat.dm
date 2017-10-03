@@ -186,8 +186,8 @@
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	visible_message("<span class='notice'>[src] expands!</span>")
 	var/mob/spammer = get_mob_by_key(src.fingerprintslast)
-	var/msg = "Spawned via [src], Last attached Mob: [spammer.real_name] ([spammer.key])"
-	var/mob/living/carbon/monkey/bananas = new /mob/living/carbon/monkey(get_turf(src))
+	var/msg = "Spawned via [src] at [COORD(src)], Last attached mob: [key_name(spammer)]."
+	var/mob/living/carbon/monkey/bananas = new(get_turf(src))
 	bananas.log_message(msg, INDIVIDUAL_ATTACK_LOG) 
 	qdel(src)
 
