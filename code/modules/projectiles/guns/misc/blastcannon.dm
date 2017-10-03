@@ -12,8 +12,6 @@
 	randomspread = FALSE
 
 	var/obj/item/device/transfer_valve/bomb
-	var/datum/gas_mixture/air1
-	var/datum/gas_mixture/air2
 
 /obj/item/gun/blastcannon/New()
 	if(!pin)
@@ -24,8 +22,6 @@
 	if(bomb)
 		qdel(bomb)
 		bomb = null
-	air1 = null
-	air2 = null
 	return ..()
 
 /obj/item/gun/blastcannon/attack_self(mob/user)
@@ -66,12 +62,9 @@
 /obj/item/gun/blastcannon/proc/calculate_bomb()
 	if(!istype(bomb)||!istype(bomb.tank_one)||!istype(bomb.tank_two))
 		return 0
-	air1 = bomb.tank_one.air_contents
-	air2 = bomb.tank_two.air_contents
-	var/datum/gas_mixture/temp
-	temp.volume = air1.volume + air2.volume
-	temp.merge(air1)
-	temp.merge(air2)
+	var/datum/gas_mixture/temp = new(60)	//directional buff.
+	temp.merge(bomb.tank_one.air_contents.remove_ratio(1))
+	temp.merge(bomb.tank_two.air_contents.remove_ratio(2))
 	for(var/i in 1 to 6)
 		temp.react()
 	var/pressure = temp.return_pressure()
