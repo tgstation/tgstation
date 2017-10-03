@@ -275,7 +275,7 @@
 			if(getBrainLoss() >= 60)
 				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 			if(InCritical())
-				msg += "[t_He] is barely concious and seems to be in a great deal of pain.\n"
+				msg += "[t_He] is barely concious.\n"
 		if(getorgan(/obj/item/organ/brain))
 			if(istype(src, /mob/living/carbon/human/interactive))
 				var/mob/living/carbon/human/interactive/auto = src
