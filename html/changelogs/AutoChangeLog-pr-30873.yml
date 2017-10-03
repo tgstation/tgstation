@@ -1,0 +1,4 @@
+author: "nicbn"
+delete-after: True
+changes: 
+  - rscadd: "Paperwork now uses Markdown instead of BBCode, see the writing help for changes."

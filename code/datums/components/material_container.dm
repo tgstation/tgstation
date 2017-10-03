@@ -17,6 +17,7 @@
 	var/show_on_examine
 	var/list/allowed_typecache
 	var/last_inserted_type
+	var/last_inserted_id
 	var/last_amount_inserted
 	var/last_insert_success
 	var/datum/callback/precondition
@@ -52,7 +53,10 @@
 
 /datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
-	if(user.a_intent == INTENT_HARM || (I.flags_2 & HOLOGRAM_2) || (tc && !is_type_in_typecache(I, tc)))
+	if(user.a_intent == INTENT_HARM)
+		return FALSE
+	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
+		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
 		return FALSE
 	. = TRUE
 	last_insert_success = FALSE
@@ -113,7 +117,7 @@
 	if(!amt)
 		return 0
 
-	insert_materials(S,amt)
+	last_inserted_id = insert_materials(S,amt)
 	last_inserted_type = S.type
 	S.use(amt)
 	last_amount_inserted = amt
@@ -130,17 +134,22 @@
 	if(!material_amount || !has_space(material_amount))
 		return 0
 
-	insert_materials(I, multiplier)
+	last_inserted_id = insert_materials(I, multiplier)
 	last_inserted_type = I.type
 	last_amount_inserted = material_amount
 	return material_amount
 
 /datum/component/material_container/proc/insert_materials(obj/item/I, multiplier = 1) //for internal usage only
 	var/datum/material/M
+	var/primary_mat
+	var/max_mat_value = 0
 	for(var/MAT in materials)
 		M = materials[MAT]
 		M.amount += I.materials[MAT] * multiplier
 		total_amount += I.materials[MAT] * multiplier
+		if(I.materials[MAT] > max_mat_value)
+			primary_mat = MAT
+	return primary_mat
 
 //For consuming material
 //mats is a list of types of material to use and the corresponding amounts, example: list(MAT_METAL=100, MAT_GLASS=200)

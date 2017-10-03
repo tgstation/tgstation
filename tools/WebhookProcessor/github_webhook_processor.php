@@ -209,7 +209,7 @@ function tag_pr($payload, $opened) {
 		$tags[] = 'Merge Conflict';
 
 	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL');
-	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound', 'config' => 'Config Update');
+	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update');
 	foreach($treetags as $tree => $tag)
 		if(has_tree_been_edited($payload, $tree))
 			$tags[] = $tag;
@@ -355,7 +355,7 @@ function check_dismiss_changelog_review($payload){
 	}
 	else
 		//kill previous reviews
-		foreach($reviews as $R){
+		foreach($reviews as $R)
 			if($R['body'] == $review_message && strtolower($R['state']) == 'changes_requested')
 				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
 }
@@ -456,6 +456,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Fix' => 2,
 		'Refactor' => 2,
 		'Code Improvement' => 1,
+		'Grammar and Formatting' => 1,
 		'Priority: High' => 4,
 		'Priority: CRITICAL' => 5,
 		'Atmospherics' => 4,

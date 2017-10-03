@@ -95,7 +95,7 @@
 	if(!ismob(M) && !isobj(M))	//No don't teleport lighting and effects!
 		return
 
-	if(M.anchored && (!ismob(M) || (istype(M, /obj/mecha) && !mech_sized)))
+	if(M.anchored && (!ismob(M) || (ismecha(M) && !mech_sized)))
 		return
 
 	if(do_teleport(M, hard_target, 6))

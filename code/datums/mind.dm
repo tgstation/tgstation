@@ -63,6 +63,7 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/datum/language_holder/language_holder
+	var/unconvertable = FALSE
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -206,7 +207,7 @@
 /datum/mind/proc/remove_wizard()
 	if(src in SSticker.mode.wizards)
 		SSticker.mode.wizards -= src
-		current.spellremove(current)
+		RemoveAllSpells()
 	special_role = null
 	remove_antag_equip()
 
@@ -586,8 +587,6 @@
 		if(src in SSticker.mode.abductors)
 			text += "<b>Abductor</b> | <a href='?src=\ref[src];abductor=clear'>human</a>"
 			text += " | <a href='?src=\ref[src];common=undress'>undress</a> | <a href='?src=\ref[src];abductor=equip'>equip</a>"
-		else
-			text += "<a href='?src=\ref[src];abductor=abductor'>abductor</a> | <b>human</b>"
 
 		if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_special))
 			text += " | Enabled in Prefs"
@@ -670,7 +669,7 @@
 		text = "<i><b>[text]</b></i>: "
 		if(is_servant_of_ratvar(current))
 			text += "not mindshielded | <a href='?src=\ref[src];clockcult=clear'>employee</a> | <b>SERVANT</b>"
-			text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
+			text += "<br><a href='?src=\ref[src];clockcult=slab'>Equip</a>"
 		else if(is_eligible_servant(current))
 			text += "not mindshielded | <b>EMPLOYEE</b> | <a href='?src=\ref[src];clockcult=servant'>servant</a>"
 		else
@@ -1027,9 +1026,9 @@
 					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
 			if("slab")
 				if(!SSticker.mode.equip_servant(current))
-					to_chat(usr, "<span class='warning'>Failed to outfit [current] with a slab!</span>")
+					to_chat(usr, "<span class='warning'>Failed to outfit [current]!</span>")
 				else
-					to_chat(usr, "<span class='notice'>Successfully gave [current] a clockwork slab!</span>")
+					to_chat(usr, "<span class='notice'>Successfully gave [current] servant equipment!</span>")
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
@@ -1048,7 +1047,7 @@
 					log_admin("[key_name(usr)] has wizard'ed [current].")
 					SSticker.mode.update_wiz_icons_added(src)
 			if("lair")
-				current.loc = pick(GLOB.wizardstart)
+				current.forceMove(pick(GLOB.wizardstart))
 			if("dressup")
 				SSticker.mode.equip_wizard(current)
 			if("name")
@@ -1110,7 +1109,7 @@
 					message_admins("[key_name_admin(usr)] has nuke op'ed [current].")
 					log_admin("[key_name(usr)] has nuke op'ed [current].")
 			if("lair")
-				current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
+				current.forceMove(get_turf(locate("landmark*Syndicate-Spawn")))
 			if("dressup")
 				var/mob/living/carbon/human/H = current
 				qdel(H.belt)
@@ -1234,13 +1233,6 @@
 			if("clear")
 				to_chat(usr, "Not implemented yet. Sorry!")
 				//SSticker.mode.update_abductor_icons_removed(src)
-			if("abductor")
-				if(!ishuman(current))
-					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
-					return
-				make_Abductor()
-				log_admin("[key_name(usr)] turned [current] into abductor.")
-				SSticker.mode.update_abductor_icons_added(src)
 			if("equip")
 				if(!ishuman(current))
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
@@ -1269,7 +1261,6 @@
 						src = null
 						M = H.monkeyize()
 						src = M.mind
-						//to_chat(world, "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!")
 					else if (istype(M) && length(M.viruses))
 						for(var/thing in M.viruses)
 							var/datum/disease/D = thing
@@ -1392,7 +1383,7 @@
 		current.faction |= "syndicate"
 
 		if(spawnloc)
-			current.loc = spawnloc
+			current.forceMove(spawnloc)
 
 		if(ishuman(current))
 			var/mob/living/carbon/human/H = current
@@ -1442,7 +1433,7 @@
 			SSjob.SendToLateJoin(current)
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
-			current.loc = pick(GLOB.wizardstart)
+			current.forceMove(pick(GLOB.wizardstart))
 
 		SSticker.mode.equip_wizard(current)
 		SSticker.mode.name_wizard(current)
@@ -1488,52 +1479,6 @@
 	var/fail = 0
 	fail |= !SSticker.mode.equip_revolutionary(current)
 
-
-/datum/mind/proc/make_Abductor()
-	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
-	var/team = input("Abductor Team ?","Team ?") in list(1,2,3,4)
-	var/teleport = alert("Teleport to ship ?","Teleport","Yes","No")
-
-	if(!role || !team || !teleport)
-		return
-
-	if(!ishuman(current))
-		return
-
-	SSticker.mode.abductors |= src
-
-	var/datum/objective/experiment/O = new
-	O.owner = src
-	objectives += O
-
-	var/mob/living/carbon/human/H = current
-
-	H.set_species(/datum/species/abductor)
-	var/datum/species/abductor/S = H.dna.species
-
-	if(role == "Scientist")
-		S.scientist = TRUE
-	S.team = team
-
-	var/list/obj/effect/landmark/abductor/agent_landmarks = new
-	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
-	agent_landmarks.len = 4
-	scientist_landmarks.len = 4
-	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
-		if(istype(A, /obj/effect/landmark/abductor/agent))
-			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A, /obj/effect/landmark/abductor/scientist))
-			scientist_landmarks[text2num(A.team)] = A
-
-	var/obj/effect/landmark/L
-	if(teleport=="Yes")
-		switch(role)
-			if("Agent")
-				L = agent_landmarks[team]
-			if("Scientist")
-				L = scientist_landmarks[team]
-		H.forceMove(L.loc)
-
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
 	S.action.Grant(current)
@@ -1550,6 +1495,10 @@
 		if(istype(S, spell))
 			spell_list -= S
 			qdel(S)
+
+/datum/mind/proc/RemoveAllSpells()
+	for(var/obj/effect/proc_holder/S in spell_list)
+		RemoveSpell(S)
 
 /datum/mind/proc/transfer_martial_arts(mob/living/new_character)
 	if(!ishuman(new_character))

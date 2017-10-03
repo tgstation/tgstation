@@ -21,40 +21,11 @@
 		set_species(dna.species.type)
 
 	//initialise organs
-	create_internal_organs()
+	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 
 	handcrafting = new()
 
 	. = ..()
-
-/mob/living/carbon/human/create_internal_organs()
-	if(!(NOHUNGER in dna.species.species_traits))
-		internal_organs += new /obj/item/organ/appendix
-	if(!(NOBREATH in dna.species.species_traits))
-		if(dna.species.mutantlungs)
-			internal_organs += new dna.species.mutantlungs()
-		else
-			internal_organs += new /obj/item/organ/lungs()
-	if(!(NOBLOOD in dna.species.species_traits))
-		internal_organs += new /obj/item/organ/heart
-
-	if(!(NOLIVER in dna.species.species_traits))
-		if(dna.species.mutantliver)
-			internal_organs += new dna.species.mutantliver()
-		else
-			internal_organs += new /obj/item/organ/liver()
-
-	if(!(NOSTOMACH in dna.species.species_traits))
-		if(dna.species.mutantstomach)
-			internal_organs += new dna.species.mutantstomach()
-		else
-			internal_organs += new /obj/item/organ/stomach()
-
-	internal_organs += new dna.species.mutanteyes
-	internal_organs += new dna.species.mutantears
-	internal_organs += new dna.species.mutanttongue
-	internal_organs += new /obj/item/organ/brain
-	..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -231,7 +202,7 @@
 			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
-			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [time_taken/10] seconds.)</span>")
+			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
 			if(do_after(usr, time_taken, needhand = 1, target = src))
 				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 					return
@@ -936,3 +907,124 @@
 			riding_datum.unequip_buckle_inhands(M)
 			riding_datum.restore_position(M)
 	. = ..(M, force)
+
+/mob/living/carbon/human/species
+	var/race = null
+
+/mob/living/carbon/human/species/Initialize()
+	. = ..()
+	set_species(race)
+
+/mob/living/carbon/human/species/abductor
+	race = /datum/species/abductor
+
+/mob/living/carbon/human/species/android
+	race = /datum/species/android
+
+/mob/living/carbon/human/species/angel
+	race = /datum/species/angel
+
+/mob/living/carbon/human/species/corporate
+	race = /datum/species/corporate
+
+/mob/living/carbon/human/species/fly
+	race = /datum/species/fly
+
+/mob/living/carbon/human/species/golem
+	race = /datum/species/golem
+
+/mob/living/carbon/human/species/golem/random
+	race = /datum/species/golem/random
+
+/mob/living/carbon/human/species/golem/adamantine
+	race = /datum/species/golem/adamantine
+
+/mob/living/carbon/human/species/golem/plasma
+	race = /datum/species/golem/plasma
+
+/mob/living/carbon/human/species/golem/diamond
+	race = /datum/species/golem/diamond
+
+/mob/living/carbon/human/species/golem/gold
+	race = /datum/species/golem/gold
+
+/mob/living/carbon/human/species/golem/silver
+	race = /datum/species/golem/silver
+
+/mob/living/carbon/human/species/golem/plasteel
+	race = /datum/species/golem/plasteel
+
+/mob/living/carbon/human/species/golem/titanium
+	race = /datum/species/golem/titanium
+
+/mob/living/carbon/human/species/golem/plastitanium
+	race = /datum/species/golem/plastitanium
+
+/mob/living/carbon/human/species/golem/alien_alloy
+	race = /datum/species/golem/alloy
+
+/mob/living/carbon/human/species/golem/wood
+	race = /datum/species/golem/wood
+
+/mob/living/carbon/human/species/golem/uranium
+	race = /datum/species/golem/uranium
+
+/mob/living/carbon/human/species/golem/sand
+	race = /datum/species/golem/sand
+
+/mob/living/carbon/human/species/golem/glass
+	race = /datum/species/golem/glass
+
+/mob/living/carbon/human/species/golem/bluespace
+	race = /datum/species/golem/bluespace
+
+/mob/living/carbon/human/species/golem/bananium
+	race = /datum/species/golem/bananium
+
+/mob/living/carbon/human/species/golem/blood_cult
+	race = /datum/species/golem/runic
+
+/mob/living/carbon/human/species/golem/cloth
+	race = /datum/species/golem/cloth
+
+/mob/living/carbon/human/species/golem/plastic
+	race = /datum/species/golem/plastic
+
+/mob/living/carbon/human/species/jelly
+	race = /datum/species/jelly
+
+/mob/living/carbon/human/species/jelly/slime
+	race = /datum/species/jelly/slime
+
+/mob/living/carbon/human/species/lizard
+	race = /datum/species/lizard
+
+/mob/living/carbon/human/species/lizard/ashwalker
+	race = /datum/species/lizard/ashwalker
+
+/mob/living/carbon/human/species/plasma
+	race = /datum/species/plasmaman
+
+/mob/living/carbon/human/species/pod
+	race = /datum/species/pod
+
+/mob/living/carbon/human/species/shadow
+	race = /datum/species/shadow
+
+/mob/living/carbon/human/species/skeleton
+	race = /datum/species/skeleton
+
+/mob/living/carbon/human/species/synth
+	race = /datum/species/synth
+
+/mob/living/carbon/human/species/synth/military
+	race = /datum/species/synth/military
+
+/mob/living/carbon/human/species/zombie
+	race = /datum/species/zombie
+
+/mob/living/carbon/human/species/zombie/infectious
+	race = /datum/species/zombie/infectious
+
+/mob/living/carbon/human/species/zombie/krokodil_addict
+	race = /datum/species/krokodil_addict

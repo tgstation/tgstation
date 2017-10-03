@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Vanguard never stunning for more than 2 seconds."

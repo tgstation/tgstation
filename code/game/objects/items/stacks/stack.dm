@@ -76,6 +76,7 @@
 		to_chat(user, "There are [get_amount()] in the stack.")
 	else
 		to_chat(user, "There is [get_amount()] in the stack.")
+	to_chat(user, "<span class='notice'>Alt-click to take a custom amount.</span>")
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)

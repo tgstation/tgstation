@@ -174,9 +174,9 @@ SUBSYSTEM_DEF(shuttle)
 			Good luck.")
 			return
 		emergency = backup_shuttle
-
-	if(world.time - SSticker.round_start_time < config.shuttle_refuel_delay)
-		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - SSticker.round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
+	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
+	if(world.time - SSticker.round_start_time < srd)
+		to_chat(user, "The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.")
 		return
 
 	switch(emergency.mode)
@@ -218,7 +218,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(call_reason)
 		SSblackbox.add_details("shuttle_reason", call_reason)
 		log_game("Shuttle call reason: [call_reason]")
-	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
 	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
@@ -421,17 +421,14 @@ SUBSYSTEM_DEF(shuttle)
 					continue base
 				if(!(T.flags_1 & UNUSED_TRANSIT_TURF_1))
 					continue base
-			//to_chat(world, "[COORD(topleft)] and [COORD(bottomright)]")
 			break base
 
 	if((!proposed_zone) || (!proposed_zone.len))
 		return FALSE
 
 	var/turf/topleft = proposed_zone[1]
-	//to_chat(world, "[COORD(topleft)] is TOPLEFT")
 	// Then create a transit docking port in the middle
 	var/coords = M.return_coords(0, 0, dock_dir)
-	//to_chat(world, json_encode(coords))
 	/*  0------2
         |      |
         |      |
@@ -469,11 +466,9 @@ SUBSYSTEM_DEF(shuttle)
 		if(WEST)
 			transit_path = /turf/open/space/transit/west
 
-	//to_chat(world, "Docking port at [transit_x], [transit_y], [topleft.z]")
 	var/turf/midpoint = locate(transit_x, transit_y, topleft.z)
 	if(!midpoint)
 		return FALSE
-	//to_chat(world, "Making transit dock at [COORD(midpoint)]")
 	var/area/shuttle/transit/A = new()
 	A.parallax_movedir = travel_dir
 	A.contents = proposed_zone

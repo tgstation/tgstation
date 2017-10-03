@@ -7441,14 +7441,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness)
-"aqt" = (
-/obj/effect/landmark/syndicate_breach_area,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/crew_quarters/fitness)
 "aqu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -13334,6 +13326,7 @@
 	id = "chapelgun";
 	name = "Chapel Launcher Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "aEo" = (
@@ -14776,7 +14769,6 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "aHr" = (
-/obj/effect/landmark/marauder_entry,
 /turf/open/space,
 /area/space)
 "aHs" = (
@@ -24673,7 +24665,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "bgp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
@@ -26870,7 +26862,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "blh" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/eastright{
@@ -26948,7 +26940,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "blp" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -26982,7 +26974,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "blr" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -27902,6 +27894,7 @@
 	id = "trash";
 	name = "disposal bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bnw" = (
@@ -29037,7 +29030,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "bpR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment{
@@ -39042,6 +39035,7 @@
 	id = "toxinsdriver";
 	name = "toxins launcher bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
 "bLm" = (
@@ -60169,7 +60163,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "cHE" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mech Bay Maintenance";
@@ -63868,6 +63862,167 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"cTJ" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTK" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTL" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/black,
+/area/medical/morgue)
+"cTM" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Morgue Maintenance APC";
+	areastring = "/area/maintenance/department/medical/morgue";
+	pixel_x = 26
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/black,
+/area/medical/morgue)
+"cTN" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTO" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTP" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTS" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTT" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTU" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTV" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
 
 (1,1,1) = {"
 aaa
@@ -83826,7 +83981,7 @@ bHE
 bYu
 bZk
 bCq
-cTG
+cTF
 bCq
 bCq
 bCq
@@ -85122,7 +85277,7 @@ bCq
 bCq
 bCq
 bCq
-cTH
+cTF
 bCq
 bLv
 bLv
@@ -100716,7 +100871,7 @@ aaa
 aaa
 aaa
 aaa
-aqt
+aqs
 aro
 aro
 aro
@@ -103580,7 +103735,7 @@ bfL
 bhp
 biB
 biB
-biB
+cTL
 bkU
 bmX
 bpE
@@ -103837,7 +103992,7 @@ bfL
 bhq
 bhm
 bkb
-bhm
+cTM
 bla
 bmZ
 bpH
@@ -104352,7 +104507,7 @@ bfS
 biC
 bkd
 bfS
-bKH
+cTO
 bmZ
 bpJ
 brc
@@ -104866,7 +105021,7 @@ bfS
 biE
 bkf
 bfS
-bKH
+cTP
 bmZ
 bpL
 bre
@@ -105123,7 +105278,7 @@ bfS
 biD
 bke
 bfS
-bKH
+cTQ
 bmZ
 bpK
 brd
@@ -105380,7 +105535,7 @@ bfS
 bfS
 bfS
 bfS
-bKH
+cTR
 bmZ
 bon
 bon
@@ -105632,17 +105787,17 @@ aYV
 baR
 bcb
 bdl
-bdO
+cTJ
 cHD
 bgo
-bPv
-bPv
+cTK
+cTN
 blq
-bna
-bPv
+cTS
+cTT
 bpQ
-bPv
-bdO
+cTU
+cTV
 btm
 buy
 bvz
@@ -115152,7 +115307,7 @@ aaa
 aaa
 aaa
 bky
-btq
+btp
 brH
 bvQ
 bxt
@@ -115666,7 +115821,7 @@ aaa
 aaa
 aaa
 bZi
-btp
+btq
 brI
 bvR
 cNS

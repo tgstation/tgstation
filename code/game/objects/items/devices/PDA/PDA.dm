@@ -26,6 +26,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/obj/item/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
 	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
+	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
+	var/font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;" //The currently selected font.
+	var/background_color = "#808000" //The currently selected background color.
+	
+	#define FONT_VT 0
+	#define FONT_SHARE 1
+	#define FONT_ORBITRON 2
+	#define FONT_MONO 3
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
@@ -57,6 +65,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
+
+/obj/item/device/pda/examine(mob/user)
+	..()
+	if(!id && !inserted_item)
+		return
+	else
+		to_chat(user, "<span class='notice'>Alt-click to remove contents.</span>")
 
 /obj/item/device/pda/Initialize()
 	. = ..()
@@ -125,7 +140,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		hidden_uplink.interact(user)
 		return
 
-	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
+	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}</style>"
+
 
 	dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
 
@@ -133,6 +149,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 		dat += " | <a href='byond://?src=\ref[src];choice=Eject'><img src=pda_eject.png> Eject [cartridge]</a>"
 	if (mode)
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=pda_menu.png> Return</a>"
+
+	if (mode == 0)
+		dat += "<div align=\"center\">"
+		dat += "<br><a href='byond://?src=\ref[src];choice=Toggle_Font'>Toggle Font</a>"
+		dat += " | <a href='byond://?src=\ref[src];choice=Change_Color'>Change Color</a>"
+		dat += "</div>"
 
 	dat += "<br>"
 
@@ -311,6 +333,24 @@ GLOBAL_LIST_EMPTY(PDAs)
 //BASIC FUNCTIONS===================================
 
 			if("Refresh")//Refresh, goes to the end of the proc.
+			
+			if ("Toggle_Font")
+				//CODE REVISION 2
+				font_index = (font_index + 1) % 4
+
+				switch(font_index)
+					if (FONT_VT)
+						font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;"
+					if (FONT_SHARE)
+						font_mode = "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
+					if (FONT_ORBITRON)
+						font_mode = "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
+					if (FONT_MONO)
+						font_mode = "font-family:monospace;"
+			if ("Change_Color")
+				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').")as color
+				background_color = new_color
+
 			if("Return")//Return
 				if(mode<=9)
 					mode = 0
@@ -404,7 +444,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if (in_range(src, U) && loc == U)
 					if (mode == 1 && n)
 						note = n
-						notehtml = parsepencode(n, U, SIGNFONT)
+						notehtml = parsemarkdown(n, U)
 						notescanned = 0
 				else
 					U << browse(null, "window=pda")
@@ -542,7 +582,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			P.show_recieved_message(msg,src)
 			if(!multiple)
 				show_to_ghosts(user,msg)
-				log_talk(user,"[key_name(user)] (PDA: [name]) sent \"[message]\" to [key_name(P,null,TRUE)]",LOGPDA)
+				log_talk(user,"[key_name(user)] (PDA: [initial(name)]) sent \"[message]\" to [key_name(P,null,TRUE)]",LOGPDA)
 		else
 			if(!multiple)
 				to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
@@ -552,7 +592,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(multiple)
 		show_to_sender(last_sucessful_msg,1)
 		show_to_ghosts(user,last_sucessful_msg,1)
-		log_talk(user,"[user] (PDA: [name]) sent \"[message]\" to Everyone",LOGPDA)
+		log_talk(user,"[user] (PDA: [initial(name)]) sent \"[message]\" to Everyone",LOGPDA)
 
 /obj/item/device/pda/proc/show_to_sender(datum/data_pda_msg/msg,multiple = 0)
 	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
