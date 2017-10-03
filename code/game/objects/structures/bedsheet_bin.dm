@@ -334,12 +334,12 @@ LINEN BINS
 		else
 			B = new /obj/item/bedsheet(loc)
 
-		B.forceMove(loc)
+		B.drop_location()
 		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
 		update_icon()
 
 		if(hidden)
-			hidden.forceMove(loc)
+			hidden.drop_location()
 			hidden = null
 
 
