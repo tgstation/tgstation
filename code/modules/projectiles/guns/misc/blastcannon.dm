@@ -18,7 +18,7 @@
 /obj/item/gun/blastcannon/New()
 	if(!pin)
 		pin = new
-	. = ..()
+	return ..()
 
 /obj/item/gun/blastcannon/Destroy()
 	if(bomb)
@@ -26,7 +26,7 @@
 		bomb = null
 	air1 = null
 	air2 = null
-	. = ..()
+	return ..()
 
 /obj/item/gun/blastcannon/attack_self(mob/user)
 	if(bomb)
@@ -35,7 +35,7 @@
 		user.visible_message("<span class='warning'>[user] detaches the [bomb] from the [src]</span>")
 		bomb = null
 	update_icon()
-	. = ..(user)
+	return ..()
 
 /obj/item/gun/blastcannon/update_icon()
 	if(bomb)
@@ -46,7 +46,6 @@
 		icon_state = initial(icon_state)
 		name = initial(name)
 		desc = initial(desc)
-	. = ..()
 
 /obj/item/gun/blastcannon/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/device/transfer_valve))
@@ -59,10 +58,10 @@
 			return FALSE
 		user.visible_message("<span class='warning'>[user] attaches the [O] to the [src]!</span>")
 		bomb = O
-		O.loc = src
+		O.forceMove(src)
 		update_icon()
 		return TRUE
-	. = ..()
+	return ..()
 
 /obj/item/gun/blastcannon/proc/calculate_bomb()
 	if(!istype(bomb)||!istype(bomb.tank_one)||!istype(bomb.tank_two))
@@ -82,7 +81,7 @@
 	return (pressure/TANK_FRAGMENT_SCALE)
 
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
-	if((!bomb) || (target == user) || (target.loc == user) || (!target) || (target.loc == user.loc) || (target.loc in range(user, 2)) || (target in range(user, 2)))
+	if((!bomb) || (!target) || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
 	var/power = calculate_bomb()
 	qdel(bomb)
@@ -94,9 +93,12 @@
 	playsound(user, "explosion", 100, 1)
 	var/turf/starting = get_turf(user)
 	var/area/A = get_area(user)
-	var/log_str = "Blast wave fired at [ADMIN_COORDJMP(starting)] ([A.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
+	var/log_str = "Blast wave fired from [ADMIN_COORDJMP(starting)] ([A.name]) at [ADMIN_COORDJMP(get_turf(target))] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
 	message_admins(log_str)
 	log_game(log_str)
+	var/obj/item/projectile/blastwave/BW = new(loc, heavy, medium, light)
+	BW.preparePixelProjectile(target, get_turf(target), user, params, 0)
+	BW.fire()
 
 /obj/item/projectile/blastwave
 	name = "blast wave"
@@ -108,6 +110,12 @@
 	var/mediumr = 0
 	var/lightr = 0
 	range = 150
+
+/obj/item/projectile/blastwave/Initialize(mapload, _h, _m, _l)
+	heavyr = _h
+	mediumr = _m
+	lightr = _l
+	return ..()
 
 /obj/item/projectile/blastwave/Range()
 	..()
