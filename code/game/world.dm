@@ -122,7 +122,7 @@ GLOBAL_PROTECT(security_mode)
 	var/playing = ("players" in input)
 
 	if(!pinging && !playing && config && CONFIG_GET(flag/log_world_topic))
-		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
+		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key], params: \"[english_list(input)]\"")
 
 	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
 
