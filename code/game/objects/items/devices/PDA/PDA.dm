@@ -30,10 +30,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/font_mode = "font-family:monospace;" //The currently selected font.
 	var/background_color = "#808000" //The currently selected background color.
 	
-	#define FONT_MONO 0
-	#define FONT_SHARE 1
-	#define FONT_ORBITRON 2
-	#define FONT_VT 3
+	#define FONT_MONO "font-family:monospace;"
+	#define FONT_SHARE "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
+	#define FONT_ORBITRON "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
+	#define FONT_VT "font-family:\"VT323\", monospace;letter-spacing:1px;"
+	#define MODE_MONO 0
+	#define MODE_SHARE 1
+	#define MODE_ORBITRON 2
+	#define MODE_VT 3
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
@@ -54,7 +58,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/detonatable = TRUE // Can the PDA be blown up?
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
 	var/emped = 0
-	var/equiped = 0 //is this the first time it has been equiped?
+	var/equipped = FALSE  //used here to determine if this is the first time its been picked up
 
 	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
@@ -93,21 +97,21 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(user.client)
 			switch(user.client.prefs.pda_style)
 				if(MONO)
-					font_index = 0
-					font_mode = "font-family:monospace;"
+					font_index = MODE_MONO
+					font_mode = FONT_MONO
 				if(SHARE)
-					font_index = 1
-					font_mode = "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
+					font_index = MODE_SHARE
+					font_mode = FONT_SHARE
 				if(ORBITRON)
-					font_index = 2
-					font_mode = "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
+					font_index = MODE_ORBITRON
+					font_mode = FONT_ORBITRON
 				if(VT)
-					font_index = 3
-					font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;"
+					font_index = MODE_VT
+					font_mode = FONT_VT
 				else
-					font_index = 0
-					font_mode = "font-family:monospace;"
-		equiped = 1
+					font_index = MODE_MONO
+					font_mode = FONT_MONO
+		equipped = TRUE
 
 /obj/item/device/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
@@ -361,14 +365,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 				font_index = (font_index + 1) % 4
 
 				switch(font_index)
-					if (FONT_VT)
-						font_mode = "font-family:\"VT323\", monospace;letter-spacing:1px;"
-					if (FONT_SHARE)
-						font_mode = "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
-					if (FONT_ORBITRON)
-						font_mode = "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
-					if (FONT_MONO)
-						font_mode = "font-family:monospace;"
+					if (MODE_MONO)
+						font_mode = FONT_MONO
+					if (MODE_SHARE)
+						font_mode = FONT_SHARE
+					if (MODE_ORBITRON)
+						font_mode = FONT_ORBITRON
+					if (MODE_VT)
+						font_mode = FONT_VT
 			if ("Change_Color")
 				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').")as color
 				background_color = new_color
