@@ -9,7 +9,6 @@
 	var/on = FALSE
 	var/cooldown = 0
 	var/screen = "home"
-	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
 	var/volume = 1000
 	var/setting = 3
@@ -68,8 +67,7 @@
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
 		if(units)
 			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
-			for(var/datum/reagent/R in RC.reagents.reagent_list)
-				add_logs(usr, src, "has added [R.name] to [src]")
+			add_logs(usr, src, "has added [english_list(RC.regeants.reagents_list)] to [src]")
 			return
 	if(default_unfasten_wrench(user, I))
 		return
@@ -97,7 +95,6 @@
 	data["active"] = on
 	data["setting"] = setting
 	data["screen"] = screen
-	data["analyzeVars"] = analyzeVars
 	return data
 
 /obj/machinery/smoke_machine/ui_act(action, params)
@@ -107,19 +104,6 @@
 		if("purge")
 			reagents.clear_reagents()
 			. = TRUE
-
-		if("analyze")
-			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
-			if(R)
-				var/state = "Unknown"
-				if(initial(R.reagent_state) == 1)
-					state = "Solid"
-				else if(initial(R.reagent_state) == 2)
-					state = "Liquid"
-				else if(initial(R.reagent_state) == 3)
-					state = "Gas"
-				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
-				screen = "analyze"
 		if("setting")
 			var/amount = text2num(params["amount"])
 			if (locate(amount) in possible_settings)
@@ -128,11 +112,8 @@
 		if("power")
 			on = !on
 			if(on)
-				log_admin("[key_name(usr)] activated a smoke machine that contains the following at [COORD(src)]:")
-				for(var/datum/reagent/R in reagents.reagent_list)
-					var/msg = "[R.name]: [R.volume] units]"
-					log_admin(msg)
-					add_logs(usr, src, "has created [msg] smoke from")
+				log_admin("[key_name(usr)] activated a smoke machine that contains [english_list(RC.regeants.reagents_list)] at [COORD(src)].")
+				add_logs(usr, src, "has activated [src] which contains [english_list(RC.regeants.reagents_list)].")
 		if("goScreen")
 			screen = params["screen"]
 			. = TRUE
