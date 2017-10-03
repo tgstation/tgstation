@@ -79,11 +79,11 @@
 	construct_type = /mob/living/simple_animal/drone/cogscarab
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/clockwork/construct_chassis/cogscarab/pre_spawn()
+/obj/item/clockwork/construct_chassis/cogscarab/reebe/pre_spawn()
 	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult))
 		construct_type = /mob/living/simple_animal/drone/cogscarab/ratvar //During rounds where they can't interact with the station, let them experiment with builds
 
-/obj/item/clockwork/construct_chassis/cogscarab/post_spawn(mob/living/construct)
+/obj/item/clockwork/construct_chassis/cogscarab/reebe/post_spawn(mob/living/construct)
 	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Allow them to build stuff and recite scripture
 		var/list/cached_stuff = construct.GetAllContents()
 		for(var/obj/item/clockwork/replica_fabricator/F in cached_stuff)
