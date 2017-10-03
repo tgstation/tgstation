@@ -327,11 +327,19 @@
 	force = 0
 	throwforce = 4
 	
-/ob/item/nullrod/crystal/attack_self(/mob/living/carbon/human/user)
+/obj/item/nullrod/crystal/magicshit
+	var/reagent_amount = 1
+	var/reagent_type = "unstablemutationtoxin"
+
+/obj/item/nullrod/crystal/attack_self(/mob/living/carbon/human/user)
 	var/crush = "<span class='danger'>you crush the crystal in your hand and a torrent of energy rushes into you!</span>"
 	to_chat(user, crush)
-	user.addreagent(unstablemutationtoxin, 1)
-	
+		if(user.reagents)
+		user.add_reagent(reagent_type, reagent_amount)
+		return TRUE
+	var/fail = "<span class='danger'>I guess the energy didn't work?</span>"
+	return FALSE
+
 /obj/item/nullrod/armblade
 	name = "dark blessing"
 	desc = "Particularly twisted dieties grant gifts of dubious value."
