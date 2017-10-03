@@ -4,6 +4,7 @@
 
 	name = "gas mixer"
 	can_unwrench = TRUE
+	desc = "Very useful for mixing gasses."
 
 	var/on = FALSE
 

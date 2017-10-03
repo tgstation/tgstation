@@ -58,7 +58,7 @@
 	if(istype(M, /obj/effect))	//sparks don't teleport
 		return
 	if(M.anchored)
-		if(!(istype(M, /obj/mecha) && mech_sized))
+		if(!(ismecha(M) && mech_sized))
 			return
 
 	if(ismovableatom(M))
