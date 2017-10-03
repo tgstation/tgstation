@@ -74,6 +74,11 @@ GLOBAL_PROTECT(config_dir)
 		if(copytext(L, 1, 2) == "#")
 			continue
 
+		var/lockthis = FALSE
+		if(copytext(L, 1, 2) == "@")
+			L = copytext(L, 2)
+			lockthis = TRUE
+
 		var/pos = findtext(L, " ")
 		var/entry = null
 		var/value = null
@@ -95,6 +100,9 @@ GLOBAL_PROTECT(config_dir)
 		if(filename != E.resident_file)
 			log_config("Found [entry] in [filename] when it should have been in [E.resident_file]! Ignoring.")
 			continue
+
+		if(lockthis)
+			E.protection |= CONFIG_ENTRY_LOCKED
 
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)
