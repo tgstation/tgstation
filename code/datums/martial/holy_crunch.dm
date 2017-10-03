@@ -38,8 +38,10 @@
 		if(prob(D.getBruteLoss()) && !D.lying)
 			D.visible_message("<span class='warning'>[A] sends [D] to the ground with holy energies!</span>", "<span class='userdanger'>An unseen force sends swipes you off your feet!</span>")
 			D.Knockdown(80)
-			playsound(get_turf(D), 'sound/effects/pray.ogg', 25, 1, -1)
+			playsound(D), 'sound/effects/pray.ogg', 25, 1, -1)
 			add_logs(A, D, " used [atk_verb] (Hand of God) on")
-		D.visible_message("<span class='warning'>[A] tries to drop [D] with holy energies!</span>", "<span class='userdanger'>An unseen force whizzes past you!</span>")
+			return TRUE
 		playsound(get_turf(D), 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		add_logs(A, D, " used [atk_verb] (Hand of God) on")
+		return TRUE
+
