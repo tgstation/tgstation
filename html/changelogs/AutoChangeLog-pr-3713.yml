@@ -1,0 +1,4 @@
+author: "More Robust Than You"
+delete-after: True
+changes: 
+  - balance: "Blobs now take damage from particle accelerators"
