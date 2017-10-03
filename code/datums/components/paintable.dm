@@ -19,8 +19,6 @@
     if(spraycan.is_capped)
         to_chat(user, "<span class='warning'>Take the cap off first!</span>")
         return
-    if(spraycan.check_empty(user))
-        return
     RemoveCurrentCoat()
     spraycan.use_charges(2)
     var/colour = spraycan.paint_color
