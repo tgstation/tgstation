@@ -133,7 +133,6 @@ GLOBAL_LIST_INIT(skin_tones, list(
 	))
 
 GLOBAL_LIST_EMPTY(species_list)
-GLOBAL_LIST_EMPTY(roundstart_species)
 
 /proc/age2agedescription(age)
 	switch(age)

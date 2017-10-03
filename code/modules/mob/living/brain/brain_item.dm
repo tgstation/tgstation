@@ -18,7 +18,7 @@
 	vital = FALSE
 	decoy_override = TRUE
 
-/obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
+/obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
 	..()
 
 	name = "brain"

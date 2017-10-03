@@ -491,6 +491,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
 	dust_mob(user, cause = "monkey attack")
 
+/obj/machinery/power/supermatter_shard/attack_alien(mob/user)
+	dust_mob(user, cause = "alien attack")
+
 /obj/machinery/power/supermatter_shard/attack_animal(mob/living/simple_animal/S)
 	var/murder
 	if(!S.melee_damage_upper && !S.melee_damage_lower)
@@ -537,7 +540,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		to_chat(user, "<span class='notice'>You carefully begin to scrape \the [src] with \the [W]...</span>")
 		if(do_after(user, 60 * W.toolspeed, TRUE, src))
 			to_chat(user, "<span class='notice'>You extract a sliver from \the [src]. \The [src] begins to react violently!</span>")
-			new /obj/item/nuke_core/supermatter_sliver(user.loc)
+			new /obj/item/nuke_core/supermatter_sliver(drop_location())
 			matter_power += 200
 	else if(user.dropItemToGround(W))
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\

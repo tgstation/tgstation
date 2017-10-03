@@ -62,6 +62,8 @@
 #define CURSE_WASTING	4 //causes gradual damage
 #define CURSE_GRASPING	8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
 
+#define STATUS_EFFECT_KINDLE /datum/status_effect/kindle //A knockdown reduced by 1 second for every 3 points of damage the target takes.
+
 /////////////
 // NEUTRAL //
 /////////////

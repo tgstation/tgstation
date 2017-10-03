@@ -203,9 +203,9 @@
 	var/mob/living/silicon/robot/R
 	switch(borg_to_spawn)
 		if("Medical")
-			R = new /mob/living/silicon/robot/syndicate/medical(T)
+			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
 		else
-			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
+			R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
 
 	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))

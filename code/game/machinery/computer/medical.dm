@@ -124,7 +124,7 @@
 						dat += "<tr><td>ID:</td><td>[active1.fields["id"]]</td></tr>"
 						dat += "<tr><td>Sex:</td><td><A href='?src=\ref[src];field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Age:</td><td><A href='?src=\ref[src];field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"
-						if(config.mutant_races)
+						if(CONFIG_GET(flag/join_with_mutant_race))
 							dat += "<tr><td>Species:</td><td><A href='?src=\ref[src];field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Fingerprint:</td><td><A href='?src=\ref[src];field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Physical Status:</td><td><A href='?src=\ref[src];field=p_stat'>&nbsp;[active1.fields["p_stat"]]&nbsp;</A></td></tr>"
@@ -543,7 +543,7 @@
 					P.info = "<CENTER><B>Medical Record - (MR-[GLOB.data_core.medicalPrintCount])</B></CENTER><BR>"
 					if(active1 in GLOB.data_core.general)
 						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", src.active1.fields["name"], src.active1.fields["id"], src.active1.fields["sex"], src.active1.fields["age"])
-						if(config.mutant_races)
+						if(CONFIG_GET(flag/join_with_mutant_race))
 							P.info += "\nSpecies: [active1.fields["species"]]<BR>"
 						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", src.active1.fields["fingerprint"], src.active1.fields["p_stat"], src.active1.fields["m_stat"])
 					else

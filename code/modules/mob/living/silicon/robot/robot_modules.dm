@@ -251,7 +251,7 @@
 	emag_modules = list(/obj/item/melee/transforming/energy/sword/cyborg)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg,
-		/obj/item/clockwork/ratvarian_spear/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_standard"
@@ -282,7 +282,7 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
 	feedback_key = "cyborg_medical"
@@ -334,7 +334,7 @@
 		/obj/item/clothing/mask/gas/sechailer/cyborg)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
 	feedback_key = "cyborg_security"
@@ -371,7 +371,7 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/peacekeeper,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "peace"
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_peacekeeper"
@@ -504,7 +504,7 @@
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/miner,
-		/obj/item/clockwork/ratvarian_spear/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
 		/obj/item/borg/sight/xray/truesight_lens)
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
@@ -524,7 +524,7 @@
 
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
@@ -551,7 +551,7 @@
 		/obj/item/gun/medbeam)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE

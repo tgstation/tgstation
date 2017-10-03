@@ -422,6 +422,41 @@
 					setDir(i)
 					sleep(1)
 
+/mob/living/simple_animal/pet/dog/corgi/Ian/narsie_act()
+	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
+	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(loc)
+	N.setDir(dir)
+	gib()
+
+/mob/living/simple_animal/pet/dog/corgi/narsie
+	name = "Nars-Ian"
+	desc = "Ia! Ia!"
+	icon_state = "narsian"
+	icon_living = "narsian"
+	icon_dead = "narsian_dead"
+	faction = list("dog", "cult")
+	gold_core_spawnable = FALSE
+	nofur = TRUE
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/Life()
+	..()
+	for(var/mob/living/simple_animal/pet/P in range(1, src))
+		if(P != src && prob(5))
+			visible_message("<span class='warning'>[src] devours [P]!</span>", \
+			"<span class='cult big bold'>DELICIOUS SOULS</span>")
+			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+			narsie_act()
+			P.gib()
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/update_corgi_fluff()
+	..()
+	speak = list("Tari'karat-pasnar!", "IA! IA!", "BRRUUURGHGHRHR")
+	speak_emote = list("growls", "barks ominously")
+	emote_hear = list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable.")
+	emote_see = list("communes with the unnameable.", "ponders devouring some souls.", "shakes.")
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/narsie_act()
+	adjustBruteLoss(-maxHealth)
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()

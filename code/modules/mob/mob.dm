@@ -9,8 +9,6 @@
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
 	qdel(hud_used)
-	if(mind && mind.current == src)
-		spellremove(src)
 	QDEL_LIST(viruses)
 	for(var/cc in client_colours)
 		qdel(cc)
@@ -161,7 +159,7 @@
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
 
-/mob/proc/movement_delay()
+/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
 	return 0
 
 /mob/proc/Life()
@@ -387,7 +385,7 @@
 	set category = "Object"
 	set src = usr
 
-	if(istype(loc, /obj/mecha))
+	if(ismecha(loc))
 		return
 
 	if(incapacitated())
@@ -435,7 +433,7 @@
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (!( GLOB.abandon_allowed ))
+	if (CONFIG_GET(flag/norespawn))
 		return
 	if ((stat != DEAD || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
