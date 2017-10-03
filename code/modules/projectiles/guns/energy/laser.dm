@@ -21,7 +21,7 @@
 	desc = "Bulkier, older version of the laser gun meant for long range encounters. Requires a hand crank to charge up each shot, and it has considerable recoil."
 	icon_state = "laser"
 	item_state = "laser"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_HUGE
 	
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
