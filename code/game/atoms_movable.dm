@@ -286,9 +286,7 @@
 			reset_perspective(destination)
 		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
-/mob/living/brain/forceMove(atom/destination, var/hard_override)
-	if(hard_override)
-		return ..()
+/mob/living/brain/forceMove(atom/destination)
 	if(container)
 		return container.forceMove(destination)
 	else //something went very wrong.
