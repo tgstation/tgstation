@@ -156,7 +156,7 @@
 		to_chat(src, "<span class='warning'>You're too busy to jaunt in.</span>")
 		return FALSE
 	fakefire()
-	forceMove(get_turf(src))
+	drop_location()
 	client.eye = src
 	visible_message("<span class='warning'><B>[src] appears in a fiery blaze!</B></span>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
