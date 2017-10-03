@@ -78,13 +78,19 @@
 	creation_message = "<span class='alloy bold'>The cogscarab clicks and whirrs as it hops up and springs to life!</span>"
 	construct_type = /mob/living/simple_animal/drone/cogscarab
 	w_class = WEIGHT_CLASS_SMALL
+	var/infinite_resources = TRUE
 
-/obj/item/clockwork/construct_chassis/cogscarab/reebe/pre_spawn()
-	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult))
+/obj/item/clockwork/construct_chassis/cogscarab/Initialize()
+	. = ..()
+	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult))
+		infinite_resources = FALSE //For any that are somehow spawned in late
+
+/obj/item/clockwork/construct_chassis/cogscarab/pre_spawn()
+	if(infinite_resources)
 		construct_type = /mob/living/simple_animal/drone/cogscarab/ratvar //During rounds where they can't interact with the station, let them experiment with builds
 
-/obj/item/clockwork/construct_chassis/cogscarab/reebe/post_spawn(mob/living/construct)
-	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Allow them to build stuff and recite scripture
+/obj/item/clockwork/construct_chassis/cogscarab/post_spawn(mob/living/construct)
+	if(infinite_resources) //Allow them to build stuff and recite scripture
 		var/list/cached_stuff = construct.GetAllContents()
 		for(var/obj/item/clockwork/replica_fabricator/F in cached_stuff)
 			F.uses_power = FALSE

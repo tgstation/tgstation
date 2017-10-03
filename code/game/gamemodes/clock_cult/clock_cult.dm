@@ -144,6 +144,8 @@ Credit where due:
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar //that's a mouthful
 	G.initial_activation_delay = ark_time * 60
 	G.seconds_until_activation = ark_time * 60 //60 seconds in a minute * number of minutes
+	for(var/obj/item/clockwork/construct_chassis/cogscarab/C in GLOB.all_clockwork_objects)
+		C.infinite_resources = FALSE
 	..()
 	return 1
 

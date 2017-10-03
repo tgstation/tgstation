@@ -134,7 +134,7 @@
 /area/reebe/city_of_cogs)
 "aB" = (
 /obj/structure/table/reinforced/brass,
-/obj/item/clockwork/construct_chassis/cogscarab/reebe,
+/obj/item/clockwork/construct_chassis/cogscarab,
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aC" = (
