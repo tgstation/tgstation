@@ -253,12 +253,14 @@
 
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
 	if(rev_mind.assigned_role in GLOB.command_positions)
-		return 0
+		return FALSE
 	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
 	if(H.isloyal())
-		return 0
+		return FALSE
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
-		return 0
+		return FALSE
+	if(rev_mind.unconvertable)
+		return FALSE
 	revolutionaries += rev_mind
 	if(iscarbon(rev_mind.current))
 		var/mob/living/carbon/carbon_mob = rev_mind.current
@@ -271,7 +273,7 @@
 	update_rev_icons_added(rev_mind)
 	if(jobban_isbanned(rev_mind.current, ROLE_REV))
 		INVOKE_ASYNC(src, .proc/replace_jobbaned_player, rev_mind.current, ROLE_REV, ROLE_REV)
-	return 1
+	return TRUE
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
 //////////////////////////////////////////////////////////////////////////////
