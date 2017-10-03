@@ -58,7 +58,6 @@
 	set desc = "Report an issue"
 	set hidden = 1
 	
-	var/compileinfo = ""
 	var/message = "This will open the issue reporter. Are you sure?"
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
