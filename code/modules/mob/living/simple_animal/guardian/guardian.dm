@@ -180,10 +180,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 				new /obj/effect/temp_visual/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/hostile/guardian/proc/is_deployed()
-	return !(loc == summoner)
+	return loc != summoner
 
 /mob/living/simple_animal/hostile/guardian/AttackingTarget()
 	if(!is_deployed())
