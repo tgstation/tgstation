@@ -41,7 +41,9 @@
 //prepare electronics
 /datum/surgery_step/prepare_electronics
 	name = "prepare electronics"
-	implements = list(/obj/item/device/multitool = 100)
+	implements = list(
+		/obj/item/device/multitool = 100,
+		/obj/item/hemostat = 10) // try to reboot internal controllers via short circuit with some conductor
 	time = 24
 
 /datum/surgery_step/prepare_electronics/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -50,23 +52,27 @@
 
 //unwrench
 /datum/surgery_step/mechanic_unwrench
-	name = "unwrench the cover"
-	implements = list(/obj/item/wrench = 100)
+	name = "unwrench bolts"
+	implements = list(
+		/obj/item/wrench = 100,
+		/obj/item/retractor = 10)
 	time = 24
 
 /datum/surgery_step/mechanic_unwrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to unwrench the cover of the organ holders in [target]'s [parse_zone(target_zone)].",
-		"<span class='notice'>You begin to unwrench the cover of the organ holders in [target]'s [parse_zone(target_zone)]...</span>")
+	user.visible_message("[user] begins to unwrench some bolts in [target]'s [parse_zone(target_zone)].",
+		"<span class='notice'>You begin to unwrench some bolts in [target]'s [parse_zone(target_zone)]...</span>")
 
 //wrench
 /datum/surgery_step/mechanic_wrench
-	name = "wrench the cover"
-	implements = list(/obj/item/wrench = 100)
+	name = "wrench bolts"
+	implements = list(
+		/obj/item/wrench = 100,
+		/obj/item/retractor = 10)
 	time = 24
 
 /datum/surgery_step/mechanic_wrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to close the cover of the organ holders in [target]'s [parse_zone(target_zone)].",
-		"<span class='notice'>You begin to close the cover of the organ holders in [target]'s [parse_zone(target_zone)]...</span>")
+	user.visible_message("[user] begins to wrench some bolts in [target]'s [parse_zone(target_zone)].",
+		"<span class='notice'>You begin to wrench some bolts in [target]'s [parse_zone(target_zone)]...</span>")
 
 //open hatch
 /datum/surgery_step/open_hatch
