@@ -273,9 +273,11 @@
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-		else if(getBrainLoss() >= 60)
-			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
-
+		else
+			if(getBrainLoss() >= 60)
+				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
+			if(InCritical())
+				msg += "[t_He] is barely concious.\n"
 		if(getorgan(/obj/item/organ/brain))
 			if(istype(src, /mob/living/carbon/human/interactive))
 				var/mob/living/carbon/human/interactive/auto = src
