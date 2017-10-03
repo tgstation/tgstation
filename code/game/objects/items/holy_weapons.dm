@@ -319,7 +319,19 @@
 	throwforce = 30
 	sharpness = IS_SHARP
 	attack_verb = list("enlightened", "redpilled")
-
+	
+/obj/item/nullrod/crystal
+	name = "magic crystal"
+	desc = "you're not quite sure what this is!"
+	//icons soon
+	force = 0
+	throwforce = 4
+	
+/ob/item/nullrod/crystal/attack_self(/mob/living/carbon/human/user)
+	var/crush = "<span class='danger'>you crush the crystal in your hand and a torrent of energy rushes into you!</span>"
+	to_chat(user, crush)
+	user.addreagent(unstablemutationtoxin, 1)
+	
 /obj/item/nullrod/armblade
 	name = "dark blessing"
 	desc = "Particularly twisted dieties grant gifts of dubious value."
