@@ -82,11 +82,12 @@
 	var/heavy = power * 0.2
 	var/medium = power * 0.5
 	var/light = power
-	user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [src.name] and fires a blast wave at \the [target]!</span>","<span class='danger'>You open \the [bomb] on your [src.name] and fire a blast wave at \the [target]!</span>")
+	user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [name] and fires a blast wave at \the [target]!</span>","<span class='danger'>You open \the [bomb] on your [name] and fire a blast wave at \the [target]!</span>")
 	playsound(user, "explosion", 100, 1)
 	var/turf/starting = get_turf(user)
+	var/turf/targturf = get_turf(target)
 	var/area/A = get_area(user)
-	var/log_str = "Blast wave fired from [ADMIN_COORDJMP(starting)] ([A.name]) at [ADMIN_COORDJMP(get_turf(target))] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
+	var/log_str = "Blast wave fired from [ADMIN_COORDJMP(starting)] ([A.name]) at [ADMIN_COORDJMP(targturf)] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
 	message_admins(log_str)
 	log_game(log_str)
 	var/obj/item/projectile/blastwave/BW = new(loc, heavy, medium, light)
