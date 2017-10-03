@@ -200,7 +200,7 @@
 				continue
 			BB.bees |= src
 			beehome = BB
-			return // End loop after the first compatible find.
+			break // End loop after the first compatible find.
 
 /mob/living/simple_animal/hostile/poison/bees/toxin/Initialize()
 	. = ..()
