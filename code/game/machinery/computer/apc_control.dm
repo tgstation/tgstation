@@ -51,7 +51,7 @@
 	if(authenticated)
 		if(!checking_logs)
 			dat += "Logged in as [auth_id].<br><br>"
-			dat += "<i>result_filters</i><br>"
+			dat += "<i>Filters</i><br>"
 			dat += "<b>Name:</b> <a href='?src=\ref[src];name_filter=1'>[result_filters["Name"] ? result_filters["Name"] : "None set"]</a><br>"
 			dat += "<b>Charge:</b> <a href='?src=\ref[src];above_filter=1'>\>[result_filters["Charge Above"] ? result_filters["Charge Above"] : "NaN"]%</a> and <a href='?src=\ref[src];below_filter=1'>\<[result_filters["Charge Below"] ? result_filters["Charge Below"] : "NaN"]%</a><br>"
 			dat += "<b>Accessible:</b> <a href='?src=\ref[src];access_filter=1'>[result_filters["Responsive"] ? "Non-Responsive Only" : "All"]</a><br><br>"
