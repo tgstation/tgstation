@@ -44,11 +44,11 @@
 	. = ..()
 	to_chat(C, "[info_text]")
 
-	C.real_name = "Nightmare"
-	C.name = "Nightmare"
+	C.real_name = "[pick(GLOB.nightmare_names)]"
+	C.name = C.real_name
 	if(C.mind)
-		C.mind.name = "Nightmare"
-	C.dna.real_name = "Nightmare"
+		C.mind.name = C.real_name
+	C.dna.real_name = C.real_name
 
 /datum/species/shadow/nightmare/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	var/turf/T = H.loc
