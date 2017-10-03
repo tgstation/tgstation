@@ -134,12 +134,11 @@
 		if(ispath(lit, /obj/item/ore/bluespace_crystal))
 			use_power(max(500,M.last_amount_inserted/10))
 		else
-			var/obj/item/stack/S = lit
-			var/list/mats = S.materials
-			if (mats[MAT_METAL])
-				flick("autolathe_o",src)//plays metal insertion animation
-			if (mats[MAT_GLASS])
-				flick("autolathe_r",src)//plays glass insertion animation
+			switch(M.last_inserted_id)
+				if (MAT_METAL)
+					flick("autolathe_o",src)//plays metal insertion animation
+				if (MAT_GLASS)
+					flick("autolathe_r",src)//plays glass insertion animation
 			use_power(M.last_amount_inserted*100)
 		updateUsrDialog()
 
