@@ -347,7 +347,7 @@
 /obj/item/nullrod/hand_of_god/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
-	var/resolve = "<span class='userdanger'>A phantom force punches your gut!</b></span>"
+	var/resolve = "<span class='danger'>A phantom force punches your gut!</b></span>"
 	to_chat(user, resolve)
 	if(is_servant_of_ratvar(user) || iscultist(user))
 		to_chat(user, "<span class='redtext'><b>\"YOU HAVE BEEN DEEMED UNWORTHY, CULTIST SCUM!\"</b></span>")
