@@ -147,7 +147,7 @@
 		M = materials[MAT]
 		M.amount += I.materials[MAT] * multiplier
 		total_amount += I.materials[MAT] * multiplier
-		if(I.materials[MAT > max_mat_value)
+		if(I.materials[MAT] > max_mat_value)
 			primary_mat = MAT
 	return primary_mat
 
