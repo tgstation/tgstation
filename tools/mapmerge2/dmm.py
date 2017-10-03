@@ -149,6 +149,48 @@ class KeyTooLarge(Exception):
     pass
 
 # ----------
+# An actual atom parser
+
+def parse_map_atom(atom):
+    try:
+        i = atom.index('{')
+    except ValueError:
+        return atom, {}
+
+    path, rest = atom[:i], atom[i+1:]
+    vars = {}
+
+    in_string = False
+    in_name = False
+    escaping = False
+    current_name = ''
+    current = ''
+    for ch in rest:
+        if escaping:
+            escaping = False
+            current += ch
+        elif ch == '\\':
+            escaping = True
+        elif ch == '"':
+            in_string = not in_string
+            current += ch
+        elif in_string:
+            current += ch
+        elif ch == ';':
+            vars[current_name.strip()] = current.strip()
+            current_name = current = ''
+        elif ch == '=':
+            current_name = current
+            current = ''
+        elif ch == '}':
+            vars[current_name.strip()] = current.strip()
+            break
+        elif ch not in ' ':
+            current += ch
+
+    return path, vars
+
+# ----------
 # TGM writer
 
 def save_tgm(dmm, output):
