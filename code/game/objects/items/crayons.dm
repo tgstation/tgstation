@@ -118,8 +118,11 @@
 		. = amount
 		refill()
 	else
-		. = min(charges_left, amount)
-		charges_left -= .
+		if(charges_left < amount)
+			to_chat(user, "<span class='warning'>There is not enough of [src] left!</span>")
+		else
+			charges_left -= amount
+			return amount
 
 /obj/item/toy/crayon/proc/check_empty(mob/user)
 	// When eating a crayon, check_empty() can be called twice producing
@@ -132,7 +135,7 @@
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		to_chat(user, "<span class='warning'>There is no more of \the [src.name] left!</span>")
+		to_chat(user, "<span class='warning'>There is no more of [src] left!</span>")
 		if(self_contained)
 			qdel(src)
 		. = TRUE
