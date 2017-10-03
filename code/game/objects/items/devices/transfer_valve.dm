@@ -15,7 +15,7 @@
 	origin_tech = "materials=1;engineering=1"
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
-	return 1
+	return TRUE
 
 /obj/item/device/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/tank))
@@ -76,13 +76,13 @@
 
 /obj/item/device/transfer_valve/Topic(href, href_list)
 	..()
-	if ( usr.stat || usr.restrained() )
+	if(!usr.canUseTopic())
 		return
-	if (src.loc == usr)
+	if(loc == usr)
 		if(tank_one && href_list["tankone"])
 			split_gases()
 			valve_open = FALSE
-			tank_one.loc = get_turf(src)
+			tank_one.drop_location()
 			tank_one = null
 			update_icon()
 			if((!tank_two || tank_two.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
@@ -90,7 +90,7 @@
 		else if(tank_two && href_list["tanktwo"])
 			split_gases()
 			valve_open = FALSE
-			tank_two.loc = get_turf(src)
+			tank_two.drop_location()
 			tank_two = null
 			update_icon()
 			if((!tank_one || tank_one.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
@@ -99,24 +99,26 @@
 			toggle_valve()
 		else if(attached_device)
 			if(href_list["rem_device"])
-				attached_device.forceMove(get_turf(src))
+				attached_device.drop_location()
 				attached_device.holder = null
 				attached_device = null
 				update_icon()
 			if(href_list["device"])
 				attached_device.attack_self(usr)
 
-		src.attack_self(usr)
-		src.add_fingerprint(usr)
+		attack_self(usr)
+		add_fingerprint(usr)
 		return
 	return
 
 /obj/item/device/transfer_valve/proc/process_activation(obj/item/device/D)
 	if(toggle)
-		toggle = 0
+		toggle = FALSE
 		toggle_valve()
-		spawn(50) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
-			toggle = 1
+		addtimer(CALLBACK(src, .proc/toggle_off), 5)	//To stop a signal being spammed from a proxy sensor constantly going off or whatever
+
+/obj/item/device/transfer_valve/proc/toggle_off()
+	toggle = TRUE
 
 /obj/item/device/transfer_valve/update_icon()
 	cut_overlays()
@@ -196,16 +198,13 @@
 		message_admins(bomb_message, 0, 1)
 		log_game("[log_str1] [A.name][COORD(bombturf)] [log_str2] [log_str3]")
 		merge_gases()
-		spawn(20) // In case one tank bursts
-			for (var/i=0,i<5,i++)
-				src.update_icon()
-				sleep(10)
-			src.update_icon()
+		for(var/i in 1 to 6)
+			addtimer(CALLBACK(src, .proc/update_icon), 20 + (i - 1) * 10)
 
 	else if(valve_open && tank_one && tank_two)
 		split_gases()
 		valve_open = FALSE
-		src.update_icon()
+		update_icon()
 
 // this doesn't do anything but the timer etc. expects it to be here
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
