@@ -53,6 +53,8 @@ Credit where due:
 			return FALSE
 		if(M.mind.enslaved_to && !is_servant_of_ratvar(M.mind.enslaved_to))
 			return FALSE
+		if(M.mind.unconvertable)
+			return FALSE
 	else
 		return FALSE
 	if(iscultist(M) || isconstruct(M) || M.isloyal() || ispAI(M))

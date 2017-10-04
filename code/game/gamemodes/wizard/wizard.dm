@@ -30,7 +30,7 @@
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
 		return 0
 	for(var/datum/mind/wiz in wizards)
-		wiz.current.loc = pick(GLOB.wizardstart)
+		wiz.current.forceMove(pick(GLOB.wizardstart))
 
 	return 1
 
@@ -244,15 +244,6 @@
 	return 1
 
 //OTHER PROCS
-
-//To batch-remove wizard spells. Linked to mind.dm.
-/mob/proc/spellremove(mob/M)
-	if(!mind)
-		return
-	for(var/X in src.mind.spell_list)
-		var/obj/effect/proc_holder/spell/spell_to_remove = X
-		qdel(spell_to_remove)
-		mind.spell_list -= spell_to_remove
 
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)

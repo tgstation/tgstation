@@ -49,7 +49,7 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
-	light_range = 3
+	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 
 	var/volume = 125
@@ -175,3 +175,15 @@
 	..()
 	if(isliving(L))
 		L.fire_act(temperature, volume)
+
+/obj/effect/dummy/fire
+	name = "fire"
+	desc = "OWWWWWW. IT BURNS. Tell a coder if you're seeing this."
+	icon_state = "nothing"
+	light_color = LIGHT_COLOR_FIRE
+	light_range = LIGHT_RANGE_FIRE
+
+/obj/effect/dummy/fire/Initialize()
+	. = ..()
+	if(!isliving(loc))
+		qdel(src)

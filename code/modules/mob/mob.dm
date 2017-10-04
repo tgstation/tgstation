@@ -9,8 +9,6 @@
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
 	qdel(hud_used)
-	if(mind && mind.current == src)
-		spellremove(src)
 	QDEL_LIST(viruses)
 	for(var/cc in client_colours)
 		qdel(cc)
@@ -387,7 +385,7 @@
 	set category = "Object"
 	set src = usr
 
-	if(istype(loc, /obj/mecha))
+	if(ismecha(loc))
 		return
 
 	if(incapacitated())

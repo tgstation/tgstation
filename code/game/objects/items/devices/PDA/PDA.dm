@@ -444,7 +444,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if (in_range(src, U) && loc == U)
 					if (mode == 1 && n)
 						note = n
-						notehtml = parsepencode(n, U, SIGNFONT)
+						notehtml = parsemarkdown(n, U)
 						notescanned = 0
 				else
 					U << browse(null, "window=pda")

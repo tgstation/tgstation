@@ -246,7 +246,7 @@
 		if(disassembled)
 			if(!assembly)
 				assembly = new()
-			assembly.loc = src.loc
+			assembly.forceMove(drop_location())
 			assembly.state = 1
 			assembly.setDir(dir)
 			assembly = null

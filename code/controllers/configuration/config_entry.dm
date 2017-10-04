@@ -51,7 +51,13 @@
 		return FALSE
 	return ..()
 
+/datum/config_entry/proc/VASProcCallGuard(str_val)
+	. = !(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "ValidateAndSet" && GLOB.LastAdminCalledTargetRef == "\ref[src]")
+	if(!.)
+		log_admin_private("Config set of [type] to [str_val] attempted by [key_name(usr)]")
+
 /datum/config_entry/proc/ValidateAndSet(str_val)
+	VASProcCallGuard(str_val)
 	CRASH("Invalid config entry type!")
 
 /datum/config_entry/proc/ValidateKeyedList(str_val, list_mode, splitter)
@@ -92,6 +98,8 @@
 	return var_name != "auto_trim" && ..()
 
 /datum/config_entry/string/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
 	value = auto_trim ? trim(str_val) : str_val
 	return TRUE
 
@@ -103,6 +111,8 @@
 	var/min_val = -INFINITY
 
 /datum/config_entry/number/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
 	var/temp = text2num(trim(str_val))
 	if(!isnull(temp))
 		value = Clamp(integer ? round(temp) : temp, min_val, max_val)
@@ -120,6 +130,8 @@
 	abstract_type = /datum/config_entry/flag
 
 /datum/config_entry/flag/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
 	value = text2num(trim(str_val)) != 0
 	return TRUE
 
@@ -128,6 +140,8 @@
 	value = list()
 
 /datum/config_entry/number_list/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
 	str_val = trim(str_val)
 	var/list/new_list = list()
 	var/list/values = splittext(str_val," ")
@@ -147,6 +161,8 @@
 	dupes_allowed = TRUE
 
 /datum/config_entry/keyed_flag_list/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
 	return ValidateKeyedList(str_val, LIST_MODE_FLAG, " ")
 
 /datum/config_entry/keyed_number_list
@@ -159,6 +175,8 @@
 	return var_name != "splitter" && ..()
 
 /datum/config_entry/keyed_number_list/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
 	return ValidateKeyedList(str_val, LIST_MODE_NUM, splitter)
 
 /datum/config_entry/keyed_string_list
@@ -171,6 +189,8 @@
 	return var_name != "splitter" && ..()
 
 /datum/config_entry/keyed_string_list/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
 	return ValidateKeyedList(str_val, LIST_MODE_TEXT, splitter)
 
 #undef LIST_MODE_NUM

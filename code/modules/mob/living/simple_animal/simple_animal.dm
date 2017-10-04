@@ -312,7 +312,7 @@
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
 			return 0
-	if (istype(the_target, /obj/mecha))
+	if (ismecha(the_target))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
 			return 0
