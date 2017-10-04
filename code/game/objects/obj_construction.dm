@@ -54,7 +54,7 @@
 /datum/construction_state/first	//this should only contain construction parameters
 	//reaching this state deletes the object
 	required_type_to_deconstruct = NO_DECONSTRUCT
-	always_drop_loot = 1
+	always_drop_loot = TRUE
 
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
@@ -68,7 +68,7 @@
 							//when this state is reached. The state before this one should have all
 							//the parameters of the initial object or be manually set to a custom state
 
-/datum/construction_state/proc/OnLeft(obj/parent, mob/user, obj/item/tool, constructed, forced)
+/datum/construction_state/proc/OnLeft(obj/parent, mob/living/user, obj/item/tool, constructed, forced)
 	var/datum/construction_state/next = constructed ? next_state : prev_state
 	var/id
 	var/obj/loot
@@ -83,8 +83,8 @@
 		if(construction_sound)
 			playsound(parent, construction_sound, CONSTRUCTION_VOLUME, TRUE)
 		parent.OnConstruction(id, user, tool)	//run event
-		var/obj/item/stack/S = tool
 		if(required_amount_to_construct)
+			var/obj/item/stack/S = tool
 			if(istype(S))
 				S.use(required_amount_to_construct)
 			else if(stash_construction_item)
@@ -104,7 +104,7 @@
 		else if(user && user.Adjacent(parent))	//adjacency check for telekinetics
 			user.put_in_hands(loot)
 		else
-			loot.forceMove(get_turf(parent))
+			loot.forceMove(parent.drop_location())
 		
 		if(!id)
 			qdel(parent)	//deconstructed fully
@@ -113,7 +113,7 @@
 	if(prev_state && prev_state.damage_reachable)
 		OnLeft(parent, usr, null, FALSE, TRUE)
 
-/datum/construction_state/proc/OnReached(obj/parent, mob/user, constructed)
+/datum/construction_state/proc/OnReached(obj/parent, mob/living/user, constructed)
 	parent.current_construction_state = src	//moving on
 
 	if(!isnull(anchored))
@@ -153,7 +153,7 @@
 	if(transformation_type)
 		required_type_to_deconstruct = NO_DECONSTRUCT
 
-/datum/construction_state/last/OnReached(obj/parent, mob/user, constructed)
+/datum/construction_state/last/OnReached(obj/parent, mob/living/user, constructed)
 	if(!constructed)
 		stack_trace("Very bad param")
 	//return to object defaults
@@ -167,7 +167,7 @@
 		var/pdir = parent.dir
 		var/obj/O
 		if(TT != CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME)
-			O = new TT(get_turf(parent))
+			O = new TT(parent.drop_location())
 			parent.transfer_fingerprints_to(O)
 			parent.OnConstructionTransform(user, O)
 		else
@@ -176,7 +176,7 @@
 				var/VE = var_edited
 				var/PVE = parent.var_edited
 				if(!VE && !PVE)
-					to_chat(user, "Something bad just happened. Go report it on coderbus: OBJCONRUNTIMETYPEFAIL")
+					to_chat(user, "Something bad just happened. Please report this: OBJCONRUNTIMETYPEFAIL")
 				CRASH("OnConstructionTransform with CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME failed for [parent]([parent.type])! Returned [O]! VE: [VE], PVE: [PVE].")
 		O.Construct(user, pdir)
 		qdel(parent)
@@ -192,7 +192,7 @@
 //See __HELPERS/game.dm for CONSTRUCTION_BLUEPRINT macro
 
 /obj/proc/SetupConstruction()
-	var/list/bp_cache = SSatoms.blueprints_cache
+	var/list/bp_cache = list() //SSatoms.blueprints_cache
 	var/list/our_steps = bp_cache[type]
 	if(isnull(our_steps))
 		our_steps = list()
@@ -327,16 +327,16 @@
 		. = FALSE
 
 //construction events
-/obj/proc/OnConstruction(state_id, mob/user, obj/item/used)
+/obj/proc/OnConstruction(state_id, mob/living/user, obj/item/used)
 
-/obj/proc/OnConstructionTransform(mob/user, obj/created)
+/obj/proc/OnConstructionTransform(mob/living/user, obj/created)
 
-/obj/proc/OnDeconstruction(state_id, mob/user, obj/item/created, forced)
+/obj/proc/OnDeconstruction(state_id, mob/living/user, obj/item/created, forced)
 
-/obj/proc/OnRepair(mob/user, obj/item/used, old_integrity)
+/obj/proc/OnRepair(mob/living/user, obj/item/used, old_integrity)
 
 /obj/proc/Construct(mob/living/user, ndir)
-	var/list/cached_construction_steps = SSatoms.blueprints_cache[type]
+	var/list/cached_construction_steps = list() //SSatoms.blueprints_cache[type]
 	if(cached_construction_steps.len)
 		var/datum/construction_state/first_step = cached_construction_steps[1]
 		var/datum/construction_state/first/very_first_step = first_step
@@ -349,14 +349,14 @@
 			if(first_step)
 				first_step.OnReached(src, user, TRUE)
 	if(user)
-		feedback_add_details("obj_construction","[type]")
+		SSblackbox.add_details("obj_construction",type)
 		add_fingerprint(user)
 		if(!ndir)
 			ndir = user.dir
 	if(ndir)
 		setDir(ndir)
 
-/obj/proc/Repair(mob/user, obj/item/used, amount)
+/obj/proc/Repair(mob/living/user, obj/item/used, amount)
 	var/old_integrity = obj_integrity
 	var/max_integ = max_integrity
 	if(!amount)
@@ -414,19 +414,19 @@
 	if(current_construction_state && current_construction_state.examine_message)
 		to_chat(user, current_construction_state.examine_message)
 
-/obj/attack_hand(mob/user)	//obj/item doesn't call this so we're fine
+/obj/attack_hand(mob/living/user)	//obj/item doesn't call this so we're fine
 	if(user.a_intent == INTENT_HELP)
 		HandConstruction(user)
 	else
 		return ..()
 
-/obj/item/attack_self(mob/user)
+/obj/item/attack_self(mob/living/user)
 	. = ..()
 	HandConstruction(user)
 
 //construct by hand
-/obj/proc/HandConstruction(mob/user)
-	var/datum/construction_state/ccs = current_construction_state	
+/obj/proc/HandConstruction(mob/living/user)
+	var/datum/construction_state/ccs = current_construction_state
 	if(ccs)
 		var/action_type
 		var/wait
@@ -505,10 +505,7 @@
 	else
 		return ..()
 
-/obj/proc/ConstructionDoAfter(mob/user, obj/item/I, delay)
-	ConstructionDoAfterInternal(user, I, delay, CUSTOM_CONSTRUCTION, FALSE)
-
-/obj/proc/ConstructionDoAfterInternal(mob/user, obj/item/I, delay, action_type, first_checked)
+/obj/proc/ConstructionDoAfterInternal(mob/living/user, obj/item/I, delay, action_type, first_checked)
 	var/datum/construction_state/ccs = current_construction_state
 	var/ccsid = ccs ? ccs.id : 0
 
@@ -524,9 +521,9 @@
 	. = do_after(user, delay, target = src, extra_checks = CALLBACK(src, .proc/ConstructionChecks, ccsid, action_type, I, user, FALSE))
 	LAZYREMOVE(user.construction_tasks, src)
 
-/obj/proc/ConstructionChecks(state_started_id, action_type, obj/item/I, mob/user, first_check) 
+/obj/proc/ConstructionChecks(state_started_id, action_type, obj/item/I, mob/living/user, first_check) 
 	var/list/user_con_tasks = user.construction_tasks
-	if(first_check && (src in user_con_tasks))
+	if(first_check && user_con_tasks && user_con_tasks[src])
 		testing("Cancelled [user]'s construction on [src]([type]) due to duplicate action")
 		return FALSE	//fail silently
 
@@ -538,7 +535,7 @@
 		to_chat(user, "<span class='warning'>You were interrupted!</span>")
 		return FALSE
 	
-	var/obj/item/weapon/weldingtool/WT = I
+	var/obj/item/weldingtool/WT = I
 	if(istype(WT))
 		if(!WT.isOn())
 			to_chat(user, "<span class='warning'>\The [WT] [first_check ? "needs to be on for this task" : "runs out of fuel"]!</span>")
