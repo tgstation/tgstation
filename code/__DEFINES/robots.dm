@@ -42,3 +42,7 @@
 #define		RENAME       3
 #define		AI_SHELL     4
 #define		DISCONNECT   5
+
+//Assembly defines
+#define ASSEMBLY_FIRST_STEP 	0
+#define ASSEMBLY_SECOND_STEP 	1

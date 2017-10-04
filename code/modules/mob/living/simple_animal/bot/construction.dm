@@ -356,23 +356,21 @@
 	desc = "The clown's up to no good once more"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "honkbot_arm"
-	item_state = "honkbot_arm"
-	var/build_step = 0
+	var/build_step = ASSEMBLY_FIRST_STEP
 	var/created_name = "honkbot"
 
 /obj/item/honkbot_assembly/attackby(obj/item/I, mob/user, params)
 
-	if(isprox(I) && isbuild_step(0))
+	if(isprox(I) && isbuild_step(ASSEMBLY_FIRST_STEP))
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		build_step++
 		to_chat(user, "<span class='notice'>You add the prox sensor to [src]!</span>")
 		icon_state = "honkbot_proxy"
-		item_state = "honkbot_proxy"
 		name = "Incomplete Honkbot Assembly"
 		qdel(I)
 
-	else if(istype(I, /obj/item/bikehorn) && isbuild_step(1))
+	else if(istype(I, /obj/item/bikehorn) && isbuild_step(ASSEMBLY_SECOND_STEP))
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		to_chat(user, "<span class='notice'>You add the bike horn to [src]! Honk!</span>")
@@ -382,6 +380,14 @@
 		addtimer(CALLBACK (S, .mob/living/simple_animal/bot/honkbot/proc/react_ping), 5)
 		qdel(I)
 		qdel(src)
+
+	else if(istype(I, /obj/item/pen))
+		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
+		if(!t)
+			return
+		if(!in_range(src, usr) && loc != usr)
+			return
+		created_name = t
 
 //Secbot Assembly
 /obj/item/secbot_assembly

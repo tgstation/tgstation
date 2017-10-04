@@ -16,7 +16,7 @@
 	model = "Honkbot"
 	bot_core_type = /obj/machinery/bot_core/honkbot
 	window_id = "autohonk"
-	window_name = "Honkomatic Bike Horn Unit v1.0.4"
+	window_name = "Honkomatic Bike Horn Unit v1.0.5"
 	data_hud_type = DATA_HUD_SECURITY_BASIC // show jobs
 
 	var/honksound = 'sound/items/bikehorn.ogg' //customizable sound
@@ -32,7 +32,7 @@
 	var/idcheck = TRUE //Chases unknowns
 	var/fcheck = TRUE //And armed people
 	var/check_records = TRUE //Doesn't care about criminals
-	var/arrest_type = 0
+	var/arrest_type = FALSE
 	var/weaponscheck = TRUE
 
 /mob/living/simple_animal/bot/honkbot/Initialize()
@@ -92,7 +92,7 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-<TT><B>Honkomatic Bike Horn Unit v1.0.4 controls</B></TT><BR><BR>
+<TT><B>Honkomatic Bike Horn Unit v1.0.5 controls</B></TT><BR><BR>
 Status: []<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"},
@@ -138,10 +138,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		icon_state = "honkbot[on]"
 
 /mob/living/simple_animal/bot/honkbot/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if(!Proj.nodamage && Proj.damage < health)
-				retaliate(Proj.firer)
+	if((istype(Proj,/obj/item/projectile/beam)) || (istype(Proj,/obj/item/projectile/bullet) && (Proj.damage_type == BURN))||(Proj.damage_type == BRUTE) && (!Proj.nodamage && Proj.damage < health))
+		retaliate(Proj.firer)
 	..()
 
 /mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A)
@@ -217,7 +215,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			C.Jitter(50)
 			C.Knockdown(60)
 			var/mob/living/carbon/human/H = C
-			if(client) //used over (!ckey) to restore botAI when ghosting.
+			if(client) //prevent spam from players..
 				spam_flag = TRUE
 			if (emagged <= 1) //HONK once, then leave
 				threatlevel = H.assess_threat(src)
