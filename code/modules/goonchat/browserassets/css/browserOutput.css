@@ -143,7 +143,7 @@ a.popt {text-decoration: none;}
 	line-height: 30px;
 	float: left;
 }
-#userBar .decreaseFont {border-top: 0;}
+#userBar .topCell {border-top: 0;}
 
 /* POPUPS */
 .popup {

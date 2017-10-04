@@ -22,7 +22,7 @@ window.onerror = function(msg, url, line, col, error) {
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $contextMenu, $filterMessages;
+var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages;
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
