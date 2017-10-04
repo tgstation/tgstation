@@ -20,7 +20,7 @@
         to_chat(user, "<span class='warning'>Take the cap off first!</span>")
         return
     RemoveCurrentCoat()
-    spraycan.use_charges(2)
+    spraycan.use_charges(user, 2)
     var/colour = spraycan.paint_color
     current_paint = spraycan.paint_color
     var/atom/A = parent
