@@ -58,7 +58,6 @@
 	set desc = "Report an issue"
 	set hidden = 1
 	
-	var/compileinfo = ""
 	var/message = "This will open the issue reporter. Are you sure?"
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
@@ -67,10 +66,11 @@
 			message += GLOB.revdata.GetTestMergeInfo(FALSE)
 		if(tgalert(src, message, "Report Issue","Yes","No")=="No")
 			return
-	
-	var/dat = {"	<title>Hippie Station 13 Github Ingame Reporting</title>
-					<iframe src='https://tools.hippiestation.com/githubreport/?ckey=[ckey(key)]&sinfo=[compileinfo]' style='border:none' width='850' height='660' scroll=no></iframe>"}
-	src << browse(dat, "window=github;size=900x700")
+		var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
+		var/servername = CONFIG_GET(string/servername)
+		src << link("[githuburl]/issues/new[GLOB.round_id ? "?body=[url_encode("Issue reported from Round ID: [GLOB.round_id][servername ? " ([servername])" : ""]\n\n[issue_template]")]" : ""]")
+	else
+		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/hotkeys_help()
