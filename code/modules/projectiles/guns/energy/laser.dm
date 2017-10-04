@@ -15,7 +15,7 @@
 	desc = "A laser gun modified to fire in three-round bursts at the cost of power."
 	icon_state = "laser"
 	item_state = "laser"
-	burst_size = 1
+	burst_size = 3
 	ammo_type = list(/obj/item/ammo_casing/energy/burstlaser)
 
 /obj/item/gun/energy/laser/laserrifle
