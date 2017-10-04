@@ -199,7 +199,6 @@
 						SSticker.mode.cult -= A.mind
 						SSticker.mode.update_cult_icons_removed(A.mind)
 				qdel(T)
-				user.drop_item()
 				qdel(src)
 			else
 				to_chat(user, "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!")

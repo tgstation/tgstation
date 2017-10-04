@@ -168,7 +168,7 @@
 		if("working")
 			temp_html += status
 			temp_html += "<h1>System Busy</h1>"
-			temp_html += "Working ... Please wait ([DisplayTimeText(radduration)])"
+			temp_html += "Working ... Please wait ([DisplayTimeText(radduration*10)])"
 		if("buffer")
 			temp_html += status
 			temp_html += buttons

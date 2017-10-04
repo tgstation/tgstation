@@ -1,6 +1,7 @@
 /obj/machinery/atmospherics/components/trinary/filter
 	name = "gas filter"
 	icon_state = "filter_off"
+	desc = "Very useful for filtering gasses."
 	density = FALSE
 	can_unwrench = TRUE
 	var/on = FALSE

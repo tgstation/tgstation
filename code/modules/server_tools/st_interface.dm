@@ -89,6 +89,8 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 				return "No message set!"
 			SERVER_TOOLS_WORLD_ANNOUNCE(msg)
 			return "SUCCESS"
+		if(SERVICE_CMD_PLAYER_COUNT)
+			return "[SERVER_TOOLS_CLIENT_COUNT]"
 		if(SERVICE_CMD_LIST_CUSTOM)
 			return json_encode(ListServiceCustomCommands(FALSE))
 		else

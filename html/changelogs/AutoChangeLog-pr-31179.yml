@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "The CMO now has an advanced health analyzer in his closet! It can give more precise readings on the non-standard damage types."
