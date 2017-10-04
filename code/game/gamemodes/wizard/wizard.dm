@@ -6,6 +6,7 @@
 	name = "wizard"
 	config_tag = "wizard"
 	antag_flag = ROLE_WIZARD
+	false_report_weight = 10
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
@@ -29,7 +30,7 @@
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
 		return 0
 	for(var/datum/mind/wiz in wizards)
-		wiz.current.loc = pick(GLOB.wizardstart)
+		wiz.current.forceMove(pick(GLOB.wizardstart))
 
 	return 1
 
@@ -46,6 +47,10 @@
 	..()
 	return
 
+/datum/game_mode/wizard/generate_report()
+	return "A dangerous Wizards' Federation individual by the name of [pick(GLOB.wizard_first)] [pick(GLOB.wizard_second)] has recently escaped confinement from an unlisted prison facility. This \
+		man is a dangerous mutant with the ability to alter himself and the world around him by what he and his leaders believe to be magic. If this man attempts an attack on your station, \
+		his execution is highly encouraged, as is the preservation of his body for later study."
 
 /datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
 	switch(rand(1,100))
@@ -110,6 +115,10 @@
 		wizard_mob.name = newname
 		if(wizard_mob.mind)
 			wizard_mob.mind.name = newname
+
+		/* Wizards by nature cannot be too young. */
+		if(wizard_mob.age < WIZARD_AGE_MIN)
+			wizard_mob.age = WIZARD_AGE_MIN
 	return
 
 
@@ -148,10 +157,10 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(wizard_mob), slot_shoes)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(wizard_mob), slot_wear_suit)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(wizard_mob), slot_head)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(wizard_mob), slot_in_backpack)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
-	var/obj/item/weapon/spellbook/spellbook = new /obj/item/weapon/spellbook(wizard_mob)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/storage/backpack(wizard_mob), slot_back)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/storage/box/survival(wizard_mob), slot_in_backpack)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/teleportation_scroll(wizard_mob), slot_r_store)
+	var/obj/item/spellbook/spellbook = new /obj/item/spellbook(wizard_mob)
 	spellbook.owner = wizard_mob
 	wizard_mob.put_in_hands_or_del(spellbook)
 
@@ -176,7 +185,7 @@
 
 /datum/game_mode/wizard/declare_completion()
 	if(finished)
-		SSblackbox.set_details("round_end_result","loss - wizard killed")
+		SSticker.mode_result = "loss - wizard killed"
 		to_chat(world, "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>")
 
 		SSticker.news_report = WIZARD_KILLED
@@ -235,15 +244,6 @@
 	return 1
 
 //OTHER PROCS
-
-//To batch-remove wizard spells. Linked to mind.dm.
-/mob/proc/spellremove(mob/M)
-	if(!mind)
-		return
-	for(var/X in src.mind.spell_list)
-		var/obj/effect/proc_holder/spell/spell_to_remove = X
-		qdel(spell_to_remove)
-		mind.spell_list -= spell_to_remove
 
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)

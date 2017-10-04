@@ -1,3 +1,6 @@
+
+//NEEDS MAJOR CODE CLEANUP
+
 /obj/effect/proc_holder/spell/dumbfire
 
 	var/projectile_type = ""
@@ -33,58 +36,65 @@
 /obj/effect/proc_holder/spell/dumbfire/cast(list/targets, mob/user = usr)
 	playMagSound()
 	for(var/turf/target in targets)
-		spawn(0)
-			var/obj/effect/proc_holder/spell/targeted/projectile
-			if(istext(proj_type))
-				var/projectile_type = text2path(proj_type)
-				projectile = new projectile_type(user)
-			else if(istype(proj_type,/obj/effect/proc_holder/spell))
-				projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
-				projectile:linked_spells += proj_type
-			else
-				projectile = new proj_type(user)
-			projectile.icon = proj_icon
-			projectile.icon_state = proj_icon_state
-			projectile.setDir(get_dir(projectile, target))
-			projectile.name = proj_name
+		launch_at(target, user)
 
-			var/current_loc = user.loc
+/obj/effect/proc_holder/spell/dumbfire/proc/launch_at(turf/target, mob/user)
+	set waitfor = FALSE
+	var/obj/effect/proc_holder/spell/targeted/projectile
+	if(istext(proj_type))
+		var/projectile_type = text2path(proj_type)
+		projectile = new projectile_type(user)
+	else if(istype(proj_type, /obj/effect/proc_holder/spell))
+		projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
+		var/obj/effect/proc_holder/spell/targeted/trigger/T = projectile
+		T.linked_spells += proj_type
+	else
+		projectile = new proj_type(user)
+	projectile.icon = proj_icon
+	projectile.icon_state = proj_icon_state
+	projectile.setDir(get_dir(projectile, target))
+	projectile.name = proj_name
 
-			projectile.loc = current_loc
+	var/current_loc = user.loc
 
-			for(var/i = 0,i < proj_lifespan,i++)
-				if(!projectile)
-					break
+	projectile.loc = current_loc
 
-				if(proj_insubstantial)
-					projectile.loc = get_step(projectile, projectile.dir)
-				else
-					step(projectile, projectile.dir)
+	for(var/i = 0,i < proj_lifespan,i++)
+		if(!projectile)
+			break
 
-				if(projectile.loc == current_loc || i == proj_lifespan)
-					projectile.cast(current_loc,user=user)
-					break
+		if(proj_insubstantial)
+			projectile.loc = get_step(projectile, projectile.dir)
+		else
+			step(projectile, projectile.dir)
 
-				var/mob/living/L = locate(/mob/living) in range(projectile, proj_trigger_range) - user
-				if(L && L.stat != DEAD)
-					projectile.cast(L.loc,user=user)
-					break
+		if(projectile.loc == current_loc || i == proj_lifespan)
+			projectile.cast(current_loc,user=user)
+			break
 
-				if(proj_trail && projectile)
-					spawn(0)
-						if(projectile)
-							var/obj/effect/overlay/trail = new /obj/effect/overlay(projectile.loc)
-							trail.icon = proj_trail_icon
-							trail.icon_state = proj_trail_icon_state
-							trail.density = 0
-							QDEL_IN(trail, proj_trail_lifespan)
+		var/mob/living/L = locate(/mob/living) in range(projectile, proj_trigger_range) - user
+		if(L && L.stat != DEAD)
+			projectile.cast(L.loc,user=user)
+			break
 
-				current_loc = projectile.loc
-				var/matrix/M = new
-				M.Turn(dir2angle(projectile.dir))
-				projectile.transform = M
+		if(proj_trail && projectile)
+			proj_trail(projectile)
 
-				sleep(proj_step_delay)
+		current_loc = projectile.loc
+		var/matrix/M = new
+		M.Turn(dir2angle(projectile.dir))
+		projectile.transform = M
 
-			if(projectile)
-				qdel(projectile)
+		sleep(proj_step_delay)
+
+	if(projectile)
+		qdel(projectile)
+
+/obj/effect/proc_holder/spell/dumbfire/proc/proj_trail(obj/effect/proc_holder/spell/targeted/projectile)
+	set waitfor = FALSE
+	if(projectile)
+		var/obj/effect/overlay/trail = new /obj/effect/overlay(projectile.loc)
+		trail.icon = proj_trail_icon
+		trail.icon_state = proj_trail_icon_state
+		trail.density = FALSE
+		QDEL_IN(trail, proj_trail_lifespan)

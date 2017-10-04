@@ -27,10 +27,8 @@
 #define APC_UPOVERLAY_OPERATING 8192
 
 
-#define APC_UPDATE_ICON_COOLDOWN 200 // 20 seconds
-
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
-// one per area, needs wire conection to power network through a terminal
+// one per area, needs wire connection to power network through a terminal
 
 // controls power to devices in that area
 // may be opened to change power cell
@@ -45,10 +43,9 @@
 	desc = "A control terminal for the area electrical systems."
 
 	icon_state = "apc0"
-	anchored = 1
-	use_power = 0
+	anchored = TRUE
+	use_power = NO_POWER_USE
 	req_access = null
-	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF
@@ -56,20 +53,20 @@
 	var/lon_range = 1.5
 	var/area/area
 	var/areastring = null
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell
 	var/start_charge = 90				// initial cell charge %
-	var/cell_type = 2500				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
+	var/cell_type = /obj/item/stock_parts/cell/upgraded		//Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	var/opened = 0 //0=closed, 1=opened, 2=cover removed
 	var/shorted = 0
 	var/lighting = 3
 	var/equipment = 3
 	var/environ = 3
-	var/operating = 1
+	var/operating = TRUE
 	var/charging = 0
 	var/chargemode = 1
 	var/chargecount = 0
-	var/locked = 1
-	var/coverlocked = 1
+	var/locked = TRUE
+	var/coverlocked = TRUE
 	var/aidisabled = 0
 	var/tdir = null
 	var/obj/machinery/power/terminal/terminal = null
@@ -87,25 +84,36 @@
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
 	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
+	var/obj/item/clockwork/integration_cog/integration_cog //Is there a cog siphoning power?
 	var/longtermpower = 10
 	var/auto_name = 0
 	var/failure_timer = 0
 	var/force_update = 0
 	var/update_state = -1
 	var/update_overlay = -1
+	var/icon_update_needed = FALSE
 
+/obj/machinery/power/apc/highcap/five_k
+	cell_type = /obj/item/stock_parts/cell/upgraded/plus
+
+/obj/machinery/power/apc/highcap/ten_k
+	cell_type = /obj/item/stock_parts/cell/high
+
+/obj/machinery/power/apc/highcap/fifteen_k
+	cell_type = /obj/item/stock_parts/cell/high/plus
+
+/obj/machinery/power/apc/get_cell()
+	return cell
 
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.
 	//The terminal is what the power computer looks for anyway.
-	if(!terminal)
-		make_terminal()
 	if(terminal)
 		terminal.connect_to_network()
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	if (!req_access)
-		req_access = list(GLOB.access_engine_equip)
+		req_access = list(ACCESS_ENGINE_EQUIP)
 	if (!armor)
 		armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	..()
@@ -122,12 +130,19 @@
 	if(auto_name)
 		name = "\improper [get_area(src)] APC"
 
-	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
-	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
+	switch(tdir)
+		if(NORTH)
+			pixel_y = 23
+		if(SOUTH)
+			pixel_y = -23
+		if(EAST)
+			pixel_x = 24
+		if(WEST)
+			pixel_x = -25
 	if (building)
 		area = get_area(src)
 		opened = 1
-		operating = 0
+		operating = FALSE
 		name = "[area.name] APC"
 		stat |= MAINT
 		src.update_icon()
@@ -138,9 +153,9 @@
 
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
-	area.power_light = 0
-	area.power_equip = 0
-	area.power_environ = 0
+	area.power_light = FALSE
+	area.power_equip = FALSE
+	area.power_environ = FALSE
 	area.power_change()
 	if(occupier)
 		malfvacate(1)
@@ -172,17 +187,19 @@
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
-		src.cell = new/obj/item/weapon/stock_parts/cell(src)
-		cell.maxcharge = cell_type	// cell_type is maximum charge (old default was 1000 or 2500 (values one and two respectively)
+		cell = new cell_type
 		cell.charge = start_charge * cell.maxcharge / 100 		// (convert percentage to actual value)
 
 	var/area/A = src.loc.loc
 
 	//if area isn't specified use current
-	if(isarea(A) && src.areastring == null)
+	if(areastring)
+		src.area = get_area_instance_from_text(areastring)
+		if(!src.area)
+			src.area = A
+			stack_trace("Bad areastring path for [src], [src.areastring]")
+	else if(isarea(A) && src.areastring == null)
 		src.area = A
-	else
-		src.area = get_area_by_name(areastring)
 	update_icon()
 
 	make_terminal()
@@ -199,6 +216,8 @@
 		else
 			to_chat(user, "It's [ !terminal ? "not" : "" ] wired up.")
 			to_chat(user, "The electronics are[!has_electronics?"n't":""] installed.")
+		if(user.Adjacent(src) && integration_cog)
+			to_chat(user, "<span class='warning'>[src]'s innards have been replaced by strange brass machinery!</span>")
 
 	else
 		if (stat & MAINT)
@@ -208,15 +227,17 @@
 		else
 			to_chat(user, "The cover is closed.")
 
+	if(integration_cog && is_servant_of_ratvar(user))
+		to_chat(user, "<span class='brass'>There is an integration cog installed!</span>")
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
-
 	var/update = check_updates() 		//returns 0 if no need to update icons.
 						// 1 if we need to update the icon_state
 						// 2 if we need to update the overlays
 	if(!update)
+		icon_update_needed = FALSE
 		return
 
 	if(update & 1) // Updating the icon state
@@ -240,6 +261,8 @@
 			icon_state = "apcemag"
 		else if(update_state & UPSTATE_WIREEXP)
 			icon_state = "apcewires"
+		else if(update_state & UPSTATE_MAINT)
+			icon_state = "apc0"
 
 	if(!(update_state & UPSTATE_ALLGOOD))
 		cut_overlays()
@@ -256,7 +279,7 @@
 				O += "apco2-[environ]"
 			add_overlay(O)
 
-	// And now, seperately for cleanness, the lighting changing
+	// And now, separately for cleanness, the lighting changing
 	if(update_state & UPSTATE_ALLGOOD)
 		switch(charging)
 			if(0)
@@ -272,8 +295,9 @@
 	else
 		set_light(0)
 
-/obj/machinery/power/apc/proc/check_updates()
+	icon_update_needed = FALSE
 
+/obj/machinery/power/apc/proc/check_updates()
 	var/last_update_state = update_state
 	var/last_update_overlay = update_overlay
 	update_state = 0
@@ -344,7 +368,7 @@
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
-	addtimer(CALLBACK(src, .proc/update_icon), APC_UPDATE_ICON_COOLDOWN, TIMER_UNIQUE)
+	icon_update_needed = TRUE
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
@@ -352,7 +376,7 @@
 
 	if(issilicon(user) && get_dist(src,user)>1)
 		return src.attack_hand(user)
-	if (istype(W, /obj/item/weapon/crowbar)) //Using crowbar
+	if (istype(W, /obj/item/crowbar)) //Using crowbar
 		if (opened) // a) on open apc
 			if (has_electronics==1)
 				if (terminal)
@@ -371,7 +395,7 @@
 							return
 							//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 						else if (emagged) // We emag board, not APC's frame
-							emagged = 0
+							emagged = FALSE
 							user.visible_message(\
 								"[user.name] has discarded emaged power control board from [src.name]!",\
 								"<span class='notice'>You discarded shorten board.</span>")
@@ -387,11 +411,22 @@
 							user.visible_message(\
 								"[user.name] has removed the power control board from [src.name]!",\
 								"<span class='notice'>You remove the power control board.</span>")
-							new /obj/item/weapon/electronics/apc(loc)
+							new /obj/item/electronics/apc(loc)
 							return
+			else if(integration_cog)
+				user.visible_message("<span class='notice'>[user] starts prying [integration_cog] from [src]...</span>", \
+				"<span class='notice'>You painstakingly start tearing [integration_cog] out of [src]'s guts...</span>")
+				playsound(src, W.usesound, 50, TRUE)
+				if(!do_after(user, 100 * W.toolspeed, target = src))
+					return
+				user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
+				"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+				QDEL_NULL(integration_cog)
+				return
 			else if (opened!=2) //cover isn't removed
 				opened = 0
-				coverlocked = 1 //closing cover relocks it
+				coverlocked = TRUE //closing cover relocks it
 				update_icon()
 				return
 		else if (!(stat & BROKEN)) // b) on closed and not broken APC
@@ -406,7 +441,7 @@
 				update_icon()
 				return
 
-	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
+	else if	(istype(W, /obj/item/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(cell)
 			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
 			return
@@ -424,7 +459,7 @@
 			chargecount = 0
 			update_icon()
 
-	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
+	else if	(istype(W, /obj/item/screwdriver))	// haxing
 		if(opened)
 			if (cell)
 				to_chat(user, "<span class='warning'>Close the APC first!</span>") //Less hints more mystery!
@@ -446,6 +481,8 @@
 				update_icon()
 		else if(emagged)
 			to_chat(user, "<span class='warning'>The interface is broken!</span>")
+		else if((stat & MAINT) && !opened)
+			..() //its an empty closed frame... theres no wires to expose!
 		else
 			panel_open = !panel_open
 			to_chat(user, "The wires have been [panel_open ? "exposed" : "unexposed"]")
@@ -489,7 +526,7 @@
 			return
 		user.visible_message("[user.name] adds cables to the APC frame.", \
 							"<span class='notice'>You start adding cables to the APC frame...</span>")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			if (C.get_amount() < 10 || !C)
 				return
@@ -504,10 +541,10 @@
 				make_terminal()
 				terminal.connect_to_network()
 
-	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened)
+	else if (istype(W, /obj/item/wirecutters) && terminal && opened)
 		terminal.dismantle(user, W)
 
-	else if (istype(W, /obj/item/weapon/electronics/apc) && opened)
+	else if (istype(W, /obj/item/electronics/apc) && opened)
 		if (has_electronics!=0) // there are already electronicks inside
 			to_chat(user, "<span class='warning'>You cannot put the board inside, there already is one!</span>")
 			return
@@ -517,16 +554,45 @@
 
 		user.visible_message("[user.name] inserts the power control board into [src].", \
 							"<span class='notice'>You start to insert the power control board into the frame...</span>")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		if(do_after(user, 10, target = src))
 			if(has_electronics==0)
 				has_electronics = 1
-				locked = 1 //We placed new, locked board in
+				locked = TRUE //We placed new, locked board in
 				to_chat(user, "<span class='notice'>You place the power control board inside the frame.</span>")
 				qdel(W)
 
-	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(istype(W, /obj/item/device/electroadaptive_pseudocircuit) && opened)
+		var/obj/item/device/electroadaptive_pseudocircuit/P = W
+		if(!has_electronics)
+			if(stat & BROKEN)
+				to_chat(user, "<span class='warning'>[src]'s frame is too damaged to support a circuit.</span>")
+				return
+			if(!P.adapt_circuit(user, 50))
+				return
+			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+			"<span class='notice'>You adapt a power control board and click it into place in [src]'s guts.</span>")
+			has_electronics = TRUE
+			locked = TRUE
+		else if(!cell)
+			if(stat & MAINT)
+				to_chat(user, "<span class='warning'>There's no connector for a power cell.</span>")
+				return
+			if(!P.adapt_circuit(user, 500))
+				return
+			var/obj/item/stock_parts/cell/crap/empty/C = new(src)
+			C.forceMove(src)
+			cell = C
+			chargecount = 0
+			user.visible_message("<span class='notice'>[user] fabricates a weak power cell and places it into [src].</span>", \
+			"<span class='warning'>Your [P.name] whirrs with strain as you create a weak power cell and place it into [src]!</span>")
+			update_icon()
+		else
+			to_chat(user, "<span class='warning'>[src] has both electronics and a cell.</span>")
+			return
+
+	else if (istype(W, /obj/item/weldingtool) && opened && has_electronics==0 && !terminal)
+		var/obj/item/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task!</span>")
 			return
@@ -575,6 +641,33 @@
 			if (opened==2)
 				opened = 1
 			update_icon()
+	else if(istype(W, /obj/item/clockwork/integration_cog) && is_servant_of_ratvar(user))
+		if(integration_cog)
+			to_chat(user, "<span class='warning'>This APC already has a cog.</span>")
+			return
+		if(!opened)
+			user.visible_message("<span class='warning'>[user] slices [src]'s cover lock, and it swings wide open!</span>", \
+			"<span class='alloy'>You slice [src]'s cover lock apart with [W], and the cover swings open.</span>")
+			opened = TRUE
+			update_icon()
+		else
+			user.visible_message("<span class='warning'>[user] presses [W] into [src]!</span>", \
+			"<span class='alloy'>You hold [W] in place within [src], and it slowly begins to warm up...</span>")
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			if(!do_after(user, 70, target = src))
+				return
+			user.visible_message("<span class='warning'>[user] installs [W] in [src]!</span>", \
+			"<span class='alloy'>Replicant alloy rapidly covers the APC's innards, replacing the machinery.</span><br>\
+			<span class='brass'>This APC will now passively provide power for the cult!</span>")
+			playsound(user, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
+			user.transferItemToLoc(W, src)
+			integration_cog = W
+			START_PROCESSING(SSfastprocess, W)
+			playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 50, FALSE)
+			opened = FALSE
+			locked = FALSE
+			update_icon()
+		return
 	else if(panel_open && !opened && is_wire_tool(W))
 		wires.interact(user)
 	else
@@ -587,11 +680,11 @@
 
 
 /obj/machinery/power/apc/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		set_broken()
 
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			set_broken()
 		if(opened != 2)
@@ -609,8 +702,9 @@
 			to_chat(user, "<span class='warning'>Nothing happens!</span>")
 		else
 			flick("apc-spark", src)
-			emagged = 1
-			locked = 0
+			playsound(src, "sparks", 75, 1)
+			emagged = TRUE
+			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
 			update_icon()
 
@@ -621,20 +715,18 @@
 		return
 	if(usr == user && opened && (!issilicon(user)))
 		if(cell)
+			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
 			user.put_in_hands(cell)
-			cell.add_fingerprint(user)
-			cell.updateicon()
-
+			cell.update_icon()
 			src.cell = null
-			user.visible_message("[user.name] removes the power cell from [src.name]!",\
-								 "<span class='notice'>You remove the power cell.</span>")
-			//to_chat(user, "You remove the power cell.")
 			charging = 0
 			src.update_icon()
 		return
+	if((stat & MAINT) && !opened) //no board; no interface
+		return
 	..()
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
@@ -646,14 +738,14 @@
 
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(
-		"locked" = locked,
+		"locked" = integration_cog ? !is_servant_of_ratvar(user) : locked,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
-		"totalLoad" = lastused_total,
+		"totalLoad" = DisplayPower(lastused_total),
 		"coverLocked" = coverlocked,
 		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
 		"malfStatus" = get_malf_status(user),
@@ -661,7 +753,7 @@
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
-				"powerLoad" = lastused_equip,
+				"powerLoad" = DisplayPower(lastused_equip),
 				"status" = equipment,
 				"topicParams" = list(
 					"auto" = list("eqp" = 3),
@@ -671,7 +763,7 @@
 			),
 			list(
 				"title" = "Lighting",
-				"powerLoad" = lastused_light,
+				"powerLoad" = DisplayPower(lastused_light),
 				"status" = lighting,
 				"topicParams" = list(
 					"auto" = list("lgt" = 3),
@@ -681,7 +773,7 @@
 			),
 			list(
 				"title" = "Environment",
-				"powerLoad" = lastused_environ,
+				"powerLoad" = DisplayPower(lastused_environ),
 				"status" = environ,
 				"topicParams" = list(
 					"auto" = list("env" = 3),
@@ -717,9 +809,9 @@
 		area.power_equip = (equipment > 1)
 		area.power_environ = (environ > 1)
 	else
-		area.power_light = 0
-		area.power_equip = 0
-		area.power_environ = 0
+		area.power_light = FALSE
+		area.power_equip = FALSE
+		area.power_environ = FALSE
 	area.power_change()
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
@@ -828,7 +920,7 @@
 	if(!malf.can_shunt)
 		to_chat(malf, "<span class='warning'>You cannot shunt!</span>")
 		return
-	if(src.z != 1)
+	if(!(src.z in GLOB.station_z_levels))
 		return
 	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
@@ -862,9 +954,9 @@
 			occupier.loc = src.loc
 			occupier.death()
 			occupier.gib()
-			for(var/obj/item/weapon/pinpointer/P in GLOB.pinpointer_list)
+			for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
-				P.nuke_warning = FALSE
+				P.alert = FALSE
 
 /obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(card.AI)
@@ -890,7 +982,7 @@
 	transfer_in_progress = TRUE
 	user.visible_message("<span class='notice'>[user] slots [card] into [src]...</span>", "<span class='notice'>Transfer process initiated. Sending request for AI approval...</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, 1)
-	occupier << sound('sound/misc/notice2.ogg') //To alert the AI that someone's trying to card them if they're tabbed out
+	SEND_SOUND(occupier, sound('sound/misc/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
 	if(alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", "Yes - Transfer Me", "No - Keep Me Here") == "No - Keep Me Here")
 		to_chat(user, "<span class='danger'>AI denied transfer request. Process terminated.</span>")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
@@ -937,7 +1029,8 @@
 		return 0
 
 /obj/machinery/power/apc/process()
-
+	if(icon_update_needed)
+		update_icon()
 	if(stat & (BROKEN|MAINT))
 		return
 	if(!area.requires_power)
@@ -982,9 +1075,6 @@
 		main_status = 1
 	else
 		main_status = 2
-
-	//if(debug)
-	//	world.log << "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light] - Longterm: [longtermpower]"
 
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
@@ -1153,7 +1243,7 @@
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
-	operating = 0
+	operating = FALSE
 	if(occupier)
 		malfvacate(1)
 	update_icon()
@@ -1237,7 +1327,7 @@
 #undef APC_UPDATE_ICON_COOLDOWN
 
 /*Power module, used for APC construction*/
-/obj/item/weapon/electronics/apc
+/obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."

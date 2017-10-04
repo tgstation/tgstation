@@ -3,7 +3,7 @@
 /proc/is_wire_tool(obj/item/I)
 	if(istype(I, /obj/item/device/multitool))
 		return TRUE
-	if(istype(I, /obj/item/weapon/wirecutters))
+	if(istype(I, /obj/item/wirecutters))
 		return TRUE
 	if(istype(I, /obj/item/device/assembly))
 		var/obj/item/device/assembly/A = I
@@ -127,13 +127,13 @@
 	for(var/wire in wires)
 		cut(wire)
 
-/datum/wires/proc/pulse(wire)
+/datum/wires/proc/pulse(wire, user)
 	if(is_cut(wire))
 		return
-	on_pulse(wire)
+	on_pulse(wire, user)
 
-/datum/wires/proc/pulse_color(color)
-	pulse(get_wire(color))
+/datum/wires/proc/pulse_color(color, mob/living/user)
+	pulse(get_wire(color), user)
 
 /datum/wires/proc/pulse_assembly(obj/item/device/assembly/S)
 	for(var/color in assemblies)
@@ -144,7 +144,7 @@
 /datum/wires/proc/attach_assembly(color, obj/item/device/assembly/S)
 	if(S && istype(S) && S.attachable && !is_attached(color))
 		assemblies[color] = S
-		S.loc = holder
+		S.forceMove(holder)
 		S.connected = src
 		return S
 
@@ -153,7 +153,7 @@
 	if(S && istype(S))
 		assemblies -= color
 		S.connected = null
-		S.loc = holder.loc
+		S.forceMove(holder.drop_location())
 		return S
 
 /datum/wires/proc/emp_pulse()
@@ -177,7 +177,7 @@
 /datum/wires/proc/on_cut(wire, mend = FALSE)
 	return
 
-/datum/wires/proc/on_pulse(wire)
+/datum/wires/proc/on_pulse(wire, user)
 	return
 // End Overridable Procs
 
@@ -198,7 +198,7 @@
 		return ..()
 	return UI_CLOSE
 
-/datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = 0, \
+/datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = FALSE, \
 							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
@@ -227,7 +227,7 @@
 	var/obj/item/I = L.get_active_held_item()
 	switch(action)
 		if("cut")
-			if(istype(I, /obj/item/weapon/wirecutters) || IsAdminGhost(usr))
+			if(istype(I, /obj/item/wirecutters) || IsAdminGhost(usr))
 				playsound(holder, I.usesound, 20, 1)
 				cut_color(target_wire)
 				. = TRUE
@@ -236,7 +236,7 @@
 		if("pulse")
 			if(istype(I, /obj/item/device/multitool) || IsAdminGhost(usr))
 				playsound(holder, 'sound/weapons/empty.ogg', 20, 1)
-				pulse_color(target_wire)
+				pulse_color(target_wire, L)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need a multitool!</span>")

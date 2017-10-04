@@ -13,10 +13,11 @@
 	var/obj/item/organ/brain/brain = null //The actual brain
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
+	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
-		if(istype(brain,/obj/item/organ/brain/alien))
+		if(istype(brain, /obj/item/organ/brain/alien))
 			if(brainmob && brainmob.stat == DEAD)
 				icon_state = "mmi_alien_dead"
 			else
@@ -31,18 +32,15 @@
 	else
 		icon_state = "mmi_empty"
 
-/obj/item/device/mmi/New()
-	..()
+/obj/item/device/mmi/Initialize()
+	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-
-/obj/item/device/mmi/Initialize()
-	..()
 	laws.set_laws_config()
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
+	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
 		if(brain)
 			to_chat(user, "<span class='warning'>There's already a brain in the MMI!</span>")
@@ -201,13 +199,16 @@
 		else
 			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
 
+/obj/item/device/mmi/relaymove()
+	return //so that the MMI won't get a warning about not being able to move if it tries to move
 
 /obj/item/device/mmi/syndie
 	name = "Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
 	origin_tech = "biotech=4;programming=4;syndicate=2"
+	overrides_aicore_laws = TRUE
 
-/obj/item/device/mmi/syndie/New()
-	..()
+/obj/item/device/mmi/syndie/Initialize()
+	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	radio.on = 0

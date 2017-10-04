@@ -54,7 +54,6 @@
 	var/self_contained = TRUE // If it deletes itself when it is empty
 
 	var/list/validSurfaces = list(/turf/open/floor)
-	var/gang = FALSE //For marking territory
 
 	var/edible = TRUE // That doesn't mean eating it is a good idea
 
@@ -68,20 +67,20 @@
 	var/pre_noise = FALSE
 	var/post_noise = FALSE
 
+
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|OXYLOSS)
 
-/obj/item/toy/crayon/New()
-	..()
+/obj/item/toy/crayon/Initialize()
+	. = ..()
 	// Makes crayons identifiable in things like grinders
 	if(name == "crayon")
 		name = "[item_color] crayon"
 
-	if(config)
-		if(config.mutant_races == 1)
-			graffiti |= "antilizard"
-			graffiti |= "prolizard"
+	if(CONFIG_GET(flag/join_with_mutant_race))
+		graffiti |= "antilizard"
+		graffiti |= "prolizard"
 
 	all_drawables = graffiti + letters + numerals + oriented + runes + graffiti_large_h
 	drawtype = pick(all_drawables)
@@ -137,7 +136,7 @@
 			qdel(src)
 		. = TRUE
 
-/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
+/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	// tgui is a plague upon this codebase
 
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -277,14 +276,6 @@
 	else if(drawing in numerals)
 		temp = "number"
 
-	// If a gang member is using a gang spraycan, it'll behave differently
-	var/gang_mode = FALSE
-	if(gang && user.mind && user.mind.gang_datum)
-		gang_mode = TRUE
-
-	// discontinue if the area isn't valid for tagging because gang "honour"
-	if(gang_mode && (!can_claim_for_gang(user, target)))
-		return
 
 	var/graf_rot
 	if(drawing in oriented)
@@ -306,8 +297,6 @@
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
 	var/takes_time = !instant
-	if(gang_mode)
-		takes_time = TRUE
 
 	var/wait_time = 50
 	if(PAINT_LARGE_HORIZONTAL)
@@ -324,28 +313,21 @@
 	var/list/turf/affected_turfs = list()
 
 	if(actually_paints)
-		if(gang_mode)
-			// Double check it wasn't tagged in the meanwhile
-			if(!can_claim_for_gang(user, target))
-				return
-			tag_for_gang(user, target)
-			affected_turfs += target
-		else
-			switch(paint_mode)
-				if(PAINT_NORMAL)
-					new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot)
+		switch(paint_mode)
+			if(PAINT_NORMAL)
+				new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot)
+				affected_turfs += target
+			if(PAINT_LARGE_HORIZONTAL)
+				var/turf/left = locate(target.x-1,target.y,target.z)
+				var/turf/right = locate(target.x+1,target.y,target.z)
+				if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
+					new /obj/effect/decal/cleanable/crayon(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					affected_turfs += left
+					affected_turfs += right
 					affected_turfs += target
-				if(PAINT_LARGE_HORIZONTAL)
-					var/turf/left = locate(target.x-1,target.y,target.z)
-					var/turf/right = locate(target.x+1,target.y,target.z)
-					if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
-						new /obj/effect/decal/cleanable/crayon(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
-						affected_turfs += left
-						affected_turfs += right
-						affected_turfs += target
-					else
-						to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
-						return
+				else
+					to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
+					return
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You finish drawing \the [temp].</span>")
@@ -383,47 +365,6 @@
 		// check_empty() is called during afterattack
 	else
 		..()
-
-/obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
-	// Check area validity.
-	// Reject space, player-created areas, and non-station z-levels.
-	var/area/A = get_area(target)
-	if(!A || (A.z != ZLEVEL_STATION) || !A.valid_territory)
-		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
-		return FALSE
-
-	var/spraying_over = FALSE
-	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
-		spraying_over = TRUE
-
-	for(var/obj/machinery/power/apc in target)
-		to_chat(user, "<span class='warning'>You can't tag an APC.</span>")
-		return FALSE
-
-	var/occupying_gang = territory_claimed(A, user)
-	if(occupying_gang && !spraying_over)
-		to_chat(user, "<span class='danger'>[A] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>")
-		return FALSE
-
-	// If you pass the gaunlet of checks, you're good to proceed
-	return TRUE
-
-/obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
-	for(var/datum/gang/G in SSticker.mode.gangs)
-		if(territory.type in (G.territory|G.territory_new))
-			. = G.name
-			break
-
-/obj/item/toy/crayon/proc/tag_for_gang(mob/user, atom/target)
-	//Delete any old markings on this tile, including other gang tags
-	for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
-		qdel(old_marking)
-
-	var/gangID = user.mind.gang_datum
-	var/area/territory = get_area(target)
-
-	new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",0)
-	to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")
 
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
@@ -498,7 +439,7 @@
  * Crayon Box
  */
 
-/obj/item/weapon/storage/crayons
+/obj/item/storage/crayons
 	name = "box of crayons"
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
@@ -509,7 +450,7 @@
 		/obj/item/toy/crayon
 	)
 
-/obj/item/weapon/storage/crayons/New()
+/obj/item/storage/crayons/New()
 	..()
 	new /obj/item/toy/crayon/red(src)
 	new /obj/item/toy/crayon/orange(src)
@@ -520,12 +461,12 @@
 	new /obj/item/toy/crayon/black(src)
 	update_icon()
 
-/obj/item/weapon/storage/crayons/update_icon()
+/obj/item/storage/crayons/update_icon()
 	cut_overlays()
 	for(var/obj/item/toy/crayon/crayon in contents)
 		add_overlay(mutable_appearance('icons/obj/crayons.dmi', crayon.item_color))
 
-/obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
+/obj/item/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = W
 		switch(C.item_color)
@@ -552,6 +493,8 @@
 	paint_color = null
 
 	item_state = "spraycan"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	desc = "A metallic container containing tasty paint.\n Alt-click to toggle the cap."
 
 	instant = TRUE
@@ -561,7 +504,7 @@
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
 
-	validSurfaces = list(/turf/open/floor,/turf/closed/wall)
+	validSurfaces = list(/turf/open/floor, /turf/closed/wall)
 	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
 
 	pre_noise = TRUE
@@ -633,7 +576,7 @@
 			C.blind_eyes(1)
 		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
 			C.confused = max(C.confused, 3)
-			C.Weaken(3)
+			C.Knockdown(60)
 		if(ishuman(C) && actually_paints)
 			var/mob/living/carbon/human/H = C
 			H.lip_style = "spray_face"
@@ -672,25 +615,6 @@
 		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		spray_overlay.color = paint_color
 		add_overlay(spray_overlay)
-
-/obj/item/toy/crayon/spraycan/gang
-	//desc = "A modified container containing suspicious paint."
-	charges = 20
-	gang = TRUE
-
-	pre_noise = FALSE
-	post_noise = TRUE
-
-/obj/item/toy/crayon/spraycan/gang/New(loc, datum/gang/G)
-	..()
-	if(G)
-		paint_color = G.color_hex
-		update_icon()
-
-/obj/item/toy/crayon/spraycan/gang/examine(mob/user)
-	. = ..()
-	if((user.mind && user.mind.gang_datum) || isobserver(user))
-		to_chat(user, "This spraycan has been specially modified for tagging territory.")
 
 /obj/item/toy/crayon/spraycan/borg
 	name = "cyborg spraycan"

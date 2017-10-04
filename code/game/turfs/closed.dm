@@ -2,8 +2,11 @@
 	var/thermite = 0
 	layer = CLOSED_TURF_LAYER
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
+
+/turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
 
 /turf/closed/indestructible
 	name = "wall"
@@ -23,9 +26,6 @@
 
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
-
-
-
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
@@ -69,13 +69,13 @@
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 
 /turf/closed/indestructible/fakeglass/Initialize()
-	..()
+	. = ..()
 	icon_state = null //set the icon state to null, so our base state isn't visible
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
 
 /turf/closed/indestructible/fakedoor
-	name = "Centcom Access"
+	name = "CentCom Access"
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	icon_state = "fake_door"
 
@@ -111,8 +111,43 @@
 	explosion_block = 50
 	baseturf = /turf/closed/indestructible/necropolis
 
+/turf/closed/indestructible/necropolis/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "necro1"
+	return TRUE
+
+/turf/closed/indestructible/riveted/boss
+	name = "necropolis wall"
+	desc = "A thick, seemingly indestructible stone wall."
+	icon = 'icons/turf/walls/boss_wall.dmi'
+	icon_state = "wall"
+	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
+	explosion_block = 50
+	baseturf = /turf/closed/indestructible/riveted/boss
+
+/turf/closed/indestructible/riveted/boss/see_through
+	opacity = FALSE
+
+/turf/closed/indestructible/riveted/boss/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "basalt"
+	return TRUE
+
 /turf/closed/indestructible/riveted/hierophant
 	name = "wall"
 	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "wall"
+
+/turf/closed/bullet_act(obj/item/projectile/Proj)
+	. = ..()
+	if((. != -1) && !Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		var/mutable_appearance/bullet_hole = mutable_appearance('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
+
+		var/random_x = rand(-13, 13)
+		bullet_hole.pixel_x += random_x
+
+		var/random_y = rand(-13, 13)
+		bullet_hole.pixel_y += random_y
+
+		add_overlay(bullet_hole, TRUE)

@@ -20,7 +20,7 @@
 		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
 		if(stacks >= 10)
 			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
-			user.Weaken(3)
+			user.Knockdown(60)
 			user.emote("gasp")
 
 	INVOKE_ASYNC(src, .proc/muscle_loop, user)
@@ -33,7 +33,7 @@
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
 			to_chat(user, "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
-			user.Weaken(2)
+			user.Knockdown(40)
 			user.status_flags &= ~GOTTAGOFAST
 			break
 

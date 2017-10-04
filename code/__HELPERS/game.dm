@@ -9,10 +9,10 @@
 #define CULT_POLL_WAIT 2400
 
 /proc/get_area(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isarea(A), A=A.loc); //semicolon is for the empty statement
-	return A
+	if(isarea(A))
+		return A
+	var/turf/T = get_turf(A)
+	return T ? T.loc : null
 
 /proc/get_area_name(atom/X)
 	var/area/Y = get_area(X)
@@ -164,7 +164,7 @@
 	. = list()
 	while(processing_list.len)
 		var/atom/A = processing_list[1]
-		if(A.flags & HEAR)
+		if(A.flags_1 & HEAR_1)
 			. += A
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
@@ -302,7 +302,7 @@
 
 /proc/try_move_adjacent(atom/movable/AM)
 	var/turf/T = get_turf(AM)
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		if(AM.Move(get_step(T, direction)))
 			break
 
@@ -314,10 +314,11 @@
 
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
 
-/proc/get_candidates(be_special_type, afk_bracket = config.inactivity_period, jobbanType)
+/proc/get_candidates(be_special_type, afk_bracket = CONFIG_GET(number/inactivity_period), jobbanType)
 	var/list/candidates = list()
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
-	while(!candidates.len && afk_bracket < config.afk_period)
+	var/afk_period = CONFIG_GET(number/afk_period)
+	while(!candidates.len && afk_bracket < afk_period)
 		for(var/mob/dead/observer/G in GLOB.player_list)
 			if(G.client != null)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
@@ -329,6 +330,20 @@
 							candidates += G.client
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
+
+/proc/considered_alive(datum/mind/M, enforce_human = TRUE)
+	if(M && M.current)
+		if(enforce_human)
+			var/mob/living/carbon/human/H
+			if(ishuman(M.current))
+				H = M.current
+			return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
+		else if(isliving(M.current))
+			return M.current.stat != DEAD
+	return FALSE
+
+/proc/considered_afk(datum/mind/M)
+	return !M || !M.current || !M.current.client || M.current.client.is_afk()
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))
@@ -418,15 +433,15 @@
 /proc/showCandidatePollWindow(mob/M, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
 	set waitfor = 0
 
-	M << 'sound/misc/notice2.ogg' //Alerting them to their consideration
+	SEND_SOUND(M, 'sound/misc/notice2.ogg') //Alerting them to their consideration
 	if(flashwindow)
 		window_flash(M.client)
-	switch(ignore_category ? askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
+	switch(ignore_category ? askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No", StealFocus=0, Timeout=poll_time))
 		if(1)
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 			if(time_passed + poll_time <= world.time)
 				to_chat(M, "<span class='danger'>Sorry, you answered too late to be considered!</span>")
-				M << 'sound/machines/buzz-sigh.ogg'
+				SEND_SOUND(M, 'sound/machines/buzz-sigh.ogg')
 				candidates -= M
 			else
 				candidates += M
@@ -449,15 +464,13 @@
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		candidates += G
 
-	pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
-
-	return candidates
+	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 
 /proc/pollCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
 	var/time_passed = world.time
 	if (!Question)
 		Question = "Would you like to be a special role?"
-
+	var/list/result = list()
 	for(var/m in group)
 		var/mob/M = m
 		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && M.ckey in GLOB.poll_ignore[ignore_category]))
@@ -472,17 +485,17 @@
 			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, "Syndicate"))
 				continue
 
-		showCandidatePollWindow(M, poll_time, Question, group, ignore_category, time_passed, flashwindow)
+		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off or get deleted during the wait period.
-	for(var/mob/M in group)
+	for(var/mob/M in result)
 		if(!M.key || !M.client)
-			group -= M
+			result -= M
 
-	listclearnulls(group)
+	listclearnulls(result)
 
-	return group
+	return result
 
 /proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
 	var/list/L = pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
@@ -508,7 +521,8 @@
 		return
 
 	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(GLOB.latejoin))//The mob being spawned.
+	var/mob/living/carbon/human/new_character = new//The mob being spawned.
+	SSjob.SendToLateJoin(new_character)
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()
@@ -554,3 +568,11 @@
 
 /proc/GetBluePart(const/hexa)
 	return hex2num(copytext(hexa, 6, 8))
+
+/proc/lavaland_equipment_pressure_check(turf/T)
+	if(!istype(T))
+		return
+	var/datum/gas_mixture/environment = T.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
+		return TRUE

@@ -3,8 +3,8 @@
 	desc = "Used to remotely control the flow of power to different parts of the station."
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
-	req_access = list(GLOB.access_engine)
-	circuit = /obj/item/weapon/circuitboard/computer/apc_control
+	req_access = list(ACCESS_ENGINE)
+	circuit = /obj/item/circuitboard/computer/apc_control
 	light_color = LIGHT_COLOR_YELLOW
 	var/list/apcs //APCs the computer has access to
 	var/mob/living/operator //Who's operating the computer right now
@@ -16,9 +16,9 @@
 	var/auth_id = "\[NULL\]"
 
 /obj/machinery/computer/apc_control/Initialize()
+	. = ..()
 	apcs = list() //To avoid BYOND making the list run through a ton of procs
 	filters = list("Name" = null, "Charge Above" = null, "Charge Below" = null, "Responsive" = null)
-	..()
 
 /obj/machinery/computer/apc_control/process()
 	apcs = list() //Clear the list every tick
@@ -31,7 +31,7 @@
 		if(active_apc)
 			if(!active_apc.locked)
 				active_apc.say("Remote access canceled. Interface locked.")
-				playsound(active_apc, 'sound/machines/BoltsDown.ogg', 25, 0)
+				playsound(active_apc, 'sound/machines/boltsdown.ogg', 25, 0)
 				playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
 			active_apc.update_icon()
@@ -66,7 +66,7 @@
 				if(filters["Responsive"] && !APC.aidisabled)
 					continue
 				dat += "<a href='?src=\ref[src];access_apc=\ref[APC]'>[A]</a><br>\
-				<b>Charge:</b> [APC.cell.charge] / [APC.cell.maxcharge] W ([round((APC.cell.charge / APC.cell.maxcharge) * 100)]%)<br>\
+				<b>Charge:</b> [DisplayPower(APC.cell.charge)] / [DisplayPower(APC.cell.maxcharge)] ([round((APC.cell.charge / APC.cell.maxcharge) * 100)]%)<br>\
 				<b>Area:</b> [APC.area]<br>\
 				[APC.aidisabled || APC.panel_open ? "<font color='#FF0000'>APC does not respond to interface query.</font>" : "<font color='#00FF00'>APC responds to interface query.</font>"]<br><br>"
 			dat += "<a href='?src=\ref[src];check_logs=1'>Check Logs</a><br>"
@@ -97,7 +97,7 @@
 	if(!usr || !usr.canUseTopic(src) || usr.incapacitated() || stat || QDELETED(src))
 		return
 	if(href_list["authenticate"])
-		var/obj/item/weapon/card/id/ID = usr.get_active_held_item()
+		var/obj/item/card/id/ID = usr.get_active_held_item()
 		if(!istype(ID))
 			ID = usr.get_idcard()
 		if(ID && istype(ID))
@@ -106,7 +106,7 @@
 				auth_id = "[ID.registered_name] ([ID.assignment])"
 				log_activity("logged in")
 		if(!authenticated) //Check for emags
-			var/obj/item/weapon/card/emag/E = usr.get_active_held_item()
+			var/obj/item/card/emag/E = usr.get_active_held_item()
 			if(E && istype(E) && usr.Adjacent(src))
 				to_chat(usr, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 				authenticated = TRUE
@@ -116,32 +116,32 @@
 		authenticated = FALSE
 		auth_id = "\[NULL\]"
 	if(href_list["restore_logging"])
-		to_chat(usr, "<span class='robot notice'>\icon[src] Logging functionality restored from backup data.</span>")
+		to_chat(usr, "<span class='robot notice'>[icon2html(src, usr)] Logging functionality restored from backup data.</span>")
 		emagged = FALSE
 		LAZYADD(logs, "<b>-=- Logging restored to full functionality at this point -=-</b>")
 	if(href_list["access_apc"])
 		playsound(src, "terminal_type", 50, 0)
 		var/obj/machinery/power/apc/APC = locate(href_list["access_apc"]) in GLOB.apcs_list
 		if(!APC || APC.aidisabled || APC.panel_open || QDELETED(APC))
-			to_chat(usr, "<span class='robot danger'>\icon[src] APC does not return interface request. Remote access may be disabled.</span>")
+			to_chat(usr, "<span class='robot danger'>[icon2html(src, usr)] APC does not return interface request. Remote access may be disabled.</span>")
 			return
 		if(active_apc)
-			to_chat(usr, "<span class='robot danger'>\icon[src] Disconnected from [active_apc].</span>")
+			to_chat(usr, "<span class='robot danger'>[icon2html(src, usr)] Disconnected from [active_apc].</span>")
 			active_apc.say("Remote access canceled. Interface locked.")
-			playsound(active_apc, 'sound/machines/BoltsDown.ogg', 25, 0)
+			playsound(active_apc, 'sound/machines/boltsdown.ogg', 25, 0)
 			playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
 			active_apc.update_icon()
 			active_apc = null
-		to_chat(usr, "<span class='robot notice'>\icon[src] Connected to APC in [get_area(APC)]. Interface request sent.</span>")
-		log_activity("remotely accessed APC in [get_area(APC)]")
+		to_chat(usr, "<span class='robot notice'>[icon2html(src, usr)] Connected to APC in [APC.area]. Interface request sent.</span>")
+		log_activity("remotely accessed APC in [APC.area]")
 		APC.interact(usr, GLOB.not_incapacitated_state)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		message_admins("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
 		log_game("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
 		if(APC.locked)
 			APC.say("Remote access detected. Interface unlocked.")
-			playsound(APC, 'sound/machines/BoltsUp.ogg', 25, 0)
+			playsound(APC, 'sound/machines/boltsup.ogg', 25, 0)
 			playsound(APC, 'sound/machines/terminal_alert.ogg', 50, 0)
 		APC.locked = FALSE
 		APC.update_icon()
@@ -192,13 +192,13 @@
 		logs = list()
 	interact(usr) //Refresh the UI after a filter changes
 
-/obj/machinery/computer/apc_control/emag_act(mob/living/user)
+/obj/machinery/computer/apc_control/emag_act(mob/user)
 	if(emagged)
 		return
 	user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
 	log_game("[key_name_admin(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
 	playsound(src, "sparks", 50, 1)
-	emagged = 1
+	emagged = TRUE
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	var/op_string = operator && !emagged ? operator : "\[NULL OPERATOR\]"

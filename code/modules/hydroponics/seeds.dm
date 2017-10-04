@@ -23,7 +23,7 @@
 	var/yield = 3					// Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
 	var/potency = 10				// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
 	var/growthstages = 6			// Amount of growth sprites the plant has.
-	var/rarity = 0					// How rare the plant is. Used for giving points to cargo when shipping off to Centcom.
+	var/rarity = 0					// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
 	var/list/mutatelist = list()	// The type of plants that this plant can mutate into.
 	var/list/genes = list()			// Plant genes are stored here, see plant_genes.dm for more info.
 	var/list/reagents_add = list()
@@ -143,7 +143,7 @@
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 	var/product_name
 	while(t_amount < getYield())
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
+		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
 		result.Add(t_prod) // User gets a consumable
 		if(!t_prod)
 			return
@@ -156,7 +156,7 @@
 	return result
 
 
-/obj/item/seeds/proc/prepare_result(var/obj/item/weapon/reagent_containers/food/snacks/grown/T)
+/obj/item/seeds/proc/prepare_result(var/obj/item/reagent_containers/food/snacks/grown/T)
 	if(T.reagents)
 		for(var/reagent_id in reagents_add)
 			if(reagent_id == "blood") // Hack to make blood in plants always O-

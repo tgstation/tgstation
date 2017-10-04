@@ -15,12 +15,11 @@
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	w_class = WEIGHT_CLASS_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
-	flags = MASKINTERNALS
+	flags_1 = MASKINTERNALS_1
 	throw_range = 5
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	layer = MOB_LAYER
-	obj_integrity = 100
 	max_integrity = 100
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
@@ -120,13 +119,11 @@
 		Leap(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/M)
-	// valid targets: corgis, carbons except aliens and devils
+	// valid targets: carbons except aliens and devils
 	// facehugger state early exit checks
 	if(stat != CONSCIOUS)
 		return FALSE
 	if(attached)
-		return FALSE
-	if(!iscorgi(M) && !iscarbon(M))
 		return FALSE
 	if(iscarbon(M))
 		// disallowed carbons
@@ -141,9 +138,8 @@
 			return FALSE
 		// carbon, has head, not alien or devil, has no hivenode or embryo: valid
 		return TRUE
-	else if(iscorgi(M))
-		// corgi: valid
-		return TRUE
+
+	return FALSE
 
 /obj/item/clothing/mask/facehugger/proc/Leap(mob/living/M)
 	if(!valid_to_attach(M))
@@ -184,15 +180,10 @@
 	//ensure we detach once we no longer need to be attached
 	addtimer(CALLBACK(src, .proc/detach), MAX_IMPREGNATION_TIME)
 
-	if (iscorgi(M))
-		var/mob/living/simple_animal/pet/dog/corgi/C = M
-		loc = C
-		C.facehugger = src
-		C.regenerate_icons()
 
 	if(!sterile)
 		M.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
-		M.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
+		M.Unconscious(MAX_IMPREGNATION_TIME/0.3) //something like 25 ticks = 20 seconds with the default settings
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
@@ -222,10 +213,6 @@
 		if((!LC || LC.status != BODYPART_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			new /obj/item/organ/body_egg/alien_embryo(target)
 
-		if(iscorgi(target))
-			var/mob/living/simple_animal/pet/dog/corgi/C = target
-			src.loc = get_turf(C)
-			C.facehugger = null
 	else
 		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", \
 								"<span class='userdanger'>[src] violates [target]'s face!</span>")
@@ -264,7 +251,7 @@
 	if(M.getorgan(/obj/item/organ/alien/hivenode))
 		return 0
 
-	if(iscorgi(M) || ismonkey(M))
+	if(ismonkey(M))
 		return 1
 
 	var/mob/living/carbon/C = M

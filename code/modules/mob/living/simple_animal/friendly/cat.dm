@@ -22,7 +22,7 @@
 	unsuitable_atmos_damage = 1
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -31,7 +31,7 @@
 	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/cat/Initialize()
-	..()
+	. = ..()
 	verbs += /mob/living/proc/lay_down
 
 /mob/living/simple_animal/pet/cat/update_canmove()
@@ -67,7 +67,7 @@
 	icon_state = "kitten"
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
-	density = 0
+	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
@@ -83,7 +83,7 @@
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
-	var/memory_saved = 0
+	var/memory_saved = FALSE
 
 /mob/living/simple_animal/pet/cat/Runtime/Initialize()
 	if(prob(5))
@@ -91,13 +91,14 @@
 		icon_living = "original"
 		icon_dead = "original_dead"
 	Read_Memory()
-	..()
+	. = ..()
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory()
+		memory_saved = TRUE
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/make_babies()
@@ -108,18 +109,26 @@
 
 /mob/living/simple_animal/pet/cat/Runtime/death()
 	if(!memory_saved)
-		Write_Memory(1)
+		Write_Memory(TRUE)
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-	S["family"] 			>> family
-
+	if(fexists("data/npc_saves/Runtime.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+		S["family"] >> family
+		fdel("data/npc_saves/Runtime.sav")
+	else
+		var/json_file = file("data/npc_saves/Runtime.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = json_decode(file2text(json_file))
+		family = json["family"]
 	if(isnull(family))
 		family = list()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
-	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+	var/json_file = file("data/npc_saves/Runtime.json")
+	var/list/file_data = list()
 	family = list()
 	if(!dead)
 		for(var/mob/living/simple_animal/pet/cat/kitten/C in children)
@@ -129,8 +138,9 @@
 				family[C.type] += 1
 			else
 				family[C.type] = 1
-	S["family"]				<< family
-	memory_saved = 1
+	file_data["family"] = family
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
 	cats_deployed = 1
@@ -215,7 +225,7 @@
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD)
-				flick_overlay(image('icons/mob/animal.dmi', src, "heart-ani2", ABOVE_MOB_LAYER), list(M.client), 20)
+				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "purrs!")
 		else
 			if(M && stat != DEAD)
@@ -231,8 +241,8 @@
 	maxHealth = 50
 	gender = FEMALE
 	harm_intent_damage = 10
-	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
-	/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
+	/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 	response_harm = "takes a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses its false life and collapses!"
@@ -258,7 +268,7 @@
 		return
 	if(health < maxHealth)
 		adjustBruteLoss(-8) //Fast life regen
-	for(var/obj/item/weapon/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
+	for(var/obj/item/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
 		if(D.icon_state != "donut2")
 			D.name = "frosted donut"
 			D.icon_state = "donut2"

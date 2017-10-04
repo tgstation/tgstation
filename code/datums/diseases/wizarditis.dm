@@ -78,7 +78,7 @@ STI KALY - blind
 	else
 		var/mob/living/carbon/H = affected_mob
 		if(prob(chance))
-			var/obj/item/weapon/staff/S = new(H)
+			var/obj/item/staff/S = new(H)
 			if(!H.put_in_hands(S))
 				qdel(S)
 
@@ -110,6 +110,6 @@ STI KALY - blind
 		return
 
 	affected_mob.say("SCYAR NILA [uppertext(thearea.name)]!")
-	affected_mob.loc = pick(L)
+	affected_mob.forceMove(pick(L))
 
 	return

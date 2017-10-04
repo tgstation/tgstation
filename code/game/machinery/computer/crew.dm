@@ -3,12 +3,15 @@
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 250
 	active_power_usage = 500
-	circuit = /obj/item/weapon/circuitboard/computer/crew
+	circuit = /obj/item/circuitboard/computer/crew
 
 	light_color = LIGHT_COLOR_BLUE
+
+/obj/machinery/computer/crew/syndie
+	icon_keyboard = "syndie_key"
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))
@@ -63,7 +66,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	jobs["Janitor"] = 68
 	jobs["Lawyer"] = 69
 	jobs["Admiral"] = 200
-	jobs["Centcom Commander"] = 210
+	jobs["CentCom Commander"] = 210
 	jobs["Custodian"] = 211
 	jobs["Medical Officer"] = 212
 	jobs["Research Officer"] = 213
@@ -132,7 +135,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if (ignore_unused || hi.isUsed())
 			var/list/results = list()
 			var/obj/item/clothing/under/U
-			var/obj/item/weapon/card/id/I
+			var/obj/item/card/id/I
 			var/turf/pos
 			var/ijob
 			var/name

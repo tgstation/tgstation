@@ -3,9 +3,10 @@
 	name = "transit tube"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "straight"
-	density = 1
+	desc = "A transit tube for moving things around."
+	density = TRUE
 	layer = LOW_ITEM_LAYER
-	anchored = 1
+	anchored = TRUE
 	climbable = 1
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs //list of directions this tube section can connect to.
@@ -30,11 +31,12 @@
 	return ..()
 
 /obj/structure/transit_tube/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
 /obj/structure/transit_tube/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		if(tube_construction)
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
 				to_chat(user, "<span class='warning'>Remove the pod first!</span>")
@@ -48,7 +50,7 @@
 				transfer_fingerprints_to(R)
 				R.add_fingerprint(user)
 				qdel(src)
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/crowbar))
 		for(var/obj/structure/transit_tube_pod/pod in src.loc)
 			pod.attackby(W, user)
 	else
@@ -187,7 +189,7 @@
 	dir = WEST
 
 /obj/structure/transit_tube/diagonal/crossing
-	density = 0
+	density = FALSE
 	icon_state = "diagonal_crossing"
 	tube_construction = /obj/structure/c_transit_tube/diagonal/crossing
 
@@ -261,7 +263,7 @@
 /obj/structure/transit_tube/crossing
 	icon_state = "crossing"
 	tube_construction = /obj/structure/c_transit_tube/crossing
-	density = 0
+	density = FALSE
 
 //mostly for mapping use
 /obj/structure/transit_tube/crossing/horizontal

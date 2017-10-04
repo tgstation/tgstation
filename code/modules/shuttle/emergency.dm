@@ -12,11 +12,11 @@
 	var/list/authorized = list()
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
-	if(istype(I, /obj/item/weapon/card/id))
+	if(istype(I, /obj/item/card/id))
 		say("Please equip your ID card into your ID slot to authenticate.")
 	. = ..()
 
-/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.human_adjacent_state)
+/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.human_adjacent_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -32,7 +32,7 @@
 	data["authorizations_remaining"] = max((auth_need - authorized.len), 0)
 	var/list/A = list()
 	for(var/i in authorized)
-		var/obj/item/weapon/card/id/ID = i
+		var/obj/item/card/id/ID = i
 		var/name = ID.registered_name
 		var/job = ID.assignment
 
@@ -57,13 +57,13 @@
 	var/mob/user = usr
 	. = FALSE
 
-	var/obj/item/weapon/card/id/ID = user.get_idcard()
+	var/obj/item/card/id/ID = user.get_idcard()
 
 	if(!ID)
 		to_chat(user, "<span class='warning'>You don't have an ID.</span>")
 		return
 
-	if(!(GLOB.access_heads in ID.access))
+	if(!(ACCESS_HEADS in ID.access))
 		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
 		return
 
@@ -93,12 +93,12 @@
 			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
 
 /obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
-	var/obj/item/weapon/card/id/ID = user.get_idcard()
+	var/obj/item/card/id/ID = user.get_idcard()
 
 	if(ID in authorized)
 		return FALSE
 	for(var/i in authorized)
-		var/obj/item/weapon/card/id/other = i
+		var/obj/item/card/id/other = i
 		if(other.registered_name == ID.registered_name)
 			return FALSE // No using IDs with the same name
 
@@ -144,8 +144,8 @@
 
 	var/time = TIME_LEFT
 	message_admins("[key_name_admin(user.client)] \
-	(<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) \
-	(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) \
+	(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[user]'>?</A>) \
+	(<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[user]'>FLW</A>) \
 	has emagged the emergency shuttle [time] seconds before launch.", 0, 1)
 	log_game("[key_name(user)] has emagged the emergency shuttle in \
 		[COORD(src)] [time] seconds before launch.")
@@ -154,7 +154,7 @@
 	for(var/i in 1 to 10)
 		// the shuttle system doesn't know who these people are, but they
 		// must be important, surely
-		var/obj/item/weapon/card/id/ID = new(src)
+		var/obj/item/card/id/ID = new(src)
 		var/datum/job/J = pick(SSjob.occupations)
 		ID.registered_name = S.random_name(pick(MALE, FEMALE))
 		ID.assignment = J.title
@@ -167,7 +167,7 @@
 	// Our fake IDs that the emag generated are just there for colour
 	// They're not supposed to be accessible
 
-	for(var/obj/item/weapon/card/id/ID in src)
+	for(var/obj/item/card/id/ID in src)
 		qdel(ID)
 	if(authorized && authorized.len)
 		authorized.Cut()
@@ -183,7 +183,7 @@
 	width = 22
 	height = 11
 	dir = EAST
-	port_angle = -90
+	port_direction = WEST
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 
@@ -213,7 +213,7 @@
 				set_coefficient = 1
 			else
 				set_coefficient = 0.5
-	var/call_time = SSshuttle.emergencyCallTime * set_coefficient
+	var/call_time = SSshuttle.emergencyCallTime * set_coefficient * engine_coeff
 	switch(mode)
 		// The shuttle can not normally be called while "recalling", so
 		// if this proc is called, it's via admin fiat
@@ -230,10 +230,12 @@
 	else
 		SSshuttle.emergencyLastCallLoc = null
 
-	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlecalled.ogg', "Priority")
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
+		return
+	if(SSshuttle.emergencyNoRecall)
 		return
 
 	invertTimer()
@@ -243,7 +245,7 @@
 		SSshuttle.emergencyLastCallLoc = signalOrigin
 	else
 		SSshuttle.emergencyLastCallLoc = null
-	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
+	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlerecalled.ogg', "Priority")
 
 /obj/docking_port/mobile/emergency/proc/is_hijacked()
 	var/has_people = FALSE
@@ -257,10 +259,10 @@
 					continue
 				if(isbrain(player)) //also technically dead
 					continue
-				if(get_area(player) == areaInstance)
+				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
 					var/location = get_turf(player.mind.current)
-					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate" || player.mind.special_role == "blood brother") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return FALSE
 
 	return has_people
@@ -288,23 +290,16 @@
 		if(SHUTTLE_CALL)
 			if(time_left <= 0)
 				//move emergency shuttle to station
-				if(dock(SSshuttle.getDock("emergency_home")))
+				if(dock(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
 					setTimer(20)
 					return
 				mode = SHUTTLE_DOCKED
 				setTimer(SSshuttle.emergencyDockTime)
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
-				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-				SSblackbox.add_details("emergency_shuttle", src.name)
-
-				// Gangs only have one attempt left if the shuttle has
-				// docked with the station to prevent suffering from
-				// endless dominator delays
-				for(var/datum/gang/G in SSticker.mode.gangs)
-					if(G.is_dominating)
-						G.dom_attempts = 0
-					else
-						G.dom_attempts = min(1,G.dom_attempts)
+				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/ai/shuttledock.ogg', "Priority")
+				if(SSdbcore.Connect())
+					var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shuttle_name = '[name]' WHERE id = [GLOB.round_id]")
+					query_round_shuttle_name.Execute()
 
 
 		if(SHUTTLE_DOCKED)
@@ -343,9 +338,7 @@
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
 				for(var/A in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = A
-					if(M.launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
-						M.launch_status = ENDGAME_LAUNCHED
-						M.enterTransit()
+					M.on_emergency_launch()
 
 				//now move the actual emergency shuttle to its transit dock
 				var/list/areas = list()
@@ -355,7 +348,7 @@
 				enterTransit()
 				mode = SHUTTLE_ESCAPE
 				launch_status = ENDGAME_LAUNCHED
-				setTimer(SSshuttle.emergencyEscapeTime)
+				setTimer(SSshuttle.emergencyEscapeTime * engine_coeff)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 
 		if(SHUTTLE_STRANDED)
@@ -367,25 +360,28 @@
 				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_END, areas)
-			if(areaInstance.parallax_movedir && time_left <= PARALLAX_LOOP_TIME)
-				parallax_slowdown()
-				for(var/A in SSshuttle.mobile)
-					var/obj/docking_port/mobile/M = A
-					if(M.launch_status == ENDGAME_LAUNCHED)
-						if(istype(M, /obj/docking_port/mobile/pod))
-							M.parallax_slowdown()
+			if(time_left <= PARALLAX_LOOP_TIME)
+				var/area_parallax = FALSE
+				for(var/place in shuttle_areas)
+					var/area/shuttle/shuttle_area = place
+					if(shuttle_area.parallax_movedir)
+						area_parallax = TRUE
+						break
+				if(area_parallax)
+					parallax_slowdown()
+					for(var/A in SSshuttle.mobile)
+						var/obj/docking_port/mobile/M = A
+						if(M.launch_status == ENDGAME_LAUNCHED)
+							if(istype(M, /obj/docking_port/mobile/pod))
+								M.parallax_slowdown()
 
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
 				for(var/A in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = A
-					if(M.launch_status == ENDGAME_LAUNCHED)
-						if(istype(M, /obj/docking_port/mobile/pod))
-							M.dock(SSshuttle.getDock("[M.id]_away")) //Escape pods dock at centcomm
-						else
-							continue //Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
+					M.on_emergency_dock()
 
-				// now move the actual emergency shuttle to centcomm
+				// now move the actual emergency shuttle to centcom
 				// unless the shuttle is "hijacked"
 				var/destination_dock = "emergency_away"
 				if(is_hijacked())
@@ -397,6 +393,16 @@
 				dock_id(destination_dock)
 				mode = SHUTTLE_ENDGAME
 				timer = 0
+
+/obj/docking_port/mobile/emergency/transit_failure()
+	..()
+	message_admins("Moving emergency shuttle directly to centcom dock to prevent deadlock.")
+
+	mode = SHUTTLE_ESCAPE
+	launch_status = ENDGAME_LAUNCHED
+	setTimer(SSshuttle.emergencyEscapeTime)
+	priority_announce("The Emergency Shuttle preparing for direct jump. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"
@@ -433,16 +439,17 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	light_color = LIGHT_COLOR_BLUE
-	density = 0
+	density = FALSE
 	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/shuttle/pod/update_icon()
 	return
 
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
-		to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
@@ -484,49 +491,44 @@
 	item_state = "syndicate-orange"
 	slowdown = 3
 
-/obj/item/weapon/pickaxe/emergency
+/obj/item/pickaxe/emergency
 	name = "emergency disembarkation tool"
 	desc = "For extracting yourself from rough landings."
 
-/obj/item/weapon/storage/pod
+/obj/item/storage/pod
 	name = "emergency space suits"
 	desc = "A wall mounted safe containing space suits. Will only open in emergencies."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
 	var/unlocked = FALSE
 
-/obj/item/weapon/storage/pod/PopulateContents()
+/obj/item/storage/pod/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/orange(src)
 	new /obj/item/clothing/head/helmet/space/orange(src)
 	new /obj/item/clothing/suit/space/orange(src)
 	new /obj/item/clothing/suit/space/orange(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/weapon/tank/internals/oxygen/red(src)
-	new /obj/item/weapon/tank/internals/oxygen/red(src)
-	new /obj/item/weapon/pickaxe/emergency(src)
-	new /obj/item/weapon/pickaxe/emergency(src)
-	new /obj/item/weapon/survivalcapsule(src)
+	new /obj/item/tank/internals/oxygen/red(src)
+	new /obj/item/tank/internals/oxygen/red(src)
+	new /obj/item/pickaxe/emergency(src)
+	new /obj/item/pickaxe/emergency(src)
+	new /obj/item/survivalcapsule(src)
+	new /obj/item/storage/toolbox/emergency(src)
 
-/obj/item/weapon/storage/pod/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/storage/pod/attackby(obj/item/W, mob/user, params)
 	return
 
-/obj/item/weapon/storage/pod/MouseDrop(over_object, src_location, over_location)
+/obj/item/storage/pod/MouseDrop(over_object, src_location, over_location)
 	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || unlocked)
 		. = ..()
 	else
 		to_chat(usr, "The storage unit will only unlock during a Red or Delta security alert.")
 
-/obj/item/weapon/storage/pod/attack_hand(mob/user)
+/obj/item/storage/pod/attack_hand(mob/user)
 	return MouseDrop(user)
-
-/obj/item/weapon/storage/pod/onShuttleMove()
-	unlocked = TRUE
-	// If the pod was launched, the storage will always open.
-	return ..()
-
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
@@ -547,9 +549,6 @@
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 
-#undef UNLAUNCHED
-#undef LAUNCHED
-#undef EARLY_LAUNCHED
 #undef TIMELEFT
 #undef ENGINES_START_TIME
 #undef ENGINES_STARTED

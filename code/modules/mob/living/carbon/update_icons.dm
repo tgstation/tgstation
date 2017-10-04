@@ -209,7 +209,8 @@
 
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
-/obj/item/proc/worn_overlays(isinhands = FALSE)
+//"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
+/obj/item/proc/worn_overlays(isinhands = FALSE, icon_file)
 	. = list()
 
 

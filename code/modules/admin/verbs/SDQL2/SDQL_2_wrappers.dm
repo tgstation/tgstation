@@ -170,5 +170,13 @@
 		return
 	L -= args.Copy(2)
 
+/proc/_list_set(list/L, key, value)
+	L[key] = value
+
+/proc/_list_numerical_add(L, key, num)
+	L[key] += num
+
 /proc/_list_swap(list/L, Index1, Index2)
 	L.Swap(Index1, Index2)
+
+

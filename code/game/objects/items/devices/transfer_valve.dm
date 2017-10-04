@@ -3,12 +3,14 @@
 	name = "tank transfer valve"
 	icon_state = "valve_1"
 	item_state = "ttv"
+	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	desc = "Regulates the transfer of air between two tanks"
-	var/obj/item/weapon/tank/tank_one
-	var/obj/item/weapon/tank/tank_two
-	var/obj/item/device/attached_device
+	var/obj/item/tank/tank_one
+	var/obj/item/tank/tank_two
+	var/obj/item/device/assembly/attached_device
 	var/mob/attacher = null
-	var/valve_open = 0
+	var/valve_open = FALSE
 	var/toggle = 1
 	origin_tech = "materials=1;engineering=1"
 
@@ -16,7 +18,7 @@
 	return 1
 
 /obj/item/device/transfer_valve/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/weapon/tank))
+	if(istype(item, /obj/item/tank))
 		if(tank_one && tank_two)
 			to_chat(user, "<span class='warning'>There are already two tanks attached, remove one first!</span>")
 			return
@@ -79,7 +81,7 @@
 	if (src.loc == usr)
 		if(tank_one && href_list["tankone"])
 			split_gases()
-			valve_open = 0
+			valve_open = FALSE
 			tank_one.loc = get_turf(src)
 			tank_one = null
 			update_icon()
@@ -87,7 +89,7 @@
 				w_class = WEIGHT_CLASS_NORMAL
 		else if(tank_two && href_list["tanktwo"])
 			split_gases()
-			valve_open = 0
+			valve_open = FALSE
 			tank_two.loc = get_turf(src)
 			tank_two = null
 			update_icon()
@@ -97,8 +99,8 @@
 			toggle_valve()
 		else if(attached_device)
 			if(href_list["rem_device"])
-				attached_device.loc = get_turf(src)
-				attached_device:holder = null
+				attached_device.forceMove(get_turf(src))
+				attached_device.holder = null
 				attached_device = null
 				update_icon()
 			if(href_list["device"])
@@ -156,14 +158,14 @@
 
 /obj/item/device/transfer_valve/proc/toggle_valve()
 	if(!valve_open && tank_one && tank_two)
-		valve_open = 1
+		valve_open = TRUE
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 
 		var/attachment = "no device"
 		if(attached_device)
 			if(istype(attached_device, /obj/item/device/assembly/signaler))
-				attachment = "<A HREF='?_src_=holder;secrets=list_signalers'>[attached_device]</A>"
+				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_device]</A>"
 			else
 				attachment = attached_device
 
@@ -202,7 +204,7 @@
 
 	else if(valve_open && tank_one && tank_two)
 		split_gases()
-		valve_open = 0
+		valve_open = FALSE
 		src.update_icon()
 
 // this doesn't do anything but the timer etc. expects it to be here

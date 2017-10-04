@@ -59,8 +59,7 @@
 /area/awaymission/wwvault)
 "an" = (
 /turf/open/floor/plasteel/cult{
-	name = "engraved floor";
-	tag = "icon-cult"
+	name = "engraved floor"
 	},
 /area/awaymission/wwvault)
 "ao" = (
@@ -172,12 +171,9 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/wwvault)
 "aL" = (
-/obj/item/weapon/paper{
-	info = "meat grinder requires sacri"
-	},
+/obj/item/paper/fluff/awaymissions/wildwest/grinder,
 /turf/open/floor/plasteel/cult{
-	name = "engraved floor";
-	tag = "icon-cult"
+	name = "engraved floor"
 	},
 /area/awaymission/wwvault)
 "aM" = (
@@ -187,10 +183,9 @@
 /turf/closed/mineral,
 /area/awaymission/wwmines)
 "aO" = (
-/obj/effect/mob_spawn/human/syndicatecommando,
+/obj/effect/mob_spawn/human/corpse/syndicatecommando,
 /turf/open/floor/plasteel/cult{
-	name = "engraved floor";
-	tag = "icon-cult"
+	name = "engraved floor"
 	},
 /area/awaymission/wwvault)
 "aP" = (
@@ -366,7 +361,7 @@
 /area/awaymission/wwmines)
 "bC" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic,
+/obj/item/gun/ballistic,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "bD" = (
@@ -382,7 +377,7 @@
 /area/awaymission/wwmines)
 "bG" = (
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/book/manual/barman_recipes,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "bH" = (
@@ -395,16 +390,16 @@
 /area/awaymission/wwmines)
 "bJ" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
 /area/awaymission/wwmines)
 "bK" = (
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/chef_recipes,
+/obj/item/book/manual/chef_recipes,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -424,11 +419,11 @@
 /area/awaymission/wwmines)
 "bN" = (
 /obj/structure/closet/secure_closet/freezer/meat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -452,8 +447,7 @@
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 8
 	},
 /turf/open/floor/plating/ironsand{
@@ -557,8 +551,7 @@
 	icon_state = "fwindow";
 	dir = 8
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
 	},
 /turf/open/floor/plating/ironsand{
@@ -610,17 +603,14 @@
 /area/awaymission/wwgov)
 "cg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper{
-	info = " The miners in the town have become sick and almost all production has stopped. They, in a fit of delusion, tossed all of their mining equipment into the furnaces.  They all claimed the same thing. A voice beckoning them to lay down their arms. Stupid miners.";
-	name = "Planer Saul's Journal: Page 4"
-	},
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page4,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
 /area/awaymission/wwmines)
 "ch" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic,
+/obj/item/gun/ballistic,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -653,7 +643,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wwgov)
 "co" = (
-/obj/item/weapon/storage/bag/money,
+/obj/item/storage/bag/money,
 /turf/open/floor/wood,
 /area/awaymission/wwgov)
 "cp" = (
@@ -694,7 +684,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wwgov)
 "cx" = (
-/obj/item/weapon/storage/bag/money,
+/obj/item/storage/bag/money,
 /turf/open/floor/carpet,
 /area/awaymission/wwgov)
 "cy" = (
@@ -717,7 +707,7 @@
 /area/awaymission/wwmines)
 "cC" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/wood,
 /area/awaymission/wwgov)
 "cD" = (
@@ -754,17 +744,17 @@
 /area/awaymission/wwmines)
 "cJ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill,
+/obj/item/reagent_containers/food/condiment/peppermill,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "cK" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+/obj/item/reagent_containers/food/condiment/saltshaker,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "cL" = (
 /obj/structure/table/wood,
-/obj/item/weapon/twohanded/dualsaber,
+/obj/item/twohanded/dualsaber,
 /turf/open/floor/wood,
 /area/awaymission/wwgov)
 "cM" = (
@@ -833,25 +823,22 @@
 /turf/open/floor/plating,
 /area/awaymission/wwrefine)
 "cU" = (
-/obj/item/weapon/paper{
-	info = "We've discovered something floating in space. We can't really tell how old it is, but it is scraped and bent to hell. There object is the size of about a room with double doors that we have yet to break into.   It is a lot sturdier than we could have imagined.  We have decided to call it 'The Vault' ";
-	name = "Planer Saul's Journal: Page 1"
-	},
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page1,
 /turf/open/floor/carpet,
 /area/awaymission/wwgov)
 "cV" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/soup/monkeysdelight,
+/obj/item/reagent_containers/food/snacks/soup/monkeysdelight,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "cW" = (
 /obj/structure/table/wood,
-/obj/item/weapon/kitchen/knife/butcher,
+/obj/item/kitchen/knife/butcher,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "cX" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/soup/stew,
+/obj/item/reagent_containers/food/snacks/soup/stew,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "cY" = (
@@ -887,8 +874,7 @@
 	icon_state = "fwindow";
 	dir = 4
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
 	},
 /turf/open/floor/plating/ironsand{
@@ -897,17 +883,17 @@
 /area/awaymission/wwgov)
 "dd" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/store/bread/creamcheese,
+/obj/item/reagent_containers/food/snacks/store/bread/creamcheese,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "de" = (
 /obj/structure/table/wood,
-/obj/item/weapon/kitchen/rollingpin,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "df" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon,
+/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "dg" = (
@@ -929,7 +915,7 @@
 	},
 /area/awaymission/wwgov)
 "dh" = (
-/obj/effect/mob_spawn/human/syndicatecommando{
+/obj/effect/mob_spawn/human/corpse/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/carpet,
@@ -976,25 +962,25 @@
 /area/space)
 "dp" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/brown,
+/obj/item/bedsheet/brown,
 /turf/open/floor/wood,
 /area/awaymission/wwgov)
 "dq" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "dr" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "ds" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/patron,
+/obj/item/reagent_containers/food/drinks/bottle/patron,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wwgov)
 "dt" = (
@@ -1072,7 +1058,7 @@
 /area/awaymission/wwmines)
 "dH" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/blue,
+/obj/item/bedsheet/blue,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "dI" = (
@@ -1200,22 +1186,22 @@
 /area/awaymission/wwmines)
 "dY" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly,
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly,
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "dZ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/food/drinks/coffee,
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "ea" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+/obj/item/reagent_containers/food/snacks/donut/jelly,
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "eb" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/donut,
+/obj/item/reagent_containers/food/snacks/donut,
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "ec" = (
@@ -1307,7 +1293,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "eq" = (
-/obj/item/weapon/gun/ballistic/shotgun,
+/obj/item/gun/ballistic/shotgun,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "er" = (
@@ -1386,20 +1372,20 @@
 /area/awaymission/wwgov)
 "eE" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/blue,
-/obj/item/weapon/gun/ballistic,
+/obj/item/bedsheet/blue,
+/obj/item/gun/ballistic,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "eF" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/blue,
+/obj/item/bedsheet/blue,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "eG" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/coffee,
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly,
+/obj/item/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly,
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "eH" = (
@@ -1716,8 +1702,7 @@
 	icon_state = "fwindow";
 	dir = 4
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/plasteel,
 /area/awaymission/wwrefine)
 "fB" = (
@@ -1839,7 +1824,7 @@
 /area/awaymission/wwmines)
 "fS" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic/shotgun,
+/obj/item/gun/ballistic/shotgun,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "fT" = (
@@ -1887,10 +1872,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "fZ" = (
-/obj/item/weapon/paper{
-	info = "The Vault...it just keeps growing and growing.  I went on my daily walk through the garden and now its just right outside the mansion... a few days ago it was only barely visible. But whatever is inside...its calling to me.";
-	name = "Planer Sauls' Journal: Page 7"
-	},
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page7,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "ga" = (
@@ -1928,7 +1910,7 @@
 /area/awaymission/wwmines)
 "gg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic/revolver/russian,
+/obj/item/gun/ballistic/revolver/russian,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gh" = (
@@ -1956,7 +1938,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gm" = (
-/obj/item/weapon/gun/ballistic,
+/obj/item/gun/ballistic,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gn" = (
@@ -2003,21 +1985,21 @@
 	},
 /area/awaymission/wwmines)
 "gv" = (
-/obj/item/weapon/hatchet,
+/obj/item/hatchet,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gw" = (
-/obj/item/weapon/gun/ballistic/automatic/pistol,
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gx" = (
-/obj/item/weapon/gun/ballistic/shotgun,
+/obj/item/gun/ballistic/shotgun,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
 /area/awaymission/wwmines)
 "gy" = (
-/obj/effect/mob_spawn/human/syndicatecommando{
+/obj/effect/mob_spawn/human/corpse/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/grass,
@@ -2116,28 +2098,20 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gK" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gL" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gM" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gN" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gO" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gP" = (
 /obj/structure/chair,
@@ -2147,22 +2121,16 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gR" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/wwrefine)
 "gT" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc2"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gU" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gV" = (
 /obj/effect/landmark/awaystart,
@@ -2175,19 +2143,12 @@
 /obj/item/clothing/suit/space/syndicate/black/orange,
 /obj/item/clothing/head/helmet/space/syndicate/black/orange,
 /obj/item/clothing/mask/gas/syndicate,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
@@ -2195,10 +2156,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gY" = (
-/obj/item/weapon/paper{
-	info = "The syndicate have invaded.  Their ships appeared out of nowhere and now they likely intend to kill us all and take everything.  On the off-chance that the Vault may grant us sanctuary, many of us have decided to force our way inside and bolt the door, taking as many provisions with us as we can carry.  In case you find this, send for help immediately and open the Vault. Find us inside.";
-	name = "Planer Saul's Journal: Page 8"
-	},
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page8,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},

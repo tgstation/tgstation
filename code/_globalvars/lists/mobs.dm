@@ -1,8 +1,8 @@
 GLOBAL_LIST_EMPTY(clients)							//all clients
 GLOBAL_LIST_EMPTY(admins)							//all clients whom are admins
 GLOBAL_PROTECT(admins)
-GLOBAL_LIST_EMPTY(deadmins)							//all clients who have used the de-admin verb.
-GLOBAL_PROTECT(deadmins)
+GLOBAL_LIST_EMPTY(deadmins)							//all ckeys who have used the de-admin verb.
+
 GLOBAL_LIST_EMPTY(directory)							//all ckeys with associated client
 GLOBAL_LIST_EMPTY(stealthminID)						//reference list with IDs that store ckeys, for stealthmins
 
@@ -20,6 +20,7 @@ GLOBAL_LIST_EMPTY(ai_list)
 GLOBAL_LIST_EMPTY(pai_list)
 GLOBAL_LIST_EMPTY(available_ai_shells)
 GLOBAL_LIST_EMPTY(simple_animals)
+GLOBAL_LIST_EMPTY(spidermobs)				//all sentient spider mobs
 
 GLOBAL_LIST_EMPTY(language_datum_instances)
 GLOBAL_LIST_EMPTY(all_languages)

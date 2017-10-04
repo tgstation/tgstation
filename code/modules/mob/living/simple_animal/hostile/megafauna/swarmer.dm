@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	. = ..()
 	swarmer_caps = GLOB.AISwarmerCapsByType //for admin-edits
 	internal = new/obj/item/device/gps/internal/swarmer_beacon(src)
-	for(var/ddir in GLOB.cardinal)
+	for(var/ddir in GLOB.cardinals)
 		new /obj/structure/swarmer/blockade (get_step(src, ddir))
 		var/mob/living/simple_animal/hostile/swarmer/ai/resource/R = new(loc)
 		step(R, ddir) //Step the swarmers, instead of spawning them there, incase the turf is solid
@@ -97,7 +97,6 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	desc = "Transmited over the signal is a strange message repeated in every language you know of, and some you don't too..." //the message is "nom nom nom"
 	invisibility = 100
 
-
 //SWARMER AI
 //AI versions of the swarmer mini-antag
 //This is an Abstract Base, it re-enables AI, but does not give the swarmer any goals/targets
@@ -106,7 +105,6 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	faction = list("swarmer", "mining")
 	weather_immunities = list("ash") //wouldn't be fun otherwise
 	AIStatus = AI_ON
-
 
 /mob/living/simple_animal/hostile/swarmer/ai/Initialize()
 	. = ..()
@@ -139,8 +137,8 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai/Move(atom/newloc)
 	if(newloc)
 		if(newloc.z == z) //so these actions are Z-specific
-			if(istype(newloc, /turf/open/floor/plating/lava))
-				var/turf/open/floor/plating/lava/L = newloc
+			if(istype(newloc, /turf/open/lava))
+				var/turf/open/lava/L = newloc
 				if(!L.is_safe())
 					StartAction(20)
 					new /obj/structure/lattice/catwalk/swarmer_catwalk(newloc)
@@ -258,20 +256,10 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	icon_state = "swarmer_ranged"
 	icon_living = "swarmer_ranged"
 	projectiletype = /obj/item/projectile/beam/laser
-	projectilesound = 'sound/weapons/Laser.ogg'
+	projectilesound = 'sound/weapons/laser.ogg'
 	check_friendly_fire = TRUE //you're supposed to protect the resource swarmers, you poop
 	retreat_distance = 3
 	minimum_distance = 3
-	login_text_dump = {"
-	<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>
-	<b>Clicking on any object will try to consume it, either deconstructing it into its components, destroying it, or integrating any materials it has into you if successful.</b>
-	<b>Ctrl-Clicking on a mob will attempt to remove it from the area and place it in a safe environment for storage.</b>
-	<b>Objectives:</b>
-	1. Defend Resource Swarmers while they consume resources and replicate until there are no more resources left.
-	2. Ensure that this location is fit for invasion at a later date; do not perform actions that would render it dangerous or inhospitable.
-	3. Biological resources should not be harmed if possible, violent force can be applied should they fail to keep away.
-	"}
-
 
 /mob/living/simple_animal/hostile/swarmer/ai/ranged_combat/Aggro()
 	..()
@@ -285,16 +273,6 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	health = 60
 	maxHealth = 60
 	ranged = FALSE
-	login_text_dump = {"
-	<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>
-	<b>Clicking on any object will try to consume it, either deconstructing it into its components, destroying it, or integrating any materials it has into you if successful.</b>
-	<b>Ctrl-Clicking on a mob will attempt to remove it from the area and place it in a safe environment for storage.</b>
-	<b>Objectives:</b>
-	1. Defend Resource Swarmers while they consume resources and replicate until there are no more resources left.
-	2. Ensure that this location is fit for invasion at a later date; do not perform actions that would render it dangerous or inhospitable.
-	3. Biological resources should not be harmed if possible, violent force can be applied should they fail to keep away.
-	"}
-
 
 /mob/living/simple_animal/hostile/swarmer/ai/melee_combat/Aggro()
 	..()

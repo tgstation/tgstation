@@ -1,9 +1,9 @@
 /datum/atom_hud/antag
 	hud_icons = list(ANTAG_HUD)
-	var/self_visible = 1
+	var/self_visible = TRUE
 
 /datum/atom_hud/antag/hidden
-	self_visible = 0
+	self_visible = FALSE
 
 /datum/atom_hud/antag/proc/join_hud(mob/M)
 	//sees_hud should be set to 0 if the mob does not get to see it's own hud type.
@@ -51,38 +51,3 @@
 	for(var/datum/atom_hud/antag/hud in GLOB.huds)
 		if(hud.hudusers[current])
 			hud.leave_hud(current)
-
-/datum/atom_hud/antag/gang
-	var/color = null
-
-/datum/atom_hud/antag/gang/add_to_hud(atom/A)
-	if(!A)
-		return
-	var/image/holder = A.hud_list[ANTAG_HUD]
-	if(holder)
-		holder.color = color
-	..()
-
-/datum/atom_hud/antag/gang/remove_from_hud(atom/A)
-	if(!A)
-		return
-	var/image/holder = A.hud_list[ANTAG_HUD]
-	if(holder)
-		holder.color = null
-	..()
-
-/datum/atom_hud/antag/gang/join_hud(mob/M)
-	if(!istype(M))
-		CRASH("join_hud(): [M] ([M.type]) is not a mob!")
-	var/image/holder = M.hud_list[ANTAG_HUD]
-	if(holder)
-		holder.color = color
-	..()
-
-/datum/atom_hud/antag/gang/leave_hud(mob/M)
-	if(!istype(M))
-		CRASH("leave_hud(): [M] ([M.type]) is not a mob!")
-	var/image/holder = M.hud_list[ANTAG_HUD]
-	if(holder)
-		holder.color = null
-	..()

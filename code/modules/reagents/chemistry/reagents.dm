@@ -58,6 +58,10 @@
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
+// Called when this reagent is first added to a mob
+/datum/reagent/proc/on_mob_add(mob/M)
+	return
+
 // Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/M)
 	return

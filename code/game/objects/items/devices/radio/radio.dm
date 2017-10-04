@@ -4,8 +4,9 @@
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"
 	item_state = "walkietalkie"
+	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
-	var/on = 1 // 0 for off
+	var/on = TRUE // 0 for off
 	var/last_transmission
 	var/frequency = 1459 //common chat
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
@@ -27,7 +28,7 @@
 	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
-	flags = CONDUCT | HEAR
+	flags_1 = CONDUCT_1 | HEAR_1
 	slot_flags = SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
@@ -44,13 +45,6 @@
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
-
-/obj/item/device/radio/New()
-	wires = new /datum/wires/radio(src)
-	if(prison_radio)
-		wires.cut(WIRE_TX) // OH GOD WHY
-	secure_radio_connections = new
-	..()
 
 /obj/item/device/radio/proc/recalculateChannels()
 	channels = list()
@@ -92,7 +86,11 @@
 	return ..()
 
 /obj/item/device/radio/Initialize()
-	..()
+	wires = new /datum/wires/radio(src)
+	if(prison_radio)
+		wires.cut(WIRE_TX) // OH GOD WHY
+	secure_radio_connections = new
+	. = ..()
 	frequency = sanitize_frequency(frequency, freerange)
 	set_frequency(frequency)
 
@@ -107,7 +105,7 @@
 	else
 		ui_interact(user)
 
-/obj/item/device/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/item/device/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -296,7 +294,6 @@
 	// --- Cold, emotionless machines. ---
 	else if(isobj(M))
 		jobname = "Machine"
-		voice = capitalize(voice)
 
 	// --- Unidentifiable mob ---
 	else
@@ -431,6 +428,9 @@
 	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 		R.receive_signal(signal)
 
+	// Allinone can act as receivers. (Unless of course whoever coded this last time forgot to put it in somewhere!)
+	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
+		R.receive_signal(signal)
 
 	spawn(20) // wait a little...
 
@@ -450,6 +450,8 @@
 		return
 	if(broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
+			if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)
+				raw_message = stars(raw_message)
 			talk_into(speaker, raw_message, , spans, language=message_language)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
@@ -514,9 +516,9 @@
 	else
 		to_chat(user, "<span class='notice'>[name] can not be modified or attached.</span>")
 
-/obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		b_stat = !b_stat
 		if(b_stat)
 			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
@@ -534,12 +536,12 @@
 	listening = 0
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
-	on = 0
+	on = FALSE
 	spawn(200)
 		if(emped == curremp) //Don't fix it if it's been EMP'd again
 			emped = 0
 			if (!istype(src, /obj/item/device/radio/intercom)) // intercoms will turn back on on their own
-				on = 1
+				on = TRUE
 	..()
 
 ///////////////////////////////
@@ -551,22 +553,22 @@
 	name = "cyborg radio"
 	subspace_switchable = 1
 	dog_fashion = null
+	flags_2 = NO_EMP_WIRES_2
 
 /obj/item/device/radio/borg/Initialize(mapload)
-	..()
-	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
+	. = ..()
 
 /obj/item/device/radio/borg/syndicate
 	syndie = 1
 	keyslot = new /obj/item/device/encryptionkey/syndicate
 
-/obj/item/device/radio/borg/syndicate/New()
-	..()
+/obj/item/device/radio/borg/syndicate/Initialize()
+	. = ..()
 	set_frequency(GLOB.SYND_FREQ)
 
-/obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/radio/borg/attackby(obj/item/W, mob/user, params)
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(keyslot)
 			for(var/ch_name in channels)
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])

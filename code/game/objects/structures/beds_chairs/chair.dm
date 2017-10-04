@@ -3,11 +3,10 @@
 	desc = "You sit in this. Either by will or force.\n<span class='notice'>Drag your sprite to sit in the chair. Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
-	anchored = 1
+	anchored = TRUE
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
 	resistance_flags = 0
-	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 25
 	var/buildstacktype = /obj/item/stack/sheet/metal
@@ -16,7 +15,7 @@
 	layer = OBJ_LAYER
 
 /obj/structure/chair/Initialize()
-	..()
+	. = ..()
 	if(!anchored)	//why would you put these on the shuttle?
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
 
@@ -25,11 +24,11 @@
 	return ..()
 
 /obj/structure/chair/proc/RemoveFromLatejoin()
-	GLOB.latejoin -= src	//These may be here due to the arrivals shuttle
+	SSjob.latejoin_trackers -= src	//These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(buildstacktype && (!(flags & NODECONSTRUCT)))
+	if(buildstacktype && (!(flags_1 & NODECONSTRUCT_1)))
 		new buildstacktype(loc,buildstackamount)
 	..()
 
@@ -41,8 +40,13 @@
 	W.setDir(dir)
 	qdel(src)
 
-/obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+/obj/structure/chair/ratvar_act()
+	var/obj/structure/chair/brass/B = new(get_turf(src))
+	B.setDir(dir)
+	qdel(src)
+
+/obj/structure/chair/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
 		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
@@ -50,7 +54,7 @@
 			return
 		var/obj/item/assembly/shock_kit/SK = W
 		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		E.setDir(dir)
 		E.part = SK
 		SK.loc = E
@@ -94,7 +98,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(config.ghost_interaction)
+	if(CONFIG_GET(flag/ghost_interaction))
 		spin()
 	else
 		if(!usr || !isturf(usr.loc))
@@ -119,7 +123,6 @@
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
@@ -141,7 +144,6 @@
 	icon_state = "comfychair"
 	color = rgb(255,255,255)
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	buildstackamount = 2
 	var/mutable_appearance/armrest
@@ -180,7 +182,7 @@
 	color = rgb(255,251,0)
 
 /obj/structure/chair/office
-	anchored = 0
+	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
 
@@ -206,7 +208,7 @@
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags & NODECONSTRUCT)
+		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
 			return
 		if(usr.incapacitated())
 			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
@@ -228,12 +230,15 @@
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
 	item_state = "chair"
+	lefthand_file = 'icons/mob/inhands/misc/chairs_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/chairs_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	force = 8
 	throwforce = 10
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
+	materials = list(MAT_METAL = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
@@ -247,10 +252,10 @@
 
 /obj/item/chair/proc/plant(mob/user)
 	for(var/obj/A in get_turf(loc))
-		if(istype(A,/obj/structure/chair))
+		if(istype(A, /obj/structure/chair))
 			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
 			return
-		if(A.density && !(A.flags & ON_BORDER))
+		if(A.density && !(A.flags_1 & ON_BORDER_1))
 			to_chat(user, "<span class='danger'>There is already something here.</span>")
 			return
 
@@ -273,7 +278,7 @@
 
 
 
-/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
 		return 1
@@ -288,7 +293,7 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)
-				C.Weaken(1)
+				C.Knockdown(20)
 		smash(user)
 
 
@@ -313,10 +318,10 @@
 	icon_state = "wooden_chair_toppled"
 	item_state = "woodenchair"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
+	materials = null
 	break_chance = 50
 
 /obj/item/chair/wood/narsie_act()
@@ -331,3 +336,34 @@
 	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
 	icon_state = "chairold"
 	item_chair = null
+
+/obj/structure/chair/brass
+	name = "brass chair"
+	desc = "A spinny chair made of brass. It looks uncomfortable."
+	icon_state = "brass_chair"
+	max_integrity = 150
+	buildstacktype = /obj/item/stack/tile/brass
+	buildstackamount = 1
+
+/obj/structure/chair/brass/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	. = ..()
+
+/obj/structure/chair/brass/process()
+	spin()
+	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)
+
+/obj/structure/chair/brass/ratvar_act()
+	return
+
+/obj/structure/chair/brass/AltClick(mob/living/user)
+	if(!user.canUseTopic(src, be_close = TRUE))
+		return
+	if(!isprocessing)
+		user.visible_message("<span class='notice'>[user] spins [src] around, and Ratvarian technology keeps it spinning FOREVER.</span>", \
+		"<span class='notice'>Automated spinny chairs. The pinnacle of Ratvarian technology.</span>")
+		START_PROCESSING(SSfastprocess, src)
+	else
+		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
+		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
+		STOP_PROCESSING(SSfastprocess, src)

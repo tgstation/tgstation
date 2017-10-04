@@ -3,6 +3,7 @@
 /obj/machinery/computer/telecomms/server
 	name = "telecommunications server monitoring console"
 	icon_screen = "comm_logs"
+	desc = "Has full access to all details and record of the telecommunications network it's monitoring."
 
 	var/screen = 0				// the screen number:
 	var/list/servers = list()	// the servers located by the computer
@@ -13,8 +14,8 @@
 
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
-	req_access = list(GLOB.access_tcomsat)
-	circuit = /obj/item/weapon/circuitboard/computer/comm_server
+	req_access = list(ACCESS_TCOMSAT)
+	circuit = /obj/item/circuitboard/computer/comm_server
 
 /obj/machinery/computer/telecomms/server/attack_hand(mob/user)
 	if(..())

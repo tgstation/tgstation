@@ -1,20 +1,14 @@
 /obj/machinery/computer/shuttle
-	name = "Shuttle Console"
+	name = "shuttle console"
+	desc = "A shuttle control computer."
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
 	light_color = LIGHT_COLOR_CYAN
 	req_access = list( )
-	circuit = /obj/item/weapon/circuitboard/computer/shuttle
 	var/shuttleId
 	var/possible_destinations = ""
 	var/admin_controlled
 	var/no_destination_swap = 0
-
-/obj/machinery/computer/shuttle/Initialize(mapload, obj/item/weapon/circuitboard/computer/shuttle/C)
-	. = ..()
-	if(istype(C))
-		possible_destinations = C.possible_destinations
-		shuttleId = C.shuttleId
 
 /obj/machinery/computer/shuttle/attack_hand(mob/user)
 	if(..(user))
@@ -72,8 +66,9 @@
 				to_chat(usr, "<span class='notice'>Unable to comply.</span>")
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
-	if(!emagged)
-		src.req_access = list()
-		emagged = 1
-		to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
+	if(emagged)
+		return
+	req_access = list()
+	emagged = TRUE
+	to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 

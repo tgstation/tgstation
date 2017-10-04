@@ -17,11 +17,11 @@
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "slots1"
-	anchored = 1
-	density = 1
-	use_power = 1
+	anchored = TRUE
+	density = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
-	circuit = /obj/item/weapon/circuitboard/computer/slot_machine
+	circuit = /obj/item/circuitboard/computer/slot_machine
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = 0
@@ -34,7 +34,7 @@
 	light_color = LIGHT_COLOR_BROWN
 
 /obj/machinery/computer/slot_machine/Initialize()
-	..()
+	. = ..()
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
 
@@ -46,8 +46,8 @@
 
 	toggle_reel_spin(0)
 
-	for(var/cointype in typesof(/obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C = cointype
+	for(var/cointype in typesof(/obj/item/coin))
+		var/obj/item/coin/C = cointype
 		coinvalues["[cointype]"] = initial(C.value)
 
 /obj/machinery/computer/slot_machine/Destroy()
@@ -80,8 +80,8 @@
 	update_icon()
 
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C = I
+	if(istype(I, /obj/item/coin))
+		var/obj/item/coin/C = I
 		if(prob(2))
 			if(!user.drop_item())
 				return
@@ -101,12 +101,13 @@
 		return ..()
 
 /obj/machinery/computer/slot_machine/emag_act()
-	if(!emagged)
-		emagged = 1
-		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-		spark_system.set_up(4, 0, src.loc)
-		spark_system.start()
-		playsound(src.loc, "sparks", 50, 1)
+	if(emagged)
+		return
+	emagged = TRUE
+	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(4, 0, src.loc)
+	spark_system.start()
+	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/computer/slot_machine/attack_hand(mob/living/user)
 	. = ..() //Sanity checks.
@@ -163,7 +164,7 @@
 	if(prob(15 * severity))
 		return
 	if(prob(1)) // :^)
-		emagged = 1
+		emagged = TRUE
 	var/severity_ascending = 4 - severity
 	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)
 	balance = max(rand(balance - (50 * severity_ascending), balance + (50 * severity_ascending)), 0)
@@ -240,8 +241,8 @@
 		money = 0
 
 		for(var/i = 0, i < 5, i++)
-			var/cointype = pick(subtypesof(/obj/item/weapon/coin))
-			var/obj/item/weapon/coin/C = new cointype(loc)
+			var/cointype = pick(subtypesof(/obj/item/coin))
+			var/obj/item/coin/C = new cointype(loc)
 			random_step(C, 2, 50)
 
 	else if(linelength == 5)
@@ -286,7 +287,7 @@
 	balance += surplus
 
 /obj/machinery/computer/slot_machine/proc/give_coins(amount)
-	var/cointype = emagged ? /obj/item/weapon/coin/iron : /obj/item/weapon/coin/silver
+	var/cointype = emagged ? /obj/item/coin/iron : /obj/item/coin/silver
 
 	if(!emagged)
 		amount = dispense(amount, cointype, null, 0)
@@ -298,12 +299,12 @@
 
 	return amount
 
-/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/weapon/coin/silver, mob/living/target, throwit = 0)
+/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
 	var/value = coinvalues["[cointype]"]
 
 
 	while(amount >= value)
-		var/obj/item/weapon/coin/C = new cointype(loc) //DOUBLE THE PAIN
+		var/obj/item/coin/C = new cointype(loc) //DOUBLE THE PAIN
 		amount -= value
 		if(throwit && target)
 			C.throw_at(target, 3, 10)

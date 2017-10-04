@@ -57,19 +57,12 @@
 	var/turf/target_turf = pick(L)
 	if(!target_turf)
 		return
-	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(target))
-	P.target = target_turf
-	P.creator = null
-	P.icon = 'icons/obj/objects.dmi'
-	P.icon_state = "anom"
-	P.name = "wormhole"
-	P.mech_sized = TRUE
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, src, 300, 1, /obj/effect/portal/anom)
 	var/turf/T = get_turf(target)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_COORDJMP(T)]",0,1)
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [COORD(T)]")
 	src = null
-	spawn(rand(150,300))
-		qdel(P)
+	QDEL_LIST_IN(created, rand(150,300))
 	return 1
 
 
@@ -101,10 +94,13 @@
 				send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 			else if(target!=locked)
 				if(locked in view(chassis))
+					var/turf/targ = get_turf(target)
+					var/turf/orig = get_turf(locked)
 					locked.throw_at(target, 14, 1.5)
 					locked = null
 					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
-					return 1
+					log_game("[key_name(chassis.occupant)] used a Gravitational Catapult to throw [locked]([COORD(orig)]) at [target]([COORD(targ)]).")
+					return TRUE
 				else
 					locked = null
 					occupant_message("Lock on [locked] disengaged.")
@@ -123,8 +119,8 @@
 						step_away(A,target)
 						sleep(2)
 			var/turf/T = get_turf(target)
-			log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Gravitational Catapult in ([T.x],[T.y],[T.z])")
-			return 1
+			log_game("[key_name(chassis.occupant)] used a Gravitational Catapult repulse wave on ([COORD(T)])")
+			return TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_equip_info()

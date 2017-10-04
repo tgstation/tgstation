@@ -32,6 +32,7 @@
 */
 /atom/Click(location,control,params)
 	if(initialized)
+		SendSignal(COMSIG_CLICK, location, control, params)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -92,7 +93,10 @@
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(istype(loc,/obj/mecha))
+	if(!modifiers["catcher"] && A.IsObscured())
+		return
+
+	if(ismecha(loc))
 		var/obj/mecha/M = loc
 		return M.click_action(A,src,params)
 
@@ -111,18 +115,18 @@
 		W.attack_self(src)
 		update_inv_hands()
 		return
-	
+
 	//These are always reachable.
 	//User itself, current loc, and user inventory
 	if(DirectAccess(A))
 		if(W)
-			melee_item_attack_chain(src,W,A,params)
+			W.melee_attack_chain(src, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
 		return
-	
+
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
 		return
@@ -130,7 +134,7 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			melee_item_attack_chain(src,W,A,params)
+			W.melee_attack_chain(src, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -140,6 +144,24 @@
 			W.afterattack(A,src,0,params)
 		else
 			RangedAttack(A,params)
+
+//Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
+/atom/proc/IsObscured()
+	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
+		return FALSE
+	var/turf/T = get_turf_pixel(src)
+	if(!T)
+		return FALSE
+	for(var/atom/movable/AM in T)
+		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density && AM.layer > layer)
+			return TRUE
+	return FALSE
+
+/turf/IsObscured()
+	for(var/atom/movable/AM in src)
+		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density)
+			return TRUE
+	return FALSE
 
 /atom/movable/proc/CanReach(atom/target,obj/item/tool,view_only = FALSE)
 	if(isturf(target) || isturf(target.loc) || DirectAccess(target)) //Directly accessible atoms
@@ -159,7 +181,7 @@
 /atom/proc/CanReachStorage(atom/target,user,depth)
 	return FALSE
 
-/obj/item/weapon/storage/CanReachStorage(atom/target,user,depth)
+/obj/item/storage/CanReachStorage(atom/target,user,depth)
 	while(target && depth > 0)
 		target = target.loc
 		depth--
@@ -260,7 +282,7 @@
 	return
 
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
@@ -284,6 +306,7 @@
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(mob/user)
+	SendSignal(COMSIG_CLICK_SHIFT, user)
 	if(user.client && user.client.eye == user || user.client.eye == user.loc)
 		user.examinate(src)
 	return
@@ -298,15 +321,18 @@
 	return
 
 /atom/proc/CtrlClick(mob/user)
+	SendSignal(COMSIG_CLICK_CTRL, user)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-	if(ishuman(user) && Adjacent(user))
+	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
+		if(world.time < user.next_move)
+			return FALSE
 		var/mob/living/carbon/human/H = user
-		H.dna.species.grab(H, src, H.martial_art)
-		H.next_click = world.time + CLICK_CD_MELEE
+		H.dna.species.grab(H, src, H.mind.martial_art)
+		H.changeNext_move(CLICK_CD_MELEE)
 	else
 		..()
 /*
@@ -318,13 +344,14 @@
 	return
 
 /mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
 		..()
 
 /atom/proc/AltClick(mob/user)
+	SendSignal(COMSIG_CLICK_ALT, user)
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
@@ -332,7 +359,6 @@
 		else
 			user.listed_turf = T
 			user.client.statpanel = T.name
-	return
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)
@@ -350,6 +376,7 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
+	SendSignal(COMSIG_CLICK_CTRL_SHIFT)
 	return
 
 /*
@@ -409,26 +436,38 @@
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "click_catcher"
+	icon_state = "flash"
 	plane = CLICKCATCHER_PLANE
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/New()
-	..()
-	transform = matrix(200, 0, 0, 0, 200, 0)
+/obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 7, view_size_y = 7)
+	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "flash")
+	if(view_size_x > 16 || view_size_y > 16)
+		newicon.Scale((16 * 2 + 1) * world.icon_size,(16 * 2 + 1) * world.icon_size)
+		icon = newicon
+		var/tx = view_size_x/16
+		var/ty = view_size_y/16
+		var/matrix/M = new
+		M.Scale(tx, ty)
+		transform = M
+		screen_loc = "CENTER-16,CENTER-16"
+	else
+		screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
+		newicon.Scale((view_size_x * 2 + 1) * world.icon_size,(view_size_y * 2 + 1) * world.icon_size)
+		icon = newicon
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
+	if(modifiers["middle"] && iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
 		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		params += "&catcher=1"
 		if(T)
 			T.Click(location, control, params)
 	. = 1
-
 
 /* MouseWheelOn */
 

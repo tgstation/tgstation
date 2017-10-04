@@ -1,6 +1,6 @@
 //an "overlay" used by clockwork walls and floors to appear normal to mesons.
 /obj/effect/clockwork/overlay
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/atom/linked
 
 /obj/effect/clockwork/overlay/examine(mob/user)

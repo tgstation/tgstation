@@ -1,5 +1,5 @@
 /mob/living/silicon/ai/say(message, language)
-	if(parent && istype(parent) && parent.stat != 2) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
+	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		parent.say(message, language)
 		return
 	..(message)
@@ -15,12 +15,14 @@
 	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
 /mob/living/silicon/ai/IsVocal()
-	return !config.silent_ai
+	return !CONFIG_GET(flag/silent_ai)
 
 /mob/living/silicon/ai/radio(message, message_mode, list/spans, language)
-	if(!radio_enabled || aiRestorePowerRoutine || stat) //AI cannot speak if radio is disabled (via intellicard) or depowered.
+	if(incapacitated())
+		return FALSE
+	if(!radio_enabled) //AI cannot speak if radio is disabled (via intellicard) or depowered.
 		to_chat(src, "<span class='danger'>Your radio transmitter is offline!</span>")
-		return 0
+		return FALSE
 	..()
 
 /mob/living/silicon/ai/get_message_mode(message)
@@ -40,7 +42,7 @@
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
-	log_say("[key_name(src)] : [message]")
+
 
 	message = trim(message)
 
@@ -49,6 +51,13 @@
 
 	var/obj/machinery/holopad/T = current
 	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
+		var/turf/padturf = get_turf(T)
+		var/padloc
+		if(padturf)
+			padloc = COORD(padturf)
+		else
+			padloc = "(UNKNOWN)"
+		log_talk(src,"HOLOPAD [padloc]: [key_name(src)] : [message]", LOGSAY)
 		send_speech(message, 7, T, "robot", get_spans(), language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
@@ -64,8 +73,8 @@
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
 
-	if(usr.stat == 2)
-		return //won't work if dead
+	if(incapacitated())
+		return
 
 	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
 	<UL><LI>You can also click on the word to preview it.</LI>\
@@ -88,7 +97,7 @@
 /mob/living/silicon/ai/proc/announcement()
 	var/static/announcing_vox = 0 // Stores the time of the last announcement
 	if(announcing_vox > world.time)
-		to_chat(src, "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>")
+		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
 
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
@@ -98,11 +107,11 @@
 	if(!message || announcing_vox > world.time)
 		return
 
-	if(stat != CONSCIOUS)
+	if(incapacitated())
 		return
 
 	if(control_disabled)
-		to_chat(src, "<span class='notice'>Wireless interface disabled, unable to interact with announcement PA.</span>")
+		to_chat(src, "<span class='warning'>Wireless interface disabled, unable to interact with announcement PA.</span>")
 		return
 
 	var/list/words = splittext(trim(message), " ")
@@ -156,9 +165,9 @@
 				if(M.client && M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
-						M << voice
+						SEND_SOUND(M, voice)
 		else
-			only_listener << voice
+			SEND_SOUND(only_listener, voice)
 		return 1
 	return 0
 

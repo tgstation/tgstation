@@ -7,7 +7,7 @@
 /obj/machinery/portable_atmospherics/pump
 	name = "portable air pump"
 	icon_state = "psiphon:0"
-	density = 1
+	density = TRUE
 
 	var/on = FALSE
 	var/direction = PUMP_OUT
@@ -16,7 +16,7 @@
 	volume = 1000
 
 /obj/machinery/portable_atmospherics/pump/Initialize()
-	..()
+	. = ..()
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
@@ -26,8 +26,7 @@
 	var/turf/T = get_turf(src)
 	T.assume_air(air_contents)
 	air_update_turf()
-	qdel(pump)
-	pump = null
+	QDEL_NULL(pump)
 	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_icon()
@@ -69,7 +68,7 @@
 	..()
 
 
-/obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -133,7 +132,7 @@
 				. = TRUE
 			if(.)
 				pump.target_pressure = Clamp(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
-				investigate_log("was set to [pump.target_pressure] kPa by [key_name(usr)].", "atmos")
+				investigate_log("was set to [pump.target_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("eject")
 			if(holding)
 				holding.loc = get_turf(src)

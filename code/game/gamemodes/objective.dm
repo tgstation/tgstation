@@ -1,41 +1,61 @@
 /datum/objective
-	var/datum/mind/owner = null			//Who owns the objective.
+	var/datum/mind/owner				//The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
+	var/datum/objective_team/team       //An alternative to 'owner': a team. Use this when writing new code.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
+	var/team_explanation_text			//For when there are multiple owners.
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = 0					//currently only used for custom objectives.
-	var/dangerrating = 0				//How hard the objective is, essentially. Used for dishing out objectives and checking overall victory.
 	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
 /datum/objective/New(var/text)
 	if(text)
 		explanation_text = text
 
+/datum/objective/proc/get_owners() // Combine owner and team into a single list.
+	. = (team && team.members) ? team.members.Copy() : list()
+	if(owner)
+		. += owner
+
+/datum/objective/proc/considered_escaped(datum/mind/M)
+	if(!considered_alive(M))
+		return FALSE
+	if(SSticker.force_ending || SSticker.mode.station_was_nuked) // Just let them win.
+		return TRUE
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+		return FALSE
+	var/turf/location = get_turf(M.current)
+	if(!location || istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails if they are in the shuttle brig
+		return FALSE
+	return location.onCentCom() || location.onSyndieBase()
+
 /datum/objective/proc/check_completion()
 	return completed
 
 /datum/objective/proc/is_unique_objective(possible_target)
-	for(var/datum/objective/O in owner.objectives)
-		if(istype(O, type) && O.get_target() == possible_target)
-			return 0
-	return 1
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		for(var/datum/objective/O in M.objectives)
+			if(istype(O, type) && O.get_target() == possible_target)
+				return FALSE
+	return TRUE
 
 /datum/objective/proc/get_target()
 	return target
-
 
 /datum/objective/proc/get_crewmember_minds()
 	. = list()
 	for(var/V in GLOB.data_core.locked)
 		var/datum/data/record/R = V
-		var/mob/M = R.fields["reference"]
-		if(M && M.mind)
-			. += M.mind
+		var/datum/mind/M = R.fields["mindref"]
+		if(M)
+			. += M
 
 /datum/objective/proc/find_target()
+	var/list/datum/mind/owners = get_owners()
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in get_crewmember_minds())
-		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
+		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target))
 			possible_targets += possible_target
 	if(possible_targets.len > 0)
 		target = pick(possible_targets)
@@ -43,8 +63,9 @@
 	return target
 
 /datum/objective/proc/find_target_by_role(role, role_type=0, invert=0)//Option sets either to check assigned role or special role. Default to assigned., invert inverts the check, eg: "Don't choose a Ling"
+	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/possible_target in get_crewmember_minds())
-		if((possible_target != owner) && ishuman(possible_target.current))
+		if(!(possible_target in owners) && ishuman(possible_target.current))
 			var/is_role = 0
 			if(role_type)
 				if(possible_target.special_role == role)
@@ -65,20 +86,21 @@
 	update_explanation_text()
 
 /datum/objective/proc/update_explanation_text()
-	//Default does nothing, override where needed
+	if(team_explanation_text && LAZYLEN(get_owners()) > 1)
+		explanation_text = team_explanation_text
 
 /datum/objective/proc/give_special_equipment(special_equipment)
-	if(owner && owner.current)
-		if(ishuman(owner.current))
-			var/mob/living/carbon/human/H = owner.current
-			var/list/slots = list ("backpack" = slot_in_backpack)
+	var/datum/mind/receiver = pick(get_owners())
+	if(receiver && receiver.current)
+		if(ishuman(receiver.current))
+			var/mob/living/carbon/human/H = receiver.current
+			var/list/slots = list("backpack" = slot_in_backpack)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
 				H.equip_in_one_of_slots(O, slots)
 
 /datum/objective/assassinate
 	var/target_role_type=0
-	dangerrating = 10
 	martyr_compatible = 1
 
 /datum/objective/assassinate/find_target_by_role(role, role_type=0, invert=0)
@@ -88,11 +110,7 @@
 	return target
 
 /datum/objective/assassinate/check_completion()
-	if(target && target.current)
-		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
-			return 1
-		return 0
-	return 1
+	return !considered_alive(target) || considered_afk(target)
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
@@ -109,7 +127,6 @@
 	if(target && !target.current)
 		explanation_text = "Assassinate [target.name], who was obliterated"
 
-
 /datum/objective/mutiny
 	var/target_role_type=0
 	martyr_compatible = 1
@@ -121,14 +138,10 @@
 	return target
 
 /datum/objective/mutiny/check_completion()
-	if(target && target.current)
-		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
-			return 1
-		var/turf/T = get_turf(target.current)
-		if(T && (T.z > ZLEVEL_STATION) || (target.current.client && target.current.client.is_afk()))			//If they leave the station or go afk they count as dead for this
-			return 2
-		return 0
-	return 1
+	if(!target || !considered_alive(target) || considered_afk(target))
+		return TRUE
+	var/turf/T = get_turf(target.current)
+	return T && !(T.z in GLOB.station_z_levels)
 
 /datum/objective/mutiny/update_explanation_text()
 	..()
@@ -137,11 +150,8 @@
 	else
 		explanation_text = "Free Objective"
 
-
-
 /datum/objective/maroon
 	var/target_role_type=0
-	dangerrating = 5
 	martyr_compatible = 1
 
 /datum/objective/maroon/find_target_by_role(role, role_type=0, invert=0)
@@ -151,12 +161,7 @@
 	return target
 
 /datum/objective/maroon/check_completion()
-	if(target && target.current)
-		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
-			return 1
-		if(target.current.onCentcom() || target.current.onSyndieBase())
-			return 0
-	return 1
+	return !target || !considered_alive(target) || (!target.current.onCentCom() && !target.current.onSyndieBase())
 
 /datum/objective/maroon/update_explanation_text()
 	if(target && target.current)
@@ -164,11 +169,8 @@
 	else
 		explanation_text = "Free Objective"
 
-
-
-/datum/objective/debrain//I want braaaainssss
+/datum/objective/debrain
 	var/target_role_type=0
-	dangerrating = 20
 
 /datum/objective/debrain/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
@@ -178,17 +180,20 @@
 
 /datum/objective/debrain/check_completion()
 	if(!target)//If it's a free objective.
-		return 1
-	if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
-		return 0
-	if( !target.current || !isbrain(target.current) )
-		return 0
+		return TRUE
+
+	if(!target.current || !isbrain(target.current))
+		return FALSE
+
 	var/atom/A = target.current
-	while(A.loc)			//check to see if the brainmob is on our person
+	var/list/datum/mind/owners = get_owners()
+
+	while(A.loc) // Check to see if the brainmob is on our person
 		A = A.loc
-		if(A == owner.current)
-			return 1
-	return 0
+		for(var/datum/mind/M in owners)
+			if(M.current && M.current.stat != DEAD && A == M.current)
+				return TRUE
+	return FALSE
 
 /datum/objective/debrain/update_explanation_text()
 	..()
@@ -197,11 +202,8 @@
 	else
 		explanation_text = "Free Objective"
 
-
-
 /datum/objective/protect//The opposite of killing a dude.
 	var/target_role_type=0
-	dangerrating = 10
 	martyr_compatible = 1
 
 /datum/objective/protect/find_target_by_role(role, role_type=0, invert=0)
@@ -211,13 +213,7 @@
 	return target
 
 /datum/objective/protect/check_completion()
-	if(!target)			//If it's a free objective.
-		return 1
-	if(target.current)
-		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current))
-			return 0
-		return 1
-	return 0
+	return !target || considered_alive(target)
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -226,165 +222,76 @@
 	else
 		explanation_text = "Free Objective"
 
-
-
 /datum/objective/hijack
 	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
-	dangerrating = 25
+	team_explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody. Leave no team member behind."
 	martyr_compatible = 0 //Technically you won't get both anyway.
 
-/datum/objective/hijack/check_completion()
-	if(!owner.current || owner.current.stat)
-		return 0
+/datum/objective/hijack/check_completion() // Requires all owners to escape.
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return 0
-	if(issilicon(owner.current))
-		return 0
-
-	var/area/A = get_area(owner.current)
-	if(SSshuttle.emergency.areaInstance != A)
-		return 0
-
+		return FALSE
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!considered_alive(M) || !SSshuttle.emergency.shuttle_areas[get_area(M.current)])
+			return FALSE
 	return SSshuttle.emergency.is_hijacked()
-
-
-/datum/objective/hijackclone
-	explanation_text = "Hijack the emergency shuttle by ensuring only you (or your copies) escape."
-	dangerrating = 25
-	martyr_compatible = 0
-
-/datum/objective/hijackclone/check_completion()
-	if(!owner.current)
-		return 0
-	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return 0
-
-	var/area/A = SSshuttle.emergency.areaInstance
-
-	for(var/mob/living/player in GLOB.player_list) //Make sure nobody else is onboard
-		if(player.mind && player.mind != owner)
-			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
-					continue
-				if(isanimal(player)) //animals don't count
-					continue
-				if(isbrain(player)) //also technically dead
-					continue
-				if(get_area(player) == A)
-					var/location = get_turf(player.mind.current)
-					if(player.real_name != owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
-						return 0
-
-	for(var/mob/living/player in GLOB.player_list) //Make sure at least one of you is onboard
-		if(player.mind && player.mind != owner)
-			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
-					continue
-				if(isanimal(player)) //animals don't count
-					continue
-				if(isbrain(player)) //also technically dead
-					continue
-				if(get_area(player) == A)
-					var/location = get_turf(player.mind.current)
-					if(player.real_name == owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
-						return 1
-	return 0
 
 /datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
-	dangerrating = 25
 	martyr_compatible = 1
 
 /datum/objective/block/check_completion()
-	if(!issilicon(owner.current))
-		return 0
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return 1
-
-	var/area/A = SSshuttle.emergency.areaInstance
-
+		return TRUE
 	for(var/mob/living/player in GLOB.player_list)
-		if(issilicon(player))
-			continue
-		if(player.mind)
-			if(player.stat != DEAD)
-				if(get_area(player) == A)
-					return 0
-
-	return 1
-
+		if(player.mind && player.stat != DEAD && !issilicon(player))
+			if(get_area(player) in SSshuttle.emergency.shuttle_areas)
+				return FALSE
+	return TRUE
 
 /datum/objective/purge
 	explanation_text = "Ensure no mutant humanoid species are present aboard the escape shuttle."
-	dangerrating = 25
 	martyr_compatible = 1
 
 /datum/objective/purge/check_completion()
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return 1
-
-	var/area/A = SSshuttle.emergency.areaInstance
-
+		return TRUE
 	for(var/mob/living/player in GLOB.player_list)
-		if(get_area(player) == A && player.mind && player.stat != DEAD && ishuman(player))
+		if(get_area(player) in SSshuttle.emergency.shuttle_areas && player.mind && player.stat != DEAD && ishuman(player))
 			var/mob/living/carbon/human/H = player
 			if(H.dna.species.id != "human")
-				return 0
-
-	return 1
-
+				return FALSE
+	return TRUE
 
 /datum/objective/robot_army
 	explanation_text = "Have at least eight active cyborgs synced to you."
-	dangerrating = 25
 	martyr_compatible = 0
 
 /datum/objective/robot_army/check_completion()
-	if(!isAI(owner.current))
-		return 0
-	var/mob/living/silicon/ai/A = owner.current
-
 	var/counter = 0
-
-	for(var/mob/living/silicon/robot/R in A.connected_robots)
-		if(R.stat != DEAD)
-			counter++
-
-	if(counter < 8)
-		return 0
-	return 1
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!M.current || !isAI(M.current))
+			continue
+		var/mob/living/silicon/ai/A = M.current
+		for(var/mob/living/silicon/robot/R in A.connected_robots)
+			if(R.stat != DEAD)
+				counter++
+	return counter >= 8
 
 /datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
-	dangerrating = 5
+	team_explanation_text = "Have all members of your team escape on a shuttle or pod alive, without being in custody."
 
 /datum/objective/escape/check_completion()
-	if(issilicon(owner.current))
-		return 0
-	if(isbrain(owner.current))
-		return 0
-	if(!owner.current || owner.current.stat == DEAD)
-		return 0
-	if(SSticker.force_ending) //This one isn't their fault, so lets just assume good faith
-		return 1
-	if(SSticker.mode.station_was_nuked) //If they escaped the blast somehow, let them win
-		return 1
-	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return 0
-	var/turf/location = get_turf(owner.current)
-	if(!location)
-		return 0
-
-	if(istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails traitors if they are in the shuttle brig -- Polymorph
-		return 0
-
-	if(location.onCentcom() || location.onSyndieBase())
-		return 1
-
-	return 0
+	// Require all owners escape safely.
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!considered_escaped(M))
+			return FALSE
+	return TRUE
 
 /datum/objective/escape/escape_with_identity
-	dangerrating = 10
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
 	var/target_missing_id
 
@@ -409,41 +316,45 @@
 		explanation_text = "Free Objective."
 
 /datum/objective/escape/escape_with_identity/check_completion()
-	if(!target_real_name)
-		return 1
-	if(!ishuman(owner.current))
-		return 0
-	var/mob/living/carbon/human/H = owner.current
-	if(..())
-		if(H.dna.real_name == target_real_name)
-			if(H.get_id_name()== target_real_name || target_missing_id)
-				return 1
-	return 0
-
+	if(!target || !target_real_name)
+		return TRUE
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!ishuman(M.current) || !considered_escaped(M))
+			continue
+		var/mob/living/carbon/human/H = M.current
+		if(H.dna.real_name == target_real_name && (H.get_id_name() == target_real_name || target_missing_id))
+			return TRUE
+	return FALSE
 
 /datum/objective/survive
 	explanation_text = "Stay alive until the end."
-	dangerrating = 3
 
 /datum/objective/survive/check_completion()
-	if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
-		return 0		//Brains no longer win survive objectives. --NEO
-	if(!is_special_character(owner.current)) //This fails borg'd traitors
-		return 0
-	return 1
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!considered_alive(M))
+			return FALSE
+	return TRUE
 
+/datum/objective/survive/exist //Like survive, but works for silicons and zombies and such.
+
+/datum/objective/survive/exist/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!considered_alive(M, FALSE))
+			return FALSE
+	return TRUE
 
 /datum/objective/martyr
 	explanation_text = "Die a glorious death."
-	dangerrating = 1
 
 /datum/objective/martyr/check_completion()
-	if(!owner.current) //Gibbed, etc.
-		return 1
-	if(owner.current && owner.current.stat == DEAD) //You're dead! Yay!
-		return 1
-	return 0
-
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(considered_alive(M))
+			return FALSE
+	return TRUE
 
 /datum/objective/nuclear
 	explanation_text = "Destroy the station with a nuclear device."
@@ -451,14 +362,13 @@
 
 /datum/objective/nuclear/check_completion()
 	if(SSticker && SSticker.mode && SSticker.mode.station_was_nuked)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
-	dangerrating = 5 //Overridden by the individual item's difficulty, but defaults to 5 for custom objectives.
 	martyr_compatible = 0
 
 /datum/objective/steal/get_target()
@@ -467,22 +377,27 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal/New()
 	..()
 	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
-		init_subtypes(/datum/objective_item/steal,GLOB.possible_items)
+		for(var/I in subtypesof(/datum/objective_item/steal))
+			new I
 
 /datum/objective/steal/find_target()
+	var/list/datum/mind/owners = get_owners()
 	var/approved_targets = list()
-	for(var/datum/objective_item/possible_item in GLOB.possible_items)
-		if(is_unique_objective(possible_item.targetitem) && !(owner.current.mind.assigned_role in possible_item.excludefromjob))
+	check_items:
+		for(var/datum/objective_item/possible_item in GLOB.possible_items)
+			if(!is_unique_objective(possible_item.targetitem))
+				continue
+			for(var/datum/mind/M in owners)
+				if(M.current.mind.assigned_role in possible_item.excludefromjob)
+					continue check_items
 			approved_targets += possible_item
 	return set_target(safepick(approved_targets))
 
 /datum/objective/steal/proc/set_target(datum/objective_item/item)
 	if(item)
 		targetinfo = item
-
 		steal_target = targetinfo.targetitem
-		explanation_text = "Steal [targetinfo.name]."
-		dangerrating = targetinfo.difficulty
+		explanation_text = "Steal [targetinfo.name]"
 		give_special_equipment(targetinfo.special_equipment)
 		return steal_target
 	else
@@ -508,23 +423,26 @@ GLOBAL_LIST_EMPTY(possible_items)
 	return steal_target
 
 /datum/objective/steal/check_completion()
+	var/list/datum/mind/owners = get_owners()
 	if(!steal_target)
-		return 1
-	if(!isliving(owner.current))
-		return 0
-	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+		return TRUE
+	for(var/datum/mind/M in owners)
+		if(!isliving(M.current))
+			continue
 
-	for(var/obj/I in all_items) //Check for items
-		if(istype(I, steal_target))
-			if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
-				return 1
-			else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
-				return 1
+		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 
-		if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
-			if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
-				return 1
-	return 0
+		for(var/obj/I in all_items) //Check for items
+			if(istype(I, steal_target))
+				if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
+					return TRUE
+				else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+					return TRUE
+
+			if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
+				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
+					return TRUE
+	return FALSE
 
 
 GLOBAL_LIST_EMPTY(possible_items_special)
@@ -533,14 +451,13 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal/special/New()
 	..()
 	if(!GLOB.possible_items_special.len)
-		init_subtypes(/datum/objective_item/special,GLOB.possible_items_special)
-		init_subtypes(/datum/objective_item/stack,GLOB.possible_items_special)
+		for(var/I in subtypesof(/datum/objective_item/special) + subtypesof(/datum/objective_item/stack))
+			new I
 
 /datum/objective/steal/special/find_target()
 	return set_target(pick(GLOB.possible_items_special))
 
 /datum/objective/steal/exchange
-	dangerrating = 10
 	martyr_compatible = 0
 
 /datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
@@ -562,7 +479,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 
 /datum/objective/steal/exchange/backstab
-	dangerrating = 3
 
 /datum/objective/steal/exchange/backstab/set_faction(faction)
 	if(faction == "red")
@@ -574,43 +490,39 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 
 /datum/objective/download
-	dangerrating = 10
 
 /datum/objective/download/proc/gen_amount_goal()
 	target_amount = rand(10,20)
 	explanation_text = "Download [target_amount] research level\s."
 	return target_amount
 
-/datum/objective/download/check_completion()//NINJACODE
-	if(!ishuman(owner.current))
-		return 0
-
-	var/mob/living/carbon/human/H = owner.current
-	if(!H || H.stat == DEAD)
-		return 0
-
-	if(!istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
-		return 0
-
-	var/obj/item/clothing/suit/space/space_ninja/SN = H.wear_suit
-	if(!SN.s_initialized)
-		return 0
-
-	var/current_amount
-	if(!SN.stored_research.len)
-		return 0
-	else
-		for(var/datum/tech/current_data in SN.stored_research)
-			if(current_data.level)
-				current_amount += (current_data.level-1)
-	if(current_amount<target_amount)
-		return 0
-	return 1
-
-
+/datum/objective/download/check_completion()
+	var/list/current_tech = list()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/owner in owners)
+		if(ismob(owner.current))
+			var/mob/M = owner.current			//Yeah if you get morphed and you eat a quantum tech disk with the RD's latest backup good on you soldier.
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H && (H.stat != DEAD) && istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+					var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
+					for(var/datum/tech/T in S.stored_research)
+						current_tech[T.id] = T.level? T.level : 0
+			var/list/otherwise = M.GetAllContents()
+			for(var/obj/item/disk/tech_disk/TD in otherwise)
+				for(var/datum/tech/T in TD.tech_stored)
+					if(!T.id || !T.level)
+						continue
+					else if(!current_tech[T.id])
+						current_tech[T.id] = T.level
+					else if(T.level > current_tech[T.id])
+						current_tech[T.id] = T.level
+	var/total = 0
+	for(var/i in current_tech)
+		total += current_tech[i]
+	return total >= target_amount
 
 /datum/objective/capture
-	dangerrating = 10
 
 /datum/objective/capture/proc/gen_amount_goal()
 		target_amount = rand(5,10)
@@ -619,66 +531,64 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
 	var/captured_amount = 0
-	var/area/centcom/holding/A = locate()
+	var/area/centcom/holding/A = locate() in GLOB.sortedAreas
 	for(var/mob/living/carbon/human/M in A)//Humans.
-		if(M.stat==2)//Dead folks are worth less.
+		if(M.stat == DEAD)//Dead folks are worth less.
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
 		captured_amount+=0.1
 	for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
-		if(M.stat==2)
+		if(M.stat == DEAD)
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
 		if(istype(M, /mob/living/carbon/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
-			if(M.stat==2)
+			if(M.stat == DEAD)
 				captured_amount+=1.5
 			else
 				captured_amount+=3
 			continue
-		if(M.stat==2)
+		if(M.stat == DEAD)
 			captured_amount+=1
 			continue
 		captured_amount+=2
-	if(captured_amount<target_amount)
-		return 0
-	return 1
-
+	return captured_amount >= target_amount
 
 
 /datum/objective/absorb
-	dangerrating = 10
 
 /datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
-	if (SSticker)
-		var/n_p = 1 //autowin
-		if (SSticker.current_state == GAME_STATE_SETTING_UP)
-			for(var/mob/dead/new_player/P in GLOB.player_list)
-				if(P.client && P.ready && P.mind!=owner)
-					n_p ++
-		else if (SSticker.IsRoundInProgress())
-			for(var/mob/living/carbon/human/P in GLOB.player_list)
-				if(P.client && !(P.mind in SSticker.mode.changelings) && P.mind!=owner)
-					n_p ++
-		target_amount = min(target_amount, n_p)
+	var/n_p = 1 //autowin
+	var/list/datum/mind/owners = get_owners()
+	if (SSticker.current_state == GAME_STATE_SETTING_UP)
+		for(var/mob/dead/new_player/P in GLOB.player_list)
+			if(P.client && P.ready == PLAYER_READY_TO_PLAY && !(P.mind in owners))
+				n_p ++
+	else if (SSticker.IsRoundInProgress())
+		for(var/mob/living/carbon/human/P in GLOB.player_list)
+			if(P.client && !(P.mind in SSticker.mode.changelings) && !(P.mind in owners))
+				n_p ++
+	target_amount = min(target_amount, n_p)
 
 	explanation_text = "Extract [target_amount] compatible genome\s."
 	return target_amount
 
 /datum/objective/absorb/check_completion()
-	if(owner && owner.changeling && owner.changeling.stored_profiles && (owner.changeling.absorbedcount >= target_amount))
-		return 1
-	else
-		return 0
+	var/list/datum/mind/owners = get_owners()
+	var/absorbedcount = 0
+	for(var/datum/mind/M in owners)
+		if(!owner || !owner.changeling || !owner.changeling.stored_profiles)
+			continue
+		absorbedcount += M.changeling.absorbedcount
+	return absorbedcount >= target_amount
 
 
 
 /datum/objective/destroy
-	dangerrating = 10
 	martyr_compatible = 1
 
 /datum/objective/destroy/find_target()
@@ -690,10 +600,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/destroy/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
-			return 1
-		return 0
-	return 1
+		return target.current.stat == DEAD || target.current.z > 6 || !target.current.ckey //Borgs/brains/AIs count as dead for traitor objectives.
+	return TRUE
 
 /datum/objective/destroy/update_explanation_text()
 	..()
@@ -701,7 +609,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
-	
+
 /datum/objective/destroy/internal
 	var/stolen = FALSE 		//Have we already eliminated this target?
 
@@ -715,25 +623,23 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal_five_of_type/summon_guns
 	explanation_text = "Steal at least five guns!"
-	wanted_items = list(/obj/item/weapon/gun)
+	wanted_items = list(/obj/item/gun)
 
 /datum/objective/steal_five_of_type/summon_magic
 	explanation_text = "Steal at least five magical artefacts!"
-	wanted_items = list(/obj/item/weapon/spellbook, /obj/item/weapon/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/weapon/scrying, /obj/item/weapon/antag_spawner/contract, /obj/item/device/necromantic_stone)
+	wanted_items = list(/obj/item/spellbook, /obj/item/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/scrying, /obj/item/antag_spawner/contract, /obj/item/device/necromantic_stone)
 
 /datum/objective/steal_five_of_type/check_completion()
-	if(!isliving(owner.current))
-		return 0
+	var/list/datum/mind/owners = get_owners()
 	var/stolen_count = 0
-	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
-	for(var/obj/I in all_items) //Check for wanted items
-		if(is_type_in_typecache(I, wanted_items))
-			stolen_count++
-	if(stolen_count >= 5)
-		return 1
-	else
-		return 0
-	return 0
+	for(var/datum/mind/M in owners)
+		if(!isliving(M.current))
+			continue
+		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+		for(var/obj/I in all_items) //Check for wanted items
+			if(is_type_in_typecache(I, wanted_items))
+				stolen_count++
+	return stolen_count >= 5
 
 
 ////////////////////////////////
@@ -865,15 +771,15 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 	var/list/check_names = department_real_names.Copy()
 
-	//Check each department member's mind to see if any of them made it to centcomm alive, if they did it's an automatic fail
+	//Check each department member's mind to see if any of them made it to centcom alive, if they did it's an automatic fail
 	for(var/datum/mind/M in department_minds)
 		if(M in SSticker.mode.changelings) //Lings aren't picked for this, but let's be safe
 			continue
 
 		if(M.current)
 			var/turf/mloc = get_turf(M.current)
-			if(mloc.onCentcom() && (M.current.stat != DEAD))
-				return 0 //A Non-ling living target got to centcomm, fail
+			if(mloc.onCentCom() && (M.current.stat != DEAD))
+				return 0 //A Non-ling living target got to centcom, fail
 
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
@@ -884,11 +790,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			if(ishuman(changeling.current))
 				var/mob/living/carbon/human/H = changeling.current
 				var/turf/cloc = get_turf(changeling.current)
-				if(cloc && cloc.onCentcom() && (changeling.current.stat != DEAD)) //Living changeling on centcomm....
+				if(cloc && cloc.onCentCom() && (changeling.current.stat != DEAD)) //Living changeling on centcom....
 					for(var/name in check_names) //Is he (disguised as) one of the staff?
 						if(H.dna.real_name == name)
 							check_names -= name //This staff member is accounted for, remove them, so the team don't succeed by escape as 7 of the same engineer
-							success++ //A living changeling staff member made it to centcomm
+							success++ //A living changeling staff member made it to centcom
 							continue changelings
 
 	if(success >= department_minds.len)

@@ -9,7 +9,6 @@
 	unanchored_icon = "obelisk_unwrenched"
 	construction_value = 20
 	max_integrity = 150
-	obj_integrity = 150
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 4, \
 	/obj/item/clockwork/alloy_shards/medium = 2, \
@@ -24,7 +23,7 @@
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='nzcrentr_small'>It requires <b>[hierophant_cost]W</b> to broadcast over the Hierophant Network, and <b>[gateway_cost]W</b> to open a Spatial Gateway.</span>")
+		to_chat(user, "<span class='nzcrentr_small'>It requires <b>[DisplayPower(hierophant_cost)]</b> to broadcast over the Hierophant Network, and <b>[DisplayPower(gateway_cost)]</b> to open a Spatial Gateway.</span>")
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
@@ -36,14 +35,14 @@
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/forced_disable(bad_effects)
 	var/affected = 0
 	for(var/obj/effect/clockwork/spatial_gateway/SG in loc)
-		SG.ex_act(1)
+		SG.ex_act(EXPLODE_DEVASTATE)
 		affected++
 	if(bad_effects)
 		affected += try_use_power(MIN_CLOCKCULT_POWER*4)
 	return affected
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
-	if(!is_servant_of_ratvar(user) || total_accessable_power() < hierophant_cost || !anchored)
+	if(!is_servant_of_ratvar(user) || !can_access_clockwork_power(src, hierophant_cost) || !anchored)
 		to_chat(user, "<span class='warning'>You place your hand on [src], but it doesn't react.</span>")
 		return
 	var/choice = alert(user,"You place your hand on [src]...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
@@ -88,17 +87,17 @@
 					active = TRUE
 					clockwork_say(user, text2ratvar("Spatial Gateway, activate!"))
 					return
-			return_power(gateway_cost) //if we didn't return above, ie, successfully create a gateway, we give the power back
+			adjust_clockwork_power(gateway_cost) //if we didn't return above, ie, successfully create a gateway, we give the power back
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/process()
 	if(!anchored)
 		return
-	var/obj/effect/clockwork/spatial_gateway/SG = locate(/obj/effect/clockwork/spatial_gateway)
+	var/obj/effect/clockwork/spatial_gateway/SG = locate(/obj/effect/clockwork/spatial_gateway) in loc
 	if(SG && SG.timerid) //it's a valid gateway, we're active
 		icon_state = active_icon
-		density = 0
+		density = FALSE
 		active = TRUE
 	else
 		icon_state = inactive_icon
-		density = 1
+		density = TRUE
 		active = FALSE

@@ -8,7 +8,7 @@
 	name = "message monitor console"
 	desc = "Used to Monitor the crew's messages, that are sent via PDA. Can also be used to view Request Console messages."
 	icon_screen = "comm_logs"
-	circuit = /obj/item/weapon/circuitboard/computer/message_monitor
+	circuit = /obj/item/circuitboard/computer/message_monitor
 	//Server linked to.
 	var/obj/machinery/message_server/linkedServer = null
 	//Sparks effect - For emag
@@ -32,32 +32,33 @@
 
 	light_color = LIGHT_COLOR_GREEN
 
-/obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O, mob/living/user, params)
-	if(istype(O, /obj/item/weapon/screwdriver) && emagged)
+/obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
+	if(istype(O, /obj/item/screwdriver) && emagged)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
 	else
 		return ..()
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
-	if(!emagged)
-		if(!isnull(src.linkedServer))
-			emagged = 1
-			screen = 2
-			spark_system.set_up(5, 0, src)
-			src.spark_system.start()
-			var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
-			MK.loc = src.loc
-			// Will help make emagging the console not so easy to get away with.
-			MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
-			var/time = 100 * length(src.linkedServer.decryptkey)
-			addtimer(CALLBACK(src, .proc/UnmagConsole), time)
-			message = rebootmsg
-		else
-			to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
+	if(emagged)
+		return
+	if(!isnull(src.linkedServer))
+		emagged = TRUE
+		screen = 2
+		spark_system.set_up(5, 0, src)
+		src.spark_system.start()
+		var/obj/item/paper/monitorkey/MK = new/obj/item/paper/monitorkey
+		MK.loc = src.loc
+		// Will help make emagging the console not so easy to get away with.
+		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
+		var/time = 100 * length(src.linkedServer.decryptkey)
+		addtimer(CALLBACK(src, .proc/UnmagConsole), time)
+		message = rebootmsg
+	else
+		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 
 /obj/machinery/computer/message_monitor/Initialize()
-	..()
+	. = ..()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		if(GLOB.message_servers && GLOB.message_servers.len > 0)
@@ -235,7 +236,7 @@
 	src.screen = 0 // Return the screen back to normal
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
-	src.emagged = 0
+	emagged = FALSE
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
 	customsender 	= "System Administrator"
@@ -308,7 +309,7 @@
 				message = noserver
 			else
 				if(auth)
-					var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+					var/dkey = trim(stripped_input(usr, "Please enter the decryption key."))
 					if(dkey && dkey != "")
 						if(src.linkedServer.decryptkey == dkey)
 							var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))
@@ -413,11 +414,11 @@
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[src]'>[customsender]</a> ([customjob]):</b></i><br>[custommessage]<br>"
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
+								customrecepient.audible_message("[icon2html(customrecepient, viewers(customrecepient))] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
-									to_chat(H, "\icon[customrecepient] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
-								log_pda("[usr]/([usr.ckey]) (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
+									to_chat(H, "[icon2html(customrecepient, viewers(H))] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
+								log_talk(usr,"[key_name(usr)] (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]",LOGPDA)
 								customrecepient.cut_overlays()
 								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
 						//Sender is faking as someone who exists
@@ -426,11 +427,11 @@
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[PDARec]'>[PDARec.owner]</a> ([customjob]):</b></i><br>[custommessage]<br>"
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
+								customrecepient.audible_message("[icon2html(customrecepient, viewers(customrecepient))] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
-									to_chat(H, "\icon[customrecepient] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
-								log_pda("[usr]/([usr.ckey]) (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
+									to_chat(H, "[icon2html(customrecepient, H)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
+								log_talk(usr,"[key_name(usr)] (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]",LOGPDA)
 								customrecepient.cut_overlays()
 								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
 						//Finally..
@@ -450,16 +451,16 @@
 	return src.attack_hand(usr)
 
 
-/obj/item/weapon/paper/monitorkey
+/obj/item/paper/monitorkey
 	//..()
 	name = "monitor decryption key"
 	var/obj/machinery/message_server/server = null
 
-/obj/item/weapon/paper/monitorkey/Initialize()
+/obj/item/paper/monitorkey/Initialize()
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/weapon/paper/monitorkey/LateInitialize()
+/obj/item/paper/monitorkey/LateInitialize()
 	if(GLOB.message_servers)
 		for(var/obj/machinery/message_server/server in GLOB.message_servers)
 			if(!isnull(server))

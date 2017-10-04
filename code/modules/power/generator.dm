@@ -11,9 +11,9 @@
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."
 	icon_state = "teg"
-	anchored = 1
-	density = 1
-	use_power = 0
+	anchored = TRUE
+	density = TRUE
+	use_power = NO_POWER_USE
 
 	var/obj/machinery/atmospherics/components/binary/circulator/cold_circ
 	var/obj/machinery/atmospherics/components/binary/circulator/hot_circ
@@ -55,7 +55,7 @@
 		stat |= BROKEN
 
 	update_icon()
-	
+
 /obj/machinery/power/generator/Destroy()
 	SSair.atmos_machinery -= src
 	return ..()
@@ -82,24 +82,16 @@
 		return
 
 	if(powernet)
-		//to_chat(world, "cold_circ and hot_circ pass")
-
 		var/datum/gas_mixture/cold_air = cold_circ.return_transfer_air()
 		var/datum/gas_mixture/hot_air = hot_circ.return_transfer_air()
 
-		//to_chat(world, "hot_air = [hot_air]; cold_air = [cold_air];")
-
 		if(cold_air && hot_air)
 
-			//to_chat(world, "hot_air = [hot_air] temperature = [hot_air.temperature]; cold_air = [cold_air] temperature = [hot_air.temperature];")
-
-			//to_chat(world, "coldair and hotair pass")
 			var/cold_air_heat_capacity = cold_air.heat_capacity()
 			var/hot_air_heat_capacity = hot_air.heat_capacity()
 
 			var/delta_temperature = hot_air.temperature - cold_air.temperature
 
-			//to_chat(world, "delta_temperature = [delta_temperature]; cold_air_heat_capacity = [cold_air_heat_capacity]; hot_air_heat_capacity = [hot_air_heat_capacity]")
 
 			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
 				var/efficiency = 0.65
@@ -109,12 +101,8 @@
 				var/heat = energy_transfer*(1-efficiency)
 				lastgen += energy_transfer*efficiency
 
-				//to_chat(world, "lastgen = [lastgen]; heat = [heat]; delta_temperature = [delta_temperature]; hot_air_heat_capacity = [hot_air_heat_capacity]; cold_air_heat_capacity = [cold_air_heat_capacity];")
-
 				hot_air.temperature = hot_air.temperature - energy_transfer/hot_air_heat_capacity
 				cold_air.temperature = cold_air.temperature + heat/cold_air_heat_capacity
-
-				//to_chat(world, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
 
 				//add_avail(lastgen) This is done in process now
 		// update icon overlays only if displayed level has changed
@@ -126,7 +114,7 @@
 		if(cold_air)
 			var/datum/gas_mixture/cold_circ_air1 = cold_circ.AIR1
 			cold_circ_air1.merge(cold_air)
-			
+
 		update_icon()
 
 	var/circ = "[cold_circ && cold_circ.last_pressure_delta > 0 ? "1" : "0"][hot_circ && hot_circ.last_pressure_delta > 0 ? "1" : "0"]"
@@ -135,7 +123,7 @@
 		update_icon()
 
 	src.updateDialog()
-	
+
 /obj/machinery/power/generator/process()
 	//Setting this number higher just makes the change in power output slower, it doesnt actualy reduce power output cause **math**
 	var/power_output = round(lastgen / 10)
@@ -161,15 +149,9 @@
 		var/datum/gas_mixture/hot_circ_air2 = hot_circ.AIR2
 
 		t += "<div class='statusDisplay'>"
-		
-		var/displaygen = lastgenlev
-		if(displaygen < 1000000) //less than a MW
-			displaygen /= 1000
-			t += "Output: [round(displaygen,0.01)] kW"
-		else
-			displaygen /= 1000000
-			t += "Output: [round(displaygen,0.01)] MW"
-		
+
+		t += "Output: [DisplayPower(lastgenlev)]"
+
 		t += "<BR>"
 
 		t += "<B><font color='blue'>Cold loop</font></B><BR>"

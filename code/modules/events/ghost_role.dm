@@ -26,9 +26,7 @@
 		var/waittime = 300 * (2^retry)
 		message_admins("The event will not spawn a [role_name] until certain \
 			conditions are met. Waiting [waittime/10]s and then retrying.")
-		spawn(waittime)
-			// I hope this doesn't end up running out of stack space
-			try_spawning(0,++retry)
+		addtimer(CALLBACK(src, .proc/try_spawning, 0, ++retry), waittime)
 		return
 
 	if(status == MAP_ERROR)

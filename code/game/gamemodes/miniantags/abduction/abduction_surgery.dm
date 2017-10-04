@@ -1,6 +1,6 @@
 /datum/surgery/organ_extraction
 	name = "experimental dissection"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin,/datum/surgery_step/incise, /datum/surgery_step/extract_organ ,/datum/surgery_step/gland_insert)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/incise, /datum/surgery_step/extract_organ, /datum/surgery_step/gland_insert)
 	possible_locs = list("chest")
 	ignore_clothes = 1
 
@@ -10,7 +10,7 @@
 	var/mob/living/carbon/human/H = user
 	if(H.dna.species.id == "abductor")
 		return 1
-	for(var/obj/item/weapon/implant/abductor/A in H.implants)
+	for(var/obj/item/implant/abductor/A in H.implants)
 		return 1
 	return 0
 

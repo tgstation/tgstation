@@ -2,11 +2,11 @@
 	name = "air injector"
 	desc = "Has a valve and pump attached to it"
 	icon_state = "inje_map"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	can_unwrench = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
-	var/on = 0
+	var/on = FALSE
 	var/injecting = 0
 
 	var/volume_rate = 50
@@ -16,10 +16,10 @@
 	var/datum/radio_frequency/radio_connection
 
 	level = 1
+	layer = GAS_SCRUBBER_LAYER
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
@@ -30,7 +30,7 @@
 	if(showpipe)
 		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions))
 
-	if(!NODE1 || !on || stat & (NOPOWER|BROKEN))
+	if(!NODE1 || !on || !is_operational())
 		icon_state = "inje_off"
 		return
 
@@ -47,8 +47,8 @@
 	..()
 	injecting = 0
 
-	if(!on || stat & (NOPOWER|BROKEN))
-		return 0
+	if(!on || !is_operational())
+		return
 
 	var/datum/gas_mixture/air_contents = AIR1
 
@@ -62,11 +62,9 @@
 
 		update_parents()
 
-	return 1
-
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
-	if(on || injecting || stat & (NOPOWER|BROKEN))
-		return 0
+	if(on || injecting || !is_operational())
+		return
 
 	var/datum/gas_mixture/air_contents = AIR1
 
@@ -91,7 +89,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -108,8 +106,6 @@
 
 	radio_connection.post_signal(src, signal)
 
-	return 1
-
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()
 	set_frequency(frequency)
 	broadcast_status()
@@ -117,7 +113,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
@@ -139,14 +135,12 @@
 			broadcast_status()
 		return //do not update_icon
 
-		//log_admin("DEBUG \[[world.timeofday]\]: outlet_injector/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
-		//return
 	spawn(2)
 		broadcast_status()
 	update_icon()
 
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/atmospherics/components/unary/outlet_injector/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -167,7 +161,7 @@
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("rate")
 			var/rate = params["rate"]
@@ -183,14 +177,13 @@
 				. = TRUE
 			if(.)
 				volume_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
-				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", "atmos")
+				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 	broadcast_status()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
-	if(..())
-		if (!(stat & NOPOWER|BROKEN) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
-		else
-			return 1
+	. = ..()
+	if(. && on && is_operational())
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		return FALSE
 

@@ -7,7 +7,7 @@
 	desc = "Allows for the construction of Subspace Receiver equipment."
 	id = "s-receiver"
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 1)
-	build_path = /obj/item/weapon/circuitboard/machine/telecomms/receiver
+	build_path = /obj/item/circuitboard/machine/telecomms/receiver
 	category = list("Subspace Telecomms")
 
 /datum/design/board/telecomms_bus
@@ -15,7 +15,7 @@
 	desc = "Allows for the construction of Telecommunications Bus Mainframes."
 	id = "s-bus"
 	req_tech = list("programming" = 2, "engineering" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/telecomms/bus
+	build_path = /obj/item/circuitboard/machine/telecomms/bus
 	category = list("Subspace Telecomms")
 
 /datum/design/board/telecomms_hub
@@ -23,7 +23,7 @@
 	desc = "Allows for the construction of Telecommunications Hub Mainframes."
 	id = "s-hub"
 	req_tech = list("programming" = 2, "engineering" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/telecomms/hub
+	build_path = /obj/item/circuitboard/machine/telecomms/hub
 	category = list("Subspace Telecomms")
 
 /datum/design/board/telecomms_relay
@@ -31,7 +31,7 @@
 	desc = "Allows for the construction of Telecommunications Relay Mainframes."
 	id = "s-relay"
 	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/telecomms/relay
+	build_path = /obj/item/circuitboard/machine/telecomms/relay
 	category = list("Subspace Telecomms")
 
 /datum/design/board/telecomms_processor
@@ -39,7 +39,7 @@
 	desc = "Allows for the construction of Telecommunications Processor equipment."
 	id = "s-processor"
 	req_tech = list("programming" = 2, "engineering" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/telecomms/processor
+	build_path = /obj/item/circuitboard/machine/telecomms/processor
 	category = list("Subspace Telecomms")
 
 /datum/design/board/telecomms_server
@@ -47,7 +47,7 @@
 	desc = "Allows for the construction of Telecommunications Servers."
 	id = "s-server"
 	req_tech = list("programming" = 2, "engineering" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/telecomms/server
+	build_path = /obj/item/circuitboard/machine/telecomms/server
 	category = list("Subspace Telecomms")
 
 /datum/design/board/subspace_broadcaster
@@ -55,5 +55,5 @@
 	desc = "Allows for the construction of Subspace Broadcasting equipment."
 	id = "s-broadcaster"
 	req_tech = list("programming" = 2, "engineering" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/telecomms/broadcaster
+	build_path = /obj/item/circuitboard/machine/telecomms/broadcaster
 	category = list("Subspace Telecomms")

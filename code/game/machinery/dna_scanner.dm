@@ -3,42 +3,29 @@
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner"
-	density = 1
-	var/locked = 0
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 300
 	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
+	circuit = /obj/item/circuitboard/machine/clonescanner
+	var/locked = FALSE
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
-
-/obj/machinery/dna_scannernew/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonescanner(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/clonescanner
-	name = "Cloning Scanner (Machine Board)"
-	build_path = /obj/machinery/dna_scannernew
-	origin_tech = "programming=2;biotech=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/scanning_module = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/stack/sheet/glass = 1,
-							/obj/item/stack/cable_coil = 2)
+	var/message_cooldown
+	var/breakout_time = 1200
 
 /obj/machinery/dna_scannernew/RefreshParts()
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0
-	for(var/obj/item/weapon/stock_parts/scanning_module/P in component_parts)
+	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
+	for(var/obj/item/stock_parts/manipulator/P in component_parts)
 		precision_coeff = P.rating
-	for(var/obj/item/weapon/stock_parts/micro_laser/P in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
 
 /obj/machinery/dna_scannernew/update_icon()
@@ -80,23 +67,20 @@
 	open_machine()
 
 /obj/machinery/dna_scannernew/container_resist(mob/living/user)
-	var/breakout_time = 2
-	if(state_open || !locked)	//Open and unlocked, no need to escape
-		state_open = 1
+	if(!locked)
+		open_machine()
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [breakout_time] minutes.)</span>")
-	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
-
-	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
+	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
-
-		locked = 0
-		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
-
+		locked = FALSE
+		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
 /obj/machinery/dna_scannernew/proc/locate_computer(type_)
@@ -137,10 +121,11 @@
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
 	if(user.stat || locked)
+		if(message_cooldown <= world.time)
+			message_cooldown = world.time + 50
+			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
-
 	open_machine()
-	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
 

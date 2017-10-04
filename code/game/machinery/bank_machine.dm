@@ -9,8 +9,8 @@
 	var/radio_channel = "Common"
 	var/minimum_time_between_warnings = 400
 
-/obj/machinery/computer/bank_machine/Initialize(mapload)
-	..()
+/obj/machinery/computer/bank_machine/Initialize()
+	. = ..()
 	radio = new(src)
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
@@ -25,9 +25,6 @@
 	if(istype(I, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/C = I
 		value = C.value * C.amount
-	if(istype(I, /obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C  = I
-		value = C.value
 	if(value)
 		SSshuttle.points += value
 		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [SSshuttle.points] credits.</span>")
@@ -46,7 +43,7 @@
 			say("Station funds depleted. Halting siphon.")
 			siphoning = FALSE
 		else
-			new /obj/item/stack/spacecash/c200(get_turf(src)) // will autostack
+			new /obj/item/stack/spacecash/c200(drop_location()) // will autostack
 			playsound(src.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 			SSshuttle.points -= 200
 			if(next_warning < world.time && prob(15))

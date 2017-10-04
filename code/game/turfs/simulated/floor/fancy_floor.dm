@@ -15,16 +15,16 @@
 /turf/open/floor/wood/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
-	if(istype(C, /obj/item/weapon/screwdriver))
+	if(istype(C, /obj/item/screwdriver))
 		pry_tile(C, user)
 		return
 
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
-	var/obj/item/weapon/tool = user.is_holding_item_of_type(/obj/item/weapon/screwdriver)
+	var/obj/item/tool = user.is_holding_item_of_type(/obj/item/screwdriver)
 	if(!tool)
-		tool = user.is_holding_item_of_type(/obj/item/weapon/crowbar)
+		tool = user.is_holding_item_of_type(/obj/item/crowbar)
 	if(!tool)
 		return
 	var/turf/open/floor/plating/P = pry_tile(tool, user, TRUE)
@@ -33,7 +33,7 @@
 	P.attackby(T, user, params)
 
 /turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
-	var/is_screwdriver = istype(C, /obj/item/weapon/screwdriver)
+	var/is_screwdriver = istype(C, /obj/item/screwdriver)
 	playsound(src, C.usesound, 80, 1)
 	return remove_tile(user, silent, make_tile = is_screwdriver)
 
@@ -66,16 +66,16 @@
 	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
-	flags = NONE
-	var/ore_type = /obj/item/weapon/ore/glass
+	flags_1 = NONE
+	var/ore_type = /obj/item/ore/glass
 	var/turfverb = "uproot"
 
 /turf/open/floor/grass/Initialize()
-	..()
+	. = ..()
 	update_icon()
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/weapon/shovel) && params)
+	if(istype(C, /obj/item/shovel) && params)
 		new ore_type(src)
 		new ore_type(src) //Make some sand if you shovel grass
 		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You [src.turfverb] [src].</span>")
@@ -96,7 +96,7 @@
 	slowdown = 2
 
 /turf/open/floor/grass/snow/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/crowbar))//You need to dig this turf out instead of crowbarring it
+	if(istype(W, /obj/item/crowbar))//You need to dig this turf out instead of crowbarring it
 		return
 	..()
 
@@ -104,12 +104,12 @@
 	name = "volcanic floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
-	ore_type = /obj/item/weapon/ore/glass/basalt
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	ore_type = /obj/item/ore/glass/basalt
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	slowdown = 0
 
 /turf/open/floor/grass/snow/basalt/Initialize()
-	..()
+	. = ..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -121,12 +121,12 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	floor_tile = /obj/item/stack/tile/basalt
-	ore_type = /obj/item/weapon/ore/glass/basalt
+	ore_type = /obj/item/ore/glass/basalt
 	turfverb = "dig up"
 	slowdown = 0
 
 /turf/open/floor/grass/fakebasalt/Initialize()
-	..()
+	. = ..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -140,11 +140,11 @@
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/chasm)
-	flags = NONE
+	canSmoothWith = list(/turf/open/floor/carpet)
+	flags_1 = NONE
 
 /turf/open/floor/carpet/Initialize()
-	..()
+	. = ..()
 	update_icon()
 
 /turf/open/floor/carpet/update_icon()
@@ -157,6 +157,12 @@
 		make_plating()
 		if(smooth)
 			queue_smooth_neighbors(src)
+
+/turf/open/floor/carpet/black
+	icon = 'icons/turf/floors/carpet_black.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/black
+	canSmoothWith = list(/turf/open/floor/carpet/black)
+
 
 /turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
@@ -175,14 +181,21 @@
 	burnt = 1
 	update_icon()
 
+/turf/open/floor/carpet/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
 
 
-turf/open/floor/fakepit
+/turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
 	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
-	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
+	canSmoothWith = list(/turf/open/floor/fakepit)
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
+
+/turf/open/floor/fakepit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "basalt"
+	return TRUE
 
 /turf/open/floor/fakespace
 	icon = 'icons/turf/space.dmi'
@@ -192,5 +205,11 @@ turf/open/floor/fakepit
 	plane = PLANE_SPACE
 
 /turf/open/floor/fakespace/Initialize()
-	..()
-	icon_state = "[rand(0,25)]"
+	. = ..()
+	icon_state = SPACE_ICON_STATE
+
+/turf/open/floor/fakespace/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/space.dmi'
+	underlay_appearance.icon_state = SPACE_ICON_STATE
+	underlay_appearance.plane = PLANE_SPACE
+	return TRUE

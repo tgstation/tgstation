@@ -2,29 +2,26 @@
 	name = "cell charger"
 	desc = "It charges power cells."
 	icon = 'icons/obj/power.dmi'
-	icon_state = "ccharger0"
-	anchored = 1
-	use_power = 1
+	icon_state = "ccharger"
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 60
 	power_channel = EQUIP
-	var/obj/item/weapon/stock_parts/cell/charging = null
+	var/obj/item/stock_parts/cell/charging = null
 	var/chargelevel = -1
 
 /obj/machinery/cell_charger/proc/updateicon()
-	icon_state = "ccharger[charging ? 1 : 0]"
+	cut_overlays()
 
-	if(charging && !(stat & (BROKEN|NOPOWER)))
-		var/newlevel = 	round(charging.percent() * 4 / 100)
-
-		if(chargelevel != newlevel)
-			chargelevel = newlevel
-
-			cut_overlays()
-			add_overlay("ccharger-o[newlevel]")
-
-	else
-		cut_overlays()
+	if(charging)
+		add_overlay(image(charging.icon, charging.icon_state))
+		add_overlay("ccharger-on")
+		if(!(stat & (BROKEN|NOPOWER)))
+			var/newlevel = 	round(charging.percent() * 4 / 100)
+			if(chargelevel != newlevel)
+				chargelevel = newlevel
+				add_overlay("ccharger-o[newlevel]")
 
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
@@ -32,8 +29,8 @@
 	if(charging)
 		to_chat(user, "Current charge: [round(charging.percent(), 1)]%")
 
-/obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
+/obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/stock_parts/cell))
 		if(stat & BROKEN)
 			to_chat(user, "<span class='warning'>[src] is broken!</span>")
 			return
@@ -48,30 +45,29 @@
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
+				to_chat(user, "<span class='warning'>The [src] blinks red as you try to insert the cell!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(W,src))
 				return
 
-			W.loc = src
 			charging = W
-			user.visible_message("[user] inserts a cell into the charger.", "<span class='notice'>You insert a cell into the charger.</span>")
+			user.visible_message("[user] inserts a cell into [src].", "<span class='notice'>You insert a cell into [src].</span>")
 			chargelevel = -1
 			updateicon()
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return
 
 		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground</span>")
+		to_chat(user, "<span class='notice'>You [anchored ? "attach" : "detach"] [src] [anchored ? "to" : "from"] the ground</span>")
 		playsound(src.loc, W.usesound, 75, 1)
 	else
 		return ..()
 
 
 /obj/machinery/cell_charger/proc/removecell()
-	charging.updateicon()
+	charging.update_icon()
 	charging = null
 	chargelevel = -1
 	updateicon()
@@ -83,7 +79,7 @@
 	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
 
-	user.visible_message("[user] removes the cell from the charger.", "<span class='notice'>You remove the cell from the charger.</span>")
+	user.visible_message("[user] removes [charging] from [src].", "<span class='notice'>You remove [charging] from [src].</span>")
 
 	removecell()
 

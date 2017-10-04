@@ -4,8 +4,6 @@
 /area/survivalpod)
 "b" = (
 /obj/structure/sign/mining/survival{
-	tag = "icon-survival (NORTH)";
-	icon_state = "survival";
 	dir = 1
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
@@ -37,13 +35,11 @@
 /area/survivalpod)
 "i" = (
 /obj/structure/bed/pod,
-/obj/item/weapon/bedsheet/black,
+/obj/item/bedsheet/black,
 /turf/open/floor/pod,
 /area/survivalpod)
 "j" = (
 /obj/structure/sign/mining/survival{
-	tag = "icon-survival (EAST)";
-	icon_state = "survival";
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,

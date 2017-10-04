@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/blood
+/obj/item/reagent_containers/blood
 	name = "blood pack"
 	desc = "Contains blood used for transfusion. Must be attached to an IV drip."
 	icon = 'icons/obj/bloodpack.dmi'
@@ -7,13 +7,13 @@
 	var/blood_type = null
 	var/labelled = 0
 
-/obj/item/weapon/reagent_containers/blood/Initialize()
+/obj/item/reagent_containers/blood/Initialize()
 	. = ..()
 	if(blood_type != null)
 		reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_icon()
 
-/obj/item/weapon/reagent_containers/blood/on_reagent_change()
+/obj/item/reagent_containers/blood/on_reagent_change()
 	if(reagents)
 		var/datum/reagent/blood/B = reagents.has_reagent("blood")
 		if(B && B.data && B.data["blood_type"])
@@ -23,14 +23,14 @@
 	update_pack_name()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/blood/proc/update_pack_name()
+/obj/item/reagent_containers/blood/proc/update_pack_name()
 	if(!labelled)
 		if(blood_type)
 			name = "blood pack - [blood_type]"
 		else
 			name = "blood pack"
 
-/obj/item/weapon/reagent_containers/blood/update_icon()
+/obj/item/reagent_containers/blood/update_icon()
 	var/percent = round((reagents.total_volume / volume) * 100)
 	switch(percent)
 		if(0 to 9)
@@ -40,37 +40,37 @@
 		if(51 to INFINITY)
 			icon_state = "full"
 
-/obj/item/weapon/reagent_containers/blood/random/Initialize()
+/obj/item/reagent_containers/blood/random/Initialize()
 	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
 	. = ..()
 
-/obj/item/weapon/reagent_containers/blood/APlus
+/obj/item/reagent_containers/blood/APlus
 	blood_type = "A+"
 
-/obj/item/weapon/reagent_containers/blood/AMinus
+/obj/item/reagent_containers/blood/AMinus
 	blood_type = "A-"
 
-/obj/item/weapon/reagent_containers/blood/BPlus
+/obj/item/reagent_containers/blood/BPlus
 	blood_type = "B+"
 
-/obj/item/weapon/reagent_containers/blood/BMinus
+/obj/item/reagent_containers/blood/BMinus
 	blood_type = "B-"
 
-/obj/item/weapon/reagent_containers/blood/OPlus
+/obj/item/reagent_containers/blood/OPlus
 	blood_type = "O+"
 
-/obj/item/weapon/reagent_containers/blood/OMinus
+/obj/item/reagent_containers/blood/OMinus
 	blood_type = "O-"
 
-/obj/item/weapon/reagent_containers/blood/lizard
+/obj/item/reagent_containers/blood/lizard
 	blood_type = "L"
 
-/obj/item/weapon/reagent_containers/blood/empty
+/obj/item/reagent_containers/blood/empty
 	name = "blood pack"
 	icon_state = "empty"
 
-/obj/item/weapon/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
+/obj/item/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
+	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
 
 		var/t = stripped_input(user, "What would you like to label the blood pack?", name, null, 53)
 		if(!user.canUseTopic(src))

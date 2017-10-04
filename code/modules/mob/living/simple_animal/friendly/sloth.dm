@@ -10,7 +10,7 @@
 	emote_see = list("dozes off.", "looks around sleepily.")
 	speak_chance = 1
 	turns_per_move = 5
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 3)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"

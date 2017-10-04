@@ -9,13 +9,14 @@
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
 	icon_state = "vent_map"
-	use_power = 1
-	can_unwrench = 1
-	welded = 0
+	use_power = IDLE_POWER_USE
+	can_unwrench = TRUE
+	welded = FALSE
 	level = 1
+	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null
-	var/on = 0
+	var/on = FALSE
 	var/pump_direction = RELEASING
 
 	var/pressure_checks = EXT_BOUND
@@ -31,15 +32,18 @@
 	var/radio_filter_in
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on
-	on = 1
-	icon_state = "vent_out"
+	on = TRUE
+	icon_state = "vent_map_on"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon
 	pump_direction = SIPHONING
+	pressure_checks = INT_BOUND
+	internal_pressure_bound = 4000
+	external_pressure_bound = 0
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
-	on = 1
-	icon_state = "vent_in"
+	on = TRUE
+	icon_state = "vent_map_siphon_on"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
@@ -52,15 +56,27 @@
 	A.air_vent_names -= id_tag
 	A.air_vent_info -= id_tag
 
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	radio_connection = null
-
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
 	power_channel = EQUIP
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on
+	on = TRUE
+	icon_state = "vent_map_on"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon
+	pump_direction = SIPHONING
+	pressure_checks = INT_BOUND
+	internal_pressure_bound = 2000
+	external_pressure_bound = 0
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on
+	on = TRUE
+	icon_state = "vent_map_siphon_on"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()
@@ -76,7 +92,7 @@
 		icon_state = "vent_welded"
 		return
 
-	if(!NODE1 || !on || stat & (NOPOWER|BROKEN))
+	if(!NODE1 || !on || !is_operational())
 		icon_state = "vent_off"
 		return
 
@@ -87,12 +103,12 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
 	..()
-	if(stat & (NOPOWER|BROKEN))
+	if(!is_operational())
 		return
-	if (!NODE1)
-		on = 0
+	if(!NODE1)
+		on = FALSE
 	if(!on || welded)
-		return 0
+		return
 
 	var/datum/gas_mixture/air_contents = AIR1
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -134,8 +150,6 @@
 				air_update_turf()
 	update_parents()
 
-	return 1
-
 //Radio remote control
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/set_frequency(new_frequency)
@@ -146,7 +160,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -173,8 +187,6 @@
 
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
-	return 1
-
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
 	//some vents work his own spesial way
@@ -186,11 +198,11 @@
 	..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal(datum/signal/signal)
-	if(stat & (NOPOWER|BROKEN))
+	if(!is_operational())
 		return
 	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return 0
+		return
 
 	if("purge" in signal.data)
 		pressure_checks &= ~EXT_BOUND
@@ -241,23 +253,23 @@
 		//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 	broadcast_status()
 	update_icon()
-	return
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
 			playsound(loc, WT.usesound, 40, 1)
 			to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
 			if(do_after(user, 20*W.toolspeed, target = src))
-				if(!src || !WT.isOn()) return
-				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				if(!src || !WT.isOn()) 
+					return
+				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 				if(!welded)
 					user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
-					welded = 1
+					welded = TRUE
 				else
 					user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
-					welded = 0
+					welded = FALSE
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 				pipe_vision_img.plane = ABOVE_HUD_PLANE
@@ -266,11 +278,10 @@
 		return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
-	if(..())
-		if(!(stat & NOPOWER) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
-		else
-			return 1
+	. = ..()
+	if(. && on && is_operational())
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		return FALSE
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	..()
@@ -288,7 +299,7 @@
 	if(!welded || !(do_after(user, 20, target = src)))
 		return
 	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the vent", "You hear loud scraping noises.")
-	welded = 0
+	welded = FALSE
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 	pipe_vision_img.plane = ABOVE_HUD_PLANE

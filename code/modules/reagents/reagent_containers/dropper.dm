@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/dropper
+/obj/item/reagent_containers/dropper
 	name = "dropper"
 	desc = "A dropper. Holds up to 5 units."
 	icon = 'icons/obj/chemical.dmi'
@@ -6,9 +6,9 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	volume = 5
-	container_type = TRANSPARENT
+	container_type = TRANSPARENT_1
 
-/obj/item/weapon/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
+/obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 	if(!target.reagents) return
 
@@ -17,7 +17,7 @@
 			to_chat(user, "<span class='notice'>[target] is full.</span>")
 			return
 
-		if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
+		if(!target.is_injectable())
 			to_chat(user, "<span class='warning'>You cannot directly fill [target]!</span>")
 			return
 
@@ -74,7 +74,7 @@
 
 	else
 
-		if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
+		if(!target.is_drawable(FALSE)) //No drawing from mobs here
 			to_chat(user, "<span class='notice'>You cannot directly remove reagents from [target].</span>")
 			return
 
@@ -88,7 +88,7 @@
 
 		update_icon()
 
-/obj/item/weapon/reagent_containers/dropper/update_icon()
+/obj/item/reagent_containers/dropper/update_icon()
 	cut_overlays()
 	if(reagents.total_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "dropper")

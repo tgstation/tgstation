@@ -16,14 +16,13 @@
 	verb_say = "hisses"
 	initial_language_holder = /datum/language_holder/alien
 	bubble_icon = "alien"
-	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
-	var/nightvision = 1
+	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 
-	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
+	var/obj/item/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
-	status_flags = CANPARALYSE|CANPUSH
+	status_flags = CANUNCONSCIOUS|CANPUSH
 
 	var/heat_protection = 0.5
 	var/leaping = 0
@@ -40,7 +39,7 @@
 
 	create_internal_organs()
 
-	..()
+	. = ..()
 
 /mob/living/carbon/alien/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain/alien
@@ -50,7 +49,7 @@
 	internal_organs += new /obj/item/organ/ears
 	..()
 
-/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
+/mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)

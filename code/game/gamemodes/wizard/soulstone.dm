@@ -3,6 +3,9 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	layer = HIGH_OBJ_LAYER
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
@@ -43,9 +46,9 @@
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
-/obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/living/user)
 	if(!iscultist(user) && !iswizard(user) && !usability)
-		user.Paralyse(5)
+		user.Unconscious(100)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
 	if(spent)
@@ -62,11 +65,11 @@
 
 ///////////////////Options for using captured souls///////////////////////////////////////
 
-/obj/item/device/soulstone/attack_self(mob/user)
+/obj/item/device/soulstone/attack_self(mob/living/user)
 	if(!in_range(src, user))
 		return
 	if(!iscultist(user) && !iswizard(user) && !usability)
-		user.Paralyse(5)
+		user.Unconscious(100)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
 	release_shades(user)
@@ -116,7 +119,7 @@
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/device/soulstone/proc/transfer_soul(choice as text, target, mob/user).
+/obj/item/device/soulstone/proc/transfer_soul(choice as text, target, mob/user)
 	switch(choice)
 		if("FORCE")
 			if(!iscarbon(target))		//TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
@@ -161,7 +164,7 @@
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
 			else
-				T.loc = src //put shade in stone
+				T.forceMove(src) //put shade in stone
 				T.status_flags |= GODMODE
 				T.canmove = 0
 				T.health = T.maxHealth
@@ -196,7 +199,6 @@
 						SSticker.mode.cult -= A.mind
 						SSticker.mode.update_cult_icons_removed(A.mind)
 				qdel(T)
-				user.drop_item()
 				qdel(src)
 			else
 				to_chat(user, "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!")
@@ -210,13 +212,16 @@
 		var/datum/action/innate/seek_master/SM = new()
 		SM.Grant(newstruct)
 	newstruct.key = target.key
+	var/obj/screen/alert/bloodsense/BS
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
 	if(iscultist(stoner) || cultoverride)
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>")
 	else if(stoner)
 		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow their orders and help them complete their goals at all costs.</b>")
-		var/obj/screen/alert/bloodsense/BS = newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+	newstruct.clear_alert("bloodsense")
+	BS = newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+	if(BS)
 		BS.Cviewer = newstruct
 	newstruct.cancel_camera()
 
@@ -231,6 +236,7 @@
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	S.key = T.key
+	S.language_holder = U.language_holder.copy(S)
 	if(U)
 		S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
 	if(U && iscultist(U))

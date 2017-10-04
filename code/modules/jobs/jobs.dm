@@ -59,6 +59,26 @@ GLOBAL_LIST_INIT(nonhuman_positions, list(
 	"Cyborg",
 	"pAI"))
 
+GLOBAL_LIST_INIT(exp_jobsmap, list(
+	EXP_TYPE_CREW = list("titles" = command_positions | engineering_positions | medical_positions | science_positions | supply_positions | security_positions | civilian_positions | list("AI","Cyborg")), // crew positions
+	EXP_TYPE_COMMAND = list("titles" = command_positions),
+	EXP_TYPE_ENGINEERING = list("titles" = engineering_positions),
+	EXP_TYPE_MEDICAL = list("titles" = medical_positions),
+	EXP_TYPE_SCIENCE = list("titles" = science_positions),
+	EXP_TYPE_SUPPLY = list("titles" = supply_positions),
+	EXP_TYPE_SECURITY = list("titles" = security_positions),
+	EXP_TYPE_SILICON = list("titles" = list("AI","Cyborg")),
+	EXP_TYPE_SERVICE = list("titles" = civilian_positions),
+))
+
+GLOBAL_LIST_INIT(exp_specialmap, list(
+	EXP_TYPE_LIVING = list(), // all living mobs
+	EXP_TYPE_ANTAG = list(),
+	EXP_TYPE_SPECIAL = list("Lifebringer","Ash Walker","Exile","Servant Golem","Free Golem","Hermit","Translocated Vet","Escaped Prisoner","Hotel Staff","SuperFriend","Space Syndicate","Ancient Crew","Space Doctor","Space Bartender","Beach Bum","Skeleton","Zombie","Space Bar Patron","Lavaland Syndicate","Ghost Role"), // Ghost roles
+	EXP_TYPE_GHOST = list() // dead people, observers
+))
+GLOBAL_PROTECT(exp_jobsmap)
+GLOBAL_PROTECT(exp_specialmap)
 
 /proc/guest_jobbans(job)
 	return ((job in GLOB.command_positions) || (job in GLOB.nonhuman_positions) || (job in GLOB.security_positions))

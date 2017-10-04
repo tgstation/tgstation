@@ -28,10 +28,9 @@
 	var/triggering	//admin cancellation
 
 /datum/round_event_control/New()
-	..()
 	if(config && !wizardevent) // Magic is unaffected by configs
-		earliest_start = Ceiling(earliest_start * config.events_min_time_mul)
-		min_players = Ceiling(min_players * config.events_min_players_mul)
+		earliest_start = Ceiling(earliest_start * CONFIG_GET(number/events_min_time_mul))
+		min_players = Ceiling(min_players * CONFIG_GET(number/events_min_players_mul))
 
 /datum/round_event_control/wizard
 	wizardevent = 1
@@ -56,13 +55,18 @@
 	return TRUE
 
 /datum/round_event_control/proc/preRunEvent()
-	if(!ispath(typepath,/datum/round_event))
+	if(!ispath(typepath, /datum/round_event))
 		return EVENT_CANT_RUN
 
 	triggering = TRUE
 	if (alertadmins)
 		message_admins("Random Event triggering in 10 seconds: [name] ([typepath]) (<a href='?src=\ref[src];cancel=1'>CANCEL</a>)")
 		sleep(100)
+		var/gamemode = SSticker.mode.config_tag
+		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
+		if(!canSpawnEvent(players_amt, gamemode))
+			message_admins("Second pre-condition check for [name] failed, skipping...")
+			return EVENT_INTERRUPTED
 
 	if(!triggering)
 		return EVENT_CANCELLED	//admin cancelled
@@ -153,19 +157,28 @@
 		return
 
 	if(activeFor == startWhen)
+		processing = FALSE
 		start()
+		processing = TRUE
 
 	if(activeFor == announceWhen)
+		processing = FALSE
 		announce()
+		processing = TRUE
 
 	if(startWhen < activeFor && activeFor < endWhen)
+		processing = FALSE
 		tick()
+		processing = TRUE
 
 	if(activeFor == endWhen)
+		processing = FALSE
 		end()
+		processing = TRUE
 
 	// Everything is done, let's clean up.
 	if(activeFor >= endWhen && activeFor >= announceWhen && activeFor >= startWhen)
+		processing = FALSE
 		kill()
 
 	activeFor++

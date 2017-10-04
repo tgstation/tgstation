@@ -22,6 +22,8 @@
 	return 0
 
 /proc/jobban_buildcache(client/C)
+	if(!SSdbcore.Connect())
+		return
 	if(C && istype(C))
 		C.jobbancache = list()
 		var/datum/DBQuery/query_jobban_build_cache = SSdbcore.NewQuery("SELECT job, reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(C.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")

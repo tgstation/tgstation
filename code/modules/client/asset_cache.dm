@@ -138,12 +138,19 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 /proc/register_asset(var/asset_name, var/asset)
 	SSassets.cache[asset_name] = asset
 
+//Generated names do not include file extention.
+//Used mainly for code that deals with assets in a generic way
+//The same asset will always lead to the same asset name
+/proc/generate_asset_name(var/file)
+	return "asset.[md5(fcopy_rsc(file))]"
+
+
 //These datums are used to populate the asset cache, the proc "register()" does this.
 
 //all of our asset datums, used for referring to these later
 GLOBAL_LIST_EMPTY(asset_datums)
 
-//get a assetdatum or make a new one
+//get an assetdatum or make a new one
 /proc/get_asset_datum(var/type)
 	if (!(type in GLOB.asset_datums))
 		return new type()
@@ -168,6 +175,33 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		register_asset(asset_name, assets[asset_name])
 /datum/asset/simple/send(client)
 	send_asset_list(client,assets,verify)
+
+
+//Generates assets based on iconstates of a single icon
+/datum/asset/simple/icon_states
+	var/icon
+	var/direction = SOUTH
+	var/frame = 1
+	var/movement_states = FALSE
+
+	var/prefix = "default" //asset_name = "[prefix].[icon_state_name].png"
+	var/generic_icon_names = FALSE //generate icon filenames using generate_asset_name() instead the above format
+
+	verify = FALSE
+
+/datum/asset/simple/icon_states/register()
+	for(var/icon_state_name in icon_states(icon))
+		var/asset = icon(icon, icon_state_name, direction, frame, movement_states)
+		if (!asset)
+			continue
+		asset = fcopy_rsc(asset) //dedupe
+		var/asset_name = sanitize_filename("[prefix].[icon_state_name].png")
+		if (generic_icon_names)
+			asset_name = "[generate_asset_name(asset)].png"
+
+		assets[asset_name] = asset
+
+	..()
 
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
@@ -205,6 +239,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"sig_low.gif" 				= 'icons/program_icons/sig_low.gif',
 		"sig_lan.gif" 				= 'icons/program_icons/sig_lan.gif',
 		"sig_none.gif" 				= 'icons/program_icons/sig_none.gif',
+		"smmon_0.gif" 				= 'icons/program_icons/smmon_0.gif',
+		"smmon_1.gif" 				= 'icons/program_icons/smmon_1.gif',
+		"smmon_2.gif" 				= 'icons/program_icons/smmon_2.gif',
+		"smmon_3.gif" 				= 'icons/program_icons/smmon_3.gif',
+		"smmon_4.gif" 				= 'icons/program_icons/smmon_4.gif',
+		"smmon_5.gif" 				= 'icons/program_icons/smmon_5.gif',
+		"smmon_6.gif" 				= 'icons/program_icons/smmon_6.gif'
 	)
 
 /datum/asset/simple/pda
@@ -276,7 +317,25 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"chevron.png" = 'html/chevron.png',
 		"chevron-expand.png" = 'html/chevron-expand.png',
 		"scales.png" = 'html/scales.png',
+		"coding.png" = 'html/coding.png',
+		"ban.png" = 'html/ban.png',
+		"chrome-wrench.png" = 'html/chrome-wrench.png',
 		"changelog.css" = 'html/changelog.css'
+	)
+
+/datum/asset/simple/goonchat
+	verify = FALSE
+	assets = list(
+		"jquery.min.js"            = 'code/modules/html_interface/js/jquery.min.js',
+		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
+		"errorHandler.js"          = 'code/modules/goonchat/browserassets/js/errorHandler.js',
+		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
+		"fontawesome-webfont.eot"  = 'tgui/assets/fonts/fontawesome-webfont.eot',
+		"fontawesome-webfont.svg"  = 'tgui/assets/fonts/fontawesome-webfont.svg',
+		"fontawesome-webfont.ttf"  = 'tgui/assets/fonts/fontawesome-webfont.ttf',
+		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
+		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
+		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 	)
 
 //Registers HTML Interface assets.
@@ -284,3 +343,14 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for(var/path in typesof(/datum/html_interface))
 		var/datum/html_interface/hi = new path()
 		hi.registerResources()
+
+//this exists purely to avoid meta by pre-loading all language icons.
+/datum/asset/language/register()
+	for(var/path in typesof(/datum/language))
+		set waitfor = FALSE
+		var/datum/language/L = new path ()
+		L.get_icon()
+
+/datum/asset/simple/icon_states/emojis
+	icon = 'icons/emoji.dmi'
+	generic_icon_names = TRUE

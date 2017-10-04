@@ -4,65 +4,29 @@
 	desc = "The name isn't descriptive enough?"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
-	density = 1
-	anchored = 1
-	var/operating = 0 //Is it on?
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 2
+	active_power_usage = 500
+	circuit = /obj/item/circuitboard/machine/gibber
+
+	var/operating = FALSE //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
 	var/meat_produced = 0
 	var/ignore_clothing = 0
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 500
-
-//auto-gibs anything that bumps into it
-/obj/machinery/gibber/autogibber
-	var/turf/input_plate
-
-/obj/machinery/gibber/autogibber/Initialize()
-	. = ..()
-	for(var/i in GLOB.cardinal)
-		var/obj/machinery/mineral/input/input_obj = locate() in get_step(loc, i)
-		if(input_obj)
-			if(isturf(input_obj.loc))
-				input_plate = input_obj.loc
-				qdel(input_obj)
-				break
-
-	if(!input_plate)
-		CRASH("Didn't find an input plate.")
-		return
-
-/obj/machinery/gibber/autogibber/Bumped(atom/A)
-	if(!input_plate) return
-
-	if(ismob(A))
-		var/mob/M = A
-
-		if(M.loc == input_plate)
-			M.loc = src
-			M.gib()
 
 
 /obj/machinery/gibber/Initialize()
 	. = ..()
 	add_overlay("grjam")
-	var/obj/item/weapon/circuitboard/machine/gibber/B = new
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/gibber
-	name = "Gibber (Machine Board)"
-	build_path = /obj/machinery/gibber
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/gibber/RefreshParts()
 	var/gib_time = 40
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		gib_time -= 5 * M.rating
 		gibtime = gib_time
 		if(M.rating >= 2)
@@ -85,6 +49,9 @@
 	return src.attack_hand(user)
 
 /obj/machinery/gibber/container_resist(mob/living/user)
+	go_out()
+
+/obj/machinery/gibber/relaymove(mob/living/user)
 	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
@@ -162,7 +129,7 @@
 	use_power(1000)
 	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
-	src.operating = 1
+	operating = TRUE
 	update_icon()
 
 	var/offset = prob(50) ? -2 : 2
@@ -174,20 +141,18 @@
 		var/mob/living/carbon/human/gibee = occupant
 		sourcejob = gibee.job
 	var/sourcenutriment = mob_occupant.nutrition / 15
-	var/sourcetotalreagents = mob_occupant.reagents.total_volume
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
-	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
-	var/typeofskin = /obj/item/stack/sheet/animalhide/human
+	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human
+	var/typeofskin
 
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
-	var/obj/item/stack/sheet/animalhide/allskin
+	var/obj/item/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
+	var/obj/item/stack/sheet/animalhide/skin
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
 		if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
-			if(gibee.dna.species.skinned_type)
-				typeofskin = gibee.dna.species.skinned_type
+			typeofskin = gibee.dna.species.skinned_type
 
 	else if(iscarbon(occupant))
 		var/mob/living/carbon/C = occupant
@@ -199,17 +164,17 @@
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
 
 	for (var/i=1 to meat_produced)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
-		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
+		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
 			if(sourcejob)
 				newmeat.subjectjob = sourcejob
-		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / meat_produced, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
-		allskin = newskin
+
+	if(typeofskin)
+		skin = new typeofskin
 
 	add_logs(user, occupant, "gibbed")
 	mob_occupant.death(1)
@@ -217,15 +182,15 @@
 	qdel(src.occupant)
 	spawn(src.gibtime)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		operating = 0
+		operating = FALSE
 		var/turf/T = get_turf(src)
 		var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
-		var/obj/item/skin = allskin
-		skin.loc = src.loc
-		skin.throw_at(pick(nearby_turfs),meat_produced,3)
+		if(skin)
+			skin.forceMove(loc)
+			skin.throw_at(pick(nearby_turfs),meat_produced,3)
 		for (var/i=1 to meat_produced)
 			var/obj/item/meatslab = allmeat[i]
-			meatslab.loc = src.loc
+			meatslab.forceMove(loc)
 			meatslab.throw_at(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced)
 				var/turf/gibturf = pick(nearby_turfs)
@@ -233,5 +198,34 @@
 					new gibtype(gibturf,i)
 
 		pixel_x = initial(pixel_x) //return to its spot after shaking
-		src.operating = 0
+		operating = FALSE
 		update_icon()
+
+//auto-gibs anything that bumps into it
+/obj/machinery/gibber/autogibber
+	var/turf/input_plate
+
+/obj/machinery/gibber/autogibber/Initialize()
+	. = ..()
+	for(var/i in GLOB.cardinals)
+		var/obj/machinery/mineral/input/input_obj = locate() in get_step(loc, i)
+		if(input_obj)
+			if(isturf(input_obj.loc))
+				input_plate = input_obj.loc
+				qdel(input_obj)
+				break
+
+	if(!input_plate)
+		CRASH("Didn't find an input plate.")
+		return
+
+/obj/machinery/gibber/autogibber/CollidedWith(atom/movable/AM)
+	if(!input_plate)
+		return
+
+	if(ismob(AM))
+		var/mob/M = AM
+
+		if(M.loc == input_plate)
+			M.forceMove(src)
+			M.gib()

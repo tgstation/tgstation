@@ -6,5 +6,6 @@
 #define POLL_IGNORE_ALIEN_LARVA "alien_larva"
 #define POLL_IGNORE_CLOCKWORK_MARAUDER "clockwork_marauder"
 #define POLL_IGNORE_SYNDICATE "syndicate"
+#define POLL_IGNORE_HOLOPARASITE "holoparasite"
 
 GLOBAL_LIST_EMPTY(poll_ignore)

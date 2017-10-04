@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(augury)
 	name = "Augury"
 	flags = SS_NO_INIT
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/watchers = list()
 	var/list/doombringers = list()
@@ -12,6 +13,9 @@ SUBSYSTEM_DEF(augury)
 
 /datum/controller/subsystem/augury/proc/register_doom(atom/A, severity)
 	doombringers[A] = severity
+
+/datum/controller/subsystem/augury/proc/unregister_doom(atom/A)
+	doombringers -= A
 
 /datum/controller/subsystem/augury/fire()
 	var/biggest_doom = null

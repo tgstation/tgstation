@@ -10,10 +10,10 @@ FLOOR SAFES
 	desc = "A huge chunk of metal with a dial embedded in it. Fine print on the dial reads \"Scarborough Arms - 2 tumbler safe, guaranteed thermite resistant, explosion resistant, and assistant resistant.\""
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "safe"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/open = 0		//is the safe open?
+	var/open = FALSE		//is the safe open?
 	var/tumbler_1_pos	//the tumbler position- from 0 to 72
 	var/tumbler_1_open	//the tumbler position to open at- 0 to 72
 	var/tumbler_2_pos
@@ -33,7 +33,7 @@ FLOOR SAFES
 
 
 /obj/structure/safe/Initialize(mapload)
-	..()
+	. = ..()
 
 	if(!mapload)
 		return
@@ -96,7 +96,10 @@ FLOOR SAFES
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/user = usr
-
+	
+	if(!user.canUseTopic(src))
+		return
+	
 	var/canhear = 0
 	if(user.is_holding_item_of_type(/obj/item/clothing/neck/stethoscope))
 		canhear = 1
@@ -186,13 +189,13 @@ FLOOR SAFES
 /obj/structure/safe/floor
 	name = "floor safe"
 	icon_state = "floorsafe"
-	density = 0
+	density = FALSE
 	level = 1	//underfloor
 	layer = LOW_OBJ_LAYER
 
 
 /obj/structure/safe/floor/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)
 		var/turf/T = loc
 		hide(T.intact)

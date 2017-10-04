@@ -13,8 +13,8 @@
 /obj/item/borg/stun/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.check_shields(0, "[M]'s [name]", src, MELEE_ATTACK))
-			playsound(M, 'sound/weapons/Genhit.ogg', 50, 1)
+		if(H.check_shields(src, 0, "[M]'s [name]", MELEE_ATTACK))
+			playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
@@ -22,14 +22,13 @@
 			return
 
 	user.do_attack_animation(M)
-	M.Weaken(5)
+	M.Knockdown(100)
 	M.apply_effect(STUTTER, 5)
-	M.Stun(5)
 
 	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
 					"<span class='userdanger'>[user] has prodded you with [src]!</span>")
 
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
 	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
@@ -111,7 +110,7 @@
 							"<span class='warning'>You bop [M] on the head!</span>")
 				playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
 		if(2)
-			if(!scooldown)
+			if(scooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M)||ismonkey(M))
 						M.electrocute_act(5, "[user]", safety = 1)
@@ -128,11 +127,9 @@
 								"<span class='danger'>You shock [M] to no effect.</span>")
 					playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
 					user.cell.charge -= 500
-					scooldown = TRUE
-					spawn(20)
-					scooldown = FALSE
+					scooldown = world.time + 20
 		if(3)
-			if(!ccooldown)
+			if(ccooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M))
 						user.visible_message("<span class='userdanger'>[user] crushes [M] in their grip!</span>", \
@@ -143,9 +140,7 @@
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1, -1)
 					M.adjustBruteLoss(15)
 					user.cell.charge -= 300
-					ccooldown = TRUE
-					spawn(10)
-					ccooldown = FALSE
+					ccooldown = world.time + 10
 
 /obj/item/borg/cyborghug/peacekeeper
 	shockallowed = TRUE
@@ -156,12 +151,13 @@
 /obj/item/borg/charger
 	name = "power connector"
 	icon_state = "charger_draw"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/mode = "draw"
-	var/list/charge_machines = list(/obj/machinery/cell_charger, /obj/machinery/recharger,
-		/obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port)
-	var/list/charge_items = list(/obj/item/weapon/stock_parts/cell, /obj/item/weapon/gun/energy,
-		)
+	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
+	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))
+
+/obj/item/borg/charger/Initialize()
+	. = ..()
 
 /obj/item/borg/charger/update_icon()
 	..()
@@ -201,15 +197,15 @@
 			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
 
 		else if(is_type_in_list(target, charge_items))
-			var/obj/item/weapon/stock_parts/cell/cell = target
+			var/obj/item/stock_parts/cell/cell = target
 			if(!istype(cell))
-				cell = locate(/obj/item/weapon/stock_parts/cell) in target
+				cell = locate(/obj/item/stock_parts/cell) in target
 			if(!cell)
 				to_chat(user, "<span class='warning'>[target] has no power cell!</span>")
 				return
 
-			if(istype(target, /obj/item/weapon/gun/energy))
-				var/obj/item/weapon/gun/energy/E = target
+			if(istype(target, /obj/item/gun/energy))
+				var/obj/item/gun/energy/E = target
 				if(!E.can_charge)
 					to_chat(user, "<span class='warning'>[target] has no power port!</span>")
 					return
@@ -240,15 +236,15 @@
 			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
 
 	else if(is_type_in_list(target, charge_items))
-		var/obj/item/weapon/stock_parts/cell/cell = target
+		var/obj/item/stock_parts/cell/cell = target
 		if(!istype(cell))
-			cell = locate(/obj/item/weapon/stock_parts/cell) in target
+			cell = locate(/obj/item/stock_parts/cell) in target
 		if(!cell)
 			to_chat(user, "<span class='warning'>[target] has no power cell!</span>")
 			return
 
-		if(istype(target, /obj/item/weapon/gun/energy))
-			var/obj/item/weapon/gun/energy/E = target
+		if(istype(target, /obj/item/gun/energy))
+			var/obj/item/gun/energy/E = target
 			if(!E.can_charge)
 				to_chat(user, "<span class='warning'>[target] has no power port!</span>")
 				return
@@ -282,7 +278,6 @@
 	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH"
 	icon_state = "megaphone"
 	var/cooldown = 0
-	var/emagged = FALSE
 
 /obj/item/device/harmalarm/emag_act(mob/user)
 	emagged = !emagged
@@ -314,7 +309,7 @@
 			if(M.get_ear_protection() == FALSE)
 				M.confused += 6
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
-		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
+		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 		if(iscyborg(user))
@@ -333,7 +328,7 @@
 					C.stuttering += 10
 					C.Jitter(10)
 				if(2)
-					C.Weaken(2)
+					C.Knockdown(40)
 					C.confused += 10
 					C.stuttering += 15
 					C.Jitter(25)
@@ -384,7 +379,7 @@
 		var/obj/O = A
 		if(O.density)
 			return FALSE
-	new /obj/item/weapon/reagent_containers/food/snacks/lollipop(T)
+	new /obj/item/reagent_containers/food/snacks/lollipop(T)
 	candy--
 	check_amount()
 	to_chat(user, "<span class='notice'>Dispensing lollipop...</span>")
@@ -466,13 +461,13 @@
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/gumball/cyborg
+	ammo_type = /obj/item/reagent_containers/food/snacks/gumball/cyborg
 	nodamage = TRUE
 
 /obj/item/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/weapon/reagent_containers/food/snacks/gumball/S = new ammo_type(T)
+		var/obj/item/reagent_containers/food/snacks/gumball/S = new ammo_type(T)
 		S.color = color
 		dropped = TRUE
 
@@ -486,12 +481,12 @@
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
-	ammo_type = /obj/item/weapon/reagent_containers/food/snacks/lollipop/cyborg
+	ammo_type = /obj/item/reagent_containers/food/snacks/lollipop/cyborg
 	var/color2 = rgb(0, 0, 0)
 	nodamage = TRUE
 
 /obj/item/projectile/bullet/reusable/lollipop/New()
-	var/obj/item/weapon/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)
+	var/obj/item/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
 	var/mutable_appearance/head = mutable_appearance('icons/obj/projectiles.dmi', "lollipop_2")
 	head.color = color2
@@ -500,9 +495,139 @@
 /obj/item/projectile/bullet/reusable/lollipop/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/weapon/reagent_containers/food/snacks/lollipop/S = new ammo_type(T)
+		var/obj/item/reagent_containers/food/snacks/lollipop/S = new ammo_type(T)
 		S.change_head_color(color2)
 		dropped = TRUE
+
+#define PKBORG_DAMPEN_CYCLE_DELAY 20
+
+//Peacekeeper Cyborg Projectile Dampenening Field
+/obj/item/borg/projectile_dampen
+	name = "Hyperkinetic Dampening projector"
+	desc = "A device that projects a dampening field that weakenss kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second \
+		while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "shield"
+	var/maxenergy = 1500
+	var/energy = 1500
+	var/energy_recharge = 7.5
+	var/energy_recharge_cyborg_drain_coefficient = 0.4
+	var/cyborg_cell_critical_percentage = 0.05
+	var/mob/living/silicon/robot/host = null
+	var/datum/proximity_monitor/advanced/dampening_field
+	var/projectile_damage_coefficient = 0.5
+	var/projectile_damage_tick_ecost_coefficient = 2	//Lasers get half their damage chopped off, drains 50 power/tick. Note that fields are processed 5 times per second.
+	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
+	var/projectile_tick_speed_ecost = 15
+	var/list/obj/item/projectile/tracked
+	var/image/projectile_effect
+	var/field_radius = 3
+	var/active = FALSE
+	var/cycle_delay = 0
+
+/obj/item/borg/projectile_dampen/debug
+	maxenergy = 50000
+	energy = 50000
+	energy_recharge = 5000
+
+/obj/item/borg/projectile_dampen/Initialize()
+	. = ..()
+	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
+	tracked = list()
+	icon_state = "shield0"
+	START_PROCESSING(SSfastprocess, src)
+	host = loc
+
+/obj/item/borg/projectile_dampen/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/obj/item/borg/projectile_dampen/attack_self(mob/user)
+	if(cycle_delay > world.time)
+		to_chat(user, "<span class='boldwarning'>\the [src] is still recycling its projectors!</span>")
+		return
+	cycle_delay = world.time + PKBORG_DAMPEN_CYCLE_DELAY
+	active = !active
+	if(active)
+		activate_field(user)
+	else
+		deactivate_field()
+	update_icon()
+	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] the [src].</span>")
+
+/obj/item/borg/projectile_dampen/update_icon()
+	icon_state = "[initial(icon_state)][active]"
+
+/obj/item/borg/projectile_dampen/proc/activate_field()
+	if(istype(dampening_field))
+		QDEL_NULL(dampening_field)
+	dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("current_range" = field_radius, "host" = src, "projector" = src))
+
+/obj/item/borg/projectile_dampen/proc/deactivate_field()
+	QDEL_NULL(dampening_field)
+	visible_message("<span class='warning'>\The [src] shuts off!</span>")
+	for(var/P in tracked)
+		restore_projectile(P)
+
+/obj/item/borg/projectile_dampen/dropped()
+	. = ..()
+	host = loc
+
+/obj/item/borg/projectile_dampen/equipped()
+	. = ..()
+	host = loc
+
+/obj/item/borg/projectile_dampen/on_mob_death()
+	deactivate_field()
+	. = ..()
+
+/obj/item/borg/projectile_dampen/process()
+	process_recharge()
+	process_usage()
+	update_location()
+
+/obj/item/borg/projectile_dampen/proc/update_location()
+	if(dampening_field)
+		dampening_field.HandleMove()
+
+/obj/item/borg/projectile_dampen/proc/process_usage()
+	var/usage = 0
+	for(var/I in tracked)
+		var/obj/item/projectile/P = I
+		if(!P.stun && P.nodamage)	//No damage
+			continue
+		usage += projectile_tick_speed_ecost
+		usage += (tracked[I] * projectile_damage_tick_ecost_coefficient)
+	energy = Clamp(energy - usage, 0, maxenergy)
+	if(energy <= 0)
+		deactivate_field()
+		visible_message("<span class='warning'>The [src] blinks \"ENERGY DEPLETED\"</span>")
+
+/obj/item/borg/projectile_dampen/proc/process_recharge()
+	if(!istype(host))
+		if(iscyborg(host.loc))
+			host = host.loc
+		else
+			energy = Clamp(energy + energy_recharge, 0, maxenergy)
+			return
+	if((host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
+		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
+		energy += energy_recharge
+
+/obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/item/projectile/P, track_projectile = TRUE)
+	if(tracked[P])
+		return
+	if(track_projectile)
+		tracked[P] = P.damage
+	P.damage *= projectile_damage_coefficient
+	P.speed *= projectile_speed_coefficient
+	P.add_overlay(projectile_effect)
+
+/obj/item/borg/projectile_dampen/proc/restore_projectile(obj/item/projectile/P)
+	tracked -= P
+	P.damage *= (1/projectile_damage_coefficient)
+	P.speed *= (1/projectile_speed_coefficient)
+	P.cut_overlay(projectile_effect)
 
 /**********************************************************************
 						HUD/SIGHT things

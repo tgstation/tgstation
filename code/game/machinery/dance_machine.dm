@@ -8,7 +8,7 @@
 	anchored = FALSE
 	verb_say = "states"
 	density = TRUE
-	req_access = list(GLOB.access_engine)
+	req_access = list(ACCESS_ENGINE)
 	var/active = FALSE
 	var/list/rangers = list()
 	var/charge = 35
@@ -18,7 +18,7 @@
 	var/static/list/songs = list(
 		new /datum/track("Engineering's Basic Beat", 					'sound/misc/disco.ogg', 	600, 	5),
 		new /datum/track("Engineering's Domination Dance", 				'sound/misc/e1m1.ogg', 		950, 	6),
-		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/Paradox.ogg', 	2400, 	4),
+		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/paradox.ogg', 	2400, 	4),
 		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/boogie2.ogg',	1770, 	5),
 		)
 	var/datum/track/selection = null
@@ -50,7 +50,7 @@
 	songs += T
 
 /obj/machinery/disco/Initialize()
-	..()
+	. = ..()
 	selection = songs[1]
 
 
@@ -60,14 +60,14 @@
 
 /obj/machinery/disco/attackby(obj/item/O, mob/user, params)
 	if(!active)
-		if(istype(O, /obj/item/weapon/wrench))
+		if(istype(O, /obj/item/wrench))
 			if(!anchored && !isinspace())
 				to_chat(user,"<span class='notice'>You secure the [src] to the floor.</span>")
 				anchored = TRUE
 			else if(anchored)
 				to_chat(user,"<span class='notice'>You unsecure and disconnect the [src].</span>")
 				anchored = FALSE
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return
 	return ..()
 
@@ -96,7 +96,7 @@
 	dat += "</div><br>"
 	dat += "<A href='?src=\ref[src];action=select'> Select Track</A><br>"
 	dat += "Track Selected: [selection.song_name]<br>"
-	dat += "Track Length: [selection.song_length/10] seconds<br><br>"
+	dat += "Track Length: [DisplayTimeText(selection.song_length)]<br><br>"
 	dat += "<br>DJ's Soundboard:<b><br>"
 	dat +="<div class='statusDisplay'><div style='text-align:center'>"
 	dat += "<A href='?src=\ref[src];action=horn'>Air Horn</A>  "
@@ -122,7 +122,7 @@
 				return
 			if(!active)
 				if(stop > world.time)
-					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [round((stop-world.time)/10)] seconds.</span>")
+					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)].</span>")
 					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
 					return
 				active = TRUE
@@ -148,7 +148,7 @@
 			selection = available[selected]
 			updateUsrDialog()
 		if("horn")
-			deejay('sound/items/AirHorn2.ogg')
+			deejay('sound/items/airhorn2.ogg')
 		if("alert")
 			deejay('sound/misc/notice1.ogg')
 		if("siren")
@@ -158,11 +158,11 @@
 		if("pump")
 			deejay('sound/weapons/shotgunpump.ogg')
 		if("pop")
-			deejay('sound/weapons/Gunshot3.ogg')
+			deejay('sound/weapons/gunshot3.ogg')
 		if("saber")
 			deejay('sound/weapons/saberon.ogg')
 		if("harm")
-			deejay('sound/AI/harmalarm.ogg')
+			deejay('sound/ai/harmalarm.ogg')
 
 /obj/machinery/disco/proc/deejay(var/S)
 	if (QDELETED(src) || !active || charge < 5)
@@ -236,7 +236,7 @@
 
 /obj/machinery/disco/proc/hierofunk()
 	for(var/i in 1 to 10)
-		spawn_atom_to_turf(/obj/effect/overlay/temp/hierophant/telegraph/edge, src, 1, FALSE)
+		spawn_atom_to_turf(/obj/effect/temp_visual/hierophant/telegraph/edge, src, 1, FALSE)
 		sleep(5)
 
 /obj/machinery/disco/proc/lights_spin()
@@ -317,7 +317,7 @@
 
 
 /obj/machinery/disco/proc/dance(var/mob/living/M) //Show your moves
-
+	set waitfor = FALSE
 	switch(rand(0,9))
 		if(0 to 1)
 			dance2(M)
@@ -392,7 +392,7 @@
 	while(time)
 		sleep(speed)
 		for(var/i in 1 to speed)
-			M.setDir(pick(GLOB.cardinal))
+			M.setDir(pick(GLOB.cardinals))
 			M.lay_down(TRUE)
 		 time--
 
@@ -456,10 +456,12 @@
 	if(charge<35)
 		charge += 1
 	if(world.time < stop && active)
+		var/sound/song_played = sound(selection.song_path)
+
 		for(var/mob/M in range(10,src))
 			if(!(M in rangers))
 				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), selection.song_path, 100, channel = CHANNEL_JUKEBOX)
+				M.playsound_local(get_turf(M), null, 100, channel = CHANNEL_JUKEBOX, S = song_played)
 			if(prob(5+(allowed(M)*4)) && M.canmove)
 				dance(M)
 		for(var/mob/L in rangers)

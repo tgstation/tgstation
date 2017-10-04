@@ -8,7 +8,7 @@
 	var/variance = 0
 	var/randomspread = 0 //use random spread for machineguns, instead of shotgun scatter
 	var/projectile_delay = 0
-	var/firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
+	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(..())
@@ -60,7 +60,7 @@
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
 	name = "general energy weapon"
-	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect/energy
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/get_shot_amount()
 	return min(round(chassis.cell.charge / energy_drain), projectiles_per_shot)
@@ -78,7 +78,7 @@
 	origin_tech = "magnets=3;combat=3;engineering=3"
 	energy_drain = 30
 	projectile = /obj/item/projectile/beam/laser
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/laser.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
@@ -98,7 +98,7 @@
 	origin_tech = "materials=4;combat=5;magnets=4"
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/laser.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
 	equip_cooldown = 35
@@ -127,6 +127,8 @@
 	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demolishing solid obstacles."
 	icon_state = "mecha_plasmacutter"
 	item_state = "plasmacutter"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	energy_drain = 30
 	origin_tech = "materials=3;plasmatech=4;engineering=3"
 	projectile = /obj/item/projectile/plasma/adv/mech
@@ -147,7 +149,7 @@
 	energy_drain = 20
 	equip_cooldown = 8
 	projectile = /obj/item/projectile/energy/electrode
-	fire_sound = 'sound/weapons/Taser.ogg'
+	fire_sound = 'sound/weapons/taser.ogg'
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker
@@ -167,7 +169,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target, params)
 	if(!action_checks(target))
 		return
-	playsound(chassis, 'sound/items/AirHorn.ogg', 100, 1)
+	playsound(chassis, 'sound/items/airhorn.ogg', 100, 1)
 	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(ishuman(M))
@@ -178,10 +180,10 @@
 		M.SetSleeping(0)
 		M.stuttering += 20
 		M.adjustEarDamage(0, 30)
-		M.Weaken(3)
+		M.Knockdown(60)
 		if(prob(30))
-			M.Stun(10)
-			M.Paralyse(4)
+			M.Stun(200)
+			M.Unconscious(80)
 		else
 			M.Jitter(500)
 
@@ -195,7 +197,7 @@
 //Base ballistic weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic
 	name = "general ballisic weapon"
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/gunshot.ogg'
 	var/projectiles
 	var/projectile_energy_cost
 
@@ -249,14 +251,14 @@
 	icon_state = "mecha_carbine"
 	origin_tech = "materials=4;combat=4"
 	equip_cooldown = 10
-	projectile = /obj/item/projectile/bullet/incendiary/shell
+	projectile = /obj/item/projectile/bullet/incendiary/fnx99
 	projectiles = 24
 	projectile_energy_cost = 15
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
 	desc = "A weapon for combat exosuits. A mime invention, field tests have shown that targets cannot even scream before going down."
-	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
+	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
 	icon_state = "mecha_mime"
 	equip_cooldown = 30
 	projectile = /obj/item/projectile/bullet/mime
@@ -269,7 +271,7 @@
 	icon_state = "mecha_scatter"
 	origin_tech = "combat=4"
 	equip_cooldown = 20
-	projectile = /obj/item/projectile/bullet/midbullet
+	projectile = /obj/item/projectile/bullet/scattershot
 	projectiles = 40
 	projectile_energy_cost = 25
 	projectiles_per_shot = 4
@@ -281,7 +283,7 @@
 	icon_state = "mecha_uac2"
 	origin_tech = "combat=4"
 	equip_cooldown = 10
-	projectile = /obj/item/projectile/bullet/weakbullet3
+	projectile = /obj/item/projectile/bullet/lmg
 	projectiles = 300
 	projectile_energy_cost = 20
 	projectiles_per_shot = 3
@@ -327,7 +329,7 @@
 	desc = "A weapon for combat exosuits. Launches primed flashbangs."
 	icon_state = "mecha_grenadelnchr"
 	origin_tech = "combat=4;engineering=4"
-	projectile = /obj/item/weapon/grenade/flashbang
+	projectile = /obj/item/grenade/flashbang
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	projectiles = 6
 	missile_speed = 1.5
@@ -335,18 +337,18 @@
 	equip_cooldown = 60
 	var/det_time = 20
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(var/obj/item/weapon/grenade/flashbang/F)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(var/obj/item/grenade/flashbang/F)
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_COORDJMP(T)]",0,1)
 	log_game("[key_name(chassis.occupant)] fired a [src] [COORD(T)]")
-	addtimer(CALLBACK(F, /obj/item/weapon/grenade/flashbang.proc/prime), det_time)
+	addtimer(CALLBACK(F, /obj/item/grenade/flashbang.proc/prime), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
 	name = "\improper SOB-3 grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed clusterbangs. You monster."
 	origin_tech = "combat=4;materials=4"
 	projectiles = 3
-	projectile = /obj/item/weapon/grenade/clusterbuster
+	projectile = /obj/item/grenade/clusterbuster
 	projectile_energy_cost = 1600 //getting off cheap seeing as this is 3 times the flashbangs held in the grenade launcher.
 	equip_cooldown = 90
 
@@ -354,7 +356,7 @@
 	name = "banana mortar"
 	desc = "Equipment for clown exosuits. Launches banana peels."
 	icon_state = "mecha_bananamrtr"
-	projectile = /obj/item/weapon/grown/bananapeel
+	projectile = /obj/item/grown/bananapeel
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
@@ -428,7 +430,7 @@
 
 /obj/item/punching_glove/throw_impact(atom/hit_atom)
 	if(!..())
-		if(istype(hit_atom, /atom/movable))
+		if(ismovableatom(hit_atom))
 			var/atom/movable/AM = hit_atom
 			AM.throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
 		qdel(src)

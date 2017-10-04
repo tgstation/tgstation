@@ -12,7 +12,7 @@
 	var/list/cameras = list()
 	var/list/turfs = list()
 	var/list/seenby = list()
-	var/visible = 0
+	var/visible = FALSE
 	var/changed = 0
 	var/updating = 0
 	var/x = 0

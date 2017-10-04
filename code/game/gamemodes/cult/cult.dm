@@ -21,6 +21,8 @@
 			return FALSE
 		if(M.mind.enslaved_to && !iscultist(M.mind.enslaved_to))
 			return FALSE
+		if(M.mind.unconvertable)
+			return FALSE
 	else
 		return FALSE
 	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
@@ -31,6 +33,7 @@
 	name = "cult"
 	config_tag = "cult"
 	antag_flag = ROLE_CULTIST
+	false_report_weight = 10
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 24
@@ -53,12 +56,11 @@
 
 /datum/game_mode/cult/pre_setup()
 	cult_objectives += "sacrifice"
-	cult_objectives += "eldergod"
 
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	//cult scaling goes here
@@ -102,10 +104,18 @@
 				GLOB.sac_image = reshape
 		else
 			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
+	if(!GLOB.summon_spots.len)
+		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
+			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
+			if((summon.z in GLOB.station_z_levels) && summon.valid_territory)
+				GLOB.summon_spots += summon
+	cult_objectives += "eldergod"
+
 	for(var/datum/mind/cult_mind in cultists_to_cult)
 		equip_cultist(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		to_chat(cult_mind.current, "<span class='userdanger'>You are a member of the cult!</span>")
+		cult_mind.current.playsound_local(get_turf(cult_mind.current), 'sound/ambience/antag/bloodcult.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
 		add_cultist(cult_mind, 0)
 	..()
 
@@ -118,9 +128,9 @@
 			mob.dna.remove_mutation(CLOWNMUT)
 
 	if(tome)
-		. += cult_give_item(/obj/item/weapon/tome, mob)
+		. += cult_give_item(/obj/item/tome, mob)
 	else
-		. += cult_give_item(/obj/item/weapon/paper/talisman/supply, mob)
+		. += cult_give_item(/obj/item/paper/talisman/supply, mob)
 	to_chat(mob, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
 
 /datum/game_mode/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
@@ -137,9 +147,9 @@
 		to_chat(mob, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
 		return 0
 	else
-		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].")
+		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
-			var/obj/item/weapon/storage/B = mob.back
+			var/obj/item/storage/B = mob.back
 			B.orient2hud(mob)
 			B.show_to(mob)
 		return 1
@@ -149,7 +159,7 @@
 		return 0
 	if(cult_mind.add_antag_datum(ANTAG_DATUM_CULT))
 		if(stun)
-			cult_mind.current.Paralyse(5)
+			cult_mind.current.Unconscious(100)
 		return 1
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, stun)
@@ -160,7 +170,7 @@
 		cult_datum.silent = silent
 		cult_datum.on_removal()
 		if(stun)
-			cult_mind.current.Paralyse(5)
+			cult_mind.current.Unconscious(100)
 		return TRUE
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
@@ -196,7 +206,7 @@
 	var/acolytes_survived = 0
 	for(var/datum/mind/cult_mind in cult)
 		if (cult_mind.current && cult_mind.current.stat != DEAD)
-			if(cult_mind.current.onCentcom() || cult_mind.current.onSyndieBase())
+			if(cult_mind.current.onCentCom() || cult_mind.current.onSyndieBase())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0
@@ -207,12 +217,10 @@
 /datum/game_mode/cult/declare_completion()
 
 	if(!check_cult_victory())
-		SSblackbox.set_details("round_end_result","win - cult win")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "win - cult win"
 		to_chat(world, "<span class='greentext'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>")
 	else
-		SSblackbox.set_details("round_end_result","loss - staff stopped the cult")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "loss - staff stopped the cult"
 		to_chat(world, "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>")
 
 	var/text = ""
@@ -240,11 +248,11 @@
 						SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
 				if("eldergod")
 					if(!eldergod)
-						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
+						explanation = "Summon Nar-Sie. The summoning can only be accomplished in [english_list(GLOB.summon_spots)].<span class='greenannounce'>Success!</span>"
 						SSblackbox.add_details("cult_objective","cult_narsie|SUCCESS")
 						SSticker.news_report = CULT_SUMMON
 					else
-						explanation = "Summon Nar-Sie. <span class='boldannounce'>Fail.</span>"
+						explanation = "Summon Nar-Sie. The summoning can only be accomplished in [english_list(GLOB.summon_spots)]<span class='boldannounce'>Fail.</span>"
 						SSblackbox.add_details("cult_objective","cult_narsie|FAIL")
 						SSticker.news_report = CULT_FAILURE
 
@@ -253,25 +261,24 @@
 	..()
 	return 1
 
+/datum/game_mode/cult/generate_report()
+	return "Some stations in your sector have reported evidence of blood sacrifice and strange magic. Ties to the Wizards' Federation have been proven not to exist, and many employees \
+			have disappeared; even Central Command employees light-years away have felt strange presences and at times hysterical compulsions. Interrogations point towards this being the work of \
+			the cult of Nar-Sie. If evidence of this cult is discovered aboard your station, extreme caution and extreme vigilance must be taken going forward, and all resources should be \
+			devoted to stopping this cult. Note that holy water seems to weaken and eventually return the minds of cultists that ingest it, and mindshield implants will prevent conversion \
+			altogether."
 
 /datum/game_mode/proc/datum_cult_completion()
 	var/text = ""
-	var/acolytes_survived = 0
-	for(var/datum/mind/cult_mind in cult)
-		if (cult_mind.current && cult_mind.current.stat != DEAD)
-			if(cult_mind.current.onCentcom() || cult_mind.current.onSyndieBase())
-				acolytes_survived++
 	var/cult_fail = 0
 	cult_fail += eldergod
 	if(!GLOB.sac_complete)
 		cult_fail++
 	if(!cult_fail)
-		SSblackbox.set_details("round_end_result","win - cult win")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "win - cult win"
 		to_chat(world, "<span class='greentext'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>")
 	else
-		SSblackbox.set_details("round_end_result","loss - staff stopped the cult")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "loss - staff stopped the cult"
 		to_chat(world, "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>")
 	if(cult_objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"

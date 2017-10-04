@@ -27,7 +27,7 @@
 	faction = list("cult")
 	status_flags = CANPUSH
 	movement_type = FLYING
-	loot = list(/obj/item/weapon/ectoplasm)
+	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
 
@@ -63,4 +63,4 @@
 		var/obj/item/device/soulstone/SS = O
 		SS.transfer_soul("SHADE", src, user)
 	else
-		..()
+		. = ..()

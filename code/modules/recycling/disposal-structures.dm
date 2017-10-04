@@ -97,7 +97,7 @@
 	return null
 
 // merge two holder objects
-// used when a a holder meets a stuck holder
+// used when a holder meets a stuck holder
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
 	for(var/atom/movable/AM in other)
 		AM.loc = src		// move everything in other holder to this one
@@ -121,8 +121,8 @@
 	T.assume_air(gas)
 	T.air_update_turf()
 
-/obj/structure/disposalholder/allow_drop()
-	return 1
+/obj/structure/disposalholder/AllowDrop()
+	return TRUE
 
 /obj/structure/disposalholder/ex_act(severity, target)
 	return
@@ -133,13 +133,12 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	on_blueprints = TRUE
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
 	dir = 0// dir will contain dominant direction for junction pipes
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
@@ -297,11 +296,11 @@
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = I
+	if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/W = I
 		if(can_be_deconstructed(user))
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start slicing the disposal pipe...</span>")
 				// check if anything changed over 2 seconds
 				if(do_after(user,30, target = src))
@@ -317,18 +316,18 @@
 
 // called when pipe is cut with welder
 /obj/structure/disposalpipe/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			if(stored)
 				var/turf/T = loc
 				stored.loc = T
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
-				stored.density = 0
-				stored.anchored = 1
+				stored.density = FALSE
+				stored.anchored = TRUE
 				stored.update_icon()
 		else
-			for(var/D in GLOB.cardinal)
+			for(var/D in GLOB.cardinals)
 				if(D & dpdir)
 					var/obj/structure/disposalpipe/broken/P = new(src.loc)
 					P.setDir(D)
@@ -336,6 +335,7 @@
 
 
 /obj/structure/disposalpipe/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 
@@ -343,7 +343,7 @@
 /obj/structure/disposalpipe/shuttleRotate(rotation)
 	..()
 	var/new_dpdir = 0
-	for(var/D in GLOB.cardinal)
+	for(var/D in GLOB.cardinals)
 		if(dpdir & D)
 			new_dpdir = new_dpdir | angle2dir(rotation+dir2angle(D))
 	dpdir = new_dpdir
@@ -555,9 +555,7 @@
 /obj/structure/disposalpipe/trunk/Initialize()
 	. = ..()
 	dpdir = dir
-	spawn(1)
-		getlinked()
-
+	getlinked()
 	update()
 
 /obj/structure/disposalpipe/trunk/Destroy()
@@ -639,8 +637,8 @@
 	desc = "An outlet for the pneumatic disposal system."
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "outlet"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
@@ -658,12 +656,11 @@
 	else
 		stored = new (src, DISP_END_OUTLET,dir)
 
-	spawn(1)
-		target = get_ranged_target_turf(src, dir, 10)
+	target = get_ranged_target_turf(src, dir, 10)
 
-		trunk = locate() in src.loc
-		if(trunk)
-			trunk.linked = src	// link the pipe trunk to self
+	trunk = locate() in loc
+	if(trunk)
+		trunk.linked = src	// link the pipe trunk to self
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
@@ -694,7 +691,7 @@
 
 /obj/structure/disposaloutlet/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		if(mode==0)
 			mode=1
 			playsound(src.loc, I.usesound, 50, 1)
@@ -704,10 +701,10 @@
 			playsound(src.loc, I.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You attach the screws around the power connection.</span>")
 
-	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
-		var/obj/item/weapon/weldingtool/W = I
+	else if(istype(I, /obj/item/weldingtool) && mode==1)
+		var/obj/item/weldingtool/W = I
 		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 			if(do_after(user,20*I.toolspeed, target = src))
 				if(!src || !W.isOn()) return
@@ -715,8 +712,8 @@
 				stored.loc = loc
 				src.transfer_fingerprints_to(stored)
 				stored.update_icon()
-				stored.anchored = 0
-				stored.density = 1
+				stored.anchored = FALSE
+				stored.density = TRUE
 				qdel(src)
 	else
 		return ..()

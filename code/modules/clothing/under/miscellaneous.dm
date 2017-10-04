@@ -104,16 +104,16 @@
 	can_adjust = 0
 
 /obj/item/clothing/under/rank/centcom_officer
-	desc = "It's a jumpsuit worn by Centcom Officers."
-	name = "\improper Centcom officer's jumpsuit"
+	desc = "It's a jumpsuit worn by CentCom Officers."
+	name = "\improper CentCom officer's jumpsuit"
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
 	alt_covers_chest = 1
 
 /obj/item/clothing/under/rank/centcom_commander
-	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
-	name = "\improper Centcom officer's jumpsuit"
+	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
+	name = "\improper CentCom officer's jumpsuit"
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
@@ -210,6 +210,14 @@
 	icon_state = "black_suit_fem"
 	item_state = "black_suit_fem"
 	item_color = "black_suit_fem"
+
+/obj/item/clothing/under/suit_jacket/green
+	name = "green suit"
+	desc = "A green suit and yellow necktie. Baller."
+	icon_state = "green_suit"
+	item_state = "dg_suit"
+	item_color = "green_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/red
 	name = "red suit"
@@ -379,7 +387,7 @@
 
 /obj/item/clothing/under/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -495,6 +503,11 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
+/obj/item/clothing/under/maid/Initialize()
+	. = ..()
+	var/obj/item/clothing/accessory/maidapron/A = new (src)
+	attach_accessory(A)
+
 /obj/item/clothing/under/janimaid
 	name = "maid uniform"
 	desc = "A simple maid uniform for housekeeping."
@@ -571,6 +584,9 @@
 	icon_state = "jester"
 	item_color = "jester"
 	can_adjust = 0
+
+/obj/item/clothing/under/jester/alt
+	icon_state = "jester2"
 
 /obj/item/clothing/under/geisha
 	name = "geisha suit"
@@ -654,3 +670,63 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
+
+/obj/item/clothing/under/mummy
+	name = "mummy wrapping"
+	desc = "Return the slab or suffer my stale references."
+	icon_state = "mummy"
+	item_state = "mummy"
+	item_color = "mummy"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+	resistance_flags = NONE
+
+/obj/item/clothing/under/scarecrow
+	name = "scarecrow clothes"
+	desc = "Perfect camouflage for hiding in botany."
+	icon_state = "scarecrow"
+	item_state = "scarecrow"
+	item_color = "scarecrow"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+	resistance_flags = NONE
+
+/obj/item/clothing/under/draculass
+	name = "draculass coat"
+	desc = "A dress inspired by the ancient era known as the victorian era"
+	icon_state = "draculass"
+	item_state = "draculass"
+	item_color = "draculass"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/drfreeze
+	name = "doctor freeze's jumpsuit"
+	desc = "A modified scientist jumpsuit to look extra cool."
+	icon_state = "drfreeze"
+	item_state = "drfreeze"
+	item_color = "drfreeze"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/lobster
+	name = "foam lobster suit"
+	desc = "Who beheaded the college mascot?"
+	icon_state = "lobster"
+	item_state = "lobster"
+	item_color = "lobster"
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+
+/obj/item/clothing/under/skeleton
+	name = "skeleton jumpsuit"
+	desc = "A black jumpsuit with a white bone pattern printed on it. Spooky!"
+	icon_state = "skeleton"
+	item_state = "skeleton"
+	item_color = "skeleton"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+	resistance_flags = NONE

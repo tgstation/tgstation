@@ -2,14 +2,15 @@
 	desc = "A space wizard's magic wall."
 	name = "FORCEWALL"
 	icon_state = "m_shield"
-	anchored = 1
+	anchored = TRUE
 	opacity = 0
-	density = 1
+	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/effect/forcefield/cult
 	desc = "An unholy shield that blocks all attacks."
 	name = "glowing wall"
+	icon = 'icons/effects/cult_effects.dmi'
 	icon_state = "cultshield"
 
 ///////////Mimewalls///////////

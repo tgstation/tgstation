@@ -4,9 +4,8 @@
 	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
 	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "close"
-	anchored = 1
-	density = 1
-	obj_integrity = 250
+	anchored = TRUE
+	density = TRUE
 	max_integrity = 250
 
 	var/obj/item/clothing/suit/space/suit = null
@@ -27,6 +26,8 @@
 	var/uv = FALSE
 	var/uv_super = FALSE
 	var/uv_cycles = 6
+	var/message_cooldown
+	var/breakout_time = 300
 
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
@@ -36,7 +37,7 @@
 /obj/machinery/suit_storage_unit/captain
 	suit_type = /obj/item/clothing/suit/space/hardsuit/captain
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
+	storage_type = /obj/item/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
@@ -54,12 +55,12 @@
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/weapon/tank/internals/oxygen
+	storage_type = /obj/item/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	mask_type = /obj/item/clothing/mask/gas
-	storage_type = /obj/item/weapon/watertank/atmos
+	storage_type = /obj/item/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
@@ -80,30 +81,30 @@
 /obj/machinery/suit_storage_unit/syndicate
 	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	storage_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+	storage_type = /obj/item/tank/jetpack/oxygen/harness
 
 /obj/machinery/suit_storage_unit/ert/command
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ert/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ert/engineer
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/ert/medical
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/med
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
-/obj/machinery/suit_storage_unit/New()
-	..()
+/obj/machinery/suit_storage_unit/Initialize()
+	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)
 	if(suit_type)
 		suit = new suit_type(src)
@@ -116,18 +117,10 @@
 	update_icon()
 
 /obj/machinery/suit_storage_unit/Destroy()
-	if(suit)
-		qdel(suit)
-		suit = null
-	if(helmet)
-		qdel(helmet)
-		helmet = null
-	if(mask)
-		qdel(mask)
-		mask = null
-	if(storage)
-		qdel(storage)
-		storage = null
+	QDEL_NULL(suit)
+	QDEL_NULL(helmet)
+	QDEL_NULL(mask)
+	QDEL_NULL(storage)
 	return ..()
 
 /obj/machinery/suit_storage_unit/update_icon()
@@ -170,7 +163,7 @@
 	occupant = null
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		open_machine()
 		dump_contents()
 		new /obj/item/stack/sheet/metal (loc, 2)
@@ -241,7 +234,7 @@
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
-			playsound(src, 'sound/machines/AirlockClose.ogg', 25, 1)
+			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
 			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				I.clean_blood()
 				I.fingerprints = list()
@@ -258,12 +251,36 @@
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
-	container_resist(user)
+	if(locked)
+		if(message_cooldown <= world.time)
+			message_cooldown = world.time + 50
+			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
+		return
+	open_machine()
+	dump_contents()
 
 /obj/machinery/suit_storage_unit/container_resist(mob/living/user)
+	if(!locked)
+		open_machine()
+		dump_contents()
+		return
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
+		"<span class='notice'>You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+		"<span class='italics'>You hear a thump from [src].</span>")
+	if(do_after(user,(breakout_time), target = src))
+		if(!user || user.stat != CONSCIOUS || user.loc != src )
+			return
+		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+			"<span class='notice'>You successfully break out of [src]!</span>")
+		open_machine()
+		dump_contents()
+
 	add_fingerprint(user)
 	if(locked)
-		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
+		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
+			"<span class='notice'>You start kicking against the doors...</span>")
 		addtimer(CALLBACK(src, .proc/resist_open, user), 300)
 	else
 		open_machine()
@@ -271,7 +288,8 @@
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == 0) // Check they're still here.
-		visible_message("<span class='notice'>You see [user] bursts out of [src]!</span>", "<span class='notice'>You escape the cramped confines of [src]!</span>")
+		visible_message("<span class='notice'>You see [user] bursts out of [src]!</span>", \
+			"<span class='notice'>You escape the cramped confines of [src]!</span>")
 		open_machine()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
@@ -321,7 +339,7 @@
 
 	return ..()
 
-/obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

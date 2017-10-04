@@ -1,6 +1,36 @@
 
 //Academy Items
 
+/obj/item/paper/fluff/awaymissions/academy/console_maint
+	name = "Console Maintenance"
+	info = "We're upgrading to the latest mainframes for our consoles, the shipment should be in before spring break is over!"
+
+/obj/item/paper/fluff/awaymissions/academy/class/automotive
+	name = "Automotive Repair 101"
+
+/obj/item/paper/fluff/awaymissions/academy/class/pyromancy
+	name = "Pyromancy 250"
+
+/obj/item/paper/fluff/awaymissions/academy/class/biology
+	name = "Biology Lab"
+
+/obj/item/paper/fluff/awaymissions/academy/grade/aplus
+	name = "Summoning Midterm Exam"
+	info = "Grade: A+ Educator's Notes: Excellent form."
+	
+/obj/item/paper/fluff/awaymissions/academy/grade/bminus
+	name = "Summoning Midterm Exam"
+	info = "Grade: B- Educator's Notes: Keep applying yourself, you're showing improvement."
+
+/obj/item/paper/fluff/awaymissions/academy/grade/dminus
+	name = "Summoning Midterm Exam"
+	info = "Grade: D- Educator's Notes: SEE ME AFTER CLASS."
+	
+/obj/item/paper/fluff/awaymissions/academy/grade/failure
+	name = "Pyromancy Evaluation"
+	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutilage."
+
+
 /obj/singularity/academy
 	dissipate = 0
 	move_self = 0
@@ -27,8 +57,7 @@
 	desc = "Made by Abjuration Inc"
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "forge"
-	anchored = 1
-	obj_integrity = 200
+	anchored = TRUE
 	max_integrity = 200
 	var/mob/living/current_wizard = null
 	var/next_check = 0
@@ -65,7 +94,7 @@
 
 /obj/structure/academy_wizard_spawner/proc/give_control()
 	set waitfor = FALSE
-	
+
 	if(!current_wizard)
 		return
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, be_special_flag = ROLE_WIZARD, M = current_wizard)
@@ -82,7 +111,7 @@
 
 	var/mob/living/carbon/human/wizbody = new(T)
 	wizbody.equipOutfit(/datum/outfit/wizard/academy)
-	var/obj/item/weapon/implant/exile/Implant = new/obj/item/weapon/implant/exile(wizbody)
+	var/obj/item/implant/exile/Implant = new/obj/item/implant/exile(wizbody)
 	Implant.implant(wizbody)
 	wizbody.faction |= "wizard"
 	wizbody.real_name = "Academy Teacher"
@@ -117,9 +146,9 @@
 	r_hand = null
 	suit = /obj/item/clothing/suit/wizrobe/red
 	head = /obj/item/clothing/head/wizard/red
-	backpack_contents = list(/obj/item/weapon/storage/box/survival = 1)
+	backpack_contents = list(/obj/item/storage/box/survival = 1)
 
-/obj/item/weapon/dice/d20/fate
+/obj/item/dice/d20/fate
 	name = "Die of Fate"
 	desc = "A die with twenty sides. You can feel unearthly energies radiating from it. Using this might be VERY risky."
 	icon_state = "d20"
@@ -128,10 +157,10 @@
 	var/reusable = 1
 	var/used = 0
 
-/obj/item/weapon/dice/d20/fate/one_use
+/obj/item/dice/d20/fate/one_use
 	reusable = 0
 
-/obj/item/weapon/dice/d20/fate/diceroll(mob/user)
+/obj/item/dice/d20/fate/diceroll(mob/user)
 	..()
 	if(!used)
 		if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
@@ -142,13 +171,13 @@
 		else
 			effect(user,result)
 
-/obj/item/weapon/dice/d20/fate/equipped(mob/user, slot)
+/obj/item/dice/d20/fate/equipped(mob/user, slot)
 	if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
 		to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans! You should leave it alone.</span>")
 		user.drop_item()
 
 
-/obj/item/weapon/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
+/obj/item/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
 	if(!reusable)
 		used = 1
 	visible_message("<span class='userdanger'>The die flare briefly.</span>")
@@ -167,7 +196,7 @@
 		if(4)
 			//Destroy Equipment
 			for (var/obj/item/I in user)
-				if (istype(I, /obj/item/weapon/implant))
+				if (istype(I, /obj/item/implant))
 					continue
 				qdel(I)
 		if(5)
@@ -179,9 +208,9 @@
 			S.speedmod += 1
 		if(7)
 			//Throw
-			user.Stun(3)
+			user.Stun(60)
 			user.adjustBruteLoss(50)
-			var/throw_dir = pick(GLOB.cardinal)
+			var/throw_dir = pick(GLOB.cardinals)
 			var/atom/throw_target = get_edge_target_turf(user, throw_dir)
 			user.throw_at(throw_target, 200, 4)
 		if(8)
@@ -196,7 +225,7 @@
 			visible_message("<span class='notice'>[src] roll perfectly.</span>")
 		if(11)
 			//Cookie
-			var/obj/item/weapon/reagent_containers/food/snacks/cookie/C = new(get_turf(src))
+			var/obj/item/reagent_containers/food/snacks/cookie/C = new(get_turf(src))
 			C.name = "Cookie of Fate"
 		if(12)
 			//Healing
@@ -209,15 +238,15 @@
 				if(rand(0,1))
 					new /obj/item/stack/spacecash/c1000(T)
 				else
-					var/obj/item/weapon/storage/bag/money/M = new(T)
+					var/obj/item/storage/bag/money/M = new(T)
 					for(var/i in 1 to rand(5,50))
-						new /obj/item/weapon/coin/gold(M)
+						new /obj/item/coin/gold(M)
 		if(14)
 			//Free Gun
-			new /obj/item/weapon/gun/ballistic/revolver/mateba(get_turf(src))
+			new /obj/item/gun/ballistic/revolver/mateba(get_turf(src))
 		if(15)
 			//Random One-use spellbook
-			new /obj/item/weapon/spellbook/oneuse/random(get_turf(src))
+			new /obj/item/spellbook/oneuse/random(get_turf(src))
 		if(16)
 			//Servant & Servant Summon
 			var/mob/living/carbon/human/H = new(get_turf(src))
@@ -241,10 +270,10 @@
 
 		if(17)
 			//Tator Kit
-			new /obj/item/weapon/storage/box/syndicate/(get_turf(src))
+			new /obj/item/storage/box/syndicate/(get_turf(src))
 		if(18)
 			//Captain ID
-			new /obj/item/weapon/card/id/captains_spare(get_turf(src))
+			new /obj/item/card/id/captains_spare(get_turf(src))
 		if(19)
 			//Instrinct Resistance
 			to_chat(user, "<span class='notice'>You feel robust.</span>")

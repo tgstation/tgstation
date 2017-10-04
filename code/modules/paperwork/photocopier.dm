@@ -12,24 +12,23 @@
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "photocopier"
-	anchored = 1
-	density = 1
-	use_power = 1
+	anchored = TRUE
+	density = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
-	obj_integrity = 300
 	max_integrity = 300
 	integrity_failure = 100
-	var/obj/item/weapon/paper/copy = null	//what's in the copier!
-	var/obj/item/weapon/photo/photocopy = null
+	var/obj/item/paper/copy = null	//what's in the copier!
+	var/obj/item/photo/photocopy = null
 	var/obj/item/documents/doccopy = null
 	var/copies = 1	//how many copies to print!
 	var/toner = 40 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 	var/greytoggle = "Greyscale"
 	var/mob/living/ass //i can't believe i didn't write a stupid-ass comment about this var when i first coded asscopy.
-	var/busy = 0
+	var/busy = FALSE
 
 /obj/machinery/photocopier/attack_ai(mob/user)
 	return attack_hand(user)
@@ -68,13 +67,13 @@
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0 && !busy && copy)
 					var/copy_as_paper = 1
-					if(istype(copy, /obj/item/weapon/paper/contract/employment))
-						var/obj/item/weapon/paper/contract/employment/E = copy
-						var/obj/item/weapon/paper/contract/employment/C = new /obj/item/weapon/paper/contract/employment (loc, E.target.current)
+					if(istype(copy, /obj/item/paper/contract/employment))
+						var/obj/item/paper/contract/employment/E = copy
+						var/obj/item/paper/contract/employment/C = new /obj/item/paper/contract/employment (loc, E.target.current)
 						if(C)
 							copy_as_paper = 0
 					if(copy_as_paper)
-						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
+						var/obj/item/paper/c = new /obj/item/paper (loc)
 						if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
 							if(toner > 10)	//lots of toner, make it dark
 								c.info = "<font color = #101010>"
@@ -94,16 +93,16 @@
 								c.stamped = copy.stamped.Copy()
 							c.copy_overlays(copy, TRUE)
 							toner--
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 			updateUsrDialog()
 		else if(photocopy)
 			for(var/i = 0, i < copies, i++)
 				if(toner >= 5 && !busy && photocopy)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
-					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
+					var/obj/item/photo/p = new /obj/item/photo (loc)
 					var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 					var/icon/img = icon(photocopy.img)
 					if(greytoggle == "Greyscale")
@@ -127,9 +126,9 @@
 					p.pixel_x = rand(-10, 10)
 					p.pixel_y = rand(-10, 10)
 					p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 		else if(doccopy)
@@ -137,9 +136,9 @@
 				if(toner > 5 && !busy && doccopy)
 					new /obj/item/documents/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 			updateUsrDialog()
@@ -150,7 +149,7 @@
 					to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>" )
 					break
 				else if(toner >= 5 && !busy && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
-					if(isalienadult(ass) || istype(ass,/mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
+					if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 						temp_img = icon('icons/ass/assalien.png')
 					else if(ishuman(ass)) //Suit checks are in check_ass
 						if(ass.gender == MALE)
@@ -163,20 +162,20 @@
 						temp_img = icon('icons/ass/assdrone.png')
 					else
 						break
-					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
+					var/obj/item/photo/p = new /obj/item/photo (loc)
 					p.desc = "You see [ass]'s ass on the photo."
 					p.pixel_x = rand(-10, 10)
 					p.pixel_y = rand(-10, 10)
 					p.img = temp_img
 					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
-					var/icon/ic = icon('icons/obj/items.dmi',"photo")
+					var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
 					small_img.Scale(8, 8)
-					ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+					ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 					p.icon = ic
 					toner -= 5
-					busy = 1
+					busy = TRUE
 					sleep(15)
-					busy = 0
+					busy = FALSE
 				else
 					break
 		updateUsrDialog()
@@ -215,7 +214,7 @@
 			for(var/datum/picture/t in tempAI.aicamera.aipictures)
 				nametemp += t.fields["name"]
 			find = input("Select image (numbered in order taken)") in nametemp
-			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
+			var/obj/item/photo/p = new /obj/item/photo (loc)
 			for(var/datum/picture/q in tempAI.aicamera.aipictures)
 				if(q.fields["name"] == find)
 					selection = q
@@ -229,9 +228,9 @@
 			p.pixel_x = rand(-10, 10)
 			p.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
-			busy = 1
+			busy = TRUE
 			sleep(15)
-			busy = 0
+			busy = FALSE
 		updateUsrDialog()
 	else if(href_list["colortoggle"])
 		if(greytoggle == "Greyscale")
@@ -255,9 +254,9 @@
 	to_chat(user, "<span class='notice'>You take [O] out of [src].</span>")
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/paper))
+	if(istype(O, /obj/item/paper))
 		if(copier_empty())
-			if(istype(O,/obj/item/weapon/paper/contract/infernal))
+			if(istype(O, /obj/item/paper/contract/infernal))
 				to_chat(user, "<span class='warning'>[src] smokes, smelling of brimstone!</span>")
 				resistance_flags |= FLAMMABLE
 				fire_act()
@@ -269,7 +268,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is already something in [src]!</span>")
 
-	else if(istype(O, /obj/item/weapon/photo))
+	else if(istype(O, /obj/item/photo))
 		if(copier_empty())
 			if(!user.drop_item())
 				return
@@ -298,7 +297,7 @@
 		else
 			to_chat(user, "<span class='warning'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 
-	else if(istype(O, /obj/item/weapon/wrench))
+	else if(istype(O, /obj/item/wrench))
 		if(isinspace())
 			to_chat(user, "<span class='warning'>There's nothing to fasten [src] to!</span>")
 			return
@@ -315,7 +314,7 @@
 		return ..()
 
 /obj/machinery/photocopier/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(toner > 0)
 			new /obj/effect/decal/cleanable/oil(get_turf(src))
 			toner = 0

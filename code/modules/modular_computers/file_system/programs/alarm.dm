@@ -13,7 +13,7 @@
 
 	var/has_alert = 0
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
-	var/alarm_z = list(ZLEVEL_STATION,ZLEVEL_LAVALAND)
+	var/alarm_z = list(ZLEVEL_STATION_PRIMARY,ZLEVEL_LAVALAND)
 
 /datum/computer_file/program/alarm_monitor/process_tick()
 	..()

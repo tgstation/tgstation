@@ -4,7 +4,7 @@
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -89
 	pixel_y = -85
-	density = 0
+	density = FALSE
 	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
@@ -30,17 +30,59 @@
 /obj/singularity/narsie/large/Initialize()
 	. = ..()
 	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
-	send_to_playing_players(pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'))
+	sound_to_playing_players('sound/creatures/narsie_rises.ogg')
 
 	var/area/A = get_area(src)
 	if(A)
-		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/effects.dmi', "ghostalertsie")
+		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult_effects.dmi', "ghostalertsie")
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
+	INVOKE_ASYNC(src, .proc/narsie_spawn_animation)
 
-	narsie_spawn_animation()
+/obj/singularity/narsie/large/cult  // For the new cult ending, guaranteed to end the round within 3 minutes
+	var/list/souls_needed = list()
+	var/soul_goal = 0
+	var/souls = 0
+	var/resolved = FALSE
 
-	sleep(19)
-	SSshuttle.emergency.request(null, set_coefficient = 0) //instantly arrives
+/obj/singularity/narsie/large/cult/Initialize()
+	. = ..()
+	GLOB.cult_narsie = src
+	deltimer(GLOB.blood_target_reset_timer)
+	GLOB.blood_target = src
+	for(var/datum/mind/cult_mind in SSticker.mode.cult)
+		if(isliving(cult_mind.current))
+			var/mob/living/L = cult_mind.current
+			L.narsie_act()
+	for(var/mob/living/player in GLOB.player_list)
+		if(player.stat != DEAD && (player.loc.z in GLOB.station_z_levels) && !iscultist(player))
+			souls_needed[player] = TRUE
+	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.6)
+	INVOKE_ASYNC(src, .proc/begin_the_end)
+
+/obj/singularity/narsie/large/cult/proc/begin_the_end()
+	sleep(50)
+	priority_announce("An acausal dimensional event has been detected in your sector. Event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating solutions. SOLUTION ETA: 60 SECONDS.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
+	sleep(550)
+	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: TWO MINUTES. ","Central Command Higher Dimensional Affairs")
+	sleep(50)
+	set_security_level("delta")
+	SSshuttle.registerHostileEnvironment(src)
+	SSshuttle.lockdown = TRUE
+	sleep(1150)
+	if(resolved == FALSE)
+		resolved = TRUE
+		sound_to_playing_players('sound/machines/alarm.ogg')
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
+
+/obj/singularity/narsie/large/cult/Destroy()
+	GLOB.cult_narsie = null
+	return ..()
+
+/proc/ending_helper()
+	SSticker.force_ending = 1
+
+/proc/cult_ending_helper(var/no_explosion = 0)
+	Cinematic(CINEMATIC_CULT,world,CALLBACK(GLOBAL_PROC,.ending_helper))
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
@@ -65,7 +107,7 @@
 	return clashing
 
 
-/obj/singularity/narsie/Bump(atom/A)
+/obj/singularity/narsie/Collide(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
 		T = get_step(A, A.dir) //please don't slam into a window like a bird, nar-sie
@@ -77,7 +119,7 @@
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>")
-				M.apply_effect(3, STUN)
+				M.apply_effect(60, STUN)
 
 
 /obj/singularity/narsie/consume(atom/A)
@@ -134,7 +176,7 @@
 		return
 	to_chat(target, "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>")
 	target = food
-	if(isliving(target))
+	if(ishuman(target))
 		to_chat(target, "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>")
 	else
 		to_chat(target, "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>")
@@ -148,7 +190,7 @@
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 1
 	for(var/atom/X in urange(consume_range,src,1))
-		if(isturf(X) || istype(X, /atom/movable))
+		if(isturf(X) || ismovableatom(X))
 			consume(X)
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 0
@@ -163,4 +205,6 @@
 	sleep(11)
 	move_self = 1
 	icon = initial(icon)
+
+
 

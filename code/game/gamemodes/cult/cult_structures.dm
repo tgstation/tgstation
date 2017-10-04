@@ -1,6 +1,6 @@
 /obj/structure/destructible/cult
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
 	var/cooldowntime = 0
 	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
@@ -10,7 +10,7 @@
 	..()
 	to_chat(user, "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>")
 	if((iscultist(user) || isobserver(user)) && cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [getETA()].</span>")
+		to_chat(user, "<span class='cultitalic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 
 /obj/structure/destructible/cult/examine_status(mob/user)
 	if(iscultist(user) || isobserver(user))
@@ -33,7 +33,7 @@
 		..()
 
 /obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
+	if(istype(I, /obj/item/tome) && iscultist(user))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>")
 		if(!anchored)
@@ -50,13 +50,6 @@
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
-/obj/structure/destructible/cult/proc/getETA()
-	var/time = (cooldowntime - world.time)/600
-	var/eta = "[round(time, 1)] minutes"
-	if(time <= 1)
-		time = (cooldowntime - world.time)*0.1
-		eta = "[round(time, 1)] seconds"
-	return eta
 
 /obj/structure/destructible/cult/talisman
 	name = "altar"
@@ -72,17 +65,17 @@
 		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>")
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>")
+		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
 	var/choice = alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Zealot's Blindfold","Flask of Unholy Water")
 	var/pickedtype
 	switch(choice)
 		if("Eldritch Whetstone")
-			pickedtype = /obj/item/weapon/sharpener/cult
+			pickedtype = /obj/item/sharpener/cult
 		if("Zealot's Blindfold")
 			pickedtype = /obj/item/clothing/glasses/night/cultblind
 		if("Flask of Unholy Water")
-			pickedtype = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
+			pickedtype = /obj/item/reagent_containers/food/drinks/bottle/unholywater
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
@@ -105,17 +98,23 @@
 		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>")
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>")
+		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar-Sien Hardsuit")
+	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
 	var/pickedtype
 	switch(choice)
 		if("Shielded Robe")
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
-		if("Nar-Sien Hardsuit")
-			pickedtype = /obj/item/clothing/suit/space/hardsuit/cult
+		if("Bastard Sword")
+			if((world.time - SSticker.round_start_time) >= 12000)
+				pickedtype = /obj/item/twohanded/required/cult_bastard
+			else
+				cooldowntime = 12000 - (world.time - SSticker.round_start_time)
+				to_chat(user, "<span class='cultitalic'>The forge fires are not yet hot enough for this weapon, give it another [DisplayTimeText(cooldowntime)].</span>")
+				cooldowntime = 0
+				return
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
@@ -129,7 +128,7 @@
 	icon_state = "pylon"
 	light_range = 5
 	light_color = LIGHT_COLOR_RED
-	break_sound = 'sound/effects/Glassbr2.ogg'
+	break_sound = 'sound/effects/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
 	var/heal_delay = 25
 	var/last_heal = 0
@@ -152,7 +151,7 @@
 		for(var/mob/living/L in range(5, src))
 			if(iscultist(L) || isshade(L) || isconstruct(L))
 				if(L.health != L.maxHealth)
-					new /obj/effect/overlay/temp/heal(get_turf(src), "#960000")
+					new /obj/effect/temp_visual/heal(get_turf(src), "#960000")
 					if(ishuman(L))
 						L.adjustBruteLoss(-1, 0)
 						L.adjustFireLoss(-1, 0)
@@ -175,7 +174,7 @@
 				/turf/closed,
 				/turf/open/floor/engine/cult,
 				/turf/open/space,
-				/turf/open/floor/plating/lava,
+				/turf/open/lava,
 				/turf/open/chasm))
 			if(is_type_in_typecache(T, blacklisted_pylon_turfs))
 				continue
@@ -190,7 +189,7 @@
 		else
 			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
 			if(F)
-				new /obj/effect/overlay/temp/cult/turf/floor(F)
+				new /obj/effect/temp_visual/cult/turf/floor(F)
 			else
 				// Are we in space or something? No cult turfs or
 				// convertable turfs?
@@ -212,13 +211,13 @@
 		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>")
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>")
+		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
 	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Walker Set")
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Supply Talisman")
-			pickedtype += /obj/item/weapon/paper/talisman/supply/weak
+			pickedtype += /obj/item/paper/talisman/supply/weak
 		if("Shuttle Curse")
 			pickedtype += /obj/item/device/shuttle_curse
 		if("Veil Walker Set")
@@ -235,5 +234,5 @@
 	desc = "You're pretty sure that abyss is staring back."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE

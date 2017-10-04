@@ -7,7 +7,7 @@
 			if(B.blob_core || !B.placed)
 				return 0
 	if(!GLOB.blob_cores.len) //blob is dead
-		if(config.continuous["blob"])
+		if(CONFIG_GET(keyed_flag_list/continuous)["blob"])
 			message_sent = FALSE //disable the win count at this point
 			continuous_sanity_checked = 1 //Nonstandard definition of "alive" gets past the check otherwise
 			SSshuttle.clearHostileEnvironment(src)
@@ -20,7 +20,7 @@
 	if(round_converted) //So badmin blobs later don't step on the dead natural blobs metaphorical toes
 		..()
 	if(blobwincount <= GLOB.blobs_legit.len)
-		SSblackbox.set_details("round_end_result","win - blob took over")
+		SSticker.mode_result = "win - blob took over"
 		to_chat(world, "<FONT size = 3><B>The blob has taken over the station!</B></FONT>")
 		to_chat(world, "<B>The entire station was eaten by the Blob!</B>")
 		log_game("Blob mode completed with a blob victory.")
@@ -28,7 +28,7 @@
 		SSticker.news_report = BLOB_WIN
 
 	else if(station_was_nuked)
-		SSblackbox.set_details("round_end_result","halfwin - nuke")
+		SSticker.mode_result = "halfwin - nuke"
 		to_chat(world, "<FONT size = 3><B>Partial Win: The station has been destroyed!</B></FONT>")
 		to_chat(world, "<B>Directive 7-12 has been successfully carried out, preventing the Blob from spreading.</B>")
 		log_game("Blob mode completed with a tie (station destroyed).")
@@ -36,7 +36,7 @@
 		SSticker.news_report = BLOB_NUKE
 
 	else if(!GLOB.blob_cores.len)
-		SSblackbox.set_details("round_end_result","loss - blob eliminated")
+		SSticker.mode_result = "loss - blob eliminated"
 		to_chat(world, "<FONT size = 3><B>The staff has won!</B></FONT>")
 		to_chat(world, "<B>The alien organism has been eradicated from the station!</B>")
 		log_game("Blob mode completed with a crew victory.")
@@ -62,7 +62,7 @@
 	return ..()
 
 /datum/game_mode/proc/auto_declare_completion_blob()
-	if(istype(SSticker.mode,/datum/game_mode/blob) )
+	if(istype(SSticker.mode, /datum/game_mode/blob) )
 		var/datum/game_mode/blob/blob_mode = src
 		if(blob_mode.blob_overminds.len)
 			var/text = "<FONT size = 2><B>The blob[(blob_mode.blob_overminds.len > 1 ? "s were" : " was")]:</B></FONT>"

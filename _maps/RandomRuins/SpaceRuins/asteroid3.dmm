@@ -16,7 +16,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "f" = (
-/obj/item/weapon/pickaxe/diamond,
+/obj/item/pickaxe/diamond,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 

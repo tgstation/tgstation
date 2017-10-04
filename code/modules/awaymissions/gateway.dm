@@ -5,8 +5,8 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/active = 0
 	var/checkparts = TRUE
@@ -21,8 +21,8 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	if(!istype(src, /obj/machinery/gateway/centerstation) && !istype(src, /obj/machinery/gateway/centeraway))
 		switch(dir)
 			if(SOUTH,SOUTHEAST,SOUTHWEST)
-				density = 0
-	..()
+				density = FALSE
+	return ..()
 
 /obj/machinery/gateway/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
@@ -75,10 +75,13 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/proc/toggleon(mob/user)
 	return FALSE
 
-/obj/machinery/gateway/centerstation/New()
-	..()
+/obj/machinery/gateway/centerstation/Initialize()
+	. = ..()
 	if(!GLOB.the_gateway)
 		GLOB.the_gateway = src
+	update_icon()
+	wait = world.time + CONFIG_GET(number/gateway_delay)	//+ thirty minutes default
+	awaygate = locate(/obj/machinery/gateway/centeraway)
 
 /obj/machinery/gateway/centerstation/Destroy()
 	if(GLOB.the_gateway == src)
@@ -89,18 +92,12 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/centerstation
 	density = TRUE
 	icon_state = "offcenter"
-	use_power = TRUE
+	use_power = IDLE_POWER_USE
 
 	//warping vars
 	var/wait = 0				//this just grabs world.time at world start
 	var/obj/machinery/gateway/centeraway/awaygate = null
 	can_link = TRUE
-
-/obj/machinery/gateway/centerstation/Initialize()
-	..()
-	update_icon()
-	wait = world.time + config.gateway_delay	//+ thirty minutes default
-	awaygate = locate(/obj/machinery/gateway/centeraway)
 
 /obj/machinery/gateway/centerstation/update_icon()
 	if(active)
@@ -126,7 +123,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
 		return
 	if(world.time < wait)
-		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>")
+		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [DisplayTimeText(wait - world.time)].</span>")
 		return
 
 	for(var/obj/machinery/gateway/G in linked)
@@ -136,7 +133,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	update_icon()
 
 //okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/Bumped(atom/movable/AM)
+/obj/machinery/gateway/centerstation/CollidedWith(atom/movable/AM)
 	if(!active)
 		return
 	if(!detect())
@@ -161,7 +158,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return
 
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
-	if(istype(W,/obj/item/device/multitool))
+	if(istype(W, /obj/item/device/multitool))
 		if(calibrated)
 			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
 			return
@@ -176,13 +173,13 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/centeraway
 	density = TRUE
 	icon_state = "offcenter"
-	use_power = FALSE
+	use_power = NO_POWER_USE
 	var/obj/machinery/gateway/centeraway/stationgate = null
 	can_link = TRUE
 
 
 /obj/machinery/gateway/centeraway/Initialize()
-	..()
+	. = ..()
 	update_icon()
 	stationgate = locate(/obj/machinery/gateway/centerstation)
 
@@ -207,12 +204,12 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	update_icon()
 
 /obj/machinery/gateway/centeraway/proc/check_exile_implant(mob/living/carbon/C)
-	for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant
+	for(var/obj/item/implant/exile/E in C.implants)//Checking that there is an exile implant
 		to_chat(C, "\black The station gate has detected your exile implant and is blocking your entry.")
 		return TRUE
 	return FALSE
 
-/obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
+/obj/machinery/gateway/centeraway/CollidedWith(atom/movable/AM)
 	if(!detect())
 		return
 	if(!active)
@@ -238,3 +235,8 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		var/mob/M = AM
 		if (M.client)
 			M.client.move_delay = max(world.time + 5, M.client.move_delay)
+
+
+/obj/item/paper/fluff/gateway
+	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Blue Space Research"
+	name = "Confidential Correspondence, Pg 1"

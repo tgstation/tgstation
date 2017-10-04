@@ -2,6 +2,8 @@ SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
 	wait = 6000
 	flags = SS_NO_TICK_CHECK
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	init_order = INIT_ORDER_BLACKBOX
 
 	var/list/msg_common = list()
 	var/list/msg_science = list()
@@ -16,6 +18,13 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/msg_other = list()
 
 	var/list/feedback = list()	//list of datum/feedback_variable
+	var/triggertime = 0
+	var/sealed = FALSE	//time to stop tracking stats?
+
+
+/datum/controller/subsystem/blackbox/Initialize()
+	triggertime = world.time
+	. = ..()
 
 //poll population
 /datum/controller/subsystem/blackbox/fire()
@@ -26,8 +35,13 @@ SUBSYSTEM_DEF(blackbox)
 		if(M.client)
 			playercount += 1
 	var/admincount = GLOB.admins.len
-	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON('[world.internet_address]'), '[world.port]')")
+	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port, round_id) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]')")
 	query_record_playercount.Execute()
+
+	if(CONFIG_GET(flag/use_exp_tracking))
+		if((triggertime < 0) || (world.time > (triggertime +3000)))	//subsystem fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <0 is midnight rollover check
+			update_exp(10,FALSE)
+
 
 /datum/controller/subsystem/blackbox/Recover()
 	msg_common = SSblackbox.msg_common
@@ -44,6 +58,8 @@ SUBSYSTEM_DEF(blackbox)
 
 	feedback = SSblackbox.feedback
 
+	sealed = SSblackbox.sealed
+
 //no touchie
 /datum/controller/subsystem/blackbox/can_vv_get(var_name)
 	if(var_name == "feedback")
@@ -54,6 +70,9 @@ SUBSYSTEM_DEF(blackbox)
 	return FALSE
 
 /datum/controller/subsystem/blackbox/Shutdown()
+	sealed = FALSE
+	set_val("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
+
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
 
@@ -79,26 +98,23 @@ SUBSYSTEM_DEF(blackbox)
 	add_details("radio_usage","PDA-[pda_msg_amt]")
 	add_details("radio_usage","RC-[rc_msg_amt]")
 
-	set_details("round_end","[time2text(world.realtime)]") //This one MUST be the last one that gets set.
-
 	if (!SSdbcore.Connect())
 		return
 
-	var/sqlrowlist = ""
+	var/list/sqlrowlist = list()
 
 	for (var/datum/feedback_variable/FV in feedback)
-		if (sqlrowlist != "")
-			sqlrowlist += ", " //a comma (,) at the start of the first row to insert will trigger a SQL error
+		sqlrowlist += list(list("time" = "Now()", "round_id" = GLOB.round_id, "var_name" =  "'[sanitizeSQL(FV.get_variable())]'", "var_value" = FV.get_value(), "details" = "'[sanitizeSQL(FV.get_details())]'"))
 
-		sqlrowlist += "(null, Now(), [GLOB.round_id], \"[sanitizeSQL(FV.get_variable())]\", [FV.get_value()], \"[sanitizeSQL(FV.get_details())]\")"
-
-	if (sqlrowlist == "")
+	if (!length(sqlrowlist))
 		return
 
-	var/datum/DBQuery/query_feedback_save = SSdbcore.NewQuery("INSERT DELAYED IGNORE INTO [format_table_name("feedback")] VALUES " + sqlrowlist)
-	query_feedback_save.Execute()
+	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, delayed = TRUE)
+
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(blackbox_msg, freq)
+	if(sealed)
+		return
 	switch(freq)
 		if(1459)
 			msg_common += blackbox_msg
@@ -133,32 +149,43 @@ SUBSYSTEM_DEF(blackbox)
 	return FV
 
 /datum/controller/subsystem/blackbox/proc/set_val(variable, value)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.set_value(value)
 
 /datum/controller/subsystem/blackbox/proc/inc(variable, value)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.inc(value)
 
 /datum/controller/subsystem/blackbox/proc/dec(variable,value)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.dec(value)
 
 /datum/controller/subsystem/blackbox/proc/set_details(variable,details)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.set_details(details)
 
 /datum/controller/subsystem/blackbox/proc/add_details(variable,details)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.add_details(details)
 
 /datum/controller/subsystem/blackbox/proc/ReportDeath(mob/living/L)
+	if(sealed)
+		return
 	if(!SSdbcore.Connect())
 		return
 	if(!L || !L.key || !L.mind)
 		return
-	var/turf/T = get_turf(L)
-	var/area/placeofdeath = get_area(T.loc)
+	var/area/placeofdeath = get_area(L)
 	var/sqlname = sanitizeSQL(L.real_name)
 	var/sqlkey = sanitizeSQL(L.ckey)
 	var/sqljob = sanitizeSQL(L.mind.assigned_role)
@@ -170,25 +197,36 @@ SUBSYSTEM_DEF(blackbox)
 		var/mob/LA = L.lastattacker
 		laname = sanitizeSQL(LA.real_name)
 		lakey = sanitizeSQL(LA.key)
-	var/sqlgender = sanitizeSQL(L.gender)
 	var/sqlbrute = sanitizeSQL(L.getBruteLoss())
 	var/sqlfire = sanitizeSQL(L.getFireLoss())
 	var/sqlbrain = sanitizeSQL(L.getBrainLoss())
 	var/sqloxy = sanitizeSQL(L.getOxyLoss())
-	var/sqltox = sanitizeSQL(L.getStaminaLoss())
-	var/sqlclone = sanitizeSQL(L.getStaminaLoss())
+	var/sqltox = sanitizeSQL(L.getToxLoss())
+	var/sqlclone = sanitizeSQL(L.getCloneLoss())
 	var/sqlstamina = sanitizeSQL(L.getStaminaLoss())
-	var/coord = sanitizeSQL("[L.x], [L.y], [L.z]")
+	var/x_coord = sanitizeSQL(L.x)
+	var/y_coord = sanitizeSQL(L.y)
+	var/z_coord = sanitizeSQL(L.z)
+	var/last_words = sanitizeSQL(L.last_words)
+	var/suicide = sanitizeSQL(L.suiciding)
 	var/map = sanitizeSQL(SSmapping.config.map_name)
-	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, coord, mapname, server_ip, server_port) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[SQLtime()]', '[laname]', '[lakey]', '[sqlgender]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[coord]', '[map]', INET_ATON('[world.internet_address]'), '[world.port]')")
+	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, last_words, suicide) VALUES ('[sqlpod]', '[x_coord]', '[y_coord]', '[z_coord]', '[map]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', [GLOB.round_id], '[SQLtime()]', '[sqljob]', '[sqlspecial]', '[sqlname]', '[sqlkey]', '[laname]', '[lakey]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[last_words]', [suicide])")
 	query_report_death.Execute()
 
+/datum/controller/subsystem/blackbox/proc/Seal()
+	if(sealed)
+		return
+	if(IsAdminAdvancedProcCall())
+		var/msg = "[key_name_admin(usr)] sealed the blackbox!"
+		message_admins(msg)
+	log_game("Blackbox sealed[IsAdminAdvancedProcCall() ? " by [key_name(usr)]" : ""].")
+	sealed = TRUE
 
 //feedback variable datum, for storing all kinds of data
 /datum/feedback_variable
 	var/variable
 	var/value
-	var/details
+	var/list/details
 
 /datum/feedback_variable/New(param_variable, param_value = 0)
 	variable = param_variable
@@ -226,20 +264,17 @@ SUBSYSTEM_DEF(blackbox)
 /datum/feedback_variable/proc/get_variable()
 	return variable
 
-/datum/feedback_variable/proc/set_details(text)
-	if (istext(text))
-		details = text
+/datum/feedback_variable/proc/set_details(deets)
+	details = list("\"[deets]\"")
 
-/datum/feedback_variable/proc/add_details(text)
-	if (istext(text))
-		text = replacetext(text, " ", "_")
-		if (!details)
-			details = text
-		else
-			details += " [text]"
+/datum/feedback_variable/proc/add_details(deets)
+	if (!details)
+		set_details(deets)
+	else
+		details += "\"[deets]\""
 
 /datum/feedback_variable/proc/get_details()
-	return details
+	return details ? details.Join(" | ") : null
 
 /datum/feedback_variable/proc/get_parsed()
-	return list(variable,value,details)
+	return list(variable,value,details.Join(" | "))

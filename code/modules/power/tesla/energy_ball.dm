@@ -1,24 +1,6 @@
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
 
-GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmospherics,
-										/obj/machinery/power/emitter,
-										/obj/machinery/field/generator,
-										/mob/living/simple_animal,
-										/obj/machinery/particle_accelerator/control_box,
-										/obj/structure/particle_accelerator/fuel_chamber,
-										/obj/structure/particle_accelerator/particle_emitter/center,
-										/obj/structure/particle_accelerator/particle_emitter/left,
-										/obj/structure/particle_accelerator/particle_emitter/right,
-										/obj/structure/particle_accelerator/power_box,
-										/obj/structure/particle_accelerator/end_cap,
-										/obj/machinery/field/containment,
-										/obj/structure/disposalpipe,
-										/obj/structure/sign,
-										/obj/machinery/gateway,
-										/obj/structure/lattice,
-										/obj/structure/grille,
-										/obj/machinery/the_singularitygen/tesla)))
 /obj/singularity/energy_ball
 	name = "energy ball"
 	desc = "An energy ball."
@@ -30,7 +12,7 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 	move_self = 1
 	grav_pull = 0
 	contained = 0
-	density = 1
+	density = TRUE
 	energy = 0
 	dissipate = 1
 	dissipate_delay = 5
@@ -138,11 +120,11 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
 
 
-/obj/singularity/energy_ball/Bump(atom/A)
+/obj/singularity/energy_ball/Collide(atom/A)
 	dust_mobs(A)
 
-/obj/singularity/energy_ball/Bumped(atom/A)
-	dust_mobs(A)
+/obj/singularity/energy_ball/CollidedWith(atom/movable/AM)
+	dust_mobs(AM)
 
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
 	if (istype(target))
@@ -183,8 +165,27 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 	var/obj/machinery/closest_machine
 	var/obj/structure/closest_structure
 	var/obj/structure/blob/closest_blob
+	var/static/things_to_shock = typecacheof(list(/obj/machinery, /mob/living, /obj/structure))
+	var/static/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
+										/obj/machinery/power/emitter,
+										/obj/machinery/field/generator,
+										/mob/living/simple_animal,
+										/obj/machinery/particle_accelerator/control_box,
+										/obj/structure/particle_accelerator/fuel_chamber,
+										/obj/structure/particle_accelerator/particle_emitter/center,
+										/obj/structure/particle_accelerator/particle_emitter/left,
+										/obj/structure/particle_accelerator/particle_emitter/right,
+										/obj/structure/particle_accelerator/power_box,
+										/obj/structure/particle_accelerator/end_cap,
+										/obj/machinery/field/containment,
+										/obj/structure/disposalpipe,
+										/obj/structure/sign,
+										/obj/machinery/gateway,
+										/obj/structure/lattice,
+										/obj/structure/grille,
+										/obj/machinery/the_singularitygen/tesla))
 
-	for(var/A in oview(source, zap_range+2))
+	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
 		if(istype(A, /obj/machinery/power/tesla_coil))
 			var/dist = get_dist(source, A)
 			var/obj/machinery/power/tesla_coil/C = A
@@ -207,13 +208,13 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 				closest_atom = A
 				closest_dist = dist
 
-		else if(closest_grounding_rod || is_type_in_typecache(A, GLOB.blacklisted_tesla_types))
+		else if(closest_grounding_rod)
 			continue
 
 		else if(isliving(A))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !HAS_SECONDARY_FLAG(L, TESLA_IGNORE))
+			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !(L.flags_2 & TESLA_IGNORE_2))
 				closest_mob = L
 				closest_atom = A
 				closest_dist = dist
@@ -243,7 +244,7 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 		else if(closest_blob)
 			continue
 
-		else if(istype(A, /obj/structure))
+		else if(isstructure(A))
 			var/obj/structure/S = A
 			var/dist = get_dist(source, A)
 			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !S.being_shocked)
@@ -272,7 +273,7 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
 			if(stun_mobs)
-				S.emp_act(2)
+				S.emp_act(EMP_LIGHT)
 			tesla_zap(S, 7, power / 1.5, explosive, stun_mobs) // metallic folks bounce it further
 		else
 			tesla_zap(closest_mob, 5, power / 1.5, explosive, stun_mobs)

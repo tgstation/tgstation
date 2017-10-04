@@ -61,7 +61,7 @@
 		else
 			cooldown = revive_cost + world.time
 			reviving = FALSE
-			to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [revive_cost/10] seconds.</span>")
+			to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)].</span>")
 		return
 
 	if(cooldown > world.time)
@@ -117,7 +117,7 @@
 /obj/item/organ/cyberimp/chest/thrusters
 	name = "implantable thrusters set"
 	desc = "An implantable set of thruster ports. They use the gas from environment or subject's internals for propulsion in zero-gravity areas. \
-	Unlike regular jetpack, this device has no stablilzation system."
+	Unlike regular jetpack, this device has no stabilization system."
 	slot = "thrusters"
 	icon_state = "imp_jetpack"
 	origin_tech = "materials=4;magnets=4;biotech=4;engineering=5"
@@ -125,7 +125,7 @@
 	implant_color = null
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	w_class = WEIGHT_CLASS_NORMAL
-	var/on = 0
+	var/on = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/M, special = 0)
@@ -148,7 +148,7 @@
 			if(!silent)
 				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
 			return 0
-		on = 1
+		on = TRUE
 		if(allow_thrust(0.01))
 			ion_trail.start()
 			if(!silent)
@@ -157,7 +157,7 @@
 		ion_trail.stop()
 		if(!silent)
 			to_chat(owner, "<span class='notice'>You turn your thrusters set off.</span>")
-		on = 0
+		on = FALSE
 	update_icon()
 
 /obj/item/organ/cyberimp/chest/thrusters/update_icon()
@@ -189,7 +189,7 @@
 		return 1
 
 	// Priority 3: use internals tank.
-	var/obj/item/weapon/tank/I = owner.internal
+	var/obj/item/tank/I = owner.internal
 	if(I && I.air_contents && I.air_contents.total_moles() > num)
 		var/datum/gas_mixture/removed = I.air_contents.remove(num)
 		if(removed.total_moles() > 0.005)

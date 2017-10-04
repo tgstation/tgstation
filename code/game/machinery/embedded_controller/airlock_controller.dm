@@ -206,7 +206,7 @@
 	icon_state = "airlock_control_standby"
 
 	name = "airlock console"
-	density = 0
+	density = FALSE
 
 	frequency = 1449
 	power_channel = ENVIRON
@@ -220,7 +220,7 @@
 	var/sanitize_external
 
 /obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 

@@ -13,16 +13,16 @@
 
 
 /datum/wires/explosive/c4
-	holder_type = /obj/item/weapon/grenade/plastic/c4
+	holder_type = /obj/item/grenade/plastic/c4
 	randomize = TRUE	//Same behaviour since no wire actually disarms it
 
 /datum/wires/explosive/c4/interactable(mob/user)
-	var/obj/item/weapon/grenade/plastic/c4/P = holder
+	var/obj/item/grenade/plastic/c4/P = holder
 	if(P.open_panel)
 		return TRUE
 
 /datum/wires/explosive/c4/explode()
-	var/obj/item/weapon/grenade/plastic/c4/P = holder
+	var/obj/item/grenade/plastic/c4/P = holder
 	P.explode()
 
 
@@ -73,8 +73,8 @@
 
 
 /datum/wires/explosive/gibtonite
-	holder_type = /obj/item/weapon/twohanded/required/gibtonite
+	holder_type = /obj/item/twohanded/required/gibtonite
 
 /datum/wires/explosive/gibtonite/explode()
-	var/obj/item/weapon/twohanded/required/gibtonite/P = holder
+	var/obj/item/twohanded/required/gibtonite/P = holder
 	P.GibtoniteReaction(null, 2)

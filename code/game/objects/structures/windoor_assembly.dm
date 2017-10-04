@@ -14,17 +14,18 @@
 
 	name = "windoor Assembly"
 	icon_state = "l_windoor_assembly01"
-	anchored = 0
-	density = 0
+	desc = "A small glass and wire assembly for windoors."
+	anchored = FALSE
+	density = FALSE
 	dir = NORTH
 
 	var/ini_dir
-	var/obj/item/weapon/electronics/airlock/electronics = null
+	var/obj/item/electronics/airlock/electronics = null
 	var/created_name = null
 
 	//Vars to help with the icon's name
 	var/facing = "l"	//Does the windoor open to the left or right?
-	var/secure = 0		//Whether or not this creates a secure windoor
+	var/secure = FALSE		//Whether or not this creates a secure windoor
 	var/state = "01"	//How far the door assembly has progressed
 	CanAtmosPass = ATMOS_PASS_PROC
 
@@ -40,7 +41,7 @@
 	air_update_turf(1)
 
 /obj/structure/windoor_assembly/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	return ..()
 
@@ -53,7 +54,7 @@
 /obj/structure/windoor_assembly/update_icon()
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
 
-/obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
@@ -90,11 +91,11 @@
 	add_fingerprint(user)
 	switch(state)
 		if("01")
-			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
-				var/obj/item/weapon/weldingtool/WT = W
+			if(istype(W, /obj/item/weldingtool) && !anchored )
+				var/obj/item/weldingtool/WT = W
 				if (WT.remove_fuel(0,user))
 					user.visible_message("[user] disassembles the windoor assembly.", "<span class='notice'>You start to disassemble the windoor assembly...</span>")
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 
 					if(do_after(user, 40*W.toolspeed, target = src))
 						if(!src || !WT.isOn()) return
@@ -109,7 +110,7 @@
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(istype(W, /obj/item/weapon/wrench) && !anchored)
+			if(istype(W, /obj/item/wrench) && !anchored)
 				for(var/obj/machinery/door/window/WD in loc)
 					if(WD.dir == dir)
 						to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
@@ -125,14 +126,14 @@
 							to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 							return
 					to_chat(user, "<span class='notice'>You secure the windoor assembly.</span>")
-					anchored = 1
+					anchored = TRUE
 					if(secure)
 						name = "secure anchored windoor assembly"
 					else
 						name = "anchored windoor assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
-			else if(istype(W, /obj/item/weapon/wrench) && anchored)
+			else if(istype(W, /obj/item/wrench) && anchored)
 				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "<span class='notice'>You start to unsecure the windoor assembly to the floor...</span>")
 
@@ -140,7 +141,7 @@
 					if(!src || !anchored)
 						return
 					to_chat(user, "<span class='notice'>You unsecure the windoor assembly.</span>")
-					anchored = 0
+					anchored = FALSE
 					if(secure)
 						name = "secure windoor assembly"
 					else
@@ -160,7 +161,7 @@
 
 					P.use(2)
 					to_chat(user, "<span class='notice'>You reinforce the windoor.</span>")
-					secure = 1
+					secure = TRUE
 					if(anchored)
 						name = "secure anchored windoor assembly"
 					else
@@ -189,7 +190,7 @@
 		if("02")
 
 			//Removing wire from the assembly. Step 5 undone.
-			if(istype(W, /obj/item/weapon/wirecutters))
+			if(istype(W, /obj/item/wirecutters))
 				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "<span class='notice'>You start to cut the wires from airlock assembly...</span>")
 
@@ -206,7 +207,7 @@
 						name = "anchored windoor assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
-			else if(istype(W, /obj/item/weapon/electronics/airlock))
+			else if(istype(W, /obj/item/electronics/airlock))
 				if(!user.drop_item())
 					return
 				playsound(loc, W.usesound, 100, 1)
@@ -224,7 +225,7 @@
 					W.loc = loc
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
-			else if(istype(W, /obj/item/weapon/screwdriver))
+			else if(istype(W, /obj/item/screwdriver))
 				if(!electronics)
 					return
 
@@ -236,12 +237,12 @@
 						return
 					to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 					name = "wired windoor assembly"
-					var/obj/item/weapon/electronics/airlock/ae
+					var/obj/item/electronics/airlock/ae
 					ae = electronics
 					electronics = null
 					ae.loc = loc
 
-			else if(istype(W, /obj/item/weapon/pen))
+			else if(istype(W, /obj/item/pen))
 				var/t = stripped_input(user, "Enter the name for the door.", name, created_name,MAX_NAME_LEN)
 				if(!t)
 					return
@@ -253,7 +254,7 @@
 
 
 			//Crowbar to complete the assembly, Step 7 complete.
-			else if(istype(W, /obj/item/weapon/crowbar))
+			else if(istype(W, /obj/item/crowbar))
 				if(!electronics)
 					to_chat(usr, "<span class='warning'>The assembly is missing electronics!</span>")
 					return
@@ -265,7 +266,7 @@
 
 					if(loc && electronics)
 
-						density = 1 //Shouldn't matter but just incase
+						density = TRUE //Shouldn't matter but just incase
 						to_chat(user, "<span class='notice'>You finish the windoor.</span>")
 
 						if(secure)
@@ -277,7 +278,7 @@
 								windoor.icon_state = "rightsecureopen"
 								windoor.base_state = "rightsecure"
 							windoor.setDir(dir)
-							windoor.density = 0
+							windoor.density = FALSE
 
 							if(electronics.one_access)
 								windoor.req_one_access = electronics.accesses
@@ -300,7 +301,7 @@
 								windoor.icon_state = "rightopen"
 								windoor.base_state = "right"
 							windoor.setDir(dir)
-							windoor.density = 0
+							windoor.density = FALSE
 
 							windoor.req_access = electronics.accesses
 							windoor.electronics = electronics

@@ -20,7 +20,7 @@ Acts like a normal vent, but has an input AND output.
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-	var/on = 0
+	var/on = FALSE
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
 
 	var/external_pressure_bound = ONE_ATMOSPHERE
@@ -32,13 +32,20 @@ Acts like a normal vent, but has an input AND output.
 	//INPUT_MIN: Do not pass input_pressure_min
 	//OUTPUT_MAX: Do not pass output_pressure_max
 
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/on
+	on = TRUE
+	icon_state = "dpvent_map_on"
+
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on
+	on = TRUE
+	icon_state = "dpvent_map_on"
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
 	..()
@@ -52,7 +59,7 @@ Acts like a normal vent, but has an input AND output.
 	if(showpipe)
 		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "dpvent_cap"))
 
-	if(!on || stat & (NOPOWER|BROKEN))
+	if(!on || !is_operational())
 		icon_state = "vent_off"
 		return
 
@@ -65,7 +72,7 @@ Acts like a normal vent, but has an input AND output.
 	..()
 
 	if(!on)
-		return FALSE
+		return
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
 
@@ -87,7 +94,7 @@ Acts like a normal vent, but has an input AND output.
 				var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 				//Removed can be null if there is no atmosphere in air1
 				if(!removed)
-					return FALSE
+					return
 
 				loc.assume_air(removed)
 				air_update_turf()
@@ -110,15 +117,13 @@ Acts like a normal vent, but has an input AND output.
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 				//removed can be null if there is no air in the location
 				if(!removed)
-					return FALSE
+					return
 
 				air2.merge(removed)
 				air_update_turf()
 
 				var/datum/pipeline/parent2 = PARENT2
 				parent2.update = 1
-
-	return TRUE
 
 	//Radio remote control
 
@@ -130,7 +135,7 @@ Acts like a normal vent, but has an input AND output.
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -149,8 +154,6 @@ Acts like a normal vent, but has an input AND output.
 	)
 	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
 
-	return 1
-
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/atmosinit()
 	..()
 	if(frequency)
@@ -158,9 +161,9 @@ Acts like a normal vent, but has an input AND output.
 	broadcast_status()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/receive_signal(datum/signal/signal)
-
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return
+
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
 

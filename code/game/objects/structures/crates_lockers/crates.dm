@@ -13,13 +13,13 @@
 	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
 	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
-	var/obj/item/weapon/paper/manifest/manifest
+	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
 /obj/structure/closet/crate/New()
 	..()
 	update_icon()
 
-/obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)
 	if(!istype(mover, /obj/structure/closet))
 		var/obj/structure/closet/crate/locatedcrate = locate(/obj/structure/closet/crate) in get_turf(mover)
 		if(locatedcrate) //you can walk on it like tables, if you're not in an open crate trying to move to a closed crate
@@ -62,7 +62,7 @@
 	update_icon()
 
 /obj/structure/closet/crate/internals
-	desc = "A internals crate."
+	desc = "An internals crate."
 	name = "internals crate"
 	icon_state = "o2crate"
 
@@ -87,16 +87,16 @@
 
 /obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()
-	new /obj/item/weapon/reagent_containers/blood/empty(src)
-	new /obj/item/weapon/reagent_containers/blood/empty(src)
-	new /obj/item/weapon/reagent_containers/blood/AMinus(src)
-	new /obj/item/weapon/reagent_containers/blood/BMinus(src)
-	new /obj/item/weapon/reagent_containers/blood/BPlus(src)
-	new /obj/item/weapon/reagent_containers/blood/OMinus(src)
-	new /obj/item/weapon/reagent_containers/blood/OPlus(src)
-	new /obj/item/weapon/reagent_containers/blood/lizard(src)
+	new /obj/item/reagent_containers/blood/empty(src)
+	new /obj/item/reagent_containers/blood/empty(src)
+	new /obj/item/reagent_containers/blood/AMinus(src)
+	new /obj/item/reagent_containers/blood/BMinus(src)
+	new /obj/item/reagent_containers/blood/BPlus(src)
+	new /obj/item/reagent_containers/blood/OMinus(src)
+	new /obj/item/reagent_containers/blood/OPlus(src)
+	new /obj/item/reagent_containers/blood/lizard(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/blood/random(src)
+		new /obj/item/reagent_containers/blood/random(src)
 
 /obj/structure/closet/crate/freezer/surplus_limbs
 	name = "surplus prosthetic limbs"
@@ -138,8 +138,8 @@
 /obj/structure/closet/crate/rcd/PopulateContents()
 	..()
 	for(var/i in 1 to 4)
-		new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/construction/rcd(src)
+		new /obj/item/rcd_ammo(src)
+	new /obj/item/construction/rcd(src)
 
 /obj/structure/closet/crate/science
 	name = "science crate"

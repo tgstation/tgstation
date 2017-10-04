@@ -370,9 +370,8 @@
 					else
 						if(cached_my_atom.type == C.required_container)
 							matching_container = 1
-					if (isliving(cached_my_atom)) //Makes it so certain chemical reactions don't occur in mobs
-						if (C.mob_react)
-							return
+					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+						return
 					if(!C.required_other)
 						matching_other = 1
 
@@ -401,19 +400,21 @@
 						add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
 					var/list/seen = viewers(4, get_turf(my_atom))
+					var/iconhtml = icon2html(cached_my_atom, seen)
 					if(cached_my_atom)
 						if(!ismob(cached_my_atom)) // No bubbling mobs
 							if(C.mix_sound)
 								playsound(get_turf(cached_my_atom), C.mix_sound, 80, 1)
+
 							for(var/mob/M in seen)
-								to_chat(M, "<span class='notice'>\icon[my_atom] [C.mix_message]</span>")
+								to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
 
 						if(istype(cached_my_atom, /obj/item/slime_extract))
 							var/obj/item/slime_extract/ME2 = my_atom
 							ME2.Uses--
 							if(ME2.Uses <= 0) // give the notification that the slime core is dead
 								for(var/mob/M in seen)
-									to_chat(M, "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>")
+									to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
 									ME2.name = "used slime extract"
 									ME2.desc = "This extract has been used up."
 
@@ -452,21 +453,21 @@
 	return 1
 
 /datum/reagents/proc/check_ignoreslow(mob/M)
-	if(istype(M, /mob))
-		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
+	if(ismob(M))
+		if(M.reagents.has_reagent("morphine"))
 			return 1
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
 
 /datum/reagents/proc/check_gofast(mob/M)
-	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants"))
+	if(ismob(M))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
 
 /datum/reagents/proc/check_goreallyfast(mob/M)
-	if(istype(M, /mob))
+	if(ismob(M))
 		if(M.reagents.has_reagent("methamphetamine"))
 			return 1
 		else
@@ -565,6 +566,8 @@
 			my_atom.on_reagent_change()
 		if(!no_react)
 			handle_reactions()
+		if(isliving(my_atom))
+			R.on_mob_add(my_atom)
 		return TRUE
 
 	else
@@ -668,7 +671,6 @@
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
-			//to_chat(world, "proffering a data-carrying reagent ([reagent_id])")
 			return R.data
 
 /datum/reagents/proc/set_data(reagent_id, new_data)
@@ -676,7 +678,6 @@
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
-			//to_chat(world, "reagent data set ([reagent_id])")
 			R.data = new_data
 
 /datum/reagents/proc/copy_data(datum/reagent/current_reagent)

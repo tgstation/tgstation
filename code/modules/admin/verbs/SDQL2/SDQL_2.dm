@@ -4,13 +4,13 @@
 // Examples
 /*
 	-- Will call the proc for all computers in the world, thats dir is 2.
-	CALL ex_act(1) ON /obj/machinery/computer IN world WHERE dir == 2
+	CALL ex_act(EXPLODE_DEVASTATE) ON /obj/machinery/computer IN world WHERE dir == 2
 	-- Will open a window with a list of all the closets in the world, with a link to VV them.
 	SELECT /obj/structure/closet/secure_closet/security/cargo IN world WHERE icon_off == "secoff"
 	-- Will change all the tube lights to green
 	UPDATE /obj/machinery/light IN world SET color = "#0F0" WHERE icon_state == "tube1"
 	-- Will delete all pickaxes. "IN world" is not required.
-	DELETE /obj/item/weapon/pickaxe
+	DELETE /obj/item/pickaxe
 	-- Will flicker the lights once, then turn all mobs green. The semicolon is important to separate the consecutive querys, but is not required for standard one-query use
 	CALL flicker(1) ON /obj/machinery/light; UPDATE /mob SET color = "#00cc00"
 
@@ -30,9 +30,6 @@
 	query_log = "[usr.ckey]([usr]) [query_log]"
 	log_game(query_log)
 	NOTICE(query_log)
-	var/list/runtime_tracker = list()
-	var/runtimes_list = ""
-	var/runtimes = 0
 	var/objs_all = 0
 	var/objs_eligible = 0
 	var/start_time = REALTIMEOFDAY
@@ -40,7 +37,6 @@
 	if(!query_text || length(query_text) < 1)
 		return
 
-	//to_chat(world, query_text)
 
 	var/list/query_list = SDQL2_tokenize(query_text)
 
@@ -76,11 +72,7 @@
 		var/list/objs = list()
 
 		for(var/type in select_types)
-			try
-				objs += SDQL_get_all(type, from_objs)
-			catch(var/exception/e)
-				runtime_tracker += SDQL_parse_exception(e)
-				runtimes++
+			objs += SDQL_get_all(type, from_objs)
 			CHECK_TICK
 		objs_all = objs.len
 
@@ -88,53 +80,26 @@
 			var/objs_temp = objs
 			objs = list()
 			for(var/datum/d in objs_temp)
-				try
-					if(SDQL_expression(d, query_tree["where"]))
-						objs += d
-						objs_eligible++
-				catch(var/exception/e)
-					runtime_tracker += SDQL_parse_exception(e)
-					runtimes++
+				if(SDQL_expression(d, query_tree["where"]))
+					objs += d
+					objs_eligible++
 				CHECK_TICK
 
 		switch(query_tree[1])
 			if("call")
 				for(var/datum/d in objs)
-					try
-						world.SDQL_var(d, query_tree["call"][1], source = d)
-					catch(var/exception/e)
-						runtime_tracker += SDQL_parse_exception(e)
-						runtimes++
+					world.SDQL_var(d, query_tree["call"][1], source = d)
 					CHECK_TICK
-
+					
 			if("delete")
 				for(var/datum/d in objs)
-					try
-						qdel(d)
-					catch(var/exception/e)
-						runtime_tracker += SDQL_parse_exception(e)
-						runtimes++
+					SDQL_qdel_datum(d)
 					CHECK_TICK
 
 			if("select")
 				var/text = ""
 				for(var/datum/t in objs)
-					try
-						text += "<A HREF='?_src_=vars;Vars=\ref[t]'>\ref[t]</A>"
-						if(istype(t, /atom))
-							var/atom/a = t
-							if(a.x)
-								text += ": [t] at ([a.x], [a.y], [a.z])<br>"
-
-							else if(a.loc && a.loc.x)
-								text += ": [t] in [a.loc] at ([a.loc.x], [a.loc.y], [a.loc.z])<br>"
-							else
-								text += ": [t]<br>"
-						else
-							text += ": [t]<br>"
-					catch(var/exception/e)
-						runtime_tracker += SDQL_parse_exception(e)
-						runtimes++
+					text += SDQL_gen_vv_href(t)
 					CHECK_TICK
 				usr << browse(text, "window=SDQL-result")
 
@@ -142,40 +107,47 @@
 				if("set" in query_tree)
 					var/list/set_list = query_tree["set"]
 					for(var/datum/d in objs)
-						try
-							for(var/list/sets in set_list)
-								var/datum/temp = d
-								var/i = 0
-								for(var/v in sets)
-									if(++i == sets.len)
-										temp.vv_edit_var(v, SDQL_expression(d, set_list[sets]))
-										break
-									if(temp.vars.Find(v) && (istype(temp.vars[v], /datum)))
-										temp = temp.vars[v]
-									else
-										break
-						catch(var/exception/e)
-							runtime_tracker += SDQL_parse_exception(e)
-							runtimes++
+						SDQL_internal_vv(d, set_list)
 						CHECK_TICK
 
 	var/end_time = REALTIMEOFDAY
 	end_time -= start_time
 	to_chat(usr, "<span class='admin'>SDQL query results: [query_text]</span>")
 	to_chat(usr, "<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [objs_eligible] objects executed on after WHERE filtering if applicable.</span>")
-	to_chat(usr, "<span class='admin'>SDQL query took [end_time/10] seconds to complete.</span>")
-	if(runtimes)
-		to_chat(usr, "<span class='boldwarning'>SDQL query encountered [runtimes] runtimes!</span>")
-		to_chat(usr, "<span class='boldwarning'>Opening runtime tracking window.</span>")
-		runtimes_list = runtime_tracker.Join()
-		usr << browse(runtimes_list, "window=SDQL-runtimes")
+	to_chat(usr, "<span class='admin'>SDQL query took [DisplayTimeText(end_time)] to complete.</span>")
 
-/proc/SDQL_parse_exception(exception/E)
-	var/list/returning = list()
-	returning += "Runtime Error: [E.name]<BR>"
-	returning += "Occured at line [E.line] file [E.file]<BR>"
-	returning += "Description: [E.desc]<BR>"
-	return returning
+/proc/SDQL_qdel_datum(datum/d)
+	qdel(d)
+
+/proc/SDQL_gen_vv_href(t)
+	var/text = ""
+	text += "<A HREF='?_src_=vars;[HrefToken()];Vars=\ref[t]'>\ref[t]</A>"
+	if(istype(t, /atom))
+		var/atom/a = t
+		var/turf/T = a.loc
+		var/turf/actual = get_turf(a)
+		if(istype(T))
+			text += ": [t] at turf [T] [COORD(T)]<br>"
+		else if(a.loc && istype(actual))
+			text += ": [t] in [a.loc] at turf [actual] [COORD(actual)]<br>"
+		else
+			text += ": [t]<br>"
+	else
+		text += ": [t]<br>"
+	return text
+
+/proc/SDQL_internal_vv(d, list/set_list)
+	for(var/list/sets in set_list)
+		var/datum/temp = d
+		var/i = 0
+		for(var/v in sets)
+			if(++i == sets.len)
+				temp.vv_edit_var(v, SDQL_expression(d, set_list[sets]))
+				break
+			if(temp.vars.Find(v) && (istype(temp.vars[v], /datum)))
+				temp = temp.vars[v]
+			else
+				break
 
 /proc/SDQL_parse(list/query_list)
 	var/datum/SDQL_parser/parser = new()

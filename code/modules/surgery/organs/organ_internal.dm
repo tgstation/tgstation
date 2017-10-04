@@ -10,6 +10,8 @@
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
 	var/vital = 0
+	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
+	var/external = FALSE
 
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
@@ -59,7 +61,7 @@
 
 
 /obj/item/organ/proc/prepare_eat()
-	var/obj/item/weapon/reagent_containers/food/snacks/organ/S = new
+	var/obj/item/reagent_containers/food/snacks/organ/S = new
 	S.name = name
 	S.desc = desc
 	S.icon = icon
@@ -69,11 +71,12 @@
 
 	return S
 
-/obj/item/weapon/reagent_containers/food/snacks/organ
+/obj/item/reagent_containers/food/snacks/organ
 	name = "appendix"
 	icon_state = "appendix"
 	icon = 'icons/obj/surgery.dmi'
 	list_reagents = list("nutriment" = 5)
+	foodtype = RAW | MEAT | GROSS
 
 
 /obj/item/organ/Destroy()
@@ -87,7 +90,7 @@
 	if(M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(status == ORGAN_ORGANIC)
-			var/obj/item/weapon/reagent_containers/food/snacks/S = prepare_eat()
+			var/obj/item/reagent_containers/food/snacks/S = prepare_eat()
 			if(S)
 				H.drop_item()
 				H.put_in_active_hand(S)
@@ -113,6 +116,26 @@
 			breathes = FALSE
 		if(NOBLOOD in dna.species.species_traits)
 			blooded = FALSE
+		var/has_liver = (!(NOLIVER in dna.species.species_traits))
+		var/has_stomach = (!(NOSTOMACH in dna.species.species_traits))
+
+		if(has_liver && !getorganslot("liver"))
+			var/obj/item/organ/liver/LI
+
+			if(dna.species.mutantliver)
+				LI = new dna.species.mutantliver()
+			else
+				LI = new()
+			LI.Insert(src)
+
+		if(has_stomach && !getorganslot("stomach"))
+			var/obj/item/organ/stomach/S
+
+			if(dna.species.mutantstomach)
+				S = new dna.species.mutantstomach()
+			else
+				S = new()
+			S.Insert(src)
 
 	if(breathes && !getorganslot("lungs"))
 		var/obj/item/organ/lungs/L = new()

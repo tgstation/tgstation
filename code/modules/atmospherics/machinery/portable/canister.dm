@@ -4,7 +4,7 @@
 	name = "canister"
 	desc = "A canister for the storage of gas."
 	icon_state = "yellow"
-	density = 1
+	density = TRUE
 
 	var/valve_open = FALSE
 	var/obj/machinery/atmospherics/components/binary/passive_gate/pump
@@ -18,7 +18,6 @@
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
 
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 50)
-	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
@@ -138,7 +137,6 @@
 	icon_state = "proto"
 	icon_state = "proto"
 	volume = 5000
-	obj_integrity = 300
 	max_integrity = 300
 	temperature_resistance = 2000 + T0C
 	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
@@ -191,8 +189,9 @@
 #define CONNECTED 2
 #define EMPTY 4
 #define LOW 8
-#define FULL 16
-#define DANGER 32
+#define MEDIUM 16
+#define FULL 32
+#define DANGER 64
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
@@ -209,9 +208,11 @@
 	var/pressure = air_contents.return_pressure()
 	if(pressure < 10)
 		update |= EMPTY
-	else if(pressure < ONE_ATMOSPHERE)
+	else if(pressure < 5 * ONE_ATMOSPHERE)
 		update |= LOW
-	else if(pressure < 15 * ONE_ATMOSPHERE)
+	else if(pressure < 10 * ONE_ATMOSPHERE)
+		update |= MEDIUM
+	else if(pressure < 40 * ONE_ATMOSPHERE)
 		update |= FULL
 	else
 		update |= DANGER
@@ -224,9 +225,9 @@
 		add_overlay("can-open")
 	if(update & CONNECTED)
 		add_overlay("can-connector")
-	if(update & EMPTY)
+	if(update & LOW)
 		add_overlay("can-o0")
-	else if(update & LOW)
+	else if(update & MEDIUM)
 		add_overlay("can-o1")
 	else if(update & FULL)
 		add_overlay("can-o2")
@@ -236,6 +237,7 @@
 #undef CONNECTED
 #undef EMPTY
 #undef LOW
+#undef MEDIUM
 #undef FULL
 #undef DANGER
 
@@ -245,7 +247,7 @@
 
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			canister_break()
 		if(disassembled)
@@ -254,9 +256,9 @@
 			new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
 
-/obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user, params)
-	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/machinery/portable_atmospherics/canister/attackby(obj/item/W, mob/user, params)
+	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if(stat & BROKEN)
 			if(!WT.remove_fuel(0, user))
 				return
@@ -271,7 +273,7 @@
 		return ..()
 
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
-	if((stat & BROKEN) || (flags & NODECONSTRUCT))
+	if((flags_1 & BROKEN) || (flags_1 & NODECONSTRUCT_1))
 		return
 	canister_break()
 
@@ -283,10 +285,10 @@
 	air_update_turf()
 
 	stat |= BROKEN
-	density = 0
+	density = FALSE
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	update_icon()
-	investigate_log("was destroyed.", "atmos")
+	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)
 		holding.forceMove(T)
@@ -314,7 +316,7 @@
 		air_update_turf() // Update the environment if needed.
 	update_icon()
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -364,7 +366,7 @@
 		if("restricted")
 			restricted = !restricted
 			if(restricted)
-				req_access = list(GLOB.access_engine)
+				req_access = list(ACCESS_ENGINE)
 			else
 				req_access = list()
 				. = TRUE
@@ -388,7 +390,7 @@
 				. = TRUE
 			if(.)
 				release_pressure = Clamp(round(pressure), can_min_release_pressure, can_max_release_pressure)
-				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", "atmos")
+				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("valve")
 			var/logmsg
 			valve_open = !valve_open
@@ -439,7 +441,7 @@
 		if("eject")
 			if(holding)
 				if(valve_open)
-					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
+					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span><br>", INVESTIGATE_ATMOS)
 				holding.forceMove(get_turf(src))
 				holding = null
 				. = TRUE

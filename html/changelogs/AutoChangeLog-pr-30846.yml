@@ -1,0 +1,5 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "Wormhole event wormholes now actually teleport you."
+  - bugfix: "portals now actually teleport on click."

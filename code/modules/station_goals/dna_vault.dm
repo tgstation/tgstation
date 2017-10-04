@@ -64,8 +64,10 @@
 	desc = "Can be used to take chemical and genetic samples of pretty much anything."
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "hypo"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/list/animals = list()
 	var/list/plants = list()
 	var/list/dna = list()
@@ -80,21 +82,21 @@
 	if(!proximity || !target)
 		return
 	//tray plants
-	if(istype(target,/obj/machinery/hydroponics))
+	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/H = target
 		if(!H.myseed)
 			return
 		if(!H.harvest)// So it's bit harder.
-			to_chat(user, "<span clas='warning'>Plant needs to be ready to harvest to perform full data scan.</span>") //Because space dna is actually magic
+			to_chat(user, "<span class='warning'>Plant needs to be ready to harvest to perform full data scan.</span>") //Because space dna is actually magic
 			return
 		if(plants[H.myseed.type])
-			to_chat(user, "<span class='notice'>Plant data already present in local storage.<span>")
+			to_chat(user, "<span class='notice'>Plant data already present in local storage.</span>")
 			return
 		plants[H.myseed.type] = 1
-		to_chat(user, "<span class='notice'>Plant data added to local storage.<span>")
+		to_chat(user, "<span class='notice'>Plant data added to local storage.</span>")
 
 	//animals
-	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/living/carbon/alien))
+	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey, /mob/living/carbon/alien))
 	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals))
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target
@@ -102,37 +104,27 @@
 				to_chat(user, "<span class='warning'>No compatible DNA detected</span>")
 				return
 		if(animals[target.type])
-			to_chat(user, "<span class='notice'>Animal data already present in local storage.<span>")
+			to_chat(user, "<span class='notice'>Animal data already present in local storage.</span>")
 			return
 		animals[target.type] = 1
-		to_chat(user, "<span class='notice'>Animal data added to local storage.<span>")
+		to_chat(user, "<span class='notice'>Animal data added to local storage.</span>")
 
 	//humans
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(dna[H.dna.uni_identity])
-			to_chat(user, "<span class='notice'>Humanoid data already present in local storage.<span>")
+			to_chat(user, "<span class='notice'>Humanoid data already present in local storage.</span>")
 			return
 		dna[H.dna.uni_identity] = 1
-		to_chat(user, "<span class='notice'>Humanoid data added to local storage.<span>")
-
-
-/obj/item/weapon/circuitboard/machine/dna_vault
-	name = "DNA Vault (Machine Board)"
-	build_path = /obj/machinery/dna_vault
-	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
-	req_components = list(
-							/obj/item/weapon/stock_parts/capacitor/super = 5,
-							/obj/item/weapon/stock_parts/manipulator/pico = 5,
-							/obj/item/stack/cable_coil = 2)
+		to_chat(user, "<span class='notice'>Humanoid data added to local storage.</span>")
 
 /obj/machinery/dna_vault
 	name = "DNA Vault"
 	desc = "Break glass in case of apocalypse."
 	icon = 'icons/obj/machines/dna_vault.dmi'
 	icon_state = "vault"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	idle_power_usage = 5000
 	pixel_x = -32
 	pixel_y = -64
@@ -180,7 +172,7 @@
 	. = ..()
 
 
-/obj/machinery/dna_vault/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
+/obj/machinery/dna_vault/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		roll_powers(user)

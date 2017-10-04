@@ -1,10 +1,12 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
+#define MAX_TRANSIT_REQUEST_RETRIES 10
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
 	wait = 10
 	init_order = INIT_ORDER_SHUTTLE
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
+	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/list/mobile = list()
 	var/list/stationary = list()
@@ -12,6 +14,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/list/turf/transit_turfs = list()
 	var/list/transit_requesters = list()
+	var/list/transit_request_failures = list()
 	var/clear_transit = FALSE
 
 		//emergency shuttle stuff
@@ -24,14 +27,15 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/emergencyLastCallLoc
 	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
 	var/emergencyNoEscape
+	var/emergencyNoRecall = FALSE
 	var/list/hostileEnvironments = list()
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
 	var/ordernum = 1					//order number given to next order
 	var/points = 5000					//number of trade-points we have
-	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
-	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
+	var/centcom_message = ""			//Remarks from CentCom on how well you checked the last order.
+	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentCom, associated with their potencies
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
@@ -71,25 +75,19 @@ SUBSYSTEM_DEF(shuttle)
 	..()
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
-	if(GLOB.transit_markers.len == 0)
-		WARNING("No /obj/effect/landmark/transit placed on the map!")
-		return
 	// transit zone
-	var/turf/A = get_turf(GLOB.transit_markers[1])
-	var/turf/B = get_turf(GLOB.transit_markers[2])
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
 		transit_turfs += T
-		T.flags |= UNUSED_TRANSIT_TURF
+		T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
-	if(GLOB.transit_markers.len == 0)
-		WARNING("No /obj/effect/landmark/transit placed on the map!")
-		return
-	var/turf/A = get_turf(GLOB.transit_markers[1])
-	var/turf/B = get_turf(GLOB.transit_markers[2])
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
@@ -100,8 +98,6 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			T.color = "#00ffff"
 #endif
-
-	//world.log << "[transit_turfs.len] transit turfs registered"
 
 /datum/controller/subsystem/shuttle/fire()
 	for(var/thing in mobile)
@@ -143,7 +139,12 @@ SUBSYSTEM_DEF(shuttle)
 		var/requester = popleft(transit_requesters)
 		var/success = generate_transit_dock(requester)
 		if(!success) // BACK OF THE QUEUE
-			transit_requesters += requester
+			transit_request_failures[requester]++
+			if(transit_request_failures[requester] < MAX_TRANSIT_REQUEST_RETRIES)
+				transit_requesters += requester
+			else
+				var/obj/docking_port/mobile/M = requester
+				M.transit_failure()
 		if(MC_TICK_CHECK)
 			return
 
@@ -173,14 +174,14 @@ SUBSYSTEM_DEF(shuttle)
 			Good luck.")
 			return
 		emergency = backup_shuttle
-
-	if(world.time - SSticker.round_start_time < config.shuttle_refuel_delay)
-		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - SSticker.round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
+	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
+	if(world.time - SSticker.round_start_time < srd)
+		to_chat(user, "The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.")
 		return
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			to_chat(user, "The emergency shuttle may not be called while returning to Centcom.")
+			to_chat(user, "The emergency shuttle may not be called while returning to CentCom.")
 			return
 		if(SHUTTLE_CALL)
 			to_chat(user, "The emergency shuttle is already on its way.")
@@ -195,7 +196,7 @@ SUBSYSTEM_DEF(shuttle)
 			to_chat(user, "The emergency shuttle is moving away to a safe distance.")
 			return
 		if(SHUTTLE_STRANDED)
-			to_chat(user, "The emergency shuttle has been disabled by Centcom.")
+			to_chat(user, "The emergency shuttle has been disabled by CentCom.")
 			return
 
 	call_reason = trim(html_encode(call_reason))
@@ -214,7 +215,30 @@ SUBSYSTEM_DEF(shuttle)
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.")
+	if(call_reason)
+		SSblackbox.add_details("shuttle_reason", call_reason)
+		log_game("Shuttle call reason: [call_reason]")
+	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+
+/datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
+	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
+		return
+	emergency.cancel()
+
+	if(!admiral_message)
+		admiral_message = pick(GLOB.admiral_messages)
+	var/intercepttext = "<font size = 3><b>Nanotrasen Update</b>: Request For Shuttle.</font><hr>\
+						To whom it may concern:<br><br>\
+						We have taken note of the situation upon [station_name()] and have come to the \
+						conclusion that it does not warrant the abandonment of the station.<br>\
+						If you do not agree with our opinion we suggest that you open a direct \
+						line with us and explain the nature of your crisis.<br><br>\
+						<i>This message has been automatically generated based upon readings from long \
+						range diagnostic tools. To assure the quality of your request every finalized report \
+						is reviewed by an on-call rear admiral.<br>\
+						<b>Rear Admiral's Notes:</b> \
+						[admiral_message]"
+	print_command_report(intercepttext, announce = TRUE)
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
@@ -264,7 +288,7 @@ SUBSYSTEM_DEF(shuttle)
 				continue
 
 		var/turf/T = get_turf(thing)
-		if(T && T.z == ZLEVEL_STATION)
+		if(T && (T.z in GLOB.station_z_levels))
 			callShuttle = 0
 			break
 
@@ -300,7 +324,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.setTimer(emergencyDockTime)
 		priority_announce("Hostile environment resolved. \
 			You have 3 minutes to board the Emergency Shuttle.",
-			null, 'sound/AI/shuttledock.ogg', "Priority")
+			null, 'sound/ai/shuttledock.ogg', "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
@@ -315,7 +339,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(getDock(destination)))
 			return 2
 	else
-		if(M.dock(getDock(destination)))
+		if(M.dock(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
@@ -330,7 +354,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(D))
 			return 2
 	else
-		if(M.dock(D))
+		if(M.dock(D) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
@@ -351,7 +375,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/travel_dir = M.preferred_direction
 	// Remember, the direction is the direction we appear to be
 	// coming from
-	var/dock_angle = dir2angle(M.preferred_direction) + M.port_angle + 180
+	var/dock_angle = dir2angle(M.preferred_direction) + dir2angle(M.port_direction) + 180
 	var/dock_dir = angle2dir(dock_angle)
 
 	var/transit_width = SHUTTLE_TRANSIT_BORDER * 2
@@ -379,13 +403,13 @@ SUBSYSTEM_DEF(shuttle)
 		for(var/i in transit_turfs)
 			CHECK_TICK
 			var/turf/topleft = i
-			if(!(topleft.flags & UNUSED_TRANSIT_TURF))
+			if(!(topleft.flags_1 & UNUSED_TRANSIT_TURF_1))
 				continue
 			var/turf/bottomright = locate(topleft.x + transit_width,
 				topleft.y + transit_height, topleft.z)
 			if(!bottomright)
 				continue
-			if(!(bottomright.flags & UNUSED_TRANSIT_TURF))
+			if(!(bottomright.flags_1 & UNUSED_TRANSIT_TURF_1))
 				continue
 
 			proposed_zone = block(topleft, bottomright)
@@ -395,19 +419,16 @@ SUBSYSTEM_DEF(shuttle)
 				var/turf/T = j
 				if(!T)
 					continue base
-				if(!(T.flags & UNUSED_TRANSIT_TURF))
+				if(!(T.flags_1 & UNUSED_TRANSIT_TURF_1))
 					continue base
-			//to_chat(world, "[COORD(topleft)] and [COORD(bottomright)]")
 			break base
 
 	if((!proposed_zone) || (!proposed_zone.len))
 		return FALSE
 
 	var/turf/topleft = proposed_zone[1]
-	//to_chat(world, "[COORD(topleft)] is TOPLEFT")
 	// Then create a transit docking port in the middle
 	var/coords = M.return_coords(0, 0, dock_dir)
-	//to_chat(world, json_encode(coords))
 	/*  0------2
         |      |
         |      |
@@ -445,11 +466,9 @@ SUBSYSTEM_DEF(shuttle)
 		if(WEST)
 			transit_path = /turf/open/space/transit/west
 
-	//to_chat(world, "Docking port at [transit_x], [transit_y], [topleft.z]")
 	var/turf/midpoint = locate(transit_x, transit_y, topleft.z)
 	if(!midpoint)
 		return FALSE
-	//to_chat(world, "Making transit dock at [COORD(midpoint)]")
 	var/area/shuttle/transit/A = new()
 	A.parallax_movedir = travel_dir
 	A.contents = proposed_zone
@@ -467,7 +486,7 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/i in new_transit_dock.assigned_turfs)
 		var/turf/T = i
 		T.ChangeTurf(transit_path)
-		T.flags &= ~(UNUSED_TRANSIT_TURF)
+		T.flags_1 &= ~(UNUSED_TRANSIT_TURF_1)
 
 	M.assigned_transit = new_transit_dock
 	return TRUE
@@ -504,3 +523,17 @@ SUBSYSTEM_DEF(shuttle)
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
 	points = SSshuttle.points
+
+
+/datum/controller/subsystem/shuttle/proc/is_in_shuttle_bounds(atom/A)
+	var/area/current = get_area(A)
+	if(istype(current, /area/shuttle) && !istype(current, /area/shuttle/transit))
+		return TRUE
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(M.is_in_shuttle_bounds(A))
+			return TRUE
+
+/datum/controller/subsystem/shuttle/proc/get_containing_shuttle(atom/A)
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(M.is_in_shuttle_bounds(A))
+			return M

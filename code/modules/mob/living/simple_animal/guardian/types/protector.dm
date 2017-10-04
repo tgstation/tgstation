@@ -22,7 +22,7 @@
 /mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(. > 0 && toggle)
-		var/image/I = new('icons/effects/effects.dmi', src, "shield-flash", MOB_LAYER+0.01, dir = pick(GLOB.cardinal))
+		var/image/I = new('icons/effects/effects.dmi', src, "shield-flash", MOB_LAYER+0.01, dir = pick(GLOB.cardinals))
 		if(namedatum)
 			I.color = namedatum.colour
 		flick_overlay_view(I, src, 5)
@@ -63,6 +63,6 @@
 			else
 				to_chat(summoner, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>!</span>")
 				summoner.visible_message("<span class='danger'>\The [summoner] jumps back to [summoner.p_their()] protector.</span>")
-				new /obj/effect/overlay/temp/guardian/phase/out(get_turf(summoner))
+				new /obj/effect/temp_visual/guardian/phase/out(get_turf(summoner))
 				summoner.forceMove(get_turf(src))
-				new /obj/effect/overlay/temp/guardian/phase(get_turf(summoner))
+				new /obj/effect/temp_visual/guardian/phase(get_turf(summoner))

@@ -17,7 +17,7 @@
 	var/obj/screen/alert/instealthalert
 
 /mob/living/simple_animal/hostile/guardian/assassin/Initialize()
-	..()
+	. = ..()
 	stealthcooldown = 0
 
 /mob/living/simple_animal/hostile/guardian/assassin/Life()
@@ -30,7 +30,7 @@
 	..()
 	if(statpanel("Status"))
 		if(stealthcooldown >= world.time)
-			stat(null, "Stealth Cooldown Remaining: [max(round((stealthcooldown - world.time)*0.1, 0.1), 0)] seconds")
+			stat(null, "Stealth Cooldown Remaining: [DisplayTimeText(stealthcooldown - world.time)]")
 
 /mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget()
 	. = ..()
@@ -71,15 +71,15 @@
 		melee_damage_upper = 50
 		armour_penetration = 100
 		obj_damage = 0
-		environment_smash = 0
-		new /obj/effect/overlay/temp/guardian/phase/out(get_turf(src))
+		environment_smash = ENVIRONMENT_SMASH_NONE
+		new /obj/effect/temp_visual/guardian/phase/out(get_turf(src))
 		alpha = 15
 		if(!forced)
 			to_chat(src, "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>")
 		updatestealthalert()
 		toggle = TRUE
 	else if(!forced)
-		to_chat(src, "<span class='danger'><B>You cannot yet enter stealth, wait another [max(round((stealthcooldown - world.time)*0.1, 0.1), 0)] seconds!</span></B>")
+		to_chat(src, "<span class='danger'><B>You cannot yet enter stealth, wait another [DisplayTimeText(stealthcooldown - world.time)]!</span></B>")
 
 /mob/living/simple_animal/hostile/guardian/assassin/proc/updatestealthalert()
 	if(stealthcooldown <= world.time)

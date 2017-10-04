@@ -90,7 +90,7 @@
 
 /obj/effect/proc_holder/spell/aimed/finger_guns
 	name = "Finger Guns"
-	desc = "Shoot a mimed bullet from your fingers that does a stun and some damage."
+	desc = "Shoot a mimed bullet from your fingers that stuns and does some damage."
 	school = "mime"
 	panel = "Mime"
 	charge_max = 300
@@ -98,7 +98,7 @@
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20
-	projectile_type = /obj/item/projectile/bullet/weakbullet2
+	projectile_type = /obj/item/projectile/bullet/mime
 	projectile_amount = 3
 	sound = null
 	active_msg = "You draw your fingers!"
@@ -125,14 +125,14 @@
 	..()
 
 
-/obj/item/weapon/spellbook/oneuse/mimery_blockade
+/obj/item/spellbook/oneuse/mimery_blockade
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime
 	spellname = ""
 	name = "Guide to Advanced Mimery Vol 1"
 	desc = "The pages don't make any sound when turned."
 	icon_state ="bookmime"
 
-/obj/item/weapon/spellbook/oneuse/mimery_guns
+/obj/item/spellbook/oneuse/mimery_guns
 	spell = /obj/effect/proc_holder/spell/aimed/finger_guns
 	spellname = ""
 	name = "Guide to Advanced Mimery Vol 2"

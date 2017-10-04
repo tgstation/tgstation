@@ -32,6 +32,7 @@
 	item_color = "cargo"
 	body_parts_covered = CHEST|GROIN|ARMS
 	mutantrace_variation = MUTANTRACE_VARIATION
+	alt_covers_chest = TRUE
 
 
 /obj/item/clothing/under/rank/chaplain
@@ -58,7 +59,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/rank/clown/hit_reaction()
+/obj/item/clothing/under/rank/clown/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
 	return 0
 
@@ -76,7 +77,7 @@
 	icon_state = "hydroponics"
 	item_state = "g_suit"
 	item_color = "hydroponics"
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 
 /obj/item/clothing/under/rank/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."

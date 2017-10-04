@@ -3,7 +3,7 @@
 	for(var/file in args)
 		src << browse_rsc(file)
 
-/client/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list(".txt",".log",".htm"))
+/client/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
 	var/path = root
 
 	for(var/i=0, i<max_iterations, i++)
@@ -22,9 +22,13 @@
 
 		if(copytext(path,-1,0) != "/")		//didn't choose a directory, no need to iterate again
 			break
-
-	var/extension = copytext(path,-4,0)
-	if( !fexists(path) || !(extension in valid_extensions) )
+	var/extensions
+	for(var/i in valid_extensions)
+		if(extensions)
+			extensions += "|"
+		extensions += "[i]"
+	var/regex/valid_ext = new("\\.([extensions])$", "i")
+	if( !fexists(path) || !(valid_ext.Find(path)) )
 		to_chat(src, "<font color='red'>Error: browse_files(): File not found/Invalid file([path]).</font>")
 		return
 
@@ -39,7 +43,7 @@
 /client/proc/file_spam_check()
 	var/time_to_wait = GLOB.fileaccess_timer - world.time
 	if(time_to_wait > 0)
-		to_chat(src, "<font color='red'>Error: file_spam_check(): Spam. Please wait [round(time_to_wait/10)] seconds.</font>")
+		to_chat(src, "<font color='red'>Error: file_spam_check(): Spam. Please wait [DisplayTimeText(time_to_wait)].</font>")
 		return 1
 	GLOB.fileaccess_timer = world.time + FTPDELAY
 	return 0

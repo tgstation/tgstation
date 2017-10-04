@@ -10,9 +10,9 @@
 	icon = 'icons/obj/machines/magic_emitter.dmi'
 	icon_state = "wabbajack_statue"
 	icon_state_on = "wabbajack_statue_on"
+	active = FALSE
 	var/list/active_tables = list()
 	var/tables_required = 2
-	active = FALSE
 
 /obj/machinery/power/emitter/energycannon/magical/Initialize()
 	. = ..()
@@ -55,15 +55,13 @@
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
-	desc = "Whether you're sleeping or waking, it's going to be \
-		quite chaotic."
-	obj_integrity = 1000
+	desc = "Whether you're sleeping or waking, it's going to be quite chaotic."
 	max_integrity = 1000
 	verb_say = "chants"
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
 	var/never_spoken = TRUE
-	flags = NODECONSTRUCT
+	flags_1 = NODECONSTRUCT_1
 
 /obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
@@ -104,7 +102,7 @@
 	// Existing sleepers
 	for(var/i in found)
 		var/mob/living/L = i
-		L.SetSleeping(10)
+		L.SetSleeping(200)
 
 	// Missing sleepers
 	for(var/i in sleepers - found)
@@ -151,7 +149,7 @@
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.access |= GLOB.access_cent_bar
+	access_card.access |= ACCESS_CENT_BAR
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = 0
@@ -166,11 +164,11 @@
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
 	. = ..()
-	access_card = new /obj/item/weapon/card/id(src)
+	access_card = new /obj/item/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
-	access_card.access |= GLOB.access_cent_bar
-	access_card.flags |= NODROP
+	access_card.access |= ACCESS_CENT_BAR
+	access_card.flags_1 |= NODROP_1
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
@@ -182,8 +180,7 @@
 
 /obj/structure/table/wood/bar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags = NODECONSTRUCT
-	obj_integrity = 1000
+	flags_1 = NODECONSTRUCT_1
 	max_integrity = 1000
 	var/boot_dir = 1
 
@@ -192,7 +189,7 @@
 		// No climbing on the bar please
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
-		M.Weaken(2)
+		M.Knockdown(40)
 		M.throw_at(throwtarget, 5, 1,src)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
@@ -209,8 +206,8 @@
 		if(H.mind && H.mind.assigned_role == "Bartender")
 			return TRUE
 
-	var/obj/item/weapon/card/id/ID = user.get_idcard()
-	if(ID && (GLOB.access_cent_bar in ID.access))
+	var/obj/item/card/id/ID = user.get_idcard()
+	if(ID && (ACCESS_CENT_BAR in ID.access))
 		return TRUE
 
 //Luxury Shuttle Blockers
@@ -218,23 +215,37 @@
 /obj/effect/forcefield/luxury_shuttle
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
+	var/static/list/check_times = list()
 
-/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
 	if(mover in approved_passengers)
-		return 1
+		return TRUE
 
 	if(!isliving(mover)) //No stowaways
-		return 0
+		return FALSE
+
+	return FALSE
+
+
+#define LUXURY_MESSAGE_COOLDOWN 100
+/obj/effect/forcefield/luxury_shuttle/CollidedWith(atom/movable/AM)
+	if(!isliving(AM))
+		return ..()
+	
+	if(check_times[AM] && check_times[AM] > world.time) //Let's not spam the message
+		return ..()
+	
+	check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
 	var/total_cash = 0
 	var/list/counted_money = list()
 
-	for(var/obj/item/weapon/coin/C in mover.GetAllContents())
+	for(var/obj/item/coin/C in AM.GetAllContents())
 		total_cash += C.value
 		counted_money += C
 		if(total_cash >= threshold)
 			break
-	for(var/obj/item/stack/spacecash/S in mover.GetAllContents())
+	for(var/obj/item/stack/spacecash/S in AM.GetAllContents())
 		total_cash += S.value * S.amount
 		counted_money += S
 		if(total_cash >= threshold)
@@ -244,17 +255,18 @@
 		for(var/obj/I in counted_money)
 			qdel(I)
 
-		to_chat(mover, "Thank you for your payment! Please enjoy your flight.")
-		approved_passengers += mover
-		return 1
+		to_chat(AM, "Thank you for your payment! Please enjoy your flight.")
+		approved_passengers += AM
+		check_times -= AM
+		return
 	else
-		to_chat(mover, "You don't have enough money to enter the main shuttle. You'll have to fly coach.")
-		return 0
+		to_chat(AM, "<span class='warning'>You don't have enough money to enter the main shuttle. You'll have to fly coach.</span>")
+		return ..()
 
 /mob/living/simple_animal/hostile/bear/fightpit
 	name = "fight pit bear"
 	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 
 /obj/effect/decal/hammerandsickle
 	name = "hammer and sickle"

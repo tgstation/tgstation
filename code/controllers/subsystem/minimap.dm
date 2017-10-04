@@ -5,11 +5,11 @@ SUBSYSTEM_DEF(minimap)
 	var/const/MINIMAP_SIZE = 2048
 	var/const/TILE_SIZE = 8
 
-	var/list/z_levels = list(ZLEVEL_STATION)
+	var/list/z_levels = list(ZLEVEL_STATION_PRIMARY)
 
 /datum/controller/subsystem/minimap/Initialize(timeofday)
 	var/hash = md5(SSmapping.config.GetFullMapPath())
-	if(config.generate_minimaps)
+	if(CONFIG_GET(flag/generate_minimaps))
 		if(hash == trim(file2text(hash_path())))
 			for(var/z in z_levels)	//We have these files cached, let's register them
 				register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))

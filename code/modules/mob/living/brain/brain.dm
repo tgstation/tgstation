@@ -7,7 +7,7 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 
 /mob/living/brain/Initialize()
-	..()
+	. = ..()
 	create_dna(src)
 	stored_dna.initialize_dna(random_blood_type())
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
@@ -19,7 +19,7 @@
 /mob/living/brain/proc/create_dna()
 	stored_dna = new /datum/dna/stored(src)
 	if(!stored_dna.species)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = pick(CONFIG_GET(keyed_flag_list/roundstart_races))
 		stored_dna.species = new rando_race()
 
 /mob/living/brain/Destroy()
@@ -63,3 +63,11 @@
 	..()
 	if(stored_dna)
 		stored_dna.real_name = real_name
+
+/mob/living/brain/ClickOn(atom/A, params)
+	..()
+	if(istype(loc, /obj/item/device/mmi))
+		var/obj/item/device/mmi/MMI = loc
+		var/obj/mecha/M = MMI.mecha
+		if((src == MMI.brainmob) && istype(M))
+			return M.click_action(A,src,params)

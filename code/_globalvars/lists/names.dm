@@ -15,9 +15,11 @@ GLOBAL_LIST_INIT(carp_names, world.file2list("strings/names/carp.txt"))
 GLOBAL_LIST_INIT(golem_names, world.file2list("strings/names/golem.txt"))
 GLOBAL_LIST_INIT(plasmaman_names, world.file2list("strings/names/plasmaman.txt"))
 GLOBAL_LIST_INIT(posibrain_names, world.file2list("strings/names/posibrain.txt"))
+GLOBAL_LIST_INIT(nightmare_names, world.file2list("strings/names/nightmare.txt"))
 
 
 GLOBAL_LIST_INIT(verbs, world.file2list("strings/names/verbs.txt"))
 GLOBAL_LIST_INIT(adjectives, world.file2list("strings/names/adjectives.txt"))
+GLOBAL_LIST_INIT(dream_strings, world.file2list("strings/dreamstrings.txt"))
 //loaded on startup because of "
 //would include in rsc if ' was used
