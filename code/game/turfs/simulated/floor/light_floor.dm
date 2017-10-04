@@ -12,6 +12,10 @@
 	var/can_modify_colour = TRUE
 
 
+/turf/open/floor/light/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+
 /turf/open/floor/light/Initialize()
 	. = ..()
 	update_icon()

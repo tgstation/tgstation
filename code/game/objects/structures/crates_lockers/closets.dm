@@ -76,8 +76,12 @@
 
 /obj/structure/closet/examine(mob/user)
 	..()
+	if(welded)
+		to_chat(user, "<span class='notice'>It's welded shut.</span>")
 	if(anchored)
-		to_chat(user, "It is anchored to the ground.")
+		to_chat(user, "<span class='notice'>It is <b>bolted</b> to the ground.</span>")
+	if(opened)
+		to_chat(user, "<span class='notice'>The parts are <b>welded</b> together.</span>")
 	else if(secure && !opened)
 		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
 
