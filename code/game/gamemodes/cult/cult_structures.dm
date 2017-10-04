@@ -106,7 +106,7 @@
 		if("Shielded Robe")
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
-				pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
+			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
 
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
