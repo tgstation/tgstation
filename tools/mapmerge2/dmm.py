@@ -1,7 +1,8 @@
 # Tools for working with DreamMaker maps
 
 import io
-from collections import OrderedDict, namedtuple
+import bidict
+from collections import namedtuple
 
 TGM_HEADER = "//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE"
 ENCODING = 'utf-8'
@@ -9,16 +10,11 @@ ENCODING = 'utf-8'
 Coordinate = namedtuple('Coordinate', ['x', 'y', 'z'])
 
 class DMM:
-    # key_length: int
-    # dictionary: OrderedDict
-    # size: Coordinate
-    # grid: dict
-    # header: str | None
     __slots__ = ['key_length', 'dictionary', 'size', 'grid', 'header']
 
     def __init__(self, key_length, size):
         self.key_length = key_length
-        self.dictionary = OrderedDict()
+        self.dictionary = bidict.bidict()
         self.size = size
         self.grid = {}
         self.header = None
@@ -61,40 +57,23 @@ class DMM:
             for x in range(1, self.size.x + 1):
                 yield (y, x)
 
-    def generate_new_key(self):
-        return generate_new_key(self.dictionary, self.key_length)
-
 # ----------
 # dictionary helpers
 
-# faster than get_key() on smaller dictionaries
-def search_key(dictionary, data):
-    for key, value in dictionary.items():
-        if value == data:
-            return key
-    return None
-
-# faster than search_key() on bigger dictionaries
-def get_key(keys, values, data):
-    try:
-        return keys[values.index(data)]
-    except:
-        return None
-
 # rewrites dictionary into an ordered dictionary with no unused keys
 def trim_dictionary(unclean_map):
-    trimmed_dict = OrderedDict()
+    trimmed_dict = bidict.bidict()
     adjusted_grid = dict()
     key_length = unclean_map.key_length
-    key = ""
+    key = base52[0] * key_length
     old_to_new = dict()
     used_keys = set(unclean_map.grid.values())
 
     for old_key, tile in unclean_map.dictionary.items():
         if old_key in used_keys:
-            key = key_after(key, key_length)
-            trimmed_dict[key] = tile
             old_to_new[old_key] = key
+            trimmed_dict[key] = tile
+            key = key_after(key)
 
     for coord, old_key in unclean_map.grid.items():
         adjusted_grid[coord] = old_to_new[old_key]
@@ -103,16 +82,6 @@ def trim_dictionary(unclean_map):
     data.dictionary = trimmed_dict
     data.grid = adjusted_grid
     return data
-
-def sort_dictionary(dictionary):
-    sorted_dict = OrderedDict()
-    for key in sorted(dictionary.keys(), key=key_to_num):
-        sorted_dict[key] = dictionary[key]
-    return sorted_dict
-
-def generate_new_key(dictionary):
-    key = next(reversed(dictionary))
-    return key_after(key, len(key))
 
 # ----------
 # key handling
@@ -128,22 +97,36 @@ def key_to_num(key):
         num = BASE * num + base52_r[ch]
     return num
 
+def item_key_to_num(item):
+    return key_to_num(item[0])
+
 def num_to_key(num, key_length):
+    if num >= BASE ** key_length:
+        raise KeyTooLarge(f"num={num} does not fit in key_length={key_length}")
+
     result = ''
     while num:
-        result += base52[num % BASE]
+        result = base52[num % BASE] + result
         num //= BASE
 
-    if len(result) > key_length:
-        raise KeyTooLarge()
-
+    assert len(result) <= key_length
     return base52[0] * (key_length - len(result)) + result
 
-def key_after(key, key_length):
-    return num_to_key(key_to_num(key) + 1, key_length)
+def key_after(key):
+    return num_to_key(key_to_num(key) + 1, len(key))
 
-def key_difference(keyA, keyB): # keyA - keyB
-    return key_to_num(keyA) - key_to_num(keyB)
+def generate_new_key(dictionary):
+    last_key = max(dictionary.keys(), key=key_to_num)
+    try:
+        # take the next key up
+        return key_after(last_key)
+    except KeyTooLarge:
+        # as a fallback if we hit ZZZ, try to find an unused key
+        for i in range(0, BASE ** len(last_key)):
+            key = num_to_key(i, len(last_key))
+            if key not in dictionary:
+                return key
+        raise KeyTooLarge(f"key_length={len(last_key)} exhausted")
 
 class KeyTooLarge(Exception):
     pass
@@ -199,7 +182,7 @@ def save_tgm(dmm, output):
         output.write(f"{dmm.header}\n")
 
     # write dictionary in tgm format
-    for key, value in dmm.dictionary.items():
+    for key, value in sorted(dmm.dictionary.items(), key=item_key_to_num):
         output.write(f'"{key}" = (\n')
         for idx, thing in enumerate(value):
             in_quote_block = False
@@ -235,9 +218,9 @@ def save_tgm(dmm, output):
         output.write("\n")
         for x in range(1, max_x + 1):
             output.write(f"({x},{1},{z}) = {{\"\n")
-            for y in range(1, max_y):
+            for y in range(1, max_y + 1):
                 output.write(f"{dmm.grid[x, y, z]}\n")
-            output.write(f"{dmm.grid[x, max_y, z]}\n\"}}\n")
+            output.write("\"}\n")
 
 # ----------
 # DMM writer
@@ -247,7 +230,7 @@ def save_dmm(dmm, output):
         output.write(f"{dmm.header}\n")
 
     # writes a tile dictionary the same way Dreammaker does
-    for key, value in dmm.dictionary.items():
+    for key, value in sorted(dmm.dictionary.items(), key=item_key_to_num):
         output.write(f'"{key}" = ({",".join(value)})\n')
 
     output.write("\n")
@@ -281,7 +264,8 @@ def _parse(map_raw_text):
     escaping = False
     skip_whitespace = False
 
-    dictionary = OrderedDict()
+    dictionary = bidict.bidict()
+    duplicate_keys = {}
     curr_key = ""
     curr_datum = ""
     curr_data = list()
@@ -388,7 +372,12 @@ def _parse(map_raw_text):
 
                 if char == ")":
                     curr_data.append(curr_datum)
-                    dictionary[curr_key] = tuple(curr_data)
+                    curr_data = tuple(curr_data)
+                    try:
+                        dictionary[curr_key] = curr_data
+                    except bidict.ValueDuplicationError:
+                        # if the map has duplicate values, eliminate them now
+                        duplicate_keys[curr_key] = dictionary.inv[curr_data]
                     curr_data = list()
                     curr_datum = ""
                     curr_key = ""
@@ -487,7 +476,7 @@ def _parse(map_raw_text):
                     if iter_x > 1:
                         curr_x += 1
 
-                    grid[curr_x, curr_y, curr_z] = curr_key
+                    grid[curr_x, curr_y, curr_z] = duplicate_keys.get(curr_key, curr_key)
                     curr_key = ""
                 continue
 
