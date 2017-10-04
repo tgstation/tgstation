@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 			copiedobjs += O2.GetAllContents()
 
 		for(var/mob/M in T)
-			if(istype(M, /mob/camera))
+			if(iscameramob(M))
 				continue // If we need to check for more mobs, I'll add a variable
 			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
 			copiedobjs += SM.GetAllContents()

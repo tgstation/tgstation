@@ -1,5 +1,6 @@
 GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/mob/living,
+		/mob/camera,
 		/obj/structure/blob,
 		/obj/effect/rune,
 		/obj/structure/spider/spiderling,
