@@ -262,7 +262,7 @@ Credit where due:
 	W.access += ACCESS_MAINT_TUNNELS
 	W.registered_name = H.real_name
 	W.update_label()
-	if(plasmaman) //If we need to breathe from the plasma tank, we should probably start doing that
+	if(plasmaman && !visualsOnly) //If we need to breathe from the plasma tank, we should probably start doing that
 		H.internal = H.get_item_for_held_index(2)
 		H.update_internals_hud_icon(1)
 
