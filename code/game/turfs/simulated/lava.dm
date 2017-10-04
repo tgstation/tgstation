@@ -89,8 +89,8 @@
 	if (AM)
 		thing_to_check = list(AM)
 	for(var/thing in thing_to_check)
-		var/atom/movable/AM = thing
-		if(AM.throwing)
+		var/atom/movable/ATM = thing
+		if(ATM.throwing)
 			continue
 		if(isobj(thing))
 			var/obj/O = thing
