@@ -185,9 +185,9 @@
 	desc = "A bunch of hair without a head attached."
 	icon_state = ""
 	item_state = "pwig"
+	flags_inv = HIDEHAIR
 	var/hair_style = "Very Long Hair"
 	var/hair_color = "#000"
-	flags_inv = HIDEHAIR
 
 /obj/item/clothing/head/wig/Initialize(mapload)
 	. = ..()
