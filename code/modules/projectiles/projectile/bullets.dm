@@ -276,7 +276,7 @@
 	name = "buckshot pellet"
 	damage = 12.5
 
-/obj/item/projectile/bullet/pellet/shotgun_rubbershot
+/obj/item/projectile/bullet/rpellet/shotgun_rubbershot
 	damage = 3
 	stamina = 25
 
