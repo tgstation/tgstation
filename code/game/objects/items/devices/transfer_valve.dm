@@ -99,7 +99,7 @@
 			toggle_valve()
 		else if(attached_device)
 			if(href_list["rem_device"])
-				attached_device.drop_location()
+				attached_device.forceMove(drop_location())
 				attached_device.holder = null
 				attached_device = null
 				update_icon()
