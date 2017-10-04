@@ -284,7 +284,7 @@ function check_ready_for_review($payload, $labels = null){
 	$dismissed_an_approved_review = false;
 
 	foreach($reviews as $R){
-		if(is_maintainer($R['author']['login'])){
+		if(is_maintainer($R['user']['login'])){
 			$lower_state = strtolower($R['state']);
 			if($lower_state == 'changes_requested')
 				$reviews_ids_with_changes_requested[] = $R['id'];
