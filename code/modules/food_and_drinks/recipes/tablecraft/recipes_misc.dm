@@ -301,7 +301,7 @@
 		/datum/reagent/consumable/milk = 1,
 		/datum/reagent/consumable/cherryjelly = 5,
 		/obj/item/stock_parts/cell/super =1,
-		/obj/item/melee/sabre = 1
+		/obj/item/melee/rapier = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/powercrepe
 	subcategory = CAT_MISCFOOD

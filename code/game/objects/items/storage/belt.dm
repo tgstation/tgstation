@@ -485,8 +485,8 @@
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
 
-/obj/item/storage/belt/sabre
-	name = "sabre sheath"
+/obj/item/storage/belt/rapier
+	name = "rapier sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
 	item_state = "sheath"
@@ -495,15 +495,15 @@
 	w_class = WEIGHT_CLASS_BULKY
 	max_w_class = WEIGHT_CLASS_BULKY
 	can_hold = list(
-		/obj/item/melee/sabre
+		/obj/item/melee/rapier
 		)
 
-/obj/item/storage/belt/sabre/examine(mob/user)
+/obj/item/storage/belt/rapier/examine(mob/user)
 	..()
 	if(contents.len)
 		to_chat(user, "<span class='notice'>Alt-click it to quickly draw the blade.</span>")
 
-/obj/item/storage/belt/sabre/AltClick(mob/user)
+/obj/item/storage/belt/rapier/AltClick(mob/user)
 	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
 		return
 	if(contents.len)
@@ -515,18 +515,18 @@
 	else
 		to_chat(user, "[src] is empty.")
 
-/obj/item/storage/belt/sabre/update_icon()
+/obj/item/storage/belt/rapier/update_icon()
 	icon_state = "sheath"
 	item_state = "sheath"
 	if(contents.len)
-		icon_state += "-sabre"
-		item_state += "-sabre"
+		icon_state += "-rapier"
+		item_state += "-rapier"
 	if(loc && isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
 	..()
 
 
-/obj/item/storage/belt/sabre/PopulateContents()
-	new /obj/item/melee/sabre(src)
+/obj/item/storage/belt/rapier/PopulateContents()
+	new /obj/item/melee/rapier(src)
 	update_icon()

@@ -46,11 +46,11 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 
-/obj/item/melee/sabre
-	name = "officer's sabre"
+/obj/item/melee/rapier
+	name = "officer's rapier"
 	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
-	icon_state = "sabre"
-	item_state = "sabre"
+	icon_state = "rapier"
+	item_state = "rapier"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -66,20 +66,20 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
 
-/obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/rapier/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
-/obj/item/melee/sabre/on_exit_storage(obj/item/storage/S)
+/obj/item/melee/rapier/on_exit_storage(obj/item/storage/S)
 	..()
-	var/obj/item/storage/belt/sabre/B = S
+	var/obj/item/storage/belt/rapier/B = S
 	if(istype(B))
 		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
 
-/obj/item/melee/sabre/on_enter_storage(obj/item/storage/S)
+/obj/item/melee/rapier/on_enter_storage(obj/item/storage/S)
 	..()
-	var/obj/item/storage/belt/sabre/B = S
+	var/obj/item/storage/belt/rapier/B = S
 	if(istype(B))
 		playsound(B, 'sound/items/sheath.ogg', 25, 1)
 
