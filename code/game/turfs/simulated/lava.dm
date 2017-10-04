@@ -89,6 +89,9 @@
 	if (AM)
 		thing_to_check = list(AM)
 	for(var/thing in thing_to_check)
+		var/atom/movable/ATM = thing
+		if(ATM.throwing)
+			continue
 		if(isobj(thing))
 			var/obj/O = thing
 			if((O.resistance_flags & (LAVA_PROOF|INDESTRUCTIBLE)) || O.throwing)
