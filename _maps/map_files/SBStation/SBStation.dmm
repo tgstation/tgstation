@@ -24589,10 +24589,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
-"bbQ" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space/nearstation)
 "bbR" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
@@ -25148,14 +25144,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "bdf" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space/nearstation)
-"bdg" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -25824,13 +25812,6 @@
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
-"beK" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 9
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space/nearstation)
 "beL" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
@@ -25958,13 +25939,6 @@
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
-"beY" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space/nearstation)
 "beZ" = (
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
@@ -26685,38 +26659,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/brig)
-"bgB" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable/white{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/structure/cable/white{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "brigfront";
-	name = "Brig Blast door"
-	},
-/turf/open/floor/plating,
-/area/security/brig)
-"bgC" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable/white{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/structure/cable/white{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "brigfront";
-	name = "Brig Blast door"
-	},
-/turf/open/floor/plating,
-/area/security/brig)
 "bgD" = (
 /obj/item/storage/backpack/satchel/flat/prison{
 	name = "?????"
@@ -26766,12 +26708,6 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
-"bgJ" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
-/area/security/brig)
 "bgK" = (
 /obj/structure/disposaloutlet{
 	dir = 1
@@ -26784,12 +26720,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/floorgrime,
-/area/security/brig)
-"bgL" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
 /area/security/brig)
 "bgM" = (
 /obj/structure/cable/white{
@@ -26845,20 +26775,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"bgR" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
-/area/security/courtroom)
 "bgS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall/r_wall,
-/area/security/courtroom)
-"bgT" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
 /turf/closed/wall/r_wall,
 /area/security/courtroom)
 "bgU" = (
@@ -26866,10 +26784,6 @@
 /obj/machinery/computer/prisoner,
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
-"bgV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall/r_wall,
-/area/security/courtroom)
 "bgW" = (
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
@@ -26959,15 +26873,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
-"bhh" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/security/courtroom)
 "bhi" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /turf/open/floor/plasteel/black,
@@ -27007,18 +26912,6 @@
 /obj/machinery/blackbox_recorder,
 /turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/space)
-"bhp" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
-/turf/closed/wall/r_wall,
-/area/engine/engineering)
-"bhq" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
-/turf/closed/wall/r_wall,
-/area/engine/engineering)
-"bhr" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
-/turf/closed/wall/r_wall,
-/area/engine/engineering)
 "bhs" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -27236,16 +27129,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"bhQ" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/light/small,
-/turf/open/space/basic,
-/area/space)
-"bhR" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/light/small,
-/turf/open/space/basic,
-/area/space)
 "bhS" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -27301,7 +27184,7 @@
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
-"chY" = (
+"bhY" = (
 /obj/docking_port/stationary{
 	dheight = 9;
 	dir = 2;
@@ -27314,7 +27197,7 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"dhZ" = (
+"bhZ" = (
 /obj/docking_port/stationary{
 	dheight = 9;
 	dir = 2;
@@ -27327,7 +27210,7 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"Yhb" = (
+"bia" = (
 /obj/docking_port/stationary{
 	dheight = 9;
 	dir = 2;
@@ -27340,7 +27223,7 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"Zhc" = (
+"bib" = (
 /obj/docking_port/stationary{
 	dheight = 9;
 	dir = 2;
@@ -27353,6 +27236,15 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"bic" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/supply)
+"bid" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"bie" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/mining)
 
 (1,1,1) = {"
 aaa
@@ -40345,7 +40237,7 @@ aaa
 aaa
 aaa
 aaa
-Zhc
+bib
 aaa
 aaa
 aaa
@@ -48297,7 +48189,7 @@ aEa
 aEa
 aEa
 aEa
-azn
+bid
 azn
 azn
 azn
@@ -52405,13 +52297,13 @@ aCT
 aBw
 aFp
 aaa
+bic
 aHG
 aHG
 aHG
 aHG
 aHG
-aHG
-aHG
+bic
 aOy
 aaa
 aaa
@@ -53433,13 +53325,13 @@ aCX
 aBA
 aFr
 aaa
-aHG
+bic
 aIu
 aJA
 aHG
 aLM
 aMP
-aHG
+bic
 aOy
 aaa
 aaa
@@ -53959,7 +53851,7 @@ aPu
 aPu
 aPv
 aPu
-aPu
+bie
 aaa
 abc
 abp
@@ -54730,7 +54622,7 @@ aPu
 aPu
 aRe
 aPu
-aPu
+bie
 aaa
 abp
 abp
@@ -63374,7 +63266,7 @@ aaa
 aaa
 aaa
 aaa
-Yhb
+bia
 aaa
 aaa
 aaa
@@ -73282,7 +73174,7 @@ aaa
 aaa
 aaa
 aaa
-dhZ
+bhZ
 aaa
 aaa
 aaa
@@ -77012,7 +76904,7 @@ aaa
 aaa
 aaa
 aaa
-chY
+bhY
 aaa
 aaa
 aaa
