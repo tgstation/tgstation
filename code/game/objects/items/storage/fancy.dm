@@ -58,7 +58,9 @@
 
 /obj/item/storage/fancy/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
 	fancy_open = TRUE
-	return ..()
+	. = ..()
+	//Recall update icon  with the fancy item snowflake arg (ugh)
+	update_icon(1)
 
 /*
  * Donut Box
