@@ -8,7 +8,7 @@
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
-/obj/item/projectile/bullet/pellet/Range()
+/obj/item/projectile/bullet/pellet/shotgun_buckshot/Range()
 	..()
 	damage -= 0.75
 	if(damage < 0)
@@ -276,7 +276,7 @@
 	name = "buckshot pellet"
 	damage = 12.5
 
-/obj/item/projectile/bullet/rpellet/shotgun_rubbershot
+/obj/item/projectile/bullet/pellet/shotgun_rubbershot
 	damage = 3
 	stamina = 25
 
