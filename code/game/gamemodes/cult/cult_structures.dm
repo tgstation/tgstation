@@ -106,7 +106,8 @@
 		if("Shielded Robe")
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
-			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
+			if((world.time - SSticker.round_start_time) >= 12000)
+				pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
 			else
 				cooldowntime = 12000 - (world.time - SSticker.round_start_time)
 				to_chat(user, "<span class='cultitalic'>The forge fires are not yet hot enough for this weapon, give it another [DisplayTimeText(cooldowntime)].</span>")
