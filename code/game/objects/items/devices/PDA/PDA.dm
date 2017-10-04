@@ -93,7 +93,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	update_icon()
 
 /obj/item/device/pda/equipped(mob/user, slot)
-	if(!equiped)
+	if(!equipped)
 		if(user.client)
 			switch(user.client.prefs.pda_style)
 				if(MONO)
