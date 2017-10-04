@@ -82,7 +82,7 @@
 		if(tank_one && href_list["tankone"])
 			split_gases()
 			valve_open = FALSE
-			tank_one.drop_location()
+			tank_one.forceMove(drop_location())
 			tank_one = null
 			update_icon()
 			if((!tank_two || tank_two.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
@@ -90,7 +90,7 @@
 		else if(tank_two && href_list["tanktwo"])
 			split_gases()
 			valve_open = FALSE
-			tank_two.drop_location()
+			tank_two.forceMove(drop_location())
 			tank_two = null
 			update_icon()
 			if((!tank_one || tank_one.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
