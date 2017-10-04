@@ -150,7 +150,7 @@
 			if(!building_checks(R, multiplier))
 				return
 
-		var/atom/O
+		var/obj/O
 		if(R.max_res_amount > 1) //Is it a stack?
 			O = new R.result_type(usr.drop_location(), R.res_amount * multiplier)
 		else
