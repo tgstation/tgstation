@@ -150,27 +150,5 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	if(prob(25))
 		mezzer()
 
-/obj/singularity/narsie/sc_Narsie/consume(atom/A)
-	if(is_type_in_list(A, uneatable))
-		return 0
-	if(isliving(A))
-		var/mob/living/L = A
-		L.gib()
-	else if(istype(A, /obj/))
-		var/obj/O = A
-		O.ex_act(EXPLODE_DEVASTATE)
-		if(O)
-			qdel(O)
-	else if(isturf(A))
-		var/turf/T = A
-		if(T.intact)
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-				if(O.invisibility == INVISIBILITY_MAXIMUM)
-					src.consume(O)
-		T.ChangeTurf(/turf/open/space)
-	return
-
 /obj/singularity/narsie/sc_Narsie/ex_act()
 	return
