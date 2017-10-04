@@ -64,9 +64,9 @@
 			H.status_flags = temp_flags
 			sleep(10)
 			playsound(H.loc, 'sound/effects/ghost.ogg', 100, 1)
-			var/newNameId = pick(GLOB.possibleShadowlingNames)
+			var/newNameId = pick(GLOB.nightmare_names)
 			var/oldName = H.real_name
-			GLOB.possibleShadowlingNames.Remove(newNameId)
+			GLOB.nightmare_names.Remove(newNameId)
 			H.real_name = newNameId
 			H.name = user.real_name
 			H.SetStun(0)
