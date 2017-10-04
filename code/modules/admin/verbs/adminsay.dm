@@ -10,6 +10,7 @@
 		return
 
 	log_talk(mob,"[key_name(src)] : [msg]",LOGASAY)
+	msg = emoji_parse(msg)
 	msg = keywords_lookup(msg)
 	if(check_rights(R_ADMIN,0))
 		msg = "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> [ADMIN_FLW(mob)]: <span class='message'>[msg]</span></span>"
