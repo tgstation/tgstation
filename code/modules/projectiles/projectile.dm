@@ -163,7 +163,7 @@
 		if(forcedodge)
 			loc = target_turf
 		return FALSE
-	var/permutation = select_target(A,target_turf,forcedodge) // searches for return value, could be deleted after run so check A isn't null
+	var/permutation = select_target(A,target_turf) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		loc = target_turf
 		if(A)
