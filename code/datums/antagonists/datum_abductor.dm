@@ -58,3 +58,9 @@
 			break
 
 	SSticker.mode.update_abductor_icons_added(owner)
+
+/datum/antagonist/abductor/scientist/finalize_abductor()
+	..()
+	var/mob/living/carbon/human/H = owner.current
+	var/datum/species/abductor/A = H.dna.species
+	A.scientist = TRUE
