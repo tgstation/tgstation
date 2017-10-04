@@ -37,6 +37,7 @@
 	C.a_intent = INTENT_HARM // THE SUFFERING MUST FLOW
 	if(regen_cooldown < world.time)
 		C.heal_overall_damage(4,4)
+		C.adjustToxLoss(-4)
 	if(prob(4))
 		playsound(C, pick(spooks), 50, TRUE, 10)
 	if(C.InCritical())
