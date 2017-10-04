@@ -150,7 +150,11 @@
 			if(!building_checks(R, multiplier))
 				return
 
-		var/atom/O = new R.result_type( usr.loc )
+		var/atom/O
+		if(R.max_res_amount > 1) //Is it a stack?
+			O = new R.result_type(usr.drop_location(), R.res_amount * multiplier)
+		else
+			O = new R.result_type(usr.drop_location())
 		O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 
@@ -163,14 +167,8 @@
 			W.ini_dir = W.dir
 		//END: oh fuck i'm so sorry
 
-		//is it a stack ?
-		if (R.max_res_amount > 1)
-			var/obj/item/stack/new_item = O
-			new_item.amount = R.res_amount*multiplier
-			new_item.update_icon()
-
-			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
-				return
+		if (QDELETED(O))
+			return //It's a stack and has already been merged
 
 		if (isitem(O))
 			usr.put_in_hands(O)
