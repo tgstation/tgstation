@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "You now have to unbuckle a player PRIOR to shaking them up off a bed or resin nest."
