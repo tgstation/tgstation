@@ -1,3 +1,5 @@
+#define MUSIC_CD 300
+
 /obj/item/melee/execution_sword
 	name = "Executioners sword."
 	desc = "Not much good in a fight but perfect for making an example of your enemies."
@@ -12,6 +14,7 @@
 	var/execution_faction = "The Syndicate"
 	var/faction_chosen = FALSE
 	var/executing = FALSE
+	var/playing_nasheed = FALSE
 
 obj/item/melee/execution_sword/attack_self(mob/living/user)
 	if(faction_chosen == TRUE)
@@ -35,11 +38,7 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 	if(executing)
 		to_chat(user, "<span class='notice'>You are already executing someone.</span>")
 		return
-	if(user.a_intent != INTENT_HARM)
-		return ..()
-	if(user.zone_selected != "head")
-		return ..()
-	if(!ishuman(target))
+	if(user.a_intent != INTENT_HARM || user.zone_selected != "head" || !ishuman(target))
 		return ..()
 	var/obj/item/bodypart/head/infidel_head = target.get_bodypart("head")
 	if(!infidel_head || target.stat == DEAD)
@@ -48,11 +47,25 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 		executing = TRUE
 		var/area/A = get_area(src)
 		priority_announce("[user] is preparing to execute [target] at [A.map_name] in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
+		log_admin("[key_name(user)] attempted to execute [key_name(target)] with [src]")
+		message_admins("[key_name(user)] is attempting to execute [key_name(target)] with [src]")
+		if(!playing_nasheed)
+			for(var/mob/M in GLOB.player_list)
+				M.playsound_local(get_turf(M), 'hippiestation/sound/misc/nasheed.ogg', 150, 1, pressure_affected = FALSE)
+				playing_nasheed = TRUE
+				addtimer(CALLBACK(src, .proc/nasheed_end), MUSIC_CD)
 		if(do_after(user,execute_infidel, target = target))
+			log_admin("[key_name(user)] executed [key_name(target)] with [src]")
+			message_admins("[key_name(user)] executed [key_name(target)] with [src]")
 			infidel_head.dismember()
-			priority_announce("[user] has executed [target] in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
+			priority_announce("[key_name(user)] has executed [key_name(target)] in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
 			executing = FALSE
 		else
 			priority_announce("[user] has failed to execute [target] and has brought shame to [execution_faction]!","Message from [execution_faction]!", 'sound/misc/compiler-failure.ogg')
 			executing = FALSE
 
+
+/obj/item/melee/execution_sword/proc/nasheed_end()
+	playing_nasheed = FALSE
+
+#undef MUSIC_CD
