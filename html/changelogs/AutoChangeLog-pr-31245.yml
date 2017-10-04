@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - bugfix: "The Cult's bastard sword should now properly store souls and create constructs."

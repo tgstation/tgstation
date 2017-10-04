@@ -10,7 +10,7 @@
 
 /obj/item/projectile/bullet/pellet/Range()
 	..()
-	damage += -0.75
+	damage -= 0.75
 	if(damage < 0)
 		qdel(src)
 
@@ -66,7 +66,7 @@
 /obj/item/projectile/bullet/c38
 	name = ".38 bullet"
 	damage = 15
-	knockdown = 30
+	knockdown = 60
 	stamina = 50
 
 // 10mm (Stechkin)

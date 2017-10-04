@@ -145,7 +145,7 @@
 /mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	bruteloss = Clamp((bruteloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+	bruteloss = Clamp((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -156,7 +156,7 @@
 /mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	oxyloss = Clamp((oxyloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+	oxyloss = Clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -175,7 +175,7 @@
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	toxloss = Clamp((toxloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+	toxloss = Clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -194,7 +194,7 @@
 /mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	fireloss = Clamp((fireloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+	fireloss = Clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -205,7 +205,7 @@
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	cloneloss = Clamp((cloneloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+	cloneloss = Clamp((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -224,7 +224,7 @@
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return 0
-	brainloss = Clamp((brainloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+	brainloss = Clamp((brainloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 
 /mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)

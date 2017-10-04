@@ -72,16 +72,15 @@
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|OXYLOSS)
 
-/obj/item/toy/crayon/New()
-	..()
+/obj/item/toy/crayon/Initialize()
+	. = ..()
 	// Makes crayons identifiable in things like grinders
 	if(name == "crayon")
 		name = "[item_color] crayon"
 
-	if(config)
-		if(config.mutant_races == 1)
-			graffiti |= "antilizard"
-			graffiti |= "prolizard"
+	if(CONFIG_GET(flag/join_with_mutant_race))
+		graffiti |= "antilizard"
+		graffiti |= "prolizard"
 
 	all_drawables = graffiti + letters + numerals + oriented + runes + graffiti_large_h
 	drawtype = pick(all_drawables)

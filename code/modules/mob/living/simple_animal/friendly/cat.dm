@@ -83,7 +83,7 @@
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
-	var/memory_saved = 0
+	var/memory_saved = FALSE
 
 /mob/living/simple_animal/pet/cat/Runtime/Initialize()
 	if(prob(5))
@@ -98,6 +98,7 @@
 		Deploy_The_Cats()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory()
+		memory_saved = TRUE
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/make_babies()
@@ -108,7 +109,7 @@
 
 /mob/living/simple_animal/pet/cat/Runtime/death()
 	if(!memory_saved)
-		Write_Memory(1)
+		Write_Memory(TRUE)
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
@@ -120,14 +121,14 @@
 		var/json_file = file("data/npc_saves/Runtime.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		family = json["family"]
 	if(isnull(family))
 		family = list()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
 	var/json_file = file("data/npc_saves/Runtime.json")
+	var/list/file_data = list()
 	family = list()
 	if(!dead)
 		for(var/mob/living/simple_animal/pet/cat/kitten/C in children)
@@ -137,9 +138,9 @@
 				family[C.type] += 1
 			else
 				family[C.type] = 1
+	file_data["family"] = family
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(family))
-	memory_saved = 1
+	WRITE_FILE(json_file, json_encode(file_data))
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
 	cats_deployed = 1

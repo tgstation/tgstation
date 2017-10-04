@@ -177,7 +177,7 @@
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "reset")
-				pressure = TANK_DEFAULT_RELEASE_PRESSURE
+				pressure = initial(distribute_pressure)
 				. = TRUE
 			else if(pressure == "min")
 				pressure = TANK_MIN_RELEASE_PRESSURE
