@@ -58,7 +58,7 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 			log_admin("[key_name(user)] executed [key_name(target)] with [src]")
 			message_admins("[key_name(user)] executed [key_name(target)] with [src]")
 			infidel_head.dismember()
-			priority_announce("[key_name(user)] has executed [key_name(target)] in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
+			priority_announce("[user] has executed [target] in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
 			executing = FALSE
 		else
 			priority_announce("[user] has failed to execute [target] and has brought shame to [execution_faction]!","Message from [execution_faction]!", 'sound/misc/compiler-failure.ogg')
