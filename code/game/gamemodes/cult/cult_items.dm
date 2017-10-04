@@ -164,7 +164,7 @@
 
 /obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
-	if(dash_toggled && jaunt.IsAvailable())
+	if(dash_toggled)
 		jaunt.Teleport(user, target)
 		return
 	if(!proximity)
@@ -193,7 +193,7 @@
 	phaseout = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
 /datum/action/innate/dash/cult/IsAvailable()
-	if(iscultist(holder) && charged)
+	if(iscultist(holder) && current_charges)
 		return TRUE
 	else
 		return FALSE
