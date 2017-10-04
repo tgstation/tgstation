@@ -36,6 +36,3 @@ SUBSYSTEM_DEF(time_track)
 	last_tick_byond_time = current_byondtime
 	last_tick_tickcount = current_tickcount
 	SSblackbox.add_details("time_dilation_current", time_dilation_current)
-	SSblackbox.add_details("time_dilation_avg_fast", time_dilation_avg_fast)
-	SSblackbox.add_details("time_dilation_avg", time_dilation_avg)
-	SSblackbox.add_details("time_dilation_avg_slow", time_dilation_avg_slow)
