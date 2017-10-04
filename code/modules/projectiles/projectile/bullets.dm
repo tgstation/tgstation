@@ -8,12 +8,6 @@
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
-/obj/item/projectile/bullet/pellet/Range()
-	..()
-	damage += -0.75
-	if(damage < 0)
-		qdel(src)
-
 /obj/item/projectile/bullet/incendiary
 	damage = 20
 	var/fire_stacks = 4
