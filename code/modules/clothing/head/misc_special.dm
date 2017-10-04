@@ -177,3 +177,45 @@
 /obj/item/clothing/head/cardborg/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("standard_borg_disguise")
+
+
+
+/obj/item/clothing/head/wig
+	name = "wig"
+	desc = "A bunch of hair without a head attached."
+	icon_state = ""
+	item_state = "pwig"
+	var/hair_style = "Very Long Hair"
+	var/hair_color = "#000"
+	flags_inv = HIDEHAIR
+
+/obj/item/clothing/head/wig/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/head/wig/update_icon()
+	cut_overlays()
+	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
+	if(!S)
+		icon_state = "pwig"
+	else
+		var/mutable_appearance/M = mutable_appearance(S.icon,S.icon_state)
+		M.appearance_flags |= RESET_COLOR
+		M.color = hair_color
+		add_overlay(M)
+
+/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
+	. = list()
+	if(!isinhands)
+		var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
+		if(!S)
+			return
+		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
+		M.appearance_flags |= RESET_COLOR
+		M.color = hair_color
+		. += M
+
+/obj/item/clothing/head/wig/random/Initialize(mapload)
+	hair_style = pick(GLOB.hair_styles_list - "Bald") //Don't want invisible wig
+	hair_color = "#[random_short_color()]"
+	. = ..()
