@@ -224,7 +224,7 @@
 	},
 /obj/docking_port/mobile/emergency{
 	name = "Box emergency shuttle";
-	timid = 0
+	timid = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
