@@ -42,7 +42,8 @@
 /obj/item/extinguisher/New()
 	..()
 	create_reagents(max_water)
-	reagents.add_reagent("water", max_water)
+	reagents.add_reagent("water", max_water-10) // Hippie: max_water-10 so we have room for cyrogenic_fluid
+	reagents.add_reagent("cryogenic_fluid", 10) // Hippie: improved turf extinguishing
 
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
@@ -192,4 +193,3 @@
 			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
->>>>>>> d3dcc118ec... Merge pull request #31340 from Firecage/codeshitnotshit
