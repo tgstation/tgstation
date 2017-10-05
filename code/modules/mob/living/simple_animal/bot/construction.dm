@@ -357,28 +357,6 @@
 	var/build_step = 0
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 
-/obj/item/clothing/head/helmet/attackby(obj/item/device/assembly/signaler/S, mob/user, params)
-	..()
-	if(!issignaler(S))
-		..()
-		return
-
-	if(type != /obj/item/clothing/head/helmet/sec) //Eh, but we don't want people making secbots out of space helmets.
-		return
-
-	if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
-		to_chat(user, "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>")
-		return
-
-	if(S.secured)
-		qdel(S)
-		var/obj/item/secbot_assembly/A = new /obj/item/secbot_assembly
-		user.put_in_hands(A)
-		to_chat(user, "<span class='notice'>You add the signaler to the helmet.</span>")
-		qdel(src)
-	else
-		return
-
 /obj/item/secbot_assembly/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/weldingtool))
