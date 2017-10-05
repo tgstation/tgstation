@@ -2078,6 +2078,7 @@
 #include "code\modules\shuttle\on_move.dm"
 #include "code\modules\shuttle\ripple.dm"
 #include "code\modules\shuttle\shuttle.dm"
+#include "code\modules\shuttle\shuttle_rotate.dm"
 #include "code\modules\shuttle\special.dm"
 #include "code\modules\shuttle\supply.dm"
 #include "code\modules\shuttle\syndicate.dm"
