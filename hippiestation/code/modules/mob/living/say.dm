@@ -1,14 +1,14 @@
 /mob/living/can_speak_vocal(message)
 	if(disabilities & MUTE)
-		return 0
+		return FALSE
 
 	if(is_muzzled())
-		return 0
+		return FALSE
 
 	if(!IsVocal())
-		return 0
+		return FALSE
 
 	if(pulledby && pulledby.grab_state == GRAB_KILL)
-		return 0
+		return FALSE
 		
-	return 1
+	return TRUE
