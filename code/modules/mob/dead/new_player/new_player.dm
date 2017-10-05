@@ -276,7 +276,7 @@
 
 	observer.started_as_observer = TRUE
 	close_spawn_windows()
-	var/obj/O = locate("landmark*Observer-Start")
+	var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	to_chat(src, "<span class='notice'>Now teleporting.</span>")
 	if (O)
 		observer.loc = O.loc
