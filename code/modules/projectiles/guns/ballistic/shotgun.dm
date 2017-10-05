@@ -137,7 +137,7 @@
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage
 	name = "arcane barrage"
-	desc = "Pew Pew Pew"
+	desc = "Pew Pew Pew."
 	fire_sound = 'sound/weapons/emitter.ogg'
 	pin = /obj/item/device/firing_pin/magic
 	icon_state = "arcane_barrage"

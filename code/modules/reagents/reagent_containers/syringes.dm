@@ -238,7 +238,7 @@
 
 /obj/item/reagent_containers/syringe/bluespace
 	name = "bluespace syringe"
-	desc = "An advanced syringe that can hold 60 units of chemicals"
+	desc = "An advanced syringe that can hold 60 units of chemicals."
 	amount_per_transfer_from_this = 20
 	volume = 60
 	origin_tech = "bluespace=4;materials=4;biotech=4"

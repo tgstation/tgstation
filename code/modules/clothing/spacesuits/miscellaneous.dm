@@ -157,7 +157,7 @@ Contains:
 	//Emergency Response Team suits
 /obj/item/clothing/head/helmet/space/hardsuit/ert
 	name = "emergency response unit helmet"
-	desc = "Standard issue command helmet for the ERT"
+	desc = "Standard issue command helmet for the ERT."
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
 	item_color = "ert_commander"
