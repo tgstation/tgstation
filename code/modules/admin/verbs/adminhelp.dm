@@ -338,6 +338,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(!silent)
 		SSblackbox.inc("ahelp_resolve")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
+		var/imsg = "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>"
+		to_chat(initiator, imsg)
 		message_admins(msg)
 		log_admin_private(msg)
 
