@@ -1,5 +1,3 @@
-#define ROUND_START_MUSIC_LIST "strings/round_start_sounds.txt"
-
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
 	init_order = INIT_ORDER_TICKER
@@ -66,10 +64,29 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
-	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+
+	var/list/provisional_title_music = flist("config/title_music/sounds/")
+	var/list/music = list()
+	var/use_rare_music = prob(1)
+
+	for(var/S in provisional_title_music)
+		var/list/L = splittext(S,"+")
+		if((L.len == 1 && L[1] != "default.ogg")|| (L.len > 1 && ((use_rare_music && lowertext(L[1]) == "rare") || (lowertext(L[1]) == lowertext(SSmapping.config.map_name)))))
+			music += S
+
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
 	if(music.len > 1)
 		music -= old_login_music
+
+	if(!isemptylist(music))
+		if(length(music) > 1)
+			for(var/S in music)
+				var/list/L = splittext(S,".")
+				if(L.len != 2 || L[1] != "default")
+					continue
+				music -= S
+				break
+
 	login_music = pick(music)
 
 	if(!GLOB.syndicate_code_phrase)
