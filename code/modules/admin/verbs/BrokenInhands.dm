@@ -2,7 +2,8 @@
 	var/text
 	for(var/A in typesof(/obj/item))
 		var/obj/item/O = new A( locate(1,1,1) )
-		if(!O) continue
+		if(!O)
+			continue
 		var/icon/IL = new(O.lefthand_file)
 		var/list/Lstates = IL.IconStates()
 		var/icon/IR = new(O.righthand_file)

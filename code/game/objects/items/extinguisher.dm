@@ -42,8 +42,8 @@
 /obj/item/extinguisher/New()
 	..()
 	create_reagents(max_water)
-	reagents.add_reagent("water", max_water - 10)
-	reagents.add_reagent("cryogenic_fluid", 10) //improved turf extinguishing
+	reagents.add_reagent("water", max_water-10) // Hippie: max_water-10 so we have room for cyrogenic_fluid
+	reagents.add_reagent("cryogenic_fluid", 10) // Hippie: improved turf extinguishing
 
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
@@ -157,19 +157,24 @@
 				if(precision)
 					the_targets -= my_target
 				var/datum/reagents/R = new/datum/reagents(5)
-				if(!W) return
+				if(!W)
+					return
 				W.reagents = R
 				R.my_atom = W
-				if(!W || !src) return
+				if(!W || !src)
+					return
 				src.reagents.trans_to(W,1)
 				for(var/b=0, b<power, b++)
 					step_towards(W,my_target)
-					if(!W || !W.reagents) return
+					if(!W || !W.reagents)
+						return
 					W.reagents.reaction(get_turf(W))
 					for(var/A in get_turf(W))
-						if(!W) return
+						if(!W)
+							return
 						W.reagents.reaction(A)
-					if(W.loc == my_target) break
+					if(W.loc == my_target)
+						break
 					sleep(2)
 
 	else

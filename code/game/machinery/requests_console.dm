@@ -343,7 +343,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		if (sending)
 			var/pass = 0
 			for (var/obj/machinery/message_server/MS in GLOB.machines)
-				if(!MS.active) continue
+				if(!MS.active)
+					continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
 				pass = 1
 
