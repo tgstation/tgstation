@@ -207,7 +207,7 @@
 	name = "blue banner"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
-	desc = "A banner with the logo of the blue deity"
+	desc = "A banner with the logo of the blue deity."
 
 /obj/item/storage/backpack/bannerpack
 	name = "nanotrasen banner backpack"

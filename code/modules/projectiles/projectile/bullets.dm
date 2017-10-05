@@ -8,7 +8,7 @@
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
-/obj/item/projectile/bullet/pellet/Range()
+/obj/item/projectile/bullet/pellet/shotgun_buckshot/Range()
 	..()
 	damage -= 0.75
 	if(damage < 0)
@@ -109,7 +109,7 @@
 // 4.6x30mm (Autorifles)
 
 /obj/item/projectile/bullet/c46x30mm
-	desc = "4.6x30mm bullet"
+	name = "4.6x30mm bullet"
 	damage = 20
 
 /obj/item/projectile/bullet/c46x30mm_ap

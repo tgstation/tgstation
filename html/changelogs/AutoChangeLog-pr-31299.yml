@@ -1,0 +1,4 @@
+author: "RandomMarine"
+delete-after: True
+changes: 
+  - bugfix: "Simple mobs should no longer experience severe hud/lighting glitches when reconnecting."

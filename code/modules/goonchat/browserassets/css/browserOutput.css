@@ -83,7 +83,7 @@ a.popt {text-decoration: none;}
 #ping {
 	position: fixed;
 	top: 0;
-	right: 40px;
+	right: 80px;
 	width: 45px;
 	background: #ddd;
 	height: 30px;
@@ -96,12 +96,12 @@ a.popt {text-decoration: none;}
 	font-size: 8pt;
 	padding-top: 2px;
 }
-#options {
+#userBar {
 	position: fixed;
 	top: 0;
 	right: 0;
 }
-#options .optionsCell {
+#userBar .subCell {
 	background: #ddd;
     height: 30px;
 	padding: 5px 0;
@@ -111,23 +111,23 @@ a.popt {text-decoration: none;}
     line-height: 28px;
     border-top: 1px solid #b4b4b4;
 }
-#options .optionsCell:hover {background: #ccc;}
-#options .toggle {
+#userBar .subCell:hover {background: #ccc;}
+#userBar .toggle {
 	width: 40px;
     background: #ccc;
     border-top: 0;
     float: right;
     text-align: center;
 }
-#options .sub {clear: both; display: none; width: 160px;}
-#options .sub.scroll {overflow-y: scroll;}
-#options .sub.optionsCell {padding: 3px 0 3px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
-#options .sub span {
+#userBar .sub {clear: both; display: none; width: 160px;}
+#userBar .sub.scroll {overflow-y: scroll;}
+#userBar .sub.subCell {padding: 3px 0 3px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
+#userBar .sub span {
 	display: block;
 	line-height: 30px;
 	float: left;
 }
-#options .sub i {
+#userBar .sub i {
 	display: block;
 	padding: 0 5px;
 	font-size: 1.1em;
@@ -136,14 +136,14 @@ a.popt {text-decoration: none;}
 	line-height: 30px;
 	float: right;
 }
-#options .sub input {
+#userBar .sub input {
 	position: absolute;
 	padding: 7px 5px;
 	width: 121px;
 	line-height: 30px;
 	float: left;
 }
-#options .decreaseFont {border-top: 0;}
+#userBar .topCell {border-top: 0;}
 
 /* POPUPS */
 .popup {

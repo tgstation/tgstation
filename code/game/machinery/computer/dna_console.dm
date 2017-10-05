@@ -66,7 +66,8 @@
 	ShowInterface(user)
 
 /obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
-	if(!user) return
+	if(!user)
+		return
 	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
 	if(!(in_range(src, user) || issilicon(user)))
 		popup.close()

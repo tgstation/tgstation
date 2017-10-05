@@ -151,7 +151,7 @@
 
 /obj/item/reagent_containers/food/snacks/mint
 	name = "mint"
-	desc = "it is only wafer thin."
+	desc = "It is only wafer thin."
 	icon_state = "mint"
 	bitesize = 1
 	trash = /obj/item/trash/plate
@@ -229,7 +229,7 @@
 
 /obj/item/reagent_containers/food/snacks/chocoorange
 	name = "chocolate orange"
-	desc = "A festive chocolate orange"
+	desc = "A festive chocolate orange."
 	icon_state = "chocoorange"
 	bonus_reagents = list("nutriment" = 1, "sugar" = 1)
 	list_reagents = list("nutriment" = 3, "sugar" = 1)

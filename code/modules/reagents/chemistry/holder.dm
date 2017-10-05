@@ -16,8 +16,6 @@
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
 
-	if(!(flags & REAGENT_NOREACT))
-		START_PROCESSING(SSobj, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!GLOB.chemical_reagents_list)
@@ -54,7 +52,6 @@
 
 /datum/reagents/Destroy()
 	. = ..()
-	STOP_PROCESSING(SSobj, src)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -288,24 +285,11 @@
 		C.update_stamina()
 	update_total()
 
-/datum/reagents/process()
-	var/list/cached_reagents = reagent_list
-	if(flags & REAGENT_NOREACT)
-		STOP_PROCESSING(SSobj, src)
-		return
-
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
-		R.on_tick()
 
 /datum/reagents/proc/set_reacting(react = TRUE)
 	if(react)
-		// Order is important, process() can remove from processing if
-		// the flag is present
 		flags &= ~(REAGENT_NOREACT)
-		START_PROCESSING(SSobj, src)
 	else
-		STOP_PROCESSING(SSobj, src)
 		flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
@@ -644,7 +628,8 @@
 	return jointext(names, ",")
 
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
-	if(!isnum(amount)) return 1
+	if(!isnum(amount))
+		return 1
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
 

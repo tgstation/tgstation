@@ -42,7 +42,7 @@
 		I.trigger(key, L)
 
 	if(!msg)
-		return FALSE
+		return
 
 	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
 	msg = "<b>[user]</b> " + msg
@@ -91,20 +91,21 @@
 /datum/emote/proc/select_param(mob/user, params)
 	return replacetext(message_param, "%t", params)
 
-/datum/emote/proc/can_run_emote(mob/user, help_check)
+/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE)
 	. = TRUE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
-	if(!help_check)
+	if(status_check)
 		if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
+			to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
 			return FALSE
-		if(restraint_check && user.restrained())
+		if(restraint_check && (user.restrained() || user.buckled))
+			to_chat(user, "<span class='notice'>You cannot [key] while restrained.</span>")
 			return FALSE
 		if(user.reagents && user.reagents.has_reagent("mimesbane"))
 			return FALSE
-
 
 /datum/emote/sound
 	var/sound //Sound to play when emote is called

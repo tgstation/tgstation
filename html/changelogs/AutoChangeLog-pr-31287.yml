@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Wizards will now have the correct name when attacked with Envy's knife!"

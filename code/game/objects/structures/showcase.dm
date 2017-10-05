@@ -24,7 +24,7 @@
 
 /obj/structure/showcase/fakesec
 	name = "\improper CentCom security records"
-	desc = "Used to view and edit personnel's security records"
+	desc = "Used to view and edit personnel's security records."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 
@@ -98,7 +98,7 @@
 
 /obj/structure/showcase/machinery/signal_decrypter
 	name = "subsystem signal decrypter"
-	desc = "A strange machine thats supposedly used to help pick up and decrypt wave signals. "
+	desc = "A strange machine that's supposedly used to help pick up and decrypt wave signals."
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "processor"
 

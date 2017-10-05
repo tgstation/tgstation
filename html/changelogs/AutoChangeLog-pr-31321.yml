@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - tweak: "Made atmos tiny bit faster"
