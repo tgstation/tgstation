@@ -75,45 +75,45 @@ SUBSYSTEM_DEF(ticker)
 		var/lower = lowertext(S)
 		var/list/L = splittext(lower,"+")
 		switch(L.len)
-			if(2) //Be permissive, allow 'Omegastation+rare+honk.ogg' and 'rare+Omegastation+honk.ogg'
-				if(use_rare_music) //There's definitely (or rather, SHOULD BE) a 'rare' here
+			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
+				if(use_rare_music)
 					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
 						music += S
 					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
 						music += S
-			if(1)
+			if(2) //rare+sound.ogg or MAP+sound.ogg -- Rare sounds or Map-specific sounds
 				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
 					music += S
+			if(1) //sound.ogg -- common sound
+				music += S
 
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
 	if(music.len > 1)
 		music -= old_login_music
 
-	if(!isemptylist(music))
-		if(length(music) > 1)
-			for(var/S in music)
-				var/list/L = splittext(S,".")
-				if(L.len < 2)
-					continue
-				var/ext = lowertext(L[L.len])
-				var/static/list/byond_sound_formats = list("mid",
-					"midi" = TRUE,
-					"mod"  = TRUE,
-					"it"   = TRUE,
-					"s3m"  = TRUE,
-					"xm"   = TRUE,
-					"oxm"  = TRUE,
-					"wav"  = TRUE,
-					"ogg"  = TRUE,
-					"raw"  = TRUE,
-					"wma"  = TRUE,
-					"aiff" = TRUE
-				)
-				if(!byond_sound_formats[ext])
-					continue
-				music -= S
-				break
-	else
+	for(var/S in music)
+		var/list/L = splittext(S,".")
+		if(L.len >= 2)
+			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
+			var/static/list/byond_sound_formats = list(
+				"mid"  = TRUE,
+				"midi" = TRUE,
+				"mod"  = TRUE,
+				"it"   = TRUE,
+				"s3m"  = TRUE,
+				"xm"   = TRUE,
+				"oxm"  = TRUE,
+				"wav"  = TRUE,
+				"ogg"  = TRUE,
+				"raw"  = TRUE,
+				"wma"  = TRUE,
+				"aiff" = TRUE
+			)
+			if(byond_sound_formats[ext])
+				continue
+		music -= S
+				
+	if(isemptylist(music))
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 
 	login_music = pick(music)
