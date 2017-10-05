@@ -83,7 +83,7 @@ All ShuttleMove procs go here
 			return
 
 	if(rotation)
-		shuttleRotate(rotation)
+		shuttleRotate(rotation) //see shuttle_rotate.dm
 	loc = newT
 	if(length(client_mobs_in_contents))
 		update_parallax_contents()
@@ -125,26 +125,6 @@ All ShuttleMove procs go here
 // Called on areas after everything has been moved
 /area/proc/afterShuttleMove()
 	return TRUE
-
-/************************************Shuttle Rotation************************************/
-
-/atom/proc/shuttleRotate(rotation)
-	//rotate our direction
-	setDir(angle2dir(rotation+dir2angle(dir)))
-
-	//resmooth if need be.
-	if(smooth)
-		queue_smooth(src)
-
-	//rotate the pixel offsets too.
-	if (pixel_x || pixel_y)
-		if (rotation < 0)
-			rotation += 360
-		for (var/turntimes=rotation/90;turntimes>0;turntimes--)
-			var/oldPX = pixel_x
-			var/oldPY = pixel_y
-			pixel_x = oldPY
-			pixel_y = (oldPX*(-1))
 
 /************************************Turf move procs************************************/
 
@@ -222,21 +202,6 @@ All ShuttleMove procs go here
 /obj/machinery/thruster/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
 	. |= MOVE_CONTENTS
-
-//Properly updates pipes on shuttle movement
-/obj/machinery/atmospherics/shuttleRotate(rotation)
-	var/list/real_node_connect = getNodeConnects()
-	for(DEVICE_TYPE_LOOP)
-		real_node_connect[I] = angle2dir(rotation+dir2angle(real_node_connect[I]))
-
-	. = ..()
-	SetInitDirections()
-	var/list/supposed_node_connect = getNodeConnects()
-	var/list/nodes_copy = nodes.Copy()
-
-	for(DEVICE_TYPE_LOOP)
-		var/new_pos = supposed_node_connect.Find(real_node_connect[I])
-		nodes[new_pos] = nodes_copy[I]
 
 /obj/machinery/atmospherics/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
