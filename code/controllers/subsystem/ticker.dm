@@ -70,11 +70,20 @@ SUBSYSTEM_DEF(ticker)
 	var/list/provisional_title_music = flist("config/title_music/sounds/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
-
+	
 	for(var/S in provisional_title_music)
-		var/list/L = splittext(S,"+")
-		if((L.len > 1 && ((use_rare_music && lowertext(L[1]) == "rare") || (lowertext(L[1]) == lowertext(SSmapping.config.map_name)))))
-			music += S
+		var/lower = lowertext(S)
+		var/list/L = splittext(lower,"+")
+		switch(L.len)
+			if(2) //Be permissive, allow 'Omegastation+rare+honk.ogg' and 'rare+Omegastation+honk.ogg'
+				if(use_rare_music) //There's definitely (or rather, SHOULD BE) a 'rare' here
+					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
+						music += S
+					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
+						music += S
+			if(1)
+				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
+					music += S
 
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
 	if(music.len > 1)
@@ -84,7 +93,23 @@ SUBSYSTEM_DEF(ticker)
 		if(length(music) > 1)
 			for(var/S in music)
 				var/list/L = splittext(S,".")
-				if(L.len != 2)
+				if(L.len < 2)
+					continue
+				var/ext = lowertext(L[L.len])
+				var/static/list/byond_sound_formats = list("mid",
+					"midi" = TRUE,
+					"mod"  = TRUE,
+					"it"   = TRUE,
+					"s3m"  = TRUE,
+					"xm"   = TRUE,
+					"oxm"  = TRUE,
+					"wav"  = TRUE,
+					"ogg"  = TRUE,
+					"raw"  = TRUE,
+					"wma"  = TRUE,
+					"aiff" = TRUE
+				)
+				if(!byond_sound_formats[ext])
 					continue
 				music -= S
 				break
