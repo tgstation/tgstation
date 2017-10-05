@@ -106,8 +106,6 @@
 			new impact_effect_type(target_loca, target, src)
 		return 0
 	var/mob/living/L = target
-	if(L.buckled && ismob(L.buckled))
-		L = L.buckled
 	if(blocked != 100) // not completely blocked
 		if(damage && L.blood_volume && damage_type == BRUTE)
 			var/splatter_dir = dir
@@ -160,7 +158,7 @@
 			ignore_source_check = TRUE
 			return FALSE
 	if(firer && !ignore_source_check)
-		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
+		if(A == firer || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
 			loc = A.loc
 			return FALSE
 
@@ -194,6 +192,8 @@
 				var/mob/living/picked_mob = pick(mobs_list)
 				if(!prehit(picked_mob))
 					return FALSE
+				if(ismob(picked_mob.buckled))
+					picked_mob = picked_mob.buckled
 				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
 	return TRUE

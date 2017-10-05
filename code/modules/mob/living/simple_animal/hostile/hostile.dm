@@ -45,7 +45,7 @@
 	var/list/wanted_objects = list() //A typecache of objects types that will be checked against to attack, should we have search_objects enabled
 	var/stat_attack = CONSCIOUS //Mobs with stat_attack to UNCONSCIOUS will attempt to attack things that are unconscious, Mobs with stat_attack set to DEAD will attempt to attack the dead.
 	var/stat_exclusive = FALSE //Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
-	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
+	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
 	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
@@ -112,7 +112,11 @@
 			if(can_see(targets_from, HM, vision_range))
 				. += HM
 	else
-		. = oview(vision_range, targets_from)
+		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line, particularly when bees are involved
+		for (var/obj/A in oview(vision_range, targets_from))
+			. += A
+		for (var/mob/A in oview(vision_range, targets_from))
+			. += A
 
 /mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
 	. = list()
@@ -161,56 +165,55 @@
 	var/chosen_target = pick(Targets)//Pick the remaining targets (if any) at random
 	return chosen_target
 
+// Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(!the_target)
-		return 0
+	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
+		return FALSE
+
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return 0
+		return FALSE
 	if(search_objects < 2)
 		if(isliving(the_target))
 			var/mob/living/L = the_target
 			var/faction_check = faction_check_mob(L)
 			if(robust_searching)
-				if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive)
-					return 0
-				if(faction_check && !attack_same || !faction_check && attack_same == 2)
-					return 0
-				if(L in friends)
-					return 0
-			else
-				if(L.stat)
-					return 0
 				if(faction_check && !attack_same)
-					return 0
-			return 1
+					return FALSE
+				if(L.stat > stat_attack)
+					return FALSE
+				if(L in friends)
+					return FALSE
+			else
+				if((faction_check && !attack_same) || L.stat)
+					return FALSE
+			return TRUE
 
-		if(istype(the_target, /obj/mecha))
+		if(ismecha(the_target))
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
 				if(CanAttack(M.occupant))
-					return 1
+					return TRUE
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
 			if(P.faction in faction)
-				return 0
+				return FALSE
 			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
-				return 0
+				return FALSE
 			if(P.stat & BROKEN) //Or turrets that are already broken
-				return 0
-			return 1
+				return FALSE
+			return TRUE
 
 		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
 			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
 			if(OW.target != src)
 				return FALSE
 			return TRUE
-
-
 	if(isobj(the_target))
 		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
-			return 1
-	return 0
+			return TRUE
+
+	return FALSE
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	target = new_target

@@ -420,13 +420,7 @@
 		var/datum/component/material_container/M = C
 		if(!M.last_insert_success)
 			return
-		var/lit = M.last_inserted_type
-		var/stack_name
-		if(ispath(lit, /obj/item/ore/bluespace_crystal))
-			stack_name = "bluespace"
-		else
-			var/obj/item/stack/S = lit
-			stack_name = material2name(initial(S.materials)[1])
+		var/stack_name = material2name(M.last_inserted_id)
 		add_overlay("fab-load-[stack_name]")
 		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[stack_name]"), 10)
 		updateUsrDialog()

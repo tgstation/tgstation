@@ -344,7 +344,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["sex"]
 		new_character.age = record_found.fields["age"]
-		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["features"])
+		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
 	else
 		var/datum/preferences/A = new()
 		A.copy_to(new_character)
@@ -391,9 +391,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			call(/datum/game_mode/proc/equip_syndicate)(new_character)
 		if("Space Ninja")
 			var/list/ninja_spawn = list()
-			for(var/obj/effect/landmark/L in GLOB.landmarks_list)
-				if(L.name=="carpspawn")
-					ninja_spawn += L
+			for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+				ninja_spawn += L
 			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(ANTAG_DATUM_NINJA)
 			ninjadatum.equip_space_ninja()
 			if(ninja_spawn.len)

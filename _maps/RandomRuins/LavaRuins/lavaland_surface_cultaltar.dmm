@@ -24,15 +24,6 @@
 /area/ruin/unpowered)
 "g" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/step_trigger/thrower{
-	name = "south";
-	tiles = 5
-	},
-/obj/effect/step_trigger/sound_effect{
-	name = "turn around";
-	sound = 'sound/hallucinations/turn_around1.ogg';
-	triggerer_only = 1
-	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -79,16 +70,6 @@
 /area/ruin/unpowered)
 "n" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/step_trigger/thrower{
-	direction = 4;
-	name = "east";
-	tiles = 5
-	},
-/obj/effect/step_trigger/sound_effect{
-	name = "turn around";
-	sound = 'sound/hallucinations/turn_around1.ogg';
-	triggerer_only = 1
-	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -117,16 +98,6 @@
 /area/ruin/unpowered)
 "p" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/step_trigger/thrower{
-	direction = 8;
-	name = "west";
-	tiles = 5
-	},
-/obj/effect/step_trigger/sound_effect{
-	name = "turn around";
-	sound = 'sound/hallucinations/turn_around1.ogg';
-	triggerer_only = 1
-	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -142,16 +113,6 @@
 /area/ruin/unpowered)
 "r" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/step_trigger/thrower{
-	direction = 1;
-	name = "north";
-	tiles = 5
-	},
-/obj/effect/step_trigger/sound_effect{
-	name = "turn around";
-	sound = 'sound/hallucinations/turn_around1.ogg';
-	triggerer_only = 1
-	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
