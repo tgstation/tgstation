@@ -52,6 +52,7 @@ Difficulty: Hard
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
+	gold_core_spawnable = TRUE
 
 /obj/item/device/gps/internal/bubblegum
 	icon_state = null
