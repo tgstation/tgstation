@@ -31,6 +31,7 @@
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
+	gold_core_spawnable = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	. = ..()
