@@ -437,21 +437,6 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() //remove from current network
 
-/obj/structure/cable/shuttleRotate(rotation)
-	//..() is not called because wires are not supposed to have a non-default direction
-	//Rotate connections
-	if(d1)
-		d1 = angle2dir(rotation+dir2angle(d1))
-	if(d2)
-		d2 = angle2dir(rotation+dir2angle(d2))
-
-	//d1 should be less than d2 for cable icons to work
-	if(d1 > d2)
-		var/temp = d1
-		d1 = d2
-		d2 = temp
-	update_icon()
-
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
