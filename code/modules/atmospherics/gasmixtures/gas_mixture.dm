@@ -119,9 +119,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/return_volume() //liters
 	return max(0, volume)
 
-// This was a proc once, turns out calling a proc is much more expensive than multiplication
-#define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
-
 /datum/gas_mixture/proc/archive()
 	//Update archived versions of variables
 	//Returns: 1 in all cases
