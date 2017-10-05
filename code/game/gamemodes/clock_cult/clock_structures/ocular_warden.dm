@@ -141,6 +141,9 @@
 	. = 1
 	if(target)
 		for(var/turf/T in getline(src, target))
+			if(T.density)
+				. -= 0.1
+				continue
 			for(var/obj/structure/O in T)
 				if(O != src && O.density)
 					. -= 0.1
