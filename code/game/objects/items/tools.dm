@@ -392,6 +392,7 @@
 	var/can_off_process = 0
 	var/light_intensity = 2 //how powerful the emitted light is when used.
 	var/burned_fuel_for = 0	//when fuel was last removed
+	var/last_flash = 0	//world.time when we last successfully flashed a mob
 	heat = 3800
 	toolspeed = 1
 
@@ -513,8 +514,8 @@
 	if(get_fuel() >= amount)
 		reagents.remove_reagent("welding_fuel", amount)
 		check_fuel()
-		if(M)
-			M.flash_act(light_intensity)
+		if(M && M.flash_act(light_intensity))
+			last_flash = world.time
 		return TRUE
 	else
 		if(M)
