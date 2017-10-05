@@ -20,32 +20,33 @@ COLOR_HACK = {
     '00255': '#0000ff',
 }
 
-Context = namedtuple('Context', ['map', 'objtree'])
-Entry = namedtuple('Entry', ['atom', 'pos'])
+Context = namedtuple('Context', ['map', 'objtree', 'prefabs', 'prefabs2'])
 
 def simple_layer(atom):
-    layer = atom.vars['layer']
+    layer = atom['layer']
     return float(DEFINES.get(layer, layer))
 
-def layer_of(entry=None, atom=None):
-    atom = atom or entry.atom
-    if atom.path.startswith('/turf/open/floor/plating') or atom.path.startswith('/turf/open/space'):
+def layer_of(atom):
+    ty = atom.type
+    if ty.subtype_of('/turf/open/floor/plating') or ty.subtype_of('/turf/open/space'):
         return -10  # under everything
-    elif atom.path.startswith('/turf/closed/mineral/'):
+    elif ty.subtype_of('/turf/closed/mineral'):
         return -3   # above hidden stuff and plating but below walls
-    elif atom.path.startswith('/turf/open/floor/') or atom.path.startswith('/turf/closed/'):
+    elif ty.subtype_of('/turf/open/floor') or ty.subtype_of('/turf/closed'):
         return -2   # above hidden pipes and wires
-    elif atom.path.startswith('/turf'):
+    elif ty.subtype_of('/turf'):
         return -10  # under everything
-    elif atom.path.startswith('/obj/effect/turf_decal'):
+    elif ty.subtype_of('/obj/effect/turf_decal'):
         return -1   # above turfs
-    elif atom.path.startswith('/obj/structure/disposalpipe'):
+    elif ty.subtype_of('/obj/structure/disposalpipe'):
         return -6
-    elif atom.path.startswith('/obj/machinery/atmospherics/pipe/') and 'hidden' in atom.path:
+    elif ty.subtype_of('/obj/machinery/atmospherics/pipe') and 'hidden' in ty.path.split('/'):
         return -5
-    elif atom.path.startswith('/obj/structure/cable'):
+    elif ty.subtype_of('/obj/structure/cable'):
         return -4
-    elif atom.path.startswith('/area'):
+    elif ty.subtype_of('/obj/structure/lattice'):
+        return -8
+    elif ty.subtype_of('/area'):
         return 10
     else:
         return simple_layer(atom)
@@ -59,130 +60,142 @@ def tint(src, tint):
         tuple(range(256)))
     return src.point(luts)
 
+def parse_prefabs(ctx, dict_entry):
+    items = []
+    for entry in dict_entry:
+        try:
+            items.append(ctx.prefabs2[entry])
+        except KeyError:
+            path, vars = dmm.parse_map_atom(entry)
+            prefab = ctx.prefabs2[entry] = objtree.Prefab(ctx.objtree[path], vars)
+            items.append(prefab)
+    return items
+
 def atom_list(ctx, coord):
-    for entry in ctx.map.dictionary[ctx.map.grid[coord]]:
-        path, atom_vars = dmm.parse_map_atom(entry)
-        obj = ctx.objtree.find(path[1:])
-        if obj is None:
-            continue
-        atom = objtree.Atom(obj, coord, atom_vars)
+    grid = ctx.map.grid[coord]
+    try:
+        prefabs = ctx.prefabs[grid]
+    except KeyError:
+        prefabs = ctx.prefabs[grid] = parse_prefabs(ctx, ctx.map.dictionary[grid])
+
+    for entry in prefabs:
+        atom = entry.new(coord)
+        ty = atom.type
 
         # apply window spawners
-        if path.startswith('/obj/effect/spawner/structure/'):
+        if ty.subtype_of('/obj/effect/spawner/structure'):
             # TODO: unhack this when the objtree is less bad
-            for each in atom.vars['spawn_list'].split('/obj/'):
+            for each in atom['spawn_list'].split('/obj/'):
                 if not each: continue
                 realpath = 'obj/' + each
-                yield objtree.Atom(ctx.objtree.find(realpath), coord, {})
+                yield ctx.objtree.new('/obj/' + each, coord)
         # ignore other spawners
-        elif path.startswith('/obj/effect/spawner'):
+        elif ty.subtype_of('/obj/effect/spawner'):
             pass
-        elif atom.vars.get('icon') == "'icons/obj/items_and_weapons.dmi'" and atom.vars.get('icon_state') == '"syndballoon"':
+        elif atom['icon'] == "'icons/obj/items_and_weapons.dmi'" and atom['icon_state'] == '"syndballoon"':
             pass
         # non-spawners are good to go
         else:
             # objects which override appearance in New()
-            if path == '/obj/structure/table/wood/fancy/black':
-                atom.vars['icon'] = "'icons/obj/smooth_structures/fancy_table_black.dmi'"
-            elif path == '/obj/structure/table/wood/fancy':
-                atom.vars['icon'] = "'icons/obj/smooth_structures/fancy_table.dmi'"
-            elif path.startswith('/turf/closed/mineral'):
-                atom.vars['pixel_x'] = '-4'
-                atom.vars['pixel_y'] = '-4'
+            if ty.path == '/obj/structure/table/wood/fancy/black':
+                atom['icon'] = "'icons/obj/smooth_structures/fancy_table_black.dmi'"
+            elif ty.path == '/obj/structure/table/wood/fancy':
+                atom['icon'] = "'icons/obj/smooth_structures/fancy_table.dmi'"
+            elif ty.subtype_of('/turf/closed/mineral'):
+                atom['pixel_x'] = '-4'
+                atom['pixel_y'] = '-4'
 
             yield atom
 
+def collect(ctx, x, y, z):
+    atoms = []
+    coord = dmm.Coordinate(x, y, z)
+    for atom in atom_list(ctx, coord):
+        # erase the syndicate shuttle by pretending it's space
+        if atom.type.path == '/area/shuttle/syndicate':
+            return [ctx.objtree.new('/turf/open/space/basic', coord)]
+
+        # don't show areas
+        if atom.type.subtype_of('/area'):
+            continue
+
+        # apply pure-invisibility
+        if float(atom.get('invisibility', '0')) >= 100:
+            continue
+
+        # apply smoothing
+        smooth_flags = 0
+        # so bad: (2 | 4) -> "24"
+        for each in [1, 2, 4, 8]:
+            if str(each) in atom['smooth']:
+                smooth_flags |= each
+        if smooth_flags & (SMOOTH_TRUE | SMOOTH_MORE):
+            atoms.extend(smooth(ctx, atom, smooth_flags))
+        else:
+            atoms.append(atom)
+    return atoms
+
+def generate(ctx, icon_files, atoms):
+    image = Image.new('RGBA', (TILE_SIZE * ctx.map.size.x, TILE_SIZE * ctx.map.size.y))
+    for atom in atoms:
+        # apply icon, icon_state, and dir
+        icon_name = dmi.unescape(atom['icon'], "'")
+        icon_state = dmi.unescape(atom.get('icon_state', '""'))
+        dir = atom.get('dir')
+
+        try:
+            icon = icon_files[icon_name]
+        except KeyError:
+            icon = icon_files[icon_name] = dmi.Dmi.from_file(icon_name)
+
+        try:
+            state = icon.get_state(icon_state)
+        except:
+            continue
+        frame = state.get_frame(dir=dir).convert('RGBA')
+
+        # apply tint
+        try:
+            color = COLOR_HACK[atom['color']]
+        except KeyError:
+            pass
+        else:
+            frame = tint(frame, color)
+
+        # apply pixel location
+        pixel_x = int(float(atom.get('pixel_x', '0')))
+        pixel_y = int(float(atom.get('pixel_y', '0')))
+        x = (atom.loc.x - 1) * TILE_SIZE + pixel_x
+        y = (atom.loc.y) * TILE_SIZE - pixel_y - frame.size[1]
+        bbox = [0, 0, *frame.size]
+        if x < 0:
+            bbox[0] -= x
+            bbox[2] += x
+            x = 0
+        if y < 0:
+            bbox[1] -= y
+            bbox[3] += y
+            y = 0
+        image.alpha_composite(frame, (x, y), tuple(bbox))
+    return image
+
 def minimap(map, tree):
-    ctx = Context(map, tree)
+    ctx = Context(map, tree, {}, {})
     icon_files = {}
     images = []
 
     for z in map.coords_z:
         print(f"Collecting z={z + STATION_Z - 1}")
-        entries = []
+        atoms = []
 
         for y, x in map.coords_yx:
-            these_entries = []
-            coord = dmm.Coordinate(x, y, z)
-            for atom in atom_list(ctx, coord):
-                # erase the syndicate shuttle to avoid confusing people
-                if atom.path == '/area/shuttle/syndicate':
-                    # pretend it's space
-                    space_atom = objtree.Atom(ctx.objtree.find('turf/open/space/basic'), coord, {})
-                    these_entries = [Entry(space_atom, ((x - 1) * TILE_SIZE, (y - 1) * TILE_SIZE))]
-                    break
+            atoms.extend(collect(ctx, x, y, z))
 
-                # don't show areas
-                if atom.path.startswith('/area/'):
-                    continue
-
-                # apply pure-invisibility
-                if float(atom.vars.get('invisibility', '0')) >= 100:
-                    continue
-
-                # apply pixel positioning
-                pixel_pos = pixel_pos_of(atom)
-
-                # apply smoothing
-                smooth_flags = 0
-                # so bad: (2 | 4) -> "24"
-                for each in [1, 2, 4, 8]:
-                    if str(each) in atom.vars['smooth']:
-                        smooth_flags |= each
-                if smooth_flags & (SMOOTH_TRUE | SMOOTH_MORE):
-                    these_entries.extend(smooth(ctx, atom, smooth_flags))
-                else:
-                    these_entries.append(Entry(atom, pixel_pos))
-
-            entries.extend(these_entries)
-
-        # apply layering
         print(f"Generating z={z + STATION_Z - 1}")
-        entries.sort(key=layer_of)
-        image = Image.new('RGBA', (TILE_SIZE * map.size.x, TILE_SIZE * map.size.y))
-        for atom, (x, y) in entries:
-            # apply icon, icon_state, and dir
-            icon_name = dmi.unescape(atom.vars['icon'], "'")
-            icon_state = dmi.unescape(atom.vars.get('icon_state', '""'))
-            dir = atom.vars.get('dir')
-
-            if icon_name in icon_files:
-                icon = icon_files[icon_name]
-            else:
-                icon = icon_files[icon_name] = dmi.Dmi.from_file(icon_name)
-
-            try:
-                state = icon.get_state(icon_state)
-            except:
-                continue
-            frame = state.get_frame(dir=dir).convert('RGBA')
-
-            # apply tint
-            if 'color' in atom.vars and atom.vars['color'] in COLOR_HACK:
-                frame = tint(frame, COLOR_HACK[atom.vars['color']])
-
-            y += TILE_SIZE - frame.size[1]
-            bbox = [0, 0, *frame.size]
-            if x < 0:
-                bbox[0] -= x
-                bbox[2] += x
-                x = 0
-            if y < 0:
-                bbox[1] -= y
-                bbox[3] += y
-                y = 0
-            image.alpha_composite(frame, (x, y), tuple(bbox))
-
-        images.append(image)
+        atoms.sort(key=layer_of)
+        images.append(generate(ctx, icon_files, atoms))
 
     return images
-
-def pixel_pos_of(atom):
-    pixel_x = int(float(atom.vars.get('pixel_x', '0')))
-    pixel_y = int(float(atom.vars.get('pixel_y', '0')))
-    pos_x = (atom.loc.x - 1) * TILE_SIZE + pixel_x
-    pos_y = (atom.loc.y - 1) * TILE_SIZE - pixel_y
-    return pos_x, pos_y
 
 # ----------
 # Icon smoothing subsystem, basically a port from the DM code
@@ -211,7 +224,7 @@ def smooth(ctx, atom, smooth_flags):
         return cardinal_smooth(ctx, atom, adjacencies)
 
 def calculate_adjacencies(ctx, atom, smooth_flags):
-    if atom.vars.get('can_be_unanchored', False) and not atom.vars.get('anchored', True):
+    if atom.get('can_be_unanchored', False) and not atom.get('anchored', True):
         return 0
 
     adjacencies = 0
@@ -221,7 +234,7 @@ def calculate_adjacencies(ctx, atom, smooth_flags):
         if am is map_edge:
             if smooth_flags & SMOOTH_BORDER:
                 adjacencies |= flag
-        elif am and am.vars.get('anchored', True):
+        elif am and am.get('anchored', True):
             adjacencies |= flag
 
     for direction in dmi.CARDINALS:
@@ -261,48 +274,48 @@ def find_type_in_direction(ctx, source, direction, smooth_flags):
         return map_edge
 
     for atom in atom_list(ctx, coord):
-        smoothlist = source.vars['canSmoothWith']
+        smoothlist = source['canSmoothWith']
         if smoothlist != 'null':
             if smooth_flags & SMOOTH_MORE:
                 current = atom.type
                 while current.parent:
-                    if smoothlist_contains(smoothlist, current.full_path):
+                    if smoothlist_contains(smoothlist, current.path):
                         return atom
                     current = current.parent
             else:
-                if smoothlist_contains(smoothlist, atom.path):
+                if smoothlist_contains(smoothlist, atom.type.path):
                     return atom
         else:
-            if atom.path == source.path:
+            if atom.type == source.type:
                 return atom
     return None
 
 def cardinal_smooth(ctx, atom, adjacencies):
-    def one_name(what, f1, n1, f2, n2, f3):
+    for what, f1, n1, f2, n2, f3 in [
+        ("1", N_NORTH, "n", N_WEST, "w", N_NORTHWEST),
+        ("2", N_NORTH, "n", N_EAST, "e", N_NORTHEAST),
+        ("3", N_SOUTH, "s", N_WEST, "w", N_SOUTHWEST),
+        ("4", N_SOUTH, "s", N_EAST, "e", N_SOUTHEAST),
+    ]:
         if (adjacencies & f1) and (adjacencies & f2):
             if adjacencies & f3:
-                return f"{what}-f"
+                name = f"{what}-f"
             else:
-                return f"{what}-{n1}{n2}"
+                name = f"{what}-{n1}{n2}"
         elif adjacencies & f1:
-            return f"{what}-{n1}"
+            name = f"{what}-{n1}"
         elif adjacencies & f2:
-            return f"{what}-{n2}"
+            name = f"{what}-{n2}"
         else:
-            return f"{what}-i"
+            name = f"{what}-i"
 
-    def one(what, *args):
-        name = one_name(what, *args)
-        vars = {'icon_state': dmi.escape(name)}
-        if 'smooth_icon' in atom.vars:
-            vars['icon'] = atom.vars['smooth_icon']
-        atom2 = objtree.Atom(atom.type, atom.loc, atom.vars.new_child(vars))
-        return Entry(atom2, pixel_pos_of(atom2))
-
-    yield one("1", N_NORTH, "n", N_WEST, "w", N_NORTHWEST)
-    yield one("2", N_NORTH, "n", N_EAST, "e", N_NORTHEAST)
-    yield one("3", N_SOUTH, "s", N_WEST, "w", N_SOUTHWEST)
-    yield one("4", N_SOUTH, "s", N_EAST, "e", N_SOUTHEAST)
+        copy = atom.copy()
+        copy['icon_state'] = dmi.escape(name)
+        try:
+            copy['icon'] = atom['smooth_icon']
+        except KeyError:
+            pass
+        yield copy
 
 def diagonal_smooth(ctx, atom, adjacencies):
     presets = {
@@ -321,28 +334,29 @@ def diagonal_smooth(ctx, atom, adjacencies):
         return
 
     # baseturf
-    if atom.path.startswith('/turf/closed/wall/'):
-        if atom.vars['fixed_underlay'] == '"space"1':  # ew
-            atom2 = objtree.Atom(ctx.objtree.find('turf/open/space/basic'), atom.loc, {})
-            yield Entry(atom2, pixel_pos_of(atom))
+    if atom.type.subtype_of('/turf/closed/wall'):
+        if atom['fixed_underlay'] == '"space"1':  # ew
+            yield ctx.objtree.new('/turf/open/space/basic', atom.loc)
         else:
             dx, dy = OFFSETS[flip_angle(reverse_ndir(adjacencies))]
             coord = dmm.Coordinate(atom.loc.x + dx, atom.loc.y + dy, atom.loc.z)
             for atom2 in atom_list(ctx, coord):
-                if atom2.path.startswith('/turf/open/'):
-                    yield Entry(atom2, pixel_pos_of(atom))
+                if atom2.type.subtype_of('/turf/open'):
+                    atom2.loc = atom.loc
+                    yield atom2
                     break
             else:
-                atom2 = objtree.Atom(ctx.objtree.find('turf/open/space/basic'), atom.loc, {})
-                yield Entry(atom2, pixel_pos_of(atom))
+                yield ctx.objtree.new('/turf/open/space/basic', atom.loc)
 
     # diagonals
     for each in presets[adjacencies]:
-        vars = {'icon_state': dmi.escape(each)}
-        if 'smooth_icon' in atom.vars:
-            vars['icon'] = atom.vars['smooth_icon']
-        atom2 = objtree.Atom(atom.type, atom.loc, atom.vars.new_child(vars))
-        yield Entry(atom2, pixel_pos_of(atom2))
+        copy = atom.copy()
+        copy['icon_state'] = dmi.escape(each)
+        try:
+            copy['icon'] = atom['smooth_icon']
+        except KeyError:
+            pass
+        yield copy
 
 def reverse_ndir(adjacencies):
     return {
@@ -383,6 +397,7 @@ if __name__ == '__main__':
     import sys, os
 
     tree = objtree.ObjectTree.from_file("data/objtree.xml")
+    tree._bake()
 
     for fname in sys.argv[1:]:
         basename, _ = os.path.splitext(os.path.basename(fname))
