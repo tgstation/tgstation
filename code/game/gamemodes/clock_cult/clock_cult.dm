@@ -1,3 +1,6 @@
+#define ARK_ACTIVATED 1 //The Ark was defended until activation and Ratvar was summoned
+#define SHUTTLE_LEFT 2 //The shuttle left before the Ark could activate, and nobody was around to stop it
+
 /*
 
 CLOCKWORK CULT: Based off of the failed pull requests from /vg/
@@ -95,8 +98,8 @@ Credit where due:
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
 	required_players = 24
-	required_enemies = 3
-	recommended_enemies = 3
+	required_enemies = 4
+	recommended_enemies = 4
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
@@ -185,9 +188,12 @@ Credit where due:
 	return FALSE
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
-	if(GLOB.clockwork_gateway_activated || GLOB.ark_of_the_clockwork_justiciar)
+	if(GLOB.clockwork_gateway_activated || SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
 		SSticker.news_report = CLOCK_SUMMON
-		return TRUE
+		if(GLOB.ark_of_the_clockwork_justiciar)
+			return SHUTTLE_LEFT
+		else
+			return ARK_ACTIVATED
 	else
 		SSticker.news_report = CULT_FAILURE
 	return FALSE
@@ -207,9 +213,15 @@ Credit where due:
 	var/text = ""
 	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
-		if(C.check_clockwork_victory())
-			text += "<span class='large_brass'><b>Ratvar's servants defended the Ark until its activation!</b></span>"
-			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
+		var/great_success = C.check_clockwork_victory()
+		if(great_success)
+			switch(great_success)
+				if(ARK_ACTIVATED)
+					text += "<span class='bold large_brass'>Ratvar's servants defended the Ark until its activation!</span>"
+					SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
+				if(SHUTTLE_LEFT)
+					text += "<span class='bold large_brass'>The crew fled the station, leaving the Ark to activate unchallenged!</span>"
+					SSticker.mode_result = "win - crew fled the station"
 		else
 			text += "<span class='userdanger'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
 			SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
