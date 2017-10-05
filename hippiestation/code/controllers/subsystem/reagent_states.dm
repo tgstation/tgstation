@@ -1,5 +1,5 @@
 SUBSYSTEM_DEF(reagent_states)
-	name = "Reagent States"
+	name = "Reagents"
 	priority = 40
 	flags = SS_NO_INIT|SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
