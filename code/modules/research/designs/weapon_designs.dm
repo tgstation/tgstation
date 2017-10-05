@@ -22,16 +22,6 @@
 	build_path = /obj/item/device/firing_pin/implant/mindshield
 	category = list("Firing Pins")
 
-/datum/design/stunrevolver
-	name = "Tesla Revolver"
-	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
-	id = "stunrevolver"
-	req_tech = list("combat" = 4, "materials" = 4, "powerstorage" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_SILVER = 10000)
-	build_path = /obj/item/gun/energy/tesla_revolver
-	category = list("Weapons")
-
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun"
 	desc = "An energy gun with an experimental miniaturized reactor."
