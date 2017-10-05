@@ -7,7 +7,7 @@ a website associated with their server or on the server itself.
 
 If operators(s) allow these configuration files to be public this file can serve that purpose by keeping it properly updated.
 
-If in the future new images are published to these folders (i.e. in an online code repository) they must explicitly state their 
+If in the future new sounds are published to these folders (i.e. in an online code repository) they must explicitly state their 
 license if said license is not the same as the default licensing found in README.md in the root directory of the project.
 
 Do not remove this notice.
@@ -19,7 +19,7 @@ Do not remove this notice.
 
 ---EXAMPLES (NOT PART OF ANY LICENSE)---
 
-These are examples of properly attrubuted and licensed images. 
+These are examples of properly attrubuted and licensed sounds. 
 They are not an actual part of any license under any circumstance.
 
 title5.ogg was created by Mya Quinn on Feburary 28, 2557. It is licensed under a Combative Clowning 3.0 HO-NK license (http://example.com/license/url/). 
