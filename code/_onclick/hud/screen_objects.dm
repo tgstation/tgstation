@@ -485,11 +485,6 @@
 	icon = 'icons/mob/screen_cyborg.dmi'
 	screen_loc = ui_borg_health
 
-/obj/screen/healths/deity
-	name = "Nexus Health"
-	icon_state = "deity_nexus"
-	screen_loc = ui_deityhealth
-
 /obj/screen/healths/blob
 	name = "blob health"
 	icon_state = "block"
