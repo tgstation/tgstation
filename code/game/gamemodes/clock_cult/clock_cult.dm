@@ -185,7 +185,7 @@ Credit where due:
 	return FALSE
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
-	if(GLOB.clockwork_gateway_activated || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
+	if(GLOB.clockwork_gateway_activated || GLOB.ark_of_the_clockwork_justiciar)
 		SSticker.news_report = CLOCK_SUMMON
 		return TRUE
 	else
