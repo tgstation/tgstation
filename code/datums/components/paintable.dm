@@ -22,7 +22,7 @@
 	RemoveCurrentCoat()
 	if(spraycan.use_charges(user, 2))
 		var/colour = spraycan.paint_color
-		current_paint = spraycan.paint_color
+		current_paint = colour
 		var/atom/A = parent
 		A.add_atom_colour(colour, FIXED_COLOUR_PRIORITY)
 		playsound(spraycan, 'sound/effects/spray.ogg', 5, 1, 5)
