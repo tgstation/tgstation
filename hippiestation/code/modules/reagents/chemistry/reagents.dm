@@ -2,6 +2,18 @@
 	reagent_state = LIQUID//since reagent states are now interchangeable it makes sense for them to all start as liquids preventing unnescessary messages
 	var/boiling_point = 500//the point at which a reagent changes from a liquid to a gaseous state
 	var/melting_point = 273//the point at which a reagent changes from a liquid to a solid state
+	var/processes = FALSE
+
+/datum/reagent/New()
+	..()
+	if(processes)
+		START_PROCESSING(SSreagent_states, src)
+
+/datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
+	. = ..()
+	if(processes)
+		STOP_PROCESSING(SSreagent_states, src)
+	holder = null
 
 /datum/reagent/proc/FINISHONMOBLIFE(mob/living/M)
 	current_cycle++
