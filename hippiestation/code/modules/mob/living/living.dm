@@ -8,7 +8,7 @@
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			add_logs(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
-			return 0
+			return FALSE
 		if(moving_resist && client) //we resisted by trying to move
 			client.move_delay = world.time + 20
 	else
