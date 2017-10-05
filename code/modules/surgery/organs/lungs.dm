@@ -95,10 +95,10 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases("o2", "n2", "plasma", "co2", "n2o", "bz", "tritium","browns")
+	breath.assert_gases("o2", "n2", "plasma", "co2", "n2o", "bz", "tritium","browns","pluox","stim")
 
 	//Partial pressures in our breath
-	var/O2_pp = breath.get_breath_partial_pressure(breath_gases["o2"][MOLES])
+	var/O2_pp = breath.get_breath_partial_pressure(breath_gases["o2"][MOLES])+(8*breath.get_breath_partial_pressure(breath_gases["pluox"][MOLES]))
 	var/N2_pp = breath.get_breath_partial_pressure(breath_gases["n2"][MOLES])
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases["plasma"][MOLES])
 	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases["co2"][MOLES])
@@ -281,8 +281,13 @@
 
 		breath_gases["browns"][MOLES]-=gas_breathed
 		gas_breathed = 0
-
-
+	//Stimulum
+		gas_breathed = breath_gases["stim"][MOLES]
+		if (gas_breathed > GAS_STIM_MINIMUM)
+			H.status_flags |= GOTTAGOFAST
+		else
+			H.status_flags &= ~GOTTAGOFAST
+		breath_gases["stim"][MOLES]-=gas_breathed
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
 	return TRUE

@@ -235,7 +235,7 @@
 /datum/gas_reaction/bzformation/init_reqs()
 	min_requirements = list(
 		"tritium" = 10,
-		"plasma" = 10,
+		"plasma" = 10
 	)
 
 
@@ -261,6 +261,37 @@
 			air.temperature = max(((temperature*old_heat_capacity + energy_released)/new_heat_capacity),TCMB)
 		return REACTING
 
-/datum/gas_reaction/
+/datum/gas_reaction/stimformation
+	priority = 3
+	name = "Stimulum formation"
+	id = "stimformation"
+/datum/gas_reaction/stimformation/init_reqs()
+	min_requirements = list(
+		"tritium" = 30,
+		"plasma" = 10,
+		"bz" = 20,
+		"browns" = 30,
+		"temp" =50000)
+
+/datum/gas_reaction/stimformation/react(datum/gas_mixture/air)
+	var/list/cached_gases = air.gases
+
+	var/old_heat_capacity = air.heat_capacity()
+	var/heat_scale = air.temperature/100000
+	var/stim_energy_change
+	stim_energy_change = (0.75(heat_scale*heat_scale)) - (0.05(heat_scale*heat_scale*heat_scale)) + (0.001(heat_scale*heat_scale*heat_scale*heat_scale)) - (0.0000062(heat_scale*heat_scale*heat_scale*heat_scale*heat_scale))
+
+	air.assert_gases("tritium","plasma","bz","browns","stim")
+	cached_gases["stim"][MOLES]+= heat_scale/10
+	cached_gases["tritium"][MOLES]-= heat_scale
+	cached_gases["plasma"][MOLES]-= heat_scale
+	cached_gases["browns"][MOLES]-= heat_scale
+
+	if(stim_energy_change)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = max(((air.temperature*old_heat_capacity + stim_energy_change)/new_heat_capacity),TCMB)
+		return REACTING
+
 #undef REACTING
 #undef NO_REACTION
