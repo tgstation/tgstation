@@ -22,7 +22,7 @@ window.onerror = function(msg, url, line, col, error) {
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $contextMenu, $filterMessages;
+var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages;
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
@@ -37,8 +37,8 @@ var opts = {
 	'restarting': false, //Is the round restarting?
 
 	//Options menu
-	'subOptionsLoop': null, //Contains the interval loop for closing the options menu
-	'suppressOptionsClose': false, //Whether or not we should be hiding the suboptions menu
+	'selectedSubLoop': null, //Contains the interval loop for closing the selected sub menu
+	'suppressSubClose': false, //Whether or not we should be hiding the selected sub menu
 	'highlightTerms': [],
 	'highlightLimit': 5,
 	'highlightColor': '#FFFF00', //The color of the highlighted message
@@ -483,6 +483,46 @@ function sendVolumeUpdate() {
 	}
 }
 
+function subSlideUp() {
+	$(this).removeClass('scroll');
+	$(this).css('height', '');
+}
+
+function startSubLoop() {
+	if (opts.selectedSubLoop) {
+		clearInterval(opts.selectedSubLoop);
+	}
+	return setInterval(function() {
+		if (!opts.suppressSubClose && $selectedSub.is(':visible')) {
+			$selectedSub.slideUp('fast', subSlideUp);
+			clearInterval(opts.selectedSubLoop);
+		}
+	}, 5000); //every 5 seconds
+}
+
+function handleToggleClick($sub, $toggle) {
+	if ($selectedSub !== $sub && $selectedSub.is(':visible')) {
+		$selectedSub.slideUp('fast', subSlideUp);
+	}
+	$selectedSub = $sub
+	if ($selectedSub.is(':visible')) {
+		$selectedSub.slideUp('fast', subSlideUp);
+		clearInterval(opts.selectedSubLoop);
+	} else {
+		$selectedSub.slideDown('fast', function() {
+			var windowHeight = $(window).height();
+			var toggleHeight = $toggle.outerHeight();
+			var priorSubHeight = $selectedSub.outerHeight();
+			var newSubHeight = windowHeight - toggleHeight;
+			$(this).height(newSubHeight);
+			if (priorSubHeight > (windowHeight - toggleHeight)) {
+				$(this).addClass('scroll');
+			}
+		});
+		opts.selectedSubLoop = startSubLoop();
+	}
+}
+
 /*****************************************
 *
 * DOM READY
@@ -497,6 +537,8 @@ if (typeof $ === 'undefined') {
 $(function() {
 	$messages = $('#messages');
 	$subOptions = $('#subOptions');
+	$subAudio = $('#subAudio');
+	$selectedSub = $subOptions;
 
 	//Hey look it's a controller loop!
 	setInterval(function() {
@@ -607,12 +649,9 @@ $(function() {
 	});
 
 	$messages.on('mousedown', function(e) {
-		if ($subOptions && $subOptions.is(':visible')) {
-			$subOptions.slideUp('fast', function() {
-				$(this).removeClass('scroll');
-				$(this).css('height', '');
-			});
-			clearInterval(opts.subOptionsLoop);
+		if ($selectedSub && $selectedSub.is(':visible')) {
+			$selectedSub.slideUp('fast', subSlideUp);
+			clearInterval(opts.selectedSubLoop);
 		}
 	});
 
@@ -731,41 +770,19 @@ $(function() {
 	});
 
 	$('#toggleOptions').click(function(e) {
-		if ($subOptions.is(':visible')) {
-			$subOptions.slideUp('fast', function() {
-				$(this).removeClass('scroll');
-				$(this).css('height', '');
-			});
-			clearInterval(opts.subOptionsLoop);
-		} else {
-			$subOptions.slideDown('fast', function() {
-				var windowHeight = $(window).height();
-				var toggleHeight = $('#toggleOptions').outerHeight();
-				var priorSubHeight = $subOptions.outerHeight();
-				var newSubHeight = windowHeight - toggleHeight;
-				$(this).height(newSubHeight);
-				if (priorSubHeight > (windowHeight - toggleHeight)) {
-					$(this).addClass('scroll');
-				}
-			});
-			opts.subOptionsLoop = setInterval(function() {
-				if (!opts.suppressOptionsClose && $('#subOptions').is(':visible')) {
-					$subOptions.slideUp('fast', function() {
-						$(this).removeClass('scroll');
-						$(this).css('height', '');
-					});
-					clearInterval(opts.subOptionsLoop);
-				}
-			}, 5000); //Every 5 seconds
-		}
+		handleToggleClick($subOptions, $(this));
 	});
 
-	$('#subOptions, #toggleOptions').mouseenter(function() {
-		opts.suppressOptionsClose = true;
+	$('#toggleAudio').click(function(e) {
+		handleToggleClick($subAudio, $(this));
 	});
 
-	$('#subOptions, #toggleOptions').mouseleave(function() {
-		opts.suppressOptionsClose = false;
+	$('.sub, .toggle').mouseenter(function() {
+		opts.suppressSubClose = true;
+	});
+
+	$('.sub, .toggle').mouseleave(function() {
+		opts.suppressSubClose = false;
 	});
 
 	$('#decreaseFont').click(function(e) {
