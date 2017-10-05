@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Jaunters equipped on the belt slot will save you from chasms again."

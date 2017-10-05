@@ -1,7 +1,0 @@
-author: "banthebantz"
-delete-after: True
-changes: 
-  - rscadd: "Reagents can now assume gaseous and solid states, merely heat/cool and apply to floor or object"
-  - rscadd: "The Nuke Ops bio-hazard bundle has been given a sarin gas grenade as proof of concept"
-  - balance: "Smoke and foam now create chempiles and solid chems with 1/10 effectiveness to curb duping"
-  - balance: "Chempiles now transfer reagents at a fixed rate of 2 when crossed as opposed to 1, 5 and permeability code has been fixed so they take the permeability of shoes into account properly"

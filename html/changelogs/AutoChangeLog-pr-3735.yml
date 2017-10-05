@@ -1,4 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - config: "Hosts can now lock config options with the @  prefix. This prevents admins from editing the option in-game."
