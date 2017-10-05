@@ -216,7 +216,7 @@
 	if(del_on_fail)
 		qdel(I)
 		return FALSE
-	I.forceMove(get_turf(src))
+	I.forceMove(drop_location())
 	I.layer = initial(I.layer)
 	I.plane = initial(I.plane)
 	I.dropped(src)
