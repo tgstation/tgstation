@@ -553,6 +553,8 @@
 	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
 	var/list/areas_to_move = list() //unique assoc list of areas on turfs being moved
 
+	CHECK_TICK
+
 	/****************************************All beforeShuttleMove procs*****************************************/
 	var/index = 0
 	for(var/place in old_turfs)
@@ -578,6 +580,7 @@
 			areas_to_move[old_area] = TRUE
 
 		old_turfs[place] = move_mode
+		CHECK_TICK
 
 	/*******************************************All onShuttleMove procs******************************************/
 
@@ -608,16 +611,19 @@
 		var/turf/oldT = thing
 		var/turf/newT = new_turfs[index]
 		newT.afterShuttleMove(oldT)																			//turfs
+		CHECK_TICK
 
 	for(var/i in 1 to moved_atoms.len)
 		var/atom/movable/moved_object = moved_atoms[i]
 		moved_object.afterShuttleMove(movement_force, dir, preferred_direction, movement_direction)			//atoms
+		CHECK_TICK
 
 	underlying_old_area.afterShuttleMove()
 
 	for(var/thing in areas_to_move)
 		var/area/internal_area = thing
 		internal_area.afterShuttleMove()																	//areas
+		CHECK_TICK
 
 	// Parallax handling
 	var/new_parallax_dir = FALSE
@@ -626,6 +632,7 @@
 	for(var/i in shuttle_areas)
 		var/area/place = i
 		place.parallax_movedir = new_parallax_dir
+		CHECK_TICK
 
 	check_poddoors()
 	new_dock.last_dock_time = world.time
