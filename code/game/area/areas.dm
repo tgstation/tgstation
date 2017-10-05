@@ -89,7 +89,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // want to find machines, mobs, etc, in the same logical area, you will need to check all the
 // related areas.  This returns a master contents list to assist in that.
 /proc/area_contents(area/A)
-	if(!istype(A)) return null
+	if(!istype(A))
+		return null
 	var/list/contents = list()
 	for(var/area/LSA in A.related)
 		contents += LSA.contents

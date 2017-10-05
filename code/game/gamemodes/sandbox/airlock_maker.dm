@@ -69,7 +69,8 @@
 	usr << browse(dat,"window=airlockmaker")
 
 /datum/airlock_maker/Topic(var/href,var/list/href_list)
-	if(!usr) return
+	if(!usr)
+		return
 	if(!src || !linked || !linked.loc)
 		usr << browse(null,"window=airlockmaker")
 		return

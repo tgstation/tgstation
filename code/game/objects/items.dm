@@ -556,7 +556,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	..()
 	if(current_size >= STAGE_FOUR)
 		throw_at(S,14,3, spin=0)
-	else return
+	else
+		return
 
 /obj/item/throw_impact(atom/A)
 	if(A && !QDELETED(A))
