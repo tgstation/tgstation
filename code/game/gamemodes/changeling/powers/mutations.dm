@@ -256,7 +256,7 @@
 
 /obj/item/ammo_casing/magic/tentacle
 	name = "tentacle"
-	desc = "a tentacle."
+	desc = "A tentacle."
 	projectile_type = /obj/item/projectile/tentacle
 	caliber = "tentacle"
 	icon_state = "tentacle_end"

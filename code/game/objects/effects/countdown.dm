@@ -3,7 +3,7 @@
 	desc = "We're leaving together\n\
 		But still it's farewell\n\
 		And maybe we'll come back\n\
-		To earth, who can tell?"
+		To Earth, who can tell?"
 
 	var/displayed_text
 	var/atom/attached_to
