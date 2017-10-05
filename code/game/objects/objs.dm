@@ -51,7 +51,7 @@
 			T.add_blueprints_preround(src)
 
 /obj/Destroy(force=FALSE)
-	if(!istype(src, /obj/machinery))
+	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	. = ..()

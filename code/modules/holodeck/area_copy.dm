@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 			I.damtype = STAMINA // thou shalt not
 
 		N.update_icon()
-		if(istype(O, /obj/machinery))
+		if(ismachinery(O))
 			var/obj/machinery/M = O
 			M.power_change()
 

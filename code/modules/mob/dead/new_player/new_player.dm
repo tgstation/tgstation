@@ -115,15 +115,6 @@
 		//no longer is required
 		if(SSticker.current_state <= GAME_STATE_PREGAME)
 			ready = tready
-
-		var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No")
-
-		if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
-			ready = PLAYER_NOT_READY
-			src << browse(null, "window=playersetup") //closes the player setup window
-			new_player_panel()
-			return FALSE
-
 		//if it's post initialisation and they're trying to observe we do the needful
 		if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
 			ready = tready
@@ -268,7 +259,15 @@
 	if(QDELETED(src) || !src.client)
 		ready = PLAYER_NOT_READY
 		return FALSE
-	
+
+	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No")
+
+	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
+		ready = PLAYER_NOT_READY
+		src << browse(null, "window=playersetup") //closes the player setup window
+		new_player_panel()
+		return FALSE
+
 	var/mob/dead/observer/observer = new()
 	spawning = TRUE
 
