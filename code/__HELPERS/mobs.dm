@@ -405,9 +405,11 @@ Proc for attack log creation, because really why not
 				step_count = max_walk
 			else
 				step_count = rand(1, max_walk)
+			var/list/directions = GLOB.cardinals.Copy()
+			pick_n_take(directions) //Remove a random entry from the list so that the mobs won't be as clustered around the center
 
 			for(var/i in 1 to step_count)
-				step(X, pick(NORTH, SOUTH, EAST, WEST))
+				step(X, pick(directions))
 
 /proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
 	for(var/mob/M in GLOB.player_list)
