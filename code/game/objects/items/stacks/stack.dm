@@ -151,7 +151,7 @@
 			if(!building_checks(R, multiplier))
 				return
 
-		var/obj/O = new R.result_type()
+		var/obj/O = new R.result_type(usr.drop_location())	// DO NOT BUILD STUFF IN NULLSPACE AND THEN MOVE THEM OVER, YOU WILL BREAK THINGS
 		O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 
@@ -172,8 +172,7 @@
 
 		if (isitem(O))
 			usr.put_in_hands(O)
-		else
-			O.forceMove(usr.drop_location())
+
 		O.add_fingerprint(usr)
 
 		//BubbleWrap - so newly formed boxes are empty
