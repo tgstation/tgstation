@@ -149,8 +149,11 @@
 	end_day = 2
 	begin_month = APRIL
 
-/datum/holiday/april_fools/greet()
-	return "HONK"
+/datum/holiday/april_fools/celebrate()
+	SSticker.login_music = 'sound/ambience/clown.ogg'
+	for(var/mob/dead/new_player/P in GLOB.mob_list)
+		if(P.client)
+			P.client.playtitlemusic()
 
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"
