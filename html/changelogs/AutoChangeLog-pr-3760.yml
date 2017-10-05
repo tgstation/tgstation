@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - rscadd: "Wigs are now available in AutoDrobe"
