@@ -64,13 +64,6 @@ All ShuttleMove procs go here
 
 // Called on the new turf after everything has been moved
 /turf/proc/afterShuttleMove(turf/oldT)
-	if(SSlighting.initialized && FALSE)
-		var/atom/movable/lighting_object/old_obj = lighting_object
-		var/atom/movable/lighting_object/new_obj = oldT.lighting_object
-		if(old_obj)
-			old_obj.update()
-		if(new_obj)
-			new_obj.update()
 	return TRUE
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +83,7 @@ All ShuttleMove procs go here
 			return
 
 	if(rotation)
-		shuttleRotate(rotation)
+		shuttleRotate(rotation) //see shuttle_rotate.dm
 	loc = newT
 	if(length(client_mobs_in_contents))
 		update_parallax_contents()
@@ -132,26 +125,6 @@ All ShuttleMove procs go here
 // Called on areas after everything has been moved
 /area/proc/afterShuttleMove()
 	return TRUE
-
-/************************************Shuttle Rotation************************************/
-
-/atom/proc/shuttleRotate(rotation)
-	//rotate our direction
-	setDir(angle2dir(rotation+dir2angle(dir)))
-
-	//resmooth if need be.
-	if(smooth)
-		queue_smooth(src)
-
-	//rotate the pixel offsets too.
-	if (pixel_x || pixel_y)
-		if (rotation < 0)
-			rotation += 360
-		for (var/turntimes=rotation/90;turntimes>0;turntimes--)
-			var/oldPX = pixel_x
-			var/oldPY = pixel_y
-			pixel_x = oldPY
-			pixel_y = (oldPX*(-1))
 
 /************************************Turf move procs************************************/
 
@@ -210,7 +183,7 @@ All ShuttleMove procs go here
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
 
-/obj/machinery/computer/auxillary_base/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/obj/machinery/computer/auxillary_base/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
 	if(z == ZLEVEL_MINING) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.add_details("colonies_dropped", "[x]|[y]|[z]") //Number of times a base has been dropped!
@@ -229,21 +202,6 @@ All ShuttleMove procs go here
 /obj/machinery/thruster/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
 	. |= MOVE_CONTENTS
-
-//Properly updates pipes on shuttle movement
-/obj/machinery/atmospherics/shuttleRotate(rotation)
-	var/list/real_node_connect = getNodeConnects()
-	for(DEVICE_TYPE_LOOP)
-		real_node_connect[I] = angle2dir(rotation+dir2angle(real_node_connect[I]))
-
-	. = ..()
-	SetInitDirections()
-	var/list/supposed_node_connect = getNodeConnects()
-	var/list/nodes_copy = nodes.Copy()
-
-	for(DEVICE_TYPE_LOOP)
-		var/new_pos = supposed_node_connect.Find(real_node_connect[I])
-		nodes[new_pos] = nodes_copy[I]
 
 /obj/machinery/atmospherics/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -304,24 +262,25 @@ All ShuttleMove procs go here
 
 /************************************Item move procs************************************/
 
-/obj/item/storage/pod/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/obj/item/storage/pod/afterShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+	. = ..()
 	unlocked = TRUE
 	// If the pod was launched, the storage will always open.
-	return ..()
 
 /************************************Mob move procs************************************/
 
 /mob/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
 	if(!move_on_shuttle)
-		return 0
-	. = ..()
-	if(!.)
 		return
-	if(client)
+	. = ..()
+
+/mob/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
+	. = ..()
+	if(client && movement_force)
+		var/shake_force = max(movement_force["THROW"], movement_force["KNOCKDOWN"])
 		if(buckled)
-			shake_camera(src, 2, 1) // turn it down a bit come on
-		else
-			shake_camera(src, 7, 1)
+			shake_force *= 0.25
+		shake_camera(src, shake_force, 1)
 
 /mob/living/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -380,7 +339,6 @@ All ShuttleMove procs go here
 
 /obj/docking_port/stationary/public_mining_dock/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
 	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.
-	return 0
 
 /obj/effect/abstract/proximity_checker/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
 	//timer so it only happens once

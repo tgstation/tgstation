@@ -112,8 +112,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			// Admin: toggle spawning
 			//
 			if("hsbtobj")
-				if(!admin)
-					return
+				if(!admin) return
 				if(GLOB.hsboxspawn)
 					to_chat(world, "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>")
 					GLOB.hsboxspawn = FALSE
@@ -126,24 +125,22 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			// Admin: Toggle auto-close
 			//
 			if("hsbtac")
-				if(!admin)
-					return
-				if(config.sandbox_autoclose)
+				if(!admin) return
+				var/sbac = CONFIG_GET(flag/sandbox_autoclose)
+				if(sbac)
 					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
-					config.sandbox_autoclose = FALSE
 				else
 					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
-					config.sandbox_autoclose = TRUE
+				CONFIG_SET(flag/sandbox_autoclose, !sbac)
 				return
 			//
 			// Spacesuit with full air jetpack set as internals
 			//
 			if("hsbsuit")
 				var/mob/living/carbon/human/P = usr
-				if(!istype(P))
-					return
+				if(!istype(P)) return
 				if(P.wear_suit)
-					P.wear_suit.loc = P.loc
+					P.wear_suit.forceMove(P.drop_location())
 					P.wear_suit.layer = initial(P.wear_suit.layer)
 					P.wear_suit.plane = initial(P.wear_suit.plane)
 					P.wear_suit = null
@@ -152,7 +149,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				P.wear_suit.plane = ABOVE_HUD_PLANE
 				P.update_inv_wear_suit()
 				if(P.head)
-					P.head.loc = P.loc
+					P.head.forceMove(P.drop_location())
 					P.head.layer = initial(P.head.layer)
 					P.head.plane = initial(P.head.plane)
 					P.head = null
@@ -161,7 +158,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				P.head.plane = ABOVE_HUD_PLANE
 				P.update_inv_head()
 				if(P.wear_mask)
-					P.wear_mask.loc = P.loc
+					P.wear_mask.forceMove(P.drop_location())
 					P.wear_mask.layer = initial(P.wear_mask.layer)
 					P.wear_mask.plane = initial(P.wear_mask.plane)
 					P.wear_mask = null
@@ -170,7 +167,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				P.wear_mask.plane = ABOVE_HUD_PLANE
 				P.update_inv_wear_mask()
 				if(P.back)
-					P.back.loc = P.loc
+					P.back.forceMove(P.drop_location())
 					P.back.layer = initial(P.back.layer)
 					P.back.plane = initial(P.back.plane)
 					P.back = null
@@ -219,8 +216,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			// Spawn check due to grief potential (destroying floors, walls, etc)
 			//
 			if("hsbrcd")
-				if(!GLOB.hsboxspawn)
-					return
+				if(!GLOB.hsboxspawn) return
 
 				new/obj/item/construction/rcd/combat(usr.loc)
 
@@ -236,8 +232,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 			// Clothing
 			if("hsbcloth")
-				if(!GLOB.hsboxspawn)
-					return
+				if(!GLOB.hsboxspawn) return
 
 				if(!clothinfo)
 					clothinfo = "<b>Clothing</b> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
@@ -251,8 +246,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 			// Reagent containers
 			if("hsbreag")
-				if(!GLOB.hsboxspawn)
-					return
+				if(!GLOB.hsboxspawn) return
 
 				if(!reaginfo)
 					reaginfo = "<b>Reagent Containers</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
@@ -266,8 +260,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 			// Other items
 			if("hsbobj")
-				if(!GLOB.hsboxspawn)
-					return
+				if(!GLOB.hsboxspawn) return
 
 				if(!objinfo)
 					objinfo = "<b>Other Items</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"
@@ -294,7 +287,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 					return
 				new typepath(usr.loc)
 
-				if(config.sandbox_autoclose)
+				if(CONFIG_GET(flag/sandbox_autoclose))
 					usr << browse(null,"window=sandbox")
 			//
 			// For everything else in the href list
@@ -306,5 +299,5 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 					return
 				new typepath(usr.loc)
 
-				if(config.sandbox_autoclose)
+				if(CONFIG_GET(flag/sandbox_autoclose))
 					usr << browse(null,"window=sandbox")

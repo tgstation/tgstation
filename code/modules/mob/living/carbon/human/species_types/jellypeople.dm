@@ -59,6 +59,7 @@
 	name = "Regenerate Limbs"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeheal"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/regenerate_limbs/IsAvailable()
@@ -139,6 +140,10 @@
 
 	C.faction |= "slime"
 
+//If you're cloned you get your body pool back
+/datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
+	bodies = old_species.bodies
+
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
@@ -153,6 +158,7 @@
 	name = "Split Body"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimesplit"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/split_body/IsAvailable()
@@ -219,6 +225,7 @@
 	name = "Swap Body"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeswap"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/swap_body/Activate()

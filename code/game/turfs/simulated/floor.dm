@@ -21,7 +21,7 @@
 		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	if (!burnt_states)
 		burnt_states = list()
-	..()
+	. = ..()
 	//This is so damaged or burnt tiles or platings don't get remembered as the default tile
 	var/static/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
 					"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2", "foam_plating",
@@ -163,10 +163,10 @@
 		broken = 0
 		burnt = 0
 		if(user && !silent)
-			to_chat(user, "<span class='danger'>You remove the broken plating.</span>")
+			to_chat(user, "<span class='notice'>You remove the broken plating.</span>")
 	else
 		if(user && !silent)
-			to_chat(user, "<span class='danger'>You remove the floor tile.</span>")
+			to_chat(user, "<span class='notice'>You remove the floor tile.</span>")
 		if(floor_tile && make_tile)
 			new floor_tile(src)
 	return make_plating()

@@ -195,22 +195,24 @@
 	var/jumping = FALSE //are we mid-jump?
 
 /obj/item/clothing/shoes/bhop/ui_action_click(mob/user, action)
-	if(!isliving(usr))
+	if(!isliving(user))
 		return
 
 	if(jumping)
 		return
 
 	if(recharging_time > world.time)
-		to_chat(usr, "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>")
+		to_chat(user, "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>")
 		return
 
-	var/atom/target = get_edge_target_turf(usr, usr.dir) //gets the user's direction
+	var/atom/target = get_edge_target_turf(user, user.dir) //gets the user's direction
 
-	jumping = TRUE
-	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
-	usr.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
-	usr.throw_at(target, jumpdistance, jumpspeed, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
+	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .proc/hop_end)))
+		jumping = TRUE
+		playsound(src, 'sound/effects/stealthoff.ogg', 50, 1, 1)
+		user.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
+	else
+		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
 
 /obj/item/clothing/shoes/bhop/proc/hop_end()
 	jumping = FALSE

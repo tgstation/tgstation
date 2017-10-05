@@ -226,6 +226,17 @@
 		A.CollidedWith(src)
 
 /atom/movable/proc/forceMove(atom/destination)
+	. = FALSE
+	if(destination)
+		. = doMove(destination)
+	else
+		CRASH("No valid destination passed into forceMove")
+
+/atom/movable/proc/moveToNullspace()
+	return doMove(null)
+
+/atom/movable/proc/doMove(atom/destination)
+	. = FALSE
 	if(destination)
 		if(pulledby)
 			pulledby.stop_pulling()
@@ -252,8 +263,17 @@
 				AM.Crossed(src, oldloc)
 
 		Moved(oldloc, 0)
-		return 1
-	return 0
+		. = TRUE
+
+	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
+	else
+		. = TRUE
+		var/atom/oldloc = loc
+		var/area/old_area = get_area(oldloc)
+		oldloc.Exited(src, null)
+		if(old_area)
+			old_area.Exited(src, null)
+		loc = null
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()
@@ -262,9 +282,10 @@
 	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	. = ..()
-	if(client)
-		reset_perspective(destination)
-	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
+	if(.)
+		if(client)
+			reset_perspective(destination)
+		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
@@ -318,7 +339,8 @@
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
+	. = FALSE
 	if (!target || (flags_1 & NODROP_1) || speed <= 0)
 		return
 
@@ -347,7 +369,9 @@
 			//then lets add it to speed
 			speed += user_momentum
 			if (speed <= 0)
-				return //no throw speed, the user was moving too fast.
+				return//no throw speed, the user was moving too fast.
+
+	. = TRUE // No failure conditions past this point.
 
 	var/datum/thrownthing/TT = new()
 	TT.thrownthing = src

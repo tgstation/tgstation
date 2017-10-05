@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	var/obj/machinery/computer/telecrystals/boss/linkedboss = null
 
 /obj/machinery/computer/telecrystals/uplinker/Initialize()
-	..()
+	. = ..()
 
 	var/ID = pick_n_take(GLOB.possible_uplinker_IDs)
 	if(!ID)

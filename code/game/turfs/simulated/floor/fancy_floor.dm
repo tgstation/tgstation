@@ -8,9 +8,14 @@
  */
 
 /turf/open/floor/wood
+	desc = "Stylish dark wood."
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
+
+/turf/open/floor/wood/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>There's a few <b>screws</b> and a <b>small crack</b> visible.</span>")
 
 /turf/open/floor/wood/attackby(obj/item/C, mob/user, params)
 	if(..())
@@ -42,16 +47,16 @@
 		broken = 0
 		burnt = 0
 		if(user && !silent)
-			to_chat(user, "<span class='danger'>You remove the broken planks.</span>")
+			to_chat(user, "<span class='notice'>You remove the broken planks.</span>")
 	else
 		if(make_tile)
 			if(user && !silent)
-				to_chat(user, "<span class='danger'>You unscrew the planks.</span>")
+				to_chat(user, "<span class='notice'>You unscrew the planks.</span>")
 			if(floor_tile)
 				new floor_tile(src)
 		else
 			if(user && !silent)
-				to_chat(user, "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>")
+				to_chat(user, "<span class='notice'>You forcefully pry off the planks, destroying them in the process.</span>")
 	return make_plating()
 
 /turf/open/floor/wood/cold
@@ -71,14 +76,14 @@
 	var/turfverb = "uproot"
 
 /turf/open/floor/grass/Initialize()
-	..()
+	. = ..()
 	update_icon()
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/shovel) && params)
 		new ore_type(src)
 		new ore_type(src) //Make some sand if you shovel grass
-		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You [src.turfverb] [src].</span>")
+		user.visible_message("[user] digs up [src].", "<span class='notice'>You [src.turfverb] [src].</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		make_plating()
 	if(..())
@@ -109,7 +114,7 @@
 	slowdown = 0
 
 /turf/open/floor/grass/snow/basalt/Initialize()
-	..()
+	. = ..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -126,7 +131,7 @@
 	slowdown = 0
 
 /turf/open/floor/grass/fakebasalt/Initialize()
-	..()
+	. = ..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -143,8 +148,12 @@
 	canSmoothWith = list(/turf/open/floor/carpet)
 	flags_1 = NONE
 
-/turf/open/floor/carpet/Initialize()
+/turf/open/floor/carpet/examine(mob/user)
 	..()
+	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+
+/turf/open/floor/carpet/Initialize()
+	. = ..()
 	update_icon()
 
 /turf/open/floor/carpet/update_icon()
@@ -205,7 +214,7 @@
 	plane = PLANE_SPACE
 
 /turf/open/floor/fakespace/Initialize()
-	..()
+	. = ..()
 	icon_state = SPACE_ICON_STATE
 
 /turf/open/floor/fakespace/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)

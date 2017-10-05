@@ -1,10 +1,15 @@
 
 /turf/open/floor/engine
 	name = "reinforced floor"
+	desc = "Extremely sturdy."
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
+
+/turf/open/floor/engine/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>")
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -108,7 +113,7 @@
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearence
 
 /turf/open/floor/engine/cult/Initialize()
-	..()
+	. = ..()
 	new /obj/effect/temp_visual/cult/turf/floor(src)
 	realappearence = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
 	realappearence.linked = src

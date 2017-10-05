@@ -14,6 +14,7 @@
 
 	name = "windoor Assembly"
 	icon_state = "l_windoor_assembly01"
+	desc = "A small glass and wire assembly for windoors."
 	anchored = FALSE
 	density = FALSE
 	dir = NORTH

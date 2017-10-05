@@ -23,7 +23,7 @@
 	icon_state = initial(icon_state)
 	desc = initial(desc)
 
-/obj/item/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
+/obj/item/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)	
 	if(!istype(I) || I.anchored == 1)
 		return
 
@@ -43,9 +43,7 @@
 		if(istype(I.loc, /obj/item/storage))	//in a container.
 			var/obj/item/storage/U = I.loc
 			U.remove_from_storage(I, src)
-		if(user.is_holding(I))
-			user.dropItemToGround(I)
-		else
+		if(!user.dropItemToGround(I))
 			return
 
 	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>",\
@@ -62,7 +60,7 @@
 	add_overlay("evidence")	//should look nicer for transparent stuff. not really that important, but hey.
 
 	desc = "An evidence bag containing [I]. [I.desc]"
-	I.loc = src
+	I.forceMove(src)
 	w_class = I.w_class
 	return 1
 

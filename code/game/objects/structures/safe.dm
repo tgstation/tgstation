@@ -97,7 +97,10 @@ FLOOR SAFES
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/user = usr
-
+	
+	if(!user.canUseTopic(src))
+		return
+	
 	var/canhear = 0
 	if(user.is_holding_item_of_type(/obj/item/clothing/neck/stethoscope))
 		canhear = 1

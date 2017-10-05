@@ -735,7 +735,7 @@
 	var/theme_name 
 
 /obj/item/storage/box/ingredients/Initialize()
-	..()
+	. = ..()
 	if(theme_name)
 		name = "[name] ([theme_name])"
 		desc = "A box containing supplementary ingredients for the aspiring chef. The box's theme is '[theme_name]'."

@@ -4,6 +4,7 @@
 	name = "\improper AI core"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "0"
+	desc = "The framework for an artificial intelligence core."
 	max_integrity = 500
 	var/state = 0
 	var/datum/ai_laws/laws = new()
@@ -45,14 +46,13 @@
 		switch(state)
 			if(EMPTY_CORE)
 				if(istype(P, /obj/item/circuitboard/aicore))
-					if(!user.drop_item())
+					if(!user.transferItemToLoc(P, src))
 						return
 					playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 					to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 					update_icon()
 					state = CIRCUIT_CORE
 					circuit = P
-					P.forceMove(src)
 					return
 			if(CIRCUIT_CORE)
 				if(istype(P, /obj/item/screwdriver))
@@ -135,7 +135,7 @@
 						to_chat(user, "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>")
 						return
 
-					if((config) && (!config.allow_ai) || jobban_isbanned(M.brainmob, "AI"))
+					if(!CONFIG_GET(flag/allow_ai) || jobban_isbanned(M.brainmob, "AI"))
 						to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 						return
 
@@ -143,10 +143,9 @@
 						to_chat(user, "<span class='warning'>This [M.name] is mindless!</span>")
 						return
 
-					if(!user.drop_item())
+					if(!user.transferItemToLoc(M,src))
 						return
 
-					M.forceMove(src)
 					brain = M
 					to_chat(user, "<span class='notice'>You add [M.name] to the frame.</span>")
 					update_icon()
@@ -176,7 +175,14 @@
 						SSticker.mode.remove_antag_for_borging(brain.brainmob.mind)
 						if(!istype(brain.laws, /datum/ai_laws/ratvar))
 							remove_servant_of_ratvar(brain.brainmob, TRUE)
-						var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
+
+						var/mob/living/silicon/ai/A = null
+
+						if (brain.overrides_aicore_laws)
+							A = new /mob/living/silicon/ai(loc, brain.laws, brain.brainmob)
+						else
+							A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
+
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
 						SSblackbox.inc("cyborg_ais_created",1)

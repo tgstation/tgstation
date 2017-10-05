@@ -69,7 +69,7 @@
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 
 /turf/closed/indestructible/fakeglass/Initialize()
-	..()
+	. = ..()
 	icon_state = null //set the icon state to null, so our base state isn't visible
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
@@ -138,3 +138,16 @@
 	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "wall"
+
+/turf/closed/bullet_act(obj/item/projectile/Proj)
+	. = ..()
+	if((. != -1) && !Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		var/mutable_appearance/bullet_hole = mutable_appearance('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
+
+		var/random_x = rand(-13, 13)
+		bullet_hole.pixel_x += random_x
+
+		var/random_y = rand(-13, 13)
+		bullet_hole.pixel_y += random_y
+
+		add_overlay(bullet_hole, TRUE)

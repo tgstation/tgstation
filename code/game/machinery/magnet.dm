@@ -216,7 +216,7 @@
 
 
 /obj/machinery/magnetic_controller/Initialize()
-	..()
+	. = ..()
 	if(autolink)
 		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
 			if(M.freq == frequency && M.code == code)

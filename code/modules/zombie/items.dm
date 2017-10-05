@@ -11,7 +11,7 @@
 	var/icon_left = "bloodhand_left"
 	var/icon_right = "bloodhand_right"
 	hitsound = 'sound/hallucinations/growl1.ogg'
-	force = 20
+	force = 21 // Just enough to break airlocks with melee attacks
 	damtype = "brute"
 
 	var/removing_airlock = FALSE
@@ -48,6 +48,16 @@
 	if(!infection)
 		infection = new()
 		infection.Insert(target)
+
+
+/obj/item/zombie_hand/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is ripping [user.p_their()] brains out! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(isliving(user))
+		var/mob/living/L = user
+		var/obj/item/bodypart/O = L.get_bodypart("head")
+		if(O)
+			O.dismember()
+	return (BRUTELOSS)
 
 /obj/item/zombie_hand/proc/check_feast(mob/living/target, mob/living/user)
 	if(target.stat == DEAD)

@@ -292,7 +292,7 @@
 	gold_core_spawnable = 0
 	var/age = 0
 	var/record_age = 1
-	var/memory_saved = 0
+	var/memory_saved = FALSE
 	var/saved_head //path
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Initialize()
@@ -308,7 +308,7 @@
 			P.real_name = "Ian"
 			P.gender = MALE
 			P.desc = "It's the HoP's beloved corgi puppy."
-			Write_Memory(0)
+			Write_Memory(FALSE)
 			qdel(src)
 	else if(age == record_age)
 		icon_state = "old_corgi"
@@ -318,13 +318,14 @@
 		turns_per_move = 20
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
-	if(SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		Write_Memory(0)
+	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+		Write_Memory(FALSE)
+		memory_saved = TRUE
 	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/death()
 	if(!memory_saved)
-		Write_Memory(1)
+		Write_Memory(TRUE)
 	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Read_Memory()
@@ -338,8 +339,7 @@
 		var/json_file = file("data/npc_saves/Ian.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		age = json["age"]
 		record_age = json["record_age"]
 		saved_head = json["saved_head"]
@@ -357,14 +357,18 @@
 		file_data["age"] = age + 1
 		if((age + 1) > record_age)
 			file_data["record_age"] = record_age + 1
+		else
+			file_data["record_age"] = record_age
 		if(inventory_head)
 			file_data["saved_head"] = inventory_head.type
+		else
+			file_data["saved_head"] = null
 	else
 		file_data["age"] = 0
+		file_data["record_age"] = record_age
 		file_data["saved_head"] = null
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
-	memory_saved = 1
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	..()
@@ -420,6 +424,41 @@
 					setDir(i)
 					sleep(1)
 
+/mob/living/simple_animal/pet/dog/corgi/Ian/narsie_act()
+	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
+	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(loc)
+	N.setDir(dir)
+	gib()
+
+/mob/living/simple_animal/pet/dog/corgi/narsie
+	name = "Nars-Ian"
+	desc = "Ia! Ia!"
+	icon_state = "narsian"
+	icon_living = "narsian"
+	icon_dead = "narsian_dead"
+	faction = list("dog", "cult")
+	gold_core_spawnable = FALSE
+	nofur = TRUE
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/Life()
+	..()
+	for(var/mob/living/simple_animal/pet/P in range(1, src))
+		if(P != src && prob(5))
+			visible_message("<span class='warning'>[src] devours [P]!</span>", \
+			"<span class='cult big bold'>DELICIOUS SOULS</span>")
+			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+			narsie_act()
+			P.gib()
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/update_corgi_fluff()
+	..()
+	speak = list("Tari'karat-pasnar!", "IA! IA!", "BRRUUURGHGHRHR")
+	speak_emote = list("growls", "barks ominously")
+	emote_hear = list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable.")
+	emote_see = list("communes with the unnameable.", "ponders devouring some souls.", "shakes.")
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/narsie_act()
+	adjustBruteLoss(-maxHealth)
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()

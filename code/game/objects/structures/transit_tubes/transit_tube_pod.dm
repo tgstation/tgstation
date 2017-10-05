@@ -181,3 +181,6 @@
 					if(TT.has_exit(direction))
 						setDir(direction)
 						return
+
+/obj/structure/transit_tube_pod/return_temperature()
+	return air_contents.temperature

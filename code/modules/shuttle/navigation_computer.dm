@@ -1,7 +1,6 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker
 	name = "navigation computer"
 	desc = "Used to designate a precise transit location for a spacecraft."
-	z_lock = ZLEVEL_STATION_PRIMARY
 	jump_action = null
 	var/datum/action/innate/shuttledocker_rotate/rotate_action = new
 	var/datum/action/innate/shuttledocker_place/place_action = new
@@ -133,7 +132,7 @@
 		if(!V)
 			continue
 		var/obj/docking_port/stationary/S = V
-		if(z_lock && (S.z != z_lock))
+		if(z_lock.len && !(S.z in z_lock))
 			continue
 		if((S.id == shuttlePortId) || jumpto_ports[S.id])
 			continue
@@ -222,7 +221,7 @@
 		if(!V)
 			continue
 		var/obj/docking_port/stationary/S = V
-		if(console.z_lock && (S.z != console.z_lock))
+		if(console.z_lock.len && !(S.z in console.z_lock))
 			continue
 		if(console.jumpto_ports[S.id])
 			L[S.name] = S

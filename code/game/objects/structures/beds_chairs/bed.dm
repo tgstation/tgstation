@@ -21,6 +21,10 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
 
+/obj/structure/bed/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(buildstacktype)

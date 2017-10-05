@@ -202,6 +202,19 @@
 	GLOB.mechas_list -= src //global mech list
 	return ..()
 
+/obj/mecha/CheckParts(list/parts_list)
+	..()
+	var/obj/item/C = locate(/obj/item/stock_parts/cell) in contents
+	cell = C
+	var/obj/item/stock_parts/scanning_module/SM = locate() in contents
+	var/obj/item/stock_parts/capacitor/CP = locate() in contents
+	if(SM)
+		step_energy_drain = 20 - (5 * SM.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+		qdel(SM)
+	if(CP)
+		armor["energy"] += (CP.rating * 10) //Each level of capacitor protects the mech against emp by 10%
+		qdel(CP)
+
 ////////////////////////
 ////// Helpers /////////
 ////////////////////////
@@ -767,7 +780,7 @@
 		. = t_air.return_pressure()
 	return
 
-/obj/mecha/proc/return_temperature()
+/obj/mecha/return_temperature()
 	var/datum/gas_mixture/t_air = return_air()
 	if(t_air)
 		. = t_air.return_temperature()

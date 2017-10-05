@@ -5751,6 +5751,10 @@
 /obj/structure/mirror{
 	pixel_x = 28
 	},
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
 /turf/open/floor/plasteel/freezer{
 	dir = 2
 	},
@@ -6101,7 +6105,7 @@
 /area/syndicate_mothership/control)
 "qp" = (
 /obj/structure/chair/stool,
-/obj/effect/landmark/syndicate_spawn,
+/obj/effect/landmark/start/nukeop,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
@@ -6506,6 +6510,7 @@
 /area/syndicate_mothership/control)
 "rj" = (
 /obj/structure/closet/cardboard,
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "rk" = (
@@ -7623,7 +7628,7 @@
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "tT" = (
-/obj/effect/landmark/syndicate_spawn,
+/obj/effect/landmark/start/nukeop_leader,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "tU" = (
@@ -8025,6 +8030,9 @@
 /area/syndicate_mothership/control)
 "vb" = (
 /obj/structure/closet/cardboard/metal,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "vc" = (
@@ -9731,7 +9739,6 @@
 /area/wizard_station)
 "zj" = (
 /obj/structure/table/wood,
-/obj/effect/landmark/teleport_scroll,
 /obj/item/dice/d20,
 /obj/item/dice,
 /turf/open/floor/carpet,
@@ -12318,19 +12325,19 @@
 /area/abductor_ship)
 "Gh" = (
 /obj/machinery/abductor/experiment{
-	team = 1
+	team_number = 1
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gi" = (
 /obj/machinery/abductor/console{
-	team = 1
+	team_number = 1
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gj" = (
 /obj/machinery/abductor/pad{
-	team = 1
+	team_number = 1
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12346,19 +12353,19 @@
 /area/abductor_ship)
 "Gm" = (
 /obj/machinery/abductor/experiment{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Gn" = (
 /obj/machinery/abductor/console{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Go" = (
 /obj/machinery/abductor/pad{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12400,7 +12407,7 @@
 /area/abductor_ship)
 "Gw" = (
 /obj/machinery/computer/camera_advanced/abductor{
-	team = 1
+	team_number = 1
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12418,7 +12425,7 @@
 /area/abductor_ship)
 "GA" = (
 /obj/machinery/computer/camera_advanced/abductor{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12479,13 +12486,13 @@
 /area/abductor_ship)
 "GM" = (
 /obj/effect/landmark/abductor/scientist{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "GN" = (
 /obj/effect/landmark/abductor/agent{
-	team = 4
+	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12629,49 +12636,49 @@
 /area/space)
 "Hn" = (
 /obj/machinery/abductor/experiment{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Ho" = (
 /obj/machinery/abductor/console{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hp" = (
 /obj/machinery/abductor/pad{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hq" = (
 /obj/machinery/abductor/experiment{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hr" = (
 /obj/machinery/abductor/console{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hs" = (
 /obj/machinery/abductor/pad{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Ht" = (
 /obj/machinery/computer/camera_advanced/abductor{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hu" = (
 /obj/machinery/computer/camera_advanced/abductor{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -12693,25 +12700,25 @@
 /area/centcom/evac)
 "Hy" = (
 /obj/effect/landmark/abductor/scientist{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "Hz" = (
 /obj/effect/landmark/abductor/agent{
-	team = 2
+	team_number = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "HA" = (
 /obj/effect/landmark/abductor/scientist{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "HB" = (
 /obj/effect/landmark/abductor/agent{
-	team = 3
+	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
@@ -13652,6 +13659,44 @@
 	},
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
+"QT" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership/control)
+"QU" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership/control)
+"QV" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership/control)
+"QW" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership/control)
+"QX" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership/control)
+"QY" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership/control)
+"QZ" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership/control)
 
 (1,1,1) = {"
 aa
@@ -34895,7 +34940,7 @@ lG
 hm
 aa
 kl
-qs
+QT
 rk
 rl
 rm
@@ -34903,7 +34948,7 @@ tl
 rm
 ux
 vc
-qs
+QY
 kl
 aa
 aa
@@ -36180,7 +36225,7 @@ hq
 hm
 aa
 kl
-qt
+QU
 ro
 rm
 sd
@@ -36437,7 +36482,7 @@ hq
 hm
 aa
 kl
-qs
+QV
 rp
 ro
 rm
@@ -36445,7 +36490,7 @@ tl
 rm
 uy
 ve
-qs
+QZ
 kl
 aa
 aa
@@ -36695,13 +36740,13 @@ hm
 aa
 kl
 qs
-qs
+QW
 se
 se
 se
 se
 se
-qs
+QX
 qs
 kl
 aa
@@ -76391,9 +76436,9 @@ dM
 QJ
 QL
 fg
-QO
-QQ
-QR
+QL
+QK
+QL
 dM
 fN
 fQ
@@ -76903,11 +76948,11 @@ dM
 QI
 dM
 QK
-QM
+QL
 QN
-QP
+QL
 fr
-QS
+QL
 dM
 fN
 ab

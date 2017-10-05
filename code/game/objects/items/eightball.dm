@@ -37,10 +37,14 @@
 		"Very doubtful")
 
 /obj/item/toy/eightball/Initialize(mapload)
-	..()
-	if(prob(1))
-		new /obj/item/toy/eightball/haunted(get_turf(src))
-		qdel(src)
+	. = ..()
+	if(MakeHaunted())
+		return INITIALIZE_HINT_QDEL
+
+/obj/item/toy/eightball/proc/MakeHaunted()
+	. = prob(1)
+	if(.)
+		new /obj/item/toy/eightball/haunted(loc)
 
 /obj/item/toy/eightball/attack_self(mob/user)
 	if(shaking)
@@ -81,7 +85,7 @@
 	var/fixed_answer
 
 /obj/item/toy/eightball/broken/Initialize(mapload)
-	..()
+	. = ..()
 	fixed_answer = pick(possible_answers)
 
 /obj/item/toy/eightball/broken/get_answer()
@@ -97,13 +101,16 @@
 	var/list/votes
 
 /obj/item/toy/eightball/haunted/Initialize(mapload)
-	..()
+	. = ..()
 	votes = list()
 	GLOB.poi_list |= src
 
 /obj/item/toy/eightball/haunted/Destroy()
 	GLOB.poi_list -= src
 	. = ..()
+
+/obj/item/toy/eightball/haunted/MakeHaunted()
+	return FALSE
 
 /obj/item/toy/eightball/haunted/attack_ghost(mob/user)
 	if(!shaking)

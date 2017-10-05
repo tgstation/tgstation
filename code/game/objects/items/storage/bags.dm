@@ -73,6 +73,7 @@
 	origin_tech = "materials=4;bluespace=4;engineering=4;plasmatech=3"
 	max_combined_w_class = 60
 	storage_slots = 60
+	flags_2 = NO_MAT_REDEMPTION_2
 
 // -----------------------------
 //        Mining Satchel

@@ -14,6 +14,7 @@
 	name = "bookcase"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookempty"
+	desc = "A great place for storing knowledge."
 	anchored = FALSE
 	density = TRUE
 	opacity = 0
@@ -24,8 +25,23 @@
 	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
 
 
-/obj/structure/bookcase/Initialize(mapload)
+/obj/structure/bookcase/examine(mob/user)
 	..()
+	if(!anchored)
+		to_chat(user, "<span class='notice'>The <i>bolts</i> on the bottom are unsecured.</span>")
+	if(anchored)
+		to_chat(user, "<span class='notice'>It's secured in place with <b>bolts</b>.</span>")
+	switch(state)
+		if(0)
+			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the back panel.</span>")
+		if(1)
+			to_chat(user, "<span class='notice'>There's space inside for a <i>wooden</i> shelf.</span>")
+		if(2)
+			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the shelf.</span>")
+
+
+/obj/structure/bookcase/Initialize(mapload)
+	. = ..()
 	if(!mapload)
 		return
 	state = 2
@@ -165,6 +181,7 @@
 	name = "book"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
+	desc = "Crack it open, inhale the musk of its pages, and learn something new."
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
@@ -288,6 +305,7 @@
 	name = "barcode scanner"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="scanner"
+	desc = "A fabulous tool if you need to scan a barcode."
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY

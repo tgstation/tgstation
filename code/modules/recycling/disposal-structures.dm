@@ -340,16 +340,6 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 
-//Fixes dpdir on shuttle rotation
-/obj/structure/disposalpipe/shuttleRotate(rotation)
-	..()
-	var/new_dpdir = 0
-	for(var/D in GLOB.cardinals)
-		if(dpdir & D)
-			new_dpdir = new_dpdir | angle2dir(rotation+dir2angle(D))
-	dpdir = new_dpdir
-
-
 // *** TEST verb
 //client/verb/dispstop()
 //	for(var/obj/structure/disposalholder/H in world)

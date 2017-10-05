@@ -147,7 +147,7 @@
 	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_AIRLOCK)
 
 /obj/machinery/airlock_sensor/Initialize()
-	..()
+	. = ..()
 	set_frequency(frequency)
 
 /obj/machinery/airlock_sensor/Destroy()

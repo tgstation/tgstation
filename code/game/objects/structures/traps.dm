@@ -16,7 +16,7 @@
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/structure/trap/Initialize(mapload)
-	..()
+	. = ..()
 	spark_system = new
 	spark_system.set_up(4,1,src)
 	spark_system.attach(src)

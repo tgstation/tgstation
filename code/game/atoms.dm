@@ -189,6 +189,7 @@
 
 
 /atom/proc/CollidedWith(atom/movable/AM)
+	set waitfor = FALSE
 	return
 
 // Convenience proc to see if a container is open for chemistry handling
@@ -455,7 +456,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 		cur_y = y_arr.Find(src.z)
 		if(cur_y)
 			break
-//	to_chat(world, "X = [cur_x]; Y = [cur_y]")
 	if(cur_x && cur_y)
 		return list("x"=cur_x,"y"=cur_y)
 	else
@@ -639,3 +639,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
+
+/atom/proc/return_temperature()
+	return

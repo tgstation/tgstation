@@ -17,14 +17,6 @@
 	if(owner)
 		. += owner
 
-/datum/objective/proc/considered_alive(var/datum/mind/M)
-	if(M && M.current)
-		var/mob/living/carbon/human/H
-		if(ishuman(M.current))
-			H = M.current
-		return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
-	return FALSE
-
 /datum/objective/proc/considered_escaped(datum/mind/M)
 	if(!considered_alive(M))
 		return FALSE
@@ -36,9 +28,6 @@
 	if(!location || istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails if they are in the shuttle brig
 		return FALSE
 	return location.onCentCom() || location.onSyndieBase()
-
-/datum/objective/proc/considered_afk(datum/mind/M)
-	return !M || !M.current || !M.current.client || M.current.client.is_afk()
 
 /datum/objective/proc/check_completion()
 	return completed
@@ -121,7 +110,7 @@
 	return target
 
 /datum/objective/assassinate/check_completion()
-	return !target || !considered_alive(target)
+	return !considered_alive(target) || considered_afk(target)
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
@@ -348,6 +337,15 @@
 			return FALSE
 	return TRUE
 
+/datum/objective/survive/exist //Like survive, but works for silicons and zombies and such.
+
+/datum/objective/survive/exist/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!considered_alive(M, FALSE))
+			return FALSE
+	return TRUE
+
 /datum/objective/martyr
 	explanation_text = "Die a glorious death."
 
@@ -501,24 +499,31 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Download [target_amount] research level\s."
 	return target_amount
 
-/datum/objective/download/check_completion()//NINJACODE.
-	var/current_amount = 0
+/datum/objective/download/check_completion()
+	var/list/current_tech = list()
 	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/M in owners)
-		if(!ishuman(owner.current))
-			continue
-		var/mob/living/carbon/human/H = owner.current
-		if(!H || H.stat == DEAD || !istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
-			continue
-		var/obj/item/clothing/suit/space/space_ninja/SN = H.wear_suit
-		if(!SN.s_initialized)
-			continue
-		for(var/datum/tech/current_data in SN.stored_research)
-			if(current_data.level)
-				current_amount += (current_data.level-1)
-	return current_amount >= target_amount
-
-
+	for(var/datum/mind/owner in owners)
+		if(ismob(owner.current))
+			var/mob/M = owner.current			//Yeah if you get morphed and you eat a quantum tech disk with the RD's latest backup good on you soldier.
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H && (H.stat != DEAD) && istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+					var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
+					for(var/datum/tech/T in S.stored_research)
+						current_tech[T.id] = T.level? T.level : 0
+			var/list/otherwise = M.GetAllContents()
+			for(var/obj/item/disk/tech_disk/TD in otherwise)
+				for(var/datum/tech/T in TD.tech_stored)
+					if(!T.id || !T.level)
+						continue
+					else if(!current_tech[T.id])
+						current_tech[T.id] = T.level
+					else if(T.level > current_tech[T.id])
+						current_tech[T.id] = T.level
+	var/total = 0
+	for(var/i in current_tech)
+		total += current_tech[i]
+	return total >= target_amount
 
 /datum/objective/capture
 

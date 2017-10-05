@@ -23,17 +23,15 @@
 	player_mind.active = 1
 
 	var/list/spawn_locs = list()
-	for(var/obj/effect/landmark/L in GLOB.landmarks_list)
+	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 		if(isturf(L.loc))
-			switch(L.name)
-				if("carpspawn")
-					spawn_locs += L.loc
+			spawn_locs += L.loc
 
 	if(!spawn_locs)
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	var /obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter((pick(spawn_locs)))
+	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter((pick(spawn_locs)))
 	var/mob/living/simple_animal/slaughter/S = new /mob/living/simple_animal/slaughter/(holder)
 	S.holder = holder
 	player_mind.transfer_to(S)

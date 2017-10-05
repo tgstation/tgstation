@@ -217,6 +217,22 @@
 	message = "laughs."
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/laugh/can_run_emote(mob/living/user)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/laugh/run_emote(mob/user, params)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human")
+			if(user.gender == FEMALE)
+				playsound(H, 'sound/voice/human/womanlaugh.ogg', 50, 1)
+			else
+				playsound(H, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg'), 50, 1)
+
 /datum/emote/living/look
 	key = "look"
 	key_third_person = "looks"

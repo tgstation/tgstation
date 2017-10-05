@@ -68,8 +68,8 @@ Bonus
 /datum/symptom/viralreverse
 
 	name = "Viral aggressive metabolism"
-	desc = "The virus sacrifices its long term survivability to gain a near-instant spread when inside a host. \
-	The virus will start at the lastest stage, but will eventually decay and die off by itself."
+	desc = "The virus sacrifices its long term survivability to nearly instantly fully spread inside a host. \
+	The virus will start at the last stage, but will eventually decay and die off by itself."
 	stealth = -2
 	resistance = 1
 	stage_speed = 3

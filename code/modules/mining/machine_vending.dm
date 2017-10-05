@@ -8,6 +8,7 @@
 	density = TRUE
 	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/mining_equipment_vendor
+	var/icon_deny = "mining-deny"
 	var/obj/item/card/id/inserted_id
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, use tabs and not spaces.
 		new /datum/data/mining_equipment("1 Marker Beacon",		/obj/item/stack/marker_beacon,											10),
@@ -108,6 +109,7 @@
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
+				to_chat(usr, "<span class='notice'>You eject the ID from [src]'s card slot.</span>")
 				inserted_id.loc = loc
 				inserted_id.verb_pickup()
 				inserted_id = null
@@ -118,21 +120,31 @@
 					return
 				I.loc = src
 				inserted_id = I
-			else
-				to_chat(usr, "<span class='danger'>No valid ID.</span>")
+				to_chat(usr, "<span class='notice'>You insert the ID into [src]'s card slot.</span>")
+			else 
+				to_chat(usr, "<span class='warning'>Error: No valid ID!</span>")
+				flick(icon_deny, src)
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
 			if (!prize || !(prize in prize_list))
+				to_chat(usr, "<span class='warning'>Error: Invalid choice!</span>")
+				flick(icon_deny, src)
 				return
 			if(prize.cost > inserted_id.mining_points)
+				to_chat(usr, "<span class='warning'>Error: Insufficent points for [prize.equipment_name]!</span>")
+				flick(icon_deny, src)
 			else
 				inserted_id.mining_points -= prize.cost
+				to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
 				new prize.equipment_path(src.loc)
 				SSblackbox.add_details("mining_equipment_bought",
 					"[src.type]|[prize.equipment_path]")
 				// Add src.type to keep track of free golem purchases
 				// separately.
+		else
+			to_chat(usr, "<span class='warning'>Error: Please insert a valid ID!</span>")
+			flick(icon_deny, src)
 	updateUsrDialog()
 	return
 
@@ -147,6 +159,7 @@
 				return
 			C.loc = src
 			inserted_id = C
+			to_chat(usr, "<span class='notice'>You insert the ID into [src]'s card slot.</span>")
 			interact(user)
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
