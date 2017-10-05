@@ -495,7 +495,8 @@
 
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
-					if(cell) cell.use(1)
+					if(cell)
+						cell.use(1)
 					if(moved && oldloc!=loc)	// successful move
 						//to_chat(world, "Successful move.")
 						blockcount = 0

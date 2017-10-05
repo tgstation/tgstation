@@ -556,7 +556,8 @@
 							"<span class='italics'>You hear welding.</span>")
 		playsound(src.loc, WT.usesound, 50, 1)
 		if(do_after(user, 50*W.toolspeed, target = src))
-			if(!src || !WT.remove_fuel(3, user)) return
+			if(!src || !WT.remove_fuel(3, user))
+				return
 			if ((stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\

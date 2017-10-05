@@ -24,7 +24,8 @@
 		if(RCD_WINDOWGRILLE)
 			if(the_rcd.window_type == /obj/structure/window/reinforced/fulltile)
 				return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 12)
-			else return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
+			else
+				return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, var/obj/item/construction/rcd/the_rcd, passed_mode)

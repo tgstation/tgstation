@@ -577,8 +577,10 @@ so as to remain in compliance with the most up-to-date laws."
 	var/atom/target = null
 
 /obj/screen/alert/hackingapc/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/living/silicon/ai/AI = usr
 	var/turf/T = get_turf(target)
 	if(T)
@@ -601,7 +603,8 @@ so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
 
 /obj/screen/alert/notify_cloning/Click()
-	if(!usr || !usr.client) return
+	if(!usr || !usr.client)
+		return
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
@@ -614,10 +617,13 @@ so as to remain in compliance with the most up-to-date laws."
 	var/action = NOTIFY_JUMP
 
 /obj/screen/alert/notify_action/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/dead/observer/G = usr
-	if(!istype(G)) return
+	if(!istype(G))
+		return
 	switch(action)
 		if(NOTIFY_ATTACK)
 			target.attack_ghost(G)

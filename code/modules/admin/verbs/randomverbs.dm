@@ -549,15 +549,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
-	if(devastation == null) return
+	if(devastation == null)
+		return
 	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num|null
-	if(heavy == null) return
+	if(heavy == null)
+		return
 	var/light = input("Range of light impact. -1 to none", text("Input"))  as num|null
-	if(light == null) return
+	if(light == null)
+		return
 	var/flash = input("Range of flash. -1 to none", text("Input"))  as num|null
-	if(flash == null) return
+	if(flash == null)
+		return
 	var/flames = input("Range of flames. -1 to none", text("Input"))  as num|null
-	if(flames == null) return
+	if(flames == null)
+		return
 
 	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1) || (flames != -1))
 		if ((devastation > 20) || (heavy > 20) || (light > 20) || (flames > 20))
@@ -581,9 +586,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
-	if(heavy == null) return
+	if(heavy == null)
+		return
 	var/light = input("Range of light pulse.", text("Input"))  as num|null
-	if(light == null) return
+	if(light == null)
+		return
 
 	if (heavy || light)
 
@@ -962,7 +969,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set name = "Toggle AntagHUD"
 	set desc = "Toggles the Admin AntagHUD"
 
-	if(!holder) return
+	if(!holder)
+		return
 
 	var/adding_hud = !has_antag_hud()
 

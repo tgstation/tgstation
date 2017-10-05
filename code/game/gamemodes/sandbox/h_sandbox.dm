@@ -112,7 +112,8 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			// Admin: toggle spawning
 			//
 			if("hsbtobj")
-				if(!admin) return
+				if(!admin)
+					return
 				if(GLOB.hsboxspawn)
 					to_chat(world, "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>")
 					GLOB.hsboxspawn = FALSE
@@ -125,7 +126,8 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			// Admin: Toggle auto-close
 			//
 			if("hsbtac")
-				if(!admin) return
+				if(!admin)
+					return
 				if(config.sandbox_autoclose)
 					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
 					config.sandbox_autoclose = FALSE
@@ -138,7 +140,8 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			//
 			if("hsbsuit")
 				var/mob/living/carbon/human/P = usr
-				if(!istype(P)) return
+				if(!istype(P))
+					return
 				if(P.wear_suit)
 					P.wear_suit.loc = P.loc
 					P.wear_suit.layer = initial(P.wear_suit.layer)
@@ -216,7 +219,8 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			// Spawn check due to grief potential (destroying floors, walls, etc)
 			//
 			if("hsbrcd")
-				if(!GLOB.hsboxspawn) return
+				if(!GLOB.hsboxspawn)
+					return
 
 				new/obj/item/construction/rcd/combat(usr.loc)
 
@@ -232,7 +236,8 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 			// Clothing
 			if("hsbcloth")
-				if(!GLOB.hsboxspawn) return
+				if(!GLOB.hsboxspawn)
+					return
 
 				if(!clothinfo)
 					clothinfo = "<b>Clothing</b> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
@@ -246,7 +251,8 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 			// Reagent containers
 			if("hsbreag")
-				if(!GLOB.hsboxspawn) return
+				if(!GLOB.hsboxspawn)
+					return
 
 				if(!reaginfo)
 					reaginfo = "<b>Reagent Containers</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
@@ -260,7 +266,8 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 			// Other items
 			if("hsbobj")
-				if(!GLOB.hsboxspawn) return
+				if(!GLOB.hsboxspawn)
+					return
 
 				if(!objinfo)
 					objinfo = "<b>Other Items</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"

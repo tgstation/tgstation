@@ -54,7 +54,8 @@
 	return 1
 
 /obj/item/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
@@ -236,7 +237,8 @@
 	return
 
 /obj/item/reagent_containers/food/condiment/pack/afterattack(obj/target, mob/user , proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 
 	//You can tear the bag open above food to put the condiments on it, obviously.
 	if(istype(target, /obj/item/reagent_containers/food/snacks))

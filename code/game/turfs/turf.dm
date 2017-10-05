@@ -112,7 +112,8 @@
 	return FALSE
 
 /turf/CanPass(atom/movable/mover, turf/target)
-	if(!target) return FALSE
+	if(!target)
+		return FALSE
 
 	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
 		return !density
@@ -353,7 +354,8 @@
 //  possible. It results in more efficient (CPU-wise) pathing
 //  for bots and anything else that only moves in cardinal dirs.
 /turf/proc/Distance_cardinal(turf/T)
-	if(!src || !T) return FALSE
+	if(!src || !T)
+		return FALSE
 	return abs(x - T.x) + abs(y - T.y)
 
 ////////////////////////////////////////////////////

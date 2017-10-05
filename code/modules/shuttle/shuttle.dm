@@ -179,7 +179,8 @@
 
 /obj/docking_port/proc/getDockedId()
 	var/obj/docking_port/P = get_docked()
-	if(P) return P.id
+	if(P)
+		return P.id
 
 /obj/docking_port/stationary
 	name = "dock"

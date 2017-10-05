@@ -137,7 +137,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 				return
 			if(destination.y>world.maxy || destination.y<1)
 				return
-	else	return
+	else
+		return
 
 	return destination
 

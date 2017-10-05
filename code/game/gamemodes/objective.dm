@@ -409,14 +409,17 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal/proc/select_target() //For admins setting objectives manually.
 	var/list/possible_items_all = GLOB.possible_items+"custom"
 	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
-	if (!new_target) return
+	if (!new_target)
+		return
 
 	if (new_target == "custom") //Can set custom items.
 		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
-		if (!custom_target) return
+		if (!custom_target)
+			return
 		var/custom_name = initial(custom_target.name)
 		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
-		if (!custom_name) return
+		if (!custom_name)
+			return
 		steal_target = custom_target
 		explanation_text = "Steal [custom_name]."
 
@@ -578,7 +581,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	for(var/datum/mind/M in owners)
 		if(!owner || !owner.changeling || !owner.changeling.stored_profiles)
 			continue
-		absorbedcount += M.changeling.absorbedcount 
+		absorbedcount += M.changeling.absorbedcount
 	return absorbedcount >= target_amount
 
 

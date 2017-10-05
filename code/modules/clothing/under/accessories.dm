@@ -139,8 +139,10 @@
 							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 							message_admins("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 
-		else to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
-	else ..()
+		else
+			to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
+	else
+		..()
 
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"

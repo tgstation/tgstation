@@ -434,7 +434,8 @@
 		overlays = list()
 		string_attached = null
 		to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
-	else ..()
+	else
+		..()
 
 /obj/item/coin/attack_self(mob/user)
 	if(cooldown < world.time)

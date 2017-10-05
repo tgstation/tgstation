@@ -95,8 +95,10 @@ STI KALY - blind
 
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(T.z != affected_mob.z) continue
-		if(T.name == "space") continue
+		if(T.z != affected_mob.z)
+			continue
+		if(T.name == "space")
+			continue
 		if(!T.density)
 			var/clear = 1
 			for(var/obj/O in T)

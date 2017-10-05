@@ -61,7 +61,8 @@
 
 /mob/living/simple_animal/pet/dog/corgi/show_inv(mob/user)
 	user.set_machine(src)
-	if(user.stat) return
+	if(user.stat)
+		return
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
 	if(inventory_head)
@@ -121,7 +122,8 @@
 
 
 /mob/living/simple_animal/pet/dog/corgi/Topic(href, href_list)
-	if(usr.stat) return
+	if(usr.stat)
+		return
 
 	//Removing from inventory
 	if(href_list["remove_inv"])

@@ -64,7 +64,8 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist = new("data/banlist.bdb")
 	log_admin("Loading Banlist")
 
-	if (!length(GLOB.Banlist.dir)) log_admin("Banlist is empty.")
+	if (!length(GLOB.Banlist.dir))
+		log_admin("Banlist is empty.")
 
 	if (!GLOB.Banlist.dir.Find("base"))
 		log_admin("Banlist missing base dir.")
@@ -88,8 +89,10 @@ GLOBAL_PROTECT(Banlist)
 			message_admins("Invalid Ban.")
 			continue
 
-		if (!GLOB.Banlist["temp"]) continue
-		if (GLOB.CMinutes >= GLOB.Banlist["minutes"]) RemoveBan(A)
+		if (!GLOB.Banlist["temp"])
+			continue
+		if (GLOB.CMinutes >= GLOB.Banlist["minutes"])
+			RemoveBan(A)
 
 	return 1
 
@@ -132,7 +135,8 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist["id"] >> id
 	GLOB.Banlist.cd = "/base"
 
-	if (!GLOB.Banlist.dir.Remove(foldername)) return 0
+	if (!GLOB.Banlist.dir.Remove(foldername))
+		return 0
 
 	if(!usr)
 		log_admin_private("Ban Expired: [key]")

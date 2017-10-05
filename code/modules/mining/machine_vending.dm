@@ -118,7 +118,8 @@
 					return
 				I.loc = src
 				inserted_id = I
-			else to_chat(usr, "<span class='danger'>No valid ID.</span>")
+			else
+				to_chat(usr, "<span class='danger'>No valid ID.</span>")
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])

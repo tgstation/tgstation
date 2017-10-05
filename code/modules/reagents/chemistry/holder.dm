@@ -644,7 +644,8 @@
 	return jointext(names, ",")
 
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
-	if(!isnum(amount)) return 1
+	if(!isnum(amount))
+		return 1
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
 

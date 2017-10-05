@@ -47,7 +47,8 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 	//       Movement based on lower left corner. Tiles that do not fit
 	//		 into the new area will not be moved.
 
-	if(!A || !src) return 0
+	if(!A || !src)
+		return 0
 
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)

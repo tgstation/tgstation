@@ -407,7 +407,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 								else
 									if(los_check(user,L))
 										M = L
-				if(M in view_or_range(range, user, selection_type)) targets += M
+				if(M in view_or_range(range, user, selection_type))
+					targets += M
 
 		else
 			var/list/possible_targets = list()

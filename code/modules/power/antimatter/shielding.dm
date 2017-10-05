@@ -3,7 +3,8 @@
 	var/list/things = list()
 	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(center, direction)
-		if(!T) continue
+		if(!T)
+			continue
 		things += T.contents
 	return things
 

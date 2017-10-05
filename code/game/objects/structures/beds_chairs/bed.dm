@@ -113,7 +113,8 @@
 		R.loaded = new/obj/structure/bed/roller(R)
 		qdel(src) //"Load"
 		return
-	else return ..()
+	else
+		return ..()
 
 /obj/item/roller/attack_self(mob/user)
 	deploy_roller(user, user.loc)

@@ -82,7 +82,8 @@
 	if(hacking || emagged)
 		screen = 2
 	else if(!auth || !linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
-		if(!linkedServer || (linkedServer.stat & (NOPOWER|BROKEN))) message = noserver
+		if(!linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
+			message = noserver
 		screen = 0
 
 	switch(screen)
@@ -267,7 +268,8 @@
 
 		//Turn the server on/off.
 		if (href_list["active"])
-			if(auth) linkedServer.active = !linkedServer.active
+			if(auth)
+				linkedServer.active = !linkedServer.active
 		//Find a server
 		if (href_list["find"])
 			if(GLOB.message_servers && GLOB.message_servers.len > 1)

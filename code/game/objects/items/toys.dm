@@ -39,7 +39,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
 	item_state = "balloon-empty"
-	
+
 
 /obj/item/toy/balloon/New()
 	create_reagents(10)
@@ -49,7 +49,8 @@
 	return
 
 /obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if (istype(A, /obj/structure/reagent_dispensers))
 		var/obj/structure/reagent_dispensers/RD = A
 		if(RD.reagents.total_volume <= 0)
