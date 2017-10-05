@@ -203,7 +203,7 @@ All ShuttleMove procs go here
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
 
-/obj/machinery/computer/auxillary_base/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/obj/machinery/computer/auxillary_base/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
 	if(z == ZLEVEL_MINING) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.add_details("colonies_dropped", "[x]|[y]|[z]") //Number of times a base has been dropped!
@@ -297,24 +297,25 @@ All ShuttleMove procs go here
 
 /************************************Item move procs************************************/
 
-/obj/item/storage/pod/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/obj/item/storage/pod/afterShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+	. = ..()
 	unlocked = TRUE
 	// If the pod was launched, the storage will always open.
-	return ..()
 
 /************************************Mob move procs************************************/
 
 /mob/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
 	if(!move_on_shuttle)
-		return 0
-	. = ..()
-	if(!.)
 		return
-	if(client)
+	. = ..()
+
+/mob/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
+	. = ..()
+	if(client && movement_force)
+		var/shake_force = max(movement_force["THROW"], movement_force["KNOCKDOWN"])
 		if(buckled)
-			shake_camera(src, 2, 1) // turn it down a bit come on
-		else
-			shake_camera(src, 7, 1)
+			shake_force *= 0.25
+		shake_camera(src, shake_force, 1)
 
 /mob/living/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -373,7 +374,6 @@ All ShuttleMove procs go here
 
 /obj/docking_port/stationary/public_mining_dock/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
 	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.
-	return 0
 
 /obj/effect/abstract/proximity_checker/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
 	//timer so it only happens once
