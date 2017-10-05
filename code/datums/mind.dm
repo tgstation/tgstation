@@ -1109,7 +1109,7 @@
 					message_admins("[key_name_admin(usr)] has nuke op'ed [current].")
 					log_admin("[key_name(usr)] has nuke op'ed [current].")
 			if("lair")
-				current.forceMove(get_turf(locate("landmark*Syndicate-Spawn")))
+				current.forceMove(pick(GLOB.nukeop_start))
 			if("dressup")
 				var/mob/living/carbon/human/H = current
 				qdel(H.belt)
