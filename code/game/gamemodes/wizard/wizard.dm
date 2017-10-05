@@ -111,10 +111,7 @@
 		if (!newname)
 			newname = randomname
 
-		wizard_mob.real_name = newname
-		wizard_mob.name = newname
-		if(wizard_mob.mind)
-			wizard_mob.mind.name = newname
+		wizard_mob.fully_replace_character_name(wizard_mob.real_name, newname)
 
 		/* Wizards by nature cannot be too young. */
 		if(wizard_mob.age < WIZARD_AGE_MIN)
