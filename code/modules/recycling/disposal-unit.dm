@@ -465,13 +465,17 @@
 		return
 	switch(dir)
 		if(NORTH)
-			if(AM.loc.y != loc.y+1) return
+			if(AM.loc.y != loc.y+1)
+				return
 		if(EAST)
-			if(AM.loc.x != loc.x+1) return
+			if(AM.loc.x != loc.x+1)
+				return
 		if(SOUTH)
-			if(AM.loc.y != loc.y-1) return
+			if(AM.loc.y != loc.y-1)
+				return
 		if(WEST)
-			if(AM.loc.x != loc.x-1) return
+			if(AM.loc.x != loc.x-1)
+				return
 
 	if(isobj(AM))
 		var/obj/O = AM

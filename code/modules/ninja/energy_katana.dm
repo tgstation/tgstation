@@ -41,6 +41,7 @@
 	. = ..()
 	jaunt.Grant(user, src)
 	user.update_icons()
+	playsound(src, 'sound/items/unsheath.ogg', 25, 1)
 
 /obj/item/energy_katana/dropped(mob/user)
 	. = ..()

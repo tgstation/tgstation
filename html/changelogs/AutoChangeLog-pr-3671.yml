@@ -1,5 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "The rarely utilized secret satchel item persistence system has been fixed and made more lenient."
-  - rscadd: "In case you forgot how it works: if you find or buy secret satchels, put an item in them, and then bury them under tiles on the station you or someone else can find them again in a future round with the item still there! Free satchels can often be found hiding around the station, so get to burying!"

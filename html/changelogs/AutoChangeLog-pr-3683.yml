@@ -1,4 +1,0 @@
-author: "Thefastfoodguy"
-delete-after: True
-changes: 
-  - bugfix: "Shadowling rounds now end if all the shadowlings die, even if they have thralls"

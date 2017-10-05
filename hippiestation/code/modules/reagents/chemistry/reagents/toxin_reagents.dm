@@ -286,25 +286,27 @@
 	toxpwr = 2
 	acidpwr = 15
 	data = 0
+	processes = TRUE
 
 /datum/reagent/toxin/acid/hydrazine/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
 	M.dizziness++
 	..()
 
-/datum/reagent/toxin/acid/hydrazine/on_tick()
-	data++
-	if(prob(2) && data > 40) //randomly creates small explosions or fireballs but has a delay so it doesn't just kill people while they're still mixing
-		var/location = get_turf(holder.my_atom)
-		holder.remove_reagent(src.id,5,safety = 1)
-		switch(prob(50))
-			if(TRUE)
-				var/datum/effect_system/reagents_explosion/e = new()
-				e.set_up(rand(1, 3), location, 0, 0, message = 1)
-				e.start()
-			if(FALSE)
-				for(var/turf/F in range(1,location))
-					new /obj/effect/hotspot(F)
+/datum/reagent/toxin/acid/hydrazine/process()
+	if(holder)
+		data++
+		if(prob(2) && data > 40) //randomly creates small explosions or fireballs but has a delay so it doesn't just kill people while they're still mixing
+			var/location = get_turf(holder.my_atom)
+			holder.remove_reagent(src.id,5,safety = 1)
+			switch(prob(50))
+				if(TRUE)
+					var/datum/effect_system/reagents_explosion/e = new()
+					e.set_up(rand(1, 3), location, 0, 0, message = 1)
+					e.start()
+				if(FALSE)
+					for(var/turf/F in range(1,location))
+						new /obj/effect/hotspot(F)
 	..()
 
 /datum/reagent/toxin/sazide//replacement for cyanide, causes scaling oxyloss followed by sleeping and eye+liver damage
@@ -373,7 +375,7 @@
 	color = "#EFD6D0"
 	taste_description = "dizzying sweetness"
 	taste_mult = 2.0
-	
+
 /datum/reagent/toxin/impgluco/on_mob_life(mob/living/M)
 	M.reagents.add_reagent("sugar",0.8*REM)
 	..()
@@ -386,11 +388,35 @@
 	color = "#F6F1D2"
 	taste_description = "ungodly sweetness"
 	taste_mult = 5.0
-	
+
 /datum/reagent/toxin/gluco/on_mob_life(mob/living/M)
 	M.reagents.add_reagent("sugar", 4*REM)
 	if(prob(15))
 		to_chat(M, "<span class='danger'>[pick("Your left leg is numb.","You feel tingly.","Everything seems airy.")]</span>")
 		M.Dizzy(10)
 		M.adjustStaminaLoss(5*REM, 0)
+	..()
+
+/datum/reagent/toxin/screech
+	name = "Screechisol"
+	id = "screech"
+	description = "Stimulates the vocal cords heavily, inducing involuntary yelling."
+	reagent_state = LIQUID
+	color = "#853358"
+	taste_description = "salty and sour"
+
+/datum/reagent/toxin/screech/on_mob_life(mob/living/M)
+	var/chance = 10
+	switch(current_cycle)
+		if(11 to 20)
+			chance = 25
+		if(21 to 30)
+			chance = 40
+		if(31 to 40)
+			chance = 55
+		if(41 to INFINITY)
+			chance = 80
+	if(prob(chance))
+		M.emote("scream")
+		. = 1
 	..()

@@ -45,7 +45,8 @@
 	set category = "Admin"
 	set hidden = 1
 
-	if(!loc) return 0
+	if(!loc)
+		return 0
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -196,7 +197,8 @@
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
 		if(qdel_on_fail)
 			qdel(W)
@@ -220,7 +222,8 @@
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
@@ -734,10 +737,6 @@
 		if(istype(S, spell))
 			mob_spell_list -= S
 			qdel(S)
-
-//override to avoid rotating pixel_xy on mobs
-/mob/shuttleRotate(rotation)
-	setDir(angle2dir(rotation+dir2angle(dir)))
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)

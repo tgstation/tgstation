@@ -40,7 +40,7 @@
 /obj/item/reagent_containers/food/snacks/grown/poppy/lily
 	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
-	desc = "A beautiful orange flower"
+	desc = "A beautiful orange flower."
 	icon_state = "lily"
 	filling_color = "#FFA500"
 
@@ -57,7 +57,7 @@
 /obj/item/reagent_containers/food/snacks/grown/poppy/geranium
 	seed = /obj/item/seeds/poppy/geranium
 	name = "geranium"
-	desc = "A beautiful blue flower"
+	desc = "A beautiful blue flower."
 	icon_state = "geranium"
 	filling_color = "#008B8B"
 
@@ -188,7 +188,8 @@
 			log_game("[key_name(user)] set [key_name(M)] on fire")
 
 /obj/item/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1)
 	else

@@ -1,0 +1,6 @@
+author: "banthebantz"
+delete-after: True
+changes: 
+  - rscadd: "Added special attacks to certain weapons, experiment and find them"
+  - rscadd: "Special attacks are executed by toggling the special action and attacking normally"
+  - rscadd: "Special attacks typically cost stamina"

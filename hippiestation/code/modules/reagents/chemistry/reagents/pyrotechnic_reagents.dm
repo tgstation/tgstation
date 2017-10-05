@@ -4,16 +4,22 @@
 	description = "Extremely cold superfluid used to put out fires that will viciously freeze people on contact causing severe pain and burn damage, weak if ingested."
 	color = "#b3ffff"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	processes = TRUE
+
+/datum/reagent/cryogenic_fluid/process()
+	if(holder)
+		data++
+		holder.chem_temp = max(holder.chem_temp - 15, TCMB)
+
+	if(data >= 13)
+		STOP_PROCESSING(SSreagent_states, src)
+	..()
 
 /datum/reagent/cryogenic_fluid/on_mob_life(mob/living/M) //not very pleasant but fights fires
 	M.adjust_fire_stacks(-2)
 	M.adjustStaminaLoss(2)
 	M.adjustBrainLoss(1)
 	M.bodytemperature = max(M.bodytemperature - 10, TCMB)
-	return ..()
-
-/datum/reagent/cryogenic_fluid/on_tick()
-	holder.chem_temp = max(holder.chem_temp - 5, TCMB)
 	return ..()
 
 /datum/reagent/cryogenic_fluid/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
@@ -92,26 +98,29 @@
 	id = "emit_on"
 	description = "It's rather radioactive and glowing painfully bright, you feel the need to RUN!"
 	color = "#1211FB"
+	processes = TRUE
 
-/datum/reagent/emit_on/on_tick()
-	playsound(get_turf(holder.my_atom), 'sound/weapons/emitter.ogg', 50, 1)
-	for(var/direction in GLOB.cardinals)
-		var/obj/item/projectile/beam/emitter/P = new /obj/item/projectile/beam/emitter(get_turf(holder.my_atom))
-		switch(direction)
-			if(1)
-				P.yo = 20
-				P.xo = 0
-			if(2)
-				P.yo = 0
-				P.xo = 20
-			if(4)
-				P.yo = 0
-				P.xo = -20
-			if(8)
-				P.yo = -20
-				P.xo = 0
-		P.fire()
-	holder.remove_reagent(src.id,10,safety = 1)
+/datum/reagent/emit_on/process()
+	if(holder)
+		playsound(get_turf(holder.my_atom), 'sound/weapons/emitter.ogg', 50, 1)
+		for(var/direction in GLOB.cardinals)
+			var/obj/item/projectile/beam/emitter/P = new /obj/item/projectile/beam/emitter(get_turf(holder.my_atom))
+			switch(direction)
+				if(1)
+					P.yo = 20
+					P.xo = 0
+				if(2)
+					P.yo = 0
+					P.xo = 20
+				if(4)
+					P.yo = 0
+					P.xo = -20
+				if(8)
+					P.yo = -20
+					P.xo = 0
+			P.fire()
+		holder.remove_reagent(src.id,10,safety = 1)
+	..()
 
 /datum/reagent/emit_on/on_mob_life(mob/living/M)
 	M.apply_effect(5,IRRADIATE,0)
@@ -128,6 +137,7 @@
 	id = "superboom"
 	description = "An absurdly unstable chemical prone to causing gigantic explosions when even slightly disturbed. Only an idiot would attempt to create this."
 	color = "#13BC5E"
+	processes = TRUE
 
 /datum/reagent/superboom/on_mob_life(mob/living/M)
 	if(M.m_intent == MOVE_INTENT_RUN && current_cycle <= 5)
@@ -146,8 +156,8 @@
 	holder.clear_reagents()
 	..()
 
-/datum/reagent/superboom/on_tick()
-	if(prob(0.5)) //even if you do nothing it can explode
+/datum/reagent/superboom/process()
+	if(prob(0.5) && holder) //even if you do nothing it can explode
 		var/location = get_turf(holder.my_atom)
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(volume, 1), location, 0, 0, message = 0)

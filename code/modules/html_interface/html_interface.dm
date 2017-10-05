@@ -71,7 +71,8 @@ You have to use modules/client/asset_cache to ensure they get sent BEFORE the in
 /mob/var/datum/html_interface/hi
 
 /mob/verb/test()
-	if (!hi) hi = new/datum/html_interface(src, "[src.key]")
+	if (!hi)
+		hi = new/datum/html_interface(src, "[src.key]")
 
 	hi.updateLayout("<div id=\"content\"></div>")
 	hi.updateContent("content", "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>")
@@ -156,14 +157,16 @@ GLOBAL_LIST_EMPTY(html_interfaces)
 		"on-close"    = "byond://?src=\ref[src]&html_interface_action=onclose"
 	)
 
-	if (hclient.client.hi_last_pos) params["pos"] = "[hclient.client.hi_last_pos]"
+	if (hclient.client.hi_last_pos)
+		params["pos"] = "[hclient.client.hi_last_pos]"
 
 	winset(hclient.client, "browser_\ref[src]", list2params(params))
 
 	winset(hclient.client, "browser_\ref[src].browser", list2params(list("parent" = "browser_\ref[src]", "type" = "browser", "pos" = "0,0", "size" = "[width]x[height]", "anchor1" = "0,0", "anchor2" = "100,100", "use-title" = "true", "auto-format" = "false")))
 
 /*                 * Public API */
-/datum/html_interface/proc/getTitle() return src.title
+/datum/html_interface/proc/getTitle()
+	return src.title
 
 /datum/html_interface/proc/setTitle(title, ignore_cache = FALSE)
 	src.title = title
@@ -173,19 +176,24 @@ GLOBAL_LIST_EMPTY(html_interfaces)
 	for (var/client in src.clients)
 		hclient = src._getClient(src.clients[client])
 
-		if (hclient && hclient.active) src._renderTitle(src.clients[client], ignore_cache)
+		if (hclient && hclient.active)
+			src._renderTitle(src.clients[client], ignore_cache)
 
 /datum/html_interface/proc/executeJavaScript(jscript, datum/html_interface_client/hclient = null)
 	if (hclient)
 		hclient = getClient(hclient)
 
 		if (istype(hclient))
-			if (hclient.is_loaded) hclient.client << output(list2params(list(jscript)), "browser_\ref[src].browser:eval")
+			if (hclient.is_loaded)
+				hclient.client << output(list2params(list(jscript)), "browser_\ref[src].browser:eval")
 	else
-		for (var/client in src.clients) if(src.clients[client]) src.executeJavaScript(jscript, src.clients[client])
+		for (var/client in src.clients)
+			if(src.clients[client])
+				src.executeJavaScript(jscript, src.clients[client])
 
 /datum/html_interface/proc/callJavaScript(func, list/arguments, datum/html_interface_client/hclient = null)
-	if (!arguments) arguments = new/list()
+	if (!arguments)
+		arguments = new/list()
 
 	if (hclient)
 		hclient = getClient(hclient)
@@ -194,7 +202,9 @@ GLOBAL_LIST_EMPTY(html_interfaces)
 			if (hclient.is_loaded)
 				hclient.client << output(list2params(arguments), "browser_\ref[src].browser:[func]")
 	else
-		for (var/client in src.clients) if (src.clients[client]) src.callJavaScript(func, arguments, src.clients[client])
+		for (var/client in src.clients)
+			if (src.clients[client])
+				src.callJavaScript(func, arguments, src.clients[client])
 
 /datum/html_interface/proc/updateLayout(layout)
 	src.layout = layout
@@ -204,7 +214,8 @@ GLOBAL_LIST_EMPTY(html_interfaces)
 	for (var/client in src.clients)
 		hclient = src._getClient(src.clients[client])
 
-		if (hclient && hclient.active) src._renderLayout(hclient)
+		if (hclient && hclient.active)
+			src._renderLayout(hclient)
 
 /datum/html_interface/proc/updateContent(id, content, ignore_cache = FALSE)
 	src.content_elements[id] = content
@@ -234,7 +245,8 @@ GLOBAL_LIST_EMPTY(html_interfaces)
 
 		winshow(hclient.client, "browser_\ref[src]", TRUE)
 
-		while (hclient.client && hclient.active && !hclient.is_loaded) sleep(2)
+		while (hclient.client && hclient.active && !hclient.is_loaded)
+			sleep(2)
 
 /datum/html_interface/proc/hide(datum/html_interface_client/hclient)
 	hclient = getClient(hclient)
@@ -243,30 +255,38 @@ GLOBAL_LIST_EMPTY(html_interfaces)
 		if (src.clients)
 			src.clients.Remove(hclient.client)
 
-			if (!src.clients.len) src.clients = null
+			if (!src.clients.len)
+				src.clients = null
 
 		hclient.client.hi_last_pos = winget(hclient.client, "browser_\ref[src]" ,"pos")
 
 		winshow(hclient.client, "browser_\ref[src]", FALSE)
 		winset(hclient.client, "browser_\ref[src]", "parent=none")
 
-		if (hascall(src.ref, "hiOnHide")) call(src.ref, "hiOnHide")(hclient)
+		if (hascall(src.ref, "hiOnHide"))
+			call(src.ref, "hiOnHide")(hclient)
 
 // Convert a /mob to /client, and /client to /datum/html_interface_client
 /datum/html_interface/proc/getClient(client, create_if_not_exist = FALSE)
-	if (istype(client, /datum/html_interface_client)) return src._getClient(client)
+	if (istype(client, /datum/html_interface_client))
+		return src._getClient(client)
 	else if (ismob(client))
 		var/mob/mob = client
 		client      = mob.client
 
 	if (istype(client, /client))
 		if (create_if_not_exist && (!src.clients || !(client in src.clients)))
-			if (!src.clients)             src.clients = new/list()
-			if (!(client in src.clients)) src.clients[client] = new/datum/html_interface_client(client)
+			if (!src.clients)
+				src.clients = new/list()
+			if (!(client in src.clients))
+				src.clients[client] = new/datum/html_interface_client(client)
 
-		if (src.clients && (client in src.clients)) return src._getClient(src.clients[client])
-		else                                        return null
-	else                                            return null
+		if (src.clients && (client in src.clients))
+			return src._getClient(src.clients[client])
+		else
+			return null
+	else
+		return null
 
 /datum/html_interface/proc/enableFor(datum/html_interface_client/hclient)
 	hclient.active = TRUE
@@ -284,7 +304,8 @@ GLOBAL_LIST_EMPTY(html_interfaces)
 			hclient = _getClient(clients[key])
 
 			if (hclient)
-				if (hclient.active) return TRUE
+				if (hclient.active)
+					return TRUE
 			else
 				clients.Remove(key)
 
@@ -335,7 +356,8 @@ GLOBAL_LIST_EMPTY(html_interfaces)
 
 			hclient.client << output(list2params(list(html)), "browser_\ref[src].browser:updateLayout")
 
-			for (var/id in src.content_elements) src._renderContent(id, hclient, ignore_loaded = ignore_loaded)
+			for (var/id in src.content_elements)
+				src._renderContent(id, hclient, ignore_loaded = ignore_loaded)
 
 /datum/html_interface/proc/_renderContent(id, datum/html_interface_client/hclient, ignore_cache = FALSE, ignore_loaded = FALSE)
 	if (hclient && (ignore_loaded || hclient.is_loaded))
@@ -365,4 +387,5 @@ GLOBAL_LIST_EMPTY(html_interfaces)
 
 				if ("onclose")
 					src.hide(hclient)
-		else if (src.ref && hclient.active) src.ref.Topic(href, href_list, hclient)
+		else if (src.ref && hclient.active)
+			src.ref.Topic(href, href_list, hclient)

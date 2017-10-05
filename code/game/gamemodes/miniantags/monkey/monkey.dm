@@ -42,8 +42,7 @@
 
 /datum/game_mode/monkey/announce()
 	to_chat(world, "<B>The current game mode is - Monkey!</B>")
-	to_chat(world, "<B>One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to CentCom. \
-				Monkeys: Ensure that your kind lives on! Rise up against your captors!</B>")
+	to_chat(world, "<B>One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to CentCom. Monkeys: Ensure that your kind lives on! Rise up against your captors!</B>")
 
 
 /datum/game_mode/monkey/proc/greet_carrier(datum/mind/carrier)
@@ -114,5 +113,4 @@
 		to_chat(world, "<span class='userdanger'>The staff managed to contain the monkey infestation!</span>")
 
 /datum/game_mode/monkey/generate_report()
-	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "bananna blight")] outbreak that turn humans into monkies has been \
-			reported in your quadrant.  Any such infections may be treated with bananna juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at Centcom."
+	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "banana blight")] outbreak that turn humans into monkeys has been reported in your quadrant.  Any such infections may be treated with banana juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at CentCom."

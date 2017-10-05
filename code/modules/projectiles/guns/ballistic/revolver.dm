@@ -345,7 +345,7 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
-	desc = "A single-shot shotgun, better not miss"
+	desc = "A single-shot shotgun. Better not miss."
 	icon_state = "ishotgun"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL

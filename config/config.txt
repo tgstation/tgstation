@@ -1,3 +1,11 @@
+# You can use the @ character at the beginning of a config option to lock it from being edited in-game
+# Example usage:
+# @SERVERNAME tgstation
+# Which sets the SERVERNAME, and disallows admins from being able to change it using View Variables.
+# @LOG_TWITTER 0
+# Which explicitly disables LOG_TWITTER, as well as locking it.
+# There are various options which are hard-locked for security reasons.
+
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
 # SERVERNAME tgstation
 

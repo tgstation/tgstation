@@ -37,7 +37,8 @@
 
 
 /obj/item/mop/afterattack(atom/A, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 
 	if(reagents.total_volume < 1)
 		to_chat(user, "<span class='warning'>Your mop is dry!</span>")

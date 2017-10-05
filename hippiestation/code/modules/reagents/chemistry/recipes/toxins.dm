@@ -140,3 +140,13 @@
 	pressure_required = 85
 	required_reagents = list("impgluco" = 2,"cryogenic_fluid" = 1)
 	centrifuge_recipe = TRUE
+
+/datum/chemical_reaction/over_reactible/screech
+	name = "Screechisol"
+	id = "screech"
+	results = list("screech" = 3)
+	can_overheat = TRUE
+	required_temp = 750
+	pressure_required = 30
+	overheat_threshold = 775
+	required_reagents = list("emote" = 3,"ephedrine" = 1)

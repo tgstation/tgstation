@@ -3,7 +3,7 @@
 	icon_state = "o2gen_map"
 
 	name = "oxygen generator"
-	desc = "Generates oxygen"
+	desc = "Generates oxygen."
 
 	dir = SOUTH
 	initialize_directions = SOUTH

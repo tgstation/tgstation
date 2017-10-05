@@ -209,3 +209,6 @@ datum/reagent/medicine/virogone/on_mob_life(mob/living/M)//cures viruses very ef
 			if(D.stage < 1)
 				D.cure()
 	..()
+
+/datum/reagent/medicine/salglu_solution
+	overdose_threshold = 0 //seriously fuck whoever thought this was a good idea.
