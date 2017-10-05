@@ -79,9 +79,12 @@
 
 		if(SSticker.current_state == GAME_STATE_PREGAME)
 			var/time_remaining = SSticker.GetTimeLeft()
-			if(time_remaining >= 0)
-				time_remaining /= 10
-			stat("Time To Start:", (time_remaining >= 0) ? "[round(time_remaining)]s" : "DELAYED")
+			if(time_remaining > 0)
+				stat("Time To Start:", "[round(time_remaining/10)]s")			
+			else if(time_remaining == -10)
+				stat("Time To Start:", "DELAYED")
+			else
+				stat("Time To Start:", "SOON")
 
 			stat("Players:", "[SSticker.totalPlayers]")
 			if(client.holder)
