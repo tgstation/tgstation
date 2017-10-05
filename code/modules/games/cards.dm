@@ -59,12 +59,14 @@
 	if (istype(O, /obj/item/hand))
 		var/obj/item/hand/H = O
 
-		for (var/datum/playingcard/P in H.cards) src.cards.Add(P)
+		for (var/datum/playingcard/P in H.cards)
+			src.cards.Add(P)
 
 		qdel (O)
 
 		user.show_message("You place your cards on the bottom of the deck.")
-	else return ..()
+	else
+		return ..()
 
 /obj/item/deck/attack_self(mob/user)
 	var/list/newcards           = list()
@@ -155,7 +157,8 @@
 	else if(istype(O, /obj/item/hand))
 		var/obj/item/hand/H = O
 
-		for(var/datum/playingcard/P in src.cards) H.cards.Add(P)
+		for(var/datum/playingcard/P in src.cards)
+			H.cards.Add(P)
 
 		H.update_icon()
 

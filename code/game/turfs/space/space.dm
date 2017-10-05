@@ -177,7 +177,8 @@
 			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 			if(L)
 				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
-			else return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+			else
+				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
 	return FALSE
 
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)

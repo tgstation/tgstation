@@ -20,7 +20,8 @@
 
 /obj/machinery/power/singularity_beacon/proc/Activate(mob/user = null)
 	if(surplus() < 1500)
-		if(user) to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
+		if(user)
+			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
 		return
 	for(var/obj/singularity/singulo in GLOB.singularities)
 		if(singulo.z == z)

@@ -418,11 +418,13 @@
 
 /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
 	set waitfor = 0
-	if(flickering) return
+	if(flickering)
+		return
 	flickering = 1
 	if(on && status == LIGHT_OK)
 		for(var/i = 0; i < amount; i++)
-			if(status != LIGHT_OK) break
+			if(status != LIGHT_OK)
+				break
 			on = !on
 			update(0)
 			sleep(rand(5, 15))
