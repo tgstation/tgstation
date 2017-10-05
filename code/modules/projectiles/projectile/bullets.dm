@@ -10,7 +10,7 @@
 
 /obj/item/projectile/bullet/pellet/Range()
 	..()
-	damage += -0.75
+	damage -= 0.75
 	if(damage < 0)
 		qdel(src)
 
