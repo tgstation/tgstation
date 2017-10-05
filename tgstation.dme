@@ -323,6 +323,7 @@
 #include "code\datums\helper_datums\topic_input.dm"
 #include "code\datums\martial\boxing.dm"
 #include "code\datums\martial\cqc.dm"
+#include "code\datums\martial\holy_crunch.dm"
 #include "code\datums\martial\krav_maga.dm"
 #include "code\datums\martial\plasma_fist.dm"
 #include "code\datums\martial\sleeping_carp.dm"
