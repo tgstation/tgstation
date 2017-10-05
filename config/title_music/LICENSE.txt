@@ -32,7 +32,3 @@ Unless otherwise noted all sounds were created by Cuban Pete on July 26, 2555. T
 
 
 ---ADD LICENSING INFORMATION BELOW---
-
-default.ogg uses the default licensing found in README.md in the root directory of the project.
-
-

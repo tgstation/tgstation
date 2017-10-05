@@ -18,10 +18,6 @@ Common sounds are in the rotation to be displayed all the time. Any name that do
 
 An example of a common sound name is "clown".
 
-The common sound named "default" is special. It is only used if no other sounds are available. You can overwrite "default" safely, but you 
-should have a sound named "default" somewhere if you don't have any other common titles. Because default only runs in the 
-absence of other titles, if you want it to also appear in the general rotation you must rename it.
-
 
 Map Title Sounds:
 
