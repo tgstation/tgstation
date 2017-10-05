@@ -61,7 +61,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/plant
 	name = "Plant Weeds"
-	desc = "Plants some alien weeds"
+	desc = "Plants some alien weeds."
 	plasma_cost = 50
 	check_turf = 1
 	action_icon_state = "alien_plant"
@@ -76,7 +76,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/whisper
 	name = "Whisper"
-	desc = "Whisper to someone"
+	desc = "Whisper to someone."
 	plasma_cost = 10
 	action_icon_state = "alien_whisper"
 
@@ -104,7 +104,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/transfer
 	name = "Transfer Plasma"
-	desc = "Transfer Plasma to another alien"
+	desc = "Transfer Plasma to another alien."
 	plasma_cost = 0
 	action_icon_state = "alien_transfer"
 
@@ -270,7 +270,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/regurgitate
 	name = "Regurgitate"
-	desc = "Empties the contents of your stomach"
+	desc = "Empties the contents of your stomach."
 	plasma_cost = 0
 	action_icon_state = "alien_barf"
 

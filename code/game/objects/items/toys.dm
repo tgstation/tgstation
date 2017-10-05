@@ -275,7 +275,7 @@
  */
 /obj/item/toy/foamblade
 	name = "foam armblade"
-	desc = "it says \"Sternside Changs #1 fan\" on it. "
+	desc = "It says \"Sternside Changs #1 fan\" on it."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamblade"
 	item_state = "arm_blade"
@@ -288,7 +288,7 @@
 
 /obj/item/toy/windupToolbox
 	name = "windup toolbox"
-	desc = "A replica toolbox that rumbles when you turn the key"
+	desc = "A replica toolbox that rumbles when you turn the key."
 	icon_state = "his_grace"
 	item_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
