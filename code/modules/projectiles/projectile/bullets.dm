@@ -8,7 +8,7 @@
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
-/obj/item/projectile/bullet/pellet/Range()
+/obj/item/projectile/bullet/pellet/shotgun_buckshot/Range()
 	..()
 	damage -= 0.75
 	if(damage < 0)
