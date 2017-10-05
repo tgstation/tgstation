@@ -174,3 +174,5 @@
 
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
 #define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
+
+#define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
