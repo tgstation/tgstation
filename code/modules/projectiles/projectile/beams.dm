@@ -34,6 +34,12 @@
 	damage = 15
 	armour_penetration = 50
 
+/obj/item/projectile/beam/burstlaser
+	damage = 17
+
+/obj/item/projectile/beam/laserrifle
+	damage = 35
+
 /obj/item/projectile/beam/practice
 	name = "practice laser"
 	damage = 0

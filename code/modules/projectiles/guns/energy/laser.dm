@@ -10,6 +10,25 @@
 	ammo_x_offset = 1
 	shaded_charge = 1
 
+/obj/item/gun/energy/laser/burst
+	name = "burst laser gun"
+	desc = "A laser gun modified to fire in three-round bursts at the cost of power."
+	icon_state = "laser"
+	item_state = "laser"
+	burst_size = 3
+	ammo_type = list(/obj/item/ammo_casing/energy/burstlaser)
+
+/obj/item/gun/energy/laser/laserrifle
+	name = "laser rifle"
+	desc = "Bulkier, older version of the laser gun meant for long range encounters. Requires a hand crank to charge up after each shot."
+	ammo_type = list(/obj/item/ammo_casing/energy/laserrifle)
+	icon_state = "laser"
+	item_state = "laser"
+	fire_delay = 30
+	zoomable = TRUE
+	zoom_amt = 7
+	w_class = WEIGHT_CLASS_HUGE
+
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
