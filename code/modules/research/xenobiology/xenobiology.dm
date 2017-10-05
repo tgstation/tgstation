@@ -476,13 +476,8 @@
 
 /obj/effect/golemrune
 	anchored = TRUE
-<<<<<<< HEAD
-	desc = "a strange rune used to create golems. It glows when spirits are nearby."
-	name = "golem rune"
-=======
 	desc = "A strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
->>>>>>> 5a0bb2f599... Grammar fixes to atom descriptions (#31293)
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "golem"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
