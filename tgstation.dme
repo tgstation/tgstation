@@ -126,7 +126,6 @@
 #include "code\_onclick\click.dm"
 #include "code\_onclick\cyborg.dm"
 #include "code\_onclick\drag_drop.dm"
-#include "code\_onclick\god.dm"
 #include "code\_onclick\item_attack.dm"
 #include "code\_onclick\observer.dm"
 #include "code\_onclick\other_mobs.dm"
