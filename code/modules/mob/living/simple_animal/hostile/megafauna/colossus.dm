@@ -636,6 +636,7 @@ Difficulty: Very Hard
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
 	var/heal_power = 5
+	gold_core_spawnable = 1
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
 	. = ..()
