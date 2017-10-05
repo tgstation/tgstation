@@ -99,10 +99,10 @@
 		return FALSE
 	if(status_check)
 		if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
-			to_chat(user, "<span class='notice'>You cannot [key] while unconscious.")
+			to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
 			return FALSE
 		if(restraint_check && (user.restrained() || user.buckled))
-			to_chat(user, "<span class='notice'>You cannot [key] while restrained.")
+			to_chat(user, "<span class='notice'>You cannot [key] while restrained.</span>")
 			return FALSE
 		if(user.reagents && user.reagents.has_reagent("mimesbane"))
 			return FALSE
