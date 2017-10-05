@@ -6,7 +6,6 @@
 	icon_state = "repairbot"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	density = FALSE
-	luminosity = 0
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."

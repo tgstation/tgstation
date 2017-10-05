@@ -194,7 +194,7 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
-	luminosity = 7
+	light_range = 7
 	layer = ABOVE_ALL_MOB_LAYER
 
 //Red/Blue Cubes
