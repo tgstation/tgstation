@@ -8,8 +8,12 @@
 
 /datum/reagent/cryogenic_fluid/process()
 	if(holder)
-		holder.chem_temp = max(holder.chem_temp - 5, TCMB)
-		..()
+		data++
+		holder.chem_temp = max(holder.chem_temp - 15, TCMB)
+
+	if(data >= 13)
+		STOP_PROCESSING(SSreagent_states, src)
+	..()
 
 /datum/reagent/cryogenic_fluid/on_mob_life(mob/living/M) //not very pleasant but fights fires
 	M.adjust_fire_stacks(-2)
