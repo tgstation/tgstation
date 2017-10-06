@@ -442,14 +442,14 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/display_parts(mob/user)
-	to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
+	to_chat(user, "<span class='notice'>It contains the following parts:</span>")
 	for(var/obj/item/C in component_parts)
-		to_chat(user, "<span class='notice'>[icon2html(C, user)] [C.name]</span>")
+		to_chat(user, "<span class='notice'>[icon2html(C, user)] \A [C].</span>")
 
 /obj/machinery/examine(mob/user)
 	..()
 	if(stat & BROKEN)
-		to_chat(user, "<span class='notice'>It looks broken and non functional.</span>")
+		to_chat(user, "<span class='notice'>It looks broken and non-functional.</span>")
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
 			to_chat(user, "<span class='warning'>It's on fire!</span>")
