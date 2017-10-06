@@ -80237,7 +80237,10 @@
 	name = "dust"
 	},
 /obj/structure/light_construct,
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	x_offset = -3;
+	y_offset = -7
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cXI" = (
