@@ -13,35 +13,67 @@ Truly Feared
 Wicked
 Nasty
 Normal
-The Unique
+Unique
 Vintage
 Genuine
 Unusual
 Haunted
 Big
 Small
-Delightful
-Sarcastic
-Status Quo
-Topsy Turvey
-Prehistoric
-Kaiju
-Space Beast
-Fugitive
-Greatest
-Worst
-Prisoner
-Bad Guy
-Good Bad Guy
-Heroic
-Birthday Boy
-Nice Little
-Party Animal
-Best Bud
-Man Bear
-Cool
-Show Stopper
-Cyborg in Disguise
-Killjoy
-Happy
-
+The
+Savage
+Hungry
+Sated
+Despicable
+Nice
+Helpful
+Rogue
+Spotted
+Deep Blue
+Quick
+Slow
+Beloved
+Agressive
+Angry
+Bewildered
+Clumsy
+Defeated
+Grumpy
+Itchy
+Scratchy
+Lazy
+Mysterious
+Repulsive
+Thoughtless
+Broad
+Chubby
+Crooked
+Curved
+Deep
+Flat
+High
+Hollow
+Low
+Narrow
+Round
+Shallow
+Robust
+Skinny
+Square Nose
+Steep Nose
+Renegade
+Ancient
+Old
+Fast
+Brief
+Short
+Frustratingly Elusive
+Curvy
+Fitted
+Forked
+Rugged
+Sinuous
+Slimy
+Sweeping
+Twisted
+Crooked
