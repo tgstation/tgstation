@@ -60,14 +60,14 @@
 	icon_living = "megacarp"
 	icon_dead = "megacarp_dead"
 	icon_gib = "megacarp_gib"
-	maxHealth = 130
-	health = 130
+	maxHealth = 65
+	health = 65
 	pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
 
 	obj_damage = 80
 	melee_damage_lower = 20
-	melee_damage_upper = 30
+	melee_damage_upper = 20
 
 	var/regen_cooldown = 0
 
