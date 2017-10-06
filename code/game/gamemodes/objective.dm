@@ -17,14 +17,6 @@
 	if(owner)
 		. += owner
 
-/datum/objective/proc/considered_alive(var/datum/mind/M)
-	if(M && M.current)
-		var/mob/living/carbon/human/H
-		if(ishuman(M.current))
-			H = M.current
-		return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
-	return FALSE
-
 /datum/objective/proc/considered_escaped(datum/mind/M)
 	if(!considered_alive(M))
 		return FALSE
@@ -36,9 +28,6 @@
 	if(!location || istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails if they are in the shuttle brig
 		return FALSE
 	return location.onCentCom() || location.onSyndieBase()
-
-/datum/objective/proc/considered_afk(datum/mind/M)
-	return !M || !M.current || !M.current.client || M.current.client.is_afk()
 
 /datum/objective/proc/check_completion()
 	return completed
@@ -348,13 +337,14 @@
 			return FALSE
 	return TRUE
 
-//Like survive, but works for silicons and zombies and such.
-/datum/objective/survive/exist/considered_alive(var/datum/mind/M)
-	if(M && M.current)
-		if(isliving(M.current))
-			var/mob/living/L = M.current
-			return L.stat != DEAD
-	return FALSE
+/datum/objective/survive/exist //Like survive, but works for silicons and zombies and such.
+
+/datum/objective/survive/exist/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!considered_alive(M, FALSE))
+			return FALSE
+	return TRUE
 
 /datum/objective/martyr
 	explanation_text = "Die a glorious death."
@@ -417,14 +407,17 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal/proc/select_target() //For admins setting objectives manually.
 	var/list/possible_items_all = GLOB.possible_items+"custom"
 	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
-	if (!new_target) return
+	if (!new_target)
+		return
 
 	if (new_target == "custom") //Can set custom items.
 		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
-		if (!custom_target) return
+		if (!custom_target)
+			return
 		var/custom_name = initial(custom_target.name)
 		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
-		if (!custom_name) return
+		if (!custom_name)
+			return
 		steal_target = custom_target
 		explanation_text = "Steal [custom_name]."
 

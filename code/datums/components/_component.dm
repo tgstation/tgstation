@@ -95,7 +95,7 @@
 			P.datum_components = null
 		parent = null
 
-/datum/component/proc/RegisterSignal(sig_type, proc_on_self, override = FALSE)
+/datum/component/proc/RegisterSignal(sig_type_or_types, proc_on_self, override = FALSE)
 	if(QDELETED(src))
 		return
 	var/list/procs = signal_procs
@@ -103,12 +103,14 @@
 		procs = list()
 		signal_procs = procs
 	
-	if(!override)
-		. = procs[sig_type]
-		if(.)
-			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
-	
-	procs[sig_type] = CALLBACK(src, proc_on_self)    
+	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
+	for(var/sig_type in sig_types)
+		if(!override)
+			. = procs[sig_type]
+			if(.)
+				stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
+		
+		procs[sig_type] = CALLBACK(src, proc_on_self)    
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return

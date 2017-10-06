@@ -29,7 +29,7 @@
 	dizziness = 0
 	jitteriness = 0
 
-	if(istype(loc, /obj/mecha))
+	if(ismecha(loc))
 		var/obj/mecha/M = loc
 		if(M.occupant == src)
 			M.go_out()

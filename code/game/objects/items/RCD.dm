@@ -431,7 +431,7 @@ obj/item/construction
 
 /obj/item/construction/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
-	desc = "A prototype RCD with ranged capability and extended capacity"
+	desc = "A prototype RCD with ranged capability and extended capacity."
 	max_matter = 300
 	matter = 300
 	delay_mod = 0.6

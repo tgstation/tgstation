@@ -223,7 +223,7 @@
 
 /obj/item/pneumatic_cannon/pie
 	name = "pie cannon"
-	desc = "Load cream pie for optimal results"
+	desc = "Load cream pie for optimal results."
 	force = 10
 	icon_state = "piecannon"
 	gasPerThrow = 0

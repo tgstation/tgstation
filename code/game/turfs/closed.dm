@@ -140,8 +140,8 @@
 	icon_state = "wall"
 
 /turf/closed/bullet_act(obj/item/projectile/Proj)
-	..()
-	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+	. = ..()
+	if((. != -1) && !Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		var/mutable_appearance/bullet_hole = mutable_appearance('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
 
 		var/random_x = rand(-13, 13)

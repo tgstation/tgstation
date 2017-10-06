@@ -31,7 +31,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Advanced ProcCall"
 	set waitfor = 0
 
-	if(!check_rights(R_DEBUG)) return
+	if(!check_rights(R_DEBUG))
+		return
 
 	var/datum/target = null
 	var/targetselected = 0
@@ -96,10 +97,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		to_chat(usr, .)
 	SSblackbox.add_details("admin_verb","Advanced ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-GLOBAL_VAR_INIT(AdminProcCaller, null)
+GLOBAL_VAR(AdminProcCaller)
 GLOBAL_PROTECT(AdminProcCaller)
 GLOBAL_VAR_INIT(AdminProcCallCount, 0)
 GLOBAL_PROTECT(AdminProcCallCount)
+GLOBAL_VAR(LastAdminCalledTargetRef)
+GLOBAL_PROTECT(LastAdminCalledTargetRef)
+GLOBAL_VAR(LastAdminCalledTarget)
+GLOBAL_PROTECT(LastAdminCalledTarget)
+GLOBAL_VAR(LastAdminCalledProc)
+GLOBAL_PROTECT(LastAdminCalledProc)
 
 /proc/WrapAdminProcCall(target, procname, list/arguments)
 	var/current_caller = GLOB.AdminProcCaller
@@ -108,6 +115,9 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		to_chat(usr, "<span class='adminnotice'>Another set of admin called procs are still running, your proc will be run after theirs finish.</span>")
 		UNTIL(!GLOB.AdminProcCaller)
 		to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
+	GLOB.LastAdminCalledProc = procname
+	if(target != GLOBAL_PROC)
+		GLOB.LastAdminCalledTargetRef = "\ref[target]"
 	GLOB.AdminProcCaller = ckey	//if this runtimes, too bad for you
 	++GLOB.AdminProcCallCount
 	. = world.WrapAdminProcCall(target, procname, arguments)

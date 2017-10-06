@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/sting
 	name = "Tiny Prick"
-	desc = "Stabby stabby"
+	desc = "Stabby stabby."
 	var/sting_icon = null
 
 /obj/effect/proc_holder/changeling/sting/Click()
@@ -77,10 +77,10 @@
 		return
 	..()
 
-/obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
 	if(!..())
 		return
-	if((target.disabilities & HUSK) || !target.has_dna())
+	if((target.disabilities & HUSK) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1

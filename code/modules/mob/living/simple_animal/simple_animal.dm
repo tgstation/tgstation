@@ -96,13 +96,6 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 
-
-/mob/living/simple_animal/Login()
-	if(src && src.client)
-		src.client.screen = list()
-		client.screen += client.void
-	..()
-
 /mob/living/simple_animal/updatehealth()
 	..()
 	health = Clamp(health, 0, maxHealth)
@@ -312,7 +305,7 @@
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
 			return 0
-	if (istype(the_target, /obj/mecha))
+	if (ismecha(the_target))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
 			return 0

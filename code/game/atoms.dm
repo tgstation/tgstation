@@ -189,6 +189,7 @@
 
 
 /atom/proc/CollidedWith(atom/movable/AM)
+	set waitfor = FALSE
 	return
 
 // Convenience proc to see if a container is open for chemistry handling
@@ -445,7 +446,8 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	return 1
 
 /atom/proc/get_global_map_pos()
-	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map)) return
+	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map))
+		return
 	var/cur_x = null
 	var/cur_y = null
 	var/list/y_arr = null

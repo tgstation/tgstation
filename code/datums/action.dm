@@ -591,3 +591,4 @@
 		var/mob/M = owner
 		var/datum/language_holder/H = M.get_language_holder()
 		H.open_language_menu(usr)
+

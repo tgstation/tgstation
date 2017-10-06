@@ -2,6 +2,7 @@
 	name = "pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
+	desc = "Dispenses countless types of pipes. Very useful if you need pipes."
 	density = TRUE
 	anchored = TRUE
 	var/wait = 0
@@ -116,6 +117,7 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 	name = "disposal pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
+	desc = "Dispenses pipes that will ultimately be used to move trash around."
 	density = TRUE
 	anchored = TRUE
 
@@ -191,6 +193,7 @@ Nah
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = TRUE
+	desc = "Dispenses pipes that will move beings around."
 	anchored = TRUE
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)

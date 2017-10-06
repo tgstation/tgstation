@@ -14,6 +14,7 @@
 
 	name = "windoor Assembly"
 	icon_state = "l_windoor_assembly01"
+	desc = "A small glass and wire assembly for windoors."
 	anchored = FALSE
 	density = FALSE
 	dir = NORTH
@@ -97,7 +98,8 @@
 					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 
 					if(do_after(user, 40*W.toolspeed, target = src))
-						if(!src || !WT.isOn()) return
+						if(!src || !WT.isOn())
+							return
 						to_chat(user, "<span class='notice'>You disassemble the windoor assembly.</span>")
 						var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
 						RG.add_fingerprint(user)

@@ -24,22 +24,9 @@
 	if(use_delay_override)
 		use_delay = use_delay_override
 
-	if(istype(parent, /atom))
-		RegisterSignal(COMSIG_ATOM_BLOB_ACT, .proc/play_squeak)
-		RegisterSignal(COMSIG_ATOM_HULK_ATTACK, .proc/play_squeak)
-		RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/play_squeak)
-		if(istype(parent, /atom/movable))
-			RegisterSignal(COMSIG_MOVABLE_CROSSED, .proc/play_squeak)
-			RegisterSignal(COMSIG_MOVABLE_COLLIDE, .proc/play_squeak)
-			RegisterSignal(COMSIG_MOVABLE_IMPACT, .proc/play_squeak)
-			if(istype(parent, /obj/item))
-				RegisterSignal(COMSIG_ITEM_ATTACK, .proc/play_squeak)
-				RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/use_squeak)
-				RegisterSignal(COMSIG_ITEM_ATTACK_OBJ, .proc/play_squeak)
-				if(istype(parent, /obj/item/clothing/shoes))
-					RegisterSignal(COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
-		else
-			RegisterSignal(COMSIG_ATOM_ENTERED, .proc/play_squeak)
+	RegisterSignal(list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_MOVABLE_CROSSED, COMSIG_MOVABLE_COLLIDE, COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ), .proc/play_squeak)
+	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/use_squeak)
+	RegisterSignal(COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
 
 /datum/component/squeak/proc/play_squeak()
 	if(prob(squeak_chance))

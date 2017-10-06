@@ -60,10 +60,6 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return
 	icon_state = "off"
 
-//prevents shuttles attempting to rotate this since it messes up sprites
-/obj/machinery/gateway/shuttleRotate()
-	return
-
 /obj/machinery/gateway/attack_hand(mob/user)
 	if(!detect())
 		return
