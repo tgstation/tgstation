@@ -2,20 +2,18 @@
  //dakimakuras
  //////////////////////////////////
 
- /obj/item/weapon/storage/daki
+ /obj/item/storage/daki
  	name = "dakimakura"
  	desc = "A large pillow depicting a girl in a compromising position. Featuring as many dimensions as you."
  	icon = 'icons/obj/daki.dmi'
  	icon_state = "daki_base"
  	slot_flags = SLOT_BACK
  	storage_slots = 3
- 	w_class = 4
- 	max_w_class = 3
- 	max_combined_w_class = 21
+ 	w_class = WEIGHT_CLASS_NORMAL
  	var/cooldowntime = 20
  	var/static/list/dakimakura_options = list("Callie","Casca","Chaika","Elisabeth","Foxy Grandpa","Haruko","Holo","Ian","Jolyne","Kurisu","Marie","Mugi","Nar'Sie","Patchouli","Plutia","Rei","Reisen","Naga","Squid","Squigly","Tomoko","Toriel","Umaru","Yaranaika","Yoko") //Kurisu is the ideal girl." - Me, Logos.
 
- /obj/item/weapon/storage/daki/attack_self(mob/living/user)
+ /obj/item/storage/daki/attack_self(mob/living/user)
  	var/body_choice
  	var/custom_name
 
