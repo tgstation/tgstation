@@ -16,12 +16,12 @@
 	var/rotation_angle = -1
 
 /obj/structure/reflector/Initialize()
+	. = ..()
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
 	if(rotation_angle == -1)
 		setAngle(dir2angle(dir))
 	else
 		setAngle(rotation_angle)
-	return ..()
 
 /obj/structure/reflector/examine(mob/user)
 	..()
@@ -64,26 +64,22 @@
 		var/obj/item/weldingtool/WT = W
 		if(!anchored)
 			if (WT.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
-				user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
-					"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-					"<span class='italics'>You hear welding.</span>")
+				playsound(src, 'sound/items/welder2.ogg', 50, 1)
+				user.visible_message("[user] starts to weld [src] to the floor.", "<span class='notice'>You start to weld [src] to the floor...</span>", "<span class='italics'>You hear welding.</span>")
 				if (do_after(user,20*W.toolspeed, target = src))
-					if(!src || !WT.isOn())
+					if(!WT.isOn())
 						return
 					anchored = TRUE
-					to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
+					to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
 		else
 			if (WT.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
-				user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
-					"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-					"<span class='italics'>You hear welding.</span>")
+				playsound(src, 'sound/items/welder2.ogg', 50, 1)
+				user.visible_message("[user] starts to cut [src] free from the floor.", "<span class='notice'>You start to cut [src] free from the floor...</span>", "<span class='italics'>You hear welding.</span>")
 				if (do_after(user,20*W.toolspeed, target = src))
-					if(!src || !WT.isOn())
+					if(!WT.isOn())
 						return
 					anchored = FALSE
-					to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
+					to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
 	//Finishing the frame
 	else if(istype(W, /obj/item/stack/sheet))
 		if(finished)
@@ -91,21 +87,21 @@
 		var/obj/item/stack/sheet/S = W
 		if(istype(W, /obj/item/stack/sheet/glass))
 			if(S.use(5))
-				new /obj/structure/reflector/single (src.loc)
+				new /obj/structure/reflector/single (loc)
 				qdel (src)
 			else
 				to_chat(user, "<span class='warning'>You need five sheets of glass to create a reflector!</span>")
 				return
 		if(istype(W, /obj/item/stack/sheet/rglass))
 			if(S.use(10))
-				new /obj/structure/reflector/double (src.loc)
+				new /obj/structure/reflector/double (loc)
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>")
 				return
 		if(istype(W, /obj/item/stack/sheet/mineral/diamond))
 			if(S.use(1))
-				new /obj/structure/reflector/box (src.loc)
+				new /obj/structure/reflector/box (loc)
 				qdel(src)
 	else
 		return ..()
