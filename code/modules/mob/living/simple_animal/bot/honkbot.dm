@@ -298,7 +298,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
-	frustration = 0
+	frustration = 0 //is counter, builds up to 5
 	INVOKE_ASYNC(src, .proc/handle_automated_action) //responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_hunt()
