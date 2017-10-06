@@ -145,7 +145,11 @@
 		else
 			payload_wall = text2path("/turf/closed/wall/mineral/[payload]")
 			payload_floor = text2path("/turf/open/floor/mineral/[payload]")
-
+	if(ispath(payload_wall) || !ispath(payload_floor))
+		to_chat(usr, "Invalid payload selected, please contact manufacturer for assistance or select another payload.")
+		payload = "plasteel"
+		payload_wall = /turf/closed/wall/r_wall
+		payload_floor = /turf/open/floor/engine
 
 /obj/machinery/construction_nuke/proc/set_timer(mob/user)
 	playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
