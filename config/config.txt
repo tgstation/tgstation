@@ -236,7 +236,7 @@ TICK_LIMIT_MC_INIT 500
 ##	This also controls the client network update rate, as well as the default client fps
 TICKLAG 0.5
 
-##Can also be set as per-second value, the follow value is identical to the above.
+##Can also be set as per-second value, the following value is identical to the above.
 #FPS 20
 
 ## Comment this out to disable automuting

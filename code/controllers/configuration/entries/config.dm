@@ -370,5 +370,5 @@ CONFIG_TWEAK(number/mc_tick_rate)
 
 CONFIG_TWEAK(number/mc_tick_rate/ValidateAndSet(str_val))
 	. = ..()
-	if (. && Master)
+	if (.)
 		Master.UpdateTickRate()
