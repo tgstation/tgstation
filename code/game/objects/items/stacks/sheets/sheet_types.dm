@@ -253,19 +253,15 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	amount = 50
 
 /obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/stamp/clown))
-		return ..()
-	if(istype(loc, /obj/item/storage))
-		to_chat(user,"<span class='notice'>Take the [src] out first!</span>")
-		return ..()
-	var/turf/T = get_turf(src.loc)
-	playsound(src, 'sound/items/bikehorn.ogg', 50, 1, -1)
-	to_chat(user, "<span class='notice'>You stamp the cardboard! Its a clown box! Honk!</span>")
-	new/obj/item/storage/box/clown(drop_location(T))
-	if ((src.amount > 1) && (user.is_holding(src))) //prevent a bug when holding stack
-		amount-- //you also keep the stack in your hand
-	else
-		use(1)
+	if(istype(I, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
+		var/atom/droploc = drop_location()
+		if(use(1))
+			playsound(I, 'sound/items/bikehorn.ogg', 50, 1, -1)
+			to_chat(user, "<span class='notice'>You stamp the cardboard! Its a clown box! Honk!</span>")
+			if (amount == 0) new/obj/item/storage/box/clown(droploc) //bugfix
+			else new/obj/item/storage/box/clown(drop_location())
+	else . = ..()
+
 
 /*
  * Runed Metal
