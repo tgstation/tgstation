@@ -42,5 +42,3 @@
 				user.visible_message("<span class='danger'>[user] punches the [name]!</span>")
 				playsound(src, 'sound/effects/shieldbash.ogg', 50, 1)
 		user.changeNext_move(CLICK_CD_MELEE)
-
- ////////////////////////////
