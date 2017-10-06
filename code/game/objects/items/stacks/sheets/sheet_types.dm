@@ -258,8 +258,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		if(use(1))
 			playsound(I, 'sound/items/bikehorn.ogg', 50, 1, -1)
 			to_chat(user, "<span class='notice'>You stamp the cardboard! Its a clown box! Honk!</span>")
-			if (amount == 0) new/obj/item/storage/box/clown(droploc) //bugfix
-			else new/obj/item/storage/box/clown(drop_location())
+			if (amount >= 0) new/obj/item/storage/box/clown(droploc) //bugfix
 	else . = ..()
 
 
