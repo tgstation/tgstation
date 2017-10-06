@@ -14,7 +14,8 @@
 	var/setting = 3
 	var/list/possible_settings = list(3,6,9,12,15)
 
-/datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry = null, setting = 3, efficiency = 10, loc)
+/datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting = 3, efficiency = 10, loc)
+	. = ..()
 	amount = setting
 	carry.copy_to(chemholder, 20)
 	carry.remove_any(setting * 16 / efficiency)
@@ -24,12 +25,8 @@
 	. = ..()
 	create_reagents(volume)
 
-/obj/machinery/smoke_machine/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
-	return ..()
-
 /obj/machinery/smoke_machine/update_icon()
-	if((stat & NOPOWER) || (!on) || (reagents.total_volume == 0))
+	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
 		icon_state = "smoke0"
 	else
 		icon_state = "smoke1"
@@ -47,15 +44,14 @@
 /obj/machinery/smoke_machine/process()
 	..()
 	update_icon()
-	if(stat & NOPOWER)
+	if(!is_operational())
 		return
 	if(reagents.total_volume == 0)
 		on = FALSE
 		return
 	var/turf/T = get_turf(src)
-	var/smoke_test
-	smoke_test = locate(/obj/effect/particle_effect/smoke) in T.contents
-	if(on && (!smoke_test))
+	var/smoke_test = locate(/obj/effect/particle_effect/smoke) in T
+	if(on && !smoke_test)
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
 		smoke.set_up(reagents, setting, efficiency, get_turf(src))
 		smoke.start()
@@ -89,7 +85,7 @@
 			TankContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 			TankCurrentVolume += R.volume
 	data["TankContents"] = TankContents
-	data["isTankLoaded"] = reagents.total_volume ? 1 : 0
+	data["isTankLoaded"] = reagents.total_volume ? TRUE : FALSE
 	data["TankCurrentVolume"] = reagents.total_volume ? reagents.total_volume : null
 	data["TankMaxVolume"] = reagents.maximum_volume
 	data["active"] = on
