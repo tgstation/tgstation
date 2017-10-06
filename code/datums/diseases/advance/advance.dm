@@ -123,7 +123,7 @@
 
 /datum/disease/advance/proc/HasSymptom(datum/symptom/S)
 	for(var/datum/symptom/symp in symptoms)
-		if(symp.id == S.id)
+		if(symp.type == S.type)
 			return 1
 	return 0
 
