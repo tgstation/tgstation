@@ -119,7 +119,7 @@
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 22
 
-		if(on && is_operational() && !running_anim)
+		if(on && !running_anim && is_operational())
 			icon_state = "pod-on"
 			running_anim = TRUE
 			run_anim(TRUE, occupant_overlay)
@@ -160,7 +160,7 @@
 		update_icon()
 		return
 	if(!occupant)
-		return 1
+		return
 
 	var/mob/living/mob_occupant = occupant
 
@@ -170,7 +170,7 @@
 	if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 		on = FALSE
 		update_icon()
-		playsound(get_turf(src), 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
+		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
 		radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
 		if(autoeject) // Eject if configured.
 			radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
