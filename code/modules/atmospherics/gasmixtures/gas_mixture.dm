@@ -21,10 +21,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		cached_gas[ARCHIVE] = 0
 		cached_gas[GAS_META] = GLOB.meta_gas_info[id]
 
-#define GASLIST(id, out_list)\
-	var/list/tmp_gaslist = GLOB.gaslist_cache[id];\
-	out_list = tmp_gaslist.Copy();
-
 /datum/gas_mixture
 	var/list/gases
 	var/temperature //kelvins
@@ -43,18 +39,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 //listmos procs
 
-	//assert_gas(gas_id) - used to guarantee that the gas list for this id exists.
-	//Must be used before adding to a gas. May be used before reading from a gas.
-/datum/gas_mixture/proc/assert_gas(gas_id)
-	var/cached_gases = gases
-	if(cached_gases[gas_id])
-		return
-	GASLIST(gas_id, cached_gases[gas_id])
-
-	//assert_gases(args) - shorthand for calling assert_gas() once for each gas type.
+	//assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.
 /datum/gas_mixture/proc/assert_gases()
 	for(var/id in args)
-		assert_gas(id)
+		ASSERT_GAS(src,id)
 
 	//add_gas(gas_id) - similar to assert_gas(), but does not check for an existing
 		//gas list for this id. This can clobber existing gases.
@@ -80,9 +68,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			cached_gases -= id
 
 	//PV = nRT
+
 /datum/gas_mixture/proc/heat_capacity() //joules per kelvin
 	var/list/cached_gases = gases
-	. = 0
 	for(var/id in cached_gases)
 		var/gas_data = cached_gases[id]
 		. += gas_data[MOLES] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
@@ -195,7 +183,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/giver_gases = giver.gases
 	//gas transfer
 	for(var/giver_id in giver_gases)
-		assert_gas(giver_id)
+		ASSERT_GAS(src, giver_id)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	return 1
@@ -250,13 +238,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return copy
 
+
 /datum/gas_mixture/copy_from(datum/gas_mixture/sample)
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/sample_gases = sample.gases
 
 	temperature = sample.temperature
 	for(var/id in sample_gases)
-		assert_gas(id)
+		ASSERT_GAS(src,id)
 		cached_gases[id][MOLES] = sample_gases[id][MOLES]
 
 	//remove all gases not in the sample

@@ -169,7 +169,7 @@
 				qdel(H)
 				var/list/G_gases = G.gases
 				if(G_gases["plasma"])
-					G.assert_gas("n2")
+					ASSERT_GAS(G,"n2")
 					G_gases["n2"][MOLES] += (G_gases["plasma"][MOLES])
 					G_gases["plasma"][MOLES] = 0
 					G.garbage_collect()
