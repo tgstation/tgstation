@@ -1,0 +1,47 @@
+﻿Legendary
+Epic
+Rare
+Common
+Elusive
+Lackluster
+Bloody
+Strange
+Unremarkable
+Scarcely Lethal
+Mildly Menacing
+Truly Feared
+Wicked
+Nasty
+Normal
+The Unique
+Vintage
+Genuine
+Unusual
+Haunted
+Big
+Small
+Delightful
+Sarcastic
+Status Quo
+Topsy Turvey
+Prehistoric
+Kaiju
+Space Beast
+Fugitive
+Greatest
+Worst
+Prisoner
+Bad Guy
+Good Bad Guy
+Heroic
+Birthday Boy
+Nice Little
+Party Animal
+Best Bud
+Man Bear
+Cool
+Show Stopper
+Cyborg in Disguise
+Killjoy
+Happy
+
