@@ -1310,6 +1310,7 @@
 #include "code\modules\events\wizard\rpgloot.dm"
 #include "code\modules\events\wizard\shuffle.dm"
 #include "code\modules\events\wizard\summons.dm"
+#include "code\modules\exosuit\exosuit.dm"
 #include "code\modules\fields\fields.dm"
 #include "code\modules\fields\peaceborg_dampener.dm"
 #include "code\modules\fields\timestop.dm"

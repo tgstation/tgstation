@@ -93,3 +93,18 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ACID_PROOF 32 //acid stuck on it doesn't melt it.
 #define INDESTRUCTIBLE 64 //doesn't take damage
 #define FREEZE_PROOF 128 //can't be frozen
+
+//Exosuit flags
+#define OCCUPANT_CAN_DRIVE	1
+#define OCCUPANT_PASSENGER	2
+
+#define MULTIMOVE		1
+#define SPACEMOVE_ONLY	2
+#define TURFMOVE_ONLY	4
+
+#define HAS_RADIO		1
+#define HAS_GPS			2
+#define HAS_TEMPCONTROL	4
+#define HAS_INTERNALS	8
+#define HAS_STORAGE		16
+#define NO_POWER		32
