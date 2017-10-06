@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
-		last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*10
+		last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*150
 
 /obj/machinery/power/rad_collector/proc/update_icons()
 	cut_overlays()

@@ -35,7 +35,7 @@
 
 	if(hl3_release_date && prob(50))
 		strength -= strength / hl3_release_date
-		if(strength <= 1)
+		if(strength <= RAD_BACKGROUND_RADIATION)
 			qdel(src)
 
 /datum/component/radioactive/InheritComponent(datum/component/C, i_am_original)

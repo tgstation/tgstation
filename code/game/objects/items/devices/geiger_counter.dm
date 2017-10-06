@@ -1,8 +1,8 @@
-#define RAD_LEVEL_NORMAL 10
-#define RAD_LEVEL_MODERATE 30
-#define RAD_LEVEL_HIGH 75
-#define RAD_LEVEL_VERY_HIGH 125
-#define RAD_LEVEL_CRITICAL 200
+#define RAD_LEVEL_NORMAL 100
+#define RAD_LEVEL_MODERATE 300
+#define RAD_LEVEL_HIGH 750
+#define RAD_LEVEL_VERY_HIGH 1250
+#define RAD_LEVEL_CRITICAL 2000
 
 /obj/item/device/geiger_counter //DISCLAIMER: I know nothing about how real-life Geiger counters work. This will not be realistic. ~Xhuis
 	name = "geiger counter"
@@ -43,7 +43,7 @@
 			else
 				to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] !@%$AT!(N P!LS! D/TEC?ED.</span>")
 				to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] &!F2rity: <=[last_tick_amount]#1</span>")
-		last_tick_amount = 0
+	last_tick_amount = 0
 
 /obj/item/device/geiger_counter/examine(mob/user)
 	..()

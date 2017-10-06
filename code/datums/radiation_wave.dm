@@ -20,15 +20,23 @@
 
 	START_PROCESSING(SSradiation, src)
 
+/datum/radiation_wave/Destroy()
+	STOP_PROCESSING(SSradiation, src)
+	return ..()
+
 /datum/radiation_wave/process()
 	master_turf = get_step(master_turf, move_dir)
 	steps++
 	var/list/turfs = get_rad_turfs()
-	check_obstructions(turfs)
-	var/strength = InverseSquareLaw(intensity, (range_modifier*(steps-1))+1, 1) //The full rad amount always applies on the first step
-	if(strength<0.1)
-		STOP_PROCESSING(SSradiation, src)
+	check_obstructions(turfs) // reduce our overall strength if there are radiation insulators
+	var/strength
+	if(steps>1)
+		strength = InverseSquareLaw(intensity, range_modifier*steps, 1) //The full rad amount always applies on the first step
+	else
+		strength = intensity
+	if(strength<RAD_BACKGROUND_RADIATION)
 		qdel(src)
+		return
 	radiate(turfs, Floor(strength))
 
 	return TRUE
