@@ -52,7 +52,7 @@
 	var/smoke_test = locate(/obj/effect/particle_effect/smoke) in T
 	if(on && !smoke_test)
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
-		smoke.set_up(reagents, setting, efficiency, get_turf(src))
+		smoke.set_up(reagents, setting, efficiency, T)
 		smoke.start()
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
@@ -79,10 +79,9 @@
 	var/data = list()
 	var/TankContents[0]
 	var/TankCurrentVolume = 0
-	if(reagents.reagent_list.len)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			TankContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
-			TankCurrentVolume += R.volume
+	for(var/datum/reagent/R in reagents.reagent_list)
+		TankContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
+		TankCurrentVolume += R.volume
 	data["TankContents"] = TankContents
 	data["isTankLoaded"] = reagents.total_volume ? TRUE : FALSE
 	data["TankCurrentVolume"] = reagents.total_volume ? reagents.total_volume : null
