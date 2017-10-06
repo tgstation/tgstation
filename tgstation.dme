@@ -225,6 +225,7 @@
 #include "code\datums\datacore.dm"
 #include "code\datums\datum.dm"
 #include "code\datums\datumvars.dm"
+#include "code\datums\demagogues.dm"
 #include "code\datums\dna.dm"
 #include "code\datums\dog_fashion.dm"
 #include "code\datums\emotes.dm"

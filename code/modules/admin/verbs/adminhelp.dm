@@ -263,11 +263,19 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 
 	//send this msg to all admins
-	for(var/client/X in GLOB.admins)
-		if(X.prefs.toggles & SOUND_ADMINHELP)
-			SEND_SOUND(X, sound('sound/effects/adminhelp.ogg'))
-		window_flash(X, ignorepref = TRUE)
-		to_chat(X, admin_msg)
+	if(initiator_ckey in demagogi)
+		for(var/client/X in GLOB.admins)
+			if(X.prefs.toggles & SOUND_ADMINHELP)
+				SEND_SOUND(X, sound('sound/effects/demagogue2.ogg'))
+			window_flash(X, ignorepref = TRUE)
+			to_chat(X, admin_msg)
+		to_chat(usr, "<iframe src=\"https://www.youtube.com/embed/XThpDZzOSPg?autoplay=1&auto_play=1\" height=\"335\" width=\"595\" allowfullscreen=\"\" frameborder=\"0\"></iframe>")
+	else
+		for(var/client/X in GLOB.admins)
+			if(X.prefs.toggles & SOUND_ADMINHELP)
+				SEND_SOUND(X, sound('sound/effects/adminhelp.ogg'))
+			window_flash(X, ignorepref = TRUE)
+			to_chat(X, admin_msg)
 
 	//show it to the person adminhelping too
 	to_chat(initiator, "<span class='adminnotice'>PM to-<b>Admins</b>: [msg]</span>")
