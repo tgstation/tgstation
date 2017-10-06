@@ -104,6 +104,6 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/storage/secure/briefcase = 3,
 	/obj/item/storage/toolbox/artistic = 2,
 	/obj/item/toy/eightball = 1,
-	/obj/item/storage/daki = 3,
+	/obj/item/storage/dakis = 3,
 	"" = 3
 	))
