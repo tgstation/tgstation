@@ -13,6 +13,8 @@
 		get_rad_contents(thing, output)
 
 /proc/radiation_pulse(turf/epicenter, intensity, range_modifier, log=0, can_contaminate=TRUE)
+	if(!SSradiation.can_fire)
+		return
 	for(var/dir in GLOB.cardinals)
 		new /datum/radiation_wave(epicenter, dir, intensity, range_modifier, can_contaminate)
 
