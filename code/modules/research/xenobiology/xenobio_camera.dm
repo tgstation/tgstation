@@ -70,7 +70,6 @@
 	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
 		monkeys++
 		to_chat(user, "<span class='notice'>You feed [O] to [src]. It now has [monkeys] monkey cubes stored.</span>")
-		user.drop_item()
 		qdel(O)
 		return
 	else if(istype(O, /obj/item/storage/bag))
