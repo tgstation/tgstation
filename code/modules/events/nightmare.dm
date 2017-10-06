@@ -13,7 +13,7 @@
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/dead/selected = pick_n_take(candidates)
+	var/mob/dead/selected = pick(candidates)
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
@@ -24,9 +24,9 @@
 			var/turf/T = L.loc
 			var/light_amount = T.get_lumcount()
 			if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-				spawn_locs += L.loc
+				spawn_locs += T
 
-	if(!spawn_locs)
+	if(!spawn_locs.len)
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
@@ -34,7 +34,7 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Nightmare"
 	player_mind.special_role = "Nightmare"
-	SSticker.mode.traitors |= player_mind
+	SSticker.mode.traitors += player_mind
 	S.set_species(/datum/species/shadow/nightmare)
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
 	message_admins("[key_name_admin(S)] has been made into a Nightmare by an event.")
