@@ -7,6 +7,8 @@
 	desc = "A large pillow depicting a girl in a compromising position. Featuring as many dimensions as you."
 	icon = 'icons/obj/daki.dmi'
 	icon_state = "daki_base"
+	lefthand_file = "icons/mob/inhands/misc/daki_lefthand.dmi"
+	righthand_file = "icons/mob/inhands/misc/daki_righthand.dmi"
 	slot_flags = SLOT_BACK
 	storage_slots = 3
 	w_class = WEIGHT_CLASS_NORMAL
