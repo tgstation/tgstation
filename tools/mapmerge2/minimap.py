@@ -133,6 +133,29 @@ def collect(ctx, x, y, z):
             atoms.extend(smooth(ctx, atom, smooth_flags))
         else:
             atoms.append(atom)
+
+        # apply overlayering
+        if atom.type.subtype_of('/obj/structure/closet'):
+            door = atom.get('icon_door')
+            if door is None or door == 'null':
+                door = atom['icon_state']
+            copy = atom.copy()
+            copy['icon_state'] = dmi.escape(dmi.unescape(door) + '_door')
+            atoms.append(copy)
+        elif atom.type.subtype_of('/obj/machinery/computer'):
+            screen = atom.get('icon_screen')
+            if screen is not None and screen != 'null':
+                copy = atom.copy()
+                copy['icon_state'] = screen
+                atoms.append(copy)
+            keyboard = atom.get('icon_keyboard')
+            if keyboard is not None and keyboard != 'null':
+                copy = atom.copy()
+                copy['icon_state'] = keyboard
+                atoms.append(copy)
+        elif atom.type.subtype_of('/obj/structure/transit_tube'):
+            atoms.extend(generate_tube_overlays(ctx, atom))
+
     return atoms
 
 def generate(ctx, icon_files, atoms):
@@ -389,6 +412,95 @@ def flip_angle(angle):
         dmi.SOUTHWEST: dmi.NORTHEAST,
         dmi.SOUTHEAST: dmi.NORTHWEST,
     }[angle]
+
+def generate_tube_overlays(ctx, atom):
+    tube_dirs = {
+        '': {
+            dmi.NORTH: [dmi.NORTH, dmi.SOUTH],
+            dmi.SOUTH: [dmi.NORTH, dmi.SOUTH],
+            dmi.EAST: [dmi.EAST, dmi.WEST],
+            dmi.WEST: [dmi.EAST, dmi.WEST],
+        },
+        '/diagonal': {
+            dmi.NORTH: [dmi.NORTHEAST, dmi.SOUTHWEST],
+            dmi.SOUTH: [dmi.NORTHEAST, dmi.SOUTHWEST],
+            dmi.EAST: [dmi.NORTHWEST, dmi.SOUTHEAST],
+            dmi.WEST: [dmi.NORTHWEST, dmi.SOUTHEAST],
+        },
+        '/curved': {
+            dmi.NORTH: [dmi.NORTH, dmi.SOUTHWEST],
+            dmi.SOUTH: [dmi.SOUTH, dmi.NORTHEAST],
+            dmi.EAST: [dmi.EAST, dmi.NORTHWEST],
+            dmi.WEST: [dmi.SOUTHEAST, dmi.WEST],
+        },
+        '/curved/flipped': {
+            dmi.NORTH: [dmi.NORTH, dmi.SOUTHEAST],
+            dmi.SOUTH: [dmi.SOUTH, dmi.NORTHWEST],
+            dmi.EAST: [dmi.EAST, dmi.SOUTHWEST],
+            dmi.WEST: [dmi.NORTHEAST, dmi.WEST],
+        },
+        '/junction': {
+            dmi.NORTH: [dmi.NORTH, dmi.SOUTHEAST, dmi.SOUTHWEST],
+            dmi.SOUTH: [dmi.SOUTH, dmi.NORTHWEST, dmi.NORTHEAST],
+            dmi.EAST: [dmi.EAST, dmi.SOUTHWEST, dmi.NORTHWEST],
+            dmi.WEST: [dmi.WEST, dmi.NORTHEAST, dmi.SOUTHEAST],
+        },
+        '/junction/flipped': {
+            dmi.NORTH: [dmi.NORTH, dmi.SOUTHWEST, dmi.SOUTHEAST],
+            dmi.SOUTH: [dmi.SOUTH, dmi.NORTHEAST, dmi.NORTHWEST],
+            dmi.EAST: [dmi.EAST, dmi.SOUTHEAST, dmi.NORTHEAST],
+            dmi.WEST: [dmi.WEST, dmi.NORTHWEST, dmi.SOUTHWEST],
+        },
+        '/station': {
+            dmi.NORTH: [dmi.EAST, dmi.WEST],
+            dmi.SOUTH: [dmi.EAST, dmi.WEST],
+            dmi.EAST: [dmi.NORTH, dmi.SOUTH],
+            dmi.WEST: [dmi.NORTH, dmi.SOUTH],
+        },
+        '/station/reverse': {
+            dmi.NORTH: [dmi.EAST],
+            dmi.SOUTH: [dmi.WEST],
+            dmi.EAST: [dmi.SOUTH],
+            dmi.WEST: [dmi.NORTH],
+        },
+    }
+
+    path = atom.type.path[len('/obj/structure/transit_tube'):]
+    while path not in tube_dirs:
+        path = path[:path.rindex('/')]
+    print(atom)
+    dir = atom.get('dir', 'SOUTH')
+    tube_dirs = tube_dirs[path][dmi.DIR_NAMES.get(dir, dir)]
+
+    for direction in tube_dirs:
+        if direction in (dmi.NORTHEAST, dmi.NORTHWEST, dmi.SOUTHEAST, dmi.SOUTHWEST):
+            if direction & dmi.NORTH:
+                yield create_tube_overlay(ctx, atom, direction ^ 3, dmi.NORTH)
+                if direction & dmi.EAST:
+                    yield create_tube_overlay(ctx, atom, direction ^ 12, dmi.EAST)
+                else:
+                    yield create_tube_overlay(ctx, atom, direction ^ 12, dmi.WEST)
+        else:
+            yield create_tube_overlay(ctx, atom, direction)
+
+def create_tube_overlay(ctx, atom, direction, shift_dir=None):
+    copy = objtree.Atom(ctx.objtree.root, atom.loc)
+    copy['dir'] = direction
+    copy['layer'] = atom['layer']
+    copy['icon'] = atom['icon']
+    if shift_dir:
+        copy['icon_state'] = '"decorative_diag"'
+        if shift_dir == dmi.NORTH:
+            copy['pixel_y'] = 32
+        elif shift_dir == dmi.SOUTH:
+            copy['pixel_y'] = -32
+        elif shift_dir == dmi.EAST:
+            copy['pixel_x'] = 32
+        elif shift_dir == dmi.WEST:
+            copy['pixel_x'] = -32
+    else:
+        copy['icon_state'] = '"decorative"'
+    return copy
 
 # ----------
 # Command line

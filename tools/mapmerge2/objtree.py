@@ -101,7 +101,7 @@ class _Base:
 class Type(_Base):
     # 'parent' is always the parent according to the tree
     # 'parent_type' differs for types which set it, and affects inheritance
-    __slots__ = ['root', 'parent', 'parent_type', 'name', 'path', 'children']
+    __slots__ = ['root', 'parent', 'parent_type', 'name', 'path', 'children', 'procs']
 
     def __init__(self, parent, name, vars=None):
         super().__init__(parent, vars)
@@ -110,6 +110,7 @@ class Type(_Base):
         self.name = name
         self.path = f"{parent.path}/{name}"
         self.children = OrderedDict()
+        self.procs = set()
 
         assert self.path not in self.root._types
         assert name not in self.parent.children
@@ -166,6 +167,7 @@ class _RootType(Type):
         self.parent = self.parent_type = None
         self.name = self.path = ''
         self.children = OrderedDict()
+        self.procs = set()
 
     def __str__(self):
         return '<root>'
@@ -213,7 +215,7 @@ def _parse_children(ty, element):
             name, value = _parse_var(child)
             ty[name] = value
         elif child.tag in ('proc', 'verb'):
-            pass  # TODO
+            ty.procs.add(child.text.rstrip())
         else:
             raise ValueError(child.tag)
 
