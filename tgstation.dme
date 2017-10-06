@@ -745,6 +745,7 @@
 #include "code\game\objects\items\cosmetics.dm"
 #include "code\game\objects\items\courtroom.dm"
 #include "code\game\objects\items\crayons.dm"
+#include "code\game\objects\items\dakis.dm"
 #include "code\game\objects\items\defib.dm"
 #include "code\game\objects\items\dehy_carp.dm"
 #include "code\game\objects\items\dice.dm"
