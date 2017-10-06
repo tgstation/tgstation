@@ -60,9 +60,8 @@
 	addtimer(CALLBACK(src, .proc/spam_flag_false), 18) // calibrates before starting the honk
 
 /mob/living/simple_animal/bot/honkbot/proc/react_buzz()
-	spawn(5)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1, -1)
-		sensor_blink()
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1, -1)
+	sensor_blink()
 
 /mob/living/simple_animal/bot/honkbot/turn_on()
 	..()
@@ -115,7 +114,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 /mob/living/simple_animal/bot/honkbot/attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == "harm")
 		retaliate(H)
-		react_buzz()
+		addtimer(CALLBACK(src, .proc/react_buzz), 5)
 	return ..()
 
 
@@ -124,7 +123,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		return
 	if(!istype(W, /obj/item/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) ) // Check for welding tool to fix #2432.
 		retaliate(user)
-		react_buzz()
+		addtimer(CALLBACK(src, .proc/react_buzz), 5)
 	..()
 
 /mob/living/simple_animal/bot/honkbot/emag_act(mob/user)
@@ -298,7 +297,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
-	frustration = 0 //is counter, builds up to 5
+	frustration = 0
 	INVOKE_ASYNC(src, .proc/handle_automated_action) //responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_hunt()
@@ -336,8 +335,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 				speak("Honk!")
 				visible_message("<b>[src]</b> starts chasing [C.name]!")
 				mode = BOT_HUNT
-				spawn(0)
-					handle_automated_action()	// ensure bot quickly responds to a perp
+				INVOKE_ASYNC(src, .proc/handle_automated_action)
 				break
 			else
 				continue
