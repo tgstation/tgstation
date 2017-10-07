@@ -15,7 +15,7 @@
 /datum/gas_reaction/hippie_fusion/react(datum/gas_mixture/air, atom/location)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/reaction_energy = air.thermal_energy()
+	var/reaction_energy = THERMAL_ENERGY(air)
 
 	if((cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])/air.total_moles() < FUSION_PURITY_THRESHOLD_HIPPIE || reaction_energy < PLASMA_BINDING_ENERGY_HIPPIE)
 		//Fusion wont occur if the level of impurities is too high.
