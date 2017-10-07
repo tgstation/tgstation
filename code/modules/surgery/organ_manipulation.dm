@@ -121,7 +121,7 @@
 			tool = I
 		else
 			I = tool
-		user.drop_item()
+		user.temporarilyRemoveItemFromInventory(I, TRUE)
 		I.Insert(target)
 		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
 			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")

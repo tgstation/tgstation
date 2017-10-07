@@ -95,9 +95,8 @@
 			if(beaker)
 				to_chat(user, "<span class='warning'>A container is already loaded into the machine.</span>")
 			else
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(O, src))
 					return
-				O.loc = src
 				beaker = O
 				to_chat(user, "<span class='notice'>You add the container to the machine.</span>")
 				update_icon()

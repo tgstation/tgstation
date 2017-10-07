@@ -92,10 +92,9 @@
 		if(status == ORGAN_ORGANIC)
 			var/obj/item/reagent_containers/food/snacks/S = prepare_eat()
 			if(S)
-				H.drop_item()
-				H.put_in_active_hand(S)
-				S.attack(H, H)
 				qdel(src)
+				if(H.put_in_active_hand(S))
+					S.attack(H, H)
 	else
 		..()
 

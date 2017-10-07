@@ -59,11 +59,9 @@
 	close_all()
 
 	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
-	var/obj/item/I = new foldable(get_turf(src))
-	user.drop_item()
-	user.put_in_hands(I)
-	user.update_inv_hands()
+	var/obj/item/I = new foldable
 	qdel(src)
+	user.put_in_hands(I)
 
 /obj/item/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/packageWrap))

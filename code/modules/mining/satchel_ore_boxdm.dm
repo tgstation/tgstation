@@ -11,9 +11,7 @@
 
 /obj/structure/ore_box/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/ore))
-		if(!user.drop_item())
-			return
-		W.forceMove(src)
+		user.transferItemToLoc(W, src)
 	else if (istype(W, /obj/item/storage))
 		var/obj/item/storage/S = W
 		for(var/obj/item/ore/O in S.contents)
