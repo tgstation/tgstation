@@ -28,7 +28,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								)
 
 /obj/machinery/r_n_d/circuit_imprinter/Initialize()
-	AddComponent(/datum/component/material_container, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE),
+	AddComponent(/datum/component/material_container/precise, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE),
 		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready))
 	create_reagents(0)
 	return ..()
