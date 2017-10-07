@@ -12,6 +12,7 @@
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = TRUE
+	desc = "A covered turret that shoots at its enemies."
 	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
@@ -390,7 +391,7 @@
 				if(!in_faction(C))
 					targets += C
 
-		if(istype(A, /obj/mecha))
+		if(ismecha(A))
 			var/obj/mecha/M = A
 			//If there is a user and they're not in our faction
 			if(M.occupant && !in_faction(M.occupant))
@@ -557,6 +558,7 @@
 	base_icon_state = "syndie"
 	faction = "syndicate"
 	emp_vunerable = 0
+	desc = "A ballistic machine gun auto-turret."
 
 /obj/machinery/porta_turret/syndicate/energy
 	icon_state = "standard_stun"
@@ -565,6 +567,7 @@
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
+	desc = "An energy blaster auto-turret."
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return

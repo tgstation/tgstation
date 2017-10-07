@@ -14,7 +14,8 @@
 	range = RANGED
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM) return
+	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+		return
 	var/turf/T = get_turf(target)
 	if(T)
 		do_teleport(chassis, T, 4)
@@ -112,7 +113,8 @@
 			else
 				atoms = orange(3, target)
 			for(var/atom/movable/A in atoms)
-				if(A.anchored) continue
+				if(A.anchored)
+					continue
 				spawn(0)
 					var/iter = 5-get_dist(A,target)
 					for(var/i=0 to iter)
@@ -208,7 +210,8 @@
 	..()
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/get_equip_info()
-	if(!chassis) return
+	if(!chassis)
+		return
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=\ref[src];toggle_repairs=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 
@@ -315,7 +318,8 @@
 			log_message("Deactivated.")
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/get_equip_info()
-	if(!chassis) return
+	if(!chassis)
+		return
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=\ref[src];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 
@@ -426,7 +430,7 @@
 	if(!istype(T))
 		return
 	var/datum/gas_mixture/GM = new
-	GM.assert_gas("plasma")
+	ASSERT_GAS("plasma", GM)
 	if(prob(10))
 		GM.gases["plasma"][MOLES] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire

@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Gutlunches will now once again look for gibs to eat."

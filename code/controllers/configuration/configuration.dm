@@ -24,8 +24,7 @@ GLOBAL_PROTECT(config_dir)
 	LoadModes()
 	for(var/I in config_files)
 		LoadEntries(I)
-	if(Get(/datum/config_entry/flag/maprotation))
-		loadmaplist(CONFIG_MAPS_FILE)
+	loadmaplist(CONFIG_MAPS_FILE)
 
 /datum/controller/configuration/Destroy()
 	entries_by_type.Cut()
@@ -75,6 +74,10 @@ GLOBAL_PROTECT(config_dir)
 		if(copytext(L, 1, 2) == "#")
 			continue
 
+		var/lockthis = copytext(L, 1, 2) == "@"
+		if(lockthis)
+			L = copytext(L, 2)
+
 		var/pos = findtext(L, " ")
 		var/entry = null
 		var/value = null
@@ -96,6 +99,9 @@ GLOBAL_PROTECT(config_dir)
 		if(filename != E.resident_file)
 			log_config("Found [entry] in [filename] when it should have been in [E.resident_file]! Ignoring.")
 			continue
+
+		if(lockthis)
+			E.protection |= CONFIG_ENTRY_LOCKED
 
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)
@@ -170,6 +176,7 @@ GLOBAL_PROTECT(config_dir)
 
 /datum/controller/configuration/proc/loadmaplist(filename)
 	filename = "[GLOB.config_dir][filename]"
+	log_config("Loading config file [filename]...")
 	var/list/Lines = world.file2list(filename)
 
 	var/datum/map_config/currentmap = null

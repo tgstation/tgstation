@@ -48,7 +48,7 @@
 	if(pockets && over_object == M)
 		return pockets.MouseDrop(over_object)
 
-	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+	if(ismecha(M.loc)) // stops inventory actions in a mech
 		return
 
 	if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
@@ -592,7 +592,7 @@ BLIND     // can't see anything
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
 			return
 		else
-			if(user && !user.drop_item())
+			if(user && !user.temporarilyRemoveItemFromInventory(I))
 				return
 			if(!A.attach(src, user))
 				return

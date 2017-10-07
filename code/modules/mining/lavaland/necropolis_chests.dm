@@ -435,7 +435,7 @@
 		if(!over_object)
 			return
 
-		if (istype(usr.loc, /obj/mecha))
+		if(ismecha(usr.loc))
 			return
 
 		if(!M.incapacitated())
@@ -932,6 +932,8 @@
 	name = "bubblegum chest"
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
+	new /obj/item/clothing/suit/space/hostile_environment(src)
+	new /obj/item/clothing/head/helmet/space/hostile_environment(src)
 	var/loot = rand(1,3)
 	switch(loot)
 		if(1)
@@ -1003,7 +1005,7 @@
 			if(H == L)
 				continue
 			to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>")
-			H.put_in_hands_or_del(new /obj/item/kitchen/knife/butcher(H))
+			H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
 
 	qdel(src)
 

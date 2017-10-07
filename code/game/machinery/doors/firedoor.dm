@@ -424,7 +424,6 @@
 					return
 				if(constructionStep != CONSTRUCTION_NOCIRCUIT)
 					return
-				user.drop_item()
 				qdel(C)
 				user.visible_message("<span class='notice'>[user] adds a circuit to [src].</span>", \
 									 "<span class='notice'>You insert and secure [C].</span>")

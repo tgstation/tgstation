@@ -254,7 +254,7 @@
 			if(!isturf(loc))
 				to_chat(user, "<span class='warning'>You cannot install[M], the frame has to be standing on the ground to be perfectly precise!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(M))
 				to_chat(user, "<span class='warning'>[M] is stuck to your hand!</span>")
 				return
 			qdel(M)

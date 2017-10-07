@@ -107,20 +107,19 @@
 		var/amount = weight * units_per_weight
 		reagents.add_reagent(reagent, amount)
 
-/obj/item/toy/crayon/proc/use_charges(amount)
+/obj/item/toy/crayon/proc/use_charges(mob/user, amount = 1, requires_full = TRUE)
 	// Returns number of charges actually used
-	switch(paint_mode)
-		if(PAINT_LARGE_HORIZONTAL)
-			amount *= 3
-
 	if(charges == -1)
 		. = amount
 		refill()
 	else
-		. = min(charges_left, amount)
-		charges_left -= .
+		if(check_empty(user, amount, requires_full))
+			return 0
+		else
+			. = min(charges_left, amount)
+			charges_left -= .
 
-/obj/item/toy/crayon/proc/check_empty(mob/user)
+/obj/item/toy/crayon/proc/check_empty(mob/user, amount = 1, requires_full = TRUE)
 	// When eating a crayon, check_empty() can be called twice producing
 	// two messages unless we check for being deleted first
 	if(QDELETED(src))
@@ -131,9 +130,12 @@
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		to_chat(user, "<span class='warning'>There is no more of \the [src.name] left!</span>")
+		to_chat(user, "<span class='warning'>There is no more of [src] left!</span>")
 		if(self_contained)
 			qdel(src)
+		. = TRUE
+	else if(charges_left < amount && requires_full)
+		to_chat(user, "<span class='warning'>There is not enough of [src] left!</span>")
 		. = TRUE
 
 /obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
@@ -299,7 +301,7 @@
 	var/takes_time = !instant
 
 	var/wait_time = 50
-	if(PAINT_LARGE_HORIZONTAL)
+	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
 
 	if(takes_time)
@@ -344,7 +346,7 @@
 	var/cost = 1
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		cost = 5
-	. = use_charges(cost)
+	. = use_charges(user, cost)
 	var/fraction = min(1, . / reagents.maximum_volume)
 	if(affected_turfs.len)
 		fraction /= affected_turfs.len
@@ -356,7 +358,7 @@
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
 		to_chat(user, "You take a bite of the [src.name]. Delicious!")
-		var/eaten = use_charges(5)
+		var/eaten = use_charges(user, 5, FALSE)
 		if(check_empty(user)) //Prevents divsion by zero
 			return
 		var/fraction = min(eaten / reagents.total_volume, 1)
@@ -528,7 +530,7 @@
 			H.lip_style = "spray_face"
 			H.lip_color = paint_color
 			H.update_body()
-		var/used = use_charges(10)
+		var/used = use_charges(user, 10, FALSE)
 		var/fraction = min(1, used / reagents.maximum_volume)
 		reagents.reaction(user, VAPOR, fraction * volume_multiplier)
 		reagents.trans_to(user, used, volume_multiplier)
@@ -584,7 +586,7 @@
 			H.update_body()
 
 		// Caution, spray cans contain inflammable substances
-		. = use_charges(10)
+		. = use_charges(user, 10, FALSE)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(C, VAPOR, fraction * volume_multiplier)
 
@@ -597,7 +599,7 @@
 				target.set_opacity(255)
 			else
 				target.set_opacity(initial(target.opacity))
-		. = use_charges(2)
+		. = use_charges(user, 2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(target, TOUCH, fraction * volume_multiplier)
 		reagents.trans_to(target, ., volume_multiplier)

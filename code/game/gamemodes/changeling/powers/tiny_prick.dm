@@ -77,10 +77,10 @@
 		return
 	..()
 
-/obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
 	if(!..())
 		return
-	if((target.disabilities & HUSK) || !target.has_dna())
+	if((target.disabilities & HUSK) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
@@ -127,8 +127,9 @@
 /obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", object="falso armblade sting")
 
-	if(!target.drop_item())
-		to_chat(user, "<span class='warning'>The [target.get_active_held_item()] is stuck to their hand, you cannot grow a false armblade over it!</span>")
+	var/obj/item/held = target.get_active_held_item()
+	if(held && !target.dropItemToGround(held))
+		to_chat(user, "<span class='warning'>[held] is stuck to their hand, you cannot grow a false armblade over it!</span>")
 		return
 
 	if(ismonkey(target))

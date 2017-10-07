@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	desc = "One can only guess that this is a bunch of wood."
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	origin_tech = "materials=1;biotech=1"
 	sheettype = "wood"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
@@ -270,7 +270,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	desc = "Sheets of cold metal with shifting inscriptions writ upon them."
 	singular_name = "runed metal sheet"
 	icon_state = "sheet-runed"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	sheettype = "runed"
 	merge_type = /obj/item/stack/sheet/runed_metal
 	novariants = TRUE
@@ -322,7 +322,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	desc = "Sheets made out of brass."
 	singular_name = "brass sheet"
 	icon_state = "sheet-brass"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	throwforce = 10
 	max_amount = 50

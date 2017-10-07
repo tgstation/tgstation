@@ -85,7 +85,7 @@
 					src.grille += 1
 			else if(istype(O, /obj/machinery/door))
 				src.door += 1
-			else if(istype(O, /obj/machinery))
+			else if(ismachinery(O))
 				src.mach += 1
 
 	if(count_territories)

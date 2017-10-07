@@ -21,15 +21,6 @@
 
 	sight |= SEE_TURFS
 
-/*
-	var/list/watch_locations = list()
-	for(var/obj/effect/landmark/landmark in landmarks_list)
-		if(landmark.tag == "landmark*new_player")
-			watch_locations += landmark.loc
-
-	if(watch_locations.len>0)
-		loc = pick(watch_locations)
-*/
 	new_player_panel()
 	client.playtitlemusic()
 	if(SSticker.current_state < GAME_STATE_SETTING_UP)

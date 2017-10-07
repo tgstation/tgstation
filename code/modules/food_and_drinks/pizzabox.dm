@@ -178,20 +178,18 @@
 			if(pizza)
 				to_chat(user, "<span class='warning'>[src] already has \a [pizza.name]!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			pizza = I
-			I.loc = src
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 			update_icon()
 			return
 	else if(istype(I, /obj/item/bombcore/pizza))
 		if(open && !bomb)
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			wires = new /datum/wires/explosive/pizza(src)
 			bomb = I
-			I.loc = src
 			to_chat(user, "<span class='notice'>You put [I] in [src]. Sneeki breeki...</span>")
 			update_icon()
 			return

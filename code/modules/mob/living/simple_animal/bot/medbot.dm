@@ -223,10 +223,9 @@
 		if(!isnull(reagent_glass))
 			to_chat(user, "<span class='warning'>There is already a beaker loaded!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(W, src))
 			return
 
-		W.loc = src
 		reagent_glass = W
 		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		show_controls(user)
@@ -543,4 +542,4 @@
 	declare_cooldown = world.time + 200
 
 /obj/machinery/bot_core/medbot
-	req_one_access =list(ACCESS_MEDICAL, ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_MEDICAL, ACCESS_ROBOTICS)

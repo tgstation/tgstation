@@ -89,7 +89,8 @@
 			I = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
 			if(I && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				I = organs[I]
-				if(!I) return -1
+				if(!I)
+					return -1
 				user.visible_message("[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",
 					"<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>")
 			else
@@ -120,7 +121,7 @@
 			tool = I
 		else
 			I = tool
-		user.drop_item()
+		user.temporarilyRemoveItemFromInventory(I, TRUE)
 		I.Insert(target)
 		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
 			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")

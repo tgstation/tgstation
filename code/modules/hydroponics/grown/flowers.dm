@@ -188,7 +188,8 @@
 			log_game("[key_name(user)] set [key_name(M)] on fire")
 
 /obj/item/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1)
 	else

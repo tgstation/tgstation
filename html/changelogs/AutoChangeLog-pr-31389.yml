@@ -1,0 +1,4 @@
+author: "Y0SH1_M4S73R"
+delete-after: True
+changes: 
+  - balance: "Gygax overdrive consumes at least 100 power per step"

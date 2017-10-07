@@ -76,8 +76,12 @@
 
 /obj/structure/closet/examine(mob/user)
 	..()
+	if(welded)
+		to_chat(user, "<span class='notice'>It's welded shut.</span>")
 	if(anchored)
-		to_chat(user, "It is anchored to the ground.")
+		to_chat(user, "<span class='notice'>It is <b>bolted</b> to the ground.</span>")
+	if(opened)
+		to_chat(user, "<span class='notice'>The parts are <b>welded</b> together.</span>")
 	else if(secure && !opened)
 		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
 
@@ -225,8 +229,7 @@
 									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
 				deconstruct(TRUE)
 				return 0
-		if(user.drop_item()) // so we put in unlit welder too
-			W.forceMove(loc)
+		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return 1
 	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
 		var/obj/item/weldingtool/WT = W

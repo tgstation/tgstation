@@ -122,7 +122,7 @@
 	channels = list("Service" = 1)
 
 /obj/item/device/encryptionkey/headset_cent
-	name = "CentCom radio encryption key"
+	name = "\improper CentCom radio encryption key"
 	desc = "An encryption key for a radio headset.  To access the CentCom channel, use :y."
 	icon_state = "cent_cypherkey"
 	independent = TRUE

@@ -154,9 +154,3 @@
 #define ui_ghost_reenter_corpse "SOUTH:6,CENTER:24"
 #define ui_ghost_teleport "SOUTH:6,CENTER+1:24"
 #define ui_ghost_pai "SOUTH: 6, CENTER+2:24"
-
-//Hand of God, god
-
-#define ui_deityhealth "EAST-1:28,CENTER-2:13"
-#define ui_deitypower	"EAST-1:28,CENTER-1:15"
-#define ui_deityfollowers "EAST-1:28,CENTER:17"

@@ -156,19 +156,24 @@
 				if(precision)
 					the_targets -= my_target
 				var/datum/reagents/R = new/datum/reagents(5)
-				if(!W) return
+				if(!W)
+					return
 				W.reagents = R
 				R.my_atom = W
-				if(!W || !src) return
+				if(!W || !src)
+					return
 				src.reagents.trans_to(W,1)
 				for(var/b=0, b<power, b++)
 					step_towards(W,my_target)
-					if(!W || !W.reagents) return
+					if(!W || !W.reagents)
+						return
 					W.reagents.reaction(get_turf(W))
 					for(var/A in get_turf(W))
-						if(!W) return
+						if(!W)
+							return
 						W.reagents.reaction(A)
-					if(W.loc == my_target) break
+					if(W.loc == my_target)
+						break
 					sleep(2)
 
 	else

@@ -1,0 +1,4 @@
+author: "Thefastfoodguy"
+delete-after: True
+changes: 
+  - bugfix: "Antimatter shielding that can't find a control unit won't delete itself anymore"

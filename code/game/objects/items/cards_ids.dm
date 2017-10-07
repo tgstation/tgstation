@@ -235,7 +235,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/ert
 	name = "\improper CentCom ID"
-	desc = "A ERT ID card."
+	desc = "An ERT ID card."
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"

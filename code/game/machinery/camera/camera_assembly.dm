@@ -109,11 +109,10 @@
 
 	// Upgrades!
 	if(is_type_in_typecache(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
-		if(!user.drop_item(W))
+		if(!user.transferItemToLoc(W, src))
 			return
 		to_chat(user, "<span class='notice'>You attach \the [W] into the assembly inner circuits.</span>")
 		upgrades += W
-		W.forceMove(src)
 		return
 
 	// Taking out upgrades
