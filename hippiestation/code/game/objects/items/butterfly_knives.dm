@@ -67,7 +67,7 @@
 	playsound(loc,'hippiestation/sound/weapons/knifecrit.ogg', 40, 1, -1)
 	user.do_attack_animation(U)
 	U.apply_damage(damage, BRUTE, affecting, U.getarmor(affecting, "melee"))
-	U.drop_item()
+	U.dropItemToGround(U.get_active_held_item())
 
 	add_logs(user, U, "backstabbed", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 

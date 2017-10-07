@@ -154,7 +154,7 @@
 
 	if(istype(I, /obj/item/paper))
 		if(!istype(P))
-			user.drop_item()
+			user.dropItemToGround(user.get_active_held_item())
 			I.loc = src
 			P = I
 			to_chat(user, "<span class='notice'>You put \the [P] in \the [src].")
@@ -163,7 +163,7 @@
 	if(istype(I, /obj/item/organ/butt))
 		if(!istype(P))
 			if(!istype(B))
-				user.drop_item()
+				user.dropItemToGround(user.get_active_held_item())
 				I.loc = src
 				B = I
 				to_chat(user, "<span class='notice'>You put \the [B] in \the [src].</span>")
@@ -200,7 +200,7 @@
 	if(user in src)
 		return
 	if(opened)
-		if(user.drop_item())
+		if(user.dropItemToGround(W))
 			W.forceMove(loc)
 			return TRUE
 	else if(istype(W, /obj/item/staplegun) && !welded)

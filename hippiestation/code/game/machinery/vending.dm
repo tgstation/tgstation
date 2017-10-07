@@ -257,7 +257,7 @@
 			attack_hand(user)
 		return
 	else if(istype(W, /obj/item/coin) && premium.len > 0)
-		if(!user.drop_item())
+		if(!user.dropItemToGround(W))
 			return
 		if(coin)
 			user << "<span class='warning'>There is already [coin] in the [src]!</span>"

@@ -65,14 +65,14 @@
 		return ..()
 	if (istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1) ) //All open containers. Too bad they all look like beakers in the machine.
 		if (!beaker)
-			if(!user.drop_item())
-				return 1
+			if(!user.dropItemToGround(I))
+				return TRUE
 			beaker =  I
 			beaker.loc = src
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>There's already a container inside.</span>")
-		return 1 //no afterattack
+		return TRUE //no afterattack
 	if(!is_type_in_list(I, blend_items) && !I.reagents)
 		return ..()
 	if(is_type_in_list(I, dried_items))
@@ -80,13 +80,13 @@
 			var/obj/item/reagent_containers/food/snacks/grown/G = I
 			if(!G.dry)
 				to_chat(user, "<span class='warning'>You must dry that first!</span>")
-			user.drop_item()
+			user.dropItemToGround(I)
 			I.loc = src
 			LAZYADD(holdingitems, I)
-			return 0
+			return FALSE
 	if(LAZYLEN(holdingitems) >= limit)
 		to_chat(usr, "The machine cannot hold anymore items.")
-		return 1
+		return TRUE
 	if(istype(I, /obj/item/storage/bag))
 		var/obj/item/storage/bag/B = I
 		for (var/obj/item/reagent_containers/food/snacks/grown/G in B.contents)
@@ -99,7 +99,7 @@
 			to_chat(user, "<span class='notice'>You empty the [I] into the [src].</span>")
 		return 1
 	else
-		user.drop_item()
+		user.dropItemToGround(I)
 		I.loc = src
 		LAZYADD(holdingitems, I)
 		return 0

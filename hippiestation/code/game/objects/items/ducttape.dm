@@ -18,7 +18,7 @@
 		playsound(user, 'hippiestation/sound/misc/ducttape2.ogg', 50, 1)
 		H.apply_damage(2, BRUTE, "head")
 		user.emote("scream")
-		user.drop_item()
+		user.dropItemToGround(user.get_active_held_item())
 		used = TRUE
 		qdel(src)
 	else
@@ -34,7 +34,7 @@
 		to_chat(H, "<span class='userdanger'>Your tape was forcefully removed from your mouth. It's not pleasant.</span>")
 		playsound(user, 'hippiestation/sound/misc/ducttape2.ogg', 50, 1)
 		H.apply_damage(2, BRUTE, "head")
-		user.drop_item()
+		user.dropItemToGround(user.get_active_held_item())
 		user.emote("scream")
 		qdel(src)
 
@@ -70,7 +70,7 @@
 		var/replace = (user.get_inactive_held_item()==W)
 		qdel(W)
 		if(src.use(3) == 0)
-			user.drop_item()
+			user.dropItemToGround(src)
 			qdel(src)
 		if(replace)
 			user.put_in_hands(new_item)
@@ -81,7 +81,7 @@
 		var/replace = (user.get_inactive_held_item()==W)
 		qdel(W)
 		if(src.use(3) == 0)
-			user.drop_item()
+			user.dropItemToGround(src)
 			qdel(src)
 		if(replace)
 			user.put_in_hands(new_item)
@@ -102,7 +102,7 @@
 			to_chat(user, "<span class='notice'>You tape [H]'s mouth shut.</span>")
 			playsound(loc, 'hippiestation/sound/misc/ducttape1.ogg', 50, 1)
 			if(src.use(2) == 0)
-				user.drop_item()
+				user.dropItemToGround(src)
 				qdel(src)
 			add_logs(user, H, "mouth-taped")
 		else

@@ -69,14 +69,14 @@
 			inv.remove_from_storage(I, T)
 	QDEL_NULL(inv)
 	..()
-	
+
 /obj/item/organ/butt/attackby(var/obj/item/W, mob/user as mob, params) // copypasting bot manufucturing process, im a lazy fuck
 
 	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
 		if(istype(src, /obj/item/organ/butt/bluebutt)) //nobody sprited a blue butt buttbot
 			to_chat(user, "<span class='warning'>Why the heck would you want to make a robot out of this?</span>")
 			return
-		user.drop_item()
+		user.dropItemToGround(W)
 		qdel(W)
 		var/turf/T = get_turf(src.loc)
 		var/mob/living/simple_animal/bot/buttbot/B = new /mob/living/simple_animal/bot/buttbot(T)
@@ -85,7 +85,7 @@
 			B.icon_state = "buttbot_xeno"
 			B.speech_list = list("hissing butts", "hiss hiss motherfucker", "nice trophy nerd", "butt", "woop get an alien inspection")
 		to_chat(user, "<span class='notice'>You add the robot arm to the butt and... What?</span>")
-		user.drop_item(src)
+		user.dropItemToGround(src)
 		qdel(src)
 
 /obj/item/organ/butt/throw_impact(atom/hit_atom)

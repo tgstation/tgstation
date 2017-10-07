@@ -12,7 +12,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(prob(50))
-			C.drop_item()
+			C.dropItemToGround(C.get_active_held_item())
 		..()
 
 

@@ -154,7 +154,7 @@
 		to_chat(user, "<span class='notice'>You add the uranium to the [src].</span>")
 		var/obj/item/stack/sheet/mineral/uranium/U = I
 		material_amt = Clamp(material_amt += U.amount * 1000, 0, 50000)//50 sheets max
-		user.drop_item()
+		user.dropItemToGround(I)
 		qdel(I)//it's a var now
 		return
 
@@ -258,7 +258,7 @@
 			return
 		to_chat(user, "<span class='notice'>You add the bluespace material to the [src].</span>")
 		crystal_amt += 1//10 crystals max
-		user.drop_item()
+		user.dropItemToGround(I)
 		qdel(I)//it's a var now
 		return
 
