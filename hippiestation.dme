@@ -2406,6 +2406,7 @@
 #include "hippiestation\code\modules\mob\living\carbon\examine.dm"
 #include "hippiestation\code\modules\mob\living\carbon\reindex_screams.dm"
 #include "hippiestation\code\modules\mob\living\carbon\human\emote.dm"
+#include "hippiestation\code\modules\mob\living\carbon\human\human.dm"
 #include "hippiestation\code\modules\mob\living\carbon\human\inventory.dm"
 #include "hippiestation\code\modules\mob\living\carbon\human\life.dm"
 #include "hippiestation\code\modules\mob\living\carbon\human\species_types\avians.dm"
