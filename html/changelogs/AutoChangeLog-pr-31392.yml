@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - bugfix: "Neutering a disease symptom now produces a unique ID that will ensure the PANDEMIC machine copies it properly."
