@@ -107,7 +107,7 @@
 		return (total_amount - total_amount_saved)
 	return FALSE
 
-/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt = 0, mob/user/user)
+/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt = 0, mob/user)
 	if(amt <= 0)
 		return FALSE
 
@@ -134,7 +134,7 @@
 	last_amount_inserted = amt
 	return amt
 
-/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, mob/user/user)
+/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, mob/user)
 	if(!I)
 		return FALSE
 	if(istype(I, /obj/item/stack))
