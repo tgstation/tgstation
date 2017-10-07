@@ -30349,6 +30349,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "bbP" = (
