@@ -116,6 +116,8 @@
 		if(requested_amount <= 0)
 			return FALSE
 		amt = requested_amount
+		if(QDELETED(S) || QDELETED(user) || !user.Adjacent(src) || !user.canUseTopic())
+			return FALSE	//Out of range, doesn't exist, or can't use.
 
 	if(amt > S.amount)
 		amt = S.amount
