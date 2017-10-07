@@ -131,7 +131,7 @@ Bonus
 /datum/symptom/heal/brute/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = 2 * power
 
-	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+	var/list/parts = M.get_damaged_bodyparts(1,0) //brute only
 
 	if(!parts.len)
 		return
@@ -175,7 +175,7 @@ Bonus
 /datum/symptom/heal/brute/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = 4 * power
 
-	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+	var/list/parts = M.get_damaged_bodyparts(1,0) //brute only
 
 	if(M.getCloneLoss() > 0)
 		M.adjustCloneLoss(-1)
@@ -225,7 +225,7 @@ Bonus
 /datum/symptom/heal/burn/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = 2 * power
 
-	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+	var/list/parts = M.get_damaged_bodyparts(0,1) //burn only
 
 	if(!parts.len)
 		return
@@ -268,7 +268,7 @@ Bonus
 /datum/symptom/heal/burn/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = 4 * power
 
-	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+	var/list/parts = M.get_damaged_bodyparts(0,1) //burn only
 
 	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (10 * heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
