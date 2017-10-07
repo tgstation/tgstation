@@ -47,7 +47,7 @@
 						  "<span class='userdanger'>[A] grabs your wrist and violently wrenches it to the side!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.emote("scream")
-		D.drop_item()
+		D.dropItemToGround(D.get_active_held_item())
 		D.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
 		D.Stun(60)
 		return 1
@@ -85,7 +85,7 @@
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
 		D.apply_damage(20, BRUTE, "head")
-		D.drop_item()
+		D.dropItemToGround(D.get_active_held_item())
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		D.Stun(80)
 		return 1
@@ -174,7 +174,7 @@
 	to_chat(user, message)
 	var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null)
 	theSleepingCarp.teach(user)
-	user.drop_item()
+	user.dropItemToGround(user.get_active_held_item())
 	visible_message("<span class='warning'>[src] lights up in fire and quickly burns to ash.</span>")
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	qdel(src)

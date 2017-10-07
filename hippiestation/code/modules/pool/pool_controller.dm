@@ -60,7 +60,7 @@
 			return
 		if(W.reagents.total_volume >= 100 && W.reagents.reagent_list.len == 1) //check if full and allow one reageant only.
 			beaker =  W
-			user.drop_item()
+			user.dropItemToGround(W)
 			W.loc = src
 			to_chat(user, "You add the beaker to the machine!")
 			updateUsrDialog()

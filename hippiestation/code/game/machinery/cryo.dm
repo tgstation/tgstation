@@ -27,7 +27,7 @@
 	var/obj/item/device/radio/radio
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
-	
+
 	var/running_bob_anim = FALSE
 	var/opening = FALSE
 
@@ -274,7 +274,7 @@
 		if(beaker)
 			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.dropItemToGround(I))
 			return
 		beaker = I
 		I.loc = src
@@ -383,5 +383,5 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return 0 //you can't see the pipe network when inside a cryo cell.
-	
+
 #undef CRYOMOBS

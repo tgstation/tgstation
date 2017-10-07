@@ -213,7 +213,7 @@
 						H.swimming = 1
 						return
 					else
-						H.drop_item()
+						H.dropItemToGround(H.get_active_held_item())
 						H.adjustOxyLoss(5)
 						H.emote("cough")
 						H.visible_message("<span class='danger'>[H] falls in and takes a drink!</span>",
