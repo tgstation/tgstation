@@ -11,7 +11,7 @@
 			 in you cannot leave and when it is destroyed it will explode catastrophically with you inside."
 	invocations = list("By the strength of the alloy...", "...call fourth the Arbiter!")
 	channel_time = 150 // This is a strong fucking weapon, 15 seconds channel time is getting off light I tell ya.
-	consumed_components = list(BELLIGERENT_EYE = 4, VANGUARD_COGWHEEL = 4, GEIS_CAPACITOR = 4, REPLICANT_ALLOY = 10, HIEROPHANT_ANSIBLE = 4) //It needs a bit of everything but its mostly made of alloy.
+	power_cost = 7500 //7.5 KW
 	usage_tip = "Neovgre is a powerful mech that will crush your enemies!"
 	invokers_required = 4
 	multiple_invokers_used = TRUE
