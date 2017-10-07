@@ -347,9 +347,6 @@ CONFIG_DEF(number/error_msg_delay)	// How long to wait between messaging admins 
 
 CONFIG_DEF(flag/irc_announce_new_game)
 
-<<<<<<< HEAD
-CONFIG_DEF(flag/debug_admin_hrefs)
-=======
 CONFIG_DEF(flag/debug_admin_hrefs)
 
 CONFIG_DEF(number/mc_tick_rate/base_mc_tick_rate)
@@ -373,4 +370,3 @@ CONFIG_TWEAK(number/mc_tick_rate/ValidateAndSet(str_val))
 	. = ..()
 	if (.)
 		Master.UpdateTickRate()
->>>>>>> 119f3fa02b... Allows editing config.allow_admin_ooccolor (#31371)
