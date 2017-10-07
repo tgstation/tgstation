@@ -290,7 +290,7 @@
 			continue
 		var/list/S_gases = S.air.gases
 		for(var/id in S_gases)
-			ASSERT_GAS(total, id)
+			ASSERT_GAS(id, total)
 			total_gases[id][MOLES] += S_gases[id][MOLES]
 		total.temperature += S.air.temperature
 

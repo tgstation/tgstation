@@ -16,7 +16,7 @@
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 	if(gas_type)
-		ASSERT_GAS(air_contents, gas_type)
+		ASSERT_GAS(gas_type, air_contents)
 		air_contents.gases[gas_type][MOLES] = AIR_CONTENTS
 		name = "[name] ([air_contents.gases[gas_type][GAS_META][META_GAS_NAME]])"
 
