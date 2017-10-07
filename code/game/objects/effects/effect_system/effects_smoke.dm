@@ -128,7 +128,7 @@
 
 /obj/effect/particle_effect/smoke/bad/smoke_mob(mob/living/carbon/M)
 	if(..())
-		M.drop_item()
+		M.drop_all_held_items()
 		M.adjustOxyLoss(1)
 		M.emote("cough")
 		return 1
@@ -169,7 +169,7 @@
 				qdel(H)
 				var/list/G_gases = G.gases
 				if(G_gases["plasma"])
-					G.assert_gas("n2")
+					ASSERT_GAS("n2", G)
 					G_gases["n2"][MOLES] += (G_gases["plasma"][MOLES])
 					G_gases["plasma"][MOLES] = 0
 					G.garbage_collect()
@@ -205,7 +205,6 @@
 
 /obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())
-		M.drop_item()
 		M.Sleeping(200)
 		M.emote("cough")
 		return 1

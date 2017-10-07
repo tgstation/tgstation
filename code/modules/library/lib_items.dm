@@ -84,9 +84,8 @@
 
 		if(2)
 			if(is_type_in_list(I, allowed_books))
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(I, src))
 					return
-				I.loc = src
 				update_icon()
 			else if(istype(I, /obj/item/storage/bag/books))
 				var/obj/item/storage/bag/books/B = I

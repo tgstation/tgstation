@@ -53,10 +53,11 @@
 
 
 /client/Northwest()
-	if(!usr.get_active_held_item())
+	var/obj/item/I = usr.get_active_held_item()
+	if(!I)
 		to_chat(usr, "<span class='warning'>You have nothing to drop in your hand!</span>")
 		return
-	usr.drop_item()
+	usr.dropItemToGround(I)
 
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
@@ -85,8 +86,8 @@
 
 /client/verb/drop_item()
 	set hidden = 1
-	if(!iscyborg(mob))
-		mob.drop_item_v()
+	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
+		mob.dropItemToGround(mob.get_active_held_item())
 	return
 
 

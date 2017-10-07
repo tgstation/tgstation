@@ -91,7 +91,7 @@
 	to_chat(synd_mind.current, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
 
 	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
-	synd_mind.current.put_in_hands_or_del(challenge)
+	synd_mind.current.put_in_hands(challenge, TRUE)
 
 	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/card/id)
 	if(foundIDs.len)
@@ -110,8 +110,7 @@
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
 		var/mob/living/carbon/human/H = synd_mind.current
-		P.forceMove(H.drop_location())
-		H.put_in_hands_or_del(P)
+		H.put_in_hands(P, TRUE)
 		H.update_icons()
 	else
 		nuke_code = "code will be provided later"
