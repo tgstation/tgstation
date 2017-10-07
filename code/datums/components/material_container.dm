@@ -25,9 +25,6 @@
 	//MAX_STACK_SIZE = 50
 	//MINERAL_MATERIAL_AMOUNT = 2000
 
-/datum/component/material_container/precise
-	precise_insertion = TRUE
-
 /datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition)
 	materials = list()
 	max_amount = max(0, max_amt)
@@ -69,11 +66,12 @@
 		return
 	var/requested_amount
 	if(istype(I, /obj/item/stack) && precise_insertion)
+		var/atom/current_parent = parent
 		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num|null
 		if(isnull(requested_amount) || (requested_amount <= 0))
-			return FALSE
-		if(QDELETED(I) || !(I in user) || QDELETED(user) || (!user.Adjacent(parent) && isatom(parent)) || !user.canUseTopic())
-			return FALSE	//Out of range, doesn't exist, can't use, or not holding it anymore.
+			return
+		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || !user.canUseTopic(current_parent) || !user.is_holding(I) || !user.Adjacent(current_parent))
+			return
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient amounts of metal or glass to be accepted by [parent].</span>")
