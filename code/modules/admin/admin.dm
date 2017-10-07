@@ -843,7 +843,7 @@
 		if(logout && CONFIG_GET(flag/announce_admin_logout))
 			string = pick(
 				"Admin logout: [key_name(src)]")
-		else if(!logout && CONFIG_GET(flag/announce_admin_login) && (prefs.toggles & ANNOUNCE_LOGIN))
+		else if(!logout && CONFIG_GET(flag/announce_admin_login) && (prefs.toggles & ANNOUNCE_LOGIN) && check_rights_for(src, R_ADMIN))
 			string = pick(
 				"Admin login: [key_name(src)]")
 		if(string)
