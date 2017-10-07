@@ -349,6 +349,7 @@ CONFIG_DEF(flag/irc_announce_new_game)
 
 CONFIG_DEF(flag/debug_admin_hrefs)
 
+
 CONFIG_DEF(number/mc_tick_rate/base_mc_tick_rate)
 	integer = FALSE
 	value = 1
