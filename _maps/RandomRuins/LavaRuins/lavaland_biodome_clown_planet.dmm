@@ -907,7 +907,7 @@
 	},
 /area/lavaland/surface/outdoors/explored)
 "gX" = (
-/turf/open/chasm/straight_down/lava_land_surface,
+/turf/open/chasm/lavaland,
 /area/lavaland/surface/outdoors/explored)
 "hY" = (
 /obj/machinery/light,
