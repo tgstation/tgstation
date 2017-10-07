@@ -56,7 +56,6 @@ CONFIG_DEF(flag/log_twitter)	// log certain expliotable parrots and other such f
 CONFIG_DEF(flag/log_world_topic)	// log all world.Topic() calls
 
 CONFIG_DEF(flag/allow_admin_ooccolor)	// Allows admins with relevant permissions to have their own ooc colour
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/allow_vote_restart)	// allow votes to restart
 
@@ -349,7 +348,6 @@ CONFIG_DEF(number/error_msg_delay)	// How long to wait between messaging admins 
 CONFIG_DEF(flag/irc_announce_new_game)
 
 CONFIG_DEF(flag/debug_admin_hrefs)
-
 
 CONFIG_DEF(number/mc_tick_rate/base_mc_tick_rate)
 	integer = FALSE
