@@ -71,8 +71,6 @@
 	for(var/datum/mind/vamp in pre_vamps)
 		spawn(rand(10,100))
 			vamp.add_antag_datum(ANTAG_DATUM_VAMPIRE)
-	if(!exchange_blue)
-		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += vampires
 	..()
 	return TRUE
