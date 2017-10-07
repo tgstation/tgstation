@@ -1,0 +1,4 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - rscadd: "Boxstation and Metastation's white ships now have navigation computers, letting you move them around in the station, deep space, and derelict z levels."
