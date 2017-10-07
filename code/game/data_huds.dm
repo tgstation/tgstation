@@ -8,10 +8,12 @@
 /* DATA HUD DATUMS */
 
 /atom/proc/add_to_all_human_data_huds()
-	for(var/datum/atom_hud/data/human/hud in GLOB.huds) hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/human/hud in GLOB.huds)
+		hud.add_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
-	for(var/datum/atom_hud/data/hud in GLOB.huds) hud.remove_from_hud(src)
+	for(var/datum/atom_hud/data/hud in GLOB.huds)
+		hud.remove_from_hud(src)
 
 /datum/atom_hud/data
 
@@ -21,10 +23,13 @@
 /datum/atom_hud/data/human/medical/basic
 
 /datum/atom_hud/data/human/medical/basic/proc/check_sensors(mob/living/carbon/human/H)
-	if(!istype(H)) return 0
+	if(!istype(H))
+		return 0
 	var/obj/item/clothing/under/U = H.w_uniform
-	if(!istype(U)) return 0
-	if(U.sensor_mode <= SENSOR_VITALS) return 0
+	if(!istype(U))
+		return 0
+	if(U.sensor_mode <= SENSOR_VITALS)
+		return 0
 	return 1
 
 /datum/atom_hud/data/human/medical/basic/add_to_single_hud(mob/M, mob/living/carbon/H)
@@ -132,7 +137,8 @@
 	B.update_suit_sensors(src)
 
 	var/turf/T = get_turf(src)
-	if (T) GLOB.crewmonitor.queueUpdate(T.z)
+	if (T)
+		GLOB.crewmonitor.queueUpdate(T.z)
 
 //called when a living mob changes health
 /mob/living/proc/med_hud_set_health()
@@ -192,7 +198,8 @@
 	sec_hud_set_security_status()
 
 	var/turf/T = get_turf(src)
-	if (T) GLOB.crewmonitor.queueUpdate(T.z)
+	if (T)
+		GLOB.crewmonitor.queueUpdate(T.z)
 
 /mob/living/carbon/human/proc/sec_hud_set_implants()
 	var/image/holder

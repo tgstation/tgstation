@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		icon_living = icon_state
 		copy_overlays(O)
 		add_overlay(googly_eyes)
-		if(isstructure(O) || istype(O, /obj/machinery))
+		if(isstructure(O) || ismachinery(O))
 			health = (anchored * 50) + 50
 			destroy_objects = 1
 			if(O.density && O.anchored)

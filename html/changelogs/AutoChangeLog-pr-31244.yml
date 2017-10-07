@@ -1,0 +1,4 @@
+author: "Xhuis and Y0SH1_M4S73R"
+delete-after: True
+changes: 
+  - bugfix: "Servants of Ratvar now spawn in as the actual race set on their preferences, with plasmamen getting the gear they need to not immediately die."

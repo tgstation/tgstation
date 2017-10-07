@@ -9,8 +9,10 @@
 	container_type = TRANSPARENT_1
 
 /obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
-	if(!proximity) return
-	if(!target.reagents) return
+	if(!proximity)
+		return
+	if(!target.reagents)
+		return
 
 	if(reagents.total_volume > 0)
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)

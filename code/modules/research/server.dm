@@ -31,7 +31,8 @@
 
 /obj/machinery/r_n_d/server/Initialize(mapload)
 	. = ..()
-	if(!files) files = new /datum/research(src)
+	if(!files)
+		files = new /datum/research(src)
 	var/list/temp_list
 	if(!id_with_upload.len)
 		temp_list = list()
@@ -254,7 +255,8 @@
 				dat += "[S.name] || "
 				dat += "<A href='?src=\ref[src];access=[S.server_id]'>Access Rights</A> | "
 				dat += "<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"
-				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
+				if(badmin)
+					dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
 				dat += "<BR>"
 
 		if(1) //Access rights menu
