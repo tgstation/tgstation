@@ -1,0 +1,6 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - tweak: "The MC will now reduce tick rate during high populations to keep it from fighting with byond for processing time."
+  - config: "Added config options to control MC tick rate"
+  - admin: "Admins can no longer manually control the mc's tick rate by editing the MC's processing value, instead you will have to edit the config datum's values for high/low pop tick rates."
