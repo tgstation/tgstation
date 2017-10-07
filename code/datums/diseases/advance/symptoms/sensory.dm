@@ -32,7 +32,8 @@ Bonus
 					  <b>Transmission 8:</b> Purges alcohol in the bloodstream."
 
 /datum/symptom/mind_restoration/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["resistance"] >= 6) //heal brain damage
 		brain_heal = TRUE
 	if(A.properties["transmittable"] >= 8) //purge alcohol
