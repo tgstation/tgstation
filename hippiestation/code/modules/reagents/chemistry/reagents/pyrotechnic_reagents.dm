@@ -311,22 +311,24 @@
 		var/turf/T = get_turf(M)
 		do_teleport(M, T, 2)
 
-/datum/reagent/cryogenic_fluid
+/datum/reagent/cryostylane
 	processes = TRUE
 
 /datum/reagent/cryostylane/process()
-	if(holder.has_reagent("oxygen"))
-		holder.remove_reagent("oxygen", 1)
-		holder.chem_temp -= 10
-		holder.handle_reactions()
+	if(holder)
+		if(holder.has_reagent("oxygen"))
+			holder.remove_reagent("oxygen", 1)
+			holder.chem_temp -= 10
+			holder.handle_reactions()
 	..()
 
 /datum/reagent/pyrosium
 	processes = TRUE
 
 /datum/reagent/pyrosium/process()
-	if(holder.has_reagent("oxygen"))
-		holder.remove_reagent("oxygen", 1)
-		holder.chem_temp += 10
-		holder.handle_reactions()
+	if(holder)
+		if(holder.has_reagent("oxygen"))
+			holder.remove_reagent("oxygen", 1)
+			holder.chem_temp += 10
+			holder.handle_reactions()
 	..()
