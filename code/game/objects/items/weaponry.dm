@@ -589,26 +589,29 @@
 /obj/item/slapper
 	name = "slapper"
 	desc = "This is how real men fight."
-	icon_state = "madeyoulook"
+	icon_state = "latexballon"
 	force = 1
 	throwforce = 0
 	flags_1 = DROPDEL_1 | ABSTRACT_1
 	attack_verb = list("slapped")
-	hitsound = 'sound/weapons/slap.ogg'
+	hitsound = 'sound/effects/snap.ogg'
 
 /obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
 	if(user.a_intent != INTENT_HARM)
-		var/aim_for_mouth = user.zone_selected == "mouth"
+		var/aim_for_face = ((user.zone_selected == "mouth") || (user.zone_selected == "eyes"))
 		user.do_attack_animation(M)
-		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
-		user.visible_message("<span class='danger'>[user] slaps [target] in the [(aim_for_mouth)?"face":zone_selected]!</span>",
- 		"<span class='notice'>You slap [target] in the [(aim_for_mouth)?"face":zone_selected]! </span>",\
+		playsound(M.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
+		user.visible_message("<span class='danger'>[user] slaps [M] in the [(aim_for_face)?"face":user.zone_selected]!</span>",
+ 		"<span class='notice'>You slap [M] in the [(aim_for_face)?"face":user.zone_selected]! </span>",\
  		"You hear a slap.")
-		M.endTailWag()
+		if(ishuman(M))
+			var/mob/living/carbon/human/L = M
+			L.endTailWag()
 		return
 	else
-		playsound(target.loc, 'sound/effects/snap.ogg', 50, 1, -1)
-		M.endTailWag()
+		if(ishuman(M))
+			var/mob/living/carbon/human/L = M
+			L.endTailWag()
 		..()
 
 /obj/item/proc/can_trigger_gun(mob/living/user)
