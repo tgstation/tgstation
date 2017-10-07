@@ -597,21 +597,18 @@
 	hitsound = 'sound/effects/snap.ogg'
 
 /obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
+	if(ishuman(M))
+		var/mob/living/carbon/human/L = M
+		L.endTailWag()
 	if(user.a_intent != INTENT_HARM)
-		var/aim_for_face = ((user.zone_selected == "mouth") || (user.zone_selected == "eyes"))
+		var/aim_for_face = ((user.zone_selected == "mouth") || (user.zone_selected == "eyes") || (user.zone_selected == "head"))
 		user.do_attack_animation(M)
-		playsound(M.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
+		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [M] in the [(aim_for_face)?"face":user.zone_selected]!</span>",
  		"<span class='notice'>You slap [M] in the [(aim_for_face)?"face":user.zone_selected]! </span>",\
  		"You hear a slap.")
-		if(ishuman(M))
-			var/mob/living/carbon/human/L = M
-			L.endTailWag()
 		return
 	else
-		if(ishuman(M))
-			var/mob/living/carbon/human/L = M
-			L.endTailWag()
 		..()
 
 /obj/item/proc/can_trigger_gun(mob/living/user)
