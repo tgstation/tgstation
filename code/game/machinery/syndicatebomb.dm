@@ -140,7 +140,7 @@
 		if(open_panel && wires.is_all_cut())
 			if(payload)
 				to_chat(user, "<span class='notice'>You carefully pry out [payload].</span>")
-				payload.drop_location()
+				payload.forceMove(drop_location())
 				payload = null
 			else
 				to_chat(user, "<span class='warning'>There isn't anything in here to remove!</span>")
@@ -458,7 +458,7 @@
 	if(istype(I, /obj/item/crowbar) && beakers.len > 0)
 		playsound(loc, I.usesound, 50, 1)
 		for (var/obj/item/B in beakers)
-			B.drop_location()
+			B.forceMove(drop_location())
 			beakers -= B
 		return
 	else if(istype(I, /obj/item/reagent_containers/glass/beaker) || istype(I, /obj/item/reagent_containers/glass/bottle))
@@ -492,7 +492,7 @@
 					beakers += S
 					S.forceMove(src)
 				else
-					S.drop_location()
+					S.forceMove(drop_location())
 
 		if(istype(G, /obj/item/grenade/chem_grenade/cryo))
 			spread_range -= 1 // Reduced range, but increased density.
@@ -509,7 +509,7 @@
 				beakers += B
 				B.forceMove(src)
 			else
-				B.drop_location()
+				B.forceMove(drop_location())
 
 		qdel(G)
 
