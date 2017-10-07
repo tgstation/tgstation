@@ -1,0 +1,5 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a rare case where creating a one tank bomb would result in a broken object"
+  - bugfix: "Fixed many cases where forced item drops could be avoided by not having an item in your active hand"
