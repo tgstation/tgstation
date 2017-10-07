@@ -2,7 +2,7 @@
 	name = "\improper honkbot"
 	desc = "A little robot. It looks happy with its bike horn."
 	icon = 'icons/mob/aibots.dmi'
-	icon_state = "honkbot0"
+	icon_state = "honkbot"
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -16,7 +16,7 @@
 	model = "Honkbot"
 	bot_core_type = /obj/machinery/bot_core/honkbot
 	window_id = "autohonk"
-	window_name = "Honkomatic Bike Horn Unit v1.0.5"
+	window_name = "Honkomatic Bike Horn Unit v1.0.6"
 	data_hud_type = DATA_HUD_SECURITY_BASIC // show jobs
 
 	var/honksound = 'sound/items/bikehorn.ogg' //customizable sound
@@ -63,14 +63,6 @@
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1, -1)
 	sensor_blink()
 
-/mob/living/simple_animal/bot/honkbot/turn_on()
-	..()
-	icon_state = "honkbot[on]"
-
-/mob/living/simple_animal/bot/honkbot/turn_off()
-	..()
-	icon_state = "honkbot[on]"
-
 /mob/living/simple_animal/bot/honkbot/bot_reset()
 	..()
 	target = null
@@ -91,7 +83,7 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-<TT><B>Honkomatic Bike Horn Unit v1.0.5 controls</B></TT><BR><BR>
+<TT><B>Honkomatic Bike Horn Unit v1.0.6 controls</B></TT><BR><BR>
 Status: []<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"},

@@ -1,4 +1,3 @@
-#define isbuild_step(A) (build_step == A)
 //Bot Construction
 
 //Cleanbot assembly
@@ -350,31 +349,31 @@
 
 
 //Honkbot Assembly
-
 /obj/item/honkbot_assembly
 	name = "incomplete honkbot assembly"
 	desc = "The clown's up to no good once more"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "honkbot_arm"
 	var/build_step = ASSEMBLY_FIRST_STEP
-	var/created_name = "honkbot"
+	var/created_name = "Honkbot"
 
 /obj/item/honkbot_assembly/attackby(obj/item/I, mob/user, params)
 
-	if(isprox(I) && isbuild_step(ASSEMBLY_FIRST_STEP))
+	if(isprox(I) && (build_step == ASSEMBLY_FIRST_STEP))
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		build_step++
-		to_chat(user, "<span class='notice'>You add the prox sensor to [src]!</span>")
+		to_chat(user, "<span class='notice'>You add the [I] to [src]!</span>")
 		icon_state = "honkbot_proxy"
-		name = "Incomplete Honkbot Assembly"
+		name = "incomplete Honkbot assembly"
 		qdel(I)
 
-	else if(istype(I, /obj/item/bikehorn) && isbuild_step(ASSEMBLY_SECOND_STEP))
+	else if(istype(I, /obj/item/bikehorn) && (build_step == ASSEMBLY_SECOND_STEP))
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
-		to_chat(user, "<span class='notice'>You add the bike horn to [src]! Honk!</span>")
+		to_chat(user, "<span class='notice'>You add the [I] to [src]! Honk!</span>")
 		var/mob/living/simple_animal/bot/honkbot/S = new(drop_location())
+		S.loc = loc
 		S.name = created_name
 		S.spam_flag = TRUE // only long enough to hear the first ping.
 		addtimer(CALLBACK (S, .mob/living/simple_animal/bot/honkbot/proc/react_ping), 5)
@@ -492,5 +491,3 @@
 			new /obj/item/bodypart/l_arm/robot(get_turf(src))
 			to_chat(user, "<span class='notice'>You remove the robot arm from [src].</span>")
 			build_step--
-
-#undef isbuild_step

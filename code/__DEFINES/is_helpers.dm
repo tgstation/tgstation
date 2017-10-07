@@ -161,10 +161,12 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 
 #define istimer(O) (istype(O, /obj/item/device/assembly/timer))
 
+#define isbuild_step(A) (build_step == A)
+
 GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
-	/obj/item/stack/sheet/glass, 
-	/obj/item/stack/sheet/rglass, 
-	/obj/item/stack/sheet/plasmaglass, 
+	/obj/item/stack/sheet/glass,
+	/obj/item/stack/sheet/rglass,
+	/obj/item/stack/sheet/plasmaglass,
 	/obj/item/stack/sheet/plasmarglass)))
 
 #define is_glass_sheet(O) (is_type_in_typecache(O, GLOB.glass_sheet_types))
