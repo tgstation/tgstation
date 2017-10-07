@@ -42,14 +42,7 @@
 	priority = FALSE
 
 /obj/item/storage/internal/pocket/shoes
-	can_hold = list(
-		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
-		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
-		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
-		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
-		/obj/item/device/firing_pin
-		)
-	//can hold both regular pens and energy daggers. made for your every-day tactical curators/murderers.
+	max_w_class = WEIGHT_CLASS_SMALL
 	priority = FALSE
 	quickdraw = TRUE
 	silent = TRUE
