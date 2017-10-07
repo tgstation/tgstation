@@ -168,6 +168,17 @@
 
 /obj/item/melee/chainofcommand/do_special_attack(atom/target, mob/living/carbon/user, proximity_flag)
 	if(!proximity_flag && get_dist(user,target) < 6 && isliving(target))
+		for(var/I in getline(user,target))
+			var/turf/T = I
+			if(T.density)
+				to_chat(user, "<span class='warning'>There's an obstruction in the way!</span>")
+				return FALSE
+
+			for(var/obj/structure/O in T)
+				if(O.density)
+					to_chat(user, "<span class='warning'>There's an obstruction in the way!</span>")
+					return FALSE
+
 		var/mob/living/M = target
 		user.visible_message("<span class='danger'>[user] flicks [src] towards [M]'s legs!</span>")
 		user.do_attack_animation(target)
