@@ -28,8 +28,10 @@
 			var/datum/gas_mixture/A = T.air
 			if(A)
 				A.gases.Cut()
-				ADD_GAS("o2", A)
-				ADD_GAS("n2", A)
+				if(TRUE)
+					ADD_GAS("o2", A)
+				if (TRUE)
+					ADD_GAS("n2", A)
 				A.gases["o2"][MOLES] = 22
 				A.gases["n2"][MOLES] = 82
 				A.temperature = 293.15
