@@ -190,3 +190,18 @@
 	if(can_be_rigged)
 		rigged = result
 	..(M)
+
+/obj/item/devildice //not actual dice but here because their called dice and having it in the code of where it apperes would be shitty
+	name = "demonic bones"
+	desc = "Taking this bet is definitely a good idea, its only your soul."
+	icon = 'icons/obj/dice.dmi'
+	icon_state = "d6"
+	force = 0
+	var/list/souls
+
+/obj/item/devildice/attack_self(mob/living/carbon/user)
+	var/result = pickweight(2 = 5, 3 = 8, 4 = 10, 5 = 13, 6 = 16, 7 = 16, 8 = 12, 9 = 9, 10 = 6, 11 = 4, 12 = 1)
+	switch(result)
+		if(2)
+			to_chat(user, "[src] rattles <b>"SNAKE-EYES, YOU LOSE!"</b>")
+			
