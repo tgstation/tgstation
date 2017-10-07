@@ -61,5 +61,5 @@
 			if(prob(1) && prob(50))
 				if(!affected_mob.resistances.Find(/datum/disease/flu))
 					var/datum/disease/Flu = new /datum/disease/flu(0)
-					affected_mob.ContractDisease(Flu)
+					affected_mob.ForceContractDisease(Flu)
 					cure()

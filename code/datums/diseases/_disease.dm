@@ -67,7 +67,7 @@
 	if(!. || (needs_all_cures && . < cures.len))
 		return 0
 
-
+//Airborne spreading
 /datum/disease/proc/spread(force_spread = 0)
 	if(!affected_mob)
 		return
@@ -90,7 +90,7 @@
 			if(V)
 				while(TRUE)
 					if(V == T)
-						C.ContractDisease(src)
+						C.AirborneContractDisease(src)
 						break
 					var/turf/Temp = get_step_towards(V, T)
 					if(!CANATMOSPASS(V, Temp))

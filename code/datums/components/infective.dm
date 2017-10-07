@@ -9,5 +9,5 @@
 	var/mob/living/carbon/victim = AM
 	if(istype(victim))
 		for(var/datum/disease/D in diseases)
-			victim.ContractDisease(D, "feet")
+			victim.ContactContractDisease(D, "feet")
 		return TRUE

@@ -20,7 +20,7 @@
 				continue
 
 			if((method == TOUCH || method == VAPOR) && (D.spread_flags & CONTACT_FLUIDS))
-				M.ContractDisease(D)
+				M.ContactContractDisease(D)
 			else //ingest, patch or inject
 				M.ForceContractDisease(D)
 
@@ -1058,7 +1058,7 @@
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ContractDisease(new /datum/disease/transformation/xeno(0))
+		M.ForceContractDisease(new /datum/disease/transformation/xeno(0))
 
 /datum/reagent/fungalspores
 	name = "Tubercle bacillus Cosmosis microbes"

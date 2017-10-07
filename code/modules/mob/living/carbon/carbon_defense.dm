@@ -113,12 +113,12 @@
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
 		if(D.spread_flags & CONTACT_SKIN)
-			user.ContractDisease(D)
+			user.ContactContractDisease(D)
 
 	for(var/thing in user.viruses)
 		var/datum/disease/D = thing
 		if(D.spread_flags & CONTACT_SKIN)
-			ContractDisease(D)
+			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
 		if(user.a_intent == INTENT_HELP)
@@ -132,12 +132,12 @@
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
 		if(D.spread_flags & CONTACT_SKIN)
-			M.ContractDisease(D)
+			M.ContactContractDisease(D)
 
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
 		if(D.spread_flags & CONTACT_SKIN)
-			ContractDisease(D)
+			ContactContractDisease(D)
 
 	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)

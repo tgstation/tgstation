@@ -23,7 +23,7 @@
 	return 1
 
 
-/mob/proc/ContractDisease(datum/disease/D)
+/mob/proc/ContactContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return 0
 	AddDisease(D)
@@ -56,7 +56,7 @@
 		DD.affected_mob.med_hud_set_status()
 
 
-/mob/living/carbon/ContractDisease(datum/disease/D, target_zone)
+/mob/living/carbon/ContactContractDisease(datum/disease/D, target_zone)
 	if(!CanContractDisease(D))
 		return 0
 
@@ -122,22 +122,25 @@
 					Cl = M.wear_mask
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 
-	if(!passed && (D.spread_flags & AIRBORNE) && !internal)
-		passed = AirborneInfection(D)
-
 	if(passed)
 		AddDisease(D)
 
-/mob/proc/AirborneInfection(datum/disease/D)
-	return prob((50*D.permeability_mod) - 1)
+/mob/proc/AirborneContractDisease(datum/disease/D)
+	if((D.spread_flags & AIRBORNE) && prob((50*D.permeability_mod) - 1))
+		ForceContractDisease(D)
 
-/mob/living/carbon/human/AirborneInfection(datum/disease/D)
-	. = ..()
+/mob/living/carbon/AirborneContractDisease(datum/disease/D)
+	if(!internal)
+		return
+	..()
+
+/mob/living/carbon/human/AirborneContractDisease(datum/disease/D)
 	if(dna && (NOBREATH in dna.species.species_traits))
-		return FALSE
+		return
+	..()
 
 
-//Same as ContractDisease, except never overidden clothes checks
+//Proc to use when you 100% want to infect someone, as long as they aren't immune
 /mob/proc/ForceContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return 0
