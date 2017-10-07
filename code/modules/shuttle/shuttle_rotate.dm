@@ -32,7 +32,8 @@ All shuttleRotate procs go here
 
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
-	setDir(angle2dir(rotation+dir2angle(dir)))
+	if(!buckled)
+		setDir(angle2dir(rotation+dir2angle(dir)))
 
 /************************************Structure rotate procs************************************/
 
