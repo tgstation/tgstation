@@ -22,3 +22,4 @@
 #define ANTAG_DATUM_ABDUCTOR 			/datum/antagonist/abductor
 #define ANTAG_DATUM_ABDUCTOR_SCIENTIST 			/datum/antagonist/abductor/scientist
 #define ANTAG_DATUM_ABDUCTOR_AGENT 			/datum/antagonist/abductor/agent
+#define ANTAG_DATUM_VAMPIRE 			/datum/antagonist/vampire

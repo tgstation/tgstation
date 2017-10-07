@@ -191,6 +191,11 @@
 		src.remove_antag_datum(ANTAG_DATUM_TRAITOR)
 	SSticker.mode.update_traitor_icons_removed(src)
 
+/datum/mind/proc/remove_vampire()
+	if(src in SSticker.mode.vampires)
+		remove_antag_datum(ANTAG_DATUM_VAMPIRE)
+	SSticker.mode.update_vampire_icons_removed(src)
+
 /datum/mind/proc/remove_brother()
 	if(src in SSticker.mode.brothers)
 		src.remove_antag_datum(ANTAG_DATUM_BROTHER)
@@ -248,6 +253,7 @@
 	remove_wizard()
 	remove_cultist()
 	remove_rev()
+	remove_vampire()
 	SSticker.mode.update_changeling_icons_removed(src)
 	SSticker.mode.update_traitor_icons_removed(src)
 	SSticker.mode.update_wiz_icons_removed(src)
@@ -431,6 +437,22 @@
 			text += " | Disabled in Prefs"
 
 		sections["brother"] = text
+
+		/** VAMPIRE ***/
+
+		text = "vampire"
+		if(SSticker.mode.config_tag == "vampire")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if(is_vampire(current))
+			text += "<b>VAMPIRE</b> | <a href='?src=\ref[src];vampire=clear'>human</a> | <a href='?src=\ref[src];vampire=full'>full-power</a>"
+		else
+			text += "<a href='?src=\ref[src];vampire=vampire'>vampire</a> | <b>HUMAN</b> | <a href='?src=\ref[src];vampire=full'>full-power</a>"
+		if(current && current.client && (ROLE_VAMPIRE in current.client.prefs.be_special))
+			text += " | Enabled in Prefs"
+		else
+			text += " | Disabled in Prefs"
+		sections["vampire"] = text
 
 		/** CHANGELING ***/
 		text = "changeling"
@@ -997,7 +1019,35 @@
 					flash.update_icon()
 
 
-
+	else if (href_list["vampire"])
+		switch(href_list["vampire"])
+			if("clear")
+				remove_vampire(current)
+				message_admins("[key_name_admin(usr)] has de-vampired [current].")
+				log_admin("[key_name(usr)] has de-vampired [current].")
+			if("vampire")
+				if(!is_vampire(current))
+					message_admins("[key_name_admin(usr)] has vampired [current].")
+					log_admin("[key_name(usr)] has vampired [current].")
+					add_vampire(current)
+				else
+					to_chat(usr, "<span class='warning'>[current] is already a vampire!</span>")
+			if("full")
+				message_admins("[key_name_admin(usr)] has full-vampired [current].")
+				log_admin("[key_name(usr)] has full-vampired [current].")
+				if(!is_vampire(current))
+					add_vampire(current)
+					var/datum/antagonist/vampire/V = has_antag_datum(ANTAG_DATUM_VAMPIRE)
+					if(V)
+						V.total_blood = 1500
+						V.usable_blood = 1500
+						V.check_vampire_upgrade()
+				else
+					var/datum/antagonist/vampire/V = has_antag_datum(ANTAG_DATUM_VAMPIRE)
+					if(V)
+						V.total_blood = 1500
+						V.usable_blood = 1500
+						V.check_vampire_upgrade()
 	else if (href_list["cult"])
 		switch(href_list["cult"])
 			if("clear")

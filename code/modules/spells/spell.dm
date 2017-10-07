@@ -227,7 +227,16 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				adjust_var(user, holder_var_type, holder_var_amount)
 	if(action)
 		action.UpdateButtonIcon()
-	return 1
+	if(vamp_req)
+		if(!is_vampire(user))
+			return FALSE
+		var/datum/antagonist/vampire/V = user.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+		if(!V)
+			return FALSE
+		if(V.usable_blood < blood_used)
+			to_chat(user, "<span class='warning'>You do not have enough blood to cast this!</span>")
+			return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 	switch(invocation_type)
@@ -254,6 +263,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
 	charge_counter = charge_max
+	if(vamp_req)
+		clothes_req = FALSE
+		range = 1
+		human_req = FALSE //so we can cast stuff while a bat, too
+		action_icon = 'icons/mob/actions/actions_vampire.dmi'
 
 /obj/effect/proc_holder/spell/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -269,6 +283,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return
 
 /obj/effect/proc_holder/spell/proc/can_target(mob/living/target)
+	if(vamp_req && is_vampire(target))
+		return FALSE
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
@@ -313,6 +329,26 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			spell.anchored = TRUE
 			spell.density = FALSE
 			QDEL_IN(spell, overlay_lifespan)
+	if(vamp_req) //i hate doing this
+		// sanity check before we cast
+		if(!is_vampire(usr))
+			targets.Cut()
+			return
+
+		if(!blood_used)
+			return
+
+		// enforce blood
+		var/datum/antagonist/vampire/vampire = usr.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+
+		if(blood_used <= vampire.usable_blood)
+			vampire.usable_blood -= blood_used
+		else
+			// stop!!
+			targets.Cut()
+
+		if(LAZYLEN(targets))
+			to_chat(usr, "<span class='notice'><b>You have [vampire.usable_blood] left to use.</b></span>")
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)
