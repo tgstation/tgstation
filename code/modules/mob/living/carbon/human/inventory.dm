@@ -269,5 +269,3 @@
 		qdel(I)
 	for(var/obj/item/I in held_items)
 		qdel(I)
-	
-
