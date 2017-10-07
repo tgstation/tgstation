@@ -586,6 +586,31 @@
 	flags_1 = DROPDEL_1 | ABSTRACT_1
 	attack_verb = list("bopped")
 
+/obj/item/slapper
+	name = "slapper"
+	desc = "This is how real men fight."
+	icon_state = "madeyoulook"
+	force = 1
+	throwforce = 0
+	flags_1 = DROPDEL_1 | ABSTRACT_1
+	attack_verb = list("slapped")
+	hitsound = 'sound/weapons/slap.ogg'
+
+/obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
+	if(user.a_intent != INTENT_HARM)
+		var/aim_for_mouth = user.zone_selected == "mouth"
+		user.do_attack_animation(M)
+		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
+		user.visible_message("<span class='danger'>[user] slaps [target] in the [(aim_for_mouth)?"face":zone_selected]!</span>",
+ 		"<span class='notice'>You slap [target] in the [(aim_for_mouth)?"face":zone_selected]! </span>",\
+ 		"You hear a slap.")
+		M.endTailWag()
+		return
+	else
+		playsound(target.loc, 'sound/effects/snap.ogg', 50, 1, -1)
+		M.endTailWag()
+		..()
+
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))
 		return FALSE
