@@ -25,6 +25,12 @@
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
 
+	var/list/damage_decals
+
+/turf/closed/wall/Initialize()
+	. = ..()
+	add_overlay(damage_decals)
+
 /turf/closed/wall/examine(mob/user)
 	..()
 	deconstruction_hints(user)
@@ -168,9 +174,23 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_wallmount(W,user,T) || try_decon(W,user,T) || try_destroy(W,user,T))
+	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T) || try_destroy(W, user, T))
 		return
 
+/turf/closed/wall/proc/try_clean(obj/item/W, mob/user, turf/T)
+	if((user.a_intent != INTENT_HELP) || !damage_decals.len || !istype(W, /obj/item/weldingtool))
+		return 0
+	var/obj/item/weldingtool/WT = W
+	if(WT.remove_fuel(0, user))
+		to_chat(user, "<span class='notice'>You begin fixing dents on the wall...</span>")
+		playsound(src, W.usesound, 100, 1)
+		if(do_after(user, slicing_duration * W.toolspeed * 0.5, target = src))
+			if((iswallturf(src) || !user || !WT || !WT.isOn() || T) && (user.loc == T) && (user.get_active_held_item() == WT) && damage_decals.len )
+				to_chat(user, "<span class='notice'>You fix some dents on the wall.</span>")
+				cut_overlay(damage_decals)
+				LAZYCLEARLIST(damage_decals)
+			return 1
+	return 0
 
 /turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user, turf/T)
 	//check for wall mounted frames
@@ -186,24 +206,21 @@
 
 	return 0
 
-
 /turf/closed/wall/proc/try_decon(obj/item/W, mob/user, turf/T)
-	if( istype(W, /obj/item/weldingtool) )
+	if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W
-		if( WT.remove_fuel(0,user) )
+		if(WT.remove_fuel(0, user))
 			to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
 			playsound(src, W.usesound, 100, 1)
-			if(do_after(user, slicing_duration*W.toolspeed, target = src))
-				if(!iswallturf(src) || !user || !WT || !WT.isOn() || !T)
-					return 1
-				if( user.loc == T && user.get_active_held_item() == WT )
+			if(do_after(user, slicing_duration * W.toolspeed, target = src))
+				if((iswallturf(src) || !user || !WT || !WT.isOn() || T) && (user.loc == T) && (user.get_active_held_item() == WT) )
 					to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 					dismantle_wall()
-					return 1
-	else if( istype(W, /obj/item/gun/energy/plasmacutter) )
+				return 1
+	else if(istype(W, /obj/item/gun/energy/plasmacutter))
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
 		playsound(src, 'sound/items/welder.ogg', 100, 1)
-		if(do_after(user, slicing_duration*W.toolspeed, target = src))
+		if(do_after(user, slicing_duration * W.toolspeed, target = src))
 			if(!iswallturf(src) || !user || !W || !T)
 				return 1
 			if( user.loc == T && user.get_active_held_item() == W )
@@ -295,3 +312,8 @@
 			ChangeTurf(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
+
+/turf/closed/wall/proc/add_damage_decal(var/mutable_appearance/decal)
+	cut_overlay(damage_decals)
+	LAZYADD(damage_decals, decal)
+	add_overlay(damage_decals)
