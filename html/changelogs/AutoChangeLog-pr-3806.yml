@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Nightmares now have a chance to spawn via event."
