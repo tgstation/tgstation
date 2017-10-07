@@ -15,6 +15,7 @@
 	var/faction_chosen = FALSE
 	var/executing = FALSE
 	var/playing_nasheed = FALSE
+	var/nasheed_list = list('hippiestation/sound/misc/nasheed.ogg', 'hippiestation/sound/misc/nasheed2.ogg')
 
 obj/item/melee/execution_sword/attack_self(mob/living/user)
 	if(faction_chosen == TRUE)
@@ -51,7 +52,8 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 		message_admins("[key_name(user)] is attempting to execute [key_name(target)] with [src]")
 		if(!playing_nasheed)
 			for(var/mob/M in GLOB.player_list)
-				M.playsound_local(get_turf(M), 'hippiestation/sound/misc/nasheed.ogg', 150, 1, pressure_affected = FALSE)
+				var/nasheed_chosen = pick(nasheed_list)
+				M.playsound_local(get_turf(M), nasheed_chosen, 150, 0, pressure_affected = FALSE)
 				playing_nasheed = TRUE
 				addtimer(CALLBACK(src, .proc/nasheed_end), MUSIC_CD)
 		if(do_after(user,execute_infidel, target = target))
