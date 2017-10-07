@@ -1,4 +1,4 @@
-#define MUSIC_CD 300
+#define EXECUTE_INFIDEL 300
 
 /obj/item/melee/execution_sword
 	name = "Executioners sword"
@@ -10,7 +10,6 @@
 	sharpness = IS_SHARP_ACCURATE
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	var/execute_infidel = 300
 	var/execution_faction = "The Syndicate"
 	var/faction_chosen = FALSE
 	var/executing = FALSE
@@ -32,7 +31,7 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 		if(custom_faction == "Yes")
 			execution_faction = stripped_input(user, "Insert your new faction", "Faction")
 			faction_chosen = TRUE
-
+	..()
 
 
 /obj/item/melee/execution_sword/attack(mob/living/target, mob/living/user)
@@ -54,8 +53,8 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 			var/nasheed_chosen = pick(nasheed_list)
 			world << nasheed_chosen
 			playing_nasheed = TRUE
-			addtimer(CALLBACK(src, .proc/nasheed_end), MUSIC_CD)
-		if(do_after(user,execute_infidel, target = target))
+			addtimer(CALLBACK(src, .proc/nasheed_end), EXECUTE_INFIDEL)
+		if(do_after(user,EXECUTE_INFIDEL, target = target))
 			log_admin("[key_name(user)] executed [key_name(target)] with [src]")
 			message_admins("[key_name(user)] executed [key_name(target)] with [src]")
 			infidel_head.dismember()
@@ -69,4 +68,4 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 /obj/item/melee/execution_sword/proc/nasheed_end()
 	playing_nasheed = FALSE
 
-#undef MUSIC_CD
+#undef EXECUTE_INFIDEL
