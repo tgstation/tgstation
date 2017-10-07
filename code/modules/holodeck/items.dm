@@ -104,7 +104,7 @@
 
 /obj/structure/holohoop/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(get_dist(src,user)<2)
-		if(user.drop_item(src))
+		if(user.transferItemToLoc(W, drop_location()))
 			visible_message("<span class='warning'> [user] dunks [W] into \the [src]!</span>")
 
 /obj/structure/holohoop/attack_hand(mob/user)
@@ -211,9 +211,7 @@
 /obj/machinery/conveyor/holodeck
 
 /obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, params)
-	if(user.drop_item())
-		I.loc = src.loc
-	else
+	if(!user.transferItemToLoc(I, drop_location()))
 		return ..()
 
 /obj/item/paper/fluff/holodeck/trek_diploma

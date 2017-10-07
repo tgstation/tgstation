@@ -373,6 +373,10 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
+"bu" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
 
 (1,1,1) = {"
 aa
@@ -1148,7 +1152,7 @@ aa
 aC
 ax
 aC
-bb
+bu
 aJ
 aj
 aj

@@ -115,9 +115,8 @@
 //since these people will be dead M != usr
 
 	if(!C.getorgan(/obj/item/organ/brain))
-		if(!C.get_bodypart("head"))
+		if(!C.get_bodypart("head") || !C.temporarilyRemoveItemFromInventory(src))
 			return
-		user.drop_item()
 		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
 		if(C == user)
 			msg = "[user] inserts [src] into [user.p_their()] head!"

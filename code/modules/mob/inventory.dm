@@ -216,32 +216,16 @@
 	if(del_on_fail)
 		qdel(I)
 		return FALSE
-	I.forceMove(get_turf(src))
+	I.forceMove(drop_location())
 	I.layer = initial(I.layer)
 	I.plane = initial(I.plane)
 	I.dropped(src)
 	return FALSE
 
-
-/mob/proc/put_in_hands_or_del(obj/item/I)
-	return put_in_hands(I, TRUE)
-
-
-/mob/proc/drop_item_v()		//this is dumb.
-	if(stat == CONSCIOUS && isturf(loc))
-		return drop_item()
-	return FALSE
-
-
 /mob/proc/drop_all_held_items()
+	. = FALSE
 	for(var/obj/item/I in held_items)
-		dropItemToGround(I)
-
-//Drops the item in our active hand.
-/mob/proc/drop_item()
-	var/obj/item/held = get_active_held_item()
-	return dropItemToGround(held)
-
+		. |= dropItemToGround(I)
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
 

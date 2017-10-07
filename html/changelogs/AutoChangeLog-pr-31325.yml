@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - balance: "Ocular Warden base damage per second changed from 12.5 to 15."
+  - bugfix: "Ocular Wardens no longer count themselves when checking for dense objects, which decreased their overall damage by 15%."
+  - balance: "Ocular Wardens now only reduce their damage by 10% per dense object, and only do so once per turf. However, dense turfs now reduce their damage with the same 10% penalty."

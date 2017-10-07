@@ -358,5 +358,5 @@
 	if(process_fire(user, user, 0, zone_override = "head"))
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")
 		user.emote("scream")
-		user.drop_item()
+		user.drop_all_held_items()
 		user.Knockdown(80)
