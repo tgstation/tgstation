@@ -119,9 +119,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/return_volume() //liters
 	return max(0, volume)
 
-/datum/gas_mixture/proc/thermal_energy() //joules
-	return temperature * heat_capacity()
-
 /datum/gas_mixture/proc/archive()
 	//Update archived versions of variables
 	//Returns: 1 in all cases
@@ -424,7 +421,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	var/list/cached_gases = gases
 	var/temp = temperature
-	var/ener = thermal_energy()
+	var/ener = THERMAL_ENERGY(src)
 
 	reaction_loop:
 		for(var/r in SSair.gas_reactions)

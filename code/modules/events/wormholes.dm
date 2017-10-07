@@ -26,7 +26,7 @@
 
 	for(var/i = 1, i <= number_of_wormholes, i++)
 		var/turf/T = pick(pick_turfs)
-		wormholes += new /obj/effect/portal/wormhole(T, null, 300, null, FALSE)
+		wormholes += new /obj/effect/portal/wormhole(T, null, 0, null, FALSE)
 
 /datum/round_event/wormholes/announce()
 	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", 'sound/ai/spanomalies.ogg')
@@ -40,6 +40,7 @@
 
 /datum/round_event/wormholes/end()
 	QDEL_LIST(wormholes)
+	wormholes = null
 
 /obj/effect/portal/wormhole
 	name = "wormhole"
@@ -47,12 +48,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
 	mech_sized = TRUE
-
-/obj/effect/portal/wormhole/attack_hand(mob/user)
-	teleport(user)
-
-/obj/effect/portal/wormhole/attackby(obj/item/I, mob/user, params)
-	teleport(user)
 
 /obj/effect/portal/wormhole/teleport(atom/movable/M)
 	if(istype(M, /obj/effect))	//sparks don't teleport

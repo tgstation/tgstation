@@ -19,6 +19,7 @@
 	var/group = TURF_DECAL_PAINT
 	icon = 'icons/turf/decals.dmi'
 	icon_state = "warningline"
+	layer = TURF_DECAL_LAYER
 	anchored = TRUE
 
 //in case we need some special decals

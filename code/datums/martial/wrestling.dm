@@ -358,9 +358,12 @@
 
 	for (var/obj/O in oview(1, A))
 		if (O.density == 1)
-			if (O == A) continue
-			if (O == D) continue
-			if (O.opacity) continue
+			if (O == A)
+				continue
+			if (O == D)
+				continue
+			if (O.opacity)
+				continue
 			else
 				surface = O
 				ST = get_turf(O)

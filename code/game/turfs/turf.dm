@@ -112,7 +112,8 @@
 	return FALSE
 
 /turf/CanPass(atom/movable/mover, turf/target)
-	if(!target) return FALSE
+	if(!target)
+		return FALSE
 
 	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
 		return !density
@@ -121,8 +122,6 @@
 	return FALSE
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
-	if (!mover)
-		return TRUE
 	// First, make sure it can leave its square
 	if(isturf(mover.loc))
 		// Nothing but border objects stop you from leaving a tile, only one loop is needed
@@ -131,32 +130,28 @@
 				mover.Collide(obstacle)
 				return FALSE
 
-	var/list/large_dense = list()
-
-	//Next, check objects to block entry that are on the border
-	for(var/atom/movable/border_obstacle in src)
-		if(border_obstacle.flags_1 & ON_BORDER_1)
-			if(!border_obstacle.CanPass(mover, mover.loc, 1) && (forget != border_obstacle))
-				mover.Collide(border_obstacle)
-				return FALSE
-		else
-			large_dense += border_obstacle
-
 	//Then, check the turf itself
 	if (!src.CanPass(mover, src))
 		mover.Collide(src)
 		return FALSE
 
-	//Finally, check objects/mobs to block entry that are not on the border
-	var/atom/movable/tompost_bump
+
+	var/atom/movable/topmost_bump
 	var/top_layer = FALSE
-	for(var/atom/movable/obstacle in large_dense)
+
+	//Next, check objects to block entry that are on the border
+	for(var/atom/movable/obstacle in src)
 		if(!obstacle.CanPass(mover, mover.loc, 1) && (forget != obstacle))
-			if(obstacle.layer > top_layer)
-				tompost_bump = obstacle
-				top_layer = obstacle.layer
-	if(tompost_bump)
-		mover.Collide(tompost_bump)
+			if(obstacle.flags_1 & ON_BORDER_1)
+				mover.Collide(obstacle)
+				return FALSE
+			else
+				if(obstacle.layer > top_layer)
+					topmost_bump = obstacle
+					top_layer = obstacle.layer
+
+	if(topmost_bump)
+		mover.Collide(topmost_bump)
 		return FALSE
 
 	return TRUE //Nothing found to block so return success!
@@ -353,7 +348,8 @@
 //  possible. It results in more efficient (CPU-wise) pathing
 //  for bots and anything else that only moves in cardinal dirs.
 /turf/proc/Distance_cardinal(turf/T)
-	if(!src || !T) return FALSE
+	if(!src || !T)
+		return FALSE
 	return abs(x - T.x) + abs(y - T.y)
 
 ////////////////////////////////////////////////////

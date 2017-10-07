@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - bugfix: "Emotes (e.g. spinning and flipping) will now properly check for consciousness, restraints, etc. when appropriate."

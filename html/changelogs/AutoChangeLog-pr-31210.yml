@@ -1,0 +1,4 @@
+author: "Thefastfoodguy"
+delete-after: True
+changes: 
+  - bugfix: "Silicons can no longer take brain damage"

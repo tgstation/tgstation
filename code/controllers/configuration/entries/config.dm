@@ -8,10 +8,8 @@ CONFIG_DEF(string/autoadmin_rank)	// the rank for autoadmins
 	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(string/servername)	// server name (the name of the game window)
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(string/serversqlname)	// short form server name used for the DB
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(string/stationname)	// station name (the name of the station in-game)
 
@@ -24,52 +22,38 @@ CONFIG_DEF(number/round_end_countdown)	// Post round murder death kill countdown
 	min_val = 0
 
 CONFIG_DEF(flag/hub)	// if the game appears on the hub or not
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_ooc)	// log OOC channel
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_access)	// log login/logout
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_say)	// log client say
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_admin)	// log admin actions
 	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_prayer)	// log prayers
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_law)	// log lawchanges
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_game)	// log game events
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_vote)	// log voting
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_whisper)	// log client whisper
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_attack)	// log attack messages
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_emote)	// log emotes
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_adminchat)	// log admin chat messages
 	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_pda)	// log pda messages
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_twitter)	// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/log_world_topic)	// log all world.Topic() calls
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/allow_admin_ooccolor)	// Allows admins with relevant permissions to have their own ooc colour
 	protection = CONFIG_ENTRY_LOCKED
@@ -85,14 +69,12 @@ CONFIG_DEF(number/vote_delay)	// minimum time between voting sessions (decisecon
 CONFIG_DEF(number/vote_period)	// length of voting period (deciseconds, default 1 minute)
 	value = 600
 	min_val = 0
-			
+
 CONFIG_DEF(flag/default_no_vote)	// vote does not default to nochange/norestart
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/no_dead_vote)	// dead people can't vote
 
 CONFIG_DEF(flag/allow_metadata)	// Metadata is supported.
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/popup_admin_pm)	// adminPMs to non-admins show in a pop-up 'reply' window when set
 
@@ -140,14 +122,12 @@ CONFIG_DEF(flag/admin_legacy_system)	//Defines whether the server uses the legac
 	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(string/hostedby)
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/norespawn)
 
 CONFIG_DEF(flag/guest_jobban)
 
 CONFIG_DEF(flag/usewhitelist)
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/ban_legacy_system)	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system.
 	protection = CONFIG_ENTRY_LOCKED
@@ -171,29 +151,22 @@ CONFIG_DEF(flag/use_exp_restrictions_other)
 CONFIG_DEF(flag/use_exp_restrictions_admin_bypass)
 
 CONFIG_DEF(string/server)
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(string/banappeals)
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(string/wikiurl)
-	protection = CONFIG_ENTRY_LOCKED
 	value = "http://www.tgstation13.org/wiki"
 
 CONFIG_DEF(string/forumurl)
-	protection = CONFIG_ENTRY_LOCKED
 	value = "http://tgstation13.org/phpBB/index.php"
 
 CONFIG_DEF(string/rulesurl)
-	protection = CONFIG_ENTRY_LOCKED
 	value = "http://www.tgstation13.org/wiki/Rules"
 
 CONFIG_DEF(string/githuburl)
-	protection = CONFIG_ENTRY_LOCKED
 	value = "https://www.github.com/tgstation/-tg-station"
 
 CONFIG_DEF(number/githubrepoid)
-	protection = CONFIG_ENTRY_LOCKED
 	value = null
 	min_val = 0
 
@@ -230,7 +203,6 @@ CONFIG_DEF(flag/forbid_singulo_possession)
 CONFIG_DEF(flag/automute_on)	//enables automuting/spam prevention
 
 CONFIG_DEF(string/panic_server_name)
-	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/panic_server_name/ValidateAndSet(str_val)
 	return str_val != "\[Put the name here\]" && ..()
@@ -287,7 +259,6 @@ CONFIG_DEF(string/extreme_popcap_message)
 	value = "The server is currently serving a high number of users, find alternative servers."
 
 CONFIG_DEF(flag/panic_bunker)	// prevents people the server hasn't seen before from connecting
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(number/notify_new_player_age)	// how long do we notify admins of a new player
 	min_val = -1
@@ -300,7 +271,6 @@ CONFIG_DEF(flag/irc_first_connection_alert)	// do we notify the irc channel when
 CONFIG_DEF(flag/check_randomizer)
 
 CONFIG_DEF(string/ipintel_email)
-	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
 /datum/config_entry/string/ipintel_email/ValidateAndSet(str_val)
 	return str_val != "ch@nge.me" && ..()
@@ -312,17 +282,14 @@ CONFIG_DEF(number/ipintel_rating_bad)
 	max_val = 1
 
 CONFIG_DEF(number/ipintel_save_good)
-	protection = CONFIG_ENTRY_LOCKED
 	value = 12
 	min_val = 0
 
 CONFIG_DEF(number/ipintel_save_bad)
-	protection = CONFIG_ENTRY_LOCKED
 	value = 1
 	min_val = 0
 
 CONFIG_DEF(string/ipintel_domain)
-	protection = CONFIG_ENTRY_LOCKED
 	value = "check.getipintel.net"
 
 CONFIG_DEF(flag/aggressive_changelog)

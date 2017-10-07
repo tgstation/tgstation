@@ -77,5 +77,5 @@
 
 
 /datum/game_mode/traitor/internal_affairs/generate_report()
-	return "Nanotrasen denies any accusations of placing internal affairs agents onboard your station to eliminate inconvenient employees.  Any further accusations against Centcom for such \
+	return "Nanotrasen denies any accusations of placing internal affairs agents onboard your station to eliminate inconvenient employees.  Any further accusations against CentCom for such \
 			actions will be met with a conversation with an official internal affairs agent."

@@ -138,6 +138,8 @@
 
 #define isstructure(A) (istype(A, /obj/structure))
 
+#define ismachinery(A) (istype(A, /obj/machinery))
+
 #define ismecha(A) (istype(A, /obj/mecha))
 
 #define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable

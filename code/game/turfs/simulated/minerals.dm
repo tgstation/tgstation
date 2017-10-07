@@ -38,10 +38,6 @@
 				if(istype(T, /turf/closed/mineral/random))
 					Spread(T)
 
-/turf/closed/mineral/shuttleRotate(rotation)
-	setDir(angle2dir(rotation+dir2angle(dir)))
-	queue_smooth(src)
-
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)
 		underlay_appearance.icon = initial(turf_type.icon)

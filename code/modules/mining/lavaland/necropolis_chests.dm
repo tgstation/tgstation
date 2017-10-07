@@ -275,7 +275,7 @@
 
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
-	desc = "a hook."
+	desc = "A hook."
 	projectile_type = /obj/item/projectile/hook
 	caliber = "hook"
 	icon_state = "hook"
@@ -932,6 +932,8 @@
 	name = "bubblegum chest"
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
+	new /obj/item/clothing/suit/space/hostile_environment(src)
+	new /obj/item/clothing/head/helmet/space/hostile_environment(src)
 	var/loot = rand(1,3)
 	switch(loot)
 		if(1)
@@ -967,7 +969,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 	color = "#FF0000"
-	desc = "Mark your target for death. "
+	desc = "Mark your target for death."
 	var/used = FALSE
 
 /obj/item/blood_contract/attack_self(mob/user)
