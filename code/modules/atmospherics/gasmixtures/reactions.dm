@@ -279,7 +279,7 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_scale = air.temperature/100000
 	var/stim_energy_change
-	stim_energy_change = (0.75(heat_scale*heat_scale)) - (0.05(heat_scale*heat_scale*heat_scale)) + (0.001(heat_scale*heat_scale*heat_scale*heat_scale)) - (0.0000062(heat_scale*heat_scale*heat_scale*heat_scale*heat_scale))
+	stim_energy_change = (0.75(heat_scale**2)) - (0.05(heat_scale**3)) + (0.001(heat_scale**4)) - (0.0000062(heat_scale**5))
 
 	air.assert_gases("tritium","plasma","bz","browns","stim")
 	cached_gases["stim"][MOLES]+= heat_scale/10

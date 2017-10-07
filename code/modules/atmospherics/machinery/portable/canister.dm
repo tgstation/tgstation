@@ -43,7 +43,6 @@
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
-		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
 		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
@@ -79,10 +78,6 @@
 	icon_state = "orange"
 	gas_type = "plasma"
 
-/obj/machinery/portable_atmospherics/canister/agent_b
-	name = "agent b canister"
-	desc = "Oxygen Agent B. You're not quite sure what it does."
-	gas_type = "agent_b"
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "BZ canister"
@@ -101,12 +96,37 @@
 	desc = "Pre-mixed air."
 	icon_state = "grey"
 
-/obj/machinery/portable_atmospherics/canister/freon
-	name = "freon canister"
-	desc = "Freon. Great for the atmosphere!"
-	icon_state = "freon"
-	gas_type = "freon"
-	starter_temp = 120
+/obj/machinery/portable_atmospherics/canister/tritium
+	name = "tritium canister"
+	desc = "Tritium, inhalation might cause radiation."
+	icon_state = "caution"
+	gas_type = "tritium"
+
+/obj/machinery/portable_atmospherics/canister/nob
+	name = "hyper-nobelium canister"
+	desc = "Hyper-Nobelium. More noble than all other gases."
+	icon_state = "caution"
+	gas_type = "nob"
+
+/obj/machinery/portable_atmospherics/canister/browns
+	name = "brown gas canister"
+	desc = "Browns gas. Feels great till the acid eats your lungs"
+	icon_state = "caution"
+	gas_type = "browns"
+
+/obj/machinery/portable_atmospherics/canister/stimulum
+	name = "stimulum canister"
+	desc = "Stimulum. High energy gas, high energy people."
+	icon_state = "caution"
+	gas_type = "tritium"
+
+/obj/machinery/portable_atmospherics/canister/pluoxium
+	name = "pluoxium canister"
+	desc = "Pluoxium. Like oygen, but more bang for your buck."
+	icon_state = "caution"
+	gas_type = "pluox"
+
+
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "water vapor canister"
@@ -114,6 +134,7 @@
 	icon_state = "water_vapor"
 	gas_type = "water_vapor"
 	filled = 1
+
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)

@@ -157,7 +157,7 @@
 
 /obj/item/nuke_core_container/supermatter
 	name = "supermatter bin"
-	desc = "A tiny receptacle that releases an inert freon mix upon sealing, allowing a sliver of a supermatter crystal to be safely stored.."
+	desc = "A tiny receptacle that releases an inert hyper-nobelium mix upon sealing, allowing a sliver of a supermatter crystal to be safely stored.."
 	var/obj/item/nuke_core/supermatter_sliver/sliver
 
 /obj/item/nuke_core_container/supermatter/Destroy()
@@ -193,7 +193,7 @@
 
 /obj/item/scalpel/supermatter
 	name = "supermatter scalpel"
-	desc = "A scalpel with a tip of condensed freon gas, searingly cold to the touch, that can safely shave a sliver off a supermatter crystal."
+	desc = "A scalpel with a tip of condensed hyper-nobelium gas, searingly cold to the touch, that can safely shave a sliver off a supermatter crystal."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "supermatter_scalpel"
 	toolspeed = 0.5
@@ -202,7 +202,7 @@
 
 /obj/item/hemostat/supermatter
 	name = "supermatter extraction tongs"
-	desc = "A pair of tongs made from condensed freon gas, searingly cold to the touch, that can safely grip a supermatter sliver."
+	desc = "A pair of tongs made from condensed hyper-nobelium gas, searingly cold to the touch, that can safely grip a supermatter sliver."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "supermatter_tongs"
 	toolspeed = 0.75
