@@ -33,41 +33,44 @@
 
 	var/vampires_possible = 4 //hard limit on vampires if scaling is turned off
 	var/num_modifier = 0
+	var/list/datum/mind/pre_vamps = list()
 
 /datum/game_mode/vampire/declare_completion()
 	..()
 
 /datum/game_mode/vampire/pre_setup()
-	var/vampires_num = 1
 
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
+
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
-	if(CONFIG_GET(number/traitor_scaling_coeff))
-		vampires_num = max(required_enemies, min( round(num_players()/(CONFIG_GET(number/traitor_scaling_coeff)*3))+ 2 + num_modifier, round(num_players()/(CONFIG_GET(number/traitor_scaling_coeff)*1.5)) + num_modifier ))
-	else
-		vampires_num = max(required_enemies, min(num_players(), vampires_possible))
+	var/num_vamps = 1
 
-	for(var/j = 0, j < vampires_num, j++)
+	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
+	if(tsc)
+		num_vamps = max(1, min(round(num_players() / (tsc * 2)) + 2 + num_modifier, round(num_players() / tsc) + num_modifier))
+	else
+		num_vamps = max(1, min(num_players(), vampires_possible))
+
+	for(var/j = 0, j < num_vamps, j++)
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/vamp = pick(antag_candidates)
-		vamp.special_role = traitor_name
+		pre_vamps += vamp
+		vamp.special_role = "Vampire"
 		vamp.restricted_roles = restricted_jobs
-
 		log_game("[vamp.key] (ckey) has been selected as a Vampire")
 		antag_candidates.Remove(vamp)
 
-	if(vampires.len < required_enemies)
-		return FALSE
-	return TRUE
+	return pre_vamps.len > 0
 
 
 /datum/game_mode/vampire/post_setup()
-	for(var/datum/mind/vamp in vampires)
-		add_vampire(vamp.current)
+	for(var/datum/mind/vamp in pre_vamps)
+		spawn(rand(10,100))
+			vamp.add_antag_datum(ANTAG_DATUM_VAMPIRE)
 	modePlayer += vampires
 	..()
 	return TRUE
