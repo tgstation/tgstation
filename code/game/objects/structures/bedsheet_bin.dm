@@ -310,13 +310,13 @@ LINEN BINS
 		else
 			B = new /obj/item/bedsheet(loc)
 
-		B.drop_location()
+		B.forceMove(drop_location())
 		user.put_in_hands(B)
 		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
 		update_icon()
 
 		if(hidden)
-			hidden.drop_location()
+			hidden.forceMove(drop_location())
 			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
 			hidden = null
 
@@ -334,12 +334,12 @@ LINEN BINS
 		else
 			B = new /obj/item/bedsheet(loc)
 
-		B.drop_location()
+		B.forceMove(drop_location())
 		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
 		update_icon()
 
 		if(hidden)
-			hidden.drop_location()
+			hidden.forceMove(drop_location())
 			hidden = null
 
 
