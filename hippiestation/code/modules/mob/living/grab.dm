@@ -61,10 +61,13 @@
 /mob/stop_pulling()
 	if(pulling && isliving(pulling)) //run this first because pulling is set to null in stop_pulling
 		var/mob/living/L = pulling
+		var/px = 0
+		var/py = 0
 		if(!L.buckled)
-			L.pixel_x = initial(L.pixel_x)
-			L.pixel_y = L.get_standard_pixel_y_offset(L.lying) //used to be an animate, not quick enough for del'ing
+			px = initial(L.pixel_x)
+			py = L.get_standard_pixel_y_offset(L.lying) //used to be an animate, not quick enough for del'ing
 		L.layer = initial(L.layer)
+		animate(L, pixel_x = px, pixel_y = py, 5, 1, LINEAR_EASING)
 	. = ..()
 
 /mob/living/setDir(newDir)
