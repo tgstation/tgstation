@@ -172,11 +172,11 @@
 	if(guns_left)
 		var/obj/item/gun/ballistic/shotgun/boltaction/enchanted/GUN = new gun_type
 		GUN.guns_left = guns_left - 1
-		user.drop_item()
+		user.dropItemToGround(src, TRUE)
 		user.swap_hand()
 		user.put_in_hands(GUN)
 	else
-		user.drop_item()
+		user.dropItemToGround(src, TRUE)
 	discard_gun(user)
 
 // Automatic Shotguns//

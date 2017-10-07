@@ -29,9 +29,8 @@
 			return 0
 		else
 			user.visible_message("[user] stuffs [tool] into [target]'s [target_zone]!", "<span class='notice'>You stuff [tool] into [target]'s [target_zone].</span>")
-			user.drop_item()
+			user.transferItemToLoc(tool, target, TRUE)
 			CH.cavity_item = tool
-			tool.loc = target
 			return 1
 	else
 		if(IC)

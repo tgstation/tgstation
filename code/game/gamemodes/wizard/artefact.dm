@@ -193,8 +193,8 @@
 	H.equip_to_slot_or_del(new hat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
-	H.put_in_hands_or_del(new /obj/item/shield/riot/roman(H))
-	H.put_in_hands_or_del(new /obj/item/claymore(H))
+	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
+	H.put_in_hands(new /obj/item/claymore(H), TRUE)
 	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), slot_back)
 
 
