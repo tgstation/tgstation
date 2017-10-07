@@ -27,10 +27,6 @@
 
 	var/list/damage_decals
 
-/turf/closed/wall/Initialize()
-	. = ..()
-	add_overlay(damage_decals)
-
 /turf/closed/wall/examine(mob/user)
 	..()
 	deconstruction_hints(user)
