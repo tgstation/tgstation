@@ -53,9 +53,9 @@
 	user << browse(dat, "window=orebox")
 
 /obj/structure/ore_box/proc/dump_box_contents()
-	for(var/obj/item/ore/O in contents)
+	for(var/obj/item/ore/O in src)
+		O.forceMove(drop_location())
 		CHECK_TICK
-		O.forceMove(loc)
 
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
