@@ -455,7 +455,7 @@
 		dish_quants[N] = max(dish_quants[N] - 1, 0)
 		for(var/obj/O in contents)
 			if(O.name == N)
-				O.drop_location()
+				O.forceMove(drop_location())
 				break
 		vend_ready = 1
 		updateUsrDialog()
