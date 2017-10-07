@@ -175,7 +175,7 @@
 				return FALSE
 
 			for(var/obj/structure/O in T)
-				if(O.density)
+				if(O.density &&!istype(O, /obj/structure/table))
 					to_chat(user, "<span class='warning'>There's an obstruction in the way!</span>")
 					return FALSE
 
@@ -184,12 +184,14 @@
 		user.do_attack_animation(target)
 		if(do_after(user, 2, target = target))
 			M.Knockdown(20)
+			M.pass_flags |= PASSTABLE
 			M.visible_message("<span class='danger'>[user] starts to reel in [M]!</span>", "<span class='userdanger'>[user]'s [src] ties your legs and trips you as they begin to reel you in!</span>")
 			for(var/I in 1 to get_dist(user, M))
 				if(do_after(user, 3, target = target))
 					step_towards(M, user)
 					playsound(M, pick('hippiestation/sound/effects/bodyscrape-01.ogg', 'hippiestation/sound/effects/bodyscrape-02.ogg'), 20, 1, -4)
 			src.special_attack = FALSE
+			M.pass_flags &= ~PASSTABLE
 			return TRUE
 
 	return FALSE
