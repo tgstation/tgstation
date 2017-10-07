@@ -88,10 +88,9 @@
 			if(w_items + I.w_class > WEIGHT_CLASS_HUGE)
 				to_chat(user, "<span class='warning'>The cistern is full!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>")
 				return
-			I.loc = src
 			w_items += I.w_class
 			to_chat(user, "<span class='notice'>You carefully place [I] into the cistern.</span>")
 
@@ -173,10 +172,9 @@
 		if(I.w_class > 1)
 			to_chat(user, "<span class='warning'>[I] is too large for the drain enclosure.</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>\[I] is stuck to your hand, you cannot put it in the drain enclosure!</span>")
 			return
-		I.forceMove(src)
 		hiddenitem = I
 		to_chat(user, "<span class='notice'>You place [I] into the drain enclosure.</span>")
 
