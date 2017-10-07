@@ -69,8 +69,8 @@
 		return
 	var/requested_amount
 	if(istype(I, /obj/item/stack) && precise_insertion)
-		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num
-		if(requested_amount <= 0)
+		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num|null
+		if(isnull(requested_amount) || (requested_amount <= 0))
 			return FALSE
 		if(QDELETED(I) || QDELETED(user) || !user.Adjacent(src) || !user.canUseTopic())
 			return FALSE	//Out of range, doesn't exist, or can't use.
