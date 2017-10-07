@@ -44,16 +44,15 @@
 
 /obj/item/papercutter/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/paper) && !storedpaper)
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(P, src))
 			return
 		playsound(loc, "pageturn", 60, 1)
 		to_chat(user, "<span class='notice'>You place [P] in [src].</span>")
-		P.loc = src
 		storedpaper = P
 		update_icon()
 		return
 	if(istype(P, /obj/item/hatchet/cutterblade) && !storedcutter)
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You replace [src]'s [P].</span>")
 		P.loc = src

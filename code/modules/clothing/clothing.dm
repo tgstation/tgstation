@@ -592,7 +592,7 @@ BLIND     // can't see anything
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
 			return
 		else
-			if(user && !user.drop_item())
+			if(user && !user.temporarilyRemoveItemFromInventory(I))
 				return
 			if(!A.attach(src, user))
 				return

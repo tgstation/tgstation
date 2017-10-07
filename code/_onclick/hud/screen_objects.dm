@@ -196,7 +196,8 @@
 	plane = HUD_PLANE
 
 /obj/screen/drop/Click()
-	usr.drop_item_v()
+	if(usr.stat == CONSCIOUS)
+		usr.dropItemToGround(usr.get_active_held_item())
 
 /obj/screen/act_intent
 	name = "intent"

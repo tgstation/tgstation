@@ -1023,8 +1023,8 @@
 	throwforce = 12 //pelt your enemies to death with lumps of snow
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
-	user.drop_item()
-	src.throw_at(target, throw_range, throw_speed)
+	if(user.dropItemToGround(src))
+		throw_at(target, throw_range, throw_speed)
 
 /obj/item/toy/snowball/throw_impact(atom/hit_atom)
 	if(!..())
@@ -1042,8 +1042,8 @@
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
 /obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
-	user.drop_item()
-	src.throw_at(target, throw_range, throw_speed)
+	if(user.dropItemToGround(src))
+		throw_at(target, throw_range, throw_speed)
 
 /*
  * Xenomorph action figure

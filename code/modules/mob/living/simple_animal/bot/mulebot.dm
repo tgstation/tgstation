@@ -84,11 +84,9 @@
 		if(open)
 			on = FALSE
 	else if(istype(I, /obj/item/stock_parts/cell) && open && !cell)
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
-		var/obj/item/stock_parts/cell/C = I
-		C.loc = src
-		cell = C
+		cell = I
 		visible_message("[user] inserts a cell into [src].",
 						"<span class='notice'>You insert the new cell into [src].</span>")
 	else if(istype(I, /obj/item/crowbar) && open && cell)
