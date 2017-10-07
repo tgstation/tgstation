@@ -8,6 +8,8 @@
 
 #define ismovableatom(A) (istype(A, /atom/movable))
 
+#define isatom(A) (istype(A, /atom))
+
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 
