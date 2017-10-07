@@ -95,7 +95,7 @@ SUBSYSTEM_DEF(ticker)
 		var/list/L = splittext(S,".")
 		if(L.len >= 2)
 			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
-			var/static/list/byond_sound_formats = list(
+			var/list/byond_sound_formats = list(
 				"mid"  = TRUE,
 				"midi" = TRUE,
 				"mod"  = TRUE,
