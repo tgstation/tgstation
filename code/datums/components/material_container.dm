@@ -67,6 +67,13 @@
 	var/datum/callback/pc = precondition
 	if(pc && !pc.Invoke())
 		return
+	var/requested_amount
+	if(istype(I, /obj/item/stack) && precise_insertion)
+		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num
+		if(requested_amount <= 0)
+			return FALSE
+		if(QDELETED(S) || QDELETED(user) || !user.Adjacent(src) || !user.canUseTopic())
+			return FALSE	//Out of range, doesn't exist, or can't use.
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient amounts of metal or glass to be accepted by [parent].</span>")
@@ -77,7 +84,7 @@
 	if(!user.temporarilyRemoveItemFromInventory(I))
 		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
 		return
-	var/inserted = insert_item(I, user = user)
+	var/inserted = insert_item(I, stack_amt = requested_amount)
 	if(inserted)
 		last_insert_success = TRUE
 		if(istype(I, /obj/item/stack))
@@ -107,17 +114,12 @@
 		return (total_amount - total_amount_saved)
 	return FALSE
 
-/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt = 0, mob/user)
+/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt = 0)
+	if(isnull(amt))
+		amt = S.amount
+
 	if(amt <= 0)
 		return FALSE
-
-	if(precise_insertion)
-		var/requested_amount = input("How much do you want to insert?", "Inserting sheets") as num
-		if(requested_amount <= 0)
-			return FALSE
-		amt = requested_amount
-		if(QDELETED(S) || QDELETED(user) || !user.Adjacent(src) || !user.canUseTopic())
-			return FALSE	//Out of range, doesn't exist, or can't use.
 
 	if(amt > S.amount)
 		amt = S.amount
@@ -136,12 +138,12 @@
 	last_amount_inserted = amt
 	return amt
 
-/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, mob/user)
+/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt)
 	if(!I)
 		return FALSE
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/S = I
-		return insert_stack(I, S.amount, user = user)
+		return insert_stack(I, stack_amt)
 
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount || !has_space(material_amount))
