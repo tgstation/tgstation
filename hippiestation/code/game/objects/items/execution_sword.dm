@@ -1,7 +1,7 @@
 #define MUSIC_CD 300
 
 /obj/item/melee/execution_sword
-	name = "Executioners sword."
+	name = "Executioners sword"
 	desc = "Not much good in a fight but perfect for making an example of your enemies."
 	force = 10
 	icon_state = "cutlass1"
@@ -18,7 +18,7 @@
 	var/nasheed_list = list('hippiestation/sound/misc/nasheed.ogg', 'hippiestation/sound/misc/nasheed2.ogg')
 
 obj/item/melee/execution_sword/attack_self(mob/living/user)
-	if(faction_chosen == TRUE)
+	if(faction_chosen == TRUE && execution_faction) //Just in case someone presses cancel when typing and ends up with a null declared faction.
 		to_chat(user, "<span class='notice'>You have already pledged your allegiance to [execution_faction]!</span>")
 		return
 	else
@@ -51,11 +51,10 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 		log_admin("[key_name(user)] attempted to execute [key_name(target)] with [src]")
 		message_admins("[key_name(user)] is attempting to execute [key_name(target)] with [src]")
 		if(!playing_nasheed)
-			for(var/mob/M in GLOB.player_list)
-				var/nasheed_chosen = pick(nasheed_list)
-				M.playsound_local(get_turf(M), nasheed_chosen, 150, 0, pressure_affected = FALSE)
-				playing_nasheed = TRUE
-				addtimer(CALLBACK(src, .proc/nasheed_end), MUSIC_CD)
+			var/nasheed_chosen = pick(nasheed_list)
+			world << nasheed_chosen
+			playing_nasheed = TRUE
+			addtimer(CALLBACK(src, .proc/nasheed_end), MUSIC_CD)
 		if(do_after(user,execute_infidel, target = target))
 			log_admin("[key_name(user)] executed [key_name(target)] with [src]")
 			message_admins("[key_name(user)] executed [key_name(target)] with [src]")
