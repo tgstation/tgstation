@@ -161,7 +161,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	chanting = TRUE
 	for(var/invocation in invocations)
 		sleep(channel_time / invocations.len)
-		if(!chanting)
+		if(QDELETED(src) || QDELETED(slab) || !chanting)
 			return
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, get_turf(invoker)))
