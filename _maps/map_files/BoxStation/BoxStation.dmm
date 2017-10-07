@@ -2281,7 +2281,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Box emergency shuttle";
+	name = "Box emergency shuttle"
 	},
 /obj/docking_port/stationary{
 	dir = 4;
@@ -64022,6 +64022,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
+"cTW" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
 
 (1,1,1) = {"
 aaa
@@ -75982,7 +75986,7 @@ aaa
 cyc
 cyy
 cyc
-czy
+cTW
 cyO
 cyi
 cyi
@@ -105020,7 +105024,7 @@ bfS
 biE
 bkf
 bfS
-cTP
+cTO
 bmZ
 bpL
 bre
@@ -105277,7 +105281,7 @@ bfS
 biD
 bke
 bfS
-cTQ
+cTO
 bmZ
 bpK
 brd
@@ -105534,7 +105538,7 @@ bfS
 bfS
 bfS
 bfS
-cTR
+cTO
 bmZ
 bon
 bon
@@ -105790,13 +105794,13 @@ cTJ
 cHD
 bgo
 cTK
-cTN
+cTK
 blq
 cTS
-cTT
+cTK
 bpQ
-cTU
-cTV
+cTK
+cTJ
 btm
 buy
 bvz
