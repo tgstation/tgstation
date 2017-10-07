@@ -191,7 +191,7 @@
 					step_towards(M, user)
 					playsound(M, pick('hippiestation/sound/effects/bodyscrape-01.ogg', 'hippiestation/sound/effects/bodyscrape-02.ogg'), 20, 1, -4)
 			src.special_attack = FALSE
-			M.pass_flags &= ~PASSTABLE
+			M.pass_flags = initial(M.pass_flags)
 			return TRUE
 
 	return FALSE
