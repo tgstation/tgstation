@@ -72,8 +72,8 @@
 		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num|null
 		if(isnull(requested_amount) || (requested_amount <= 0))
 			return FALSE
-		if(QDELETED(I) || QDELETED(user) || !user.Adjacent(src) || !user.canUseTopic())
-			return FALSE	//Out of range, doesn't exist, or can't use.
+		if(QDELETED(I) || !(I in user) || QDELETED(user) || (!user.Adjacent(parent) && isatom(parent)) || !user.canUseTopic())
+			return FALSE	//Out of range, doesn't exist, can't use, or not holding it anymore.
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient amounts of metal or glass to be accepted by [parent].</span>")
