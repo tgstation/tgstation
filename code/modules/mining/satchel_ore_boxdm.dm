@@ -20,7 +20,7 @@
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		to_chat(user, "<span class='notice'>You empty the ore in [S] into \the [src].</span>")
 	else if(istype(W, /obj/item/crowbar))
-		playsound(loc, W.usesound, 50, 1)
+		playsound(src, W.usesound, 50, 1)
 		var/obj/item/crowbar/C = W
 		if(do_after(user, 50*C.toolspeed, target = src))
 			user.visible_message("[user] pries \the [src] apart.", "<span class='notice'>You pry apart \the [src].</span>", "<span class='italics'>You hear splitting wood.</span>")
@@ -54,6 +54,7 @@
 
 /obj/structure/ore_box/proc/dump_box_contents()
 	for(var/obj/item/ore/O in contents)
+		TICK_CHECK
 		O.forceMove(loc)
 
 /obj/structure/ore_box/Topic(href, href_list)
@@ -66,9 +67,8 @@
 	src.add_fingerprint(usr)
 	if(href_list["removeall"])
 		dump_box_contents()
-		to_chat(usr, "<span class='notice'>You empty the box.</span>")
+		to_chat(usr, "<span class='notice'>You open the release hatch on the box..</span>")
 	updateUsrDialog()
-
 
 /obj/structure/ore_box/deconstruct(disassembled = TRUE, mob/user)
 	var/obj/item/stack/sheet/mineral/wood/WD = new (loc, 4)
