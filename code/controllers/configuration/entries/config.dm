@@ -56,7 +56,6 @@ CONFIG_DEF(flag/log_twitter)	// log certain expliotable parrots and other such f
 CONFIG_DEF(flag/log_world_topic)	// log all world.Topic() calls
 
 CONFIG_DEF(flag/allow_admin_ooccolor)	// Allows admins with relevant permissions to have their own ooc colour
-	protection = CONFIG_ENTRY_LOCKED
 
 CONFIG_DEF(flag/allow_vote_restart)	// allow votes to restart
 
