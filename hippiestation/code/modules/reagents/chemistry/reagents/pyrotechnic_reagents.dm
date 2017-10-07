@@ -315,18 +315,18 @@
 	processes = TRUE
 
 /datum/reagent/cryostylane/process()
- 	if(holder.has_reagent("oxygen"))
- 		holder.remove_reagent("oxygen", 1)
- 		holder.chem_temp -= 10
- 		holder.handle_reactions()
- ..()
- 
- /datum/reagent/pyrosium
+	if(holder.has_reagent("oxygen"))
+		holder.remove_reagent("oxygen", 1)
+		holder.chem_temp -= 10
+		holder.handle_reactions()
+	..()
+
+/datum/reagent/pyrosium
 	processes = TRUE
- 
- /datum/reagent/pyrosium/process()
- 	if(holder.has_reagent("oxygen"))
- 		holder.remove_reagent("oxygen", 1)
- 		holder.chem_temp += 10
- 		holder.handle_reactions()
- 	..()
+
+/datum/reagent/pyrosium/process()
+	if(holder.has_reagent("oxygen"))
+		holder.remove_reagent("oxygen", 1)
+		holder.chem_temp += 10
+		holder.handle_reactions()
+	..()
