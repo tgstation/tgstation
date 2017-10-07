@@ -72,7 +72,7 @@
 		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num
 		if(requested_amount <= 0)
 			return FALSE
-		if(QDELETED(S) || QDELETED(user) || !user.Adjacent(src) || !user.canUseTopic())
+		if(QDELETED(I) || QDELETED(user) || !user.Adjacent(src) || !user.canUseTopic())
 			return FALSE	//Out of range, doesn't exist, or can't use.
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
@@ -142,7 +142,6 @@
 	if(!I)
 		return FALSE
 	if(istype(I, /obj/item/stack))
-		var/obj/item/stack/S = I
 		return insert_stack(I, stack_amt)
 
 	var/material_amount = get_item_material_amount(I)
