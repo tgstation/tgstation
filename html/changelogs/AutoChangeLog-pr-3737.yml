@@ -1,0 +1,4 @@
+author: "GuyonBroadway"
+delete-after: True
+changes: 
+  - rscadd: "Traitors can now buy a sword that lets you perform executions that are announced to the station., it even plays a nice fitting sound courtesy of Popnotes."
