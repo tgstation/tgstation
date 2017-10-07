@@ -496,3 +496,5 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
 MICE_ROUNDSTART 10
 
+## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
+#EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
