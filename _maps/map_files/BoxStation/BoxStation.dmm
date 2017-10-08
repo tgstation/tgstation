@@ -58911,17 +58911,15 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "Qlj" = (
-/obj/docking_port/mobile{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate";
-	name = "syndicate infiltrator";
-	port_direction = 1;
-	roundstart_move = "syndicate_away";
-	width = 18
-	},
+/obj/docking_port/stationary{
+ 	dheight = 9;
+ 	dir = 2;
+ 	dwidth = 5;
+ 	height = 24;
+	id = "syndicate_nw";
+	name = "northwest of station";
+	turf_type = /turf/open/space
+},
 /turf/open/space/basic,
 /area/space)
 
