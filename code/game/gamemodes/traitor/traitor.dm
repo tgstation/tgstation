@@ -60,13 +60,12 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in pre_traitors)
-		spawn(rand(10,100))
-			traitor.add_antag_datum(antag_datum)
+		traitor.add_antag_datum(antag_datum)
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
 	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
