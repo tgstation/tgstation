@@ -78,38 +78,35 @@
 	..()
 	if(!usr.canUseTopic(src))
 		return
-	if(loc == usr)
-		if(tank_one && href_list["tankone"])
-			split_gases()
-			valve_open = FALSE
-			tank_one.forceMove(drop_location())
-			tank_one = null
+	if(tank_one && href_list["tankone"])
+		split_gases()
+		valve_open = FALSE
+		tank_one.forceMove(drop_location())
+		tank_one = null
+		update_icon()
+		if((!tank_two || tank_two.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
+			w_class = WEIGHT_CLASS_NORMAL
+	else if(tank_two && href_list["tanktwo"])
+		split_gases()
+		valve_open = FALSE
+		tank_two.forceMove(drop_location())
+		tank_two = null
+		update_icon()
+		if((!tank_one || tank_one.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
+			w_class = WEIGHT_CLASS_NORMAL
+	else if(href_list["open"])
+		toggle_valve()
+	else if(attached_device)
+		if(href_list["rem_device"])
+			attached_device.forceMove(drop_location())
+			attached_device.holder = null
+			attached_device = null
 			update_icon()
-			if((!tank_two || tank_two.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
-				w_class = WEIGHT_CLASS_NORMAL
-		else if(tank_two && href_list["tanktwo"])
-			split_gases()
-			valve_open = FALSE
-			tank_two.forceMove(drop_location())
-			tank_two = null
-			update_icon()
-			if((!tank_one || tank_one.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
-				w_class = WEIGHT_CLASS_NORMAL
-		else if(href_list["open"])
-			toggle_valve()
-		else if(attached_device)
-			if(href_list["rem_device"])
-				attached_device.forceMove(drop_location())
-				attached_device.holder = null
-				attached_device = null
-				update_icon()
-			if(href_list["device"])
-				attached_device.attack_self(usr)
+		if(href_list["device"])
+			attached_device.attack_self(usr)
 
-		attack_self(usr)
-		add_fingerprint(usr)
-		return
-	return
+	attack_self(usr)
+	add_fingerprint(usr)
 
 /obj/item/device/transfer_valve/proc/process_activation(obj/item/device/D)
 	if(toggle)
