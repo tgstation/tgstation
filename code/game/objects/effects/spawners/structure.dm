@@ -24,6 +24,7 @@ again.
 	name = "window spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/fulltile)
 	dir = SOUTH
+	layer = ABOVE_OBJ_LAYER // To match /obj/structure/window
 
 /obj/effect/spawner/structure/window/hollow
 	name = "hollow window spawner"
