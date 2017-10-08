@@ -117,7 +117,8 @@
 		R.loaded = new/obj/structure/bed/roller(R)
 		qdel(src) //"Load"
 		return
-	else return ..()
+	else
+		return ..()
 
 /obj/item/roller/attack_self(mob/user)
 	deploy_roller(user, user.loc)
@@ -197,5 +198,5 @@
 
 /obj/structure/bed/alien
 	name = "resting contraption"
-	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
+	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
 	icon_state = "abed"

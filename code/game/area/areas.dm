@@ -89,7 +89,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // want to find machines, mobs, etc, in the same logical area, you will need to check all the
 // related areas.  This returns a master contents list to assist in that.
 /proc/area_contents(area/A)
-	if(!istype(A)) return null
+	if(!istype(A))
+		return null
 	var/list/contents = list()
 	for(var/area/LSA in A.related)
 		contents += LSA.contents
@@ -449,10 +450,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 		if(!L.client.played)
 			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
-			L.client.played = 1
-			sleep(600)			//ewww - this is very very bad
-			if(L.&& L.client)
-				L.client.played = 0
+			L.client.played = TRUE
+			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600) 
+
+/client/proc/ResetAmbiencePlayed()
+	played = FALSE
 
 /atom/proc/has_gravity(turf/T)
 	if(!T || !isturf(T))

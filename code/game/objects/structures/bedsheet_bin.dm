@@ -27,7 +27,8 @@ LINEN BINS
 		..()
 
 /obj/item/bedsheet/attack_self(mob/user)
-	user.drop_item()
+	if(!user.dropItemToGround(src))
+		return
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
 		to_chat(user, "<span class='notice'>You cover yourself with [src].</span>")
@@ -275,18 +276,16 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/bedsheet))
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
-		I.loc = src
 		sheets.Add(I)
 		amount++
 		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 		update_icon()
 	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>")
 			return
-		I.loc = src
 		hidden = I
 		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 

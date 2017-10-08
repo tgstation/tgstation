@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell
 	name = "Spell"
-	desc = "A wizard spell"
+	desc = "A wizard spell."
 	panel = "Spells"
 	var/sound = null //The sound the spell makes when it is cast
 	anchored = TRUE // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
@@ -429,7 +429,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 								else
 									if(los_check(user,L))
 										M = L
-				if(M in view_or_range(range, user, selection_type)) targets += M
+				if(M in view_or_range(range, user, selection_type))
+					targets += M
 
 		else
 			var/list/possible_targets = list()

@@ -790,7 +790,7 @@
 
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
-	desc = "Used for building turret control panels"
+	desc = "Used for building turret control panels."
 	icon_state = "apc"
 	result_path = /obj/machinery/turretid
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)

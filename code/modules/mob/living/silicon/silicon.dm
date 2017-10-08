@@ -142,9 +142,6 @@
 			for(var/key in alarm_types_clear)
 				alarm_types_clear[key] = 0
 
-/mob/living/silicon/drop_item()
-	return
-
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
 		to_chat(user, "<span class='alert'>Their outer shell is too tough.</span>")

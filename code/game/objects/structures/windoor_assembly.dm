@@ -98,7 +98,8 @@
 					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 
 					if(do_after(user, 40*W.toolspeed, target = src))
-						if(!src || !WT.isOn()) return
+						if(!src || !WT.isOn())
+							return
 						to_chat(user, "<span class='notice'>You disassemble the windoor assembly.</span>")
 						var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
 						RG.add_fingerprint(user)
@@ -208,11 +209,10 @@
 
 			//Adding airlock electronics for access. Step 6 complete.
 			else if(istype(W, /obj/item/electronics/airlock))
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(W, src))
 					return
 				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] installs the electronics into the airlock assembly.", "<span class='notice'>You start to install electronics into the airlock assembly...</span>")
-				W.loc = src
 
 				if(do_after(user, 40, target = src))
 					if(!src || electronics)

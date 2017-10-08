@@ -62,7 +62,7 @@
 
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"
-	desc = "serenity now... SERENITY NOW!"
+	desc = "Serenity now... SERENITY NOW!"
 	icon_state = "festivus_pole"
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"

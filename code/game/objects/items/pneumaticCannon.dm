@@ -122,7 +122,7 @@
 		return
 	if(user.disabilities & CLUMSY && prob(75) && clumsyCheck)
 		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
-		user.drop_item()
+		user.dropItemToGround(src, TRUE)
 		if(prob(10))
 			target = get_turf(user)
 		else
@@ -223,7 +223,7 @@
 
 /obj/item/pneumatic_cannon/pie
 	name = "pie cannon"
-	desc = "Load cream pie for optimal results"
+	desc = "Load cream pie for optimal results."
 	force = 10
 	icon_state = "piecannon"
 	gasPerThrow = 0

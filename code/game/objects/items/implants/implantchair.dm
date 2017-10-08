@@ -151,7 +151,7 @@
 
 /obj/machinery/implantchair/genepurge
 	name = "Genetic purifier"
-	desc = "Used to purge human genome of foreign influences"
+	desc = "Used to purge a human genome of foreign influences."
 	special = TRUE
 	special_name = "Purge genome"
 	injection_cooldown = 0

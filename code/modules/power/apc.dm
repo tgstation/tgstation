@@ -449,9 +449,8 @@
 			if (stat & MAINT)
 				to_chat(user, "<span class='warning'>There is no connector for your power cell!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.forceMove(src)
 			cell = W
 			user.visible_message(\
 				"[user.name] has inserted the power cell to [src.name]!",\
@@ -601,7 +600,8 @@
 							"<span class='italics'>You hear welding.</span>")
 		playsound(src.loc, WT.usesound, 50, 1)
 		if(do_after(user, 50*W.toolspeed, target = src))
-			if(!src || !WT.remove_fuel(3, user)) return
+			if(!src || !WT.remove_fuel(3, user))
+				return
 			if ((stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\

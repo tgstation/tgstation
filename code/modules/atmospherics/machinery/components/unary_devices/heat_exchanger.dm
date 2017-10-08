@@ -3,7 +3,7 @@
 	icon_state = "he_intact"
 
 	name = "heat exchanger"
-	desc = "Exchanges heat between two input gases. Setup for fast heat transfer"
+	desc = "Exchanges heat between two input gases. Set up for fast heat transfer."
 
 	can_unwrench = TRUE
 
