@@ -20,7 +20,7 @@
 			if(D.spread_flags & VIRUS_SPREAD_CONTACT_FLUIDS)
 				diseases_to_add += D
 		if(LAZYLEN(diseases_to_add))
-			AddComponent(/datum/component/infective_floor, diseases_to_add)
+			AddComponent(/datum/component/infective, diseases_to_add)
 	. = ..()
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
