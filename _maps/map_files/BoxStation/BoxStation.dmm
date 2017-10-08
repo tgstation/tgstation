@@ -37846,6 +37846,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/sign/xenobio{
+	pixel_y = -32
+	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "bIU" = (
@@ -39417,14 +39420,14 @@
 	pixel_x = -25
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bMh" = (
@@ -39458,7 +39461,8 @@
 	desc = "A machine used to process slimes and retrieve their extract.";
 	name = "Slime Processor"
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bMm" = (
 /obj/machinery/monkey_recycler,
@@ -39466,30 +39470,42 @@
 	dir = 2;
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bMn" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/turf/open/floor/plasteel/white,
+/obj/structure/table/glass,
+/obj/machinery/reagentgrinder{
+	desc = "Used to grind things up into raw materials and liquids.";
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bMo" = (
 /obj/machinery/smartfridge/extract/preloaded,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bMp" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/white,
+/obj/item/extinguisher,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bMq" = (
 /obj/structure/closet/l3closet/scientist,
-/turf/open/floor/plasteel/white,
+/obj/item/extinguisher,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bMr" = (
 /obj/effect/spawner/structure/window,
@@ -40830,7 +40846,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPy" = (
 /obj/effect/landmark/start/scientist,
@@ -40841,30 +40860,57 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bPz" = (
+/obj/structure/table/glass,
+/obj/item/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/storage/box/syringes{
+	pixel_y = 5
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/storage/box/monkeycubes,
 /obj/machinery/light,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/table/glass,
-/obj/item/storage/box/monkeycubes,
-/obj/item/storage/box/monkeycubes,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPA" = (
 /obj/machinery/computer/camera_advanced/xenobio,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPB" = (
 /obj/structure/table/glass,
+/obj/item/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/folder/white{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -4
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/folder/white,
-/obj/item/pen,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPC" = (
 /obj/structure/disposalpipe/segment{
@@ -40885,13 +40931,13 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bPE" = (
-/obj/structure/table,
-/obj/item/extinguisher{
-	pixel_x = 4;
-	pixel_y = 3
+/obj/structure/table/reinforced,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/device/slime_scanner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
-/obj/item/extinguisher,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -40903,19 +40949,19 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "bPG" = (
-/obj/structure/table,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/machinery/light,
+/obj/machinery/chem_master,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
-/turf/open/floor/plasteel/white,
+/obj/machinery/light,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPH" = (
-/obj/structure/table,
+/obj/machinery/chem_dispenser/constructable,
 /obj/machinery/requests_console{
 	department = "Science";
 	departmentType = 2;
@@ -40923,25 +40969,45 @@
 	pixel_y = -30;
 	receive_ore_updates = 1
 	},
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/obj/item/pen,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPI" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPJ" = (
-/obj/structure/table,
-/obj/item/storage/box/beakers{
-	pixel_x = 2;
+/obj/structure/table/glass,
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 4
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 4
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 4
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/item/storage/box/syringes,
-/turf/open/floor/plasteel/white,
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/dropper,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPK" = (
 /obj/effect/spawner/structure/window,
@@ -41315,6 +41381,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bQM" = (
@@ -41322,6 +41389,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bQN" = (
@@ -41337,6 +41405,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bQO" = (
@@ -42323,6 +42392,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bTb" = (
@@ -42364,6 +42434,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bTe" = (
@@ -47839,7 +47910,10 @@
 /obj/structure/rack,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/suit/hooded/wintercoat,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cfz" = (
 /obj/structure/cable{
@@ -48188,7 +48262,10 @@
 	dir = 2;
 	on = 1
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cgo" = (
 /obj/structure/cable{
@@ -48695,15 +48772,18 @@
 /turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "cht" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "chu" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -49738,7 +49818,10 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/pen,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cjC" = (
 /obj/structure/grille,
@@ -64026,6 +64109,31 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
+"cTX" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/shieldwallgen/xenobiologyaccess,
+/obj/structure/sign/poster/official/safety_eye_protection{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
+/area/science/xenobiology)
+"cTY" = (
+/obj/structure/sign/poster/official/safety_internals{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
+"cTZ" = (
+/obj/effect/turf_decal/stripes/line{
+	tag = "icon-warninglinecorner (NORTH)";
+	icon_state = "warninglinecorner";
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 
 (1,1,1) = {"
 aaa
@@ -107629,8 +107737,8 @@ bZa
 bMi
 bMi
 bRZ
-bMi
-bMi
+cTY
+cTZ
 chu
 ccQ
 aaf
@@ -107868,7 +107976,7 @@ bEm
 bEm
 bEm
 bDb
-bJH
+cTX
 bLb
 bMk
 bNn
