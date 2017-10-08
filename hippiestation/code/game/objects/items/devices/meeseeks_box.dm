@@ -61,15 +61,15 @@
 			meeseeks.job = "Mr. Meeseeks"
 			new /obj/effect/cloud(get_turf(user))
 			meeseeks.key = Z.key
-			to_chat(M, "<span class='boldannounce'>You are a Mr. Meeseeks!</span>")
+			to_chat(meeseeks, "<span class='boldannounce'>You are a Mr. Meeseeks!</span>")
 			var/request = stripped_input(user, "How should Mr. Meeseeks help you today?")
 			if(!request)
 				to_chat(user, "<span class='warning'>Mr. Meeseeks didn't get a request!</span>")
-				destroy_meeseeks(M, SM)
+				destroy_meeseeks(meeseeks, SM)
 				return
 			playsound(loc, 'hippiestation/sound/voice/cando.ogg', 40)
-			message_admins("[key_name_admin(user)] has summoned a Mr. Meeseeks([key_name_admin(M)]) with the request: [request]")
-			log_game("[key_name(user)] has summoned a Mr. Meeseeks([key_name(M)]) with the request: [request]")
+			message_admins("[key_name_admin(user)] has summoned a Mr. Meeseeks([key_name_admin(meeseeks)]) with the request: [request]")
+			log_game("[key_name(user)] has summoned a Mr. Meeseeks([key_name(meeseeks)]) with the request: [request]")
 			if(meeseeks.mind)
 				meeseeks.mind.assigned_role = "Mr. Meeseeks" //Should prevent getting picked for antag as a meeseeks
 				var/datum/objective/objective = new
