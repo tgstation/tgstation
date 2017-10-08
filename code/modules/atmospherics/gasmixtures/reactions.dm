@@ -293,5 +293,31 @@
 			air.temperature = max(((air.temperature*old_heat_capacity + stim_energy_change)/new_heat_capacity),TCMB)
 		return REACTING
 
+/datum/gas_reaction/nobeliumformation
+	priority = 3
+	name = "Hyper-Nobelium condensation"
+	id = "nobformation"
+
+/datum/gas_reaction/nobeliumformation/init_reqs()
+	min_requirements = list(
+		"nitrogen" = 10,
+		"tritium" = 5,
+		"temp" = 500000)
+
+/datum/gas_reaction/nobeliumformation/react(datum/gas_mixture/air)
+	var/list/cached_gases = air.gases
+	air.assert_gases("tritium","nitrogen", "nob")
+	var/old_heat_capacity = air.heat_capacity()
+	var/nob_formed = (cached_gases["nitrogen"]*cached_gases["tritium"])/100
+	var/energy_taken = nob_formed*1000000
+	cached_gases["tritium"][MOLES]-= 10*nob_formed
+	cached_gases["nitrogen"][MOLES]-= 20*nob_formed
+	cached_gases["nob"][MOLES]+= nob_formed
+
+
+	if (nob_formed)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = max(((air.temperature*old_heat_capacity - energy_taken)/new_heat_capacity),TCMB)
 #undef REACTING
 #undef NO_REACTION
