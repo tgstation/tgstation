@@ -393,6 +393,7 @@
 				dock_id(destination_dock)
 				mode = SHUTTLE_ENDGAME
 				timer = 0
+				world << 'sound/jukebox/spaceasshole.ogg'
 
 /obj/docking_port/mobile/emergency/transit_failure()
 	..()
