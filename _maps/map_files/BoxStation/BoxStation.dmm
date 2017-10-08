@@ -58384,7 +58384,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "cCW" = (
-/obj/machinery/portable_atmospherics/canister/freon,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cCX" = (
