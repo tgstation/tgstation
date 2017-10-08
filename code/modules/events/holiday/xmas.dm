@@ -116,41 +116,8 @@
 		santa.key = Z.key
 		qdel(Z)
 
-		santa.real_name = "Santa Claus"
-		santa.name = "Santa Claus"
-		santa.mind.name = "Santa Claus"
-		santa.mind.assigned_role = "Santa"
-		santa.mind.special_role = "Santa"
-
-		santa.hair_style = "Long Hair"
-		santa.facial_hair_style = "Full Beard"
-		santa.hair_color = "FFF"
-		santa.facial_hair_color = "FFF"
-
-		santa.equip_to_slot_or_del(new /obj/item/clothing/under/color/red, slot_w_uniform)
-		santa.equip_to_slot_or_del(new /obj/item/clothing/suit/space/santa, slot_wear_suit)
-		santa.equip_to_slot_or_del(new /obj/item/clothing/head/santa, slot_head)
-		santa.equip_to_slot_or_del(new /obj/item/clothing/mask/breath, slot_wear_mask)
-		santa.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/red, slot_gloves)
-		santa.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/red, slot_shoes)
-		santa.equip_to_slot_or_del(new /obj/item/tank/internals/emergency_oxygen/double, slot_belt)
-		santa.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain, slot_ears)
-		santa.equip_to_slot_or_del(new /obj/item/storage/backpack/santabag, slot_back)
-		santa.equip_to_slot_or_del(new /obj/item/device/flashlight, slot_r_store) //most blob spawn locations are really dark.
-
-		var/obj/item/card/id/gold/santacard = new(santa)
-		santacard.update_label("Santa Claus", "Santa")
-		var/datum/job/captain/J = new/datum/job/captain
-		santacard.access = J.get_access()
-		santa.equip_to_slot_or_del(santacard, slot_wear_id)
-
+		santa.equipOutfit(/datum/outfit/santa)
 		santa.update_icons()
-
-		var/obj/item/storage/backpack/bag = santa.back
-		var/obj/item/a_gift/gift = new(santa)
-		while(bag.can_be_inserted(gift, 1))
-			bag.handle_item_insertion(gift, 1)
-			gift = new(santa)
 
 		var/datum/objective/santa_objective = new()
 		santa_objective.explanation_text = "Bring joy and presents to the station!"
