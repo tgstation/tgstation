@@ -57,7 +57,7 @@
 		pixel_x = 0
 		pixel_y = 0
 
-		tesla_zap(src, 7, TESLA_DEFAULT_POWER, TRUE))
+		tesla_zap(src, 7, TESLA_DEFAULT_POWER, TRUE)
 
 		pixel_x = -32
 		pixel_y = -32
