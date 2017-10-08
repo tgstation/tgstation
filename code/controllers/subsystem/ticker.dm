@@ -67,6 +67,21 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
+	var/list/byond_sound_formats = list(
+		"mid"  = TRUE,
+		"midi" = TRUE,
+		"mod"  = TRUE,
+		"it"   = TRUE,
+		"s3m"  = TRUE,
+		"xm"   = TRUE,
+		"oxm"  = TRUE,
+		"wav"  = TRUE,
+		"ogg"  = TRUE,
+		"raw"  = TRUE,
+		"wma"  = TRUE,
+		"aiff" = TRUE
+	)
+
 	var/list/provisional_title_music = flist("config/title_music/sounds/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
@@ -95,20 +110,6 @@ SUBSYSTEM_DEF(ticker)
 		var/list/L = splittext(S,".")
 		if(L.len >= 2)
 			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
-			var/list/byond_sound_formats = list(
-				"mid"  = TRUE,
-				"midi" = TRUE,
-				"mod"  = TRUE,
-				"it"   = TRUE,
-				"s3m"  = TRUE,
-				"xm"   = TRUE,
-				"oxm"  = TRUE,
-				"wav"  = TRUE,
-				"ogg"  = TRUE,
-				"raw"  = TRUE,
-				"wma"  = TRUE,
-				"aiff" = TRUE
-			)
 			if(byond_sound_formats[ext])
 				continue
 		music -= S
