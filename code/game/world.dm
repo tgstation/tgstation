@@ -242,14 +242,18 @@ GLOBAL_PROTECT(security_mode)
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
-			s += "<big><b>[server_name]</b> &#8212; </big>"
+			s += "<big><b>[server_name]</b> &#8212; [station_name()]</big>"
 		hostedby = CONFIG_GET(string/hostedby)
 		forumurl = CONFIG_GET(string/forumurl)
 		githuburl = CONFIG_GET(string/githuburl)
-
+	if(SSticker)
+		if(GLOB.master_mode)
+			s += "<br>Mode: <b>[GLOB.master_mode]</b>"
+	else
+		s += "<br>Mode: <b>STARTING</b>"
 	if (hostedby)
 		s += "<br>Hosted by <b>[hostedby]</b>."
-	s += "<img src=\"http://i.imgur.com/xH6DuHE.jpg\">" //Banner image
+	s += "<img src=\"https://i.imgur.com/xfWVypg.png\">" //Banner image
 	s += "<br>("
 	s += "<a href=\"[forumurl]\">"
 	s += "Forums"
@@ -260,11 +264,6 @@ GLOBAL_PROTECT(security_mode)
 	s += "Github"
 	s += "</a>"
 	s += ") "
-	if(SSticker)
-		if(GLOB.master_mode)
-			s += GLOB.master_mode
-	else
-		s += "<b>STARTING</b>"
 
 	status = s
 
