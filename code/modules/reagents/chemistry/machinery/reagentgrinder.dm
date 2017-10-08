@@ -106,6 +106,8 @@
 		beaker = null
 		update_icon()
 		updateUsrDialog()
+	if(holdingitems[A])
+		holdingitems -= A
 
 /obj/machinery/reagentgrinder/proc/drop_all_items()
 	for(var/i in holdingitems)
