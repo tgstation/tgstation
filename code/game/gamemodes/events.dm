@@ -25,7 +25,8 @@
 				if(!(AT.z in GLOB.station_z_levels)) //Only check one, it's enough.
 					skip = 1
 				break
-		if(skip) continue
+		if(skip)
+			continue
 		A.power_light = FALSE
 		A.power_equip = FALSE
 		A.power_environ = FALSE
@@ -40,7 +41,8 @@
 				if(istype(A,area_type))
 					skip = 1
 					break
-			if(skip) continue
+			if(skip)
+				continue
 
 			C.cell.charge = 0
 

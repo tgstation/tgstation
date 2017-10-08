@@ -208,9 +208,9 @@
 	"Miner" = /obj/item/robot_module/miner, \
 	"Janitor" = /obj/item/robot_module/janitor, \
 	"Service" = /obj/item/robot_module/butler)
-	if(!config.forbid_peaceborg)
+	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
-	if(!config.forbid_secborg)
+	if(!CONFIG_GET(flag/disable_secborg))
 		modulelist["Security"] = /obj/item/robot_module/security
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
@@ -424,9 +424,8 @@
 		else if(cell)
 			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			cell = W
 			to_chat(user, "<span class='notice'>You insert the power cell.</span>")
 		update_icons()
@@ -515,7 +514,7 @@
 		else if(U.locked)
 			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(U))
 				return
 			if(U.action(src))
 				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
@@ -526,12 +525,13 @@
 					upgrades += U
 			else
 				to_chat(user, "<span class='danger'>Upgrade error.</span>")
+				U.forceMove(drop_location())
 
 	else if(istype(W, /obj/item/device/toner))
 		if(toner >= tonermax)
 			to_chat(user, "<span class='warning'>The toner level of [src] is at its highest level possible!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			toner = tonermax
 			qdel(W)
@@ -782,7 +782,35 @@
 		cell = null
 	qdel(src)
 
-/mob/living/silicon/robot/syndicate
+/mob/living/silicon/robot/modules
+	var/set_module = null
+
+/mob/living/silicon/robot/modules/Initialize()
+	. = ..()
+	module.transform_to(set_module)
+
+/mob/living/silicon/robot/modules/standard
+	set_module = /obj/item/robot_module/standard
+
+/mob/living/silicon/robot/modules/medical
+	set_module = /obj/item/robot_module/medical
+
+/mob/living/silicon/robot/modules/engineering
+	set_module = /obj/item/robot_module/engineering
+
+/mob/living/silicon/robot/modules/security
+	set_module = /obj/item/robot_module/security
+
+/mob/living/silicon/robot/modules/peacekeeper
+	set_module = /obj/item/robot_module/peacekeeper
+
+/mob/living/silicon/robot/modules/miner
+	set_module = /obj/item/robot_module/miner
+
+/mob/living/silicon/robot/modules/janitor
+	set_module = /obj/item/robot_module/janitor
+
+/mob/living/silicon/robot/modules/syndicate
 	icon_state = "syndie_bloodhound"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
@@ -794,25 +822,24 @@
 							<b>You are armed with powerful offensive tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 							Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 							<i>Help the operatives secure the disk at all costs!</i></b>"
-	var/set_module = /obj/item/robot_module/syndicate
+	set_module = /obj/item/robot_module/syndicate
 
-/mob/living/silicon/robot/syndicate/Initialize()
+/mob/living/silicon/robot/modules/syndicate/Initialize()
 	. = ..()
 	cell.maxcharge = 25000
 	cell.charge = 25000
 	radio = new /obj/item/device/radio/borg/syndicate(src)
-	module.transform_to(set_module)
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
 
-/mob/living/silicon/robot/syndicate/proc/show_playstyle()
+/mob/living/silicon/robot/modules/syndicate/proc/show_playstyle()
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
 
-/mob/living/silicon/robot/syndicate/ResetModule()
+/mob/living/silicon/robot/modules/syndicate/ResetModule()
 	return
 
-/mob/living/silicon/robot/syndicate/medical
+/mob/living/silicon/robot/modules/syndicate/medical
 	icon_state = "syndi-medi"
 	playstyle_string = "<span class='userdanger'>You are a Syndicate medical cyborg!</span><br>\
 						<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
@@ -868,6 +895,7 @@
 	see_invisible = initial(see_invisible)
 	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
+	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	if(client.eye != src)
 		var/atom/A = client.eye

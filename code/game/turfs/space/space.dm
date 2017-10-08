@@ -14,6 +14,7 @@
 
 	var/global/datum/gas_mixture/immutable/space/space_gas = new
 	plane = PLANE_SPACE
+	layer = SPACE_LAYER
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
@@ -66,7 +67,7 @@
 	return
 
 /turf/open/space/proc/update_starlight()
-	if(config.starlight)
+	if(CONFIG_GET(flag/starlight))
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
@@ -176,7 +177,8 @@
 			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 			if(L)
 				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
-			else return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+			else
+				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
 	return FALSE
 
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)

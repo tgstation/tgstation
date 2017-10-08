@@ -9,7 +9,7 @@ Buildable meters
 
 /obj/item/pipe
 	name = "pipe"
-	desc = "A pipe"
+	desc = "A pipe."
 	var/pipe_type = 0
 	var/pipename
 	force = 7
@@ -213,6 +213,8 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		return ..()
 	if (!isturf(src.loc))
 		return 1
+	
+	add_fingerprint(user)
 
 	fixdir()
 	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
@@ -264,7 +266,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 
 /obj/item/pipe_meter
 	name = "meter"
-	desc = "A meter that can be laid on pipes"
+	desc = "A meter that can be laid on pipes."
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"

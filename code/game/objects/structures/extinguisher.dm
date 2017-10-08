@@ -10,6 +10,10 @@
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = 0
 
+/obj/structure/extinguisher_cabinet/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to [opened ? "close":"open"] it.</span>")
+
 /obj/structure/extinguisher_cabinet/New(loc, ndir, building)
 	..()
 	if(building)
@@ -50,9 +54,8 @@
 		return
 	if(istype(I, /obj/item/extinguisher))
 		if(!stored_extinguisher && opened)
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
-			contents += I
 			stored_extinguisher = I
 			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
 			update_icon()

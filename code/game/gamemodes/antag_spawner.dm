@@ -90,7 +90,7 @@
 		if("healing")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
-			M.put_in_hands_or_del(new /obj/item/gun/magic/staff/healing(M))
+			M.put_in_hands(new /obj/item/gun/magic/staff/healing(M), TRUE)
 			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
 		if("robeless")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
@@ -203,9 +203,9 @@
 	var/mob/living/silicon/robot/R
 	switch(borg_to_spawn)
 		if("Medical")
-			R = new /mob/living/silicon/robot/syndicate/medical(T)
+			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
 		else
-			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
+			R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
 
 	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))

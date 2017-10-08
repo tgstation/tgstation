@@ -1,5 +1,6 @@
 /obj/machinery/computer/shuttle/ferry
 	name = "transport ferry console"
+	desc = "A console that controls the transport ferry."
 	circuit = /obj/item/circuitboard/computer/ferry
 	shuttleId = "ferry"
 	possible_destinations = "ferry_home;ferry_away"

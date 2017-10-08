@@ -134,6 +134,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(changed_transit)
 		color_space()
 #endif
+	CheckAutoEvac()
 
 	while(transit_requesters.len)
 		var/requester = popleft(transit_requesters)
@@ -146,7 +147,32 @@ SUBSYSTEM_DEF(shuttle)
 				var/obj/docking_port/mobile/M = requester
 				M.transit_failure()
 		if(MC_TICK_CHECK)
-			return
+			break
+
+/datum/controller/subsystem/shuttle/proc/CheckAutoEvac()
+	if(emergencyNoEscape || emergencyNoRecall || !emergency)
+		return
+
+	var/threshold = CONFIG_GET(number/emergency_shuttle_autocall_threshold)
+	if(!threshold)
+		return
+
+	var/alive = 0
+	for(var/I in GLOB.player_list)
+		var/mob/M = I
+		if(M.stat != DEAD)
+			++alive
+	
+	var/total = GLOB.joined_player_list.len
+
+	if(alive / total <= threshold)
+		var/msg = "Automatically dispatching shuttle due to crew death."
+		message_admins(msg)
+		log_game("[msg] Alive: [alive], Roundstart: [total], Threshold: [threshold]")
+		emergencyNoRecall = TRUE
+		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
+		if(emergency.timeLeft(1) > emergencyCallTime * 0.4)
+			emergency.request(null, set_coefficient = 0.4)
 
 /datum/controller/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
@@ -174,9 +200,9 @@ SUBSYSTEM_DEF(shuttle)
 			Good luck.")
 			return
 		emergency = backup_shuttle
-
-	if(world.time - SSticker.round_start_time < config.shuttle_refuel_delay)
-		to_chat(user, "The emergency shuttle is refueling. Please wait [DisplayTimeText((world.time - SSticker.round_start_time) - config.shuttle_refuel_delay)] before trying again.")
+	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
+	if(world.time - SSticker.round_start_time < srd)
+		to_chat(user, "The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.")
 		return
 
 	switch(emergency.mode)

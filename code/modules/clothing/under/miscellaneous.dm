@@ -24,7 +24,7 @@
 
 /obj/item/clothing/under/scratch
 	name = "white suit"
-	desc = "A white suit, suitable for an excellent host"
+	desc = "A white suit, suitable for an excellent host."
 	icon_state = "scratch"
 	item_state = "scratch"
 	item_color = "scratch"
@@ -695,7 +695,7 @@
 
 /obj/item/clothing/under/draculass
 	name = "draculass coat"
-	desc = "A dress inspired by the ancient era known as the victorian era"
+	desc = "A dress inspired by the ancient \"Victorian\" era."
 	icon_state = "draculass"
 	item_state = "draculass"
 	item_color = "draculass"

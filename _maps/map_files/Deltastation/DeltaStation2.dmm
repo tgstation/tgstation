@@ -91796,7 +91796,7 @@
 "dwO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dwP" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -91816,7 +91816,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dwQ" = (
 /obj/structure/table/glass,
 /obj/item/clipboard,
@@ -92449,7 +92449,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dyb" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
@@ -92457,12 +92457,12 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dyc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dyd" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -92471,7 +92471,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dye" = (
 /obj/structure/table/glass,
 /obj/item/folder/white,
@@ -92924,12 +92924,12 @@
 "dzf" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dzg" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dzh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -92939,14 +92939,14 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dzi" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/backpack/duffelbag/med,
 /obj/item/device/flashlight/pen,
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dzj" = (
 /turf/closed/wall,
 /area/crew_quarters/heads/cmo)
@@ -93675,7 +93675,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dAw" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -93688,7 +93688,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dAx" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -93700,7 +93700,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dAy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -93713,7 +93713,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dAz" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -93734,14 +93734,14 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dAA" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/latex/nitrile,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/breath/medical,
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dAB" = (
 /obj/structure/closet/secure_closet/CMO,
 /obj/item/clothing/under/rank/nursesuit,
@@ -94325,7 +94325,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dBP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -94335,13 +94335,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dBQ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dBR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -94351,7 +94351,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dBS" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
@@ -94360,7 +94360,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dBT" = (
 /obj/machinery/light{
 	dir = 8
@@ -95033,15 +95033,15 @@
 /obj/structure/closet/secure_closet/medical3,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dDe" = (
 /obj/structure/closet/wardrobe/white/medical,
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dDf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dDg" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -95049,10 +95049,15 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dDh" = (
 /obj/machinery/suit_storage_unit/cmo,
 /obj/effect/turf_decal/stripes/line{
@@ -95604,7 +95609,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue)
+/area/maintenance/department/medical/morgue)
 "dEn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
@@ -113091,6 +113096,50 @@
 /obj/structure/ore_box,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
+"esz" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/department/medical/morgue)
+"esA" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/department/medical/morgue)
+"esB" = (
+/turf/closed/wall,
+/area/maintenance/department/medical/morgue)
+"esC" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/maintenance/department/medical/morgue)
+"esD" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"esE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Morgue Maintenance APC";
+	areastring = "/area/maintenance/department/medical/morgue";
+	pixel_y = -26
+	},
+/obj/structure/cable/white{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/maintenance/department/medical/morgue)
+"esF" = (
+/turf/closed/wall,
+/area/maintenance/department/medical/morgue)
+"esG" = (
+/turf/closed/wall,
+/area/maintenance/department/medical/morgue)
+"esH" = (
+/turf/closed/wall,
+/area/maintenance/department/medical/morgue)
 
 (1,1,1) = {"
 aaa
@@ -141006,9 +141055,9 @@ cHW
 cHW
 cHW
 cOy
-cQx
-cRP
-cTA
+epl
+epm
+epn
 cOy
 cHW
 cHS
@@ -155933,13 +155982,13 @@ drr
 dsR
 dur
 dvw
-dwN
+esz
 dya
-dyY
+esD
 dAw
 dBO
 dDd
-dwK
+esB
 dFd
 dGE
 dHP
@@ -156190,13 +156239,13 @@ drs
 dsS
 drs
 dvx
-dwN
+esz
 dyb
 dzf
 dAx
 dBP
 dDe
-dwK
+esB
 dFe
 dGF
 dHP
@@ -156961,13 +157010,13 @@ drv
 dlO
 dus
 dvA
-dwK
-dxS
+esB
+esC
 dzi
 dAA
 dBS
-dxS
-dwK
+esE
+esB
 dEY
 dGA
 dHP

@@ -173,7 +173,7 @@
 
 /obj/screen/alert/verygross
 	name = "Very grossed out."
-	desc = "I'm not feeling very well.."
+	desc = "You're not feeling very well..."
 	icon_state = "gross2"
 
 /obj/screen/alert/disgusted
@@ -378,90 +378,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /obj/screen/alert/clockwork
 	alerttooltipstyle = "clockcult"
 
-/obj/screen/alert/clockwork/scripture_reqs
-	name = "Next Tier Requirements"
-	desc = "You shouldn't be seeing this description unless you're very fast. If you're very fast, good job!"
-	icon_state = "no-servants-caches"
-
-/obj/screen/alert/clockwork/scripture_reqs/Initialize()
-	. = ..()
-	START_PROCESSING(SSprocessing, src)
-	process()
-
-/obj/screen/alert/clockwork/scripture_reqs/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
-	return ..()
-
-/obj/screen/alert/clockwork/scripture_reqs/process()
-	if(GLOB.clockwork_gateway_activated)
-		mob_viewer.clear_alert("scripturereq")
-		return
-	var/current_state
-	for(var/i in SSticker.scripture_states)
-		if(!SSticker.scripture_states[i])
-			current_state = i
-			break
-	icon_state = "no"
-	if(!current_state)
-		name = "Current Objective"
-		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
-			var/area/gate_area = get_area(G)
-			desc = "<b>Protect the Ark at [gate_area.map_name]!</b>"
-			return
-		desc = "<b>All tiers of Scripture are unlocked.<br>\
-		Acquire components and summon the Ark.</b>"
-	else
-		name = "Next Tier Requirements"
-		var/validservants = 0
-		var/unconverted_ais_exist = get_unconverted_ais()
-		for(var/mob/living/L in GLOB.living_mob_list)
-			if(is_servant_of_ratvar(L) && (ishuman(L) || issilicon(L)))
-				validservants++
-		var/req_servants = 0
-		var/req_caches = 0
-		var/req_cv = 0
-		var/req_ai = FALSE
-		var/list/textlist = list("Requirements for <b>[current_state] Scripture:</b>")
-		switch(current_state) //get our requirements based on the tier
-			if(SCRIPTURE_SCRIPT)
-				req_servants = SCRIPT_SERVANT_REQ
-				req_caches = SCRIPT_CACHE_REQ
-			if(SCRIPTURE_APPLICATION)
-				req_servants = APPLICATION_SERVANT_REQ
-				req_caches = APPLICATION_CACHE_REQ
-				req_cv = APPLICATION_CV_REQ
-			if(SCRIPTURE_JUDGEMENT)
-				req_servants = JUDGEMENT_SERVANT_REQ
-				req_caches = JUDGEMENT_CACHE_REQ
-				req_cv = JUDGEMENT_CV_REQ
-				req_ai = TRUE
-		textlist += "<br><b>[validservants]/[req_servants]</b> Servants"
-		if(validservants < req_servants)
-			icon_state += "-servants" //in this manner, generate an icon key based on what we're missing
-		else
-			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-		textlist += "<br><b>[GLOB.clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
-		if(GLOB.clockwork_caches < req_caches)
-			icon_state += "-caches"
-		else
-			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-		if(req_cv) //cv only shows up if the tier requires it
-			textlist += "<br><b>[GLOB.clockwork_construction_value]/[req_cv]</b> Construction Value"
-			if(GLOB.clockwork_construction_value < req_cv)
-				icon_state += "-cv"
-			else
-				textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-		if(req_ai) //same for ai
-			if(unconverted_ais_exist)
-				if(unconverted_ais_exist > 1)
-					textlist += "<br><b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
-				else
-					textlist += "<br><b>An unconverted AI exists!</b>"
-				icon_state += "-ai"
-			else
-				textlist += "<br>No unconverted AIs exist: <b><font color=#5A6068>\[CHECK\]</font></b>"
-		desc = textlist.Join()
-
 /obj/screen/alert/clockwork/infodump
 	name = "Global Records"
 	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
@@ -473,7 +389,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	else
 		var/servants = 0
 		var/validservants = 0
-		var/unconverted_ais_exist = get_unconverted_ais()
 		var/list/textlist
 		for(var/mob/living/L in GLOB.living_mob_list)
 			if(is_servant_of_ratvar(L))
@@ -487,29 +402,25 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist = list("<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>")
 		else
 			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
-		textlist += "<b>[GLOB.clockwork_caches ? "[GLOB.clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
-		<b>[GLOB.clockwork_construction_value]</b> Construction Value.<br>"
-		textlist += "<b>[Floor(servants * 0.2)]</b> Tinkerer's Daemons can be active at once. <b>[LAZYLEN(GLOB.active_daemons)]</b> are active.<br>"
-		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
-			var/area/gate_area = get_area(G)
-			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
-			if(G.still_needs_components())
-				textlist += "Ark Components required:<br>"
-				for(var/i in G.required_components)
-					if(G.required_components[i])
-						textlist += "[get_component_icon(i)] <b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
-				textlist += "<br>"
-			else
-				textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
-			break
-		if(unconverted_ais_exist)
-			if(unconverted_ais_exist > 1)
-				textlist += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
-			else
-				textlist += "<b>An unconverted AI exists!</b><br>"
-		for(var/i in SSticker.scripture_states)
-			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
-				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+			for(var/i in SSticker.scripture_states)
+				if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
+					textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+		if(G)
+			var/time_info
+			var/time_name
+			if(G.seconds_until_activation)
+				time_info = G.seconds_until_activation
+				time_name = "until the Ark activates"
+			else if(G.grace_period)
+				time_info = G.grace_period
+				time_name = "of grace period remaining"
+			else if(G.progress_in_seconds)
+				time_info = GATEWAY_RATVAR_ARRIVAL - G.progress_in_seconds
+				time_name = "until the Ark finishes summoning"
+			if(time_info)
+				textlist += "<b>[time_info / 60] minutes</b> [time_name].<br>"
+		textlist += "<b>[DisplayPower(get_clockwork_power())]</b> power available for use."
 		desc = textlist.Join()
 	..()
 
@@ -580,8 +491,10 @@ so as to remain in compliance with the most up-to-date laws."
 	var/atom/target = null
 
 /obj/screen/alert/hackingapc/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/living/silicon/ai/AI = usr
 	var/turf/T = get_turf(target)
 	if(T)
@@ -604,7 +517,8 @@ so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
 
 /obj/screen/alert/notify_cloning/Click()
-	if(!usr || !usr.client) return
+	if(!usr || !usr.client)
+		return
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
@@ -617,17 +531,20 @@ so as to remain in compliance with the most up-to-date laws."
 	var/action = NOTIFY_JUMP
 
 /obj/screen/alert/notify_action/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/dead/observer/G = usr
-	if(!istype(G)) return
+	if(!istype(G))
+		return
 	switch(action)
 		if(NOTIFY_ATTACK)
 			target.attack_ghost(G)
 		if(NOTIFY_JUMP)
 			var/turf/T = get_turf(target)
 			if(T && isturf(T))
-				G.loc = T
+				G.forceMove(T)
 		if(NOTIFY_ORBIT)
 			G.ManualFollow(target)
 

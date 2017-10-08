@@ -31,15 +31,16 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/max_i = 10//number of tries to spawn meteor.
 	while(!isspaceturf(pickedstart))
 		var/startSide = pick(GLOB.cardinals)
-		pickedstart = spaceDebrisStartLoc(startSide, ZLEVEL_STATION_PRIMARY)
-		pickedgoal = spaceDebrisFinishLoc(startSide, ZLEVEL_STATION_PRIMARY)
+		var/startZ = pick(GLOB.station_z_levels)
+		pickedstart = spaceDebrisStartLoc(startSide, startZ)
+		pickedgoal = spaceDebrisFinishLoc(startSide, startZ)
 		max_i--
 		if(max_i<=0)
 			return
 	var/Me = pickweight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
-	M.z_original = ZLEVEL_STATION_PRIMARY
+	M.z_original = M.z
 	spawn(0)
 		walk_towards(M, M.dest, 1)
 

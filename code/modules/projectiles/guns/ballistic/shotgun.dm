@@ -137,7 +137,7 @@
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage
 	name = "arcane barrage"
-	desc = "Pew Pew Pew"
+	desc = "Pew Pew Pew."
 	fire_sound = 'sound/weapons/emitter.ogg'
 	pin = /obj/item/device/firing_pin/magic
 	icon_state = "arcane_barrage"
@@ -172,11 +172,11 @@
 	if(guns_left)
 		var/obj/item/gun/ballistic/shotgun/boltaction/enchanted/GUN = new gun_type
 		GUN.guns_left = guns_left - 1
-		user.drop_item()
+		user.dropItemToGround(src, TRUE)
 		user.swap_hand()
 		user.put_in_hands(GUN)
 	else
-		user.drop_item()
+		user.dropItemToGround(src, TRUE)
 	discard_gun(user)
 
 // Automatic Shotguns//
@@ -212,6 +212,10 @@
 	w_class = WEIGHT_CLASS_HUGE
 	var/toggled = FALSE
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
+
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to pump it.</span>")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize()
 	. = ..()

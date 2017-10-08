@@ -1,7 +1,7 @@
 
 /obj/structure/firepit
 	name = "firepit"
-	desc = "warm and toasty"
+	desc = "Warm and toasty."
 	icon = 'icons/obj/fireplace.dmi'
 	icon_state = "firepit-active"
 	density = FALSE

@@ -391,7 +391,8 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set name = "Show/Hide Radio Chatter"
 	set category = "Preferences"
 	set desc = "Toggle seeing radiochatter from nearby radios and speakers"
-	if(!holder) return
+	if(!holder)
+		return
 	prefs.chat_toggles ^= CHAT_RADIO
 	prefs.save_preferences()
 	to_chat(usr, "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers")

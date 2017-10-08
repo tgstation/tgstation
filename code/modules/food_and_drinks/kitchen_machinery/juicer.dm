@@ -1,7 +1,7 @@
 
 /obj/machinery/juicer
 	name = "juicer"
-	desc = "a centrifugal juicer with two speeds: Juice and Separate."
+	desc = "A centrifugal juicer with two speeds: Juice and Separate."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
 	layer = BELOW_OBJ_LAYER

@@ -144,7 +144,7 @@
 /datum/wires/proc/attach_assembly(color, obj/item/device/assembly/S)
 	if(S && istype(S) && S.attachable && !is_attached(color))
 		assemblies[color] = S
-		S.loc = holder
+		S.forceMove(holder)
 		S.connected = src
 		return S
 
@@ -153,7 +153,7 @@
 	if(S && istype(S))
 		assemblies -= color
 		S.connected = null
-		S.loc = holder.loc
+		S.forceMove(holder.drop_location())
 		return S
 
 /datum/wires/proc/emp_pulse()
@@ -250,9 +250,10 @@
 				if(istype(I, /obj/item/device/assembly))
 					var/obj/item/device/assembly/A = I
 					if(A.attachable)
-						if(!L.drop_item())
+						if(!L.temporarilyRemoveItemFromInventory(A))
 							return
-						attach_assembly(target_wire, A)
+						if(!attach_assembly(target_wire, A))
+							A.forceMove(L.drop_location())
 						. = TRUE
 					else
 						to_chat(L, "<span class='warning'>You need an attachable assembly!</span>")

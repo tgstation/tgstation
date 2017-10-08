@@ -73,6 +73,7 @@ MASS SPECTROMETER
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1
 	var/scanmode = 0
+	var/advanced = FALSE
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
 	if(!scanmode)
@@ -97,7 +98,7 @@ MASS SPECTROMETER
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
 
 	if(scanmode == 0)
-		healthscan(user, M, mode)
+		healthscan(user, M, mode, advanced)
 	else if(scanmode == 1)
 		chemscan(user, M)
 
@@ -105,7 +106,7 @@ MASS SPECTROMETER
 
 
 // Used by the PDA medical scanner too
-/proc/healthscan(mob/living/user, mob/living/M, mode = 1)
+/proc/healthscan(mob/living/user, mob/living/M, mode = 1, advanced = FALSE)
 	if(user.incapacitated() || user.eye_blind)
 		return
 	//Damage specifics
@@ -115,8 +116,8 @@ MASS SPECTROMETER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
-	if(M.status_flags & FAKEDEATH)
-		mob_status = "<span class='alert'>Deceased</span>"
+	if(M.status_flags & FAKEDEATH && !advanced)
+		mob_status = "<span class='alert'><b>Deceased</b></span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
 	if(ishuman(M))
@@ -136,19 +137,77 @@ MASS SPECTROMETER
 	if(oxy_loss > 10)
 		to_chat(user, "\t<span class='info'><span class='alert'>[oxy_loss > 50 ? "Severe" : "Minor"] oxygen deprivation detected.</span>")
 	if(tox_loss > 10)
-		to_chat(user, "\t<span class='alert'>[tox_loss > 50 ? "Critical" : "Dangerous"] amount of toxins detected.</span>")
+		to_chat(user, "\t<span class='alert'>[tox_loss > 50 ? "Severe" : "Minor"] amount of toxin damage detected.</span>")
 	if(M.getStaminaLoss())
 		to_chat(user, "\t<span class='alert'>Subject appears to be suffering from fatigue.</span>")
+		if(advanced)
+			to_chat(user, "\t<span class='info'>Fatigue Level: [M.getStaminaLoss()]%.</span>")
 	if (M.getCloneLoss())
 		to_chat(user, "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>")
-	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
-		to_chat(user, "\t<span class='info'>Bloodstream analysis located [M.reagents.get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>")
+		if(advanced)
+			to_chat(user, "\t<span class='info'>Cellular Damage Level: [M.getCloneLoss()].</span>")
 	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
 		to_chat(user, "\t<span class='alert'>Subject brain function is non-existent.</span>")
 	else if (M.getBrainLoss() >= 60)
 		to_chat(user, "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>")
 	else if (M.getBrainLoss() >= 10)
 		to_chat(user, "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>")
+	if(advanced)
+		to_chat(user, "\t<span class='info'>Brain Activity Level: [100 - M.getBrainLoss()]%.</span>")
+	if (M.radiation)
+		to_chat(user, "\t<span class='alert'>Subject is irradiated.</span>")
+		if(advanced)
+			to_chat(user, "\t<span class='info'>Radiation Level: [M.radiation]%.</span>")
+
+	if(advanced && M.hallucinating())
+		to_chat(user, "\t<span class='info'>Subject is hallucinating.</span>")
+
+	//Eyes and ears
+	if(advanced)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			var/obj/item/organ/ears/ears = C.getorganslot("ears")
+			to_chat(user, "\t<span class='info'><b>==EAR STATUS==</b></span>")
+			if(istype(ears))
+				var/healthy = TRUE
+				if(C.disabilities & DEAF)
+					healthy = FALSE
+					to_chat(user, "\t<span class='alert'>Subject is genetically deaf.</span>")
+				else
+					if(ears.ear_damage)
+						to_chat(user, "\t<span class='alert'>Subject has [ears.ear_damage > UNHEALING_EAR_DAMAGE? "permanent ": "temporary "]hearing damage.</span>")
+						healthy = FALSE
+					if(ears.deaf)
+						to_chat(user, "\t<span class='alert'>Subject is [ears.ear_damage > UNHEALING_EAR_DAMAGE ? "permanently ": "temporarily "] deaf.</span>")
+						healthy = FALSE
+				if(healthy)
+					to_chat(user, "\t<span class='info'>Healthy.</span>")
+			else
+				to_chat(user, "\t<span class='alert'>Subject does not have ears.</span>")
+			var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
+			to_chat(user, "\t<span class='info'><b>==EYE STATUS==</b></span>")
+			if(istype(eyes))
+				var/healthy = TRUE
+				if(C.disabilities & BLIND)
+					to_chat(user, "\t<span class='alert'>Subject is blind.</span>")
+					healthy = FALSE
+				if(C.disabilities & NEARSIGHT)
+					to_chat(user, "\t<span class='alert'>Subject is nearsighted.</span>")
+					healthy = FALSE
+				if(eyes.eye_damage > 30)
+					to_chat(user, "\t<span class='alert'>Subject has severe eye damage.</span>")
+					healthy = FALSE
+				else if(eyes.eye_damage > 20)
+					to_chat(user, "\t<span class='alert'>Subject has significant eye damage.</span>")
+					healthy = FALSE
+				else if(eyes.eye_damage)
+					to_chat(user, "\t<span class='alert'>Subject has minor eye damage.</span>")
+					healthy = FALSE
+				if(healthy)
+					to_chat(user, "\t<span class='info'>Healthy.</span>")
+			else
+				to_chat(user, "\t<span class='alert'>Subject does not have eyes.</span>")
+
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -172,7 +231,7 @@ MASS SPECTROMETER
 	to_chat(user, "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>")
 
 	// Time of death
-	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
+	if(M.tod && (M.stat == DEAD || ((M.status_flags & FAKEDEATH) && !advanced)))
 		to_chat(user, "<span class='info'>Time of Death:</span> [M.tod]")
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
@@ -209,7 +268,7 @@ MASS SPECTROMETER
 
 		var/cyberimp_detect
 		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)
-			if(CI.status == ORGAN_ROBOTIC)
+			if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
 				cyberimp_detect += "[C.name] is modified with a [CI.name].<br>"
 		if(cyberimp_detect)
 			to_chat(user, "<span class='notice'>Detected cybernetic modifications:</span>")
@@ -246,6 +305,12 @@ MASS SPECTROMETER
 		if(0)
 			to_chat(usr, "The scanner no longer shows limb damage.")
 
+/obj/item/device/healthanalyzer/advanced
+	name = "advanced health analyzer"
+	icon_state = "health_adv"
+	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
+	origin_tech = "magnets=3;biotech=3"
+	advanced = TRUE
 
 /obj/item/device/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels."

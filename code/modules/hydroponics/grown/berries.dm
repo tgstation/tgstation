@@ -126,7 +126,7 @@
 // Blue Cherries
 /obj/item/seeds/cherry/blue
 	name = "pack of blue cherry pits"
-	desc = "The blue kind of cherries"
+	desc = "The blue kind of cherries."
 	icon_state = "seed-bluecherry"
 	species = "bluecherry"
 	plantname = "Blue Cherry Tree"

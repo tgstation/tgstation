@@ -16885,7 +16885,6 @@
 	dwidth = 5;
 	height = 11;
 	name = "Omega emergency shuttle";
-	timid = 0;
 	width = 19
 	},
 /obj/docking_port/stationary{
@@ -30350,6 +30349,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "bbP" = (
@@ -38904,7 +38904,7 @@
 	volume_rate = 200
 	},
 /turf/open/space/basic,
-/area/space)
+/area/engine/engineering)
 "bxd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
