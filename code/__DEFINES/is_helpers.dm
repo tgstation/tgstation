@@ -131,6 +131,8 @@
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
+#define iscameramob(A) (istype(A, /mob/camera))
+
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
