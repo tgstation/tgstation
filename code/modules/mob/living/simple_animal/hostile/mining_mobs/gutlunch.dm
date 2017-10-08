@@ -62,6 +62,9 @@
 
 		return TRUE
 
+	if(isobj(the_target) && is_type_in_typecache(the_target, wanted_objects))
+		return TRUE
+
 	return FALSE
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Destroy()

@@ -254,7 +254,7 @@
 
 /obj/structure/door_assembly/door_assembly_clown
 	name = "bananium airlock assembly"
-	desc = "Honk"
+	desc = "Honk."
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	airlock_type = /obj/machinery/door/airlock/clown
 	anchored = TRUE
@@ -580,7 +580,8 @@
 		user.visible_message("[user] wires the airlock assembly.", \
 							"<span class='notice'>You start to wire the airlock assembly...</span>")
 		if(do_after(user, 40, target = src))
-			if(C.get_amount() < 1 || state != 0) return
+			if(C.get_amount() < 1 || state != 0)
+				return
 			C.use(1)
 			state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
 			to_chat(user, "<span class='notice'>You wire the airlock assembly.</span>")
@@ -642,7 +643,8 @@
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 					if(do_after(user, 40, target = src))
-						if(G.get_amount() < 1 || mineral) return
+						if(G.get_amount() < 1 || mineral)
+							return
 						if(!istype(G, /obj/item/stack/sheet/glass))
 							to_chat(user, "<span class='notice'>You install [G.name] windows into the airlock assembly.</span>")
 							heat_proof_finished = 1 //plasma & reinforced glass makes the airlock heat-proof
@@ -670,7 +672,8 @@
 						user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 						if(do_after(user, 40, target = src))
-							if(G.get_amount() < 2 || mineral) return
+							if(G.get_amount() < 2 || mineral)
+								return
 							to_chat(user, "<span class='notice'>You install [M] plating into the airlock assembly.</span>")
 							G.use(2)
 							mineral = "[M]"

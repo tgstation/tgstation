@@ -16,9 +16,12 @@
 	for(var/mob/living/target in targets)
 		var/list/turfs = new/list()
 		for(var/turf/T in range(target,outer_tele_radius))
-			if(T in range(target,inner_tele_radius)) continue
-			if(isspaceturf(T) && !include_space) continue
-			if(T.density && !include_dense) continue
+			if(T in range(target,inner_tele_radius))
+				continue
+			if(isspaceturf(T) && !include_space)
+				continue
+			if(T.density && !include_dense)
+				continue
 			if(T.x>world.maxx-outer_tele_radius || T.x<outer_tele_radius)
 				continue	//putting them at the edge is dumb
 			if(T.y>world.maxy-outer_tele_radius || T.y<outer_tele_radius)

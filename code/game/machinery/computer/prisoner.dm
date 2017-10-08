@@ -90,13 +90,13 @@
 
 		if(href_list["id"])
 			if(href_list["id"] =="insert" && !inserted_id)
-				var/obj/item/card/id/prisoner/I = usr.get_active_held_item()
-				if(istype(I))
-					if(!usr.drop_item())
+				var/obj/item/card/id/prisoner/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
+				if(I)
+					if(!usr.transferItemToLoc(I, src))
 						return
-					I.loc = src
 					inserted_id = I
-				else to_chat(usr, "<span class='danger'>No valid ID.</span>")
+				else
+					to_chat(usr, "<span class='danger'>No valid ID.</span>")
 			else if(inserted_id)
 				switch(href_list["id"])
 					if("eject")

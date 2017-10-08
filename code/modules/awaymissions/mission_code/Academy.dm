@@ -54,7 +54,7 @@
 
 /obj/structure/academy_wizard_spawner
 	name = "Academy Defensive System"
-	desc = "Made by Abjuration Inc"
+	desc = "Made by Abjuration, Inc."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "forge"
 	anchored = TRUE
@@ -174,7 +174,7 @@
 /obj/item/dice/d20/fate/equipped(mob/user, slot)
 	if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
 		to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans! You should leave it alone.</span>")
-		user.drop_item()
+		user.dropItemToGround(src)
 
 
 /obj/item/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)

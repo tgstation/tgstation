@@ -161,10 +161,14 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	if (istype(hclient))
 		var/resource
 		switch (color)
-			if ("green")  resource = 'uiEyeGreen.png'
-			if ("orange") resource = 'uiEyeOrange.png'
-			if ("red")    resource = 'uiEyeRed.png'
-			else          CRASH("Invalid color: [color]")
+			if ("green")
+				resource = 'uiEyeGreen.png'
+			if ("orange")
+				resource = 'uiEyeOrange.png'
+			if ("red")
+				resource = 'uiEyeRed.png'
+			else
+				CRASH("Invalid color: [color]")
 
 		if (hclient.getExtraVar("eye_color") != color)
 			hclient.putExtraVar("eye_color", color)

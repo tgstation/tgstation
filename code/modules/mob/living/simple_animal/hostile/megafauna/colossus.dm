@@ -635,6 +635,7 @@ Difficulty: Very Hard
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
+	gold_core_spawnable = TRUE
 	var/heal_power = 5
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
@@ -757,7 +758,7 @@ Difficulty: Very Hard
 
 /obj/effect/proc_holder/spell/targeted/exit_possession
 	name = "Exit Possession"
-	desc = "Exits the body you are possessing"
+	desc = "Exits the body you are possessing."
 	charge_max = 60
 	clothes_req = 0
 	invocation_type = "none"

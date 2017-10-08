@@ -11,7 +11,7 @@
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/damage_per_tick = 2.5
+	var/damage_per_tick = 3
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
@@ -141,8 +141,12 @@
 	. = 1
 	if(target)
 		for(var/turf/T in getline(src, target))
+			if(T.density)
+				. -= 0.1
+				continue
 			for(var/obj/structure/O in T)
-				if(O.density)
-					. -= 0.15
+				if(O != src && O.density)
+					. -= 0.1
+					break
 		. -= (get_dist(src, target) * 0.05)
 		. = max(., 0.1) //The lowest damage a warden can do is 10% of its normal amount (0.25 by default)
