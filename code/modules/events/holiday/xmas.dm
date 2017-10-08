@@ -114,7 +114,7 @@
 		var/mob/dead/observer/Z = pick(candidates)
 		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
 		santa.key = Z.key
-		qdel(M)
+		qdel(Z)
 
 		santa.real_name = "Santa Claus"
 		santa.name = "Santa Claus"
