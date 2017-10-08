@@ -81,12 +81,16 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 	id = "browns"
 	specific_heat = 20
 	name = "Brown Gas"
+	gas_overlay = "browns"
+	moles_visible = MOLES_PLASMA_VISIBLE
 	dangerous = TRUE
 
 /datum/gas/tritium
 	id = "tritium"
 	specific_heat = 10
 	name = "Tritium"
+	gas_overlay = "tritium"
+	moles_visible = MOLES_PLASMA_VISIBLE
 	dangerous = TRUE
 
 /datum/gas/bz

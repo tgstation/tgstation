@@ -119,10 +119,10 @@
 				cached_gases["plasma"][MOLES] = QUANTIZE(cached_gases["plasma"][MOLES] - plasma_burn_rate)
 				cached_gases["o2"][MOLES] = QUANTIZE(cached_gases["o2"][MOLES] - (plasma_burn_rate * oxygen_burn_rate))
 				if (super_saturation)
-					air.assert_gas("tritium")
+					ASSERT_GAS("tritium",air)
 					cached_gases["tritium"][MOLES] += plasma_burn_rate
 				else
-					air.assert_gas("co2")
+					ASSERT_GAS("co2",air)
 					cached_gases["co2"][MOLES] += plasma_burn_rate
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
@@ -176,7 +176,7 @@
 	var/plasma_fused = (PLASMA_FUSED_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)*4
 	var/tritium_catalyzed = (CARBON_CATALYST_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 	var/oxygen_added = tritium_catalyzed
-	var/waste_added = (plasma_fused-oxygen_added)-(air.thermal_energy()/PLASMA_BINDING_ENERGY)
+	var/waste_added = (plasma_fused-oxygen_added)-((air.total_moles()*air.heat_capacity())/PLASMA_BINDING_ENERGY)
 	reaction_energy = max(reaction_energy+((catalyst_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/catalyst_efficency)+2)*10)+((plasma_fused/(moles_impurities/catalyst_efficency))*PLASMA_BINDING_ENERGY),0)
 
 	air.assert_gases("o2", "n2","water_vapor","n2o","browns")

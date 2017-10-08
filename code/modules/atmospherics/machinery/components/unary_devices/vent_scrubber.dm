@@ -217,27 +217,27 @@
 				removed_gases["nob"][MOLES] = 0
 
 			if(scrub_Rare && removed_gases["stim"])
-				ADD_GAS("stim",.filtered_out.gases)
+				ADD_GAS("stim",filtered_out.gases)
 				filtered_gases["stim"][MOLES] = removed_gases["stim"][MOLES]
 				removed_gases["stim"][MOLES] = 0
 
 			if(scrub_Rare && removed_gases["pluox"])
-				ADD_GAS("pluox",.filtered_out.gases)
+				ADD_GAS("pluox",filtered_out.gases)
 				filtered_gases["pluox"][MOLES] = removed_gases["pluox"][MOLES]
 				removed_gases["pluox"][MOLES] = 0
 
 			if(scrub_Rare && removed_gases["browns"])
-				ADD_GAS("browns",.filtered_out.gases)
+				ADD_GAS("browns",filtered_out.gases)
 				filtered_gases["browns"][MOLES] = removed_gases["browns"][MOLES]
 				removed_gases["browns"][MOLES] = 0
 
 			if(scrub_Rare && removed_gases["tritium"])
-				ADD_GAS("tritium",.filtered_out.gases)
+				ADD_GAS("tritium",filtered_out.gases)
 				filtered_gases["browns"][MOLES] = removed_gases["browns"][MOLES]
 				removed_gases["browns"][MOLES] = 0
 
 			if(scrub_WaterVapor && removed_gases["water_vapor"])
-				ADD_GAS("water_vapor", filtered_out.gases)
+				ADD_GAS("water_vapor",filtered_out.gases)
 				filtered_gases["water_vapor"][MOLES] = removed_gases["water_vapor"][MOLES]
 				removed_gases["water_vapor"][MOLES] = 0
 
