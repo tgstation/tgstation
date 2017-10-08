@@ -35,6 +35,7 @@
 	var/list/datum/tgui/children = list() // Children of this UI.
 	var/titlebar = TRUE
 	var/custom_browser_id = FALSE
+	var/current_nounce = 0
 
  /**
   * public
@@ -231,7 +232,8 @@
 				"name" = "[src_object]",
 				"ref"  = "\ref[src_object]"
 			),
-			"titlebar" = titlebar
+			"titlebar" = titlebar,
+			"nounce" = current_nounce
 		)
 	return config_data
 
@@ -286,6 +288,8 @@
 		if("tgui:nofrills")
 			user.client.prefs.tgui_fancy = FALSE
 		else
+			if(params["nounce"] != current_nounce)
+				return	//avoid spam clicks for unupdated uis
 			update_status(push = 0) // Update the window state.
 			if(src_object.ui_act(action, params, src, state)) // Call ui_act() on the src_object.
 				SStgui.update_uis(src_object) // Update if the object requested it.
@@ -324,6 +328,7 @@
 	if(status <= UI_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
+	++current_nounce	//something changed, old uis are garbo now
 	// Send the new JSON to the update() Javascript function.
 	user << output(url_encode(get_json(data)), "[custom_browser_id ? window_id : "[window_id].browser"]:update")
 

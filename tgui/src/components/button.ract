@@ -40,6 +40,7 @@
     oninit () {
       this.on('press', (event) => {
         const { action, params } = this.get()
+        params.nounce = this.get('config.current_nounce')
         act(this.get('config.ref'), action, params)
         event.node.blur()
       })
