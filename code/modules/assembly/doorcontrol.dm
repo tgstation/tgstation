@@ -13,13 +13,6 @@
 	if(id)
 		to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
 
-/obj/item/device/assembly/control/proc/toggle(obj/machinery/door/poddoor/M)
-	if(M)
-		if(openclose)
-			M.open()
-		else
-			M.close()
-
 /obj/item/device/assembly/control/activate()
 	cooldown = 1
 	var/openclose
@@ -27,7 +20,7 @@
 		if(M.id == src.id)
 			if(openclose == null)
 				openclose = M.density
-			INVOKE_ASYNC(src, .proc/toggle, M)
+			INVOKE_ASYNC(M, openclose ? /obj/machinery/door/poddoor.proc/open : /obj/machinery/door/poddoor.proc/close)
 	sleep(10)
 	cooldown = 0
 
