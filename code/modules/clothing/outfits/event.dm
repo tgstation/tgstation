@@ -1,20 +1,20 @@
 /datum/outfit/santa //ho ho ho!
 	name = "Santa Claus"
 
-  uniform = /obj/item/clothing/under/color/red
+	uniform = /obj/item/clothing/under/color/red
 	shoes = /obj/item/clothing/shoes/sneakers/red
 	suit = /obj/item/clothing/suit/space/santa
 	head = /obj/item/clothing/head/santa
 	back = /obj/item/storage/backpack/santabag
 	mask = /obj/item/clothing/mask/breath
-  r_pocket = /obj/item/device/flashlight
-  gloves = /obj/item/clothing/gloves/color/red
-  belt = /obj/item/tank/internals/emergency_oxygen/double
-  id = /obj/item/card/id/gold/santacard
+	r_pocket = /obj/item/device/flashlight
+	gloves = /obj/item/clothing/gloves/color/red
+	belt = /obj/item/tank/internals/emergency_oxygen/double
+ 	id = /obj/item/card/id/gold/santacard
 
 /datum/outfit/santa/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-  if(visualsOnly)
-    return
+	if(visualsOnly)
+    	return
 	H.real_name = "Santa Claus"
 	H.name = "Santa Claus"
 	H.mind.name = "Santa Claus"
