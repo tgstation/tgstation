@@ -14,7 +14,7 @@
 
 /datum/outfit/santa/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
-    	return
+		return
 	H.real_name = "Santa Claus"
 	H.name = "Santa Claus"
 	H.mind.name = "Santa Claus"
