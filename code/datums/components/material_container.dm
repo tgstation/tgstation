@@ -59,20 +59,11 @@
 	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
 		return FALSE
-	. = FALSE
+	. = TRUE
 	last_insert_success = FALSE
 	var/datum/callback/pc = precondition
 	if(pc && !pc.Invoke())
 		return
-	var/requested_amount
-	if(istype(I, /obj/item/stack) && precise_insertion)
-		. = TRUE
-		var/atom/current_parent = parent
-		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num|null
-		if(isnull(requested_amount) || (requested_amount <= 0))
-			return
-		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || !user.canUseTopic(current_parent) || !user.is_holding(I) || !user.Adjacent(current_parent))
-			return
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient amounts of metal or glass to be accepted by [parent].</span>")
@@ -80,6 +71,17 @@
 	if(!has_space(material_amount))
 		to_chat(user, "<span class='warning'>[parent] is full. Please remove metal or glass from [parent] in order to insert more.</span>")
 		return
+	user_insert(I, user)
+
+/datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
+	var/requested_amount
+	if(istype(I, /obj/item/stack) && precise_insertion)
+		var/atom/current_parent = parent
+		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num|null
+		if(isnull(requested_amount) || (requested_amount <= 0))
+			return
+		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || !user.canUseTopic(current_parent) || !user.is_holding(I) || !user.Adjacent(current_parent))
+			return
 	if(!user.temporarilyRemoveItemFromInventory(I))
 		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
 		return

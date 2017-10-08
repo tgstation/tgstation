@@ -280,23 +280,10 @@
 		holdingitems -= O
 	updateUsrDialog()
 
-/obj/machinery/reagentgrinder/proc/is_allowed(obj/item/reagent_containers/O)
-	for (var/i in blend_items)
-		if(istype(O, i))
-			return TRUE
-	return FALSE
+/obj/machinery/reagentgrinder/proc/get_allowed_by_obj(obj/item/O)
+	return blend_items[O.type]
 
-/obj/machinery/reagentgrinder/proc/get_allowed_by_id(obj/item/O)
-	for (var/i in blend_items)
-		if (istype(O, i))
-			return blend_items[i]
-
-/obj/machinery/reagentgrinder/proc/get_allowed_snack_by_id(obj/item/reagent_containers/food/snacks/O)
-	for(var/i in blend_items)
-		if(istype(O, i))
-			return blend_items[i]
-
-/obj/machinery/reagentgrinder/proc/get_allowed_juice_by_id(obj/item/reagent_containers/food/snacks/O)
+/obj/machinery/reagentgrinder/proc/get_allowed_juice_by_obj(obj/item/reagent_containers/food/snacks/O)
 	for(var/i in juice_items)
 		if(istype(O, i))
 			return juice_items[i]
@@ -334,7 +321,7 @@
 			var/obj/item/reagent_containers/food/snacks/O = I
 			if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 				break
-			var/allowed = get_allowed_juice_by_id(O)
+			var/list/allowed = get_allowed_juice_by_obj(O)
 			if(isnull(allowed))
 				break
 			for(var/r_id in allowed)
@@ -383,7 +370,7 @@
 		//Snacks
 		if(istype(I, /obj/item/reagent_containers/food/snacks))
 			var/obj/item/reagent_containers/food/snacks/O = I
-			var/allowed = get_allowed_snack_by_id(O)
+			var/list/allowed = get_allowed_by_obj(O)
 			if(isnull(allowed))
 				continue
 			for(var/r_id in allowed)
@@ -404,10 +391,10 @@
 					break
 			if(O.reagents.reagent_list.len == 0)
 				remove_object(O)
-		//Sheets======================================================================================================================
+		//Sheets
 		else if(istype(I, /obj/item/stack/sheet))
 			var/obj/item/stack/sheet/O = I
-			var/allowed = get_allowed_by_id(O)
+			var/list/allowed = get_allowed_by_obj(O)
 			for(var/t in 1 to round(O.amount, 1))
 				for(var/r_id in allowed)
 					var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
@@ -421,7 +408,7 @@
 		//Plants
 		else if(istype(I, /obj/item/grown))
 			var/obj/item/grown/O = I
-			var/allowed = get_allowed_by_id(O)
+			var/list/allowed = get_allowed_by_obj(O)
 			for (var/r_id in allowed)
 				var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 				var/amount = allowed[r_id]
