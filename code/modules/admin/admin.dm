@@ -840,7 +840,7 @@
 /client/proc/adminGreet(logout)
 	if(SSticker.HasRoundStarted())
 		var/string
-		if(logout && CONFIG_GET(flag/announce_admin_logout))
+		if(logout && CONFIG_GET(flag/announce_admin_logout)  && check_rights_for(src, R_ADMIN))
 			string = pick(
 				"Admin logout: [key_name(src)]")
 		else if(!logout && CONFIG_GET(flag/announce_admin_login) && (prefs.toggles & ANNOUNCE_LOGIN) && check_rights_for(src, R_ADMIN))
