@@ -20,7 +20,6 @@
 		"<span class='alloy'>You crush [src], capturing its escaping energy for use as power.</span>")
 		playsound(user, 'sound/effects/pop_expl.ogg', 50, TRUE)
 		adjust_clockwork_power(POWER_WALL_TOTAL)
-		user.drop_item()
 		qdel(src)
 
 /obj/item/clockwork/component/pickup(mob/living/user)

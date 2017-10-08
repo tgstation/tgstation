@@ -21,7 +21,7 @@
 	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	timid = null;
+	timid = 1;
 	width = 35
 	},
 /turf/open/floor/mineral/titanium,
@@ -372,6 +372,10 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/shuttle/abandoned)
+"bu" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 
 (1,1,1) = {"
@@ -1148,7 +1152,7 @@ aa
 aC
 ax
 aC
-bb
+bu
 aJ
 aj
 aj

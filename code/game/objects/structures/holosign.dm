@@ -97,7 +97,7 @@
 
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"
-	desc = "A powerful energy field that blocks movement. Energy arcs off it"
+	desc = "A powerful energy field that blocks movement. Energy arcs off it."
 	max_integrity = 20
 	var/shockcd = 0
 

@@ -232,7 +232,7 @@
 
 		total_gas_mixture.merge(G)
 
-		total_thermal_energy += G.thermal_energy()
+		total_thermal_energy += THERMAL_ENERGY(G)
 		total_heat_capacity += G.heat_capacity()
 
 	total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0

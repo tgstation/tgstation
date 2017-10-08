@@ -1,7 +1,7 @@
 
 /obj/item/bodypart
 	name = "limb"
-	desc = "why is it detached..."
+	desc = "Why is it detached..."
 	force = 3
 	throwforce = 3
 	icon = 'icons/mob/human_parts.dmi'

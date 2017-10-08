@@ -341,7 +341,7 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
-	desc = "A single-shot shotgun, better not miss"
+	desc = "A single-shot shotgun. Better not miss."
 	icon_state = "ishotgun"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -358,5 +358,5 @@
 	if(process_fire(user, user, 0, zone_override = "head"))
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")
 		user.emote("scream")
-		user.drop_item()
+		user.drop_all_held_items()
 		user.Knockdown(80)

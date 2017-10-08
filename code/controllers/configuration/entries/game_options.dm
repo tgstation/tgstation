@@ -264,3 +264,8 @@ CONFIG_DEF(number/bombcap)
 		GLOB.MAX_EX_LIGHT_RANGE = value
 		GLOB.MAX_EX_FLASH_RANGE = value
 		GLOB.MAX_EX_FLAME_RANGE = value
+
+CONFIG_DEF(number/emergency_shuttle_autocall_threshold)
+	min_val = 0
+	max_val = 1
+	integer = FALSE

@@ -83,7 +83,7 @@
 			bumpopen(M)
 			return
 
-	if(istype(AM, /obj/mecha))
+	if(ismecha(AM))
 		var/obj/mecha/mecha = AM
 		if(density)
 			if(mecha.occupant)

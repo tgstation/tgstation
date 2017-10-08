@@ -276,16 +276,29 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 
 /datum/DBColumn/proc/SqlTypeName(type_handler = sql_type)
 	switch(type_handler)
-		if(TINYINT) return "TINYINT"
-		if(SMALLINT) return "SMALLINT"
-		if(MEDIUMINT) return "MEDIUMINT"
-		if(INTEGER) return "INTEGER"
-		if(BIGINT) return "BIGINT"
-		if(FLOAT) return "FLOAT"
-		if(DOUBLE) return "DOUBLE"
-		if(DATE) return "DATE"
-		if(DATETIME) return "DATETIME"
-		if(TIMESTAMP) return "TIMESTAMP"
-		if(TIME) return "TIME"
-		if(STRING) return "STRING"
-		if(BLOB) return "BLOB"
+		if(TINYINT)
+			return "TINYINT"
+		if(SMALLINT)
+			return "SMALLINT"
+		if(MEDIUMINT)
+			return "MEDIUMINT"
+		if(INTEGER)
+			return "INTEGER"
+		if(BIGINT)
+			return "BIGINT"
+		if(FLOAT)
+			return "FLOAT"
+		if(DOUBLE)
+			return "DOUBLE"
+		if(DATE)
+			return "DATE"
+		if(DATETIME)
+			return "DATETIME"
+		if(TIMESTAMP)
+			return "TIMESTAMP"
+		if(TIME)
+			return "TIME"
+		if(STRING)
+			return "STRING"
+		if(BLOB)
+			return "BLOB"

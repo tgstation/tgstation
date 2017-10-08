@@ -1,5 +1,5 @@
 /obj/item/grenade/syndieminibomb
-	desc = "A syndicate manufactured explosive used to sow destruction and chaos"
+	desc = "A syndicate manufactured explosive used to sow destruction and chaos."
 	name = "syndicate minibomb"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "syndicate"

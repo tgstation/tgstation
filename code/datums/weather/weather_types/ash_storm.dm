@@ -27,7 +27,7 @@
 	probability = 90
 
 /datum/weather/ash_storm/proc/is_ash_immune(mob/living/L)
-	if(istype(L.loc, /obj/mecha)) //Mechs are immune
+	if(ismecha(L.loc)) //Mechs are immune
 		return TRUE
 	if(ishuman(L)) //Are you immune?
 		var/mob/living/carbon/human/H = L

@@ -95,6 +95,7 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+	desc = "Some kind of machine."
 	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 15
@@ -475,14 +476,17 @@ Class Procs:
 // Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
 /obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
 	if (hclient.client.mob && (hclient.client.mob.stat == 0 || IsAdminGhost(hclient.client.mob)))
-		if (isAI(hclient.client.mob) || IsAdminGhost(hclient.client.mob)) return TRUE
-		else                          return hclient.client.mob.machine == src && Adjacent(hclient.client.mob)
+		if (isAI(hclient.client.mob) || IsAdminGhost(hclient.client.mob))
+			return TRUE
+		else
+			return hclient.client.mob.machine == src && Adjacent(hclient.client.mob)
 	else
 		return FALSE
 
 // Hook for html_interface module to unset the active machine when the window is closed by the player.
 /obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
-	if (hclient.client.mob && hclient.client.mob.machine == src) hclient.client.mob.unset_machine()
+	if (hclient.client.mob && hclient.client.mob.machine == src)
+		hclient.client.mob.unset_machine()
 
 /obj/machinery/proc/can_be_overridden()
 	. = 1

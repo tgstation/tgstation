@@ -88,7 +88,7 @@
 		if(burned_fuel)
 			energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
 
-			air.assert_gas("water_vapor")
+			ASSERT_GAS("water_vapor", air)
 			cached_gases["water_vapor"][MOLES] += burned_fuel
 
 			cached_results[id] += burned_fuel
@@ -105,7 +105,7 @@
 		else
 			temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
 		if(temperature_scale > 0)
-			air.assert_gas("o2")
+			ASSERT_GAS("o2", air)
 			oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
 			if(cached_gases["o2"][MOLES] / cached_gases["plasma"][MOLES] > 90) //supersaturation. Form Tritium.
 				super_saturation = TRUE
@@ -115,7 +115,7 @@
 				plasma_burn_rate = (temperature_scale*(cached_gases["o2"][MOLES]/PLASMA_OXYGEN_FULLBURN))/PLASMA_BURN_RATE_DELTA
 
 			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
-
+				ASSERT_GAS("co2", air)
 				cached_gases["plasma"][MOLES] = QUANTIZE(cached_gases["plasma"][MOLES] - plasma_burn_rate)
 				cached_gases["o2"][MOLES] = QUANTIZE(cached_gases["o2"][MOLES] - (plasma_burn_rate * oxygen_burn_rate))
 				if (super_saturation)
@@ -170,7 +170,7 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	var/catalyst_efficency = max(min(cached_gases["plasma"][MOLES]/cached_gases["tritium"][MOLES],MAX_CARBON_EFFICENCY)-(temperature/FUSION_HEAT_DROPOFF),0)
-	var/reaction_energy = air.thermal_energy()
+	var/reaction_energy = THERMAL_ENERGY(air)
 	var/moles_impurities = air.total_moles()-(cached_gases["plasma"][MOLES]+cached_gases["tritium"][MOLES])
 
 	var/plasma_fused = (PLASMA_FUSED_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)*4

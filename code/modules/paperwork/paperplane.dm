@@ -1,6 +1,6 @@
 /obj/item/paperplane
 	name = "paper plane"
-	desc = "Paper, folded in the shape of a plane"
+	desc = "Paper, folded in the shape of a plane."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paperplane"
 	throw_range = 7

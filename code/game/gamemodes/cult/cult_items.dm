@@ -98,7 +98,6 @@
 	var/datum/action/innate/cult/spin2win/linked_action
 	var/spinning = FALSE
 	var/spin_cooldown = 250
-	var/list/shards = list()
 	var/dash_toggled = TRUE
 
 /obj/item/twohanded/required/cult_bastard/Initialize()
@@ -164,7 +163,7 @@
 
 /obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
-	if(dash_toggled && jaunt.IsAvailable())
+	if(dash_toggled)
 		jaunt.Teleport(user, target)
 		return
 	if(!proximity)
@@ -174,11 +173,12 @@
 		if(H.stat != CONSCIOUS)
 			var/obj/item/device/soulstone/SS = new /obj/item/device/soulstone(src)
 			SS.attack(H, user)
-			shards += SS
-		return
+			if(!LAZYLEN(SS.contents))
+				qdel(SS)
 	if(istype(target, /obj/structure/constructshell) && contents.len)
 		var/obj/item/device/soulstone/SS = contents[1]
-		if(istype(SS) && SS.transfer_soul("CONSTRUCT",target,user))
+		if(istype(SS))
+			SS.transfer_soul("CONSTRUCT",target,user)
 			qdel(SS)
 
 /datum/action/innate/dash/cult
@@ -193,7 +193,7 @@
 	phaseout = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
 /datum/action/innate/dash/cult/IsAvailable()
-	if(iscultist(holder) && charged)
+	if(iscultist(holder) && current_charges)
 		return TRUE
 	else
 		return FALSE
@@ -302,7 +302,7 @@
 
 /obj/item/clothing/suit/magusred
 	name = "magus robes"
-	desc = "A set of armored robes worn by the followers of Nar-Sie"
+	desc = "A set of armored robes worn by the followers of Nar-Sie."
 	icon_state = "magusred"
 	item_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
