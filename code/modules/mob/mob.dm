@@ -338,6 +338,18 @@
 
 	if(ismob(AM))
 		var/mob/M = AM
+
+		//Share diseases that are spread by touch
+		for(var/thing in viruses)
+			var/datum/disease/D = thing
+			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+				M.ContactContractDisease(D)
+
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
+			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+				ContactContractDisease(D)
+
 		add_logs(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
