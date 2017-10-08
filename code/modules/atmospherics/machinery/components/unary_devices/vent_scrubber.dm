@@ -233,8 +233,8 @@
 
 			if(scrub_Rare && removed_gases["tritium"])
 				ADD_GAS("tritium",filtered_out.gases)
-				filtered_gases["browns"][MOLES] = removed_gases["browns"][MOLES]
-				removed_gases["browns"][MOLES] = 0
+				filtered_gases["tritium"][MOLES] = removed_gases["tritium"][MOLES]
+				removed_gases["tritium"][MOLES] = 0
 
 			if(scrub_WaterVapor && removed_gases["water_vapor"])
 				ADD_GAS("water_vapor",filtered_out.gases)

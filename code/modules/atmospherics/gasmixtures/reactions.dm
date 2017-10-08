@@ -213,9 +213,9 @@
 	var/temperature = air.temperature
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = temperature/FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100
+	var/heat_efficency = temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100)
 	var/energy_used = heat_efficency*BROWNS_FORMATION_ENERGY
-	air.assert_gases("oxygen","nitrogen","browns")
+	ASSERT_GAS("browns",air)
 
 	cached_gases["oxygen"][MOLES] -= heat_efficency
 	cached_gases["nitrogen"][MOLES] -= heat_efficency
@@ -245,11 +245,11 @@
 	var/pressure = air.return_pressure()
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/reaction_efficency = pressure/0.1*ONE_ATMOSPHERE
+	var/reaction_efficency = pressure/(0.1*ONE_ATMOSPHERE)
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
 
 
-	air.assert_gases("tritium","plasma","BZ")
+	ASSERT_GAS("BZ",air)
 	cached_gases["bz"][MOLES]+= reaction_efficency
 	cached_gases["tritium"][MOLES]-= 2*reaction_efficency
 	cached_gases["plasma"][MOLES]-= reaction_efficency
@@ -261,7 +261,7 @@
 			air.temperature = max(((temperature*old_heat_capacity + energy_released)/new_heat_capacity),TCMB)
 		return REACTING
 
-/datum/gas_reaction/stimformation
+/datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
 	priority = 3
 	name = "Stimulum formation"
 	id = "stimformation"
@@ -281,7 +281,7 @@
 	var/stim_energy_change
 	stim_energy_change = (STIMULUM_FIRST_RISE(heat_scale**2)) - (STIMULUM_FIRST_DROP(heat_scale**3)) + (STIMULUM_SECOND_RISE(heat_scale**4)) - (STIMULUM_ABSOLUTE_DROP(heat_scale**5))
 
-	air.assert_gases("tritium","plasma","bz","browns","stim")
+	ASSERT_GAS("stim",air)
 	cached_gases["stim"][MOLES]+= heat_scale/10
 	cached_gases["tritium"][MOLES]-= heat_scale
 	cached_gases["plasma"][MOLES]-= heat_scale
@@ -293,7 +293,7 @@
 			air.temperature = max(((air.temperature*old_heat_capacity + stim_energy_change)/new_heat_capacity),TCMB)
 		return REACTING
 
-/datum/gas_reaction/nobeliumformation
+/datum/gas_reaction/nobeliumformation //Hyper-Nobelium formation is extrememly endothermic, but requires high temperatures to start. Due to its high mass, hyper-nobelium uses large amounts of nitrogen and tritium. BZ can be used as a catalyst to make it less endothermic.
 	priority = 3
 	name = "Hyper-Nobelium condensation"
 	id = "nobformation"
@@ -306,10 +306,10 @@
 
 /datum/gas_reaction/nobeliumformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
-	air.assert_gases("tritium","nitrogen", "nob")
+	air.assert_gases("nob","bz")
 	var/old_heat_capacity = air.heat_capacity()
-	var/nob_formed = (cached_gases["nitrogen"]*cached_gases["tritium"])/100
-	var/energy_taken = nob_formed*1000000
+	var/nob_formed = (cached_gases["nitrogen"][MOLES]*cached_gases["tritium"][MOLES])/100
+	var/energy_taken = nob_formed*(1000000/cached_gases["bz"][MOLES])
 	cached_gases["tritium"][MOLES]-= 10*nob_formed
 	cached_gases["nitrogen"][MOLES]-= 20*nob_formed
 	cached_gases["nob"][MOLES]+= nob_formed
