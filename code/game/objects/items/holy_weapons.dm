@@ -294,6 +294,27 @@
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	
+/obj/item/nullrod/pride_hammer
+	icon_state = "mjollnir0"
+	name = "Pride-struck Hammer"
+	desc = "It resonates an aura of Pride."
+	force = 18
+	throwforce = 15
+	w_class = 4
+	slot_flags = SLOT_BACK
+	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
+	hitsound = 'sound/weapons/blade1.ogg'
+	
+/obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	if(!proximity)
+		return
+	if(istype(A,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = A
+		if(H)
+			user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0)
+			user << "Your pride reflects on [H]."
+			H << "You feel insecure, taking on [user]'s burden."
 
 /obj/item/nullrod/whip
 	name = "holy whip"
