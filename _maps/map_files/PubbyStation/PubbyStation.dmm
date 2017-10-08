@@ -16484,9 +16484,7 @@
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "aMF" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -16495,15 +16493,11 @@
 	name = "disposal conveyor"
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "aMG" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "aMH" = (
 /obj/effect/turf_decal/stripes/corner{
