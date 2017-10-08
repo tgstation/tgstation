@@ -264,6 +264,7 @@
 			eject(user)
 		if("detach")
 			detach(user)
+	updateUsrDialog()
 
 /obj/machinery/reagentgrinder/proc/detach(mob/user)
 	if(!beaker)
