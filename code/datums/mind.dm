@@ -546,7 +546,7 @@
 			text += "<b>HEAD</b> | not mindshielded | employee | headrev | rev"
 		else if (src in SSticker.mode.head_revolutionaries)
 			var/last_healthy_headrev = TRUE
-			for(var/I in SSticker.mode.head_revolutionaries)
+			for(var/datum/mind/I in SSticker.mode.head_revolutionaries)
 				if(I == src)
 					continue
 				var/mob/M = I.current
