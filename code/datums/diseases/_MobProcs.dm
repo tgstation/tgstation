@@ -126,7 +126,7 @@
 		AddDisease(D)
 
 /mob/proc/AirborneContractDisease(datum/disease/D)
-	if((D.spread_flags & AIRBORNE) && prob((50*D.permeability_mod) - 1))
+	if((D.spread_flags & VIRUS_SPREAD_AIRBORNE) && prob((50*D.permeability_mod) - 1))
 		ForceContractDisease(D)
 
 /mob/living/carbon/AirborneContractDisease(datum/disease/D)

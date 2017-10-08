@@ -111,12 +111,12 @@
 	//Also diseases
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(D.spread_flags & CONTACT_SKIN)
+		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
 			M.ContactContractDisease(D)
 
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
-		if(D.spread_flags & CONTACT_SKIN)
+		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
 	if(now_pushing)

@@ -16,10 +16,10 @@
 		for(var/thing in data["viruses"])
 			var/datum/disease/D = thing
 
-			if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
+			if((D.spread_flags & VIRUS_SPREAD_SPECIAL) || (D.spread_flags & VIRUS_SPREAD_NON_CONTAGIOUS))
 				continue
 
-			if((method == TOUCH || method == VAPOR) && (D.spread_flags & CONTACT_FLUIDS))
+			if((method == TOUCH || method == VAPOR) && (D.spread_flags & VIRUS_SPREAD_CONTACT_FLUIDS))
 				M.ContactContractDisease(D)
 			else //ingest, patch or inject
 				M.ForceContractDisease(D)

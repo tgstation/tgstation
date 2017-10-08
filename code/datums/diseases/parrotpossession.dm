@@ -2,7 +2,7 @@
 	name = "Parrot Possession"
 	max_stages = 1
 	spread_text = "Paranormal"
-	spread_flags = SPECIAL
+	spread_flags = VIRUS_SPREAD_SPECIAL
 	disease_flags = CURABLE
 	cure_text = "Holy Water."
 	cures = list("holywater")

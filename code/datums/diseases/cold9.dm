@@ -2,7 +2,7 @@
 	name = "The Cold"
 	max_stages = 3
 	spread_text = "On contact"
-	spread_flags = BLOOD | CONTACT_SKIN | CONTACT_FLUIDS
+	spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_SKIN | VIRUS_SPREAD_CONTACT_FLUIDS
 	cure_text = "Common Cold Anti-bodies & Spaceacillin"
 	cures = list("spaceacillin")
 	agent = "ICE9-rhinovirus"

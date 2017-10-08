@@ -2,7 +2,7 @@
 	//Flags
 	var/visibility_flags = 0
 	var/disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
-	var/spread_flags = AIRBORNE | CONTACT_FLUIDS | CONTACT_SKIN
+	var/spread_flags = VIRUS_SPREAD_AIRBORNE | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN
 
 	//Fluff
 	var/form = "Virus"
@@ -72,7 +72,7 @@
 	if(!affected_mob)
 		return
 
-	if(!(spread_flags & AIRBORNE) && !force_spread)
+	if(!(spread_flags & VIRUS_SPREAD_AIRBORNE) && !force_spread)
 		return
 
 	if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))

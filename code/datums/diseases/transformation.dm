@@ -2,7 +2,7 @@
 	name = "Transformation"
 	max_stages = 5
 	spread_text = "Acute"
-	spread_flags = SPECIAL
+	spread_flags = VIRUS_SPREAD_SPECIAL
 	cure_text = "A coder's love (theoretical)."
 	agent = "Shenanigans"
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey, /mob/living/carbon/alien)
@@ -68,7 +68,7 @@
 	cure_text = "Bananas"
 	cures = list("banana")
 	spread_text = "Monkey Bites"
-	spread_flags = SPECIAL
+	spread_flags = VIRUS_SPREAD_SPECIAL
 	viable_mobtypes = list(/mob/living/carbon/monkey, /mob/living/carbon/human)
 	permeability_mod = 1
 	cure_chance = 1

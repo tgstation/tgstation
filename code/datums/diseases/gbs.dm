@@ -2,7 +2,7 @@
 	name = "GBS"
 	max_stages = 5
 	spread_text = "On contact"
-	spread_flags = BLOOD | CONTACT_SKIN | CONTACT_FLUIDS
+	spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_SKIN | VIRUS_SPREAD_CONTACT_FLUIDS
 	cure_text = "Synaptizine & Sulfur"
 	cures = list("synaptizine","sulfur")
 	cure_chance = 15//higher chance to cure, since two reagents are required

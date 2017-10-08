@@ -194,7 +194,7 @@
 		if(properties["stealth"] >= 2)
 			visibility_flags = HIDDEN_SCANNER
 
-		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), BLOOD, AIRBORNE))
+		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), VIRUS_SPREAD_BLOOD, VIRUS_SPREAD_AIRBORNE))
 
 		permeability_mod = max(Ceiling(0.4 * properties["transmittable"]), 1)
 		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
@@ -208,23 +208,23 @@
 // Assign the spread type and give it the correct description.
 /datum/disease/advance/proc/SetSpread(spread_id)
 	switch(spread_id)
-		if(NON_CONTAGIOUS)
-			spread_flags = NON_CONTAGIOUS
+		if(VIRUS_SPREAD_NON_CONTAGIOUS)
+			spread_flags = VIRUS_SPREAD_NON_CONTAGIOUS
 			spread_text = "None"
-		if(SPECIAL)
-			spread_flags = SPECIAL
+		if(VIRUS_SPREAD_SPECIAL)
+			spread_flags = VIRUS_SPREAD_SPECIAL
 			spread_text = "None"
-		if(BLOOD)
-			spread_flags = BLOOD
+		if(VIRUS_SPREAD_BLOOD)
+			spread_flags = VIRUS_SPREAD_BLOOD
 			spread_text = "Blood"
-		if(CONTACT_FLUIDS)
-			spread_flags = BLOOD | CONTACT_FLUIDS
+		if(VIRUS_SPREAD_CONTACT_FLUIDS)
+			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS
 			spread_text = "Fluids"
-		if(CONTACT_SKIN)
-			spread_flags = BLOOD | CONTACT_FLUIDS | CONTACT_SKIN
+		if(VIRUS_SPREAD_CONTACT_SKIN)
+			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN
 			spread_text = "On contact"
-		if(AIRBORNE)
-			spread_flags = BLOOD | CONTACT_FLUIDS | CONTACT_SKIN | AIRBORNE
+		if(VIRUS_SPREAD_AIRBORNE)
+			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN | VIRUS_SPREAD_AIRBORNE
 			spread_text = "Airborne"
 
 /datum/disease/advance/proc/SetSeverity(level_sev)

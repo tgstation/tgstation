@@ -2,7 +2,7 @@
 	name = "Retrovirus"
 	max_stages = 4
 	spread_text = "Contact"
-	spread_flags = BLOOD | CONTACT_SKIN | CONTACT_FLUIDS
+	spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_SKIN | VIRUS_SPREAD_CONTACT_FLUIDS
 	cure_text = "Rest or an injection of mutadone"
 	cure_chance = 6
 	agent = ""

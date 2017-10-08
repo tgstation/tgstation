@@ -377,7 +377,7 @@
 			//the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
 			if(!(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC) \
 			&& D.severity != VIRUS_SEVERITY_POSITIVE \
-			&& (D.stage > 1 || (D.spread_flags & AIRBORNE))) // medibot can't detect a virus in its initial stage unless it spreads airborne.
+			&& (D.stage > 1 || (D.spread_flags & VIRUS_SPREAD_AIRBORNE))) // medibot can't detect a virus in its initial stage unless it spreads airborne.
 				return 1 //STOP DISEASE FOREVER
 
 	return 0
@@ -429,7 +429,7 @@
 				//detectable virus
 				if((!(D.visibility_flags & HIDDEN_SCANNER)) || (!(D.visibility_flags & HIDDEN_PANDEMIC)))
 					if(D.severity != VIRUS_SEVERITY_POSITIVE)      //virus is harmful
-						if((D.stage > 1) || (D.spread_flags & AIRBORNE))
+						if((D.stage > 1) || (D.spread_flags & VIRUS_SPREAD_AIRBORNE))
 							virus = 1
 
 			if(!reagent_id && (virus))

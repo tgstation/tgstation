@@ -2,7 +2,7 @@
 	name = "Unnatural Wasting"
 	max_stages = 5
 	stage_prob = 10
-	spread_flags = NON_CONTAGIOUS
+	spread_flags = VIRUS_SPREAD_NON_CONTAGIOUS
 	cure_text = "Holy water or extensive rest."
 	spread_text = "A burst of unholy energy"
 	cures = list("holywater")
