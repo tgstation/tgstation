@@ -154,16 +154,20 @@
 			M.pass_flags |= PASSMOB
 			pass_flags |= PASSMOB
 
-			M.Move(oldloc)
-			Move(oldMloc)
-
+			var/move_failed = FALSE
+			if(!M.Move(oldloc) || !Move(oldMloc))
+				M.forceMove(oldMloc)
+				forceMove(oldloc)
+				move_failed = TRUE
 			if(!src_passmob)
 				pass_flags &= ~PASSMOB
 			if(!M_passmob)
 				M.pass_flags &= ~PASSMOB
 
 			now_pushing = 0
-			return 1
+			
+			if(!move_failed)
+				return 1
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
