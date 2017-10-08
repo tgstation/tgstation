@@ -93,17 +93,17 @@
 	if(traitors.len)
 		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
 		for(var/datum/mind/traitor in traitors)
-			var/traitorwin = 1
+			var/traitorwin = TRUE
 
 			text += printplayer(traitor)
 
 			var/TC_uses = 0
-			var/uplink_true = 0
+			var/uplink_true = FALSE
 			var/purchases = ""
 			for(var/obj/item/device/uplink/H in GLOB.uplinks)
 				if(H && H.owner && H.owner == traitor.key)
 					TC_uses += H.spent_telecrystals
-					uplink_true = 1
+					uplink_true = TRUE
 					purchases += H.purchase_log
 
 			var/objectives = ""
@@ -116,7 +116,7 @@
 					else
 						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
 						SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
-						traitorwin = 0
+						traitorwin = FALSE
 					count++
 
 			if(uplink_true)
@@ -147,7 +147,7 @@
 		<b>The code responses were:</b> <font color='red'>[GLOB.syndicate_code_response]</font><br>"
 		to_chat(world, text)
 
-	return 1
+	return TRUE
 
 /datum/game_mode/traitor/generate_report()
 	return "Although more specific threats are commonplace, you should always remain vigilant for Syndicate agents aboard your station. Syndicate communications have implied that many \
