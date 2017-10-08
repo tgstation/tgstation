@@ -4755,7 +4755,9 @@
 /area/crew_quarters/heads/cmo)
 "akL" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display,
+/obj/machinery/status_display{
+	layer = 3.3
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/cmo)
 "akM" = (
@@ -5659,7 +5661,6 @@
 /area/crew_quarters/bar)
 "anf" = (
 /obj/machinery/status_display{
-	density = 0;
 	layer = 4;
 	pixel_x = -32
 	},
@@ -7525,7 +7526,9 @@
 /area/medical/sleeper)
 "arv" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display,
+/obj/machinery/status_display{
+	layer = 3.3
+	},
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "arw" = (
@@ -8284,7 +8287,6 @@
 	light_color = "#e8eaff"
 	},
 /obj/machinery/status_display{
-	density = 0;
 	layer = 4;
 	pixel_x = 32
 	},
@@ -8409,7 +8411,6 @@
 /area/medical/morgue)
 "atG" = (
 /obj/machinery/status_display{
-	density = 0;
 	pixel_x = -32;
 	supply_display = 1
 	},
@@ -9505,8 +9506,7 @@
 "awi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4
+	layer = 3.3
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -9572,8 +9572,7 @@
 "awl" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 4
+	layer = 3.3
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -10151,7 +10150,6 @@
 /area/hallway/primary/central)
 "axF" = (
 /obj/machinery/status_display{
-	density = 0;
 	pixel_x = 0;
 	pixel_y = 30;
 	supply_display = 1
@@ -12862,7 +12860,6 @@
 /area/quartermaster/qm)
 "aDh" = (
 /obj/machinery/status_display{
-	density = 0;
 	name = "cargo display";
 	pixel_x = 32;
 	supply_display = 1
@@ -13241,7 +13238,6 @@
 /area/science/server)
 "aDV" = (
 /obj/machinery/status_display{
-	density = 0;
 	pixel_x = -32;
 	supply_display = 1
 	},
@@ -13298,7 +13294,6 @@
 	height = 9;
 	id = "emergency";
 	name = "Boz emergency shuttle";
-	timid = 0;
 	width = 17
 	},
 /obj/docking_port/stationary{
@@ -13671,7 +13666,9 @@
 /area/crew_quarters/heads/hop)
 "aES" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display,
+/obj/machinery/status_display{
+	layer = 3.3
+	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "aET" = (
@@ -15129,7 +15126,9 @@
 /area/science/xenobiology)
 "aHB" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display,
+/obj/machinery/status_display{
+	layer = 3.3
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "aHC" = (
@@ -15184,7 +15183,6 @@
 /area/quartermaster/storage)
 "aHJ" = (
 /obj/machinery/status_display{
-	density = 0;
 	name = "cargo display";
 	pixel_x = -32;
 	supply_display = 1
@@ -15613,7 +15611,6 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/cargo/request,
 /obj/machinery/status_display{
-	density = 0;
 	name = "cargo display";
 	pixel_x = 0;
 	pixel_y = 32;
@@ -16072,7 +16069,9 @@
 /area/quartermaster/storage)
 "aJM" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display,
+/obj/machinery/status_display{
+	layer = 3.3
+	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aJN" = (
@@ -16642,12 +16641,14 @@
 /area/hallway/primary/central)
 "aKT" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display,
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/structure/cable/white,
+/obj/machinery/status_display{
+	layer = 3.3
+	},
 /turf/open/floor/plating,
 /area/ai_monitored/storage/eva{
 	name = "E.V.A. Storage"
@@ -17602,7 +17603,6 @@
 /area/hallway/secondary/exit)
 "aML" = (
 /obj/machinery/status_display{
-	density = 0;
 	pixel_x = 0;
 	pixel_y = -30;
 	supply_display = 1
@@ -27240,6 +27240,9 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/supply)
 "bid" = (
+/obj/machinery/status_display{
+	layer = 3.3
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bie" = (
