@@ -127,7 +127,6 @@
 					here.ChangeTurf(T.type)
 					return INITIALIZE_HINT_QDEL
 				here.ChangeTurf(/turf/closed/wall)
-				return INITIALIZE_HINT_QDEL
 			if(9 to 11)
 				lights = FALSE
 				locked = TRUE
