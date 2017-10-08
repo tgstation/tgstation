@@ -24,9 +24,8 @@
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id/prisoner))
 		if(!inserted_id)
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
-			I.forceMove(src)
 			inserted_id = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			return
@@ -83,9 +82,8 @@
 			else
 				var/obj/item/I = usr.get_active_held_item()
 				if(istype(I, /obj/item/card/id/prisoner))
-					if(!usr.drop_item())
+					if(!usr.transferItemToLoc(I, src))
 						return
-					I.forceMove(src)
 					inserted_id = I
 		if("claim_points")
 			inserted_id.points += stacking_machine.points

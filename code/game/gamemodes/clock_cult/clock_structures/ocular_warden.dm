@@ -11,7 +11,7 @@
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/damage_per_tick = 2.7
+	var/damage_per_tick = 3
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
@@ -68,14 +68,14 @@
 						else
 							R.reveal(10)
 					if(prob(50))
-						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot1.ogg',50,1)
+						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot1.ogg',75 * get_efficiency_mod(),1)
 					else
-						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot2.ogg',50,1)
+						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot2.ogg',75 * get_efficiency_mod(),1)
 					L.adjustFireLoss((!iscultist(L) ? damage_per_tick : damage_per_tick * 2) * get_efficiency_mod()) //Nar-Sian cultists take additional damage
 					if(GLOB.ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
-			else if(istype(target, /obj/mecha))
+			else if(ismecha(target))
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
@@ -89,10 +89,10 @@
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
 			if(isliving(target))
 				var/mob/living/L = target
-				to_chat(L, "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [GLOB.ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
-			else if(istype(target, /obj/mecha))
+				to_chat(L, "<span class='neovgre'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [GLOB.ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
+			else if(ismecha(target))
 				var/obj/mecha/M = target
-				to_chat(M.occupant, "<span class='heavy_brass'>\"I SEE YOU!\"</span>" )
+				to_chat(M.occupant, "<span class='neovgre'>\"I SEE YOU!\"</span>" )
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
 				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
@@ -112,7 +112,7 @@
 			continue
 		if(is_servant_of_ratvar(L) || (L.disabilities & BLIND) || L.null_rod_check())
 			continue
-		if(L.stat || L.restrained() || L.buckled || L.lying || istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))
+		if(L.stat || L.restrained() || L.buckled || L.lying)
 			continue
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L
@@ -134,3 +134,19 @@
 	target = null
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
+
+/obj/structure/destructible/clockwork/ocular_warden/get_efficiency_mod()
+	if(GLOB.ratvar_awakens)
+		return 2
+	. = 1
+	if(target)
+		for(var/turf/T in getline(src, target))
+			if(T.density)
+				. -= 0.1
+				continue
+			for(var/obj/structure/O in T)
+				if(O != src && O.density)
+					. -= 0.1
+					break
+		. -= (get_dist(src, target) * 0.05)
+		. = max(., 0.1) //The lowest damage a warden can do is 10% of its normal amount (0.25 by default)

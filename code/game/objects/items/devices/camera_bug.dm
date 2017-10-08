@@ -124,7 +124,8 @@
 						// 15 second intervals ~ 1/4 minute
 						var/m = round(time_diff/4)
 						var/s = (time_diff - 4*m) * 15
-						if(!s) s = "00"
+						if(!s)
+							s = "00"
 						html += "Last seen near [outstring] ([m]:[s] minute\s ago)<br>"
 					if( C && (C.bug == src)) //Checks to see if the camera has a bug
 						html += "<a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"

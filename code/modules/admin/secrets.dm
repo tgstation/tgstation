@@ -214,8 +214,8 @@
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Send CentCom Ferry")
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
-				message_admins("[key_name_admin(usr)] moved the centcom ferry")
-				log_admin("[key_name(usr)] moved the centcom ferry")
+				message_admins("[key_name_admin(usr)] moved the CentCom ferry")
+				log_admin("[key_name(usr)] moved the CentCom ferry")
 
 		if("togglearrivals")
 			if(!check_rights(R_ADMIN))
@@ -333,9 +333,12 @@
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Traitor All ([objective])")
 			for(var/mob/living/H in GLOB.player_list)
-				if(!(ishuman(H)||istype(H, /mob/living/silicon/))) continue
-				if(H.stat == DEAD || !H.client || !H.mind || ispAI(H)) continue
-				if(is_special_character(H)) continue
+				if(!(ishuman(H)||istype(H, /mob/living/silicon/)))
+					continue
+				if(H.stat == DEAD || !H.client || !H.mind || ispAI(H))
+					continue
+				if(is_special_character(H))
+					continue
 				H.mind.add_antag_datum(ANTAG_DATUM_TRAITOR_CUSTOM)
 				var/datum/antagonist/traitor/traitordatum = H.mind.has_antag_datum(ANTAG_DATUM_TRAITOR) //original datum self deletes
 				var/datum/objective/new_objective = new
@@ -353,15 +356,8 @@
 			SSblackbox.add_details("admin_secrets_fun_used","Bomb Cap")
 
 			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", GLOB.MAX_EX_LIGHT_RANGE) as num|null
-			if (newBombCap < 4)
+			if (!CONFIG_SET(number/bombcap, newBombCap))
 				return
-
-			GLOB.MAX_EX_DEVESTATION_RANGE = round(newBombCap/4)
-			GLOB.MAX_EX_HEAVY_RANGE = round(newBombCap/2)
-			GLOB.MAX_EX_LIGHT_RANGE = newBombCap
-			//I don't know why these are their own variables, but fuck it, they are.
-			GLOB.MAX_EX_FLASH_RANGE = newBombCap
-			GLOB.MAX_EX_FLAME_RANGE = newBombCap
 
 			message_admins("<span class='boldannounce'>[key_name_admin(usr)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]</span>")
 			log_admin("[key_name(usr)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]")
@@ -545,7 +541,8 @@
 			if(!check_rights(R_DEBUG))
 				return
 			var/datum/job/J = SSjob.GetJob("Security Officer")
-			if(!J) return
+			if(!J)
+				return
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")

@@ -68,8 +68,6 @@
 	if(istype(O, /obj/item/reagent_containers/food/drinks/drinkingglass))
 		var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = O
 		if(!DG.reagents.total_volume) //glass is empty
-			if(!user.drop_item())
-				return
 			qdel(DG)
 			glasses++
 			to_chat(user, "<span class='notice'>The [src] accepts the drinking glass, sterilizing it.</span>")
@@ -78,9 +76,8 @@
 			to_chat(user, "<span class='warning'>The [src] is at full capacity.</span>")
 		else
 			var/obj/item/reagent_containers/food/snacks/S = O
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(S, src))
 				return
-			S.loc = src
 			if(stored_food[sanitize(S.name)])
 				stored_food[sanitize(S.name)]++
 			else

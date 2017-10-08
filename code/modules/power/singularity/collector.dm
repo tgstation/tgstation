@@ -87,10 +87,9 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 		if(loaded_tank)
 			to_chat(user, "<span class='warning'>There's already a plasma tank loaded!</span>")
 			return TRUE
-		if(!user.drop_item())
-			return TRUE
+		if(!user.transferItemToLoc(W, src))
+			return
 		loaded_tank = W
-		W.forceMove(src)
 		update_icons()
 	else if(istype(W, /obj/item/crowbar))
 		if(loaded_tank)

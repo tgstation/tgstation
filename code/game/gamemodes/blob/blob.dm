@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(blobs_legit) //used for win-score calculations, contains only 
 		var/mob/camera/blob/B = blob.current.become_overmind(TRUE, round(blob_base_starting_points/blob_overminds.len))
 		B.mind.name = B.name
 		var/turf/T = pick(GLOB.blobstart)
-		B.loc = T
+		B.forceMove(T)
 		B.base_point_rate = blob_point_rate
 
 	SSshuttle.registerHostileEnvironment(src)

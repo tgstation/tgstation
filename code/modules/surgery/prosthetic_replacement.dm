@@ -63,9 +63,8 @@
 		tool.desc = "A container for holding body parts."
 		tool.cut_overlays()
 		tool = tool.contents[1]
-	if(istype(tool, /obj/item/bodypart))
+	if(istype(tool, /obj/item/bodypart) && user.temporarilyRemoveItemFromInventory(tool))
 		var/obj/item/bodypart/L = tool
-		user.drop_item()
 		L.attach_limb(target)
 		if(organ_rejection_dam)
 			target.adjustToxLoss(organ_rejection_dam)

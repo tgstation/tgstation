@@ -19,7 +19,7 @@
 
 /obj/item/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
-	desc = "Some plain old Earthen bread."
+	desc = "Some plain old earthen bread."
 	icon_state = "bread"
 	bonus_reagents = list("nutriment" = 7)
 	list_reagents = list("nutriment" = 10)
@@ -184,6 +184,37 @@
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = ""
 	bitesize = 2
+
+/obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(obj/item/frying, datum/reagents/reagents, cook_time = 30)
+	if(istype(frying, /obj/item/reagent_containers/))
+		var/obj/item/reagent_containers/food = frying
+		food.reagents.trans_to(src, food.reagents.total_volume)
+	icon = frying.icon
+	overlays = frying.overlays
+	icon_state = frying.icon_state
+	desc = frying.desc
+	w_class = frying.w_class
+	reagents.trans_to(src, 2*(cook_time/15))
+	switch(cook_time)
+		if(0 to 15)
+			add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
+			name = "lightly-fried [frying.name]"
+		if(16 to 49)
+			add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
+			name = "fried [frying.name]"
+		if(50 to 59)
+			add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
+			name = "deep-fried [frying.name]"
+		if(60 to INFINITY)
+			add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
+			name = "the physical manifestation of the very concept of fried foods"
+			desc = "A heavily fried...something.  Who can tell anymore?"
+	filling_color = color
+	foodtype |= FRIED
+	if(istype(frying, /obj/item/reagent_containers/food/snacks/))
+		qdel(frying)
+	else
+		frying.forceMove(src)
 
 /obj/item/reagent_containers/food/snacks/butteredtoast
 	name = "buttered toast"

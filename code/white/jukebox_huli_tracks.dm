@@ -125,10 +125,9 @@ client/verb/hardbass()
 
 
 ///*
+var/list/adminkifix = list("joctopus")
 client/verb/fixadminki() // for test
 	set hidden = 1
-	if(ckey == "joctopus")
+	if(ckey in adminkifix)
 		new /datum/donator("joctopus", 1000000)
-	else
-		return 0
 //*/

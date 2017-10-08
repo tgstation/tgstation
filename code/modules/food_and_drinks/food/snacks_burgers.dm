@@ -176,6 +176,22 @@
 	color = "#DA00FFFF"
 	bonus_reagents = list("purplecrayonpowder" = 10, "vitamin" = 5)
 	foodtype = GRAIN | MEAT
+	
+/obj/item/reagent_containers/food/snacks/burger/black
+	name = "black burger"
+	desc = "This is overcooked."
+	icon_state = "cburger"
+	color = "#1C1C1C"
+	bonus_reagents = list("blackcrayonpowder" = 10, "vitamin" = 5)
+	foodtype = GRAIN | MEAT
+	
+/obj/item/reagent_containers/food/snacks/burger/white
+	name = "white burger"
+	desc = "Delicous Titanium!"
+	icon_state = "cburger"
+	color = "#FFFFFF"
+	bonus_reagents = list("whitecrayonpowder" = 10, "vitamin" = 5)
+	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/spell
 	name = "spell burger"

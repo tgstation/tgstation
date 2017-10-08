@@ -10502,6 +10502,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/structure/closet/l3closet/security,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -13899,8 +13900,8 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
@@ -16884,7 +16885,6 @@
 	dwidth = 5;
 	height = 11;
 	name = "Omega emergency shuttle";
-	timid = 0;
 	width = 19
 	},
 /obj/docking_port/stationary{
@@ -20538,8 +20538,8 @@
 	amount = 50
 	},
 /obj/item/crowbar,
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -27150,6 +27150,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/structure/closet/l3closet,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -30348,6 +30349,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "bbP" = (
@@ -34632,6 +34634,7 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "bjG" = (
+/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 6
 	},
@@ -35678,6 +35681,7 @@
 	id = "chapelmassdoor";
 	name = "Chapel Launcher Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "blJ" = (
@@ -38900,7 +38904,7 @@
 	volume_rate = 200
 	},
 /turf/open/space/basic,
-/area/space)
+/area/engine/engineering)
 "bxd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -80681,13 +80685,13 @@ aDc
 aYc
 aYW
 byo
-byt
+byo
 bbx
 bcm
 bdd
 beb
-byy
-byA
+byo
+bys
 bfK
 aQd
 bgT
@@ -80937,14 +80941,14 @@ aWQ
 abt
 aYc
 aYW
-byp
+byo
 baI
 bby
 bcn
 bde
 bec
 beH
-byB
+byo
 bfK
 aQd
 bgU
@@ -81451,14 +81455,14 @@ aWS
 abt
 aYe
 aYW
-byr
+byo
 baK
 bbA
 bcp
 bdg
 bee
 beJ
-byC
+byo
 bfK
 avV
 bgU
@@ -81709,13 +81713,13 @@ aIZ
 aYc
 aYW
 bys
-byu
-byv
-byw
+byo
+byo
+byo
 bdh
-byx
-byz
-byD
+byo
+byo
+byo
 bfM
 avV
 bgV

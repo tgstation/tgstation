@@ -1,6 +1,7 @@
 /obj/structure/girder
 	name = "girder"
 	icon_state = "girder"
+	desc = "A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall."
 	anchored = TRUE
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
@@ -258,9 +259,8 @@
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
 		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(P, drop_location()))
 				return
-			P.loc = src.loc
 			to_chat(user, "<span class='notice'>You fit the pipe into \the [src].</span>")
 	else
 		return ..()

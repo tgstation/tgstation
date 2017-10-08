@@ -45,7 +45,7 @@
 	..()
 	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
 
-	if(istype(target, /obj/mecha))
+	if(ismecha(target))
 		var/obj/mecha/M = target
 		M.take_damage(anti_armour_damage)
 	if(issilicon(target))
@@ -55,7 +55,7 @@
 
 /obj/item/projectile/bullet/srmrocket
 	name ="SRM-8 Rocket"
-	desc = "Boom"
+	desc = "Boom."
 	icon_state = "missile"
 	damage = 30
 	ricochets_max = 0 //it's a MISSILE

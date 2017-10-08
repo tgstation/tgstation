@@ -35,7 +35,6 @@
 	has_limbs = 1
 	var/obj/item/reagent_containers/food/snacks/meat/slab/type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab
 
-	var/list/obj/effect/proc_holder/alien/abilities = list()
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
 
 	var/rotate_on_lying = 1

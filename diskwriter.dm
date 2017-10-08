@@ -19,7 +19,7 @@
 
 /obj/machinery/party/musicwriter/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/coin))
-		user.drop_item()
+		user.dropItemToGround()
 		del(O)
 		coin++
 

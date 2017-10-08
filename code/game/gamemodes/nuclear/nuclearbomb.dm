@@ -81,6 +81,20 @@
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
+/obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
+	var/datum/game_mode/nuclear/NM = SSticker.mode
+	switch(off_station)
+		if(0)
+			if(istype(NM) && NM.syndies_didnt_escape)
+				return CINEMATIC_ANNIHILATION
+			else
+				return CINEMATIC_NUKE_WIN
+		if(1)
+			return CINEMATIC_NUKE_MISS
+		if(2)
+			return CINEMATIC_NUKE_FAR
+	return CINEMATIC_NUKE_FAR
+
 /obj/machinery/nuclearbomb/syndicate/Initialize()
 	. = ..()
 	var/obj/machinery/nuclearbomb/existing = locate("syndienuke") in GLOB.nuke_list
@@ -91,9 +105,8 @@
 
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/disk/nuclear))
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
-		I.forceMove(src)
 		auth = I
 		add_fingerprint(user)
 		return
@@ -295,10 +308,8 @@
 				. = TRUE
 		if("insert_disk")
 			if(!auth)
-				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/disk/nuclear))
-					usr.drop_item()
-					I.forceMove(src)
+				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/disk/nuclear)
+				if(I && usr.transferItemToLoc(I, src))
 					auth = I
 					. = TRUE
 		if("keypad")
@@ -422,12 +433,12 @@
 	update_icon()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	if(SSticker && SSticker.mode)
-		SSticker.mode.explosion_in_progress = 1
+		SSticker.roundend_check_paused = TRUE
 	sleep(100)
 
 	if(!core)
-		SSticker.station_explosion_cinematic(3,"no_core",src)
-		SSticker.mode.explosion_in_progress = 0
+		Cinematic(CINEMATIC_NUKE_NO_CORE,world)
+		SSticker.roundend_check_paused = FALSE
 		return
 
 	GLOB.enter_allowed = 0
@@ -437,28 +448,37 @@
 	var/area/A = get_area(bomb_location)
 	if(bomb_location && (bomb_location.z in GLOB.station_z_levels))
 		if(istype(A, /area/space))
-			off_station = NUKE_MISS_STATION
+			off_station = NUKE_NEAR_MISS
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
-			off_station = NUKE_MISS_STATION
+			off_station = NUKE_NEAR_MISS
 	else if((istype(A, /area/syndicate_mothership) || (istype(A, /area/shuttle/syndicate)) && bomb_location.z == ZLEVEL_CENTCOM))
 		off_station = NUKE_SYNDICATE_BASE
 	else
-		off_station = NUKE_NEAR_MISS
+		off_station = NUKE_MISS_STATION
 
-	if(istype(SSticker.mode, /datum/game_mode/nuclear))
-		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
-		var/datum/game_mode/nuclear/NM = SSticker.mode
-		NM.syndies_didnt_escape = (Shuttle && (Shuttle.z == ZLEVEL_CENTCOM || Shuttle.z == ZLEVEL_TRANSIT)) ? 0 : 1
-		NM.nuke_off_station = off_station
+	if(off_station < 2)
+		SSshuttle.registerHostileEnvironment(src)
+		SSshuttle.lockdown = TRUE
 
-	SSticker.station_explosion_cinematic(off_station,null,src)
-	if(SSticker.mode)
-		if(istype(SSticker.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/NM = SSticker.mode
-			NM.nukes_left --
-		if(!SSticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-			SSticker.Reboot("Station destroyed by Nuclear Device.", "nuke - unhandled ending")
+	//Cinematic
+	SSticker.mode.OnNukeExplosion(off_station)
+	var/bombz = z
+	Cinematic(get_cinematic_type(off_station),world,CALLBACK(SSticker,/datum/controller/subsystem/ticker/proc/station_explosion_detonation,src))
+	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel,bombz)
+	SSticker.roundend_check_paused = FALSE
 
+/obj/machinery/nuclearbomb/proc/get_cinematic_type(off_station)
+	if(off_station < 2)
+		return CINEMATIC_SELFDESTRUCT
+	else
+		return CINEMATIC_SELFDESTRUCT_MISS
+
+/proc/KillEveryoneOnZLevel(z)
+	if(!z)
+		return
+	for(var/mob/M in GLOB.mob_list)
+		if(M.stat != DEAD && M.z == z)
+			M.gib()
 
 /*
 This is here to make the tiles around the station mininuke change when it's armed.

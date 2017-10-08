@@ -304,7 +304,8 @@
 				to_chat(user, "<span class='notice'>You start slicing the disposal pipe...</span>")
 				// check if anything changed over 2 seconds
 				if(do_after(user,30, target = src))
-					if(!src || !W.isOn()) return
+					if(!src || !W.isOn())
+						return
 					deconstruct()
 					to_chat(user, "<span class='notice'>You slice the disposal pipe.</span>")
 	else
@@ -338,16 +339,6 @@
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
-
-//Fixes dpdir on shuttle rotation
-/obj/structure/disposalpipe/shuttleRotate(rotation)
-	..()
-	var/new_dpdir = 0
-	for(var/D in GLOB.cardinals)
-		if(dpdir & D)
-			new_dpdir = new_dpdir | angle2dir(rotation+dir2angle(D))
-	dpdir = new_dpdir
-
 
 // *** TEST verb
 //client/verb/dispstop()
@@ -707,7 +698,8 @@
 			playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 			if(do_after(user,20*I.toolspeed, target = src))
-				if(!src || !W.isOn()) return
+				if(!src || !W.isOn())
+					return
 				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
 				stored.loc = loc
 				src.transfer_fingerprints_to(stored)
