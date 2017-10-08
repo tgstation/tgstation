@@ -64,7 +64,7 @@
 		atmosanalyzer_scan(parent.air, user)
 	if(istype(W, /obj/item/pipe_meter))
 		var/obj/item/pipe_meter/meter = W
-		user.drop_item(meter, loc)
+		user.dropItemToGround(meter)
 		meter.setAttachLayer(piping_layer)
 	else
 		return ..()

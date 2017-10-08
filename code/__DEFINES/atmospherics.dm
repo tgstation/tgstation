@@ -175,8 +175,9 @@
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
 #define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
 
-#define PIPING_LAYER_MIN 1
-#define PIPING_LAYER_MAX 5
+//IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
+#define PIPING_LAYER_MIN 2
+#define PIPING_LAYER_MAX 4
 #define PIPING_LAYER_DEFAULT 3
 #define PIPING_LAYER_P_X 5
 #define PIPING_LAYER_P_Y 5
