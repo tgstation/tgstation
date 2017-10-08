@@ -313,8 +313,8 @@
 		var/mob/living/carbon/human/H = A
 		if(H)
 			user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0)
-			user << "Your pride reflects on [H]."
-			H << "You feel insecure, taking on [user]'s burden."
+			to_chat(user, "<span class='notice'>"Your pride reflects on [H]."</span>")
+			to_chat(H, "<span class='userdanger'>"You feel insecure, taking on [user]'s burden."</span>")
 
 /obj/item/nullrod/whip
 	name = "holy whip"
