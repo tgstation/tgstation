@@ -44,7 +44,7 @@
 	id = "vapor"
 
 /datum/gas_reaction/water_vapor/init_reqs()
-	min_requirements = list("water_vapor" = MOLES_PLASMA_VISIBLE)
+	min_requirements = list("water_vapor" = MOLES_GAS_VISIBLE)
 
 /datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, turf/open/location)
 	. = NO_REACTION
@@ -52,7 +52,7 @@
 		if(location && location.freon_gas_act())
 			. = REACTING
 	else if(location && location.water_vapor_gas_act())
-		air.gases["water_vapor"][MOLES] -= MOLES_PLASMA_VISIBLE
+		air.gases["water_vapor"][MOLES] -= MOLES_GAS_VISIBLE
 		. = REACTING
 
 //fire: combustion of plasma and volatile fuel (treated as hydrocarbons). creates hotspots. exothermic
@@ -169,12 +169,12 @@
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/catalyst_efficency = max(min(cached_gases["plasma"][MOLES]/cached_gases["tritium"][MOLES],MAX_CARBON_EFFICENCY)-(temperature/FUSION_HEAT_DROPOFF),0)
+	var/catalyst_efficency = max(min(cached_gases["plasma"][MOLES]/cached_gases["tritium"][MOLES],MAX_CATALYST_EFFICENCY)-(temperature/FUSION_HEAT_DROPOFF),0)
 	var/reaction_energy = THERMAL_ENERGY(air)
 	var/moles_impurities = air.total_moles()-(cached_gases["plasma"][MOLES]+cached_gases["tritium"][MOLES])
 
 	var/plasma_fused = (PLASMA_FUSED_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)*4
-	var/tritium_catalyzed = (CARBON_CATALYST_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)
+	var/tritium_catalyzed = (CATALYST_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 	var/oxygen_added = tritium_catalyzed
 	var/waste_added = (plasma_fused-oxygen_added)-((air.total_moles()*air.heat_capacity())/PLASMA_BINDING_ENERGY)
 	reaction_energy = max(reaction_energy+((catalyst_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/catalyst_efficency)+2)*10)+((plasma_fused/(moles_impurities/catalyst_efficency))*PLASMA_BINDING_ENERGY),0)

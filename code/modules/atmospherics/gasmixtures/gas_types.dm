@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 	specific_heat = 200
 	name = "Plasma"
 	gas_overlay = "plasma"
-	moles_visible = MOLES_PLASMA_VISIBLE
+	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 
 /datum/gas/water_vapor
@@ -59,14 +59,14 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 	specific_heat = 40
 	name = "Water Vapor"
 	gas_overlay = "water_vapor"
-	moles_visible = MOLES_PLASMA_VISIBLE
+	moles_visible = MOLES_GAS_VISIBLE
 
 /datum/gas/hypernoblium
 	id = "nob"
 	specific_heat = 2000
 	name = "Hyper-noblium"
 	gas_overlay = "freon"
-	moles_visible = MOLES_PLASMA_VISIBLE
+	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 
 /datum/gas/nitrous_oxide
@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 	specific_heat = 20
 	name = "Brown Gas"
 	gas_overlay = "browns"
-	moles_visible = MOLES_PLASMA_VISIBLE
+	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 
 /datum/gas/tritium
@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 	specific_heat = 10
 	name = "Tritium"
 	gas_overlay = "tritium"
-	moles_visible = MOLES_PLASMA_VISIBLE
+	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 
 /datum/gas/bz

@@ -69,7 +69,7 @@
 #define PLASMA_OXYGEN_FULLBURN				10
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
-#define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
+#define MOLES_GAS_VISIBLE				0.5		//Moles in a standard cell after which gases are visible
 //General assmos defines.
 #define WATER_VAPOR_FREEZE					200
 #define BROWNS_FORMATION_ENERGY				100000
@@ -84,9 +84,9 @@
 #define REACTION_OPPRESSION_THRESHOLD		5
 	//Plasma fusion properties
 #define PLASMA_BINDING_ENERGY				3000000
-#define MAX_CARBON_EFFICENCY				9
+#define MAX_CATALYST_EFFICENCY				9
 #define PLASMA_FUSED_COEFFICENT				0.08
-#define CARBON_CATALYST_COEFFICENT			0.01
+#define CATALYST_COEFFICENT					0.01
 #define FUSION_PURITY_THRESHOLD				0.9
 #define FUSION_HEAT_DROPOFF					20000+T0C
 
