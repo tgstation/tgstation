@@ -142,9 +142,6 @@
 /proc/_sin(X)
 	return sin(X)
 
-/proc/_step(Ref, Dir, Speed = 0)
-	return step(Ref, Dir, Speed)
-
 /proc/_list_add(list/L, ...)
 	if (args.len < 2)
 		return
