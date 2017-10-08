@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
 		for(var/atom/movable/AM in shuttle_area)
-			if(AM.anchored)
+			if(AM.anchored || iscameramob(AM))
 				continue
 			sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
