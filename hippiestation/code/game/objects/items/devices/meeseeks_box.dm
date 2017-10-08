@@ -13,6 +13,7 @@
 	var/request = "Nothing"
 	var/next_summon
 	var/summoned = FALSE
+	var/summoning = FALSE
 	var/mob/living/carbon/masters
 	var/mob/living/carbon/human/meeseeks
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
@@ -40,23 +41,26 @@
 		to_chat(user, "<span class='warning'>[src] explodes!</span>")
 		explosion(get_turf(src), null, null, 1, 2)
 		qdel(src)
+	else if(summoning)
+		to_chat(user, "<span class='warning'>[src] is trying to summon a Mr. Meeseeks. Be patient, Meeseeks don't grow on trees.</span>")
 	else if(next_summon < world.time)
 		next_summon = world.time + MEESEEKS_BOX_COOLDOWN
+		summoning = TRUE
 		user.visible_message("<span class='notice'>[user] presses the button on [src]!</span>")
-		var/list/candidates = pollGhostCandidates("Would you like to become a Mr. Meeseeks and fulfill a task?", poll_time=150)
-		if(LAZYLEN(candidates))
+		var/list/candidates = pollGhostCandidates("Would you like to become a Mr. Meeseeks and fulfill a task?", poll_time=100)
+		if(candidates.len)
 			var/mob/dead/observer/Z = pick(candidates)
-			var/mob/living/carbon/human/M = new
-			M.hardset_dna(null, null, "Mr. Meeseeks", null, /datum/species/meeseeks)
-			var/datum/species/meeseeks/SM = M.dna.species
+			masters = user
+			meeseeks = new
+			meeseeks.alpha = 0
+			meeseeks.forceMove(get_turf(user))
+			meeseeks.hardset_dna(null, null, "Mr. Meeseeks", null, /datum/species/meeseeks)
+			var/datum/species/meeseeks/SM = meeseeks.dna.species
 			SM.master = user
-			M.set_cloned_appearance()
-			M.job = "Mr. Meeseeks"
-			M.alpha = 0
+			meeseeks.set_cloned_appearance()
+			meeseeks.job = "Mr. Meeseeks"
 			new /obj/effect/cloud(get_turf(user))
-			M.loc = get_turf(user)
-			M.key = Z.key
-			meeseeks = M
+			meeseeks.key = Z.key
 			to_chat(M, "<span class='boldannounce'>You are a Mr. Meeseeks!</span>")
 			var/request = stripped_input(user, "How should Mr. Meeseeks help you today?")
 			if(!request)
@@ -66,14 +70,15 @@
 			playsound(loc, 'hippiestation/sound/voice/cando.ogg', 40)
 			message_admins("[key_name_admin(user)] has summoned a Mr. Meeseeks([key_name_admin(M)]) with the request: [request]")
 			log_game("[key_name(user)] has summoned a Mr. Meeseeks([key_name(M)]) with the request: [request]")
-			if(M.mind)
-				M.mind.assigned_role = "Mr. Meeseeks" //Should prevent getting picked for antag as a meeseeks
+			if(meeseeks.mind)
+				meeseeks.mind.assigned_role = "Mr. Meeseeks" //Should prevent getting picked for antag as a meeseeks
 				var/datum/objective/objective = new
 				objective.explanation_text = "Your master [masters] has asked that you complete the following task: [request]."
 				objective.completed = FALSE
-				M.mind.objectives += objective
-				M.mind.announce_objectives()
+				meeseeks.mind.objectives += objective
+				meeseeks.mind.announce_objectives()
 				SM.objective = objective
+			summoning = FALSE
 			summoned = TRUE
 		else
 			next_summon -= MEESEEKS_BOX_FAILURE_TIME
