@@ -1,5 +1,5 @@
 
-#define MILK_TO_BUTTER_COEFF
+#define MILK_TO_BUTTER_COEFF 15
 
 /obj/machinery/reagentgrinder
 	name = "All-In-One Grinder"
@@ -210,11 +210,10 @@
 			beaker_contents = "<B>The beaker contains:</B><br>"
 			var/anything = FALSE
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
-					anything = TRUE
-					beaker_contents += "[R.volume] - [R.name]<br>"
+				anything = TRUE
+				beaker_contents += "[R.volume] - [R.name]<br>"
 			if(!anything)
-					beaker_contents += "Nothing<br>"
-
+				beaker_contents += "Nothing<br>"
 
 		dat = {"
 	<b>Processing chamber contains:</b><br>
@@ -244,7 +243,7 @@
 	if(..())
 		return
 	var/mob/user = usr
-	if(!user.canUseTopic())
+	if(!user.canUseTopic(src))
 		return
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -278,7 +277,7 @@
 	for(var/i in holdingitems)
 		var/obj/item/O = i
 		O.forceMove(drop_location())
-		holdingitems -= O/
+		holdingitems -= O
 	updateUsrDialog()
 
 /obj/machinery/reagentgrinder/proc/is_allowed(obj/item/reagent_containers/O)
@@ -358,14 +357,14 @@
 
 /obj/machinery/reagentgrinder/proc/operate_for(time, silent = FALSE, juicing = FALSE)
 	shake_for(time)
-	updateUserDialog()
+	updateUsrDialog()
 	operating = TRUE
 	if(!silent)
 		if(!juicing)
 			playsound(src, 'sound/machines/blender.ogg', 50, 1)
 		else
 			playsound(src, 'sound/machines/juicer.ogg', 20, 1)
-	addtimer(CALLBACK(src, .proc/stop_operating), duration)
+	addtimer(CALLBACK(src, .proc/stop_operating), time)
 
 /obj/machinery/reagentgrinder/proc/stop_operating()
 	operating = FALSE
@@ -409,14 +408,14 @@
 		else if(istype(I, /obj/item/stack/sheet))
 			var/obj/item/stack/sheet/O = I
 			var/allowed = get_allowed_by_id(O)
-			for(var/i in 1 to round(O.amount, 1))
+			for(var/t in 1 to round(O.amount, 1))
 				for(var/r_id in allowed)
 					var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 					var/amount = allowed[r_id]
 					beaker.reagents.add_reagent(r_id,min(amount, space))
 					if (space < amount)
 						break
-				if(i == round(O.amount, 1))
+				if(t == round(O.amount, 1))
 					remove_object(O)
 					break
 		//Plants
@@ -469,7 +468,7 @@
 /obj/machinery/reagentgrinder/proc/mix_complete()
 	if(beaker && beaker.reagents.total_volume)
 		//Recipe to make Butter
-		var/butter_amt = floor(beaker.reagents.get_reagent_amount("milk") / MILK_TO_BUTTER_COEFF)
+		var/butter_amt = Floor(beaker.reagents.get_reagent_amount("milk") / MILK_TO_BUTTER_COEFF)
 		beaker.reagents.remove_reagent("milk", MILK_TO_BUTTER_COEFF * butter_amt)
 		for(var/i in 1 to butter_amt)
 			new /obj/item/reagent_containers/food/snacks/butter(drop_location())

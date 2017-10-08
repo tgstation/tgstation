@@ -59,13 +59,14 @@
 	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
 		return FALSE
-	. = TRUE
+	. = FALSE
 	last_insert_success = FALSE
 	var/datum/callback/pc = precondition
 	if(pc && !pc.Invoke())
 		return
 	var/requested_amount
 	if(istype(I, /obj/item/stack) && precise_insertion)
+		. = TRUE
 		var/atom/current_parent = parent
 		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num|null
 		if(isnull(requested_amount) || (requested_amount <= 0))
