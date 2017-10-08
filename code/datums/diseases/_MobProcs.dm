@@ -130,7 +130,7 @@
 		ForceContractDisease(D)
 
 /mob/living/carbon/AirborneContractDisease(datum/disease/D)
-	if(!internal)
+	if(internal)
 		return
 	..()
 
