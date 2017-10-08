@@ -192,7 +192,7 @@
 		if(APPRENTICE_HEALING)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
-			H.put_in_hands_or_del(new /obj/item/gun/magic/staff/healing(H))
+			H.put_in_hands(new /obj/item/gun/magic/staff/healing(H))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
 		if(APPRENTICE_HEALING)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
