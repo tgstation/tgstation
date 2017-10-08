@@ -155,7 +155,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
-	if(lit || QDELETED(src))	//Incase outfit datum tries to light us after the dummy we're on is recycled for other purposes.
+	if(lit || !initialized)
 		return
 
 	lit = TRUE
