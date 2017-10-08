@@ -107,8 +107,7 @@
 	if(!istype(H))
 		return
 	if(strip)
-		to_chat(world,"TODO: delete equipment")
-		//H.delete_equipment()
+		H.delete_equipment()
 	//Wizards are human by default. Use the mirror if you want something else.
 	H.set_species(/datum/species/human)
 	/* Wizards by nature cannot be too young. */
@@ -173,8 +172,7 @@
 	if(!istype(H))
 		return
 	if(strip)
-		to_chat(world,"TODO: delete equipment")
-		//H.delete_equipment()
+		H.delete_equipment()
 	H.set_species(/datum/species/human)
 	/* STILL A YEAR TO GO APPRENTICE*/
 	H.age = WIZARD_AGE_MIN - 1
