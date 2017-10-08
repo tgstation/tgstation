@@ -16,7 +16,7 @@
 	var/direct = pick(GLOB.alldirs)
 	var/steps_amt = pick(1;25,2;50,3,4;200)
 	for(var/j in 1 to steps_amt)
-		addtimer(CALLBACK(src, .proc/step, expl, direct), 1)
+		step(expl, direct)
 	
 /datum/effect_system/expl_particles/start()
 	for(var/i in 1 to number)
