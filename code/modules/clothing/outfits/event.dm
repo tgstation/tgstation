@@ -10,7 +10,7 @@
 	r_pocket = /obj/item/device/flashlight
 	gloves = /obj/item/clothing/gloves/color/red
 	belt = /obj/item/tank/internals/emergency_oxygen/double
- 	id = /obj/item/card/id/gold
+	id = /obj/item/card/id/gold
 
 /datum/outfit/santa/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
