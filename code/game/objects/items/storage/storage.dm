@@ -324,10 +324,10 @@
 //such as when picking up all the items on a tile with one click.
 /obj/item/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if(!istype(W))
-		return 0
+		return FALSE
 	if(usr)
 		if(!usr.transferItemToLoc(W, src))
-			return 0
+			return FALSE
 	else
 		W.forceMove(src)
 	if(silent)
@@ -362,13 +362,13 @@
 			show_to(M)
 	W.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	update_icon()
-	return 1
+	return TRUE
 
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
 /obj/item/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
 	if(!istype(W))
-		return 0
+		return FALSE
 
 	if(istype(src, /obj/item/storage/fancy))
 		var/obj/item/storage/fancy/F = src
@@ -383,7 +383,8 @@
 		W.dropped(M)
 	W.layer = initial(W.layer)
 	W.plane = initial(W.plane)
-	W.forceMove(new_location)
+	if(new_location)	//The only time this is called with null is when something inside is deleted and in that case it's already moved to null by Destroy.
+		W.forceMove(new_location)
 
 	for(var/mob/M in can_see_contents())
 		orient2hud(M)
@@ -394,7 +395,7 @@
 	W.on_exit_storage(src)
 	update_icon()
 	W.mouse_opacity = initial(W.mouse_opacity)
-	return 1
+	return TRUE
 
 /obj/item/storage/deconstruct(disassembled = TRUE)
 	var/drop_loc = loc
@@ -410,15 +411,15 @@
 	if(istype(W, /obj/item/hand_labeler))
 		var/obj/item/hand_labeler/labeler = W
 		if(labeler.mode)
-			return 0
-	. = 1 //no afterattack
+			return FALSE
+	. = TRUE //no afterattack
 	if(iscyborg(user))
 		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
 		if(contents.len >= storage_slots) //don't use items on the backpack if they don't fit
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 	handle_item_insertion(W, 0 , user)
 
