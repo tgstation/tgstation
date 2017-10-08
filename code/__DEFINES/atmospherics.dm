@@ -70,7 +70,18 @@
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
 #define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
+//General assmos defines.
+#define WATER_VAPOR_FREEZE					200
+#define BROWNS_FORMATION_ENERGY				100000
 #define GAS_STIM_MINIMUM					0.002
+#define TRITIUM_BURN_OXY_FACTOR				2
+#define SUPER_SATURATION_THRESHOLD			96
+#define STIMULUM_HEAT_SCALE					100000
+#define STIMULUM_FIRST_RISE					0.75
+#define STIMULUM_FIRST_DROP					0.05
+#define STIMULUM_SECOND_RISE				0.001
+#define STIMULUM_ABSOLUTE_DROP				0.0000062
+#define REACTION_OPPRESSION_THRESHOLD		5
 	//Plasma fusion properties
 #define PLASMA_BINDING_ENERGY				3000000
 #define MAX_CARBON_EFFICENCY				9
@@ -78,8 +89,7 @@
 #define CARBON_CATALYST_COEFFICENT			0.01
 #define FUSION_PURITY_THRESHOLD				0.9
 #define FUSION_HEAT_DROPOFF					20000+T0C
-	//MISC reaction properties
-#define BROWNS_FORMATION_ENERGY				100000
+
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define WARNING_HIGH_PRESSURE				325		//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)

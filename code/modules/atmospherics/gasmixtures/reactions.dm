@@ -48,7 +48,7 @@
 
 /datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, turf/open/location)
 	. = NO_REACTION
-	if (air.temperature <= 200)
+	if (air.temperature <= WATER_VAPOR_FREEZE)
 		if(location && location.freon_gas_act())
 			. = REACTING
 	else if(location && location.water_vapor_gas_act())
@@ -78,11 +78,11 @@
 		if(!cached_gases["o2"])
 			burned_fuel = 0
 		else if(cached_gases["o2"][MOLES] < cached_gases["tritium"][MOLES])
-			burned_fuel = cached_gases["o2"][MOLES]/2
+			burned_fuel = cached_gases["o2"][MOLES]/TRITIUM_BURN_OXY_FACTOR
 			cached_gases["tritium"][MOLES] -= burned_fuel
 			cached_gases["o2"][MOLES] = 0
 		else
-			burned_fuel = cached_gases["tritium"][MOLES]*2
+			burned_fuel = cached_gases["tritium"][MOLES]*TRITIUM_BURN_OXY_FACTOR
 			cached_gases["o2"][MOLES] -= cached_gases["tritium"][MOLES]
 
 		if(burned_fuel)
@@ -107,7 +107,7 @@
 		if(temperature_scale > 0)
 			ASSERT_GAS("o2", air)
 			oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
-			if(cached_gases["o2"][MOLES] / cached_gases["plasma"][MOLES] > 90) //supersaturation. Form Tritium.
+			if(cached_gases["o2"][MOLES] / cached_gases["plasma"][MOLES] > SUPER_SATURATION_THRESHOLD) //supersaturation. Form Tritium.
 				super_saturation = TRUE
 			else if(cached_gases["o2"][MOLES] > cached_gases["plasma"][MOLES]*PLASMA_OXYGEN_FULLBURN)
 				plasma_burn_rate = (cached_gases["plasma"][MOLES]*temperature_scale)/PLASMA_BURN_RATE_DELTA
@@ -271,15 +271,15 @@
 		"plasma" = 10,
 		"bz" = 20,
 		"browns" = 30,
-		"temp" =50000)
+		"temp" = STIMULUM_HEAT_SCALE/2)
 
 /datum/gas_reaction/stimformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/heat_scale = air.temperature/100000
+	var/heat_scale = air.temperature/STIMULUM_HEAT_SCALE
 	var/stim_energy_change
-	stim_energy_change = (0.75(heat_scale**2)) - (0.05(heat_scale**3)) + (0.001(heat_scale**4)) - (0.0000062(heat_scale**5))
+	stim_energy_change = (STIMULUM_FIRST_RISE(heat_scale**2)) - (STIMULUM_FIRST_DROP(heat_scale**3)) + (STIMULUM_SECOND_RISE(heat_scale**4)) - (STIMULUM_ABSOLUTE_DROP(heat_scale**5))
 
 	air.assert_gases("tritium","plasma","bz","browns","stim")
 	cached_gases["stim"][MOLES]+= heat_scale/10

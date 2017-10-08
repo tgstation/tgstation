@@ -406,7 +406,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	reaction_results = new
 
 	var/list/cached_gases = gases
-	if (cached_gases["nob"][MOLES] > 5)
+	if (cached_gases["nob"][MOLES] > REACTION_OPPRESSION_THRESHOLD)
 		return
 	var/temp = temperature
 	var/ener = THERMAL_ENERGY(src)
