@@ -15,6 +15,10 @@ All ShuttleMove procs go here
 // Only gets called if fromShuttleMove returns true first
 // returns the new move_mode (based on the old)
 /turf/proc/toShuttleMove(turf/oldT, move_mode, obj/docking_port/mobile/shuttle)
+	. = move_mode
+	if(!(. & MOVE_TURF))
+		return
+
 	var/shuttle_dir = shuttle.dir
 	for(var/i in contents)
 		var/atom/movable/thing = i
@@ -40,8 +44,6 @@ All ShuttleMove procs go here
 				step(thing, shuttle_dir)
 			else
 				qdel(thing)
-
-	return move_mode
 
 // Called on the old turf to move the turf data
 /turf/proc/onShuttleMove(turf/newT, turf_type, baseturf_type, rotation, list/movement_force, move_dir)
