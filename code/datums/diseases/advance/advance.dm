@@ -183,7 +183,8 @@
 		properties["stealth"] += S.stealth
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
-		properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity symptom
+		if(!S.neutered)
+			properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity non-neutered symptom
 	return
 
 // Assign the properties that are in the list.
