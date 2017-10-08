@@ -11,7 +11,7 @@
 "k" = (/obj/structure/lattice,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
 "l" = (/obj/structure/lattice,/turf/open/floor/plating/airless,/area/ruin/unpowered/no_grav)
 "m" = (/obj/structure/chair/comfy/arm{tag = "icon-armchair (EAST)"; icon_state = "armchair"; dir = 4},/turf/open/floor/carpet/peaks,/area/ruin)
-"n" = (/obj/structure/table/wood/fancy,/obj/item/reagent_containers/food/drinks/mug{step_x = 4; step_y = 5},/turf/open/floor/carpet/peaks,/area/ruin)
+"n" = (/obj/structure/table/wood/fancy,/obj/item/reagent_containers/food/drinks/mug{pixel_x = 4; pixel_y = 5},/turf/open/floor/carpet/peaks,/area/ruin)
 "o" = (/obj/structure/closet/crate/bin,/obj/item/device/tape/random,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
 "p" = (/obj/structure/curtain/red{icon_state = "open"},/turf/open/floor/carpet/peaks,/area/ruin)
 "q" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/hatch,/turf/open/floor/pod/dark,/area/ruin)
