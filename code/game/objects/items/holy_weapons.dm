@@ -76,14 +76,14 @@
 		return
 	A.adjustBRUTELOSS(-5) //i wanna hear what others say before i set a real value so 5 for now
 	user.adjustCLONELOSS(5)
-    var/mob/living/carbon/human/H = A
-    if(!istype(H))
-        return
-    var/list/reagents = H.reagents
-    for(var/reagent/B in reagents)
-        if(istype(B, reagent/toxic)
-            H.reagents.trans_to(user, H.reagents.total_volume, 1, 1, 0)
-        	//to chat heal messages and shiz zzz
+	var/mob/living/carbon/human/H = A
+	if(!istype(H))
+		return
+		var/list/reagents = H.reagents
+	for(var/reagent/B in reagents)
+		if(istype(B, reagent/toxic)
+		H.reagents.trans_to(user, H.reagents.total_volume, 1, 1, 0)
+		//to chat heal messages and shiz zzz
 
 /obj/item/nullrod/staff
 	icon_state = "godstaff-red"
