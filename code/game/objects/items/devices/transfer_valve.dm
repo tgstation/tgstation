@@ -76,7 +76,7 @@
 
 /obj/item/device/transfer_valve/Topic(href, href_list)
 	..()
-	if(!usr.canUseTopic())
+	if(!usr.canUseTopic(src))
 		return
 	if(loc == usr)
 		if(tank_one && href_list["tankone"])
