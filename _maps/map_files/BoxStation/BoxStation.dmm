@@ -58918,7 +58918,8 @@
  	height = 24;
 	id = "syndicate_nw";
 	name = "northwest of station";
-	turf_type = /turf/open/space;
+	turf_type = /turf/open/space
+},
 /turf/open/space/basic,
 /area/space)
 
