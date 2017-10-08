@@ -1,3 +1,9 @@
+#define WIRE_RECEIVE	1
+#define WIRE_PULSE	2
+#define WIRE_PULSE_SPECIAL	4
+#define WIRE_RADIO_RECEIVE	8
+#define WIRE_RADIO_PULSE	16
+
 /obj/item/device/assembly
 	name = "assembly"
 	desc = "A small electronic device that should never exist."
@@ -17,12 +23,6 @@
 	var/wire_type = WIRE_RECEIVE | WIRE_PULSE
 	var/attachable = FALSE // can this be attached to wires
 	var/datum/wires/connected = null
-
-	var/const/WIRE_RECEIVE = 1			//Allows Pulsed(0) to call Activate()
-	var/const/WIRE_PULSE = 2				//Allows Pulse(0) to act on the holder
-	var/const/WIRE_PULSE_SPECIAL = 4		//Allows Pulse(0) to act on the holders special assembly
-	var/const/WIRE_RADIO_RECEIVE = 8		//Allows Pulsed(1) to call Activate()
-	var/const/WIRE_RADIO_PULSE = 16		//Allows Pulse(1) to send a radio message
 
 	var/next_activate = 0 //When we're next allowed to activate - for spam control
 
