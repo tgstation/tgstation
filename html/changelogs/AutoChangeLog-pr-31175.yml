@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where Viral Aggressive Metabolism caused viruses to be cured instantly."
-  - bugfix: "Fixed a bug where viruses' symptoms would all instantly activate on infection."
