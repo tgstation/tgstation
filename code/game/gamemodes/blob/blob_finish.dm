@@ -24,7 +24,8 @@
 		to_chat(world, "<FONT size = 3><B>The blob has taken over the station!</B></FONT>")
 		to_chat(world, "<B>The entire station was eaten by the Blob!</B>")
 		log_game("Blob mode completed with a blob victory.")
-
+		for(var/datum/mind/M in blob_overminds)
+			SSblackbox.ReportAntag(ckey(M.key), ANTAG_VICTORY, ROLE_BLOB)
 		SSticker.news_report = BLOB_WIN
 
 	else if(station_was_nuked)
@@ -32,7 +33,8 @@
 		to_chat(world, "<FONT size = 3><B>Partial Win: The station has been destroyed!</B></FONT>")
 		to_chat(world, "<B>Directive 7-12 has been successfully carried out, preventing the Blob from spreading.</B>")
 		log_game("Blob mode completed with a tie (station destroyed).")
-
+		for(var/datum/mind/M in blob_overminds)
+			SSblackbox.ReportAntag(ckey(M.key), ANTAG_STALEMATE, ROLE_BLOB)
 		SSticker.news_report = BLOB_NUKE
 
 	else if(!GLOB.blob_cores.len)
@@ -40,7 +42,8 @@
 		to_chat(world, "<FONT size = 3><B>The staff has won!</B></FONT>")
 		to_chat(world, "<B>The alien organism has been eradicated from the station!</B>")
 		log_game("Blob mode completed with a crew victory.")
-
+		for(var/datum/mind/M in blob_overminds)
+			SSblackbox.ReportAntag(ckey(M.key), ANTAG_DEFEAT, ROLE_BLOB, M.objectives)
 		SSticker.news_report = BLOB_DESTROYED
 
 	..()

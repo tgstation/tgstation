@@ -1,12 +1,28 @@
 Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
 
-The latest database version is 3.4; The query to update the schema revision table is:
+The latest database version is 3.5; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (3, 4);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (3, 5);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (3, 4);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (3, 5);
 
 In any query remember to add a prefix to the table names if you use one.
+
+----------------------------------------------------
+
+7 October 2017, by Cyberboss
+Added table 'greentext'
+
+CREATE TABLE `greentext` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `round_id` INT(11) UNSIGNED NOT NULL,
+  `ckey` varchar(32) NOT NULL,
+  `victory` TINYINT(1) NOT NULL,
+  `antag_name` VARCHAR(32) NOT NULL,
+  `completed_objectives` TEXT NULL,
+  `incompleted_objectives` TEXT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ----------------------------------------------------
 

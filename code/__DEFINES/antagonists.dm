@@ -1,3 +1,7 @@
+#define ANTAG_DEFEAT 0
+#define ANTAG_STALEMATE 1
+#define ANTAG_VICTORY 2
+
 #define ANTAG_DATUM_CULT				/datum/antagonist/cult
 #define ANTAG_DATUM_CULT_MASTER			/datum/antagonist/cult/master
 #define ANTAG_DATUM_CLOCKCULT			/datum/antagonist/clockcult

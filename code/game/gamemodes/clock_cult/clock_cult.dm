@@ -204,12 +204,15 @@ Credit where due:
 
 /datum/game_mode/proc/auto_declare_completion_clockwork_cult()
 	var/text = ""
+	var/victory = ANTAG_STALEMATE	//for non-clock rounds
 	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		if(C.check_clockwork_victory())
+			victory = ANTAG_VICTORY
 			text += "<span class='large_brass'><b>Ratvar's servants defended the Ark until its activation!</b></span>"
 			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 		else
+			victory = ANTAG_DEFEAT
 			text += "<span class='userdanger'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
 			SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
 		text += "<br><b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE]."
@@ -222,6 +225,7 @@ Credit where due:
 		text += "<br><b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)
 			text += printplayer(M)
+			SSblackbox.ReportAntag(ckey(M.key), victory, ROLE_SERVANT_OF_RATVAR, M.objectives)
 	to_chat(world, text)
 
 /datum/game_mode/proc/update_servant_icons_added(datum/mind/M)

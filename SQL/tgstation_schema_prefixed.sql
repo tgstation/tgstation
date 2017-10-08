@@ -425,6 +425,21 @@ CREATE TABLE `SS13_schema_revision` (
   PRIMARY KEY (`major`,`minor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Table structure for table `SS13_greentext`
+--
+DROP TABLE IF EXISTS `SS13_greentext`;
+CREATE TABLE `greentext` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `round_id` INT(11) UNSIGNED NOT NULL,
+  `ckey` varchar(32) NOT NULL,
+  `victory` TINYINT(1) NOT NULL,
+  `antag_name` VARCHAR(32) NOT NULL,
+  `completed_objectives` TEXT NULL,
+  `incompleted_objectives` TEXT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
