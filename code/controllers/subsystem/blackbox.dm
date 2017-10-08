@@ -17,6 +17,8 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/msg_cargo = list()
 	var/list/msg_other = list()
 
+	var/list/antag_report_query
+
 	var/list/feedback = list()	//list of datum/feedback_variable
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
@@ -101,6 +103,9 @@ SUBSYSTEM_DEF(blackbox)
 	if (!SSdbcore.Connect())
 		return
 
+	if(antag_report_query)
+		SSdbcore.MassInsert(format_table_name("greentext"), antag_report_query, ignore_errors = TRUE, delayed = TRUE)
+
 	var/list/sqlrowlist = list()
 
 	for (var/datum/feedback_variable/FV in feedback)
@@ -110,7 +115,6 @@ SUBSYSTEM_DEF(blackbox)
 		return
 
 	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, delayed = TRUE)
-
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(blackbox_msg, freq)
 	if(sealed)
@@ -177,6 +181,29 @@ SUBSYSTEM_DEF(blackbox)
 		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.add_details(details)
+
+/datum/controller/subsystem/blackbox/proc/ReportAntag(ckey, result, antag_type, list/objectives)
+	if(!M || !istext(ckey) || !isnum(result) || !istext(antag_type) || sealed || !SSdbcore.Connect())
+		return
+
+	var/list/completed_objectives = list()
+	var/list/incompleted_objectives = list()
+
+	for(var/I in objectives)
+		var/datum/objective/O = I
+		var/escaped_text = replacetext(replacetext(O.explanation_text, "%", "%37"), "&", "%38")	//separate with &
+		if(O.completed)
+			completed_objectives += escaped_text
+		else
+			incompleted_objectives += escaped_text
+
+	LAZYADD(antag_report_query, list(list(
+		"ckey" => sanitizeSQL(ckey),
+		"victory" => result,
+		"antag_name" => sanitizeSQL(antag_name),
+		"completed_objectives" => sanitizeSQL(completed_objectives.Join("&")),
+		"incompleted_objectives" => sanitizeSQL(incompleted_objectives.Join("&"))
+	)))
 
 /datum/controller/subsystem/blackbox/proc/ReportDeath(mob/living/L)
 	if(sealed)

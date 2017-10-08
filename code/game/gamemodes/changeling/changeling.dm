@@ -261,6 +261,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 			else
 				text += "<br><span class='boldannounce'>The changeling has failed.</span>"
 				SSblackbox.add_details("changeling_success","FAIL")
+			SSblackbox.ReportAntag(ckey(changeling.key), changelingwin ? ANTAG_VICTORY : ANTAG_DEFEAT, ROLE_CHANGELING, changeling.objectives)
 			text += "<br>"
 
 		to_chat(world, text)

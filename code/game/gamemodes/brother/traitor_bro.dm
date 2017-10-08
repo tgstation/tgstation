@@ -127,6 +127,8 @@
 		else
 			text += "<br><font color='red'><B>The blood brothers have failed!</B></font>"
 			SSblackbox.add_details("brother_success","FAIL")
+		for(var/datum/mind/M in team.members)
+			SSblackbox.ReportAntag(ckey(M.key), win ? ANTAG_VICTORY : ANTAG_DEFEAT, ROLE_BROTHER, M.objectives)
 		text += "<br>"
 	to_chat(world, text)
 
