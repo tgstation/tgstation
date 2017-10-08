@@ -10,7 +10,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	permeability_mod = 1
-	severity = BIOHAZARD
+	severity = VIRUS_SEVERITY_BIOHAZARD
 
 /datum/disease/gbs/stage_act()
 	..()

@@ -11,7 +11,7 @@
 	var/datum/dna/original_dna = null
 	var/transformed = 0
 	desc = "This disease transplants the genetic code of the initial vector into new hosts."
-	severity = MEDIUM
+	severity = VIRUS_SEVERITY_MEDIUM
 
 
 /datum/disease/dnaspread/stage_act()

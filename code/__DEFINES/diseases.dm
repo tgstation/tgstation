@@ -17,9 +17,10 @@
 
 
 //Severity Defines
-#define NONTHREAT	"No threat"
-#define MINOR		"Minor"
-#define MEDIUM		"Medium"
-#define HARMFUL		"Harmful"
-#define DANGEROUS 	"Dangerous!"
-#define BIOHAZARD	"BIOHAZARD THREAT!"
+#define VIRUS_SEVERITY_POSITIVE		"Positive"  //Diseases that buff, heal, or at least do nothing at all
+#define VIRUS_SEVERITY_NONTHREAT	"Harmless"  //Diseases that may have annoying effects, but nothing disruptive (sneezing)
+#define VIRUS_SEVERITY_MINOR		"Minor"	    //Diseases that can annoy in concrete ways (dizziness)
+#define VIRUS_SEVERITY_MEDIUM		"Medium"    //Diseases that can do minor harm, or severe annoyance (vomit)
+#define VIRUS_SEVERITY_HARMFUL		"Harmful"   //Diseases that can do significant harm, or severe disruption (brainrot)
+#define VIRUS_SEVERITY_DANGEROUS 	"Dangerous" //Diseases that can kill or maim if left untreated (flesh eating, blindness)
+#define VIRUS_SEVERITY_BIOHAZARD	"BIOHAZARD" //Diseases that can quickly kill an unprepared victim (fungal tb, gbs)

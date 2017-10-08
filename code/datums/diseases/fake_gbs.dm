@@ -8,7 +8,7 @@
 	agent = "Gravitokinetic Bipotential SADS-"
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	desc = "If left untreated death will occur."
-	severity = BIOHAZARD
+	severity = VIRUS_SEVERITY_BIOHAZARD
 
 /datum/disease/fake_gbs/stage_act()
 	..()

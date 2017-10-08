@@ -8,7 +8,7 @@
 	agent = "ICE9-rhinovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "If left untreated the subject will slow, as if partly frozen."
-	severity = MEDIUM
+	severity = VIRUS_SEVERITY_HARMFUL
 
 /datum/disease/cold9/stage_act()
 	..()

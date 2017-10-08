@@ -232,17 +232,19 @@
 	switch(level_sev)
 
 		if(-INFINITY to 0)
-			severity = NONTHREAT
+			severity = VIRUS_SEVERITY_POSITIVE
 		if(1)
-			severity = MINOR
+			severity = VIRUS_SEVERITY_NONTHREAT
 		if(2)
-			severity = MEDIUM
+			severity = VIRUS_SEVERITY_MINOR
 		if(3)
-			severity = HARMFUL
+			severity = VIRUS_SEVERITY_MEDIUM
 		if(4)
-			severity = DANGEROUS
-		if(5 to INFINITY)
-			severity = BIOHAZARD
+			severity = VIRUS_SEVERITY_HARMFUL
+		if(5)
+			severity = VIRUS_SEVERITY_DANGEROUS
+		if(6 to INFINITY)
+			severity = VIRUS_SEVERITY_BIOHAZARD
 		else
 			severity = "Unknown"
 

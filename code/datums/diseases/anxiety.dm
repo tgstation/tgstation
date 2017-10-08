@@ -9,7 +9,7 @@
 	agent = "Excess Lepidopticides"
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	desc = "If left untreated subject will regurgitate butterflies."
-	severity = MEDIUM
+	severity = VIRUS_SEVERITY_MINOR
 
 /datum/disease/anxiety/stage_act()
 	..()

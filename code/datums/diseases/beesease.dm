@@ -9,7 +9,7 @@
 	agent = "Apidae Infection"
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	desc = "If left untreated subject will regurgitate bees."
-	severity = DANGEROUS
+	severity = VIRUS_SEVERITY_MEDIUM
 
 /datum/disease/beesease/stage_act()
 	..()
