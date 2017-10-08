@@ -1,3 +1,8 @@
+#define APPRENTICE_DESTRUCTION "destruction"
+#define APPRENTICE_BLUESPACE "bluespace"
+#define APPRENTICE_ROBELESS "robeless"
+#define APPRENTICE_HEALING "healing"
+
 /datum/antagonist/wizard
 	name = "Space Wizard"
 	var/give_objectives = TRUE
@@ -149,7 +154,7 @@
 	name = "Wizard Apprentice"
 	hud_version = "apprentice"
 	var/datum/mind/master
-	var/school = "Destruction"
+	var/school = APPRENTICE_DESTRUCTION
 
 /datum/antagonist/wizard/apprentice/greet()
 	to_chat(owner, "<B>You are [master.current.real_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.")
@@ -176,20 +181,20 @@
 	H.equipOutfit(/datum/outfit/wizard/apprentice)
 	
 	switch(school)
-		if("destruction")
+		if(APPRENTICE_DESTRUCTION)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball.")
-		if("bluespace")
+		if(APPRENTICE_BLUESPACE)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.")
-		if("healing")
+		if(APPRENTICE_HEALING)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
 			H.put_in_hands_or_del(new /obj/item/gun/magic/staff/healing(H))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
-		if("robeless")
+		if(APPRENTICE_HEALING)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
