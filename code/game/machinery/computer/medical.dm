@@ -27,9 +27,8 @@
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/card/id) && !scan)
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(O, src))
 			return
-		O.loc = src
 		scan = O
 		to_chat(user, "<span class='notice'>You insert [O].</span>")
 	else
@@ -215,17 +214,13 @@
 			src.temp = null
 		if(href_list["scan"])
 			if(src.scan)
-				if(ishuman(usr) && !usr.get_active_held_item())
-					usr.put_in_hands(scan)
-				else
-					scan.loc = get_turf(src)
-				src.scan = null
+				usr.put_in_hands(scan)
+				scan = null
 			else
-				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/card/id))
-					if(!usr.drop_item())
+				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
+				if(I)
+					if(!usr.transferItemToLoc(I, src))
 						return
-					I.loc = src
 					src.scan = I
 		else if(href_list["logout"])
 			src.authenticated = null

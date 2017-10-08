@@ -82,9 +82,8 @@
 	if(istype(W, /obj/item/tank))
 		if(!(stat & BROKEN))
 			var/obj/item/tank/T = W
-			if(holding || !user.drop_item())
+			if(holding || !user.transferItemToLoc(T, src))
 				return
-			T.loc = src
 			holding = T
 			update_icon()
 	else if(istype(W, /obj/item/wrench))

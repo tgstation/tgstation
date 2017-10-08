@@ -127,9 +127,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		else
 			to_chat(user, "<span class='danger'>Machine cannot accept disks in that format.</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(D, src))
 			return
-		D.loc = src
 		to_chat(user, "<span class='notice'>You add the disk to the machine!</span>")
 	else if(!(linked_destroy && linked_destroy.busy) && !(linked_lathe && linked_lathe.busy) && !(linked_imprinter && linked_imprinter.busy))
 		. = ..()
@@ -325,7 +324,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 				if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 					for(var/material in linked_destroy.loaded_item.materials)
-						linked_materials.insert_amount(min((linked_materials.max_amount - linked_materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
+						linked_materials.insert_amount(min((linked_materials.max_amount - linked_materials.total_amount), (min(linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10), linked_destroy.loaded_item.materials[material]))), material)
 					SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
 				linked_destroy.loaded_item = null
 				for(var/obj/I in linked_destroy.contents)

@@ -71,15 +71,11 @@
 		if(storedpda)
 			to_chat(user, "<span class='warning'>There is already a PDA inside!</span>")
 			return
-		else
-			var/obj/item/device/pda/P = user.get_active_held_item()
-			if(istype(P))
-				if(!user.drop_item())
-					return
-				storedpda = P
-				P.loc = src
-				P.add_fingerprint(user)
-				update_icon()
+		else if(!user.transferItemToLoc(O, src))
+			return
+		storedpda = O
+		O.add_fingerprint(user)
+		update_icon()
 
 	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 		var/obj/item/weldingtool/WT = O
