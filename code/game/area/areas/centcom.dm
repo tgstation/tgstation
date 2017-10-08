@@ -143,3 +143,18 @@
 
 /area/ctf/flag_room2
 	name = "Flag Room B"
+
+// REEBE
+
+/area/reebe
+	name = "Reebe"
+	icon_state = "yellow"
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	hidden = TRUE
+
+/area/reebe/city_of_cogs
+	name = "City of Cogs"
+	icon_state = "purple"
+	hidden = FALSE

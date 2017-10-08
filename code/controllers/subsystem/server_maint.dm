@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(server_maint)
 	var/list/currentrun
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
-	if (config.hub)
+	if (CONFIG_GET(flag/hub))
 		world.update_hub_visibility(TRUE)
 	..()
 
@@ -21,16 +21,19 @@ SUBSYSTEM_DEF(server_maint)
 	var/list/currentrun = src.currentrun
 	var/round_started = SSticker.HasRoundStarted()
 
+	var/kick_inactive = CONFIG_GET(flag/kick_inactive)
+	var/afk_period
+	if(kick_inactive)
+		afk_period = CONFIG_GET(number/afk_period)
 	for(var/I in currentrun)
 		var/client/C = I
 		//handle kicking inactive players
-		if(round_started && config.kick_inactive)
-			if(C.is_afk(config.afk_period))
-				var/cmob = C.mob
-				if(!(isobserver(cmob) || (isdead(cmob) && C.holder)))
-					log_access("AFK: [key_name(C)]")
-					to_chat(C, "<span class='danger'>You have been inactive for more than [config.afk_period / 600] minutes and have been disconnected.</span>")
-					qdel(C)
+		if(round_started && kick_inactive && C.is_afk(afk_period))
+			var/cmob = C.mob
+			if(!(isobserver(cmob) || (isdead(cmob) && C.holder)))
+				log_access("AFK: [key_name(C)]")
+				to_chat(C, "<span class='danger'>You have been inactive for more than [DisplayTimeText(afk_period)] and have been disconnected.</span>")
+				qdel(C)
 
 		if (!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
 			winset(C, null, "command=.update_ping+[world.time+world.tick_lag*TICK_USAGE_REAL/100]")
@@ -40,7 +43,7 @@ SUBSYSTEM_DEF(server_maint)
 
 /datum/controller/subsystem/server_maint/Shutdown()
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", TRUE) //second parameter ensures only afk clients are kicked
-	var/server = config.server
+	var/server = CONFIG_GET(string/server)
 	for(var/thing in GLOB.clients)
 		if(!thing)
 			continue

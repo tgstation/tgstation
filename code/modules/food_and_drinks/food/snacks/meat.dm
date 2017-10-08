@@ -4,7 +4,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab
 	name = "meat"
-	desc = "A slab of meat"
+	desc = "A slab of meat."
 	icon_state = "meat"
 	dried_type = /obj/item/reagent_containers/food/snacks/sosjerky/healthy
 	bitesize = 3
@@ -82,7 +82,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	icon_state = "lizardmeat"
-	desc = "Delicious dino damage"
+	desc = "Delicious dino damage."
 	filling_color = "#6B8E23"
 	tastes = list("meat" = 4, "scales" = 1)
 	foodtype = MEAT | RAW
@@ -96,7 +96,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	icon_state = "shadowmeat"
-	desc = "Ow, the edge"
+	desc = "Ow, the edge."
 	filling_color = "#202020"
 	tastes = list("darkness" = 1, "meat" = 1)
 	foodtype = MEAT | RAW
@@ -180,7 +180,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	name = "xeno meat"
-	desc = "A slab of meat"
+	desc = "A slab of meat."
 	icon_state = "xenomeat"
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 	bitesize = 4

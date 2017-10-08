@@ -21,6 +21,8 @@
 			return FALSE
 		if(M.mind.enslaved_to && !iscultist(M.mind.enslaved_to))
 			return FALSE
+		if(M.mind.unconvertable)
+			return FALSE
 	else
 		return FALSE
 	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
@@ -55,10 +57,10 @@
 /datum/game_mode/cult/pre_setup()
 	cult_objectives += "sacrifice"
 
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	//cult scaling goes here

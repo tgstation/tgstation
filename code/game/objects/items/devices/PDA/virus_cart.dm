@@ -20,7 +20,7 @@
 /obj/item/cartridge/virus/clown
 	name = "\improper Honkworks 5.0 cartridge"
 	icon_state = "cart-clown"
-	desc = "A data cartridge for portable microcomputers. It smells vaguely of banannas"
+	desc = "A data cartridge for portable microcomputers. It smells vaguely of bananas."
 	access = CART_CLOWN
 
 /obj/item/cartridge/virus/clown/send_virus(obj/item/device/pda/target, mob/living/U)

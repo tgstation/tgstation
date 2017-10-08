@@ -19,12 +19,13 @@
 				var/obj/item/weldingtool/WT = P
 				if(!WT.remove_fuel(0, user))
 					if(!WT.isOn())
-						to_chat(user, "<span class='warning'>The welding tool must be on to complete this task!</span>")
+						to_chat(user, "<span class='warning'>[WT] must be on to complete this task!</span>")
 					return
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You start deconstructing the frame...</span>")
 				if(do_after(user, 20*P.toolspeed, target = src))
-					if(!src || !WT.isOn()) return
+					if(!src || !WT.isOn())
+						return
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 					var/obj/item/stack/sheet/metal/M = new (loc, 5)
 					M.add_fingerprint(user)
@@ -40,14 +41,13 @@
 					state = 0
 				return
 			if(istype(P, /obj/item/circuitboard/computer) && !circuit)
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(P, null))
 					return
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-				to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
+				to_chat(user, "<span class='notice'>You place [P] inside the frame.</span>")
 				icon_state = "1"
 				circuit = P
 				circuit.add_fingerprint(user)
-				P.loc = null
 				return
 
 			else if(istype(P, /obj/item/circuitboard) && !circuit)
@@ -55,16 +55,16 @@
 				return
 			if(istype(P, /obj/item/screwdriver) && circuit)
 				playsound(src.loc, P.usesound, 50, 1)
-				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
+				to_chat(user, "<span class='notice'>You screw [circuit] into place.</span>")
 				state = 2
 				icon_state = "2"
 				return
 			if(istype(P, /obj/item/crowbar) && circuit)
 				playsound(src.loc, P.usesound, 50, 1)
-				to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
+				to_chat(user, "<span class='notice'>You remove [circuit].</span>")
 				state = 1
 				icon_state = "0"
-				circuit.loc = src.loc
+				circuit.forceMove(drop_location())
 				circuit.add_fingerprint(user)
 				circuit = null
 				return

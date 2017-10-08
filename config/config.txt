@@ -1,3 +1,11 @@
+# You can use the @ character at the beginning of a config option to lock it from being edited in-game
+# Example usage:
+# @SERVERNAME tgstation
+# Which sets the SERVERNAME, and disallows admins from being able to change it using View Variables.
+# @LOG_TWITTER 0
+# Which explicitly disables LOG_TWITTER, as well as locking it.
+# There are various options which are hard-locked for security reasons.
+
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
 # SERVERNAME tgstation
 
@@ -224,8 +232,12 @@ ALLOW_HOLIDAYS
 ##This is currently a testing optimized setting. A good value for production would be 98.
 TICK_LIMIT_MC_INIT 500
 
-##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
+##Defines the ticklag for the world. Ticklag is the amount of time between game ticks (aka byond ticks) (in 1/10ths of a second).
+##	This also controls the client network update rate, as well as the default client fps
 TICKLAG 0.5
+
+##Can also be set as per-second value, the following value is identical to the above.
+#FPS 20
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
@@ -296,7 +308,7 @@ ANNOUNCE_ADMIN_LOGOUT
 
 ## Map rotation
 ## You should edit maps.txt to match your configuration when you enable this.
-#MAPROTATION
+MAPROTATION
 
 ## Map voting
 ## Allows players to vote for their preffered map
@@ -310,8 +322,11 @@ ALLOW_MAP_VOTING 1
 #MAPROTATIONCHANCEDELTA 0.75
 
 ## AUTOADMIN
+## The default admin rank
+AUTOADMIN_RANK Game Master
+
 ## Uncomment to automatically give that admin rank to all players
-#AUTOADMIN Game Admin
+#AUTOADMIN
 
 ## GENERATE_MINIMAPS
 ## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
@@ -350,3 +365,23 @@ MINUTE_TOPIC_LIMIT 100
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 DEBUG_ADMIN_HREFS
+
+###Master Controller High Pop Mode###
+
+##The Master Controller(MC) is the primary system controlling timed tasks and events in SS13 (lobby timer, game checks, lighting updates, atmos, etc)
+##Default base MC tick rate (1 = process every "byond tick" (see: tick_lag/fps config settings), 2 = process every 2 byond ticks, etc)
+##	Setting this to 0 will prevent the Master Controller from ticking
+BASE_MC_TICK_RATE 1
+
+##High population MC tick rate 
+##	Byond rounds timer values UP, but the tick rate is modified with heuristics during lag spites so setting this to something like 2
+##	will make it run every 2 byond ticks, but will also double the effect of anti-lag heuristics. You can instead set it to something like
+##	1.1 to make it run every 2 byond ticks, but only increase the effect of anti-lag heuristics by 10%. or 1.5 for 50%.
+##	(As an aside, you could in theory also reduce the effect of anti-lag heuristics in the base tick rate by setting it to something like 0.5)
+HIGH_POP_MC_TICK_RATE 1.1
+
+##Engage high pop mode if player count raises above this (Player in this context means any connected user. Lobby, ghost or in-game all count)
+HIGH_POP_MC_MODE_AMOUNT 65
+
+##Disengage high pop mode if player count drops below this
+DISABLE_HIGH_POP_MC_MODE_AMOUNT 60

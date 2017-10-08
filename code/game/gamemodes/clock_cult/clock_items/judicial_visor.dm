@@ -170,7 +170,7 @@
 		if(!QDELETED(B))
 			B.duration = world.time + 30
 			C.Knockdown(5) //knocks down for half a second if affected
-	sleep(16)
+	sleep(!GLOB.ratvar_approaches ? 16 : 10)
 	name = "judicial blast"
 	layer = ABOVE_ALL_MOB_LAYER
 	flick("judicial_explosion", src)

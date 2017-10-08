@@ -32,6 +32,7 @@
 */
 /atom/Click(location,control,params)
 	if(initialized)
+		SendSignal(COMSIG_CLICK, location, control, params)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -95,7 +96,7 @@
 	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
-	if(istype(loc, /obj/mecha))
+	if(ismecha(loc))
 		var/obj/mecha/M = loc
 		return M.click_action(A,src,params)
 
@@ -305,6 +306,7 @@
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(mob/user)
+	SendSignal(COMSIG_CLICK_SHIFT, user)
 	if(user.client && user.client.eye == user || user.client.eye == user.loc)
 		user.examinate(src)
 	return
@@ -319,12 +321,13 @@
 	return
 
 /atom/proc/CtrlClick(mob/user)
+	SendSignal(COMSIG_CLICK_CTRL, user)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-	if(ishuman(user) && Adjacent(user))
+	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
 		if(world.time < user.next_move)
 			return FALSE
 		var/mob/living/carbon/human/H = user
@@ -348,6 +351,7 @@
 		..()
 
 /atom/proc/AltClick(mob/user)
+	SendSignal(COMSIG_CLICK_ALT, user)
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
@@ -355,7 +359,6 @@
 		else
 			user.listed_turf = T
 			user.client.statpanel = T.name
-	user.Stat() //responsive ui pls
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)
@@ -373,6 +376,7 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
+	SendSignal(COMSIG_CLICK_CTRL_SHIFT)
 	return
 
 /*

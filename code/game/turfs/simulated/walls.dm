@@ -25,6 +25,13 @@
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
 
+/turf/closed/wall/examine(mob/user)
+	..()
+	deconstruction_hints(user)
+
+/turf/closed/wall/proc/deconstruction_hints(mob/user)
+	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
+
 /turf/closed/wall/attack_tk()
 	return
 
@@ -137,6 +144,7 @@
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
+	user.temp()
 	..()
 
 

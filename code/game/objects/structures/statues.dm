@@ -244,7 +244,7 @@
 /obj/structure/statue/diamond
 	max_integrity = 1000
 	material_drop_type = /obj/item/stack/sheet/mineral/diamond
-	desc = "This is a very expensive diamond statue"
+	desc = "This is a very expensive diamond statue."
 
 /obj/structure/statue/diamond/captain
 	name = "statue of THE captain."

@@ -70,7 +70,8 @@
 	return TRUE
 
 /obj/item/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else
@@ -114,4 +115,4 @@
 		if(prob(20))
 			M.Unconscious(force / 0.3)
 			M.Knockdown(force / 0.75)
-		M.drop_item()
+		M.drop_all_held_items()

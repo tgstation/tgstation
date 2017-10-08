@@ -89,7 +89,7 @@ JSON на выходе - строго ASCII, строки закодированы в Unicode, все Unicode-символ
 /proc/rhtml_decode(var/t)
 	t = replacetext(t, "&#x044f;", "я")
 	t = replacetext(t, "&#255;", "я")
-	t = html_decode(t)
+	t = rhtml_decode(t)
 	return t
 
 

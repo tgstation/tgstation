@@ -77,7 +77,7 @@
 
 /obj/machinery/party/turntable/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/disk/music) && !disk)
-		user.drop_item()
+		user.dropItemToGround()
 		O.loc = src
 		disk = O
 		attack_hand(user)

@@ -11,7 +11,8 @@
 	else if(M.bloody_hands > 1)
 		if(add_blood(M.blood_DNA))
 			M.bloody_hands--
-	if(!suit_fibers) suit_fibers = list()
+	if(!suit_fibers)
+		suit_fibers = list()
 	var/fibertext
 	var/item_multiplier = isitem(src)?1.2:1
 	if(M.wear_suit)

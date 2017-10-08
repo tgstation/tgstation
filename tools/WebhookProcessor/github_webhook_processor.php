@@ -99,11 +99,8 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 	case 'pull_request_review':
 		if($payload['action'] == 'submitted'){
 			$lower_state = strtolower($payload['review']['state']);
-			if(($lower_state == 'approved' || $lower_state == 'changes_requested') && is_maintainer($payload, $payload['review']['user']['login'])){
-				$lower_association = strtolower($payload['review']['author_association']);
-				if($lower_association == 'member' || $lower_association == 'contributor' || $lower_association == 'owner')
-					remove_ready_for_review($payload);
-			}
+			if(($lower_state == 'approved' || $lower_state == 'changes_requested') && is_maintainer($payload, $payload['review']['user']['login']))
+				remove_ready_for_review($payload);
 		}
 		break;
 	default:
@@ -209,7 +206,7 @@ function tag_pr($payload, $opened) {
 		$tags[] = 'Merge Conflict';
 
 	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL');
-	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound', 'config' => 'Config Update');
+	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
 	foreach($treetags as $tree => $tag)
 		if(has_tree_been_edited($payload, $tree))
 			$tags[] = $tag;
@@ -286,9 +283,8 @@ function check_ready_for_review($payload, $labels = null){
 	$reviews_ids_with_changes_requested = array();
 	$dismissed_an_approved_review = false;
 
-	foreach($reviews as $R){
-		$lower_association = strtolower($R['author_association']);
-		if($lower_association == 'member' || $lower_association == 'contributor' || $lower_association == 'owner'){
+	foreach($reviews as $R)
+		if(is_maintainer($R['user']['login'])){
 			$lower_state = strtolower($R['state']);
 			if($lower_state == 'changes_requested')
 				$reviews_ids_with_changes_requested[] = $R['id'];
@@ -297,7 +293,6 @@ function check_ready_for_review($payload, $labels = null){
 				$dismissed_an_approved_review = true;
 			}
 		}
-	}
 
 	if(!$dismissed_an_approved_review && count($reviews_ids_with_changes_requested) == 0){
 		if($has_label_already)
@@ -355,7 +350,7 @@ function check_dismiss_changelog_review($payload){
 	}
 	else
 		//kill previous reviews
-		foreach($reviews as $R){
+		foreach($reviews as $R)
 			if($R['body'] == $review_message && strtolower($R['state']) == 'changes_requested')
 				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
 }
@@ -456,6 +451,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Fix' => 2,
 		'Refactor' => 2,
 		'Code Improvement' => 1,
+		'Grammar and Formatting' => 1,
 		'Priority: High' => 4,
 		'Priority: CRITICAL' => 5,
 		'Atmospherics' => 4,
