@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay = 1)
 	set waitfor = FALSE
-	if(istype(target))
+	if(istype(chasing))
 		walk_towards(src, chasing, delay)
 
 /obj/effect/meteor/proc/meteor_effect()
