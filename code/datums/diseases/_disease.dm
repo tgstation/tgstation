@@ -73,7 +73,7 @@
 	stage = min(stage, max_stages)
 	
 	if(!bypasses_immunity && affected_mob && affected_mob.dna && affected_mob.dna.species && (VIRUSIMMUNE in affected_mob.dna.species.species_traits))
-		cure()
+		cure(FALSE)
 
 	if(!cure)
 		if(prob(stage_prob))
@@ -132,10 +132,10 @@
 					V = Temp
 
 
-/datum/disease/proc/cure()
+/datum/disease/proc/cure(add_resistance = TRUE)
 	if(affected_mob)
 		if(disease_flags & CAN_RESIST)
-			if(!(type in affected_mob.resistances))
+			if(add_resistance && !(type in affected_mob.resistances))
 				affected_mob.resistances += type
 		remove_virus()
 	qdel(src)
