@@ -1,6 +1,3 @@
-#define ARK_ACTIVATED 1 //The Ark was defended until activation and Ratvar was summoned
-#define SHUTTLE_LEFT 2 //The shuttle left before the Ark could activate, and nobody was around to stop it
-
 /*
 
 CLOCKWORK CULT: Based off of the failed pull requests from /vg/
@@ -149,6 +146,7 @@ Credit where due:
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar //that's a mouthful
 	G.initial_activation_delay = ark_time * 60
 	G.seconds_until_activation = ark_time * 60 //60 seconds in a minute * number of minutes
+	SSshuttle.registerHostileEnvironment(GLOB.ark_of_the_clockwork_justiciar)
 	..()
 	return 1
 
@@ -188,12 +186,9 @@ Credit where due:
 	return FALSE
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
-	if(GLOB.clockwork_gateway_activated || SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
+	if(GLOB.clockwork_gateway_activated)
 		SSticker.news_report = CLOCK_SUMMON
-		if(GLOB.ark_of_the_clockwork_justiciar)
-			return SHUTTLE_LEFT
-		else
-			return ARK_ACTIVATED
+		return TRUE
 	else
 		SSticker.news_report = CULT_FAILURE
 	return FALSE
