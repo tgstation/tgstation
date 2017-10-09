@@ -177,8 +177,8 @@ GLOBAL_LIST_EMPTY(explosions)
 
 		//------- EX_ACT AND TURF FIRES -------
 
-		if(T == epicenter)
-			var/list/items
+		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
+			var/list/items = list() 
 			for(var/atom/A in T.contents)
 				items += A.GetAllContents()
 			for(var/atom/I in items)
