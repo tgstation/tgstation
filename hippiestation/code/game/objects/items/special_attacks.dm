@@ -192,6 +192,32 @@
 					playsound(M, pick('hippiestation/sound/effects/bodyscrape-01.ogg', 'hippiestation/sound/effects/bodyscrape-02.ogg'), 20, 1, -4)
 			src.special_attack = FALSE
 			M.pass_flags = initial(M.pass_flags)
-			return TRUE
+
+
+/obj/item/screwdriver
+	special_name = "Nipple Twist"
+	special_desc = "COST: 35 STAMINA. Plunges the screwdriver into the target's nipples, stunning them."
+	special_cost = 35
+	actions_types = list(/datum/action/item_action/special_attack)
+
+/obj/item/screwdriver/do_special_attack(atom/target, mob/living/carbon/user, proximity_flag)
+	if(ishuman(target) && proximity_flag)
+		var/mob/living/carbon/human/H = target
+		src.special_attack = FALSE
+		H.bleed_rate = min(H.bleed_rate + 2, 2)
+		H.blood_volume -= 5
+		user.do_attack_animation(target)
+		for(var/turf/T in range(H.loc, 1))
+			H.add_splatter_floor(T)
+		H.visible_message("<span class='danger'>[user] plunges into one of [H]'s nipples with [src]!</span>", "<span class='userdanger'>[user] plunges into your nipples with [src]!</span>")
+		playsound(H, 'sound/effects/splat.ogg', 50, 1)
+		for(var/I in 1 to 3)
+			if(do_after(user, 50, target = target))
+				playsound(H, 'hippiestation/sound/misc/tear.ogg', 50, 1)
+				H.emote("scream")
+				H.apply_damage(8, BRUTE, H.get_bodypart("chest"))
+				H.Stun(50)
+				H.visible_message("<span class='danger'>[user] twists one of [H]'s nipples with [src]!</span>", "<span class='userdanger'>[user] Twists your nipple with [src]!</span>")
+		return TRUE
 
 	return FALSE
