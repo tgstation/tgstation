@@ -172,6 +172,12 @@ Credit where due:
 		return TRUE
 	return FALSE
 
+/datum/game_mode/clockwork_cult/check_finished()
+	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in GLOB.all_clockwork_objects
+	if(G && !GLOB.ratvar_awakens)
+		return FALSE
+	. = ..()
+
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	if(GLOB.clockwork_gateway_activated)
 		SSticker.news_report = CLOCK_PROSELYTIZATION //failure, technically, but we have the station
