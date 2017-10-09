@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main four gases, which were at one time hardcoded
+GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)) //the main four gases, which were at one time hardcoded
 
 /proc/meta_gas_list()
 	. = new /list
@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 		if(initial(gas.moles_visible) != null)
 			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(gas.gas_overlay))
 		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
-		.[initial(gas.id)] = gas_info
+		.[initial(gas.path)] = gas_info
 
 /*||||||||||||||/----------\||||||||||||||*\
 ||||||||||||||||[GAS DATUMS]||||||||||||||||
