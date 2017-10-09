@@ -40932,7 +40932,6 @@
 /area/science/xenobiology)
 "bPE" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/latex,
 /obj/item/device/slime_scanner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -40961,7 +40960,6 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPH" = (
-/obj/machinery/chem_dispenser/constructable,
 /obj/machinery/requests_console{
 	department = "Science";
 	departmentType = 2;
@@ -40972,6 +40970,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/table/reinforced,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPI" = (
