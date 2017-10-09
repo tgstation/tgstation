@@ -7,6 +7,9 @@
 	if(input)
 		if(!text_to_speech_output(input))
 			to_chat(src, "<span class='boldwarning'>Text-to-speech is not enabled.</span>")
+		else
+			message_admins("[key_name_admin(src)] played TTS: \"[input]\".")
+			log_admin("[key_name(src)] played TTS: \"[input]\".")
 
 /proc/text_to_speech_output(msg)
 	var/ttsurl = CONFIG_GET(string/tts_api)
