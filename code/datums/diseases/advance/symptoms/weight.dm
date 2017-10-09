@@ -31,7 +31,8 @@ Bonus
 	threshold_desc = "<b>Stealth 4:</b> The symptom is less noticeable."
 
 /datum/symptom/weight_gain/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stealth"] >= 4) //warn less often
 		base_message_chance = 25
 
@@ -81,7 +82,8 @@ Bonus
 	threshold_desc = "<b>Stealth 4:</b> The symptom is less noticeable."
 
 /datum/symptom/weight_loss/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stealth"] >= 4) //warn less often
 		base_message_chance = 25
 

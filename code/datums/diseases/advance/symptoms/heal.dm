@@ -15,7 +15,8 @@
 					  <b>Stealth 4:</b> Healing will no longer be visible to onlookers."
 
 /datum/symptom/heal/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stealth"] >= 4) //invisible healing
 		hide_healing = TRUE
 	if(A.properties["stage_rate"] >= 6) //stronger healing
