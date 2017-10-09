@@ -2313,9 +2313,7 @@
 /area/ctf)
 "gS" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/ctf)
 "gT" = (
 /obj/effect/turf_decal/stripes/line{
