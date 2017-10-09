@@ -67,19 +67,20 @@
 	force = 1
 	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
 	w_class = WEIGHT_CLASS_HUGE
-	hitsound = 'sound/weapons/sear.ogg' //remind me to add healing effects :)
+	hitsound = 'sound/weapons/sear.ogg' //remind me to add healing sounds :)
 	damtype = BURN
 	attack_verb = list("healed", "mended", "revitalized")
 
 /obj/item/nullrod/healhand/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
-	A.adjustBRUTELOSS(-5) //i wanna hear what others say before i set a real value so 5 for now
-	user.adjustCLONELOSS(5)
+	getBruteLoss(A)
+	user.adjustBruteLoss(brute/2)
+	A.adjustBruteLoss(-brute)
 	var/mob/living/carbon/human/H = A
 	if(!istype(H))
 		return
-		var/list/reagents = H.reagents
+	var/list/reagents = H.reagents
 	for(var/reagent/B in reagents)
 		if(istype(B, reagent/toxic)
 		H.reagents.trans_to(user, H.reagents.total_volume, 1, 1, 0)
