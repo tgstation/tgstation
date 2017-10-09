@@ -51,7 +51,8 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
 	..()
-	display_visor_message("Radiation pulse detected! Magnitude: <span class='green'>[severity]</span> RADs.")
+	if(severity > RAD_AMOUNT_EXTREME)
+		display_visor_message("Radiation pulse detected! Magnitude: <span class='green'>[severity]</span> RADs.")
 
 /obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
 	..()

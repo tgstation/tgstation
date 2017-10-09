@@ -463,7 +463,7 @@
 
 /obj/structure/window/plasma/Initialize()
 	. = ..()
-	qdel(GetComponent(/datum/component/rad_insulation))
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST

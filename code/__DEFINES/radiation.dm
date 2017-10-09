@@ -3,19 +3,23 @@ These defines are the balancing points of various parts of the radiation system.
 */
 
 #define RAD_BACKGROUND_RADIATION 9 					// How much radiation is harmless to a mob, this is also when radiation waves stop spreading
+													// WARNING: Lowering this value significantly increases SSradiation load
 #define RAD_AMOUNT_LOW 50
 #define RAD_AMOUNT_MEDIUM 200
 #define RAD_AMOUNT_HIGH 500
 #define RAD_AMOUNT_EXTREME 1000
 
+// apply_effect(amount * RAD_MOB_COEFFICIENT, IRRADIATE, blocked)
+#define RAD_MOB_COEFFICIENT 0.05					// Radiation applied is multiplied by this
+
 #define RAD_MOB_SAFE 100							// How much stored radiation in a mob with no ill effects
-#define RAD_MOB_KNOCKDOWN 1000						// How much stored radiation to start stunning
+#define RAD_MOB_KNOCKDOWN 2000						// How much stored radiation to start stunning
 #define RAD_MOB_MUTATE 800							// How much stored radiation to check for mutation
 #define RAD_MOB_HAIRLOSS 500						// How much stored radiation to check for hair loss
 
 #define RAD_KNOCKDOWN_TIME 200						// How much knockdown to apply
 
-#define RAD_LOSS_PER_TICK 10
+#define RAD_LOSS_PER_TICK 1
 
 #define RAD_NO_INSULATION 1.0						// For things that shouldn't become irradiated for whatever reason
 #define RAD_VERY_LIGHT_INSULATION 0.9				// What girders have

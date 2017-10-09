@@ -971,12 +971,12 @@
 	return 0
 
 /datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/H)
-	. = TRUE
+	. = FALSE
 	var/radiation = H.radiation
 
 	if(RADIMMUNE in species_traits)
 		radiation = 0
-		return FALSE
+		return TRUE
 
 	if(radiation > RAD_MOB_KNOCKDOWN)
 		if(!H.IsKnockdown())

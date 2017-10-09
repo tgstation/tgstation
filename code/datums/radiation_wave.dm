@@ -81,9 +81,13 @@
 		if(!thing)
 			continue
 		thing.rad_act(strength)
+
+		var/static/list/blacklisted = typecacheof(list(/turf, /obj/machinery/power/rad_collector))
+		if(blacklisted[thing.type])
+			continue
 		if(can_contaminate && prob((strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1/(steps*range_modifier), 1))) // Only stronk rads get to have little baby rads
 			var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
-			if(insulation.protects)
+			if(insulation && insulation.contamination_proof)
 				continue
 			else
 				thing.AddComponent(/datum/component/radioactive, (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT * min(1/(steps*range_modifier), 1))

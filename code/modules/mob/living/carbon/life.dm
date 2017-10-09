@@ -280,10 +280,11 @@
 				HM.force_lose(src)
 				dna.temporary_mutations.Remove(mut)
 
-	radiation -= max(radiation, RAD_LOSS_PER_TICK)
+	radiation -= min(radiation, RAD_LOSS_PER_TICK)
 	if(radiation > RAD_MOB_SAFE)
 		if(prob((radiation-RAD_MOB_SAFE)*0.1))
 			adjustToxLoss(1)
+			radiation -= min(radiation, RAD_LOSS_PER_TICK*2)
 
 
 /mob/living/carbon/handle_stomach()
