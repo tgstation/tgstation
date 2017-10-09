@@ -14091,10 +14091,11 @@
 	},
 /area/shuttle/syndicate/eva)
 "Tl" = (
-/obj/structure/grille,
 /obj/structure/window/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/syndicate/medical)
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/syndicate/eva)
 "Tm" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/plastitanium,
@@ -14493,16 +14494,6 @@
 	dir = 6
 	},
 /turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/medical)
-"ZZ" = (
-/obj/structure/grille,
-/obj/structure/window/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/syndicate/medical)
-"OVERFLOW" = (
-/obj/structure/grille,
-/obj/structure/window/plastitanium,
-/turf/open/floor/plating,
 /area/shuttle/syndicate/medical)
 
 (1,1,1) = {"
@@ -28560,10 +28551,10 @@ Ou
 NJ
 Tl
 ZS
-Tl
-Tl
+QP
+QP
 pk
-Tl
+Nc
 XJ
 XJ
 Nk
@@ -28813,7 +28804,7 @@ XN
 Ru
 XN
 XN
-ZZ
+Ur
 Pt
 Pt
 Pt
@@ -28822,7 +28813,7 @@ RF
 NV
 RD
 TT
-Ur
+XL
 de
 Jn
 hq
@@ -29327,7 +29318,7 @@ Om
 TW
 Om
 Om
-OVERFLOW
+Ur
 Pt
 Pt
 Pt
@@ -29336,7 +29327,7 @@ WW
 NV
 RD
 TT
-Ur
+XL
 de
 Mz
 hq
@@ -29586,12 +29577,12 @@ Nk
 Wk
 Wk
 Qo
-Tl
+Mk
 Se
-Tl
-Tl
+Wd
+Wd
 ZM
-Tl
+ZE
 Jz
 Jz
 Nk
