@@ -25,27 +25,6 @@
 	target = null
 	..()
 
-/obj/item/grenade/plastic/attackby(obj/item/I, mob/user, params)
-	if(!nadeassembly && istype(I, /obj/item/device/assembly_holder))
-		var/obj/item/device/assembly_holder/A = I
-		if(!user.transferItemToLoc(I, src))
-			return ..()
-		nadeassembly = A
-		A.master = src
-		assemblyattacher = user.ckey
-		to_chat(user, "<span class='notice'>You add [A] to the [name].</span>")
-		playsound(src, 'sound/weapons/tap.ogg', 20, 1)
-		update_icon()
-		return
-	if(nadeassembly && istype(I, /obj/item/wirecutters))
-		playsound(src, I.usesound, 20, 1)
-		nadeassembly.forceMove(get_turf(src))
-		nadeassembly.master = null
-		nadeassembly = null
-		update_icon()
-		return
-	..()
-
 /obj/item/grenade/plastic/prime()
 	var/turf/location
 	if(target)
