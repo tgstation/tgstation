@@ -237,7 +237,7 @@
 	cabin_air = new
 	cabin_air.temperature = T20C
 	cabin_air.volume = 200
-	cabin_air.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen_added)
+	cabin_air.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
 	cabin_air.gases[/datum/gas/oxygen][MOLES] = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
 	cabin_air.gases[/datum/gas/nitrogen][MOLES] = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
 	return cabin_air

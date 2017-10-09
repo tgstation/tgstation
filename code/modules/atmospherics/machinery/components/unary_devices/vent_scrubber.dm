@@ -205,10 +205,10 @@
 				filtered_gases[/datum/gas/carbon_dioxide][MOLES] = removed_gases[/datum/gas/carbon_dioxide][MOLES]
 				removed_gases[/datum/gas/carbon_dioxide][MOLES] = 0
 
-			if(removed_gases[/datum/gas/agent_b])
-				ADD_GAS(/datum/gas/agent_b, filtered_out.gases)
-				filtered_gases[/datum/gas/agent_b][MOLES] = removed_gases[/datum/gas/agent_b][MOLES]
-				removed_gases[/datum/gas/agent_b][MOLES] = 0
+			if(removed_gases[/datum/gas/oxygen_agent_b])
+				ADD_GAS(/datum/gas/oxygen_agent_b, filtered_out.gases)
+				filtered_gases[/datum/gas/oxygen_agent_b][MOLES] = removed_gases[/datum/gas/oxygen_agent_b][MOLES]
+				removed_gases[/datum/gas/oxygen_agent_b][MOLES] = 0
 
 			if(scrub_N2O && removed_gases[/datum/gas/nitrous_oxide])
 				ADD_GAS(/datum/gas/nitrous_oxide, filtered_out.gases)
