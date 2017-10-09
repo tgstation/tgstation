@@ -433,11 +433,11 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	to_chat(src, "Variable appears to be <b>[uppertext(default)]</b>.")
 
-	to_chat(src, "Variable contains: [L[index]]")
+	to_chat(src, "Variable contains: [variable]")
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		var/tdir = L[index]
+		var/tdir = variable
 		if(tdir > 0 && tdir < 16)
 			if(tdir & 1)
 				dir_text += "NORTH"
@@ -451,11 +451,8 @@ GLOBAL_PROTECT(VVpixelmovement)
 		if(dir_text)
 			to_chat(usr, "If a direction, direction is: [dir_text]")
 
-	var/original_var
-	if(assoc)
-		original_var = L[assoc_key]
-	else
-		original_var = L[index]
+	var/original_var = variable
+
 	if (O)
 		L = L.Copy()
 	var/class
