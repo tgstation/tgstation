@@ -58893,9 +58893,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "cTZ" = (
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (NORTH)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
