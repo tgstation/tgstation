@@ -268,6 +268,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		gas -= "TEMP"
 	gases.Cut()
 	for(var/id in gas)
+		if(!ispath(id))
+			id = gas_id2path(id) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
 		ADD_GAS(id, gases)
 		gases[id][MOLES] = text2num(gas[id])
 	return 1
