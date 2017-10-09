@@ -271,6 +271,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			verbs += GLOB.admin_verbs_sounds
 			if(CONFIG_GET(string/invoke_youtubedl))
 				verbs += /client/proc/play_web_sound
+			if(CONFIG_GET(string/tts_api))
+				verbs += /client/proc/play_tts
 		if(rights & R_SPAWN)
 			verbs += GLOB.admin_verbs_spawn
 
@@ -295,6 +297,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		GLOB.admin_verbs_poll,
 		GLOB.admin_verbs_sounds,
 		/client/proc/play_web_sound,
+		/client/proc/play_tts,
 		GLOB.admin_verbs_spawn,
 		/*Debug verbs added by "show debug verbs"*/
 		/client/proc/Cell,
