@@ -98,5 +98,5 @@
 				if(insulation)
 					continue
 				else
-					thing.AddComponent(/datum/component/radioactive, (strength-RAD_MINIMUM_CONTAMINATION) * max(1/(steps*range_modifier), 1))
+					thing.AddComponent(/datum/component/radioactive, (strength-RAD_MINIMUM_CONTAMINATION) * max(1/(steps*range_modifier)))
 				// Unless you're the stronkest of the stronk, in which case you get grandkids (>800 strength) or great great grandkids (>1200)

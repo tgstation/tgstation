@@ -333,8 +333,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	if(prob(50))
 		radiation_pulse(get_turf(src), power * (1 + power_transmission_bonus/10 * freon_transmit_modifier))
-		var/test = "Emitting [power * (1 + power_transmission_bonus/10 * freon_transmit_modifier)]"
-		to_chat(world, test)
 
 	var/device_energy = power * REACTION_POWER_MODIFIER
 
