@@ -267,6 +267,7 @@
   * If the src_object's ui_act() returns 1, update all UIs attacked to it.
  **/
 /datum/tgui/Topic(href, href_list)
+	warning("Topic called with [href] [list2params(href_list)]")
 	if(user != usr)
 		return // Something is not right here.
 
