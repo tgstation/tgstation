@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(ticker)
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 		login_music = pick(music)
 	else
-		login_music = "config/title_music/music/" + pick(music)
+		login_music = "config/title_music/sounds/" + pick(music)
 	
 
 	if(!GLOB.syndicate_code_phrase)
