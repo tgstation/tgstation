@@ -30,7 +30,8 @@ Bonus
 					  <b>Resistance 10:</b> Causes narcolepsy more often, increasing the chance of the host falling asleep."
 
 /datum/symptom/narcolepsy/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["transmittable"] >= 7) //stamina damage
 		stamina = TRUE
 	if(A.properties["resistance"] >= 10) //act more often
