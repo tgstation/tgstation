@@ -208,15 +208,9 @@ Credit where due:
 	var/text = ""
 	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
-		var/great_success = C.check_clockwork_victory()
-		if(great_success)
-			switch(great_success)
-				if(ARK_ACTIVATED)
-					text += "<span class='bold large_brass'>Ratvar's servants defended the Ark until its activation!</span>"
-					SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
-				if(SHUTTLE_LEFT)
-					text += "<span class='bold large_brass'>The crew fled the station, leaving the Ark to activate unchallenged!</span>"
-					SSticker.mode_result = "win - crew fled the station"
+		if(C.check_clockwork_victory())
+			text += "<span class='bold large_brass'>Ratvar's servants defended the Ark until its activation!</span>"
+			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 		else
 			text += "<span class='userdanger'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
 			SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
