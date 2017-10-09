@@ -54,7 +54,7 @@
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
 #define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	100+T0C
 #define FIRE_SPREAD_RADIOSITY_SCALE			0.85
-#define FIRE_CARBON_ENERGY_RELEASED			500000	//Amount of heat released per mole of burnt carbon into the tile
+#define FIRE_CARBON_ENERGY_RELEASED			1000000	//Amount of heat released per mole of burnt carbon into the tile
 #define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
 #define FIRE_GROWTH_RATE					40000	//For small fires
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 	200+T0C	//Resistance to fire damage
@@ -69,12 +69,12 @@
 #define PLASMA_OXYGEN_FULLBURN				10
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
-#define MOLES_GAS_VISIBLE				0.5		//Moles in a standard cell after which gases are visible
+#define MOLES_GAS_VISIBLE					0.5		//Moles in a standard cell after which gases are visible
 //General assmos defines.
 #define WATER_VAPOR_FREEZE					200
 #define BROWNS_FORMATION_ENERGY				100000
 #define GAS_STIM_MINIMUM					0.002
-#define TRITIUM_BURN_OXY_FACTOR				2
+#define TRITIUM_BURN_OXY_FACTOR				1000
 #define SUPER_SATURATION_THRESHOLD			96
 #define STIMULUM_HEAT_SCALE					100000
 #define STIMULUM_FIRST_RISE					0.75
@@ -82,6 +82,7 @@
 #define STIMULUM_SECOND_RISE				0.001
 #define STIMULUM_ABSOLUTE_DROP				0.0000062
 #define REACTION_OPPRESSION_THRESHOLD		5
+#define STOP_REACTIONS 						2
 	//Plasma fusion properties
 #define PLASMA_BINDING_ENERGY				3000000
 #define MAX_CATALYST_EFFICENCY				9

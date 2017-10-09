@@ -284,9 +284,9 @@
 	//Stimulum
 		gas_breathed = breath_gases["stim"][MOLES]
 		if (gas_breathed > GAS_STIM_MINIMUM)
-			H.status_flags |= GOTTAGOFAST
+			H.status_flags |= GOTTAGOREALLYFAST
 		else
-			H.status_flags &= ~GOTTAGOFAST
+			H.status_flags &= ~GOTTAGOREALLYFAST
 		breath_gases["stim"][MOLES]-=gas_breathed
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()

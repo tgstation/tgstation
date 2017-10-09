@@ -1,6 +1,5 @@
 #define NO_REACTION	0
 #define REACTING	1
-
 /datum/controller/subsystem/air/var/list/gas_reactions //this is our singleton of all reactions
 
 /proc/init_gas_reactions()
@@ -35,7 +34,15 @@
 /datum/gas_reaction/proc/react(datum/gas_mixture/air, atom/location)
 	return NO_REACTION
 
+/datum/gas_reaction/nobliumsupression
+	priority = INFINITY
+	name = "Hyper-Noblium Reaction Supression"
+	id = "nobstop"
+/datum/gas_reaction/nobliumsupression/init_reqs()
+	min_requirements = list("nob" = REACTION_OPPRESSION_THRESHOLD)
 
+/datum/gas_reaction/nobliumsupression/react()
+	return STOP_REACTIONS
 
 //water vapor: puts out fires?
 /datum/gas_reaction/water_vapor
@@ -80,7 +87,6 @@
 		else if(cached_gases["o2"][MOLES] < cached_gases["tritium"][MOLES])
 			burned_fuel = cached_gases["o2"][MOLES]/TRITIUM_BURN_OXY_FACTOR
 			cached_gases["tritium"][MOLES] -= burned_fuel
-			cached_gases["o2"][MOLES] = 0
 		else
 			burned_fuel = cached_gases["tritium"][MOLES]*TRITIUM_BURN_OXY_FACTOR
 			cached_gases["o2"][MOLES] -= cached_gases["tritium"][MOLES]
@@ -88,8 +94,8 @@
 		if(burned_fuel)
 			energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
 
-			ASSERT_GAS("water_vapor", air)
-			cached_gases["water_vapor"][MOLES] += burned_fuel
+			ASSERT_GAS("co2", air)
+			cached_gases["co2"][MOLES] += burned_fuel/TRITIUM_BURN_OXY_FACTOR
 
 			cached_results[id] += burned_fuel
 
@@ -109,7 +115,7 @@
 			oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
 			if(cached_gases["o2"][MOLES] / cached_gases["plasma"][MOLES] > SUPER_SATURATION_THRESHOLD) //supersaturation. Form Tritium.
 				super_saturation = TRUE
-			else if(cached_gases["o2"][MOLES] > cached_gases["plasma"][MOLES]*PLASMA_OXYGEN_FULLBURN)
+			if(cached_gases["o2"][MOLES] > cached_gases["plasma"][MOLES]*PLASMA_OXYGEN_FULLBURN)
 				plasma_burn_rate = (cached_gases["plasma"][MOLES]*temperature_scale)/PLASMA_BURN_RATE_DELTA
 			else
 				plasma_burn_rate = (temperature_scale*(cached_gases["o2"][MOLES]/PLASMA_OXYGEN_FULLBURN))/PLASMA_BURN_RATE_DELTA
@@ -177,7 +183,7 @@
 	var/tritium_catalyzed = (CATALYST_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 	var/oxygen_added = tritium_catalyzed
 	var/waste_added = (plasma_fused-oxygen_added)-((air.total_moles()*air.heat_capacity())/PLASMA_BINDING_ENERGY)
-	reaction_energy = max(reaction_energy+((catalyst_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/catalyst_efficency)+2)*10)+((plasma_fused/(moles_impurities/catalyst_efficency))*PLASMA_BINDING_ENERGY),0)
+	reaction_energy = max(reaction_energy+((catalyst_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/catalyst_efficency)+2)*10)+((plasma_fused/((moles_impurities/catalyst_efficency)+1))*PLASMA_BINDING_ENERGY),0)
 
 	air.assert_gases("o2", "n2","water_vapor","n2o","browns")
 	//Fusion produces an absurd amount of waste products now, requiring active filtration.
@@ -204,11 +210,12 @@
 /datum/gas_reaction/brownsformation/init_reqs()
 	min_requirements = list(
 		"oxygen" = 20,
-		"nitrogen" = 20,
-		"temp" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*200
+		"n2" = 20,
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*200
 	)
 
 /datum/gas_reaction/brownsformation/react(datum/gas_mixture/air)
+	world << "browns formation"
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 
@@ -220,7 +227,7 @@
 	cached_gases["oxygen"][MOLES] -= heat_efficency
 	cached_gases["nitrogen"][MOLES] -= heat_efficency
 	cached_gases["browns"][MOLES] += heat_efficency*2
-
+	world << "browns formation"
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -228,7 +235,7 @@
 		return REACTING
 
 /datum/gas_reaction/bzformation //Formation of BZ by combining plasma and tritium at low pressures. Exothermic.
-	priority = 3
+	priority = 4
 	name = "BZ Gas formation"
 	id = "bzformation"
 
@@ -249,7 +256,7 @@
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
 
 
-	ASSERT_GAS("BZ",air)
+	ASSERT_GAS("bz",air)
 	cached_gases["bz"][MOLES]+= reaction_efficency
 	cached_gases["tritium"][MOLES]-= 2*reaction_efficency
 	cached_gases["plasma"][MOLES]-= reaction_efficency
@@ -262,7 +269,7 @@
 		return REACTING
 
 /datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
-	priority = 3
+	priority = 5
 	name = "Stimulum formation"
 	id = "stimformation"
 /datum/gas_reaction/stimformation/init_reqs()
@@ -271,7 +278,7 @@
 		"plasma" = 10,
 		"bz" = 20,
 		"browns" = 30,
-		"temp" = STIMULUM_HEAT_SCALE/2)
+		"TEMP" = STIMULUM_HEAT_SCALE/2)
 
 /datum/gas_reaction/stimformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
@@ -294,22 +301,22 @@
 		return REACTING
 
 /datum/gas_reaction/nobeliumformation //Hyper-Nobelium formation is extrememly endothermic, but requires high temperatures to start. Due to its high mass, hyper-nobelium uses large amounts of nitrogen and tritium. BZ can be used as a catalyst to make it less endothermic.
-	priority = 3
+	priority = 6
 	name = "Hyper-Nobelium condensation"
 	id = "nobformation"
 
 /datum/gas_reaction/nobeliumformation/init_reqs()
 	min_requirements = list(
-		"nitrogen" = 10,
+		"n2" = 10,
 		"tritium" = 5,
-		"temp" = 500000)
+		"TEMP" = 500000)
 
 /datum/gas_reaction/nobeliumformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	air.assert_gases("nob","bz")
 	var/old_heat_capacity = air.heat_capacity()
 	var/nob_formed = (cached_gases["nitrogen"][MOLES]*cached_gases["tritium"][MOLES])/100
-	var/energy_taken = nob_formed*(1000000/cached_gases["bz"][MOLES])
+	var/energy_taken = nob_formed*(1000000/(cached_gases["bz"][MOLES])+1)
 	cached_gases["tritium"][MOLES]-= 10*nob_formed
 	cached_gases["nitrogen"][MOLES]-= 20*nob_formed
 	cached_gases["nob"][MOLES]+= nob_formed

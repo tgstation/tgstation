@@ -6,7 +6,6 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
-
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
@@ -406,8 +405,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	reaction_results = new
 
 	var/list/cached_gases = gases
-	if (cached_gases["nob"][MOLES] > REACTION_OPPRESSION_THRESHOLD)
-		return
 	var/temp = temperature
 	var/ener = THERMAL_ENERGY(src)
 
@@ -442,6 +439,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			*/
 
 			. |= reaction.react(src, dump_location)
+			to_chat(world,reaction.name)
+			if (. & STOP_REACTIONS)
+				break
 	if(.)
 		garbage_collect()
 

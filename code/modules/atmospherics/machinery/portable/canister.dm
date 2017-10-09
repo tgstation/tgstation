@@ -99,31 +99,26 @@
 /obj/machinery/portable_atmospherics/canister/tritium
 	name = "tritium canister"
 	desc = "Tritium, inhalation might cause radiation."
-	icon_state = "caution"
 	gas_type = "tritium"
 
 /obj/machinery/portable_atmospherics/canister/nob
 	name = "hyper-nobelium canister"
 	desc = "Hyper-Nobelium. More noble than all other gases."
-	icon_state = "caution"
 	gas_type = "nob"
 
 /obj/machinery/portable_atmospherics/canister/browns
 	name = "brown gas canister"
 	desc = "Browns gas. Feels great till the acid eats your lungs"
-	icon_state = "caution"
 	gas_type = "browns"
 
 /obj/machinery/portable_atmospherics/canister/stimulum
 	name = "stimulum canister"
 	desc = "Stimulum. High energy gas, high energy people."
-	icon_state = "caution"
 	gas_type = "tritium"
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "pluoxium canister"
 	desc = "Pluoxium. Like oygen, but more bang for your buck."
-	icon_state = "caution"
 	gas_type = "pluox"
 
 
