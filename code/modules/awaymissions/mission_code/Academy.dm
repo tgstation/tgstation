@@ -108,27 +108,12 @@
 
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc
-
 	var/mob/living/carbon/human/wizbody = new(T)
-	wizbody.equipOutfit(/datum/outfit/wizard/academy)
-	var/obj/item/implant/exile/Implant = new/obj/item/implant/exile(wizbody)
-	Implant.implant(wizbody)
-	wizbody.faction |= "wizard"
-	wizbody.real_name = "Academy Teacher"
-	wizbody.name = "Academy Teacher"
-
-	var/datum/mind/wizmind = new /datum/mind()
-	wizmind.name = "Wizard Defender"
+	wizbody.fully_replace_character_name("Academy Teacher")
+	wizbody.mind_initialize()
+	var/datum/mind/wizmind = wizbody.mind
 	wizmind.special_role = "Academy Defender"
-	var/datum/objective/O = new("Protect Wizard Academy from the intruders")
-	wizmind.objectives += O
-	wizmind.transfer_to(wizbody)
-	SSticker.mode.wizards |= wizmind
-
-	wizmind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt)
-	wizmind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile)
-	wizmind.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball)
-
+	wizmind.add_antag_datum(/datum/antagonist/wizard/academy)
 	current_wizard = wizbody
 
 	give_control()

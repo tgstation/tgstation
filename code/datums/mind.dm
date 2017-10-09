@@ -75,7 +75,7 @@
 	if(islist(antag_datums))
 		for(var/i in antag_datums)
 			var/datum/antagonist/antag_datum = i
-			if(antag_datum.delete_on_death)
+			if(antag_datum.delete_on_mind_deletion)
 				qdel(i)
 		antag_datums = null
 	return ..()

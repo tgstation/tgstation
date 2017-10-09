@@ -12,6 +12,8 @@
 	var/datum/objective_team/wizard/wiz_team //Only created if wizard summons apprentices
 	var/list/objectives = list() //this should be base datum antag proc and list, todo make lazy
 	var/move_to_lair = TRUE
+	var/outfit_type = /datum/outfit/wizard
+	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
 
 /datum/antagonist/wizard/on_gain()
 	register()
@@ -110,10 +112,9 @@
 		H.delete_equipment()
 	//Wizards are human by default. Use the mirror if you want something else.
 	H.set_species(/datum/species/human)
-	/* Wizards by nature cannot be too young. */
-	if(H.age < WIZARD_AGE_MIN)
-		H.age = WIZARD_AGE_MIN
-	H.equipOutfit(/datum/outfit/wizard)
+	if(H.age < wiz_age)
+		H.age = wiz_age
+	H.equipOutfit(outfit_type)
 	
 /datum/antagonist/wizard/greet()
 	to_chat(owner, "<span class='boldannounce'>You are the Space Wizard!</span>")
@@ -144,16 +145,20 @@
 	var/mob/living/M = mob_override || owner.current
 	if(wiz_team) //Don't bother with the icon if you're solo wizard
 		update_wiz_icons_added(M)
+	M.faction |= "wizard"
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_wiz_icons_removed(M)
+	M.faction -= "wizard"
 
 /datum/antagonist/wizard/apprentice
 	name = "Wizard Apprentice"
 	hud_version = "apprentice"
 	var/datum/mind/master
 	var/school = APPRENTICE_DESTRUCTION
+	outfit_type = /datum/outfit/wizard/apprentice
+	wiz_age = APPRENTICE_AGE_MIN
 
 /datum/antagonist/wizard/apprentice/greet()
 	to_chat(owner, "<B>You are [master.current.real_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.")
@@ -166,18 +171,12 @@
 	SSticker.mode.apprentices -= src
 
 /datum/antagonist/wizard/apprentice/equip_wizard()
+	. = ..()
 	if(!owner)
 		return
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
-	if(strip)
-		H.delete_equipment()
-	H.set_species(/datum/species/human)
-	/* STILL A YEAR TO GO APPRENTICE*/
-	H.age = WIZARD_AGE_MIN - 1
-	H.equipOutfit(/datum/outfit/wizard/apprentice)
-	
 	switch(school)
 		if(APPRENTICE_DESTRUCTION)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
@@ -246,3 +245,28 @@
 	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]
 	wizhud.leave_hud(wiz)
 	set_antag_hud(wiz, null)
+
+
+/datum/antagonist/wizard/academy
+	name = "Academy Teacher"
+	otufit_type = /datum/outfit/wizard/academy
+
+/datum/antagonist/wizard/academy/equip_wizard()
+	. = ..()
+	
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt)
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile)
+	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball)
+
+	var/mob/living/M = owner.current
+	if(!istype(M))
+		return
+	
+	var/obj/item/implant/exile/Implant = new/obj/item/implant/exile(M)
+	Implant.implant(M)
+
+/datum/antagonist/wizard/academy/create_objectives()
+	var/datum/objective/new_objective = new("Protect Wizard Academy from the intruders")
+	new_objective.owner = owner
+	owner.objectives += new_objective
+	objectives += new_objective
