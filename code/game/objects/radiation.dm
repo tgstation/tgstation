@@ -1,17 +1,14 @@
-/mob/living/rad_act(amount, silent = 0)
+/mob/living/rad_act(amount)
 	amount = max(amount-RAD_BACKGROUND_RADIATION, 0)
 
 	if(amount)
 		var/blocked = getarmor(null, "rad")
 
-		if(!silent && amount >= 10)
-			to_chat(src, "Your skin feels warm.")
-
 		apply_effect(amount/50, IRRADIATE, blocked)
-		if(amount > 500)
-			apply_damage(amount/1000, BURN, null, blocked)
+		if(amount > RAD_AMOUNT_EXTREME)
+			apply_damage((amount-RAD_AMOUNT_EXTREME)/RAD_AMOUNT_EXTREME, BURN, null, blocked)
 
-/mob/living/carbon/rad_act(amount, silent = 0)
+/mob/living/carbon/rad_act(amount)
 	if(dna && (RADIMMUNE in dna.species.species_traits))
 		silent = TRUE
 	..()

@@ -133,3 +133,7 @@
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = 0
+
+/obj/item/clothing/suit/radiation/Initialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION) // Just don't want things to be irradiated inside this

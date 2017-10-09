@@ -23,7 +23,7 @@
 		var/atom/thing = things[k]
 		if(!thing)
 			continue
-		thing.rad_act(intensity, TRUE)
+		thing.rad_act(intensity)
 
 	if(log || intensity > 500)
 		log_game("Radiation pulse with intensity:[intensity] and range modifier:[range_modifier] in area [epicenter.loc.name] ")

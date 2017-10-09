@@ -7,7 +7,7 @@
 	var/list/__dirs //The directions to the side of the wave, stored for easy looping
 	var/can_contaminate
 
-/datum/radiation_wave/New(turf/place, dir, _intensity=0, _range_modifier=1, _can_contaminate=TRUE)
+/datum/radiation_wave/New(turf/place, dir, _intensity=0, _range_modifier=RAD_DISTANCE_COEFFICIENT, _can_contaminate=TRUE)
 	master_turf = place
 
 	move_dir = dir
@@ -31,7 +31,7 @@
 	check_obstructions(turfs) // reduce our overall strength if there are radiation insulators
 	var/strength
 	if(steps>1)
-		strength = InverseSquareLaw(intensity, range_modifier*steps, 1) //The full rad amount always applies on the first step
+		strength = InverseSquareLaw(intensity, max(range_modifier*steps, 1), 1)
 	else
 		strength = intensity
 	if(strength<RAD_BACKGROUND_RADIATION)
@@ -92,11 +92,11 @@
 			var/atom/thing = things[k]
 			if(!thing)
 				continue
-			thing.rad_act(strength, TRUE)
-			if(can_contaminate && prob(Clamp((strength-RAD_MINIMUM_CONTAMINATION)/10000,0,1))) // Only stronk rads get to have little baby rads
+			thing.rad_act(strength)
+			if(can_contaminate && prob((strength-RAD_MINIMUM_CONTAMINATION)*RAD_CONTAMINATION_CHANCE_COEFFICIENT)) // Only stronk rads get to have little baby rads
 				var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
 				if(insulation)
 					continue
 				else
-					thing.AddComponent(/datum/component/radioactive, log(strength-RAD_MINIMUM_CONTAMINATION)**5.5) //This should be balanced somewhere between 5 and 6
-				// Unless you're the stronkest of the stronk, in which case you get grandkids (>300 strength) or great great grandkids (>762)
+					thing.AddComponent(/datum/component/radioactive, (strength-RAD_MINIMUM_CONTAMINATION) * max(1/(steps*range_modifier), 1))
+				// Unless you're the stronkest of the stronk, in which case you get grandkids (>800 strength) or great great grandkids (>1200)

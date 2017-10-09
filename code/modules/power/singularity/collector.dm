@@ -1,4 +1,4 @@
-#define RAD_COLLECTOR_EFFICIENCY 100 //radiation needs to be over this amount to get power
+#define RAD_COLLECTOR_EFFICIENCY 80 //radiation needs to be over this amount to get power
 
 GLOBAL_LIST_EMPTY(rad_collectors)
 
@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= 0.001*drainratio
 			loaded_tank.air_contents.garbage_collect()
 
-			var/power_produced = min(last_power, last_power/10+1000) //Produces at least 1000 watts if it has more than that stored
+			var/power_produced = min(last_power, (last_power/100)+1000) //Produces at least 1000 watts if it has more than that stored
 			add_avail(power_produced)
 			last_power-=power_produced
 	return
@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
-		last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*150
+		last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*100
 
 /obj/machinery/power/rad_collector/proc/update_icons()
 	cut_overlays()
