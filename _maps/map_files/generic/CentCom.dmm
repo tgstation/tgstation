@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space/basic,
 /area/space)
@@ -14091,11 +14091,10 @@
 	},
 /area/shuttle/syndicate/eva)
 "Tl" = (
+/obj/structure/grille,
 /obj/structure/window/plastitanium,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate/eva)
+/turf/open/floor/plating,
+/area/shuttle/syndicate/medical)
 "Tm" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/plastitanium,
@@ -14494,6 +14493,16 @@
 	dir = 6
 	},
 /turf/closed/wall/mineral/plastitanium,
+/area/shuttle/syndicate/medical)
+"ZZ" = (
+/obj/structure/grille,
+/obj/structure/window/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/syndicate/medical)
+"OVERFLOW" = (
+/obj/structure/grille,
+/obj/structure/window/plastitanium,
+/turf/open/floor/plating,
 /area/shuttle/syndicate/medical)
 
 (1,1,1) = {"
@@ -28551,10 +28560,10 @@ Ou
 NJ
 Tl
 ZS
-QP
-QP
+Tl
+Tl
 pk
-Nc
+Tl
 XJ
 XJ
 Nk
@@ -28804,7 +28813,7 @@ XN
 Ru
 XN
 XN
-Ur
+ZZ
 Pt
 Pt
 Pt
@@ -28813,7 +28822,7 @@ RF
 NV
 RD
 TT
-XL
+Ur
 de
 Jn
 hq
@@ -29318,7 +29327,7 @@ Om
 TW
 Om
 Om
-Ur
+OVERFLOW
 Pt
 Pt
 Pt
@@ -29327,7 +29336,7 @@ WW
 NV
 RD
 TT
-XL
+Ur
 de
 Mz
 hq
@@ -29577,12 +29586,12 @@ Nk
 Wk
 Wk
 Qo
-Mk
+Tl
 Se
-Wd
-Wd
+Tl
+Tl
 ZM
-ZE
+Tl
 Jz
 Jz
 Nk
