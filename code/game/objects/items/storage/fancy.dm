@@ -17,6 +17,7 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
+	desc = "Mmm. Donuts."
 	resistance_flags = FLAMMABLE
 	var/icon_type = "donut"
 	var/spawn_type = null
@@ -57,7 +58,9 @@
 
 /obj/item/storage/fancy/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
 	fancy_open = TRUE
-	return ..()
+	. = ..()
+	//Recall update icon  with the fancy item snowflake arg (ugh)
+	update_icon(1)
 
 /*
  * Donut Box
@@ -125,13 +128,21 @@
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 
+/obj/item/storage/fancy/cigarettes/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to extract contents.</span>")
+
 /obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	if(user.get_active_held_item())
+	if(user.stat || user.restrained())
 		return
-	for(var/obj/item/lighter/lighter in src)
-		remove_from_storage(lighter, user.loc)
-		user.put_in_active_hand(lighter)
-		break
+	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
+	if(W && contents.len > 0)
+		remove_from_storage(W, user)
+		user.put_in_hands(W)
+		contents -= W
+		to_chat(user, "<span class='notice'>You take a [icon_type] out of the pack.</span>")
+	else
+		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
 /obj/item/storage/fancy/cigarettes/update_icon()
 	if(fancy_open || !contents.len)

@@ -27,10 +27,6 @@ OOC_DURING_ROUND
 ## Comment this out if you want to disable emojis
 EMOJIS
 
-## CREDIT SEQUENCE ###
-## Uncomment this if you want to disable round-end credits
-#NO_CREDITS_ROUND_END
-
 ## MOB MOVEMENT ###
 
 ## We suggest editing these variables ingame to find a good speed for your server.
@@ -89,7 +85,6 @@ PROBABILITY REVOLUTION 2
 PROBABILITY CULT 2
 PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
-PROBABILITY MALFUNCTION 1
 PROBABILITY BLOB 2
 PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
@@ -118,7 +113,6 @@ CONTINUOUS CULT
 CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
-CONTINUOUS MALFUNCTION
 CONTINUOUS BLOB
 CONTINUOUS ABDUCTION
 #CONTINUOUS MONKEY
@@ -143,7 +137,6 @@ MIDROUND_ANTAG CULT
 MIDROUND_ANTAG CLOCKWORK_CULT
 MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
-MIDROUND_ANTAG MALFUNCTION
 MIDROUND_ANTAG BLOB
 MIDROUND_ANTAG ABDUCTION
 #MIDROUND_ANTAG  MONKEY
@@ -487,8 +480,11 @@ LAVALAND_BUDGET 60
 Space_Budget 16
 
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
-## Must be at least 30 to not break parallax I recommended at least 55 to be visually/aurally appropriate
+## Must be at least 30. At least 55 recommended to be visually/aurally appropriate
 ARRIVALS_SHUTTLE_DOCK_WINDOW 55
+
+## Uncomment to require the arrivals shuttle to be in flight (if it can fly) before late join players can join
+#ARRIVALS_SHUTTLE_REQUIRE_UNDOCKED
 
 ## Uncomment to prevent late join players from spawning if the arrivals shuttle is depressurized
 #ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN
@@ -497,3 +493,5 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
 MICE_ROUNDSTART 10
 
+## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
+#EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2

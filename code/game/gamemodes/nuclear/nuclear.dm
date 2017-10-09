@@ -22,27 +22,17 @@
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
+	var/list/pre_nukeops = list()
 
 /datum/game_mode/nuclear/pre_setup()
-	var/n_players = num_players()
-	var/n_agents = min(round(n_players / 10, 1), agents_possible)
-
-	if(antag_candidates.len < n_agents) //In the case of having less candidates than the selected number of agents
-		n_agents = antag_candidates.len
-
-	while(n_agents > 0)
-		var/datum/mind/new_syndicate = pick(antag_candidates)
-		syndicates += new_syndicate
-		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
-		n_agents--
-
-	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.assigned_role = "Syndicate"
-		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
-		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
-
-	return 1
-
+	var/n_agents = min(round(num_players() / 10), antag_candidates.len, agents_possible)
+	for(var/i = 0, i < n_agents, ++i)
+		var/datum/mind/new_op = pick_n_take(antag_candidates)
+		pre_nukeops += new_op
+		new_op.assigned_role = "Nuclear Operative"
+		new_op.special_role = "Nuclear Operative"
+		log_game("[new_op.key] (ckey) has been selected as a nuclear operative")
+	return TRUE
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -60,47 +50,35 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/game_mode/nuclear/post_setup()
-
-	var/list/turf/synd_spawn = list()
-
-	for(var/obj/effect/landmark/A in GLOB.landmarks_list)
-		if(A.name == "Syndicate-Spawn")
-			synd_spawn += get_turf(A)
-			continue
-
 	var/nuke_code = random_nukecode()
-	var/leader_selected = 0
 	var/agent_number = 1
-	var/spawnpos = 1
+	var/datum/mind/leader = pick(pre_nukeops)
+	syndicates += pre_nukeops
+	for(var/i = 1 to pre_nukeops.len)
+		var/datum/mind/op = pre_nukeops[i]
 
-	for(var/datum/mind/synd_mind in syndicates)
-		if(spawnpos > synd_spawn.len)
-			spawnpos = 2
-		synd_mind.current.loc = synd_spawn[spawnpos]
-
-		forge_syndicate_objectives(synd_mind)
-		greet_syndicate(synd_mind)
-		equip_syndicate(synd_mind.current)
+		forge_syndicate_objectives(op)
+		greet_syndicate(op)
+		equip_syndicate(op.current)
 
 		if(nuke_code)
-			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-			to_chat(synd_mind.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
+			op.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
+			to_chat(op.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
 
-		if(!leader_selected)
-			prepare_syndicate_leader(synd_mind, nuke_code)
-			leader_selected = 1
+		if(op == leader)
+			op.current.forceMove(pick(GLOB.nukeop_leader_start))
+			prepare_syndicate_leader(op, nuke_code)
 		else
-			synd_mind.current.real_name = "[syndicate_name()] Operative #[agent_number]"
-			agent_number++
-		spawnpos++
-		update_synd_icons_added(synd_mind)
-		synd_mind.current.playsound_local(get_turf(synd_mind.current), 'sound/ambience/antag/ops.ogg',100,0)
-	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
+			op.current.forceMove(GLOB.nukeop_start[((i - 1) % GLOB.nukeop_start.len) + 1])
+			op.current.real_name = "[syndicate_name()] Operative #[agent_number++]"
 
+		update_synd_icons_added(op)
+		op.current.playsound_local(get_turf(op.current), 'sound/ambience/antag/ops.ogg',100,0)
+
+	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
 	if(nuke)
 		nuke.r_code = nuke_code
 	return ..()
-
 
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
@@ -113,7 +91,7 @@
 	to_chat(synd_mind.current, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
 
 	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
-	synd_mind.current.put_in_hands_or_del(challenge)
+	synd_mind.current.put_in_hands(challenge, TRUE)
 
 	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/card/id)
 	if(foundIDs.len)
@@ -132,8 +110,7 @@
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
 		var/mob/living/carbon/human/H = synd_mind.current
-		P.loc = H.loc
-		H.put_in_hands_or_del(P)
+		H.put_in_hands(P, TRUE)
 		H.update_icons()
 	else
 		nuke_code = "code will be provided later"
@@ -161,6 +138,12 @@
 		synd_mob.equipOutfit(/datum/outfit/syndicate/no_crystals)
 	return 1
 
+/datum/game_mode/nuclear/OnNukeExplosion(off_station)
+	..()
+	nukes_left--
+	var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
+	syndies_didnt_escape = (Shuttle && (Shuttle.z == ZLEVEL_CENTCOM || Shuttle.z == ZLEVEL_TRANSIT)) ? 0 : 1
+	nuke_off_station = off_station
 
 /datum/game_mode/nuclear/check_win()
 	if (nukes_left == 0)

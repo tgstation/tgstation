@@ -62,7 +62,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Returns the component that was created. Or the old component in a dupe situation where `COMPONENT_DUPE_UNIQUE` was set
 1. `/datum/proc/LoadComponent(component_type(type), ...) -> datum/component` (public, final)
     * Equivalent to calling `GetComponent(component_type)` where, if the result would be `null`, returns `AddComponent(component_type, ...)` instead
-1. `/datum/proc/ComponentActivated(datum/component/C)` (abstract)
+1. `/datum/proc/ComponentActivated(datum/component/C)` (abstract, async)
     * Called on a component's `parent` after a signal recieved causes it to activate. `src` is the parameter
     * Will only be called if a component's callback returns `TRUE`
 1. `/datum/proc/TakeComponent(datum/component/C)` (public, final)
@@ -87,22 +87,20 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Called on a component when a component of the same type was added to the same parent
     * See `/datum/component/var/dupe_mode`
     * `C`'s type will always be the same of the called component
-1. `/datum/component/proc/AfterComponentActivated()` (abstract)
+1. `/datum/component/proc/AfterComponentActivated()` (abstract, async)
     * Called on a component that was activated after it's `parent`'s `ComponentActivated()` is called
 1. `/datum/component/proc/OnTransfer(datum/new_parent)` (abstract, no-sleep)
     * Called before the new `parent` is assigned in `TakeComponent()`, after the remove signal, before the added signal
     * Allows the component to react to ownership transfers
 1. `/datum/component/proc/_RemoveNoSignal()` (private, final)
     * Internal, clears the parent var and removes the component from the parents component list
-1. `/datum/component/proc/RegisterSignal(signal(string), proc_ref(type), override(boolean))` (protected, final) (Consider removing for performance gainz)
+1. `/datum/component/proc/RegisterSignal(signal(string/list of strings), proc_ref(type), override(boolean))` (protected, final) (Consider removing for performance gainz)
+    * If signal is a list it will be as if RegisterSignal was called for each of the entries with the same following arguments
     * Makes a component listen for the specified `signal` on it's `parent` datum.
     * When that signal is recieved `proc_ref` will be called on the component, along with associated arguments
     * Example proc ref: `.proc/OnEvent`
     * If a previous registration is overwritten by the call, a runtime occurs. Setting `override` to TRUE prevents this
     * These callbacks run asyncronously
     * Returning `TRUE` from these callbacks will trigger a `TRUE` return from the `SendSignal()` that initiated it
-1. `/datum/component/proc/ReceiveSignal(signal, ...)` (virtual)
-    * Called when a component recieves any signal and is enabled
-    * Default implementation looks if the signal is registered and runs the appropriate proc
 
 ### See/Define signals and their arguments in __DEFINES\components.dm

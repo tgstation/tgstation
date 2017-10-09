@@ -4,7 +4,7 @@
 
 /obj/item/wallframe/firealarm
 	name = "fire alarm frame"
-	desc = "Used for building fire alarms"
+	desc = "Used for building fire alarms."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
@@ -216,6 +216,16 @@
 				if(istype(W, /obj/item/electronics/firealarm))
 					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
 					qdel(W)
+					buildstage = 1
+					update_icon()
+					return
+
+				else if(istype(W, /obj/item/device/electroadaptive_pseudocircuit))
+					var/obj/item/device/electroadaptive_pseudocircuit/P = W
+					if(!P.adapt_circuit(user, 15))
+						return
+					user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+					"<span class='notice'>You adapt a fire alarm circuit and slot it into the assembly.</span>")
 					buildstage = 1
 					update_icon()
 					return

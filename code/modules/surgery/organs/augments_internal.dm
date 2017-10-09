@@ -2,10 +2,11 @@
 
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
-	desc = "a state-of-the-art implant that improves a baseline's functionality"
+	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	status = ORGAN_ROBOTIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
+	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
 
 /obj/item/organ/cyberimp/New(var/mob/M = null)
 	if(iscarbon(M))
@@ -22,7 +23,7 @@
 
 /obj/item/organ/cyberimp/brain
 	name = "cybernetic brain implant"
-	desc = "injectors of extra sub-routines for the brain"
+	desc = "Injectors of extra sub-routines for the brain."
 	icon_state = "brain_implant"
 	implant_overlay = "brain_implant_overlay"
 	zone = "head"

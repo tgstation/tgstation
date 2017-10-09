@@ -271,9 +271,11 @@
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-		else if(getBrainLoss() >= 60)
-			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
-
+		else
+			if(getBrainLoss() >= 60)
+				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
+			if(InCritical())
+				msg += "[t_He] is barely conscious.\n"
 		if(getorgan(/obj/item/organ/brain))
 			if(istype(src, /mob/living/carbon/human/interactive))
 				var/mob/living/carbon/human/interactive/auto = src
@@ -305,7 +307,7 @@
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH, /obj/item/organ/cyberimp/eyes/hud/medical))
 					var/cyberimp_detect
 					for(var/obj/item/organ/cyberimp/CI in internal_organs)
-						if(CI.status == ORGAN_ROBOTIC)
+						if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
 							cyberimp_detect += "[name] is modified with a [CI.name].<br>"
 					if(cyberimp_detect)
 						msg += "Detected cybernetic modifications:<br>"

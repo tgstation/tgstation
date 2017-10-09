@@ -426,11 +426,19 @@
 					return
 				if(constructionStep != CONSTRUCTION_NOCIRCUIT)
 					return
-				user.drop_item()
 				qdel(C)
 				user.visible_message("<span class='notice'>[user] adds a circuit to [src].</span>", \
 									 "<span class='notice'>You insert and secure [C].</span>")
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
+				constructionStep = CONSTRUCTION_GUTTED
+				update_icon()
+				return
+			if(istype(C, /obj/item/device/electroadaptive_pseudocircuit))
+				var/obj/item/device/electroadaptive_pseudocircuit/P = C
+				if(!P.adapt_circuit(user, 30))
+					return
+				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+				"<span class='notice'>You adapt a firelock circuit and slot it into the assembly.</span>")
 				constructionStep = CONSTRUCTION_GUTTED
 				update_icon()
 				return

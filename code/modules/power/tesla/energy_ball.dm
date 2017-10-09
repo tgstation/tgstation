@@ -222,7 +222,7 @@
 		else if(closest_mob)
 			continue
 
-		else if(istype(A, /obj/machinery))
+		else if(ismachinery(A))
 			var/obj/machinery/M = A
 			var/dist = get_dist(source, A)
 			if(dist <= zap_range && (dist < closest_dist || !closest_machine) && !M.being_shocked)
@@ -244,7 +244,7 @@
 		else if(closest_blob)
 			continue
 
-		else if(istype(A, /obj/structure))
+		else if(isstructure(A))
 			var/obj/structure/S = A
 			var/dist = get_dist(source, A)
 			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !S.being_shocked)

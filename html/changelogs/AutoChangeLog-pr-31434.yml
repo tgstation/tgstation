@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Traitor pen uplinks now preferentially spawn in the PDA pen, and not in a pocket protector full of pens that no-one checks."

@@ -1,0 +1,5 @@
+author: "Jambread/RemieRichards/Incoming5643"
+delete-after: True
+changes: 
+  - server: "There is a new system for title music accessible from config/title_music folder. This system allows for multiple rotating lobby music without bloating Git as well as map specific lobby music. See the readme.txt in config/title_music for full details."
+  - config: "The previous method of title music selection, strings/round_start_sounds.txt has been depreciated by this change."

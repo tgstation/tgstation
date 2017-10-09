@@ -82,6 +82,10 @@
 	pockets = /obj/item/storage/internal/pocket/small/detective
 	dog_fashion = /datum/dog_fashion/head/detective
 
+/obj/item/clothing/head/fedora/det_hat/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to take a candy corn.</span>")
+
 /obj/item/clothing/head/fedora/det_hat/AltClick()
 	..()
 	if(ismob(loc))

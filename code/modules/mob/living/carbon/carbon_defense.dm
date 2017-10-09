@@ -112,13 +112,13 @@
 
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
-			user.ContractDisease(D)
+		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+			user.ContactContractDisease(D)
 
 	for(var/thing in user.viruses)
 		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
-			ContractDisease(D)
+		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
 		if(user.a_intent == INTENT_HELP)
@@ -131,13 +131,13 @@
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
-			M.ContractDisease(D)
+		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+			M.ContactContractDisease(D)
 
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
-			ContractDisease(D)
+		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+			ContactContractDisease(D)
 
 	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)
@@ -249,6 +249,9 @@
 	if(health >= 0 && !(status_flags & FAKEDEATH))
 
 		if(lying)
+			if(buckled)
+				to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
+				return
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
 		else

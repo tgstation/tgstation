@@ -68,7 +68,8 @@
 		recharged -= 1
 
 /obj/machinery/chem_dispenser/proc/recharge()
-	if(stat & (BROKEN|NOPOWER)) return
+	if(stat & (BROKEN|NOPOWER))
+		return
 	var/usedpower = cell.give( 1 / powerefficiency) //Should always be a gain of one on the UI.
 	if(usedpower)
 		use_power(2500)
@@ -112,8 +113,8 @@
 	data["maxEnergy"] = cell.maxcharge * powerefficiency
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 
-	var beakerContents[0]
-	var beakerCurrentVolume = 0
+	var/beakerContents[0]
+	var/beakerCurrentVolume = 0
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
@@ -129,7 +130,7 @@
 		data["beakerMaxVolume"] = null
 		data["beakerTransferAmounts"] = null
 
-	var chemicals[0]
+	var/chemicals[0]
 	var/is_hallucinating = FALSE
 	if(user.hallucinating())
 		is_hallucinating = TRUE

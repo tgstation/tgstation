@@ -28,7 +28,7 @@ Bonus
 	stage_speed = 0
 	transmittable = 1
 	level = 3
-	severity = 4
+	severity = 3
 	base_message_chance = 100
 	symptom_delay_min = 25
 	symptom_delay_max = 80
@@ -39,7 +39,8 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/vomit/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
 	if(A.properties["resistance"] >= 7) //blood vomit

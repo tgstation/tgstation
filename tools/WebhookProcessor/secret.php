@@ -48,3 +48,6 @@ $validation = "org";
 
 //how many merged prs must they have under the rules above to have their pr announced to the game servers.
 $validation_count = 1;
+
+//enforce changelogs on PRs
+$require_changelogs = false;

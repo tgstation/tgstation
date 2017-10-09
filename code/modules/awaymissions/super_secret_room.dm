@@ -9,10 +9,13 @@
 	var/times_spoken_to = 0
 	var/list/shenanigans = list()
 
-/obj/structure/speaking_tile/New()
-	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
-	S["phrases"] 			>> shenanigans
-	..()
+/obj/structure/speaking_tile/Initialize()
+	. = ..()
+	var/json_file = file("data/npc_saves/Poly.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	shenanigans = json["phrases"]
 
 /obj/structure/speaking_tile/interact(mob/user)
 	if(!isliving(user) || speaking)

@@ -6,6 +6,7 @@
 //trees
 /obj/structure/flora/tree
 	name = "tree"
+	desc = "A large tree."
 	density = TRUE
 	pixel_x = -16
 	layer = FLY_LAYER
@@ -40,6 +41,7 @@
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
+	desc = "A coniferous pine tree."
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 
@@ -49,6 +51,7 @@
 
 /obj/structure/flora/tree/pine/xmas
 	name = "xmas tree"
+	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
 
 /obj/structure/flora/tree/pine/xmas/Initialize()
@@ -57,10 +60,12 @@
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
+	desc = "A dead tree. How it died, you know not."
 	icon_state = "tree_1"
 
 /obj/structure/flora/tree/palm
 	icon = 'icons/misc/beach2.dmi'
+	desc = "A tree straight from the tropics."
 	icon_state = "palm1"
 
 /obj/structure/flora/tree/palm/Initialize()
@@ -98,6 +103,7 @@
 //grass
 /obj/structure/flora/grass
 	name = "grass"
+	desc = "A patch of overgrown grass."
 	icon = 'icons/obj/flora/snowflora.dmi'
 	gender = PLURAL	//"this is grass" not "this is a grass"
 
@@ -127,6 +133,7 @@
 //bushes
 /obj/structure/flora/bush
 	name = "bush"
+	desc = "Some type of shrub."
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
 	anchored = TRUE
@@ -139,6 +146,7 @@
 
 /obj/structure/flora/ausbushes
 	name = "bush"
+	desc = "Some kind of plant."
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
 
@@ -256,6 +264,7 @@
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
+	desc = "A little bit of nature contained in a pot."
 	layer = ABOVE_MOB_LAYER
 	w_class = WEIGHT_CLASS_HUGE
 	force = 10
@@ -314,7 +323,7 @@
 
 /obj/structure/flora/rock
 	icon_state = "basalt"
-	desc = "A volcanic rock"
+	desc = "A volcanic rock."
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
 	density = TRUE
@@ -325,7 +334,7 @@
 
 /obj/structure/flora/rock/pile
 	icon_state = "lavarocks"
-	desc = "A pile of rocks"
+	desc = "A pile of rocks."
 
 /obj/structure/flora/rock/pile/Initialize()
 	. = ..()
@@ -365,6 +374,7 @@
 
 /obj/structure/flora/junglebush
 	name = "bush"
+	desc = "A wild plant that is found in jungles."
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
 

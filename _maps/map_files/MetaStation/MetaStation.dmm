@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -19,19 +19,6 @@
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
 /area/space)
-"aad" = (
-/turf/open/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 9
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"aae" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "aaf" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -178,7 +165,6 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port/fore)
 "aav" = (
-/obj/effect/landmark/marauder_entry,
 /turf/open/space,
 /area/space)
 "aaw" = (
@@ -387,16 +373,6 @@
 "aaV" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
-"aaW" = (
-/turf/open/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
 "aaX" = (
 /turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
@@ -442,10 +418,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/security/prison)
-"abd" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/circuit/red,
-/area/shuttle/syndicate)
 "abe" = (
 /turf/closed/wall,
 /area/security/prison)
@@ -918,10 +890,6 @@
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/security/prison)
-"acd" = (
-/obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "ace" = (
 /obj/machinery/vending/sustenance{
@@ -2220,14 +2188,6 @@
 /area/crew_quarters/fitness/recreation)
 "aeC" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/fitness/recreation)
-"aeD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/landmark/syndicate_breach_area,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -4182,6 +4142,7 @@
 	id = "trash";
 	name = "disposal bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aig" = (
@@ -4362,13 +4323,6 @@
 /obj/structure/closet{
 	name = "Evidence Closet 1"
 	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 1"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -4395,11 +4349,6 @@
 /area/security/warden)
 "aiz" = (
 /obj/structure/closet/secure_closet/evidence,
-/obj/item/storage/secure/briefcase{
-	name = "Secure Evidence Briefcase";
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -4766,16 +4715,9 @@
 /obj/structure/closet{
 	name = "Evidence Closet 2"
 	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 2"
-	},
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 1
@@ -4799,13 +4741,6 @@
 "ajt" = (
 /obj/structure/closet{
 	name = "Evidence Closet 5"
-	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 5"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -5370,13 +5305,6 @@
 "akB" = (
 /obj/structure/closet{
 	name = "Evidence Closet 4"
-	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 4"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
@@ -7414,10 +7342,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/security/warden)
-"aov" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
 /area/security/warden)
 "aow" = (
 /obj/machinery/door/firedoor,
@@ -10185,23 +10109,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"atC" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/fore)
 "atD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -12753,9 +12660,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/labor)
-"ayv" = (
-/turf/closed/wall,
-/area/security/execution/education)
 "ayw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
@@ -13541,10 +13445,6 @@
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "azU" = (
-/obj/machinery/computer/security/wooden_tv{
-	pixel_x = 3;
-	pixel_y = 2
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -13555,6 +13455,11 @@
 	network = list("Prison");
 	pixel_y = 30
 	},
+/obj/item/device/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/restraints/handcuffs,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "azV" = (
@@ -13562,16 +13467,15 @@
 /obj/item/storage/secure/safe{
 	pixel_x = 32
 	},
-/obj/item/device/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/restraints/handcuffs,
 /obj/machinery/button/door{
 	id = "detective_shutters";
 	name = "detective's office shutters control";
 	pixel_y = 26;
 	req_access_txt = "4"
+	},
+/obj/machinery/computer/security/wooden_tv{
+	pixel_x = 3;
+	pixel_y = 2
 	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
@@ -17389,8 +17293,8 @@
 	amount = 50
 	},
 /obj/item/crowbar,
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -20493,13 +20397,6 @@
 /obj/structure/closet{
 	name = "Evidence Closet 3"
 	},
-/obj/item/storage/backpack{
-	name = "Evidence Bag 3"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -21300,14 +21197,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
-"aPc" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "syndieshutters";
-	name = "blast shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
 "aPd" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -22158,15 +22047,6 @@
 "aQH" = (
 /obj/structure/chair{
 	dir = 1
-	},
-/turf/open/floor/plasteel/black,
-/area/security/courtroom)
-"aQI" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/security/courtroom)
@@ -23436,6 +23316,7 @@
 /turf/open/floor/plating,
 /area/storage/primary)
 "aTi" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
 	locked = 0;
 	name = "AI Upload";
@@ -24856,6 +24737,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "aVY" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Network Access";
 	req_access_txt = "19"
@@ -25227,10 +25109,6 @@
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
-"aWS" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "aWT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -26660,17 +26538,6 @@
 /area/hallway/primary/central)
 "aZt" = (
 /turf/closed/wall,
-/area/storage/tools)
-"aZu" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
 /area/storage/tools)
 "aZv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -28589,9 +28456,6 @@
 	},
 /turf/open/space,
 /area/space)
-"bcR" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/arrival)
 "bcS" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
@@ -29382,13 +29246,6 @@
 	name = "EXTERNAL AIRLOCK"
 	},
 /turf/closed/wall/r_wall,
-/area/space)
-"ber" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/space,
 /area/space)
 "bes" = (
 /obj/structure/window/reinforced{
@@ -32252,16 +32109,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
-"bjN" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
-/turf/open/space,
-/area/space)
 "bjO" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -33194,16 +33041,6 @@
 /obj/structure/window/reinforced,
 /turf/open/space,
 /area/space)
-"blz" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/black,
-/area/aisat)
 "blA" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /obj/structure/window/reinforced,
@@ -36260,6 +36097,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/paper_bin,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
@@ -36280,6 +36118,7 @@
 /area/storage/art)
 "brf" = (
 /obj/structure/table,
+/obj/item/paper_bin/construction,
 /obj/item/airlock_painter,
 /obj/machinery/airalarm{
 	dir = 8;
@@ -37175,17 +37014,6 @@
 	},
 /obj/machinery/status_display{
 	pixel_y = -32
-	},
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 8
-	},
-/area/hallway/primary/port)
-"bsF" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -39964,19 +39792,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
-"bya" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "hop";
-	name = "privacy shutters"
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/heads/hop)
 "byb" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor{
@@ -41266,8 +41081,8 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /turf/open/floor/plasteel/caution{
 	dir = 8
 	},
@@ -42302,26 +42117,6 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/crew_quarters/toilet/auxiliary)
-"bCT" = (
-/obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/machinery/newscaster{
-	pixel_x = -32
-	},
-/turf/open/floor/wood,
-/area/library)
-"bCU" = (
-/obj/structure/table/wood,
-/obj/item/folder,
-/obj/item/pen/blue{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/turf/open/floor/wood,
-/area/library)
 "bCV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -48076,12 +47871,6 @@
 /obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"bOj" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "bOk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -48264,20 +48053,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/wood,
-/area/bridge/showroom/corporate)
-"bOA" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
 "bOB" = (
@@ -48757,20 +48532,6 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"bPB" = (
-/obj/structure/chair/office/dark{
-	dir = 1;
-	name = "tactical swivel chair"
-	},
-/obj/machinery/button/door{
-	id = "syndieshutters";
-	name = "Cockpit View Control";
-	pixel_x = 32;
-	pixel_y = 32;
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
 "bPC" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -49454,12 +49215,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/aisat)
-"bRb" = (
-/obj/machinery/computer/crew/syndie,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
 "bRc" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -50187,12 +49942,6 @@
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
-"bSm" = (
-/obj/machinery/computer/med_data/syndie,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
 "bSn" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -50764,17 +50513,6 @@
 /area/maintenance/aft)
 "bTt" = (
 /obj/item/storage/box,
-/turf/open/floor/plating,
-/area/maintenance/port)
-"bTu" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bTv" = (
@@ -53835,15 +53573,6 @@
 "bZo" = (
 /turf/closed/wall,
 /area/security/checkpoint/science/research)
-"bZp" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "bZq" = (
 /obj/item/reagent_containers/food/snacks/grown/wheat,
 /obj/item/reagent_containers/food/snacks/grown/watermelon,
@@ -56261,12 +55990,6 @@
 	dir = 4
 	},
 /area/security/checkpoint/science/research)
-"cdT" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "cdU" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Hydroponics Maintenance";
@@ -57563,17 +57286,6 @@
 "cgq" = (
 /turf/closed/wall/r_wall,
 /area/science/explab)
-"cgr" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "cgs" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
@@ -58266,13 +57978,6 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister,
-/turf/open/floor/plasteel/floorgrime,
-/area/maintenance/disposal/incinerator)
-"chK" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4
-	},
-/obj/machinery/meter,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "chL" = (
@@ -62432,12 +62137,6 @@
 "cpU" = (
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
-"cpV" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 4
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "cpW" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -63202,12 +62901,6 @@
 "cro" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/turf/open/floor/plasteel/white,
-/area/medical/surgery)
-"crp" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "crq" = (
@@ -67168,20 +66861,6 @@
 "cyK" = (
 /turf/closed/wall/r_wall,
 /area/science/mixing)
-"cyL" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "cyM" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Space Access";
@@ -69603,6 +69282,7 @@
 	id = "toxinsdriver";
 	name = "Toxins Launcher Bay Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
 "cDu" = (
@@ -74302,17 +73982,6 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/starboard/aft)
-"cLG" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "cLH" = (
 /obj/machinery/space_heater,
 /obj/effect/turf_decal/stripes/line{
@@ -77240,14 +76909,9 @@
 	id = "chapelgun";
 	name = "Chapel Launcher Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
-"cRQ" = (
-/obj/machinery/computer/shuttle/syndicate,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
 "cRR" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -77517,16 +77181,6 @@
 "cSt" = (
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"cSu" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/white,
-/area/science/xenobiology)
 "cSv" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -77671,12 +77325,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"cSH" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
 "cSI" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -78079,43 +77727,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
-"cTl" = (
-/obj/machinery/door/poddoor{
-	id = "smindicate";
-	name = "outer blast door"
-	},
-/obj/machinery/button/door{
-	id = "smindicate";
-	name = "external door control";
-	pixel_x = -26;
-	req_access_txt = "150"
-	},
-/obj/docking_port/mobile{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate";
-	name = "syndicate infiltrator";
-	port_direction = 1;
-	roundstart_move = "syndicate_away";
-	width = 18
-	},
-/obj/docking_port/stationary{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate_nw";
-	name = "northwest of station";
-	turf_type = /turf/open/space;
-	width = 18
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
 "cTm" = (
 /obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
@@ -78213,15 +77824,6 @@
 /obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_4)
-"cTv" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK"
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "cTw" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/item/storage/box/lights/mixed,
@@ -78266,147 +77868,14 @@
 /obj/machinery/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/science/xenobiology)
-"cTE" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cTF" = (
-/obj/machinery/computer/camera_advanced/syndie,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cTG" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cTH" = (
-/obj/structure/table/reinforced,
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
-/obj/item/clipboard,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/item/folder/red,
-/obj/item/toy/figure/syndie,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cTI" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cTJ" = (
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"cTK" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_y = -32;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cTL" = (
-/obj/structure/closet/syndicate/personal,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cTM" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"cTN" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Cockpit";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cTO" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"cTP" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/cable_coil/white,
-/obj/item/stack/cable_coil/white,
-/obj/item/crowbar/red,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"cTQ" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/box/handcuffs{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/zipties,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
 "cTR" = (
 /obj/effect/landmark/xmastree,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"cTS" = (
-/obj/structure/chair{
-	dir = 8;
-	name = "tactical chair"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
 "cTT" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
-"cTU" = (
-/obj/machinery/door/airlock/external{
-	name = "Ready Room";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cTV" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/podhatch{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"cTW" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
 "cTX" = (
 /obj/docking_port/stationary{
 	dheight = 9;
@@ -78420,381 +77889,10 @@
 	},
 /turf/open/space,
 /area/space)
-"cTY" = (
-/obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cTZ" = (
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUa" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"cUb" = (
-/obj/machinery/sleeper/syndie{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUc" = (
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
-	pixel_x = -3
-	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
-	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 4;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 2;
-	pixel_y = 8
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUd" = (
-/obj/machinery/door/airlock/external{
-	name = "E.V.A. Gear Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUe" = (
-/obj/machinery/door/airlock/external{
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUf" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "EVA Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUg" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"cUh" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate/black/red,
-/obj/item/clothing/head/helmet/space/syndicate/black/red,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUi" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_x = -32;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUj" = (
-/obj/structure/closet/syndicate/nuclear,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUk" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUl" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUm" = (
-/obj/structure/bed/roller,
-/obj/machinery/iv_drip,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUn" = (
-/obj/item/screwdriver{
-	pixel_y = 9
-	},
-/obj/item/device/assembly/voice{
-	pixel_y = 3
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUo" = (
-/obj/item/stock_parts/cell/high{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/stock_parts/cell/high,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUp" = (
-/obj/item/device/assembly/signaler,
-/obj/item/device/assembly/signaler,
-/obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUq" = (
-/obj/item/wrench,
-/obj/item/device/assembly/infra,
-/obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUr" = (
-/obj/item/weldingtool/largetank{
-	pixel_y = 3
-	},
-/obj/item/device/multitool,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUs" = (
-/obj/structure/sign/bluecross_2,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUt" = (
-/obj/machinery/door/window/westright{
-	name = "Tool Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUu" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/syndicate,
-/obj/item/crowbar/red,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUv" = (
-/obj/machinery/door/airlock/hatch{
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUw" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "Infirmary";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"cUx" = (
-/obj/machinery/door/window{
-	dir = 8;
-	name = "Tool Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUy" = (
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Surgery";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"cUz" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/item/bodypart/r_arm/robot,
-/obj/item/bodypart/l_arm/robot,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"cUA" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"cUB" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"cUC" = (
-/obj/item/grenade/syndieminibomb{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/grenade/syndieminibomb{
-	pixel_x = -1
-	},
-/obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUD" = (
-/obj/item/device/sbeacondrop/bomb{
-	pixel_y = 5
-	},
-/obj/item/device/sbeacondrop/bomb,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUE" = (
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"cUF" = (
-/obj/item/surgicaldrill,
-/obj/item/circular_saw,
-/obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUG" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
 "cUH" = (
 /obj/structure/table/optable,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
-"cUI" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 11
-	},
-/obj/structure/mirror{
-	pixel_x = 30
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"cUJ" = (
-/obj/machinery/nuclearbomb/syndicate,
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Theatre Stage";
-	req_access_txt = "0"
-	},
-/turf/open/floor/circuit/red,
-/area/shuttle/syndicate)
-"cUK" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/airless,
-/area/shuttle/syndicate)
 "cUL" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
@@ -78834,21 +77932,6 @@
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"cUO" = (
-/obj/structure/shuttle/engine/propulsion,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/airless,
-/area/shuttle/syndicate)
-"cUP" = (
-/obj/structure/shuttle/engine/propulsion/left,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/airless,
-/area/shuttle/syndicate)
-"cUQ" = (
-/obj/structure/shuttle/engine/propulsion/right,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/airless,
-/area/shuttle/syndicate)
 "cUR" = (
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
 	dir = 4
@@ -79277,9 +78360,6 @@
 	name = "dust"
 	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned)
-"cVW" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cVX" = (
 /obj/structure/tank_dispenser/oxygen{
@@ -79858,7 +78938,6 @@
 /area/shuttle/abandoned)
 "cWT" = (
 /obj/structure/table,
-/obj/item/device/camera,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -79866,6 +78945,8 @@
 /obj/structure/light_construct{
 	dir = 1
 	},
+/obj/item/folder/blue,
+/obj/item/pen,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cWU" = (
@@ -79874,6 +78955,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/table,
+/obj/item/device/camera,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cWV" = (
@@ -79948,16 +79031,6 @@
 /obj/structure/easel,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"cXe" = (
-/obj/structure/chair/office/light{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned)
 "cXf" = (
 /obj/structure/table,
 /obj/item/folder/blue,
@@ -80205,14 +79278,6 @@
 "cXA" = (
 /turf/closed/wall/r_wall,
 /area/security/checkpoint/engineering)
-"cXB" = (
-/obj/structure/chair/office/light,
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/abandoned)
 "cXC" = (
 /obj/item/phone{
 	pixel_x = -3;
@@ -80271,13 +79336,15 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cXH" = (
-/obj/structure/table,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/megaphone,
 /obj/structure/light_construct,
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	x_offset = -3;
+	y_offset = -7
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cXI" = (
@@ -80983,13 +80050,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/construction/mining/aux_base)
-"cYR" = (
-/obj/structure/table,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "cYS" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -81224,14 +80284,6 @@
 	pixel_y = 3
 	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"cZu" = (
-/obj/machinery/status_display{
-	dir = 8;
-	pixel_x = 32
-	},
-/obj/machinery/holopad,
-/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cZv" = (
 /turf/open/floor/circuit/killroom,
@@ -81667,15 +80719,6 @@
 /obj/structure/extinguisher_cabinet,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"day" = (
-/turf/open/space,
-/area/shuttle/syndicate)
-"daz" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
 "daA" = (
 /obj/machinery/door/window/southleft{
 	dir = 2;
@@ -81836,16 +80879,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
-"daT" = (
-/turf/open/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 6
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
 "daW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -82003,9 +81036,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"dbu" = (
-/turf/open/floor/engine/vacuum,
-/area/engine/atmos)
 "dbv" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small,
@@ -82020,35 +81050,6 @@
 	},
 /turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
-"dbx" = (
-/obj/structure/table/optable,
-/obj/item/surgical_drapes,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dby" = (
-/obj/item/cautery,
-/obj/item/scalpel,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dbz" = (
-/obj/item/retractor,
-/obj/item/hemostat,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dbA" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
-	},
-/turf/open/floor/circuit/red,
-/area/shuttle/syndicate)
 "dbB" = (
 /obj/docking_port/stationary{
 	dheight = 9;
@@ -82103,15 +81104,6 @@
 	dir = 4
 	},
 /area/chapel/main)
-"dbG" = (
-/turf/open/space,
-/obj/machinery/porta_turret/syndicate{
-	dir = 10
-	},
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
 "dbH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -83275,15 +82267,6 @@
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
 /area/science/xenobiology)
-"ddD" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
-/obj/machinery/deepfryer,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/crew_quarters/kitchen)
 "ddE" = (
 /obj/effect/landmark/start/cook,
 /obj/machinery/holopad,
@@ -83351,12 +82334,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/engine/engineering)
-"ddR" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/turf/closed/wall/r_wall,
 /area/engine/engineering)
 "ddS" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -83594,24 +82571,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"det" = (
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 8;
-	name = "Mix Bypass"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/engine,
-/area/engine/engineering)
 "deu" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -83764,16 +82723,6 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
-"deT" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/trinary/filter/critical{
-	dir = 1;
-	filter_type = "plasma"
-	},
-/turf/open/floor/engine,
-/area/engine/engineering)
 "deU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -84454,11 +83403,6 @@
 	},
 /turf/open/space,
 /area/space)
-"dhm" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
 "dhn" = (
 /obj/structure/table,
 /obj/item/poster/random_contraband,
@@ -85478,10 +84422,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"diX" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/science/xenobiology)
 "djg" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -85546,37 +84486,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
-"dju" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
-"djv" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
-"djw" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "djx" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -85590,26 +84499,7 @@
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
-"djy" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "djz" = (
-/obj/machinery/door/airlock/external{
-	cyclelinkeddir = 2;
-	name = "Arrival Airlock"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
-"djA" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 2;
 	name = "Arrival Airlock"
@@ -85639,56 +84529,7 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"djD" = (
-/obj/machinery/door/airlock/external{
-	cyclelinkeddir = 1;
-	name = "Arrival Airlock"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "djE" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"djF" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"djG" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"djH" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"djI" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"djJ" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"djK" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"djL" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -85709,64 +84550,12 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
-"djN" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"djO" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"djP" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"djQ" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
 "djR" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)
-"djS" = (
-/obj/machinery/door/airlock/external{
-	cyclelinkeddir = 2;
-	name = "Arrival Airlock"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
-"djT" = (
-/obj/machinery/door/airlock/external{
-	cyclelinkeddir = 2;
-	name = "Arrival Airlock"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
-"djU" = (
-/obj/machinery/door/airlock/external{
-	cyclelinkeddir = 1;
-	name = "Arrival Airlock"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
-"djV" = (
-/obj/machinery/door/airlock/external{
-	cyclelinkeddir = 1;
-	name = "Arrival Airlock"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "djW" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
@@ -85784,363 +84573,6 @@
 	},
 /turf/open/floor/plating,
 /area/chapel/main)
-"djY" = (
-/obj/machinery/computer/secure_data/syndie,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"djZ" = (
-/obj/structure/chair/office/dark{
-	dir = 8;
-	name = "tactical swivel chair"
-	},
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dka" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dkb" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dkc" = (
-/obj/structure/chair/office/dark{
-	dir = 4;
-	name = "tactical swivel chair"
-	},
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dkd" = (
-/obj/structure/table/reinforced,
-/obj/machinery/ai_status_display{
-	pixel_x = 32
-	},
-/obj/item/storage/fancy/donut_box,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dke" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"dkf" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dkg" = (
-/obj/structure/chair{
-	dir = 4;
-	name = "tactical chair"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dkh" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dki" = (
-/obj/structure/chair{
-	dir = 4;
-	name = "tactical chair"
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dkj" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dkk" = (
-/obj/structure/chair{
-	dir = 8;
-	name = "tactical chair"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dkl" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dkm" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dkn" = (
-/obj/structure/chair{
-	dir = 4;
-	name = "tactical chair"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dko" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dkp" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
-	},
-/area/shuttle/syndicate)
-"dkq" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dkr" = (
-/obj/structure/chair{
-	dir = 4;
-	name = "tactical chair"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dks" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
-	},
-/area/shuttle/syndicate)
-"dkt" = (
-/obj/item/storage/toolbox/syndicate,
-/obj/item/crowbar/red,
-/obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 10
-	},
-/area/shuttle/syndicate)
-"dku" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"dkv" = (
-/obj/structure/chair{
-	name = "tactical chair"
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 6
-	},
-/area/shuttle/syndicate)
-"dkw" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
-	},
-/area/shuttle/syndicate)
-"dkx" = (
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dky" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/podhatch{
-	dir = 6
-	},
-/area/shuttle/syndicate)
-"dkz" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dkA" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dkB" = (
-/obj/structure/chair{
-	dir = 1;
-	name = "tactical chair"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dkC" = (
-/obj/structure/chair{
-	dir = 1;
-	name = "tactical chair"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dkD" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate/black/red,
-/obj/item/clothing/head/helmet/space/syndicate/black/red,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dkE" = (
-/obj/machinery/ai_status_display,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"dkF" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dkG" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"dkH" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dkI" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dkJ" = (
-/turf/open/floor/plasteel/black,
-/area/shuttle/syndicate)
-"dkK" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dkL" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 9
-	},
-/area/shuttle/syndicate)
-"dkM" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"dkN" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"dkO" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"dkP" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"dkQ" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"dkR" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"dkS" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
-"dkT" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 5
-	},
-/area/shuttle/syndicate)
-"dkU" = (
-/obj/structure/closet/syndicate/personal,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dkV" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker,
-/obj/item/reagent_containers/dropper,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dkW" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 10
-	},
-/area/shuttle/syndicate)
-"dkX" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"dkY" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"dkZ" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"dla" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"dlb" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"dlc" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"dld" = (
-/turf/open/floor/plasteel/podhatch,
-/area/shuttle/syndicate)
-"dle" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 6
-	},
-/area/shuttle/syndicate)
-"dlf" = (
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Technological Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"dlg" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/table/reinforced,
-/obj/item/device/aicard,
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"dlh" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/shuttle/syndicate)
 "dli" = (
 /obj/structure/chair,
 /obj/machinery/light/small{
@@ -86236,12 +84668,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"dlu" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
 "dlv" = (
 /obj/structure/table,
 /obj/item/stack/medical/gauze,
@@ -86334,33 +84760,9 @@
 "dlI" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
-"dlJ" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"dlK" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"dlL" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"dlM" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "dlN" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
-/area/engine/supermatter)
-"dlO" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"dlP" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"dlQ" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"dlR" = (
-/turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "dlS" = (
 /obj/machinery/power/rad_collector/anchored,
@@ -86370,78 +84772,7 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
-"dlT" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
-"dlU" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "dlV" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dlW" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dlX" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dlY" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dlZ" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dma" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmb" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmc" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmd" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dme" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmf" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmg" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmh" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmi" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmj" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmk" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dml" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmm" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmn" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmo" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmp" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/department/science/xenobiology)
 "dmq" = (
@@ -86468,90 +84799,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"dms" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmt" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmu" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmv" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmw" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmx" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmy" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmz" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmA" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmB" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
-"dmC" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
 "dmD" = (
-/obj/structure/displaycase/trophy,
-/turf/open/floor/wood,
-/area/library)
-"dmE" = (
 /obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "dmF" = (
 /turf/closed/wall,
 /area/quartermaster/sorting)
-"dmG" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
 "dmH" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/quartermaster/sorting)
-"dmI" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/quartermaster/sorting)
-"dmJ" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmK" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmL" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmM" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmN" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmO" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmP" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmQ" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmR" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmS" = (
-/turf/closed/wall,
 /area/quartermaster/sorting)
 "dmT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -86559,45 +84816,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
-"dmU" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmV" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmW" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmX" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dmY" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/quartermaster/sorting)
-"dmZ" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dna" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dnb" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"dnc" = (
-/turf/closed/wall,
-/area/quartermaster/sorting)
 "dnd" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "dne" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnf" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dng" = (
 /turf/closed/wall,
 /area/maintenance/port/fore)
 "dnh" = (
@@ -86607,31 +84830,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"dnj" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
 "dnk" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dnl" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnm" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnn" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dno" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnp" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnq" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
 "dnr" = (
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -86647,48 +84849,13 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/port/fore)
-"dns" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnt" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
 "dnu" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dnv" = (
-/obj/structure/closet/firecloset,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dnw" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnx" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dny" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
 "dnz" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dnA" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dnB" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dnC" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dnD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dnE" = (
-/turf/closed/wall,
 /area/maintenance/starboard/fore)
 "dnF" = (
 /turf/open/floor/plating{
@@ -86708,26 +84875,11 @@
 "dnH" = (
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dnI" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnJ" = (
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dnK" = (
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dnL" = (
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "dnM" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dnN" = (
-/turf/closed/wall,
 /area/maintenance/port/fore)
 "dnO" = (
 /obj/machinery/space_heater,
@@ -86741,9 +84893,6 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dnQ" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
 "dnR" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -86751,39 +84900,10 @@
 "dnS" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"dnT" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dnU" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnV" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnW" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnX" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dnY" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "dnZ" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/maintenance/port/fore)
-"doa" = (
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dob" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doc" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
 /area/maintenance/port/fore)
 "dod" = (
 /obj/item/cigbutt,
@@ -86793,107 +84913,19 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dof" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dog" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
 "doh" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/starboard/fore)
-"doi" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"doj" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dok" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dol" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dom" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"don" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doo" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dop" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doq" = (
-/obj/machinery/space_heater,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dor" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dos" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dot" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
 "dou" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dov" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dow" = (
-/obj/item/cigbutt,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dox" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doy" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/port/fore)
-"doz" = (
-/turf/closed/wall,
 /area/maintenance/port/fore)
 "doA" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"doB" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doC" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"doD" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"doE" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"doF" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"doG" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"doH" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"doI" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "doJ" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -86902,144 +84934,9 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"doK" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"doL" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"doM" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"doN" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"doO" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"doP" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"doQ" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"doR" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doS" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doT" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doU" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doV" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doW" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doX" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doY" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"doZ" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpa" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpb" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpc" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpd" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpe" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpf" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpg" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dph" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpi" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpj" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
 "dpk" = (
 /obj/item/cigbutt,
 /turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dpl" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dpm" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpn" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dpo" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpp" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dpq" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dpr" = (
-/turf/closed/wall,
 /area/maintenance/starboard/fore)
 "dps" = (
 /obj/machinery/space_heater,
@@ -87047,46 +84944,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/starboard/fore)
-"dpt" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpu" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dpv" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpw" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpx" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpy" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpz" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpA" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpB" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpC" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpD" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpE" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpF" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
 "dpG" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -87096,446 +84953,31 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dpH" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpI" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpJ" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpK" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
 "dpL" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/starboard/fore)
-"dpM" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpN" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpO" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpP" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Storage Room";
-	req_access_txt = "12"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dpQ" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpR" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpS" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/starboard/fore)
-"dpT" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dpU" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dpV" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpW" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpX" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dpY" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dpZ" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqa" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqb" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqc" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqd" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "dqe" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dqf" = (
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dqg" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dqh" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dqi" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqj" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqk" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dql" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqm" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqn" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dqo" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "dqp" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/starboard/fore)
-"dqq" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dqr" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dqs" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dqt" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
 "dqu" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"dqv" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dqw" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dqx" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dqy" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/maintenance/starboard/fore)
-"dqz" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dqA" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqB" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqC" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqD" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqE" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqF" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/port/fore)
-"dqG" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dqH" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dqI" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dqJ" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dqK" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dqL" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dqM" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Storage Room";
-	req_access_txt = "12"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dqN" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dqO" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dqP" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dqQ" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dqR" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
-/area/maintenance/starboard/fore)
-"dqS" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
 "dqT" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/starboard/fore)
-"dqU" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dqV" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dqW" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dqX" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dqY" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dqZ" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dra" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drb" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drc" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drd" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dre" = (
-/obj/machinery/space_heater,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"drf" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drg" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drh" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dri" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drj" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drk" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drl" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drm" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"drn" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dro" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"drp" = (
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"drq" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"drr" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"drs" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"drt" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dru" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"drv" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"drw" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"drx" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dry" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drz" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drA" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drB" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"drC" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"drD" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"drE" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"drF" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"drG" = (
-/obj/machinery/space_heater,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"drH" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"drI" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"drJ" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"drK" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drL" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drM" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drN" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drO" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drP" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "drQ" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
-/area/maintenance/port/fore)
-"drR" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"drS" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"drT" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drU" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drV" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drW" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drX" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drY" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"drZ" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dsa" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsb" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsc" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dsd" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dse" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsf" = (
-/turf/closed/wall,
 /area/maintenance/port/fore)
 "dsg" = (
 /obj/structure/cable/yellow{
@@ -87553,41 +84995,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"dsh" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dsi" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dsj" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsk" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dsl" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dsm" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsn" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dso" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsp" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsq" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsr" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
 "dss" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -87602,138 +85009,6 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dsu" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsv" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsw" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dsx" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsy" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsz" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dsA" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsB" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dsC" = (
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dsD" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dsE" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dsF" = (
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dsG" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsH" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsI" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsJ" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsK" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsL" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsM" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dsN" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsO" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dsP" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsQ" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsR" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsS" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsT" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsU" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsV" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsW" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dsX" = (
-/obj/structure/closet/firecloset,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dsY" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dsZ" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dta" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dtb" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dtc" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtd" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dte" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dtf" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dtg" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dth" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dti" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dtj" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtk" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
 "dtl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -87746,97 +85021,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dtm" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtn" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dto" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtp" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dtq" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtr" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dts" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtt" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtu" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtv" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtw" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtx" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/fore)
-"dty" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtz" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtA" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtB" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtC" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtD" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
 "dtE" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
-"dtF" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtG" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtH" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtI" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtJ" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtK" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dtL" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dtM" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dtN" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtO" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
 "dtP" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -87854,9 +85044,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dtQ" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
 "dtR" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -87887,141 +85074,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"dtT" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dtU" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtV" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtW" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtX" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtY" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dtZ" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dua" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dub" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"duc" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"dud" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"due" = (
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"duf" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dug" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"duh" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dui" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"duj" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"duk" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dul" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"dum" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dun" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
 "duo" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"dup" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"duq" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dur" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dus" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"dut" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"duu" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"duv" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
-"duw" = (
-/turf/closed/wall,
-/area/maintenance/starboard/fore)
 "dux" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duy" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duz" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duA" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duB" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duC" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duD" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duE" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duF" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duG" = (
 /turf/closed/wall,
 /area/maintenance/port/aft)
 "duH" = (
@@ -88030,128 +85087,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"duI" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duJ" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duK" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duL" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duM" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duN" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duO" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duP" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duQ" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duR" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duS" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duT" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duU" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duV" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duW" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duX" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duY" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"duZ" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dva" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvb" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvc" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvd" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dve" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvf" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvg" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvh" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvi" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvj" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvk" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvl" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvm" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvn" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvo" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvp" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
 "dvq" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dvr" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvs" = (
-/turf/closed/wall,
 /area/maintenance/port/aft)
 "dvt" = (
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/maintenance/port/aft)
-"dvu" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvv" = (
-/turf/closed/wall,
 /area/maintenance/port/aft)
 "dvw" = (
 /obj/structure/disposalpipe/segment{
@@ -88162,99 +85105,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"dvx" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvy" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvz" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvA" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvB" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/port/aft)
-"dvC" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvD" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
 "dvE" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"dvF" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvG" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvH" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvI" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvJ" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvK" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvL" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvM" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvN" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvO" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvP" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvQ" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvR" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvS" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvT" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvU" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvV" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvW" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dvX" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
 "dvY" = (
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
-"dvZ" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwa" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
 "dwb" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -88287,20 +85144,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"dwd" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "dwe" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -88314,48 +85157,6 @@
 	dir = 4
 	},
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dwf" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dwg" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dwh" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dwi" = (
@@ -88383,39 +85184,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"dwk" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwl" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwm" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwn" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwo" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwp" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwq" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwr" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dws" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwt" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwu" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
 "dwv" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -88424,83 +85192,13 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dwx" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwy" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwz" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwA" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwB" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwC" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwD" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwE" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwF" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwG" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwH" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwI" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwJ" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwK" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
 "dwL" = (
 /turf/closed/wall/r_wall,
-/area/maintenance/starboard/aft)
-"dwM" = (
-/turf/closed/wall,
 /area/maintenance/starboard/aft)
 "dwN" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dwO" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dwP" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "dwQ" = (
-/obj/structure/chair/stool,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dwR" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwS" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwT" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dwU" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwV" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dwW" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -88513,150 +85211,24 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dwZ" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxa" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxb" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxc" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxd" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dxe" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dxf" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxg" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
 "dxh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dxi" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dxj" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "dxk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dxl" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dxm" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dxn" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxo" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dxp" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxq" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/port/aft)
-"dxr" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dxs" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxt" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxu" = (
-/turf/closed/wall,
 /area/maintenance/starboard/aft)
 "dxv" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/port/aft)
-"dxw" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxx" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxy" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxz" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxA" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxB" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dxC" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dxE" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxF" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dxG" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxH" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dxI" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dxJ" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dxK" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dxL" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dxM" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/aft)
-"dxN" = (
-/obj/structure/closet/firecloset,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "dxO" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dxP" = (
-/turf/closed/wall,
 /area/maintenance/starboard/aft)
 "dxQ" = (
 /obj/structure/cable/yellow{
@@ -88669,86 +85241,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dxR" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxS" = (
-/obj/structure/closet/firecloset,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dxT" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dxU" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dxV" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dxW" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dxX" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dxY" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dxZ" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dya" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyb" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/aft)
 "dyc" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dyd" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dye" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyf" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
 "dyg" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dyh" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dyi" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -88778,139 +85275,14 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port/aft)
-"dyk" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dyl" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dym" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/aft)
-"dyn" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyo" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "dyp" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dyq" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyr" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dys" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyt" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/port/aft)
-"dyu" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dyv" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "dyw" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"dyx" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyy" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/aft)
-"dyz" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyA" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyB" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyC" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyD" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyE" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyF" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyG" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyH" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyI" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyJ" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyK" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyL" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyM" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyN" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyO" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyP" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/aft)
 "dyQ" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -88924,147 +85296,9 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/starboard/aft)
-"dyR" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dyS" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dyT" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dyU" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyV" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyW" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyX" = (
-/obj/machinery/space_heater,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dyY" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dyZ" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dza" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzb" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
 "dzc" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dzd" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dze" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dzf" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzg" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzh" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzi" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzj" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzk" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzl" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzm" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzn" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzo" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzp" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzq" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzr" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzs" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzt" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzu" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzv" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzw" = (
-/obj/machinery/space_heater,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dzx" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzy" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzz" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzA" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzB" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzC" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzD" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzE" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzF" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzG" = (
-/turf/closed/wall,
-/area/maintenance/port/aft)
-"dzH" = (
-/turf/closed/wall/r_wall,
 /area/maintenance/starboard/aft)
 "dzI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -89078,27 +85312,8 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dzJ" = (
-/obj/structure/closet/firecloset,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "dzK" = (
 /turf/closed/wall/r_wall,
-/area/maintenance/port/aft)
-"dzL" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/port/aft)
-"dzM" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/port/aft)
-"dzN" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/port/aft)
-"dzO" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/port/aft)
-"dzP" = (
-/turf/closed/wall,
 /area/maintenance/port/aft)
 "dzQ" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -89114,52 +85329,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dzS" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dzT" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzU" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dzV" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dzW" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dzX" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dzY" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dzZ" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dAa" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAb" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAc" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "dAd" = (
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
@@ -89170,46 +85339,11 @@
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dAe" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAf" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAg" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
 "dAh" = (
 /obj/item/storage/box,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dAi" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAj" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAk" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAl" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAm" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
 "dAn" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/external{
-	req_access_txt = "13"
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dAo" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -89230,25 +85364,6 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/maintenance/starboard/aft)
-"dAq" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAr" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAs" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAt" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAu" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAv" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dAw" = (
 /obj/structure/cable/yellow{
@@ -89279,141 +85394,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dAy" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dAz" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dAA" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dAB" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dAC" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAD" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAE" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dAF" = (
-/obj/machinery/space_heater,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dAG" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAH" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAI" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAJ" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAK" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAL" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAM" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAN" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAO" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAP" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAQ" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAR" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAS" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dAT" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAU" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAV" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAW" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dAX" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dAY" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "dAZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dBa" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dBb" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBc" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dBd" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dBe" = (
@@ -89421,56 +85405,7 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/starboard/aft)
-"dBf" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBg" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"dBh" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/aft)
-"dBi" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBj" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBk" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBl" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBm" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBn" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBo" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBp" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBq" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBr" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBs" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
-"dBt" = (
-/turf/closed/wall,
-/area/maintenance/starboard/aft)
 "dBu" = (
-/turf/closed/wall,
-/area/engine/gravity_generator)
-"dBv" = (
 /turf/closed/wall,
 /area/engine/gravity_generator)
 "dBw" = (
@@ -89530,14 +85465,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/brig)
-"dBE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/plating,
-/area/security/brig)
 "dBF" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
@@ -89589,14 +85516,6 @@
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/engine/atmos)
-"dBL" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "dBM" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8";
@@ -89623,22 +85542,6 @@
 	},
 /mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
-/area/medical/virology)
-"dBP" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating,
-/area/medical/virology)
-"dBQ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating,
 /area/medical/virology)
 "dBR" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -89683,11 +85586,6 @@
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
 /area/medical/virology)
-"dBW" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable/yellow,
-/turf/open/floor/plating,
-/area/medical/virology)
 "dBX" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/black,
@@ -89727,10 +85625,6 @@
 	dir = 4
 	},
 /area/crew_quarters/fitness/recreation)
-"dCd" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/red,
-/area/security/main)
 "dCe" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -89796,13 +85690,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dCm" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "dCn" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -89865,10 +85752,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"dCu" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/storage/primary)
 "dCv" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/floorgrime,
@@ -89895,10 +85778,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port/fore)
-"dCy" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/floorgrime,
-/area/crew_quarters/locker)
 "dCz" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/black,
@@ -89946,24 +85825,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"dCF" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"dCG" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "dCH" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -89989,10 +85850,6 @@
 	},
 /area/hallway/primary/starboard)
 "dCK" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/black,
-/area/bridge)
-"dCL" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/black,
 /area/bridge)
@@ -90028,20 +85885,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
-"dCQ" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"dCR" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/black,
-/area/bridge)
 "dCS" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/bar,
@@ -90120,20 +85963,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
-"dDc" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
-"dDd" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "dDe" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/cafeteria{
@@ -90159,15 +85988,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
-"dDh" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "dDi" = (
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -90175,24 +85995,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
 /area/library)
-"dDj" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"dDk" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "dDl" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/green/side{
@@ -90206,12 +86008,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"dDn" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/green/side{
-	dir = 8
-	},
-/area/hydroponics)
 "dDo" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
@@ -90288,10 +86084,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"dDx" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "dDy" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -90347,15 +86139,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
-"dDD" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/white,
-/area/science/research)
 "dDE" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
@@ -90420,14 +86203,51 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"dDM" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
-	name = "Storage Room";
-	req_access_txt = "12"
+"dDN" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"dDO" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/chair/office/light,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"dDP" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/table,
+/obj/item/device/megaphone,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"EDa" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_nw";
+	name = "northwest of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
+/turf/open/space/basic,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -94821,16 +90641,16 @@ aaa
 aaa
 aaa
 aaa
-aad
-aae
-aae
-aae
-aae
-aae
-aae
-aae
-aae
-cTM
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -95072,22 +90892,22 @@ aaa
 aaa
 aaa
 aaa
-aad
-aae
-aae
-aae
-aae
-aae
-aae
-cUb
-cUm
-cUb
-dkV
-cUz
-cUF
-dby
-cUK
-cUP
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -95329,22 +91149,22 @@ aaa
 aaa
 aaa
 aaa
-aae
-cTV
-dkp
-dkp
-dkp
-dky
-aae
-dkx
-cTJ
-dkf
-dkf
-cUy
-dkf
-dbx
-cUK
-cUO
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -95586,22 +91406,22 @@ aaa
 aaa
 aaa
 aaa
-aae
-dkf
-dkf
-dkf
-dkf
-dkf
-dkE
-cUk
-cTJ
-dkL
-dkW
-cUB
-cUI
-dbz
-cUK
-cUQ
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -95836,29 +91656,29 @@ aaa
 aaa
 aaa
 aaa
-aad
-aae
-aae
-aae
-cTM
 aaa
 aaa
-aae
-dkf
-dkf
-dkf
-dkf
-dkf
-aae
-cUc
-cTJ
-dkM
-dku
-cUA
-aae
-aae
-aae
-daT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96093,26 +91913,26 @@ aaa
 aaa
 aaa
 aaa
-aae
-bSm
-cTH
-cTJ
-aae
-dbG
 aaa
-aae
-cTW
-cTY
-cTI
-dkx
-dkz
-aae
-cUl
-cTJ
-dkM
-dku
-cUE
-aae
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96350,28 +92170,28 @@ aaa
 aaa
 aaa
 aaa
-aPc
-bRb
-djZ
-cTJ
-aae
-aae
-aae
-aae
-aae
-aae
-aae
-cUd
-cUg
-aae
-aae
-aae
-cUv
-cUg
-aae
-aae
-aae
-cTM
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96607,28 +92427,28 @@ aaa
 aaa
 aaa
 aaa
-aPc
-cTE
-dka
-cTJ
-dke
-cTP
-dkg
-dki
-dkg
-dkg
-cUg
-dkf
-dkf
-dkf
-dkf
-dkI
-dkM
-dku
-cTJ
-cUg
-cUK
-cUP
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96864,28 +92684,28 @@ aaa
 aaa
 aaa
 aaa
-aPc
-cRQ
-bPB
-cTJ
-cTN
-dkf
-dka
-dka
-dka
-dkf
-cTU
-dkf
-dka
-dka
-dka
-dka
-dkM
-dku
-cTJ
-cUJ
-cUK
-cUO
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97121,28 +92941,28 @@ aaa
 aaa
 aaa
 aaa
-aPc
-cTG
-dka
-cTJ
-aae
-cTQ
-cTS
-dkk
-cTS
-cTS
-cUg
-dkf
-dkf
-dkf
-dkf
-dkK
-dkM
-dku
-cTJ
-cUg
-cUK
-cUQ
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97378,28 +93198,28 @@ aaa
 aaa
 aaa
 aaa
-aPc
-cTF
-dkc
-cTJ
-aae
-aae
-aae
-cpV
-aae
-aae
-aae
-cUe
-cUg
-aae
-aae
-aae
-cUv
-cUg
-aae
-aae
-aae
-cTO
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97635,26 +93455,26 @@ aaa
 aaa
 aaa
 aaa
-aae
-djY
-dkd
-cTJ
-aae
-daT
 aaa
 aaa
 aaa
-aae
-dkt
-dkf
-dkB
-aae
-cUo
-cTJ
-dkM
-dku
-cUD
-aae
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97892,29 +93712,29 @@ aaa
 aaa
 aaa
 aaa
-aaW
-aae
-aae
-aae
-cTO
 aaa
 aaa
 aaa
 aaa
-cTl
-dku
-dkf
-dkB
-aae
-cUn
-cTJ
-dkM
-dku
-cUC
-aae
-aae
-aae
-dbG
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98158,20 +93978,20 @@ aaa
 aaa
 aaa
 aaa
-cTv
-dkv
-dkf
-dkD
-dke
-cUq
-cTJ
-dkT
-dle
-cUB
-dkf
-abd
-cUK
-cUP
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98415,20 +94235,20 @@ aaa
 aaa
 aaa
 aaa
-aaW
-aae
-aae
-aae
-aae
-cUp
-cTJ
-dkf
-dkf
-dlf
-dkf
-dbA
-cUK
-cUO
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98675,17 +94495,17 @@ aaa
 aaa
 aaa
 aaa
-cUa
-aae
-cUr
-cTJ
-dkU
-cUj
-dlg
-dkK
-abd
-cUK
-cUQ
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98933,16 +94753,16 @@ aaa
 aaa
 aaa
 aaa
-aaW
-aae
-aae
-aae
-aae
-aae
-aae
-aae
-aae
-cTO
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -99950,7 +95770,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+EDa
 aaa
 aaa
 aaa
@@ -101625,10 +97445,10 @@ cWt
 cWE
 cVF
 cWU
-cXe
-cWo
-cXB
 cXa
+cWo
+cXa
+dDP
 cVF
 cJI
 cYp
@@ -101882,9 +97702,9 @@ cVG
 cVF
 cVF
 cWT
-cVY
+dDN
 cWo
-cWR
+dDO
 cXH
 cVF
 cVF
@@ -124018,7 +119838,7 @@ cIi
 cJa
 dAp
 cKK
-cLG
+cxM
 dvY
 cNl
 dAZ
@@ -126059,7 +121879,7 @@ cub
 cva
 cwb
 cIk
-cLG
+cxM
 dvY
 czD
 cQC
@@ -128535,7 +124355,7 @@ aaa
 aaa
 aaf
 aaa
-aaX
+blx
 adl
 aQf
 adl
@@ -129053,7 +124873,7 @@ aaa
 aaa
 bii
 aaa
-aeD
+aeC
 afD
 afD
 afD
@@ -130157,7 +125977,7 @@ ccI
 ced
 cfq
 cgw
-chK
+cfs
 ciZ
 ckD
 ciZ
@@ -130669,7 +126489,7 @@ bZE
 cba
 ccK
 cef
-chK
+cfs
 czH
 cLC
 cjb
@@ -134723,8 +130543,8 @@ arU
 atk
 aux
 avF
-drc
-drc
+dqT
+dqT
 aaf
 ack
 dea
@@ -134980,8 +130800,8 @@ arV
 atl
 auy
 dnS
-drc
-drc
+dqT
+dqT
 aaf
 ack
 ack
@@ -135238,7 +131058,7 @@ apm
 dnh
 dnS
 dnz
-drc
+dqT
 aaf
 aaf
 aaf
@@ -135494,8 +131314,8 @@ aaa
 dnh
 auz
 dqp
-drc
-drc
+dqT
+dqT
 aaa
 aaa
 aaa
@@ -135751,7 +131571,7 @@ aaf
 dni
 auA
 dnS
-drc
+dqT
 aaa
 aaa
 aaa
@@ -136008,7 +131828,7 @@ aaa
 dnh
 auB
 avG
-drc
+dqT
 aaa
 aaa
 aaa
@@ -136046,9 +131866,9 @@ aaf
 aaa
 aaf
 bAR
-dbu
-dbu
-dbu
+bCC
+bCC
+bCC
 bAR
 bJd
 bKI
@@ -136071,8 +131891,8 @@ cgD
 chW
 cjl
 ckK
-dbu
-dbu
+bCC
+bCC
 ckM
 aaf
 bKK
@@ -136265,7 +132085,7 @@ aaa
 dnh
 dnh
 atn
-drc
+dqT
 aaf
 aaa
 aaa
@@ -136303,7 +132123,7 @@ aaf
 aaf
 aaf
 bAR
-dbu
+bCC
 bEe
 bGb
 bAR
@@ -136327,9 +132147,9 @@ ccY
 ccY
 ccY
 cjm
-dbu
+bCC
 cme
-dbu
+bCC
 cjo
 aaa
 bKK
@@ -136522,7 +132342,7 @@ ack
 atn
 bOY
 avG
-drc
+dqT
 aaf
 aaa
 aaa
@@ -136585,8 +132405,8 @@ cgE
 chX
 cjn
 ckL
-dbu
-dbu
+bCC
+bCC
 bxc
 aaf
 aai
@@ -136779,7 +132599,7 @@ aaf
 dnh
 dnh
 atn
-drc
+dqT
 aaf
 aaa
 aaa
@@ -137036,7 +132856,7 @@ aaa
 aaa
 aaf
 ack
-drc
+dqT
 aaf
 anT
 anT
@@ -142718,14 +138538,14 @@ aSD
 bes
 bgg
 bil
-blz
-blz
+bjO
+bjO
 bns
 bpF
 brS
-blz
-blz
-blz
+bjO
+bjO
+bjO
 bzk
 bAS
 anT

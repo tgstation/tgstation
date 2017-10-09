@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(minimap)
 
 /datum/controller/subsystem/minimap/Initialize(timeofday)
 	var/hash = md5(SSmapping.config.GetFullMapPath())
-	if(config.generate_minimaps)
+	if(CONFIG_GET(flag/generate_minimaps))
 		if(hash == trim(file2text(hash_path())))
 			for(var/z in z_levels)	//We have these files cached, let's register them
 				register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))

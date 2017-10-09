@@ -69,7 +69,7 @@
 
 /datum/gas_mixture/immutable/cloner/garbage_collect()
 	..()
-	add_gas("n2")
+	ADD_GAS("n2", gases)
 	gases["n2"][MOLES] = MOLES_O2STANDARD + MOLES_N2STANDARD
 
 /datum/gas_mixture/immutable/cloner/heat_capacity()

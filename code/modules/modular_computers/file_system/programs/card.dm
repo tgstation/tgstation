@@ -44,7 +44,7 @@
 	addtimer(CALLBACK(src, .proc/SetConfigCooldown), 0)
 
 /datum/computer_file/program/card_mod/proc/SetConfigCooldown()
-	change_position_cooldown = config.id_console_jobslot_delay
+	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
 /datum/computer_file/program/card_mod/event_idremoved(background, slot)
 	if(!slot || slot == 2)// slot being false means both are removed
@@ -175,9 +175,8 @@
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/card/id))
-								if(!usr.drop_item())
+								if(!usr.transferItemToLoc(I, computer))
 									return
-								I.forceMove(computer)
 								card_slot.stored_card = I
 					if("auth")
 						if(auth_card)
@@ -191,9 +190,8 @@
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/card/id))
-								if(!usr.drop_item())
+								if(!usr.transferItemToLoc(I, computer))
 									return
-								I.forceMove(computer)
 								card_slot.stored_card2 = I
 		if("PRG_terminate")
 			if(computer && ((id_card.assignment in head_subordinates) || id_card.assignment == "Assistant"))

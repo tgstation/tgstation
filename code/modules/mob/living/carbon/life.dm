@@ -72,7 +72,7 @@
 		//Breathe from internal
 		breath = get_breath_from_internal(BREATH_VOLUME)
 
-		if(!breath)
+		if(isnull(breath)) //in case of 0 pressure internals
 
 			if(isobj(loc)) //Breathe from loc as object
 				var/obj/loc_as_obj = loc
@@ -221,7 +221,9 @@
 			update_internals_hud_icon(0)
 		else
 			update_internals_hud_icon(1)
-			return internal.remove_air_volume(volume_needed)
+			. = internal.remove_air_volume(volume_needed)
+			if(!.)
+				return FALSE //to differentiate between no internals and active, but empty internals
 
 /mob/living/carbon/proc/handle_blood()
 	return
@@ -412,8 +414,9 @@
 			liver_failure()
 		else
 			liver.failing = FALSE
-
-	if(((!(NOLIVER in dna.species.species_traits)) && (!liver)))
+	else
+		if((dna && dna.species && (NOLIVER in dna.species.species_traits)))
+			return
 		liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()

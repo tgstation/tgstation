@@ -17,7 +17,7 @@
 /datum/objective_team/brother_team/proc/forge_brother_objectives()
 	objectives = list()
 	var/is_hijacker = prob(10)
-	for(var/i = 1 to max(1, config.brother_objectives_amount + (members.len > 2) - is_hijacker))
+	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (members.len > 2) - is_hijacker))
 		forge_single_objective()
 	if(is_hijacker)
 		if(!locate(/datum/objective/hijack) in objectives)
@@ -58,16 +58,17 @@
 	var/meeting_areas = list("The Bar", "Dorms", "Escape Dock", "Arrivals", "Holodeck", "Primary Tool Storage", "Recreation Area", "Chapel", "Library")
 
 /datum/game_mode/traitor/bros/pre_setup()
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	var/list/datum/mind/possible_brothers = get_players_for_role(ROLE_BROTHER)
 
 	var/num_teams = team_amount
-	if(config.brother_scaling_coeff)
-		num_teams = max(1, round(num_players()/config.brother_scaling_coeff))
+	var/bsc = CONFIG_GET(number/brother_scaling_coeff)
+	if(bsc)
+		num_teams = max(1, round(num_players() / bsc))
 
 	for(var/j = 1 to num_teams)
 		if(possible_brothers.len < min_team_size || antag_candidates.len <= required_enemies) 
@@ -80,7 +81,7 @@
 			antag_candidates -= bro
 			team.members += bro
 			bro.restricted_roles = restricted_jobs
-			log_game("[key_name(bro)] has been selected as a Brother")
+			log_game("[bro.key] (ckey) has been selected as a Brother")
 		pre_brother_teams += team
 	return ..()
 
@@ -94,6 +95,9 @@
 			modePlayer += M
 	brother_teams += pre_brother_teams
 	return ..()
+
+/datum/game_mode/traitor/bros/generate_report()
+	return "It's Syndicate recruiting season. Be alert for potential Syndicate infiltrators, but also watch out for disgruntled employees trying to defect. Unlike Nanotrasen, the Syndicate prides itself in teamwork and will only recruit pairs that share a brotherly trust."
 
 /datum/game_mode/proc/auto_declare_completion_brother()
 	if(!LAZYLEN(brother_teams))

@@ -34,7 +34,7 @@
 		if(!over_object)
 			return
 
-		if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+		if (ismecha(M.loc)) // stops inventory actions in a mech
 			return
 
 		// this must come before the screen objects only block, dunno why it wasn't before
@@ -365,35 +365,43 @@
 	return 1
 
 
-//Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
+//Call this proc to handle the removal of an item from the storage item. The item will be moved to the new_location target, if that is null it's being deleted
 /obj/item/storage/proc/remove_from_storage(obj/item/W, atom/new_location)
 	if(!istype(W))
 		return 0
 
-	if(istype(src, /obj/item/storage/fancy))
-		var/obj/item/storage/fancy/F = src
-		F.update_icon(1)
-
-	for(var/mob/M in can_see_contents())
-		if(M.client)
-			M.client.screen -= W
+	//Cache this as it should be reusable down the bottom, will not apply if anyone adds a sleep to dropped
+	//or moving objects, things that should never happen
+	var/list/seeing_mobs = can_see_contents()
+	for(var/mob/M in seeing_mobs)
+		M.client.screen -= W
 
 	if(ismob(loc))
 		var/mob/M = loc
 		W.dropped(M)
-	W.layer = initial(W.layer)
-	W.plane = initial(W.plane)
-	W.forceMove(new_location)
+	
 
-	for(var/mob/M in can_see_contents())
+	if(new_location)
+		W.forceMove(new_location)
+		//Reset the items values
+		W.layer = initial(W.layer)
+		W.plane = initial(W.plane)
+		W.mouse_opacity = initial(W.mouse_opacity)
+		if(W.maptext)
+			W.maptext = ""
+		//We don't want to call this if the item is being destroyed
+		W.on_exit_storage(src)
+
+	else
+		//Being destroyed, just move to nullspace now (so it's not in contents for the icon update)
+		W.moveToNullspace()
+
+
+	for(var/mob/M in seeing_mobs)
 		orient2hud(M)
 		show_to(M)
 
-	if(W.maptext)
-		W.maptext = ""
-	W.on_exit_storage(src)
 	update_icon()
-	W.mouse_opacity = initial(W.mouse_opacity)
 	return 1
 
 /obj/item/storage/deconstruct(disassembled = TRUE)

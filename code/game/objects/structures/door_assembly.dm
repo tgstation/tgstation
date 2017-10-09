@@ -6,6 +6,7 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 200
+	desc = "The mechanical framework for an airlock."
 	var/state = 0
 	var/mineral = null
 	var/typetext = ""
@@ -249,7 +250,7 @@
 
 /obj/structure/door_assembly/door_assembly_clown
 	name = "bananium airlock assembly"
-	desc = "Honk"
+	desc = "Honk."
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	airlock_type = /obj/machinery/door/airlock/clown
 	anchored = TRUE
@@ -362,6 +363,23 @@
 	airlock_type = /obj/machinery/door/airlock/centcom
 	anchored = TRUE
 	state = 1
+
+/obj/structure/door_assembly/examine(mob/user)
+	..()
+	switch(state)
+		if(0)
+			if(anchored)
+				to_chat(user, "<span class='notice'>The anchoring bolts are <b>wrenched</b> in place, but the maintenance panel lacks <i>wiring</i>.</span>")
+			else
+				to_chat(user, "<span class='notice'>The assembly is <b>welded together</b>, but the anchoring bolts are <i>unwrenched</i>.</span>")
+		if(1)
+			to_chat(user, "<span class='notice'>The maintenance panel is <b>wired</b>, but the circuit slot is <i>empty</i>.</span>")
+		if(2)
+			to_chat(user, "<span class='notice'>The circuit is <b>connected loosely</b> to its slot, but the maintenance panel is <i>unscrewed and open</i>.</span>")
+	if(!mineral || !material)
+		to_chat(user, "<span class='notice'>There is a small <i>paper</i> placard on the assembly. There are <i>empty</i> slots for glass windows or mineral covers.</span>")
+	else
+		to_chat(user, "<span class='notice'>There is a small <i>paper</i> placard on the assembly.</span>")
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
@@ -558,7 +576,8 @@
 		user.visible_message("[user] wires the airlock assembly.", \
 							"<span class='notice'>You start to wire the airlock assembly...</span>")
 		if(do_after(user, 40, target = src))
-			if(C.get_amount() < 1 || state != 0) return
+			if(C.get_amount() < 1 || state != 0)
+				return
 			C.use(1)
 			src.state = 1
 			to_chat(user, "<span class='notice'>You wire the airlock assembly.</span>")
@@ -584,10 +603,9 @@
 		if(do_after(user, 40, target = src))
 			if( src.state != 1 )
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(W, src))
 				return
 
-			W.loc = src
 			to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
 			src.state = 2
 			src.name = "near finished airlock assembly"
@@ -621,7 +639,8 @@
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 					if(do_after(user, 40, target = src))
-						if(G.get_amount() < 1 || mineral) return
+						if(G.get_amount() < 1 || mineral)
+							return
 						if(!istype(G, /obj/item/stack/sheet/glass))
 							to_chat(user, "<span class='notice'>You install [G.name] windows into the airlock assembly.</span>")
 							heat_proof_finished = 1 //plasma & reinforced glass makes the airlock heat-proof
@@ -649,7 +668,8 @@
 						user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 						if(do_after(user, 40, target = src))
-							if(G.get_amount() < 2 || mineral) return
+							if(G.get_amount() < 2 || mineral)
+								return
 							to_chat(user, "<span class='notice'>You install [M] plating into the airlock assembly.</span>")
 							G.use(2)
 							mineral = "[M]"

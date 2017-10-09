@@ -30,7 +30,7 @@
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
 		return 0
 	for(var/datum/mind/wiz in wizards)
-		wiz.current.loc = pick(GLOB.wizardstart)
+		wiz.current.forceMove(pick(GLOB.wizardstart))
 
 	return 1
 
@@ -111,10 +111,7 @@
 		if (!newname)
 			newname = randomname
 
-		wizard_mob.real_name = newname
-		wizard_mob.name = newname
-		if(wizard_mob.mind)
-			wizard_mob.mind.name = newname
+		wizard_mob.fully_replace_character_name(wizard_mob.real_name, newname)
 
 		/* Wizards by nature cannot be too young. */
 		if(wizard_mob.age < WIZARD_AGE_MIN)
@@ -162,7 +159,7 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/teleportation_scroll(wizard_mob), slot_r_store)
 	var/obj/item/spellbook/spellbook = new /obj/item/spellbook(wizard_mob)
 	spellbook.owner = wizard_mob
-	wizard_mob.put_in_hands_or_del(spellbook)
+	wizard_mob.put_in_hands(spellbook, TRUE)
 
 	to_chat(wizard_mob, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
 	to_chat(wizard_mob, "The spellbook is bound to you, and others cannot use it.")
@@ -244,15 +241,6 @@
 	return 1
 
 //OTHER PROCS
-
-//To batch-remove wizard spells. Linked to mind.dm.
-/mob/proc/spellremove(mob/M)
-	if(!mind)
-		return
-	for(var/X in src.mind.spell_list)
-		var/obj/effect/proc_holder/spell/spell_to_remove = X
-		qdel(spell_to_remove)
-		mind.spell_list -= spell_to_remove
 
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)
