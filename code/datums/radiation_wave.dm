@@ -27,77 +27,64 @@
 /datum/radiation_wave/process()
 	master_turf = get_step(master_turf, move_dir)
 	steps++
-	var/list/turfs = get_rad_turfs()
+	var/list/atoms = get_rad_atoms()
 
 	var/strength
 	if(steps>1)
 		strength = InverseSquareLaw(intensity, max(range_modifier*steps, 1), 1)
 	else
 		strength = intensity
+
+	radiate(atoms, Floor(strength))
+
+	check_obstructions(atoms) // reduce our overall strength if there are radiation insulators
 	if(strength<RAD_BACKGROUND_RADIATION)
 		qdel(src)
 		return
-	radiate(turfs, Floor(strength))
-	check_obstructions(turfs) // reduce our overall strength if there are radiation insulators
 
 	return TRUE
 
-/datum/radiation_wave/proc/get_rad_turfs()
-	var/list/turfs = list()
+/datum/radiation_wave/proc/get_rad_atoms()
+	var/list/atoms = list()
 	var/distance = steps
 
 	if(move_dir == NORTH || move_dir == SOUTH)
 		distance-- //otherwise corners overlap
 
-	turfs += master_turf
+	atoms += get_rad_contents(master_turf)
 
 	if(!distance)
-		return turfs
+		return atoms
 
 	var/turf/place
 	for(var/dir in __dirs) //There should be just 2 dirs in here, left and right of the direction of movement
 		place = master_turf
 		for(var/i in 1 to distance)
 			place = get_step(place, dir)
-			turfs += place
+			atoms += get_rad_contents(place)
 
-	return turfs
+	return atoms
 
-/datum/radiation_wave/proc/check_obstructions(list/turfs)
-	for(var/i in 1 to turfs.len)
-		var/turf/place = turfs[i]
-		if(!place)
+/datum/radiation_wave/proc/check_obstructions(list/atoms)
+	for(var/k in 1 to atoms.len)
+		var/atom/thing = atoms[k]
+		if(!thing)
 			continue
-		var/datum/component/rad_insulation/insulation = place.GetComponent(/datum/component/rad_insulation)
-		if(insulation)
-			intensity *= insulation.amount
-
-		var/list/things = get_rad_contents(place)
-		for(var/k in 1 to things.len)
-			var/atom/thing = things[k]
-			if(!thing)
-				continue
-			insulation = thing.GetComponent(/datum/component/rad_insulation)
-			if(!insulation)
-				continue
-			intensity *= insulation.amount
-
-/datum/radiation_wave/proc/radiate(list/turfs, strength)
-	for(var/i in 1 to turfs.len)
-		var/turf/place = turfs[i]
-		if(!place)
+		var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
+		if(!insulation)
 			continue
+		intensity *= insulation.amount
 
-		var/list/things = get_rad_contents(place)
-		for(var/k in 1 to things.len)
-			var/atom/thing = things[k]
-			if(!thing)
+/datum/radiation_wave/proc/radiate(list/atoms, strength)
+	for(var/k in 1 to atoms.len)
+		var/atom/thing = atoms[k]
+		if(!thing)
+			continue
+		thing.rad_act(strength)
+		if(can_contaminate && prob((strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1/(steps*range_modifier), 1))) // Only stronk rads get to have little baby rads
+			var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
+			if(insulation.protects)
 				continue
-			thing.rad_act(strength)
-			if(can_contaminate && prob((strength-RAD_MINIMUM_CONTAMINATION)*RAD_CONTAMINATION_CHANCE_COEFFICIENT)) // Only stronk rads get to have little baby rads
-				var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
-				if(insulation)
-					continue
-				else
-					thing.AddComponent(/datum/component/radioactive, (strength-RAD_MINIMUM_CONTAMINATION) * max(1/(steps*range_modifier)))
+			else
+				thing.AddComponent(/datum/component/radioactive, (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT * min(1/(steps*range_modifier), 1))
 				// Unless you're the stronkest of the stronk, in which case you get grandkids (>800 strength) or great great grandkids (>1200)

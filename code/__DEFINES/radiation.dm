@@ -25,10 +25,11 @@ These defines are the balancing points of various parts of the radiation system.
 #define RAD_EXTREME_INSULATION 0.05					// What reinforced walls have
 #define RAD_FULL_INSULATION 0						// Unused
 
-// contamination_chance = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT
-// contamination_strength = (strength-RAD_MINIMUM_CONTAMINATION) * max(1/(steps*RAD_DISTANCE_COEFFICIENT), 1)
+// contamination_chance = 		(strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1/(steps*RAD_DISTANCE_COEFFICIENT), 1))
+// contamination_strength = 	(strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT * min(1/(steps*RAD_DISTANCE_COEFFICIENT), 1)
 #define RAD_MINIMUM_CONTAMINATION 300				// How strong does a radiation wave have to be to contaminate objects
-#define RAD_CONTAMINATION_CHANCE_COEFFICIENT 0.005
+#define RAD_CONTAMINATION_CHANCE_COEFFICIENT 0.005  // Higher means higher strength scaling contamination chance
+#define RAD_CONTAMINATION_STR_COEFFICIENT 0.1		// Higher means higher strength sclaing contamination strength
 #define RAD_DISTANCE_COEFFICIENT 0.50				// Lower means further rad spread
 
 #define RAD_HALF_LIFE 150							// The half-life of contaminated objects

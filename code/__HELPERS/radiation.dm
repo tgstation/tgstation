@@ -1,12 +1,17 @@
 /proc/get_rad_contents(atom/location, list/output=list()) // A special GetAllContents that doesn't search past things with rad insulation
-	var/static/list/ignored_things = typecacheof(list(/mob/dead, /obj/effect, /obj/docking_port, /turf, /atom/movable/lighting_object))
 	. = output
-	if(!location || location.GetComponent(/datum/component/rad_insulation))
+
+	if(!location)
+		return
+
+	var/datum/component/rad_insulation/insulation = location.GetComponent(/datum/component/rad_insulation)
+	if(insulation && insulation.protects)
 		return
 
 	output += location
 	
 	for(var/i in 1 to location.contents.len)
+		var/static/list/ignored_things = typecacheof(list(/mob/dead, /obj/effect, /obj/docking_port, /turf, /atom/movable/lighting_object))
 		var/atom/thing = location.contents[i]
 		if(ignored_things[thing.type])
 			continue

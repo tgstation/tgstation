@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 /obj/machinery/power/rad_collector/Initialize()
 	. = ..()
 	GLOB.rad_collectors += src
-	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION)
+	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION, FALSE)
 
 /obj/machinery/power/rad_collector/Destroy()
 	GLOB.rad_collectors -= src
