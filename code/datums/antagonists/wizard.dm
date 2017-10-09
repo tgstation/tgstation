@@ -130,7 +130,7 @@
 
 /datum/antagonist/wizard/proc/rename_wizard()
 	set waitfor = FALSE
-	
+
 	var/wizard_name_first = pick(GLOB.wizard_first)
 	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
@@ -250,7 +250,7 @@
 
 /datum/antagonist/wizard/academy
 	name = "Academy Teacher"
-	otufit_type = /datum/outfit/wizard/academy
+	outfit_type = /datum/outfit/wizard/academy
 
 /datum/antagonist/wizard/academy/equip_wizard()
 	. = ..()
