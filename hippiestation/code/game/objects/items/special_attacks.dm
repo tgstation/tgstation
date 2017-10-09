@@ -207,8 +207,8 @@
 		H.bleed_rate = min(H.bleed_rate + 2, 2)
 		H.blood_volume -= 5
 		user.do_attack_animation(target)
-		for(var/turf/T in range(H.loc, 1))
-			H.add_splatter_floor(T)
+		var/turf/T = get_turf(target)
+		H.add_splatter_floor(T)
 		H.visible_message("<span class='danger'>[user] plunges into one of [H]'s nipples with [src]!</span>", "<span class='userdanger'>[user] plunges into your nipples with [src]!</span>")
 		playsound(H, 'sound/effects/splat.ogg', 50, 1)
 
@@ -218,7 +218,7 @@
 				H.emote("scream")
 				H.apply_damage(8, BRUTE, H.get_bodypart("chest"))
 				H.Stun(50)
-				H.visible_message("<span class='danger'>[user] twists one of [H]'s nipples with [src]!</span>", "<span class='userdanger'>[user] Twists your nipple with [src]!</span>")
+				H.visible_message("<span class='danger'>[user] twists one of [H]'s nipples with [src]!</span>", "<span class='userdanger'>[user] twists your nipple with [src]!</span>")
 		return TRUE
 
 	return FALSE
