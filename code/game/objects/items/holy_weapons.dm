@@ -82,7 +82,7 @@
 		return
 	var/list/reagents = H.reagents
 	for(var/reagent/B in reagents)
-		if(istype(B, reagent/toxic)
+		if(istype(B, reagent/toxic))
 		H.reagents.trans_to(user, H.reagents.total_volume, 1, 1, 0)
 		//to chat heal messages and shiz zzz
 
