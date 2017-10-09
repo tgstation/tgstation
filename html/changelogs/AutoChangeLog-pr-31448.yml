@@ -1,0 +1,4 @@
+author: "improvedname"
+delete-after: True
+changes: 
+  - bugfix: "9mm doesn't longer appear in traitor surplus crates"

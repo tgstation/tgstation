@@ -147,6 +147,7 @@
 
 	var/obj/item/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
 	var/obj/item/stack/sheet/animalhide/skin
+	var/list/datum/disease/diseases = mob_occupant.get_static_viruses()
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
@@ -180,26 +181,28 @@
 	mob_occupant.death(1)
 	mob_occupant.ghostize()
 	qdel(src.occupant)
-	spawn(src.gibtime)
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-		operating = FALSE
-		var/turf/T = get_turf(src)
-		var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
-		if(skin)
-			skin.forceMove(loc)
-			skin.throw_at(pick(nearby_turfs),meat_produced,3)
-		for (var/i=1 to meat_produced)
-			var/obj/item/meatslab = allmeat[i]
-			meatslab.forceMove(loc)
-			meatslab.throw_at(pick(nearby_turfs),i,3)
-			for (var/turfs=1 to meat_produced)
-				var/turf/gibturf = pick(nearby_turfs)
-				if (!gibturf.density && src in view(gibturf))
-					new gibtype(gibturf,i)
+	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
-		pixel_x = initial(pixel_x) //return to its spot after shaking
-		operating = FALSE
-		update_icon()
+/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/reagent_containers/food/snacks/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	operating = FALSE
+	var/turf/T = get_turf(src)
+	var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
+	if(skin)
+		skin.forceMove(loc)
+		skin.throw_at(pick(nearby_turfs),meat_produced,3)
+	for (var/i=1 to meat_produced)
+		var/obj/item/meatslab = allmeat[i]
+		meatslab.forceMove(loc)
+		meatslab.throw_at(pick(nearby_turfs),i,3)
+		for (var/turfs=1 to meat_produced)
+			var/turf/gibturf = pick(nearby_turfs)
+			if (!gibturf.density && src in view(gibturf))
+				new gibtype(gibturf,i,diseases)
+
+	pixel_x = initial(pixel_x) //return to its spot after shaking
+	operating = FALSE
+	update_icon()
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
