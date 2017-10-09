@@ -133,3 +133,9 @@
 		pixel_x = 0
 		pixel_y = 0
 	return TRUE
+
+/obj/structure/lattice/catwalk/clockwork/singularity_act()
+	return FALSE
+
+/obj/structure/lattice/catwalk/clockwork/singularity_pull()
+	return FALSE
