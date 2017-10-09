@@ -213,11 +213,11 @@
 		playsound(H, 'sound/effects/splat.ogg', 50, 1)
 
 		for(var/I in 1 to 3)
-			if(do_after(user, 50, target = target))
+			if(do_after(user, 30, target = target))
 				playsound(H, 'hippiestation/sound/misc/tear.ogg', 50, 1)
 				H.emote("scream")
 				H.apply_damage(8, BRUTE, H.get_bodypart("chest"))
-				H.Stun(50)
+				H.Stun(25)
 				H.visible_message("<span class='danger'>[user] twists one of [H]'s nipples with [src]!</span>", "<span class='userdanger'>[user] twists your nipple with [src]!</span>")
 		return TRUE
 
