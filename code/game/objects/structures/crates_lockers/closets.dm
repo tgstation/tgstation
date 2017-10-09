@@ -54,6 +54,7 @@
 /obj/structure/closet/update_icon()
 	cut_overlays()
 	if(!opened)
+		layer = OBJ_LAYER
 		if(icon_door)
 			add_overlay("[icon_door]_door")
 		else
@@ -70,6 +71,7 @@
 				add_overlay("off")
 
 	else
+		layer = BELOW_OBJ_LAYER
 		if(icon_door_override)
 			add_overlay("[icon_door]_open")
 		else
