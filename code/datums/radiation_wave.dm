@@ -28,7 +28,7 @@
 	master_turf = get_step(master_turf, move_dir)
 	steps++
 	var/list/turfs = get_rad_turfs()
-	check_obstructions(turfs) // reduce our overall strength if there are radiation insulators
+
 	var/strength
 	if(steps>1)
 		strength = InverseSquareLaw(intensity, max(range_modifier*steps, 1), 1)
@@ -38,6 +38,7 @@
 		qdel(src)
 		return
 	radiate(turfs, Floor(strength))
+	check_obstructions(turfs) // reduce our overall strength if there are radiation insulators
 
 	return TRUE
 

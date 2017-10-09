@@ -27,8 +27,8 @@ These defines are the balancing points of various parts of the radiation system.
 
 // contamination_chance = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT
 // contamination_strength = (strength-RAD_MINIMUM_CONTAMINATION) * max(1/(steps*RAD_DISTANCE_COEFFICIENT), 1)
-#define RAD_MINIMUM_CONTAMINATION 400				// How strong does a radiation wave have to be to contaminate objects
-#define RAD_CONTAMINATION_CHANCE_COEFFICIENT 0.001
+#define RAD_MINIMUM_CONTAMINATION 300				// How strong does a radiation wave have to be to contaminate objects
+#define RAD_CONTAMINATION_CHANCE_COEFFICIENT 0.005
 #define RAD_DISTANCE_COEFFICIENT 0.50				// Lower means further rad spread
 
 #define RAD_HALF_LIFE 150							// The half-life of contaminated objects

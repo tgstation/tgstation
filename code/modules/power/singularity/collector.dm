@@ -1,4 +1,5 @@
-#define RAD_COLLECTOR_EFFICIENCY 80 //radiation needs to be over this amount to get power
+#define RAD_COLLECTOR_EFFICIENCY 80 	// radiation needs to be over this amount to get power
+#define RAD_COLLECTOR_STORED_OUT 0.04	// (this*100)% of stored power outputted per tick. Doesn't actualy change output total, lower numbers just means collectors output for longer in absence of a source
 
 GLOBAL_LIST_EMPTY(rad_collectors)
 
@@ -25,6 +26,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 /obj/machinery/power/rad_collector/Initialize()
 	. = ..()
 	GLOB.rad_collectors += src
+	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION)
 
 /obj/machinery/power/rad_collector/Destroy()
 	GLOB.rad_collectors -= src
@@ -39,11 +41,9 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= 0.001*drainratio
 			loaded_tank.air_contents.garbage_collect()
 
-			var/power_produced = min(last_power, (last_power/100)+1000) //Produces at least 1000 watts if it has more than that stored
+			var/power_produced = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
 			add_avail(power_produced)
 			last_power-=power_produced
-	return
-
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
 	if(..())
