@@ -2490,7 +2490,6 @@
 #include "hippiestation\code\modules\spells\spell_types\necrospells.dm"
 #include "hippiestation\code\modules\spells\spell_types\summon_bees.dm"
 #include "hippiestation\code\modules\sports\bowling.dm"
-#include "hippiestation\code\modules\sports\football.dm"
 #include "hippiestation\code\modules\sports\hockey.dm"
 #include "hippiestation\code\modules\sports\wrestling.dm"
 #include "hippiestation\code\modules\surgery\dethralling.dm"
