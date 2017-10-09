@@ -71,9 +71,6 @@
 		return
 
 	stage = min(stage, max_stages)
-	
-	if(!bypasses_immunity && affected_mob && affected_mob.dna && affected_mob.dna.species && (VIRUSIMMUNE in affected_mob.dna.species.species_traits))
-		cure(FALSE)
 
 	if(!cure)
 		if(prob(stage_prob))
