@@ -19,7 +19,8 @@
 	player_mind.active = TRUE
 
 	var/list/spawn_locs = list()
-	for(var/turf/T in GLOB.xeno_spawn)
+	for(var/X in GLOB.xeno_spawn)
+		var/turf/T = X
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			spawn_locs += T
