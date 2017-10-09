@@ -2,6 +2,8 @@
 	var/prev_lying = lying
 	if(stat != DEAD)
 		death(1)
+	for(var/atom/A in contents)
+		A.ex_act(EXPLODE_DEVASTATE)
 
 	if(!prev_lying)
 		gib_animation()
@@ -10,7 +12,6 @@
 
 	if(!no_bodyparts)
 		spread_bodyparts(no_brain, no_organs)
-
 	spawn_gibs(no_bodyparts)
 	qdel(src)
 

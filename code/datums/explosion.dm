@@ -177,6 +177,13 @@ GLOBAL_LIST_EMPTY(explosions)
 
 		//------- EX_ACT AND TURF FIRES -------
 
+		if(T == epicenter)
+			var/list/items
+			for(var/atom/A in T.contents)
+				items += A.GetAllContents()
+			for(var/atom/I in items)
+				I.ex_act(dist)
+
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
 
