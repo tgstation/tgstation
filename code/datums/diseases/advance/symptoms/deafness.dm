@@ -32,7 +32,8 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/deafness/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
 	if(A.properties["resistance"] >= 9) //permanent deafness
