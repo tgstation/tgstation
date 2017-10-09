@@ -173,8 +173,8 @@ Credit where due:
 	return FALSE
 
 /datum/game_mode/clockwork_cult/check_finished()
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in GLOB.all_clockwork_objects
-	if(G && !GLOB.ratvar_awakens)
+	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+	if(G && !GLOB.ratvar_awakens) // Doesn't end until the Ark is destroyed or completed
 		return FALSE
 	. = ..()
 
@@ -208,7 +208,7 @@ Credit where due:
 			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 		else
 			var/half_victory = FALSE
-			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in GLOB.all_clockwork_objects
+			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 			if(G)
 				half_victory = TRUE
 			if(half_victory)
