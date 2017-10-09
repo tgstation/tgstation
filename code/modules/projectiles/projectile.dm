@@ -213,7 +213,7 @@
 		while(loc)
 			if(paused)
 				next_run = world.time
-				sleep(1)
+				stoplag(1)
 				continue
 
 			if((!( current ) || loc == current))

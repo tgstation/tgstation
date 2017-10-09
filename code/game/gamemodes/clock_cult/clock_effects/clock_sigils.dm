@@ -123,10 +123,9 @@
 	if(glow_type)
 		glow = new glow_type(get_turf(src))
 		animate(glow, alpha = 255, time = convert_time)
-	var/I = 0
-	while(I < convert_time && get_turf(L) == get_turf(src))
-		I++
-		sleep(1)
+	var/end_time = world.time+convert_time
+	while(world.time < end_time && get_turf(L) == get_turf(src))
+		stoplag(1)
 	if(get_turf(L) != get_turf(src))
 		if(glow)
 			qdel(glow)
