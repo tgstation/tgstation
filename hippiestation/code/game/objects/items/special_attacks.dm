@@ -192,7 +192,7 @@
 					playsound(M, pick('hippiestation/sound/effects/bodyscrape-01.ogg', 'hippiestation/sound/effects/bodyscrape-02.ogg'), 20, 1, -4)
 			src.special_attack = FALSE
 			M.pass_flags = initial(M.pass_flags)
-
+			return TRUE
 
 /obj/item/screwdriver
 	special_name = "Nipple Twist"
@@ -211,6 +211,7 @@
 			H.add_splatter_floor(T)
 		H.visible_message("<span class='danger'>[user] plunges into one of [H]'s nipples with [src]!</span>", "<span class='userdanger'>[user] plunges into your nipples with [src]!</span>")
 		playsound(H, 'sound/effects/splat.ogg', 50, 1)
+
 		for(var/I in 1 to 3)
 			if(do_after(user, 50, target = target))
 				playsound(H, 'hippiestation/sound/misc/tear.ogg', 50, 1)
