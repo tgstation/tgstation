@@ -195,7 +195,8 @@
 	if(P)
 		user.visible_message("[user] put [O] into [src].", \
 			"You put [O] into [src].")
-		user.transferItemToLoc(O, src, TRUE)
+		user.drop_item()
+		O.loc = src
 		return 1
 	else
 		if(user.a_intent != INTENT_HARM)

@@ -116,8 +116,9 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/card/id/I = usr.get_active_held_item()
 			if(istype(I))
-				if(!usr.transferItemToLoc(I, src))
+				if(!usr.drop_item())
 					return
+				I.loc = src
 				inserted_id = I
 				to_chat(usr, "<span class='notice'>You insert the ID into [src]'s card slot.</span>")
 			else 
@@ -154,8 +155,9 @@
 	if(istype(I, /obj/item/card/id))
 		var/obj/item/card/id/C = usr.get_active_held_item()
 		if(istype(C) && !istype(inserted_id))
-			if(!usr.transferItemToLoc(C, src))
+			if(!usr.drop_item())
 				return
+			C.loc = src
 			inserted_id = C
 			to_chat(usr, "<span class='notice'>You insert the ID into [src]'s card slot.</span>")
 			interact(user)

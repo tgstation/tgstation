@@ -122,9 +122,10 @@
 		if (temp_tech.len == 0)
 			to_chat(user, "<span class='warning'>You cannot experiment on this item!</span>")
 			return
-		if(!user.transferItemToLoc(O, src))
+		if(!user.drop_item())
 			return
 		loaded_item = O
+		O.loc = src
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine.</span>")
 		flick("h_lathe_load", src)
 

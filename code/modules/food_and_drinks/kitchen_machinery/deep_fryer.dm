@@ -58,9 +58,10 @@ insert ascii eagle on american flag background here
 	else
 		if(is_type_in_typecache(I, deepfry_blacklisted_items))
 			. = ..()
-		else if(!frying && user.transferItemToLoc(I, src))
+		else if(user.drop_item() && !frying)
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 			frying = I
+			frying.forceMove(src)
 			icon_state = "fryer_on"
 
 /obj/machinery/deepfryer/process()

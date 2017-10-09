@@ -657,7 +657,7 @@
 						insert_into_backpack()
 			//---------FASHION
 			if(istype(TARGET, /obj/item/clothing))
-				temporarilyRemoveItemFromInventory(TARGET, TRUE)
+				drop_item()
 				dressup(TARGET)
 				update_hands = 1
 				if(MYPDA in src.loc || MYID in src.loc)

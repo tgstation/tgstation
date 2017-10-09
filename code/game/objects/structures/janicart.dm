@@ -32,8 +32,9 @@
 		return 1
 
 /obj/structure/janitorialcart/proc/put_in_cart(obj/item/I, mob/user)
-	if(!user.transferItemToLoc(I, src))
+	if(!user.drop_item())
 		return
+	I.loc = src
 	updateUsrDialog()
 	to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 	return

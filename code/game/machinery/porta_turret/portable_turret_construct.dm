@@ -84,8 +84,9 @@
 		if(PTURRET_INTERNAL_ARMOUR_ON)
 			if(istype(I, /obj/item/gun/energy)) //the gun installation part
 				var/obj/item/gun/energy/E = I
-				if(!user.transferItemToLoc(E, src))
+				if(!user.drop_item())
 					return
+				E.forceMove(src)
 				installed_gun = E
 				to_chat(user, "<span class='notice'>You add [I] to the turret.</span>")
 				build_step = PTURRET_GUN_EQUIPPED
@@ -100,7 +101,7 @@
 		if(PTURRET_GUN_EQUIPPED)
 			if(isprox(I))
 				build_step = PTURRET_SENSORS_ON
-				if(!user.temporarilyRemoveItemFromInventory(I))
+				if(!user.drop_item())
 					return
 				to_chat(user, "<span class='notice'>You add the proximity sensor to the turret.</span>")
 				qdel(I)

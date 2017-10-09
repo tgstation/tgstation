@@ -122,7 +122,7 @@
 		return
 	if(user.disabilities & CLUMSY && prob(75) && clumsyCheck)
 		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
-		user.dropItemToGround(src, TRUE)
+		user.drop_item()
 		if(prob(10))
 			target = get_turf(user)
 		else

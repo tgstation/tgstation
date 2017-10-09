@@ -1198,7 +1198,7 @@
 				target.stop_pulling()
 			else
 				I = target.get_active_held_item()
-				if(target.dropItemToGround(I))
+				if(target.drop_item())
 					target.visible_message("<span class='danger'>[user] has disarmed [target]!</span>", \
 						"<span class='userdanger'>[user] has disarmed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 				else

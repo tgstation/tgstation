@@ -131,7 +131,8 @@
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
 	if(user.a_intent != INTENT_HARM && !(I.flags_1 & ABSTRACT_1))
-		if(user.transferItemToLoc(I, drop_location()))
+		if(user.drop_item())
+			I.Move(loc)
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
@@ -440,7 +441,7 @@
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
 		return
-	if(!user.dropItemToGround(O))
+	if(!user.drop_item())
 		return
 	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -453,7 +454,8 @@
 		return
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-	if(user.transferItemToLoc(W, drop_location()))
+	if(user.drop_item())
+		W.Move(loc)
 		return 1
 
 /obj/structure/rack/attack_paw(mob/living/user)
@@ -516,7 +518,7 @@
 	building = TRUE
 	to_chat(user, "<span class='notice'>You start constructing a rack...</span>")
 	if(do_after(user, 50, target = user, progress=TRUE))
-		if(!user.temporarilyRemoveItemFromInventory(src))
+		if(!user.drop_item())
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
 		user.visible_message("<span class='notice'>[user] assembles \a [R].\

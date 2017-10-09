@@ -21,6 +21,7 @@
 	if(invoke(user))
 		uses--
 	if(uses <= 0)
+		user.drop_item()
 		qdel(src)
 
 /obj/item/paper/talisman/proc/invoke(mob/living/user, successfuluse = 1)
@@ -181,6 +182,7 @@
 				C.Jitter(15)
 			if(is_servant_of_ratvar(target))
 				target.adjustBruteLoss(15)
+		user.drop_item()
 		qdel(src)
 		return
 	..()
@@ -202,13 +204,13 @@
 	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
 	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), slot_shoes)
 	user.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), slot_back)
-	user.dropItemToGround(src)
+	user.drop_item()
 	user.put_in_hands(new /obj/item/melee/cultblade(user))
 	user.put_in_hands(new /obj/item/restraints/legcuffs/bola/cult(user))
 
 /obj/item/paper/talisman/armor/attack(mob/living/target, mob/living/user)
 	if(iscultist(user) && iscultist(target))
-		user.temporarilyRemoveItemFromInventory(src)
+		user.drop_item()
 		invoke(target)
 		qdel(src)
 		return
@@ -333,6 +335,7 @@
 	else
 		to_chat(user, "<span class='warning'>[C] is already bound.</span>")
 	if(uses <= 0)
+		user.drop_item()
 		qdel(src)
 
 /obj/item/restraints/handcuffs/energy/cult //For the talisman of shackling

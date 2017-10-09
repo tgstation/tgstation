@@ -141,7 +141,8 @@
 			to_chat(user, "<span class='notice'>You reverse [src]'s direction.</span>")
 
 	else if(user.a_intent != INTENT_HARM)
-		user.transferItemToLoc(I, drop_location())
+		if(user.drop_item())
+			I.loc = src.loc
 	else
 		return ..()
 

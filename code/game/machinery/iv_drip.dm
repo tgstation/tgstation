@@ -95,8 +95,10 @@
 		if(beaker)
 			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.drop_item())
 			return
+
+		W.forceMove(src)
 		beaker = W
 		to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 		update_icon()

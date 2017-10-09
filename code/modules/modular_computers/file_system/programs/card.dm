@@ -175,8 +175,9 @@
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/card/id))
-								if(!usr.transferItemToLoc(I, computer))
+								if(!usr.drop_item())
 									return
+								I.forceMove(computer)
 								card_slot.stored_card = I
 					if("auth")
 						if(auth_card)
@@ -190,8 +191,9 @@
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/card/id))
-								if(!usr.transferItemToLoc(I, computer))
+								if(!usr.drop_item())
 									return
+								I.forceMove(computer)
 								card_slot.stored_card2 = I
 		if("PRG_terminate")
 			if(computer && ((id_card.assignment in head_subordinates) || id_card.assignment == "Assistant"))

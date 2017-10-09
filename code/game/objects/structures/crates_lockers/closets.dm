@@ -229,7 +229,8 @@
 									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
 				deconstruct(TRUE)
 				return 0
-		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
+		if(user.drop_item()) // so we put in unlit welder too
+			W.forceMove(loc)
 			return 1
 	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
 		var/obj/item/weldingtool/WT = W

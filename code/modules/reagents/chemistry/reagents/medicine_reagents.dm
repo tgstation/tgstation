@@ -626,20 +626,27 @@
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/M)
 	if(prob(33))
-		M.drop_all_held_items()
+		var/obj/item/I = M.get_active_held_item()
+		if(I)
+			M.drop_item()
 		M.Dizzy(2)
 		M.Jitter(2)
 	..()
 
 /datum/reagent/medicine/morphine/addiction_act_stage1(mob/living/M)
 	if(prob(33))
-		M.drop_all_held_items()
+		var/obj/item/I = M.get_active_held_item()
+		if(I)
+			M.drop_item()
+		M.Dizzy(2)
 		M.Jitter(2)
 	..()
 
 /datum/reagent/medicine/morphine/addiction_act_stage2(mob/living/M)
 	if(prob(33))
-		M.drop_all_held_items()
+		var/obj/item/I = M.get_active_held_item()
+		if(I)
+			M.drop_item()
 		M.adjustToxLoss(1*REM, 0)
 		. = 1
 		M.Dizzy(3)
@@ -648,7 +655,9 @@
 
 /datum/reagent/medicine/morphine/addiction_act_stage3(mob/living/M)
 	if(prob(33))
-		M.drop_all_held_items()
+		var/obj/item/I = M.get_active_held_item()
+		if(I)
+			M.drop_item()
 		M.adjustToxLoss(2*REM, 0)
 		. = 1
 		M.Dizzy(4)
@@ -657,7 +666,9 @@
 
 /datum/reagent/medicine/morphine/addiction_act_stage4(mob/living/M)
 	if(prob(33))
-		M.drop_all_held_items()
+		var/obj/item/I = M.get_active_held_item()
+		if(I)
+			M.drop_item()
 		M.adjustToxLoss(3*REM, 0)
 		. = 1
 		M.Dizzy(5)

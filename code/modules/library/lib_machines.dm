@@ -507,8 +507,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 
 /obj/machinery/libraryscanner/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/book))
-		if(!user.transferItemToLoc(O, src))
+		if(!user.drop_item())
 			return
+		O.loc = src
 	else
 		return ..()
 
@@ -575,8 +576,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(busy)
 		to_chat(user, "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>")
 		return
-	if(!user.transferItemToLoc(P, src))
+	if(!user.drop_item())
 		return
+	P.loc = src
 	user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 	audible_message("[src] begins to hum as it warms up its printing drums.")
 	busy = TRUE

@@ -59,7 +59,7 @@
 	if(target.handcuffed)
 		return
 
-	if(!user.temporarilyRemoveItemFromInventory(src) && !dispense)
+	if(!user.drop_item() && !dispense)
 		return
 
 	var/obj/item/restraints/handcuffs/cuffs = src
@@ -68,7 +68,7 @@
 	else if(dispense)
 		cuffs = new type()
 
-	cuffs.forceMove(target)
+	cuffs.loc = target
 	target.handcuffed = cuffs
 
 	target.update_handcuffed()

@@ -89,7 +89,7 @@
 /obj/item/organ/heart/cursed/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
 	if(H == user && istype(H))
 		playsound(user,'sound/effects/singlebeat.ogg',40,1)
-		user.temporarilyRemoveItemFromInventory(src, TRUE)
+		user.drop_item()
 		Insert(user)
 	else
 		return ..()

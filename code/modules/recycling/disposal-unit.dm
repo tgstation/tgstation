@@ -96,7 +96,7 @@
 			return
 
 	if(user.a_intent != INTENT_HARM)
-		if((I.flags_1 & ABSTRACT_1) || !user.temporarilyRemoveItemFromInventory(I))
+		if(!user.drop_item() || (I.flags_1 & ABSTRACT_1))
 			return
 		place_item_in_disposal(I, user)
 		update_icon()

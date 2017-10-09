@@ -161,7 +161,7 @@
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()
 			if(E.can_attach(src))
-				if(!user.temporarilyRemoveItemFromInventory(W))
+				if(!user.drop_item())
 					return
 				E.attach(src)
 				user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
@@ -226,10 +226,11 @@
 	else if(istype(W, /obj/item/stock_parts/cell))
 		if(state==4)
 			if(!cell)
-				if(!user.transferItemToLoc(W, src))
+				if(!user.drop_item())
 					return
 				var/obj/item/stock_parts/cell/C = W
 				to_chat(user, "<span class='notice'>You install the powercell.</span>")
+				C.forceMove(src)
 				cell = C
 				log_message("Powercell installed")
 			else

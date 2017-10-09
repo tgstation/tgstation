@@ -75,8 +75,9 @@
 		item = null
 	else
 		for(var/mob/living/carbon/C in targets)
-			if(C.dropItemToGround(C.get_active_held_item()))
-				C.put_in_hands(make_item(), TRUE)
+			if(C.drop_item())
+				item = make_item()
+				C.put_in_hands(item)
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/Destroy()
 	if(item)

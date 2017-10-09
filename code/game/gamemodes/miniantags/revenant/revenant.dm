@@ -353,7 +353,7 @@
 		return ..()
 	user.visible_message("<span class='notice'>[user] scatters [src] in all directions.</span>", \
 						 "<span class='notice'>You scatter [src] across the area. The particles slowly fade away.</span>")
-	user.dropItemToGround(src)
+	user.drop_item()
 	scatter()
 
 /obj/item/ectoplasm/revenant/throw_impact(atom/hit_atom)

@@ -14,9 +14,12 @@
 
 /obj/effect/proc_holder/spell/targeted/infinite_guns/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/C in targets)
-		C.drop_all_held_items()
+		C.drop_item()
+		C.swap_hand()
+		C.drop_item()
 		var/GUN = new summon_path
 		C.put_in_hands(GUN)
+		C.swap_hand(C.get_held_index_of_item(GUN))
 
 /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
 

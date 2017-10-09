@@ -240,7 +240,7 @@
 		updateUsrDialog()
 
 /obj/machinery/photocopier/proc/do_insertion(obj/item/O, mob/user)
-	O.forceMove(src)
+	O.loc = src
 	to_chat(user, "<span class ='notice'>You insert [O] into [src].</span>")
 	flick("photocopier1", src)
 	updateUsrDialog()
@@ -261,7 +261,7 @@
 				resistance_flags |= FLAMMABLE
 				fire_act()
 			else
-				if(!user.temporarilyRemoveItemFromInventory(O))
+				if(!user.drop_item())
 					return
 				copy = O
 				do_insertion(O, user)
@@ -270,7 +270,7 @@
 
 	else if(istype(O, /obj/item/photo))
 		if(copier_empty())
-			if(!user.temporarilyRemoveItemFromInventory(O))
+			if(!user.drop_item())
 				return
 			photocopy = O
 			do_insertion(O, user)
@@ -279,7 +279,7 @@
 
 	else if(istype(O, /obj/item/documents))
 		if(copier_empty())
-			if(!user.temporarilyRemoveItemFromInventory(O))
+			if(!user.drop_item())
 				return
 			doccopy = O
 			do_insertion(O, user)
@@ -288,7 +288,7 @@
 
 	else if(istype(O, /obj/item/device/toner))
 		if(toner <= 0)
-			if(!user.temporarilyRemoveItemFromInventory(O))
+			if(!user.drop_item())
 				return
 			qdel(O)
 			toner = 40

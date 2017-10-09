@@ -159,7 +159,7 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/teleportation_scroll(wizard_mob), slot_r_store)
 	var/obj/item/spellbook/spellbook = new /obj/item/spellbook(wizard_mob)
 	spellbook.owner = wizard_mob
-	wizard_mob.put_in_hands(spellbook, TRUE)
+	wizard_mob.put_in_hands_or_del(spellbook)
 
 	to_chat(wizard_mob, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
 	to_chat(wizard_mob, "The spellbook is bound to you, and others cannot use it.")

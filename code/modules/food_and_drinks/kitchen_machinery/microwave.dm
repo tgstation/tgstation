@@ -142,10 +142,11 @@
 			to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 			return 1
 		else
-			if(!user.transferItemToLoc(O, src))
+			if(!user.drop_item())
 				to_chat(user, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return 0
 
+			O.loc = src
 			user.visible_message( \
 				"[user] has added \the [O] to \the [src].", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")

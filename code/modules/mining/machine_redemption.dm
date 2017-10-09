@@ -166,8 +166,9 @@
 	if(istype(W, /obj/item/card/id))
 		var/obj/item/card/id/I = user.get_active_held_item()
 		if(istype(I) && !istype(inserted_id))
-			if(!user.transferItemToLoc(I, src))
+			if(!user.drop_item())
 				return
+			I.forceMove(src)
 			inserted_id = I
 			interact(user)
 		return

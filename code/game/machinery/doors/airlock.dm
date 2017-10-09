@@ -1169,9 +1169,10 @@
 			to_chat(user, "<span class='warning'>The maintenance panel is destroyed!</span>")
 			return
 		to_chat(user, "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>")
+		user.drop_item()
 		panel_open = FALSE
 		update_icon()
-		user.transferItemToLoc(C, src, TRUE)
+		C.forceMove(src)
 		charge = C
 	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
 		if(note)
