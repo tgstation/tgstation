@@ -401,6 +401,12 @@ By design, d1 is the smallest direction and d2 is the highest
 		if(PN.is_empty()) //can happen with machines made nodeless when smoothing cables
 			qdel(PN)
 
+/obj/structure/cable/proc/auto_propogate_cut_cable(obj/O)
+	set waitfor = FALSE
+	if(O && !QDELETED(O))
+		var/datum/powernet/newPN = new()// creates a new powernet...
+		propagate_network(O, newPN)//... and propagates it to the other side of the cable
+
 // cut the cable's powernet at this cable and updates the powergrid
 /obj/structure/cable/proc/cut_cable_from_powernet(remove=TRUE)
 	var/turf/T1 = loc
@@ -428,10 +434,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		loc = null
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
-	spawn(0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
-		if(O && !QDELETED(O))
-			var/datum/powernet/newPN = new()// creates a new powernet...
-			propagate_network(O, newPN)//... and propagates it to the other side of the cable
+	addtimer(CALLBACK(src, auto_propogate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
 
 	// Disconnect machines connected to nodes
 	if(d1 == 0) // if we cut a node (O-X) cable

@@ -11,7 +11,7 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
+		suiciding = TRUE
 		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
@@ -19,7 +19,7 @@
 			if(damagetype)
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
-					suiciding = 0
+					suiciding = FALSE
 					return
 				var/damage_mod = 0
 				for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
@@ -30,20 +30,23 @@
 				if(damagetype & BRUTELOSS)
 					adjustBruteLoss(200/damage_mod)
 
-				if(damagetype & FIRELOSS)
+				else if(damagetype & FIRELOSS)
 					adjustFireLoss(200/damage_mod)
 
-				if(damagetype & TOXLOSS)
+				else if(damagetype & TOXLOSS)
 					adjustToxLoss(200/damage_mod)
 
-				if(damagetype & OXYLOSS)
+				else if(damagetype & OXYLOSS)
 					adjustOxyLoss(200/damage_mod)
 
+				else if(damagetype & MANUAL_SUICIDE)	//Assume the object will handle the death.
+					return
+
 				//If something went wrong, just do normal oxyloss
-				if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
+				else if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
 					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
-				death(0)
+				death(FASE)
 				return
 
 		var/suicide_message = pick("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \

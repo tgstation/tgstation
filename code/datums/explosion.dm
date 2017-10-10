@@ -365,10 +365,13 @@ GLOBAL_LIST_EMPTY(explosions)
 		else
 			continue
 
-	sleep(100)
-	for(var/turf/T in wipe_colours)
-		T.color = null
-		T.maptext = ""
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/wipe_color_and_text, wipe_colours), 100)
+
+/proc/wipe_color_and_text(list/atom/wiping)
+	for(var/i in wiping)
+		var/atom/A = i
+		A.color = null
+		A.maptext = ""
 
 /proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
 	if(!power)

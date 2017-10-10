@@ -205,8 +205,10 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(4, 0, L)
 		s.start()
-		new /obj/effect/temp_visual/revenant(L.loc)
-		sleep(20)
+		new /obj/effect/temp_visual/revenant(get_turf(L))
+		addtimer(CALLBACK(src, .proc/overload_shock, L), 20)
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload_shock(obj/machinery/light/L)
 		if(!L.on) //wait, wait, don't shock me
 			return
 		flick("[L.base_state]2", L)

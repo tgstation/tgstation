@@ -443,9 +443,12 @@
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = "camera_off"
 	on = FALSE
-	spawn(64)
-		icon_state = "camera"
-		on = TRUE
+	addtimer(CALLBACK(src, .proc/cooldown), 64)
+
+/obj/item/device/camera/proc/cooldown()
+	set waitfor = FALSE
+	icon_state = "camera"
+	on = TRUE
 
 /obj/item/device/camera/siliconcam/proc/toggle_camera_mode()
 	if(in_camera_mode)

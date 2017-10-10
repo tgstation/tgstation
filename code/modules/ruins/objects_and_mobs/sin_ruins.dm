@@ -24,7 +24,9 @@
 		know it'll be worth it.</span>")
 	icon_state = "slots2"
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, 0)
-	sleep(50)
+	addtimer(CALLBACK(src, .proc/determine_victor, user), 50)
+
+/obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/user)
 	icon_state = "slots1"
 	in_use = FALSE
 	if(prob(win_prob))
@@ -36,6 +38,7 @@
 	else
 		if(user)
 			to_chat(user, "<span class='boldwarning'>Fucking machine! Must be rigged. Still... one more try couldn't hurt, right?</span>")
+
 
 /obj/structure/cursed_money
 	name = "bag of money"
@@ -64,8 +67,6 @@
 	var/obj/item/dice/d20/fate/one_use/critical_fail = new(T)
 	user.put_in_hands(critical_fail)
 	qdel(src)
-
-
 
 /obj/effect/gluttony //Gluttony's wall: Used in the Gluttony ruin. Only lets the overweight through.
 	name = "gluttony's wall"

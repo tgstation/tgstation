@@ -207,6 +207,32 @@
 /obj/item/gun/proc/recharge_newshot()
 	return
 
+/obj/item/gun/proc/process_burst(mob/living/user, atom/target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bouns_spread)
+	if(!user)
+		break
+	if(!issilicon(user))
+		if( i>1 && !(user.is_holding(src))) //for burst firing
+			break
+	if(chambered && chambered.BB)
+		if(randomspread)
+			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
+		else //Smart spread
+			sprd = round((((rand_spr/burst_size) * i) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
+
+		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
+			shoot_with_empty_chamber(user)
+			break
+		else
+			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
+				shoot_live_shot(user, 1, target, message)
+			else
+				shoot_live_shot(user, 0, target, message)
+	else
+		shoot_with_empty_chamber(user)
+		break
+	process_chamber()
+	update_icon()
+
 /obj/item/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
 	add_fingerprint(user)
 
@@ -221,34 +247,10 @@
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
-		firing_burst = 1
+		firing_burst = TRUE
 		for(var/i = 1 to burst_size)
-			if(!user)
-				break
-			if(!issilicon(user))
-				if( i>1 && !(user.is_holding(src))) //for burst firing
-					break
-			if(chambered && chambered.BB)
-				if(randomspread)
-					sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
-				else //Smart spread
-					sprd = round((((rand_spr/burst_size) * i) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
-
-				if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
-					shoot_with_empty_chamber(user)
-					break
-				else
-					if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-						shoot_live_shot(user, 1, target, message)
-					else
-						shoot_live_shot(user, 0, target, message)
-			else
-				shoot_with_empty_chamber(user)
-				break
-			process_chamber()
-			update_icon()
-			sleep(fire_delay)
-		firing_burst = 0
+			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread), min(fire_delay * (i - 1), 0))
+		firing_burst = FALSE
 	else
 		if(chambered)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
@@ -265,14 +267,16 @@
 			return
 		process_chamber()
 		update_icon()
-		semicd = 1
-		spawn(fire_delay)
-			semicd = 0
+		semicd = TRUE
+		addtimer(CALLBACK(src, .proc/reset_semicd), fire_delay)
 
 	if(user)
 		user.update_inv_hands()
 	SSblackbox.add_details("gun_fired","[src.type]")
-	return 1
+	return TRUE
+
+/obj/item/gun/proc/reset_semicd()
+	semicd = FALSE
 
 /obj/item/gun/update_icon()
 	..()
