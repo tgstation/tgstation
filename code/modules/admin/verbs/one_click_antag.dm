@@ -358,6 +358,7 @@
 	return
 
 // INCINERATORS
+/datum/admins/proc/makeIncinerators()
 	var/mission = input("Assign a mission to the Incineration Team", "Assign Mission", "Burn it all down.")
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for an elite Nanotrasen Strike Team?", "incineration", null)
 	var/packSpawned = 0
@@ -380,8 +381,10 @@
 			var/mob/living/carbon/human/Incinerator = new(spawnloc)
 			chosen_candidate.client.prefs.copy_to(Incinerator)
 			if(numagents == 1) //If Squad Leader
+				Incinerator.real_name = "NT Flame Commander [pick(GLOB.commando_names)]"
 				Incinerator.equipOutfit(/datum/outfit/death_commando/officer)
 			else
+				Incinerator.real_name = "Flamer [pick(GLOB.commando_names)]"
 				Incinerator.equipOutfit(/datum/outfit/death_commando)
 			Incinerator.dna.update_dna_identity()
 			Incinerator.key = chosen_candidate.key
@@ -414,7 +417,9 @@
 				message_admins("The Incineraton team has spawned with the mission: [mission].")
 			log_game("[key_name(Incinerator)] has been selected as an Incinerator")
 			numagents--
+			packSpawned++
 
+		if (packSpawned)
 			return 1
 		else
 			return 0
