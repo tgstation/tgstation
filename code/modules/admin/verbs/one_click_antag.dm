@@ -400,12 +400,12 @@
 			Incinerator.mind.objectives += missionobj
 
 			//Greet the INCINERATOR
-			to_chat(Incinerator, "<B><font size=3 color=red>You are a part of [numagents==1?"Incineration Officer":"Incineraton Team Member"].</font></B>")
-			var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
+			to_chat(Incinerator, "<B><font size=3 color=red>You are the [numagents==1?"Flame Commander":"Flamer"]!</font></B>")
+			var/missiondesc = "NT Flamers are a hidden group of repurposed pest extermination used by Nanotrasen's finest, and you have been called on a mission to [station_name()]."
 			if(numagents == 1) //If Squad Leader
-				missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
+				missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready. <b>BRING THE BURN!</b>"
 			else
-				missiondesc += " Follow orders given to you by your Incinerao."
+				missiondesc += " Follow orders given to you by your Flame Commander. <b>FEEL THE BURN!</b>"
 			missiondesc += "<BR><B>Your Mission</B>: [mission]"
 			to_chat(Incinerator, missiondesc)
 
@@ -583,9 +583,6 @@
 			return 1
 		else
 			return 0
-
-	return
-
 //Abductors
 /datum/admins/proc/makeAbductorTeam()
 	new /datum/round_event/ghost_role/abductor
