@@ -9,7 +9,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will feel quite unwell."
-	severity = VIRUS_SEVERITY_MINOR
+	severity = MEDIUM
 
 /datum/disease/flu/stage_act()
 	..()

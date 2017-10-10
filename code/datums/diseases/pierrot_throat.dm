@@ -9,7 +9,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will probably drive others to insanity."
-	severity = VIRUS_SEVERITY_MEDIUM
+	severity = MEDIUM
 
 /datum/disease/pierrot_throat/stage_act()
 	..()

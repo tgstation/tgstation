@@ -61,7 +61,7 @@
 	M.jitteriness = 0
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
-		if(D.severity == VIRUS_SEVERITY_POSITIVE)
+		if(D.severity == NONTHREAT)
 			continue
 		D.cure()
 	..()

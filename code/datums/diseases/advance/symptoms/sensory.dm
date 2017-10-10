@@ -23,6 +23,7 @@ Bonus
 	stage_speed = -4
 	transmittable = -3
 	level = 5
+	severity = 0
 	symptom_delay_min = 5
 	symptom_delay_max = 10
 	var/purge_alcohol = FALSE

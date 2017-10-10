@@ -23,7 +23,7 @@ Bonus
 	stage_speed = 0
 	transmittable = -3
 	level = 6
-	severity = 4
+	severity = 3
 	var/list/possible_mutations
 	var/archived_dna = null
 	base_message_chance = 50

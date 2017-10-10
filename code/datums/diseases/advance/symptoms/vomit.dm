@@ -28,7 +28,7 @@ Bonus
 	stage_speed = 0
 	transmittable = 1
 	level = 3
-	severity = 3
+	severity = 4
 	base_message_chance = 100
 	symptom_delay_min = 25
 	symptom_delay_max = 80

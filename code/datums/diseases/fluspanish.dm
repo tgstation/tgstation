@@ -9,7 +9,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will burn to death for being a heretic."
-	severity = VIRUS_SEVERITY_DANGEROUS
+	severity = DANGEROUS
 
 /datum/disease/fluspanish/stage_act()
 	..()
