@@ -10,6 +10,7 @@
 
 	if(!no_bodyparts)
 		spread_bodyparts(no_brain, no_organs)
+	
 	spawn_gibs(no_bodyparts)
 	qdel(src)
 
