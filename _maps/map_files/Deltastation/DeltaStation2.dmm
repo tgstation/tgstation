@@ -77224,6 +77224,7 @@
 /obj/structure/table/glass,
 /obj/item/clipboard,
 /obj/item/toy/figure/chemist,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 1
 	},

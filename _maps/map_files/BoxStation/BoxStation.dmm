@@ -27831,6 +27831,7 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/device/radio/headset/headset_med,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "boe" = (
