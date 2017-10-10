@@ -73609,8 +73609,8 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cOM" = (
-/obj/machinery/chem_dispenser/constructable,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/chem_master,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cON" = (
@@ -141425,7 +141425,7 @@ ecI
 cJK
 cLq
 cNa
-cOL
+cYG
 cQH
 cRX
 cTK
