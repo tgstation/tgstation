@@ -10,7 +10,7 @@
 
 /datum/effect_system/expl_particles
 	number = 10
-	
+
 /datum/effect_system/expl_particles/start()
 	for(var/i in 1 to number)
 		var/obj/effect/particle_effect/expl_particles/expl = new /obj/effect/particle_effect/expl_particles(location)
