@@ -309,7 +309,7 @@
 /obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity)
 		return
-	if(ishuman(A))
+	if(prob(30) && ishuman(A))
 		var/mob/living/carbon/human/H = A
 		user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0)
 		to_chat(user, "<span class='notice'>Your pride reflects on [H].</span>")
