@@ -183,19 +183,19 @@
 		properties["stealth"] += S.stealth
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
-		if(!S.neutered)
-			properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity non-neutered symptom
+		properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity symptom
 	return
 
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/AssignProperties()
 
 	if(properties && properties.len)
-		if(properties["stealth"] >= 2)
-			visibility_flags = HIDDEN_SCANNER
+		switch(properties["stealth"])
+			if(2 to INFINITY)
+				visibility_flags = HIDDEN_SCANNER
 
-		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), VIRUS_SPREAD_BLOOD, VIRUS_SPREAD_AIRBORNE))
-
+		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
+		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), BLOOD, AIRBORNE))
 		permeability_mod = max(Ceiling(0.4 * properties["transmittable"]), 1)
 		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
@@ -208,43 +208,35 @@
 // Assign the spread type and give it the correct description.
 /datum/disease/advance/proc/SetSpread(spread_id)
 	switch(spread_id)
-		if(VIRUS_SPREAD_NON_CONTAGIOUS)
-			spread_flags = VIRUS_SPREAD_NON_CONTAGIOUS
+		if(NON_CONTAGIOUS)
 			spread_text = "None"
-		if(VIRUS_SPREAD_SPECIAL)
-			spread_flags = VIRUS_SPREAD_SPECIAL
+		if(SPECIAL)
 			spread_text = "None"
-		if(VIRUS_SPREAD_BLOOD)
-			spread_flags = VIRUS_SPREAD_BLOOD
-			spread_text = "Blood"
-		if(VIRUS_SPREAD_CONTACT_FLUIDS)
-			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS
-			spread_text = "Fluids"
-		if(VIRUS_SPREAD_CONTACT_SKIN)
-			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN
+		if(CONTACT_GENERAL, CONTACT_HANDS, CONTACT_FEET)
 			spread_text = "On contact"
-		if(VIRUS_SPREAD_AIRBORNE)
-			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN | VIRUS_SPREAD_AIRBORNE
+		if(AIRBORNE)
 			spread_text = "Airborne"
+		if(BLOOD)
+			spread_text = "Blood"
+
+	spread_flags = spread_id
 
 /datum/disease/advance/proc/SetSeverity(level_sev)
 
 	switch(level_sev)
 
 		if(-INFINITY to 0)
-			severity = VIRUS_SEVERITY_POSITIVE
+			severity = NONTHREAT
 		if(1)
-			severity = VIRUS_SEVERITY_NONTHREAT
+			severity = MINOR
 		if(2)
-			severity = VIRUS_SEVERITY_MINOR
+			severity = MEDIUM
 		if(3)
-			severity = VIRUS_SEVERITY_MEDIUM
+			severity = HARMFUL
 		if(4)
-			severity = VIRUS_SEVERITY_HARMFUL
-		if(5)
-			severity = VIRUS_SEVERITY_DANGEROUS
-		if(6 to INFINITY)
-			severity = VIRUS_SEVERITY_BIOHAZARD
+			severity = DANGEROUS
+		if(5 to INFINITY)
+			severity = BIOHAZARD
 		else
 			severity = "Unknown"
 

@@ -18,7 +18,7 @@
 	return
 
 /mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(get_turf(src), null, get_static_viruses())
+	new /obj/effect/gibspawner/generic(get_turf(src))
 
 /mob/living/proc/spill_organs()
 	return
