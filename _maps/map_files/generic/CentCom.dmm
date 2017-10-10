@@ -13628,9 +13628,10 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/centcom/evac)
 "Mk" = (
-/obj/structure/grille,
 /obj/structure/window/plastitanium,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
 /area/shuttle/syndicate/airlock)
 "Mz" = (
 /obj/structure/shuttle/engine/propulsion/right,
@@ -13798,7 +13799,6 @@
 	id = "syndieshutters";
 	name = "blast shutters"
 	},
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/bridge)
 "Pm" = (
@@ -13889,9 +13889,10 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
 "QP" = (
-/obj/structure/grille,
 /obj/structure/window/plastitanium,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
 /area/shuttle/syndicate/medical)
 "QT" = (
 /obj/effect/turf_decal/stripes/corner,
@@ -14090,9 +14091,10 @@
 	},
 /area/shuttle/syndicate/eva)
 "Tl" = (
-/obj/structure/grille,
 /obj/structure/window/plastitanium,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
 /area/shuttle/syndicate/eva)
 "Tm" = (
 /obj/machinery/status_display,
@@ -14248,9 +14250,10 @@
 /turf/open/floor/plasteel/vault,
 /area/shuttle/syndicate/medical)
 "Wd" = (
-/obj/structure/grille,
 /obj/structure/window/plastitanium,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
 /area/shuttle/syndicate/armory)
 "We" = (
 /obj/item/screwdriver{
@@ -14492,16 +14495,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
-"ZZ" = (
-/obj/structure/grille,
-/obj/structure/window/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/syndicate/hallway)
-"OVERFLOW" = (
-/obj/structure/grille,
-/obj/structure/window/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/syndicate/hallway)
 
 (1,1,1) = {"
 aa
@@ -28561,7 +28554,7 @@ ZS
 QP
 QP
 pk
-QP
+Nc
 XJ
 XJ
 Nk
@@ -28811,7 +28804,7 @@ XN
 Ru
 XN
 XN
-ZZ
+Ur
 Pt
 Pt
 Pt
@@ -28820,7 +28813,7 @@ RF
 NV
 RD
 TT
-Ur
+XL
 de
 Jn
 hq
@@ -29325,7 +29318,7 @@ Om
 TW
 Om
 Om
-OVERFLOW
+Ur
 Pt
 Pt
 Pt
@@ -29334,7 +29327,7 @@ WW
 NV
 RD
 TT
-Ur
+XL
 de
 Mz
 hq
@@ -29589,7 +29582,7 @@ Se
 Wd
 Wd
 ZM
-Wd
+ZE
 Jz
 Jz
 Nk
