@@ -13,7 +13,8 @@
 	var/execution_faction = "The Syndicate"
 	var/faction_chosen = FALSE
 	var/executing = FALSE
-	var/playing_nasheed = FALSE
+	var/static/playing_nasheed = FALSE
+	var/static/earrape_time = 0
 	var/nasheed_list = list('hippiestation/sound/misc/nasheed.ogg', 'hippiestation/sound/misc/nasheed2.ogg')
 
 obj/item/melee/execution_sword/attack_self(mob/living/user)
@@ -49,8 +50,9 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 		priority_announce("[user] is preparing to execute [target] at [A.map_name] in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
 		log_admin("[key_name(user)] attempted to execute [key_name(target)] with [src]")
 		message_admins("[key_name(user)] is attempting to execute [key_name(target)] with [src]")
-		if(!playing_nasheed)
+		if(!playing_nasheed && world.time > earrape_time)
 			var/nasheed_chosen = pick(nasheed_list)
+			earrape_time = world.time + 250 //25 seconds between each
 			world << nasheed_chosen
 			playing_nasheed = TRUE
 			addtimer(CALLBACK(src, .proc/nasheed_end), EXECUTE_INFIDEL)
@@ -63,6 +65,7 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 		else
 			priority_announce("[user] has failed to execute [target] and has brought shame to [execution_faction]!","Message from [execution_faction]!", 'sound/misc/compiler-failure.ogg')
 			executing = FALSE
+			nasheed_end()
 
 
 /obj/item/melee/execution_sword/proc/nasheed_end()
