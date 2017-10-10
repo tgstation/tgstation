@@ -357,6 +357,71 @@
 
 	return
 
+// INCINERATORS
+	var/mission = input("Assign a mission to the Incineration Team", "Assign Mission", "Burn it all down.")
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for an elite Nanotrasen Strike Team?", "incineration", null)
+	var/packSpawned = 0
+
+	if(candidates.len >= 2) //Minimum 2 to be considered a TEAM
+		//Pick the lucky players
+		var/numagents = min(5,candidates.len) //How many incinerators we will spawn
+		var/list/spawnpoints = GLOB.emergencyresponseteamspawn
+		while(numagents && candidates.len)
+			if (numagents > spawnpoints.len)
+				numagents--
+				continue // This guy's unlucky, not enough spawn points, we skip him.
+			var/spawnloc = spawnpoints[numagents]
+			var/mob/dead/observer/chosen_candidate = pick(candidates)
+			candidates -= chosen_candidate
+			if(!chosen_candidate.key)
+				continue
+
+			//Spawn and equip the commando
+			var/mob/living/carbon/human/Incinerator = new(spawnloc)
+			chosen_candidate.client.prefs.copy_to(Incinerator)
+			if(numagents == 1) //If Squad Leader
+				Incinerator.equipOutfit(/datum/outfit/death_commando/officer)
+			else
+				Incinerator.equipOutfit(/datum/outfit/death_commando)
+			Incinerator.dna.update_dna_identity()
+			Incinerator.key = chosen_candidate.key
+			Incinerator.mind.assigned_role = "Death Commando"
+
+			//Assign antag status and the mission
+			SSticker.mode.traitors += Incinerator.mind
+			Incinerator.mind.special_role = "incinerator"
+			var/datum/objective/missionobj = new
+			missionobj.owner = Incinerator.mind
+			missionobj.explanation_text = mission
+			missionobj.completed = 1
+			Incinerator.mind.objectives += missionobj
+
+			//Greet the INCINERATOR
+			to_chat(Incinerator, "<B><font size=3 color=red>You are a part of [numagents==1?"Incineration Officer":"Incineraton Team Member"].</font></B>")
+			var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
+			if(numagents == 1) //If Squad Leader
+				missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
+			else
+				missiondesc += " Follow orders given to you by your Incinerao."
+			missiondesc += "<BR><B>Your Mission</B>: [mission]"
+			to_chat(Incinerator, missiondesc)
+
+			if(CONFIG_GET(flag/enforce_human_authority))
+				Incinerator.set_species(/datum/species/human)
+
+			//Logging and cleanup
+			if(numagents == 1)
+				message_admins("The Incineraton team has spawned with the mission: [mission].")
+			log_game("[key_name(Incinerator)] has been selected as an Incinerator")
+			numagents--
+
+			return 1
+		else
+			return 0
+
+	return
+
+
 /datum/admins/proc/makeOfficial()
 	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered to be a CentCom Official?", "deathsquad")
@@ -399,12 +464,14 @@
 
 // CENTCOM RESPONSE TEAM
 /datum/admins/proc/makeEmergencyresponseteam()
-	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: CentCom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Delta: Deathsquad")
+	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: CentCom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Red: Incinerators", "Delta: Deathsquad")
 	if(!alert)
 		return
 	switch(alert)
 		if("Delta: Deathsquad")
 			return makeDeathsquad()
+		if("Red: Incinerators")
+			return makeIncinerators()
 		if("Red: Elite ERT (Armoury Access + Pulse Weapons)")
 			alert = "Red"
 		if("Amber: Full ERT (Armoury Access)")
