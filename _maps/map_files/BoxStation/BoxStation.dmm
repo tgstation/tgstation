@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -54691,12 +54691,14 @@
 "cyd" = (
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
+	callTime = 250;
 	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 22;
 	id = "whiteship";
 	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "NT Medical Ship";
 	port_direction = 8;
 	preferred_direction = 4;
@@ -58902,14 +58904,27 @@
 /area/science/xenobiology)
 "Qlj" = (
 /obj/docking_port/stationary{
- 	dheight = 9;
- 	dir = 2;
- 	dwidth = 5;
- 	height = 24;
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
 	id = "syndicate_nw";
 	name = "northwest of station";
 	turf_type = /turf/open/space
-},
+	},
+/turf/open/space/basic,
+/area/space)
+"Qlk" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_nw";
+	name = "northwest of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
 /turf/open/space/basic,
 /area/space)
 
@@ -73082,7 +73097,6 @@ aaa
 aaa
 aaa
 aaa
-Qlj
 aaa
 aaa
 aaa
@@ -73093,6 +73107,7 @@ aaa
 aaa
 aaa
 aaa
+Qlk
 aaa
 aaa
 aaa
