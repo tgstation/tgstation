@@ -22,13 +22,10 @@
 /obj/item/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user, ranged = 0)
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
-	var/new_location = get_turf(loc)
+	var/new_location = get_turf(src)
 	var/obj/item/broken_bottle/B = new /obj/item/broken_bottle(new_location)
-	if(ranged)
-		B.loc = new_location
-	else
-		user.drop_item()
-		user.put_in_active_hand(B)
+	if(!ranged)
+		user.put_in_hands(B)
 	B.icon_state = src.icon_state
 
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)

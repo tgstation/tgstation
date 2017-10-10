@@ -90,7 +90,7 @@
 			if(!no_table_check)
 				return TRUE
 		return FALSE
-	if(get_clockwork_power(RATVAR_POWER_CHECK))
+	if(GLOB.ratvar_awakens)
 		fabrication_values["power_cost"] = 0
 
 	var/turf/Y = get_turf(user)
@@ -167,7 +167,7 @@
 		return FALSE
 	if(target.type != expected_type)
 		return FALSE
-	if(get_clockwork_power(RATVAR_POWER_CHECK))
+	if(GLOB.ratvar_awakens)
 		fabrication_values["power_cost"] = 0
 	if(!get_clockwork_power(fabrication_values["power_cost"]))
 		if(get_clockwork_power() - fabrication_values["power_cost"] < 0)
@@ -212,7 +212,7 @@
 		return FALSE
 	repair_values["healing_for_cycle"] = min(repair_values["amount_to_heal"], FABRICATOR_REPAIR_PER_TICK) //modify the healing for this cycle
 	repair_values["power_required"] = round(repair_values["healing_for_cycle"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER) //and get the power cost from that
-	if(!get_clockwork_power(RATVAR_POWER_CHECK) && !get_clockwork_power(repair_values["power_required"]))
+	if(!GLOB.ratvar_awakens && !get_clockwork_power(repair_values["power_required"]))
 		if(!silent)
 			to_chat(user, "<span class='warning'>You need at least <b>[DisplayPower(repair_values["power_required"])]</b> power to start repairin[target == user ? "g yourself" : "g [target]"], and at least \
 			<b>[DisplayPower(repair_values["amount_to_heal"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)]</b> to fully repair [target == user ? "yourself" : "[target.p_them()]"]!</span>")

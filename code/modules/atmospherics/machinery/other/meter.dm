@@ -75,16 +75,14 @@
 		radio_connection.post_signal(src, signal)
 
 /obj/machinery/meter/proc/status()
-	var/t = ""
 	if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
-			t += "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)] K ([round(environment.temperature-T0C,0.01)]&deg;C)"
+			. = "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)] K ([round(environment.temperature-T0C,0.01)]&deg;C)."
 		else
-			t += "The sensor error light is blinking."
+			. = "The sensor error light is blinking."
 	else
-		t += "The connect error light is blinking."
-	return t
+		. = "The connect error light is blinking."
 
 /obj/machinery/meter/examine(mob/user)
 	..()

@@ -72,7 +72,7 @@
 	if(..())
 		return
 	if(istype(C, /obj/item/light/bulb)) //only for light tiles
-		if(state && user.drop_item())
+		if(state && user.temporarilyRemoveItemFromInventory(C))
 			qdel(C)
 			state = 0 //fixing it by bashing it with a light bulb, fun eh?
 			update_icon()

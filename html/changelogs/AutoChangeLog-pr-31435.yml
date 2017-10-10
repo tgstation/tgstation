@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Viral Aggressive Metabolism is now properly inactive when neutered."

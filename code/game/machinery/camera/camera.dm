@@ -149,10 +149,10 @@
 
 		else if(istype(W, /obj/item/device/analyzer))
 			if(!isXRay())
-				if(!user.drop_item(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
-				upgradeXRay()
 				qdel(W)
+				upgradeXRay()
 				to_chat(user, "[msg]")
 			else
 				to_chat(user, "[msg2]")

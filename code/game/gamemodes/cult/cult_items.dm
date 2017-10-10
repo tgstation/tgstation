@@ -503,7 +503,7 @@
 /obj/item/device/cult_shift/examine(mob/user)
 	..()
 	if(uses)
-		to_chat(user, "<span class='cult'>It has [uses] uses remaining.</span>")
+		to_chat(user, "<span class='cult'>It has [uses] use\s remaining.</span>")
 	else
 		to_chat(user, "<span class='cult'>It seems drained.</span>")
 

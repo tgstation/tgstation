@@ -104,7 +104,6 @@
 							 "<span class='notice'>You attach the sign to [T].</span>")
 		playsound(T, 'sound/items/deconstruct.ogg', 50, 1)
 		new sign_path(T)
-		user.drop_item()
 		qdel(src)
 	else
 		return ..()

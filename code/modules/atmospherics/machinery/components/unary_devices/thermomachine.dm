@@ -128,8 +128,10 @@
 	return data
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_act(action, params)
+
 	if(..())
 		return
+
 	switch(action)
 		if("power")
 			on = !on
@@ -141,7 +143,7 @@
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("Set new target ([min_temperature]-[max_temperature] K):", name, target_temperature) as num|null
-				if(!isnull(target) && !..())
+				if(!isnull(target))
 					. = TRUE
 			else if(adjust)
 				target = target_temperature + adjust
@@ -152,6 +154,7 @@
 			if(.)
 				target_temperature = Clamp(target, min_temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
+
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer

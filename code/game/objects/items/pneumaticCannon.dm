@@ -38,10 +38,10 @@
 		out += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		out += "<span class='info'>[icon2html(I, user)] It has \the [I] loaded.</span>"
+		out += "<span class='info'>[icon2html(I, user)] It has \a [I] loaded.</span>"
 		CHECK_TICK
 	if(tank)
-		out += "<span class='notice'>[icon2html(tank, user)] It has \the [tank] mounted onto it.</span>"
+		out += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
 	to_chat(user, out.Join("<br>"))
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/user, params)
@@ -122,7 +122,7 @@
 		return
 	if(user.disabilities & CLUMSY && prob(75) && clumsyCheck)
 		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
-		user.drop_item()
+		user.dropItemToGround(src, TRUE)
 		if(prob(10))
 			target = get_turf(user)
 		else

@@ -40,7 +40,7 @@ insert ascii eagle on american flag background here
 /obj/machinery/deepfryer/examine()
 	..()
 	if(frying)
-		to_chat(usr, "You can make out [frying] in the oil.")
+		to_chat(usr, "You can make out \a [frying] in the oil.")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(!reagents.total_volume)
@@ -58,10 +58,9 @@ insert ascii eagle on american flag background here
 	else
 		if(is_type_in_typecache(I, deepfry_blacklisted_items))
 			. = ..()
-		else if(user.drop_item() && !frying)
+		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 			frying = I
-			frying.forceMove(src)
 			icon_state = "fryer_on"
 
 /obj/machinery/deepfryer/process()

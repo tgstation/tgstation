@@ -50,9 +50,8 @@
 					to_chat(user, "<span class='notice'>Your gun has no external power connector.</span>")
 					return 1
 
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(G, src))
 				return 1
-			G.loc = src
 			charging = G
 			use_power = ACTIVE_POWER_USE
 			update_icon(scan = TRUE)

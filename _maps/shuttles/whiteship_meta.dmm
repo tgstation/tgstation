@@ -722,11 +722,12 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/structure/table,
+/obj/item/device/camera,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bs" = (
 /obj/structure/table,
-/obj/item/device/camera,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -734,6 +735,8 @@
 /obj/structure/light_construct{
 	dir = 1
 	},
+/obj/item/folder/blue,
+/obj/item/pen,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bt" = (
@@ -1162,13 +1165,15 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cg" = (
-/obj/structure/table,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/megaphone,
 /obj/structure/light_construct,
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	x_offset = -3;
+	y_offset = -7
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ch" = (
@@ -1765,6 +1770,38 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
+"dk" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"dl" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/chair/office/light,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"dm" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/table,
+/obj/item/device/megaphone,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
 
 (1,1,1) = {"
 aa
@@ -2130,10 +2167,10 @@ aR
 bc
 ac
 br
-bC
-aL
-bZ
 bx
+aL
+bx
+dm
 ac
 cA
 cN
@@ -2147,9 +2184,9 @@ ae
 ac
 ac
 bs
-ax
+dk
 aL
-bp
+dl
 cg
 ac
 ac

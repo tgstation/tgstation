@@ -152,11 +152,10 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
 	..()
-	if(!is_operational())
+	if(welded || !is_operational())
 		return FALSE
-	if(!NODE1)
+	if(!NODE1 || !on)
 		on = FALSE
-	if(!on || welded)
 		return FALSE
 	scrub(loc)
 	if(widenet)
@@ -196,37 +195,37 @@
 			filtered_out.temperature = removed.temperature
 
 			if(scrub_Toxins && removed_gases["plasma"])
-				filtered_out.add_gas("plasma")
+				ADD_GAS("plasma", filtered_out.gases)
 				filtered_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
 				removed_gases["plasma"][MOLES] = 0
 
 			if(scrub_CO2 && removed_gases["co2"])
-				filtered_out.add_gas("co2")
+				ADD_GAS("co2", filtered_out.gases)
 				filtered_gases["co2"][MOLES] = removed_gases["co2"][MOLES]
 				removed_gases["co2"][MOLES] = 0
 
 			if(removed_gases["agent_b"])
-				filtered_out.add_gas("agent_b")
+				ADD_GAS("agent_b", filtered_out.gases)
 				filtered_gases["agent_b"][MOLES] = removed_gases["agent_b"][MOLES]
 				removed_gases["agent_b"][MOLES] = 0
 
 			if(scrub_N2O && removed_gases["n2o"])
-				filtered_out.add_gas("n2o")
+				ADD_GAS("n2o", filtered_out.gases)
 				filtered_gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
 				removed_gases["n2o"][MOLES] = 0
 
 			if(scrub_BZ && removed_gases["bz"])
-				filtered_out.add_gas("bz")
+				ADD_GAS("bz", filtered_out.gases)
 				filtered_gases["bz"][MOLES] = removed_gases["bz"][MOLES]
 				removed_gases["bz"][MOLES] = 0
 
 			if(scrub_Freon && removed_gases["freon"])
-				filtered_out.add_gas("freon")
+				ADD_GAS("freon", filtered_out.gases)
 				filtered_gases["freon"][MOLES] = removed_gases["freon"][MOLES]
 				removed_gases["freon"][MOLES] = 0
 
 			if(scrub_WaterVapor && removed_gases["water_vapor"])
-				filtered_out.add_gas("water_vapor")
+				ADD_GAS("water_vapor", filtered_out.gases)
 				filtered_gases["water_vapor"][MOLES] = removed_gases["water_vapor"][MOLES]
 				removed_gases["water_vapor"][MOLES] = 0
 
@@ -257,7 +256,7 @@
 //There is no easy way for an object to be notified of changes to atmos can pass flags
 //	So we check every machinery process (2 seconds)
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process()
-	if (widenet)
+	if(widenet)
 		check_turfs()
 
 //we populate a list of turfs with nonatmos-blocked cardinal turfs AND
@@ -270,9 +269,7 @@
 
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
-	if(!is_operational())
-		return
-	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
+	if(!is_operational() || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
 
 	if("power" in signal.data)
