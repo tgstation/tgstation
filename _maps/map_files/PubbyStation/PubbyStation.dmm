@@ -39132,9 +39132,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	icon_state = "plating_warn_end"
-	},
+/turf/open/floor/plating,
 /area/science/mineral_storeroom)
 "bJW" = (
 /obj/machinery/light{
