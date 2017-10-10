@@ -13,7 +13,7 @@
 	storage_slots = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	var/cooldowntime = 20
-	var/static/list/dakimakura_options = list("Callie","Casca","Chaika","Elisabeth","Foxy Grandpa","Haruko","Holo","Ian","Jolyne","Kurisu","Marie","Mugi","Nar'Sie","Patchouli","Plutia","Rei","Reisen","Naga","Squid","Squigly","Tomoko","Toriel","Umaru","Yaranaika","Yoko") //Kurisu is the ideal girl." - Me, Logos. //how could someone make something so good then say some retarded shit like this
+	var/static/list/dakimakura_options = list("Operative","Fruit","CMO","Clown", "Mime", "Nar'Sie", "Ian", "Catgirl") //Kurisu is the ideal girl." - Me, Logos. //how could someone make something so good then say some retarded shit like this
 
 /obj/item/storage/daki/attack_self(mob/living/user)
 	var/body_choice
@@ -33,7 +33,7 @@
 			to_chat(user,"<span class='danger'>Name is too long!</span>")
 			return FALSE
 		if(custom_name)
-			name = \proper custom_name
+			name = "\proper [custom_name]"
 			desc = "A large pillow depicting [custom_name] in a compromising position. Featuring as many dimensions as you."
 	else
 		switch(user.a_intent)
