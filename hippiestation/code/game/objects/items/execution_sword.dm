@@ -55,7 +55,6 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 			earrape_time = world.time + 250 //25 seconds between each
 			var/sound/nasheed = new()
 			nasheed.file = nasheed_chosen
-			nasheed.priority = 250
 			nasheed.channel = CHANNEL_ADMIN
 			nasheed.frequency = 1
 			nasheed.wait = 1
