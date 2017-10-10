@@ -58904,7 +58904,7 @@
 /area/science/xenobiology)
 "Qlj" = (
 /obj/docking_port/stationary{
-	 dheight = 9;
+	dheight = 9;
 	dir = 2;
 	dwidth = 5;
 	height = 24;

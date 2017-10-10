@@ -41,14 +41,6 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 11;
-	height = 15;
-	id = "whiteship_home";
-	name = "SS13: Auxiliary Dock, Station-Port";
-	width = 27
-	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ah" = (
