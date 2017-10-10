@@ -2282,6 +2282,7 @@
 #include "hippiestation\code\game\machinery\doors\airlock.dm"
 #include "hippiestation\code\game\machinery\doors\blastco.dm"
 #include "hippiestation\code\game\machinery\pipe\pipe_dispenser.dm"
+#include "hippiestation\code\game\machinery\telecomms\telecommunications.dm"
 #include "hippiestation\code\game\mecha\mech_fabricator.dm"
 #include "hippiestation\code\game\mecha\clockwork\clockwork_mech.dm"
 #include "hippiestation\code\game\mecha\working\ripley.dm"
