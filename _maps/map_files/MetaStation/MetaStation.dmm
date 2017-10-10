@@ -81419,13 +81419,6 @@
 /area/science/xenobiology)
 "dce" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 7
-	},
-/obj/item/storage/box/syringes{
-	pixel_y = 5
-	},
 /obj/item/storage/box/monkeycubes{
 	pixel_x = 2;
 	pixel_y = -2
@@ -81782,8 +81775,15 @@
 	},
 /area/science/xenobiology)
 "dcL" = (
-/obj/machinery/chem_dispenser/constructable,
 /obj/machinery/light,
+/obj/structure/table/glass,
+/obj/item/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/storage/box/syringes{
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "dcM" = (
