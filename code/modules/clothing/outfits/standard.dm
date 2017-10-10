@@ -392,6 +392,53 @@
 	mask = /obj/item/clothing/mask/breath
 	suit_store = /obj/item/tank/internals/oxygen
 
+/datum/outfit/flamer
+	name = "NT Flamer"
+
+	uniform = /obj/item/clothing/under/color/green
+	suit = /obj/item/clothing/suit/space/hardsuit/flamer
+	shoes = /obj/item/clothing/shoes/combat/swat
+	gloves = /obj/item/clothing/gloves/combat
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
+	back = /obj/item/storage/backpack/security
+	l_pocket = /obj/item/melee/transforming/energy/sword/saber
+	suit_store = /obj/item/tank/internals/emergency_oxygen
+	belt = /obj/item/gun/ballistic/revolver/mateba
+	r_hand = /obj/item/gun/energy/pulse/loyalpin
+	id = /obj/item/card/id
+	ears = /obj/item/device/radio/headset/headset_cent/alt
+
+	backpack_contents = list(/obj/item/storage/box=1,\
+		/obj/item/ammo_box/a357=1,\
+		/obj/item/storage/firstaid/regular=1,\
+		/obj/item/storage/box/flashbangs=1,\
+		/obj/item/device/flashlight=1,\
+		/obj/item/grenade/plastic/x4=1)
+
+/datum/outfit/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/device/radio/R = H.ears
+	R.set_frequency(GLOB.CENTCOM_FREQ)
+	R.freqlock = 1
+
+	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)//Here you go Deuryn
+	L.implant(H, null, 1)
+
+
+	var/obj/item/card/id/W = H.wear_id
+	W.icon_state = "centcom"
+	W.access = get_all_accesses()//They get full station access.
+	W.access += get_centcom_access("NT Flamer")//Let's add their alloted CentCom access.
+	W.assignment = "NT Flamer"
+	W.registered_name = H.real_name
+	W.update_label(W.registered_name, W.assignment)
+
+/datum/outfit/death_commando/officer
+	name = "NT Flame Commander"
+	head = /obj/item/clothing/head/HoS
 
 
 

@@ -3,6 +3,7 @@
 Contains:
  - Captain's spacesuit
  - Death squad's hardsuit
+ - Incinerator Suit
  - SWAT suit
  - Officer's beret/spacesuit
  - NASA Voidsuit
@@ -36,6 +37,19 @@ Contains:
 	item_state = "swat_suit"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
+	dog_fashion = /datum/dog_fashion/back/deathsquad
+
+/obj/item/clothing/suit/space/hardsuit/flamer
+	name = "MK.II Flamer Suit"
+	desc = "A very anomalous version of the MK.II SWAT suit, used by NT Flamers. Based on the streamlined MK.II model, the traditional ceramic and graphene plate construction was replaced with Fixium, allowing superior armor against fire and explosives."
+	icon_state = "deathsquad"
+	item_state = "swat_suit"
+	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
+	armor = list(melee = 60, bullet = 40, laser = 40, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF

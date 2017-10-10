@@ -396,7 +396,7 @@
 			var/datum/objective/missionobj = new
 			missionobj.owner = Incinerator.mind
 			missionobj.explanation_text = mission
-			missionobj.completed = 1
+			missionobj.completed = TRUE
 			Incinerator.mind.objectives += missionobj
 
 			//Greet the INCINERATOR
@@ -420,9 +420,9 @@
 			packSpawned++
 
 		if (packSpawned)
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 //CENTCOM OFFICIAL
 /datum/admins/proc/makeOfficial()
 	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
