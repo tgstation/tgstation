@@ -47,7 +47,7 @@
 		next_summon = world.time + MEESEEKS_BOX_COOLDOWN
 		summoning = TRUE
 		user.visible_message("<span class='notice'>[user] presses the button on [src]!</span>")
-		var/list/candidates = pollGhostCandidates("Would you like to become a Mr. Meeseeks and fulfill a task?", poll_time=100)
+		var/list/candidates = pollGhostCandidates("Would you like to become a Mr. Meeseeks and fulfill a task?", poll_time = 100, ignore_category = POLL_IGNORE_MEESEEKS)
 		if(candidates.len)
 			var/mob/dead/observer/Z = pick(candidates)
 			masters = user
