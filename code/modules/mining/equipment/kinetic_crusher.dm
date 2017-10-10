@@ -36,7 +36,7 @@
 	to_chat(user, "<span class='notice'>Does <b>80</b> damage if the target is backstabbed, instead of <b>50</b>.</span>")
 	for(var/t in trophies)
 		var/obj/item/crusher_trophy/T = t
-		to_chat(user, "<span class='notice'>It has \a [T] attached, which cause [T.effect_desc()].</span>")
+		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
 
 /obj/item/twohanded/required/kinetic_crusher/attackby(obj/item/A, mob/living/user)
 	if(istype(A, /obj/item/crowbar))
@@ -220,7 +220,7 @@
 	bonus_value = 8
 
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
-	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second[bonus_value*0.1 == 1 ? "":"s"]"
+	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second\s"
 
 /obj/item/crusher_trophy/watcher_wing/on_mark_detonation(mob/living/target, mob/living/user)
 	if(ishostile(target))
@@ -265,7 +265,7 @@
 	bonus_value = 3
 
 /obj/item/crusher_trophy/legion_skull/effect_desc()
-	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second[bonus_value*0.1 == 1 ? "":"s"] faster"
+	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
 
 /obj/item/crusher_trophy/legion_skull/add_to(obj/item/twohanded/required/kinetic_crusher/H, mob/living/user)
 	. = ..()
