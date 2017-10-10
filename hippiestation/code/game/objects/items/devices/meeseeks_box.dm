@@ -26,7 +26,7 @@
 		to_chat(user, "<span class='warning'>A Mr. Meeseeks has already left this box!</span>")
 		switch(alert(user, "Do you wish to send Mr.Meeseeks away?","Mr. Meeseeks dismissal.","Yes","No"))
 			if("Yes")
-				if(meeseeks in range(src, 7))
+				if(get_dist(meeseeks, user) <= 7)
 					if(SMS.stage_ticks < MEESEEKS_TICKS_STAGE_THREE)
 						destroy_meeseeks(meeseeks, meeseeks.dna.species)
 						masters = null
@@ -54,12 +54,13 @@
 			meeseeks = new
 			meeseeks.alpha = 0
 			meeseeks.forceMove(get_turf(user))
-			meeseeks.hardset_dna(null, null, "Mr. Meeseeks", null, /datum/species/meeseeks)
-			var/datum/species/meeseeks/SM = meeseeks.dna.species
+			var/datum/species/meeseeks/SM = new
+			meeseeks.hardset_dna(null, null, "Mr. Meeseeks", null, SM)
 			SM.master = user
 			meeseeks.set_cloned_appearance()
 			meeseeks.job = "Mr. Meeseeks"
 			new /obj/effect/cloud(get_turf(user))
+			animate(meeseeks, alpha = 255, time = 8)
 			meeseeks.key = Z.key
 			to_chat(meeseeks, "<span class='boldannounce'>You are a Mr. Meeseeks!</span>")
 			var/request = stripped_input(user, "How should Mr. Meeseeks help you today?")
