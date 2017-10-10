@@ -1,0 +1,4 @@
+author: "DaxDupont"
+delete-after: True
+changes: 
+  - bugfix: "Crew pinpointer no longer switches between regular pinpointer and crew pinpointer when facing west on medium distance."
