@@ -130,8 +130,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 		//now copy the uploads to the thing
 		$target_interfaces = $target_path . '/src/interfaces/';
-		foreach($good_files as $F)
-			move_uploaded_file($F['tmp_name'], $target_interfaces . $F['name']);
+		foreach($good_files as $F){
+			$target_name = $target_interfaces . $F['name'];
+			if(file_exists(target_name))
+				unlink($target_name); //remove the file
+			move_uploaded_file($F['tmp_name'], $target_name);
+		}
 		
 		//compile
 		$command = '"' . $full_path_to_gulp . '" --cwd "' . str_replace('/', '\\', $target_path) . '" --min 2>&1';
