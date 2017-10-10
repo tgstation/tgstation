@@ -2,4 +2,6 @@
 
 <h1>Welcome to Space Station 13!</h1>
 
-<i>This server is running a /tg/station 13 Git build.</i>
+<i>This server is running the Tikistation codebase, a branch of /tg/station.</i>
+
+<i>rules go here</i>
