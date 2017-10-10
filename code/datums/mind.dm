@@ -1354,7 +1354,7 @@
 					if (istype(M))
 						for(var/datum/disease/transformation/jungle_fever/JF in M.viruses)
 							JF.cure(0)
-							sleep(0) //because deleting of virus is doing throught spawn(0) //What
+							stoplag() //because deleting of virus is doing throught spawn(0) //What
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						H = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)

@@ -88,7 +88,7 @@
 	var/list/things = src_object.contents.Copy()
 	var/datum/progressbar/progress = new(user, things.len, src)
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(src, .proc/handle_mass_item_insertion, things, src_object, user, progress)))
-		sleep(1)
+		stoplag(1)
 	qdel(progress)
 	orient2hud(user)
 	src_object.orient2hud(user)
@@ -495,7 +495,7 @@
 	var/list/things = contents.Copy()
 	var/datum/progressbar/progress = new(usr, things.len, T)
 	while (do_after(usr, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
-		sleep(1)
+		stoplag(1)
 	qdel(progress)
 
 /obj/item/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress)
