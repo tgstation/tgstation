@@ -179,10 +179,12 @@ GLOBAL_LIST_EMPTY(explosions)
 
 		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
 			var/list/items = list() 
-			for(var/atom/A in T.contents)
+			for(var/I in T)
+				var/atom/A = I
 				items += A.GetAllContents()
-			for(var/atom/I in items)
-				I.ex_act(dist)
+			for(var/O in items)
+				var/atom/A = O
+				A.ex_act(dist)
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
