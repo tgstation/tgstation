@@ -25950,6 +25950,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
+/obj/machinery/smoke_machine,
 /mob/living/simple_animal/bot/cleanbot{
 	name = "C.L.E.A.N."
 	},
@@ -69344,7 +69345,8 @@
 	height = 24;
 	id = "syndicate_nw";
 	name = "northwest of station";
-	turf_type = /turf/open/space
+	turf_type = /turf/open/space;
+	width = 18
 	},
 /turf/open/space/basic,
 /area/space)
