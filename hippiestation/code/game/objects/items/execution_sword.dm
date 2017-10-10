@@ -65,7 +65,7 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 				if(M.client.prefs.toggles & SOUND_MIDI)
 					var/user_vol = M.client.chatOutput.adminMusicVolume
 					if(user_vol)
-						nasheed.volume = vol * (user_vol / 100)
+						nasheed.volume = 100 * (user_vol / 100)
 					SEND_SOUND(M, nasheed)
 					nasheed.volume = 100
 			playing_nasheed = TRUE
