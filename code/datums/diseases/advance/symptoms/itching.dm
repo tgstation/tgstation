@@ -33,7 +33,8 @@ BONUS
 					  <b>Stage Speed 7:</b> The host will scrath itself when itching, causing superficial damage."
 
 /datum/symptom/itching/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["transmittable"] >= 6) //itch more often
 		symptom_delay_min = 1
 		symptom_delay_max = 4

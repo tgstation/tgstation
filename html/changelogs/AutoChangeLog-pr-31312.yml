@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - tweak: "Abandoned Airlocks will no longer be deleted when their turf is changed to a wall."
