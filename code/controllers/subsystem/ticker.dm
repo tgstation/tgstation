@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/provisional_title_music = flist("config/title_music/sounds/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
-	
+
 	for(var/S in provisional_title_music)
 		var/lower = lowertext(S)
 		var/list/L = splittext(lower,"+")
@@ -113,7 +113,7 @@ SUBSYSTEM_DEF(ticker)
 			if(byond_sound_formats[ext])
 				continue
 		music -= S
-				
+
 	if(isemptylist(music))
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 
@@ -173,6 +173,7 @@ SUBSYSTEM_DEF(ticker)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
+				SSticker.SetTimeLeft(CONFIG_GET(number/lobby_countdown) * 10) // FULPSTATOION: Update time on fail! Otherwise we end up STUCK here without an admin to hit START.
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
 
 		if(GAME_STATE_PLAYING)
@@ -754,10 +755,11 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/apcdestroyed.ogg',
 		'sound/roundend/bangindonk.ogg',
 		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
+		'sound/roundend/its_only_game.ogg',\
 		)
+		//'sound/roundend/yeehaw.ogg',
+		//'sound/roundend/disappointed.ogg'
+
 
 	SEND_SOUND(world, sound(round_end_sound))
 	text2file(login_music, "data/last_round_lobby_music.txt")

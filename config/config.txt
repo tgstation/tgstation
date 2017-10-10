@@ -7,16 +7,16 @@
 # There are various options which are hard-locked for security reasons.
 
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
-# SERVERNAME tgstation
+SERVERNAME Fulpstation
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
-# SERVERSQLNAME tgstation
+SERVERSQLNAME fulpstation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME Space Station 13
+#STATIONNAME Space Station 13
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
-#HUB
+HUB
 
 ## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
@@ -184,13 +184,13 @@ CHECK_RANDOMIZER
 # SERVER ss13.example.com:2506
 
 ## forum address
-# FORUMURL http://tgstation13.org/phpBB/index.php
+FORUMURL https://fulpstation.com
 
 ## Wiki address
 # WIKIURL http://www.tgstation13.org/wiki
 
 ## Rules address
-# RULESURL http://www.tgstation13.org/wiki/Rules
+RULESURL http://rules.fulpstation.com
 
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/-tg-station
@@ -199,6 +199,9 @@ CHECK_RANDOMIZER
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
 ##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization 
 # GITHUBREPOID 3234987
+
+##Discord address
+DISCORDURL https://discord.gg/SVu782A
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
