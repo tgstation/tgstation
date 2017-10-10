@@ -59764,6 +59764,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow{
 	dir = 4
 	},
