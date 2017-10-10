@@ -17,7 +17,6 @@
 //CONFIG
 $repo_dir = 'tgstation';
 $path_to_tgui_from_repo = '/tgui';
-$node_modules_dir = 'node_modules';
 $full_path_to_gulp = 'C:/Users/Cyberboss/AppData/Roaming/npm/gulp';	//this needs to be read/executable by the PHP app pool
 $max_number_of_uploads = 20;
 //END CONFIG
