@@ -36,6 +36,7 @@
 	var/titlebar = TRUE
 	var/custom_browser_id = FALSE
 	var/current_nounce = 0
+	var/last_data	//json of last data payload sent
 
  /**
   * public
@@ -328,7 +329,10 @@
 	if(status <= UI_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
-	++current_nounce	//something changed, old uis are garbo now
+	var/this_data = json_encode(data)
+	if(this_data != last_data)
+		++current_nounce	//something changed, old uis are garbo now
+		last_data = this_data
 	// Send the new JSON to the update() Javascript function.
 	user << output(url_encode(get_json(data)), "[custom_browser_id ? window_id : "[window_id].browser"]:update")
 
