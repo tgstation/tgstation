@@ -7,7 +7,7 @@
 
 //INSTALLATION
 //Setup PHP
-//Place this file in it's own directory and rewrite all requests to the directory to the php
+//Place this file in it's own directory and rewrite all requests to the directory to this file
 //add extension=php_fileinfo.dll to php.ini
 //ensure fastcgi.impersonate is set to 0 in php.ini
 //clone a tgui repository and place next to this file
