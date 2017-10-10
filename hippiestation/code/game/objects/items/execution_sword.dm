@@ -13,7 +13,8 @@
 	var/execution_faction = "The Syndicate"
 	var/faction_chosen = FALSE
 	var/executing = FALSE
-	var/playing_nasheed = FALSE
+	var/static/playing_nasheed = FALSE
+	var/static/earrape_time = 0
 	var/nasheed_list = list('hippiestation/sound/misc/nasheed.ogg', 'hippiestation/sound/misc/nasheed2.ogg')
 
 obj/item/melee/execution_sword/attack_self(mob/living/user)
@@ -49,9 +50,24 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 		priority_announce("[user] is preparing to execute [target] at [A.map_name] in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
 		log_admin("[key_name(user)] attempted to execute [key_name(target)] with [src]")
 		message_admins("[key_name(user)] is attempting to execute [key_name(target)] with [src]")
-		if(!playing_nasheed)
+		if(!playing_nasheed && world.time > earrape_time)
 			var/nasheed_chosen = pick(nasheed_list)
-			world << nasheed_chosen
+			earrape_time = world.time + 250 //25 seconds between each
+			var/sound/nasheed = new()
+			nasheed.file = nasheed_chosen
+			nasheed.channel = CHANNEL_ADMIN
+			nasheed.frequency = 1
+			nasheed.wait = 1
+			nasheed.repeat = 0
+			nasheed.status = SOUND_STREAM
+			nasheed.volume = 100
+			for(var/mob/M in GLOB.player_list)
+				if(M.client.prefs.toggles & SOUND_MIDI)
+					var/user_vol = M.client.chatOutput.adminMusicVolume
+					if(user_vol)
+						nasheed.volume = 100 * (user_vol / 100)
+					SEND_SOUND(M, nasheed)
+					nasheed.volume = 100
 			playing_nasheed = TRUE
 			addtimer(CALLBACK(src, .proc/nasheed_end), EXECUTE_INFIDEL)
 		if(do_after(user,EXECUTE_INFIDEL, target = target))
@@ -63,6 +79,7 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 		else
 			priority_announce("[user] has failed to execute [target] and has brought shame to [execution_faction]!","Message from [execution_faction]!", 'sound/misc/compiler-failure.ogg')
 			executing = FALSE
+			nasheed_end()
 
 
 /obj/item/melee/execution_sword/proc/nasheed_end()
