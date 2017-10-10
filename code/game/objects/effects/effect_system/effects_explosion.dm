@@ -10,17 +10,14 @@
 
 /datum/effect_system/expl_particles
 	number = 10
-
-/datum/effect_system/expl_particles/proc/create_particles()
-	var/obj/effect/particle_effect/expl_particles/expl = new /obj/effect/particle_effect/expl_particles(location)
-	var/direct = pick(GLOB.alldirs)
-	var/steps_amt = pick(1;25,2;50,3,4;200)
-	for(var/j in 1 to steps_amt)
-		addtimer(CALLBACK(src, .proc/_step, expl, direct), j)
 	
 /datum/effect_system/expl_particles/start()
 	for(var/i in 1 to number)
-		INVOKE_ASYNC(src, .proc/create_particles)
+		var/obj/effect/particle_effect/expl_particles/expl = new /obj/effect/particle_effect/expl_particles(location)
+		var/direct = pick(GLOB.alldirs)
+		var/steps_amt = pick(1;25,2;50,3,4;200)
+		for(var/j in 1 to steps_amt)
+			addtimer(CALLBACK(src, .proc/_step, expl, direct), j)
 
 /obj/effect/explosion
 	name = "fire"
