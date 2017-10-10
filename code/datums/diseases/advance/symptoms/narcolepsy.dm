@@ -22,7 +22,7 @@ Bonus
 	level = 6
 	symptom_delay_min = 15
 	symptom_delay_max = 80
-	severity = 5
+	severity = 4
 	var/sleep_level = 0
 	var/sleepy_ticks = 0
 	var/stamina = FALSE
