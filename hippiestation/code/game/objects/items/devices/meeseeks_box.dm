@@ -84,6 +84,7 @@
 			next_summon -= MEESEEKS_BOX_FAILURE_TIME
 			to_chat(user, "<span class='warning'>[src] failed to create a Mr. Meeseeks. Try again later!</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			summoning = FALSE
 	else
 		to_chat(user, "<span class='warning'>[src] is silent. Try again in a few minutes.</span>")
 
