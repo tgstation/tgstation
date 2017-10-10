@@ -74,16 +74,17 @@
 /obj/item/nullrod/healhand/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
-	getBruteLoss(A)
+	if(ismob(A))
+		var/mob/healmepls = A
+	healmepls.getBruteLoss()
 	user.adjustBruteLoss(brute/2)
-	A.adjustBruteLoss(-brute)
-	var/mob/living/carbon/human/H = A
-	if(!istype(H))
-		return
-	var/list/reagents = H.reagents
+	healmepls.adjustBruteLoss(-brute)
+	if(ishuman(healmepls))
+		var/mob/living/carbon/human/healmeplsiamhuman = healmepls
+	var/list/reagents = healmeplsiamhuman.reagents
 	for(var/reagent/B in reagents)
 		if(istype(B, reagent/toxic))
-		H.reagents.trans_to(user, H.reagents.total_volume, 1, 1, 0)
+		healmeplsiamhuman.reagents.trans_to(user, healmeplsiamhuman.reagents.total_volume, 1, 1, 0)
 		//to chat heal messages and shiz zzz
 
 /obj/item/nullrod/staff
