@@ -36,7 +36,7 @@
 /obj/machinery/atmospherics/miner/examine(mob/user)
 	..()
 	if(broken)
-		to_chat(user, "Its debug output is printing \"[broken_message]\"")
+		to_chat(user, "Its debug output is printing \"[broken_message]\".")
 
 /obj/machinery/atmospherics/miner/proc/check_operation()
 	if(!active)

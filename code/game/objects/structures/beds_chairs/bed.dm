@@ -145,7 +145,7 @@
 
 /obj/item/roller/robo/examine(mob/user)
 	..()
-	to_chat(user, "The dock is [loaded ? "loaded" : "empty"]")
+	to_chat(user, "The dock is [loaded ? "loaded" : "empty"].")
 
 /obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)
