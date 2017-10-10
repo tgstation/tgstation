@@ -9126,7 +9126,6 @@
 /area/hallway/primary/central)
 "awl" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -16174,9 +16173,7 @@
 	pixel_y = -5;
 	req_access_txt = "17"
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
 /turf/open/floor/plasteel/blue/corner,
@@ -16834,9 +16831,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (NORTH)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -30295,9 +30290,7 @@
 	dir = 8;
 	network = list("SS13","RD")
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
 /turf/open/floor/plasteel/white,
@@ -33325,9 +33318,7 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (WEST)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -34763,9 +34754,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (WEST)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
@@ -38583,9 +38572,7 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (NORTH)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -38955,9 +38942,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
 /turf/open/floor/plasteel/green/side,
@@ -42150,9 +42135,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
 /turf/open/floor/plasteel/black,
@@ -42168,9 +42151,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (NORTH)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
@@ -42783,9 +42764,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (WEST)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
@@ -42805,9 +42784,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (EAST)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
@@ -45602,9 +45579,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (WEST)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -45719,9 +45694,7 @@
 	dir = 1;
 	pixel_y = 29
 	},
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (EAST)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -46277,9 +46250,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "can" = (
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
 /turf/open/floor/plasteel,
@@ -46372,9 +46343,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cav" = (
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (NORTH)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -53350,9 +53319,7 @@
 /turf/closed/wall,
 /area/library)
 "cxC" = (
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (NORTH)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -53363,9 +53330,7 @@
 	},
 /area/library)
 "cxD" = (
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -53465,9 +53430,7 @@
 /turf/closed/wall,
 /area/library)
 "cyz" = (
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (EAST)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -53478,9 +53441,7 @@
 	},
 /area/library)
 "cyA" = (
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (WEST)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
