@@ -21,7 +21,7 @@
 				return 0
 	while(attached_hand) //hibernate untill the spell is actually used
 		charge_counter = 0
-		sleep(1)
+		stoplag(1)
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/ChargeHand(mob/living/carbon/user)
 	attached_hand = new hand_path(src)
