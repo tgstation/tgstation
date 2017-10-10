@@ -189,8 +189,9 @@
 		var/obj/item/reagent_containers/food/snacks/S = W
 		if(!S.junkiness)
 			if(!iscompartmentfull(user))
-				if(!user.transferItemToLoc(W, src))
+				if(!user.drop_item())
 					return
+				W.loc = src
 				food_load(W)
 				to_chat(user, "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>")
 		else
@@ -278,8 +279,9 @@
 		if(!premium.len)
 			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.drop_item())
 			return
+		W.loc = src
 		coin = W
 		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 		return

@@ -15,7 +15,8 @@
 	if(!istype(tool))
 		return 0
 
-	user.transferItemToLoc(tool, target, TRUE)
+	user.drop_item()
+	tool.loc = target
 
 	var/datum/action/item_action/hands_free/activate_pill/P = new(tool)
 	P.button.name = "Activate [tool.name]"

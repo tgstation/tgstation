@@ -54,8 +54,9 @@
 		return
 	if(istype(I, /obj/item/extinguisher))
 		if(!stored_extinguisher && opened)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.drop_item())
 				return
+			contents += I
 			stored_extinguisher = I
 			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
 			update_icon()

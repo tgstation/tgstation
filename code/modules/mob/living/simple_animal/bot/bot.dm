@@ -846,8 +846,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else if(allow_pai && !key)
 		if(!locked && !open)
 			if(card.pai && card.pai.mind)
-				if(!user.transferItemToLoc(card, src))
+				if(!user.drop_item())
 					return
+				card.forceMove(src)
 				paicard = card
 				user.visible_message("[user] inserts [card] into [src]!","<span class='notice'>You insert [card] into [src].</span>")
 				paicard.pai.mind.transfer_to(src)

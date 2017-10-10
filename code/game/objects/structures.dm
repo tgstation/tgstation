@@ -53,7 +53,7 @@
 		return
 	if(iscyborg(user))
 		return
-	if(!user.drop_all_held_items())
+	if(!user.drop_item())
 		return
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))

@@ -53,9 +53,10 @@
 			if(F.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
-			if(!user.transferItemToLoc(F, src))
+			if(!user.drop_item())
 				return
 			fireaxe = F
+			F.forceMove(src)
 			to_chat(user, "<span class='caution'>You place the [F.name] back in the [name].</span>")
 			update_icon()
 			return

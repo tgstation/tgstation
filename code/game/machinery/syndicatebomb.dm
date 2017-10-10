@@ -150,10 +150,11 @@
 			to_chat(user, "<span class='warning'>The cover is screwed on, it won't pry off!</span>")
 	else if(istype(I, /obj/item/bombcore))
 		if(!payload)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.drop_item())
 				return
 			payload = I
 			to_chat(user, "<span class='notice'>You place [payload] into [src].</span>")
+			payload.loc = src
 		else
 			to_chat(user, "<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>")
 	else if(istype(I, /obj/item/weldingtool))
@@ -462,10 +463,11 @@
 		return
 	else if(istype(I, /obj/item/reagent_containers/glass/beaker) || istype(I, /obj/item/reagent_containers/glass/bottle))
 		if(beakers.len < max_beakers)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.drop_item())
 				return
 			beakers += I
 			to_chat(user, "<span class='notice'>You load [src] with [I].</span>")
+			I.loc = src
 		else
 			to_chat(user, "<span class='warning'>The [I] wont fit! The [src] can only hold up to [max_beakers] containers.</span>")
 			return

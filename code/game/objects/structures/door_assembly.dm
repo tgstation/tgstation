@@ -603,9 +603,10 @@
 		if(do_after(user, 40, target = src))
 			if( src.state != 1 )
 				return
-			if(!user.transferItemToLoc(W, src))
+			if(!user.drop_item())
 				return
 
+			W.loc = src
 			to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
 			src.state = 2
 			src.name = "near finished airlock assembly"

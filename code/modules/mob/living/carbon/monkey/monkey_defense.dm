@@ -69,9 +69,11 @@
 					add_logs(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 						"<span class='userdanger'>[M] has pushed down [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-				else if(dropItemToGround(get_active_held_item()))
-					playsound(src, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					visible_message("<span class='danger'>[M] has disarmed [src]!</span>", "<span class='userdanger'>[M] has disarmed [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				else
+					if(drop_item())
+						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+						visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+							"<span class='userdanger'>[M] has disarmed [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
@@ -111,10 +113,12 @@
 						"<span class='userdanger'>[M] has tackled down [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			else
 				I = get_active_held_item()
-				if(dropItemToGround(I))
-					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", "<span class='userdanger'>[M] has disarmed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
+				if(drop_item())
+					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
+							"<span class='userdanger'>[M] has disarmed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				else
-					I = null
+					I = null//did not manage to actually disarm the item, gross but no time to refactor
+
 			add_logs(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			updatehealth()
 

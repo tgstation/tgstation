@@ -83,15 +83,16 @@
 	if(istype(I, /obj/item/coin))
 		var/obj/item/coin/C = I
 		if(prob(2))
-			if(!user.transferItemToLoc(C, drop_location()))
+			if(!user.drop_item())
 				return
+			C.loc = loc
 			C.throw_at(user, 3, 10)
 			if(prob(10))
 				balance = max(balance - SPIN_PRICE, 0)
 			to_chat(user, "<span class='warning'>[src] spits your coin back out!</span>")
 
 		else
-			if(!user.temporarilyRemoveItemFromInventory(C))
+			if(!user.drop_item())
 				return
 			to_chat(user, "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>")
 			balance += C.value

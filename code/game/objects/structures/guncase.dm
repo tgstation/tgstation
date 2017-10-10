@@ -39,8 +39,9 @@
 		return
 	if(istype(I, gun_category) && open)
 		if(LAZYLEN(contents) < capacity)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.drop_item())
 				return
+			I.forceMove(src)
 			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
 			update_icon()
 		else

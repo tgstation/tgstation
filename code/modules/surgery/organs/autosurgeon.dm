@@ -49,8 +49,9 @@
 		else if(!uses)
 			to_chat(user, "<span class='notice'>[src] has already been used up.</span>")
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.drop_item())
 			return
+		I.forceMove(src)
 		storedorgan = I
 		to_chat(user, "<span class='notice'>You insert the [I] into [src].</span>")
 	else if(istype(I, /obj/item/screwdriver))

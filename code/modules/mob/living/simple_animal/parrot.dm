@@ -244,8 +244,8 @@
 
 						var/obj/item/device/radio/headset/headset_to_add = item_to_add
 
-						if(!usr.transferItemToLoc(headset_to_add, src))
-							return
+						usr.drop_item()
+						headset_to_add.loc = src
 						src.ears = headset_to_add
 						to_chat(usr, "<span class='notice'>You fit the headset onto [src].</span>")
 
@@ -338,6 +338,7 @@
 			drop_held_item(0)
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
 		qdel(O)
+		user.drop_item()
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
 		speak_chance *= 1.27 // 20 crackers to go from 1% to 100%

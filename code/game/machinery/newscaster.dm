@@ -786,9 +786,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 		else
 			qdel(photo)
 		photo = null
-	photo = user.is_holding_item_of_type(/obj/item/photo)
-	if(photo && !user.transferItemToLoc(photo, src))
-		photo = null
+	if(istype(user.get_active_held_item(), /obj/item/photo))
+		photo = user.get_active_held_item()
+		if(!user.drop_item())
+			return
+		photo.loc = src
 	if(issilicon(user))
 		var/list/nametemp = list()
 		var/find

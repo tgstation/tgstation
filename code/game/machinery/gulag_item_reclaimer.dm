@@ -33,8 +33,9 @@
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id/prisoner))
 		if(!inserted_id)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.drop_item())
 				return
+			I.forceMove(src)
 			inserted_id = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			return
@@ -81,13 +82,18 @@
 	switch(action)
 		if("handle_id")
 			if(inserted_id)
-				usr.put_in_hands(inserted_id)
-				inserted_id = null
+				if(!usr.get_active_held_item())
+					usr.put_in_hands(inserted_id)
+					inserted_id = null
+				else
+					inserted_id.forceMove(get_turf(src))
+					inserted_id = null
 			else
-				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
-				if(I)
-					if(!usr.transferItemToLoc(I, src))
+				var/obj/item/I = usr.get_active_held_item()
+				if(istype(I, /obj/item/card/id/prisoner))
+					if(!usr.drop_item())
 						return
+					I.forceMove(src)
 					inserted_id = I
 		if("release_items")
 			var/mob/M = locate(params["mobref"])

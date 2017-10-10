@@ -47,9 +47,10 @@
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/paper) || istype(P, /obj/item/folder) || istype(P, /obj/item/photo) || istype(P, /obj/item/documents))
-		if(!user.transferItemToLoc(P, src))
+		if(!user.drop_item())
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
+		P.loc = src
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
 		icon_state = initial(icon_state)

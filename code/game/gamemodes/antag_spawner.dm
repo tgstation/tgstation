@@ -90,7 +90,7 @@
 		if("healing")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
-			M.put_in_hands(new /obj/item/gun/magic/staff/healing(M), TRUE)
+			M.put_in_hands_or_del(new /obj/item/gun/magic/staff/healing(M))
 			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
 		if("robeless")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))

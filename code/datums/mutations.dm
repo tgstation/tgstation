@@ -270,7 +270,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/cough/on_life(mob/living/carbon/human/owner)
 	if(prob(5) && owner.stat == CONSCIOUS)
-		owner.drop_all_held_items()
+		owner.drop_item()
 		owner.emote("cough")
 
 /datum/mutation/human/dwarfism

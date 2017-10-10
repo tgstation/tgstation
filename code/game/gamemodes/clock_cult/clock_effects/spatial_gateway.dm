@@ -88,7 +88,7 @@
 	if(istype(I, /obj/item/clockwork/slab))
 		to_chat(user, "<span class='heavy_brass'>\"I don't think you want to drop your slab into that.\"\n\"If you really want to, try throwing it.\"</span>")
 		return TRUE
-	if(uses && user.dropItemToGround(I))
+	if(user.drop_item() && uses)
 		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")
 		pass_through_gateway(I, TRUE)
 		return TRUE
