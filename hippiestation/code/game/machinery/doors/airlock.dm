@@ -1,3 +1,5 @@
+#define COOLDOWN_TIME 10
+
 /obj/machinery/door/airlock
 	doorClose = 'sound/machines/airlock.ogg' 
 	doorDeni = 'hippiestation/sound/machine/denied.ogg'
@@ -7,8 +9,8 @@
 	doorClose = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/door/airlock/AltClick(mob/living/user)
-	if(!istype(user))
-		to_chat(user, "<span class='info'>Nice try, ghosts.</span>")
+	if(isobserver(user))
+		to_chat(user, "<span class='danger'>Psst, you can't interact with the world, ghosts!</span>")
 		return
 
 	if (!user.canUseTopic(src))
@@ -27,5 +29,5 @@
 		if(!AI.client)
 			continue
 		to_chat(AI, "<span class='info'><a href='?src=\ref[AI];track=[html_encode(user.name)]'><span class='name'>[user.name] ([user.GetJob()])</span></a> is requesting you to open [src]<a href='?src=\ref[AI];remotedoor=\ref[src]'>(Open)</a></span>")
-	request_cooldown = world.time + 100
+	request_cooldown = world.time + (COOLDOWN_TIME * 10)
 	to_chat(user, "<span class='info'>Request sent.</span>")
