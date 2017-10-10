@@ -116,7 +116,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 				$good_files[] = $F;
 		}
 	}
-	if(count($good_files) > 0){
+	$the_count = count($good_files);
+	if($the_count > 0 && $the_count < $max_number_of_uploads){
 		$tgtgui_path = $tgdir . $path_to_tgui_from_repo;
 		$requests_dir = $parent_dir . '/requests';
 		if(!is_dir($requests_dir))
