@@ -1,38 +1,79 @@
 /datum/surgery/organ_manipulation
 	name = "organ manipulation"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders,
-	/datum/surgery_step/incise, /datum/surgery_step/manipulate_organs)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("chest", "head")
-	requires_organic_bodypart = FALSE
-	requires_real_bodypart = TRUE
+	requires_real_bodypart = 1
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/manipulate_organs,
+		//there should be bone fixing
+		/datum/surgery_step/close
+		)
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders,
-	/datum/surgery_step/incise, /datum/surgery_step/manipulate_organs)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/close
+		)
 
 /datum/surgery/organ_manipulation/alien
 	name = "alien organ manipulation"
 	possible_locs = list("chest", "head", "groin", "eyes", "mouth", "l_arm", "r_arm")
 	species = list(/mob/living/carbon/alien/humanoid)
-	steps = list(/datum/surgery_step/saw, /datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/manipulate_organs)
+	steps = list(
+		/datum/surgery_step/saw,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/close
+		)
 
+/datum/surgery/organ_manipulation/mechanic
+	name = "prosthesis organ manipulation"
+	possible_locs = list("chest", "head")
+	requires_bodypart_type = BODYPART_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close
+		)
 
-
+/datum/surgery/organ_manipulation/mechanic/soft
+	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/manipulate_organs,
+		/datum/surgery_step/mechanic_close
+		)
 
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
+	repeatable = 1
 	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
 	var/implements_extract = list(/obj/item/hemostat = 100, /obj/item/crowbar = 55)
-	var/implements_mend = list(/obj/item/cautery = 100, /obj/item/weldingtool = 70, /obj/item/lighter = 45, /obj/item/match = 20)
 	var/current_type
 	var/obj/item/organ/I = null
 
 /datum/surgery_step/manipulate_organs/New()
 	..()
-	implements = implements + implements_extract + implements_mend
+	implements = implements + implements_extract
 
 /datum/surgery_step/manipulate_organs/tool_check(mob/user, obj/item/tool)
 	if(istype(tool, /obj/item/weldingtool))
@@ -96,23 +137,12 @@
 			else
 				return -1
 
-	else if(implement_type in implements_mend)
-		current_type = "mend"
-		user.visible_message("[user] begins to mend the incision in [target]'s [parse_zone(target_zone)].",
-			"<span class='notice'>You begin to mend the incision in [target]'s [parse_zone(target_zone)]...</span>")
-
 	else if(istype(tool, /obj/item/reagent_containers/food/snacks/organ))
 		to_chat(user, "<span class='warning'>[tool] was bitten by someone! It's too damaged to use!</span>")
 		return -1
 
 /datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(current_type == "mend")
-		user.visible_message("[user] mends the incision in [target]'s [parse_zone(target_zone)].",
-			"<span class='notice'>You mend the incision in [target]'s [parse_zone(target_zone)].</span>")
-		if(locate(/datum/surgery_step/saw) in surgery.steps)
-			target.heal_bodypart_damage(45,0)
-		return 1
-	else if(current_type == "insert")
+	if(current_type == "insert")
 		if(istype(tool, /obj/item/organ_storage))
 			I = tool.contents[1]
 			tool.icon_state = "evidenceobj"
@@ -121,7 +151,7 @@
 			tool = I
 		else
 			I = tool
-		user.drop_item()
+		user.temporarilyRemoveItemFromInventory(I, TRUE)
 		I.Insert(target)
 		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
 			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")

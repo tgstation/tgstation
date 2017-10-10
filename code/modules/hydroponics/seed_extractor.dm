@@ -13,7 +13,7 @@
 	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/))
 		var/obj/item/reagent_containers/food/snacks/grown/F = O
 		if(F.seed)
-			if(user && !user.drop_item()) //couldn't drop the item
+			if(user && !user.temporarilyRemoveItemFromInventory(O)) //couldn't drop the item
 				return
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
@@ -25,7 +25,7 @@
 	else if(istype(O, /obj/item/grown))
 		var/obj/item/grown/F = O
 		if(F.seed)
-			if(user && !user.drop_item())
+			if(user && !user.temporarilyRemoveItemFromInventory(O))
 				return
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
@@ -181,13 +181,12 @@
 
 	if(ismob(O.loc))
 		var/mob/M = O.loc
-		if(!M.drop_item())
+		if(!M.transferItemToLoc(O, src))
 			return 0
 	else if(istype(O.loc, /obj/item/storage))
 		var/obj/item/storage/S = O.loc
 		S.remove_from_storage(O,src)
 
-	O.loc = src
 	. = 1
 	for (var/datum/seed_pile/N in piles)
 		if (O.plantname == N.name && O.lifespan == N.lifespan && O.endurance == N.endurance && O.maturation == N.maturation && O.production == N.production && O.yield == N.yield && O.potency == N.potency)

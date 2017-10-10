@@ -220,7 +220,7 @@
 	message = "laughs."
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/laugh/can_run_emote(mob/living/user)
+/datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
 	. = ..()
 	if(. && iscarbon(user))
 		var/mob/living/carbon/C = user

@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - tweak: "The asteroid escape shuttle has no stabilizers and throws you around when it moves"

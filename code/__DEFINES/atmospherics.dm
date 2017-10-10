@@ -118,8 +118,8 @@
 
 
 #define PRESSURE_DAMAGE_COEFFICIENT			4		//The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
-#define MAX_HIGH_PRESSURE_DAMAGE			4		//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
-#define LOW_PRESSURE_DAMAGE					2		//The amounb of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
+#define MAX_HIGH_PRESSURE_DAMAGE			4
+#define LOW_PRESSURE_DAMAGE					2		//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
 #define COLD_SLOWDOWN_FACTOR				20		//Humans are slowed by the difference between bodytemp and BODYTEMP_COLD_DAMAGE_LIMIT divided by this
 
@@ -176,3 +176,11 @@
 #define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
 
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
+
+#define ADD_GAS(gas_id, out_list)\
+	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id];\
+	out_list[gas_id] = tmp_gaslist.Copy();
+
+//ASSERT_GAS(gas_id, gas_mixture) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
+//Must be used before adding to a gas. May be used before reading from a gas.
+#define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
