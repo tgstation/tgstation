@@ -646,6 +646,60 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	if(owner.a_intent == INTENT_HARM)
 		owner.LaserEyes(target)
 
+/datum/mutation/human/healing_hands
+	name = "Healing Hands"
+	quality = POSITIVE
+	get_chance = 27.5
+	lowest_value = 256 * 12
+	text_gain_indication = "<span class='notice'>You feel a comforting buzzing in your hands.</span>"
+	time_coeff = 5
+	var/next_heal_time = 0
+
+/datum/mutation/human/healing_hands/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
+	if(owner.a_intent != INTENT_HELP || world.time < next_heal_time)
+		return ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat == DEAD)
+			to_chat(owner, "<span class='warning'>Well, sorry, but you can't heal death.</span>")
+			return ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/human/H = target
+		if(H.dna && H.dna.species && (istype(H.dna.species, /datum/species/android) || istype(H.dna.species, /datum/species/synth)))
+			to_chat(owner, "<span class='warning'>You try to heal [H], but nothing happens.</span>")
+			return
+		H.heal_overall_damage(5,5)
+		if(prob(25))
+			H.adjustOxyLoss(-5)
+		if(prob(7.5))
+			H.adjustToxLoss(-2.5)
+		next_heal_time = world.time + HEALING_HANDS_COOLDOWN
+		H.visible_message("<span class='notice'>[owner] envelops [H] in a warm glow!</span>", "<span class='notice'>[owner] envelops you in a warm, comforting glow!</span>")
+		return
+	else if(!issilicon(target) && isliving(target))
+		var/mob/living/L = target
+		L.heal_bodypart_damage(5, 5)
+		L.visible_message("<span class='notice'>[owner] envelops [L] in a warm glow!</span>", "<span class='notice'>[owner] envelops you in a warm, comforting glow!</span>")
+		next_heal_time = world.time + HEALING_HANDS_COOLDOWN
+		return
+	else if(issilicon(target))
+		to_chat(owner, "<span class='warning'>You try to heal [target], but nothing happens.</span>")
+	return ..()
+
+/obj/effect/temp_visual/healing_aura
+	name = "healing aura"
+	desc = "A comforting, warm aura of light."
+	resistance_flags = INDESTRUCTIBLE
+	icon = 'icons/effects/genetics.dmi'
+	icon_state = "healaura"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	alpha = 255
+	duration = 25
+
+/obj/effect/temp_visual/healing_aura/Initialize()
+	. = ..()
+	animate(src, alpha = 0, time = 24)
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return

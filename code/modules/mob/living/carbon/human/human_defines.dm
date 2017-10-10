@@ -43,6 +43,10 @@
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
 	var/datum/personal_crafting/handcrafting
+
+	var/healaura = FALSE
+	var/mutable_appearance/healaura_overlay
+
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	can_ride_typecache = list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot)

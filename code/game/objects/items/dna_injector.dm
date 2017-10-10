@@ -368,3 +368,11 @@
 	name = "\improper DNA injector (Human > Monkey)"
 	desc = "Will make you a flea bag."
 	add_mutations_static = list(RACEMUT)
+
+/obj/item/dnainjector/healhands
+	name = "\improper DNA injector (Healing Hands)"
+	add_mutations_static = list(HEALINGHANDS)
+
+/obj/item/dnainjector/antihealhands
+	name = "\improper DNA injector (Anti-Healing Hands)"
+	remove_mutations_static = list(HEALINGHANDS)

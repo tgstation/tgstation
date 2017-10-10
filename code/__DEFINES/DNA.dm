@@ -28,11 +28,13 @@
 #define SWEDISH		"Swedish"
 #define CHAV		"Chav"
 #define ELVIS		"Elvis"
+#define HEALINGHANDS	"Healing Hands"
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
 
 #define CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY 204
+#define HEALING_HANDS_COOLDOWN					75
 
 // String identifiers for associative list lookup
 
