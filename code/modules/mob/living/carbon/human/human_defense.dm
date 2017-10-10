@@ -372,7 +372,7 @@
 			else
 				for(var/I in contents)
 					var/atom/A = I
-					A.ex_act(EXPLODE_DEVASTATE)
+					A.ex_act(severity)
 				gib()
 				return
 
