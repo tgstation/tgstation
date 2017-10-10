@@ -192,3 +192,8 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
+
+# Fulpstation Ignores
+tgstation.dmb
+config/dbconfig.txt
+data/player_saves

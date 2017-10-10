@@ -17,7 +17,7 @@ REVIVAL_BRAIN_LIFE -1
 ## RENAMING ###
 
 ## Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
-#RENAME_CYBORG
+RENAME_CYBORG
 
 ## OOC DURING ROUND ###
 ## Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
@@ -92,6 +92,7 @@ PROBABILITY EXTENDED 0
 PROBABILITY SECRET_EXTENDED 0
 PROBABILITY DEVIL 0
 PROBABILITY DEVIL_AGENTS 0
+#PROBABILITY BLOODSUCKER 8
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -109,13 +110,16 @@ CONTINUOUS TRAITORCHAN
 CONTINUOUS INTERNAL_AFFAIRS
 #CONTINUOUS NUCLEAR
 #CONTINUOUS REVOLUTION
-CONTINUOUS CULT
-CONTINUOUS CLOCKWORK_CULT
+#CONTINUOUS CULT
+#CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 CONTINUOUS BLOB
 CONTINUOUS ABDUCTION
 #CONTINUOUS MONKEY
+CONTINUOUS DEVIL
+CONTINUOUS DEVIL_AGENTS
+#CONTINUOUS BLOODSUCKER
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -131,7 +135,7 @@ MIDROUND_ANTAG TRAITOR
 #MIDROUND_ANTAG TRAITORBRO
 MIDROUND_ANTAG TRAITORCHAN
 MIDROUND_ANTAG INTERNAL_AFFAIRS
-#MIDROUND_ANTAG  NUCLEAR
+MIDROUND_ANTAG  NUCLEAR
 #MIDROUND_ANTAG  REVOLUTION
 MIDROUND_ANTAG CULT
 MIDROUND_ANTAG CLOCKWORK_CULT
@@ -140,6 +144,9 @@ MIDROUND_ANTAG WIZARD
 MIDROUND_ANTAG BLOB
 MIDROUND_ANTAG ABDUCTION
 #MIDROUND_ANTAG  MONKEY
+MIDROUND_ANTAG DEVIL
+MIDROUND_ANTAG DEVIL_AGENTS
+#MIDROUND_ANTAG BLOODSUCKER
 
 ## Uncomment these for overrides of the minimum / maximum number of players in a round type. 
 ## If you set any of these occasionally check to see if you still need them as the modes
@@ -186,11 +193,17 @@ MIDROUND_ANTAG ABDUCTION
 #MIN_POP METEOR 0
 #MAX_POP METEOR -1
 
-#MIN_POP DEVIL 0
+#MIN_POP DEVIL 12
 #MAX_POP DEVIL -1
 
 #MIN_POP DEVIL_AGENTS 25
 #MAX_POP DEVIL_AGENTS -1
+
+MIN_POP DEVIL 12
+#MAX_POP DEVIL -1
+
+#MIN_POP BLOODSUCKER 12
+#MAX_POP BLOODSUCKER -1
 
 ## Setting at least one mode to be playable at 0/1 players is required.
 #MIN_POP EXTENDED 0
@@ -199,7 +212,7 @@ MIDROUND_ANTAG ABDUCTION
 
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
-SHUTTLE_REFUEL_DELAY 12000
+SHUTTLE_REFUEL_DELAY 8000
 
 ## Variables calculate how number of antagonists will scale to population.
 ## Used as (Antagonists = Population / Coeff)
@@ -220,7 +233,7 @@ BROTHER_OBJECTIVES_AMOUNT 2
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
-#PROTECT_ROLES_FROM_ANTAGONIST
+PROTECT_ROLES_FROM_ANTAGONIST
 
 ## Uncomment to prohibit assistants from becoming most antagonists.
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
@@ -244,7 +257,7 @@ EVENTS_MIN_TIME_MUL 1
 
 ## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
 ## Set to 0 to make dangerous events avaliable for all populations.
-EVENTS_MIN_PLAYERS_MUL 1
+EVENTS_MIN_PLAYERS_MUL 0
 
 
 ## AI ###
@@ -264,7 +277,7 @@ ALLOW_AI
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
-GATEWAY_DELAY 18000
+GATEWAY_DELAY 9000
 
 
 ## ACCESS ###
@@ -284,7 +297,7 @@ MINIMAL_ACCESS_THRESHOLD 20
 #ASSISTANTS_HAVE_MAINT_ACCESS
 
 ## Uncoment to give security maint access. Note that if you dectivate JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
-#SECURITY_HAS_MAINT_ACCESS
+SECURITY_HAS_MAINT_ACCESS
 
 ## Uncomment to give everyone maint access.
 #EVERYONE_HAS_MAINT_ACCESS
@@ -315,7 +328,7 @@ SEC_START_BRIG
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
-DEFAULT_LAWS 0
+DEFAULT_LAWS 2
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -434,7 +447,7 @@ ASSISTANT_CAP -1
 #STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
-#GREY_ASSISTANTS
+GREY_ASSISTANTS
 
 ## Midround Antag (aka Mulligan antag) config options ###
 
@@ -477,7 +490,7 @@ BOMBCAP 20
 LAVALAND_BUDGET 60
 
 ## Space Ruin Budged
-Space_Budget 16
+Space_Budget 24
 
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
 ## Must be at least 30. At least 55 recommended to be visually/aurally appropriate
@@ -495,3 +508,4 @@ MICE_ROUNDSTART 10
 
 ## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
 #EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
+

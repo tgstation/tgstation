@@ -169,6 +169,9 @@ CONFIG_DEF(number/githubrepoid)
 	value = null
 	min_val = 0
 
+CONFIG_DEF(string/discordurl)
+	value = "https://discord.gg/SVu782A"
+
 CONFIG_DEF(flag/guest_ban)
 
 CONFIG_DEF(number/id_console_jobslot_delay)
