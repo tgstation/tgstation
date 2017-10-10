@@ -506,11 +506,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 /*
 Recursively gets all contents of contents and returns them all in a list.
 
-Just in case there's a situation where multiple objects are in eachother's
-contents this has a recursive depth limit so it doesn't loop forever.
-Also useful if you only want a turf and everything on it (recursive_depth=1)
+recursive_depth is useful if you only want a turf and everything on it (recursive_depth=1)
 */
-/atom/proc/GetAllContents(list/output=list(), recursive_depth=10)
+/atom/proc/GetAllContents(list/output=list(), recursive_depth=INFINITY)
 	. = output
 	output += src 
 	if(!recursive_depth)
