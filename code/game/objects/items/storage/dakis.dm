@@ -33,7 +33,7 @@
 			to_chat(user,"<span class='danger'>Name is too long!</span>")
 			return FALSE
 		if(custom_name)
-			name = "\proper custom_name"
+			name = \proper custom_name
 			desc = "A large pillow depicting [custom_name] in a compromising position. Featuring as many dimensions as you."
 	else
 		switch(user.a_intent)
