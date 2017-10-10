@@ -139,7 +139,6 @@
 	.["vote"] = CONFIG_GET(flag/allow_vote_mode)
 	.["ai"] = CONFIG_GET(flag/allow_ai)
 	.["host"] = world.host ? world.host : null
-	.["active_players"] = get_active_player_count()
 	.["players"] = GLOB.clients.len
 	.["revision"] = GLOB.revdata.commit
 	.["revision_date"] = GLOB.revdata.date
@@ -152,9 +151,11 @@
 
 	.["map_name"] = SSmapping.config.map_name
 
-	if(key_valid && SSticker.HasRoundStarted())
-		.["real_mode"] = SSticker.mode.name
-		// Key-authed callers may know the truth behind the "secret"
+	if(key_valid)
+		.["active_players"] = get_active_player_count()
+		if(SSticker.HasRoundStarted())
+			.["real_mode"] = SSticker.mode.name
+			// Key-authed callers may know the truth behind the "secret"
 
 	.["security_level"] = get_security_level()
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
