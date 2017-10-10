@@ -127,8 +127,8 @@
 		return ..()
 
 /obj/machinery/satellite/meteor_shield
-	name = "Meteor Shield Satellite"
-	desc = "Meteor Point Defense Satellite"
+	name = "\improper Meteor Shield Satellite"
+	desc = "A meteor point-defense satellite."
 	mode = "M-SHIELD"
 	speed_process = TRUE
 	var/kill_range = 14

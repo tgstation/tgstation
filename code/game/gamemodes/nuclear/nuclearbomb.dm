@@ -105,9 +105,8 @@
 
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/disk/nuclear))
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
-		I.forceMove(src)
 		auth = I
 		add_fingerprint(user)
 		return
@@ -309,10 +308,8 @@
 				. = TRUE
 		if("insert_disk")
 			if(!auth)
-				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/disk/nuclear))
-					usr.drop_item()
-					I.forceMove(src)
+				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/disk/nuclear)
+				if(I && usr.transferItemToLoc(I, src))
 					auth = I
 					. = TRUE
 		if("keypad")

@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Shuttles no longer rotate ghosts of players who prefer directionless sprites"

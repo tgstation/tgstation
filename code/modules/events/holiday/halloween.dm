@@ -35,9 +35,8 @@
 	earliest_start = 0
 
 /datum/round_event/carp_migration/eyeballs/start()
-	for(var/obj/effect/landmark/C in GLOB.landmarks_list)
-		if(C.name == "carpspawn")
-			new /mob/living/simple_animal/hostile/carp/eyeball(C.loc)
+	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
+		new /mob/living/simple_animal/hostile/carp/eyeball(C.loc)
 
 //Pumpking meteors waves
 /datum/round_event_control/meteor_wave/spooky

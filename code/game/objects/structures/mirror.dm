@@ -101,7 +101,8 @@
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
-	choosable_races = GLOB.roundstart_species
+	var/list/L = CONFIG_GET(keyed_flag_list/roundstart_races)
+	choosable_races = L.Copy()
 	..()
 
 /obj/structure/mirror/magic/badmin/New()

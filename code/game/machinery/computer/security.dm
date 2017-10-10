@@ -37,9 +37,8 @@
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/card/id))
 		if(!scan)
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(O, src))
 				return
-			O.loc = src
 			scan = O
 			to_chat(user, "<span class='notice'>You insert [O].</span>")
 		else
@@ -186,7 +185,7 @@
 						<tr><td>ID:</td><td><A href='?src=\ref[src];choice=Edit Field;field=id'>&nbsp;[active1.fields["id"]]&nbsp;</A></td></tr>
 						<tr><td>Sex:</td><td><A href='?src=\ref[src];choice=Edit Field;field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>
 						<tr><td>Age:</td><td><A href='?src=\ref[src];choice=Edit Field;field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"}
-						if(config.mutant_races)
+						if(CONFIG_GET(flag/join_with_mutant_race))
 							dat += "<tr><td>Species:</td><td><A href ='?src=\ref[src];choice=Edit Field;field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
 						dat += {"<tr><td>Rank:</td><td><A href='?src=\ref[src];choice=Edit Field;field=rank'>&nbsp;[active1.fields["rank"]]&nbsp;</A></td></tr>
 						<tr><td>Fingerprint:</td><td><A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>
@@ -303,17 +302,13 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if(scan)
-					if(ishuman(usr) && !usr.get_active_held_item())
-						usr.put_in_hands(scan)
-					else
-						scan.loc = get_turf(src)
+					usr.put_in_hands(scan)
 					scan = null
 				else
-					var/obj/item/I = usr.get_active_held_item()
-					if(istype(I, /obj/item/card/id))
-						if(!usr.drop_item())
+					var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
+					if(I)
+						if(!usr.transferItemToLoc(I, src))
 							return
-						I.loc = src
 						scan = I
 
 			if("Log Out")
@@ -373,7 +368,7 @@ What a mess.*/
 					P.info = "<CENTER><B>Security Record - (SR-[GLOB.data_core.securityPrintCount])</B></CENTER><BR>"
 					if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))
 						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"])
-						if(config.mutant_races)
+						if(CONFIG_GET(flag/join_with_mutant_race))
 							P.info += "\nSpecies: [active1.fields["species"]]<BR>"
 						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
 					else
@@ -519,7 +514,7 @@ What a mess.*/
 				G.fields["rank"] = "Unassigned"
 				G.fields["sex"] = "Male"
 				G.fields["age"] = "Unknown"
-				if(config.mutant_races)
+				if(CONFIG_GET(flag/join_with_mutant_race))
 					G.fields["species"] = "Human"
 				G.fields["photo_front"] = new /icon()
 				G.fields["photo_side"] = new /icon()
@@ -604,7 +599,7 @@ What a mess.*/
 							active1.fields["age"] = t1
 					if("species")
 						if(istype(active1, /datum/data/record))
-							var/t1 = input("Select a species", "Species Selection") as null|anything in GLOB.roundstart_species
+							var/t1 = input("Select a species", "Species Selection") as null|anything in CONFIG_GET(keyed_flag_list/roundstart_races)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
@@ -772,7 +767,7 @@ What a mess.*/
 				if(6)
 					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 				if(7)
-					R.fields["species"] = pick(GLOB.roundstart_species)
+					R.fields["species"] = pick(CONFIG_GET(keyed_flag_list/roundstart_races))
 				if(8)
 					var/datum/data/record/G = pick(GLOB.data_core.general)
 					R.fields["photo_front"] = G.fields["photo_front"]

@@ -14,7 +14,7 @@
 	slot = "eye_hud"
 	var/HUD_type = 0
 
-/obj/item/organ/cyberimp/eyes/hud/Insert(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/cyberimp/eyes/hud/Insert(var/mob/living/carbon/M, var/special = 0, drop_if_replaced = FALSE)
 	..()
 	if(HUD_type)
 		var/datum/atom_hud/H = GLOB.huds[HUD_type]
@@ -39,3 +39,8 @@
 	desc = "These cybernetic eye implants will display a security HUD over everything you see."
 	origin_tech = "materials=4;programming=4;biotech=3;combat=3"
 	HUD_type = DATA_HUD_SECURITY_ADVANCED
+
+/obj/item/organ/cyberimp/eyes/hud/security/syndicate
+	name = "Contraband Security HUD Implant"
+	desc = "A Cybersun Industries brand Security HUD Implant. These illicit cybernetic eye implants will display a security HUD over everything you see."
+	syndicate_implant = TRUE

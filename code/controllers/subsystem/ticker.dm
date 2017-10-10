@@ -66,27 +66,78 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
-	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+
+	var/list/byond_sound_formats = list(
+		"mid"  = TRUE,
+		"midi" = TRUE,
+		"mod"  = TRUE,
+		"it"   = TRUE,
+		"s3m"  = TRUE,
+		"xm"   = TRUE,
+		"oxm"  = TRUE,
+		"wav"  = TRUE,
+		"ogg"  = TRUE,
+		"raw"  = TRUE,
+		"wma"  = TRUE,
+		"aiff" = TRUE
+	)
+
+	var/list/provisional_title_music = flist("config/title_music/sounds/")
+	var/list/music = list()
+	var/use_rare_music = prob(1)
+	
+	for(var/S in provisional_title_music)
+		var/lower = lowertext(S)
+		var/list/L = splittext(lower,"+")
+		switch(L.len)
+			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
+				if(use_rare_music)
+					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
+						music += S
+					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
+						music += S
+			if(2) //rare+sound.ogg or MAP+sound.ogg -- Rare sounds or Map-specific sounds
+				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
+					music += S
+			if(1) //sound.ogg -- common sound
+				music += S
+
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
 	if(music.len > 1)
 		music -= old_login_music
-	login_music = pick(music)
+
+	for(var/S in music)
+		var/list/L = splittext(S,".")
+		if(L.len >= 2)
+			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
+			if(byond_sound_formats[ext])
+				continue
+		music -= S
+				
+	if(isemptylist(music))
+		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+		login_music = pick(music)
+	else
+		login_music = "config/title_music/sounds/[pick(music)]"
+	
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
 	if(!GLOB.syndicate_code_response)
 		GLOB.syndicate_code_response = generate_code_phrase()
 	..()
-	start_at = world.time + (config.lobby_countdown * 10)
+	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			if(Master.initializations_finished_with_no_players_logged_in)
-				start_at = world.time + (config.lobby_countdown * 10)
+				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
+			if(CONFIG_GET(flag/irc_announce_new_game))
+				SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
@@ -202,7 +253,7 @@ SUBSYSTEM_DEF(ticker)
 	else
 		mode.announce()
 
-	if(!config.ooc_during_round)
+	if(!CONFIG_GET(flag/ooc_during_round))
 		toggle_ooc(FALSE) // Turn it off
 
 	CHECK_TICK
@@ -328,6 +379,8 @@ SUBSYSTEM_DEF(ticker)
 	var/num_shuttle_escapees = 0
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+	if(LAZYLEN(GLOB.round_end_notifiees))
+		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
 	for(var/client/C in GLOB.clients)
 		if(!C.credits)
@@ -423,7 +476,7 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 
-	if(config.cross_allowed)
+	if(CONFIG_GET(string/cross_server_address))
 		send_news_report()
 
 	CHECK_TICK
@@ -489,7 +542,8 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<font color='purple'><b>Tip of the round: </b>[html_encode(m)]</font>")
 
 /datum/controller/subsystem/ticker/proc/check_queue()
-	if(!queued_players.len || !config.hard_popcap)
+	var/hpc = CONFIG_GET(number/hard_popcap)
+	if(!queued_players.len || !hpc)
 		return
 
 	queue_delay++
@@ -497,7 +551,7 @@ SUBSYSTEM_DEF(ticker)
 
 	switch(queue_delay)
 		if(5) //every 5 ticks check if there is a slot available
-			if(living_player_count() < config.hard_popcap)
+			if(living_player_count() < hpc)
 				if(next_in_line && next_in_line.client)
 					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>")
 					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg'))
@@ -511,7 +565,7 @@ SUBSYSTEM_DEF(ticker)
 			queue_delay = 0
 
 /datum/controller/subsystem/ticker/proc/check_maprotate()
-	if (!config.maprotation)
+	if (!CONFIG_GET(flag/maprotation))
 		return
 	if (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
 		return
@@ -521,7 +575,7 @@ SUBSYSTEM_DEF(ticker)
 	maprotatechecked = 1
 
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
-	if (!prob((world.time/600)*config.maprotatechancedelta))
+	if (!prob((world.time/600)*CONFIG_GET(number/maprotatechancedelta)))
 		return
 	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 
@@ -672,7 +726,7 @@ SUBSYSTEM_DEF(ticker)
 		return
 
 	if(!delay)
-		delay = config.round_end_countdown * 10
+		delay = CONFIG_GET(number/round_end_countdown) * 10
 
 	var/skip_delay = check_rights()
 	if(delay_end && !skip_delay)

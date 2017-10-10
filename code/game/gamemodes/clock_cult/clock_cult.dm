@@ -53,6 +53,8 @@ Credit where due:
 			return FALSE
 		if(M.mind.enslaved_to && !is_servant_of_ratvar(M.mind.enslaved_to))
 			return FALSE
+		if(M.mind.unconvertable)
+			return FALSE
 	else
 		return FALSE
 	if(iscultist(M) || isconstruct(M) || M.isloyal() || ispAI(M))
@@ -93,8 +95,8 @@ Credit where due:
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
 	required_players = 24
-	required_enemies = 3
-	recommended_enemies = 3
+	required_enemies = 4
+	recommended_enemies = 4
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
@@ -107,9 +109,9 @@ Credit where due:
 	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 30 + (number of players / 5) (max 40 mins.)
 
 /datum/game_mode/clockwork_cult/pre_setup()
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 	var/starter_servants = 4 //Guaranteed four servants
 	var/number_players = num_players()
@@ -144,6 +146,7 @@ Credit where due:
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar //that's a mouthful
 	G.initial_activation_delay = ark_time * 60
 	G.seconds_until_activation = ark_time * 60 //60 seconds in a minute * number of minutes
+	SSshuttle.registerHostileEnvironment(GLOB.ark_of_the_clockwork_justiciar)
 	..()
 	return 1
 
@@ -161,7 +164,6 @@ Credit where due:
 	if(!M || !ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/L = M
-	L.set_species(/datum/species/human)
 	L.equipOutfit(/datum/outfit/servant_of_ratvar)
 	var/obj/item/clockwork/slab/S = new
 	var/slot = "At your feet"
@@ -182,8 +184,14 @@ Credit where due:
 		return TRUE
 	return FALSE
 
+/datum/game_mode/clockwork_cult/check_finished()
+	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+	if(G && !GLOB.ratvar_awakens) // Doesn't end until the Ark is destroyed or completed
+		return FALSE
+	. = ..()
+
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
-	if(GLOB.clockwork_gateway_activated || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
+	if(GLOB.clockwork_gateway_activated)
 		SSticker.news_report = CLOCK_SUMMON
 		return TRUE
 	else
@@ -206,7 +214,7 @@ Credit where due:
 	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		if(C.check_clockwork_victory())
-			text += "<span class='large_brass'><b>Ratvar's servants defended the Ark until its activation!</b></span>"
+			text += "<span class='bold large_brass'>Ratvar's servants defended the Ark until its activation!</span>"
 			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 		else
 			text += "<span class='userdanger'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
@@ -237,6 +245,7 @@ Credit where due:
 
 //Servant of Ratvar outfit
 /datum/outfit/servant_of_ratvar
+	name = "Servant of Ratvar"
 	uniform = /obj/item/clothing/under/chameleon/ratvar
 	shoes = /obj/item/clothing/shoes/workboots
 	back = /obj/item/storage/backpack
@@ -246,6 +255,15 @@ Credit where due:
 	backpack_contents = list(/obj/item/storage/box/engineer = 1, \
 	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1)
 	id = /obj/item/card/id
+	var/plasmaman //We use this to determine if we should activate internals in post_equip()
+
+/datum/outfit/servant_of_ratvar/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(H.dna.species.id == "plasmaman") //Plasmamen get additional equipment because of how they work
+		head = /obj/item/clothing/head/helmet/space/plasmaman
+		uniform = /obj/item/clothing/under/plasmaman //Plasmamen generally shouldn't need chameleon suits anyways, since everyone expects them to wear their fire suit
+		r_hand = /obj/item/tank/internals/plasmaman/belt/full
+		mask = /obj/item/clothing/mask/breath
+		plasmaman = TRUE
 
 /datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/card/id/W = H.wear_id
@@ -253,6 +271,9 @@ Credit where due:
 	W.access += ACCESS_MAINT_TUNNELS
 	W.registered_name = H.real_name
 	W.update_label()
+	if(plasmaman && !visualsOnly) //If we need to breathe from the plasma tank, we should probably start doing that
+		H.internal = H.get_item_for_held_index(2)
+		H.update_internals_hud_icon(1)
 
 /obj/item/paper/servant_primer
 	name = "The Ark And You: A Primer On Servitude"

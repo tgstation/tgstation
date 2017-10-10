@@ -2,6 +2,7 @@
 	name = "pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
+	desc = "Dispenses countless types of pipes. Very useful if you need pipes."
 	density = TRUE
 	anchored = TRUE
 	var/wait = 0
@@ -70,8 +71,6 @@
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		to_chat(usr, "<span class='notice'>You put [W] back into [src].</span>")
-		if(!user.drop_item())
-			return
 		qdel(W)
 		return
 	else if (istype(W, /obj/item/wrench))
@@ -108,6 +107,7 @@
 	name = "disposal pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
+	desc = "Dispenses pipes that will ultimately be used to move trash around."
 	density = TRUE
 	anchored = TRUE
 
@@ -183,6 +183,7 @@ Nah
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = TRUE
+	desc = "Dispenses pipes that will move beings around."
 	anchored = TRUE
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)

@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Ocular wardens no longer have a burning hatred for revenants and won't attack their corpse endlessly anymore."

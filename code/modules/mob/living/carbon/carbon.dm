@@ -419,23 +419,6 @@
 			var/turf/target = get_turf(loc)
 			I.throw_at(target,I.throw_range,I.throw_speed,src)
 
-/mob/living/carbon/proc/AddAbility(obj/effect/proc_holder/alien/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		A.action.Grant(src)
-	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
-
-/mob/living/carbon/proc/RemoveAbility(obj/effect/proc_holder/alien/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/carbon/proc/add_abilities_to_panel()
-	for(var/obj/effect/proc_holder/alien/A in abilities)
-		statpanel("[A.panel]",A.plasma_cost > 0?"([A.plasma_cost])":"",A)
-
 /mob/living/carbon/Stat()
 	..()
 	if(statpanel("Status"))
@@ -767,7 +750,7 @@
 		B.damaged_brain = 0
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(D.severity != NONTHREAT)
+		if(D.severity != VIRUS_SEVERITY_POSITIVE)
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()

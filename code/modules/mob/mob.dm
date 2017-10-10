@@ -9,8 +9,6 @@
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
 	qdel(hud_used)
-	if(mind && mind.current == src)
-		spellremove(src)
 	QDEL_LIST(viruses)
 	for(var/cc in client_colours)
 		qdel(cc)
@@ -47,7 +45,8 @@
 	set category = "Admin"
 	set hidden = 1
 
-	if(!loc) return 0
+	if(!loc)
+		return 0
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -161,7 +160,7 @@
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
 
-/mob/proc/movement_delay()
+/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
 	return 0
 
 /mob/proc/Life()
@@ -198,7 +197,8 @@
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
 		if(qdel_on_fail)
 			qdel(W)
@@ -222,7 +222,8 @@
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
@@ -337,6 +338,18 @@
 
 	if(ismob(AM))
 		var/mob/M = AM
+
+		//Share diseases that are spread by touch
+		for(var/thing in viruses)
+			var/datum/disease/D = thing
+			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+				M.ContactContractDisease(D)
+
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
+			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+				ContactContractDisease(D)
+
 		add_logs(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
@@ -387,7 +400,7 @@
 	set category = "Object"
 	set src = usr
 
-	if(istype(loc, /obj/mecha))
+	if(ismecha(loc))
 		return
 
 	if(incapacitated())
@@ -435,7 +448,7 @@
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (!( GLOB.abandon_allowed ))
+	if (CONFIG_GET(flag/norespawn))
 		return
 	if ((stat != DEAD || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
@@ -737,10 +750,6 @@
 			mob_spell_list -= S
 			qdel(S)
 
-//override to avoid rotating pixel_xy on mobs
-/mob/shuttleRotate(rotation)
-	setDir(angle2dir(rotation+dir2angle(dir)))
-
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
@@ -938,6 +947,16 @@
 
 /mob/proc/get_idcard()
 	return
+
+/mob/proc/get_static_viruses() //used when creating blood and other infective objects
+	if(!LAZYLEN(viruses))
+		return
+	var/list/datum/disease/diseases = list()
+	for(var/datum/disease/D in viruses)
+		var/static_virus = D.Copy()
+		diseases += static_virus
+	return diseases
+
 
 /mob/vv_get_dropdown()
 	. = ..()

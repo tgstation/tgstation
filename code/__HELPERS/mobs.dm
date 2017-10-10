@@ -133,7 +133,6 @@ GLOBAL_LIST_INIT(skin_tones, list(
 	))
 
 GLOBAL_LIST_EMPTY(species_list)
-GLOBAL_LIST_EMPTY(roundstart_species)
 
 /proc/age2agedescription(age)
 	switch(age)
@@ -235,7 +234,7 @@ Proc for attack log creation, because really why not
 	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 		if(QDELETED(user) || QDELETED(target))
@@ -296,7 +295,7 @@ Proc for attack log creation, because really why not
 	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 
@@ -351,7 +350,7 @@ Proc for attack log creation, because really why not
 	. = 1
 	mainloop:
 		while(world.time < endtime)
-			sleep(1)
+			stoplag(1)
 			if(progress)
 				progbar.update(world.time - starttime)
 			if(QDELETED(user) || !targets)

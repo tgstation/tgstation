@@ -33,8 +33,9 @@
 	if(!timestamp)
 		timestamp = SQLtime()
 	if(!server)
-		if (config && config.server_sql_name)
-			server = config.server_sql_name
+		var/ssqlname = CONFIG_GET(string/serversqlname)
+		if (ssqlname)
+			server = ssqlname
 	server = sanitizeSQL(server)
 	if(isnull(secret))
 		switch(alert("Hide note from being viewed by players?", "Secret note?","Yes","No","Cancel"))
@@ -216,8 +217,10 @@
 			var/editor_ckey = query_get_messages.item[8]
 			var/age = text2num(query_get_messages.item[9])
 			var/alphatext = ""
-			if (agegate && type == "note" && isnum(config.note_stale_days) && isnum(config.note_fresh_days) && config.note_stale_days > config.note_fresh_days)
-				var/alpha = Clamp(100 - (age - config.note_fresh_days) * (85 / (config.note_stale_days - config.note_fresh_days)), 15, 100)
+			var/nsd = CONFIG_GET(number/note_stale_days)
+			var/nfd = CONFIG_GET(number/note_fresh_days)
+			if (agegate && type == "note" && isnum(nsd) && isnum(nfd) && nsd > nfd)
+				var/alpha = Clamp(100 - (age - nfd) * (85 / (nsd - nfd)), 15, 100)
 				if (alpha < 100)
 					if (alpha <= 15)
 						if (skipped)
@@ -353,8 +356,9 @@ proc/get_message_output(type, target_ckey)
 		var/notetext
 		notesfile >> notetext
 		var/server
-		if(config && config.server_sql_name)
-			server = config.server_sql_name
+		var/ssqlname = CONFIG_GET(string/serversqlname)
+		if (ssqlname)
+			server = ssqlname
 		var/regex/note = new("^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$", "i")
 		note.Find(notetext)
 		var/timestamp = note.group[1]

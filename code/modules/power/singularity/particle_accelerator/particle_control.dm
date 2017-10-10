@@ -204,8 +204,8 @@
 /obj/machinery/particle_accelerator/control_box/proc/toggle_power()
 	active = !active
 	investigate_log("turned [active?"<font color='green'>ON</font>":"<font color='red'>OFF</font>"] by [usr ? key_name(usr) : "outside forces"]", INVESTIGATE_SINGULO)
-	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? key_name_admin(usr) : "outside forces"](<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] in ([x],[y],[z])")
+	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? key_name_admin(usr) : "outside forces"][ADMIN_QUE(usr)] [ADMIN_FLW(usr)] in [ADMIN_COORDJMP(src)]",0,1)
+	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] in [COORD(src)]")
 	if(active)
 		use_power = ACTIVE_POWER_USE
 		for(var/CP in connected_parts)
@@ -257,11 +257,11 @@
 	..()
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
-			to_chat(user, "Looks like it's not attached to the flooring")
+			to_chat(user, "Looks like it's not attached to the flooring.")
 		if(PA_CONSTRUCTION_UNWIRED)
-			to_chat(user, "It is missing some cables")
+			to_chat(user, "It is missing some cables.")
 		if(PA_CONSTRUCTION_PANEL_OPEN)
-			to_chat(user, "The panel is open")
+			to_chat(user, "The panel is open.")
 
 
 /obj/machinery/particle_accelerator/control_box/attackby(obj/item/W, mob/user, params)

@@ -31,16 +31,17 @@
 
 /datum/game_mode/traitor/pre_setup()
 
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	var/num_traitors = 1
 
-	if(config.traitor_scaling_coeff)
-		num_traitors = max(1, min( round(num_players()/(config.traitor_scaling_coeff*2))+ 2 + num_modifier, round(num_players()/(config.traitor_scaling_coeff)) + num_modifier ))
+	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
+	if(tsc)
+		num_traitors = max(1, min(round(num_players() / (tsc * 2)) + 2 + num_modifier, round(num_players() / tsc) + num_modifier))
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
@@ -59,19 +60,19 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in pre_traitors)
-		spawn(rand(10,100))
-			traitor.add_antag_datum(antag_datum)
+		addtimer(CALLBACK(traitor, /datum/mind.proc/add_antag_datum, antag_datum), rand(10,100))
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
-	var/traitorcap = min(round(GLOB.joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(GLOB.joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
+	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
+	var/traitorcap = min(round(GLOB.joined_player_list.len / (tsc * 2)) + 2 + num_modifier, round(GLOB.joined_player_list.len / tsc) + num_modifier)
 	if((SSticker.mode.traitors.len + pre_traitors.len) >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
-	if((SSticker.mode.traitors.len + pre_traitors.len) <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
+	if((SSticker.mode.traitors.len + pre_traitors.len) <= (traitorcap - 2) || prob(100 / (tsc * 2)))
 		if(ROLE_TRAITOR in character.client.prefs.be_special)
 			if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))
@@ -92,17 +93,17 @@
 	if(traitors.len)
 		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
 		for(var/datum/mind/traitor in traitors)
-			var/traitorwin = 1
+			var/traitorwin = TRUE
 
 			text += printplayer(traitor)
 
 			var/TC_uses = 0
-			var/uplink_true = 0
+			var/uplink_true = FALSE
 			var/purchases = ""
 			for(var/obj/item/device/uplink/H in GLOB.uplinks)
 				if(H && H.owner && H.owner == traitor.key)
 					TC_uses += H.spent_telecrystals
-					uplink_true = 1
+					uplink_true = TRUE
 					purchases += H.purchase_log
 
 			var/objectives = ""
@@ -115,7 +116,7 @@
 					else
 						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
 						SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
-						traitorwin = 0
+						traitorwin = FALSE
 					count++
 
 			if(uplink_true)
@@ -146,7 +147,7 @@
 		<b>The code responses were:</b> <font color='red'>[GLOB.syndicate_code_response]</font><br>"
 		to_chat(world, text)
 
-	return 1
+	return TRUE
 
 /datum/game_mode/traitor/generate_report()
 	return "Although more specific threats are commonplace, you should always remain vigilant for Syndicate agents aboard your station. Syndicate communications have implied that many \

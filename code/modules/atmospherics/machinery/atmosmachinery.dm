@@ -34,6 +34,11 @@ Pipelines + Other Objects -> Pipe network
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes
 
+/obj/machinery/atmospherics/examine(mob/living/user)
+	..()
+	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && user.ventcrawler)
+		to_chat(user, "<span class='notice'>Alt-click to crawl through it.</span>")
+
 /obj/machinery/atmospherics/New(loc, process = TRUE)
 	nodes = new(device_type)
 	if (!armor)
@@ -297,4 +302,3 @@ Pipelines + Other Objects -> Pipe network
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
 	return TRUE
-

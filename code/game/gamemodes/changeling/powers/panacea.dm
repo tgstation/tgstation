@@ -32,7 +32,7 @@
 
 	for(var/thing in user.viruses)
 		var/datum/disease/D = thing
-		if(D.severity == NONTHREAT)
+		if(D.severity == VIRUS_SEVERITY_POSITIVE)
 			continue
 		D.cure()
 	return TRUE

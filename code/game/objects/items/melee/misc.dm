@@ -233,7 +233,7 @@
 
 /obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
 	if(user && target == user)
-		user.drop_item()
+		user.dropItemToGround(src)
 	if(proximity_flag)
 		consume_everything(target)
 	..()
@@ -243,7 +243,7 @@
 	if(ismob(target))
 		var/mob/M
 		if(src.loc == M)
-			M.drop_item()
+			M.dropItemToGround(src)
 	consume_everything(target)
 
 /obj/item/melee/supermatter_sword/pickup(user)
@@ -267,7 +267,7 @@
 
 /obj/item/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
-	user.drop_item()
+	user.dropItemToGround(src, TRUE)
 	shard.CollidedWith(user)
 
 /obj/item/melee/supermatter_sword/proc/consume_everything(target)

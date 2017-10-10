@@ -21,7 +21,7 @@
 
 /obj/item/tank/internals/oxygen/New()
 	..()
-	air_contents.assert_gas("o2")
+	ASSERT_GAS("o2", air_contents)
 	air_contents.gases["o2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -87,7 +87,7 @@
 
 /obj/item/tank/internals/plasma/New()
 	..()
-	air_contents.assert_gas("plasma")
+	ASSERT_GAS("plasma", air_contents)
 	air_contents.gases["plasma"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -105,8 +105,7 @@
 		return ..()
 
 /obj/item/tank/internals/plasma/full/New()
-	..()
-	air_contents.assert_gas("plasma")
+	..() // Plasma asserted in parent
 	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -125,13 +124,12 @@
 
 /obj/item/tank/internals/plasmaman/New()
 	..()
-	air_contents.assert_gas("plasma")
+	ASSERT_GAS("plasma", air_contents)
 	air_contents.gases["plasma"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 /obj/item/tank/internals/plasmaman/full/New()
-	..()
-	air_contents.assert_gas("plasma")
+	..() // Plasma asserted in parent
 	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -145,8 +143,7 @@
 	w_class = WEIGHT_CLASS_SMALL //thanks i forgot this
 
 /obj/item/tank/internals/plasmaman/belt/full/New()
-	..()
-	air_contents.assert_gas("plasma")
+	..() // Plasma asserted in parent
 	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -169,7 +166,7 @@
 
 /obj/item/tank/internals/emergency_oxygen/New()
 	..()
-	air_contents.assert_gas("o2")
+	ASSERT_GAS("o2", air_contents)
 	air_contents.gases["o2"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 

@@ -11,7 +11,7 @@
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/damage_per_tick = 2.5
+	var/damage_per_tick = 3
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
@@ -75,7 +75,7 @@
 					if(GLOB.ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
-			else if(istype(target, /obj/mecha))
+			else if(ismecha(target))
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
@@ -90,7 +90,7 @@
 			if(isliving(target))
 				var/mob/living/L = target
 				to_chat(L, "<span class='neovgre'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [GLOB.ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
-			else if(istype(target, /obj/mecha))
+			else if(ismecha(target))
 				var/obj/mecha/M = target
 				to_chat(M.occupant, "<span class='neovgre'>\"I SEE YOU!\"</span>" )
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
@@ -120,6 +120,10 @@
 				continue
 			if(("ratvar" in H.faction) || ("neutral" in H.faction))
 				continue
+		else if(isrevenant(L))
+			var/mob/living/simple_animal/revenant/R = L
+			if(R.stasis) //Don't target any revenants that are respawning
+				continue
 		else if(!L.mind)
 			continue
 		. += L
@@ -141,8 +145,12 @@
 	. = 1
 	if(target)
 		for(var/turf/T in getline(src, target))
+			if(T.density)
+				. -= 0.1
+				continue
 			for(var/obj/structure/O in T)
-				if(O.density)
-					. -= 0.15
+				if(O != src && O.density)
+					. -= 0.1
+					break
 		. -= (get_dist(src, target) * 0.05)
 		. = max(., 0.1) //The lowest damage a warden can do is 10% of its normal amount (0.25 by default)
