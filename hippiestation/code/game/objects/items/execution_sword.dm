@@ -53,7 +53,13 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 		if(!playing_nasheed && world.time > earrape_time)
 			var/nasheed_chosen = pick(nasheed_list)
 			earrape_time = world.time + 250 //25 seconds between each
-			world << nasheed_chosen
+			for(var/mob/M in GLOB.player_list)
+				if(M.client.prefs.toggles & SOUND_MIDI)
+					var/user_vol = M.client.chatOutput.adminMusicVolume
+					if(user_vol)
+						nasheed_chosen.volume = vol * (user_vol / 100)
+					SEND_SOUND(M, nasheed_chosen)
+					nasheed_chosen.volume = 100
 			playing_nasheed = TRUE
 			addtimer(CALLBACK(src, .proc/nasheed_end), EXECUTE_INFIDEL)
 		if(do_after(user,EXECUTE_INFIDEL, target = target))
