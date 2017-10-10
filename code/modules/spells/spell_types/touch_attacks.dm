@@ -20,7 +20,7 @@
 			if(!ChargeHand(C))
 				return FALSE
 	UNTIL(!attached_hand) //hibernate untill the spell is actually used
-		charge_counter = 0
+	charge_counter = 0
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/ChargeHand(mob/living/carbon/user)
 	attached_hand = new hand_path(src)

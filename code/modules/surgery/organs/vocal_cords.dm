@@ -369,7 +369,7 @@
 				text = devilinfo.truename
 			else
 				text = L.real_name
-			addtimer(CALLBACK(L, /mob/living/.proc/say, text), 5 * i)
+			addtimer(CALLBACK(L, /atom/movable/proc/say, text), 5 * i)
 			i++
 
 	//SAY MY NAME
@@ -377,14 +377,14 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			addtimer(CALLBACK(L, /mob/living/.proc/say, user.name), 5 * i)
+			addtimer(CALLBACK(L, /atom/movable/proc/say, user.name), 5 * i)
 
 	//KNOCK KNOCK
 	else if((findtext(message, knockknock_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			addtimer(CALLBACK(L, /mob/living/.proc/say, "Who's there?"), 5 * i)
+			addtimer(CALLBACK(L, /atom/movable/proc/say, "Who's there?"), 5 * i)
 
 	//STATE LAWS
 	else if((findtext(message, statelaws_words)))
@@ -404,10 +404,10 @@
 			direction = WEST
 		else if(findtext(message, right_words))
 			direction = EAST
-		for(var/i=1, i<=(5*power_multiplier), i++)
+		for(var/in 1 to 5 * power_multiplier)
 			for(var/V in listeners)
 				var/mob/living/L = V
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/step, L, direction? direction : pick(GLOB.cardinals)), 10 * (i - 1))
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, L, direction? direction : pick(GLOB.cardinals)), 10 * (i - 1))
 
 	//WALK
 	else if((findtext(message, walk_words)))
@@ -429,32 +429,32 @@
 	else if((findtext(message, helpintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/living/carbon/human/.proc/a_intent_change, INTENT_HELP), i * 2)
-			addtimer(CALLBACK(H, /mob/living/carbon/human/.proc/click_random_mob), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/a_intent_change, INTENT_HELP), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
 			i++
 
 	//DISARM INTENT
 	else if((findtext(message, disarmintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/living/carbon/human/.proc/a_intent_change, INTENT_DISARM), i * 2)
-			addtimer(CALLBACK(H, /mob/living/carbon/human/.proc/click_random_mob), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/a_intent_change, INTENT_DISARM), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
 			i++
 
 	//GRAB INTENT
 	else if((findtext(message, grabintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/living/carbon/human/.proc/a_intent_change, INTENT_GRAB), i * 2)
-			addtimer(CALLBACK(H, /mob/living/carbon/human/.proc/click_random_mob), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/a_intent_change, INTENT_GRAB), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
 			i++
 
 	//HARM INTENT
 	else if((findtext(message, harmintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/living/carbon/human/.proc/a_intent_change, INTENT_HARM), i * 2)
-			addtimer(CALLBACK(H, /mob/living/carbon/human/.proc/click_random_mob), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/a_intent_change, INTENT_HARM), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
 			i++
 
 	//THROW/CATCH
@@ -475,7 +475,7 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			addtimer(CALLBACK(L, /mob/living/.proc/say, pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"), 5 * i)
+			addtimer(CALLBACK(L, /mob/living/.proc/say, pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")), 5 * i)
 			i++
 
 	//GET UP

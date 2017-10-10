@@ -209,18 +209,18 @@
 		addtimer(CALLBACK(src, .proc/overload_shock, L), 20)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload_shock(obj/machinery/light/L)
-		if(!L.on) //wait, wait, don't shock me
-			return
-		flick("[L.base_state]2", L)
-		for(var/mob/living/carbon/human/M in view(shock_range, L))
-			if(M == user)
-				continue
-			L.Beam(M,icon_state="purple_lightning",time=5)
-			M.electrocute_act(shock_damage, L, safety=1)
-			var/datum/effect_system/spark_spread/z = new /datum/effect_system/spark_spread
-			z.set_up(4, 0, M)
-			z.start()
-			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+	if(!L.on) //wait, wait, don't shock me
+		return
+	flick("[L.base_state]2", L)
+	for(var/mob/living/carbon/human/M in view(shock_range, L))
+		if(M == user)
+			continue
+		L.Beam(M,icon_state="purple_lightning",time=5)
+		M.electrocute_act(shock_damage, L, safety=1)
+		var/datum/effect_system/spark_spread/z = new /datum/effect_system/spark_spread
+		z.set_up(4, 0, M)
+		z.start()
+		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile
