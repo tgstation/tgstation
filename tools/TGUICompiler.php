@@ -21,10 +21,6 @@ try{
 	$max_number_of_uploads = 20;
 	//END CONFIG
 
-	$full_path_to_gulp = str_replace('/', '\\', $full_path_to_gulp);
-	$parent_dir = str_replace('\\', '/', realpath(dirname(__FILE__)));
-	$tgdir = $parent_dir . '/' . $repo_dir;
-
 	function getGitRevision()
 	{
 		global $tgdir;
@@ -39,8 +35,6 @@ try{
 		return $rev;
 	}
 
-	$revision = getGitRevision();
-
 	function extrapolate_git_url(){
 		global $tgdir;
 		$config = file($tgdir . '/.git/config', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -48,12 +42,6 @@ try{
 			if(strpos($line, 'url = ') !== false)
 				return trim(explode('=', $line)[1]);
 	}
-
-	$git_base = extrapolate_git_url();
-	if($git_base)
-		$commit_url = $git_base . '/commit/' . $revision;
-	else
-		$error = 'Unable to determine github URL!';
 
 	function download_file($path){
 		header('Content-type: application/zip'); 
@@ -99,6 +87,17 @@ try{
 		global $tgdir;
 		shell_exec('cd ' . $tgdir . ' && git pull');
 	}
+	
+	$full_path_to_gulp = str_replace('/', '\\', $full_path_to_gulp);
+	$parent_dir = str_replace('\\', '/', realpath(dirname(__FILE__)));
+	$tgdir = $parent_dir . '/' . $repo_dir;
+
+	$revision = getGitRevision();
+	$git_base = extrapolate_git_url();
+	if($git_base)
+		$commit_url = $git_base . '/commit/' . $revision;
+	else
+		$error = 'Unable to determine github URL!';
 
 	if($_SERVER['REQUEST_METHOD'] === 'POST'){
 		$updated_git = isset($_POST['pull']);
