@@ -597,14 +597,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.faction = list("neutral")
 	return 1
 
-/proc/show_server_hop_transfer_screen(expected_key)
-	//only show it to incoming ghosts
-	for(var/mob/dead/observer/O in GLOB.player_list)
-		if(O.key == expected_key)
-			if(O.client)
-				new /obj/screen/splash(O.client, TRUE)
-			break
-
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
 //overriden here and in /mob/living for different point span classes and sanity checks
