@@ -2,7 +2,7 @@
 	set name = "Clean Air"
 	set category = "Special Verbs"
 	set desc = "Cleans the air in a radius of harmful gasses like plasma and N2O"
-	var/size = input("How big?", "Input") in list(5, 10, 20, "Cancel")
+	var/size = input("How big?", "Input") in list(5, 10, 20, 50, 100, "Cancel")
 	if(size == "Cancel")
 		return 0
 	cleanair(size)
@@ -29,9 +29,9 @@
 			if(A)
 				A.gases.Cut()
 				if(TRUE)
-					ADD_GAS("o2", A)
+					ADD_GAS("o2", A.gases)
 				if (TRUE)
-					ADD_GAS("n2", A)
+					ADD_GAS("n2", A.gases)
 				A.gases["o2"][MOLES] = 22
 				A.gases["n2"][MOLES] = 82
 				A.temperature = 293.15
