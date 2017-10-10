@@ -45,6 +45,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/process_atmos()
 	..()
+
 	injecting = 0
 
 	if(!on || !is_operational())
@@ -63,6 +64,7 @@
 		update_parents()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
+
 	if(on || injecting || !is_operational())
 		return
 
@@ -72,11 +74,8 @@
 
 	if(air_contents.temperature > 0)
 		var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
 		loc.assume_air(removed)
-
 		update_parents()
 
 	flick("inje_inject", src)
@@ -88,6 +87,7 @@
 		radio_connection = SSradio.add_object(src, frequency)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/broadcast_status()
+
 	if(!radio_connection)
 		return
 
@@ -112,6 +112,7 @@
 	..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/receive_signal(datum/signal/signal)
+
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return
 
@@ -137,6 +138,7 @@
 
 	spawn(2)
 		broadcast_status()
+
 	update_icon()
 
 
