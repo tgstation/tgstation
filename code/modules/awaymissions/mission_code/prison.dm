@@ -394,6 +394,15 @@
 /obj/structure/sign/prison
 	icon = 'icons/valtos/prison/prison.dmi'
 
+/obj/structure/sign/prison/tablo
+	name = "\improper Tablo"
+	icon = 'icons/valtos/prison/prisonw.dmi'
+	desc = "Табличка. Кусь."
+	icon_state = "t1"
+
+/obj/structure/sign/prison/tablo/Initialize()
+	icon_state = "t[rand(1,18)]"
+
 /obj/structure/sign/prison/uprava
 	name = "\improper Uprava"
 	icon = 'icons/valtos/prison/prisonw.dmi'
@@ -401,9 +410,28 @@
 	icon_state = "uprava"
 
 /obj/structure/sign/prison/blok1
-	name = "\improper Blok 1"
+	name = "\improper Block A"
+	icon = 'icons/valtos/prison/prisonw.dmi'
 	desc = "Родная хата."
-	icon_state = "blok1"
+	icon_state = "blocka"
+
+/obj/structure/sign/prison/biblio
+	name = "\improper Biblioteka"
+	icon = 'icons/valtos/prison/prisonw.dmi'
+	desc = "Обитель книг с голыми бабами."
+	icon_state = "biblio"
+
+/obj/structure/sign/prison/cross
+	name = "\improper Church"
+	icon = 'icons/valtos/prison/prisonw.dmi'
+	desc = "Какой-то храм. Не сожгли благодаря кирпичным стенам."
+	icon_state = "cross"
+
+/obj/structure/sign/prison/stolov
+	name = "\improper Stolovka"
+	icon = 'icons/valtos/prison/prisonw.dmi'
+	desc = "Говорят, что тут могут быть котлетки."
+	icon_state = "stolov"
 
 /obj/structure/sign/prison/tok
 	name = "\improper Ne prikasaisya!"
