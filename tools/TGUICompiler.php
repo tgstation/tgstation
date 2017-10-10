@@ -132,7 +132,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 		$target_interfaces = $target_path . '/src/interfaces/';
 		foreach($good_files as $F){
 			$target_name = $target_interfaces . $F['name'];
-			if(file_exists(target_name))
+			if(file_exists($target_name))
 				unlink($target_name); //remove the file
 			move_uploaded_file($F['tmp_name'], $target_name);
 		}
