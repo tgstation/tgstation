@@ -58,6 +58,34 @@
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
+	
+/obj/item/nullrod/healhand
+	icon_state = "disintegrate"
+	item_state = "disintegrate"
+	name = "hand of healing"
+	desc = "This hand of yours glows with a medical power!"
+	force = 1
+	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
+	w_class = WEIGHT_CLASS_HUGE
+	hitsound = 'sound/weapons/sear.ogg' //remind me to add healing sounds :)
+	damtype = BURN
+	attack_verb = list("healed", "mended", "revitalized")
+
+/obj/item/nullrod/healhand/afterattack(atom/A, mob/user, proximity)
+	if(!proximity)
+		return
+	if(ismob(A))
+		var/mob/healmepls = A
+	healmepls.getBruteLoss()
+	user.adjustBruteLoss(brute/2)
+	healmepls.adjustBruteLoss(-brute)
+	if(ishuman(healmepls))
+		var/mob/living/carbon/human/healmeplsiamhuman = healmepls
+	var/list/reagents = healmeplsiamhuman.reagents
+	for(var/reagent/B in reagents)
+		if(istype(B, reagent/toxic))
+		healmeplsiamhuman.reagents.trans_to(user, healmeplsiamhuman.reagents.total_volume, 1, 1, 0)
+		//to chat heal messages and shiz zzz
 
 /obj/item/nullrod/staff
 	icon_state = "godstaff-red"
