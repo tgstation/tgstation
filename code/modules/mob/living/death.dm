@@ -1,10 +1,7 @@
-/mob/living/gib(no_brain, no_organs, no_bodyparts, explosion = false)
+/mob/living/gib(no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying
 	if(stat != DEAD)
 		death(1)
-	if(explosion)
-		for(var/atom/A in contents)
-			A.ex_act(EXPLODE_DEVASTATE)
 
 	if(!prev_lying)
 		gib_animation()
