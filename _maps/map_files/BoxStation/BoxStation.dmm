@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -27831,7 +27831,6 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/device/radio/headset/headset_med,
-/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "boe" = (
@@ -37462,6 +37461,7 @@
 /obj/item/circuitboard/machine/clonescanner,
 /obj/item/circuitboard/machine/clonepod,
 /obj/item/circuitboard/computer/scan_consolenew,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bJl" = (
@@ -58904,14 +58904,14 @@
 /area/science/xenobiology)
 "Qlj" = (
 /obj/docking_port/stationary{
- 	dheight = 9;
- 	dir = 2;
- 	dwidth = 5;
- 	height = 24;
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
 	id = "syndicate_nw";
 	name = "northwest of station";
 	turf_type = /turf/open/space
-},
+	},
 /turf/open/space/basic,
 /area/space)
 

@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -27681,6 +27681,7 @@
 /obj/item/circuitboard/machine/clonescanner,
 /obj/item/circuitboard/machine/clonepod,
 /obj/item/circuitboard/computer/scan_consolenew,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/black,
 /area/storage/tech)
 "bbo" = (
@@ -59764,7 +59765,6 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow{
 	dir = 4
 	},
