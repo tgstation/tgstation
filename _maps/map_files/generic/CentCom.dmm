@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space/basic,
 /area/space)
@@ -13628,10 +13628,9 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/centcom/evac)
 "Mk" = (
+/obj/structure/grille,
 /obj/structure/window/plastitanium,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
+/turf/open/floor/plating,
 /area/shuttle/syndicate/airlock)
 "Mz" = (
 /obj/structure/shuttle/engine/propulsion/right,
@@ -13799,6 +13798,7 @@
 	id = "syndieshutters";
 	name = "blast shutters"
 	},
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/bridge)
 "Pm" = (
@@ -13889,10 +13889,9 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
 "QP" = (
+/obj/structure/grille,
 /obj/structure/window/plastitanium,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
+/turf/open/floor/plating,
 /area/shuttle/syndicate/medical)
 "QT" = (
 /obj/effect/turf_decal/stripes/corner,
@@ -14091,10 +14090,9 @@
 	},
 /area/shuttle/syndicate/eva)
 "Tl" = (
+/obj/structure/grille,
 /obj/structure/window/plastitanium,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
+/turf/open/floor/plating,
 /area/shuttle/syndicate/eva)
 "Tm" = (
 /obj/machinery/status_display,
@@ -14250,10 +14248,9 @@
 /turf/open/floor/plasteel/vault,
 /area/shuttle/syndicate/medical)
 "Wd" = (
+/obj/structure/grille,
 /obj/structure/window/plastitanium,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
+/turf/open/floor/plating,
 /area/shuttle/syndicate/armory)
 "We" = (
 /obj/item/screwdriver{
@@ -14495,6 +14492,16 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
+"ZZ" = (
+/obj/structure/grille,
+/obj/structure/window/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/syndicate/hallway)
+"OVERFLOW" = (
+/obj/structure/grille,
+/obj/structure/window/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/syndicate/hallway)
 
 (1,1,1) = {"
 aa
@@ -28554,7 +28561,7 @@ ZS
 QP
 QP
 pk
-Nc
+QP
 XJ
 XJ
 Nk
@@ -28804,7 +28811,7 @@ XN
 Ru
 XN
 XN
-Ur
+ZZ
 Pt
 Pt
 Pt
@@ -28813,7 +28820,7 @@ RF
 NV
 RD
 TT
-XL
+Ur
 de
 Jn
 hq
@@ -29318,7 +29325,7 @@ Om
 TW
 Om
 Om
-Ur
+OVERFLOW
 Pt
 Pt
 Pt
@@ -29327,7 +29334,7 @@ WW
 NV
 RD
 TT
-XL
+Ur
 de
 Mz
 hq
@@ -29582,7 +29589,7 @@ Se
 Wd
 Wd
 ZM
-ZE
+Wd
 Jz
 Jz
 Nk
