@@ -423,10 +423,7 @@
 			return 1
 		else
 			return 0
-
-	return
-
-
+//CENTCOM OFFICIAL
 /datum/admins/proc/makeOfficial()
 	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered to be a CentCom Official?", "deathsquad")
