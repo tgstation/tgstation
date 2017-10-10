@@ -404,10 +404,10 @@
 			direction = WEST
 		else if(findtext(message, right_words))
 			direction = EAST
-		for(var/in 1 to 5 * power_multiplier)
+		for(var/iter 1 to 5 * power_multiplier)
 			for(var/V in listeners)
 				var/mob/living/L = V
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, L, direction? direction : pick(GLOB.cardinals)), 10 * (i - 1))
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, L, direction? direction : pick(GLOB.cardinals)), 10 * (iter - 1))
 
 	//WALK
 	else if((findtext(message, walk_words)))
@@ -429,7 +429,7 @@
 	else if((findtext(message, helpintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/proc/a_intent_change, INTENT_HELP), i * 2)
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HELP), i * 2)
 			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
 			i++
 
@@ -437,7 +437,7 @@
 	else if((findtext(message, disarmintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/proc/a_intent_change, INTENT_DISARM), i * 2)
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_DISARM), i * 2)
 			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
 			i++
 
@@ -445,7 +445,7 @@
 	else if((findtext(message, grabintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/proc/a_intent_change, INTENT_GRAB), i * 2)
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_GRAB), i * 2)
 			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
 			i++
 
@@ -453,7 +453,7 @@
 	else if((findtext(message, harmintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/proc/a_intent_change, INTENT_HARM), i * 2)
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HARM), i * 2)
 			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
 			i++
 
@@ -475,7 +475,7 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			addtimer(CALLBACK(L, /mob/living/.proc/say, pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")), 5 * i)
+			addtimer(CALLBACK(L, /atom/movable/proc/say, pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")), 5 * i)
 			i++
 
 	//GET UP
@@ -520,7 +520,7 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(prob(25))
-				addtimer(CALLBACK(L, /mob/living/.proc/say, "HOW HIGH?!!"), 5 * i)
+				addtimer(CALLBACK(L, /atom/movable/proc/say, "HOW HIGH?!!"), 5 * i)
 			addtimer(CALLBACK(L, /mob/living/.proc/emote, "jump"), 5 * i)
 			i++
 

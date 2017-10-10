@@ -207,21 +207,24 @@
 /obj/item/gun/proc/recharge_newshot()
 	return
 
-/obj/item/gun/proc/process_burst(mob/living/user, atom/target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bouns_spread)
-	if(!user)
-		break
+/obj/item/gun/proc/process_burst(mob/living/user, atom/target, message = TRUE, params, zone_override, sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
+	if(!user || !firing_burst)
+		firing_burst = FALSE
+		return FALSE
 	if(!issilicon(user))
-		if( i>1 && !(user.is_holding(src))) //for burst firing
-			break
+		if( iteration > 1 && !(user.is_holding(src))) //for burst firing
+			firing_burst = FALSE
+			return FALSE
 	if(chambered && chambered.BB)
 		if(randomspread)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 		else //Smart spread
-			sprd = round((((rand_spr/burst_size) * i) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
+			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
 
 		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
 			shoot_with_empty_chamber(user)
-			break
+			firing_burst = FALSE
+			return FALSE
 		else
 			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 				shoot_live_shot(user, 1, target, message)
@@ -229,11 +232,13 @@
 				shoot_live_shot(user, 0, target, message)
 	else
 		shoot_with_empty_chamber(user)
-		break
+		firing_burst = FALSE
+		return FALSE
 	process_chamber()
 	update_icon()
+	return TRUE
 
-/obj/item/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
+/obj/item/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = TRUE, params, zone_override, bonus_spread = 0)
 	add_fingerprint(user)
 
 	if(semicd)
@@ -249,7 +254,7 @@
 	if(burst_size > 1)
 		firing_burst = TRUE
 		for(var/i = 1 to burst_size)
-			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread), min(fire_delay * (i - 1), 0))
+			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, iteration), min(fire_delay * (i - 1), 0))
 		firing_burst = FALSE
 	else
 		if(chambered)

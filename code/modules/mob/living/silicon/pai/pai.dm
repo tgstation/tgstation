@@ -19,6 +19,7 @@
 	var/list/software = list()
 	var/userDNA		// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
+	var/hacking = FALSE		//Are we hacking a door?
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"

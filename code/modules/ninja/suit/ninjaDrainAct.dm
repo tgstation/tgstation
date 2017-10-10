@@ -116,7 +116,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 /obj/machinery/proc/AI_notify_hack()
 	set waitfor = FALSE
-	var/turf/location = get_turf(H)
+	var/turf/location = get_turf(src)
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		to_chat(AI, "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>.")
 
@@ -128,7 +128,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	. = DRAIN_RD_HACK_FAILED
 
 	to_chat(H, "<span class='notice'>Hacking \the [src]...</span>")
-	AI_notify_hack
+	AI_notify_hack()
 
 	if(files && files.known_tech.len)
 		for(var/datum/tech/current_data in S.stored_research)
