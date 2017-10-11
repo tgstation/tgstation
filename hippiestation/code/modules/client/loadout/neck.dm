@@ -79,4 +79,7 @@
 	category = slot_neck
 	path = /obj/item/clothing/neck/stripedgreenscarf
 
-
+/datum/gear/headphones
+	name = "Headphones"
+	category = slot_ears
+	path = /obj/item/clothing/ears/headphones
