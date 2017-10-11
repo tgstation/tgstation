@@ -1,12 +1,12 @@
-## tikistation
-work in progress don't donwload unless you have my cat's permission ok
+## Tikistation 13
+work in progress don't download unless you have my cat's permission ok
 
 [![forthebadge](http://forthebadge.com/images/badges/mom-made-pizza-rolls.svg)](http://forthebadge.com)
 
-**Website:** http://www.tgstation13.org <BR>
-**Code:** https://github.com/tgstation/tgstation <BR>
-**Wiki** http://tgstation13.org/wiki/Main_Page <BR>
-**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
+**Website:** we don't have one sorry <BR>
+**Code:** https://github.com/cyclowns/tikistation <BR>
+**Wiki** we don't have one use the TG one <BR>
+**Discord** https://discord.gg/h6S3N5w <BR>
 
 
 ## DOWNLOADING
@@ -17,6 +17,6 @@ Option 1:
 Follow this: http://www.tgstation13.org/wiki/Setting_up_git
 
 Option 2: Download the source code as a zip by clicking the ZIP button in the
-code tab of https://github.com/tgstation/tgstation
+code tab of https://github.com/cyclowns/tikistation
 (note: this will use a lot of bandwidth if you wish to update and is a lot of
 hassle if you want to make any changes at all, so it's not recommended.)
