@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -6987,7 +6987,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 4;
-	filter_type = "n2"
+	filter_type = /datum/gas/nitrogen
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmospherics_engine)
@@ -10811,7 +10811,7 @@
 /area/shuttle/supply)
 "aza" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = "n2";
+	filter_type = /datum/gas/nitrogen;
 	name = "nitrogen filter"
 	},
 /turf/open/floor/plasteel/yellow,
@@ -23007,7 +23007,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = "co2";
+	filter_type = /datum/gas/carbon_dioxide;
 	name = "co2 filter";
 	on = 1
 	},
@@ -24580,7 +24580,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "o2";
+	filter_type = /datum/gas/oxygen;
 	name = "oxygen filter";
 	on = 1
 	},
@@ -25841,7 +25841,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = "plasma";
+	filter_type = /datum/gas/plasma;
 	name = "waste filter";
 	on = 1
 	},
@@ -27484,7 +27484,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "n2";
+	filter_type = /datum/gas/nitrogen;
 	name = "nitrogen filter";
 	on = 1
 	},
@@ -29207,7 +29207,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = "n2o";
+	filter_type = /datum/gas/nitrous_oxide;
 	name = "n2o filter";
 	on = 1
 	},
@@ -105710,7 +105710,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 4;
-	filter_type = "freon";
+	filter_type = /datum/gas/freon;
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/plasteel/neutral,
@@ -121754,7 +121754,7 @@ aaa
 aaa
 aaa
 aaa
-YGI
+aaa
 aaa
 aaa
 aaa
@@ -125890,7 +125890,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+YGI
 aaa
 aaa
 aaa

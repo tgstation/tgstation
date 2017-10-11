@@ -268,8 +268,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		gas -= "TEMP"
 	gases.Cut()
 	for(var/id in gas)
-		ADD_GAS(id, gases)
-		gases[id][MOLES] = text2num(gas[id])
+		var/path = id
+		if(!ispath(path))
+			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
+		ADD_GAS(path, gases)
+		gases[path][MOLES] = text2num(gas[id])
 	return 1
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)

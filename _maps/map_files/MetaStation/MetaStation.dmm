@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -46859,7 +46859,7 @@
 "bMk" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "n2o";
+	filter_type = /datum/gas/nitrous_oxide;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -49916,7 +49916,7 @@
 "bSj" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "plasma";
+	filter_type = /datum/gas/plasma;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -52635,7 +52635,7 @@
 "bXq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "co2";
+	filter_type = /datum/gas/carbon_dioxide;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -54519,7 +54519,7 @@
 "cbd" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = "n2";
+	filter_type = /datum/gas/nitrogen;
 	on = 1
 	},
 /obj/structure/window/reinforced,
@@ -54574,7 +54574,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = "o2";
+	filter_type = /datum/gas/oxygen;
 	on = 1
 	},
 /turf/open/floor/plasteel/blue,
@@ -54639,12 +54639,14 @@
 /area/engine/atmos)
 "cbm" = (
 /obj/docking_port/mobile{
+	callTime = 250;
 	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 15;
 	id = "whiteship";
 	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 4;
@@ -82679,7 +82681,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = "freon";
+	filter_type = /datum/gas/freon;
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/engine,
@@ -82879,7 +82881,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = "n2"
+	filter_type = /datum/gas/nitrogen
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -95771,7 +95773,7 @@ aaa
 aaa
 aaa
 aaa
-EDa
+aaa
 aaa
 aaa
 aaa
@@ -96071,7 +96073,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+EDa
 aaa
 aaa
 aaa

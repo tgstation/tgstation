@@ -185,10 +185,9 @@ Credit where due:
 	return FALSE
 
 /datum/game_mode/clockwork_cult/check_finished()
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-	if(G && !GLOB.ratvar_awakens) // Doesn't end until the Ark is destroyed or completed
+	if(GLOB.ark_of_the_clockwork_justiciar && !GLOB.ratvar_awakens) // Doesn't end until the Ark is destroyed or completed
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	if(GLOB.clockwork_gateway_activated)
