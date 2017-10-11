@@ -413,7 +413,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/flamer
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat
-	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	mask = /obj/item/clothing/mask/gas
 	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
 	back = /obj/item/storage/backpack/security
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber
@@ -445,7 +445,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.icon_state = "centcom"
 	W.access = get_all_accesses()//They get full station access.
-	W.access += get_centcom_access("NT Flamer")//Let's add their alloted CentCom access.
+	W.access += get_centcom_access("Death Commando")//Let's add their alloted CentCom access.
 	W.assignment = "NT Flamer"
 	W.registered_name = H.real_name
 	W.update_label(W.registered_name, W.assignment)
