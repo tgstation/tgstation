@@ -331,7 +331,7 @@
 	var/list/things = src_object.contents.Copy()
 	var/datum/progressbar/progress = new(user, things.len, src)
 	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/storage.proc/mass_remove_from_storage, src, things, progress)))
-		sleep(1)
+		stoplag(1)
 	qdel(progress)
 
 	return TRUE

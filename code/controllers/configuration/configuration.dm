@@ -175,8 +175,8 @@ GLOBAL_PROTECT(config_dir)
 	votable_modes += "secret"
 
 /datum/controller/configuration/proc/loadmaplist(filename)
-	filename = "[GLOB.config_dir][filename]"
 	log_config("Loading config file [filename]...")
+	filename = "[GLOB.config_dir][filename]"
 	var/list/Lines = world.file2list(filename)
 
 	var/datum/map_config/currentmap = null

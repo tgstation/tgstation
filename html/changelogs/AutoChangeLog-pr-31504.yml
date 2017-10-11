@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - bugfix: "Clock Cult mode will no longer end if all the cultists die. The round will not end until the Ark is destroyed or completed."

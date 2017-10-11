@@ -33,7 +33,9 @@
 	AIR1 = air_contents
 
 /obj/machinery/atmospherics/components/unary/oxygen_generator/process_atmos()
+
 	..()
+
 	if(!on)
 		return 0
 

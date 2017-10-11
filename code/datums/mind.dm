@@ -551,11 +551,11 @@
 			text += "<b>HEAD</b> | not mindshielded | employee | headrev | rev"
 		else if (src in SSticker.mode.head_revolutionaries)
 			var/last_healthy_headrev = TRUE
-			for(var/I in SSticker.mode.head_revolutionaries)
+			for(var/datum/mind/I in SSticker.mode.head_revolutionaries)
 				if(I == src)
 					continue
-				var/mob/M = I
-				if((M.z in GLOB.station_z_levels) && !M.stat)
+				var/mob/M = I.current
+				if(M && (M.z in GLOB.station_z_levels) && !M.stat)
 					last_healthy_headrev = FALSE
 					break
 			text += "head | not mindshielded | <a href='?src=\ref[src];revolution=clear'>employee</a> | <b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b> | <a href='?src=\ref[src];revolution=rev'>rev</a>"
@@ -1294,7 +1294,7 @@
 					if (istype(M))
 						for(var/datum/disease/transformation/jungle_fever/JF in M.viruses)
 							JF.cure(0)
-							sleep(0) //because deleting of virus is doing throught spawn(0) //What
+							stoplag() //because deleting of virus is doing throught spawn(0) //What
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						H = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
