@@ -8411,8 +8411,7 @@
 /area/medical/morgue)
 "atG" = (
 /obj/machinery/status_display{
-	pixel_x = -32;
-	supply_display = 1
+	pixel_x = -32
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Clone Lab";
@@ -10151,8 +10150,7 @@
 "axF" = (
 /obj/machinery/status_display{
 	pixel_x = 0;
-	pixel_y = 30;
-	supply_display = 1
+	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -13238,8 +13236,7 @@
 /area/science/server)
 "aDV" = (
 /obj/machinery/status_display{
-	pixel_x = -32;
-	supply_display = 1
+	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white/side{
@@ -17604,8 +17601,7 @@
 "aML" = (
 /obj/machinery/status_display{
 	pixel_x = 0;
-	pixel_y = -30;
-	supply_display = 1
+	pixel_y = -30
 	},
 /obj/machinery/light{
 	light_color = "#c9d3e8"
