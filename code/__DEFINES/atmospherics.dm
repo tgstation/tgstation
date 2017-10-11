@@ -17,6 +17,7 @@
 #define META_GAS_MOLES_VISIBLE	3
 #define META_GAS_OVERLAY		4
 #define META_GAS_DANGER			5
+#define META_GAS_ID				6
 
 //stuff you should probably leave well alone!
 //ATMOS

@@ -36,10 +36,11 @@ BONUS
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/cough/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
-	if(A.spread_flags &= AIRBORNE) //infect bystanders
+	if(A.spread_flags &= VIRUS_SPREAD_AIRBORNE) //infect bystanders
 		infective = TRUE
 	if(A.properties["resistance"] >= 3) //strong enough to drop items
 		power = 1.5

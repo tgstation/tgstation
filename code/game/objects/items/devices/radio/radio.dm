@@ -514,9 +514,9 @@
 /obj/item/device/radio/examine(mob/user)
 	..()
 	if (b_stat)
-		to_chat(user, "<span class='notice'>[name] can be attached and modified.</span>")
+		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
 	else
-		to_chat(user, "<span class='notice'>[name] can not be modified or attached.</span>")
+		to_chat(user, "<span class='notice'>It cannot be modified or attached.</span>")
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)

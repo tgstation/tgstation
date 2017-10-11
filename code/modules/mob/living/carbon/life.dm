@@ -72,7 +72,7 @@
 		//Breathe from internal
 		breath = get_breath_from_internal(BREATH_VOLUME)
 
-		if(!breath)
+		if(isnull(breath)) //in case of 0 pressure internals
 
 			if(isobj(loc)) //Breathe from loc as object
 				var/obj/loc_as_obj = loc
@@ -127,11 +127,10 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
-	breath.assert_gases("o2","plasma","co2","n2o", "bz")
-
-	var/O2_partialpressure = (breath_gases["o2"][MOLES]/breath.total_moles())*breath_pressure
-	var/Toxins_partialpressure = (breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure
-	var/CO2_partialpressure = (breath_gases["co2"][MOLES]/breath.total_moles())*breath_pressure
+	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz)
+	var/O2_partialpressure = (breath_gases[/datum/gas/oxygen][MOLES]/breath.total_moles())*breath_pressure
+	var/Toxins_partialpressure = (breath_gases[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
+	var/CO2_partialpressure = (breath_gases[/datum/gas/carbon_dioxide][MOLES]/breath.total_moles())*breath_pressure
 
 
 	//OXYGEN
@@ -142,7 +141,7 @@
 			var/ratio = 1 - O2_partialpressure/safe_oxy_min
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
-			oxygen_used = breath_gases["o2"][MOLES]*ratio
+			oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
@@ -152,11 +151,11 @@
 		failed_last_breath = 0
 		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(-5)
-		oxygen_used = breath_gases["o2"][MOLES]
+		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")
 
-	breath_gases["o2"][MOLES] -= oxygen_used
-	breath_gases["co2"][MOLES] += oxygen_used
+	breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
+	breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
 
 	//CARBON DIOXIDE
 	if(CO2_partialpressure > safe_co2_max)
@@ -175,15 +174,15 @@
 
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
-		var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
+		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_tox_max) * 10
 		adjustToxLoss(Clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
 
 	//NITROUS OXIDE
-	if(breath_gases["n2o"])
-		var/SA_partialpressure = (breath_gases["n2o"][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_gases[/datum/gas/nitrous_oxide])
+		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
@@ -193,19 +192,19 @@
 				emote(pick("giggle","laugh"))
 
 	//BZ (Facepunch port of their Agent B)
-	if(breath_gases["bz"])
-		var/bz_partialpressure = (breath_gases["bz"][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_gases[/datum/gas/bz])
+		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
 			hallucination += 20
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5//Removed at 2 per tick so this will slowly build up
 	//TRITIUM
-	if(breath_gases["tritium"])
-		var/tritium_partialpressure = (breath_gases["tritium"][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_gases[/datum/gas/tritium])
+		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
 	//Brown Gas
-	if (breath_gases["browns"])
-		var/browns_partialpressure = (breath_gases["browns"][MOLES]/breath.total_moles())*breath_pressure
+	if (breath_gases[/datum/gas/browns])
+		var/browns_partialpressure = (breath_gases[/datum/gas/browns][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(browns_partialpressure/4)
 
 
@@ -231,7 +230,9 @@
 			update_internals_hud_icon(0)
 		else
 			update_internals_hud_icon(1)
-			return internal.remove_air_volume(volume_needed)
+			. = internal.remove_air_volume(volume_needed)
+			if(!.)
+				return FALSE //to differentiate between no internals and active, but empty internals
 
 /mob/living/carbon/proc/handle_blood()
 	return
@@ -416,6 +417,8 @@
 
 /mob/living/carbon/proc/handle_liver()
 	var/obj/item/organ/liver/liver = getorganslot("liver")
+	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
+		return
 	if(liver)
 		if(liver.damage >= 100)
 			liver.failing = TRUE
@@ -423,8 +426,6 @@
 		else
 			liver.failing = FALSE
 	else
-		if((dna && dna.species && (NOLIVER in dna.species.species_traits)))
-			return
 		liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()

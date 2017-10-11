@@ -80,7 +80,7 @@
 		if(seed)
 			to_chat(user, "<span class='warning'>A sample is already loaded into the machine!</span>")
 		else
-			if(!user.temporarilyRemoveItemFromInventory())
+			if(!user.temporarilyRemoveItemFromInventory(I))
 				return
 			insert_seed(I)
 			to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")

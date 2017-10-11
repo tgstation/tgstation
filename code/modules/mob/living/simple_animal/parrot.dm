@@ -123,7 +123,7 @@
 /mob/living/simple_animal/parrot/examine(mob/user)
 	..()
 	if(stat)
-		to_chat(user, pick("This parrot is no more", "This is a late parrot", "This is an ex-parrot"))
+		to_chat(user, pick("This parrot is no more.", "This is a late parrot.", "This is an ex-parrot."))
 
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
@@ -999,7 +999,7 @@
 	var/datum/disease/parrot_possession/P = new
 	P.parrot = src
 	loc = H
-	H.ContractDisease(P)
+	H.ForceContractDisease(P)
 	parrot_interest = null
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
 

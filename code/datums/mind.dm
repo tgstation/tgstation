@@ -75,7 +75,7 @@
 	if(islist(antag_datums))
 		for(var/i in antag_datums)
 			var/datum/antagonist/antag_datum = i
-			if(antag_datum.delete_on_death)
+			if(antag_datum.delete_on_mind_deletion)
 				qdel(i)
 		antag_datums = null
 	return ..()
@@ -128,10 +128,16 @@
 	memory = null
 
 // Datum antag mind procs
-/datum/mind/proc/add_antag_datum(datum_type, team)
-	if(!datum_type)
+/datum/mind/proc/add_antag_datum(datum_type_or_instance, team)
+	if(!datum_type_or_instance)
 		return
-	var/datum/antagonist/A = new datum_type(src, team)
+	var/datum/antagonist/A
+	if(!ispath(datum_type_or_instance))
+		A = datum_type_or_instance
+		if(!istype(A))
+			return
+	else
+		A = new datum_type_or_instance(src, team)
 	if(!A.can_be_owned(src))
 		qdel(A)
 		return
@@ -188,12 +194,12 @@
 
 /datum/mind/proc/remove_traitor()
 	if(src in SSticker.mode.traitors)
-		src.remove_antag_datum(ANTAG_DATUM_TRAITOR)
+		remove_antag_datum(ANTAG_DATUM_TRAITOR)
 	SSticker.mode.update_traitor_icons_removed(src)
 
 /datum/mind/proc/remove_brother()
 	if(src in SSticker.mode.brothers)
-		src.remove_antag_datum(ANTAG_DATUM_BROTHER)
+		remove_antag_datum(ANTAG_DATUM_BROTHER)
 	SSticker.mode.update_brother_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
@@ -205,11 +211,8 @@
 	remove_antag_equip()
 
 /datum/mind/proc/remove_wizard()
-	if(src in SSticker.mode.wizards)
-		SSticker.mode.wizards -= src
-		RemoveAllSpells()
+	remove_antag_datum(/datum/antagonist/wizard)
 	special_role = null
-	remove_antag_equip()
 
 /datum/mind/proc/remove_cultist()
 	if(src in SSticker.mode.cult)
@@ -250,7 +253,6 @@
 	remove_rev()
 	SSticker.mode.update_changeling_icons_removed(src)
 	SSticker.mode.update_traitor_icons_removed(src)
-	SSticker.mode.update_wiz_icons_removed(src)
 	SSticker.mode.update_cult_icons_removed(src)
 	SSticker.mode.update_rev_icons_removed(src)
 
@@ -265,7 +267,12 @@
 	var/list/all_contents = traitor_mob.GetAllContents()
 	var/obj/item/device/pda/PDA = locate() in all_contents
 	var/obj/item/device/radio/R = locate() in all_contents
-	var/obj/item/pen/P = locate() in all_contents //including your PDA-pen!
+	var/obj/item/pen/P
+
+	if (PDA) // Prioritize PDA pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink
+		P = locate() in PDA
+	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
+		P = locate() in all_contents
 
 	var/obj/item/uplink_loc
 
@@ -521,11 +528,9 @@
 		if (SSticker.mode.config_tag=="wizard")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if ((src in SSticker.mode.wizards) || (src in SSticker.mode.apprentices))
+		if (has_antag_datum(/datum/antagonist/wizard))
 			text += "<b>YES</b> | <a href='?src=\ref[src];wizard=clear'>no</a>"
-			text += "<br><a href='?src=\ref[src];wizard=lair'>To lair</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];wizard=dressup'>dress up</a>, <a href='?src=\ref[src];wizard=name'>let choose name</a>."
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];wizard=autoobjectives'>Randomize!</a>"
+			text += "<br><a href='?src=\ref[src];wizard=lair'>To lair</a>, <a href='?src=\ref[src];common=undress'>undress</a>"
 		else
 			text += "<a href='?src=\ref[src];wizard=wizard'>yes</a> | <b>NO</b>"
 
@@ -546,11 +551,11 @@
 			text += "<b>HEAD</b> | not mindshielded | employee | headrev | rev"
 		else if (src in SSticker.mode.head_revolutionaries)
 			var/last_healthy_headrev = TRUE
-			for(var/I in SSticker.mode.head_revolutionaries)
+			for(var/datum/mind/I in SSticker.mode.head_revolutionaries)
 				if(I == src)
 					continue
-				var/mob/M = I
-				if((M.z in GLOB.station_z_levels) && !M.stat)
+				var/mob/M = I.current
+				if(M && (M.z in GLOB.station_z_levels) && !M.stat)
 					last_healthy_headrev = FALSE
 					break
 			text += "head | not mindshielded | <a href='?src=\ref[src];revolution=clear'>employee</a> | <b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b> | <a href='?src=\ref[src];revolution=rev'>rev</a>"
@@ -1038,27 +1043,15 @@
 		switch(href_list["wizard"])
 			if("clear")
 				remove_wizard()
-				to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>")
 				log_admin("[key_name(usr)] has de-wizard'ed [current].")
-				SSticker.mode.update_wiz_icons_removed(src)
 			if("wizard")
-				if(!(src in SSticker.mode.wizards))
-					SSticker.mode.wizards += src
+				if(has_antag_datum(/datum/antagonist/wizard))
 					special_role = "Wizard"
-					//SSticker.mode.learn_basic_spells(current)
-					to_chat(current, "<span class='boldannounce'>You are the Space Wizard!</span>")
+					add_antag_datum(/datum/antagonist/wizard)
 					message_admins("[key_name_admin(usr)] has wizard'ed [current].")
 					log_admin("[key_name(usr)] has wizard'ed [current].")
-					SSticker.mode.update_wiz_icons_added(src)
 			if("lair")
 				current.forceMove(pick(GLOB.wizardstart))
-			if("dressup")
-				SSticker.mode.equip_wizard(current)
-			if("name")
-				SSticker.mode.name_wizard(current)
-			if("autoobjectives")
-				SSticker.mode.forge_wizard_objectives(src)
-				to_chat(usr, "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if (href_list["changeling"])
 		switch(href_list["changeling"])
@@ -1289,7 +1282,7 @@
 					if (istype(M))
 						for(var/datum/disease/transformation/jungle_fever/JF in M.viruses)
 							JF.cure(0)
-							sleep(0) //because deleting of virus is doing throught spawn(0) //What
+							stoplag() //because deleting of virus is doing throught spawn(0) //What
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						H = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
@@ -1429,20 +1422,10 @@
 		SSticker.mode.update_changeling_icons_added(src)
 
 /datum/mind/proc/make_Wizard()
-	if(!(src in SSticker.mode.wizards))
-		SSticker.mode.wizards += src
+	if(!has_antag_datum(/datum/antagonist/wizard))
 		special_role = "Wizard"
 		assigned_role = "Wizard"
-		if(!GLOB.wizardstart.len)
-			SSjob.SendToLateJoin(current)
-			to_chat(current, "HOT INSERTION, GO GO GO")
-		else
-			current.forceMove(pick(GLOB.wizardstart))
-
-		SSticker.mode.equip_wizard(current)
-		SSticker.mode.name_wizard(current)
-		SSticker.mode.forge_wizard_objectives(src)
-		SSticker.mode.greet_wizard(src)
+		add_antag_datum(/datum/antagonist/wizard)
 
 
 /datum/mind/proc/make_Cultist()
