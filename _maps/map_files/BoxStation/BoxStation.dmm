@@ -43112,7 +43112,7 @@
 "bWb" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "n2o";
+	filter_type = /datum/gas/nitrous_oxide;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -44673,7 +44673,7 @@
 "bZJ" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "plasma";
+	filter_type = /datum/gas/plasma;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -46464,7 +46464,7 @@
 "cdB" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "co2";
+	filter_type = /datum/gas/carbon_dioxide;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -47092,7 +47092,7 @@
 "cfi" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = "n2";
+	filter_type = /datum/gas/nitrogen;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -47344,7 +47344,7 @@
 "cfR" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = "o2";
+	filter_type = /datum/gas/oxygen;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -57395,7 +57395,7 @@
 "cGf" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
-	filter_type = "n2"
+	filter_type = /datum/gas/nitrogen
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -58511,7 +58511,7 @@
 "cSJ" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
-	filter_type = "freon";
+	filter_type = /datum/gas/freon;
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/engine,
