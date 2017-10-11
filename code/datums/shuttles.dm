@@ -100,7 +100,7 @@
 	name = "The Arena"
 	description = "The crew must pass through an otherworldy arena to board this shuttle. Expect massive casualties. The source of the Bloody Signal must be tracked down and eliminated to unlock this shuttle."
 	admin_notes = "RIP AND TEAR."
-	credit_cost = 10000
+	credit_cost = 1000000
 
 /datum/map_template/shuttle/emergency/arena/prerequisites_met()
 	if("bubblegum" in SSshuttle.shuttle_purchase_requirements_met)
