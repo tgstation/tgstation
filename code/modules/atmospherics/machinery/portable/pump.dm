@@ -99,8 +99,8 @@
 		if("power")
 			on = !on
 			if(on && !holding)
-				var/plasma = air_contents.gases["plasma"]
-				var/n2o = air_contents.gases["n2o"]
+				var/plasma = air_contents.gases[/datum/gas/plasma]
+				var/n2o = air_contents.gases[/datum/gas/nitrous_oxide]
 				if(n2o || plasma)
 					var/area/A = get_area(src)
 					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [A][ADMIN_JMP(src)]")

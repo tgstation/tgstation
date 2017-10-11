@@ -11009,7 +11009,7 @@
 "asz" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = "n2";
+	filter_type = /datum/gas/nitrogen;
 	name = "nitrogen filter";
 	on = 1
 	},
@@ -13296,7 +13296,7 @@
 "awD" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = "o2";
+	filter_type = /datum/gas/oxygen;
 	name = "oxygen filter";
 	on = 1
 	},
@@ -14109,7 +14109,7 @@
 "ayf" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "plasma";
+	filter_type = /datum/gas/plasma;
 	name = "waste filter";
 	on = 1
 	},
@@ -21607,7 +21607,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 1;
-	filter_type = "n2"
+	filter_type = /datum/gas/nitrogen
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -23873,7 +23873,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 1;
-	filter_type = "freon";
+	filter_type = /datum/gas/freon;
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/plasteel,
