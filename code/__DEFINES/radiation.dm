@@ -18,7 +18,9 @@ Ask ninjanomnom if they're around
 #define RAD_TOX_COEFFICIENT 0.1						// Toxin damage per tick coefficient
 
 #define RAD_MOB_SAFE 300							// How much stored radiation in a mob with no ill effects
-#define RAD_MOB_KNOCKDOWN 2000						// How much stored radiation to start stunning
+#define RAD_MOB_KNOCKDOWN 1500						// How much stored radiation to start stunning
+// If (mutate*2<knockdown) then monkeys will sometimes turn into gorillas before being knocked down
+// otherwise they only turn into gorillas *after* being knocked down
 #define RAD_MOB_MUTATE 800							// How much stored radiation to check for mutation
 #define RAD_MOB_HAIRLOSS 500						// How much stored radiation to check for hair loss
 
