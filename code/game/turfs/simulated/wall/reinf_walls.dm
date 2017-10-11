@@ -15,7 +15,7 @@
 
 /turf/closed/wall/r_wall/Initialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION)
+	AddComponent(/datum/component/rad_insulation, RAD_HEAVY_INSULATION)
 
 /turf/closed/wall/r_wall/deconstruction_hints(mob/user)
 	switch(d_state)

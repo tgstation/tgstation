@@ -116,6 +116,10 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = 0
 
+/obj/item/clothing/head/radiation/Initialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
+
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
 	desc = "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
@@ -136,4 +140,6 @@
 
 /obj/item/clothing/suit/radiation/Initialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION) // Just don't want things to be irradiated inside this
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE) 
+	// Just don't want things to be irradiated inside this
+	// Except things on the mob aren't even inside the suit so ehhhhhh

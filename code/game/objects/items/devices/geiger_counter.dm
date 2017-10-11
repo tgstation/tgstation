@@ -1,8 +1,10 @@
 #define RAD_LEVEL_NORMAL 100
-#define RAD_LEVEL_MODERATE 300
-#define RAD_LEVEL_HIGH 750
-#define RAD_LEVEL_VERY_HIGH 1250
-#define RAD_LEVEL_CRITICAL 2000
+#define RAD_LEVEL_MODERATE 500
+#define RAD_LEVEL_HIGH 1000
+#define RAD_LEVEL_VERY_HIGH 2000
+#define RAD_LEVEL_CRITICAL 5000
+
+#define RAD_MEASURE_SMOOTHING 20
 
 /obj/item/device/geiger_counter //DISCLAIMER: I know nothing about how real-life Geiger counters work. This will not be realistic. ~Xhuis
 	name = "geiger counter"
@@ -29,13 +31,13 @@
 
 /obj/item/device/geiger_counter/process()
 	if(emagged)
-		if(radiation_count < 20)
+		if(radiation_count < 200)
 			radiation_count++
 		return 0
 	if(radiation_count > 0)
-		radiation_count--
+		radiation_count-=10
 		update_icon()
-	if(current_tick_amount && isliving(loc))
+	if(current_tick_amount)
 		if(isliving(loc))
 			var/mob/living/M = loc
 			if(!emagged)
@@ -95,11 +97,9 @@
 	..()
 
 /obj/item/device/geiger_counter/rad_act(amount)
-	if(!amount && scanning)
-		return 0
-	if(emagged)
-		amount = Clamp(amount, 0, 25) //Emagged geiger counters can only accept 25 radiation at a time
-	radiation_count += amount
+	if(amount <= RAD_BACKGROUND_RADIATION || !scanning)
+		return
+	radiation_count = (radiation_count - (radiation_count/RAD_MEASURE_SMOOTHING)) + (amount/RAD_MEASURE_SMOOTHING)
 	current_tick_amount += amount
 	update_icon()
 
@@ -112,7 +112,7 @@
 	if(user.a_intent == INTENT_HELP)
 		if(!emagged)
 			user.visible_message("<span class='notice'>[user] scans [M] with [src].</span>", "<span class='notice'>You scan [M]'s radiation levels with [src]...</span>")
-			addtimer(CALLBACK(src, .proc/mob_scan, M, user), 20, TIMER_UNIQUE) // Let's not have spamming GetAllContents
+			addtimer(CALLBACK(src, .proc/scan, M, user), 20, TIMER_UNIQUE) // Let's not have spamming GetAllContents
 		else
 			user.visible_message("<span class='notice'>[user] scans [M] with [src].</span>", "<span class='danger'>You project [src]'s stored radiation into [M]'s body!</span>")
 			M.rad_act(radiation_count)
@@ -120,9 +120,9 @@
 		return 1
 	..()
 
-/obj/item/device/geiger_counter/proc/mob_scan(mob/living/M, mob/user)
+/obj/item/device/geiger_counter/proc/scan(atom/A, mob/user)
 	var/rad_strength = 0
-	for(var/i in get_rad_contents(M)) // Yes it's intentional that you can't detect radioactive things under rad protection. Gives traitors a way to hide their glowing green rocks.
+	for(var/i in get_rad_contents(A)) // Yes it's intentional that you can't detect radioactive things under rad protection. Gives traitors a way to hide their glowing green rocks.
 		var/atom/thing = i
 		if(!thing)
 			continue
@@ -130,13 +130,17 @@
 		if(radiation)
 			rad_strength += radiation.strength
 
-	if(!M.radiation)
-		to_chat(user, "<span class='notice'>[icon2html(src, user)] Radiation levels within normal boundaries.</span>")
-	else
-		to_chat(user, "<span class='boldannounce'>[icon2html(src, user)] Subject is irradiated. Radiation levels: [M.radiation].</span>")
+	if(isliving(A))
+		var/mob/living/M = A
+		if(!M.radiation)
+			to_chat(user, "<span class='notice'>[icon2html(src, user)] Radiation levels within normal boundaries.</span>")
+		else
+			to_chat(user, "<span class='boldannounce'>[icon2html(src, user)] Subject is irradiated. Radiation levels: [M.radiation].</span>")
 
 	if(rad_strength)
 		to_chat(user, "<span class='boldannounce'>[icon2html(src, user)] Subject has irradiated objects on them. Radioactive strength: [rad_strength]</span>")
+	else
+		to_chat(user, "<span class='notice'>[icon2html(src, user)] Subject is free of radioactive contamination.</span>")
 
 /obj/item/device/geiger_counter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver) && emagged)

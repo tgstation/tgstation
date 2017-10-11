@@ -11,6 +11,7 @@
 	master_turf = place
 
 	move_dir = dir
+	__dirs = list()
 	__dirs+=turn(dir, 90)
 	__dirs+=turn(dir, -90)
 
@@ -35,12 +36,13 @@
 	else
 		strength = intensity
 
-	radiate(atoms, Floor(strength))
-
-	check_obstructions(atoms) // reduce our overall strength if there are radiation insulators
 	if(strength<RAD_BACKGROUND_RADIATION)
 		qdel(src)
 		return
+
+	radiate(atoms, Floor(strength))
+
+	check_obstructions(atoms) // reduce our overall strength if there are radiation insulators
 
 	return TRUE
 
@@ -53,9 +55,6 @@
 
 	atoms += get_rad_contents(master_turf)
 
-	if(!distance)
-		return atoms
-
 	var/turf/place
 	for(var/dir in __dirs) //There should be just 2 dirs in here, left and right of the direction of movement
 		place = master_turf
@@ -66,6 +65,11 @@
 	return atoms
 
 /datum/radiation_wave/proc/check_obstructions(list/atoms)
+	var/width = steps
+	if(move_dir == NORTH || move_dir == SOUTH)
+		width--
+	width = 1+(2*width)
+
 	for(var/k in 1 to atoms.len)
 		var/atom/thing = atoms[k]
 		if(!thing)
@@ -73,7 +77,7 @@
 		var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
 		if(!insulation)
 			continue
-		intensity *= insulation.amount
+		intensity = intensity*(1-((1-insulation.amount)/width)) // The further out the rad wave goes the less it's affected by insulation
 
 /datum/radiation_wave/proc/radiate(list/atoms, strength)
 	for(var/k in 1 to atoms.len)
@@ -82,13 +86,12 @@
 			continue
 		thing.rad_act(strength)
 
-		var/static/list/blacklisted = typecacheof(list(/turf, /obj/machinery/power/rad_collector))
-		if(blacklisted[thing.type])
+		var/static/list/blacklisted = typecacheof(list(/turf))
+		if(!can_contaminate || blacklisted[thing.type])
 			continue
-		if(can_contaminate && prob((strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1/(steps*range_modifier), 1))) // Only stronk rads get to have little baby rads
+		if(prob((strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1/(steps*range_modifier), 1))) // Only stronk rads get to have little baby rads
 			var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
 			if(insulation && insulation.contamination_proof)
 				continue
 			else
 				thing.AddComponent(/datum/component/radioactive, (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT * min(1/(steps*range_modifier), 1))
-				// Unless you're the stronkest of the stronk, in which case you get grandkids (>800 strength) or great great grandkids (>1200)

@@ -4,11 +4,11 @@
 	if(!location)
 		return
 
+	output += location
+
 	var/datum/component/rad_insulation/insulation = location.GetComponent(/datum/component/rad_insulation)
 	if(insulation && insulation.protects)
 		return
-
-	output += location
 	
 	for(var/i in 1 to location.contents.len)
 		var/static/list/ignored_things = typecacheof(list(/mob/dead, /obj/effect, /obj/docking_port, /turf, /atom/movable/lighting_object))

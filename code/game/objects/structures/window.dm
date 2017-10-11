@@ -78,7 +78,7 @@
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
 
-	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION)
+	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION, TRUE, FALSE)
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -436,7 +436,7 @@
 
 /obj/structure/window/reinforced/Initialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_HEAVY_INSULATION)
+	AddComponent(/datum/component/rad_insulation, RAD_HEAVY_INSULATION, TRUE, FALSE)
 
 /obj/structure/window/reinforced/spawner/east
 	dir = EAST
@@ -463,7 +463,7 @@
 
 /obj/structure/window/plasma/Initialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST

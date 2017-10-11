@@ -205,7 +205,7 @@
 
 /obj/structure/mineral_door/transparent/plasma/Initialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION)
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/structure/mineral_door/transparent/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot())
