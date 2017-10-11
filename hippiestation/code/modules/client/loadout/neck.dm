@@ -81,5 +81,5 @@
 
 /datum/gear/headphones
 	name = "Headphones"
-	category = slot_ears
+	category = slot_neck
 	path = /obj/item/clothing/ears/headphones
