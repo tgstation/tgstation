@@ -47785,6 +47785,7 @@
 	pixel_y = 4
 	},
 /obj/item/hand_tele,
+/obj/item/melee/chainofcommand,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain)
 "bQC" = (
