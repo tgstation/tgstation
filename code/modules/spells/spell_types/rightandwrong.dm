@@ -13,7 +13,7 @@
 		if(H.stat == DEAD || !(H.client))
 			continue
 		if(H.mind)
-			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice" || H.mind.special_role == "survivalist")
+			if(iswizard(H) || H.mind.special_role == "survivalist")
 				continue
 		if(prob(survivor_probability) && !(H.mind in SSticker.mode.traitors))
 			SSticker.mode.traitors += H.mind
