@@ -768,6 +768,16 @@
 	name = "Ladies Commie"
 	icon_state = "female_commie"
 	gender = FEMALE
+	
+/datum/sprite_accessory/underwear/sports_bra
+	name = "Sports Bra"
+	icon_state = "sports_bra"
+	gender = NEUTRAL
+
+/datum/sprite_accessory/underwear/sports_bra2
+	name = "Alt Sports Bra"
+	icon_state = "sports_bra_alt"
+	gender = NEUTRAL
 
 ////////////////////////////
 // Undershirt Definitions //
