@@ -772,12 +772,12 @@
 /datum/sprite_accessory/underwear/sports_bra
 	name = "Sports Bra"
 	icon_state = "sports_bra"
-	gender = NEUTRAL
+	gender = NEUTER
 
 /datum/sprite_accessory/underwear/sports_bra2
 	name = "Alt Sports Bra"
 	icon_state = "sports_bra_alt"
-	gender = NEUTRAL
+	gender = NEUTER
 
 ////////////////////////////
 // Undershirt Definitions //
