@@ -168,10 +168,10 @@
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
 				var/list/G_gases = G.gases
-				if(G_gases["plasma"])
-					ASSERT_GAS("n2", G)
-					G_gases["n2"][MOLES] += (G_gases["plasma"][MOLES])
-					G_gases["plasma"][MOLES] = 0
+				if(G_gases[/datum/gas/plasma])
+					ASSERT_GAS(/datum/gas/nitrogen, G)
+					G_gases[/datum/gas/nitrogen][MOLES] += (G_gases[/datum/gas/plasma][MOLES])
+					G_gases[/datum/gas/plasma][MOLES] = 0
 					G.garbage_collect()
 		for(var/obj/machinery/atmospherics/components/unary/U in T)
 			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
