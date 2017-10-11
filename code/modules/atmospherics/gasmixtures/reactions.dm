@@ -209,7 +209,7 @@
 
 /datum/gas_reaction/brownsformation/init_reqs()
 	min_requirements = list(
-		"oxygen" = 20,
+		"o2" = 20,
 		"n2" = 20,
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*200
 	)
@@ -224,8 +224,8 @@
 	var/energy_used = heat_efficency*BROWNS_FORMATION_ENERGY
 	ASSERT_GAS("browns",air)
 
-	cached_gases["oxygen"][MOLES] -= heat_efficency
-	cached_gases["nitrogen"][MOLES] -= heat_efficency
+	cached_gases["o2"][MOLES] -= heat_efficency
+	cached_gases["n2"][MOLES] -= heat_efficency
 	cached_gases["browns"][MOLES] += heat_efficency*2
 	world << "browns formation"
 	if(energy_used > 0)
