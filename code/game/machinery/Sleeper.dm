@@ -174,7 +174,7 @@
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	scramble_chem_buttons()
-	to_chat(user, "<span class='warning'>You scramble the sleepers user interface!</span>")
+	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 
 /obj/machinery/sleeper/proc/inject_chem(chem)
 	if((chem in available_chems) && chem_allowed(chem))

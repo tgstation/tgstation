@@ -3275,7 +3275,6 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fY" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
@@ -3306,7 +3305,7 @@
 "ga" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "o2";
+	filter_type = /datum/gas/oxygen;
 	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3396,7 +3395,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
@@ -3721,7 +3719,7 @@
 "gO" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "n2o";
+	filter_type = /datum/gas/nitrous_oxide;
 	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{

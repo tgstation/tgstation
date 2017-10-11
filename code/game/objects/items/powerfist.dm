@@ -26,7 +26,7 @@
 		to_chat(user, "<span class='notice'>You'll need to get closer to see any more.</span>")
 		return
 	if(tank)
-		to_chat(user, "<span class='notice'>[icon2html(tank, user)] It has \the [tank] mounted onto it.</span>")
+		to_chat(user, "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>")
 
 
 /obj/item/melee/powerfist/attackby(obj/item/W, mob/user, params)

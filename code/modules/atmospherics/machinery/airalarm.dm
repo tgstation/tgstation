@@ -5,10 +5,10 @@
 	var/max2
 
 /datum/tlv/New(min2 as num, min1 as num, max1 as num, max2 as num)
-	src.min2 = min2
-	src.min1 = min1
-	src.max1 = max1
-	src.max2 = max2
+	if(min2) src.min2 = min2
+	if(min1) src.min1 = min1
+	if(max1) src.max1 = max1
+	if(max2) src.max2 = max2
 
 /datum/tlv/proc/get_danger_level(val as num)
 	if(max2 != -1 && val >= max2)
@@ -20,6 +20,18 @@
 	if(min1 != -1 && val <= min1)
 		return 1
 	return 0
+
+/datum/tlv/no_checks
+	min2 = -1
+	min1 = -1
+	max1 = -1
+	max2 = -1
+
+/datum/tlv/dangerous
+	min2 = -1
+	min1 = -1
+	max1 = 0.2
+	max2 = 0.5
 
 /obj/item/electronics/airalarm
 	name = "air alarm electronics"
@@ -73,56 +85,56 @@
 	var/datum/radio_frequency/radio_connection
 
 	var/list/TLV = list( // Breathable air.
-		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
-		"temperature"	= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
-		"o2"			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
-		"n2"			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
-		"co2" 			= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
-		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5),
-		"nob"			= new/datum/tlv(-1, -1, 0.2, 0.5),
-		"water_vapor"	= new/datum/tlv(-1, -1, 0.2, 0.5),
-		"tritium"		= new/datum/tlv(-1, -1, 0.2, 0.5),
-		"stim"			= new/datum/tlv(-1, -1, 0.2, 0.5),
-		"browns"		= new/datum/tlv(-1, -1, 0.2, 0.5),
-		"pluox"			= new/datum/tlv(-1, -1, 0.2, 0.5)
+		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
+		"temperature"				= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
+		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
+		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
+		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
+		/datum/gas/plasma			= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/bz				= new/datum/tlv/dangerous,
+		/datum/gas/hypernoblium			= new/datum/tlv/dangerous,
+		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
+		/datum/gas/tritium			= new/datum/tlv/dangerous,
+		/datum/gas/stimulum			= new/datum/tlv/dangerous,
+		/datum/gas/brown_gas			= new/datum/tlv/dangerous,
+		/datum/gas/pluoxium			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/server // No checks here.
 	TLV = list(
-		"pressure"		= new/datum/tlv(-1, -1, -1, -1),
-		"temperature"	= new/datum/tlv(-1, -1, -1, -1),
-		"o2"			= new/datum/tlv(-1, -1, -1, -1),
-		"n2"			= new/datum/tlv(-1, -1, -1, -1),
-		"co2"			= new/datum/tlv(-1, -1, -1, -1),
-		"plasma"		= new/datum/tlv(-1, -1, -1, -1),
-		"n2o"			= new/datum/tlv(-1, -1, -1, -1),
-		"bz"			= new/datum/tlv(-1, -1, -1, -1),
-		"nob"			= new/datum/tlv(-1, -1, -1, -1),
-		"water_vapor"	= new/datum/tlv(-1, -1, -1, -1),
-		"tritium"		= new/datum/tlv(-1, -1, -1, -1),
-		"stim"			= new/datum/tlv(-1, -1, -1, -1),
-		"browns"			= new/datum/tlv(-1, -1, -1, -1),
-		"pluox"			= new/datum/tlv(-1, -1, -1, -1)
+		"pressure"					= new/datum/tlv/no_checks,
+		"temperature"				= new/datum/tlv/no_checks,
+		/datum/gas/oxygen			= new/datum/tlv/no_checks,
+		/datum/gas/nitrogen			= new/datum/tlv/no_checks,
+		/datum/gas/carbon_dioxide	= new/datum/tlv/no_checks,
+		/datum/gas/plasma			= new/datum/tlv/no_checks,
+		/datum/gas/nitrous_oxide	= new/datum/tlv/no_checks,
+		/datum/gas/bz				= new/datum/tlv/no_checks,
+		/datum/gas/hypernoblium			= new/datum/tlv/no_checks,
+		/datum/gas/water_vapor		= new/datum/tlv/no_checks,
+		/datum/gas/tritium			= new/datum/tlv/no_checks,
+		/datum/gas/stimulum			= new/datum/tlv/no_checks,
+		/datum/gas/brown_gas			= new/datum/tlv/no_checks,
+		/datum/gas/pluoxium			= new/datum/tlv/no_checks
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
 	TLV = list(
-		"pressure"		= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
-		"temperature"	= new/datum/tlv(200,210,273.15,283.15), // K
-		"o2"			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
-		"n2"			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
-		"co2" 			= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
-		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"nob"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"water_vapor"	= new/datum/tlv(-1, -1, 0.2, 0.5),
-		"tritium"		= new/datum/tlv(-1, -1, 0.2, 0.5),
-		"stim"			= new/datum/tlv(-1, -1, 0.2, 0.5),
-		"browns"		= new/datum/tlv(-1, -1, 0.2, 0.5),
-		"pluox"			= new/datum/tlv(-1, -1, 0.2, 0.5)
+		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
+		"temperature"				= new/datum/tlv(200,210,273.15,283.15), // K
+		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
+		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
+		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
+		/datum/gas/plasma			= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/bz				= new/datum/tlv/dangerous,
+		/datum/gas/hypernoblium			= new/datum/tlv/dangerous,
+		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
+		/datum/gas/tritium			= new/datum/tlv/dangerous,
+		/datum/gas/stimulum			= new/datum/tlv/dangerous,
+		/datum/gas/brown_gas			= new/datum/tlv/dangerous,
+		/datum/gas/pluoxium			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/engine

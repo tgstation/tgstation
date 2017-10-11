@@ -423,7 +423,7 @@
 	if(sortTypes.len>0)
 		to_chat(user, "It is tagged with the following tags:")
 		for(var/t in sortTypes)
-			to_chat(user, GLOB.TAGGERLOCATIONS[t])
+			to_chat(user, "\t[GLOB.TAGGERLOCATIONS[t]].")
 	else
 		to_chat(user, "It has no sorting tags set.")
 
