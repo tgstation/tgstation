@@ -603,7 +603,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 
 		if(DISPOSALS_MODE) //Making disposals pipes
 			if(isclosedturf(A))
-				to_chat(user, "<span class='warning'>The [src]'s error light flickers; there's something in the way!</span>")
+				to_chat(user, "<span class='warning'>\the [src]'s error light flickers; there's something in the way!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)

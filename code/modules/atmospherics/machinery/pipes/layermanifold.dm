@@ -34,6 +34,7 @@
 		A.build_network()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
+	/*
 	var/list/obj/machinery/atmospherics/all_connected = list()
 	for(var/obj/machinery/atmospherics/I in front_nodes)
 		all_connected[I] = I
@@ -45,6 +46,8 @@
 	for(var/obj/machinery/atmospherics/A in all_connected)
 		returnlist += all_connected[A]
 	return returnlist
+	*/
+	return front_nodes | back_nodes | nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
 	layer = (initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE))	//This is above everything else.
@@ -86,7 +89,7 @@
 	front_nodes = list()
 	back_nodes = list()
 	var/list/new_nodes = list()
-	for(var/iter = PIPING_LAYER_MIN; iter <= PIPING_LAYER_MAX; iter += 1)
+	for(var/iter in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
 		var/obj/machinery/atmospherics/foundfront = findConnecting(dir, iter)
 		var/obj/machinery/atmospherics/foundback = findConnecting(turn(dir, 180), iter)
 		front_nodes += foundfront
@@ -99,9 +102,9 @@
 	return new_nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
-	findAllConnections()
+	..()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
+/obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer()
 	piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()

@@ -109,9 +109,7 @@ Pipelines + Other Objects -> Pipe network
 	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
-	if(connection_check(target, piping_layer))
-		return TRUE
-	return FALSE
+	return connection_check(target, piping_layer)
 
 //Find a connecting /obj/machinery/atmospherics in specified direction
 /obj/machinery/atmospherics/proc/findConnecting(direction, prompted_layer)
