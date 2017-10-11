@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 		.[gas_path] = gas_info
 
 /proc/gas_id2path(id)
-	var/meta_gas = meta_gas_list()
+	var/list/meta_gas = GLOB.meta_gas_info
 	for(var/path in meta_gas)
 		if(meta_gas[path][META_GAS_ID] == id)
 			return path
