@@ -221,15 +221,15 @@
 	if(usr.incapacitated())
 		return
 
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
 
 	if(in_range(src, usr))
 
 		if(href_list["req_access"] && add_req_access)
-			output_access_dialog(filter.getObj("id_card"),filter.getMob("user"))
+			output_access_dialog(afilter.getObj("id_card"),afilter.getMob("user"))
 
 		if(href_list["maint_access"] && maint_access)
-			var/mob/user = filter.getMob("user")
+			var/mob/user = afilter.getMob("user")
 			if(user)
 				if(state==0)
 					state = 1
@@ -237,27 +237,27 @@
 				else if(state==1)
 					state = 0
 					to_chat(user, "The securing bolts are now hidden.")
-				output_maintenance_dialog(filter.getObj("id_card"),user)
+				output_maintenance_dialog(afilter.getObj("id_card"),user)
 
 		if(href_list["set_internal_tank_valve"] && state >=1)
-			var/mob/user = filter.getMob("user")
+			var/mob/user = afilter.getMob("user")
 			if(user)
 				var/new_pressure = input(user,"Input new output pressure","Pressure setting",internal_tank_valve) as num
 				if(new_pressure)
 					internal_tank_valve = new_pressure
 					to_chat(user, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
 
-		if(href_list["add_req_access"] && add_req_access && filter.getObj("id_card"))
-			operation_req_access += filter.getNum("add_req_access")
-			output_access_dialog(filter.getObj("id_card"),filter.getMob("user"))
+		if(href_list["add_req_access"] && add_req_access && afilter.getObj("id_card"))
+			operation_req_access += afilter.getNum("add_req_access")
+			output_access_dialog(afilter.getObj("id_card"),afilter.getMob("user"))
 
-		if(href_list["del_req_access"] && add_req_access && filter.getObj("id_card"))
-			operation_req_access -= filter.getNum("del_req_access")
-			output_access_dialog(filter.getObj("id_card"),filter.getMob("user"))
+		if(href_list["del_req_access"] && add_req_access && afilter.getObj("id_card"))
+			operation_req_access -= afilter.getNum("del_req_access")
+			output_access_dialog(afilter.getObj("id_card"),afilter.getMob("user"))
 
 		if(href_list["finish_req_access"])
 			add_req_access = 0
-			var/mob/user = filter.getMob("user")
+			var/mob/user = afilter.getMob("user")
 			user << browse(null,"window=exosuit_add_access")
 
 	if(usr != occupant)
@@ -267,7 +267,7 @@
 		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())
 
 	if(href_list["select_equip"])
-		var/obj/item/mecha_parts/mecha_equipment/equip = filter.getObj("select_equip")
+		var/obj/item/mecha_parts/mecha_equipment/equip = afilter.getObj("select_equip")
 		if(equip && equip.selectable)
 			src.selected = equip
 			src.occupant_message("You switch to [equip]")
@@ -283,7 +283,7 @@
 		send_byjax(src.occupant,"exosuit.browser","rspkstate",(radio.listening?"Engaged":"Disengaged"))
 
 	if(href_list["rfreq"])
-		var/new_frequency = (radio.frequency + filter.getNum("rfreq"))
+		var/new_frequency = (radio.frequency + afilter.getNum("rfreq"))
 		if (!radio.freerange || (radio.frequency < 1200 || radio.frequency > 1600))
 			new_frequency = sanitize_frequency(new_frequency)
 		radio.set_frequency(new_frequency)
