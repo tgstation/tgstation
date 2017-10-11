@@ -64,7 +64,8 @@
 			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
 			add_logs(usr, src, "has added [english_list(RC.reagents.reagent_list)] to [src]")
 			return
-	if(default_unfasten_wrench(user, I))
+	if(default_unfasten_wrench(user, I, 15))
+		on = FALSE
 		return
 	return ..()
 
