@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -73609,8 +73609,8 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cOM" = (
-/obj/machinery/chem_dispenser/constructable,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/chem_master,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cON" = (
@@ -77224,6 +77224,7 @@
 /obj/structure/table/glass,
 /obj/item/clipboard,
 /obj/item/toy/figure/chemist,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 1
 	},
@@ -121753,7 +121754,7 @@ aaa
 aaa
 aaa
 aaa
-YGI
+aaa
 aaa
 aaa
 aaa
@@ -125889,7 +125890,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+YGI
 aaa
 aaa
 aaa
@@ -141425,7 +141426,7 @@ ecI
 cJK
 cLq
 cNa
-cOL
+cYG
 cQH
 cRX
 cTK

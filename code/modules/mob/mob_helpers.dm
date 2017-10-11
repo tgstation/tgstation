@@ -363,7 +363,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				if(M.mind in SSticker.mode.changelings)
 					return 2
 			if("wizard")
-				if(M.mind in SSticker.mode.wizards)
+				if(iswizard(M))
 					return 2
 			if("apprentice")
 				if(M.mind in SSticker.mode.apprentices)

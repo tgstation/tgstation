@@ -2,7 +2,7 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(reboot_mode, REBOOT_MODE_NORMAL)
 SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 
 /proc/GetTestMerges()
-	if(RunningService() && fexists(SERVICE_PR_TEST_JSON))
+	if(RunningService(TRUE) && fexists(SERVICE_PR_TEST_JSON))
 		. = json_decode(file2text(SERVICE_PR_TEST_JSON))
 		if(.)
 			return

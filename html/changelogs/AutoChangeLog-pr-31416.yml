@@ -1,0 +1,4 @@
+author: "Armhulen"
+delete-after: True
+changes: 
+  - bugfix: "Clockwork golems no longer slip and slide on glass!"

@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -27831,6 +27831,7 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/device/radio/headset/headset_med,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "boe" = (
@@ -40368,7 +40369,6 @@
 /area/science/xenobiology)
 "bPE" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/latex,
 /obj/item/device/slime_scanner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -40397,7 +40397,6 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPH" = (
-/obj/machinery/chem_dispenser/constructable,
 /obj/machinery/requests_console{
 	department = "Science";
 	departmentType = 2;
@@ -40408,6 +40407,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/table/reinforced,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPI" = (
@@ -54691,17 +54693,18 @@
 "cyd" = (
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
+	callTime = 250;
 	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 22;
 	id = "whiteship";
 	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "NT Medical Ship";
 	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	timid = null;
 	width = 35
 	},
 /obj/docking_port/stationary{
@@ -58893,23 +58896,34 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "cTZ" = (
-/obj/effect/turf_decal/stripes/line{
-	tag = "icon-warninglinecorner (NORTH)";
-	icon_state = "warninglinecorner";
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "Qlj" = (
 /obj/docking_port/stationary{
- 	dheight = 9;
- 	dir = 2;
- 	dwidth = 5;
- 	height = 24;
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
 	id = "syndicate_nw";
 	name = "northwest of station";
 	turf_type = /turf/open/space
-},
+	},
+/turf/open/space/basic,
+/area/space)
+"Qlk" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_nw";
+	name = "northwest of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
 /turf/open/space/basic,
 /area/space)
 
@@ -73082,7 +73096,6 @@ aaa
 aaa
 aaa
 aaa
-Qlj
 aaa
 aaa
 aaa
@@ -73093,6 +73106,7 @@ aaa
 aaa
 aaa
 aaa
+Qlk
 aaa
 aaa
 aaa

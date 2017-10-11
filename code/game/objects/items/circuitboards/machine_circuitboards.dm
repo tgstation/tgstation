@@ -599,6 +599,17 @@
 		/obj/item/stock_parts/cell = 1)
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 
+/obj/item/circuitboard/machine/smoke_machine
+	name = "Smoke Machine (Machine Board)"
+	build_path = /obj/machinery/smoke_machine
+	origin_tech = "materials=4;engineering=3;biotech=3"
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/console_screen = 1,
+		/obj/item/stock_parts/cell = 1)
+
 /obj/item/circuitboard/machine/chem_heater
 	name = "Chemical Heater (Machine Board)"
 	build_path = /obj/machinery/chem_heater

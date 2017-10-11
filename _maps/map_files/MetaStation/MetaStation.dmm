@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -54639,12 +54639,14 @@
 /area/engine/atmos)
 "cbm" = (
 /obj/docking_port/mobile{
+	callTime = 250;
 	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 15;
 	id = "whiteship";
 	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 4;
@@ -59764,6 +59766,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow{
 	dir = 4
 	},
@@ -81419,13 +81422,6 @@
 /area/science/xenobiology)
 "dce" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 7
-	},
-/obj/item/storage/box/syringes{
-	pixel_y = 5
-	},
 /obj/item/storage/box/monkeycubes{
 	pixel_x = 2;
 	pixel_y = -2
@@ -81782,8 +81778,15 @@
 	},
 /area/science/xenobiology)
 "dcL" = (
-/obj/machinery/chem_dispenser/constructable,
 /obj/machinery/light,
+/obj/structure/table/glass,
+/obj/item/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/storage/box/syringes{
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "dcM" = (
@@ -95770,7 +95773,7 @@ aaa
 aaa
 aaa
 aaa
-EDa
+aaa
 aaa
 aaa
 aaa
@@ -96070,7 +96073,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+EDa
 aaa
 aaa
 aaa
