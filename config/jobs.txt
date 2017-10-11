@@ -28,7 +28,7 @@ Lawyer=2,2
 Chaplain=1,1
 
 Station Engineer=5,5
-Atmospheric Technician=3,2
+#Atmospheric Technician=3,2
 
 Medical Doctor=5,3
 Chemist=2,2
@@ -38,8 +38,8 @@ Virologist=1,1
 Scientist=5,3
 Roboticist=2,2
 
-Warden=1,1
-Detective=1,1
+#Warden=1,1
+#Detective=1,1
 Security Officer=5,5
 
 AI=0,1
