@@ -126,7 +126,7 @@
 	var/mob/living/carbon/human/M = AM
 
 	if(M.stat != DEAD && M.ckey)
-		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
+		visible_message("<span class='warning'>[M] triggered [src]!</span>")
 		triggered = 1
 
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread

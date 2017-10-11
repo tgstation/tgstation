@@ -167,11 +167,11 @@
 			return
 
 		playsound(loc, WT.usesound, 50, 1)
-		to_chat(user, "<span class='notice'>You start to cut the [src] apart...</span>")
+		to_chat(user, "<span class='notice'>You start to cut [src] apart...</span>")
 		if(do_after(user, 20*I.toolspeed, target = src))
 			if(!WT.isOn() || !WT.remove_fuel(5, user))
 				return
-			to_chat(user, "<span class='notice'>You cut the [src] apart.</span>")
+			to_chat(user, "<span class='notice'>You cut [src] apart.</span>")
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
 	else
@@ -467,7 +467,7 @@
 			beakers += I
 			to_chat(user, "<span class='notice'>You load [src] with [I].</span>")
 		else
-			to_chat(user, "<span class='warning'>The [I] wont fit! The [src] can only hold up to [max_beakers] containers.</span>")
+			to_chat(user, "<span class='warning'>[I] won't fit! \The [src] can only hold up to [max_beakers] containers.</span>")
 			return
 	..()
 

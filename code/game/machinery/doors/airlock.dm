@@ -1297,7 +1297,7 @@
 			if(result)
 				open(2)
 				if(density && !open(2))
-					to_chat(user, "<span class='warning'>Despite your attempts, the [src] refuses to open.</span>")
+					to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite

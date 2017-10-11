@@ -434,12 +434,12 @@
 	if(prob(10))
 		GM.gases["plasma"][MOLES] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
-		T.visible_message("The [src] suddenly disgorges a cloud of heated plasma.")
+		T.visible_message("[src] suddenly disgorges a cloud of heated plasma.")
 		qdel(src)
 	else
 		GM.gases["plasma"][MOLES] += 5
 		GM.temperature = istype(T) ? T.air.return_temperature() : T20C
-		T.visible_message("The [src] suddenly disgorges a cloud of plasma.")
+		T.visible_message("[src] suddenly disgorges a cloud of plasma.")
 	T.assume_air(GM)
 	return
 

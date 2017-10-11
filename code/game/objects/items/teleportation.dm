@@ -55,7 +55,7 @@ Frequency:
 		return
 	var/turf/current_location = get_turf(usr)//What turf is the user on?
 	if(!current_location || current_location.z == ZLEVEL_CENTCOM)//If turf was not found or they're on CentCom
-		to_chat(usr, "The [src] is malfunctioning.")
+		to_chat(usr, "[src] is malfunctioning.")
 		return
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)))
 		usr.set_machine(src)

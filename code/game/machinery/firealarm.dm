@@ -82,7 +82,7 @@
 		return
 	emagged = TRUE
 	if(user)
-		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
+		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
 	playsound(src, "sparks", 50, 1)
 
