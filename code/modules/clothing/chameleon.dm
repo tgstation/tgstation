@@ -383,7 +383,7 @@
 	randomise_action.UpdateButtonIcon()
 
 /obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>The [src] does not have a voice changer.</span>")
+	to_chat(user, "<span class='notice'>[src] does not have a voice changer.</span>")
 
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
