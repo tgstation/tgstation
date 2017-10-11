@@ -3,7 +3,6 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/extract_implant, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("chest")
-	requires_organic_bodypart = 0
 
 
 //extract implant
@@ -44,3 +43,14 @@
 	else
 		to_chat(user, "<span class='warning'>You can't find anything in [target]'s [target_zone]!</span>")
 	return 1
+
+/datum/surgery/implant_removal/mechanic
+	name = "implant removal"
+	requires_bodypart_type = BODYPART_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/extract_implant,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close)

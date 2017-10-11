@@ -104,6 +104,5 @@
 		if(is_servant_of_ratvar(H))
 			to_chat(H, "<span class='bold alloy'>The beacon's power warps your body into a clockwork form! You are now immune to many hazards, and your body is more robust against damage!</span>")
 			H.set_species(/datum/species/golem/clockwork/no_scrap)
-	SSshuttle.registerHostileEnvironment(GLOB.ark_of_the_clockwork_justiciar) //no leaving when we need to purge you, heretics
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 	G.grace_period = FALSE //no grace period if we've declared war

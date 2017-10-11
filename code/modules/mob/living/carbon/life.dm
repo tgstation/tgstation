@@ -408,6 +408,8 @@
 
 /mob/living/carbon/proc/handle_liver()
 	var/obj/item/organ/liver/liver = getorganslot("liver")
+	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
+		return
 	if(liver)
 		if(liver.damage >= 100)
 			liver.failing = TRUE
@@ -415,8 +417,6 @@
 		else
 			liver.failing = FALSE
 	else
-		if((dna && dna.species && (NOLIVER in dna.species.species_traits)))
-			return
 		liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()

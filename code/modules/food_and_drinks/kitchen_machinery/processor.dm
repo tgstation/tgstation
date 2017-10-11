@@ -135,7 +135,7 @@
 
 	for(var/thing in O.viruses)
 		var/datum/disease/D = thing
-		if(!(D.spread_flags & SPECIAL))
+		if(!(D.spread_flags & VIRUS_SPREAD_SPECIAL))
 			B.data["viruses"] += D.Copy()
 	if(O.has_dna())
 		B.data["blood_DNA"] = O.dna.unique_enzymes

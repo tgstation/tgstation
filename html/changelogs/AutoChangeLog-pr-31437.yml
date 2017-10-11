@@ -1,0 +1,4 @@
+author: "More Robust Than You"
+delete-after: True
+changes: 
+  - bugfix: "Makes the santa event properly poll ghosts"

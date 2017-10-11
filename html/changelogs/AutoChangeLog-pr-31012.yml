@@ -1,0 +1,4 @@
+author: "GLACoding"
+delete-after: True
+changes: 
+  - bugfix: "Syndicate turrets and other machines in walls can now be hit by projectiles"

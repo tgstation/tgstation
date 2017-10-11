@@ -220,7 +220,7 @@
 	message = "laughs."
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/laugh/can_run_emote(mob/living/user)
+/datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
 	. = ..()
 	if(. && iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -513,3 +513,16 @@
 	else
 		qdel(N)
 		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
+
+/datum/emote/living/slap
+	key = "slap"
+	key_third_person = "slaps"
+	restraint_check = TRUE
+
+/datum/emote/living/slap/run_emote(mob/user, params)
+	. = ..()
+	var/obj/item/slapper/N = new(user)
+	if(user.put_in_hands(N))
+		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
+	else
+		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")

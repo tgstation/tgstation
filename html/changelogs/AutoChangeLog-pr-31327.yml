@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "The Ark of the Clockwork Justiciar is now registered as a hostile environment."

@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - rscadd: "The Chemistry Smoke Machine! Chemist offices will have a board available should they choose to construct a smoke machine. The smoke machine will regularly produce smoke from whatever chemicals have been inserted into the machine. Designs for the circuitboard are also available at RND."
