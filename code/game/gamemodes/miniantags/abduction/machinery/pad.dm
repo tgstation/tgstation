@@ -25,7 +25,7 @@
 	new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 	Warp(target)
 
-/obj/machinery/abductor/pad/proc/doMobToLoc(place, atom/target)
+/obj/machinery/abductor/pad/proc/doMobToLoc(place, atom/movable/target)
 	flick("alien-pad", src)
 	target.forceMove(place)
 	new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
