@@ -54691,35 +54691,43 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cyd" = (
-/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
 	callTime = 250;
 	dheight = 0;
 	dir = 2;
 	dwidth = 11;
-	height = 22;
+	height = 15;
 	id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "NT Medical Ship";
+	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	width = 35
+	width = 28
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "recovery shuttle external airlock"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
 	},
 /obj/docking_port/stationary{
 	dir = 2;
 	dwidth = 11;
 	height = 22;
 	id = "whiteship_home";
-	name = "SS13 Arrival Docking";
-	turf_type = /turf/open/space;
+	name = "SS13: Auxiliary Dock, Station-Port";
 	width = 35
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cye" = (
-/obj/machinery/door/airlock/titanium,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cyf" = (
@@ -54746,20 +54754,56 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "cyi" = (
-/turf/open/floor/mineral/titanium,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cyj" = (
-/obj/structure/table,
-/obj/item/screwdriver,
-/obj/structure/light_construct{
-	dir = 1
+/obj/structure/closet/crate{
+	name = "spare equipment crate"
 	},
-/turf/open/floor/mineral/titanium,
+/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/relic,
+/obj/item/device/t_scanner,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cyk" = (
-/obj/structure/table,
-/obj/item/device/radio/off,
-/turf/open/floor/mineral/titanium,
+/obj/structure/closet/crate/medical{
+	name = "medical crate"
+	},
+/obj/item/storage/firstaid/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/roller{
+	pixel_y = 4
+	},
+/obj/item/device/healthanalyzer,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small/built{
+	dir = 8;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cyl" = (
 /obj/machinery/door/airlock/external{
@@ -54777,8 +54821,21 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "cyn" = (
-/turf/open/floor/plating,
-/turf/closed/wall/mineral/titanium/interior,
+/obj/structure/table,
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/stack/rods{
+	amount = 50
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/wrench,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cyo" = (
 /obj/structure/shuttle/engine/heater{
@@ -54832,14 +54889,25 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cyw" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/table,
+/obj/item/device/camera,
 /turf/open/floor/mineral/titanium,
-/turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/abandoned)
 "cyx" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/hardsuit/medical,
-/obj/item/clothing/mask/breath,
-/turf/open/floor/mineral/titanium,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small/built{
+	dir = 4;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cyy" = (
 /obj/machinery/mass_driver{
@@ -54906,11 +54974,11 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cyI" = (
-/obj/item/stock_parts/cell{
-	charge = 100;
-	maxcharge = 15000
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cyJ" = (
 /obj/structure/rack,
@@ -54967,8 +55035,16 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "cyO" = (
-/obj/structure/chair{
-	dir = 1
+/obj/structure/table,
+/obj/item/folder/blue,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/device/gps{
+	gpstag = "NTREC1";
+	pixel_x = -1;
+	pixel_y = 2
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -55079,11 +55155,16 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czb" = (
-/obj/structure/chair{
-	dir = 4
+/obj/machinery/porta_turret/aux_base{
+	always_up = 1;
+	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else.";
+	dir = 4;
+	has_cover = 0;
+	icon_state = "standard_lethal";
+	lethal_projectile = /obj/item/projectile/beam/weak;
+	name = "turret"
 	},
-/obj/effect/decal/remains/human,
-/turf/open/floor/mineral/titanium,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "czc" = (
 /obj/machinery/computer/shuttle/white_ship,
@@ -55127,15 +55208,15 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned)
 "czm" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/light/small/built{
+	dir = 4;
+	icon_state = "bulb-empty"
 	},
-/turf/open/floor/mineral/titanium/purple,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czn" = (
 /obj/structure/frame/computer{
@@ -55152,7 +55233,17 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "czr" = (
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_y = 4
+	},
+/obj/item/storage/fancy/egg_box{
+	pixel_y = 5
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czs" = (
@@ -58126,20 +58217,32 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "cLY" = (
-/obj/structure/light_construct/small,
-/turf/open/floor/plating,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cLZ" = (
-/obj/structure/frame/computer{
-	anchored = 1
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -1;
+	pixel_y = 6
 	},
-/obj/machinery/light{
-	dir = 1
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cMa" = (
-/obj/structure/light_construct,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/blood/gibs/limb,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cMb" = (
@@ -58149,8 +58252,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "cMc" = (
-/obj/structure/light_construct{
+/obj/structure/chair{
 	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -58167,10 +58274,15 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cMf" = (
-/obj/structure/light_construct{
-	dir = 8
+/obj/machinery/door/airlock/titanium{
+	name = "medbay";
+	welded = 0
 	},
-/turf/open/floor/mineral/titanium,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cMh" = (
 /obj/structure/light_construct/small{
@@ -58924,6 +59036,1774 @@
 	turf_type = /turf/open/space;
 	width = 18
 	},
+/turf/open/space/basic,
+/area/space)
+"Qll" = (
+/obj/machinery/door/airlock/titanium{
+	name = "recovery shuttle external airlock"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qlm" = (
+/obj/structure/toilet{
+	pixel_y = 9
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/greenglow{
+	desc = "Looks like something's sprung a leak"
+	},
+/obj/machinery/light/small/built{
+	dir = 8;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qln" = (
+/obj/structure/mirror{
+	pixel_x = 28
+	},
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qlo" = (
+/obj/structure/closet/wardrobe/mixed,
+/obj/item/clothing/under/rank/centcom_officer{
+	desc = "A badge on the arm indicates that it's meant to be worn by CentCom recovery teams. This one seems dusty and clearly hasn't been cleaned in some time.";
+	name = "\improper dusty old CentCom jumpsuit"
+	},
+/obj/item/clothing/under/rank/centcom_commander{
+	desc = "A badge on the arm indicates that it's meant to be worn by CentCom recovery teams. This one seems dusty and clearly hasn't been cleaned in some time.";
+	name = "\improper dusty old CentCom jumpsuit"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qlp" = (
+/obj/structure/table,
+/obj/item/storage/pill_bottle/dice{
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qlq" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qlr" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qls" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qlt" = (
+/obj/structure/tank_dispenser/oxygen{
+	layer = 2.7;
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qlu" = (
+/obj/structure/sign/vacuum{
+	pixel_x = -32
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small/built{
+	dir = 8;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qlv" = (
+/obj/item/storage/box/lights/mixed,
+/obj/item/cigbutt,
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	name = "spare equipment crate";
+	opened = 1
+	},
+/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/air,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/shuttle/abandoned)
+"Qlw" = (
+/obj/structure/closet/crate{
+	name = "emergency supplies crate"
+	},
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
+/obj/item/device/flashlight/flare{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/device/flashlight/flare{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/shuttle/abandoned)
+"Qlx" = (
+/obj/machinery/door/airlock/titanium{
+	name = "bathroom"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qly" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/ash{
+	desc = "They look like human remains, and have clearly been gnawed at.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remains";
+	name = "remains"
+	},
+/obj/item/gun/energy/laser/retro,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qlz" = (
+/obj/structure/bed,
+/obj/item/bedsheet/centcom,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small/built{
+	dir = 4;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QlA" = (
+/obj/structure/table,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/device/radio/off,
+/obj/item/device/radio/off,
+/obj/item/device/radio/off,
+/obj/item/device/radio/off,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small/built{
+	dir = 8;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QlB" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QlC" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QlD" = (
+/obj/machinery/door/airlock/titanium{
+	name = "E.V.A. equipment"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QlE" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QlF" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/ash{
+	desc = "They look like human remains, and have clearly been gnawed at.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remains";
+	name = "remains"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QlG" = (
+/obj/machinery/door/airlock/titanium{
+	name = "cargo bay"
+	},
+/obj/effect/turf_decal/delivery{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/area/shuttle/abandoned)
+"QlH" = (
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/delivery{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/area/shuttle/abandoned)
+"QlI" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/delivery{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/area/shuttle/abandoned)
+"QlJ" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/delivery{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/area/shuttle/abandoned)
+"QlK" = (
+/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/delivery{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/area/shuttle/abandoned)
+"QlL" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/machinery/door/window/westright{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/soap/nanotrasen,
+/obj/effect/decal/cleanable/ash{
+	desc = "They look like human remains, and have clearly been gnawed at.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remains";
+	name = "remains"
+	},
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QlM" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/mirror{
+	pixel_x = 28
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small/built{
+	dir = 4;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QlN" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QlO" = (
+/obj/structure/bed,
+/obj/item/bedsheet/centcom,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QlP" = (
+/obj/structure/rack{
+	dir = 8;
+	layer = 2.9;
+	pixel_y = 2
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/clothing/head/welding{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/welding,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QlQ" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QlR" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QlS" = (
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/shuttle/abandoned)
+"QlT" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/delivery{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/area/shuttle/abandoned)
+"QlU" = (
+/obj/structure/closet/emcloset,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small,
+/turf/open/floor/plasteel,
+/area/shuttle/abandoned)
+"QlV" = (
+/obj/structure/closet/firecloset/full,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/shuttle/abandoned)
+"QlW" = (
+/obj/structure/sign/restroom,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"QlX" = (
+/obj/machinery/door/airlock/titanium{
+	name = "bathroom"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QlY" = (
+/obj/machinery/door/airlock/titanium{
+	name = "dormitory"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QlZ" = (
+/obj/machinery/vending/boozeomat{
+	icon_deny = "smartfridge";
+	icon_state = "smartfridge";
+	req_access_txt = "0";
+	use_power = 0
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"Qma" = (
+/obj/machinery/door/airlock/titanium{
+	name = "E.V.A. equipment"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qmb" = (
+/obj/machinery/door/airlock/titanium{
+	name = "recovery shuttle interior airlock"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qmc" = (
+/obj/machinery/door/airlock/titanium{
+	name = "recovery shuttle interior airlock"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qmd" = (
+/obj/structure/sign/cargo,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"Qme" = (
+/obj/machinery/door/airlock/titanium{
+	name = "cargo bay"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/turf_decal/delivery{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	dir = 1
+	},
+/area/shuttle/abandoned)
+"Qmf" = (
+/obj/machinery/porta_turret/aux_base{
+	always_up = 1;
+	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else.";
+	dir = 4;
+	has_cover = 0;
+	icon_state = "standard_lethal";
+	lethal_projectile = /obj/item/projectile/beam/weak;
+	name = "turret"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"Qmg" = (
+/obj/machinery/vending/cigarette{
+	use_power = 0
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qmh" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qmi" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qmj" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/built{
+	dir = 1;
+	icon_state = "tube-empty";
+	tag = "icon-tube1 (NORTH)"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qmk" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qml" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qmm" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qmn" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/built{
+	dir = 1;
+	icon_state = "tube-empty";
+	tag = "icon-tube1 (NORTH)"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qmo" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/folder/blue,
+/obj/item/pen,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qmp" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/storage/photo_album,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qmq" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/sign/vacuum{
+	pixel_x = -32
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small/built{
+	dir = 4;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qmr" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qms" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qmt" = (
+/obj/structure/chair,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qmu" = (
+/obj/structure/chair,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qmv" = (
+/obj/structure/chair,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qmw" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qmx" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qmy" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qmz" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QmA" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmB" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmC" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/turretid{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 0;
+	pixel_x = -28;
+	req_access = null
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmD" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QmE" = (
+/obj/machinery/door/airlock/titanium{
+	name = "recovery shuttle external airlock"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QmF" = (
+/obj/machinery/door/airlock/titanium{
+	name = "recovery shuttle interior airlock"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QmG" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmH" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmI" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmJ" = (
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmK" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmL" = (
+/obj/machinery/door/airlock/titanium{
+	name = "living quarters"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QmM" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/roller{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/roller{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/spray/cleaner,
+/obj/structure/table,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmN" = (
+/obj/item/clothing/suit/bio_suit,
+/obj/item/clothing/suit/bio_suit,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/head/bio_hood,
+/obj/item/clothing/head/bio_hood,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/structure/table,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmO" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/ash{
+	desc = "They look like human remains, and have clearly been gnawed at.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remains";
+	name = "remains"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmP" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/suit/armor/vest,
+/obj/structure/table,
+/obj/item/clothing/head/helmet/swat/nanotrasen,
+/obj/item/clothing/head/helmet/swat/nanotrasen,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmQ" = (
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/table,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmR" = (
+/obj/machinery/door/airlock/titanium{
+	name = "bridge"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QmS" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmT" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/computer/shuttle/white_ship,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmU" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/light_construct/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QmV" = (
+/obj/machinery/vending/cola/random,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmW" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmX" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmY" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QmZ" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qna" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnb" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnc" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnd" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/chair/office/light,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qne" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/clothing/head/centhat{
+	desc = "There's a gouge through the top where something has clawed clean through it. Whoever was wearing it probably doesn't need a hat any more.";
+	name = "\improper damaged CentCom hat"
+	},
+/obj/effect/decal/cleanable/ash{
+	desc = "They look like human remains, and have clearly been gnawed at.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remains";
+	name = "remains"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qnf" = (
+/obj/item/phone{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/cigbutt/cigarbutt{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qng" = (
+/obj/machinery/vending/snack/random,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnh" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/built{
+	dir = 2;
+	icon_state = "tube-empty";
+	tag = "icon-tube1 (NORTH)"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qni" = (
+/obj/structure/sign/science{
+	pixel_y = -32
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qnj" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qnk" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/table,
+/obj/item/device/megaphone,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnl" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	station_lock_override = 1;
+	view_range = 15;
+	x_offset = -3;
+	y_offset = -7
+	},
+/obj/machinery/light/built{
+	dir = 2;
+	icon_state = "tube-empty";
+	tag = "icon-tube1 (NORTH)"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnm" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/device/mass_spectrometer,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnn" = (
+/obj/structure/table,
+/obj/item/device/radio/off{
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qno" = (
+/obj/structure/sign/botany,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnp" = (
+/obj/machinery/door/airlock/titanium{
+	name = "hydroponics"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qnq" = (
+/obj/machinery/door/airlock/titanium{
+	name = "kitchen"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qnr" = (
+/obj/machinery/door/airlock/titanium{
+	name = "laboratory"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"Qns" = (
+/obj/structure/sign/bluecross_2,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnt" = (
+/obj/item/storage/bag/plants/portaseeder,
+/obj/structure/table,
+/obj/item/reagent_containers/spray/plantbgone{
+	pixel_x = 13;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/bottle/nutrient/ez,
+/obj/item/reagent_containers/glass/bottle/nutrient/ez,
+/obj/item/reagent_containers/glass/bottle/nutrient/ez,
+/obj/item/reagent_containers/glass/bottle/nutrient/rh{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnu" = (
+/obj/machinery/biogenerator{
+	idle_power_usage = 0;
+	use_power = 0
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnv" = (
+/obj/machinery/vending/hydroseeds{
+	use_power = 0
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small/built{
+	dir = 1;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnw" = (
+/obj/machinery/processor,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small/built{
+	dir = 1;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnx" = (
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qny" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/storage/box/donkpockets,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qnz" = (
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnA" = (
+/obj/machinery/sleeper{
+	dir = 4;
+	use_power = 0
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnB" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/reagent_containers/blood/empty{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/random,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnC" = (
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
+/obj/item/storage/firstaid/regular,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small/built{
+	dir = 1;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnD" = (
+/obj/structure/table,
+/obj/item/wrench,
+/obj/item/crowbar,
+/obj/item/clothing/suit/apron,
+/obj/item/shovel/spade,
+/obj/item/cultivator,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/wirecutters,
+/obj/item/device/plant_analyzer,
+/obj/item/reagent_containers/glass/bucket,
+/obj/machinery/light/small/built{
+	dir = 8;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnE" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QnF" = (
+/obj/machinery/smartfridge{
+	use_power = 0
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"QnG" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QnH" = (
+/obj/effect/decal/cleanable/egg_smudge,
+/obj/effect/decal/cleanable/flour,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QnI" = (
+/obj/structure/table,
+/obj/item/kitchen/rollingpin,
+/obj/item/kitchen/knife,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small/built{
+	dir = 4;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnJ" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnK" = (
+/obj/structure/chair/office/light,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QnL" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_x = -28;
+	req_access_txt = "0";
+	use_power = 0
+	},
+/obj/machinery/iv_drip,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/light/small/built{
+	dir = 8;
+	icon_state = "bulb-empty"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QnM" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QnN" = (
+/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/ash{
+	desc = "A pile of remains that look vaguely humanoid. The skull is abnormally elongated, and there are burns through some of the other bones.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remainsxeno";
+	name = "remains"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QnO" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
+/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"QnP" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnQ" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnR" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/seeds/glowshroom,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnS" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnT" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder{
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnU" = (
+/obj/structure/table,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/item/reagent_containers/dropper,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnV" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/sugar,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnW" = (
+/obj/structure/table,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/syringe,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnX" = (
+/obj/structure/table,
+/obj/item/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnY" = (
+/obj/structure/table,
+/obj/item/hand_labeler,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"QnZ" = (
+/obj/structure/table,
+/obj/item/defibrillator,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qoa" = (
+/obj/structure/table,
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/glass/bottle/charcoal{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/syringe,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qob" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/mask/surgical,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/item/clothing/suit/apron/surgical,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qoc" = (
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/med/surgery{
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Qod" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
+"Qoe" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
+"Qof" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"Qog" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
+"Qoh" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"Qoi" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"Qoj" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"Qok" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
+"Qol" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space)
+"Qom" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
+"Qon" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
+"Qoo" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"Qop" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
+"Qoq" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"Qor" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"Qos" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space)
+"Qot" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
+"Qou" = (
+/obj/structure/lattice,
+/obj/structure/grille,
 /turf/open/space/basic,
 /area/space)
 
@@ -62665,11 +64545,11 @@ aaa
 aaa
 aaa
 aaa
-cyc
-cyc
-cye
-cyc
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -62922,11 +64802,11 @@ aaa
 aaa
 aaa
 aaa
-cyc
-cyw
-cyi
-cyw
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -63179,11 +65059,11 @@ aaa
 aaa
 aaa
 aaa
-cyc
-cyi
-cyi
-cyi
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -63436,11 +65316,11 @@ aaa
 aaa
 aaa
 aaa
-cyc
-cyi
-cyi
-cyi
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -63693,11 +65573,11 @@ aaa
 aaa
 aaa
 aaa
-cyc
-cyi
-cyi
-cyi
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -63950,11 +65830,11 @@ aaa
 aaa
 aaa
 aaa
-cyc
-cyi
-cyi
-cMa
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -64207,11 +66087,11 @@ aaa
 aaa
 aaa
 aaa
-cyc
-cyi
-cyi
-cyi
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -64461,14 +66341,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
 cyc
-cyi
-cyi
-cyi
 cyc
+QmE
+cyc
+cyc
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -64714,19 +66594,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cyc
+cyf
+cym
+cym
+cym
+cyR
+Qmq
 cyi
-cyi
-czd
-cyc
-aaa
+QmU
+cyR
+cym
+cym
+cym
+cyF
 aaa
 aaa
 aaa
@@ -64970,21 +66850,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 cyc
-cyw
-cyi
-cyw
 cyc
-aaa
-aaa
+cyo
+cyo
+cyc
+cyc
+cyc
+QmF
+cyc
+cyc
+cyc
+cyo
+cyo
+cyc
+cyc
 aaa
 aaa
 aaa
@@ -65227,21 +67107,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 cyc
 cyc
-cye
 cyc
 cyc
-aaa
-aaa
+cyc
+Qmg
+Qmr
+cyi
+QmV
+Qng
+cyc
+cyc
+cyc
+cyc
+cyc
 aaa
 aaa
 aaa
@@ -65484,21 +67364,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 cyc
-cyi
+Qlm
 cyc
-aaa
-aaa
-aaa
+QlL
+QlW
+Qmh
+cyI
+cyI
+cyI
+cyI
+cyc
+Qnt
+QnD
+QnP
+cyc
 aaa
 aaa
 aaa
@@ -65741,21 +67621,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cyc
-cyc
-cye
-cyc
-cyc
-aaa
-aaa
+cyR
+Qln
+Qlx
+QlM
+QlX
+Qmi
+Qms
+QmG
+QmW
+cyI
+Qno
+Qnu
+cyi
+QnQ
+cyR
 aaa
 aaa
 aaa
@@ -65998,21 +67878,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 cyc
 cyc
-cyw
+cyc
+cyc
+cyc
+Qmj
+Qmt
+QmH
+QmX
+cyI
+Qnp
 cyi
-cyw
-cyc
-cyc
-aaa
+cyI
+QnR
+cyR
 aaa
 aaa
 aaa
@@ -66255,27 +68135,27 @@ aaa
 aaa
 aaa
 aae
+cyR
+Qlo
+Qly
+QlN
+QlY
+Qmk
+Qmu
+QmI
+QmY
+Qnh
 cyc
-cyf
-cym
-cym
-cym
-cyF
+Qnv
+QnE
+QnS
+cyc
 aaa
-cyc
-cyw
-cyi
-cyi
-cyi
-cyw
-cyc
 aaa
-cyf
-cym
-cym
-cym
-cyF
-cyc
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -66513,26 +68393,26 @@ aaa
 aaa
 aaa
 cyc
-cyc
-cyo
-cyo
-cyo
-cyc
-cyc
-cyc
+Qlp
+Qlz
+QlO
+QlZ
+Qml
+Qmv
+QmJ
 cMc
-cyi
-cyi
-cyi
-cMa
+cyI
 cyc
 cyc
-cyc
-cyo
-cyo
-cyo
+QnF
 cyc
 cyc
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -66769,26 +68649,26 @@ aaa
 aaa
 aaa
 aaa
+cyc
+cyc
+cyc
+cyc
+cyc
+Qmm
+Qmw
+QmK
+QmZ
+cyI
+Qnq
+cyI
+QnG
+QnT
+cyc
 aaa
-cyc
-cyn
-cyv
-cyv
-cyn
-cyc
-cyw
-cyi
-cyi
-cyi
-cyi
-cyi
-cyw
-cyc
-cyn
-cyv
-cyv
-cyn
-cyc
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -67026,25 +68906,25 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 cyc
+Qlq
+QlA
 cyn
-cyv
-cLY
 cyc
+cLY
+cyI
 cyi
-cyi
-cyi
-cyi
-cyi
+cyI
+cyI
+cyc
+Qnw
 cyi
 czr
-cyc
-cMk
-cyv
-cyn
-cyc
+cyR
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -67283,24 +69163,24 @@ aaa
 aaa
 aaa
 aaf
-aaa
-aaa
-aaa
-cyc
-cyc
-cyH
-cyc
-cyc
-cyc
 cyR
-cza
+Qlr
+QlB
+QlP
+cyc
+cyc
+cyc
+QmL
+cyc
+cyc
+cyc
+Qnx
+QnH
+QnU
 cyR
-cyc
-cyc
-cyc
-cyH
-cyc
-cyc
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -67540,24 +69420,24 @@ aaa
 aaa
 aaf
 aaf
+cyR
+Qls
+cyi
+QlQ
+Qma
+cyi
+cyI
+cyI
+cyI
+cyI
+cyc
+Qny
+QnI
+QnV
+cyc
 aaa
 aaa
 aaa
-cyc
-cyc
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyc
-cyc
 aaa
 aaa
 aaa
@@ -67797,25 +69677,25 @@ aaf
 aaa
 aAC
 aaf
-aaa
-aaa
 cyc
+Qlt
+QlC
+QlR
 cyc
-cyw
 cyI
-cyi
-cyi
-cyi
-cyi
-cMd
-cyi
-cyi
-cyi
-cyi
-cyi
+Qmx
+QmM
+Qna
+cyI
 cyc
 cyc
 cyc
+cyc
+cyc
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -68054,26 +69934,26 @@ awW
 asE
 arB
 aaf
+cyc
+cyc
+QlD
+cyc
+cyc
+Qmn
+Qmy
+QmN
+Qnb
+Qni
+cyc
+Qnz
+QnJ
+QnW
+cyc
 aaa
-cyc
-cyc
-cyw
-cyi
-cyi
-cyi
-cyi
-cyc
-cyc
-cyc
-cyc
-cyc
-cyc
-cyi
-cyi
-cyc
-cyc
-cyc
-cyc
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -68311,26 +70191,26 @@ ayk
 awW
 aAD
 awW
-cyc
-cyc
-cyc
-cyc
-cyc
-cyc
-cyw
+Qll
+Qlu
+QlE
 cyi
-cyc
-cyV
-cyi
-cMh
-cyi
-cye
-cyi
-cyi
-cye
-cyi
-cyw
-cyc
+Qmb
+cyI
+Qmz
+QmO
+cyI
+cyI
+Qnr
+cyI
+QnK
+QnX
+cyR
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -68570,25 +70450,25 @@ auP
 cyt
 cyd
 cyi
+QlF
+cyx
+Qmc
 cyi
-cyx
-cyx
-cyw
-cyc
+cyI
 cMa
-cyc
-cyW
 cyi
-cze
+cyI
+cyc
+cye
 czm
+QnY
 cyc
-cMc
-cyi
-cyc
-cyi
-czB
-cyc
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -68826,26 +70706,26 @@ awW
 awW
 awW
 cyc
-cyi
-cyi
-cyi
-cyi
-cyJ
 cyc
-cyi
+QlG
+cyc
+cyc
+cyI
+QmA
+QmP
 cye
-cyi
-cMe
-cyi
-czl
+Qnj
 cyc
-cyi
-cyi
 cyc
-cyi
-cyi
-cyw
 cyc
+cyc
+cyc
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -69084,25 +70964,25 @@ aAF
 awW
 cyc
 cyk
-cyi
-cyi
-cyi
-cyi
-cyc
-cyi
-cyc
-cyc
-cyc
-cyc
-cyc
-cyc
-cyi
+QlH
+QlS
+Qmd
 cyI
-cyR
-czA
-cyi
-cyi
+QmB
+QmQ
+Qnc
+cyI
+Qns
+QnA
+QnL
+QnZ
 cyc
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -69339,27 +71219,27 @@ ayl
 ayl
 aAE
 awW
-cyc
+cyR
 cyj
+QlI
+QlT
+Qme
+cyI
+cyI
 cyi
-cyi
-cyi
-cyi
-cye
-cyi
-cyi
-cyi
+cyI
+cyI
 cMf
 cyi
-cyi
-cyi
-cyi
-cyi
+QnM
+Qoa
 cyR
-cyi
-cyi
-czC
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -69596,27 +71476,27 @@ ayl
 ayl
 bgi
 awW
-cyc
-cyi
-cyi
-cyi
-cyi
-cyi
-cyc
-cyw
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-czw
 cyR
-cyi
-cyi
-cyi
+Qlv
+QlJ
+QlU
 cyc
+cyc
+cyc
+QmR
+cyc
+cyc
+cyc
+QnB
+QnN
+Qob
+cyR
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -69854,26 +71734,26 @@ azA
 bgh
 awW
 cyc
-cyi
-cyi
-cyi
-cyi
+Qlw
+QlK
+QlV
+cyc
 cyw
+QmC
+cyI
+cye
+Qnk
 cyc
+QnC
+QnO
+Qoc
 cyc
-cyc
-cyR
-cza
-cyR
-cyc
-cyc
-cyc
-cyc
-cyc
-cyi
-cyi
-cyi
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70111,26 +71991,26 @@ awW
 awW
 awW
 cyc
-cyi
-cyi
-cyi
-cyw
 cyc
-cyw
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyX
-cyX
-cyX
+cyR
 cyc
-cyi
-cyi
-cyw
 cyc
+Qmo
+QmD
+cyI
+Qnd
+Qnl
+cyc
+cyc
+cyR
+cyc
+cyc
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70367,26 +72247,26 @@ ayl
 beL
 auP
 cyu
-cye
-cyi
-cyq
-cyi
-cyc
-cyw
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyw
-cyw
-czy
-cyc
+aaa
+aaa
+aaa
+aaa
+cyR
+Qmp
+cyI
+QmS
+Qne
+Qnm
+cyR
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70624,26 +72504,26 @@ ayk
 awW
 aAD
 awW
-cyc
-cyc
-cyc
-cyz
-cyc
+aaa
+aaa
+aaa
+aaa
+cyR
 cLZ
 cyO
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-cyi
-czx
-czn
-cyc
-cyc
-cyc
+QmT
+Qnf
+Qnn
+cyR
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70883,23 +72763,23 @@ awW
 aaf
 aaa
 aaa
-cyc
-cyy
-cyc
-cTW
-cyO
-cyi
-cyi
-cyX
+aaa
+aaa
+Qmf
+cyR
+cyR
+cyR
+cyR
+cyR
 czb
-cyX
-cyi
-cyi
-cyi
-cyi
-cyw
-cyc
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71138,24 +73018,24 @@ ayl
 beN
 arB
 aaf
-aaf
-aaf
-cyc
-cyA
-cyc
-cyw
-cyP
-cyi
-cyi
-cyY
-czc
-cyX
-cyi
-cyi
-cyi
-cyw
-cyc
-cyc
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71395,23 +73275,23 @@ ayl
 beM
 aAC
 aaf
-aaf
-aaf
-aaf
-aaf
-cyc
-cyc
-cyc
-cyR
-cyR
-cyR
-cyR
-cyR
-cyR
-cyR
-cyc
-cyc
-cyc
+aHr
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -82258,8 +84138,8 @@ aaa
 aaa
 aaa
 aaa
-abY
-abY
+aaT
+aaT
 aaa
 aaa
 aaa
@@ -82504,20 +84384,20 @@ aaa
 aaa
 crn
 aaf
-abY
-abY
-abY
-abY
-abY
-abY
-abY
-abY
-abY
+aaT
+aaT
+aaT
+aaT
+aaT
+aaT
+aaT
+aaT
+aaT
 aaa
 aaf
 ctv
-abY
-abY
+aaT
+aaT
 aaa
 aaa
 aaa
@@ -82761,7 +84641,7 @@ aaa
 aaa
 crn
 aaf
-abY
+aaT
 ctv
 ctv
 ctv
@@ -82769,12 +84649,12 @@ ctv
 ctv
 ctv
 ctv
-abY
+aaT
 aaa
 aaf
 ctv
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -83543,8 +85423,8 @@ aaa
 aaa
 aaa
 aaT
-abY
-abY
+aaT
+aaT
 aaa
 aaa
 aaa
@@ -83801,7 +85681,7 @@ aaa
 aaa
 aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -84058,7 +85938,7 @@ aaf
 aaf
 aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -84315,7 +86195,7 @@ aaa
 aaa
 aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -84572,7 +86452,7 @@ aaf
 aaf
 aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -84829,7 +86709,7 @@ aaa
 aaa
 aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -85086,7 +86966,7 @@ aaf
 aaf
 aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -85343,7 +87223,7 @@ aaa
 aaa
 aaT
 ctv
-abY
+aaT
 aaa
 aaf
 aaa
@@ -86372,9 +88252,9 @@ ccw
 ccw
 ccw
 aaa
-aaa
-aaf
-aaa
+Qot
+aaT
+Qou
 aaa
 aaa
 aaa
@@ -86629,9 +88509,9 @@ csd
 ciZ
 ccw
 aaa
-abY
+aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -87143,9 +89023,9 @@ cAu
 cAu
 ccw
 aaa
-abY
+aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -87402,7 +89282,7 @@ ccw
 aaf
 aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -87657,9 +89537,9 @@ csd
 cHo
 ccw
 aaa
-abY
+aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aae
@@ -87914,9 +89794,9 @@ cGV
 ccw
 ccw
 aaa
-abY
+aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -88171,9 +90051,9 @@ csd
 cHp
 ccw
 aaf
-abY
+aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -88428,9 +90308,9 @@ csd
 ciZ
 ccw
 aaf
-aaS
+aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -88685,9 +90565,9 @@ cHj
 cHd
 ccw
 aaa
-abY
+aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -89199,9 +91079,9 @@ csd
 cHs
 ccw
 aaf
-abY
+aaT
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -89456,9 +91336,9 @@ cHl
 ccw
 ccw
 aaf
-abY
 aaT
-abY
+aaT
+aaT
 aaa
 aaa
 aaa
@@ -90483,7 +92363,7 @@ aaf
 aaa
 aaf
 ctv
-abY
+aaT
 aaa
 aaf
 aaa
@@ -90740,7 +92620,7 @@ aaf
 aaf
 aaf
 ctv
-abY
+aaT
 aaa
 aaf
 aaa
@@ -90997,7 +92877,7 @@ aaa
 ctv
 ctv
 ctv
-abY
+aaT
 aaa
 aaa
 aaa
@@ -91251,10 +93131,10 @@ aaa
 aaa
 aaa
 aaa
-abY
-abY
-abY
-abY
+aaT
+aaT
+aaT
+aaT
 aaa
 aaa
 aae
@@ -91511,7 +93391,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qod
 aaa
 aaa
 aaa
@@ -91768,7 +93648,7 @@ aae
 aaa
 aaa
 aaa
-aaa
+Qoe
 aaa
 aaa
 aaa
@@ -92025,7 +93905,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qof
 aaa
 aaa
 aaa
@@ -92282,7 +94162,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qog
 aaa
 aaa
 aaa
@@ -92539,7 +94419,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qoh
 aaa
 aaa
 aaa
@@ -92796,7 +94676,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qoi
 aaa
 aaa
 aaa
@@ -93053,7 +94933,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qoj
 aaa
 aaa
 aaa
@@ -93310,7 +95190,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qok
 aaa
 aaa
 aaa
@@ -93567,7 +95447,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qol
 aaa
 aaa
 aaa
@@ -93824,7 +95704,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qom
 aaa
 aaa
 aaa
@@ -94081,7 +95961,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qon
 aaa
 aaa
 aaa
@@ -94338,7 +96218,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qoo
 aaa
 aaa
 aaa
@@ -94595,7 +96475,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qop
 aaa
 aaa
 aaa
@@ -94852,7 +96732,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qoq
 aaa
 aaa
 aaa
@@ -95109,7 +96989,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qor
 aaa
 aaa
 aaa
@@ -95366,7 +97246,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Qos
 aaa
 aaa
 aaa
