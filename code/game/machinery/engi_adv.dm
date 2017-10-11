@@ -145,7 +145,7 @@
 		else
 			payload_wall = text2path("/turf/closed/wall/mineral/[payload]")
 			payload_floor = text2path("/turf/open/floor/mineral/[payload]")
-	if(ispath(payload_wall) || !ispath(payload_floor))
+	if(!ispath(payload_wall) || !ispath(payload_floor))
 		to_chat(usr, "Invalid payload selected, please contact manufacturer for assistance or select another payload.")
 		payload = "plasteel"
 		payload_wall = /turf/closed/wall/r_wall
