@@ -265,6 +265,20 @@
 	back = /obj/item/storage/backpack
 	backpack_contents = list(/obj/item/storage/box=1)
 
+/datum/outfit/wizard/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/spellbook/S = locate() in H.held_items
+	if(S)
+		S.owner = H
+
+/datum/outfit/wizard/apprentice
+	name = "Wizard Apprentice"
+	r_hand = null
+	l_hand = null
+	r_pocket = /obj/item/teleportation_scroll/apprentice
+
 /datum/outfit/wizard/red
 	name = "Red Wizard"
 

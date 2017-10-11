@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -49539,7 +49539,6 @@
 	port_direction = 4;
 	preferred_direction = 1;
 	roundstart_move = "whiteship_away";
-	timid = null;
 	width = 9
 	},
 /obj/docking_port/stationary{
@@ -62849,7 +62848,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+YXG
 aaa
 aaa
 aaa
@@ -63852,7 +63851,7 @@ aaa
 aaa
 aaa
 aaa
-YXG
+aaa
 aaa
 aaa
 aaa
@@ -110422,7 +110421,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ajA
 aaa
 aaa
 aaa
@@ -110931,7 +110930,7 @@ aaa
 aaa
 aaa
 aaa
-ajA
+aaa
 aaa
 aaa
 aaa
