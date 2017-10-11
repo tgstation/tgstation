@@ -5,10 +5,10 @@
 	var/max2
 
 /datum/tlv/New(min2 as num, min1 as num, max1 as num, max2 as num)
-	src.min2 = min2
-	src.min1 = min1
-	src.max1 = max1
-	src.max2 = max2
+	if(min2) src.min2 = min2
+	if(min1) src.min1 = min1
+	if(max1) src.max1 = max1
+	if(max2) src.max2 = max2
 
 /datum/tlv/proc/get_danger_level(val as num)
 	if(max2 != -1 && val >= max2)
