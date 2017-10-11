@@ -97,7 +97,8 @@ Bonus
 		A.cure()
 
 /datum/symptom/viralreverse/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	A.stage = 5
 	if(A.properties["stealth"] >= 4) //more time before it's cured
 		power = 2

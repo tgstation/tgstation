@@ -12,6 +12,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/name = "scripture"
 	var/desc = "Ancient Ratvarian lore. This piece seems particularly mundane."
 	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
+	var/chanting = FALSE //If the invocation's words are being spoken
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
 	var/power_cost = 5 //In watts, how much a scripture takes to invoke
 	var/special_power_text //If the scripture can use additional power to have a unique function, use this; put POWERCOST here to display the special power cost.
@@ -145,18 +146,29 @@ Applications: 8 servants, 3 caches, and 100 CV
 	to_chat(invoker, "<span class='brass'>You [channel_time <= 0 ? "recite" : "begin reciting"] a piece of scripture entitled \"[name]\".</span>")
 	if(!channel_time)
 		return TRUE
+	chant()
+	if(!do_after(invoker, channel_time, target = invoker, extra_checks = CALLBACK(src, .proc/check_special_requirements)))
+		slab.busy = null
+		chanting = FALSE
+		scripture_fail()
+		chanting = FALSE
+		return
+	chanting = FALSE
+	return TRUE
+
+/datum/clockwork_scripture/proc/chant()
+	set waitfor = FALSE
+	chanting = TRUE
 	for(var/invocation in invocations)
-		if(!do_after(invoker, channel_time / invocations.len, target = invoker, extra_checks = CALLBACK(src, .proc/check_special_requirements)))
-			slab.busy = null
-			scripture_fail()
-			return FALSE
+		sleep(channel_time / invocations.len)
+		if(QDELETED(src) || QDELETED(slab) || !chanting)
+			return
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, get_turf(invoker)))
 				if(can_recite_scripture(L))
 					clockwork_say(L, text2ratvar(invocation), whispered)
 		else
 			clockwork_say(invoker, text2ratvar(invocation), whispered)
-	return TRUE
 
 /datum/clockwork_scripture/proc/scripture_effects() //The actual effects of the recital after its conclusion
 
@@ -307,7 +319,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 				qdel(progbar)
 			else
 				progbar.update(end_time - world.time)
-		sleep(1)
+		stoplag(1)
 	if(slab)
 		if(slab.slab_ability)
 			successful = slab.slab_ability.successful

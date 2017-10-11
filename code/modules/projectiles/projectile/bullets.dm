@@ -116,7 +116,7 @@
 	damage = 10
 	fire_stacks = 1
 
-// .45 (M1911)
+// .45 (M1911 & C20r)
 
 /obj/item/projectile/bullet/c45
 	name = ".45 bullet"
@@ -125,7 +125,7 @@
 
 /obj/item/projectile/bullet/c45_nostamina
 	name = ".45 bullet"
-	damage = 20
+	damage = 30
 
 // 5.56mm (M-90gl Carbine)
 

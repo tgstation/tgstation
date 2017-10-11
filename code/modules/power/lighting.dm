@@ -315,7 +315,7 @@
 			src.add_fingerprint(user)
 			var/obj/item/light/L = W
 			if(istype(L, light_type))
-				if(!user.temporarilyRemoveItemFromInventory())
+				if(!user.temporarilyRemoveItemFromInventory(L))
 					return
 
 				src.add_fingerprint(user)

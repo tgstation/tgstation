@@ -100,8 +100,8 @@
 	if(do_after(user, 30, target = AM))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
-		src.target = AM
-		forceMove(null)	//Yep
+		target = AM
+		moveToNullspace()	//Yep
 
 		if(istype(AM, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
 			var/obj/item/I = AM
