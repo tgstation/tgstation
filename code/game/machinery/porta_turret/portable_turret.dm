@@ -628,6 +628,10 @@
 /obj/machinery/porta_turret/centcom_shuttle/setup()
 	return
 
+/obj/machinery/porta_turret/centcom_shuttle/weak
+	stun_projectile = /obj/item/projectile/beam/weak
+	lethal_projectile = /obj/item/projectile/beam/weak
+
 ////////////////////////
 //Turret Control Panel//
 ////////////////////////

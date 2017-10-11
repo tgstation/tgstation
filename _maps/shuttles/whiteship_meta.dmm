@@ -66,8 +66,7 @@
 	desc = "Looks like something's sprung a leak"
 	},
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -162,8 +161,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -196,8 +194,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
@@ -320,8 +317,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -338,8 +334,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -464,8 +459,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -550,8 +544,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -652,14 +645,8 @@
 	},
 /area/shuttle/abandoned)
 "ba" = (
-/obj/machinery/porta_turret/aux_base{
-	always_up = 1;
-	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else.";
-	dir = 4;
-	has_cover = 0;
-	icon_state = "standard_lethal";
-	lethal_projectile = /obj/item/projectile/beam/weak;
-	name = "turret"
+/obj/machinery/porta_turret/centcom_shuttle/weak{
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -686,7 +673,6 @@
 	},
 /obj/machinery/light/built{
 	dir = 1;
-	icon_state = "tube-empty";
 	tag = "icon-tube1 (NORTH)"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -714,7 +700,6 @@
 	},
 /obj/machinery/light/built{
 	dir = 1;
-	icon_state = "tube-empty";
 	tag = "icon-tube1 (NORTH)"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -773,8 +758,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -1121,7 +1105,6 @@
 	},
 /obj/machinery/light/built{
 	dir = 2;
-	icon_state = "tube-empty";
 	tag = "icon-tube1 (NORTH)"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -1166,7 +1149,6 @@
 	},
 /obj/machinery/light/built{
 	dir = 2;
-	icon_state = "tube-empty";
 	tag = "icon-tube1 (NORTH)"
 	},
 /turf/open/floor/mineral/titanium,
@@ -1277,8 +1259,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 1;
-	icon_state = "bulb-empty"
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -1289,8 +1270,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 1;
-	icon_state = "bulb-empty"
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -1360,8 +1340,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 1;
-	icon_state = "bulb-empty"
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -1380,8 +1359,7 @@
 /obj/item/device/plant_analyzer,
 /obj/item/reagent_containers/glass/bucket,
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -1432,8 +1410,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -1465,8 +1442,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -1483,8 +1459,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)

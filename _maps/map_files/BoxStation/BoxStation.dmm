@@ -54800,8 +54800,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
@@ -54904,8 +54903,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -55213,8 +55211,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -59060,8 +59057,7 @@
 	desc = "Looks like something's sprung a leak"
 	},
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -59164,8 +59160,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -59255,8 +59250,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -59273,8 +59267,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -59418,8 +59411,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -59621,14 +59613,8 @@
 	},
 /area/shuttle/abandoned)
 "Qmf" = (
-/obj/machinery/porta_turret/aux_base{
-	always_up = 1;
-	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else.";
-	dir = 4;
-	has_cover = 0;
-	icon_state = "standard_lethal";
-	lethal_projectile = /obj/item/projectile/beam/weak;
-	name = "turret"
+/obj/machinery/porta_turret/centcom_shuttle/weak{
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -59662,7 +59648,6 @@
 	},
 /obj/machinery/light/built{
 	dir = 1;
-	icon_state = "tube-empty";
 	tag = "icon-tube1 (NORTH)"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -59696,7 +59681,6 @@
 	},
 /obj/machinery/light/built{
 	dir = 1;
-	icon_state = "tube-empty";
 	tag = "icon-tube1 (NORTH)"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -59733,8 +59717,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -60181,7 +60164,6 @@
 	},
 /obj/machinery/light/built{
 	dir = 2;
-	icon_state = "tube-empty";
 	tag = "icon-tube1 (NORTH)"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -60226,7 +60208,6 @@
 	},
 /obj/machinery/light/built{
 	dir = 2;
-	icon_state = "tube-empty";
 	tag = "icon-tube1 (NORTH)"
 	},
 /turf/open/floor/mineral/titanium,
@@ -60326,8 +60307,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 1;
-	icon_state = "bulb-empty"
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -60338,8 +60318,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 1;
-	icon_state = "bulb-empty"
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -60409,8 +60388,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 1;
-	icon_state = "bulb-empty"
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -60429,8 +60407,7 @@
 /obj/item/device/plant_analyzer,
 /obj/item/reagent_containers/glass/bucket,
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -60481,8 +60458,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 4;
-	icon_state = "bulb-empty"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -60521,8 +60497,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small/built{
-	dir = 8;
-	icon_state = "bulb-empty"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -66343,7 +66318,7 @@ aaa
 aaa
 cyc
 cyc
-QmE
+Qll
 cyc
 cyc
 aaa
@@ -67369,11 +67344,11 @@ Qlm
 cyc
 QlL
 QlW
-Qmh
-cyI
-cyI
-cyI
-cyI
+QlC
+QlC
+QlC
+QlC
+QlC
 cyc
 Qnt
 QnD
@@ -67629,12 +67604,12 @@ QlX
 Qmi
 Qms
 QmG
-QmW
-cyI
+Qmw
+QlC
 Qno
 Qnu
 cyi
-QnQ
+QnP
 cyR
 aaa
 aaa
@@ -67887,10 +67862,10 @@ Qmj
 Qmt
 QmH
 QmX
-cyI
+QlC
 Qnp
 cyi
-cyI
+QlC
 QnR
 cyR
 aaa
@@ -68141,14 +68116,14 @@ Qly
 QlN
 QlY
 Qmk
-Qmu
+Qmt
 QmI
-QmY
+QmX
 Qnh
 cyc
 Qnv
 QnE
-QnS
+QnP
 cyc
 aaa
 aaa
@@ -68397,11 +68372,11 @@ Qlp
 Qlz
 QlO
 QlZ
-Qml
-Qmv
+QlC
+Qmt
 QmJ
-cMc
-cyI
+QmX
+QlC
 cyc
 cyc
 QnF
@@ -68654,13 +68629,13 @@ cyc
 cyc
 cyc
 cyc
-Qmm
+QlC
 Qmw
 QmK
-QmZ
-cyI
+Qms
+QlC
 Qnq
-cyI
+QlC
 QnG
 QnT
 cyc
@@ -68912,10 +68887,10 @@ QlA
 cyn
 cyc
 cLY
-cyI
+QlC
 cyi
-cyI
-cyI
+QlC
+QlC
 cyc
 Qnw
 cyi
@@ -69421,15 +69396,15 @@ aaa
 aaf
 aaf
 cyR
-Qls
+Qlr
 cyi
-QlQ
-Qma
+QlC
+QlD
 cyi
-cyI
-cyI
-cyI
-cyI
+QlC
+QlC
+QlC
+QlC
 cyc
 Qny
 QnI
@@ -69682,11 +69657,11 @@ Qlt
 QlC
 QlR
 cyc
-cyI
-Qmx
+QlC
+Qms
 QmM
-Qna
-cyI
+Qms
+QlC
 cyc
 cyc
 cyc
@@ -69940,9 +69915,9 @@ QlD
 cyc
 cyc
 Qmn
-Qmy
+Qmw
 QmN
-Qnb
+Qmw
 Qni
 cyc
 Qnz
@@ -70193,16 +70168,16 @@ aAD
 awW
 Qll
 Qlu
-QlE
+QlC
 cyi
 Qmb
-cyI
-Qmz
+QlC
+Qmk
 QmO
-cyI
-cyI
+QlC
+QlC
 Qnr
-cyI
+QlC
 QnK
 QnX
 cyR
@@ -70452,14 +70427,14 @@ cyd
 cyi
 QlF
 cyx
-Qmc
+Qmb
 cyi
-cyI
+QlC
 cMa
 cyi
-cyI
+QlC
 cyc
-cye
+Qms
 czm
 QnY
 cyc
@@ -70710,10 +70685,10 @@ cyc
 QlG
 cyc
 cyc
-cyI
-QmA
+QlC
+Qms
 QmP
-cye
+Qms
 Qnj
 cyc
 cyc
@@ -70967,11 +70942,11 @@ cyk
 QlH
 QlS
 Qmd
-cyI
-QmB
+QlC
+Qms
 QmQ
-Qnc
-cyI
+Qmw
+QlC
 Qns
 QnA
 QnL
@@ -71222,13 +71197,13 @@ awW
 cyR
 cyj
 QlI
-QlT
+QlI
 Qme
-cyI
-cyI
+QlC
+QlC
 cyi
-cyI
-cyI
+QlC
+QlC
 cMf
 cyi
 QnM
@@ -71478,7 +71453,7 @@ bgi
 awW
 cyR
 Qlv
-QlJ
+QlI
 QlU
 cyc
 cyc
@@ -71740,8 +71715,8 @@ QlV
 cyc
 cyw
 QmC
-cyI
-cye
+QlC
+Qms
 Qnk
 cyc
 QnC
@@ -71997,7 +71972,7 @@ cyc
 cyc
 Qmo
 QmD
-cyI
+QlC
 Qnd
 Qnl
 cyc
@@ -72253,7 +72228,7 @@ aaa
 aaa
 cyR
 Qmp
-cyI
+QlC
 QmS
 Qne
 Qnm
@@ -72771,7 +72746,7 @@ cyR
 cyR
 cyR
 cyR
-czb
+Qmf
 aaa
 aaa
 aaa
@@ -88252,9 +88227,9 @@ ccw
 ccw
 ccw
 aaa
-Qot
+Qod
 aaT
-Qou
+Qod
 aaa
 aaa
 aaa
@@ -93648,7 +93623,7 @@ aae
 aaa
 aaa
 aaa
-Qoe
+Qod
 aaa
 aaa
 aaa
@@ -94162,7 +94137,7 @@ aaa
 aaa
 aaa
 aaa
-Qog
+Qod
 aaa
 aaa
 aaa
@@ -94419,7 +94394,7 @@ aaa
 aaa
 aaa
 aaa
-Qoh
+Qof
 aaa
 aaa
 aaa
@@ -94933,7 +94908,7 @@ aaa
 aaa
 aaa
 aaa
-Qoj
+Qof
 aaa
 aaa
 aaa
@@ -95190,7 +95165,7 @@ aaa
 aaa
 aaa
 aaa
-Qok
+Qod
 aaa
 aaa
 aaa
@@ -95704,7 +95679,7 @@ aaa
 aaa
 aaa
 aaa
-Qom
+Qod
 aaa
 aaa
 aaa
@@ -95961,7 +95936,7 @@ aaa
 aaa
 aaa
 aaa
-Qon
+Qod
 aaa
 aaa
 aaa
@@ -96218,7 +96193,7 @@ aaa
 aaa
 aaa
 aaa
-Qoo
+Qof
 aaa
 aaa
 aaa
@@ -96475,7 +96450,7 @@ aaa
 aaa
 aaa
 aaa
-Qop
+Qod
 aaa
 aaa
 aaa
@@ -96732,7 +96707,7 @@ aaa
 aaa
 aaa
 aaa
-Qoq
+Qof
 aaa
 aaa
 aaa
@@ -96989,7 +96964,7 @@ aaa
 aaa
 aaa
 aaa
-Qor
+Qof
 aaa
 aaa
 aaa
@@ -97246,7 +97221,7 @@ aaa
 aaa
 aaa
 aaa
-Qos
+Qol
 aaa
 aaa
 aaa
