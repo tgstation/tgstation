@@ -436,9 +436,9 @@
 	W.registered_name = H.real_name
 	W.update_label(W.registered_name, W.assignment)
 
-/datum/outfit/death_commando/officer
+/datum/outfit/flamer/com
 	name = "NT Flame Commander"
-	head = /obj/item/clothing/head/HoS
+	suit = /obj/item/clothing/suit/space/hardsuit/flamer/com
 
 
 

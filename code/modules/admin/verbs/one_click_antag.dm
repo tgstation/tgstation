@@ -382,7 +382,7 @@
 			chosen_candidate.client.prefs.copy_to(Incinerator)
 			if(numagents == 1) //If Squad Leader
 				Incinerator.real_name = "NT Flame Commander [pick(GLOB.commando_names)]"
-				Incinerator.equipOutfit(/datum/outfit/flamer)
+				Incinerator.equipOutfit(/datum/outfit/flamer/com)
 			else
 				Incinerator.real_name = "Flamer [pick(GLOB.commando_names)]"
 				Incinerator.equipOutfit(/datum/outfit/flamer)
