@@ -5,8 +5,8 @@ work in progress don't download unless you have my cat's permission ok
 
 **Website:** we don't have one sorry <BR>
 **Code:** https://github.com/cyclowns/tikistation <BR>
-**Wiki** we don't have one use the TG one <BR>
-**Discord** https://discord.gg/h6S3N5w <BR>
+**Wiki:** we don't have one use the TG one <BR>
+**Discord:** https://discord.gg/h6S3N5w <BR>
 
 
 ## DOWNLOADING
