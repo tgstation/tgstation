@@ -16,73 +16,72 @@ def merge_map(new_map, old_map, delete_unused=False):
         print(f"  New: {new_map.size}")
         return new_map
 
-    key_length = old_map.key_length
-    size = old_map.size
-    new_dict = new_map.dictionary
-    new_grid = new_map.grid
-    old_dict = old_map.dictionary
-    old_grid = old_map.grid
+    key_length, size = old_map.key_length, old_map.size
+    merged = DMM(key_length, size)
+    merged.dictionary = old_map.dictionary.copy()
 
-    merged_grid = dict()
-    merged_dict = old_map.dictionary.copy()
-    known_keys = dict()
-    unused_keys = set(old_dict.keys())
+    known_keys = dict()  # mapping fron 'new' key to 'merged' key
+    unused_keys = set(old_map.dictionary.keys())  # keys going unused
 
     # step one: parse the new version, compare it to the old version, merge both
     for z, y, x in new_map.coords_zyx:
-        new_key = new_grid[x, y, z]
+        new_key = new_map.grid[x, y, z]
         # if this key has been processed before, it can immediately be merged
-        if new_key in known_keys:
-            merged_grid[x, y, z] = known_keys[new_key]
+        try:
+            merged.grid[x, y, z] = known_keys[new_key]
             continue
+        except KeyError:
+            pass
 
         def select_key(assigned):
-            merged_grid[x, y, z] = known_keys[new_key] = assigned
-        def mark_used(assigned):
-            try:
-                unused_keys.remove(assigned)
-            except ValueError:
-                print(f"Notice: Correcting duplicate dictionary entry. ({new_key})")
+            merged.grid[x, y, z] = known_keys[new_key] = assigned
 
-        old_key = old_grid[x, y, z]
-        old_tile = old_dict[old_key]
-        new_tile = new_dict[new_key]
+        old_key = old_map.grid[x, y, z]
+        old_tile = old_map.dictionary[old_key]
+        new_tile = new_map.dictionary[new_key]
 
         # this tile is the exact same as before, so the old key is used
         if new_tile == old_tile:
             select_key(old_key)
-            mark_used(old_key)
+            unused_keys.remove(old_key)
 
-        # the tile is different here, but if it exists in the old dictionary, its old key can be used
-        elif new_tile in merged_dict.inv:
-            newold_key = merged_dict.inv[new_tile]
+        # the tile is different here, but if it exists in the merged dictionary, that key can be used
+        elif new_tile in merged.dictionary.inv:
+            newold_key = merged.dictionary.inv[new_tile]
             select_key(newold_key)
-            mark_used(newold_key)
+            unused_keys.remove(newold_key)
 
         # the tile is brand new and it needs a new key, but if the old key isn't being used any longer it can be used instead
-        elif old_tile not in new_dict.inv:
-            merged_dict[old_key] = new_tile
+        elif old_tile not in new_map.dictionary.inv and old_key in unused_keys:
+            merged.dictionary[old_key] = new_tile
             select_key(old_key)
-            mark_used(old_key)
+            unused_keys.remove(old_key)
 
         # all other options ruled out, a brand new key is generated for the brand new tile
         else:
-            fresh_key = generate_new_key(merged_dict)
-            merged_dict[fresh_key] = new_tile
+            fresh_key = generate_new_key(merged.dictionary)
+            merged.dictionary[fresh_key] = new_tile
             select_key(fresh_key)
 
     # step two: clean the dictionary if it has too many unused keys
-    output_map = DMM(key_length, size)
-    output_map.dictionary = merged_dict
-    output_map.grid = merged_grid
-
-    if len(unused_keys) > min(1600, len(old_dict) * 0.5) or delete_unused:
+    if len(unused_keys) > min(1600, len(merged.dictionary) * 0.5) or delete_unused:
         print("Notice: Trimming the dictionary.")
-        output_map = trim_dictionary(output_map)
+        merged = trim_dictionary(merged)
         print(f"Notice: Trimmed out {len(unused_keys)} unused dictionary keys.")
-        output_map.header = f"//Model dictionary trimmed on: {datetime.utcnow().strftime('%d-%m-%Y %H:%M (UTC)')}"
+        merged.header = f"//Model dictionary trimmed on: {datetime.utcnow().strftime('%d-%m-%Y %H:%M (UTC)')}"
 
-    return output_map
+    # sanity check: that the merged map equals the new map
+    for z, y, x in new_map.coords_zyx:
+        new_tile = new_map.dictionary[new_map.grid[x, y, z]]
+        merged_tile = merged.dictionary[merged.grid[x, y, z]]
+        if new_tile != merged_tile:
+            print(f"Error: the map has been mangled! This is a mapmerge bug!")
+            print(f"At {x},{y},{z}.")
+            print(f"Should be {new_tile}")
+            print(f"Instead is {merged_tile}")
+            raise RuntimeError()
+
+    return merged
 
 def main(settings):
     for fname in frontend.process(settings, "merge", backup=True):
