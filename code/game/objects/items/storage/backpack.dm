@@ -72,7 +72,7 @@
 
 /obj/item/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
-		if(user && user.mind && user.mind.is_antag())
+		if(!(user && user.mind && user.mind.is_antag()))
 			var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
 			if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
 				return
