@@ -314,6 +314,7 @@
 	random_sensor = 0
 
 /obj/item/clothing/under/prison/prison/Initialize()
+	..()
 	name = "prisoner #[rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)]"
 
 /******************Suits*******************************/
@@ -401,6 +402,7 @@
 	icon_state = "t1"
 
 /obj/structure/sign/prison/tablo/Initialize()
+	..()
 	icon_state = "t[rand(1,18)]"
 
 /obj/structure/sign/prison/uprava
@@ -553,8 +555,10 @@
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
 	layer = 5
+	anchored = 1
 
 /obj/machinery/prisonplant/Initialize()
+	..()
 	icon_state = "plant-[rand(0,2)][rand(0,5)]"
 
 /********************Misc-Deco****************************/
