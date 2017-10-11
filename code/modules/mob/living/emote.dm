@@ -325,6 +325,7 @@
 	message = "snores."
 	message_mime = "sleeps soundly."
 	emote_type = EMOTE_AUDIBLE
+	stat_allowed = UNCONSCIOUS
 
 /datum/emote/living/stare
 	key = "stare"
