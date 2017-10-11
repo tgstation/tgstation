@@ -93,11 +93,11 @@
 		/datum/gas/plasma			= new/datum/tlv/dangerous, // Partial pressure, kpa
 		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous, // Partial pressure, kpa
 		/datum/gas/bz				= new/datum/tlv/dangerous,
-		/datum/gas/noblium			= new/datum/tlv/dangerous,
+		/datum/gas/hypernoblium			= new/datum/tlv/dangerous,
 		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
 		/datum/gas/stimulum			= new/datum/tlv/dangerous,
-		/datum/gas/browns			= new/datum/tlv/dangerous,
+		/datum/gas/brown_gas			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv/dangerous
 	)
 
@@ -111,11 +111,11 @@
 		/datum/gas/plasma			= new/datum/tlv/no_checks,
 		/datum/gas/nitrous_oxide	= new/datum/tlv/no_checks,
 		/datum/gas/bz				= new/datum/tlv/no_checks,
-		/datum/gas/noblium			= new/datum/tlv/no_checks,
+		/datum/gas/hypernoblium			= new/datum/tlv/no_checks,
 		/datum/gas/water_vapor		= new/datum/tlv/no_checks,
 		/datum/gas/tritium			= new/datum/tlv/no_checks,
 		/datum/gas/stimulum			= new/datum/tlv/no_checks,
-		/datum/gas/browns			= new/datum/tlv/no_checks,
+		/datum/gas/brown_gas			= new/datum/tlv/no_checks,
 		/datum/gas/pluoxium			= new/datum/tlv/no_checks
 	)
 
@@ -129,11 +129,11 @@
 		/datum/gas/plasma			= new/datum/tlv/dangerous, // Partial pressure, kpa
 		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous, // Partial pressure, kpa
 		/datum/gas/bz				= new/datum/tlv/dangerous,
-		/datum/gas/noblium			= new/datum/tlv/dangerous,
+		/datum/gas/hypernoblium			= new/datum/tlv/dangerous,
 		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
 		/datum/gas/stimulum			= new/datum/tlv/dangerous,
-		/datum/gas/browns			= new/datum/tlv/dangerous,
+		/datum/gas/brown_gas			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv/dangerous
 	)
 

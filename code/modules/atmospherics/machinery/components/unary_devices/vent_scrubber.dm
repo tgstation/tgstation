@@ -210,10 +210,10 @@
 				filtered_gases[/datum/gas/bz][MOLES] = removed_gases[/datum/gas/bz][MOLES]
 				removed_gases[/datum/gas/bz][MOLES] = 0
 
-			if(scrub_Rare && removed_gases[/datum/gas/noblium])
-				ADD_GAS(/datum/gas/noblium, filtered_gases)
-				filtered_gases[/datum/gas/noblium][MOLES] = removed_gases[/datum/gas/noblium][MOLES]
-				removed_gases[/datum/gas/noblium][MOLES] = 0
+			if(scrub_Rare && removed_gases[/datum/gas/hypernoblium])
+				ADD_GAS(/datum/gas/hypernoblium, filtered_gases)
+				filtered_gases[/datum/gas/hypernoblium][MOLES] = removed_gases[/datum/gas/hypernoblium][MOLES]
+				removed_gases[/datum/gas/hypernoblium][MOLES] = 0
 
 			if(scrub_Rare && removed_gases[/datum/gas/stimulum])
 				ADD_GAS(/datum/gas/stimulum, filtered_gases)
@@ -222,18 +222,17 @@
 
 			if(scrub_Rare && removed_gases[/datum/gas/pluoxium])
 				ADD_GAS(/datum/gas/pluoxium, filtered_gases)
-				filtered_gases[/datum/gas/pluoxium]MOLES] = removed_gases[/datum/gas/pluoxium][MOLES]
+				filtered_gases[/datum/gas/pluoxium][MOLES] = removed_gases[/datum/gas/pluoxium][MOLES]
 				removed_gases[/datum/gas/pluoxium][MOLES] = 0
 
-			if(scrub_Rare && removed_gases[/datum/gas/browns])
-				ADD_GAS(/datum/gas/browns, filtered_gases)
-				filtered_gases[/datum/gas/browns][MOLES] = removed_gases[/datum/gas/browns][MOLES]
-				removed_gases[/datum/gas/browns][MOLES] = 0
-
+			if(scrub_Rare && removed_gases[/datum/gas/brown_gas])
+				ADD_GAS(/datum/gas/brown_gas, filtered_gases)
+				filtered_gases[/datum/gas/brown_gas][MOLES] = removed_gases[/datum/gas/brown_gas][MOLES]
+				removed_gases[/datum/gas/brown_gas][MOLES] = 0
 
 			if(scrub_Rare && removed_gases[/datum/gas/tritium])
 				ADD_GAS(/datum/gas/tritium, filtered_gases)
-				filtered_gases[/datum/gas/tritium]MOLES] = removed_gases[/datum/gas/tritium][MOLES]
+				filtered_gases[/datum/gas/tritium][MOLES] = removed_gases[/datum/gas/tritium][MOLES]
 				removed_gases[/datum/gas/tritium][MOLES] = 0
 
 			if(scrub_WaterVapor && removed_gases[/datum/gas/water_vapor])

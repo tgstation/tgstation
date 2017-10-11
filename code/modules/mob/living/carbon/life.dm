@@ -203,8 +203,8 @@
 		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
 	//Brown Gas
-	if (breath_gases[/datum/gas/browns])
-		var/browns_partialpressure = (breath_gases[/datum/gas/browns][MOLES]/breath.total_moles())*breath_pressure
+	if (breath_gases[/datum/gas/brown_gas])
+		var/browns_partialpressure = (breath_gases[/datum/gas/brown_gas][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(browns_partialpressure/4)
 
 

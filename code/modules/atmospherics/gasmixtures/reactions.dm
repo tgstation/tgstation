@@ -39,7 +39,7 @@
 	name = "Hyper-Noblium Reaction Supression"
 	id = "nobstop"
 /datum/gas_reaction/nobliumsupression/init_reqs()
-	min_requirements = list(/datum/gas/noblium = REACTION_OPPRESSION_THRESHOLD)
+	min_requirements = list(/datum/gas/hypernoblium = REACTION_OPPRESSION_THRESHOLD)
 
 /datum/gas_reaction/nobliumsupression/react()
 	return STOP_REACTIONS
@@ -185,7 +185,7 @@
 	var/waste_added = (plasma_fused-oxygen_added)-((air.total_moles()*air.heat_capacity())/PLASMA_BINDING_ENERGY)
 	reaction_energy = max(reaction_energy+((catalyst_efficency*cached_gases[/datum/gas/plasma][MOLES])/((moles_impurities/catalyst_efficency)+2)*10)+((plasma_fused/((moles_impurities/catalyst_efficency)+1))*PLASMA_BINDING_ENERGY),0)
 
-	air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/water_vapor, /datum/gas/nitrous_oxide, /datum/gas/browns)
+	air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/water_vapor, /datum/gas/nitrous_oxide, /datum/gas/brown_gas)
 	//Fusion produces an absurd amount of waste products now, requiring active filtration.
 	cached_gases[/datum/gas/plasma][MOLES] -= plasma_fused
 	cached_gases[/datum/gas/tritium][MOLES] -= tritium_catalyzed
@@ -193,7 +193,7 @@
 	cached_gases[/datum/gas/nitrogen][MOLES] += waste_added
 	cached_gases[/datum/gas/water_vapor][MOLES] += waste_added
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] += waste_added
-	cached_gases[/datum/gas/browns][MOLES] += waste_added
+	cached_gases[/datum/gas/brown_gas][MOLES] += waste_added
 
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -221,11 +221,11 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100)
 	var/energy_used = heat_efficency*BROWNS_FORMATION_ENERGY
-	ASSERT_GAS(/datum/gas/browns,air)
+	ASSERT_GAS(/datum/gas/brown_gas,air)
 
 	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency
 	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/browns][MOLES] += heat_efficency*2
+	cached_gases[/datum/gas/brown_gas][MOLES] += heat_efficency*2
 
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -276,7 +276,7 @@
 		/datum/gas/tritium = 30,
 		/datum/gas/plasma = 10,
 		/datum/gas/bz = 20,
-		/datum/gas/browns = 30,
+		/datum/gas/brown_gas = 30,
 		"TEMP" = STIMULUM_HEAT_SCALE/2)
 
 /datum/gas_reaction/stimformation/react(datum/gas_mixture/air)
@@ -291,7 +291,7 @@
 	cached_gases[/datum/gas/stimulum][MOLES]+= heat_scale/10
 	cached_gases[/datum/gas/tritium][MOLES]-= heat_scale
 	cached_gases[/datum/gas/plasma][MOLES]-= heat_scale
-	cached_gases[/datum/gas/browns][MOLES]-= heat_scale
+	cached_gases[/datum/gas/brown_gas][MOLES]-= heat_scale
 
 	if(stim_energy_change)
 		var/new_heat_capacity = air.heat_capacity()
@@ -312,13 +312,13 @@
 
 /datum/gas_reaction/nobliumformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
-	air.assert_gases(/datum/gas/noblium,/datum/gas/bz)
+	air.assert_gases(/datum/gas/hypernoblium,/datum/gas/bz)
 	var/old_heat_capacity = air.heat_capacity()
 	var/nob_formed = (cached_gases[/datum/gas/nitrogen][MOLES]*cached_gases[/datum/gas/tritium][MOLES])/100
 	var/energy_taken = nob_formed*(1000000/(cached_gases[/datum/gas/bz][MOLES])+1)
 	cached_gases[/datum/gas/tritium][MOLES]-= 10*nob_formed
 	cached_gases[/datum/gas/nitrogen][MOLES]-= 20*nob_formed
-	cached_gases[/datum/gas/noblium][MOLES]+= nob_formed
+	cached_gases[/datum/gas/hypernoblium][MOLES]+= nob_formed
 
 
 	if (nob_formed)
