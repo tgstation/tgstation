@@ -29,7 +29,7 @@
 
 //GAME_MODE PROCS
 //called to set a mob's antag icon state
-/datum/game_mode/proc/set_antag_hud(mob/M, new_icon_state)
+/proc/set_antag_hud(mob/M, new_icon_state)
 	if(!istype(M))
 		CRASH("set_antag_hud(): [M] ([M.type]) is not a mob!")
 	var/image/holder = M.hud_list[ANTAG_HUD]
@@ -43,7 +43,7 @@
 //these are called by mind.transfer_to()
 /datum/mind/proc/transfer_antag_huds(datum/atom_hud/antag/newhud)
 	leave_all_antag_huds()
-	SSticker.mode.set_antag_hud(current, antag_hud_icon_state)
+	set_antag_hud(current, antag_hud_icon_state)
 	if(newhud)
 		newhud.join_hud(current)
 

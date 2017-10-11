@@ -159,7 +159,8 @@
 
 
 /obj/mecha/proc/output_access_dialog(obj/item/card/id/id_card, mob/user)
-	if(!id_card || !user) return
+	if(!id_card || !user)
+		return
 	. = {"<html>
 						<head><style>
 						h1 {font-size:15px;margin-bottom:4px;}
@@ -173,9 +174,11 @@
 		. += "[get_access_desc(a)] - <a href='?src=\ref[src];del_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Delete</a><br>"
 	. += "<hr><h1>Following keycodes were detected on portable device:</h1>"
 	for(var/a in id_card.access)
-		if(a in operation_req_access) continue
+		if(a in operation_req_access)
+			continue
 		var/a_name = get_access_desc(a)
-		if(!a_name) continue //there's some strange access without a name
+		if(!a_name)
+			continue //there's some strange access without a name
 		. += "[a_name] - <a href='?src=\ref[src];add_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Add</a><br>"
 	. += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> "
 	. += "<span class='danger'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</span>"
@@ -185,7 +188,8 @@
 
 
 /obj/mecha/proc/output_maintenance_dialog(obj/item/card/id/id_card,mob/user)
-	if(!id_card || !user) return
+	if(!id_card || !user)
+		return
 	. = {"<html>
 						<head>
 						<style>

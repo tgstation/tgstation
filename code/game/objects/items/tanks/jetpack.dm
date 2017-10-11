@@ -8,7 +8,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
-	var/gas_type = "o2"
+	var/gas_type = /datum/gas/oxygen
 	var/on = FALSE
 	var/stabilizers = FALSE
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
@@ -17,7 +17,7 @@
 /obj/item/tank/jetpack/New()
 	..()
 	if(gas_type)
-		air_contents.assert_gas(gas_type)
+		ASSERT_GAS(gas_type,air_contents)
 		air_contents.gases[gas_type][MOLES] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
 
 	ion_trail = new
@@ -128,7 +128,7 @@
 	icon_state = "jetpack-black"
 	item_state =  "jetpack-black"
 	distribute_pressure = 0
-	gas_type = "co2"
+	gas_type = /datum/gas/carbon_dioxide
 
 
 /obj/item/tank/jetpack/suit
@@ -193,7 +193,7 @@
 
 //Return a jetpack that the mob can use
 //Back worn jetpacks, hardsuit internal packs, and so on.
-//Used in Process_Spacemove() and wherever you want to check for/get a jetpack	
+//Used in Process_Spacemove() and wherever you want to check for/get a jetpack
 
 /mob/proc/get_jetpack()
 	return

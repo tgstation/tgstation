@@ -108,6 +108,17 @@
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
+	//Also diseases
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+			M.ContactContractDisease(D)
+
+	for(var/thing in M.viruses)
+		var/datum/disease/D = thing
+		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+			ContactContractDisease(D)
+
 	if(now_pushing)
 		return 1
 
@@ -152,16 +163,20 @@
 			M.pass_flags |= PASSMOB
 			pass_flags |= PASSMOB
 
-			M.Move(oldloc)
-			Move(oldMloc)
-
+			var/move_failed = FALSE
+			if(!M.Move(oldloc) || !Move(oldMloc))
+				M.forceMove(oldMloc)
+				forceMove(oldloc)
+				move_failed = TRUE
 			if(!src_passmob)
 				pass_flags &= ~PASSMOB
 			if(!M_passmob)
 				M.pass_flags &= ~PASSMOB
 
 			now_pushing = 0
-			return 1
+			
+			if(!move_failed)
+				return 1
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
@@ -503,7 +518,7 @@
 				if((newdir in GLOB.cardinals) && (prob(50)))
 					newdir = turn(get_dir(target_turf, start), 180)
 				if(!blood_exists)
-					new /obj/effect/decal/cleanable/trail_holder(start)
+					new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
 
 				for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
 					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
@@ -872,7 +887,7 @@
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
-		src.set_light(3)
+		new/obj/effect/dummy/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		return TRUE
@@ -882,7 +897,8 @@
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
-		src.set_light(0)
+		for(var/obj/effect/dummy/fire/F in src)
+			qdel(F)
 		clear_alert("fire")
 		update_fire()
 

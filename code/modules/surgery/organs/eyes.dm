@@ -16,7 +16,7 @@
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	var/lighting_alpha
 
-/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = FALSE)
 	..()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/HMN = owner
@@ -44,9 +44,11 @@
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	actions_types = list(/datum/action/item_action/organ_action/use)
+	sight_flags = SEE_BLACKNESS
 	var/night_vision = TRUE
 
 /obj/item/organ/eyes/night_vision/ui_action_click()
+	sight_flags = initial(sight_flags)
 	switch(lighting_alpha)
 		if (LIGHTING_PLANE_ALPHA_VISIBLE)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -56,6 +58,7 @@
 			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		else
 			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			sight_flags &= ~SEE_BLACKNESS
 	owner.update_sight()
 
 /obj/item/organ/eyes/night_vision/alien

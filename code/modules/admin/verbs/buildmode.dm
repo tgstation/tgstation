@@ -181,7 +181,8 @@
 			if(varholder in locked && !check_rights(R_DEBUG,0))
 				return 1
 			var/thetype = input(user,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
-			if(!thetype) return 1
+			if(!thetype)
+				return 1
 			switch(thetype)
 				if("text")
 					valueholder = input(user,"Enter variable value:" ,"Value", "value") as text
@@ -200,7 +201,8 @@
 				var/datum/mapGenerator/MP = path
 				options[initial(MP.buildmode_name)] = path
 			var/type = input(user,"Select Generator Type","Type") as null|anything in options
-			if(!type) return
+			if(!type)
+				return
 
 			generator_path = options[type]
 			cornerA = null

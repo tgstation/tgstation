@@ -45,7 +45,7 @@
 	name = "meat spike"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "spike"
-	desc = "A spike for collecting meat from animals"
+	desc = "A spike for collecting meat from animals."
 	density = TRUE
 	anchored = TRUE
 	buckle_lying = 0

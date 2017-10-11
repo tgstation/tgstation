@@ -12,8 +12,8 @@
 	if(!air_contents)
 		return 0
 
-	var/oxy = air_contents.gases["o2"] ? air_contents.gases["o2"][MOLES] : 0
-	var/tox = air_contents.gases["plasma"] ? air_contents.gases["plasma"][MOLES] : 0
+	var/oxy = air_contents.gases[/datum/gas/oxygen] ? air_contents.gases[/datum/gas/oxygen][MOLES] : 0
+	var/tox = air_contents.gases[/datum/gas/plasma] ? air_contents.gases[/datum/gas/plasma][MOLES] : 0
 
 	if(active_hotspot)
 		if(soh)
@@ -49,7 +49,7 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
-	light_range = 3
+	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 
 	var/volume = 125
@@ -112,7 +112,7 @@
 		qdel(src)
 		return
 
-	if(!(location.air) || !location.air.gases["plasma"] || !location.air.gases["o2"] || location.air.gases["plasma"][MOLES] < 0.5 || location.air.gases["o2"][MOLES] < 0.5)
+	if(!(location.air) || !location.air.gases[/datum/gas/plasma] || !location.air.gases[/datum/gas/oxygen] || location.air.gases[/datum/gas/plasma][MOLES] < 0.5 || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
 		qdel(src)
 		return
 
@@ -175,3 +175,15 @@
 	..()
 	if(isliving(L))
 		L.fire_act(temperature, volume)
+
+/obj/effect/dummy/fire
+	name = "fire"
+	desc = "OWWWWWW. IT BURNS. Tell a coder if you're seeing this."
+	icon_state = "nothing"
+	light_color = LIGHT_COLOR_FIRE
+	light_range = LIGHT_RANGE_FIRE
+
+/obj/effect/dummy/fire/Initialize()
+	. = ..()
+	if(!isliving(loc))
+		qdel(src)

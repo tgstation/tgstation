@@ -259,8 +259,8 @@
 
 //Atmos Backpack Resin, transparent, prevents atmos and filters the air
 /obj/structure/foamedmetal/resin
-	name = "ATMOS Resin"
-	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature"
+	name = "\improper ATMOS Resin"
+	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature."
 	opacity = FALSE
 	icon_state = "atmos_resin"
 	alpha = 120
@@ -279,8 +279,9 @@
 				qdel(H)
 			var/list/G_gases = G.gases
 			for(var/I in G_gases)
-				if(I != "o2" && I != "n2")
-					G.gases[I][MOLES] = 0
+				if(I == /datum/gas/oxygen || I == /datum/gas/nitrogen)
+					continue
+				G_gases[I][MOLES] = 0
 			G.garbage_collect()
 			O.air_update_turf()
 		for(var/obj/machinery/atmospherics/components/unary/U in O)

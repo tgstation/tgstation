@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Buckled mobs when on a rotating shuttle should now rotate correctly"

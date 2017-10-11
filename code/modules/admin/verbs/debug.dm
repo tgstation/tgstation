@@ -31,7 +31,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Advanced ProcCall"
 	set waitfor = 0
 
-	if(!check_rights(R_DEBUG)) return
+	if(!check_rights(R_DEBUG))
+		return
 
 	var/datum/target = null
 	var/targetselected = 0
@@ -715,8 +716,8 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		if(Rad.anchored)
 			if(!Rad.loaded_tank)
 				var/obj/item/tank/internals/plasma/Plasma = new/obj/item/tank/internals/plasma(Rad)
-				Plasma.air_contents.assert_gas("plasma")
-				Plasma.air_contents.gases["plasma"][MOLES] = 70
+				ASSERT_GAS(/datum/gas/plasma, Plasma.air_contents)
+				Plasma.air_contents.gases[/datum/gas/plasma][MOLES] = 70
 				Rad.drainratio = 0
 				Rad.loaded_tank = Plasma
 				Plasma.loc = Rad

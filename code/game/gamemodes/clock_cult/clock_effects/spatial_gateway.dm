@@ -55,7 +55,7 @@
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='brass'>It has [uses] uses remaining.</span>")
+		to_chat(user, "<span class='brass'>It has [uses] use\s remaining.</span>")
 
 /obj/effect/clockwork/spatial_gateway/attack_ghost(mob/user)
 	if(linked_gateway)
@@ -88,7 +88,7 @@
 	if(istype(I, /obj/item/clockwork/slab))
 		to_chat(user, "<span class='heavy_brass'>\"I don't think you want to drop your slab into that.\"\n\"If you really want to, try throwing it.\"</span>")
 		return TRUE
-	if(user.drop_item() && uses)
+	if(uses && user.dropItemToGround(I))
 		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")
 		pass_through_gateway(I, TRUE)
 		return TRUE

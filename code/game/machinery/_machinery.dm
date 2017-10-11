@@ -443,14 +443,14 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/display_parts(mob/user)
-	to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
+	to_chat(user, "<span class='notice'>It contains the following parts:</span>")
 	for(var/obj/item/C in component_parts)
-		to_chat(user, "<span class='notice'>[icon2html(C, user)] [C.name]</span>")
+		to_chat(user, "<span class='notice'>[icon2html(C, user)] \A [C].</span>")
 
 /obj/machinery/examine(mob/user)
 	..()
 	if(stat & BROKEN)
-		to_chat(user, "<span class='notice'>It looks broken and non functional.</span>")
+		to_chat(user, "<span class='notice'>It looks broken and non-functional.</span>")
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
 			to_chat(user, "<span class='warning'>It's on fire!</span>")
@@ -476,14 +476,17 @@ Class Procs:
 // Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
 /obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
 	if (hclient.client.mob && (hclient.client.mob.stat == 0 || IsAdminGhost(hclient.client.mob)))
-		if (isAI(hclient.client.mob) || IsAdminGhost(hclient.client.mob)) return TRUE
-		else                          return hclient.client.mob.machine == src && Adjacent(hclient.client.mob)
+		if (isAI(hclient.client.mob) || IsAdminGhost(hclient.client.mob))
+			return TRUE
+		else
+			return hclient.client.mob.machine == src && Adjacent(hclient.client.mob)
 	else
 		return FALSE
 
 // Hook for html_interface module to unset the active machine when the window is closed by the player.
 /obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
-	if (hclient.client.mob && hclient.client.mob.machine == src) hclient.client.mob.unset_machine()
+	if (hclient.client.mob && hclient.client.mob.machine == src)
+		hclient.client.mob.unset_machine()
 
 /obj/machinery/proc/can_be_overridden()
 	. = 1

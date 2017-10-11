@@ -61,14 +61,14 @@ GLOBAL_LIST_EMPTY(explosions)
 		flash_range = min(GLOB.MAX_EX_FLASH_RANGE, flash_range)
 		flame_range = min(GLOB.MAX_EX_FLAME_RANGE, flame_range)
 
-	//DO NOT REMOVE THIS SLEEP, IT BREAKS THINGS
+	//DO NOT REMOVE THIS STOPLAG, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
 	//doing that might cause it to trigger another explosion
 	//this is bad
 	//I would make this not ex_act the thing that triggered the explosion,
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
-	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
+	stoplag() //tldr, let the calling proc call qdel(src) before we explode
 
 	EX_PREPROCESS_EXIT_CHECK
 
@@ -176,6 +176,15 @@ GLOBAL_LIST_EMPTY(explosions)
 			dist = EXPLODE_NONE
 
 		//------- EX_ACT AND TURF FIRES -------
+
+		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
+			var/list/items = list() 
+			for(var/I in T)
+				var/atom/A = I
+				items += A.GetAllContents()
+			for(var/O in items)
+				var/atom/A = O
+				A.ex_act(dist)
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!

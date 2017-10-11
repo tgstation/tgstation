@@ -1,4 +1,4 @@
-// /tg/station 13 server tools API v3.1
+// /tg/station 13 server tools API v3.1.0.2
 
 //CONFIGURATION
 //use this define if you want to do configuration outside of this file
@@ -21,6 +21,8 @@
 #define SERVER_TOOLS_LOG(message) log_world("SERVICE: [##message]")
 //Notify current in-game administrators of a string `event`
 #define SERVER_TOOLS_NOTIFY_ADMINS(event) message_admins(##event)
+//The current amount of connected clients
+#define SERVER_TOOLS_CLIENT_COUNT GLOB.clients.len
 #endif
 
 //Required hooks:
@@ -62,7 +64,7 @@
 
 //IMPLEMENTATION
 
-#define SERVICE_API_VERSION_STRING "3.1.0.0"
+#define SERVICE_API_VERSION_STRING "3.1.0.2"
 
 #define REBOOT_MODE_NORMAL 0
 #define REBOOT_MODE_HARD 1
@@ -78,12 +80,13 @@
 #define SERVICE_CMD_GRACEFUL_SHUTDOWN "graceful_shutdown"
 #define SERVICE_CMD_WORLD_ANNOUNCE "world_announce"
 #define SERVICE_CMD_LIST_CUSTOM "list_custom_commands"
+#define SERVICE_CMD_API_COMPATIBLE "api_compat"
+#define SERVICE_CMD_PLAYER_COUNT "client_count"
 
 #define SERVICE_CMD_PARAM_KEY "serviceCommsKey"
 #define SERVICE_CMD_PARAM_COMMAND "command"
 #define SERVICE_CMD_PARAM_SENDER "sender"
 #define SERVICE_CMD_PARAM_CUSTOM "custom"
-#define SERVICE_CMD_API_COMPATIBLE "api_compat"
 
 #define SERVICE_JSON_PARAM_HELPTEXT "help_text"
 #define SERVICE_JSON_PARAM_ADMINONLY "admin_only"

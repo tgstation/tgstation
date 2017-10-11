@@ -96,13 +96,6 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 
-
-/mob/living/simple_animal/Login()
-	if(src && src.client)
-		src.client.screen = list()
-		client.screen += client.void
-	..()
-
 /mob/living/simple_animal/updatehealth()
 	..()
 	health = Clamp(health, 0, maxHealth)
@@ -188,10 +181,10 @@
 			var/ST_gases = ST.air.gases
 			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
-			var/tox = ST_gases["plasma"][MOLES]
-			var/oxy = ST_gases["o2"][MOLES]
-			var/n2  = ST_gases["n2"][MOLES]
-			var/co2 = ST_gases["co2"][MOLES]
+			var/tox = ST_gases[/datum/gas/plasma][MOLES]
+			var/oxy = ST_gases[/datum/gas/oxygen][MOLES]
+			var/n2  = ST_gases[/datum/gas/nitrogen][MOLES]
+			var/co2 = ST_gases[/datum/gas/carbon_dioxide][MOLES]
 
 			ST.air.garbage_collect()
 

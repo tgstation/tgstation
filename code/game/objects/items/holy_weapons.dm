@@ -10,6 +10,7 @@
 	throw_range = 4
 	throwforce = 10
 	w_class = WEIGHT_CLASS_TINY
+	unique_rename = TRUE
 	var/reskinned = FALSE
 
 /obj/item/nullrod/suicide_act(mob/user)
@@ -339,8 +340,8 @@
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "carpplushie"
+	icon = 'icons/obj/plushes.dmi'
+	icon_state = "carpplush"
 	item_state = "carp_plushie"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'

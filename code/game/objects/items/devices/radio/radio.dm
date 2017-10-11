@@ -195,9 +195,11 @@
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language)
-	if(!on) return // the device has to be on
+	if(!on)
+		return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
-	if(!M || !message) return
+	if(!M || !message)
+		return
 
 	if(wires.is_cut(WIRE_TX))
 		return
@@ -512,9 +514,9 @@
 /obj/item/device/radio/examine(mob/user)
 	..()
 	if (b_stat)
-		to_chat(user, "<span class='notice'>[name] can be attached and modified.</span>")
+		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
 	else
-		to_chat(user, "<span class='notice'>[name] can not be modified or attached.</span>")
+		to_chat(user, "<span class='notice'>It cannot be modified or attached.</span>")
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)

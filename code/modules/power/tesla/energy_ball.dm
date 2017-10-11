@@ -57,7 +57,7 @@
 		pixel_x = 0
 		pixel_y = 0
 
-		setDir(tesla_zap(src, 7, TESLA_DEFAULT_POWER, TRUE))
+		tesla_zap(src, 7, TESLA_DEFAULT_POWER, TRUE)
 
 		pixel_x = -32
 		pixel_y = -32
@@ -75,9 +75,9 @@
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
-	var/first_move = dir
+	var/move_bias = pick(GLOB.alldirs)
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(GLOB.alldirs + first_move) //give the first move direction a bit of favoring.
+		var/move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around 
 		if(target && prob(60))
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
@@ -222,7 +222,7 @@
 		else if(closest_mob)
 			continue
 
-		else if(istype(A, /obj/machinery))
+		else if(ismachinery(A))
 			var/obj/machinery/M = A
 			var/dist = get_dist(source, A)
 			if(dist <= zap_range && (dist < closest_dist || !closest_machine) && !M.being_shocked)

@@ -89,28 +89,26 @@
 	var/mob/M = user
 	if(isigniter(S.a_left) == isigniter(S.a_right))		//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 		return
-	if(!M.drop_item())			//Remove the assembly from your hands
+	if(!M.temporarilyRemoveItemFromInventory(src))			//Remove the assembly from your hands
 		return
 
-	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
+	var/obj/item/device/onetankbomb/R = new
 
-	M.temporarilyRemoveItemFromInventory(src, TRUE)	//Remove the tank from your character,in case you were holding it
-	if(!M.put_in_hands(R))		//Equips the bomb if possible, or puts it on the floor.
-		forceMove(get_turf(M))
+	M.put_in_hands(R)		//Equips the bomb if possible, or puts it on the floor.
 
 	R.bombassembly = S	//Tell the bomb about its assembly part
 	S.master = R		//Tell the assembly about its new owner
-	S.loc = R			//Move the assembly out of the fucking way
+	S.forceMove(R)			//Move the assembly out of the fucking way
 
 	R.bombtank = src	//Same for tank
 	master = R
-	loc = R
+	forceMove(R)
 	R.update_icon()
 	return
 
 /obj/item/tank/proc/ignite()	//This happens when a bomb is told to explode
-	air_contents.assert_gases("plasma", "o2")
-	var/fuel_moles = air_contents.gases["plasma"][MOLES] + air_contents.gases["o2"][MOLES]/6
+	air_contents.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+	var/fuel_moles = air_contents.gases[/datum/gas/plasma][MOLES] + air_contents.gases[/datum/gas/oxygen][MOLES]/6
 	air_contents.garbage_collect()
 
 	var/strength = 1

@@ -63,7 +63,7 @@
 
 	if(isnum(.)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)
 		if(.)
-			to_chat(H, "<span class='notice'>Gained <B>[.]</B> energy from \the [A].</span>")
+			to_chat(H, "<span class='notice'>Gained <B>[DisplayPower(.)]</B> of energy from [A].</span>")
 		else
 			to_chat(H, "<span class='danger'>\The [A] has run dry of power, you must find another source!</span>")
 	else
@@ -78,4 +78,4 @@
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
 	if(flags_1 & NODROP_1)
-		to_chat(user, "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>.")
+		to_chat(user, "The energy drain mechanism is <B>[candrain?"active":"inactive"]</B>.")

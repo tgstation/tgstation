@@ -59,10 +59,9 @@
 		lenin.restricted_roles = restricted_jobs
 
 	if(head_revolutionaries.len < required_enemies)
-		return 0
+		return FALSE
 
-	return 1
-
+	return TRUE
 
 /datum/game_mode/revolution/post_setup()
 	var/list/heads = get_living_heads()
@@ -102,10 +101,7 @@
 		for(var/datum/mind/head_mind in heads)
 			mark_for_death(rev_mind, head_mind)
 
-		spawn(rand(10,100))
-		//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
-		//	Removing revolutionary uplinks.	-Pete
-			equip_revolutionary(rev_mind.current)
+		addtimer(CALLBACK(src, .proc/equip_revolutionary, rev_mind.current), rand(10, 100))
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
@@ -121,7 +117,7 @@
 			check_heads()
 			SSticker.mode.check_win()
 		check_counter = 0
-	return 0
+	return FALSE
 
 
 /datum/game_mode/proc/forge_revolutionary_objectives(datum/mind/rev_mind)
@@ -169,7 +165,7 @@
 		to_chat(mob, "The Syndicate were unfortunately unable to get you a flash.")
 	else
 		to_chat(mob, "The flash in your [where] will help you to persuade the crew to join your cause.")
-		return 1
+		return TRUE
 
 /////////////////////////////////
 //Gives head revs their targets//
@@ -235,7 +231,7 @@
 			SSshuttle.clearHostileEnvironment(src)
 		return ..()
 	if(finished != 0)
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -253,12 +249,14 @@
 
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
 	if(rev_mind.assigned_role in GLOB.command_positions)
-		return 0
+		return FALSE
 	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
 	if(H.isloyal())
-		return 0
+		return FALSE
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
-		return 0
+		return FALSE
+	if(rev_mind.unconvertable)
+		return FALSE
 	revolutionaries += rev_mind
 	if(iscarbon(rev_mind.current))
 		var/mob/living/carbon/carbon_mob = rev_mind.current
@@ -271,7 +269,7 @@
 	update_rev_icons_added(rev_mind)
 	if(jobban_isbanned(rev_mind.current, ROLE_REV))
 		INVOKE_ASYNC(src, .proc/replace_jobbaned_player, rev_mind.current, ROLE_REV, ROLE_REV)
-	return 1
+	return TRUE
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
 //////////////////////////////////////////////////////////////////////////////
@@ -319,9 +317,9 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/objective/mutiny/objective in rev_mind.objectives)
 			if(!(objective.check_completion()))
-				return 0
+				return FALSE
 
-		return 1
+		return TRUE
 
 /////////////////////////////
 //Checks for a head victory//
@@ -331,8 +329,8 @@
 		var/turf/T = get_turf(rev_mind.current)
 		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && (T.z in GLOB.station_z_levels))
 			if(ishuman(rev_mind.current))
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//
@@ -350,7 +348,7 @@
 
 		SSticker.news_report = REVS_LOSE
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
 	var/list/targets = list()

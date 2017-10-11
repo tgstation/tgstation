@@ -134,12 +134,11 @@
 		if(ispath(lit, /obj/item/ore/bluespace_crystal))
 			use_power(max(500,M.last_amount_inserted/10))
 		else
-			var/obj/item/stack/S = lit
-			var/list/initmats = initial(S.materials)
-			if (initmats[MAT_METAL])
-				flick("autolathe_o",src)//plays metal insertion animation
-			if (initmats[MAT_GLASS])
-				flick("autolathe_r",src)//plays glass insertion animation
+			switch(M.last_inserted_id)
+				if (MAT_METAL)
+					flick("autolathe_o",src)//plays metal insertion animation
+				if (MAT_GLASS)
+					flick("autolathe_r",src)//plays glass insertion animation
 			use_power(M.last_amount_inserted*100)
 		updateUsrDialog()
 
@@ -388,6 +387,10 @@
 				files.AddDesign2Known(D)
 			else
 				files.known_designs -= D.id
+
+/obj/machinery/autolathe/hacked/Initialize()
+	. = ..()
+	adjust_hacked(TRUE)
 
 //Called when the object is constructed by an autolathe
 //Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes

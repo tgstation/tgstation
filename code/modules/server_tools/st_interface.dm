@@ -2,7 +2,7 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(reboot_mode, REBOOT_MODE_NORMAL)
 SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 
 /proc/GetTestMerges()
-	if(RunningService() && fexists(SERVICE_PR_TEST_JSON))
+	if(RunningService(TRUE) && fexists(SERVICE_PR_TEST_JSON))
 		. = json_decode(file2text(SERVICE_PR_TEST_JSON))
 		if(.)
 			return
@@ -89,6 +89,8 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 				return "No message set!"
 			SERVER_TOOLS_WORLD_ANNOUNCE(msg)
 			return "SUCCESS"
+		if(SERVICE_CMD_PLAYER_COUNT)
+			return "[SERVER_TOOLS_CLIENT_COUNT]"
 		if(SERVICE_CMD_LIST_CUSTOM)
 			return json_encode(ListServiceCustomCommands(FALSE))
 		else

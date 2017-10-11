@@ -349,8 +349,8 @@ research holder datum.
 	max_tech_stored = 10
 
 /obj/item/disk/tech_disk/debug
-	name = "centcom technology disk"
-	desc = "A debug item for research"
+	name = "\improper CentCom technology disk"
+	desc = "A debug item for research."
 	materials = list()
 	max_tech_stored = 0
 

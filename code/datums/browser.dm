@@ -177,7 +177,7 @@
 
 /datum/browser/alert/proc/wait()
 	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
-		stoplag()
+		stoplag(1)
 
 /datum/browser/alert/Topic(href,href_list)
 	if (href_list["close"] || !user || !user.client)
@@ -249,7 +249,8 @@
 // Otherwise, the user mob's machine var will be reset directly.
 //
 /proc/onclose(mob/user, windowid, atom/ref=null)
-	if(!user.client) return
+	if(!user.client)
+		return
 	var/param = "null"
 	if(ref)
 		param = "\ref[ref]"

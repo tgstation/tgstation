@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(devil_syllable, list("hal", "ve", "odr", "neit", "ci", "quon", 
 GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", ", the Lord of all things", ", Jr."))
 /datum/antagonist/devil
 	//Don't delete upon mind destruction, otherwise soul re-selling will break.
-	delete_on_death = FALSE
+	delete_on_mind_deletion = FALSE
 	var/obligation
 	var/ban
 	var/bane

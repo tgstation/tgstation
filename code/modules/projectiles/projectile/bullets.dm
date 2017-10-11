@@ -8,9 +8,9 @@
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
-/obj/item/projectile/bullet/pellet/Range()
+/obj/item/projectile/bullet/pellet/shotgun_buckshot/Range()
 	..()
-	damage += -0.75
+	damage -= 0.75
 	if(damage < 0)
 		qdel(src)
 
@@ -66,7 +66,7 @@
 /obj/item/projectile/bullet/c38
 	name = ".38 bullet"
 	damage = 15
-	knockdown = 30
+	knockdown = 60
 	stamina = 50
 
 // 10mm (Stechkin)
@@ -109,7 +109,7 @@
 // 4.6x30mm (Autorifles)
 
 /obj/item/projectile/bullet/c46x30mm
-	desc = "4.6x30mm bullet"
+	name = "4.6x30mm bullet"
 	damage = 20
 
 /obj/item/projectile/bullet/c46x30mm_ap
@@ -122,7 +122,7 @@
 	damage = 10
 	fire_stacks = 1
 
-// .45 (M1911)
+// .45 (M1911 & C20r)
 
 /obj/item/projectile/bullet/c45
 	name = ".45 bullet"
@@ -131,7 +131,7 @@
 
 /obj/item/projectile/bullet/c45_nostamina
 	name = ".45 bullet"
-	damage = 20
+	damage = 30
 
 // 5.56mm (M-90gl Carbine)
 

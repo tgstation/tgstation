@@ -223,10 +223,9 @@
 		if(!isnull(reagent_glass))
 			to_chat(user, "<span class='warning'>There is already a beaker loaded!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(W, src))
 			return
 
-		W.loc = src
 		reagent_glass = W
 		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		show_controls(user)
@@ -377,8 +376,8 @@
 			var/datum/disease/D = thing
 			//the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
 			if(!(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC) \
-			&& D.severity != NONTHREAT \
-			&& (D.stage > 1 || (D.spread_flags & AIRBORNE))) // medibot can't detect a virus in its initial stage unless it spreads airborne.
+			&& D.severity != VIRUS_SEVERITY_POSITIVE \
+			&& (D.stage > 1 || (D.spread_flags & VIRUS_SPREAD_AIRBORNE))) // medibot can't detect a virus in its initial stage unless it spreads airborne.
 				return 1 //STOP DISEASE FOREVER
 
 	return 0
@@ -429,8 +428,8 @@
 				var/datum/disease/D = thing
 				//detectable virus
 				if((!(D.visibility_flags & HIDDEN_SCANNER)) || (!(D.visibility_flags & HIDDEN_PANDEMIC)))
-					if(D.severity != NONTHREAT)      //virus is harmful
-						if((D.stage > 1) || (D.spread_flags & AIRBORNE))
+					if(D.severity != VIRUS_SEVERITY_POSITIVE)      //virus is harmful
+						if((D.stage > 1) || (D.spread_flags & VIRUS_SPREAD_AIRBORNE))
 							virus = 1
 
 			if(!reagent_id && (virus))
