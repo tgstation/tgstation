@@ -888,6 +888,7 @@
 #include "code\game\objects\items\storage\book.dm"
 #include "code\game\objects\items\storage\boxes.dm"
 #include "code\game\objects\items\storage\briefcase.dm"
+#include "code\game\objects\items\storage\dakis.dm"
 #include "code\game\objects\items\storage\fancy.dm"
 #include "code\game\objects\items\storage\firstaid.dm"
 #include "code\game\objects\items\storage\internal.dm"
