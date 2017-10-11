@@ -30,6 +30,7 @@
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
 	var/step_energy_drain = 10
 	var/melee_energy_drain = 15
+	var/overload_step_energy_drain_min = 100
 	max_integrity = 300 //max_integrity is base health
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
@@ -275,7 +276,7 @@
 	if(equipment && equipment.len)
 		to_chat(user, "It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
-			to_chat(user, "[icon2html(ME, user)] [ME]")
+			to_chat(user, "[icon2html(ME, user)] \A [ME].")
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -593,7 +594,8 @@
 ///////////////////////////////////
 
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
-	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
+	if(!islist(possible_int_damage) || isemptylist(possible_int_damage))
+		return
 	if(prob(20))
 		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			for(var/T in possible_int_damage)

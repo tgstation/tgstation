@@ -32,7 +32,7 @@
 		to_chat(user, "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining.")
 		for(var/A in get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
-			to_chat(user, "<span class='notice'>There is a [M.name] mod installed, using <b>[M.cost]%</b> capacity.</span>")
+			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
 
 /obj/item/gun/energy/kinetic_accelerator/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/crowbar))

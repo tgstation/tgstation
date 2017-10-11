@@ -15,8 +15,10 @@
 	resistance_flags = 0
 
 /obj/item/reagent_containers/food/drinks/on_reagent_change()
-	if (gulp_size < 5) gulp_size = 5
-	else gulp_size = max(round(reagents.total_volume / 5), 5)
+	if (gulp_size < 5)
+		gulp_size = 5
+	else
+		gulp_size = max(round(reagents.total_volume / 5), 5)
 
 /obj/item/reagent_containers/food/drinks/attack(mob/M, mob/user, def_zone)
 
@@ -51,7 +53,8 @@
 	return 1
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if (!is_open_container())

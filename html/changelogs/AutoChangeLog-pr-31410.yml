@@ -1,0 +1,6 @@
+author: "WJohnston & ninjanomnom"
+delete-after: True
+changes: 
+  - rscadd: "Plastitanium walls smooth, fancier syndicate shuttles!"
+  - bugfix: "Infiltrator shuttles have been moved out of the station maps and made into a multi-area shuttle."
+  - balance: "Titanium and plastitanium have explosion resistance (requested by Wjohn)"

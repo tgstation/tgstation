@@ -131,8 +131,7 @@
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
 	if(user.a_intent != INTENT_HARM && !(I.flags_1 & ABSTRACT_1))
-		if(user.drop_item())
-			I.Move(loc)
+		if(user.transferItemToLoc(I, drop_location()))
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
@@ -316,13 +315,15 @@
 			if(deconstruction_ready)
 				to_chat(user, "<span class='notice'>You start strengthening the reinforced table...</span>")
 				if (do_after(user, 50*W.toolspeed, target = src))
-					if(!src || !WT.isOn()) return
+					if(!src || !WT.isOn())
+						return
 					to_chat(user, "<span class='notice'>You strengthen the table.</span>")
 					deconstruction_ready = 0
 			else
 				to_chat(user, "<span class='notice'>You start weakening the reinforced table...</span>")
 				if (do_after(user, 50*W.toolspeed, target = src))
-					if(!src || !WT.isOn()) return
+					if(!src || !WT.isOn())
+						return
 					to_chat(user, "<span class='notice'>You weaken the table.</span>")
 					deconstruction_ready = 1
 	else
@@ -439,7 +440,7 @@
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
 		return
-	if(!user.drop_item())
+	if(!user.dropItemToGround(O))
 		return
 	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -452,8 +453,7 @@
 		return
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-	if(user.drop_item())
-		W.Move(loc)
+	if(user.transferItemToLoc(W, drop_location()))
 		return 1
 
 /obj/structure/rack/attack_paw(mob/living/user)
@@ -516,7 +516,7 @@
 	building = TRUE
 	to_chat(user, "<span class='notice'>You start constructing a rack...</span>")
 	if(do_after(user, 50, target = user, progress=TRUE))
-		if(!user.drop_item())
+		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
 		user.visible_message("<span class='notice'>[user] assembles \a [R].\

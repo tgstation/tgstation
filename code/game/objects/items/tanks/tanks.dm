@@ -71,7 +71,8 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if(!in_range(src, user))
-		if (icon == src) to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
+		if (icon == src)
+			to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
 	to_chat(user, "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>")

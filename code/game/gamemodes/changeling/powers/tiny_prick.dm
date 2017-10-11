@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/sting
 	name = "Tiny Prick"
-	desc = "Stabby stabby"
+	desc = "Stabby stabby."
 	var/sting_icon = null
 
 /obj/effect/proc_holder/changeling/sting/Click()
@@ -127,8 +127,9 @@
 /obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", object="falso armblade sting")
 
-	if(!target.drop_item())
-		to_chat(user, "<span class='warning'>The [target.get_active_held_item()] is stuck to their hand, you cannot grow a false armblade over it!</span>")
+	var/obj/item/held = target.get_active_held_item()
+	if(held && !target.dropItemToGround(held))
+		to_chat(user, "<span class='warning'>[held] is stuck to their hand, you cannot grow a false armblade over it!</span>")
 		return
 
 	if(ismonkey(target))

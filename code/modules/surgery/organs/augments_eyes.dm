@@ -14,7 +14,7 @@
 	slot = "eye_hud"
 	var/HUD_type = 0
 
-/obj/item/organ/cyberimp/eyes/hud/Insert(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/cyberimp/eyes/hud/Insert(var/mob/living/carbon/M, var/special = 0, drop_if_replaced = FALSE)
 	..()
 	if(HUD_type)
 		var/datum/atom_hud/H = GLOB.huds[HUD_type]

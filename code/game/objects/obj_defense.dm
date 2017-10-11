@@ -52,10 +52,12 @@
 		return
 	..() //contents explosion
 	if(target == src)
+		obj_integrity = 0
 		qdel(src)
 		return
 	switch(severity)
 		if(1)
+			obj_integrity = 0
 			qdel(src)
 		if(2)
 			take_damage(rand(100, 250), BRUTE, "bomb", 0)

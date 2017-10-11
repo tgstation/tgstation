@@ -19,7 +19,6 @@
 #define BANTYPE_ADMIN_TEMP	8
 #define BANTYPE_ANY_JOB		9 //used to remove jobbans
 
-//Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
 #define R_BUILDMODE		1
 #define R_ADMIN			2
@@ -39,7 +38,7 @@
 #error Remove the flag below , its been long enough
 #endif
 //legacy , remove post 512, it was replaced by R_POLL
-#define R_REJUVINATE	2 
+#define R_REJUVINATE	2
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 

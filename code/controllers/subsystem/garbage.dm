@@ -385,7 +385,8 @@ SUBSYSTEM_DEF(garbage)
 		find_references(TRUE)
 
 /datum/proc/DoSearchVar(X, Xname)
-	if(usr && usr.client && !usr.client.running_find_references) return
+	if(usr && usr.client && !usr.client.running_find_references)
+		return
 	if(istype(X, /datum))
 		var/datum/D = X
 		if(D.last_find_references == last_find_references)

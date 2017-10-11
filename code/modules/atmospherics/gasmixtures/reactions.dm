@@ -57,7 +57,7 @@
 	cached_gases["co2"][MOLES] -= reaction_rate
 	cached_gases["agent_b"][MOLES] -= reaction_rate*0.05
 
-	air.assert_gas("o2") //only need to assert oxygen, as this reaction doesn't occur without the other gases existing
+	ASSERT_GAS("o2", air) //only need to assert oxygen, as this reaction doesn't occur without the other gases existing
 	cached_gases["o2"][MOLES] += reaction_rate
 
 	air.temperature -= (reaction_rate*20000)/air.heat_capacity()
@@ -126,7 +126,7 @@
 		if(burned_fuel)
 			energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
 
-			air.assert_gas("co2")
+			ASSERT_GAS("co2", air)
 			cached_gases["co2"][MOLES] += burned_fuel
 
 			cached_results[id] += burned_fuel
@@ -142,14 +142,14 @@
 		else
 			temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
 		if(temperature_scale > 0)
-			air.assert_gas("o2")
+			ASSERT_GAS("o2", air)
 			oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
 			if(cached_gases["o2"][MOLES] > cached_gases["plasma"][MOLES]*PLASMA_OXYGEN_FULLBURN)
 				plasma_burn_rate = (cached_gases["plasma"][MOLES]*temperature_scale)/PLASMA_BURN_RATE_DELTA
 			else
 				plasma_burn_rate = (temperature_scale*(cached_gases["o2"][MOLES]/PLASMA_OXYGEN_FULLBURN))/PLASMA_BURN_RATE_DELTA
 			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
-				air.assert_gas("co2")
+				ASSERT_GAS("co2", air)
 				cached_gases["plasma"][MOLES] = QUANTIZE(cached_gases["plasma"][MOLES] - plasma_burn_rate)
 				cached_gases["o2"][MOLES] = QUANTIZE(cached_gases["o2"][MOLES] - (plasma_burn_rate * oxygen_burn_rate))
 				cached_gases["co2"][MOLES] += plasma_burn_rate
@@ -199,13 +199,13 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	var/carbon_efficency = min(cached_gases["plasma"][MOLES]/cached_gases["co2"][MOLES],MAX_CARBON_EFFICENCY)
-	var/reaction_energy = air.thermal_energy()
+	var/reaction_energy = THERMAL_ENERGY(air)
 	var/moles_impurities = air.total_moles()-(cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])
 
 	var/plasma_fused = (PLASMA_FUSED_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 	var/carbon_catalyzed = (CARBON_CATALYST_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 	var/oxygen_added = carbon_catalyzed
-	var/nitrogen_added = (plasma_fused-oxygen_added)-(air.thermal_energy()/PLASMA_BINDING_ENERGY)
+	var/nitrogen_added = (plasma_fused-oxygen_added)-(THERMAL_ENERGY(air)/PLASMA_BINDING_ENERGY)
 
 	reaction_energy = max(reaction_energy+((carbon_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY),0)
 

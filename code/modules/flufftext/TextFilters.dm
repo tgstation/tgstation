@@ -41,8 +41,10 @@
 	step(M, pick(d,turn(d,90),turn(d,-90)))
 
 /proc/Ellipsis(original_msg, chance = 50, keep_words)
-	if(chance <= 0) return "..."
-	if(chance >= 100) return original_msg
+	if(chance <= 0)
+		return "..."
+	if(chance >= 100)
+		return original_msg
 
 	var/list
 		words = splittext(original_msg," ")

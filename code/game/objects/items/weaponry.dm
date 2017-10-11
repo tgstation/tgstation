@@ -1,5 +1,5 @@
 /obj/item/banhammer
-	desc = "A banhammer"
+	desc = "A banhammer."
 	name = "banhammer"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "toyhammer"
@@ -192,7 +192,7 @@
 
 /obj/item/katana
 	name = "katana"
-	desc = "Woefully underpowered in D20"
+	desc = "Woefully underpowered in D20."
 	icon_state = "katana"
 	item_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -257,7 +257,7 @@
 
 /obj/item/throwing_star
 	name = "throwing star"
-	desc = "An ancient weapon still used to this day due to it's ease of lodging itself into victim's body parts"
+	desc = "An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts."
 	icon_state = "throwingstar"
 	item_state = "eshield0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -390,7 +390,7 @@
 
 /obj/item/ectoplasm
 	name = "ectoplasm"
-	desc = "spooky"
+	desc = "Spooky."
 	gender = PLURAL
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
@@ -585,6 +585,31 @@
 	throwforce = 0
 	flags_1 = DROPDEL_1 | ABSTRACT_1
 	attack_verb = list("bopped")
+
+/obj/item/slapper
+	name = "slapper"
+	desc = "This is how real men fight."
+	icon_state = "latexballon"
+	force = 1
+	throwforce = 0
+	flags_1 = DROPDEL_1 | ABSTRACT_1
+	attack_verb = list("slapped")
+	hitsound = 'sound/effects/snap.ogg'
+
+/obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
+	if(ishuman(M))
+		var/mob/living/carbon/human/L = M
+		L.endTailWag()
+	if(user.a_intent != INTENT_HARM)
+		var/aim_for_face = ((user.zone_selected == "mouth") || (user.zone_selected == "eyes") || (user.zone_selected == "head"))
+		user.do_attack_animation(M)
+		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
+		user.visible_message("<span class='danger'>[user] slaps [M] in the [(aim_for_face)?"face":user.zone_selected]!</span>",
+ 		"<span class='notice'>You slap [M] in the [(aim_for_face)?"face":user.zone_selected]! </span>",\
+ 		"You hear a slap.")
+		return
+	else
+		..()
 
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))

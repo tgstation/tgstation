@@ -24,7 +24,8 @@
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You start deconstructing the frame...</span>")
 				if(do_after(user, 20*P.toolspeed, target = src))
-					if(!src || !WT.isOn()) return
+					if(!src || !WT.isOn())
+						return
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 					var/obj/item/stack/sheet/metal/M = new (loc, 5)
 					M.add_fingerprint(user)

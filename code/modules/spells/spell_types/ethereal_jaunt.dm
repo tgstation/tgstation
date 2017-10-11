@@ -87,7 +87,8 @@
 	return ..()
 
 /obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
-	if ((movedelay > world.time) || reappearing || !direction) return
+	if ((movedelay > world.time) || reappearing || !direction)
+		return
 	var/turf/newLoc = get_step(src,direction)
 	setDir(direction)
 	if(!(newLoc.flags_1 & NOJAUNT_1))

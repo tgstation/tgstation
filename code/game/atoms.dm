@@ -36,8 +36,6 @@
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		GLOB._preloader.load(src)
 
-	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
-
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize > INITIALIZATION_INSSATOMS)
 		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
@@ -414,10 +412,10 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	. = ..()
 	transfer_blood = rand(2, 4)
 
-/turf/add_blood(list/blood_dna)
+/turf/add_blood(list/blood_dna, list/datum/disease/diseases)
 	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
 	if(!B)
-		B = new /obj/effect/decal/cleanable/blood/splatter(src)
+		B = new /obj/effect/decal/cleanable/blood/splatter(src, diseases)
 	B.transfer_blood_dna(blood_dna) //give blood info to the blood decal.
 	return 1 //we bloodied the floor
 
@@ -446,7 +444,8 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	return 1
 
 /atom/proc/get_global_map_pos()
-	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map)) return
+	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map))
+		return
 	var/cur_x = null
 	var/cur_y = null
 	var/list/y_arr = null
@@ -526,7 +525,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if(isturf(src))
-		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
+		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
 		// Make toxins vomit look different
 		if(toxvomit)
 			V.icon_state = "vomittox_[pick(1,4)]"

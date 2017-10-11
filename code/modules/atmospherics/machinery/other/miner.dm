@@ -36,7 +36,7 @@
 /obj/machinery/atmospherics/miner/examine(mob/user)
 	..()
 	if(broken)
-		to_chat(user, "Its debug output is printing \"[broken_message]\"")
+		to_chat(user, "Its debug output is printing \"[broken_message]\".")
 
 /obj/machinery/atmospherics/miner/proc/check_operation()
 	if(!active)
@@ -132,7 +132,7 @@
 	if(!isopenturf(O))
 		return FALSE
 	var/datum/gas_mixture/merger = new
-	merger.assert_gas(spawn_id)
+	ASSERT_GAS(spawn_id, merger)
 	merger.gases[spawn_id][MOLES] = (spawn_mol)
 	merger.temperature = spawn_temp
 	O.assume_air(merger)

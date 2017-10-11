@@ -48,10 +48,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	..()
 	icon_state = "[get_status()]_[sprite_number]"
 
-//prevents shuttles attempting to rotate this since it messes up sprites
-/obj/machinery/gravity_generator/shuttleRotate()
-	return
-
 /obj/machinery/gravity_generator/proc/get_status()
 	return "off"
 

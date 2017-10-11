@@ -265,7 +265,12 @@
 	var/list/all_contents = traitor_mob.GetAllContents()
 	var/obj/item/device/pda/PDA = locate() in all_contents
 	var/obj/item/device/radio/R = locate() in all_contents
-	var/obj/item/pen/P = locate() in all_contents //including your PDA-pen!
+	var/obj/item/pen/P
+
+	if (PDA) // Prioritize PDA pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink
+		P = locate() in PDA
+	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
+		P = locate() in all_contents
 
 	var/obj/item/uplink_loc
 
@@ -291,7 +296,8 @@
 					uplink_loc = R
 
 	if (!uplink_loc)
-		if(!silent) to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
+		if(!silent)
+			to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
 		. = 0
 	else
 		var/obj/item/device/uplink/U = new(uplink_loc)
@@ -301,19 +307,22 @@
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
-			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features.")
+			if(!silent)
+				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name]).")
 
 		else if(uplink_loc == PDA)
 			PDA.lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 
-			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
+			if(!silent)
+				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name]).")
 
 		else if(uplink_loc == P)
 			P.traitor_unlock_degrees = rand(1, 360)
 
-			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
+			if(!silent)
+				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name]).")
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
@@ -542,11 +551,11 @@
 			text += "<b>HEAD</b> | not mindshielded | employee | headrev | rev"
 		else if (src in SSticker.mode.head_revolutionaries)
 			var/last_healthy_headrev = TRUE
-			for(var/I in SSticker.mode.head_revolutionaries)
+			for(var/datum/mind/I in SSticker.mode.head_revolutionaries)
 				if(I == src)
 					continue
-				var/mob/M = I
-				if((M.z in GLOB.station_z_levels) && !M.stat)
+				var/mob/M = I.current
+				if(M && (M.z in GLOB.station_z_levels) && !M.stat)
 					last_healthy_headrev = FALSE
 					break
 			text += "head | not mindshielded | <a href='?src=\ref[src];revolution=clear'>employee</a> | <b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b> | <a href='?src=\ref[src];revolution=rev'>rev</a>"
@@ -1109,7 +1118,7 @@
 					message_admins("[key_name_admin(usr)] has nuke op'ed [current].")
 					log_admin("[key_name(usr)] has nuke op'ed [current].")
 			if("lair")
-				current.forceMove(get_turf(locate("landmark*Syndicate-Spawn")))
+				current.forceMove(pick(GLOB.nukeop_start))
 			if("dressup")
 				var/mob/living/carbon/human/H = current
 				qdel(H.belt)
@@ -1285,7 +1294,7 @@
 					if (istype(M))
 						for(var/datum/disease/transformation/jungle_fever/JF in M.viruses)
 							JF.cure(0)
-							sleep(0) //because deleting of virus is doing throught spawn(0) //What
+							stoplag() //because deleting of virus is doing throught spawn(0) //What
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						H = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)

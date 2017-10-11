@@ -29,6 +29,7 @@
 	key_third_person = "bows"
 	message = "bows."
 	message_param = "bows to %t."
+	restraint_check = TRUE
 
 /datum/emote/living/burp
 	key = "burp"
@@ -119,6 +120,7 @@
 	key = "flap"
 	key_third_person = "flaps"
 	message = "flaps their wings."
+	restraint_check = TRUE
 	var/wing_time = 20
 
 /datum/emote/living/flap/run_emote(mob/user, params)
@@ -138,6 +140,7 @@
 	key = "aflap"
 	key_third_person = "aflaps"
 	message = "flaps their wings ANGRILY!"
+	restraint_check = TRUE
 	wing_time = 10
 
 /datum/emote/living/flip
@@ -147,7 +150,7 @@
 
 /datum/emote/living/flip/run_emote(mob/user, params)
 	. = ..()
-	if(!.)
+	if(.)
 		user.SpinAnimation(7,1)
 
 /datum/emote/living/frown
@@ -217,7 +220,7 @@
 	message = "laughs."
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/laugh/can_run_emote(mob/living/user)
+/datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
 	. = ..()
 	if(. && iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -322,6 +325,7 @@
 	message = "snores."
 	message_mime = "sleeps soundly."
 	emote_type = EMOTE_AUDIBLE
+	stat_allowed = UNCONSCIOUS
 
 /datum/emote/living/stare
 	key = "stare"
@@ -454,7 +458,7 @@
 		if(e in keys)
 			continue
 		E = emote_list[e]
-		if(E.can_run_emote(user, TRUE))
+		if(E.can_run_emote(user, status_check = FALSE))
 			keys += E.key
 
 	keys = sortList(keys)
@@ -481,18 +485,21 @@
 /datum/emote/living/spin
 	key = "spin"
 	key_third_person = "spins"
+	restraint_check = TRUE
 
 /datum/emote/living/spin/run_emote(mob/user)
-	user.spin(20, 1)
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-		if(R.buckled_mobs)
-			for(var/mob/M in R.buckled_mobs)
-				if(R.riding_datum)
-					R.riding_datum.force_dismount(M)
-				else
-					R.unbuckle_all_mobs()
-	..()
+	. = ..()
+	if(.)
+		user.spin(20, 1)
+		if(iscyborg(user))
+			var/mob/living/silicon/robot/R = user
+			if(R.buckled_mobs)
+				for(var/mob/M in R.buckled_mobs)
+					if(R.riding_datum)
+						R.riding_datum.force_dismount(M)
+					else
+						R.unbuckle_all_mobs()
+
 
 /datum/emote/living/circle
 	key = "circle"
@@ -507,3 +514,16 @@
 	else
 		qdel(N)
 		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
+
+/datum/emote/living/slap
+	key = "slap"
+	key_third_person = "slaps"
+	restraint_check = TRUE
+
+/datum/emote/living/slap/run_emote(mob/user, params)
+	. = ..()
+	var/obj/item/slapper/N = new(user)
+	if(user.put_in_hands(N))
+		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
+	else
+		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")

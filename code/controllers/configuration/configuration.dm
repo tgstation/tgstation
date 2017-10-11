@@ -49,7 +49,6 @@ GLOBAL_PROTECT(config_dir)
 		if(initial(E.abstract_type) == I)
 			continue
 		E = new I
-		_entries_by_type[I] = E
 		var/esname = E.name
 		var/datum/config_entry/test = _entries[esname]
 		if(test)
@@ -57,6 +56,7 @@ GLOBAL_PROTECT(config_dir)
 			qdel(E)
 			continue
 		_entries[esname] = E
+		_entries_by_type[I] = E
 		.[E.resident_file] = TRUE
 
 /datum/controller/configuration/proc/RemoveEntry(datum/config_entry/CE)
@@ -175,8 +175,8 @@ GLOBAL_PROTECT(config_dir)
 	votable_modes += "secret"
 
 /datum/controller/configuration/proc/loadmaplist(filename)
-	filename = "[GLOB.config_dir][filename]"
 	log_config("Loading config file [filename]...")
+	filename = "[GLOB.config_dir][filename]"
 	var/list/Lines = world.file2list(filename)
 
 	var/datum/map_config/currentmap = null
