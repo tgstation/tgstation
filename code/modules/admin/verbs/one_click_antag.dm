@@ -382,13 +382,13 @@
 			chosen_candidate.client.prefs.copy_to(Incinerator)
 			if(numagents == 1) //If Squad Leader
 				Incinerator.real_name = "NT Flame Commander [pick(GLOB.commando_names)]"
-				Incinerator.equipOutfit(/datum/outfit/death_commando/officer)
+				Incinerator.equipOutfit(/datum/outfit/flamer)
 			else
 				Incinerator.real_name = "Flamer [pick(GLOB.commando_names)]"
-				Incinerator.equipOutfit(/datum/outfit/death_commando)
+				Incinerator.equipOutfit(/datum/outfit/flamer)
 			Incinerator.dna.update_dna_identity()
 			Incinerator.key = chosen_candidate.key
-			Incinerator.mind.assigned_role = "Death Commando"
+			Incinerator.mind.assigned_role = "Incinerator"
 
 			//Assign antag status and the mission
 			SSticker.mode.traitors += Incinerator.mind
