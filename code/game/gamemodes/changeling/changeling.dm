@@ -115,6 +115,10 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()
 
+/datum/game_mode/changeling/handle_late_join(mob/living/carbon/human/character)
+	addtimer(CALLBACK(src, .proc/make_antag_chance, character), 100)
+	return 0
+
 /datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling, var/team_mode = 0)
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting

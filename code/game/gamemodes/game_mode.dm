@@ -104,6 +104,8 @@
 		replacementmode.make_antag_chance(character)
 	return
 
+/datum/game_mode/proc/handle_late_join(mob/living/carbon/human/character)
+	return 0
 
 ///Allows rounds to basically be "rerolled" should the initial premise fall through. Also known as mulligan antags.
 /datum/game_mode/proc/convert_roundtype()
