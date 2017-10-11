@@ -2,7 +2,6 @@
 	name = "ragin' mages"
 	config_tag = "raginmages"
 	required_players = 20
-	use_huds = 1
 	announce_span = "userdanger"
 	announce_text = "There are many, many wizards attacking the station!\n\
 	<span class='danger'>Wizards</span>: Accomplish your objectives and cause utter catastrophe!\n\
@@ -30,18 +29,6 @@
 				max_mages = 1
 	if(bullshit_mode)
 		max_mages = INFINITY
-/datum/game_mode/wizard/raginmages/greet_wizard(datum/mind/wizard, you_are=1)
-	if (you_are)
-		to_chat(wizard.current, "<B>You are the Space Wizard!</B>")
-		wizard.current.playsound_local('sound/ambience/antag/RagesMages.ogg',100,0)
-	to_chat(wizard.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")
-
-	var/obj_count = 1
-	to_chat(wizard.current, "<b>Objective Alpha</b>: Make sure the station pays for its actions against our diplomats")
-	for(var/datum/objective/objective in wizard.objectives)
-		to_chat(wizard.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-		obj_count++
-	return
 
 /datum/game_mode/wizard/raginmages/check_finished()
 	var/wizards_alive = 0
@@ -155,7 +142,6 @@
 	name = "very ragin' bullshit mages"
 	config_tag = "veryraginbullshitmages"
 	required_players = 20
-	use_huds = 1
 	bullshit_mode = 1
 	time_check = 250
 	spawn_delay_min = 50

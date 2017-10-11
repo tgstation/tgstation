@@ -263,6 +263,7 @@
 #include "code\datums\antagonists\datum_traitor.dm"
 #include "code\datums\antagonists\devil.dm"
 #include "code\datums\antagonists\ninja.dm"
+#include "code\datums\antagonists\wizard.dm"
 #include "code\datums\components\_component.dm"
 #include "code\datums\components\archaeology.dm"
 #include "code\datums\components\infective.dm"
