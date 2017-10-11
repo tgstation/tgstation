@@ -12,7 +12,7 @@
 
 	volume = 1000
 	var/filled = 0.5
-	var/gas_type = /datum/gas
+	var/gas_type
 	var/release_pressure = ONE_ATMOSPHERE
 	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
