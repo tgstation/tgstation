@@ -70,7 +70,7 @@ Contains:
 /obj/item/clothing/head/helmet/space/hardsuit/flamer/com
 	name = "MK.II FLAME Commander Helmet"
 	desc = "A space proof, fixium-reinforced SWAT mask. The extra reinforcements means it has to be a helmet, though. Has a couple flashy visor effects for the squad to enjoy."
-	icon_state = "flamer"
+	icon_state = "flamercom"
 	item_state = "flamer"
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
