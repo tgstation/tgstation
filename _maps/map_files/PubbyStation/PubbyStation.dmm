@@ -49539,7 +49539,6 @@
 	port_direction = 4;
 	preferred_direction = 1;
 	roundstart_move = "whiteship_away";
-	timid = null;
 	width = 9
 	},
 /obj/docking_port/stationary{
