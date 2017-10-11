@@ -116,9 +116,8 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/hulk
 
 	name = "Hulk"
+	dna_block = NON_SCANNABLE
 	quality = POSITIVE
-	get_chance = 15
-	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25
@@ -630,7 +629,8 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/laser_eyes
 	name = "Laser Eyes"
 	quality = POSITIVE
-	dna_block = NON_SCANNABLE
+	get_chance = 15
+	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 	layer_used = FRONT_MUTATIONS_LAYER
 	limb_req = "head"
