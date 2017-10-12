@@ -1155,6 +1155,7 @@
 #include "code\modules\awaymissions\mission_code\snowdin.dm"
 #include "code\modules\awaymissions\mission_code\spacebattle.dm"
 #include "code\modules\awaymissions\mission_code\stationCollision.dm"
+#include "code\modules\awaymissions\mission_code\undergroundoutpost45.dm"
 #include "code\modules\awaymissions\mission_code\wildwest.dm"
 #include "code\modules\cargo\console.dm"
 #include "code\modules\cargo\export_scanner.dm"

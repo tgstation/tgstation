@@ -119,7 +119,7 @@ GLOBAL_PROTECT(security_mode)
 	var/datum/world_topic/handler
 	for(var/I in topic_handlers)
 		if(input[I])
-			handler = I
+			handler = topic_handlers[I]
 			break
 	
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
@@ -131,7 +131,7 @@ GLOBAL_PROTECT(security_mode)
 		return
 
 	handler = new handler()
-	return handler.Run(input)
+	return handler.TryRun(input)
 
 /world/proc/AnnouncePR(announcement, list/payload)
 	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
