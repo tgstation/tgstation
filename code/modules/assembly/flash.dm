@@ -146,27 +146,20 @@
 
 /obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
 	if(istype(H) && ishuman(user) && H.stat != DEAD)
-		if(user.mind && (user.mind in SSticker.mode.head_revolutionaries))
-			if(H.client)
-				if(H.stat == CONSCIOUS)
-					H.mind_initialize() //give them a mind datum if they don't have one.
-					var/resisted
-					if(!H.isloyal())
-						if(user.mind in SSticker.mode.head_revolutionaries)
-							if(SSticker.mode.add_revolutionary(H.mind))
-								H.Stun(60)
-								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
-							else
-								resisted = 1
-					else
-						resisted = 1
-
-					if(resisted)
-						to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
-				else
-					to_chat(user, "<span class='warning'>They must be conscious before you can convert them!</span>")
-			else
+		if(user.mind)
+			var/datum/antagonist/rev/head/converter = user.mind.has_antag_datum(/datum/antagonist/rev/head)
+			if(!converter)
+				return
+			if(!H.client)
 				to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
+				return
+			if(H.stat != CONSCIOUS)
+				to_chat(user, "<span class='warning'>They must be conscious before you can convert them!</span>")
+				return
+			if(converter.add_revolutionary(H.mind))
+				times_used -- //Flashes less likely to burn out for headrevs when used for conversion
+			else
+				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
 
 /obj/item/device/assembly/flash/cyborg

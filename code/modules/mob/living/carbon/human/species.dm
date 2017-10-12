@@ -1300,7 +1300,8 @@
 						H.adjust_blurriness(10)
 
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
-						SSticker.mode.remove_revolutionary(H.mind, FALSE, user)
+						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
+						rev.remove_revolutionary(FALSE, user)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)

@@ -392,43 +392,6 @@
 		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
 			. ++
 
-///////////////////////////////////
-//Keeps track of all living heads//
-///////////////////////////////////
-/datum/game_mode/proc/get_living_heads()
-	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.command_positions))
-			. |= player.mind
-
-
-////////////////////////////
-//Keeps track of all heads//
-////////////////////////////
-/datum/game_mode/proc/get_all_heads()
-	. = list()
-	for(var/mob/player in GLOB.mob_list)
-		if(player.mind && (player.mind.assigned_role in GLOB.command_positions))
-			. |= player.mind
-
-//////////////////////////////////////////////
-//Keeps track of all living security members//
-//////////////////////////////////////////////
-/datum/game_mode/proc/get_living_sec()
-	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.security_positions))
-			. |= player.mind
-
-////////////////////////////////////////
-//Keeps track of all  security members//
-////////////////////////////////////////
-/datum/game_mode/proc/get_all_sec()
-	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.mind && (player.mind.assigned_role in GLOB.security_positions))
-			. |= player.mind
-
 //////////////////////////
 //Reports player logouts//
 //////////////////////////
@@ -529,19 +492,11 @@
 
 	return max(0, enemy_minimum_age - C.player_age)
 
-/datum/game_mode/proc/replace_jobbaned_player(mob/living/M, role_type, pref)
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [role_type]?", "[role_type]", null, pref, 50, M)
-	var/mob/dead/observer/theghost = null
-	if(candidates.len)
-		theghost = pick(candidates)
-		to_chat(M, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
-		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)]) to replace a jobbaned player.")
-		M.ghostize(0)
-		M.key = theghost.key
-
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
 	SSticker.mode.remove_cultist(newborgie, 0, 0)
-	SSticker.mode.remove_revolutionary(newborgie, 0)
+	var/datum/antagonist/rev/rev = newborgie.has_antag_datum(/datum/antagonist/rev)
+	if(rev)
+		rev.remove_revolutionary(TRUE)
 
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = list()

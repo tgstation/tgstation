@@ -3,20 +3,27 @@
 	var/special_role = "blood brother"
 	var/datum/objective_team/brother_team/team
 
-/datum/antagonist/brother/New(datum/mind/new_owner, datum/objective_team/brother_team/T)
-	team = T
+/datum/antagonist/brother/New(datum/mind/new_owner)
 	return ..()
+
+/datum/antagonist/brother/create_team(datum/objective_team/brother_team/new_team)
+	if(!new_team)
+		return
+	if(!istype(new_team))
+		stack_trace("Wrong team type passed to [type] initialization.")
+	team = new_team
+
+/datum/antagonist/brother/get_team()
+	return team
 
 /datum/antagonist/brother/on_gain()
 	SSticker.mode.brothers += owner
-	owner.special_role = special_role
 	owner.objectives += team.objectives
 	finalize_brother()
 	return ..()
 
 /datum/antagonist/brother/on_removal()
 	SSticker.mode.brothers -= owner
-	team.members -= owner
 	owner.objectives -= team.objectives
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
