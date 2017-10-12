@@ -18,4 +18,3 @@
 	new /obj/item/clothing/head/soft(src)
 	new /obj/item/device/export_scanner(src)
 	new /obj/item/door_remote/quartermaster(src)
-	new /obj/item/clothing/neck/petcollar(src)
