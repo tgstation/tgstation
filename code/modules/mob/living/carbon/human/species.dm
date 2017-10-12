@@ -18,8 +18,7 @@
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 
-	var/face_y_offset = 0
-	var/hair_y_offset = 0
+	var/offset_features = list("uniform" = list(0,0), "id" = list(0,0), "gloves" = list(0,0), "glasses" = list(0,0), "ears" = list(0,0), "shoes" = list(0,0), "s_store" = list(0,0), "mask" = list(0,0), "head" = list(0,0),"face" = list(0,0), "belt" = list(0,0), "back" = list(0,0), "suit" = list(0,0), "neck" = list(0,0))
 
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
@@ -257,11 +256,11 @@
 				C.dropItemToGround(I)
 			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				C.put_in_hands(new mutanthands())
-	
+
 	if(VIRUSIMMUNE in species_traits)
 		for(var/datum/disease/A in C.viruses)
 			A.cure(FALSE)
-		
+
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
@@ -399,7 +398,10 @@
 				else
 					hair_overlay.color = forced_colour
 				hair_overlay.alpha = hair_alpha
-				hair_overlay.pixel_y += hair_y_offset
+				if("face" in H.dna.species.offset_features)
+					var/list/offset_list = H.dna.species.offset_features["face"]
+					hair_overlay.pixel_x += offset_list[1]
+					hair_overlay.pixel_y += offset_list[2]
 		if(hair_overlay.icon)
 			standing += hair_overlay
 
@@ -420,14 +422,20 @@
 		if(H.lip_style && (LIPS in species_traits) && HD)
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
-			lip_overlay.pixel_y += face_y_offset
+			if("face" in H.dna.species.offset_features)
+				var/list/offset_list = H.dna.species.offset_features["face"]
+				lip_overlay.pixel_x += offset_list[1]
+				lip_overlay.pixel_y += offset_list[2]
 			standing += lip_overlay
 
 		// eyes
 		if((EYECOLOR in species_traits) && HD)
 			var/mutable_appearance/eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
 			eye_overlay.color = "#" + H.eye_color
-			eye_overlay.pixel_y += face_y_offset
+			if("face" in H.dna.species.offset_features)
+				var/list/offset_list = H.dna.species.offset_features["face"]
+				eye_overlay.pixel_x += offset_list[1]
+				eye_overlay.pixel_y += offset_list[2]
 			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
