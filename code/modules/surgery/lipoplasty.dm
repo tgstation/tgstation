@@ -49,5 +49,5 @@
 	newmeat.subjectname = H.real_name
 	newmeat.subjectjob = H.job
 	newmeat.reagents.add_reagent ("nutriment", (removednutriment / 15)) //To balance with nutriment_factor of nutriment
-	newmeat.loc = target.loc
+	newmeat.forceMove(target.loc)
 	return 1
