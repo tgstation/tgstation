@@ -1,6 +1,3 @@
-#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
-									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
-
 GLOBAL_VAR(security_mode)
 GLOBAL_PROTECT(security_mode)
 
@@ -118,91 +115,25 @@ GLOBAL_PROTECT(security_mode)
 		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
 
 /world/Topic(T, addr, master, key)
+	var/static/list/topic_handlers = TopicHandlers()
+
 	var/list/input = params2list(T)
-
-	var/pinging = ("ping" in input)
-	var/playing = ("players" in input)
-
-	if(!pinging && !playing && config && CONFIG_GET(flag/log_world_topic))
+	var/datum/world_topic/handler
+	for(var/I in topic_handlers)
+		if(input[I])
+			handler = I
+			break
+	
+	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
 		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
 
-	var/comms_key = CONFIG_GET(string/comms_key)
-	var/key_valid = (comms_key && input["key"] == comms_key)
+	if(!handler)
+		return
 
-	if(pinging)
-		var/x = 1
-		for (var/client/C in GLOB.clients)
-			x++
-		return x
-
-	else if(playing)
-		var/n = 0
-		for(var/mob/M in GLOB.player_list)
-			if(M.client)
-				n++
-		return n
-
-	else if("status" in input)
-		var/list/s = list()
-		s["version"] = GLOB.game_version
-		s["mode"] = GLOB.master_mode
-		s["respawn"] = config ? !CONFIG_GET(flag/norespawn) : FALSE
-		s["enter"] = GLOB.enter_allowed
-		s["vote"] = CONFIG_GET(flag/allow_vote_mode)
-		s["ai"] = CONFIG_GET(flag/allow_ai)
-		s["host"] = host ? host : null
-		s["active_players"] = get_active_player_count()
-		s["players"] = GLOB.clients.len
-		s["revision"] = GLOB.revdata.commit
-		s["revision_date"] = GLOB.revdata.date
-
-		var/list/adm = get_admin_counts()
-		var/list/presentmins = adm["present"]
-		var/list/afkmins = adm["afk"]
-		s["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
-		s["gamestate"] = SSticker.current_state
-
-		s["map_name"] = SSmapping.config.map_name
-
-		if(key_valid && SSticker.HasRoundStarted())
-			s["real_mode"] = SSticker.mode.name
-			// Key-authed callers may know the truth behind the "secret"
-
-		s["security_level"] = get_security_level()
-		s["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
-		// Amount of world's ticks in seconds, useful for calculating round duration
-
-		if(SSshuttle && SSshuttle.emergency)
-			s["shuttle_mode"] = SSshuttle.emergency.mode
-			// Shuttle status, see /__DEFINES/stat.dm
-			s["shuttle_timer"] = SSshuttle.emergency.timeLeft()
-			// Shuttle timer, in seconds
-
-		return list2params(s)
-
-	else if("announce" in input)
-		if(!key_valid)
-			return "Bad Key"
-		else
-			AnnouncePR(input["announce"], json_decode(input["payload"]))
-
-	else if("crossmessage" in input)
-		if(!key_valid)
-			return
-		else
-			if(input["crossmessage"] == "Ahelp")
-				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
-			if(input["crossmessage"] == "Comms_Console")
-				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
-				for(var/obj/machinery/computer/communications/CM in GLOB.machines)
-					CM.overrideCooldown()
-			if(input["crossmessage"] == "News_Report")
-				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
-
-	else if("server_hop" in input)
-		show_server_hop_transfer_screen(input["server_hop"])
+	handler = new handler()
+	return handler.Run(input)
 
 /world/proc/AnnouncePR(announcement, list/payload)
 	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
