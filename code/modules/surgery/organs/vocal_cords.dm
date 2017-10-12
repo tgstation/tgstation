@@ -378,6 +378,7 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			addtimer(CALLBACK(L, /atom/movable/proc/say, user.name), 5 * i)
+			i++
 
 	//KNOCK KNOCK
 	else if((findtext(message, knockknock_words)))
@@ -385,6 +386,7 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			addtimer(CALLBACK(L, /atom/movable/proc/say, "Who's there?"), 5 * i)
+			i++
 
 	//STATE LAWS
 	else if((findtext(message, statelaws_words)))
