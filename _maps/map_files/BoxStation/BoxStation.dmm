@@ -27831,7 +27831,6 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/device/radio/headset/headset_med,
-/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "boe" = (
@@ -37462,6 +37461,7 @@
 /obj/item/circuitboard/machine/clonescanner,
 /obj/item/circuitboard/machine/clonepod,
 /obj/item/circuitboard/computer/scan_consolenew,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bJl" = (
@@ -54705,7 +54705,6 @@
 	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	timid = null;
 	width = 35
 	},
 /obj/docking_port/stationary{

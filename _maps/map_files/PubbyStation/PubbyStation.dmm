@@ -32785,7 +32785,6 @@
 /obj/item/hand_labeler,
 /obj/item/device/radio/headset/headset_med,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bwW" = (
@@ -41751,6 +41750,7 @@
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/darkgreen,
 /area/storage/tech)
 "bQw" = (
@@ -49539,7 +49539,6 @@
 	port_direction = 4;
 	preferred_direction = 1;
 	roundstart_move = "whiteship_away";
-	timid = null;
 	width = 9
 	},
 /obj/docking_port/stationary{

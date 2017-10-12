@@ -411,16 +411,6 @@
 	if(..())
 		return
 
-	if(issilicon(usr))
-		if(iscyborg(usr))
-			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module, /obj/item/robot_module/butler) ))
-				to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-				return
-		else
-			to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-			return
-
 	if(href_list["remove_coin"])
 		if(!(coin || bill))
 			to_chat(usr, "<span class='notice'>There is no money in this machine.</span>")

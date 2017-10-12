@@ -32,6 +32,7 @@
 	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
+	timid = 1;
 	width = 27
 	},
 /obj/machinery/door/airlock/titanium{
