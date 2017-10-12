@@ -1,5 +1,6 @@
 /obj/machinery/smoke_machine
 	name = "Smoke Machine"
+	desc = "Seriously man?"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "smoke0"
 	density = TRUE
