@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(lighting)
 
 	..()
 
-/datum/controller/subsystem/lighting/proc/fire(resumed, init_tick_checks)
+/datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
 	MC_SPLIT_TICK_INIT(3)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK

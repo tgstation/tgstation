@@ -204,7 +204,6 @@
 	var/update = FALSE
 
 	if (!source_atom || QDELETED(source_atom))
-		GLOB.lightingshit["nosourceatom"] += 1
 		qdel(src)
 		return
 
@@ -221,7 +220,6 @@
 		update = TRUE
 
 	if (!light_range || !light_power)
-		GLOB.lightingshit["nolightrangepower"] += 1
 		qdel(src)
 		return
 
@@ -241,7 +239,6 @@
 			update = TRUE
 
 	if (!isturf(source_turf))
-		GLOB.lightingshit["nosourceturf"] += 1
 		if (applied)
 			remove_lum()
 		return
@@ -261,7 +258,6 @@
 		needs_update = LIGHTING_CHECK_UPDATE
 		applied = TRUE
 	else if (needs_update == LIGHTING_CHECK_UPDATE)
-		GLOB.lightingshit["nothingchanged"] += 1
 		return //nothing's changed
 
 	var/list/datum/lighting_corner/corners = list()
