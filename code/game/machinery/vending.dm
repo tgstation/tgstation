@@ -259,7 +259,7 @@
 			cut_overlays()
 			if(panel_open)
 				add_overlay("[initial(icon_state)]-panel")
-			playsound(src.loc, W.usesound, 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>You must first secure [src].</span>")
@@ -403,7 +403,7 @@
 
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 
@@ -443,7 +443,7 @@
 		dish_quants[N] = max(dish_quants[N] - 1, 0)
 		for(var/obj/O in contents)
 			if(O.name == N)
-				O.loc = src.loc
+				O.forceMove(drop_location())
 				break
 		vend_ready = 1
 		updateUsrDialog()
@@ -510,7 +510,7 @@
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		new R.product_path(get_turf(src))
-		SSblackbox.add_details("vending_machine_usage","[src.type]|[R.product_path]")
+		SSblackbox.add_details("vending_machine_usage","[type]|[R.product_path]")
 		vend_ready = 1
 		return
 
