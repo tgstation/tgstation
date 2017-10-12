@@ -1,12 +1,6 @@
 //How often to check for promotion possibility
 #define HEAD_UPDATE_PERIOD 300
 
-//TODO
-//Jobban replace
-//Game mode replacement
-//Special role search
-
-
 /datum/antagonist/rev
 	name = "Revolutionary"
 	job_rank = ROLE_REV
@@ -57,6 +51,7 @@
 				return
 		rev_team = new /datum/objective_team/revolution
 		rev_team.update_objectives()
+		rev_team.update_heads()
 		return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
@@ -190,8 +185,7 @@
 	var/list/objectives
 	var/max_headrevs = 3
 
-
-/datum/objective_team/revolution/proc/update_objectives()
+/datum/objective_team/revolution/proc/update_objectives(initial = FALSE)
 	var/untracked_heads = SSjob.get_all_heads()
 	for(var/datum/objective/mutiny/O in objectives)
 		untracked_heads -= O.target
@@ -203,7 +197,8 @@
 		objectives += new_target
 	for(var/datum/mind/M in members)
 		M.objectives |= objectives
-	return
+	
+	addtimer(CALLBACK(src,.proc/update_objectives),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
 /datum/objective_team/revolution/proc/head_revolutionaries()
 	. = list()
