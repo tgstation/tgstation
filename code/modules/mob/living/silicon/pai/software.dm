@@ -595,13 +595,11 @@
 	else
 		dat += "Jack in progress... [hackprogress]% complete.<br>"
 		dat += "<a href='byond://?src=\ref[src];software=doorjack;cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"
-	//hackdoor = machine
-	//hackloop()
 	return dat
 
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
-	var/turf/T = get_turf(loc)
+	var/turf/T = get_turf(src)
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		if(T.loc)
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
