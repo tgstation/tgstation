@@ -121,7 +121,7 @@ GLOBAL_PROTECT(security_mode)
 	var/datum/world_topic/handler
 	for(var/I in topic_handlers)
 		if(input[I])
-			handler = I
+			handler = topic_handlers[I]
 			break
 	
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
