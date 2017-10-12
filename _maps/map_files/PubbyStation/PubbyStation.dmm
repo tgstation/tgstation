@@ -41924,7 +41924,7 @@
 "bQN" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/nitrous_oxide;
+	filter_type = "n2o";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -43351,7 +43351,7 @@
 "bTU" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/plasma;
+	filter_type = "plasma";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -44738,7 +44738,7 @@
 "bWK" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/oxygen;
+	filter_type = "o2";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -44777,7 +44777,7 @@
 "bWQ" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/carbon_dioxide;
+	filter_type = "co2";
 	on = 1
 	},
 /turf/open/floor/plasteel,

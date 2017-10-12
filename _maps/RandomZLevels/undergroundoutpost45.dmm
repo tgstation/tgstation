@@ -14187,7 +14187,7 @@
 "um" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/nitrogen;
+	filter_type = "n2";
 	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
@@ -14236,7 +14236,7 @@
 "up" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/oxygen;
+	filter_type = "o2";
 	on = 1
 	},
 /turf/open/floor/plasteel/blue/side{
