@@ -108,10 +108,12 @@
 		factory.spores += src
 	. = ..()
 
+var/obj/item/organ/body_egg/changeling_egg/EGG
+
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
-			if(H.stat == DEAD)
+			if(H.stat == DEAD && !var/obj/item/organ/body_egg/changeling_egg/EGG in view(src,1)) //if they're alive, ignore. if they have a changeling egg definitely ignore to stop edge cases like #31258
 				Zombify(H)
 				break
 	if(factory && z != factory.z)
