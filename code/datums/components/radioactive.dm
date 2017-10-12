@@ -1,3 +1,8 @@
+#define RAD_AMOUNT_LOW 50
+#define RAD_AMOUNT_MEDIUM 200
+#define RAD_AMOUNT_HIGH 500
+#define RAD_AMOUNT_EXTREME 1000
+
 /datum/component/radioactive
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
@@ -65,3 +70,8 @@
 /datum/component/radioactive/proc/rad_attack(atom/movable/target, mob/living/user)
 	radiation_pulse(get_turf(target), strength/20)
 	target.rad_act(strength/2)
+
+#undef RAD_AMOUNT_LOW
+#undef RAD_AMOUNT_MEDIUM
+#undef RAD_AMOUNT_HIGH
+#undef RAD_AMOUNT_EXTREME

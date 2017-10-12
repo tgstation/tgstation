@@ -16,6 +16,10 @@
 #define COMSIG_COMPONENT_REMOVING "component_removing"			//before a component is removed from a datum because of RemoveComponent: (/datum/component)
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"				//before a datum's Destroy() is called: ()
 
+// /datum signals used by /datum/component/sound_loop
+#define COMSIG_SOUND_MUTE_SET "component_mute"					//used to set the mute boolean of all components making sound: (new_value)
+#define COMSIG_SOUND_TIER_SET "component_tier_set"				//used to modify the tier of tiered sound loops: (tier)
+
 // /atom signals
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)

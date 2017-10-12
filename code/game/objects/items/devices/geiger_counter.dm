@@ -1,10 +1,12 @@
-#define RAD_LEVEL_NORMAL 100
-#define RAD_LEVEL_MODERATE 500
-#define RAD_LEVEL_HIGH 1000
-#define RAD_LEVEL_VERY_HIGH 2000
-#define RAD_LEVEL_CRITICAL 5000
+#define RAD_LEVEL_NORMAL 9
+#define RAD_LEVEL_MODERATE 100
+#define RAD_LEVEL_HIGH 400
+#define RAD_LEVEL_VERY_HIGH 800
+#define RAD_LEVEL_CRITICAL 1500
 
-#define RAD_MEASURE_SMOOTHING 20
+#define RAD_MEASURE_SMOOTHING 10
+
+#define RAD_GRACE_PERIOD 3
 
 /obj/item/device/geiger_counter //DISCLAIMER: I know nothing about how real-life Geiger counters work. This will not be realistic. ~Xhuis
 	name = "geiger counter"
@@ -16,37 +18,54 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
-	var/scanning = 0
+
+	var/muted = TRUE
+	var/danger = 0
+	var/grace = RAD_GRACE_PERIOD
+	var/static/list/sounds = list( //hah, static. get it?
+		list('sound/items/geiger/low1.ogg'=1, 'sound/items/geiger/low2.ogg'=1, 'sound/items/geiger/low3.ogg'=1, 'sound/items/geiger/low4.ogg'=1),
+		list('sound/items/geiger/med1.ogg'=1, 'sound/items/geiger/med2.ogg'=1, 'sound/items/geiger/med3.ogg'=1, 'sound/items/geiger/med4.ogg'=1),
+		list('sound/items/geiger/high1.ogg'=1, 'sound/items/geiger/high2.ogg'=1, 'sound/items/geiger/high3.ogg'=1, 'sound/items/geiger/high4.ogg'=1),
+		list('sound/items/geiger/ext1.ogg'=1, 'sound/items/geiger/ext2.ogg'=1, 'sound/items/geiger/ext3.ogg'=1, 'sound/items/geiger/ext4.ogg'=1)
+		)
+
+	var/scanning = FALSE
 	var/radiation_count = 0
 	var/current_tick_amount = 0
 	var/last_tick_amount = 0
+	var/fail_to_receive = 0
+	var/current_warning = 1
 
-/obj/item/device/geiger_counter/New()
-	..()
+/obj/item/device/geiger_counter/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
+
+	soundLoop()
 
 /obj/item/device/geiger_counter/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/device/geiger_counter/process()
-	if(emagged)
-		if(radiation_count < 200)
-			radiation_count++
-		return 0
-	if(radiation_count > 0)
-		radiation_count-=10
-		update_icon()
+	update_icon()
+
+	if(!scanning)
+		current_tick_amount = 0
+		return
+	
+	radiation_count -= radiation_count/RAD_MEASURE_SMOOTHING
+	radiation_count += current_tick_amount/RAD_MEASURE_SMOOTHING
+	
 	if(current_tick_amount)
-		if(isliving(loc))
-			var/mob/living/M = loc
-			if(!emagged)
-				to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] RADIATION PULSE DETECTED.</span>")
-				to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] Severity: [current_tick_amount]</span>")
-			else
-				to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] !@%$AT!(N P!LS! D/TEC?ED.</span>")
-				to_chat(M, "<span class='boldannounce'>[icon2html(src, M)] &!F2rity: <=[current_tick_amount]#1</span>")
+		grace = RAD_GRACE_PERIOD
 		last_tick_amount = current_tick_amount
+
+	else if(!emagged)
+		grace--
+		if(grace <= 0)
+			radiation_count = 0
+	
+	update_sound()
 
 	current_tick_amount = 0
 
@@ -96,15 +115,43 @@
 			icon_state = "geiger_on_5"
 	..()
 
+/obj/item/device/geiger_counter/proc/update_sound()
+	switch(radiation_count)
+		if(RAD_BACKGROUND_RADIATION to RAD_LEVEL_MODERATE)
+			danger = 1
+		if(RAD_LEVEL_MODERATE to RAD_LEVEL_VERY_HIGH)
+			danger = 2
+		if(RAD_LEVEL_VERY_HIGH to RAD_LEVEL_CRITICAL)
+			danger = 3
+		if(RAD_LEVEL_CRITICAL to INFINITY)
+			danger = 4
+		else
+			danger = 0
+	if(!danger)
+		muted = TRUE
+	else if(muted)
+		muted = FALSE
+		soundLoop()
+
+/obj/item/device/geiger_counter/proc/soundLoop()
+	if(muted || !danger)
+		return
+	playsound(src, pickweight(sounds[danger]), 50)
+	addtimer(CALLBACK(src, .proc/soundLoop), 1)
+
 /obj/item/device/geiger_counter/rad_act(amount)
 	if(amount <= RAD_BACKGROUND_RADIATION || !scanning)
 		return
-	radiation_count = (radiation_count - (radiation_count/RAD_MEASURE_SMOOTHING)) + (amount/RAD_MEASURE_SMOOTHING)
 	current_tick_amount += amount
 	update_icon()
 
 /obj/item/device/geiger_counter/attack_self(mob/user)
 	scanning = !scanning
+	if(!scanning)
+		muted = TRUE
+	else
+		muted = FALSE
+		soundLoop()
 	update_icon()
 	to_chat(user, "<span class='notice'>[icon2html(src, user)] You switch [scanning ? "on" : "off"] [src].</span>")
 
