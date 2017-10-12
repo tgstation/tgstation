@@ -136,9 +136,8 @@ There are several things that need to be remembered:
 
 
 		if("uniform" in dna.species.offset_features)
-			var/list/offset_list = dna.species.offset_features["uniform"]
-			uniform_overlay.pixel_x += offset_list[1]
-			uniform_overlay.pixel_y += offset_list[2]
+			uniform_overlay.pixel_x += dna.species.offset_features["uniform"][1]
+			uniform_overlay.pixel_y += dna.species.offset_features["uniform"][2]
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
 
 	apply_overlay(UNIFORM_LAYER)
@@ -163,9 +162,8 @@ There are several things that need to be remembered:
 		//TODO: add an icon file for ID slot stuff, so it's less snowflakey
 		id_overlay = wear_id.build_worn_icon(state = wear_id.item_state, default_layer = ID_LAYER, default_icon_file = 'icons/mob/mob.dmi')
 		if("id" in dna.species.offset_features)
-			var/list/offset_list = dna.species.offset_features["id"]
-			id_overlay.pixel_x += offset_list[1]
-			id_overlay.pixel_y += offset_list[2]
+			id_overlay.pixel_x += dna.species.offset_features["id"][1]
+			id_overlay.pixel_y += dna.species.offset_features["id"][2]
 		overlays_standing[ID_LAYER] = id_overlay
 
 	apply_overlay(ID_LAYER)
@@ -201,9 +199,8 @@ There are several things that need to be remembered:
 		overlays_standing[GLOVES_LAYER] = gloves.build_worn_icon(state = t_state, default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/hands.dmi')
 		gloves_overlay = overlays_standing[GLOVES_LAYER]
 		if("gloves" in dna.species.offset_features)
-			var/list/offset_list = dna.species.offset_features["gloves"]
-			gloves_overlay.pixel_x += offset_list[1]
-			gloves_overlay.pixel_y += offset_list[2]
+			gloves_overlay.pixel_x += dna.species.offset_features["gloves"][1]
+			gloves_overlay.pixel_y += dna.species.offset_features["gloves"][2]
 	overlays_standing[GLOVES_LAYER] = gloves_overlay
 	apply_overlay(GLOVES_LAYER)
 
@@ -229,9 +226,8 @@ There are several things that need to be remembered:
 			overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
 		var/mutable_appearance/glasses_overlay = overlays_standing[GLASSES_LAYER]
 		if("glasses" in dna.species.offset_features)
-			var/list/offset_list = dna.species.offset_features["glasses"]
-			glasses_overlay.pixel_x += offset_list[1]
-			glasses_overlay.pixel_y += offset_list[2]
+			glasses_overlay.pixel_x += dna.species.offset_features["glasses"][1]
+			glasses_overlay.pixel_y += dna.species.offset_features["glasses"][2]
 		overlays_standing[GLASSES_LAYER] = glasses_overlay
 	apply_overlay(GLASSES_LAYER)
 
@@ -256,9 +252,8 @@ There are several things that need to be remembered:
 		overlays_standing[EARS_LAYER] = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
 		var/mutable_appearance/ears_overlay = overlays_standing[EARS_LAYER]
 		if("ears" in dna.species.offset_features)
-			var/list/offset_list = dna.species.offset_features["ears"]
-			ears_overlay.pixel_x += offset_list[1]
-			ears_overlay.pixel_y += offset_list[2]
+			ears_overlay.pixel_x += dna.species.offset_features["ears"][1]
+			ears_overlay.pixel_y += dna.species.offset_features["ears"][2]
 		overlays_standing[EARS_LAYER] = ears_overlay
 	apply_overlay(EARS_LAYER)
 
@@ -282,9 +277,8 @@ There are several things that need to be remembered:
 		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
 		if("shoes" in dna.species.offset_features)
-			var/list/offset_list = dna.species.offset_features["shoes"]
-			shoes_overlay.pixel_x += offset_list[1]
-			shoes_overlay.pixel_y += offset_list[2]
+			shoes_overlay.pixel_x += dna.species.offset_features["shoes"][1]
+			shoes_overlay.pixel_y += dna.species.offset_features["shoes"][2]
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
@@ -308,9 +302,8 @@ There are several things that need to be remembered:
 		overlays_standing[SUIT_STORE_LAYER]	= mutable_appearance('icons/mob/belt_mirror.dmi', t_state, -SUIT_STORE_LAYER)
 		var/mutable_appearance/s_store_overlay = overlays_standing[SUIT_LAYER]
 		if("s_store" in dna.species.offset_features)
-			var/list/offset_list = dna.species.offset_features["s_store"]
-			s_store_overlay.pixel_x += offset_list[1]
-			s_store_overlay.pixel_y += offset_list[2]
+			s_store_overlay.pixel_x += dna.species.offset_features["s_store"][1]
+			s_store_overlay.pixel_y += dna.species.offset_features["s_store"][2]
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
 	apply_overlay(SUIT_STORE_LAYER)
 
@@ -339,9 +332,8 @@ There are several things that need to be remembered:
 		overlays_standing[BELT_LAYER] = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = 'icons/mob/belt.dmi')
 		var/mutable_appearance/belt_overlay = overlays_standing[BELT_LAYER]
 		if("belt" in dna.species.offset_features)
-			var/list/offset_list = dna.species.offset_features["belt"]
-			belt_overlay.pixel_x += offset_list[1]
-			belt_overlay.pixel_y += offset_list[2]
+			belt_overlay.pixel_x += dna.species.offset_features["belt"][1]
+			belt_overlay.pixel_y += dna.species.offset_features["belt"][2]
 		overlays_standing[BELT_LAYER] = belt_overlay
 
 	apply_overlay(BELT_LAYER)
@@ -365,9 +357,8 @@ There are several things that need to be remembered:
 		overlays_standing[SUIT_LAYER] = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
 		if("suit" in dna.species.offset_features)
-			var/list/offset_list = dna.species.offset_features["suit"]
-			suit_overlay.pixel_x += offset_list[1]
-			suit_overlay.pixel_y += offset_list[2]
+			suit_overlay.pixel_x += dna.species.offset_features["suit"][1]
+			suit_overlay.pixel_y += dna.species.offset_features["suit"][2]
 		overlays_standing[SUIT_LAYER] = suit_overlay
 	update_hair()
 	update_mutant_bodyparts()

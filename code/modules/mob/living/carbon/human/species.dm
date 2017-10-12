@@ -399,9 +399,8 @@
 					hair_overlay.color = forced_colour
 				hair_overlay.alpha = hair_alpha
 				if("face" in H.dna.species.offset_features)
-					var/list/offset_list = H.dna.species.offset_features["face"]
-					hair_overlay.pixel_x += offset_list[1]
-					hair_overlay.pixel_y += offset_list[2]
+					hair_overlay.pixel_x += H.dna.species.offset_features["face"][1]
+					hair_overlay.pixel_y += H.dna.species.offset_features["face"][2]
 		if(hair_overlay.icon)
 			standing += hair_overlay
 
@@ -423,9 +422,8 @@
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
 			if("face" in H.dna.species.offset_features)
-				var/list/offset_list = H.dna.species.offset_features["face"]
-				lip_overlay.pixel_x += offset_list[1]
-				lip_overlay.pixel_y += offset_list[2]
+				lip_overlay.pixel_x += H.dna.species.offset_features["face"][1]
+				lip_overlay.pixel_y += H.dna.species.offset_features["face"][2]
 			standing += lip_overlay
 
 		// eyes
@@ -433,9 +431,8 @@
 			var/mutable_appearance/eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
 			eye_overlay.color = "#" + H.eye_color
 			if("face" in H.dna.species.offset_features)
-				var/list/offset_list = H.dna.species.offset_features["face"]
-				eye_overlay.pixel_x += offset_list[1]
-				eye_overlay.pixel_y += offset_list[2]
+				eye_overlay.pixel_x += H.dna.species.offset_features["face"][1]
+				eye_overlay.pixel_y += H.dna.species.offset_features["face"][2]
 			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
