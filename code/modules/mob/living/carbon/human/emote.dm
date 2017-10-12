@@ -171,6 +171,11 @@
 
 /datum/emote/living/carbon/human/flex
 	key = "flex"
-	message = "flexs [p_their()] [pick("arms", ((gender == FEMALE) ? "flat stomach" : "abs"), "legs")]."
+	message = "flexes their muscles."
+
+/datum/emote/living/carbon/human/flex/select_message_type(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	return "flexes [H.p_their()] [pick("arms", ((H.gender == FEMALE) ? "flat stomach" : "abs"), "legs")]."
 
 //Ayy lmao
