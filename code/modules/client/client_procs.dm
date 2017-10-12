@@ -673,6 +673,7 @@ GLOBAL_LIST(external_rsc_urls)
 			return FALSE
 		if ("key")
 			return FALSE
+	. = ..()
 
 
 /client/proc/change_view(new_size)
