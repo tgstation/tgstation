@@ -1,0 +1,4 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - imageadd: "Black carpets no longer have an ugly periodic black line in them. Regular catwalks are now totally opaque so you won't accidentally click on space when trying to place wires or tiles on them."

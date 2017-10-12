@@ -27681,6 +27681,7 @@
 /obj/item/circuitboard/machine/clonescanner,
 /obj/item/circuitboard/machine/clonepod,
 /obj/item/circuitboard/computer/scan_consolenew,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/black,
 /area/storage/tech)
 "bbo" = (
@@ -46859,7 +46860,7 @@
 "bMk" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/nitrous_oxide;
+	filter_type = "n2o";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -49916,7 +49917,7 @@
 "bSj" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/plasma;
+	filter_type = "plasma";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -52635,7 +52636,7 @@
 "bXq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/carbon_dioxide;
+	filter_type = "co2";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -54519,7 +54520,7 @@
 "cbd" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/nitrogen;
+	filter_type = "n2";
 	on = 1
 	},
 /obj/structure/window/reinforced,
@@ -54574,7 +54575,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/oxygen;
+	filter_type = "o2";
 	on = 1
 	},
 /turf/open/floor/plasteel/blue,
@@ -59766,7 +59767,6 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow{
 	dir = 4
 	},
@@ -82681,7 +82681,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = /datum/gas/freon;
+	filter_type = "freon";
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/engine,
@@ -82881,7 +82881,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = /datum/gas/nitrogen
+	filter_type = "n2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)

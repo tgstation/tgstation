@@ -3305,7 +3305,7 @@
 "ga" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/oxygen;
+	filter_type = "o2";
 	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3719,7 +3719,7 @@
 "gO" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/nitrous_oxide;
+	filter_type = "n2o";
 	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{

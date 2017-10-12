@@ -6987,7 +6987,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 4;
-	filter_type = /datum/gas/nitrogen
+	filter_type = "n2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmospherics_engine)
@@ -10811,7 +10811,7 @@
 /area/shuttle/supply)
 "aza" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = /datum/gas/nitrogen;
+	filter_type = "n2";
 	name = "nitrogen filter"
 	},
 /turf/open/floor/plasteel/yellow,
@@ -23007,7 +23007,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = /datum/gas/carbon_dioxide;
+	filter_type = "co2";
 	name = "co2 filter";
 	on = 1
 	},
@@ -24580,7 +24580,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/oxygen;
+	filter_type = "o2";
 	name = "oxygen filter";
 	on = 1
 	},
@@ -25841,7 +25841,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = /datum/gas/plasma;
+	filter_type = "plasma";
 	name = "waste filter";
 	on = 1
 	},
@@ -27484,7 +27484,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/nitrogen;
+	filter_type = "n2";
 	name = "nitrogen filter";
 	on = 1
 	},
@@ -29207,7 +29207,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = /datum/gas/nitrous_oxide;
+	filter_type = "n2o";
 	name = "n2o filter";
 	on = 1
 	},
@@ -39367,6 +39367,7 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bAP" = (
@@ -47785,6 +47786,7 @@
 	pixel_y = 4
 	},
 /obj/item/hand_tele,
+/obj/item/melee/chainofcommand,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain)
 "bQC" = (
@@ -77224,7 +77226,6 @@
 /obj/structure/table/glass,
 /obj/item/clipboard,
 /obj/item/toy/figure/chemist,
-/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 1
 	},
@@ -105710,7 +105711,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 4;
-	filter_type = /datum/gas/freon;
+	filter_type = "freon";
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/plasteel/neutral,

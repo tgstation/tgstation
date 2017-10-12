@@ -27831,7 +27831,6 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/device/radio/headset/headset_med,
-/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "boe" = (
@@ -37462,6 +37461,7 @@
 /obj/item/circuitboard/machine/clonescanner,
 /obj/item/circuitboard/machine/clonepod,
 /obj/item/circuitboard/computer/scan_consolenew,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bJl" = (
@@ -43114,7 +43114,7 @@
 "bWb" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/nitrous_oxide;
+	filter_type = "n2o";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -44675,7 +44675,7 @@
 "bZJ" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/plasma;
+	filter_type = "plasma";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -46466,7 +46466,7 @@
 "cdB" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/carbon_dioxide;
+	filter_type = "co2";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -47094,7 +47094,7 @@
 "cfi" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = /datum/gas/nitrogen;
+	filter_type = "n2";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -47346,7 +47346,7 @@
 "cfR" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/oxygen;
+	filter_type = "o2";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -57398,7 +57398,7 @@
 "cGf" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
-	filter_type = /datum/gas/nitrogen
+	filter_type = "n2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -58514,7 +58514,7 @@
 "cSJ" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
-	filter_type = /datum/gas/freon;
+	filter_type = "freon";
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/engine,

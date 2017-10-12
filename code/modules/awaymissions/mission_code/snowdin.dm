@@ -1,3 +1,40 @@
+//Snow Valley Areas//--
+
+/area/awaymission/snowdin
+	name = "Snowdin Tundra Plains"
+	icon_state = "awaycontent1"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+
+/area/awaymission/snowdin/post
+	name = "Snowdin Outpost"
+	requires_power = TRUE
+	icon_state = "awaycontent2"
+
+/area/awaymission/snowdin/igloo
+	name = "Snowdin Igloos"
+	icon_state = "awaycontent3"
+
+/area/awaymission/snowdin/cave
+	name = "Snowdin Caves"
+	icon_state = "awaycontent4"
+
+/area/awaymission/snowdin/base
+	name = "Snowdin Main Base"
+	icon_state = "awaycontent5"
+	requires_power = TRUE
+
+/area/awaymission/snowdin/dungeon1
+	name = "Snowdin Depths"
+	icon_state = "awaycontent6"
+
+/area/awaymission/snowdin/sekret
+	name = "Snowdin Operations"
+	icon_state = "awaycontent7"
+	requires_power = TRUE
+
+
+
 ///////////	papers
 
 /obj/item/paper/crumpled/ruins/snowdin/snowdingatewaynotice
