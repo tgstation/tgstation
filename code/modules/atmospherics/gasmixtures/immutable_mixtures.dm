@@ -54,7 +54,7 @@
 	initial_temperature = TCMB
 
 /datum/gas_mixture/immutable/space/heat_capacity()
-	return HEAT_CAPACITY_VACUUM
+	return 7000
 
 /datum/gas_mixture/immutable/space/remove()
 	return copy() //we're always empty, so we can just return a copy.
