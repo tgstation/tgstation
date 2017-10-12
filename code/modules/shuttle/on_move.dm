@@ -87,14 +87,15 @@ All ShuttleMove procs go here
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
 	loc = newT
-	if(length(client_mobs_in_contents))
-		update_parallax_contents()
 	return TRUE
 
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	if(light)
 		update_light()
+
+	update_parallax_contents()
+	
 	return TRUE
 
 /////////////////////////////////////////////////////////////////////////////////////
