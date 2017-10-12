@@ -61,7 +61,7 @@
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
 
-/obj/structure/holosign/barrier/engineering/Initialize()
+/obj/structure/holosign/barrier/engineering/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION)
 

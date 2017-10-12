@@ -10,7 +10,7 @@
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	max_integrity = 200
 
-/obj/structure/girder/Initialize()
+/obj/structure/girder/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION)
 

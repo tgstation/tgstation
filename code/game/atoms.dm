@@ -75,10 +75,17 @@
 	if (opacity && isturf(loc))
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	ComponentInitialize()
+
 	return INITIALIZE_HINT_NORMAL
 
 //called if Initialize returns INITIALIZE_HINT_LATELOAD
 /atom/proc/LateInitialize()
+	return
+
+// Put your AddComponent() calls here
+/atom/proc/ComponentInitialize()
 	return
 
 /atom/Destroy()
@@ -487,7 +494,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/rad_act(strength)
 	SendSignal(COMSIG_ATOM_RAD_ACT)
-	return TRUE
+	return
 
 /atom/proc/narsie_act()
 	SendSignal(COMSIG_ATOM_NARSIE_ACT)

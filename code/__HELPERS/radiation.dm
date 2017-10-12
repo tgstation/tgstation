@@ -17,7 +17,7 @@
 			continue
 		get_rad_contents(thing, output)
 
-/proc/radiation_pulse(turf/epicenter, intensity, range_modifier, log=0, can_contaminate=TRUE)
+/proc/radiation_pulse(turf/epicenter, intensity, range_modifier, log=FALSE, can_contaminate=TRUE)
 	if(!SSradiation.can_fire)
 		return
 	for(var/dir in GLOB.cardinals)
@@ -30,6 +30,6 @@
 			continue
 		thing.rad_act(intensity)
 
-	if(log || intensity > 500)
+	if(log)
 		log_game("Radiation pulse with intensity:[intensity] and range modifier:[range_modifier] in area [epicenter.loc.name] ")
 	return TRUE

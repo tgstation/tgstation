@@ -23,7 +23,7 @@
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
 
-/obj/machinery/power/rad_collector/Initialize()
+/obj/machinery/power/rad_collector/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION, FALSE, FALSE)
 

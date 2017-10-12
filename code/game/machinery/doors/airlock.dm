@@ -143,6 +143,8 @@
 
 	update_icon()
 
+/obj/machinery/door/airlock/ComponentInitialize()
+	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/machinery/door/airlock/proc/update_other_id()

@@ -5,7 +5,7 @@
 	density = TRUE
 	blocks_air = 1
 
-/turf/closed/Initialize()
+/turf/closed/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 

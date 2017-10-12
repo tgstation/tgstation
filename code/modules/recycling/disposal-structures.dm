@@ -15,9 +15,8 @@
 	var/tomail = 0 //changes if contains wrapped package
 	var/hasmob = 0 //If it contains a mob
 
-/obj/structure/disposalholder/Initialize()
+/obj/structure/disposalholder/ComponentInitialize()
 	. = ..()
-
 	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/structure/disposalholder/Destroy()
@@ -154,8 +153,6 @@
 /obj/structure/disposalpipe/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
 
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
-
 	if(make_from && !QDELETED(make_from))
 		base_icon_state = make_from.base_state
 		setDir(make_from.dir)
@@ -183,6 +180,9 @@
 			if("pipe-j2s")
 				stored.ptype = DISP_SORTJUNCTION_FLIP
 
+/obj/structure/disposalpipe/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
@@ -647,8 +647,6 @@
 
 /obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
-
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 	
 	if(make_from)
 		setDir(make_from.dir)
@@ -662,6 +660,10 @@
 	trunk = locate() in loc
 	if(trunk)
 		trunk.linked = src	// link the pipe trunk to self
+
+/obj/structure/disposaloutlet/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)

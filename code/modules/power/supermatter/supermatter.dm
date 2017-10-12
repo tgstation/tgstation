@@ -579,7 +579,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	matter_power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(get_turf(src), 500, 2, log=TRUE)
+	radiation_pulse(get_turf(src), 3000, 2, TRUE)
 	for(var/mob/living/L in range(10))
 		investigate_log("has irradiated [L] after consuming [AM].", INVESTIGATE_SUPERMATTER)
 		if(L in view())

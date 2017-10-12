@@ -28,8 +28,6 @@
 /obj/machinery/disposal/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
 
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
-
 	if(make_from)
 		setDir(make_from.dir)
 		make_from.loc = 0
@@ -44,6 +42,10 @@
 	update_icon()
 
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
+
+/obj/machinery/disposal/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/machinery/disposal/proc/trunk_check()
 	trunk = locate() in loc

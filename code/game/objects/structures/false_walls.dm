@@ -31,7 +31,10 @@
 
 /obj/structure/falsewall/Initialize()
 	. = ..()
-	air_update_turf(1)
+	air_update_turf(TRUE)
+
+/obj/structure/falsewall/ComponentInitialize()
+	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/structure/falsewall/Destroy()

@@ -13,7 +13,7 @@
 	girder_type = /obj/structure/girder/reinforced
 	explosion_block = 2
 
-/turf/closed/wall/r_wall/Initialize()
+/turf/closed/wall/r_wall/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_HEAVY_INSULATION)
 

@@ -44,20 +44,20 @@
 
 	check_obstructions(atoms) // reduce our overall strength if there are radiation insulators
 
-	return TRUE
-
 /datum/radiation_wave/proc/get_rad_atoms()
 	var/list/atoms = list()
 	var/distance = steps
+	var/cmove_dir = move_dir
+	var/cmaster_turf = master_turf
 
-	if(move_dir == NORTH || move_dir == SOUTH)
+	if(cmove_dir == NORTH || cmove_dir == SOUTH)
 		distance-- //otherwise corners overlap
 
-	atoms += get_rad_contents(master_turf)
+	atoms += get_rad_contents(cmaster_turf)
 
 	var/turf/place
 	for(var/dir in __dirs) //There should be just 2 dirs in here, left and right of the direction of movement
-		place = master_turf
+		place = cmaster_turf
 		for(var/i in 1 to distance)
 			place = get_step(place, dir)
 			atoms += get_rad_contents(place)
@@ -66,7 +66,8 @@
 
 /datum/radiation_wave/proc/check_obstructions(list/atoms)
 	var/width = steps
-	if(move_dir == NORTH || move_dir == SOUTH)
+	var/cmove_dir = move_dir
+	if(cmove_dir == NORTH || cmove_dir == SOUTH)
 		width--
 	width = 1+(2*width)
 

@@ -116,7 +116,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = 0
 
-/obj/item/clothing/head/radiation/Initialize()
+/obj/item/clothing/head/radiation/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
 
@@ -138,7 +138,7 @@
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = 0
 
-/obj/item/clothing/suit/radiation/Initialize()
+/obj/item/clothing/suit/radiation/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE) 
 	// Just don't want things to be irradiated inside this
