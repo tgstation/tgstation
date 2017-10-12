@@ -32785,7 +32785,6 @@
 /obj/item/hand_labeler,
 /obj/item/device/radio/headset/headset_med,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bwW" = (
@@ -41751,6 +41750,7 @@
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/darkgreen,
 /area/storage/tech)
 "bQw" = (
@@ -41924,7 +41924,7 @@
 "bQN" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "n2o";
+	filter_type = /datum/gas/nitrous_oxide;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -43351,7 +43351,7 @@
 "bTU" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "plasma";
+	filter_type = /datum/gas/plasma;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -44738,7 +44738,7 @@
 "bWK" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = "o2";
+	filter_type = /datum/gas/oxygen;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -44777,7 +44777,7 @@
 "bWQ" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "co2";
+	filter_type = /datum/gas/carbon_dioxide;
 	on = 1
 	},
 /turf/open/floor/plasteel,

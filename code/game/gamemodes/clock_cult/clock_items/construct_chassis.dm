@@ -34,16 +34,27 @@
 	. = ..()
 
 /obj/item/clockwork/construct_chassis/attack_ghost(mob/user)
+	if(!SSticker.mode)
+		to_chat(user, "<span class='danger'>You cannot use that before the game has started.</span>")
+		return
 	if(alert(user, "Become a [construct_name]? You can no longer be cloned!", construct_name, "Yes", "Cancel") == "Cancel")
 		return
 	if(QDELETED(src))
 		to_chat(user, "<span class='danger'>You were too late! Better luck next time.</span>")
 		return
+	pre_spawn()
 	visible_message(creation_message)
 	var/mob/living/construct = new construct_type(get_turf(src))
 	construct.key = user.key
+	post_spawn(construct)
 	qdel(user)
 	qdel(src)
+
+/obj/item/clockwork/construct_chassis/proc/pre_spawn() //Some things might change before the construct spawns; override those on a subtype basis in this proc
+	return
+
+/obj/item/clockwork/construct_chassis/proc/post_spawn(mob/living/construct) //And some things might change after it
+	return
 
 
 //Marauder armor, used to create clockwork marauders - sturdy frontline combatants that can deflect projectiles.
@@ -67,3 +78,21 @@
 	creation_message = "<span class='alloy bold'>The cogscarab clicks and whirrs as it hops up and springs to life!</span>"
 	construct_type = /mob/living/simple_animal/drone/cogscarab
 	w_class = WEIGHT_CLASS_SMALL
+	var/infinite_resources = TRUE
+
+/obj/item/clockwork/construct_chassis/cogscarab/Initialize()
+	. = ..()
+	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult))
+		infinite_resources = FALSE //For any that are somehow spawned in late
+
+/obj/item/clockwork/construct_chassis/cogscarab/pre_spawn()
+	if(infinite_resources)
+		construct_type = /mob/living/simple_animal/drone/cogscarab/ratvar //During rounds where they can't interact with the station, let them experiment with builds
+
+/obj/item/clockwork/construct_chassis/cogscarab/post_spawn(mob/living/construct)
+	if(infinite_resources) //Allow them to build stuff and recite scripture
+		var/list/cached_stuff = construct.GetAllContents()
+		for(var/obj/item/clockwork/replica_fabricator/F in cached_stuff)
+			F.uses_power = FALSE
+		for(var/obj/item/clockwork/slab/S in cached_stuff)
+			S.no_cost = TRUE
