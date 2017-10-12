@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - config: "The shuttle may now be configured to be automatically called if the amount of living crew drops below a certain percentage"

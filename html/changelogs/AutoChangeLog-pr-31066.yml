@@ -1,0 +1,9 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Blood and vomit pools can now spread the diseases of the mob that made them! Cover your feet properly to avoid infection."
+  - rscadd: "Virus severity now changes the color of the disease HUD icon, scaling from green to red to flashing black-red."
+  - tweak: "Contact-based diseases no longer spread by simply standing near other people; it requires interaction like touching or attacking. Bumping against people/swapping with help intent still counts as touching."
+  - tweak: "Advanced viruses now have another infection type, \"Fluids\"; it's between blood and skin contact, and will only be transmitted through fluid contact."
+  - rscdel: "Two \"hidden\" infection types have been removed. Overall this means that making a virus airborne is a little bit easier."
+  - bugfix: "Species who cannot breathe can no longer be infected by breathing."

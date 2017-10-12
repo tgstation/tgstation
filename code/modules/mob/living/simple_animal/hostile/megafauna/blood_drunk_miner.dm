@@ -161,7 +161,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/quick_attack_loop()
 	if(next_move <= world.time)
-		sleep(1)
+		stoplag(1)
 		.() //retry
 		return
 	sleep((next_move - world.time) * 1.5)

@@ -41,7 +41,7 @@
 						  "<span class='userdanger'>[A] grabs your wrist and violently wrenches it to the side!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.emote("scream")
-		D.drop_item()
+		D.dropItemToGround(D.get_active_held_item())
 		D.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
 		D.Stun(60)
 		return 1
@@ -79,7 +79,7 @@
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
 		D.apply_damage(20, BRUTE, "head")
-		D.drop_item()
+		D.drop_all_held_items()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		D.Stun(80)
 		return 1
@@ -112,6 +112,8 @@
 			D.stop_pulling()
 			if(A.a_intent == INTENT_GRAB)
 				add_logs(A, D, "grabbed", addition="aggressively")
+				D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
+				  "<span class='userdanger'>[A] violently grabs you!</span>")
 				A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
 			else
 				add_logs(A, D, "grabbed", addition="passively")
@@ -168,10 +170,9 @@
 	to_chat(user, message)
 	var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null)
 	theSleepingCarp.teach(user)
-	user.drop_item()
-	visible_message("<span class='warning'>[src] lights up in fire and quickly burns to ash.</span>")
-	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	qdel(src)
+	visible_message("<span class='warning'>[src] lights up in fire and quickly burns to ash.</span>")
+	new /obj/effect/decal/cleanable/ash(user.drop_location())
 
 /obj/item/twohanded/bostaff
 	name = "bo staff"

@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/examine()
 	. = ..()
-	usr.show_message("It has [uses_left] uses remaining.", 1)
+	usr.show_message("It has [uses_left] use\s remaining.", 1)
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
@@ -67,8 +67,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 					B.handle_item_insertion(src)
 			uses_left--
 			if(uses_left <= 0)
-				user.drop_item(src)
-				loc = A
+				user.transferItemToLoc(src, A, TRUE)
 			var/mutable_appearance/balloon
 			var/mutable_appearance/balloon2
 			var/mutable_appearance/balloon3
