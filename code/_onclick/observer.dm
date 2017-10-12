@@ -53,7 +53,9 @@
 	if(user.client)
 		if(IsAdminGhost(user))
 			attack_ai(user)
-		if(user.client.prefs.inquisitive_ghost)
+		else if(isliving(src) && user.health_scan)
+			healthscan(user, src, 1, TRUE)
+		else if(user.client.prefs.inquisitive_ghost)
 			user.examinate(src)
 
 // ---------------------------------------

@@ -30,6 +30,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/mob/observetarget = null	//The target mob that the ghost is observing. Used as a reference in logout()
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
+	var/health_scan = FALSE //Are health scans currently enabled?
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
@@ -674,6 +675,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		show_data_huds()
 		to_chat(src, "<span class='notice'>Data HUDs enabled.</span>")
 		data_huds_on = 1
+
+/mob/dead/observer/verb/toggle_health_scan()
+	set name = "Toggle Health Scan"
+	set desc = "Toggles whether you health-scan living beings on click"
+	set category = "Ghost"
+
+	if(health_scan) //remove old huds
+		to_chat(src, "<span class='notice'>Health scan disabled.</span>")
+		health_scan = 0
+	else
+		to_chat(src, "<span class='notice'>Health scan enabled.</span>")
+		health_scan = 1
 
 /mob/dead/observer/verb/restore_ghost_appearance()
 	set name = "Restore Ghost Character"
