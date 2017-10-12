@@ -24640,6 +24640,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
+/obj/machinery/smoke_machine,
 /mob/living/simple_animal/bot/cleanbot{
 	name = "C.L.E.A.N."
 	},
@@ -43114,7 +43115,7 @@
 "bWb" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/nitrous_oxide;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -44675,7 +44676,7 @@
 "bZJ" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/plasma;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -46466,7 +46467,7 @@
 "cdB" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/carbon_dioxide;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -47094,7 +47095,7 @@
 "cfi" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = /datum/gas/nitrogen;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -47346,7 +47347,7 @@
 "cfR" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/oxygen;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -57398,7 +57399,7 @@
 "cGf" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
-	filter_type = /datum/gas/nitrogen
+	filter_type = !INVALID_VALUE!
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -58514,7 +58515,7 @@
 "cSJ" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
-	filter_type = /datum/gas/freon;
+	filter_type = !INVALID_VALUE!;
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/engine,

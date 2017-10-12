@@ -46860,7 +46860,7 @@
 "bMk" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/nitrous_oxide;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -49917,7 +49917,7 @@
 "bSj" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/plasma;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -52636,7 +52636,7 @@
 "bXq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/carbon_dioxide;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -54520,7 +54520,7 @@
 "cbd" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/nitrogen;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /obj/structure/window/reinforced,
@@ -54575,7 +54575,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/oxygen;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /turf/open/floor/plasteel/blue,
@@ -59052,6 +59052,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cjV" = (
+/obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 4
 	},
@@ -82681,7 +82682,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = /datum/gas/freon;
+	filter_type = !INVALID_VALUE!;
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/engine,
@@ -82881,7 +82882,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = /datum/gas/nitrogen
+	filter_type = !INVALID_VALUE!
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
