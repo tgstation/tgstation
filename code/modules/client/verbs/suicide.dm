@@ -30,20 +30,20 @@
 				if(damagetype & BRUTELOSS)
 					adjustBruteLoss(200/damage_mod)
 
-				else if(damagetype & FIRELOSS)
+				if(damagetype & FIRELOSS)
 					adjustFireLoss(200/damage_mod)
 
-				else if(damagetype & TOXLOSS)
+				if(damagetype & TOXLOSS)
 					adjustToxLoss(200/damage_mod)
 
-				else if(damagetype & OXYLOSS)
+				if(damagetype & OXYLOSS)
 					adjustOxyLoss(200/damage_mod)
 
-				else if(damagetype & MANUAL_SUICIDE)	//Assume the object will handle the death.
+				if(damagetype & MANUAL_SUICIDE)	//Assume the object will handle the death.
 					return
 
 				//If something went wrong, just do normal oxyloss
-				else if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
+				if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
 					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
 				death(FALSE)
