@@ -369,11 +369,13 @@
 		qdel(I)
 
 	else if(istype(I, /obj/item/bikehorn) && (build_step == ASSEMBLY_SECOND_STEP))
+		if(istype(loc, /obj/item/storage/backpack)) //don't build them in your backpacks!
+			return
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		to_chat(user, "<span class='notice'>You add the [I] to [src]! Honk!</span>")
-		var/mob/living/simple_animal/bot/honkbot/S = new(drop_location())
-		S.loc = loc
+		var/T = get_turf(loc) //important to spawn new bots on turf.
+		var/mob/living/simple_animal/bot/honkbot/S = new(drop_location(T))
 		S.name = created_name
 		S.spam_flag = TRUE // only long enough to hear the first ping.
 		addtimer(CALLBACK (S, .mob/living/simple_animal/bot/honkbot/proc/react_ping), 5)
