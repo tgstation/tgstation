@@ -1,4 +1,38 @@
+//centcomAway areas
 
+/area/awaymission/centcomAway
+	name = "XCC-P5831"
+	icon_state = "away"
+	requires_power = FALSE
+
+/area/awaymission/centcomAway/general
+	name = "XCC-P5831"
+	music = 'sound/ambience/ambigen3.ogg'
+
+/area/awaymission/centcomAway/maint
+	name = "XCC-P5831 Maintenance"
+	icon_state = "away1"
+	music = 'sound/ambience/ambisin1.ogg'
+
+/area/awaymission/centcomAway/thunderdome
+	name = "XCC-P5831 Thunderdome"
+	icon_state = "away2"
+	music = 'sound/ambience/ambisin2.ogg'
+
+/area/awaymission/centcomAway/cafe
+	name = "XCC-P5831 Kitchen Arena"
+	icon_state = "away3"
+	music = 'sound/ambience/ambisin3.ogg'
+
+/area/awaymission/centcomAway/courtroom
+	name = "XCC-P5831 Courtroom"
+	icon_state = "away4"
+	music = 'sound/ambience/ambisin4.ogg'
+
+/area/awaymission/centcomAway/hangar
+	name = "XCC-P5831 Hangars"
+	icon_state = "away4"
+	music = 'sound/ambience/ambigen5.ogg'
 
 //centcomAway items
 
