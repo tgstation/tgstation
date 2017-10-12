@@ -59647,8 +59647,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/built{
-	dir = 1;
-	tag = "icon-tube1 (NORTH)"
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -59680,8 +59679,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/built{
-	dir = 1;
-	tag = "icon-tube1 (NORTH)"
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -60163,8 +60161,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/built{
-	dir = 2;
-	tag = "icon-tube1 (NORTH)"
+	dir = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -60207,8 +60204,7 @@
 	y_offset = -7
 	},
 /obj/machinery/light/built{
-	dir = 2;
-	tag = "icon-tube1 (NORTH)"
+	dir = 2
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
