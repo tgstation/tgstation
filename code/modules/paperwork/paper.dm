@@ -109,7 +109,6 @@
 	return (BRUTELOSS)
 
 /obj/item/paper/proc/reset_spamflag()
-	set waitfor = FALSE
 	spam_flag = FALSE
 
 /obj/item/paper/attack_self(mob/user)
