@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
 	var/font_mode = "font-family:monospace;" //The currently selected font.
 	var/background_color = "#808000" //The currently selected background color.
-	
+
 	#define FONT_MONO "font-family:monospace;"
 	#define FONT_SHARE "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
 	#define FONT_ORBITRON "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
@@ -70,11 +70,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
-	
-	var/underline_flag = TRUE //flag for underline
 
-    #define UNDERLINE_OFF 0
-    #define UNDERLINE_ON 1
+	var/underline_flag = TRUE //flag for underline
 
 /obj/item/device/pda/examine(mob/user)
 	..()
@@ -186,7 +183,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		dat += "<br><a href='byond://?src=\ref[src];choice=Toggle_Font'>Toggle Font</a>"
 		dat += " | <a href='byond://?src=\ref[src];choice=Change_Color'>Change Color</a>"
 		dat += " | <a href='byond://?src=\ref[src];choice=Toggle_Underline'>Toggle Underline</a>" //underline button
-        
+
 		dat += "</div>"
 
 	dat += "<br>"
@@ -293,7 +290,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(cartridge)
 					dat += cartridge.message_header()
 
-				dat += "<h4><img src=pda_menu.png>Detected PDAs</h4>"
+				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
 
 				dat += "<ul>"
 				var/count = 0
@@ -314,10 +311,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 					dat += "<a href='byond://?src=\ref[src];choice=MessageAll'>Send To All</a>"
 
 			if(21)
-				dat += "<h4><img src=pda_mail.png>SpaceMessenger V3.9.6</h4>"
+				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
 				dat += "<a href='byond://?src=\ref[src];choice=Clear'><img src=pda_blank.png>Clear Messages</a>"
 
-				dat += "<h4><img src=pda_mail.png>Messages</h4>"
+				dat += "<h4><img src=pda_mail.png> Messages</h4>"
 
 				dat += tnote
 				dat += "<br>"
@@ -349,12 +346,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += cartridge.generate_menu()
 
 	dat += "</body></html>"
-	
-	if (underline_flag == UNDERLINE_ON)
+
+	if (underline_flag)
 		dat = replacetext(dat, "text-decoration:none", "text-decoration:underline")
-	if (underline_flag == UNDERLINE_OFF)
+	if (!underline_flag)
 		dat = replacetext(dat, "text-decoration:underline", "text-decoration:none")
-	
+
 	user << browse(dat, "window=pda;size=400x450;border=1;can_resize=1;can_minimize=0")
 	onclose(user, "pda", src)
 
@@ -372,7 +369,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //BASIC FUNCTIONS===================================
 
 			if("Refresh")//Refresh, goes to the end of the proc.
-			
+
 			if ("Toggle_Font")
 				//CODE REVISION 2
 				font_index = (font_index + 1) % 4
@@ -389,9 +386,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if ("Change_Color")
 				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').")as color
 				background_color = new_color
-                
+
 			if ("Toggle_Underline")
-				underline_flag = (underline_flag + 1) % 2
+				underline_flag = !underline_flag
 
 			if("Return")//Return
 				if(mode<=9)
