@@ -39367,7 +39367,6 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bAP" = (
@@ -77225,6 +77224,7 @@
 /obj/structure/table/glass,
 /obj/item/clipboard,
 /obj/item/toy/figure/chemist,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 1
 	},
