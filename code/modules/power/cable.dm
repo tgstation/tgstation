@@ -402,7 +402,6 @@ By design, d1 is the smallest direction and d2 is the highest
 			qdel(PN)
 
 /obj/structure/cable/proc/auto_propogate_cut_cable(obj/O)
-	set waitfor = FALSE
 	if(O && !QDELETED(O))
 		var/datum/powernet/newPN = new()// creates a new powernet...
 		propagate_network(O, newPN)//... and propagates it to the other side of the cable
