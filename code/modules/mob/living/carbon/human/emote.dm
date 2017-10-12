@@ -169,4 +169,8 @@
 		var/turf/T = loc
 		T.Entered(src)
 
+/datum/emote/living/carbon/human/flex
+	key = "flex"
+	message = "flexs [p_their()] [pick("arms", ((gender == FEMALE) ? "flat stomach" : "abs"), "legs")]."
+
 //Ayy lmao
