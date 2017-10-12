@@ -59,7 +59,7 @@
 			continue
 		if(QDELETED(src))
 			break
-		O.forceMove(drop_location())
+		O.forceMove(drop)
 		if(TICK_CHECK)
 			stoplag()
 			drop = drop_location()
