@@ -131,7 +131,7 @@ GLOBAL_PROTECT(security_mode)
 		return
 
 	handler = new handler()
-	return handler.Run(input)
+	return handler.TryRun(input)
 
 /world/proc/AnnouncePR(announcement, list/payload)
 	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
