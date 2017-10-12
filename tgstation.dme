@@ -2139,6 +2139,7 @@
 #include "code\modules\stock_market\logs.dm"
 #include "code\modules\stock_market\stockmarket.dm"
 #include "code\modules\stock_market\stocks.dm"
+#include "code\modules\superbox\frenzystation.dm"
 #include "code\modules\superbox\geoscape.dm"
 #include "code\modules\superbox\voice.dm"
 #include "code\modules\surgery\amputation.dm"
