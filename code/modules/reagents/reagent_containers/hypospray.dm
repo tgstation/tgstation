@@ -101,11 +101,10 @@
 		reagents.maximum_volume = 0 //Makes them useless afterwards
 		container_type = NONE
 	update_icon()
-	if(iscyborg(user))
-		addtimer(CALLBACK(src, .proc/cyborg_recharge, user), 80)
+	addtimer(CALLBACK(src, .proc/cyborg_recharge, user), 80)
 
 /obj/item/reagent_containers/hypospray/medipen/proc/cyborg_recharge(mob/living/silicon/robot/user)
-	if(!reagents.total_volume)
+	if(!reagents.total_volume && iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.cell.use(100))
 			reagents.add_reagent_list(list_reagents)
