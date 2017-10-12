@@ -34,7 +34,6 @@
 		A.build_network()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
-	/*
 	var/list/obj/machinery/atmospherics/all_connected = list()
 	for(var/obj/machinery/atmospherics/I in front_nodes)
 		all_connected[I] = I
@@ -46,8 +45,6 @@
 	for(var/obj/machinery/atmospherics/A in all_connected)
 		returnlist += all_connected[A]
 	return returnlist
-	*/
-	return front_nodes | back_nodes | nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
 	layer = (initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE))	//This is above everything else.
@@ -102,7 +99,9 @@
 	return new_nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
-	..()
+	findAllConnections()
+	var/turf/T = loc			// hide if turf is not intact
+	hide(T.intact)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer()
 	piping_layer = PIPING_LAYER_DEFAULT

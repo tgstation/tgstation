@@ -539,16 +539,18 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
 		return ..()
 
-	var/temp_piping_layer = null
-	if(istype(A, /obj/machinery/atmospherics))
-		var/obj/machinery/atmospherics/AM = A
-		temp_piping_layer = AM.piping_layer
-		A = get_turf(user)
+	var/atmos_piping_mode = p_class == ATMOS_MODE || p_class == METER_MODE
+	var/temp_piping_layer
+	if(atmos_piping_mode)
+		if(istype(A, /obj/machinery/atmospherics))
+			var/obj/machinery/atmospherics/AM = A
+			temp_piping_layer = AM.piping_layer
+			A = get_turf(user)
 
 	//make sure what we're clicking is valid for the current mode
 	var/is_paintable = (p_class == PAINT_MODE && istype(A, /obj/machinery/atmospherics/pipe))
 	var/is_consumable = (p_class == EATING_MODE && (istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct)))
-	var/can_make_pipe = ((p_class == ATMOS_MODE || p_class == METER_MODE || p_class == DISPOSALS_MODE) && isturf(A))
+	var/can_make_pipe = ((atmos_piping_mode || p_class == DISPOSALS_MODE) && isturf(A))
 
 	if(!is_paintable && !is_consumable && !can_make_pipe)
 		return ..()
