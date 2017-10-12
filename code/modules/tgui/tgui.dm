@@ -7,6 +7,8 @@
  /**
   * tgui datum (represents a UI).
  **/
+ 
+ //fixed by MRTY
 /datum/tgui
 	var/mob/user // The mob who opened/is using the UI.
 	var/datum/src_object // The object which owns the UI.
