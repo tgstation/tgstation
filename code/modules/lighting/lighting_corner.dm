@@ -4,7 +4,6 @@
 
 // This list is what the code that assigns corners listens to, the order in this list is the order in which corners are added to the /turf/corners list.
 GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST))
-GLOBAL_LIST_INIT(lightingshit, list())
 
 /datum/lighting_corner
 	var/list/turf/masters
