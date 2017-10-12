@@ -122,7 +122,7 @@
 	return NC.Run(input["sender"], input["namecheck"])
 
 /datum/world_topic/adminwho
-	keyword = "namecheck"
+	keyword = "adminwho"
 
 /datum/world_topic/adminwho/Run(list/input)
 	return ircadminwho()
