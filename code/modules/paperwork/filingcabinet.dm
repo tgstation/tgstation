@@ -217,4 +217,4 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 		cooldown = 0
 	else
-		to_chat(user, "<span class='warning'>The [src] is jammed, give it a few seconds.</span>")
+		to_chat(user, "<span class='warning'>[src] is jammed, give it a few seconds.</span>")

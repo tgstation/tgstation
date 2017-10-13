@@ -112,9 +112,9 @@
 /obj/item/twohanded/required/cult_bastard/attack_self(mob/user)
 	dash_toggled = !dash_toggled
 	if(dash_toggled)
-		to_chat(loc, "<span class='notice'>You raise the [src] and prepare to jaunt with it.</span>")
+		to_chat(loc, "<span class='notice'>You raise [src] and prepare to jaunt with it.</span>")
 	else
-		to_chat(loc, "<span class='notice'>You lower the [src] and prepare to swing it normally.</span>")
+		to_chat(loc, "<span class='notice'>You lower [src] and prepare to swing it normally.</span>")
 
 /obj/item/twohanded/required/cult_bastard/pickup(mob/living/user)
 	. = ..()

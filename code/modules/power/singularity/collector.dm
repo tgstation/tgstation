@@ -76,13 +76,17 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
+<<<<<<< HEAD
 		to_chat(user, "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>")
+=======
+		to_chat(user, "<span class='notice'>[W] detects that [last_power]W is being processed.</span>")
+>>>>>>> 7998a3ce6d... Merge pull request #31601 from AutomaticFrenzy/patch/thethe
 		return TRUE
 	else if(istype(W, /obj/item/device/analyzer) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
 	else if(istype(W, /obj/item/tank/internals/plasma))
 		if(!anchored)
-			to_chat(user, "<span class='warning'>The [src] needs to be secured to the floor first!</span>")
+			to_chat(user, "<span class='warning'>[src] needs to be secured to the floor first!</span>")
 			return TRUE
 		if(loaded_tank)
 			to_chat(user, "<span class='warning'>There's already a plasma tank loaded!</span>")
