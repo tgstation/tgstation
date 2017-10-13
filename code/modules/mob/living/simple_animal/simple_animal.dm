@@ -96,6 +96,10 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 
+/mob/living/simple_animal/Destroy()
+	. = ..()
+	GLOB.simple_animals -= src
+
 /mob/living/simple_animal/updatehealth()
 	..()
 	health = Clamp(health, 0, maxHealth)
