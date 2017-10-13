@@ -509,8 +509,7 @@ function update_pr_balance($payload) {
 	$balances = pr_balances();
 	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
 	adjust_pr_balance($author, $friendliness, $balances);
-	if($author != $merger)
-		adjust_pr_balance($merger, 1, $balances);
+	adjust_pr_balance($merger, $author != $merger ? 1 : -100, $balances);
 }
 	
 function adjust_pr_balance($user, $amount, $balances = null) {
