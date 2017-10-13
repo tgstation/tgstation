@@ -124,7 +124,7 @@ There are several things that need to be remembered:
 		else if(U.adjusted == DIGITIGRADE_STYLE)
 			t_color = "[t_color]_l"
 
-		var/mutable_appearance/uniform_overlay
+		var/mutable_appearance/uniform_overlay = overlays_standing[UNIFORM_LAYER]
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
@@ -151,7 +151,7 @@ There are several things that need to be remembered:
 		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_wear_id]
 		inv.update_icon()
 
-	var/mutable_appearance/id_overlay
+	var/mutable_appearance/id_overlay = overlays_standing[ID_LAYER]
 
 	if(wear_id)
 		wear_id.screen_loc = ui_id
@@ -186,7 +186,7 @@ There are several things that need to be remembered:
 
 		overlays_standing[GLOVES_LAYER] = bloody_overlay
 
-	var/mutable_appearance/gloves_overlay
+	var/mutable_appearance/gloves_overlay = overlays_standing[GLOVES_LAYER]
 	if(gloves)
 		gloves.screen_loc = ui_gloves
 		if(client && hud_used && hud_used.hud_shown)
@@ -311,6 +311,14 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_head()
 	..()
 	update_mutant_bodyparts()
+	if(head)
+		var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
+		remove_overlay(HEAD_LAYER)
+		if("head" in dna.species.offset_features)
+			head_overlay.pixel_x += dna.species.offset_features["head"][1]
+			head_overlay.pixel_y += dna.species.offset_features["head"][2]
+			overlays_standing[HEAD_LAYER] = head_overlay
+	apply_overlay(HEAD_LAYER)
 
 /mob/living/carbon/human/update_inv_belt()
 	remove_overlay(BELT_LAYER)
@@ -391,8 +399,24 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_wear_mask()
 	..()
+	var/mutable_appearance/mask_overlay = overlays_standing[FACEMASK_LAYER]
+	remove_overlay(FACEMASK_LAYER)
+	if("mask" in dna.species.offset_features)
+		mask_overlay.pixel_x += dna.species.offset_features["mask"][1]
+		mask_overlay.pixel_y += dna.species.offset_features["mask"][2]
+		overlays_standing[FACEMASK_LAYER] = mask_overlay
+	apply_overlay(FACEMASK_LAYER)
 	update_mutant_bodyparts() //e.g. upgate needed because mask now hides lizard snout
 
+/mob/living/carbon/human/update_inv_back()
+	..()
+	var/mutable_appearance/back_overlay = overlays_standing[BACK_LAYER]
+	remove_overlay(BACK_LAYER)
+	if("back" in dna.species.offset_features)
+		back_overlay.pixel_x += dna.species.offset_features["back"][1]
+		back_overlay.pixel_y += dna.species.offset_features["back"][2]
+		overlays_standing[BACK_LAYER] = back_overlay
+	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/human/update_inv_legcuffed()
 	remove_overlay(LEGCUFF_LAYER)

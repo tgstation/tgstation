@@ -125,13 +125,6 @@
 	if(wear_mask)
 		if(!(head && (head.flags_inv & HIDEMASK)))
 			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
-			if(ishuman(src))
-				var/mob/living/carbon/human/H = src
-				var/mutable_appearance/mask_overlay
-				if("mask" in dna.species.offset_features)
-					mask_overlay.pixel_x += H.dna.species.offset_features["mask"][1]
-					mask_overlay.pixel_y += H.dna.species.offset_features["mask"][2]
-					overlays_standing[FACEMASK_LAYER] = mask_overlay
 		update_hud_wear_mask(wear_mask)
 
 	apply_overlay(FACEMASK_LAYER)
@@ -159,14 +152,8 @@
 
 	if(back)
 		overlays_standing[BACK_LAYER] = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			var/mutable_appearance/back_overlay
-			if("back" in dna.species.offset_features)
-				back_overlay.pixel_x += H.dna.species.offset_features["back"][1]
-				back_overlay.pixel_y += H.dna.species.offset_features["back"][2]
-				overlays_standing[HEAD_LAYER] = back_overlay
 		update_hud_back(back)
+
 	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/update_inv_head()
@@ -181,13 +168,6 @@
 
 	if(head)
 		overlays_standing[HEAD_LAYER] = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			var/mutable_appearance/head_overlay
-			if("head" in dna.species.offset_features)
-				head_overlay.pixel_x += H.dna.species.offset_features["head"][1]
-				head_overlay.pixel_y += H.dna.species.offset_features["head"][2]
-				overlays_standing[HEAD_LAYER] = head_overlay
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)
