@@ -683,10 +683,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(health_scan) //remove old huds
 		to_chat(src, "<span class='notice'>Health scan disabled.</span>")
-		health_scan = 0
+		health_scan = FALSE
 	else
 		to_chat(src, "<span class='notice'>Health scan enabled.</span>")
-		health_scan = 1
+		health_scan = TRUE
 
 /mob/dead/observer/verb/restore_ghost_appearance()
 	set name = "Restore Ghost Character"
