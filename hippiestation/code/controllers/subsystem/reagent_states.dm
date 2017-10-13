@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(reagent_states)
 	priority = 40
 	flags = SS_NO_INIT|SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	var/deleting = FALSE
 
 	var/list/currentrun = list()
 	var/list/processing = list()
@@ -25,7 +26,14 @@ SUBSYSTEM_DEF(reagent_states)
 			thing.process(wait)
 		else
 			SSreagent_states.processing -= thing
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
+			if(!deleting && cost > 2000)
+				deleting = TRUE
+				for(var/I in GLOB.smoke)
+					qdel(I)
+				for(var/I in GLOB.vapour)
+					qdel(I)
+				deleting = FALSE
 			return
 
 /datum/controller/subsystem/reagent_states/Recover()
