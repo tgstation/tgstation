@@ -36,6 +36,7 @@
 
 	..()
 
+GLOBAL_LIST_EMPTY(vapour)
 /obj/effect/particle_effect/vapour
 	name = "vapour"
 	icon = 'icons/effects/tile_effects.dmi'
@@ -50,15 +51,18 @@
 
 /obj/effect/particle_effect/vapour/Initialize()
 	. = ..()
+	LAZYADD(GLOB.vapour, src)
 	create_reagents(50)//used just for in air reactions
 	START_PROCESSING(SSreagent_states, src)
 
 
 /obj/effect/particle_effect/vapour/Destroy()
+	LAZYREMOVE(GLOB.vapour, src)
 	STOP_PROCESSING(SSreagent_states, src)
 	return ..()
 
 /obj/effect/particle_effect/vapour/proc/kill_vapour()
+	LAZYREMOVE(GLOB.vapour, src)
 	STOP_PROCESSING(SSreagent_states, src)
 	qdel(src)
 
