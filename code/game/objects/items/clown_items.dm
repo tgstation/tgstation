@@ -137,12 +137,12 @@
 	var/flip_flag = FALSE
 
 /obj/item/bikehorn/golden/attack()
-	if (flip_flag == FALSE)
+	if (!flip_flag)
 		flip_mobs()
 	return ..()
 
 /obj/item/bikehorn/golden/attack_self(mob/user)
-	if (flip_flag == FALSE)
+	if (!flip_flag)
 		flip_mobs()
 	..()
 
