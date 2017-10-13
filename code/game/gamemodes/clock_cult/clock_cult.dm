@@ -124,7 +124,6 @@ Credit where due:
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
 		antag_candidates -= servant
-		modePlayer += servant
 		servant.assigned_role = "Servant of Ratvar"
 		servant.special_role = "Servant of Ratvar"
 		starter_servants--
