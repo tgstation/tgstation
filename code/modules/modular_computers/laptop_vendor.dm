@@ -247,7 +247,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(c))
 			return
 		credits += c.value
-		visible_message("<span class='info'><span class='name'>[usr]</span> inserts [c.value] credits into the [src].</span>")
+		visible_message("<span class='info'><span class='name'>[usr]</span> inserts [c.value] credits into [src].</span>")
 		qdel(c)
 		return
 
