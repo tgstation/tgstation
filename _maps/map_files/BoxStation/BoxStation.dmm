@@ -24640,9 +24640,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/mob/living/simple_animal/bot/cleanbot{
-	name = "C.L.E.A.N."
-	},
+/obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bha" = (
@@ -27881,6 +27879,9 @@
 	pixel_x = 30
 	},
 /obj/machinery/light,
+/mob/living/simple_animal/bot/cleanbot{
+	name = "C.L.E.A.N."
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bok" = (
