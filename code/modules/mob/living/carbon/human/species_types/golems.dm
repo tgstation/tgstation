@@ -295,7 +295,7 @@
 	if(!active)
 		if(world.time > last_event+30)
 			active = 1
-			radiation_pulse(get_turf(H), 3, 3, 5, 0)
+			radiation_pulse(get_turf(H), 50)
 			last_event = world.time
 			active = null
 	..()
