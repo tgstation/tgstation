@@ -1,5 +1,7 @@
-
-GLOBAL_LIST_EMPTY(rad_collectors)
+// last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
+#define RAD_COLLECTOR_EFFICIENCY 80 	// radiation needs to be over this amount to get power
+#define RAD_COLLECTOR_COEFFICIENT 100
+#define RAD_COLLECTOR_STORED_OUT 0.04	// (this*100)% of stored power outputted per tick. Doesn't actualy change output total, lower numbers just means collectors output for longer in absence of a source
 
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
@@ -21,12 +23,11 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
 
-/obj/machinery/power/rad_collector/Initialize()
+/obj/machinery/power/rad_collector/ComponentInitialize()
 	. = ..()
-	GLOB.rad_collectors += src
+	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION, FALSE, FALSE)
 
 /obj/machinery/power/rad_collector/Destroy()
-	GLOB.rad_collectors -= src
 	return ..()
 
 /obj/machinery/power/rad_collector/process()
@@ -37,8 +38,10 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 		else
 			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= 0.001*drainratio
 			loaded_tank.air_contents.garbage_collect()
-	return
 
+			var/power_produced = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
+			add_avail(power_produced)
+			last_power-=power_produced
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
 	if(..())
@@ -137,15 +140,9 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 	else
 		update_icons()
 
-/obj/machinery/power/rad_collector/proc/receive_pulse(pulse_strength)
-	if(loaded_tank && active)
-		var/power_produced = loaded_tank.air_contents.gases[/datum/gas/plasma] ? loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] : 0
-		power_produced *= pulse_strength*10
-		add_avail(power_produced)
-		last_power = power_produced
-		return
-	return
-
+/obj/machinery/power/rad_collector/rad_act(pulse_strength)
+	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
+		last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 
 /obj/machinery/power/rad_collector/proc/update_icons()
 	cut_overlays()
@@ -167,3 +164,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 		flick("ca_deactive", src)
 	update_icons()
 	return
+
+#undef RAD_COLLECTOR_EFFICIENCY
+#undef RAD_COLLECTOR_COEFFICIENT
+#undef RAD_COLLECTOR_STORED_OUT

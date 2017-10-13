@@ -15,6 +15,10 @@
 	var/tomail = 0 //changes if contains wrapped package
 	var/hasmob = 0 //If it contains a mob
 
+/obj/structure/disposalholder/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
+
 /obj/structure/disposalholder/Destroy()
 	qdel(gas)
 	active = 0
@@ -176,6 +180,9 @@
 			if("pipe-j2s")
 				stored.ptype = DISP_SORTJUNCTION_FLIP
 
+/obj/structure/disposalpipe/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
@@ -640,6 +647,7 @@
 
 /obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
+	
 	if(make_from)
 		setDir(make_from.dir)
 		make_from.loc = src
@@ -652,6 +660,10 @@
 	trunk = locate() in loc
 	if(trunk)
 		trunk.linked = src	// link the pipe trunk to self
+
+/obj/structure/disposaloutlet/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)

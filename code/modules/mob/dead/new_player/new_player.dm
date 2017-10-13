@@ -24,6 +24,9 @@
 		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
+
+	ComponentInitialize()
+
 	. = ..()
 
 /mob/dead/new_player/prepare_huds()
