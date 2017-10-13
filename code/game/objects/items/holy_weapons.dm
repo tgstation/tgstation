@@ -296,10 +296,10 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	
 /obj/item/nullrod/pride_hammer
-	icon_state = "mjollnir0"
+	icon_state = "pride"
 	name = "Pride-struck Hammer"
 	desc = "It resonates an aura of Pride."
-	force = 18
+	force = 16
 	throwforce = 15
 	w_class = 4
 	slot_flags = SLOT_BACK
