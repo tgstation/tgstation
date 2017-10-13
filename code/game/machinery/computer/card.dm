@@ -45,6 +45,11 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/machinery/computer/card/examine(mob/user)
+	..()
+	if(scan || modify)
+		to_chat(user, "<span class='notice'>Alt-click to eject the ID card.</span>")
+
 /obj/machinery/computer/card/Initialize()
 	. = ..()
 	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
@@ -537,7 +542,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		scan.verb_pickup()
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		scan = null
-	else
+	else //switching the ID with the one you're holding
 		var/obj/item/I = usr.get_active_held_item()
 		if(istype(I, /obj/item/card/id))
 			if(!usr.transferItemToLoc(I,src))
@@ -557,7 +562,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		modify = null
 		region_access = null
 		head_subordinates = null
-	else
+	else //switching the ID with the one you're holding
 		var/obj/item/I = usr.get_active_held_item()
 		if(istype(I, /obj/item/card/id))
 			if (!usr.transferItemToLoc(I,src))
