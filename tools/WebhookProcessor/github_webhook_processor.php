@@ -505,11 +505,20 @@ function update_pr_balance($payload) {
 	if(!$trackPRBalance)
 		return;
 	$author = $payload['pull_request']['user']['login'];
+	$merger = $payload['pull_request']['merged_by']['login'];
 	$balances = pr_balances();
+	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
+	adjust_pr_balance($author, $friendliness, $balances);
+	if($author == $merger)
+		adjust_pr_balance($merger,  -100, $balances);
+}
+	
+function adjust_pr_balance($user, $amount, $balances = null) {
+	if($balances == null)
+		$balances = pr_balances();
 	if(!isset($balances[$author]))
 		$balances[$author] = $startingPRBalance;
-	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
-	$balances[$author] += $friendliness;
+	$balances[$author] += $amount;
 	if(!is_maintainer($payload, $author)){	//immune
 		if($balances[$author] < 0 && $friendliness < 0)
 			create_comment($payload, 'Your Fix/Feature pull request delta is currently below zero (' . $balances[$author] . '). Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
