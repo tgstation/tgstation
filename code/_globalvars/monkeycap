@@ -1,0 +1,2 @@
+GLOBAL_VAR_INIT(monkeynum, 0)
+GLOBAL_VAR_INIT(monkeycap, 100)
