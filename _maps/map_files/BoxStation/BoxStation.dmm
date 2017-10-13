@@ -56959,25 +56959,30 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cEu" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/camera{
 	c_tag = "Supermatter Chamber";
 	dir = 2;
 	network = list("Engine");
 	pixel_x = 23
 	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cEv" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/east,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "cEw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -56992,17 +56997,22 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cEy" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/engine/supermatter)
-"cEz" = (
+/obj/structure/window/plasma/reinforced/spawner/west,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"cEz" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -57174,18 +57184,28 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFe" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/east,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "cFh" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/west,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "cFj" = (
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -87130,8 +87150,8 @@ cDD
 cqU
 cMD
 cEu
-cMI
-cMI
+cEz
+cEz
 cMD
 cFL
 cGf
