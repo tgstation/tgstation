@@ -301,15 +301,7 @@ What a mess.*/
 				active2 = null
 
 			if("Confirm Identity")
-				if(scan)
-					usr.put_in_hands(scan)
-					scan = null
-				else
-					var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
-					if(I)
-						if(!usr.transferItemToLoc(I, src))
-							return
-						scan = I
+				eject_id()
 
 			if("Log Out")
 				authenticated = null
@@ -790,3 +782,18 @@ What a mess.*/
 					if(!record2 || record2 == active2)
 						return 1
 	return 0
+
+/obj/machinery/computer/secure_data/AltClick(mob/user)
+	if(user.canUseTopic(src))
+		eject_id()
+
+/obj/machinery/computer/secure_data/proc/eject_id(mob/user)
+	if(scan)
+		usr.put_in_hands(scan)
+		scan = null
+	else
+		var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
+		if(I)
+			if(!usr.transferItemToLoc(I, src))
+				return
+			scan = I
