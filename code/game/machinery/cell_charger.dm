@@ -45,7 +45,7 @@
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				to_chat(user, "<span class='warning'>The [src] blinks red as you try to insert the cell!</span>")
+				to_chat(user, "<span class='warning'>[src] blinks red as you try to insert the cell!</span>")
 				return
 			if(!user.transferItemToLoc(W,src))
 				return

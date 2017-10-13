@@ -1,4 +1,3 @@
-
 #define SOURCE_PORTAL 1
 #define DESTINATION_PORTAL 2
 
@@ -54,8 +53,8 @@ Frequency:
 	if (usr.stat || usr.restrained())
 		return
 	var/turf/current_location = get_turf(usr)//What turf is the user on?
-	if(!current_location||current_location.z==2)//If turf was not found or they're on z level 2.
-		to_chat(usr, "The [src] is malfunctioning.")
+	if(!current_location || current_location.z == ZLEVEL_CENTCOM)//If turf was not found or they're on CentCom
+		to_chat(usr, "[src] is malfunctioning.")
 		return
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)))
 		usr.set_machine(src)

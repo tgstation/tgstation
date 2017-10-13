@@ -113,7 +113,7 @@
 		if(!is_insertion_ready(user))
 			return
 		if(!checkCircumstances(O))
-			to_chat(user, "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>")
+			to_chat(user, "<span class='warning'>[O] is not yet valid for [src] and must be completed!</span>")
 			return
 		if(!O.origin_tech)
 			to_chat(user, "<span class='warning'>This doesn't seem to have a tech origin!</span>")
@@ -125,7 +125,7 @@
 		if(!user.transferItemToLoc(O, src))
 			return
 		loaded_item = O
-		to_chat(user, "<span class='notice'>You add the [O.name] to the machine.</span>")
+		to_chat(user, "<span class='notice'>You add [O] to the machine.</span>")
 		flick("h_lathe_load", src)
 
 
@@ -687,13 +687,13 @@
 		qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 
 /obj/item/relic/proc/teleport(mob/user)
-	to_chat(user, "<span class='notice'>The [src] begins to vibrate!</span>")
+	to_chat(user, "<span class='notice'>[src] begins to vibrate!</span>")
 	addtimer(CALLBACK(src, .proc/do_teleport, user), rand(10, 30))
 
 /obj/item/relic/proc/do_teleport(mob/user)
 	var/turf/userturf = get_turf(user)
 	if(loc == user && userturf.z != ZLEVEL_CENTCOM) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
-		visible_message("<span class='notice'>The [src] twists and bends, relocating itself!</span>")
+		visible_message("<span class='notice'>[src] twists and bends, relocating itself!</span>")
 		throwSmoke(userturf)
 		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg')
 		throwSmoke(get_turf(user))
