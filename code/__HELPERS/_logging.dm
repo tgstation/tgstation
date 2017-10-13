@@ -131,10 +131,6 @@
 		return "[A.loc] (0, 0, 0) ([A.loc.type])"
 
 
-/proc/log_manifest(/datum/mind/mind,mob/body,latejoin = FALSE)
+/proc/log_manifest(datum/mind/mind,mob/body,latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
-		var/ckey = mind.ckey
-		var/assigned_role = mind.assigned_role
-		var/special_role = mind.special_role
-		var/name = body.real_name
-		WRITE_FILE(GLOB.manifest_log, "[ckey] - [name] - [assigned_role] - [special_role][latejoin ? " - LATEJOIN":""]")
+		WRITE_FILE(GLOB.manifest_log, "[mind.key] - [boyd.real_name] - [mind.assigned_role] - [mind.special_role][latejoin ? " - LATEJOIN":""]")
