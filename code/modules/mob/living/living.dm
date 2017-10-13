@@ -873,6 +873,16 @@
 		G.Recall()
 		to_chat(G, "<span class='holoparasite'>Your summoner has changed form!</span>")
 
+/mob/living/rad_act(amount)
+	amount = max(amount-RAD_BACKGROUND_RADIATION, 0)
+
+	if(amount)
+		var/blocked = getarmor(null, "rad")
+
+		apply_effect(amount * RAD_MOB_COEFFICIENT, IRRADIATE, blocked)
+		if(amount > RAD_AMOUNT_EXTREME)
+			apply_damage((amount-RAD_AMOUNT_EXTREME)/RAD_AMOUNT_EXTREME, BURN, null, blocked)
+
 /mob/living/proc/fakefireextinguish()
 	return
 

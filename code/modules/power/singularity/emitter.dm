@@ -137,7 +137,7 @@
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 	else
-		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>")
+		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
 		return 1
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
@@ -349,7 +349,7 @@
 	locked = FALSE
 	emagged = TRUE
 	if(user)
-		user.visible_message("[user.name] emags the [src].","<span class='notice'>You short out the lock.</span>")
+		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
 
 
 /obj/machinery/power/emitter/prototype

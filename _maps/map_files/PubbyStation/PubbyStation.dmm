@@ -32777,7 +32777,6 @@
 /area/medical/chemistry)
 "bwU" = (
 /obj/machinery/holopad,
-/obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bwV" = (
@@ -41925,7 +41924,7 @@
 "bQN" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = !INVALID_VALUE!;
+	filter_type = "n2o";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -43352,7 +43351,7 @@
 "bTU" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = !INVALID_VALUE!;
+	filter_type = "plasma";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -44739,7 +44738,7 @@
 "bWK" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = !INVALID_VALUE!;
+	filter_type = "o2";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -44778,7 +44777,7 @@
 "bWQ" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = !INVALID_VALUE!;
+	filter_type = "co2";
 	on = 1
 	},
 /turf/open/floor/plasteel,
