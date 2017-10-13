@@ -156,18 +156,6 @@
 	new /obj/item/clothing/shoes/sneakers/black( src )
 	new /obj/item/clothing/head/bomb_hood( src )
 
-
-/obj/structure/closet/bombclosetsecurity
-	name = "\improper EOD closet"
-	desc = "It's a storage unit for explosion-protective suits."
-	icon_state = "bomb"
-
-/obj/structure/closet/bombclosetsecurity/PopulateContents()
-	new /obj/item/clothing/suit/bomb_suit/security( src )
-	new /obj/item/clothing/under/rank/security( src )
-	new /obj/item/clothing/shoes/sneakers/brown( src )
-	new /obj/item/clothing/head/bomb_hood/security( src )
-
 /*
  * Ammunition
  */
