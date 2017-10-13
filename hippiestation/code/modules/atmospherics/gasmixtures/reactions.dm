@@ -46,11 +46,7 @@
 			if(!isnull(location))
 				location.set_light(4, 30)
 				location.light_color = LIGHT_COLOR_GREEN
-				radiation_pulse(location, 8, 15, 5)//set to an arbitrary value for now because radiation scaling with reaction energy is insane
-				
-				for(var/obj/machinery/power/rad_collector/R in GLOB.rad_collectors)
-					if(R.z == location.z && get_dist(R, location) <= 8) // Better than using orange() every process
-						R.receive_pulse(energy_released * FUSION_POWER_GENERATION_COEFFICIENT_HIPPIE)
+				radiation_pulse(location, 8, energy_released * FUSION_POWER_GENERATION_COEFFICIENT_HIPPIE)//set to an arbitrary value for now because radiation scaling with reaction energy is insane
 						
 				addtimer(CALLBACK(location, .atom/proc/set_light, 0, 0), 30)
 			return TRUE
