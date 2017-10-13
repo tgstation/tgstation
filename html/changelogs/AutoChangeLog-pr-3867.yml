@@ -1,0 +1,4 @@
+author: "ragicil"
+delete-after: True
+changes: 
+  - rscadd: "Adds screwdriver special attack to game"
