@@ -171,25 +171,22 @@
 	return TRUE
 
 /obj/item/projectile/proc/select_target(atom/A,target_turf)
-	if((A && A.density && !(A.flags_1 & ON_BORDER_1)) && (istype(A,/obj/machinery) || isturf(A))) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
-		var/list/mobs_list = list()
-		var/list/machine_list = list()
-		for(var/mob/living/L in target_turf)
-			mobs_list += L
-		for(var/obj/machinery/m in target_turf)
-			if(m.density)
-				machine_list += m
+	if((A && A.density && !(A.flags_1 & ON_BORDER_1)) && !ismob(A)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs or machines/structures on that tile.
+		var/static/list/machine_and_structure_typecache = typecacheof(/obj/machinery) + typecacheof(/obj/structure)
+		var/static/list/mob_typecache = typecacheof(/mob/living)
+		var/list/mobs_list = typecache_filter_list(A, mob_typecache)
+		var/list/machine_and_structure_list = typecache_filter_list(A, machine_and_structure_typecache)
 		var/permutationbackup
 		if(isturf(A))
 			permutationbackup = A.bullet_act(src, def_zone)		// Just in case the turf can deflect bullets
-		if(mobs_list.len || machine_list.len)
+		if(length(mobs_list) || length(machine_and_structure_list))
 			var/atom/movable/selected_target
-			if(mobs_list.Find(original) || machine_list.Find(original))
+			if(mobs_list.Find(original) || machine_and_structure_list.Find(original))
 				selected_target = original
 			else if(mobs_list.len)
 				selected_target = pick(mobs_list)
 			else
-				selected_target = pick(machine_list)
+				selected_target = pick(machine_and_structure_list)
 			if(!prehit(selected_target))
 				return FALSE
 			return selected_target.bullet_act(src, def_zone)
