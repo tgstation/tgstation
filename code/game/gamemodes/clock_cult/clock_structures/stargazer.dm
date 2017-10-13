@@ -50,6 +50,10 @@
 			if(isspaceturf(T))
 				has_starlight = TRUE
 				break
+	if(has_starlight && anchored)
+		var/area/A = get_area(src)
+		if(A.outdoors || A.map_name == "Space" || !A.blob_allowed)
+			has_starlight = FALSE
 	if(old_status != has_starlight)
 		if(has_starlight)
 			visible_message("<span class='nzcrentr_small'>[src] hums and shines brilliantly!</span>")

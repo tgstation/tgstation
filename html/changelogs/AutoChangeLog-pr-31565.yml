@@ -1,0 +1,5 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - balance: "Stargazers can no longer be built off-station, even in new areas."
+  - balance: "Integration cogs no longer emit sounds and steam visuals when active."

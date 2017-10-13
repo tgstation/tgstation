@@ -46860,7 +46860,7 @@
 "bMk" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/nitrous_oxide;
+	filter_type = "n2o";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -49917,7 +49917,7 @@
 "bSj" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/plasma;
+	filter_type = "plasma";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -52636,7 +52636,7 @@
 "bXq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/carbon_dioxide;
+	filter_type = "co2";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -54520,7 +54520,7 @@
 "cbd" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/nitrogen;
+	filter_type = "n2";
 	on = 1
 	},
 /obj/structure/window/reinforced,
@@ -54575,7 +54575,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/oxygen;
+	filter_type = "o2";
 	on = 1
 	},
 /turf/open/floor/plasteel/blue,
@@ -80903,16 +80903,21 @@
 	},
 /area/maintenance/port/fore)
 "daY" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "daZ" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "dbb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -82681,7 +82686,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = /datum/gas/freon;
+	filter_type = "freon";
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/engine,
@@ -82723,8 +82728,10 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "deU" = (
 /obj/effect/turf_decal/stripes/line{
@@ -82834,15 +82841,25 @@
 /area/engine/supermatter)
 "dfk" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/north,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "dfm" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/north,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "dfp" = (
 /obj/effect/turf_decal/bot{
@@ -82855,15 +82872,15 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "dfq" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
 /obj/machinery/camera{
 	c_tag = "Supermatter Chamber";
 	dir = 4;
 	network = list("Engine")
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -82881,7 +82898,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = /datum/gas/nitrogen
+	filter_type = "n2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -129533,7 +129550,7 @@ dbb
 dfa
 aNv
 dfk
-dlS
+daY
 djx
 dfG
 cXz
@@ -129790,7 +129807,7 @@ dbb
 aMk
 aNv
 dfm
-dlS
+daY
 djt
 dbg
 dfR

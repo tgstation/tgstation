@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "C4 will no longer appear underneath objects on walls."
+  - bugfix: "Plastic explosives will no longer be invisible after being planted."

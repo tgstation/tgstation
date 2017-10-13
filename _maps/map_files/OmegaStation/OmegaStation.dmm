@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -11009,7 +11009,7 @@
 "asz" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = /datum/gas/nitrogen;
+	filter_type = "n2";
 	name = "nitrogen filter";
 	on = 1
 	},
@@ -13296,7 +13296,7 @@
 "awD" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = /datum/gas/oxygen;
+	filter_type = "o2";
 	name = "oxygen filter";
 	on = 1
 	},
@@ -14109,7 +14109,7 @@
 "ayf" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/plasma;
+	filter_type = "plasma";
 	name = "waste filter";
 	on = 1
 	},
@@ -21607,7 +21607,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 1;
-	filter_type = /datum/gas/nitrogen
+	filter_type = "n2"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -22155,25 +22155,30 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aMR" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/camera{
-	c_tag = "Engineering Supermatter Chamber";
+	c_tag = "Supermatter Chamber";
 	dir = 2;
-	network = list("SS13","Engine");
+	network = list("Engine");
 	pixel_x = 23
 	},
-/turf/open/floor/circuit/green,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "aMS" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/east,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "aMT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -22194,16 +22199,21 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/west,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "aMX" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "aMY" = (
 /obj/structure/cable{
@@ -22838,14 +22848,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aOa" = (
-/obj/machinery/power/supermatter_shard/engine{
-	anchored = 1;
-	base_icon_state = "darkmatter";
-	explosion_power = 20;
-	gasefficency = 0.15;
-	icon_state = "darkmatter";
-	name = "supermatter crystal"
-	},
+/obj/machinery/power/supermatter_shard/crystal/engine,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aOb" = (
@@ -23106,15 +23109,25 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/east,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "aOD" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/west,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "aOE" = (
 /obj/structure/cable{
@@ -23873,7 +23886,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 1;
-	filter_type = /datum/gas/freon;
+	filter_type = "freon";
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/plasteel,
@@ -67194,8 +67207,8 @@ aJs
 aKz
 buW
 aMR
-buZ
-buZ
+aMX
+aMX
 buW
 aQK
 aRI
