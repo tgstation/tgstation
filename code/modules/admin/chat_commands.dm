@@ -74,3 +74,21 @@ GLOBAL_LIST(round_end_notifiees)
 	LAZYINITLIST(GLOB.round_end_notifiees)
 	GLOB.round_end_notifiees[sender] = TRUE
 	return "I will notify [sender] when the round ends."
+
+/datum/server_tools_command/smite
+	name = "smite"
+	help_text = "Smites a mob with the specified <ckey> and <punishment>"
+	admin_only = TRUE
+
+/datum/server_tools_command/smite/Run(sender, params)
+	var/list/L = splittext(params, " ")
+	if(L.len < 2)
+		return "Error: Insufficient paramenters"
+	var/client/C = GLOB.directory[ckey(L[1])]
+	if(!C)
+		return "Error: No client"
+	var/mob/living/carbon/human/H = C.mob
+	if(!istype(H))
+		return "Error: Invalid mob type"
+	L.Cut(1, 2)
+	return H.smite(L.Join(" "), sender, "[sender] (IRC)") ? "Smite success!" : "Invalid smite, available: [english_list(ADMIN_PUNISHMENT_LIST)]"

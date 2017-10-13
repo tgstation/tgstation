@@ -1174,34 +1174,39 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!holder)
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL)
+	var/list/punishment_list = ADMIN_PUNISHMENT_LIST
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
 	if(QDELETED(target) || !punishment)
 		return
 
+	target.smite(punishment, key_name(usr), key_name_admin(usr))
+
+/mob/living/carbon/human/proc/smite(punishment, username, kna_username)
 	switch(punishment)
 		if(ADMIN_PUNISHMENT_LIGHTNING)
-			var/turf/T = get_step(get_step(target, NORTH), NORTH)
-			T.Beam(target, icon_state="lightning[rand(1,12)]", time = 5)
-			target.adjustFireLoss(75)
-			target.electrocution_animation(40)
-			to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>")
+			var/turf/T = get_step(get_step(src, NORTH), NORTH)
+			T.Beam(src, icon_state="lightning[rand(1,12)]", time = 5)
+			adjustFireLoss(75)
+			electrocution_animation(40)
+			to_chat(src, "<span class='userdanger'>The gods have punished you for your sins!</span>")
 		if(ADMIN_PUNISHMENT_BRAINDAMAGE)
-			target.adjustBrainLoss(75)
+			adjustBrainLoss(75)
 		if(ADMIN_PUNISHMENT_GIB)
-			target.gib(FALSE)
+			gib(FALSE)
 		if(ADMIN_PUNISHMENT_BSA)
-			bluespace_artillery(target)
+			bluespace_artillery()
 		if(ADMIN_PUNISHMENT_FIREBALL)
-			new /obj/effect/temp_visual/target(get_turf(target))
+			new /obj/effect/temp_visual/target(get_turf(src))
+		else
+			return FALSE
 
-	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
+	var/msg = "[kna_username] punished [key_name_admin(src)] with [punishment]."
 	message_admins(msg)
-	admin_ticket_log(target, msg)
-	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")
-
+	admin_ticket_log(src, msg)
+	log_admin("[username] punished [key_name(src)] with [punishment].")
+	return TRUE
 
 /client/proc/trigger_centcom_recall()
 	if(!holder)

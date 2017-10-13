@@ -7,20 +7,21 @@
 	if(!isliving(target))
 		to_chat(usr, "This can only be used on instances of type /mob/living")
 		return
+	target.bluespace_artillery()
 
-	explosion(target.loc, 0, 0, 0, 0)
-
-	var/turf/open/floor/T = get_turf(target)
+/mob/living/proc/bluespace_artillery()
+	var/turf/open/floor/T = get_turf(src)
+	explosion(T, 0, 0, 0, 0)
 	if(istype(T))
 		if(prob(80))
 			T.break_tile_to_plating()
 		else
 			T.break_tile()
 
-	if(target.health <= 1)
-		target.gib(1, 1)
+	if(health <= 1)
+		gib(1, 1)
 	else
-		target.adjustBruteLoss(min(99,(target.health - 1)))
-		target.Knockdown(400)
-		target.stuttering = 20
+		adjustBruteLoss(min(99,(health - 1)))
+		Knockdown(400)
+		stuttering = 20
 
