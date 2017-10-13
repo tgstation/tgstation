@@ -380,7 +380,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message_admins(msg)
 	log_admin_private(msg)
 	AddInteraction("Marked as IC issue by [key_name]")
-	Resolve(silent = TRUE)
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
