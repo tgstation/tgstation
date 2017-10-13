@@ -40840,6 +40840,7 @@
 	network = list("MiniSat","tcomm");
 	pixel_y = -29
 	},
+/obj/structure/bed/dogbed/renault,
 /mob/living/simple_animal/pet/fox/Renault,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
