@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Fixed mobs being able to smash shocked objects without taking damage."
