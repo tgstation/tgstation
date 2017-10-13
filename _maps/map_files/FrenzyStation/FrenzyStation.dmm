@@ -371,6 +371,7 @@
 	dir = 1;
 	pixel_y = 2
 	},
+/obj/structure/closet/secure_closet/captains,
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bg" = (
@@ -2076,7 +2077,7 @@
 	},
 /area/security/brig)
 "eZ" = (
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/white,
 /area/storage/primary)
 "fa" = (
@@ -3243,6 +3244,7 @@
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "hO" = (
@@ -3410,12 +3412,13 @@
 /turf/open/floor/plasteel/black,
 /area/engine/gravity_generator)
 "ij" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "ik" = (
@@ -4269,7 +4272,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/carpet,
 /area/chapel/main)
 "kk" = (
@@ -4333,7 +4336,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "kq" = (
@@ -4799,7 +4802,6 @@
 /area/crew_quarters/dorms)
 "lD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "lE" = (
@@ -4835,7 +4837,7 @@
 /area/crew_quarters/bar)
 "lK" = (
 /obj/structure/chair/stool,
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "lL" = (
@@ -5004,7 +5006,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "mb" = (
@@ -5035,6 +5036,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "md" = (
@@ -5260,6 +5262,7 @@
 /obj/structure/urinal{
 	pixel_y = 32
 	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/dorms)
 "mH" = (
@@ -6428,7 +6431,7 @@
 	dir = 1;
 	pixel_y = 3
 	},
-/obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start/chief_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "pp" = (
@@ -8961,6 +8964,63 @@
 "uF" = (
 /turf/open/space/basic,
 /area/space/nearstation)
+"uG" = (
+/obj/item/device/radio/intercom{
+	anyai = 1;
+	broadcasting = 0;
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = 28;
+	pixel_y = -31
+	},
+/obj/item/device/radio/intercom{
+	anyai = 1;
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_y = -31
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	freerange = 1;
+	listening = 1;
+	name = "Common Channel";
+	pixel_x = -28;
+	pixel_y = -31
+	},
+/obj/effect/landmark/start/ai,
+/turf/open/floor/circuit/green,
+/area/bridge)
+"uH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"uI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/start/security_officer,
+/turf/open/floor/plasteel,
+/area/security/brig)
+"uJ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/plasteel,
+/area/storage/primary)
+"uK" = (
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"uL" = (
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aa
@@ -40694,7 +40754,7 @@ kB
 kQ
 lj
 lx
-lx
+uK
 lQ
 mm
 kO
@@ -40931,7 +40991,7 @@ ei
 ey
 eN
 ff
-fy
+fw
 fM
 gf
 gx
@@ -41188,7 +41248,7 @@ ej
 cb
 eN
 fg
-fw
+uJ
 fM
 gg
 eM
@@ -42457,7 +42517,7 @@ aE
 aN
 aW
 be
-aW
+uG
 br
 bB
 bP
@@ -43494,12 +43554,12 @@ cu
 cO
 df
 cP
-dB
+uH
 cP
 cP
 er
 eC
-eR
+uI
 fm
 fq
 er
@@ -43534,7 +43594,7 @@ nX
 oh
 oB
 oZ
-pk
+uL
 pk
 qa
 qt
@@ -44793,10 +44853,10 @@ eR
 gV
 fq
 hw
-hM
+ik
 ij
 hM
-iT
+hM
 hM
 jA
 hM
@@ -45051,9 +45111,9 @@ gW
 hr
 hw
 hN
-ik
-iG
-iU
+hM
+hM
+hM
 hM
 hM
 hM
@@ -45308,11 +45368,11 @@ gX
 fT
 hw
 hO
-hO
-hO
-iU
-hO
 jB
+hO
+hO
+hO
+hO
 hO
 hO
 jB
