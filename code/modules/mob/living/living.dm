@@ -121,7 +121,7 @@
 		return TRUE
 
 	//TODO FOR LATER PRS: Make passing tables an automatic thing for flying and passable objects be determined better to prevent huge amounts of flags being set when mobs fly.
-	if(((movement_type & FLYING) && !(M.movement_type & FLYING)) || (!(movement_type & FLYING) && (M.movement_type & FLYING)))	//Fly past each other.
+	if((movement_type) ^ (M.movement_type))	//Fly past each other.
 		now_pushing = TRUE
 		var/old = pass_flags & PASSMOB
 		var/old_p = pulling? (pulling.pass_flags & PASSMOB) : NONE
