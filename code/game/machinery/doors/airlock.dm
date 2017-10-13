@@ -274,7 +274,7 @@
 	var/image/electrocution_skeleton_anim = image('icons/mob/human.dmi', user, icon_state = "electrocuted_base", layer=ABOVE_MOB_LAYER)
 	shock_image.color = rgb(0,0,0)
 	shock_image.override = TRUE
-	electrocution_skeleton_anim.appearance_flags = RESET_COLOR
+	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
 
 	to_chat(user, "<span class='userdanger'>You feel a powerful shock course through your body!</span>")
 	if(user.client)
